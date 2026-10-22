@@ -1,0 +1,28 @@
+BLE001 Do not catch blind exception: `Exception`
+   --> /private/tmp/managed-search-transport-20261017/lifecycle.py:186:20
+    |
+184 |                     "exact-native-identity-observed-before-delete-and-absence-after"
+185 |                 )
+186 |             except Exception as e:
+    |                    ^^^^^^^^^
+187 |                 results[kind] = {"errorType": type(e).__name__, "message": str(e)}
+188 |         result = {
+    |
+
+SIM117 Use a single `with` statement with multiple contexts instead of nested `with` statements
+   --> /private/tmp/managed-search-transport-20261017/test_transport.py:323:9
+    |
+321 |                   return Slow(200, b"")
+322 |
+323 | /         with (
+324 | |             patch.object(t.time, "monotonic", side_effect=lambda: clock[0]),
+325 | |             patch.object(t.http.client, "HTTPSConnection", C),
+326 | |         ):
+327 | |             with self.assertRaises(TimeoutError):
+    | |_________________________________________________^
+328 |                   self.http().request("GET", t.EP + "/" + t.ENDPOINT, None, deadline=1.0)
+329 |           self.assertEqual((self.p / "http/000-response.bin").read_bytes(), b"partial")
+    |
+help: Combine `with` statements
+
+Found 3 errors (1 fixed, 2 remaining).

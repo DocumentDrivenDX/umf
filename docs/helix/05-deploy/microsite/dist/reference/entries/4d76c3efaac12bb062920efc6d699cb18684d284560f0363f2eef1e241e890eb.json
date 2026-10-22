@@ -1,0 +1,33 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 1409,
+        "line": 1,
+        "path": "spec/extensions/typespec/compiler-report.schema.json",
+        "sha256": "f8a0a22c72d83925ca7df4ac0aefe13a4fdc94d1128d2814f37da4c81a3527f5"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "typespecCompilerReportSchema",
+    "runtime": "unassessed",
+    "signatureText": [
+      "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"$id\": \"urn:umf:typespec:compiler-report:0.1.0\",\n  \"type\": \"object\",\n  \"additionalProperties\": false,\n  \"required\": [\n    \"compiler\",\n    \"valid\",\n    \"complete\",\n    \"diagnostics\",\n    \"limitations\",\n    \"libraries\"\n  ],\n  \"properties\": {\n    \"compiler\": {\n      \"const\": \"@typespec/compiler@1.16.0\"\n    },\n    \"valid\": {\n      \"type\": \"boolean\"\n    },\n    \"complete\": {\n      \"const\": false\n    },\n    \"diagnostics\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"additionalProperties\": false,\n        \"required\": [\n          \"code\",\n          \"severity\",\n          \"message\"\n        ],\n        \"properties\": {\n          \"code\": {\n            \"type\": \"string\"\n          },\n          \"severity\": {\n            \"enum\": [\n              \"error\",\n              \"warning\"\n            ]\n          },\n          \"message\": {\n            \"type\": \"string\"\n          },\n          \"file\": {\n            \"type\": \"string\"\n          },\n          \"start\": {\n            \"type\": \"integer\"\n          },\n          \"end\": {\n            \"type\": \"integer\"\n          }\n        }\n      }\n    },\n    \"limitations\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"string\"\n      },\n      \"minItems\": 1\n    },\n    \"libraries\": {\n      \"type\": \"object\",\n      \"additionalProperties\": {\n        \"type\": \"string\"\n      }\n    }\n  }\n}\n"
+    ]
+  },
+  "id": "[\"api\",\".\",\"typespecCompilerReportSchema\"]",
+  "kind": "api",
+  "links": [
+    "[\"schema\",\"spec/extensions/typespec/compiler-report.schema.json\",\"\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 1409,
+      "line": 1,
+      "path": "spec/extensions/typespec/compiler-report.schema.json",
+      "sha256": "f8a0a22c72d83925ca7df4ac0aefe13a4fdc94d1128d2814f37da4c81a3527f5"
+    }
+  ],
+  "summary": "Public export · spec/extensions/typespec/compiler-report.schema.json",
+  "title": "typespecCompilerReportSchema"
+}

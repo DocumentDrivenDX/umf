@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 import json,tempfile
 from pathlib import Path
 from deltalake import DeltaTable

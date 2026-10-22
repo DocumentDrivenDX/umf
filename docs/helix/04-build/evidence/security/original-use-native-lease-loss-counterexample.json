@@ -1,0 +1,13 @@
+{
+  "status": "counterexample-observed",
+  "retainedEvidence": "docs/helix/04-build/evidence/security/original-use-native-lease-loss-evidence.json",
+  "retainedEvidenceSha256": "a8795eb8536189db036d692a8598c0bebb86351c1f21bcb1a88a11a6928f1259",
+  "observationIds": [
+    "lease-loss-control-original-buffer",
+    "lease-loss-control-server-termination",
+    "lease-loss-control-revocation-committed-before-buffer-drain",
+    "lease-loss-control-client-buffer-still-retained",
+    "lease-loss-control-client-eventually-detects-failure"
+  ],
+  "scope": "Native PostgreSQL backend termination releases automatic transaction lease. Trigger-enforced revocation commits while the live client retains an unpublished old result. No unauthorized publication is performed. This contradicts sufficiency of native transaction locks for the full application-buffer drain rule under backend loss."
+}

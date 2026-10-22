@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 13360,
+        "line": 19,
+        "path": "src/core-ideals/facets-postgresql-projection.ts",
+        "sha256": "6ce38a1459c90d94fcf25a9f4008d10771d7fc0566950c8c163c68ef434354db"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "FacetsPostgresqlProjection",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface FacetsPostgresqlProjection {\n operation:'project-facets-postgresql';version:'1.0.0';status:'projected'|'blocked';source:Document;author:Author;request:FacetsPostgresqlRequest;target?:Document;nativeSql?:string;binding:typeof binding;diagnostics:Diagnostic[];\n mapping:{origin:'authored';idealPath:string;nativePath:'/stmts/0/stmt/CreateStmt/tableElts/0/ColumnDef';facets:CoreFacetPatch;encoding:FacetsPostgresqlRequest['encoding'];outcome:Outcome};\n residuals:{path:string;value:Json;reason:string;outcome:Exclude<Outcome,'exact'>;recovery:typeof recovery}[];\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"FacetsPostgresqlProjection\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 13360,
+      "line": 19,
+      "path": "src/core-ideals/facets-postgresql-projection.ts",
+      "sha256": "6ce38a1459c90d94fcf25a9f4008d10771d7fc0566950c8c163c68ef434354db"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/facets-postgresql-projection.ts",
+  "title": "FacetsPostgresqlProjection"
+}

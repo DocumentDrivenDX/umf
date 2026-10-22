@@ -1,0 +1,23 @@
+2 | import {createHash} from 'node:crypto';
+3 | import * as u from '/private/tmp/umf-integrated-qualification-40e83200/src/index.ts';
+4 | import fixture from '/private/tmp/umf-integrated-qualification-40e83200/fixtures/actions/approve.json';
+5 | const root='/private/tmp/umf-integrated-qualification-40e83200/';
+6 | const captured=await Bun.file(root+'fixtures/validation/core-check-refresh/native-browser.json').json();
+7 | assert.equal(captured.sourceRevision,'40e83200fb34274b9cd6c6a99d404b6da2d89602');
+           ^
+AssertionError: Expected values to be strictly equal:
++ actual - expected
+
++ '40e83200c16e9daa632ed269831cf0f72002533d'
+- '40e83200fb34274b9cd6c6a99d404b6da2d89602'
+
+ generatedMessage: true,
+     actual: "40e83200c16e9daa632ed269831cf0f72002533d",
+   expected: "40e83200fb34274b9cd6c6a99d404b6da2d89602",
+   operator: "strictEqual",
+       diff: "simple",
+       code: "ERR_ASSERTION"
+
+      at /private/tmp/umf-integrated-handler-metadata-probe-40e83200.ts:7:8
+
+Bun v1.4.2 (macOS arm64)

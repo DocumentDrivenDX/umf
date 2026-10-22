@@ -1,0 +1,13 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"arrowIpcLayoutSchema\"]",
+  "kind": "Schema",
+  "members": [],
+  "parameters": [],
+  "purpose": "JSON Schema exported as arrowIpcLayoutSchema. Follow the related schema definition for object keys, value constraints and conditions.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "{ $schema: string; $id: string; description: string; type: string; properties: { source: { $ref: string; }; format: { enum: string[]; }; complete: { const: boolean; }; bytesAccountedFor: { type: string; }; frames: { type: string; maxItems: number; items: { type: string; properties: { offset: { type: string; minimum: number; maximum: number; }; prefixLength: { enum: number[]; }; metadataOffset: { type: string; minimum: number; maximum: number; }; metadataLength: { type: string; minimum: number; maximum: number; }; bodyOffset: { type: string; minimum: number; maximum: number; }; bodyLength: { type: string; minimum: number; maximum: number; }; kind: { enum: string[]; }; metadata: { $ref: string; }; }; required: string[]; additionalProperties: boolean; }; }; footer: { type: string; properties: { offset: { type: string; minimum: number; maximum: number; }; length: { type: string; minimum: number; maximum: number; }; metadata: { $ref: string; }; }; required: string[]; additionalProperties: boolean; }; eosOffset: { type: string; minimum: number; maximum: number; }; consumed: { type: string; minimum: number; maximum: number; }; trailingBytes: { type: string; minimum: number; maximum: number; }; diagnostics: { type: string; items: { type: string; properties: { code: { type: string; }; path: { type: string; }; severity: { enum: string[]; }; message: { type: string; }; }; required: string[]; additionalProperties: boolean; }; }; }; required: string[]; additionalProperties: boolean; }"
+}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 16496,
+        "line": 13,
+        "path": "src/extensions/security/protection/functions.ts",
+        "sha256": "b20bfd2016e15cf0f0590282b9284ff716251a88043514ed9052a7695ddb57db"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "ProtectionFunctionResult",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface ProtectionFunctionResult extends Omit<ProtectionParameterValidation,'status'|'validated'> {\n status:FunctionStatus;selection:Json;input:Json;value:Json;\n inputDomain:Json;outputDomain:Json;valueProfile:string|null;\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"ProtectionFunctionResult\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 16496,
+      "line": 13,
+      "path": "src/extensions/security/protection/functions.ts",
+      "sha256": "b20bfd2016e15cf0f0590282b9284ff716251a88043514ed9052a7695ddb57db"
+    }
+  ],
+  "summary": "Type declaration · src/extensions/security/protection/functions.ts",
+  "title": "ProtectionFunctionResult"
+}

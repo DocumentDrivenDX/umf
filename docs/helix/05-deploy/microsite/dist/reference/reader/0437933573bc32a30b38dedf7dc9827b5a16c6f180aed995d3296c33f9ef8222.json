@@ -1,0 +1,21 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"inspectProtectionCatalog\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "input",
+      "optional": false,
+      "type": "unknown"
+    }
+  ],
+  "purpose": "`valid` qualifies wire structure and local bounds only; `complete` is always false.",
+  "related": [],
+  "returns": "ProtectionCatalogInspection",
+  "task": "Inspect and select",
+  "type": "(input: unknown) => ProtectionCatalogInspection"
+}

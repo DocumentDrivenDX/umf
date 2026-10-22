@@ -1,0 +1,2 @@
+{"stage": "container-gates", "command": ["bun", "test", "tests/core-ideals/cardinality-conformance.test.ts", "tests/core-ideals/facets-conformance.test.ts", "tests/core-ideals/facets-evidence.test.ts", "tests/core-ideals/field-conformance.test.ts", "tests/core-ideals/key-conformance.test.ts", "tests/core-ideals/key-evidence.test.ts", "tests/core-ideals/nullability-conformance.test.ts", "tests/core-ideals/relationship-conformance.test.ts"]}
+{"stage": "container-integrity", "command": ["bun", "scripts/verify-current-core-evidence.ts"]}

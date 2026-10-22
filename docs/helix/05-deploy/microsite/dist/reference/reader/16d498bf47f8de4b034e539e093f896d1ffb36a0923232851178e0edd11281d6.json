@@ -1,0 +1,83 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"CoreRelationshipInspection\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "operation",
+      "optional": false,
+      "type": "\"inspect-core-relationships\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "version",
+      "optional": false,
+      "type": "\"3.0.0\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "source",
+      "optional": false,
+      "type": "Source"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"RelationshipModuleIdentity\"]"
+      ],
+      "name": "identity",
+      "optional": false,
+      "type": "RelationshipModuleIdentity"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "path",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreRelationshipMeaning\"]"
+      ],
+      "name": "meaning",
+      "optional": false,
+      "type": "CoreRelationshipMeaning"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "provenance",
+      "optional": false,
+      "type": "\"unverified\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Diagnostic\"]"
+      ],
+      "name": "diagnostics",
+      "optional": false,
+      "type": "Diagnostic[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "residuals",
+      "optional": false,
+      "type": "[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "CoreRelationshipInspection is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "CoreRelationshipInspection"
+}

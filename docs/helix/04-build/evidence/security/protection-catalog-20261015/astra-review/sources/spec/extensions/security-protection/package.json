@@ -1,0 +1,79 @@
+{
+  "id": "umf.security.protection",
+  "version": "0.1.0",
+  "coreVersion": "0.1.0",
+  "description": "Protection catalog envelope scaffold; transform interpretation is not implemented",
+  "schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "urn:umf:security-protection:0.1.0:envelope",
+    "title": "Protection catalog envelope and transform identity scaffold only",
+    "description": "Structural envelope only. Payload members are preserved, not interpreted; this schema never establishes a usable transform.",
+    "type": "object",
+    "properties": {
+      "vocabulary": {
+        "const": "umf.security.protection"
+      },
+      "version": {
+        "const": "0.1.0"
+      },
+      "id": {
+        "type": "string",
+        "minLength": 1
+      },
+      "revision": {
+        "type": "string",
+        "minLength": 1
+      },
+      "transforms": {
+        "type": "array",
+        "maxItems": 256,
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "version": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "id",
+            "version"
+          ],
+          "additionalProperties": true
+        }
+      },
+      "native": {}
+    },
+    "required": [
+      "vocabulary",
+      "version",
+      "id",
+      "revision",
+      "transforms"
+    ],
+    "additionalProperties": true
+  },
+  "semantics": "CONTRACT-062 field protection catalog; structural envelope and transform identity subset only; unknown payload remains data and interpretation always refuses",
+  "scopes": [
+    "document"
+  ],
+  "capabilities": {
+    "validation": "structural",
+    "directions": [
+      "import",
+      "export"
+    ],
+    "evidence": [
+      "tests/security/protection/catalog.test.ts"
+    ],
+    "native": {
+      "system": "UMF-authored protection catalog",
+      "version": "0.1.0",
+      "subset": "Envelope structure and duplicate identity inspection only; no domains, transforms, custody, policy0.2 interpretation or native enforcement"
+    }
+  }
+}

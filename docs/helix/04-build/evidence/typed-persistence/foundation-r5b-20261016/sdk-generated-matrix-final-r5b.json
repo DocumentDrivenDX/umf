@@ -1,0 +1,512 @@
+{
+  "status": "pass",
+  "scope": "non-temporal generated model/codec agreement and presence controls; no native backend or temporal qualification",
+  "work": "/private/tmp/umf-generated-matrix-2P0XE2",
+  "wheelSha256": "9427c729c3e5ffe68f08e4c6e94cbdc0d478680a408ff769294f2eb61ad52adb",
+  "corpusSha256": "fdad48d32f30da8a66f6d72e7124debbb78442192cb8e3107e224957bb768e8a",
+  "sourceSha256": "cebc66a998f68dbb7a09209417a3d63161043fc762e334c4d28545607604730a",
+  "heldTemporal": [
+    "temporal-gap-date",
+    "temporal-gap-instant",
+    "temporal-gap-local"
+  ],
+  "observed": {
+    "vectors": [
+      {
+        "id": "decimal-short",
+        "expected": true,
+        "modelCodecAgreement": true,
+        "carrierAdaptation": "literal converted without repair"
+      },
+      {
+        "id": "decimal-scale1",
+        "expected": true,
+        "modelCodecAgreement": true,
+        "carrierAdaptation": "literal converted without repair"
+      },
+      {
+        "id": "decimal-scale2",
+        "expected": true,
+        "modelCodecAgreement": true,
+        "carrierAdaptation": "literal converted without repair"
+      },
+      {
+        "id": "decimal-scale3zero",
+        "expected": true,
+        "modelCodecAgreement": true,
+        "carrierAdaptation": "literal converted without repair"
+      },
+      {
+        "id": "decimal-zero",
+        "expected": true,
+        "modelCodecAgreement": true,
+        "carrierAdaptation": "literal converted without repair"
+      },
+      {
+        "id": "decimal-negative-zero",
+        "expected": true,
+        "modelCodecAgreement": true,
+        "carrierAdaptation": "literal converted without repair"
+      },
+      {
+        "id": "decimal-exponent",
+        "expected": true,
+        "modelCodecAgreement": true,
+        "carrierAdaptation": "literal converted without repair"
+      },
+      {
+        "id": "decimal-max",
+        "expected": true,
+        "modelCodecAgreement": true,
+        "carrierAdaptation": "literal converted without repair"
+      },
+      {
+        "id": "decimal-overflow",
+        "expected": false,
+        "modelCodecAgreement": true,
+        "carrierAdaptation": "literal converted without repair"
+      },
+      {
+        "id": "decimal-rounding",
+        "expected": false,
+        "modelCodecAgreement": true,
+        "carrierAdaptation": "literal converted without repair"
+      },
+      {
+        "id": "decimal-tiny",
+        "expected": false,
+        "modelCodecAgreement": true,
+        "carrierAdaptation": "literal converted without repair"
+      },
+      {
+        "id": "decimal-nan",
+        "expected": false,
+        "modelCodecAgreement": true,
+        "carrierAdaptation": "literal converted without repair"
+      },
+      {
+        "id": "int8--129",
+        "expected": false,
+        "modelCodecAgreement": true,
+        "carrierAdaptation": "literal converted without repair"
+      },
+      {
+        "id": "int8--128",
+        "expected": true,
+        "modelCodecAgreement": true,
+        "carrierAdaptation": "literal converted without repair"
+      },
+      {
+        "id": "int8--1",
+        "expected": true,
+        "modelCodecAgreement": true,
+        "carrierAdaptation": "literal converted without repair"
+      },
+      {
+        "id": "int8-0",
+        "expected": true,
+        "modelCodecAgreement": true,
+        "carrierAdaptation": "literal converted without repair"
+      },
+      {
+        "id": "int8-127",
+        "expected": true,
+        "modelCodecAgreement": true,
+        "carrierAdaptation": "literal converted without repair"
+      },
+      {
+        "id": "int8-128",
+        "expected": false,
+        "modelCodecAgreement": true,
+        "carrierAdaptation": "literal converted without repair"
+      },
+      {
+        "id": "uint8--1",
+        "expected": false,
+        "modelCodecAgreement": true,
+        "carrierAdaptation": "literal converted without repair"
+      },
+      {
+        "id": "uint8-0",
+        "expected": true,
+        "modelCodecAgreement": true,
+        "carrierAdaptation": "literal converted without repair"
+      },
+      {
+        "id": "uint8-255",
+        "expected": true,
+        "modelCodecAgreement": true,
+        "carrierAdaptation": "literal converted without repair"
+      },
+      {
+        "id": "uint8-256",
+        "expected": false,
+        "modelCodecAgreement": true,
+        "carrierAdaptation": "literal converted without repair"
+      },
+      {
+        "id": "unicode-empty",
+        "expected": false,
+        "modelCodecAgreement": true,
+        "carrierAdaptation": "literal converted without repair"
+      },
+      {
+        "id": "unicode-astral",
+        "expected": true,
+        "modelCodecAgreement": true,
+        "carrierAdaptation": "literal converted without repair"
+      },
+      {
+        "id": "unicode-combining",
+        "expected": true,
+        "modelCodecAgreement": true,
+        "carrierAdaptation": "literal converted without repair"
+      },
+      {
+        "id": "unicode-long",
+        "expected": false,
+        "modelCodecAgreement": true,
+        "carrierAdaptation": "literal converted without repair"
+      },
+      {
+        "id": "unicode-surrogate",
+        "expected": false,
+        "modelCodecAgreement": true,
+        "carrierAdaptation": "literal converted without repair"
+      },
+      {
+        "id": "allowed-yes",
+        "expected": true,
+        "modelCodecAgreement": true,
+        "carrierAdaptation": "literal converted without repair"
+      },
+      {
+        "id": "allowed-no",
+        "expected": false,
+        "modelCodecAgreement": true,
+        "carrierAdaptation": "literal converted without repair"
+      },
+      {
+        "id": "range-0",
+        "expected": false,
+        "modelCodecAgreement": true,
+        "carrierAdaptation": "literal converted without repair"
+      },
+      {
+        "id": "range-1",
+        "expected": true,
+        "modelCodecAgreement": true,
+        "carrierAdaptation": "literal converted without repair"
+      },
+      {
+        "id": "range-2",
+        "expected": true,
+        "modelCodecAgreement": true,
+        "carrierAdaptation": "literal converted without repair"
+      },
+      {
+        "id": "range-3",
+        "expected": false,
+        "modelCodecAgreement": true,
+        "carrierAdaptation": "literal converted without repair"
+      },
+      {
+        "id": "binary-upper",
+        "expected": true,
+        "modelCodecAgreement": true,
+        "carrierAdaptation": "literal converted without repair"
+      },
+      {
+        "id": "binary-empty",
+        "expected": false,
+        "modelCodecAgreement": true,
+        "carrierAdaptation": "literal converted without repair"
+      },
+      {
+        "id": "binary-odd",
+        "expected": false,
+        "modelCodecAgreement": true,
+        "carrierAdaptation": "malformed binaryHex has no bytes carrier; original token tested as rejected string carrier"
+      },
+      {
+        "id": "binary-long",
+        "expected": false,
+        "modelCodecAgreement": true,
+        "carrierAdaptation": "literal converted without repair"
+      },
+      {
+        "id": "bool-true",
+        "expected": true,
+        "modelCodecAgreement": true,
+        "carrierAdaptation": "literal converted without repair"
+      },
+      {
+        "id": "bool-integer",
+        "expected": false,
+        "modelCodecAgreement": true,
+        "carrierAdaptation": "literal converted without repair"
+      },
+      {
+        "id": "int64--9223372036854775809",
+        "expected": false,
+        "modelCodecAgreement": true,
+        "carrierAdaptation": "literal converted without repair"
+      },
+      {
+        "id": "int64--9223372036854775808",
+        "expected": true,
+        "modelCodecAgreement": true,
+        "carrierAdaptation": "literal converted without repair"
+      },
+      {
+        "id": "int64-9223372036854775807",
+        "expected": true,
+        "modelCodecAgreement": true,
+        "carrierAdaptation": "literal converted without repair"
+      },
+      {
+        "id": "int64-9223372036854775808",
+        "expected": false,
+        "modelCodecAgreement": true,
+        "carrierAdaptation": "literal converted without repair"
+      },
+      {
+        "id": "decimal-extra-1e1000000000",
+        "expected": false,
+        "modelCodecAgreement": true,
+        "carrierAdaptation": "literal converted without repair"
+      },
+      {
+        "id": "decimal-extra-0e1000000000",
+        "expected": true,
+        "modelCodecAgreement": true,
+        "carrierAdaptation": "literal converted without repair"
+      },
+      {
+        "id": "decimal-extra-1e-1000000000",
+        "expected": false,
+        "modelCodecAgreement": true,
+        "carrierAdaptation": "literal converted without repair"
+      },
+      {
+        "id": "decimal-extra-0e-1000000000",
+        "expected": true,
+        "modelCodecAgreement": true,
+        "carrierAdaptation": "literal converted without repair"
+      },
+      {
+        "id": "decimal-extra--9999999999.99",
+        "expected": true,
+        "modelCodecAgreement": true,
+        "carrierAdaptation": "literal converted without repair"
+      },
+      {
+        "id": "decimal-extra-1.2300",
+        "expected": true,
+        "modelCodecAgreement": true,
+        "carrierAdaptation": "literal converted without repair"
+      },
+      {
+        "id": "null-required",
+        "expected": false,
+        "modelCodecAgreement": true,
+        "carrierAdaptation": "literal converted without repair"
+      },
+      {
+        "id": "null-absent-allowed",
+        "expected": true,
+        "modelCodecAgreement": true,
+        "carrierAdaptation": "literal converted without repair"
+      },
+      {
+        "id": "array-empty",
+        "expected": false,
+        "modelCodecAgreement": true,
+        "carrierAdaptation": "literal converted without repair"
+      },
+      {
+        "id": "array-one",
+        "expected": true,
+        "modelCodecAgreement": true,
+        "carrierAdaptation": "literal converted without repair"
+      },
+      {
+        "id": "array-two",
+        "expected": true,
+        "modelCodecAgreement": true,
+        "carrierAdaptation": "literal converted without repair"
+      },
+      {
+        "id": "array-long",
+        "expected": false,
+        "modelCodecAgreement": true,
+        "carrierAdaptation": "literal converted without repair"
+      },
+      {
+        "id": "array-overflow",
+        "expected": false,
+        "modelCodecAgreement": true,
+        "carrierAdaptation": "literal converted without repair"
+      },
+      {
+        "id": "array-null",
+        "expected": false,
+        "modelCodecAgreement": true,
+        "carrierAdaptation": "literal converted without repair"
+      },
+      {
+        "id": "array-wrong",
+        "expected": false,
+        "modelCodecAgreement": true,
+        "carrierAdaptation": "literal converted without repair"
+      },
+      {
+        "id": "map-empty",
+        "expected": false,
+        "modelCodecAgreement": true,
+        "carrierAdaptation": "literal converted without repair"
+      },
+      {
+        "id": "map-one",
+        "expected": true,
+        "modelCodecAgreement": true,
+        "carrierAdaptation": "literal converted without repair"
+      },
+      {
+        "id": "map-two",
+        "expected": true,
+        "modelCodecAgreement": true,
+        "carrierAdaptation": "literal converted without repair"
+      },
+      {
+        "id": "map-long",
+        "expected": false,
+        "modelCodecAgreement": true,
+        "carrierAdaptation": "literal converted without repair"
+      },
+      {
+        "id": "map-overflow",
+        "expected": false,
+        "modelCodecAgreement": true,
+        "carrierAdaptation": "literal converted without repair"
+      },
+      {
+        "id": "map-null",
+        "expected": false,
+        "modelCodecAgreement": true,
+        "carrierAdaptation": "literal converted without repair"
+      },
+      {
+        "id": "map-wrong",
+        "expected": false,
+        "modelCodecAgreement": true,
+        "carrierAdaptation": "literal converted without repair"
+      },
+      {
+        "id": "nested-valid",
+        "expected": true,
+        "modelCodecAgreement": true,
+        "carrierAdaptation": "literal converted without repair"
+      },
+      {
+        "id": "nested-inner-empty",
+        "expected": false,
+        "modelCodecAgreement": true,
+        "carrierAdaptation": "literal converted without repair"
+      },
+      {
+        "id": "nested-deep-overflow",
+        "expected": false,
+        "modelCodecAgreement": true,
+        "carrierAdaptation": "literal converted without repair"
+      },
+      {
+        "id": "nested-wrong-shape",
+        "expected": false,
+        "modelCodecAgreement": true,
+        "carrierAdaptation": "literal converted without repair"
+      }
+    ],
+    "presenceControls": [
+      "nullable-array-item",
+      "nullable-map-value",
+      "missing-array-refusal",
+      "missing-map-refusal",
+      "absent-map-key",
+      "authored-default-not-executed",
+      "nested-mutation-revalidated"
+    ],
+    "installedPayloadCount": 33,
+    "wheelSha256": "9427c729c3e5ffe68f08e4c6e94cbdc0d478680a408ff769294f2eb61ad52adb",
+    "python": "3.14.8",
+    "runtime": "/private/tmp/sdk-r5b-314-env/lib/python3.14/site-packages/umf_access/__init__.py"
+  },
+  "commands": [
+    {
+      "label": "real-cli-generate",
+      "argv": [
+        "/private/tmp/sdk-bun142-recovered/bun",
+        "/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/scripts/umf-access-generate.ts",
+        "generate",
+        "--request",
+        "/private/tmp/umf-generated-matrix-2P0XE2/request.json",
+        "--profile",
+        "/private/tmp/umf-generated-matrix-2P0XE2/profile.json",
+        "--output",
+        "/private/tmp/umf-generated-matrix-2P0XE2/generated"
+      ],
+      "exit": 0,
+      "stdout": "{\"kind\":\"access-public-diff\",\"scope\":\"source compatibility only; target and data compatibility unqualified\",\"changes\":[]}\n",
+      "stderr": ""
+    },
+    {
+      "label": "real-cli-check-before",
+      "argv": [
+        "/private/tmp/sdk-bun142-recovered/bun",
+        "/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/scripts/umf-access-generate.ts",
+        "check",
+        "--request",
+        "/private/tmp/umf-generated-matrix-2P0XE2/request.json",
+        "--profile",
+        "/private/tmp/umf-generated-matrix-2P0XE2/profile.json",
+        "--output",
+        "/private/tmp/umf-generated-matrix-2P0XE2/generated"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "label": "installed-generated-matrix",
+      "argv": [
+        "/private/tmp/sdk-r5b-314-env/bin/python",
+        "-I",
+        "-B",
+        "/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/python/umf_access/tests/generated_matrix_probe.py",
+        "/private/tmp/umf-generated-matrix-2P0XE2/generated",
+        "/private/tmp/sdk-completion-runtime-r5b-wheels/umf_access-0.1.0.dev0-py3-none-any.whl",
+        "/private/tmp/umf-generated-matrix-2P0XE2/vectors.json"
+      ],
+      "exit": 0,
+      "stdout": "{\"vectors\": [{\"id\": \"decimal-short\", \"expected\": true, \"modelCodecAgreement\": true, \"carrierAdaptation\": \"literal converted without repair\"}, {\"id\": \"decimal-scale1\", \"expected\": true, \"modelCodecAgreement\": true, \"carrierAdaptation\": \"literal converted without repair\"}, {\"id\": \"decimal-scale2\", \"expected\": true, \"modelCodecAgreement\": true, \"carrierAdaptation\": \"literal converted without repair\"}, {\"id\": \"decimal-scale3zero\", \"expected\": true, \"modelCodecAgreement\": true, \"carrierAdaptation\": \"literal converted without repair\"}, {\"id\": \"decimal-zero\", \"expected\": true, \"modelCodecAgreement\": true, \"carrierAdaptation\": \"literal converted without repair\"}, {\"id\": \"decimal-negative-zero\", \"expected\": true, \"modelCodecAgreement\": true, \"carrierAdaptation\": \"literal converted without repair\"}, {\"id\": \"decimal-exponent\", \"expected\": true, \"modelCodecAgreement\": true, \"carrierAdaptation\": \"literal converted without repair\"}, {\"id\": \"decimal-max\", \"expected\": true, \"modelCodecAgreement\": true, \"carrierAdaptation\": \"literal converted without repair\"}, {\"id\": \"decimal-overflow\", \"expected\": false, \"modelCodecAgreement\": true, \"carrierAdaptation\": \"literal converted without repair\"}, {\"id\": \"decimal-rounding\", \"expected\": false, \"modelCodecAgreement\": true, \"carrierAdaptation\": \"literal converted without repair\"}, {\"id\": \"decimal-tiny\", \"expected\": false, \"modelCodecAgreement\": true, \"carrierAdaptation\": \"literal converted without repair\"}, {\"id\": \"decimal-nan\", \"expected\": false, \"modelCodecAgreement\": true, \"carrierAdaptation\": \"literal converted without repair\"}, {\"id\": \"int8--129\", \"expected\": false, \"modelCodecAgreement\": true, \"carrierAdaptation\": \"literal converted without repair\"}, {\"id\": \"int8--128\", \"expected\": true, \"modelCodecAgreement\": true, \"carrierAdaptation\": \"literal converted without repair\"}, {\"id\": \"int8--1\", \"expected\": true, \"modelCodecAgreement\": true, \"carrierAdaptation\": \"literal converted without repair\"}, {\"id\": \"int8-0\", \"expected\": true, \"modelCodecAgreement\": true, \"carrierAdaptation\": \"literal converted without repair\"}, {\"id\": \"int8-127\", \"expected\": true, \"modelCodecAgreement\": true, \"carrierAdaptation\": \"literal converted without repair\"}, {\"id\": \"int8-128\", \"expected\": false, \"modelCodecAgreement\": true, \"carrierAdaptation\": \"literal converted without repair\"}, {\"id\": \"uint8--1\", \"expected\": false, \"modelCodecAgreement\": true, \"carrierAdaptation\": \"literal converted without repair\"}, {\"id\": \"uint8-0\", \"expected\": true, \"modelCodecAgreement\": true, \"carrierAdaptation\": \"literal converted without repair\"}, {\"id\": \"uint8-255\", \"expected\": true, \"modelCodecAgreement\": true, \"carrierAdaptation\": \"literal converted without repair\"}, {\"id\": \"uint8-256\", \"expected\": false, \"modelCodecAgreement\": true, \"carrierAdaptation\": \"literal converted without repair\"}, {\"id\": \"unicode-empty\", \"expected\": false, \"modelCodecAgreement\": true, \"carrierAdaptation\": \"literal converted without repair\"}, {\"id\": \"unicode-astral\", \"expected\": true, \"modelCodecAgreement\": true, \"carrierAdaptation\": \"literal converted without repair\"}, {\"id\": \"unicode-combining\", \"expected\": true, \"modelCodecAgreement\": true, \"carrierAdaptation\": \"literal converted without repair\"}, {\"id\": \"unicode-long\", \"expected\": false, \"modelCodecAgreement\": true, \"carrierAdaptation\": \"literal converted without repair\"}, {\"id\": \"unicode-surrogate\", \"expected\": false, \"modelCodecAgreement\": true, \"carrierAdaptation\": \"literal converted without repair\"}, {\"id\": \"allowed-yes\", \"expected\": true, \"modelCodecAgreement\": true, \"carrierAdaptation\": \"literal converted without repair\"}, {\"id\": \"allowed-no\", \"expected\": false, \"modelCodecAgreement\": true, \"carrierAdaptation\": \"literal converted without repair\"}, {\"id\": \"range-0\", \"expected\": false, \"modelCodecAgreement\": true, \"carrierAdaptation\": \"literal converted without repair\"}, {\"id\": \"range-1\", \"expected\": true, \"modelCodecAgreement\": true, \"carrierAdaptation\": \"literal converted without repair\"}, {\"id\": \"range-2\", \"expected\": true, \"modelCodecAgreement\": true, \"carrierAdaptation\": \"literal converted without repair\"}, {\"id\": \"range-3\", \"expected\": false, \"modelCodecAgreement\": true, \"carrierAdaptation\": \"literal converted without repair\"}, {\"id\": \"binary-upper\", \"expected\": true, \"modelCodecAgreement\": true, \"carrierAdaptation\": \"literal converted without repair\"}, {\"id\": \"binary-empty\", \"expected\": false, \"modelCodecAgreement\": true, \"carrierAdaptation\": \"literal converted without repair\"}, {\"id\": \"binary-odd\", \"expected\": false, \"modelCodecAgreement\": true, \"carrierAdaptation\": \"malformed binaryHex has no bytes carrier; original token tested as rejected string carrier\"}, {\"id\": \"binary-long\", \"expected\": false, \"modelCodecAgreement\": true, \"carrierAdaptation\": \"literal converted without repair\"}, {\"id\": \"bool-true\", \"expected\": true, \"modelCodecAgreement\": true, \"carrierAdaptation\": \"literal converted without repair\"}, {\"id\": \"bool-integer\", \"expected\": false, \"modelCodecAgreement\": true, \"carrierAdaptation\": \"literal converted without repair\"}, {\"id\": \"int64--9223372036854775809\", \"expected\": false, \"modelCodecAgreement\": true, \"carrierAdaptation\": \"literal converted without repair\"}, {\"id\": \"int64--9223372036854775808\", \"expected\": true, \"modelCodecAgreement\": true, \"carrierAdaptation\": \"literal converted without repair\"}, {\"id\": \"int64-9223372036854775807\", \"expected\": true, \"modelCodecAgreement\": true, \"carrierAdaptation\": \"literal converted without repair\"}, {\"id\": \"int64-9223372036854775808\", \"expected\": false, \"modelCodecAgreement\": true, \"carrierAdaptation\": \"literal converted without repair\"}, {\"id\": \"decimal-extra-1e1000000000\", \"expected\": false, \"modelCodecAgreement\": true, \"carrierAdaptation\": \"literal converted without repair\"}, {\"id\": \"decimal-extra-0e1000000000\", \"expected\": true, \"modelCodecAgreement\": true, \"carrierAdaptation\": \"literal converted without repair\"}, {\"id\": \"decimal-extra-1e-1000000000\", \"expected\": false, \"modelCodecAgreement\": true, \"carrierAdaptation\": \"literal converted without repair\"}, {\"id\": \"decimal-extra-0e-1000000000\", \"expected\": true, \"modelCodecAgreement\": true, \"carrierAdaptation\": \"literal converted without repair\"}, {\"id\": \"decimal-extra--9999999999.99\", \"expected\": true, \"modelCodecAgreement\": true, \"carrierAdaptation\": \"literal converted without repair\"}, {\"id\": \"decimal-extra-1.2300\", \"expected\": true, \"modelCodecAgreement\": true, \"carrierAdaptation\": \"literal converted without repair\"}, {\"id\": \"null-required\", \"expected\": false, \"modelCodecAgreement\": true, \"carrierAdaptation\": \"literal converted without repair\"}, {\"id\": \"null-absent-allowed\", \"expected\": true, \"modelCodecAgreement\": true, \"carrierAdaptation\": \"literal converted without repair\"}, {\"id\": \"array-empty\", \"expected\": false, \"modelCodecAgreement\": true, \"carrierAdaptation\": \"literal converted without repair\"}, {\"id\": \"array-one\", \"expected\": true, \"modelCodecAgreement\": true, \"carrierAdaptation\": \"literal converted without repair\"}, {\"id\": \"array-two\", \"expected\": true, \"modelCodecAgreement\": true, \"carrierAdaptation\": \"literal converted without repair\"}, {\"id\": \"array-long\", \"expected\": false, \"modelCodecAgreement\": true, \"carrierAdaptation\": \"literal converted without repair\"}, {\"id\": \"array-overflow\", \"expected\": false, \"modelCodecAgreement\": true, \"carrierAdaptation\": \"literal converted without repair\"}, {\"id\": \"array-null\", \"expected\": false, \"modelCodecAgreement\": true, \"carrierAdaptation\": \"literal converted without repair\"}, {\"id\": \"array-wrong\", \"expected\": false, \"modelCodecAgreement\": true, \"carrierAdaptation\": \"literal converted without repair\"}, {\"id\": \"map-empty\", \"expected\": false, \"modelCodecAgreement\": true, \"carrierAdaptation\": \"literal converted without repair\"}, {\"id\": \"map-one\", \"expected\": true, \"modelCodecAgreement\": true, \"carrierAdaptation\": \"literal converted without repair\"}, {\"id\": \"map-two\", \"expected\": true, \"modelCodecAgreement\": true, \"carrierAdaptation\": \"literal converted without repair\"}, {\"id\": \"map-long\", \"expected\": false, \"modelCodecAgreement\": true, \"carrierAdaptation\": \"literal converted without repair\"}, {\"id\": \"map-overflow\", \"expected\": false, \"modelCodecAgreement\": true, \"carrierAdaptation\": \"literal converted without repair\"}, {\"id\": \"map-null\", \"expected\": false, \"modelCodecAgreement\": true, \"carrierAdaptation\": \"literal converted without repair\"}, {\"id\": \"map-wrong\", \"expected\": false, \"modelCodecAgreement\": true, \"carrierAdaptation\": \"literal converted without repair\"}, {\"id\": \"nested-valid\", \"expected\": true, \"modelCodecAgreement\": true, \"carrierAdaptation\": \"literal converted without repair\"}, {\"id\": \"nested-inner-empty\", \"expected\": false, \"modelCodecAgreement\": true, \"carrierAdaptation\": \"literal converted without repair\"}, {\"id\": \"nested-deep-overflow\", \"expected\": false, \"modelCodecAgreement\": true, \"carrierAdaptation\": \"literal converted without repair\"}, {\"id\": \"nested-wrong-shape\", \"expected\": false, \"modelCodecAgreement\": true, \"carrierAdaptation\": \"literal converted without repair\"}], \"presenceControls\": [\"nullable-array-item\", \"nullable-map-value\", \"missing-array-refusal\", \"missing-map-refusal\", \"absent-map-key\", \"authored-default-not-executed\", \"nested-mutation-revalidated\"], \"installedPayloadCount\": 33, \"wheelSha256\": \"9427c729c3e5ffe68f08e4c6e94cbdc0d478680a408ff769294f2eb61ad52adb\", \"python\": \"3.14.8\", \"runtime\": \"/private/tmp/sdk-r5b-314-env/lib/python3.14/site-packages/umf_access/__init__.py\"}\n",
+      "stderr": ""
+    },
+    {
+      "label": "real-cli-check-after",
+      "argv": [
+        "/private/tmp/sdk-bun142-recovered/bun",
+        "/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/scripts/umf-access-generate.ts",
+        "check",
+        "--request",
+        "/private/tmp/umf-generated-matrix-2P0XE2/request.json",
+        "--profile",
+        "/private/tmp/umf-generated-matrix-2P0XE2/profile.json",
+        "--output",
+        "/private/tmp/umf-generated-matrix-2P0XE2/generated"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ]
+}

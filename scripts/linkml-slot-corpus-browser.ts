@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
 const cases=[];for(const c of (await Bun.file('fixtures/linkml/slot-corpus/oracle-results.json').json()).cases)cases.push({...c,raw:await Bun.file(c.path).text()});
 const built=await Bun.build({entrypoints:['src/index.ts','src/model/native-json.ts'],outdir:'.cache/linkml-slot-corpus-browser',naming:'[name].js',target:'browser',format:'esm'});if(!built.success)throw Error(built.logs.join('\n'));

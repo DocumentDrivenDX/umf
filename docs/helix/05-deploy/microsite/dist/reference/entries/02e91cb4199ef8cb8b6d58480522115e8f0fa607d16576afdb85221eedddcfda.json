@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 5089,
+        "line": 19,
+        "path": "src/model/record-type.ts",
+        "sha256": "8ac51b25f81eebbd78168922671f1633c439c7f62100922ba01a18f396c0f61e"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "declareCoreRecordType",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(fieldInput: CoreKindDeclaration, recordInput: CoreKindDeclaration): CoreRecordTypeDeclaration"
+    ]
+  },
+  "id": "[\"api\",\".\",\"declareCoreRecordType\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 5089,
+      "line": 19,
+      "path": "src/model/record-type.ts",
+      "sha256": "8ac51b25f81eebbd78168922671f1633c439c7f62100922ba01a18f396c0f61e"
+    }
+  ],
+  "summary": "Explicit type relationship. Generic role strings are never treated as author receipts.",
+  "title": "declareCoreRecordType"
+}

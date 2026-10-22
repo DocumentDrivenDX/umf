@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {probeRdfXml,type Profile} from '../native/rdfxml/probe';
 const manifest=await Bun.file('native/rdfxml/sources/sources.json').json(),results=[];
 for(const f of manifest.files)if(new Bun.CryptoHasher('sha256').update(await Bun.file(f.path).arrayBuffer()).digest('hex')!==f.sha256)throw Error('Source digest differs: '+f.path);

@@ -1,0 +1,25 @@
+{
+  "scope": "rootless browser-local sample data only",
+  "products": [
+    {
+      "id": "bar",
+      "name": "Sample"
+    },
+    {
+      "id": "baz",
+      "name": "Sample"
+    },
+    {
+      "id": "qux",
+      "name": "Sample"
+    },
+    {
+      "id": "spare",
+      "name": "Untouched"
+    }
+  ],
+  "statements": [
+    "UPDATE products SET name = 'Foo' WHERE id = 'bar'",
+    "UPDATE products SET name = 'Bulk' WHERE name = 'Sample'"
+  ]
+}

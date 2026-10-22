@@ -1,0 +1,20 @@
+{
+  "base": "6a2929d52d23b4587c9913aa87b3a265cf43ed1e",
+  "approved_original_freeze_sha256": "488be43a47ef48dbc8c4d96da003bfaaef89a3f13045a9ac37520cdeb1bd9294",
+  "scope": "Exact approved evolution implementation integrated on latest official main; src/index preserves upstream public-company export; schema audit regenerated 367/367. No source/model semantic evaluator changes between approved base and latest. Original candidate evidence retained unchanged.",
+  "checks": {
+    "combined_tests": 36,
+    "assertions": 653,
+    "typechecks": "both pass",
+    "schema_audit": "367/367",
+    "real_browser_cases": 6,
+    "resource_refusals": 2
+  },
+  "commands": [
+    "bun test tests/core-evolution.test.ts tests/core-dataset-compact.test.ts",
+    "bun run typecheck",
+    "bun scripts/audit-json-schemas.ts",
+    "bun scripts/core-evolution-browser.ts <fresh-output>"
+  ],
+  "claims": "Bounded source-preservation only; no native migration or catalog authority."
+}

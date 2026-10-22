@@ -1,11 +1,12 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {parquetFieldPaths} from '../../scripts/core-ideals/parquet-field-cases';
-import {classifyParquetRecord,recoverParquetRecordBytes} from '../../src/core-ideals/parquet-record';
-import {importParquetSchema,getParquetFieldMetadata} from '../../src/adapters/parquet/field-metadata';
-import {upgradeFieldEnvelope} from '../../src/model/field-transition';
+import {classifyParquetRecord, recoverParquetRecordBytes} from '../../src/core-ideals/parquet-record';
+import {importParquetSchema, getParquetFieldMetadata} from '../../src/adapters/parquet/field-metadata';
+
 import {declareCoreElementKind} from '../../src/model/field-kind';
-import {copyJson} from '../../src/model/json';import {readJsonValue,writeJsonValue} from '../../src/model/serialization';
-async function load(path:string){const bytes=new Uint8Array(await Bun.file(path).arrayBuffer());return {bytes,source:upgradeFieldEnvelope(importParquetSchema(bytes,{id:path})).target};}
+import {copyJson} from '../../src/model/json';import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
+async function load(path:string){const bytes=new Uint8Array(await Bun.file(path).arrayBuffer());return {bytes,source:importParquetSchema(bytes,{id:path})};}
 test('Parquet root records keep ordered value slots separate from container and struct definitions',async()=>{
  for(const path of parquetFieldPaths){const {bytes,source}=await load(path),result=classifyParquetRecord(source,{index:0,recordModule:'records',recordId:'root',mode:'strict'});expect(result.status).toBe('classified');const record=result.target!.modules.at(-1)!.elements[0]!;expect(record.kind).toBe('record');expect(record.references!.length).toBe(result.mappings.length-1);
  for(const reference of record.references!){const e=result.target!.modules.find(m=>m.id===reference.module)!.elements.find(e=>e.id===reference.element)!;expect(e.kind).toBe('field');expect(e.cardinality).toBeUndefined();}

@@ -1,0 +1,30 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"editGraphqlAst\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "edit",
+      "optional": false,
+      "type": "(ast: DocumentNode) => DocumentNode"
+    }
+  ],
+  "purpose": "editGraphqlAst accepts document, edit and returns Document.",
+  "related": [],
+  "returns": "Document",
+  "task": "Author and edit",
+  "type": "(document: Document, edit: (ast: DocumentNode) => DocumentNode) => Document"
+}

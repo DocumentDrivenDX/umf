@@ -1,0 +1,46 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"PostgresqlDdlColumn\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "path",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Element\"]"
+      ],
+      "name": "element",
+      "optional": false,
+      "type": "Element"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "typeResolution",
+      "optional": false,
+      "type": "\"unresolved\" | \"builtin-syntax\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"NativeJson\"]"
+      ],
+      "name": "nativeColumn",
+      "optional": false,
+      "type": "NativeJson"
+    }
+  ],
+  "parameters": [],
+  "purpose": "PostgresqlDdlColumn is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "PostgresqlDdlColumn"
+}

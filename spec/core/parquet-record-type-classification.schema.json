@@ -29,10 +29,10 @@
       ]
     },
     "source": {
-      "$ref": "urn:umf:core:0.2.0"
+      "$ref": "urn:umf:core:0.10.0"
     },
     "target": {
-      "$ref": "urn:umf:core:0.2.0"
+      "$ref": "urn:umf:core:0.10.0"
     },
     "request": {
       "type": "object",
@@ -61,7 +61,7 @@
         "authors": {
           "type": "array",
           "items": {
-            "$ref": "urn:umf:core:kind-operation:1.0.0#/$defs/declaration"
+            "$ref": "urn:umf:core:kind-operation:6.0.0#/$defs/declaration"
           }
         },
         "index": {
@@ -69,7 +69,7 @@
           "minimum": 1
         },
         "fieldAuthor": {
-          "$ref": "urn:umf:core:kind-operation:1.0.0#/$defs/declaration"
+          "$ref": "urn:umf:core:kind-operation:6.0.0#/$defs/declaration"
         }
       }
     },

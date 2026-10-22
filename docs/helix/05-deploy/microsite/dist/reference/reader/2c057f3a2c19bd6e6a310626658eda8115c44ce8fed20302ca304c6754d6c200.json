@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"verifyDddGraphqlProjection\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"DddGraphqlProjection\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "DddGraphqlProjection"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "currentTarget",
+      "optional": true,
+      "type": "Document | undefined"
+    }
+  ],
+  "purpose": "Verify the complete retained report by recomputation, including unknown content.",
+  "related": [],
+  "returns": "DddGraphqlProjection",
+  "task": "Other APIs",
+  "type": "(input: DddGraphqlProjection, currentTarget?: Document) => DddGraphqlProjection"
+}

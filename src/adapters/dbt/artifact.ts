@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
+import {CURRENT_CORE_VERSION} from '../../generated/core-model';
 import manifest from '../../../spec/extensions/dbt-artifact/package.json';
 import runResultsGrammar from '../../../spec/extensions/dbt-artifact/run-results-v6-schema.json';
 import freshnessGrammar from '../../../spec/extensions/dbt-artifact/sources-v3-schema.json';
@@ -32,7 +34,7 @@ function payload(document:Document):Payload{
  const checked=inspectDbtArtifact(document);if(!checked.valid)throw new UmfError('DBT_ARTIFACT_DOCUMENT',JSON.stringify(checked.diagnostics));
  const value=document.modules.find(m=>m.id==='artifact')?.elements.find(e=>e.id==='artifact')?.extensions[DBT_ARTIFACT_EXTENSION];if(!value||document.vocabularies[DBT_ARTIFACT_EXTENSION]?.version!=='0.1.0')throw new UmfError('DBT_ARTIFACT_PAYLOAD','Expected pinned dbt artifact payload');return copyJson(value) as unknown as Payload;
 }
-export function importDbtArtifact(text:string,options:{id:string}):Document{const d:Document={umf:'0.1.0',id:options.id,vocabularies:{[DBT_ARTIFACT_EXTENSION]:{version:'0.1.0'}},modules:[{id:'artifact',namespace:'',elements:[{id:'artifact',extensions:{[DBT_ARTIFACT_EXTENSION]:{profile:'dbt-artifact-json',root:parseNativeJson(text)} as unknown as Json}}]}]};payload(d);return d;}
+export function importDbtArtifact(text:string,options:{id:string}):Document{const d:Document={umf:CURRENT_CORE_VERSION,id:options.id,vocabularies:{[DBT_ARTIFACT_EXTENSION]:{version:'0.1.0'}},modules:[{id:'artifact',namespace:'',elements:[{id:'artifact',extensions:{[DBT_ARTIFACT_EXTENSION]:{profile:'dbt-artifact-json',root:parseNativeJson(text)} as unknown as Json}}]}]};payload(d);return d;}
 export function exportDbtArtifact(document:Document){const p=payload(document);if(inspectDbtArtifact(document).diagnostics.some(d=>d.code==='DBT_ARTIFACT_REPRESENTATION'))throw new UmfError('DBT_ARTIFACT_EXPORT','Unknown representation fields cannot be discarded');return renderTree(p.root);}
 export function getDbtArtifactNode(document:Document,path:string){let n=payload(document).root;for(const key of nativePointer(path))n=treeChild(n,key);return copyJson(n) as unknown as NativeJson;}
 export function proposeDbtArtifactNodeEdit(document:Document,path:string,text:string){const p=payload(document),parts=nativePointer(path),replacement=parseNativeJson(text);if(!parts.length)p.root=replacement;else{let n=p.root;for(const key of parts.slice(0,-1))n=treeChild(n,key);const key=parts.at(-1)!;treeChild(n,key);if(n.kind==='object')n.members[key]=replacement;else if(n.kind==='array')n.items[Number(key)]=replacement;else throw new UmfError('DBT_ARTIFACT_EDIT','Expected existing node');}const next=copyJson(document) as unknown as Document;next.modules.find(m=>m.id==='artifact')!.elements.find(e=>e.id==='artifact')!.extensions[DBT_ARTIFACT_EXTENSION]=p as unknown as Json;payload(next);return {document:next,validation:inspectDbtArtifact(next)};}

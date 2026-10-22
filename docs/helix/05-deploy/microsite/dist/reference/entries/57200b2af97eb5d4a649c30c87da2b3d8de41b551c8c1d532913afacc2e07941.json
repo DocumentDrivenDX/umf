@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 4495,
+        "line": 16,
+        "path": "src/extensions/actions/types.ts",
+        "sha256": "4cd5eb6a0bab3a17bb6834efcf7724d5c981e67cc252e3ba8965aadd4ad67c68"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "ActionEffect",
+    "runtime": "type-only",
+    "signatureText": [
+      "export type ActionEffect = ({id:string;kind:'create';record:ActionReference;key:string;values:ActionAssignment[]}|{id:string;kind:'set';entity:ActionEntityBinding;values:ActionAssignment[]}|{id:string;kind:'delete';entity:ActionEntityBinding}|{id:string;kind:'link'|'unlink';relationship:ActionRelationshipReference;source:ActionEntityBinding;target:ActionEntityBinding;association?:ActionEntityBinding}|{id:string;kind:string}) & {[key:string]:unknown};"
+    ]
+  },
+  "id": "[\"api\",\".\",\"ActionEffect\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 4495,
+      "line": 16,
+      "path": "src/extensions/actions/types.ts",
+      "sha256": "4cd5eb6a0bab3a17bb6834efcf7724d5c981e67cc252e3ba8965aadd4ad67c68"
+    }
+  ],
+  "summary": "Type declaration · src/extensions/actions/types.ts",
+  "title": "ActionEffect"
+}

@@ -1,0 +1,20 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
+import {CURRENT_CORE_VERSION} from '../../generated/core-model';
+/** Public data boundary shared by admission, bundle and Python target. */
+export interface Ref {module:string;element:string}
+export interface AccessDiagnostic {code:string;sourceId:string;pointer:string;message:string;accessCode?:string}
+export interface Disposition {id:string;sourceId:string;pointer:string;assertion:string;relevance:'selected'|'dependency'|'unselected';fidelity:'exact'|'approximated'|'not-expressible'|'unknown';checks:('client'|'database'|'engine'|'informational')[];reason:string;obligationIds:string[]}
+export interface Obligation {id:string;owner:'host'|'database'|'engine'|'catalog'|'qualifier';description:string;dispositionIds:string[]}
+export interface AccessSource {id:string;format:'json'|'yaml';text:string}
+export interface AccessRequest {contract:'umf-access-generate/0.1';sources:AccessSource[];logical:string;bindings:string[];records:Ref[];actions:{module:string;action:string}[];projections:{name:string;record:Ref;fields:Ref[]}[];package:string;names:{sourceId:string;pointer:string;python:string}[];mode:'strict'|'report';profileId:string;profileVersion:string;coreVersion:typeof CURRENT_CORE_VERSION}
+export interface AccessProfile {id:string;version:string;compilerVersion:string;coreVersions:string[];vocabularies:{id:string;version:string}[];python:{version:string};dependencies:{distribution:string;version:string}[];checkers:{name:string;version:string;configuration:Record<string,unknown>}[];reservedNames:string[];importedNames:string[];assertionKinds:string[];subset:string;codeSha256:string}
+export interface GeneratedFile {path:string;text:string;sha256:string}
+export interface AccessSymbol {sourceId:string;pointer:string;path:string;symbol:string;role:'row'|'create'|'patch'|'update'|'key'|'projection'|'fields'|'search'|'action-ref'|'action-input'|'action-output'|'action-failure'|'action-client'|'action-committed'|'codec'}
+export interface AccessResult {contract:'umf-access-generate/0.1';abi:'umf-python-types/0.1';runtimeAbi:{distribution:string;version:string;abi:'umf-access-runtime/0.1'};outcome:'candidate'|'refused';inputDigest:string;files:GeneratedFile[];symbols:AccessSymbol[];dispositions:Disposition[];diagnostics:AccessDiagnostic[];obligations:Obligation[]}
+export interface ResolvedField {ref:Ref;pointer:string;python:string;owned?:boolean;viewPointer?:string;logicalName?:string|null;scalarType:string|null;cardinality:string;row:{missing:boolean;null:boolean};create:{missing:boolean;null:boolean};mutable:boolean;generated:boolean;temporal?:'instant'|'local';facets:Record<string,unknown>;properties:Record<string,unknown>;item?:Ref;vectorDimensions?:number;vectorComponent?:boolean}
+export interface ResolvedRecord {ref:Ref;pointer:string;python:string;namespace?:string;logicalName?:string|null;fields:ResolvedField[];keys:{id:string;fields:Ref[]}[];inverseKey?:string;selected:boolean}
+export interface ResolvedRelation {owner:Ref;target:Ref;key:string;python:string;pointer:string;module:string;id:string;logicalName?:string|null;toOne?:boolean;optional?:boolean}
+export interface ResolvedActionParameter {id:string;python:string;required:boolean;pointer:string;field?:ResolvedField;entity?:Ref;entityKey?:string}
+export interface ResolvedAction {module:string;id:string;python:string;pointer:string;parameters:ResolvedActionParameter[];outputs:ResolvedActionParameter[];failures:{code:string;retryable:boolean}[];kind:'handler'|'recipe';createdKeys:(Ref&{key:string})[];changedKeys:(Ref&{key:string})[]}
+export interface ResolvedSearch {record:Ref;id:string;python:string;pointer:string;declaration:Record<string,unknown>;bindings:Record<string,unknown>[]}
+export interface ResolvedAccess {documentId:string;sourceId:string;records:ResolvedRecord[];relations?:ResolvedRelation[];actions?:ResolvedAction[];extraFields?:ResolvedField[];search?:ResolvedSearch[]}

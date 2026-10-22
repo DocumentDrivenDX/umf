@@ -1,0 +1,12 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
+import {CURRENT_CORE_VERSION} from '../../src/generated/core-model';
+import currentModel from './fixtures/current-products-model.json';
+import original from './original-products-action-packet.json';
+export function currentProductsSourceFixture(){
+ const model:any=structuredClone(currentModel),revision='current-authored-products/1',ref=(elementId:string)=>({documentId:model.id,moduleId:'sales',elementId});
+ const subjectDocument={umf:CURRENT_CORE_VERSION,id:'bulk-subject-domain',vocabularies:{},modules:[{id:'identity',namespace:'identity',elements:[{id:'principal-id',kind:'field',scalarType:'string',cardinality:'one',nullability:'required',extensions:{}},{id:'person',kind:'record',members:[{module:'identity',element:'principal-id'}],keys:[{id:'pk',name:'primary',primary:true,fields:[{module:'identity',element:'principal-id'}]}],extensions:{}}]}]};
+ const subject={documentId:subjectDocument.id,moduleId:'identity',elementId:'person'},pins=[{documentId:model.id,revision},{documentId:subjectDocument.id,revision:'subject-domain-1'}];
+ const ontology={version:'0.2.0',documentId:'bulk-demo-ontology',revision:'ontology-1',documents:pins,subject,entities:[{type:subject,keyId:'pk',fields:[{ref:{...subject,elementId:'principal-id'},protection:'unprotected'}]},{type:ref('products'),keyId:'pk',fields:['product-id','product-name'].map(id=>({ref:ref(id),protection:'unprotected'}))}],associations:[],context:[],actions:['bulk-prepare-read','bulk-name-write'],actionPurposes:[{action:'bulk-prepare-read',purposes:['read']},{action:'bulk-name-write',purposes:['field']}]};
+ const policy={vocabulary:'umf.security',version:'0.2.0',id:'bulk-products-policy',revision:'policy-1',ontology:{documentId:ontology.documentId,revision:ontology.revision},rules:[{id:'products-original-read',effect:'permit',actions:['bulk-prepare-read'],target:[ref('products')],condition:{op:'literal',value:true},disclosure:['product-id','product-name'].map(id=>({field:ref(id),disposition:{kind:'original'}}))},{id:'products-name-write',effect:'permit',actions:['bulk-name-write'],target:[ref('products')],condition:{op:'literal',value:true}}]};
+ return {original,model,ontology,policy,closure:{pins,documents:[{revision,document:model},{revision:'subject-domain-1',document:subjectDocument}]}};
+}

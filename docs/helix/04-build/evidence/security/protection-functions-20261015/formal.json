@@ -1,0 +1,150 @@
+{
+  "status": "conditional-proof-passed",
+  "solverVersion": "4.15.4",
+  "checks": [
+    {
+      "id": "bucket-lower-bound",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun width () Int)\n(declare-fun input () Int)\n(declare-fun origin () Int)\n(assert\n (> width 0))\n(assert\n (let ((?x15 (ite (>= (- input origin) 0) (div (- input origin) width) (- (div (- (- input origin)) width)))))\n(let (($x19 (and (< (- input origin) 0) (and (distinct (mod (- (- input origin)) width) 0) true))))\n(let ((?x22 (ite $x19 (- ?x15 1) ?x15)))\n(let ((?x24 (+ origin (* ?x22 width))))\n(> ?x24 input))))))\n(check-sat)\n",
+      "witness": null
+    },
+    {
+      "id": "bucket-upper-exclusive",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun width () Int)\n(declare-fun origin () Int)\n(declare-fun input () Int)\n(assert\n (> width 0))\n(assert\n (let ((?x15 (ite (>= (- input origin) 0) (div (- input origin) width) (- (div (- (- input origin)) width)))))\n(let (($x19 (and (< (- input origin) 0) (and (distinct (mod (- (- input origin)) width) 0) true))))\n(let ((?x22 (ite $x19 (- ?x15 1) ?x15)))\n(let ((?x24 (+ origin (* ?x22 width))))\n(>= input (+ ?x24 width)))))))\n(check-sat)\n",
+      "witness": null
+    },
+    {
+      "id": "bucket-idempotence",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun width () Int)\n(declare-fun origin () Int)\n(declare-fun input () Int)\n(assert\n (> width 0))\n(assert\n (let ((?x15 (ite (>= (- input origin) 0) (div (- input origin) width) (- (div (- (- input origin)) width)))))\n(let (($x19 (and (< (- input origin) 0) (and (distinct (mod (- (- input origin)) width) 0) true))))\n(let ((?x22 (ite $x19 (- ?x15 1) ?x15)))\n(let ((?x24 (+ origin (* ?x22 width))))\n(and (distinct (+ origin (* (div (- ?x24 origin) width) width)) ?x24) true))))))\n(check-sat)\n",
+      "witness": null
+    },
+    {
+      "id": "omit-negative-floor-control",
+      "expected": "sat",
+      "observed": "sat",
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun width () Int)\n(declare-fun origin () Int)\n(declare-fun input () Int)\n(assert\n (> width 0))\n(assert\n (let ((?x8 (- input origin)))\n (< ?x8 0)))\n(assert\n (let ((?x15 (ite (>= (- input origin) 0) (div (- input origin) width) (- (div (- (- input origin)) width)))))\n(> (+ origin (* ?x15 width)) input)))\n(check-sat)\n",
+      "witness": "[width = 2,\n input = -1,\n origin = 0,\n div0 = [else -> 0],\n mod0 = [else -> 0]]"
+    },
+    {
+      "id": "partial-nonnegative-middle",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun length () Int)\n(declare-fun prefix () Int)\n(declare-fun suffix () Int)\n(assert\n (>= length 0))\n(assert\n (>= prefix 0))\n(assert\n (>= suffix 0))\n(assert\n (<= prefix 4096))\n(assert\n (<= suffix 4096))\n(assert\n (let ((?x114 (ite (< prefix length) prefix length)))\n(let ((?x110 (- length ?x114)))\n(let ((?x50 (ite (< suffix ?x110) suffix ?x110)))\n(let ((?x87 (- ?x110 ?x50)))\n(< ?x87 0))))))\n(check-sat)\n",
+      "witness": null
+    },
+    {
+      "id": "partial-total-length",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun length () Int)\n(declare-fun prefix () Int)\n(declare-fun suffix () Int)\n(assert\n (>= length 0))\n(assert\n (>= prefix 0))\n(assert\n (>= suffix 0))\n(assert\n (<= prefix 4096))\n(assert\n (<= suffix 4096))\n(assert\n (let ((?x114 (ite (< prefix length) prefix length)))\n(let ((?x110 (- length ?x114)))\n(let ((?x50 (ite (< suffix ?x110) suffix ?x110)))\n(and (distinct (+ (+ ?x114 (- ?x110 ?x50)) ?x50) length) true)))))\n(check-sat)\n",
+      "witness": null
+    },
+    {
+      "id": "partial-short-full-exposure",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun length () Int)\n(declare-fun prefix () Int)\n(declare-fun suffix () Int)\n(assert\n (>= length 0))\n(assert\n (>= prefix 0))\n(assert\n (>= suffix 0))\n(assert\n (<= prefix 4096))\n(assert\n (<= suffix 4096))\n(assert\n (<= length (+ prefix suffix)))\n(assert\n (let ((?x114 (ite (< prefix length) prefix length)))\n(let ((?x110 (- length ?x114)))\n(let ((?x50 (ite (< suffix ?x110) suffix ?x110)))\n(let ((?x87 (- ?x110 ?x50)))\n(and (distinct ?x87 0) true))))))\n(check-sat)\n",
+      "witness": null
+    },
+    {
+      "id": "overlapping-suffix-control",
+      "expected": "sat",
+      "observed": "sat",
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun length () Int)\n(declare-fun prefix () Int)\n(declare-fun suffix () Int)\n(assert\n (>= length 0))\n(assert\n (>= prefix 0))\n(assert\n (>= suffix 0))\n(assert\n (<= prefix 4096))\n(assert\n (<= suffix 4096))\n(assert\n (let ((?x114 (ite (< prefix length) prefix length)))\n(let ((?x110 (- length ?x114)))\n(< (- ?x110 (ite (< suffix length) suffix length)) 0))))\n(check-sat)\n",
+      "witness": "[prefix = 1, length = 1, suffix = 1]"
+    },
+    {
+      "id": "year-valid-output",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun year () Int)\n(declare-fun month () Int)\n(declare-fun day () Int)\n(assert\n (>= year 1))\n(assert\n (<= year 9999))\n(assert\n (>= month 1))\n(assert\n (<= month 12))\n(assert\n (>= day 1))\n(assert\n (let (($x51 (or (= month 4) (= month 6) (= month 9) (= month 11))))\n (let ((?x48 (ite $x51 30 31)))\n (let (($x75 (= (mod year 4) 0)))\n (let (($x88 (and $x75 (or (and (distinct (mod year 100) 0) true) (= (mod year 400) 0)))))\n (let ((?x61 (ite $x88 29 28)))\n (let (($x117 (= month 2)))\n (<= day (ite $x117 ?x61 ?x48)))))))))\n(assert\n (let (($x168 (or (= 1 4) (= 1 6) (= 1 9) (= 1 11))))\n(let ((?x53 (ite $x168 30 31)))\n(let (($x75 (= (mod year 4) 0)))\n(let (($x88 (and $x75 (or (and (distinct (mod year 100) 0) true) (= (mod year 400) 0)))))\n(let ((?x61 (ite $x88 29 28)))\n(let (($x32 (< 1 1)))\n(or $x32 (> 1 12) $x32 (> 1 (ite (= 1 2) ?x61 ?x53))))))))))\n(check-sat)\n",
+      "witness": null
+    },
+    {
+      "id": "year-nonadvancing",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun year () Int)\n(declare-fun month () Int)\n(declare-fun day () Int)\n(assert\n (>= year 1))\n(assert\n (<= year 9999))\n(assert\n (>= month 1))\n(assert\n (<= month 12))\n(assert\n (>= day 1))\n(assert\n (let (($x51 (or (= month 4) (= month 6) (= month 9) (= month 11))))\n (let ((?x48 (ite $x51 30 31)))\n (let (($x75 (= (mod year 4) 0)))\n (let (($x88 (and $x75 (or (and (distinct (mod year 100) 0) true) (= (mod year 400) 0)))))\n (let (($x117 (= month 2)))\n (<= day (ite $x117 (ite $x88 29 28) ?x48))))))))\n(assert\n (or (> 1 month) (and (= 1 month) (> 1 day))))\n(check-sat)\n",
+      "witness": null
+    },
+    {
+      "id": "quarter-valid-output",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun year () Int)\n(declare-fun month () Int)\n(declare-fun day () Int)\n(assert\n (>= year 1))\n(assert\n (<= year 9999))\n(assert\n (>= month 1))\n(assert\n (<= month 12))\n(assert\n (>= day 1))\n(assert\n (let (($x51 (or (= month 4) (= month 6) (= month 9) (= month 11))))\n (let ((?x48 (ite $x51 30 31)))\n (let (($x75 (= (mod year 4) 0)))\n (let (($x88 (and $x75 (or (and (distinct (mod year 100) 0) true) (= (mod year 400) 0)))))\n (let ((?x61 (ite $x88 29 28)))\n (let (($x117 (= month 2)))\n (<= day (ite $x117 ?x61 ?x48)))))))))\n(assert\n (let (($x103 (or (= (+ 1 (* 3 (div (- month 1) 3))) 4) (= (+ 1 (* 3 (div (- month 1) 3))) 6) (= (+ 1 (* 3 (div (- month 1) 3))) 9) (= (+ 1 (* 3 (div (- month 1) 3))) 11))))\n(let ((?x72 (ite $x103 30 31)))\n(let (($x75 (= (mod year 4) 0)))\n(let (($x88 (and $x75 (or (and (distinct (mod year 100) 0) true) (= (mod year 400) 0)))))\n(let ((?x61 (ite $x88 29 28)))\n(let ((?x159 (ite (= (+ 1 (* 3 (div (- month 1) 3))) 2) ?x61 ?x72)))\n(or (< (+ 1 (* 3 (div (- month 1) 3))) 1) (> (+ 1 (* 3 (div (- month 1) 3))) 12) (< 1 1) (> 1 ?x159)))))))))\n(check-sat)\n",
+      "witness": null
+    },
+    {
+      "id": "quarter-nonadvancing",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun year () Int)\n(declare-fun month () Int)\n(declare-fun day () Int)\n(assert\n (>= year 1))\n(assert\n (<= year 9999))\n(assert\n (>= month 1))\n(assert\n (<= month 12))\n(assert\n (>= day 1))\n(assert\n (let (($x51 (or (= month 4) (= month 6) (= month 9) (= month 11))))\n (let ((?x48 (ite $x51 30 31)))\n (let (($x75 (= (mod year 4) 0)))\n (let (($x88 (and $x75 (or (and (distinct (mod year 100) 0) true) (= (mod year 400) 0)))))\n (let (($x117 (= month 2)))\n (<= day (ite $x117 (ite $x88 29 28) ?x48))))))))\n(assert\n (let (($x145 (and (= (+ 1 (* 3 (div (- month 1) 3))) month) (> 1 day))))\n(or (> (+ 1 (* 3 (div (- month 1) 3))) month) $x145)))\n(check-sat)\n",
+      "witness": null
+    },
+    {
+      "id": "month-valid-output",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun year () Int)\n(declare-fun month () Int)\n(declare-fun day () Int)\n(assert\n (>= year 1))\n(assert\n (<= year 9999))\n(assert\n (>= month 1))\n(assert\n (<= month 12))\n(assert\n (>= day 1))\n(assert\n (let (($x51 (or (= month 4) (= month 6) (= month 9) (= month 11))))\n (let ((?x48 (ite $x51 30 31)))\n (let (($x75 (= (mod year 4) 0)))\n (let (($x88 (and $x75 (or (and (distinct (mod year 100) 0) true) (= (mod year 400) 0)))))\n (let (($x117 (= month 2)))\n (let ((?x29 (ite $x117 (ite $x88 29 28) ?x48)))\n (<= day ?x29))))))))\n(assert\n (let (($x51 (or (= month 4) (= month 6) (= month 9) (= month 11))))\n(let ((?x48 (ite $x51 30 31)))\n(let (($x75 (= (mod year 4) 0)))\n(let (($x88 (and $x75 (or (and (distinct (mod year 100) 0) true) (= (mod year 400) 0)))))\n(let (($x117 (= month 2)))\n(let ((?x29 (ite $x117 (ite $x88 29 28) ?x48)))\n(or (< month 1) (> month 12) (< 1 1) (> 1 ?x29)))))))))\n(check-sat)\n",
+      "witness": null
+    },
+    {
+      "id": "month-nonadvancing",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun year () Int)\n(declare-fun month () Int)\n(declare-fun day () Int)\n(assert\n (>= year 1))\n(assert\n (<= year 9999))\n(assert\n (>= month 1))\n(assert\n (<= month 12))\n(assert\n (>= day 1))\n(assert\n (let (($x51 (or (= month 4) (= month 6) (= month 9) (= month 11))))\n (let ((?x48 (ite $x51 30 31)))\n (let (($x75 (= (mod year 4) 0)))\n (let (($x88 (and $x75 (or (and (distinct (mod year 100) 0) true) (= (mod year 400) 0)))))\n (let (($x117 (= month 2)))\n (<= day (ite $x117 (ite $x88 29 28) ?x48))))))))\n(assert\n (or (> month month) (and (= month month) (> 1 day))))\n(check-sat)\n",
+      "witness": null
+    },
+    {
+      "id": "day-valid-output",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun year () Int)\n(declare-fun month () Int)\n(declare-fun day () Int)\n(assert\n (>= year 1))\n(assert\n (<= year 9999))\n(assert\n (>= month 1))\n(assert\n (<= month 12))\n(assert\n (>= day 1))\n(assert\n (let (($x51 (or (= month 4) (= month 6) (= month 9) (= month 11))))\n (let ((?x48 (ite $x51 30 31)))\n (let (($x75 (= (mod year 4) 0)))\n (let (($x88 (and $x75 (or (and (distinct (mod year 100) 0) true) (= (mod year 400) 0)))))\n (let (($x117 (= month 2)))\n (let ((?x29 (ite $x117 (ite $x88 29 28) ?x48)))\n (<= day ?x29))))))))\n(assert\n (let (($x51 (or (= month 4) (= month 6) (= month 9) (= month 11))))\n(let ((?x48 (ite $x51 30 31)))\n(let (($x75 (= (mod year 4) 0)))\n(let (($x88 (and $x75 (or (and (distinct (mod year 100) 0) true) (= (mod year 400) 0)))))\n(let (($x117 (= month 2)))\n(let ((?x29 (ite $x117 (ite $x88 29 28) ?x48)))\n(or (< month 1) (> month 12) (< day 1) (> day ?x29)))))))))\n(check-sat)\n",
+      "witness": null
+    },
+    {
+      "id": "day-nonadvancing",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun year () Int)\n(declare-fun month () Int)\n(declare-fun day () Int)\n(assert\n (>= year 1))\n(assert\n (<= year 9999))\n(assert\n (>= month 1))\n(assert\n (<= month 12))\n(assert\n (>= day 1))\n(assert\n (let (($x51 (or (= month 4) (= month 6) (= month 9) (= month 11))))\n (let ((?x48 (ite $x51 30 31)))\n (let (($x75 (= (mod year 4) 0)))\n (let (($x88 (and $x75 (or (and (distinct (mod year 100) 0) true) (= (mod year 400) 0)))))\n (let (($x117 (= month 2)))\n (<= day (ite $x117 (ite $x88 29 28) ?x48))))))))\n(assert\n (or (> month month) (and (= month month) (> day day))))\n(check-sat)\n",
+      "witness": null
+    },
+    {
+      "id": "quarter-idempotence",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun month () Int)\n(assert\n (>= month 1))\n(assert\n (<= month 12))\n(assert\n (let ((?x162 (+ 1 (* 3 (div (- month 1) 3)))))\n(and (distinct (+ 1 (* 3 (div (- ?x162 1) 3))) ?x162) true)))\n(check-sat)\n",
+      "witness": null
+    },
+    {
+      "id": "every-emission-requires-input",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun input_valid () Bool)\n(declare-fun budget () Bool)\n(declare-fun output_valid () Bool)\n(declare-fun signature () Bool)\n(declare-fun pinned () Bool)\n(declare-fun known () Bool)\n(assert\n (let (($x139 (and known pinned signature input_valid output_valid budget)))\n(and $x139 (not input_valid))))\n(check-sat)\n",
+      "witness": null
+    },
+    {
+      "id": "constant-bypass-input-control",
+      "expected": "sat",
+      "observed": "sat",
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun known () Bool)\n(declare-fun pinned () Bool)\n(declare-fun signature () Bool)\n(declare-fun output_valid () Bool)\n(declare-fun budget () Bool)\n(declare-fun input_valid () Bool)\n(assert\n known)\n(assert\n pinned)\n(assert\n signature)\n(assert\n output_valid)\n(assert\n budget)\n(assert\n (not input_valid))\n(assert\n (and known pinned signature output_valid budget))\n(check-sat)\n",
+      "witness": "[known = True,\n pinned = True,\n signature = True,\n output_valid = True,\n budget = True,\n input_valid = False]"
+    }
+  ],
+  "sourceDigests": {
+    "tools/security/prove-protection-functions.py": "741368f49aa32166c91d2d83572424915b5f0f207c7a9a1c5ffef934cc004661",
+    "src/extensions/security/protection/functions.ts": "36fa7e6768dcccbe77a33a71571867f8ef211dc7784b003f52602e1b6e320cf5",
+    "src/extensions/security/protection/literals.ts": "450adb406a60da7c8d35d1cb28e7a1f7fb0debd9b741e9044130839700479e04",
+    "src/adapters/gregorian-date.ts": "bb589bf938b33c36e8decc5d09fe3a760f3104bcfd13cf1a23aee074993a2ff1",
+    "docs/helix/02-design/contracts/CONTRACT-062-security-semantics.md": "34ecc318578563ef490e68d85902aa80345ae6c8e0d9942cc57fa6e86c97f5a9",
+    "docs/helix/02-design/contracts/CONTRACT-066-gregorian-date-operations.md": "d20814589fa55f87fbc2aba2db150739b9df154d47e0067645b1fe411e58adf4"
+  },
+  "scope": "Exact integer coefficient floor algebra (decimal scaling a premise), Unicode scalar count/no-overlap algebra (not grapheme or collation), selected Gregorian date output algebra, and explicit input-guard conjunction. Assumes actual parser/domain closure, complete guards, bounded integer fidelity, source snapshot and implementation correspond to these expressions. SAT controls expose truncation-toward-zero, overlapping disclosure and constant-input bypass. No TypeScript/core-literal/compiler/native refinement, total resource theorem, authorization, confidentiality, source authentication, native date equivalence or whole S19 qualification.",
+  "acceptanceCasesPromoted": [],
+  "nativeInstallationProven": false
+}

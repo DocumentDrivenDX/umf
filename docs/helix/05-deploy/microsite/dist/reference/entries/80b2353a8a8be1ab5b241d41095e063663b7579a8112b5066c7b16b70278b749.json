@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 7556,
+        "line": 12,
+        "path": "src/model/cardinality.ts",
+        "sha256": "9b1c89d0528af524a56d115c3f0471250b9b9ecf04d020d8d9e132c3f90f3541"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "CoreCardinalityMeaning",
+    "runtime": "type-only",
+    "signatureText": [
+      "export type CoreCardinalityMeaning={state:'known';cardinality:Cardinality;itemType?:CoreItemTypeReference}|{state:'missing'}|{state:'inapplicable'}|{state:'unknown';value:string};"
+    ]
+  },
+  "id": "[\"api\",\".\",\"CoreCardinalityMeaning\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 7556,
+      "line": 12,
+      "path": "src/model/cardinality.ts",
+      "sha256": "9b1c89d0528af524a56d115c3f0471250b9b9ecf04d020d8d9e132c3f90f3541"
+    }
+  ],
+  "summary": "Type declaration · src/model/cardinality.ts",
+  "title": "CoreCardinalityMeaning"
+}

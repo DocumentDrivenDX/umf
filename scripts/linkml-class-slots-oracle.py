@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Local class membership, native SchemaView imports=False; source loader failures stay explicit."""
 import json
 import sys

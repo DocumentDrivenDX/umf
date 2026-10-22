@@ -1,0 +1,869 @@
+{
+  "nativeReceiptSha256": "29d8a7e2e6cc919fe0744baec33255a992bb08043a934fc09947d3f5fa7d102d",
+  "originalRequiredCases": 132,
+  "historicalAcceptedCases": 26,
+  "acceptancePromoted": false,
+  "relation": "Original raw ontology read-admission component evidence only; no complete raw profile, typed graph, owner issuer, installation or publication schedule promoted",
+  "observations": [
+    {
+      "id": "fixed-server-version",
+      "requirements": [
+        "US-056-AC10"
+      ],
+      "trussSchedules": [],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "fixed-bun-version",
+      "requirements": [
+        "US-056-AC10"
+      ],
+      "trussSchedules": [],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "ordinary-not-writer-or-registrar-member",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC9",
+        "US-056-AC5"
+      ],
+      "trussSchedules": [
+        "PA-N04"
+      ],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "ordinary-cannot-create-schema",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC9",
+        "US-056-AC5"
+      ],
+      "trussSchedules": [
+        "PA-N04"
+      ],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "initial:complete-employee",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC1"
+      ],
+      "trussSchedules": [],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "initial:complete-project",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC1"
+      ],
+      "trussSchedules": [],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "initial:complete-resource",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC1"
+      ],
+      "trussSchedules": [],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "initial:complete-m2m_employee_project",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC1"
+      ],
+      "trussSchedules": [],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "initial:complete-m2m_resource_project",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC1"
+      ],
+      "trussSchedules": [],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "private-fact-owners-and-rls",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC1",
+        "US-056-AC5"
+      ],
+      "trussSchedules": [
+        "PA-N04"
+      ],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "fixed-read-committed-isolation",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC9",
+        "US-056-AC5"
+      ],
+      "trussSchedules": [
+        "PA-N01"
+      ],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "native-original-actor",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC9",
+        "US-056-AC5"
+      ],
+      "trussSchedules": [
+        "PA-N01"
+      ],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "forged-public-context",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC9",
+        "US-056-AC5"
+      ],
+      "trussSchedules": [
+        "PA-N05"
+      ],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "copied-public-context-different-connection",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC9",
+        "US-056-AC5"
+      ],
+      "trussSchedules": [
+        "PA-N05"
+      ],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "private-capability-different-connection",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC9",
+        "US-056-AC5"
+      ],
+      "trussSchedules": [
+        "PA-N05"
+      ],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "private-capability-different-login",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC9",
+        "US-056-AC5"
+      ],
+      "trussSchedules": [
+        "PA-N04"
+      ],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "different-attempt",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC9",
+        "US-056-AC5"
+      ],
+      "trussSchedules": [
+        "PA-N05"
+      ],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "different-input",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC9",
+        "US-056-AC5"
+      ],
+      "trussSchedules": [
+        "PA-N05"
+      ],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "unregistered-wrapper-even-with-private-capability",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC9",
+        "US-056-AC5"
+      ],
+      "trussSchedules": [
+        "PA-N03"
+      ],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "direct-registry-write",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC9",
+        "US-056-AC5"
+      ],
+      "trussSchedules": [
+        "PA-N04"
+      ],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "private-capability-read",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC9",
+        "US-056-AC5"
+      ],
+      "trussSchedules": [
+        "PA-N04"
+      ],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "private-authority-read",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC9",
+        "US-056-AC5"
+      ],
+      "trussSchedules": [
+        "PA-N04"
+      ],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "private-authority-update",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC9",
+        "US-056-AC5"
+      ],
+      "trussSchedules": [
+        "PA-N04"
+      ],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "private-authority-helper",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC9",
+        "US-056-AC5"
+      ],
+      "trussSchedules": [
+        "PA-N04"
+      ],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "revoker-no-direct-authority-write",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC9",
+        "US-056-AC5"
+      ],
+      "trussSchedules": [
+        "PA-N04"
+      ],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "refusals-have-zero-effects",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC9",
+        "US-056-AC5"
+      ],
+      "trussSchedules": [
+        "PA-N03",
+        "PA-N04",
+        "PA-N05"
+      ],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "host-pre-entry-native-context",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC9",
+        "US-056-AC5"
+      ],
+      "trussSchedules": [
+        "PA-N01"
+      ],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "actual-original-effect",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC9",
+        "US-056-AC5"
+      ],
+      "trussSchedules": [
+        "PA-N01"
+      ],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "native-one-use-in-same-transaction",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC9",
+        "US-056-AC5"
+      ],
+      "trussSchedules": [
+        "PA-N05"
+      ],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "host-one-use-survives-savepoint-rollback",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC9",
+        "US-056-AC5"
+      ],
+      "trussSchedules": [
+        "PA-N09"
+      ],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "rollback-removes-effect",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC9",
+        "US-056-AC5"
+      ],
+      "trussSchedules": [
+        "PA-N09"
+      ],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "native-alone-replay-demonstrates-host-requirement",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC9",
+        "US-056-AC5"
+      ],
+      "trussSchedules": [
+        "PA-N09"
+      ],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "private-capability-new-transaction",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC9",
+        "US-056-AC5"
+      ],
+      "trussSchedules": [
+        "PA-N05"
+      ],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "final-zero-committed-effects",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC9",
+        "US-056-AC5"
+      ],
+      "trussSchedules": [
+        "PA-N09"
+      ],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "actual-authority-revoked-generation",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC9",
+        "US-056-AC5"
+      ],
+      "trussSchedules": [
+        "PA-N08"
+      ],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "revoked-after-capture",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC9",
+        "US-056-AC5"
+      ],
+      "trussSchedules": [
+        "PA-N08"
+      ],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "revoked-attempt-zero-effects",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC9",
+        "US-056-AC5"
+      ],
+      "trussSchedules": [
+        "PA-N08"
+      ],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "refused-capability-not-consumed",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC9",
+        "US-056-AC5"
+      ],
+      "trussSchedules": [
+        "PA-N08"
+      ],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "current-generation-revoked-refuses",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC9",
+        "US-056-AC5"
+      ],
+      "trussSchedules": [
+        "PA-N08"
+      ],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "stale-generation-after-regrant",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC9",
+        "US-056-AC5"
+      ],
+      "trussSchedules": [
+        "PA-N07",
+        "PA-N08"
+      ],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "current-generation-native-effect",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC9",
+        "US-056-AC5"
+      ],
+      "trussSchedules": [
+        "PA-N01"
+      ],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "revocation-blocked-by-authority-lock",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC9",
+        "US-056-AC5"
+      ],
+      "trussSchedules": [
+        "PA-N11"
+      ],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "blocked-revocation-keeps-authority",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC9",
+        "US-056-AC5"
+      ],
+      "trussSchedules": [
+        "PA-N11"
+      ],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "revocation-after-transaction-release",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC9",
+        "US-056-AC5"
+      ],
+      "trussSchedules": [
+        "PA-N11"
+      ],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "authority-schedule-zero-committed-effects",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC9",
+        "US-056-AC5"
+      ],
+      "trussSchedules": [
+        "PA-N09"
+      ],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "ontology-allowed-RA",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC1"
+      ],
+      "trussSchedules": [],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "ontology-allowed-RAB",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC1"
+      ],
+      "trussSchedules": [],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "ontology-denied-RB",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC1"
+      ],
+      "trussSchedules": [],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "ontology-denied-RD",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC1"
+      ],
+      "trussSchedules": [],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "ontology-denied-RO",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC1"
+      ],
+      "trussSchedules": [],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "ontology-denied-UNKNOWN",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC1"
+      ],
+      "trussSchedules": [],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "ontology-private-assignment-read",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC1",
+        "US-056-AC5"
+      ],
+      "trussSchedules": [
+        "PA-N04"
+      ],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "ontology-direct-assignment-write",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC1",
+        "US-056-AC5"
+      ],
+      "trussSchedules": [
+        "PA-N04"
+      ],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "ontology-private-predicate-execute",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC1",
+        "US-056-AC5"
+      ],
+      "trussSchedules": [
+        "PA-N04"
+      ],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "ontology-revocation-blocked",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC1"
+      ],
+      "trussSchedules": [
+        "PA-N08",
+        "PA-N11"
+      ],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "ontology-membership-unchanged-while-held",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC1"
+      ],
+      "trussSchedules": [],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "blocked-membership-revocation:complete-employee",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC1"
+      ],
+      "trussSchedules": [
+        "PA-N08",
+        "PA-N11"
+      ],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "blocked-membership-revocation:complete-project",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC1"
+      ],
+      "trussSchedules": [
+        "PA-N08",
+        "PA-N11"
+      ],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "blocked-membership-revocation:complete-resource",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC1"
+      ],
+      "trussSchedules": [
+        "PA-N08",
+        "PA-N11"
+      ],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "blocked-membership-revocation:complete-m2m_employee_project",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC1"
+      ],
+      "trussSchedules": [
+        "PA-N08",
+        "PA-N11"
+      ],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "blocked-membership-revocation:complete-m2m_resource_project",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC1"
+      ],
+      "trussSchedules": [
+        "PA-N08",
+        "PA-N11"
+      ],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "final-membership-revocation:complete-employee",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC1"
+      ],
+      "trussSchedules": [
+        "PA-N08",
+        "PA-N11"
+      ],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "final-membership-revocation:complete-project",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC1"
+      ],
+      "trussSchedules": [
+        "PA-N08",
+        "PA-N11"
+      ],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "final-membership-revocation:complete-resource",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC1"
+      ],
+      "trussSchedules": [
+        "PA-N08",
+        "PA-N11"
+      ],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "final-membership-revocation:complete-m2m_employee_project",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC1"
+      ],
+      "trussSchedules": [
+        "PA-N08",
+        "PA-N11"
+      ],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "final-membership-revocation:complete-m2m_resource_project",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC1"
+      ],
+      "trussSchedules": [
+        "PA-N08",
+        "PA-N11"
+      ],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "ontology-membership-revoked",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC1"
+      ],
+      "trussSchedules": [],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "ontology-current-generation-denies-RA",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC1"
+      ],
+      "trussSchedules": [
+        "PA-N08",
+        "PA-N11"
+      ],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "ontology-current-generation-denies-RAB",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC1"
+      ],
+      "trussSchedules": [
+        "PA-N08",
+        "PA-N11"
+      ],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "ontology-current-generation-denies-RB",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC1"
+      ],
+      "trussSchedules": [
+        "PA-N08",
+        "PA-N11"
+      ],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "ontology-current-generation-denies-RD",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC1"
+      ],
+      "trussSchedules": [
+        "PA-N08",
+        "PA-N11"
+      ],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "ontology-current-generation-denies-RO",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC1"
+      ],
+      "trussSchedules": [
+        "PA-N08",
+        "PA-N11"
+      ],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "ontology-current-generation-denies-UNKNOWN",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC1"
+      ],
+      "trussSchedules": [
+        "PA-N08",
+        "PA-N11"
+      ],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "ontology-zero-effects-after-denials",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC1"
+      ],
+      "trussSchedules": [],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "restored-no-effect-select",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC9",
+        "US-056-AC5"
+      ],
+      "trussSchedules": [
+        "PA-N04"
+      ],
+      "completeSchedulePassed": false
+    }
+  ],
+  "remaining": [
+    "Production authenticated actor and original subject mapping",
+    "Original owner authority and current coherent cut",
+    "Epoch/configuration/generation and complete installed closure",
+    "Protected registrar/private carrier lifecycle and exclusive original adapter dispatch",
+    "Resource admission, finalization/publication and seven semantic bodies"
+  ]
+}

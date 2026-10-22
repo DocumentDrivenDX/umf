@@ -1,0 +1,74 @@
+{
+  "status": "conditional-proof-passed",
+  "solverVersion": "4.15.4",
+  "sourceDigests": {
+    "/Users/erik/.codex/worktrees/1598/umf/tools/security/prove-scoped-composition.py": "31b182a734853c5ab72caf3e5e7ed98e0d0bebe462483ec65d0c0af476e93992",
+    "/Users/erik/Projects/truss/packages/postgresql/src/security-predicate.ts": "cd04f93e2b79da2767428a990262421612df1fe74187a75b57cd8b0e323b0207"
+  },
+  "cases": [
+    {
+      "id": "native-semantic-eligibility",
+      "violation": {
+        "result": "unsat",
+        "smt": "(declare-fun permit0 () Int)\n(declare-fun permit1 () Int)\n(declare-fun required () Int)\n(declare-fun forbidden () Int)\n(declare-fun scope_forbidden () Bool)\n(declare-fun scope_required () Bool)\n(declare-fun scope1 () Bool)\n(declare-fun scope0 () Bool)\n(assert (and (>= permit0 0) (<= permit0 2)))\n(assert (and (>= permit1 0) (<= permit1 2)))\n(assert (and (>= required 0) (<= required 2)))\n(assert (and (>= forbidden 0) (<= forbidden 2)))\n(assert (let ((a!1 (or (and scope0 (= permit0 1)) (and scope1 (= permit1 1))))\n      (a!2 (and (=> scope_required (= required 1))\n                (=> scope_forbidden (= forbidden 0)))))\n(let ((a!3 (and a!1\n                a!2\n                (ite (and scope0 scope1)\n                     (and (distinct permit0 2) (distinct permit1 2))\n                     true))))\n  (distinct a!3\n            (and a!1\n                 a!2\n                 (=> scope0 (distinct permit0 2))\n                 (=> scope1 (distinct permit1 2))\n                 (=> scope_required (distinct required 2))\n                 (=> scope_forbidden (distinct forbidden 2)))))))\n",
+        "replayResult": "unsat",
+        "witness": null
+      },
+      "weakenedControl": {
+        "result": "sat",
+        "smt": "(declare-fun permit0 () Int)\n(declare-fun permit1 () Int)\n(declare-fun required () Int)\n(declare-fun forbidden () Int)\n(declare-fun scope_forbidden () Bool)\n(declare-fun scope_required () Bool)\n(declare-fun scope1 () Bool)\n(declare-fun scope0 () Bool)\n(assert (and (>= permit0 0) (<= permit0 2)))\n(assert (and (>= permit1 0) (<= permit1 2)))\n(assert (and (>= required 0) (<= required 2)))\n(assert (and (>= forbidden 0) (<= forbidden 2)))\n(assert (let ((a!1 (or (and scope0 (= permit0 1)) (and scope1 (= permit1 1))))\n      (a!2 (and (=> scope_required (= required 1))\n                (=> scope_forbidden (= forbidden 0)))))\n  (distinct (and a!1 a!2)\n            (and a!1\n                 a!2\n                 (=> scope0 (distinct permit0 2))\n                 (=> scope1 (distinct permit1 2))\n                 (=> scope_required (distinct required 2))\n                 (=> scope_forbidden (distinct forbidden 2))))))\n",
+        "replayResult": "sat",
+        "witness": "[forbidden = 1,\n scope1 = True,\n permit0 = 2,\n scope_forbidden = False,\n scope0 = True,\n required = 2,\n scope_required = False,\n permit1 = 1]"
+      },
+      "positive": {
+        "result": "sat",
+        "smt": "(declare-fun permit0 () Int)\n(declare-fun permit1 () Int)\n(declare-fun required () Int)\n(declare-fun forbidden () Int)\n(declare-fun scope1 () Bool)\n(declare-fun scope0 () Bool)\n(declare-fun scope_forbidden () Bool)\n(declare-fun scope_required () Bool)\n(assert (and (>= permit0 0) (<= permit0 2)))\n(assert (and (>= permit1 0) (<= permit1 2)))\n(assert (and (>= required 0) (<= required 2)))\n(assert (and (>= forbidden 0) (<= forbidden 2)))\n(assert (and (or (and scope0 (= permit0 1)) (and scope1 (= permit1 1)))\n     (=> scope_required (= required 1))\n     (=> scope_forbidden (= forbidden 0))\n     (ite (and scope0 scope1)\n          (and (distinct permit0 2) (distinct permit1 2))\n          true)))\n",
+        "replayResult": "sat",
+        "witness": "[scope0 = True,\n permit0 = 1,\n scope_required = False,\n forbidden = 1,\n required = 0,\n scope_forbidden = False,\n permit1 = 0,\n scope1 = True]"
+      }
+    },
+    {
+      "id": "unknown-scoped-permit-denies",
+      "violation": {
+        "result": "unsat",
+        "smt": "(declare-fun permit0 () Int)\n(declare-fun permit1 () Int)\n(declare-fun required () Int)\n(declare-fun forbidden () Int)\n(declare-fun scope1 () Bool)\n(declare-fun scope0 () Bool)\n(declare-fun scope_forbidden () Bool)\n(declare-fun scope_required () Bool)\n(assert (and (>= permit0 0) (<= permit0 2)))\n(assert (and (>= permit1 0) (<= permit1 2)))\n(assert (and (>= required 0) (<= required 2)))\n(assert (and (>= forbidden 0) (<= forbidden 2)))\n(assert (and (or (and scope0 (= permit0 1)) (and scope1 (= permit1 1)))\n     (=> scope_required (= required 1))\n     (=> scope_forbidden (= forbidden 0))\n     (ite (and scope0 scope1)\n          (and (distinct permit0 2) (distinct permit1 2))\n          true)\n     (or (and scope0 (= permit0 2)) (and scope1 (= permit1 2)))))\n",
+        "replayResult": "unsat",
+        "witness": null
+      },
+      "weakenedControl": {
+        "result": "sat",
+        "smt": "(declare-fun permit0 () Int)\n(declare-fun permit1 () Int)\n(declare-fun required () Int)\n(declare-fun forbidden () Int)\n(declare-fun scope1 () Bool)\n(declare-fun scope0 () Bool)\n(declare-fun scope_forbidden () Bool)\n(declare-fun scope_required () Bool)\n(assert (and (>= permit0 0) (<= permit0 2)))\n(assert (and (>= permit1 0) (<= permit1 2)))\n(assert (and (>= required 0) (<= required 2)))\n(assert (and (>= forbidden 0) (<= forbidden 2)))\n(assert (and (or (and scope0 (= permit0 1)) (and scope1 (= permit1 1)))\n     (=> scope_required (= required 1))\n     (=> scope_forbidden (= forbidden 0))\n     scope0\n     (= permit0 2)\n     scope1\n     (= permit1 1)))\n",
+        "replayResult": "sat",
+        "witness": "[scope_required = False,\n scope_forbidden = False,\n required = 0,\n forbidden = 1,\n permit1 = 1,\n scope0 = True,\n scope1 = True,\n permit0 = 2]"
+      },
+      "positive": {
+        "result": "sat",
+        "smt": "(declare-fun permit0 () Int)\n(declare-fun permit1 () Int)\n(declare-fun required () Int)\n(declare-fun forbidden () Int)\n(declare-fun scope1 () Bool)\n(declare-fun scope0 () Bool)\n(declare-fun scope_forbidden () Bool)\n(declare-fun scope_required () Bool)\n(assert (and (>= permit0 0) (<= permit0 2)))\n(assert (and (>= permit1 0) (<= permit1 2)))\n(assert (and (>= required 0) (<= required 2)))\n(assert (and (>= forbidden 0) (<= forbidden 2)))\n(assert (and (or (and scope0 (= permit0 1)) (and scope1 (= permit1 1)))\n     (=> scope_required (= required 1))\n     (=> scope_forbidden (= forbidden 0))\n     (ite (and scope0 scope1)\n          (and (distinct permit0 2) (distinct permit1 2))\n          true)\n     scope0\n     (= permit0 1)\n     scope1\n     (= permit1 0)))\n",
+        "replayResult": "sat",
+        "witness": "[forbidden = 1,\n required = 0,\n scope_required = False,\n scope_forbidden = False,\n permit1 = 0,\n scope0 = True,\n scope1 = True,\n permit0 = 1]"
+      }
+    },
+    {
+      "id": "unscoped-unknown-ignored",
+      "violation": {
+        "result": "unsat",
+        "smt": "(declare-fun permit0 () Int)\n(declare-fun permit1 () Int)\n(declare-fun required () Int)\n(declare-fun forbidden () Int)\n(declare-fun scope1 () Bool)\n(declare-fun scope0 () Bool)\n(declare-fun scope_forbidden () Bool)\n(declare-fun scope_required () Bool)\n(assert (and (>= permit0 0) (<= permit0 2)))\n(assert (and (>= permit1 0) (<= permit1 2)))\n(assert (and (>= required 0) (<= required 2)))\n(assert (and (>= forbidden 0) (<= forbidden 2)))\n(assert (let ((a!1 (and (=> scope_required (= required 1))\n                (=> scope_forbidden (= forbidden 0)))))\n(let ((a!2 (and (or (and scope0 (= permit0 1)) (and scope1 (= permit1 1)))\n                a!1\n                (ite (and scope0 scope1)\n                     (and (distinct permit0 2) (distinct permit1 2))\n                     true)))\n      (a!3 (and (or (and scope0 (= 2 1)) (and scope1 (= permit1 1)))\n                a!1\n                (ite (and scope0 scope1)\n                     (and (distinct 2 2) (distinct permit1 2))\n                     true))))\n  (and (not scope0) (distinct a!2 a!3)))))\n",
+        "replayResult": "unsat",
+        "witness": null
+      },
+      "weakenedControl": {
+        "result": "sat",
+        "smt": "(declare-fun permit0 () Int)\n(declare-fun permit1 () Int)\n(declare-fun required () Int)\n(declare-fun forbidden () Int)\n(declare-fun scope_forbidden () Bool)\n(declare-fun scope_required () Bool)\n(declare-fun scope1 () Bool)\n(declare-fun scope0 () Bool)\n(assert (and (>= permit0 0) (<= permit0 2)))\n(assert (and (>= permit1 0) (<= permit1 2)))\n(assert (and (>= required 0) (<= required 2)))\n(assert (and (>= forbidden 0) (<= forbidden 2)))\n(assert (let ((a!1 (or (and scope0 (= permit0 1)) (and scope1 (= permit1 1))))\n      (a!2 (and (=> scope_required (= required 1))\n                (=> scope_forbidden (= forbidden 0)))))\n(let ((a!3 (and a!1\n                a!2\n                (ite (and scope0 scope1)\n                     (and (distinct permit0 2) (distinct permit1 2))\n                     true))))\n  (and (not scope0)\n       (distinct a!3\n                 (and a!1\n                      a!2\n                      (distinct permit0 2)\n                      (distinct permit1 2)\n                      (distinct required 2)\n                      (distinct forbidden 2)))))))\n",
+        "replayResult": "sat",
+        "witness": "[forbidden = 2,\n scope1 = True,\n permit0 = 0,\n scope_required = False,\n required = 0,\n scope_forbidden = False,\n permit1 = 1,\n scope0 = False]"
+      },
+      "positive": {
+        "result": "sat",
+        "smt": "(declare-fun permit0 () Int)\n(declare-fun permit1 () Int)\n(declare-fun required () Int)\n(declare-fun forbidden () Int)\n(declare-fun scope1 () Bool)\n(declare-fun scope0 () Bool)\n(declare-fun scope_forbidden () Bool)\n(declare-fun scope_required () Bool)\n(assert (and (>= permit0 0) (<= permit0 2)))\n(assert (and (>= permit1 0) (<= permit1 2)))\n(assert (and (>= required 0) (<= required 2)))\n(assert (and (>= forbidden 0) (<= forbidden 2)))\n(assert (and (not scope0)\n     (= permit0 2)\n     (or (and scope0 (= permit0 1)) (and scope1 (= permit1 1)))\n     (=> scope_required (= required 1))\n     (=> scope_forbidden (= forbidden 0))\n     (ite (and scope0 scope1)\n          (and (distinct permit0 2) (distinct permit1 2))\n          true)))\n",
+        "replayResult": "sat",
+        "witness": "[forbidden = 1,\n required = 0,\n scope_required = False,\n scope_forbidden = False,\n permit1 = 1,\n scope0 = False,\n scope1 = True,\n permit0 = 2]"
+      }
+    }
+  ],
+  "scope": "Two optional scoped permits, one optional scoped require and forbid, all F/T/U states. Exact final eligibility correspondence and unknown refusal under identical scoped scalar truth premises. This mathematical model does not prove actual source authenticity, compiler/SQL implementation, native completeness, graph profile or authority through release. Native source-owner diagnostics are separate."
+}

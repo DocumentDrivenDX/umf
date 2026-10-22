@@ -1,5 +1,6 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {inspectPostgresqlCardinalityCatalog,resolvePostgresqlCardinalityType,correlatePostgresqlCardinalityCatalog} from '../../src/adapters/postgresql/cardinality-catalog';
+import {inspectPostgresqlCardinalityCatalog, resolvePostgresqlCardinalityType, correlatePostgresqlCardinalityCatalog} from '../../src/adapters/postgresql/cardinality-catalog';
 import {importPostgresqlCatalogCapture} from '../../src/adapters/postgresql/catalog';
 const evidence=await Bun.file('fixtures/validation/cardinality-postgresql-catalog-native.json').json();
 const source=JSON.stringify(evidence.supplement);

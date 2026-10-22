@@ -1,0 +1,1314 @@
+{
+  "data": {
+    "pointer": "",
+    "profileVersions": [],
+    "references": [
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/nullability-operation-v5.schema.json\",\"\"]",
+        "target": "urn:umf:core:nullability-operation:5.0.0#/$defs/declaration"
+      }
+    ],
+    "role": "operation",
+    "schemaPath": "spec/core/nullability-sqlserver-projection.schema.json",
+    "sourceData": {
+      "kind": "object",
+      "members": {
+        "$id": {
+          "kind": "string",
+          "value": "urn:umf:core:nullability-sqlserver-projection:1.0.0"
+        },
+        "$schema": {
+          "kind": "string",
+          "value": "https://json-schema.org/draft/2020-12/schema"
+        },
+        "additionalProperties": {
+          "kind": "boolean",
+          "value": false
+        },
+        "allOf": {
+          "items": [
+            {
+              "kind": "object",
+              "members": {
+                "else": {
+                  "kind": "object",
+                  "members": {
+                    "properties": {
+                      "kind": "object",
+                      "members": {
+                        "nativeSql": {
+                          "kind": "boolean",
+                          "value": false
+                        },
+                        "target": {
+                          "kind": "boolean",
+                          "value": false
+                        }
+                      }
+                    }
+                  }
+                },
+                "if": {
+                  "kind": "object",
+                  "members": {
+                    "properties": {
+                      "kind": "object",
+                      "members": {
+                        "status": {
+                          "kind": "object",
+                          "members": {
+                            "const": {
+                              "kind": "string",
+                              "value": "projected"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "then": {
+                  "kind": "object",
+                  "members": {
+                    "properties": {
+                      "kind": "object",
+                      "members": {
+                        "nativeSql": {
+                          "kind": "boolean",
+                          "value": true
+                        },
+                        "target": {
+                          "kind": "boolean",
+                          "value": true
+                        }
+                      }
+                    },
+                    "required": {
+                      "items": [
+                        {
+                          "kind": "string",
+                          "value": "target"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "nativeSql"
+                        }
+                      ],
+                      "kind": "array"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "kind": "object",
+              "members": {
+                "$comment": {
+                  "kind": "string",
+                  "value": "UMF projection policy"
+                },
+                "allOf": {
+                  "items": [
+                    {
+                      "kind": "object",
+                      "members": {
+                        "else": {
+                          "kind": "object",
+                          "members": {
+                            "properties": {
+                              "kind": "object",
+                              "members": {
+                                "diagnostics": {
+                                  "kind": "object",
+                                  "members": {
+                                    "contains": {
+                                      "kind": "object",
+                                      "members": {
+                                        "properties": {
+                                          "kind": "object",
+                                          "members": {
+                                            "severity": {
+                                              "kind": "object",
+                                              "members": {
+                                                "const": {
+                                                  "kind": "string",
+                                                  "value": "error"
+                                                }
+                                              }
+                                            }
+                                          }
+                                        },
+                                        "required": {
+                                          "items": [
+                                            {
+                                              "kind": "string",
+                                              "value": "severity"
+                                            }
+                                          ],
+                                          "kind": "array"
+                                        },
+                                        "type": {
+                                          "kind": "string",
+                                          "value": "object"
+                                        }
+                                      }
+                                    },
+                                    "minItems": {
+                                      "kind": "number",
+                                      "value": "1"
+                                    },
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "array"
+                                    }
+                                  }
+                                },
+                                "residuals": {
+                                  "kind": "object",
+                                  "members": {
+                                    "minItems": {
+                                      "kind": "number",
+                                      "value": "1"
+                                    },
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "array"
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "if": {
+                          "kind": "object",
+                          "members": {
+                            "properties": {
+                              "kind": "object",
+                              "members": {
+                                "status": {
+                                  "kind": "object",
+                                  "members": {
+                                    "const": {
+                                      "kind": "string",
+                                      "value": "projected"
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "then": {
+                          "kind": "object",
+                          "members": {
+                            "properties": {
+                              "kind": "object",
+                              "members": {
+                                "diagnostics": {
+                                  "kind": "object",
+                                  "members": {
+                                    "items": {
+                                      "kind": "object",
+                                      "members": {
+                                        "properties": {
+                                          "kind": "object",
+                                          "members": {
+                                            "severity": {
+                                              "kind": "object",
+                                              "members": {
+                                                "const": {
+                                                  "kind": "string",
+                                                  "value": "warning"
+                                                }
+                                              }
+                                            }
+                                          }
+                                        },
+                                        "type": {
+                                          "kind": "string",
+                                          "value": "object"
+                                        }
+                                      }
+                                    },
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "array"
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "kind": "object",
+                      "members": {
+                        "if": {
+                          "kind": "object",
+                          "members": {
+                            "properties": {
+                              "kind": "object",
+                              "members": {
+                                "request": {
+                                  "kind": "object",
+                                  "members": {
+                                    "properties": {
+                                      "kind": "object",
+                                      "members": {
+                                        "mode": {
+                                          "kind": "object",
+                                          "members": {
+                                            "const": {
+                                              "kind": "string",
+                                              "value": "strict"
+                                            }
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "object"
+                                    }
+                                  }
+                                },
+                                "status": {
+                                  "kind": "object",
+                                  "members": {
+                                    "const": {
+                                      "kind": "string",
+                                      "value": "projected"
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "then": {
+                          "kind": "object",
+                          "members": {
+                            "properties": {
+                              "kind": "object",
+                              "members": {
+                                "mapping": {
+                                  "kind": "object",
+                                  "members": {
+                                    "properties": {
+                                      "kind": "object",
+                                      "members": {
+                                        "outcome": {
+                                          "kind": "object",
+                                          "members": {
+                                            "const": {
+                                              "kind": "string",
+                                              "value": "exact"
+                                            }
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "object"
+                                    }
+                                  }
+                                },
+                                "residuals": {
+                                  "kind": "object",
+                                  "members": {
+                                    "maxItems": {
+                                      "kind": "number",
+                                      "value": "0"
+                                    },
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "array"
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "kind": "object",
+                      "members": {
+                        "if": {
+                          "kind": "object",
+                          "members": {
+                            "properties": {
+                              "kind": "object",
+                              "members": {
+                                "mapping": {
+                                  "kind": "object",
+                                  "members": {
+                                    "properties": {
+                                      "kind": "object",
+                                      "members": {
+                                        "outcome": {
+                                          "kind": "object",
+                                          "members": {
+                                            "enum": {
+                                              "items": [
+                                                {
+                                                  "kind": "string",
+                                                  "value": "unknown"
+                                                },
+                                                {
+                                                  "kind": "string",
+                                                  "value": "approximated"
+                                                },
+                                                {
+                                                  "kind": "string",
+                                                  "value": "not-expressible"
+                                                }
+                                              ],
+                                              "kind": "array"
+                                            }
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "required": {
+                                      "items": [
+                                        {
+                                          "kind": "string",
+                                          "value": "outcome"
+                                        }
+                                      ],
+                                      "kind": "array"
+                                    },
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "object"
+                                    }
+                                  }
+                                },
+                                "status": {
+                                  "kind": "object",
+                                  "members": {
+                                    "const": {
+                                      "kind": "string",
+                                      "value": "projected"
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "then": {
+                          "kind": "object",
+                          "members": {
+                            "properties": {
+                              "kind": "object",
+                              "members": {
+                                "residuals": {
+                                  "kind": "object",
+                                  "members": {
+                                    "minItems": {
+                                      "kind": "number",
+                                      "value": "1"
+                                    },
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "array"
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ],
+                  "kind": "array"
+                }
+              }
+            }
+          ],
+          "kind": "array"
+        },
+        "properties": {
+          "kind": "object",
+          "members": {
+            "author": {
+              "kind": "object",
+              "members": {
+                "$ref": {
+                  "kind": "string",
+                  "value": "urn:umf:core:nullability-operation:5.0.0#/$defs/declaration"
+                }
+              }
+            },
+            "binding": {
+              "kind": "object",
+              "members": {
+                "const": {
+                  "kind": "object",
+                  "members": {
+                    "id": {
+                      "kind": "string",
+                      "value": "umf.core.nullability.sqlserver"
+                    },
+                    "nativeVersion": {
+                      "kind": "string",
+                      "value": "16.0.4295.3"
+                    },
+                    "subset": {
+                      "kind": "string",
+                      "value": "Single authored Field availability with explicit builtin carrier and stored-relation SQL-NULL policy; excludes input omission, query guarantees and native equivalence"
+                    },
+                    "version": {
+                      "kind": "string",
+                      "value": "1.0.0"
+                    }
+                  }
+                }
+              }
+            },
+            "diagnostics": {
+              "kind": "object",
+              "members": {
+                "items": {
+                  "kind": "object",
+                  "members": {
+                    "additionalProperties": {
+                      "kind": "boolean",
+                      "value": false
+                    },
+                    "properties": {
+                      "kind": "object",
+                      "members": {
+                        "code": {
+                          "kind": "object",
+                          "members": {
+                            "type": {
+                              "kind": "string",
+                              "value": "string"
+                            }
+                          }
+                        },
+                        "message": {
+                          "kind": "object",
+                          "members": {
+                            "type": {
+                              "kind": "string",
+                              "value": "string"
+                            }
+                          }
+                        },
+                        "path": {
+                          "kind": "object",
+                          "members": {
+                            "type": {
+                              "kind": "string",
+                              "value": "string"
+                            }
+                          }
+                        },
+                        "severity": {
+                          "kind": "object",
+                          "members": {
+                            "enum": {
+                              "items": [
+                                {
+                                  "kind": "string",
+                                  "value": "error"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "warning"
+                                }
+                              ],
+                              "kind": "array"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "required": {
+                      "items": [
+                        {
+                          "kind": "string",
+                          "value": "code"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "path"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "message"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "severity"
+                        }
+                      ],
+                      "kind": "array"
+                    },
+                    "type": {
+                      "kind": "string",
+                      "value": "object"
+                    }
+                  }
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "array"
+                }
+              }
+            },
+            "mapping": {
+              "kind": "object",
+              "members": {
+                "additionalProperties": {
+                  "kind": "boolean",
+                  "value": false
+                },
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "basis": {
+                      "kind": "object",
+                      "members": {
+                        "enum": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "authored-requirement"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "no-authored-requirement"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "unprojected-requirement"
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    },
+                    "carrier": {
+                      "kind": "object",
+                      "members": {
+                        "enum": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "sql-null"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "unresolved"
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    },
+                    "encoding": {
+                      "kind": "object",
+                      "members": {
+                        "enum": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "not-null"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "null"
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    },
+                    "idealPath": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "nativePath": {
+                      "kind": "object",
+                      "members": {
+                        "const": {
+                          "kind": "string",
+                          "value": "/sql"
+                        }
+                      }
+                    },
+                    "nullability": {
+                      "kind": "object",
+                      "members": {
+                        "enum": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "required"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "absent-allowed"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "unspecified"
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    },
+                    "origin": {
+                      "kind": "object",
+                      "members": {
+                        "const": {
+                          "kind": "string",
+                          "value": "authored"
+                        }
+                      }
+                    },
+                    "outcome": {
+                      "kind": "object",
+                      "members": {
+                        "enum": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "exact"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "unknown"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "not-expressible"
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    },
+                    "scope": {
+                      "kind": "object",
+                      "members": {
+                        "enum": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "stored-relation"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "query-result"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "write-input"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "unresolved"
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "origin"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "idealPath"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "nativePath"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "outcome"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "basis"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "nullability"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "encoding"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "scope"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "carrier"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "nativeSql": {
+              "kind": "object",
+              "members": {
+                "minLength": {
+                  "kind": "number",
+                  "value": "1"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "string"
+                }
+              }
+            },
+            "operation": {
+              "kind": "object",
+              "members": {
+                "const": {
+                  "kind": "string",
+                  "value": "project-nullability-sqlserver"
+                }
+              }
+            },
+            "request": {
+              "kind": "object",
+              "members": {
+                "additionalProperties": {
+                  "kind": "boolean",
+                  "value": false
+                },
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "carrier": {
+                      "kind": "object",
+                      "members": {
+                        "enum": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "sql-null"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "unresolved"
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    },
+                    "columnName": {
+                      "kind": "object",
+                      "members": {
+                        "minLength": {
+                          "kind": "number",
+                          "value": "1"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "id": {
+                      "kind": "object",
+                      "members": {
+                        "minLength": {
+                          "kind": "number",
+                          "value": "1"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "mode": {
+                      "kind": "object",
+                      "members": {
+                        "enum": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "strict"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "report"
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    },
+                    "namespace": {
+                      "kind": "object",
+                      "members": {
+                        "minLength": {
+                          "kind": "number",
+                          "value": "1"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "nativeType": {
+                      "kind": "object",
+                      "members": {
+                        "enum": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "bit"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "tinyint"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "smallint"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "int"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "bigint"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "decimal(38,9)"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "real"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "float(53)"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "nvarchar(max)"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "varbinary(max)"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "date"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "time(7)"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "datetime2(7)"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "datetimeoffset(7)"
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    },
+                    "scope": {
+                      "kind": "object",
+                      "members": {
+                        "enum": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "stored-relation"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "query-result"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "write-input"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "unresolved"
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    },
+                    "tableName": {
+                      "kind": "object",
+                      "members": {
+                        "minLength": {
+                          "kind": "number",
+                          "value": "1"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "id"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "tableName"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "columnName"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "nativeType"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "mode"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "namespace"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "scope"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "carrier"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "residuals": {
+              "kind": "object",
+              "members": {
+                "items": {
+                  "kind": "object",
+                  "members": {
+                    "additionalProperties": {
+                      "kind": "boolean",
+                      "value": false
+                    },
+                    "properties": {
+                      "kind": "object",
+                      "members": {
+                        "outcome": {
+                          "kind": "object",
+                          "members": {
+                            "enum": {
+                              "items": [
+                                {
+                                  "kind": "string",
+                                  "value": "unknown"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "not-expressible"
+                                }
+                              ],
+                              "kind": "array"
+                            }
+                          }
+                        },
+                        "path": {
+                          "kind": "object",
+                          "members": {
+                            "type": {
+                              "kind": "string",
+                              "value": "string"
+                            }
+                          }
+                        },
+                        "reason": {
+                          "kind": "object",
+                          "members": {
+                            "minLength": {
+                              "kind": "number",
+                              "value": "1"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "string"
+                            }
+                          }
+                        },
+                        "recovery": {
+                          "kind": "object",
+                          "members": {
+                            "const": {
+                              "kind": "string",
+                              "value": "Recover source meaning with retained projection receipt; native-only import does not recover author intent"
+                            }
+                          }
+                        },
+                        "value": {
+                          "kind": "object",
+                          "members": {}
+                        }
+                      }
+                    },
+                    "required": {
+                      "items": [
+                        {
+                          "kind": "string",
+                          "value": "path"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "value"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "reason"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "outcome"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "recovery"
+                        }
+                      ],
+                      "kind": "array"
+                    },
+                    "type": {
+                      "kind": "string",
+                      "value": "object"
+                    }
+                  }
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "array"
+                }
+              }
+            },
+            "source": {
+              "kind": "object",
+              "members": {
+                "$ref": {
+                  "kind": "string",
+                  "value": "urn:umf:core:0.10.0"
+                }
+              }
+            },
+            "status": {
+              "kind": "object",
+              "members": {
+                "enum": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "projected"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "blocked"
+                    }
+                  ],
+                  "kind": "array"
+                }
+              }
+            },
+            "target": {
+              "kind": "object",
+              "members": {
+                "additionalProperties": {
+                  "kind": "boolean",
+                  "value": false
+                },
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "format": {
+                      "kind": "object",
+                      "members": {
+                        "const": {
+                          "kind": "string",
+                          "value": "sqlserver-ddl"
+                        }
+                      }
+                    },
+                    "sql": {
+                      "kind": "object",
+                      "members": {
+                        "minLength": {
+                          "kind": "number",
+                          "value": "1"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "format"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "sql"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "version": {
+              "kind": "object",
+              "members": {
+                "const": {
+                  "kind": "string",
+                  "value": "1.0.0"
+                }
+              }
+            }
+          }
+        },
+        "required": {
+          "items": [
+            {
+              "kind": "string",
+              "value": "operation"
+            },
+            {
+              "kind": "string",
+              "value": "version"
+            },
+            {
+              "kind": "string",
+              "value": "status"
+            },
+            {
+              "kind": "string",
+              "value": "source"
+            },
+            {
+              "kind": "string",
+              "value": "author"
+            },
+            {
+              "kind": "string",
+              "value": "request"
+            },
+            {
+              "kind": "string",
+              "value": "binding"
+            },
+            {
+              "kind": "string",
+              "value": "mapping"
+            },
+            {
+              "kind": "string",
+              "value": "residuals"
+            },
+            {
+              "kind": "string",
+              "value": "diagnostics"
+            }
+          ],
+          "kind": "array"
+        },
+        "title": {
+          "kind": "string",
+          "value": "Authored availability projection to SQL Server stored columns"
+        },
+        "type": {
+          "kind": "string",
+          "value": "object"
+        }
+      }
+    }
+  },
+  "id": "[\"schema\",\"spec/core/nullability-sqlserver-projection.schema.json\",\"\"]",
+  "kind": "schema",
+  "links": [
+    "[\"schema\",\"spec/core/nullability-operation-v5.schema.json\",\"\"]",
+    "[\"schema\",\"spec/core/schema.json\",\"\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 8991,
+      "path": "spec/core/nullability-sqlserver-projection.schema.json",
+      "sha256": "6f9ab8d0ced0456ba4c6b5ec825959b1a4395a0fa568275db2fb5941ec10fd8a"
+    }
+  ],
+  "summary": "spec/core/nullability-sqlserver-projection.schema.json",
+  "title": "Authored availability projection to SQL Server stored columns"
+}

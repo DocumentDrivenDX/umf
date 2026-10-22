@@ -1,0 +1,35 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"OpenapiReferenceRequest\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "pointer",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "kind",
+      "optional": false,
+      "type": "\"link\" | \"example\" | \"parameter\" | \"header\" | \"response\" | \"request-body\" | \"security-scheme\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "resourceUri",
+      "optional": true,
+      "type": "string"
+    }
+  ],
+  "parameters": [],
+  "purpose": "OpenapiReferenceRequest is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "OpenapiReferenceRequest"
+}

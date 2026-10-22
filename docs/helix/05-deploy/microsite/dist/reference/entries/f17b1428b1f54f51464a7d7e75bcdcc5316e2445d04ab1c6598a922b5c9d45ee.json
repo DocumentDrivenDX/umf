@@ -1,0 +1,195 @@
+{
+  "data": {
+    "extensionId": "umf.spark",
+    "manifest": {
+      "capabilities": {
+        "directions": [
+          "import",
+          "export"
+        ],
+        "evidence": [
+          "tests/spark/schema.test.ts",
+          "fixtures/spark/capability-results.json",
+          "fixtures/spark/umf-oracle-results.json",
+          "fixtures/spark/browser-results.json",
+          "tests/spark/rename.test.ts",
+          "fixtures/spark/rename-oracle-results.json",
+          "tests/spark/upstream.test.ts",
+          "fixtures/spark/upstream-oracle-results.json",
+          "tests/spark/metadata.test.ts",
+          "fixtures/spark/metadata-oracle-results.json",
+          "tests/spark/collations.test.ts",
+          "fixtures/spark/collation-oracle-results.json",
+          "tests/spark/parameters.test.ts",
+          "fixtures/spark/parameter-oracle-results.json",
+          "tests/spark/projection.test.ts",
+          "tests/spark/reverse-projection.test.ts",
+          "fixtures/projections/spark-arrow/projection-oracle-results.json",
+          "fixtures/projections/spark-arrow/reverse-oracle-results.json",
+          "tests/spark/arrow-origin.test.ts",
+          "fixtures/projections/arrow-spark/oracle-results.json",
+          "tests/spark/upstream-projection.test.ts",
+          "fixtures/projections/arrow-spark-upstream/oracle-results.json"
+        ],
+        "native": {
+          "subset": "Known array/map/struct shape validation, exact source preservation and candidate edits. Atomic names/parameters and UDT declarations retain interpretation limits; no JVM/browser execution, DDL or data coercion claim.",
+          "system": "Apache Spark DataType schema JSON",
+          "version": "4.0.1 grammar baseline; Python and JVM evidence separately qualified"
+        },
+        "validation": "semantic"
+      },
+      "coreVersion": "0.10.0",
+      "description": "Exact Spark DataType/StructType JSON with preserved metadata and native interpretation limits",
+      "id": "umf.spark",
+      "schema": {
+        "$defs": {
+          "node": {
+            "oneOf": [
+              {
+                "properties": {
+                  "kind": {
+                    "const": "null"
+                  }
+                },
+                "required": [
+                  "kind"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "kind": {
+                    "const": "boolean"
+                  },
+                  "value": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "kind": {
+                    "const": "string"
+                  },
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "kind": {
+                    "const": "number"
+                  },
+                  "value": {
+                    "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?([eE][+-]?[0-9]+)?$",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "items": {
+                    "items": {
+                      "$ref": "#/$defs/node"
+                    },
+                    "type": "array"
+                  },
+                  "kind": {
+                    "const": "array"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "items"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "kind": {
+                    "const": "object"
+                  },
+                  "members": {
+                    "additionalProperties": {
+                      "$ref": "#/$defs/node"
+                    },
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "members"
+                ],
+                "type": "object"
+              }
+            ]
+          }
+        },
+        "$id": "urn:umf:spark:0.1.0",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": true,
+        "properties": {
+          "profile": {
+            "const": "spark-datatype-json"
+          },
+          "root": {
+            "$ref": "#/$defs/node"
+          }
+        },
+        "required": [
+          "profile",
+          "root"
+        ],
+        "type": "object"
+      },
+      "scopes": [
+        "element"
+      ],
+      "semantics": "CONTRACT-017. Source JSON is authoritative; no native parser normalization, UDT execution or engine/configuration validity is implied. Unknown properties/types and exact numeric tokens survive.",
+      "version": "0.1.0"
+    },
+    "registration": {
+      "apiIds": [
+        "[\"api\",\".\",\"sparkRegistry\"]"
+      ],
+      "coreProfiles": [],
+      "mode": "explicit"
+    },
+    "schemaId": "[\"schema\",\"spec/extensions/spark/schema.json\",\"\"]",
+    "version": "0.1.0"
+  },
+  "id": "[\"extension\",\"umf.spark\",\"0.1.0\"]",
+  "kind": "extension",
+  "links": [
+    "[\"api\",\".\",\"sparkRegistry\"]",
+    "[\"guide\",\"extensions\"]",
+    "[\"schema\",\"spec/extensions/spark/schema.json\",\"\"]",
+    "[\"integration\",\"umf.spark@0.1.0:import\"]",
+    "[\"integration\",\"umf.spark@0.1.0:export\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 4665,
+      "path": "spec/extensions/spark/package.json",
+      "sha256": "a402b39a48a436641c5bc06d64ec94cb6611e793a53b738f1075d366ade2ad9f"
+    }
+  ],
+  "summary": "Exact Spark DataType/StructType JSON with preserved metadata and native interpretation limits",
+  "title": "umf.spark · 0.1.0"
+}

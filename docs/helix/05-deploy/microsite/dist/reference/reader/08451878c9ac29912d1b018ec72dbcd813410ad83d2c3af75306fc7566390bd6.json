@@ -1,0 +1,30 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"verifyBindingSqlServerProjection\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SqlServerPhysicalProjection\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "SqlServerPhysicalProjection"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "current",
+      "optional": false,
+      "type": "string"
+    }
+  ],
+  "purpose": "verifyBindingSqlServerProjection accepts input, current and returns SqlServerPhysicalProjection & { [x: string]: {}; }.",
+  "related": [],
+  "returns": "SqlServerPhysicalProjection & { [x: string]: {}; }",
+  "task": "Other APIs",
+  "type": "(input: SqlServerPhysicalProjection, current: string) => SqlServerPhysicalProjection & { [x: string]: {}; }"
+}

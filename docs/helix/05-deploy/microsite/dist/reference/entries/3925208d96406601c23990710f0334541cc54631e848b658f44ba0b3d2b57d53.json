@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 8193,
+        "line": 38,
+        "path": "src/model/facets.ts",
+        "sha256": "54d789632de775afe7d97518c7fb5f2b493a4d7353ad46b3e91e265a1967208a"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "declareCoreFacets",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: Document, identity: CoreFacetIdentity, options: CoreFacetPatch): CoreFacetDeclaration"
+    ]
+  },
+  "id": "[\"api\",\".\",\"declareCoreFacets\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 8193,
+      "line": 38,
+      "path": "src/model/facets.ts",
+      "sha256": "54d789632de775afe7d97518c7fb5f2b493a4d7353ad46b3e91e265a1967208a"
+    }
+  ],
+  "summary": "Patch known groups only; omitted groups and unknown nested qualifiers remain attached.",
+  "title": "declareCoreFacets"
+}

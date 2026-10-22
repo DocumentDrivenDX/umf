@@ -1,0 +1,396 @@
+[
+  {
+    "id": "@documentdrivendx/umf-schema-browser@2.0.0",
+    "name": "@documentdrivendx/umf-schema-browser",
+    "version": "2.0.0",
+    "size": 2178040,
+    "unpackedSize": 19204501,
+    "shasum": "629680d12a8303cd209a4b3a967b130143bdab48",
+    "integrity": "sha512-MuCXD6aRu36nss+KXfVinexh/RDiQgoBk7hx6SAEf0AwQViUny5jp3jpeWLcyFTI2xizWbffR1iYMLxzFGMviQ==",
+    "filename": "documentdrivendx-umf-schema-browser-2.0.0.tgz",
+    "files": [
+      {
+        "path": "CHANGELOG.md",
+        "size": 2234,
+        "mode": 420
+      },
+      {
+        "path": "HOST_CONTRACT.md",
+        "size": 8991,
+        "mode": 420
+      },
+      {
+        "path": "LICENSE-APACHE",
+        "size": 11357,
+        "mode": 420
+      },
+      {
+        "path": "LICENSE-MIT",
+        "size": 1086,
+        "mode": 420
+      },
+      {
+        "path": "README.md",
+        "size": 7585,
+        "mode": 420
+      },
+      {
+        "path": "SHA256SUMS",
+        "size": 6470,
+        "mode": 420
+      },
+      {
+        "path": "THIRD_PARTY_NOTICES.md",
+        "size": 75672,
+        "mode": 420
+      },
+      {
+        "path": "asset-manifest.json",
+        "size": 5218,
+        "mode": 420
+      },
+      {
+        "path": "assets/chunk-0cyxfbf5.js",
+        "size": 2685,
+        "mode": 420
+      },
+      {
+        "path": "assets/chunk-0yrdndnq.js",
+        "size": 93871,
+        "mode": 420
+      },
+      {
+        "path": "assets/chunk-2zhqqq8v.js",
+        "size": 227651,
+        "mode": 420
+      },
+      {
+        "path": "assets/chunk-3b8jxkra.js",
+        "size": 3170,
+        "mode": 420
+      },
+      {
+        "path": "assets/chunk-3ckrb4ha.js",
+        "size": 315948,
+        "mode": 420
+      },
+      {
+        "path": "assets/chunk-3e927yyq.js",
+        "size": 204,
+        "mode": 420
+      },
+      {
+        "path": "assets/chunk-6bbybc4e.js",
+        "size": 201,
+        "mode": 420
+      },
+      {
+        "path": "assets/chunk-8avk1t53.js",
+        "size": 234106,
+        "mode": 420
+      },
+      {
+        "path": "assets/chunk-8fwevz7v.js",
+        "size": 11767,
+        "mode": 420
+      },
+      {
+        "path": "assets/chunk-9ht6vzn4.js",
+        "size": 13387,
+        "mode": 420
+      },
+      {
+        "path": "assets/chunk-19s0r9xs.js",
+        "size": 11444,
+        "mode": 420
+      },
+      {
+        "path": "assets/chunk-48my5and.js",
+        "size": 222,
+        "mode": 420
+      },
+      {
+        "path": "assets/chunk-74rcqzrq.js",
+        "size": 139,
+        "mode": 420
+      },
+      {
+        "path": "assets/chunk-189t60eb.js",
+        "size": 13960,
+        "mode": 420
+      },
+      {
+        "path": "assets/chunk-9041nsbv.js",
+        "size": 40393,
+        "mode": 420
+      },
+      {
+        "path": "assets/chunk-a3r35vwj.js",
+        "size": 10816,
+        "mode": 420
+      },
+      {
+        "path": "assets/chunk-a8rwnqq8.js",
+        "size": 1015,
+        "mode": 420
+      },
+      {
+        "path": "assets/chunk-age4zjs5.js",
+        "size": 6408,
+        "mode": 420
+      },
+      {
+        "path": "assets/chunk-awjyb4jb.js",
+        "size": 902,
+        "mode": 420
+      },
+      {
+        "path": "assets/chunk-d22wwjwm.js",
+        "size": 2603,
+        "mode": 420
+      },
+      {
+        "path": "assets/chunk-dnyq4rx2.js",
+        "size": 217863,
+        "mode": 420
+      },
+      {
+        "path": "assets/chunk-dyfe9tns.js",
+        "size": 127,
+        "mode": 420
+      },
+      {
+        "path": "assets/chunk-dyhe34jv.js",
+        "size": 201,
+        "mode": 420
+      },
+      {
+        "path": "assets/chunk-fff90kq1.js",
+        "size": 16673,
+        "mode": 420
+      },
+      {
+        "path": "assets/chunk-ffy3x09s.js",
+        "size": 9572,
+        "mode": 420
+      },
+      {
+        "path": "assets/chunk-h838d7m9.js",
+        "size": 5630,
+        "mode": 420
+      },
+      {
+        "path": "assets/chunk-hjqm6009.js",
+        "size": 10267,
+        "mode": 420
+      },
+      {
+        "path": "assets/chunk-j6hnavwm.js",
+        "size": 7991,
+        "mode": 420
+      },
+      {
+        "path": "assets/chunk-j1761thh.js",
+        "size": 198,
+        "mode": 420
+      },
+      {
+        "path": "assets/chunk-k2v9vyvz.js",
+        "size": 330,
+        "mode": 420
+      },
+      {
+        "path": "assets/chunk-k9nw71nj.js",
+        "size": 5200,
+        "mode": 420
+      },
+      {
+        "path": "assets/chunk-k09yed2v.js",
+        "size": 134080,
+        "mode": 420
+      },
+      {
+        "path": "assets/chunk-kkbcw88c.js",
+        "size": 24336,
+        "mode": 420
+      },
+      {
+        "path": "assets/chunk-kxxpzsd0.js",
+        "size": 205297,
+        "mode": 420
+      },
+      {
+        "path": "assets/chunk-mf0yn2d9.js",
+        "size": 180,
+        "mode": 420
+      },
+      {
+        "path": "assets/chunk-mjj9769n.js",
+        "size": 254293,
+        "mode": 420
+      },
+      {
+        "path": "assets/chunk-mt4ev39n.js",
+        "size": 14476,
+        "mode": 420
+      },
+      {
+        "path": "assets/chunk-my1cq8f9.js",
+        "size": 139694,
+        "mode": 420
+      },
+      {
+        "path": "assets/chunk-qqr3ahja.js",
+        "size": 605,
+        "mode": 420
+      },
+      {
+        "path": "assets/chunk-ww4nmdsp.js",
+        "size": 14838611,
+        "mode": 420
+      },
+      {
+        "path": "assets/chunk-xyn4vvqt.js",
+        "size": 815762,
+        "mode": 420
+      },
+      {
+        "path": "assets/chunk-y33s5b58.js",
+        "size": 1031,
+        "mode": 420
+      },
+      {
+        "path": "assets/chunk-yc072vtb.js",
+        "size": 81730,
+        "mode": 420
+      },
+      {
+        "path": "assets/chunk-yg38jvvb.js",
+        "size": 0,
+        "mode": 420
+      },
+      {
+        "path": "assets/chunk-yp36ghgq.js",
+        "size": 525,
+        "mode": 420
+      },
+      {
+        "path": "assets/chunk-yybmn8nw.js",
+        "size": 322,
+        "mode": 420
+      },
+      {
+        "path": "assets/chunk-z7fkf19q.js",
+        "size": 16237,
+        "mode": 420
+      },
+      {
+        "path": "assets/chunk-zc4shbzz.js",
+        "size": 184946,
+        "mode": 420
+      },
+      {
+        "path": "assets/chunk-zsn9vjj1.js",
+        "size": 15588,
+        "mode": 420
+      },
+      {
+        "path": "assets/chunk-zvzn5tbp.js",
+        "size": 12981,
+        "mode": 420
+      },
+      {
+        "path": "assets/components.css",
+        "size": 2980,
+        "mode": 420
+      },
+      {
+        "path": "assets/explorer.css",
+        "size": 16447,
+        "mode": 420
+      },
+      {
+        "path": "assets/explorer.js",
+        "size": 850984,
+        "mode": 420
+      },
+      {
+        "path": "assets/index.html",
+        "size": 1562,
+        "mode": 420
+      },
+      {
+        "path": "assets/schema-catalog.json",
+        "size": 27,
+        "mode": 420
+      },
+      {
+        "path": "assets/style.css",
+        "size": 6956,
+        "mode": 420
+      },
+      {
+        "path": "catalog.schema.json",
+        "size": 6166,
+        "mode": 420
+      },
+      {
+        "path": "examples/host.css",
+        "size": 174,
+        "mode": 420
+      },
+      {
+        "path": "examples/host.js",
+        "size": 1215,
+        "mode": 420
+      },
+      {
+        "path": "examples/index.html",
+        "size": 676,
+        "mode": 420
+      },
+      {
+        "path": "index.js",
+        "size": 20686,
+        "mode": 420
+      },
+      {
+        "path": "package.json",
+        "size": 976,
+        "mode": 420
+      },
+      {
+        "path": "provenance.json",
+        "size": 159245,
+        "mode": 420
+      },
+      {
+        "path": "release-manifest.json",
+        "size": 7164,
+        "mode": 420
+      },
+      {
+        "path": "types/components.d.ts",
+        "size": 1567,
+        "mode": 420
+      },
+      {
+        "path": "types/index.d.ts",
+        "size": 613,
+        "mode": 420
+      },
+      {
+        "path": "types/types.d.ts",
+        "size": 2812,
+        "mode": 420
+      }
+    ],
+    "entryCount": 75,
+    "bundled": []
+  }
+]
+npm notice
+npm notice New major version of npm available! 11.20.0 -> 12.2.0
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.0
+npm notice To update run: npm install -g npm@12.2.0
+npm notice

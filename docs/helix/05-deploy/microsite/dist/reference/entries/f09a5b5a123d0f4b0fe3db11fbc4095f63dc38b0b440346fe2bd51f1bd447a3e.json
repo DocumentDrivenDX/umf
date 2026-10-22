@@ -1,0 +1,33 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 2163,
+        "line": 1,
+        "path": "spec/core/native-json.schema.json",
+        "sha256": "071e2dc97ffae0b8743b691ae4786c0b74eaa1ee54d881e1d8116dcb3f6a2839"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "nativeJsonSchema",
+    "runtime": "unassessed",
+    "signatureText": [
+      "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"$id\": \"urn:umf:native-json:0.1.0\",\n  \"$ref\": \"#/$defs/node\",\n  \"$defs\": {\n    \"node\": {\n      \"oneOf\": [\n        {\n          \"type\": \"object\",\n          \"required\": [\n            \"kind\"\n          ],\n          \"properties\": {\n            \"kind\": {\n              \"const\": \"null\"\n            }\n          }\n        },\n        {\n          \"type\": \"object\",\n          \"required\": [\n            \"kind\",\n            \"value\"\n          ],\n          \"properties\": {\n            \"kind\": {\n              \"const\": \"boolean\"\n            },\n            \"value\": {\n              \"type\": \"boolean\"\n            }\n          }\n        },\n        {\n          \"type\": \"object\",\n          \"required\": [\n            \"kind\",\n            \"value\"\n          ],\n          \"properties\": {\n            \"kind\": {\n              \"const\": \"string\"\n            },\n            \"value\": {\n              \"type\": \"string\"\n            }\n          }\n        },\n        {\n          \"type\": \"object\",\n          \"required\": [\n            \"kind\",\n            \"value\"\n          ],\n          \"properties\": {\n            \"kind\": {\n              \"const\": \"number\"\n            },\n            \"value\": {\n              \"type\": \"string\",\n              \"pattern\": \"^-?(0|[1-9][0-9]*)(\\\\.[0-9]+)?([eE][+-]?[0-9]+)?$\"\n            }\n          }\n        },\n        {\n          \"type\": \"object\",\n          \"required\": [\n            \"kind\",\n            \"items\"\n          ],\n          \"properties\": {\n            \"kind\": {\n              \"const\": \"array\"\n            },\n            \"items\": {\n              \"type\": \"array\",\n              \"items\": {\n                \"$ref\": \"#/$defs/node\"\n              }\n            }\n          }\n        },\n        {\n          \"type\": \"object\",\n          \"required\": [\n            \"kind\",\n            \"members\"\n          ],\n          \"properties\": {\n            \"kind\": {\n              \"const\": \"object\"\n            },\n            \"members\": {\n              \"type\": \"object\",\n              \"additionalProperties\": {\n                \"$ref\": \"#/$defs/node\"\n              }\n            }\n          }\n        }\n      ]\n    }\n  }\n}\n"
+    ]
+  },
+  "id": "[\"api\",\".\",\"nativeJsonSchema\"]",
+  "kind": "api",
+  "links": [
+    "[\"schema\",\"spec/core/native-json.schema.json\",\"\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 2163,
+      "line": 1,
+      "path": "spec/core/native-json.schema.json",
+      "sha256": "071e2dc97ffae0b8743b691ae4786c0b74eaa1ee54d881e1d8116dcb3f6a2839"
+    }
+  ],
+  "summary": "Public export · spec/core/native-json.schema.json",
+  "title": "nativeJsonSchema"
+}

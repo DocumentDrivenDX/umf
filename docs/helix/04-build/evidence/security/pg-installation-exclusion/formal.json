@@ -1,0 +1,83 @@
+{
+  "version": "umf.security.installation-exclusion-laws/0.1.0",
+  "solver": "4.15.4",
+  "python": "3.9.6 (default, Aug 25 2026, 21:26:21) \n[Clang 21.0.0 (clang-2100.3.34.2)]",
+  "sourcePins": {
+    "tools/security/pg-installation-exclusion-probe.py": "f585d26553035c0c818c9211f5b583740dc5f6d38f25066b9a55f7eb80b0d690",
+    "tools/security/pg-routine-drift-probe.py": "3e50a19c2a6c2ed04c59049e3a13d120f7c6cae4fc2a1d4deae3102089612e45",
+    "tools/security/pg-routine-custody.py": "2c4aa144f13dd5fdb0ceaf84faa18ea2c8ba46a4df47c79575764717c82e23b0",
+    "tests/security/native/pg-raw-membership.sql": "ac5640077786e81b80e536acc7c5d89d8f6747e1d8f425f17c4e3dfc3b37daf6",
+    "tests/security/native/pg-raw-membership-oracle.json": "1b04b8a2fe0de4f72ca2926398ff2717909bdbdee9d53e4284e4f4bd2fc5acee",
+    "docs/helix/03-test/security/cases.json": "37308740d5d8b57f6f4647c1a44feee71cbfde02d8f5bee1334299654a610ba9",
+    "tools/security/prove-installation-exclusion.py": "dd9e6e322ed6a51ebc15a34dd85f295cc882c64d466c1ee8c9a768f07de3ef2f",
+    "docs/helix/04-build/evidence/security/pg-installation-exclusion/native.json": "af342a025ec64c7842ae2063990c8371a990ac243ef7694dd76c036c43a5bcef"
+  },
+  "laws": 2,
+  "formulas": [
+    {
+      "name": "installation-initiation",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smtCapturedBeforeSolve": true,
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun readerHeld () Bool)\n(declare-fun registered () Int)\n(declare-fun installed () Int)\n(assert\n readerHeld)\n(assert\n (= installed registered))\n(assert\n (not (and readerHeld (= installed registered))))\n(check-sat)\n",
+      "freshContextReplay": "unsat"
+    },
+    {
+      "name": "installation-step-preservation",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smtCapturedBeforeSolve": true,
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun readerHeld () Bool)\n(declare-fun registered () Int)\n(declare-fun installed () Int)\n(declare-fun writerHeld () Bool)\n(declare-fun mutation () Bool)\n(declare-fun replacement () Int)\n(declare-fun following () Int)\n(assert\n readerHeld)\n(assert\n (= installed registered))\n(assert\n (not (and readerHeld writerHeld)))\n(assert\n (=> mutation writerHeld))\n(assert\n (= following (ite mutation replacement installed)))\n(assert\n (and (distinct following registered) true))\n(check-sat)\n",
+      "freshContextReplay": "unsat"
+    },
+    {
+      "name": "installation-uncoordinated-erasure-control",
+      "expected": "sat",
+      "observed": "sat",
+      "smtCapturedBeforeSolve": true,
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun readerHeld () Bool)\n(declare-fun registered () Int)\n(declare-fun installed () Int)\n(declare-fun writerHeld () Bool)\n(declare-fun mutation () Bool)\n(declare-fun replacement () Int)\n(declare-fun following () Int)\n(assert\n readerHeld)\n(assert\n (= installed registered))\n(assert\n (not (and readerHeld writerHeld)))\n(assert\n mutation)\n(assert\n (and (distinct replacement registered) true))\n(assert\n (= following (ite mutation replacement installed)))\n(assert\n (and (distinct following registered) true))\n(check-sat)\n",
+      "freshContextReplay": "sat"
+    },
+    {
+      "name": "installation-reader-and-waiter-nonvacuity",
+      "expected": "sat",
+      "observed": "sat",
+      "smtCapturedBeforeSolve": true,
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun readerHeld () Bool)\n(declare-fun writerPending () Bool)\n(declare-fun writerHeld () Bool)\n(declare-fun registered () Int)\n(declare-fun installed () Int)\n(declare-fun mutation () Bool)\n(declare-fun replacement () Int)\n(declare-fun following () Int)\n(assert\n readerHeld)\n(assert\n writerPending)\n(assert\n (not writerHeld))\n(assert\n (= installed registered))\n(assert\n (not (and readerHeld writerHeld)))\n(assert\n (=> mutation writerHeld))\n(assert\n (= following (ite mutation replacement installed)))\n(assert\n (= following registered))\n(check-sat)\n",
+      "freshContextReplay": "sat"
+    },
+    {
+      "name": "installation-writer-after-release-nonvacuity",
+      "expected": "sat",
+      "observed": "sat",
+      "smtCapturedBeforeSolve": true,
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun readerHeld () Bool)\n(declare-fun writerHeld () Bool)\n(declare-fun mutation () Bool)\n(declare-fun registered () Int)\n(declare-fun installed () Int)\n(declare-fun replacement () Int)\n(declare-fun following () Int)\n(assert\n (not readerHeld))\n(assert\n writerHeld)\n(assert\n mutation)\n(assert\n (= installed registered))\n(assert\n (and (distinct replacement registered) true))\n(assert\n (not (and readerHeld writerHeld)))\n(assert\n (=> mutation writerHeld))\n(assert\n (= following (ite mutation replacement installed)))\n(assert\n (and (distinct following registered) true))\n(check-sat)\n",
+      "freshContextReplay": "sat"
+    },
+    {
+      "name": "fresh-observed-drift-refusal",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smtCapturedBeforeSolve": true,
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun registered () Int)\n(declare-fun observed () Int)\n(declare-fun admit () Bool)\n(declare-fun execute () Bool)\n(assert\n (let (($x29 (= observed registered)))\n (= admit $x29)))\n(assert\n (= execute admit))\n(assert\n (and (distinct observed registered) true))\n(assert\n execute)\n(check-sat)\n",
+      "freshContextReplay": "unsat"
+    },
+    {
+      "name": "fresh-guard-erasure-control",
+      "expected": "sat",
+      "observed": "sat",
+      "smtCapturedBeforeSolve": true,
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun execute () Bool)\n(declare-fun registered () Int)\n(declare-fun observed () Int)\n(assert\n execute)\n(assert\n (and (distinct observed registered) true))\n(check-sat)\n",
+      "freshContextReplay": "sat"
+    },
+    {
+      "name": "fresh-matching-dispatch-nonvacuity",
+      "expected": "sat",
+      "observed": "sat",
+      "smtCapturedBeforeSolve": true,
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun registered () Int)\n(declare-fun observed () Int)\n(declare-fun admit () Bool)\n(declare-fun execute () Bool)\n(assert\n (let (($x29 (= observed registered)))\n (= admit $x29)))\n(assert\n (= execute admit))\n(assert\n (= observed registered))\n(assert\n execute)\n(check-sat)\n",
+      "freshContextReplay": "sat"
+    }
+  ],
+  "scope": "Ideal tuple identity and one-step cooperative lock invariant plus fresh observed-drift dispatch law. Successful initial validation establishes the invariant; one-step preservation supports arbitrary finite mutation histories while the reader lock remains held, assuming every mutation requires the mutually exclusive writer lock. SAT controls remove cooperation/guard or show active reader/waiter and post-release writer progress. Not refinement of Python serialization/admission, PostgreSQL lock/catalog/protocol implementation, real mutator completeness, source authentication, diagnostic noninterference or B10/native qualification. Erasure controls are model assumptions, not source mutants."
+}

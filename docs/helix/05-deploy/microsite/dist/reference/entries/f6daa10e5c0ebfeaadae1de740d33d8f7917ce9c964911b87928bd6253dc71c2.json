@@ -1,0 +1,50 @@
+{
+  "data": {
+    "conflicts": [],
+    "correspondence": "unassessed",
+    "declarations": [
+      {
+        "bytes": 3424,
+        "path": "spec/extensions/dbt-manifest/package.json",
+        "sha256": "b73eb55078749fe205d696e17e9f8dd8e987904112aa6dd5f99dd5551e35e22f"
+      }
+    ],
+    "evidence": [],
+    "operation": {
+      "apiNames": [],
+      "coreProfiles": [],
+      "extensionVersions": [],
+      "fixturePaths": [],
+      "id": "umf.dbt.manifest@0.1.0:export",
+      "kind": "export",
+      "limitations": [
+        "Recorded scope only; native equivalence and production adoption are separate."
+      ],
+      "runtime": {
+        "availability": "host-only",
+        "profileId": "umf.dbt.manifest@0.1.0:export",
+        "requirements": [
+          "Native runtime / original qualification harness; not executed by this page."
+        ]
+      },
+      "sourceSystem": "dbt manifest · v12 grammar; dbt Core 1.10.0 fixture",
+      "subset": "Exact artifact preservation, copied edits and schema-shape diagnostics; no graph or execution validity",
+      "targetSystem": "dbt manifest · v12 grammar; dbt Core 1.10.0 fixture",
+      "title": "umf.dbt.manifest · export"
+    }
+  },
+  "id": "[\"integration\",\"umf.dbt.manifest@0.1.0:export\"]",
+  "kind": "integration",
+  "links": [
+    "[\"extension\",\"umf.dbt.manifest\",\"0.1.0\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 134795,
+      "path": "docs/helix/05-deploy/reference/operations.json",
+      "sha256": "793743bbca36e56e90e82df5ef0408b628c434e58cb68aea4d6486349be78e61"
+    }
+  ],
+  "summary": "Exact artifact preservation, copied edits and schema-shape diagnostics; no graph or execution validity",
+  "title": "umf.dbt.manifest · export"
+}

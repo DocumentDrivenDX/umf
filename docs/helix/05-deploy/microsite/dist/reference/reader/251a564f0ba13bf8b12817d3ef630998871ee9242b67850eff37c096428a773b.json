@@ -1,0 +1,70 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"ExtensionPackage\"]",
+  "kind": "Type alias",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "id",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "version",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "coreVersion",
+      "optional": false,
+      "type": "\"0.10.0\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "description",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "schema",
+      "optional": false,
+      "type": "boolean | { [key: string]: unknown; }"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "semantics",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "scopes",
+      "optional": false,
+      "type": "(\"module\" | \"element\" | \"document\")[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "capabilities",
+      "optional": false,
+      "type": "{ [key: string]: unknown; validation: \"structural\" | \"semantic\"; directions: (\"import\" | \"export\")[]; evidence: (string)[]; native?: { \"system\": string; \"version\": string; \"subset\": string; [key: string]: unknown; }; }"
+    }
+  ],
+  "parameters": [],
+  "purpose": "ExtensionPackage is a type alias in Extensions. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Extensions",
+  "type": "ExtensionPackage"
+}

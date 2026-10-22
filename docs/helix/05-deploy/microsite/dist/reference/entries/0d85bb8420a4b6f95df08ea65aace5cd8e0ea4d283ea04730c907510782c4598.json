@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 13697,
+        "line": 9,
+        "path": "src/projections/bit128.ts",
+        "sha256": "6d0d33aba20872e1038c5946d8fc3bb1902cbde7d78cd3a1a66d7b7f1d953709"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "Bit128NativeProjection",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface Bit128NativeProjection {\n operation:'project-bit128-carrier-schema';version:'1.0.0';source:Document;binding:Document;identity:{module:string;element:string};policy:Bit128ProjectionPolicy;\n outcomes:{obligation:Bit128Obligation;outcome:'exact'|'unknown'|'not-expressible';reason:string}[];\n diagnostics:Diagnostic[];mapping:{idealPath:string;targetSlots:string[];bindingVersion:'0.3.0';target:Bit128BindingPayload['target']};\n status:'projected'|'reported'|'blocked';candidate?:{format:'sql'|'avro'|'parquet'|'tablespec';text:string};\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"Bit128NativeProjection\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 13697,
+      "line": 9,
+      "path": "src/projections/bit128.ts",
+      "sha256": "6d0d33aba20872e1038c5946d8fc3bb1902cbde7d78cd3a1a66d7b7f1d953709"
+    }
+  ],
+  "summary": "Type declaration · src/projections/bit128.ts",
+  "title": "Bit128NativeProjection"
+}

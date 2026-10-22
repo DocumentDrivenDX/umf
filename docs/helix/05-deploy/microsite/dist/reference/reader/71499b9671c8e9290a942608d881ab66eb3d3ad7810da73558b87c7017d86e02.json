@@ -1,0 +1,44 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"Bit128FieldBinding\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "module",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "element",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "storage",
+      "optional": false,
+      "type": "\"scalar-carrier\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Bit128Carrier\"]"
+      ],
+      "name": "carrier",
+      "optional": false,
+      "type": "Bit128Carrier"
+    }
+  ],
+  "parameters": [],
+  "purpose": "Bit128FieldBinding is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "Bit128FieldBinding"
+}

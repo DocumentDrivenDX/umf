@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 4654,
+        "line": 4,
+        "path": "src/adapters/arrow/ipc-consistency.ts",
+        "sha256": "7b83af801aece8a9e400261ea36fa8bc71eb566af531b80e93479ff919dce9bc"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "ArrowIpcConsistency",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface ArrowIpcConsistency {layout:ArrowIpcLayout;complete:false;footerChecks:'not-applicable'|'matched'|'mismatch'|'unverified';diagnostics:Diagnostic[];}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"ArrowIpcConsistency\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 4654,
+      "line": 4,
+      "path": "src/adapters/arrow/ipc-consistency.ts",
+      "sha256": "7b83af801aece8a9e400261ea36fa8bc71eb566af531b80e93479ff919dce9bc"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/arrow/ipc-consistency.ts",
+  "title": "ArrowIpcConsistency"
+}

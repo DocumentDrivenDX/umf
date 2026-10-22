@@ -1,5 +1,8 @@
-import {declareCoreFacets,declareCoreElementKind,type Document,type CoreFacetPatch,type FacetsTableSpecRequest,type CoreFacetDeclaration,type CoreKindDeclaration} from '../../src';
-export const facetProjectionSource=(scalarType:string):Document=>({umf:'0.5.0',id:'ideal',vocabularies:{},modules:[{id:'m',namespace:'',elements:[{id:'value',name:'value',kind:'field',scalarType,extensions:{}}]}]});
+// SPDX-License-Identifier: MIT OR Apache-2.0
+import {CURRENT_CORE_VERSION} from '../../src/model/types';
+// Synthetic current-core fixture for active operation/projection behavior.
+import {declareCoreFacets, declareCoreElementKind, type Document, type CoreFacetPatch, type FacetsTableSpecRequest, type CoreFacetDeclaration, type CoreKindDeclaration} from '../../src';
+export const facetProjectionSource=(scalarType:string):Document=>({umf:CURRENT_CORE_VERSION,id:'ideal',vocabularies:{},modules:[{id:'m',namespace:'',elements:[{id:'value',name:'value',kind:'field',scalarType,extensions:{}}]}]});
 export function facetsTableSpecProjectionCases(){
  const seeds:{name:string;family:string;type:FacetsTableSpecRequest['nativeType'];facets:CoreFacetPatch}[]=[
   ...[0,2,200].map(max=>({name:'length-'+max,family:'string',type:'VARCHAR' as const,facets:{length:{max,unit:'unicode-scalar' as const}}})),

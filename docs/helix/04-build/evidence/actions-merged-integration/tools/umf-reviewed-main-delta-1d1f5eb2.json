@@ -1,0 +1,395 @@
+{
+  "profile": "umf.actions.reviewed-primary-delta/1",
+  "baseline": "5be80ab9e71d2da9aea589e688fdc61af0a0e251",
+  "preparedMerge": "1d1f5eb2a21fd90a58b1fe52ce8fde9af23c96d2",
+  "integrationMerge": "a55345d10a6b78e8c6024e6a6796dbdadf88637a",
+  "primary": "322b193cef7c940d07b741860cf0170272628868",
+  "review": "Astra Ultra approved the primary integration and the subsequent three-file public Java runtime reproduction change; bounded models remain unchanged. Execution qualification remains a separate gate.",
+  "coldFormalToolCheck": {
+    "log": "/private/tmp/umf-public-tlc-runtime-cold-check.log",
+    "sha256": "070ae0a35d8498db53b397218daff939962811937579101cb1f4e88be09672d3",
+    "SMT": 22,
+    "TLC": 13,
+    "meaning": "Actual cold-cache tooling check before merged-source qualification; not the merged qualification itself"
+  },
+  "paths": [
+    {
+      "path": ".github/workflows/microsite.yml",
+      "beforeSha256": "defafefa97eb7b8575899ffe5996cd8fc8c0dd5e31e90218818ef95267697315",
+      "afterSha256": "07b381819b85e36d9b365043e2ae0e3c9184dee2014f756d32a283fd0817c1dc",
+      "kind": "changed"
+    },
+    {
+      "path": "docs/helix/01-frame/features/FEAT-009-domain-pack-catalog.md",
+      "beforeSha256": "416a773ae9cbbc0e03056f7b4466203dd945fe262ff0ab5183865c57d1fc4fd2",
+      "afterSha256": "d8803af59d19fd4735b9679364abe81378ff16c50cf5bee6070a420e8a638374",
+      "kind": "changed"
+    },
+    {
+      "path": "docs/helix/02-design/contracts/CONTRACT-061-artifact-collections.md",
+      "beforeSha256": null,
+      "afterSha256": "118a308b8d44f63c49a2b32aa1ab93331fadf01fc92a12adc5c938eb2882d173",
+      "kind": "added"
+    },
+    {
+      "path": "docs/helix/02-design/experiments/actions/formal/README.md",
+      "beforeSha256": "abbc7d687ae22dd08df927a5dc8bea9c9d066518458aae073dce064188aeb8d4",
+      "afterSha256": "f9f5881d15157c2f85004a4fe3b8542ac248ac69101456e5188fe166b87bcd41",
+      "kind": "changed"
+    },
+    {
+      "path": "docs/helix/04-build/artifact-collections-plan.md",
+      "beforeSha256": null,
+      "afterSha256": "e3c7de4cbbf9c3ab4b3de44bc6d9d062fde91f00bef7ca499c747f1ff522b5d0",
+      "kind": "added"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/artifact-collections.md",
+      "beforeSha256": null,
+      "afterSha256": "859c0271ce9153af144c49f007108a69870fbd56131308ad7bbd966b7b1bf461",
+      "kind": "added"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/schema-browser-ux.md",
+      "beforeSha256": null,
+      "afterSha256": "954bb73a3647362ed2722551e55c41c93df089b75d2ab1b2b63ce36deb5eed8f",
+      "kind": "added"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/schema-browser-ux/artifacts.jpg",
+      "beforeSha256": null,
+      "afterSha256": "f69b04a618d73968a7f1592abbcd853bf955f2dc759a5180de9f1774a6801a51",
+      "kind": "added"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/schema-browser-ux/desktop.jpg",
+      "beforeSha256": null,
+      "afterSha256": "7e1062689d1ec8155c3f09cfd85ff973ef65220901641543101a99b4342de6b4",
+      "kind": "added"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/schema-browser-ux/embedded.jpg",
+      "beforeSha256": null,
+      "afterSha256": "c733fb9efaeb578204e79569269b1e79abca91bc05a13c87f725518ef730b084",
+      "kind": "added"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/schema-browser-ux/focus.jpg",
+      "beforeSha256": null,
+      "afterSha256": "f0530e234ac683d5c3754e0c204e5174f178c0e72a331ab7c308be307d514e35",
+      "kind": "added"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/schema-browser-ux/mobile.jpg",
+      "beforeSha256": null,
+      "afterSha256": "86b1d9d76995293f5c83d1ede95758e0e97918be20a92212a49ade9d2c509cef",
+      "kind": "added"
+    },
+    {
+      "path": "docs/helix/04-build/guides/actions/formal-analysis.md",
+      "beforeSha256": "3fa2845684be6bde6c0deab255c5f6f9937de850f5e9663353276b9e28d77552",
+      "afterSha256": "76578a3e6bd46c17ead7f47622627b0b6e63668cf0f25259d469e2936bb94f8c",
+      "kind": "changed"
+    },
+    {
+      "path": "docs/helix/04-build/schema-browser-ux-plan.md",
+      "beforeSha256": null,
+      "afterSha256": "0a4a9b080dcadb8dd8f1f9153d13579b9e7d05bccfab8d815f518a2e19ff5c98",
+      "kind": "added"
+    },
+    {
+      "path": "docs/helix/05-deploy/artifact-collections-release-notes.md",
+      "beforeSha256": null,
+      "afterSha256": "934940fc91e89053641591f195313fa835acca8dbc4975c56f66b9d1fb738b44",
+      "kind": "added"
+    },
+    {
+      "path": "docs/helix/05-deploy/microsite/README.md",
+      "beforeSha256": "687c2b1d0856d4c404a884f4b3267dfe0fdc8a1d0f11bf4931e770da024ae5c0",
+      "afterSha256": "a32a2d974ab2cecbef94adabdacb991f02a45a3e0731583180fab1701f474737",
+      "kind": "changed"
+    },
+    {
+      "path": "docs/helix/05-deploy/microsite/build-explorer.ts",
+      "beforeSha256": "b7a6d78ca84734a54b9c2649f0c8ca468fc7f0248ae691326d2045c7b143fe93",
+      "afterSha256": "ebb5c08efa129517dcd8999d26619d0ad88f33fb3ce57adcdfe7b2cf76907f80",
+      "kind": "changed"
+    },
+    {
+      "path": "docs/helix/05-deploy/microsite/dist/explorer.css",
+      "beforeSha256": "479073250e24e40c180a37d4f55207cd7f672612acc61965c10156249d7cb6e0",
+      "afterSha256": "f4f15ddfc7dfa1f04d1a3d3604fdbf039e566293e4ee834c424f83642e440ceb",
+      "kind": "changed"
+    },
+    {
+      "path": "docs/helix/05-deploy/microsite/dist/explorer.js",
+      "beforeSha256": "e6d54c957f1a7644acf87ed74462ee783ac71be46299587ce08fcfc49596b207",
+      "afterSha256": "ced5812c5c376036254da0960055a113a0232a26cf74f633128c2dd63b92ce60",
+      "kind": "changed"
+    },
+    {
+      "path": "docs/helix/05-deploy/microsite/dist/schema-catalog.json",
+      "beforeSha256": "24473f535fd1ff33d9b07407d3ac83ad3af187bb0b9140a570981119ed48c850",
+      "afterSha256": "2bcd31b1572909ea6e5cfa9c4173c964257a6884fe4235d48cf1b4031ba92672",
+      "kind": "changed"
+    },
+    {
+      "path": "docs/helix/05-deploy/microsite/download-view.ts",
+      "beforeSha256": "1cd1a840b4ee9d00ec74ebef010e06815f0dd7a49e92a3801a1130b2610669f0",
+      "afterSha256": "deee02a0319710bd5d4c664251e6b99ab07b7f0f4d15cf2c7cd3fdeb609970cb",
+      "kind": "changed"
+    },
+    {
+      "path": "docs/helix/05-deploy/microsite/explorer-model.ts",
+      "beforeSha256": "b34241fc4039882682e8a5373db6373d054e2ad0558962272102ab2594301c09",
+      "afterSha256": "687468d3cd91fc1eda613d248d5517c8e74462cc2f0b6c2f67540f45af03aaa9",
+      "kind": "changed"
+    },
+    {
+      "path": "docs/helix/05-deploy/microsite/explorer.ts",
+      "beforeSha256": "e35684a10cc01fd4d4c1ea33cb714b210e468fa6a09a389be4dce7069e48c8ac",
+      "afterSha256": "6f9253a1f5292f83daec06ffdb6c6be10f1c2b09dadcb2976b29cb93eabb5e26",
+      "kind": "changed"
+    },
+    {
+      "path": "docs/helix/05-deploy/microsite/ontology-view.ts",
+      "beforeSha256": "ce8af4d5511006e0920d919fd4733154218765832d9e098e0df408a837502ead",
+      "afterSha256": "4edfe468de4817ecf95ebb25919f0d52163cd70a2b3dcb6763761b92aa418376",
+      "kind": "changed"
+    },
+    {
+      "path": "docs/helix/05-deploy/microsite/presentation.ts",
+      "beforeSha256": null,
+      "afterSha256": "ddb622dde7a9dc9b327cc27931548e5b35dbb8da6dd12b6994fff482e66f5fde",
+      "kind": "added"
+    },
+    {
+      "path": "docs/helix/README.md",
+      "beforeSha256": "ed4f517579d3f7cc4c8286088bb801a56f4c93c3df9f46ebaa1833dbebd88d4c",
+      "afterSha256": "e702e82a6f4918eeb6dba7104bcb8b526658cb0b2a95fe3a11445901a8ff4b48",
+      "kind": "changed"
+    },
+    {
+      "path": "python/README.md",
+      "beforeSha256": "e5faeff6c75999e0d975eec1379598f27b02aabe5f33fd6c9be831f1316d6c6e",
+      "afterSha256": "abb3d286b5502780dd47405b435a98f848fe1d5c32a830095a1e4e647ad145e1",
+      "kind": "changed"
+    },
+    {
+      "path": "python/pyproject.toml",
+      "beforeSha256": "7e3dc142b9c4c37e0e128032bb3d9014dcc40009831e1f8c05089fa4b7e2e16d",
+      "afterSha256": "20f4017c3af38a0f819f3708c4f95dc76287b9281a1857ac62698d59ff8fbe4b",
+      "kind": "changed"
+    },
+    {
+      "path": "python/tests/test_domain_packs.py",
+      "beforeSha256": "fa27751fbc42ce4f727981938c10955b0ba49b0ad8925114c442af49d12c4618",
+      "afterSha256": "f08bbeca0132b630334fcbd158074663568e885fcfe551f924a7289b9f7972a4",
+      "kind": "changed"
+    },
+    {
+      "path": "scripts/actions-docs/reproduce-formal.py",
+      "beforeSha256": "4b5132286eb82005eec0941b52465b19cc2ea9a9367b3b829fb4e2299c8d695b",
+      "afterSha256": "1f19d20bec05e344562baf008bb1bbce96f9ee03106b0513052658e4b5029491",
+      "kind": "changed"
+    },
+    {
+      "path": "scripts/artifact-collections-browser.ts",
+      "beforeSha256": null,
+      "afterSha256": "50930eeb942ccff91c0918583d2df4a2fbf92da96cec70ffe99c0a3a071af6ec",
+      "kind": "added"
+    },
+    {
+      "path": "scripts/build-domain-pack-loaders.ts",
+      "beforeSha256": "227aaf71660fccead61cf7d2bdd68a3da12457e401603f877274b30f136083d5",
+      "afterSha256": "b34beaee9aa7929cd0d5d199ca23bd8abd1e87fdbf4fc573b5224481c928405c",
+      "kind": "changed"
+    },
+    {
+      "path": "scripts/build-medical-subpacks.ts",
+      "beforeSha256": "a74d49f9985753b86a1f5633399d1294bdafa15dcf7a3023e19175861e882990",
+      "afterSha256": "712a9bd0f195f3d3c716e68510524cc798bff2bf6b7f8dc656a341c08d019b98",
+      "kind": "changed"
+    },
+    {
+      "path": "scripts/domain-packs/legal-appellate-project.py",
+      "beforeSha256": "e17fd50392fc2f115c62bed7ea43935a75051297109d7ce04221184fcdda0612",
+      "afterSha256": "a47dcc9b8725607e296c88f68e6c33cf6fc3d23a8b9720a226bd87a8e7147e2c",
+      "kind": "changed"
+    },
+    {
+      "path": "scripts/domain-packs/legal-project.py",
+      "beforeSha256": "39649031a160deffdd1d532dc7332365c2cf8c106112c5a646c4edacc8c9e002",
+      "afterSha256": "c2a039580ea5a1d65b55f5c93b4f2b3ec4fc2e8c327af3a3630e68e48f0f949e",
+      "kind": "changed"
+    },
+    {
+      "path": "scripts/domain-packs/public-company.ts",
+      "beforeSha256": "ad5bd4e6acfb76f96e58fbc5188e71cf8f2726196c13445f94c6bbe417ca2c20",
+      "afterSha256": "b1a42f90563f50535e5ea32fc766e8e82814755066639482902b0e85bfd0e8f6",
+      "kind": "changed"
+    },
+    {
+      "path": "scripts/domain-packs/test-graph-candidate-provenance.py",
+      "beforeSha256": "7b1bfeb54dccbb9154e73123f5f9ae2937f23a44c4a503510943df884f9b4bcb",
+      "afterSha256": "e749322ec597e707fcc1fe11737ea637ef874da74d75ccc804060b63350bf00c",
+      "kind": "changed"
+    },
+    {
+      "path": "scripts/public-company-browser.ts",
+      "beforeSha256": "1add29988b84acbbb256230cd3223d191394ee1a8017564775515acbc8f69452",
+      "afterSha256": "cf72c8eaf32f2e650479676a7ce29e260ca1c9bcc00289e536661a4c9d027645",
+      "kind": "changed"
+    },
+    {
+      "path": "spec/domain-packs/court-documents-loader-demo/pack.json",
+      "beforeSha256": "433457e67f38c3ecd8175852ef3e268ed75bea8dcc760239ed2bc7caafb1dd78",
+      "afterSha256": "7769199b054572775db4ebb7f7d6b3566f4c2e4a808ee145f4c3d6d39c9d4ad2",
+      "kind": "changed"
+    },
+    {
+      "path": "spec/domain-packs/legal-appellate/pack.json",
+      "beforeSha256": "02c4d081c77808ccc642fabd5512e31f4ff7064335455730233da641182a690d",
+      "afterSha256": "f4e637b7ec6fc9a9cf5fd0a792be994f4d68c58d7ca87cd39a1846f193467bc5",
+      "kind": "changed"
+    },
+    {
+      "path": "spec/domain-packs/legal/pack.json",
+      "beforeSha256": "2c9d3da15f1bd6a950c6e5ac1e7ddec2d65dbab632934bd144af5906c384205f",
+      "afterSha256": "37d16c130e92587986e7a2edeb79b40f448ca1ee816d6b8ffc0cc6c76d91e1b4",
+      "kind": "changed"
+    },
+    {
+      "path": "spec/domain-packs/medical-carrier/README.md",
+      "beforeSha256": "ccf5a89076c257e69d3c8a33bfb135e4d7acd8dc7ab11b866dc526850d6d18c4",
+      "afterSha256": "09c182b99313c76f73a2812821d3a418a599fe412f738d62edf0d498aab80a72",
+      "kind": "changed"
+    },
+    {
+      "path": "spec/domain-packs/medical-carrier/pack.json",
+      "beforeSha256": "3b59727ac3f98690084c703c6f0c2c444e1e00ef0b562bb97131edaec880568c",
+      "afterSha256": "a0983d727a976211448ef1e7790ed48bce451f548786ab10778ba010e6b85303",
+      "kind": "changed"
+    },
+    {
+      "path": "spec/domain-packs/medical-epidemiology/README.md",
+      "beforeSha256": "a4604dbc905b6baa3074c509fbd5449118915bc02906b7423da3b86bb0cabf49",
+      "afterSha256": "86c240fd53db176a018c117428eca5c996fb8887bb47011a51dc63cccdf5aa63",
+      "kind": "changed"
+    },
+    {
+      "path": "spec/domain-packs/medical-epidemiology/pack.json",
+      "beforeSha256": "fa073eeaa754042b9015913a1eba7546bf18d8623279135856856424d4fdfdd5",
+      "afterSha256": "4112439485f1659216b876f12abc14de5ca527e296eb9180d9445321cca12e1d",
+      "kind": "changed"
+    },
+    {
+      "path": "spec/domain-packs/medical-imaging/README.md",
+      "beforeSha256": "f45029ebbd3e593a38ba3b0b4cc62cd90fa06225179395656d6b680877496a3f",
+      "afterSha256": "7afc3ce9819c9a7f6526e37e4f7f70baf8c813422ad198e1c87ac3f8a62b97cd",
+      "kind": "changed"
+    },
+    {
+      "path": "spec/domain-packs/medical-imaging/pack.json",
+      "beforeSha256": "6fac6b9ced73a3aa8022508353c30727ea80e3ad51050a1db9a0f15da750c283",
+      "afterSha256": "28c236c049a66317dfdde5619452e1c088d2801cd46681b5b6f62de0a68c86d4",
+      "kind": "changed"
+    },
+    {
+      "path": "spec/domain-packs/medical-terminology/README.md",
+      "beforeSha256": "a681195a09ba9f4c2f5a578f998286abdf390eee62894048950b932501f8afc2",
+      "afterSha256": "71e6e91ecce5761544cbe498fcfa0ed06d9c34652e43d9f6e1053626c2ce9c96",
+      "kind": "changed"
+    },
+    {
+      "path": "spec/domain-packs/medical-terminology/pack.json",
+      "beforeSha256": "d67785efcacaea51de46d2e12737d9a69d84428d9380d34dda819a5c54bdd926",
+      "afterSha256": "308aedfb3c8346c113efde9b17380dd2857c51fd956b2a3e6889900a981ab642",
+      "kind": "changed"
+    },
+    {
+      "path": "spec/domain-packs/medical/pack.json",
+      "beforeSha256": "e7d3b3c8c39ffb7eb14835b76b371fe1a1c1ba43d38ddc3847914aea35a17574",
+      "afterSha256": "0ca3d6d61f4eb5f2d242750e9fcac4a142b0e38f5e8214077be903e27f77b7ae",
+      "kind": "changed"
+    },
+    {
+      "path": "spec/domain-packs/public-company-intelligence/pack.json",
+      "beforeSha256": "a2d45d43f21f1fa0eb025db2e3a411a8de4fc521939db22c924266bb28693286",
+      "afterSha256": "a7e88fcb160ff56ab5c22d5148187ca39f79d6b3d652a42650ceae6212b2efb1",
+      "kind": "changed"
+    },
+    {
+      "path": "spec/domain-packs/sec-filings-loader-demo/pack.json",
+      "beforeSha256": "e17bbec66e50b508e6eeeffb0659dc656bd58b88ad97d2b52248fc0e5ab7f25a",
+      "afterSha256": "5888e8c5576dfe7028986b9e95719735136c7a3c8784bb2e8ffe67323b901236",
+      "kind": "changed"
+    },
+    {
+      "path": "spec/extensions/domain-pack/package.json",
+      "beforeSha256": "fa69016037bdb6883f790380b05702a77c7b1c07b54bf568d663ab04ae5d9a71",
+      "afterSha256": "7a5ce97d3d8938ad004b6e7e869c080cd0a353997b81171cc96d910f2e64fb70",
+      "kind": "changed"
+    },
+    {
+      "path": "spec/extensions/domain-pack/schema.json",
+      "beforeSha256": "ffbd4489f63bca37183990f4594d22e1e6c524e8365c948f7ce9da79ae97d89f",
+      "afterSha256": "e34054015eae699987d7fd0640bdbc17906b129fa46b2c5770753ebf0723931e",
+      "kind": "changed"
+    },
+    {
+      "path": "src/domain-packs/artifacts.ts",
+      "beforeSha256": null,
+      "afterSha256": "d3bff93f5d6a9f2caa34f29781eb0978ad89672cf1f003340b9801204b7cf9e0",
+      "kind": "added"
+    },
+    {
+      "path": "src/domain-packs/profile.ts",
+      "beforeSha256": "e1014a08dfbac6d8c0b2f2f04ac2a905a04fbc91da8eca949e87236d1e806e4d",
+      "afterSha256": "f050120eb409d7f8c1c79ca907b848077def53a2fcdc00151a6d0376dc7bef34",
+      "kind": "changed"
+    },
+    {
+      "path": "src/domain-packs/schema.ts",
+      "beforeSha256": "cc016548fdd8ebdc962bc4b29f7abd9144f1f09bca9b9e73c2c14b0d8345c28f",
+      "afterSha256": "95f62367f2586797eb0ee73e8affa2c8c1f295453d75d9d4e90a1510e3bd757f",
+      "kind": "changed"
+    },
+    {
+      "path": "src/index.ts",
+      "beforeSha256": "4deafa20d96f5838f484b9f8a14049240364992e53a0031472d8692aca8d70c4",
+      "afterSha256": "afec73b869f812800de64de8465df7be6b568e991ad8f5e08ecaf560aebb8b47",
+      "kind": "changed"
+    },
+    {
+      "path": "tests/domain-packs/artifacts.test.ts",
+      "beforeSha256": null,
+      "afterSha256": "9d6c3e6f854b7b86ea4ca8ea5493759d2d34f1ac12685323f3043a3cbd65e7e1",
+      "kind": "added"
+    },
+    {
+      "path": "tests/domain-packs/legal.test.ts",
+      "beforeSha256": "a7ab247e443733578842d13bf8e188a6b366fc691d1d5d8e44f915b0d0f1e9e9",
+      "afterSha256": "d99a11275584479d42b86a2e12e5621b51ab7be14dad3acff71491bd3ab231fc",
+      "kind": "changed"
+    },
+    {
+      "path": "tests/domain-packs/medical-family.test.ts",
+      "beforeSha256": "a4d16deaff7999d13582d36631402cc037a68151e505273791f439888e43f746",
+      "afterSha256": "e4880ecc14c93d4423915fceb26777a26433cf623961839261ba5e9a1f0e7c1b",
+      "kind": "changed"
+    },
+    {
+      "path": "tests/domain-packs/presentation.test.ts",
+      "beforeSha256": null,
+      "afterSha256": "201dff0a70f9f2b109a43d40e59c9e1aad45a7ba11971653bb9f2f4ddc82f5b9",
+      "kind": "added"
+    },
+    {
+      "path": "tsconfig.tools.json",
+      "beforeSha256": "4eadc39912c38f9941534a50ffb20eabcb75a70fcdf2fed58f978f35d5fc84a9",
+      "afterSha256": "a2662971bd1abb7fd1bbc0f781a6ce9f120af85ed2715a2d150aad9cc33e0ba6",
+      "kind": "changed"
+    }
+  ]
+}

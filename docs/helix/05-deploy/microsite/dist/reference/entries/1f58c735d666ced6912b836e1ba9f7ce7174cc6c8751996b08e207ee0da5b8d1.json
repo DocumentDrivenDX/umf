@@ -1,0 +1,595 @@
+{
+  "data": {
+    "pointer": "",
+    "profileVersions": [],
+    "references": [
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/cardinality-operation-v4.schema.json\",\"\"]",
+        "target": "#/$defs/identity"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/cardinality-operation-v4.schema.json\",\"\"]",
+        "target": "#/$defs/cardinality"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/cardinality-operation-v4.schema.json\",\"\"]",
+        "target": "#/$defs/request"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/cardinality-operation-v4.schema.json\",\"\"]",
+        "target": "#/$defs/cardinality"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/cardinality-operation-v4.schema.json\",\"\"]",
+        "target": "#/$defs/itemType"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/cardinality-operation-v4.schema.json\",\"\"]",
+        "target": "#/$defs/declaration"
+      }
+    ],
+    "role": "operation",
+    "schemaPath": "spec/core/cardinality-operation-v4.schema.json",
+    "sourceData": {
+      "kind": "object",
+      "members": {
+        "$defs": {
+          "kind": "object",
+          "members": {
+            "cardinality": {
+              "kind": "object",
+              "members": {
+                "enum": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "one"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "array"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "map"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "unspecified"
+                    }
+                  ],
+                  "kind": "array"
+                }
+              }
+            },
+            "declaration": {
+              "kind": "object",
+              "members": {
+                "additionalProperties": {
+                  "kind": "boolean",
+                  "value": false
+                },
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "identity": {
+                      "kind": "object",
+                      "members": {
+                        "$ref": {
+                          "kind": "string",
+                          "value": "#/$defs/identity"
+                        }
+                      }
+                    },
+                    "operation": {
+                      "kind": "object",
+                      "members": {
+                        "const": {
+                          "kind": "string",
+                          "value": "declare-core-cardinality"
+                        }
+                      }
+                    },
+                    "provenance": {
+                      "kind": "object",
+                      "members": {
+                        "additionalProperties": {
+                          "kind": "boolean",
+                          "value": false
+                        },
+                        "properties": {
+                          "kind": "object",
+                          "members": {
+                            "basis": {
+                              "kind": "object",
+                              "members": {
+                                "const": {
+                                  "kind": "string",
+                                  "value": "explicit-author-declaration"
+                                }
+                              }
+                            },
+                            "binding": {
+                              "kind": "object",
+                              "members": {
+                                "const": {
+                                  "kind": "object",
+                                  "members": {
+                                    "id": {
+                                      "kind": "string",
+                                      "value": "umf.core.cardinality.authoring"
+                                    },
+                                    "version": {
+                                      "kind": "string",
+                                      "value": "4.0.0"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "cardinality": {
+                              "kind": "object",
+                              "members": {
+                                "$ref": {
+                                  "kind": "string",
+                                  "value": "#/$defs/cardinality"
+                                }
+                              }
+                            },
+                            "idealPath": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            },
+                            "nativePath": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "null"
+                                }
+                              }
+                            },
+                            "origin": {
+                              "kind": "object",
+                              "members": {
+                                "const": {
+                                  "kind": "string",
+                                  "value": "authored"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "required": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "origin"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "idealPath"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "cardinality"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "binding"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "basis"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "nativePath"
+                            }
+                          ],
+                          "kind": "array"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "object"
+                        }
+                      }
+                    },
+                    "request": {
+                      "kind": "object",
+                      "members": {
+                        "$ref": {
+                          "kind": "string",
+                          "value": "#/$defs/request"
+                        }
+                      }
+                    },
+                    "source": {
+                      "kind": "object",
+                      "members": {
+                        "$ref": {
+                          "kind": "string",
+                          "value": "urn:umf:core:0.10.0"
+                        }
+                      }
+                    },
+                    "target": {
+                      "kind": "object",
+                      "members": {
+                        "$ref": {
+                          "kind": "string",
+                          "value": "urn:umf:core:0.10.0"
+                        }
+                      }
+                    },
+                    "version": {
+                      "kind": "object",
+                      "members": {
+                        "const": {
+                          "kind": "string",
+                          "value": "4.0.0"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "operation"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "version"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "source"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "target"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "identity"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "provenance"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "request"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "identity": {
+              "kind": "object",
+              "members": {
+                "additionalProperties": {
+                  "kind": "boolean",
+                  "value": false
+                },
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "element": {
+                      "kind": "object",
+                      "members": {
+                        "minLength": {
+                          "kind": "number",
+                          "value": "1"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "module": {
+                      "kind": "object",
+                      "members": {
+                        "minLength": {
+                          "kind": "number",
+                          "value": "1"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "module"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "element"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "itemType": {
+              "kind": "object",
+              "members": {
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "element": {
+                      "kind": "object",
+                      "members": {
+                        "minLength": {
+                          "kind": "number",
+                          "value": "1"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "module": {
+                      "kind": "object",
+                      "members": {
+                        "minLength": {
+                          "kind": "number",
+                          "value": "1"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "module"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "element"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "request": {
+              "kind": "object",
+              "members": {
+                "additionalProperties": {
+                  "kind": "boolean",
+                  "value": false
+                },
+                "allOf": {
+                  "items": [
+                    {
+                      "kind": "object",
+                      "members": {
+                        "if": {
+                          "kind": "object",
+                          "members": {
+                            "properties": {
+                              "kind": "object",
+                              "members": {
+                                "itemType": {
+                                  "kind": "object",
+                                  "members": {
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "object"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "required": {
+                              "items": [
+                                {
+                                  "kind": "string",
+                                  "value": "itemType"
+                                }
+                              ],
+                              "kind": "array"
+                            }
+                          }
+                        },
+                        "then": {
+                          "kind": "object",
+                          "members": {
+                            "properties": {
+                              "kind": "object",
+                              "members": {
+                                "cardinality": {
+                                  "kind": "object",
+                                  "members": {
+                                    "enum": {
+                                      "items": [
+                                        {
+                                          "kind": "string",
+                                          "value": "array"
+                                        },
+                                        {
+                                          "kind": "string",
+                                          "value": "map"
+                                        }
+                                      ],
+                                      "kind": "array"
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "cardinality": {
+                      "kind": "object",
+                      "members": {
+                        "$ref": {
+                          "kind": "string",
+                          "value": "#/$defs/cardinality"
+                        }
+                      }
+                    },
+                    "itemType": {
+                      "kind": "object",
+                      "members": {
+                        "oneOf": {
+                          "items": [
+                            {
+                              "kind": "object",
+                              "members": {
+                                "$ref": {
+                                  "kind": "string",
+                                  "value": "#/$defs/itemType"
+                                }
+                              }
+                            },
+                            {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "null"
+                                }
+                              }
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "cardinality"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "source": {
+              "kind": "object",
+              "members": {
+                "$ref": {
+                  "kind": "string",
+                  "value": "urn:umf:core:0.10.0"
+                }
+              }
+            }
+          }
+        },
+        "$id": {
+          "kind": "string",
+          "value": "urn:umf:core:cardinality-operation:4.0.0"
+        },
+        "$schema": {
+          "kind": "string",
+          "value": "https://json-schema.org/draft/2020-12/schema"
+        },
+        "oneOf": {
+          "items": [
+            {
+              "kind": "object",
+              "members": {
+                "$ref": {
+                  "kind": "string",
+                  "value": "#/$defs/declaration"
+                }
+              }
+            }
+          ],
+          "kind": "array"
+        },
+        "title": {
+          "kind": "string",
+          "value": "Core cardinality inspection and explicit author declaration results (Key envelope) (Relationship envelope)"
+        }
+      }
+    }
+  },
+  "id": "[\"schema\",\"spec/core/cardinality-operation-v4.schema.json\",\"\"]",
+  "kind": "schema",
+  "links": [
+    "[\"schema\",\"spec/core/schema.json\",\"\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 3666,
+      "path": "spec/core/cardinality-operation-v4.schema.json",
+      "sha256": "c2562ad726b58306c18332512f2b5388ddc625abb7494c532794682492300d45"
+    }
+  ],
+  "summary": "spec/core/cardinality-operation-v4.schema.json",
+  "title": "Core cardinality inspection and explicit author declaration results (Key envelope) (Relationship envelope)"
+}

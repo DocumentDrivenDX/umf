@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 4018,
+        "line": 10,
+        "path": "src/adapters/odcs/references.ts",
+        "sha256": "ba7b29fa12c26572a82f9e4c4771ed40c8fff4fec5529ce56c05845dc451ad20"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "resolveOdcsReference",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(document: Document, options: { reference: string; usage: \"element\" | \"foreignKey\"; }): OdcsReferenceResult"
+    ]
+  },
+  "id": "[\"api\",\".\",\"resolveOdcsReference\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 4018,
+      "line": 10,
+      "path": "src/adapters/odcs/references.ts",
+      "sha256": "ba7b29fa12c26572a82f9e4c4771ed40c8fff4fec5529ce56c05845dc451ad20"
+    }
+  ],
+  "summary": "Resolve local ODCS identifiers/names. These are not JSON Pointer array indexes.",
+  "title": "resolveOdcsReference"
+}

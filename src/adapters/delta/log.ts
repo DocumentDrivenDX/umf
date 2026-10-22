@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
+import {CURRENT_CORE_VERSION} from '../../generated/core-model';
 import manifest from '../../../spec/extensions/delta-log/package.json';
 import {Registry} from '../../registry/registry';
 import {validateDocument} from '../../validation/document';
@@ -9,7 +11,7 @@ export const deltaLogPackage=manifest as unknown as ExtensionPackage;
 export function deltaLogRegistry(){return new Registry().register(deltaLogPackage);}
 export function captureDeltaLog(text:string,options:{id:string}):Document{
  if(typeof text!=='string'||text.length>1000000)throw new UmfError('DELTA_LOG_LIMIT','Expected at most 1000000 UTF-16 code units');
- const doc:Document={umf:'0.1.0',id:options.id,vocabularies:{[DELTA_LOG_EXTENSION]:{version:'0.1.0'}},modules:[{id:'log',namespace:'',elements:[{id:'source',extensions:{[DELTA_LOG_EXTENSION]:{profile:'delta-jsonl-source',text}}}]}]};exportDeltaLog(doc);return doc;
+ const doc:Document={umf:CURRENT_CORE_VERSION,id:options.id,vocabularies:{[DELTA_LOG_EXTENSION]:{version:'0.1.0'}},modules:[{id:'log',namespace:'',elements:[{id:'source',extensions:{[DELTA_LOG_EXTENSION]:{profile:'delta-jsonl-source',text}}}]}]};exportDeltaLog(doc);return doc;
 }
 export function exportDeltaLog(doc:Document):string{
  if(!validateDocument(doc,deltaLogRegistry()).valid)throw new UmfError('DELTA_LOG_DOCUMENT','Invalid source capture envelope');const p=doc.modules.find(m=>m.id==='log')?.elements.find(e=>e.id==='source')?.extensions[DELTA_LOG_EXTENSION];if(doc.vocabularies[DELTA_LOG_EXTENSION]?.version!=='0.1.0'||!p||typeof p!=='object'||Array.isArray(p))throw new UmfError('DELTA_LOG_PAYLOAD','Expected pinned log payload');if(Object.keys(p).some(k=>!['profile','text'].includes(k)))throw new UmfError('DELTA_LOG_REPRESENTATION','Unknown representation fields cannot be dropped from native export');if(typeof p.text!=='string'||p.text.length>1000000)throw new UmfError('DELTA_LOG_LIMIT','Expected at most 1000000 UTF-16 code units');return p.text;

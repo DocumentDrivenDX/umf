@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {readJsonValue} from '../model/serialization';
 import {type NativeJson} from '../model/native-json';
 import {UmfError,pointer} from '../model/types';

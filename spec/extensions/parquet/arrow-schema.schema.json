@@ -12,7 +12,7 @@
   ],
   "properties": {
     "source": {
-      "$ref": "urn:umf:core:0.1.0"
+      "$ref": "urn:umf:core:0.10.0"
     },
     "status": {
       "enum": [
@@ -63,10 +63,10 @@
       "pattern": "^(?:[0-9a-f]{2})*(?![\\s\\S])"
     },
     "message": {
-      "$ref": "urn:umf:core:0.1.0"
+      "$ref": "urn:umf:core:0.10.0"
     },
     "schema": {
-      "$ref": "urn:umf:core:0.1.0"
+      "$ref": "urn:umf:core:0.10.0"
     }
   },
   "allOf": [

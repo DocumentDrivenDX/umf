@@ -1,0 +1,1295 @@
+{
+  "version": "0.1.0",
+  "engine": "170009",
+  "actors": [
+    "umf_sec_alice",
+    "umf_sec_bob",
+    "umf_sec_carol",
+    "umf_sec_dave",
+    "umf_sec_eve",
+    "umf_sec_frank",
+    "umf_sec_grace",
+    "umf_sec_henry",
+    "umf_sec_iris",
+    "umf_sec_outsider"
+  ],
+  "initialRows": [
+    [
+      "WA",
+      "A",
+      "alice"
+    ],
+    [
+      "WB",
+      "B",
+      "bob"
+    ],
+    [
+      "WC",
+      "A",
+      "carol"
+    ],
+    [
+      "WD",
+      "A",
+      "dave"
+    ],
+    [
+      "WE",
+      "A",
+      "eve-new"
+    ],
+    [
+      "WEO",
+      "B",
+      "eve-old"
+    ],
+    [
+      "WF",
+      "A",
+      "frank-new"
+    ],
+    [
+      "WFO",
+      "B",
+      "frank-old"
+    ],
+    [
+      "WG",
+      "A",
+      "grace"
+    ],
+    [
+      "WH",
+      "A",
+      "henry-new"
+    ],
+    [
+      "WHO",
+      "B",
+      "henry-old"
+    ]
+  ],
+  "actionGrants": [
+    [
+      "Alice",
+      "A",
+      "read"
+    ],
+    [
+      "Alice",
+      "A",
+      "create"
+    ],
+    [
+      "Alice",
+      "A",
+      "update"
+    ],
+    [
+      "Alice",
+      "A",
+      "delete"
+    ],
+    [
+      "Alice",
+      "A",
+      "writeId"
+    ],
+    [
+      "Alice",
+      "A",
+      "writeOwner"
+    ],
+    [
+      "Alice",
+      "A",
+      "writeValue"
+    ],
+    [
+      "Alice",
+      "A",
+      "changeOwner"
+    ],
+    [
+      "Alice",
+      "A",
+      "changePolicy"
+    ],
+    [
+      "Alice",
+      "B",
+      "read"
+    ],
+    [
+      "Alice",
+      "B",
+      "create"
+    ],
+    [
+      "Alice",
+      "B",
+      "update"
+    ],
+    [
+      "Alice",
+      "B",
+      "delete"
+    ],
+    [
+      "Alice",
+      "B",
+      "writeId"
+    ],
+    [
+      "Alice",
+      "B",
+      "writeOwner"
+    ],
+    [
+      "Alice",
+      "B",
+      "writeValue"
+    ],
+    [
+      "Alice",
+      "B",
+      "changeOwner"
+    ],
+    [
+      "Alice",
+      "B",
+      "changePolicy"
+    ],
+    [
+      "Bob",
+      "A",
+      "read"
+    ],
+    [
+      "Bob",
+      "A",
+      "create"
+    ],
+    [
+      "Bob",
+      "A",
+      "update"
+    ],
+    [
+      "Bob",
+      "A",
+      "delete"
+    ],
+    [
+      "Bob",
+      "A",
+      "writeId"
+    ],
+    [
+      "Bob",
+      "A",
+      "writeOwner"
+    ],
+    [
+      "Bob",
+      "A",
+      "writeValue"
+    ],
+    [
+      "Bob",
+      "A",
+      "changeOwner"
+    ],
+    [
+      "Bob",
+      "A",
+      "changePolicy"
+    ],
+    [
+      "Bob",
+      "B",
+      "read"
+    ],
+    [
+      "Bob",
+      "B",
+      "create"
+    ],
+    [
+      "Bob",
+      "B",
+      "update"
+    ],
+    [
+      "Bob",
+      "B",
+      "delete"
+    ],
+    [
+      "Bob",
+      "B",
+      "writeId"
+    ],
+    [
+      "Bob",
+      "B",
+      "writeOwner"
+    ],
+    [
+      "Bob",
+      "B",
+      "writeValue"
+    ],
+    [
+      "Bob",
+      "B",
+      "changeOwner"
+    ],
+    [
+      "Bob",
+      "B",
+      "changePolicy"
+    ],
+    [
+      "Carol",
+      "A",
+      "read"
+    ],
+    [
+      "Carol",
+      "A",
+      "create"
+    ],
+    [
+      "Carol",
+      "A",
+      "update"
+    ],
+    [
+      "Carol",
+      "A",
+      "delete"
+    ],
+    [
+      "Carol",
+      "A",
+      "writeId"
+    ],
+    [
+      "Carol",
+      "A",
+      "writeOwner"
+    ],
+    [
+      "Carol",
+      "A",
+      "writeValue"
+    ],
+    [
+      "Carol",
+      "A",
+      "changeOwner"
+    ],
+    [
+      "Carol",
+      "A",
+      "changePolicy"
+    ],
+    [
+      "Carol",
+      "B",
+      "read"
+    ],
+    [
+      "Carol",
+      "B",
+      "create"
+    ],
+    [
+      "Carol",
+      "B",
+      "update"
+    ],
+    [
+      "Carol",
+      "B",
+      "delete"
+    ],
+    [
+      "Carol",
+      "B",
+      "writeId"
+    ],
+    [
+      "Carol",
+      "B",
+      "writeOwner"
+    ],
+    [
+      "Carol",
+      "B",
+      "writeValue"
+    ],
+    [
+      "Carol",
+      "B",
+      "changeOwner"
+    ],
+    [
+      "Carol",
+      "B",
+      "changePolicy"
+    ],
+    [
+      "Dave",
+      "A",
+      "read"
+    ],
+    [
+      "Dave",
+      "A",
+      "create"
+    ],
+    [
+      "Dave",
+      "A",
+      "update"
+    ],
+    [
+      "Dave",
+      "A",
+      "delete"
+    ],
+    [
+      "Dave",
+      "A",
+      "writeId"
+    ],
+    [
+      "Dave",
+      "A",
+      "writeOwner"
+    ],
+    [
+      "Dave",
+      "A",
+      "writeValue"
+    ],
+    [
+      "Dave",
+      "A",
+      "changePolicy"
+    ],
+    [
+      "Dave",
+      "B",
+      "read"
+    ],
+    [
+      "Dave",
+      "B",
+      "create"
+    ],
+    [
+      "Dave",
+      "B",
+      "update"
+    ],
+    [
+      "Dave",
+      "B",
+      "delete"
+    ],
+    [
+      "Dave",
+      "B",
+      "writeId"
+    ],
+    [
+      "Dave",
+      "B",
+      "writeOwner"
+    ],
+    [
+      "Dave",
+      "B",
+      "writeValue"
+    ],
+    [
+      "Dave",
+      "B",
+      "changePolicy"
+    ],
+    [
+      "Eve",
+      "A",
+      "read"
+    ],
+    [
+      "Eve",
+      "A",
+      "create"
+    ],
+    [
+      "Eve",
+      "A",
+      "update"
+    ],
+    [
+      "Eve",
+      "A",
+      "delete"
+    ],
+    [
+      "Eve",
+      "A",
+      "writeId"
+    ],
+    [
+      "Eve",
+      "A",
+      "writeOwner"
+    ],
+    [
+      "Eve",
+      "A",
+      "writeValue"
+    ],
+    [
+      "Eve",
+      "A",
+      "changeOwner"
+    ],
+    [
+      "Eve",
+      "A",
+      "changePolicy"
+    ],
+    [
+      "Eve",
+      "B",
+      "read"
+    ],
+    [
+      "Eve",
+      "B",
+      "create"
+    ],
+    [
+      "Eve",
+      "B",
+      "update"
+    ],
+    [
+      "Eve",
+      "B",
+      "delete"
+    ],
+    [
+      "Eve",
+      "B",
+      "writeId"
+    ],
+    [
+      "Eve",
+      "B",
+      "writeOwner"
+    ],
+    [
+      "Eve",
+      "B",
+      "writeValue"
+    ],
+    [
+      "Eve",
+      "B",
+      "changePolicy"
+    ],
+    [
+      "Frank",
+      "A",
+      "read"
+    ],
+    [
+      "Frank",
+      "A",
+      "create"
+    ],
+    [
+      "Frank",
+      "A",
+      "update"
+    ],
+    [
+      "Frank",
+      "A",
+      "delete"
+    ],
+    [
+      "Frank",
+      "A",
+      "writeId"
+    ],
+    [
+      "Frank",
+      "A",
+      "writeOwner"
+    ],
+    [
+      "Frank",
+      "A",
+      "writeValue"
+    ],
+    [
+      "Frank",
+      "A",
+      "changeOwner"
+    ],
+    [
+      "Frank",
+      "A",
+      "changePolicy"
+    ],
+    [
+      "Frank",
+      "B",
+      "read"
+    ],
+    [
+      "Frank",
+      "B",
+      "create"
+    ],
+    [
+      "Frank",
+      "B",
+      "update"
+    ],
+    [
+      "Frank",
+      "B",
+      "delete"
+    ],
+    [
+      "Frank",
+      "B",
+      "writeId"
+    ],
+    [
+      "Frank",
+      "B",
+      "writeOwner"
+    ],
+    [
+      "Frank",
+      "B",
+      "writeValue"
+    ],
+    [
+      "Frank",
+      "B",
+      "changeOwner"
+    ],
+    [
+      "Grace",
+      "A",
+      "read"
+    ],
+    [
+      "Grace",
+      "A",
+      "create"
+    ],
+    [
+      "Grace",
+      "A",
+      "update"
+    ],
+    [
+      "Grace",
+      "A",
+      "delete"
+    ],
+    [
+      "Grace",
+      "A",
+      "writeId"
+    ],
+    [
+      "Grace",
+      "A",
+      "writeOwner"
+    ],
+    [
+      "Grace",
+      "A",
+      "changeOwner"
+    ],
+    [
+      "Grace",
+      "B",
+      "read"
+    ],
+    [
+      "Grace",
+      "B",
+      "create"
+    ],
+    [
+      "Grace",
+      "B",
+      "update"
+    ],
+    [
+      "Grace",
+      "B",
+      "delete"
+    ],
+    [
+      "Grace",
+      "B",
+      "writeId"
+    ],
+    [
+      "Grace",
+      "B",
+      "writeOwner"
+    ],
+    [
+      "Grace",
+      "B",
+      "changeOwner"
+    ],
+    [
+      "Henry",
+      "A",
+      "read"
+    ],
+    [
+      "Henry",
+      "A",
+      "create"
+    ],
+    [
+      "Henry",
+      "A",
+      "update"
+    ],
+    [
+      "Henry",
+      "A",
+      "delete"
+    ],
+    [
+      "Henry",
+      "A",
+      "writeOwner"
+    ],
+    [
+      "Henry",
+      "A",
+      "writeValue"
+    ],
+    [
+      "Henry",
+      "A",
+      "changeOwner"
+    ],
+    [
+      "Henry",
+      "A",
+      "changePolicy"
+    ],
+    [
+      "Henry",
+      "B",
+      "read"
+    ],
+    [
+      "Henry",
+      "B",
+      "create"
+    ],
+    [
+      "Henry",
+      "B",
+      "update"
+    ],
+    [
+      "Henry",
+      "B",
+      "delete"
+    ],
+    [
+      "Henry",
+      "B",
+      "writeId"
+    ],
+    [
+      "Henry",
+      "B",
+      "writeOwner"
+    ],
+    [
+      "Henry",
+      "B",
+      "changeOwner"
+    ],
+    [
+      "Henry",
+      "B",
+      "changePolicy"
+    ],
+    [
+      "Iris",
+      "A",
+      "read"
+    ],
+    [
+      "Iris",
+      "A",
+      "create"
+    ],
+    [
+      "Iris",
+      "A",
+      "delete"
+    ],
+    [
+      "Iris",
+      "A",
+      "writeId"
+    ],
+    [
+      "Iris",
+      "A",
+      "writeOwner"
+    ],
+    [
+      "Iris",
+      "A",
+      "writeValue"
+    ],
+    [
+      "Iris",
+      "A",
+      "changeOwner"
+    ],
+    [
+      "Iris",
+      "A",
+      "changePolicy"
+    ],
+    [
+      "Iris",
+      "B",
+      "read"
+    ],
+    [
+      "Iris",
+      "B",
+      "create"
+    ],
+    [
+      "Iris",
+      "B",
+      "delete"
+    ],
+    [
+      "Iris",
+      "B",
+      "writeId"
+    ],
+    [
+      "Iris",
+      "B",
+      "writeOwner"
+    ],
+    [
+      "Iris",
+      "B",
+      "writeValue"
+    ],
+    [
+      "Iris",
+      "B",
+      "changeOwner"
+    ],
+    [
+      "Iris",
+      "B",
+      "changePolicy"
+    ]
+  ],
+  "vectors": [
+    {
+      "id": "create-assigned",
+      "actor": "umf_sec_alice",
+      "sql": "INSERT INTO security_write.resource VALUES('CA','A','created') RETURNING json_build_array(id,owner_project,value)::text;",
+      "sqlstate": null,
+      "rows": [
+        [
+          "CA",
+          "A",
+          "created"
+        ]
+      ],
+      "effects": [
+        {
+          "id": "CA",
+          "row": [
+            "CA",
+            "A",
+            "created"
+          ]
+        }
+      ],
+      "approvedDelta": "1"
+    },
+    {
+      "id": "create-unassigned",
+      "actor": "umf_sec_alice",
+      "sql": "INSERT INTO security_write.resource VALUES('NO','B','denied') RETURNING json_build_array(id,owner_project,value)::text;",
+      "sqlstate": "42501",
+      "rows": [],
+      "effects": [],
+      "approvedDelta": "0"
+    },
+    {
+      "id": "create-no-owner-action",
+      "actor": "umf_sec_dave",
+      "sql": "INSERT INTO security_write.resource VALUES('NO','A','denied') RETURNING json_build_array(id,owner_project,value)::text;",
+      "sqlstate": "42501",
+      "rows": [],
+      "effects": [],
+      "approvedDelta": "0"
+    },
+    {
+      "id": "create-no-policy-action",
+      "actor": "umf_sec_frank",
+      "sql": "INSERT INTO security_write.resource VALUES('NO','B','denied') RETURNING json_build_array(id,owner_project,value)::text;",
+      "sqlstate": "42501",
+      "rows": [],
+      "effects": [],
+      "approvedDelta": "0"
+    },
+    {
+      "id": "create-outsider",
+      "actor": "umf_sec_outsider",
+      "sql": "INSERT INTO security_write.resource VALUES('NO','A','denied') RETURNING json_build_array(id,owner_project,value)::text;",
+      "sqlstate": "42501",
+      "rows": [],
+      "effects": [],
+      "approvedDelta": "0"
+    },
+    {
+      "id": "update-assigned",
+      "actor": "umf_sec_alice",
+      "sql": "UPDATE security_write.resource SET value='updated' WHERE id='WA' RETURNING json_build_array(id,owner_project,value)::text;",
+      "sqlstate": null,
+      "rows": [
+        [
+          "WA",
+          "A",
+          "updated"
+        ]
+      ],
+      "effects": [
+        {
+          "id": "WA",
+          "row": [
+            "WA",
+            "A",
+            "updated"
+          ]
+        }
+      ],
+      "approvedDelta": "1"
+    },
+    {
+      "id": "update-hidden-old",
+      "actor": "umf_sec_alice",
+      "sql": "UPDATE security_write.resource SET value='denied' WHERE id='WB' RETURNING json_build_array(id,owner_project,value)::text;",
+      "sqlstate": null,
+      "rows": [],
+      "effects": [],
+      "approvedDelta": "0"
+    },
+    {
+      "id": "move-no-new-membership",
+      "actor": "umf_sec_alice",
+      "sql": "UPDATE security_write.resource SET owner_project='B' WHERE id='WA' RETURNING json_build_array(id,owner_project,value)::text;",
+      "sqlstate": "42501",
+      "rows": [],
+      "effects": [],
+      "approvedDelta": "0"
+    },
+    {
+      "id": "move-no-old-membership",
+      "actor": "umf_sec_bob",
+      "sql": "UPDATE security_write.resource SET owner_project='B' WHERE id='WA' RETURNING json_build_array(id,owner_project,value)::text;",
+      "sqlstate": null,
+      "rows": [],
+      "effects": [],
+      "approvedDelta": "0"
+    },
+    {
+      "id": "move-no-owner-action",
+      "actor": "umf_sec_dave",
+      "sql": "UPDATE security_write.resource SET owner_project='B' WHERE id='WD' RETURNING json_build_array(id,owner_project,value)::text;",
+      "sqlstate": "42501",
+      "rows": [],
+      "effects": [],
+      "approvedDelta": "0"
+    },
+    {
+      "id": "move-no-new-owner-action",
+      "actor": "umf_sec_eve",
+      "sql": "UPDATE security_write.resource SET owner_project='B' WHERE id='WE' RETURNING json_build_array(id,owner_project,value)::text;",
+      "sqlstate": "42501",
+      "rows": [],
+      "effects": [],
+      "approvedDelta": "0"
+    },
+    {
+      "id": "move-no-old-owner-action",
+      "actor": "umf_sec_eve",
+      "sql": "UPDATE security_write.resource SET owner_project='A' WHERE id='WEO' RETURNING json_build_array(id,owner_project,value)::text;",
+      "sqlstate": "42501",
+      "rows": [],
+      "effects": [],
+      "approvedDelta": "0"
+    },
+    {
+      "id": "move-no-new-policy-action",
+      "actor": "umf_sec_frank",
+      "sql": "UPDATE security_write.resource SET owner_project='B' WHERE id='WF' RETURNING json_build_array(id,owner_project,value)::text;",
+      "sqlstate": "42501",
+      "rows": [],
+      "effects": [],
+      "approvedDelta": "0"
+    },
+    {
+      "id": "move-no-old-policy-action",
+      "actor": "umf_sec_frank",
+      "sql": "UPDATE security_write.resource SET owner_project='A' WHERE id='WFO' RETURNING json_build_array(id,owner_project,value)::text;",
+      "sqlstate": "42501",
+      "rows": [],
+      "effects": [],
+      "approvedDelta": "0"
+    },
+    {
+      "id": "move-no-policy-action",
+      "actor": "umf_sec_grace",
+      "sql": "UPDATE security_write.resource SET owner_project='B' WHERE id='WG' RETURNING json_build_array(id,owner_project,value)::text;",
+      "sqlstate": "42501",
+      "rows": [],
+      "effects": [],
+      "approvedDelta": "0"
+    },
+    {
+      "id": "noop-no-field-action-needed",
+      "actor": "umf_sec_grace",
+      "sql": "UPDATE security_write.resource SET value=value WHERE id='WG' RETURNING json_build_array(id,owner_project,value)::text;",
+      "sqlstate": null,
+      "rows": [
+        [
+          "WG",
+          "A",
+          "grace"
+        ]
+      ],
+      "effects": [],
+      "approvedDelta": "1"
+    },
+    {
+      "id": "noop-object-required",
+      "actor": "umf_sec_outsider",
+      "sql": "UPDATE security_write.resource SET value=value WHERE id='WG' RETURNING json_build_array(id,owner_project,value)::text;",
+      "sqlstate": null,
+      "rows": [],
+      "effects": [],
+      "approvedDelta": "0"
+    },
+    {
+      "id": "null-field-transition-refused",
+      "actor": "umf_sec_grace",
+      "sql": "UPDATE security_write.resource SET value=NULL WHERE id='WG' RETURNING json_build_array(id,owner_project,value)::text;",
+      "sqlstate": "42501",
+      "rows": [],
+      "effects": [],
+      "approvedDelta": "0"
+    },
+    {
+      "id": "dependent-multirow-atomic-refusal",
+      "actor": "umf_sec_eve",
+      "sql": "WITH allowed AS (UPDATE security_write.resource SET value='uncommitted' WHERE id='WA' RETURNING value) UPDATE security_write.resource SET owner_project='B',value=(SELECT value FROM allowed) WHERE id='WC' RETURNING json_build_array(id,owner_project,value)::text;",
+      "sqlstate": "42501",
+      "rows": [],
+      "effects": [],
+      "approvedDelta": "1"
+    },
+    {
+      "id": "move-authorized",
+      "actor": "umf_sec_carol",
+      "sql": "UPDATE security_write.resource SET owner_project='B' WHERE id='WC' RETURNING json_build_array(id,owner_project,value)::text;",
+      "sqlstate": null,
+      "rows": [
+        [
+          "WC",
+          "B",
+          "carol"
+        ]
+      ],
+      "effects": [
+        {
+          "id": "WC",
+          "row": [
+            "WC",
+            "B",
+            "carol"
+          ]
+        }
+      ],
+      "approvedDelta": "1"
+    },
+    {
+      "id": "delete-hidden-old",
+      "actor": "umf_sec_alice",
+      "sql": "DELETE FROM security_write.resource WHERE id='WB' RETURNING json_build_array(id,owner_project,value)::text;",
+      "sqlstate": null,
+      "rows": [],
+      "effects": [],
+      "approvedDelta": "0"
+    },
+    {
+      "id": "delete-no-owner-action",
+      "actor": "umf_sec_dave",
+      "sql": "DELETE FROM security_write.resource WHERE id='WD' RETURNING json_build_array(id,owner_project,value)::text;",
+      "sqlstate": "42501",
+      "rows": [],
+      "effects": [],
+      "approvedDelta": "0"
+    },
+    {
+      "id": "delete-no-policy-action",
+      "actor": "umf_sec_frank",
+      "sql": "DELETE FROM security_write.resource WHERE id='WFO' RETURNING json_build_array(id,owner_project,value)::text;",
+      "sqlstate": "42501",
+      "rows": [],
+      "effects": [],
+      "approvedDelta": "0"
+    },
+    {
+      "id": "delete-authorized",
+      "actor": "umf_sec_carol",
+      "sql": "DELETE FROM security_write.resource WHERE id='WC' RETURNING json_build_array(id,owner_project,value)::text;",
+      "sqlstate": null,
+      "rows": [
+        [
+          "WC",
+          "B",
+          "carol"
+        ]
+      ],
+      "effects": [
+        {
+          "id": "WC",
+          "row": null
+        }
+      ],
+      "approvedDelta": "1"
+    },
+    {
+      "id": "move-no-new-field-action",
+      "actor": "umf_sec_henry",
+      "sql": "UPDATE security_write.resource SET owner_project='B',value='changed' WHERE id='WH' RETURNING json_build_array(id,owner_project,value)::text;",
+      "sqlstate": "42501",
+      "rows": [],
+      "effects": [],
+      "approvedDelta": "0"
+    },
+    {
+      "id": "move-no-old-field-action",
+      "actor": "umf_sec_henry",
+      "sql": "UPDATE security_write.resource SET owner_project='A',value='changed' WHERE id='WHO' RETURNING json_build_array(id,owner_project,value)::text;",
+      "sqlstate": "42501",
+      "rows": [],
+      "effects": [],
+      "approvedDelta": "0"
+    },
+    {
+      "id": "rename-no-id-action",
+      "actor": "umf_sec_henry",
+      "sql": "UPDATE security_write.resource SET id='WH2' WHERE id='WH' RETURNING json_build_array(id,owner_project,value)::text;",
+      "sqlstate": "42501",
+      "rows": [],
+      "effects": [],
+      "approvedDelta": "0"
+    },
+    {
+      "id": "rename-authorized-without-owner-action",
+      "actor": "umf_sec_dave",
+      "sql": "UPDATE security_write.resource SET id='WD2' WHERE id='WD' RETURNING json_build_array(id,owner_project,value)::text;",
+      "sqlstate": null,
+      "rows": [
+        [
+          "WD2",
+          "A",
+          "dave"
+        ]
+      ],
+      "effects": [
+        {
+          "id": "WD",
+          "row": null
+        },
+        {
+          "id": "WD2",
+          "row": [
+            "WD2",
+            "A",
+            "dave"
+          ]
+        }
+      ],
+      "approvedDelta": "1"
+    },
+    {
+      "id": "noop-object-action-missing",
+      "actor": "umf_sec_iris",
+      "sql": "UPDATE security_write.resource SET value=value WHERE id='WG' RETURNING json_build_array(id,owner_project,value)::text;",
+      "sqlstate": null,
+      "rows": [],
+      "effects": [],
+      "approvedDelta": "0"
+    }
+  ],
+  "scope": "Fixed non-null TEXT raw state/field/ownership/policy action fold. Private nontransactional approval sequence is excluded integrity instrumentation, not protected business data or publication. No concurrent guard, history, public compiler or graph qualification.",
+  "employees": [
+    [
+      "Alice",
+      "umf_sec_alice"
+    ],
+    [
+      "Bob",
+      "umf_sec_bob"
+    ],
+    [
+      "Carol",
+      "umf_sec_carol"
+    ],
+    [
+      "Dave",
+      "umf_sec_dave"
+    ],
+    [
+      "Eve",
+      "umf_sec_eve"
+    ],
+    [
+      "Frank",
+      "umf_sec_frank"
+    ],
+    [
+      "Grace",
+      "umf_sec_grace"
+    ],
+    [
+      "Henry",
+      "umf_sec_henry"
+    ],
+    [
+      "Iris",
+      "umf_sec_iris"
+    ]
+  ],
+  "assignments": [
+    [
+      "Alice",
+      "A",
+      true
+    ],
+    [
+      "Alice",
+      "B",
+      false
+    ],
+    [
+      "Bob",
+      "B",
+      true
+    ],
+    [
+      "Carol",
+      "A",
+      true
+    ],
+    [
+      "Carol",
+      "B",
+      true
+    ],
+    [
+      "Dave",
+      "A",
+      true
+    ],
+    [
+      "Dave",
+      "B",
+      true
+    ],
+    [
+      "Eve",
+      "A",
+      true
+    ],
+    [
+      "Eve",
+      "B",
+      true
+    ],
+    [
+      "Frank",
+      "A",
+      true
+    ],
+    [
+      "Frank",
+      "B",
+      true
+    ],
+    [
+      "Grace",
+      "A",
+      true
+    ],
+    [
+      "Grace",
+      "B",
+      true
+    ],
+    [
+      "Henry",
+      "A",
+      true
+    ],
+    [
+      "Henry",
+      "B",
+      true
+    ],
+    [
+      "Iris",
+      "A",
+      true
+    ],
+    [
+      "Iris",
+      "B",
+      true
+    ]
+  ]
+}

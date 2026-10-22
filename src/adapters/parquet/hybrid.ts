@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 export interface ParquetHybridValues {values:number[];consumedBytes:number;padding:number[]}
 /** Raw hybrid run stream; caller strips any length/bit-width prefixes first. */
 export function decodeParquetHybrid(input:Uint8Array,width:number,count:number,maxValue=2**width-1):ParquetHybridValues {

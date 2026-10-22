@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 11705,
+        "line": 18,
+        "path": "src/core-ideals/key-postgresql.ts",
+        "sha256": "e186e5918f65b4406a31e1c384c97577b69c037d332cec57b8a1a5a64a7e2af6"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "PostgresqlKeyObservation",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface PostgresqlKeyObservation {\n identity:{schema:string;table:string;index:string};nativePath:string;fields:{module:string;element:string}[];primary:boolean;\n enforcement:'immediate-unique-nonnull'|'conditional'|'deferred'|'nullable'|'not-unique'|'unavailable'|'unknown';\n equality:'exact-on-representable-values'|'incompatible'|'unknown';authorIntent:'unknown';provenance:'inferred';scope:'relation-with-descendants';reasons:string[];\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"PostgresqlKeyObservation\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 11705,
+      "line": 18,
+      "path": "src/core-ideals/key-postgresql.ts",
+      "sha256": "e186e5918f65b4406a31e1c384c97577b69c037d332cec57b8a1a5a64a7e2af6"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/key-postgresql.ts",
+  "title": "PostgresqlKeyObservation"
+}

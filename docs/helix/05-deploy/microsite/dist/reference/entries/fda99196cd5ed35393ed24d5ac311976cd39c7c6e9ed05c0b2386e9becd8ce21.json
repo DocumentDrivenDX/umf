@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 13184,
+        "line": 167,
+        "path": "src/domain-packs/medical.ts",
+        "sha256": "d36364b8fc4c204dc5a9a0b6fd5b2ed1fea68b0d8066a0a317e3fe9da72326bc"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "MedicalTerminologyRecord",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface MedicalTerminologyRecord {\n  system: string; release: string; code: string; display?: string; [key: string]: unknown;\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"MedicalTerminologyRecord\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 13184,
+      "line": 167,
+      "path": "src/domain-packs/medical.ts",
+      "sha256": "d36364b8fc4c204dc5a9a0b6fd5b2ed1fea68b0d8066a0a317e3fe9da72326bc"
+    }
+  ],
+  "summary": "Type declaration · src/domain-packs/medical.ts",
+  "title": "MedicalTerminologyRecord"
+}

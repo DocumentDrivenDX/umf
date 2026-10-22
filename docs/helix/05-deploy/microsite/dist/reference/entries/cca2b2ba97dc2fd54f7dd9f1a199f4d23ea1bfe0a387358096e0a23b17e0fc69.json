@@ -1,0 +1,285 @@
+{
+  "data": {
+    "extensionId": "umf.tablespec.relationships",
+    "manifest": {
+      "capabilities": {
+        "directions": [
+          "import",
+          "export"
+        ],
+        "evidence": [
+          "tests/core-ideals/relationship-tablespec.test.ts",
+          "fixtures/validation/relationship-tablespec-discovery-native.json",
+          "tests/core-ideals/relationship-tablespec-projection.test.ts",
+          "spec/core/relationship-tablespec-projection.schema.json",
+          "fixtures/validation/relationship-tablespec-projection-native.json",
+          "fixtures/validation/relationship-tablespec-projection-browser.json"
+        ],
+        "native": {
+          "subset": "Native foreign_keys, outgoing, referenced_by and incoming metadata only; no authored relationship inference, target Key resolution, participation validation or join enforcement",
+          "system": "TableSpec",
+          "version": "647e8e566ad78b864282ec65c0b0b2237aa63084"
+        },
+        "validation": "structural"
+      },
+      "coreVersion": "0.10.0",
+      "description": "TableSpec relationship observations and explicit outgoing-metadata projection",
+      "id": "umf.tablespec.relationships",
+      "schema": {
+        "$defs": {
+          "node": {
+            "oneOf": [
+              {
+                "properties": {
+                  "kind": {
+                    "const": "null"
+                  }
+                },
+                "required": [
+                  "kind"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "kind": {
+                    "const": "boolean"
+                  },
+                  "value": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "kind": {
+                    "const": "string"
+                  },
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "kind": {
+                    "const": "number"
+                  },
+                  "value": {
+                    "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?([eE][+-]?[0-9]+)?$",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "items": {
+                    "items": {
+                      "$ref": "#/$defs/node"
+                    },
+                    "type": "array"
+                  },
+                  "kind": {
+                    "const": "array"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "items"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "kind": {
+                    "const": "object"
+                  },
+                  "members": {
+                    "additionalProperties": {
+                      "$ref": "#/$defs/node"
+                    },
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "members"
+                ],
+                "type": "object"
+              }
+            ]
+          }
+        },
+        "$id": "urn:umf:tablespec:relationship-binding:1.0.0",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": true,
+        "properties": {
+          "binding": {
+            "const": {
+              "id": "umf.tablespec.relationships",
+              "nativeVersion": "647e8e566ad78b864282ec65c0b0b2237aa63084",
+              "subset": "Native foreign_keys, outgoing, referenced_by and incoming metadata only; no authored relationship inference, target Key resolution, participation validation or join enforcement",
+              "version": "1.0.0"
+            }
+          },
+          "observations": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "authorIntent": {
+                  "const": "unknown"
+                },
+                "basis": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "carrier": {
+                  "enum": [
+                    "foreign_keys",
+                    "outgoing",
+                    "referenced_by",
+                    "incoming",
+                    "unknown"
+                  ]
+                },
+                "enforcement": {
+                  "const": "unknown"
+                },
+                "native": {
+                  "$ref": "#/$defs/node"
+                },
+                "nativePath": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "resolvedSource": {
+                  "anyOf": [
+                    {
+                      "type": "null"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "element": {
+                          "minLength": 1,
+                          "type": "string"
+                        },
+                        "module": {
+                          "minLength": 1,
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "module",
+                        "element"
+                      ],
+                      "type": "object"
+                    }
+                  ]
+                },
+                "sourceColumn": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "state": {
+                  "enum": [
+                    "declared",
+                    "invalid",
+                    "unknown"
+                  ]
+                },
+                "targetColumn": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "targetTable": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "required": [
+                "nativePath",
+                "carrier",
+                "state",
+                "native",
+                "sourceColumn",
+                "targetTable",
+                "targetColumn",
+                "resolvedSource",
+                "enforcement",
+                "authorIntent",
+                "basis"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "origin": {
+            "const": "classified"
+          },
+          "profile": {
+            "const": "declared-metadata"
+          }
+        },
+        "required": [
+          "origin",
+          "binding",
+          "profile",
+          "observations"
+        ],
+        "title": "TableSpec native relationship observations; not authored associations",
+        "type": "object"
+      },
+      "scopes": [
+        "document"
+      ],
+      "semantics": "CONTRACT-041 and TD-045; native observations and qualified authored outgoing-metadata projection with retained residuals. Full binding acceptance, ideal admission and native equivalence remain unclaimed.",
+      "version": "1.0.0"
+    },
+    "registration": {
+      "apiIds": [],
+      "coreProfiles": [],
+      "mode": "unmapped"
+    },
+    "schemaId": "[\"schema\",\"spec/extensions/tablespec-relationships/schema.json\",\"\"]",
+    "version": "1.0.0"
+  },
+  "id": "[\"extension\",\"umf.tablespec.relationships\",\"1.0.0\"]",
+  "kind": "extension",
+  "links": [
+    "[\"guide\",\"extensions\"]",
+    "[\"schema\",\"spec/extensions/tablespec-relationships/schema.json\",\"\"]",
+    "[\"integration\",\"umf.tablespec.relationships@1.0.0:import\"]",
+    "[\"integration\",\"umf.tablespec.relationships@1.0.0:export\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 6912,
+      "path": "spec/extensions/tablespec-relationships/package.json",
+      "sha256": "f0f4a492633395e192cb7bb962ae7ec8d3ab9ae8defb5fd8ada3d5db9a20198b"
+    }
+  ],
+  "summary": "TableSpec relationship observations and explicit outgoing-metadata projection",
+  "title": "umf.tablespec.relationships · 1.0.0"
+}

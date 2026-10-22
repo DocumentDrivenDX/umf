@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 8193,
+        "line": 64,
+        "path": "src/model/facets.ts",
+        "sha256": "54d789632de775afe7d97518c7fb5f2b493a4d7353ad46b3e91e265a1967208a"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "verifyCoreFacetDeclaration",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: CoreFacetDeclaration, current: Document): CoreFacetDeclaration"
+    ]
+  },
+  "id": "[\"api\",\".\",\"verifyCoreFacetDeclaration\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 8193,
+      "line": 64,
+      "path": "src/model/facets.ts",
+      "sha256": "54d789632de775afe7d97518c7fb5f2b493a4d7353ad46b3e91e265a1967208a"
+    }
+  ],
+  "summary": "Receipt consistency and current-document check, not source authentication.",
+  "title": "verifyCoreFacetDeclaration"
+}

@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/private/tmp/umf-audit-merged-actions-execution.py", line 44, in <module>
+    assert row['exitCode']==0 and not row.get('postcheckError') and row['sourceHeldStable'] and row['overlayHeldStable'] and row['inheritedFixturesHeldStable'] and row['sealedCacheHeldStable'],row['stage']
+AssertionError: install

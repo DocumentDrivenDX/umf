@@ -1,0 +1,63 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"OpenapiJsonSchemaPolicy\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "id",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "schemaId",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "pointer",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "resourceUri",
+      "optional": true,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "schemaResources",
+      "optional": true,
+      "type": "string[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "usage",
+      "optional": false,
+      "type": "\"schema-only\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "lossPolicy",
+      "optional": false,
+      "type": "\"strict\" | \"allow-reported-loss\""
+    }
+  ],
+  "parameters": [],
+  "purpose": "OpenapiJsonSchemaPolicy is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "OpenapiJsonSchemaPolicy"
+}

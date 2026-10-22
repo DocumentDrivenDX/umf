@@ -1,0 +1,468 @@
+{
+  "umf": "0.1.0",
+  "id": "1.0.0-littleendian/generated_decimal256.arrow_file/message/0",
+  "vocabularies": {
+    "umf.arrow.flatbuffer": {
+      "version": "0.1.0"
+    }
+  },
+  "modules": [
+    {
+      "id": "metadata",
+      "namespace": "",
+      "elements": [
+        {
+          "id": "root",
+          "extensions": {
+            "umf.arrow.flatbuffer": {
+              "profile": "arrow-flatbuffer-model",
+              "model": {
+                "rootType": "Message",
+                "value": {
+                  "version": "V5",
+                  "header": {
+                    "type": "Schema",
+                    "value": {
+                      "fields": [
+                        {
+                          "name": "f0",
+                          "nullable": true,
+                          "type": {
+                            "type": "Decimal",
+                            "value": {
+                              "precision": 37,
+                              "scale": 5,
+                              "bitWidth": 256
+                            }
+                          },
+                          "children": []
+                        },
+                        {
+                          "name": "f1",
+                          "nullable": true,
+                          "type": {
+                            "type": "Decimal",
+                            "value": {
+                              "precision": 38,
+                              "scale": 5,
+                              "bitWidth": 256
+                            }
+                          },
+                          "children": []
+                        },
+                        {
+                          "name": "f2",
+                          "nullable": true,
+                          "type": {
+                            "type": "Decimal",
+                            "value": {
+                              "precision": 39,
+                              "scale": 5,
+                              "bitWidth": 256
+                            }
+                          },
+                          "children": []
+                        },
+                        {
+                          "name": "f3",
+                          "nullable": true,
+                          "type": {
+                            "type": "Decimal",
+                            "value": {
+                              "precision": 40,
+                              "scale": 5,
+                              "bitWidth": 256
+                            }
+                          },
+                          "children": []
+                        },
+                        {
+                          "name": "f4",
+                          "nullable": true,
+                          "type": {
+                            "type": "Decimal",
+                            "value": {
+                              "precision": 41,
+                              "scale": 5,
+                              "bitWidth": 256
+                            }
+                          },
+                          "children": []
+                        },
+                        {
+                          "name": "f5",
+                          "nullable": true,
+                          "type": {
+                            "type": "Decimal",
+                            "value": {
+                              "precision": 42,
+                              "scale": 5,
+                              "bitWidth": 256
+                            }
+                          },
+                          "children": []
+                        },
+                        {
+                          "name": "f6",
+                          "nullable": true,
+                          "type": {
+                            "type": "Decimal",
+                            "value": {
+                              "precision": 43,
+                              "scale": 5,
+                              "bitWidth": 256
+                            }
+                          },
+                          "children": []
+                        },
+                        {
+                          "name": "f7",
+                          "nullable": true,
+                          "type": {
+                            "type": "Decimal",
+                            "value": {
+                              "precision": 44,
+                              "scale": 5,
+                              "bitWidth": 256
+                            }
+                          },
+                          "children": []
+                        },
+                        {
+                          "name": "f8",
+                          "nullable": true,
+                          "type": {
+                            "type": "Decimal",
+                            "value": {
+                              "precision": 45,
+                              "scale": 5,
+                              "bitWidth": 256
+                            }
+                          },
+                          "children": []
+                        },
+                        {
+                          "name": "f9",
+                          "nullable": true,
+                          "type": {
+                            "type": "Decimal",
+                            "value": {
+                              "precision": 46,
+                              "scale": 5,
+                              "bitWidth": 256
+                            }
+                          },
+                          "children": []
+                        },
+                        {
+                          "name": "f10",
+                          "nullable": true,
+                          "type": {
+                            "type": "Decimal",
+                            "value": {
+                              "precision": 47,
+                              "scale": 5,
+                              "bitWidth": 256
+                            }
+                          },
+                          "children": []
+                        },
+                        {
+                          "name": "f11",
+                          "nullable": true,
+                          "type": {
+                            "type": "Decimal",
+                            "value": {
+                              "precision": 48,
+                              "scale": 5,
+                              "bitWidth": 256
+                            }
+                          },
+                          "children": []
+                        },
+                        {
+                          "name": "f12",
+                          "nullable": true,
+                          "type": {
+                            "type": "Decimal",
+                            "value": {
+                              "precision": 49,
+                              "scale": 5,
+                              "bitWidth": 256
+                            }
+                          },
+                          "children": []
+                        },
+                        {
+                          "name": "f13",
+                          "nullable": true,
+                          "type": {
+                            "type": "Decimal",
+                            "value": {
+                              "precision": 50,
+                              "scale": 5,
+                              "bitWidth": 256
+                            }
+                          },
+                          "children": []
+                        },
+                        {
+                          "name": "f14",
+                          "nullable": true,
+                          "type": {
+                            "type": "Decimal",
+                            "value": {
+                              "precision": 51,
+                              "scale": 5,
+                              "bitWidth": 256
+                            }
+                          },
+                          "children": []
+                        },
+                        {
+                          "name": "f15",
+                          "nullable": true,
+                          "type": {
+                            "type": "Decimal",
+                            "value": {
+                              "precision": 52,
+                              "scale": 5,
+                              "bitWidth": 256
+                            }
+                          },
+                          "children": []
+                        },
+                        {
+                          "name": "f16",
+                          "nullable": true,
+                          "type": {
+                            "type": "Decimal",
+                            "value": {
+                              "precision": 53,
+                              "scale": 5,
+                              "bitWidth": 256
+                            }
+                          },
+                          "children": []
+                        },
+                        {
+                          "name": "f17",
+                          "nullable": true,
+                          "type": {
+                            "type": "Decimal",
+                            "value": {
+                              "precision": 54,
+                              "scale": 5,
+                              "bitWidth": 256
+                            }
+                          },
+                          "children": []
+                        },
+                        {
+                          "name": "f18",
+                          "nullable": true,
+                          "type": {
+                            "type": "Decimal",
+                            "value": {
+                              "precision": 55,
+                              "scale": 5,
+                              "bitWidth": 256
+                            }
+                          },
+                          "children": []
+                        },
+                        {
+                          "name": "f19",
+                          "nullable": true,
+                          "type": {
+                            "type": "Decimal",
+                            "value": {
+                              "precision": 56,
+                              "scale": 5,
+                              "bitWidth": 256
+                            }
+                          },
+                          "children": []
+                        },
+                        {
+                          "name": "f20",
+                          "nullable": true,
+                          "type": {
+                            "type": "Decimal",
+                            "value": {
+                              "precision": 57,
+                              "scale": 5,
+                              "bitWidth": 256
+                            }
+                          },
+                          "children": []
+                        },
+                        {
+                          "name": "f21",
+                          "nullable": true,
+                          "type": {
+                            "type": "Decimal",
+                            "value": {
+                              "precision": 58,
+                              "scale": 5,
+                              "bitWidth": 256
+                            }
+                          },
+                          "children": []
+                        },
+                        {
+                          "name": "f22",
+                          "nullable": true,
+                          "type": {
+                            "type": "Decimal",
+                            "value": {
+                              "precision": 59,
+                              "scale": 5,
+                              "bitWidth": 256
+                            }
+                          },
+                          "children": []
+                        },
+                        {
+                          "name": "f23",
+                          "nullable": true,
+                          "type": {
+                            "type": "Decimal",
+                            "value": {
+                              "precision": 60,
+                              "scale": 5,
+                              "bitWidth": 256
+                            }
+                          },
+                          "children": []
+                        },
+                        {
+                          "name": "f24",
+                          "nullable": true,
+                          "type": {
+                            "type": "Decimal",
+                            "value": {
+                              "precision": 61,
+                              "scale": 5,
+                              "bitWidth": 256
+                            }
+                          },
+                          "children": []
+                        },
+                        {
+                          "name": "f25",
+                          "nullable": true,
+                          "type": {
+                            "type": "Decimal",
+                            "value": {
+                              "precision": 62,
+                              "scale": 5,
+                              "bitWidth": 256
+                            }
+                          },
+                          "children": []
+                        },
+                        {
+                          "name": "f26",
+                          "nullable": true,
+                          "type": {
+                            "type": "Decimal",
+                            "value": {
+                              "precision": 63,
+                              "scale": 5,
+                              "bitWidth": 256
+                            }
+                          },
+                          "children": []
+                        },
+                        {
+                          "name": "f27",
+                          "nullable": true,
+                          "type": {
+                            "type": "Decimal",
+                            "value": {
+                              "precision": 64,
+                              "scale": 5,
+                              "bitWidth": 256
+                            }
+                          },
+                          "children": []
+                        },
+                        {
+                          "name": "f28",
+                          "nullable": true,
+                          "type": {
+                            "type": "Decimal",
+                            "value": {
+                              "precision": 65,
+                              "scale": 5,
+                              "bitWidth": 256
+                            }
+                          },
+                          "children": []
+                        },
+                        {
+                          "name": "f29",
+                          "nullable": true,
+                          "type": {
+                            "type": "Decimal",
+                            "value": {
+                              "precision": 66,
+                              "scale": 5,
+                              "bitWidth": 256
+                            }
+                          },
+                          "children": []
+                        },
+                        {
+                          "name": "f30",
+                          "nullable": true,
+                          "type": {
+                            "type": "Decimal",
+                            "value": {
+                              "precision": 67,
+                              "scale": 5,
+                              "bitWidth": 256
+                            }
+                          },
+                          "children": []
+                        },
+                        {
+                          "name": "f31",
+                          "nullable": true,
+                          "type": {
+                            "type": "Decimal",
+                            "value": {
+                              "precision": 68,
+                              "scale": 5,
+                              "bitWidth": 256
+                            }
+                          },
+                          "children": []
+                        },
+                        {
+                          "name": "f32",
+                          "nullable": true,
+                          "type": {
+                            "type": "Decimal",
+                            "value": {
+                              "precision": 69,
+                              "scale": 5,
+                              "bitWidth": 256
+                            }
+                          },
+                          "children": []
+                        }
+                      ],
+                      "custom_metadata": []
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

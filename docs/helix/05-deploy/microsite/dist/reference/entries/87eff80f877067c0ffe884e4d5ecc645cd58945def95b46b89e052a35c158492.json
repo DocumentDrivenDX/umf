@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 13857,
+        "line": 26,
+        "path": "src/extensions/security/write.ts",
+        "sha256": "bd7475dd43d42407e8900136c9dc5647195c9e02cdaa0d1d5b65bd83d196dee0"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "evaluateSecurityWrite",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(policyInput: SecurityPolicy, resolutionInput: SecurityResolution, profileInput: SecurityWriteProfile, requestInput: SecurityWriteRequest): SecurityWriteResult"
+    ]
+  },
+  "id": "[\"api\",\".\",\"evaluateSecurityWrite\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 13857,
+      "line": 26,
+      "path": "src/extensions/security/write.ts",
+      "sha256": "bd7475dd43d42407e8900136c9dc5647195c9e02cdaa0d1d5b65bd83d196dee0"
+    }
+  ],
+  "summary": "Admission only: the native host must bind this decision and effects to one guarded transaction.",
+  "title": "evaluateSecurityWrite"
+}

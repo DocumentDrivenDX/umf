@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 export {};
 const schema=await Bun.file('spec/extensions/parquet/metadata-inspection.schema.json').json(),integer={type:'integer',minimum:0},path={type:'array',items:{type:'string'}},object=(properties:any)=>({type:'object',properties,required:Object.keys(properties),additionalProperties:false});
 schema.$id='urn:umf:parquet:schema-inspection:0.1.0';schema.properties.status={enum:['checked','blocked']};schema.$defs.schemaNode=object({index:integer,name:{type:'string'},path,definitionLevel:integer,repetitionLevel:integer,children:{type:'array',items:{$ref:'#/$defs/schemaNode'}}});schema.properties.tree={$ref:'#/$defs/schemaNode'};schema.properties.leaves={type:'array',items:object({index:integer,ordinal:integer,path,physicalType:{enum:['BOOLEAN','INT32','INT64','INT96','FLOAT','DOUBLE','BYTE_ARRAY','FIXED_LEN_BYTE_ARRAY']},definitionLevel:integer,repetitionLevel:integer})};

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {getIcebergTableNode} from './table';
 import {pointer,type Document,type Diagnostic} from '../../model/types';
 import type {NativeJson} from '../../model/native-json';

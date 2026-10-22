@@ -1,10 +1,11 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import * as u from '../../src';
-import {classifyParquetFacets as classify,recoverParquetFacetSource as recover,parquetFacetsPackage,PARQUET_FACETS_EXTENSION,type ParquetFacetRequest} from '../../src';
+import {classifyParquetFacets as classify, recoverParquetFacetSource as recover, parquetFacetsPackage, PARQUET_FACETS_EXTENSION, type ParquetFacetRequest} from '../../src';
 async function sample(id='int8-min-plain',family:u.ScalarType='integer',options:Partial<ParquetFacetRequest>={}){
  const bytes=new Uint8Array(await Bun.file(`fixtures/parquet/facets/${id}.parquet`).arrayBuffer());
  const native=u.importParquetSchema(bytes,{id:'parquet-facets'});
- const document=u.upgradeFacetEnvelope(u.upgradeCardinalityEnvelope(u.upgradeNullabilityEnvelope(u.upgradeFieldEnvelope(native).target).target).target).target;
+ const document=native;
  document.modules.push({id:'logical',namespace:'',elements:[{id:'value',kind:'field',cardinality:'one',scalarType:family,extensions:{}}]});
  const request:ParquetFacetRequest={location:{index:1,scope:'present-non-null-leaf'},identity:{module:'logical',element:'value'},mode:'report',profile:'declared-schema',obligation:'value-domain',...options};
  return {document,request,bytes};

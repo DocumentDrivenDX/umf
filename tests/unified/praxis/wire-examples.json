@@ -1,0 +1,123 @@
+{
+  "scope": "Illustrative mapping from the exact derived current010 source; no live response/commit/qualification claim",
+  "sourceDigest": "9d346ff147732f01936f6c6261c9855633cc67da36412f84d12aba7976881e16",
+  "solutionListRequest": {
+    "contract": "umf.access/1",
+    "schema": "9d346ff147732f01936f6c6261c9855633cc67da36412f84d12aba7976881e16",
+    "kind": "read",
+    "query": {
+      "record": "catalog.Solution",
+      "filters": [],
+      "order": [
+        {
+          "field": "Solution.code",
+          "direction": "asc"
+        }
+      ]
+    },
+    "size": 100,
+    "after": null,
+    "at_least": null
+  },
+  "solutionByKeyRequest": {
+    "contract": "umf.access/1",
+    "schema": "9d346ff147732f01936f6c6261c9855633cc67da36412f84d12aba7976881e16",
+    "kind": "read",
+    "query": {
+      "record": "catalog.Solution",
+      "filters": [],
+      "order": [],
+      "key": {
+        "Solution.code": "matter-query"
+      }
+    },
+    "size": 2,
+    "after": null,
+    "at_least": null
+  },
+  "coverageUpdateRequest": {
+    "contract": "umf.access/1",
+    "schema": "9d346ff147732f01936f6c6261c9855633cc67da36412f84d12aba7976881e16",
+    "kind": "apply",
+    "action": "catalog.ChangeCoverageLevel",
+    "inputs": {
+      "level": "full",
+      "coverageAssertion": {
+        "CoverageAssertion.code": "aderant.client-reporting-budgets"
+      }
+    },
+    "idempotency_key": null
+  },
+  "consumerInvoke": {
+    "method": "authenticated_user_ontology.invoke",
+    "action": "catalog.ChangeCoverageLevel",
+    "inputs": {
+      "level": "full",
+      "coverageAssertion": "aderant.client-reporting-budgets"
+    },
+    "idempotency_key": null,
+    "execution": "external host only; not executed by generator"
+  },
+  "coverageUpdateResponseExample": {
+    "schema": "9d346ff147732f01936f6c6261c9855633cc67da36412f84d12aba7976881e16",
+    "created": [],
+    "changed": [
+      {
+        "record": "catalog.CoverageAssertion",
+        "key": {
+          "CoverageAssertion.code": "aderant.client-reporting-budgets"
+        }
+      }
+    ],
+    "counts": {
+      "created": 0,
+      "updated": 1,
+      "deleted": 0,
+      "linked": 0,
+      "unlinked": 0
+    },
+    "consistency_token": "opaque-token-from-authoritative-host"
+  },
+  "coverageReadAfterRequest": {
+    "contract": "umf.access/1",
+    "schema": "9d346ff147732f01936f6c6261c9855633cc67da36412f84d12aba7976881e16",
+    "kind": "read",
+    "query": {
+      "record": "catalog.CoverageAssertion",
+      "filters": [],
+      "order": [],
+      "key": {
+        "CoverageAssertion.code": "aderant.client-reporting-budgets"
+      }
+    },
+    "size": 2,
+    "after": null,
+    "at_least": "opaque-token-from-authoritative-host"
+  },
+  "correctSolutionOmittedSummaryRequest": {
+    "contract": "umf.access/1",
+    "schema": "9d346ff147732f01936f6c6261c9855633cc67da36412f84d12aba7976881e16",
+    "kind": "apply",
+    "action": "catalog.CorrectSolution",
+    "inputs": {
+      "solution": {
+        "Solution.code": "matter-query"
+      }
+    },
+    "idempotency_key": null
+  },
+  "correctSolutionExplicitNullRequest": {
+    "contract": "umf.access/1",
+    "schema": "9d346ff147732f01936f6c6261c9855633cc67da36412f84d12aba7976881e16",
+    "kind": "apply",
+    "action": "catalog.CorrectSolution",
+    "inputs": {
+      "summary": null,
+      "solution": {
+        "Solution.code": "matter-query"
+      }
+    },
+    "idempotency_key": null
+  },
+  "optionalHandlerPolicy": "Missing and explicit null stay distinct in wire; observed Hohfeld props resolver emits no assignment for either. Neither implies unset."
+}

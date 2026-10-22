@@ -1,0 +1,236 @@
+{
+  "data": {
+    "extensionId": "umf.openapi",
+    "manifest": {
+      "capabilities": {
+        "directions": [
+          "import",
+          "export"
+        ],
+        "evidence": [
+          "tests/openapi/native.test.ts",
+          "tests/openapi/corpus.test.ts",
+          "fixtures/openapi/corpus-oracle-results.json",
+          "tests/openapi/bundle.test.ts",
+          "fixtures/openapi/resource-bundle-oracle-results.json",
+          "tests/openapi/schemas.test.ts",
+          "fixtures/openapi/embedded-schema-oracle-results.json",
+          "tests/openapi/references.test.ts",
+          "fixtures/openapi/reference-oracle-results.json",
+          "tests/openapi/extraction.test.ts",
+          "tests/openapi/scope.test.ts",
+          "fixtures/openapi/scope-oracle-results.json",
+          "tests/openapi/dynamic.test.ts",
+          "fixtures/openapi/dynamic-oracle-results.json"
+        ],
+        "native": {
+          "subset": "JSON-compatible JSON/YAML standalone descriptions; 2.0/3.0 check the Schema Object subset in their official schemas, known 3.1/3.2 embedded dialect keyword syntax is checked; unknown dialects are retained without reinterpretation; references and runtime rules remain incomplete; explicit URI-addressed resource archives and literal document-pointer lookup, without schema scope inference",
+          "system": "OpenAPI",
+          "version": "Swagger 2.0 schema 2017-08-27; OpenAPI 3.0 schema 2024-10-18; 3.1 schema 2026-08-03; 3.2 schema 2026-08-30"
+        },
+        "validation": "semantic"
+      },
+      "coreVersion": "0.10.0",
+      "description": "OpenAPI JSON/YAML exact tree and source preservation",
+      "id": "umf.openapi",
+      "schema": {
+        "$defs": {
+          "node": {
+            "oneOf": [
+              {
+                "properties": {
+                  "kind": {
+                    "const": "null"
+                  }
+                },
+                "required": [
+                  "kind"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "kind": {
+                    "const": "boolean"
+                  },
+                  "value": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "kind": {
+                    "const": "string"
+                  },
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "kind": {
+                    "const": "number"
+                  },
+                  "value": {
+                    "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?([eE][+-]?[0-9]+)?$",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "items": {
+                    "items": {
+                      "$ref": "#/$defs/node"
+                    },
+                    "type": "array"
+                  },
+                  "kind": {
+                    "const": "array"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "items"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "kind": {
+                    "const": "object"
+                  },
+                  "members": {
+                    "additionalProperties": {
+                      "$ref": "#/$defs/node"
+                    },
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "members"
+                ],
+                "type": "object"
+              }
+            ]
+          }
+        },
+        "$id": "urn:umf:openapi:0.1.0",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "dependentRequired": {
+          "resources": [
+            "baseUri"
+          ]
+        },
+        "properties": {
+          "baseUri": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "originalFormat": {
+            "enum": [
+              "json",
+              "yaml"
+            ]
+          },
+          "originalSource": {
+            "type": "string"
+          },
+          "profile": {
+            "const": "openapi-json-yaml-0.1"
+          },
+          "resources": {
+            "items": {
+              "properties": {
+                "originalFormat": {
+                  "enum": [
+                    "json",
+                    "yaml"
+                  ]
+                },
+                "originalSource": {
+                  "type": "string"
+                },
+                "root": {
+                  "$ref": "#/$defs/node"
+                },
+                "uri": {
+                  "minLength": 1,
+                  "type": "string"
+                }
+              },
+              "required": [
+                "uri",
+                "root",
+                "originalSource",
+                "originalFormat"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "root": {
+            "$ref": "#/$defs/node"
+          }
+        },
+        "required": [
+          "profile",
+          "root",
+          "originalSource",
+          "originalFormat"
+        ],
+        "type": "object"
+      },
+      "scopes": [
+        "element"
+      ],
+      "semantics": "CONTRACT-011. Exact native JSON tree and source archive; pinned OpenAPI/Swagger object schemas provide bounded validation, not reference, transport or runtime conformance.",
+      "version": "0.1.0"
+    },
+    "registration": {
+      "apiIds": [
+        "[\"api\",\".\",\"openapiRegistry\"]"
+      ],
+      "coreProfiles": [],
+      "mode": "explicit"
+    },
+    "schemaId": "[\"schema\",\"spec/extensions/openapi/schema.json\",\"\"]",
+    "version": "0.1.0"
+  },
+  "id": "[\"extension\",\"umf.openapi\",\"0.1.0\"]",
+  "kind": "extension",
+  "links": [
+    "[\"api\",\".\",\"openapiRegistry\"]",
+    "[\"guide\",\"extensions\"]",
+    "[\"schema\",\"spec/extensions/openapi/schema.json\",\"\"]",
+    "[\"integration\",\"umf.openapi@0.1.0:import\"]",
+    "[\"integration\",\"umf.openapi@0.1.0:export\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 5351,
+      "path": "spec/extensions/openapi/package.json",
+      "sha256": "ac12bc4a932ce0bb7210ef6ec925546d43dfa5119b4ca53f246c63819638aa83"
+    }
+  ],
+  "summary": "OpenAPI JSON/YAML exact tree and source preservation",
+  "title": "umf.openapi · 0.1.0"
+}

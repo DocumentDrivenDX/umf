@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {copyJson} from '../model/json';
 import {UmfError,type Document,type Json,type Diagnostic,type ExtensionPackage} from '../model/types';
 import type {NativeJson} from '../model/native-json';
@@ -5,12 +6,7 @@ import {exportTableSpec,exportTableSpecBundle,getTableSpecTable,TABLESPEC_EXTENS
 import {validateDocument} from '../validation/document';
 import {createValidator} from '../validation/schema';
 import legacy from '../../spec/core/schema.json';
-import fields from '../../spec/core/field-document.schema.json';
-import nullability from '../../spec/core/nullability-document.schema.json';
-import cardinality from '../../spec/core/cardinality-document.schema.json';
-import facets from '../../spec/core/facet-document.schema.json';
-import keys from '../../spec/core/key-document.schema.json';
-import relationships from '../../spec/core/relationship-document.schema.json';
+
 import schema from '../../spec/core/tablespec-relationship-classification.schema.json';
 import manifest from '../../spec/extensions/tablespec-relationships/package.json';
 export const TABLESPEC_RELATIONSHIPS_EXTENSION='umf.tablespec.relationships';
@@ -30,7 +26,7 @@ export interface TableSpecRelationshipClassification {
  residuals:{path:string;value:Json;outcome:'unknown'|'not-expressible';reason:string;recovery:typeof recovery}[];diagnostics:Diagnostic[];
 }
 const validator=createValidator(false);
-for(const s of [legacy,fields,nullability,cardinality,facets,keys,relationships])validator.addSchema(s);
+for(const s of [legacy])validator.addSchema(s);
 const check=validator.compile(schema),checkRequest=validator.compile(schema.properties.request);
 function canonical(value:Json):string {
  if(Array.isArray(value))return 'a['+value.map(canonical).join(',')+']';

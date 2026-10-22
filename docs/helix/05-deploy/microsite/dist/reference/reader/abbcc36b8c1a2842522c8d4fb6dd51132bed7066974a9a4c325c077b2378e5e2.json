@@ -1,0 +1,52 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"ActionPlanInspectionContext\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Registry\"]"
+      ],
+      "name": "registry",
+      "optional": false,
+      "type": "Registry"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ActionPlanModelPin\"]",
+        "[\"api\",\".\",\"ActionPlanArtifact\"]"
+      ],
+      "name": "models",
+      "optional": false,
+      "type": "{ pin: ActionPlanModelPin; artifact: ActionPlanArtifact; }[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"PortableActionPin\"]",
+        "[\"api\",\".\",\"ActionPlanArtifact\"]"
+      ],
+      "name": "actions",
+      "optional": false,
+      "type": "{ pin: PortableActionPin; artifact: ActionPlanArtifact; }[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ActionPlanSelectionInspector\"]"
+      ],
+      "name": "selections",
+      "optional": false,
+      "type": "ActionPlanSelectionInspector[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "ActionPlanInspectionContext is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "ActionPlanInspectionContext"
+}

@@ -1,0 +1,30 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"getTypeSpecSyntax\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "path",
+      "optional": false,
+      "type": "string"
+    }
+  ],
+  "purpose": "getTypeSpecSyntax accepts document, path and returns { kind: string; start: number; end: number; }[].",
+  "related": [],
+  "returns": "{ kind: string; start: number; end: number; }[]",
+  "task": "Inspect and select",
+  "type": "(document: Document, path: string) => { kind: string; start: number; end: number; }[]"
+}

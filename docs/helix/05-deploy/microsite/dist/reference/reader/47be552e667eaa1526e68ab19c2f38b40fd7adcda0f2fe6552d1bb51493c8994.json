@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"constructActionManifest\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ActionManifestConstruction\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "ActionManifestConstruction"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ActionPlanInspectionContext\"]"
+      ],
+      "name": "context",
+      "optional": false,
+      "type": "ActionPlanInspectionContext"
+    }
+  ],
+  "purpose": "Constructs portable invocation bytes; native selection, order and sealing remain host-owned.",
+  "related": [],
+  "returns": "ConstructedActionManifest",
+  "task": "Other APIs",
+  "type": "(input: ActionManifestConstruction, context: ActionPlanInspectionContext) => ConstructedActionManifest"
+}

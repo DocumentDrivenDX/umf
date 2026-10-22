@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 7561,
+        "line": 76,
+        "path": "src/adapters/smithy/index.ts",
+        "sha256": "a6095780c586b5f5b0bb3ababb5e3473b0d5b6302960680b9338c2aedf4bcd0a"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "proposeSmithyNodeEdit",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(document: Document, path: string, text: string, dependencyId?: string | undefined): { document: Document; validation: Validation; }"
+    ]
+  },
+  "id": "[\"api\",\".\",\"proposeSmithyNodeEdit\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 7561,
+      "line": 76,
+      "path": "src/adapters/smithy/index.ts",
+      "sha256": "a6095780c586b5f5b0bb3ababb5e3473b0d5b6302960680b9338c2aedf4bcd0a"
+    }
+  ],
+  "summary": "Candidate only: native semantic validation remains required.",
+  "title": "proposeSmithyNodeEdit"
+}

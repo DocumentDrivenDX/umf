@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"getOwlExpressionView\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"RdfNode\"]"
+      ],
+      "name": "node",
+      "optional": false,
+      "type": "RdfNode"
+    }
+  ],
+  "purpose": "Local RDF constructor view, not a recursive OWL DL parse or a reasoning result.",
+  "related": [],
+  "returns": "OwlExpressionView",
+  "task": "Inspect and select",
+  "type": "(document: Document, node: RdfNode) => OwlExpressionView"
+}

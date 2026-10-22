@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 6053,
+        "line": 39,
+        "path": "src/model/field-kind.ts",
+        "sha256": "b3ba0db55ec8ed5a466e8b116b9311035505457a060c59fa93512b9220e7b670"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "declareCoreElementKind",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: Document, identity: CoreKindIdentity, kind: \"record\" | \"group\" | \"field\"): CoreKindDeclaration"
+    ]
+  },
+  "id": "[\"api\",\".\",\"declareCoreElementKind\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 6053,
+      "line": 39,
+      "path": "src/model/field-kind.ts",
+      "sha256": "b3ba0db55ec8ed5a466e8b116b9311035505457a060c59fa93512b9220e7b670"
+    }
+  ],
+  "summary": "Explicit author action; archives previous meaning and makes no native classification claim.",
+  "title": "declareCoreElementKind"
+}

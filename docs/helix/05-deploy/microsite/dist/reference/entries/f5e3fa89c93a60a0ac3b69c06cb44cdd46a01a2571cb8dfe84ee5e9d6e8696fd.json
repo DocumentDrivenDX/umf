@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 11185,
+        "line": 20,
+        "path": "src/core-ideals/facets-parquet-projection.ts",
+        "sha256": "1cc8bde733bdc1cc316601021186288dd0b86b91e11d3ca049d3a20cabcb7243"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "FacetsParquetProjection",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface FacetsParquetProjection {\n operation:'project-facets-parquet';version:'1.0.0';status:'projected'|'blocked';source:Document;author:Author;request:FacetsParquetRequest;target?:Document;binding:typeof binding;diagnostics:Diagnostic[];\n mapping:{origin:'authored';idealPath:string;nativeIndex:1;facets:CoreFacetPatch;encoding:FacetsParquetRequest['encoding'];profile:FacetsParquetRequest['profile'];outcome:Outcome};\n residuals:{path:string;value:Json;reason:string;outcome:Exclude<Outcome,'exact'>;recovery:typeof recovery}[];\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"FacetsParquetProjection\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 11185,
+      "line": 20,
+      "path": "src/core-ideals/facets-parquet-projection.ts",
+      "sha256": "1cc8bde733bdc1cc316601021186288dd0b86b91e11d3ca049d3a20cabcb7243"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/facets-parquet-projection.ts",
+  "title": "FacetsParquetProjection"
+}

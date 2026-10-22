@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"inspectRecordProjection\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"AuthoredRecordProjection\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "AuthoredRecordProjection"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"PostgresqlBackend\"]"
+      ],
+      "name": "backend",
+      "optional": true,
+      "type": "PostgresqlBackend | undefined"
+    }
+  ],
+  "purpose": "Recompute a native-specific receipt before exposing common consumer metadata.",
+  "related": [],
+  "returns": "Promise<RecordProjectionInspection>",
+  "task": "Inspect and select",
+  "type": "(input: AuthoredRecordProjection, backend?: PostgresqlBackend) => Promise<RecordProjectionInspection>"
+}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 10034,
+        "line": 24,
+        "path": "src/core-ideals/nullability-avro.ts",
+        "sha256": "dd3b3b867b8f70cdb19fcbc10f559b2444a04cd325f1971c68fe3e857c00b2ce"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "AvroNullabilityClassification",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface AvroNullabilityClassification {\n operation:'classify-avro-nullability';version:'1.0.0';status:'classified'|'blocked';source:Document;target?:Document;request:AvroNullabilityRequest;binding:typeof binding;\n mapping:{origin:'classified';idealPath:string;nativePath:string;dependencyId?:string;nativeFragment:NativeJson;nullability:Nullability;interpretation:'declared'|'unknown'|'unsupported';outcome:'exact'|'unknown'|'not-expressible';scope:AvroNullabilityRequest['scope'];carrier:AvroNullabilityRequest['carrier'];basis:'Underlying field type in a present containing record; not member omission, reader defaults, ancestor availability or logical refinements'};\n residuals:{path:string;value:Json;reason:string;recovery:typeof recovery}[];diagnostics:Diagnostic[];\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"AvroNullabilityClassification\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 10034,
+      "line": 24,
+      "path": "src/core-ideals/nullability-avro.ts",
+      "sha256": "dd3b3b867b8f70cdb19fcbc10f559b2444a04cd325f1971c68fe3e857c00b2ce"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/nullability-avro.ts",
+  "title": "AvroNullabilityClassification"
+}

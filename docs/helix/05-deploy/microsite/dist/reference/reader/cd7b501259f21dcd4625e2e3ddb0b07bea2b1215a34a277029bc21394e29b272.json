@@ -1,0 +1,13 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"postgresqlKeyCatalogCorrelationSchema\"]",
+  "kind": "Schema",
+  "members": [],
+  "parameters": [],
+  "purpose": "JSON Schema exported as postgresqlKeyCatalogCorrelationSchema. Follow the related schema definition for object keys, value constraints and conditions.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "{ $schema: string; $id: string; title: string; type: string; additionalProperties: boolean; required: string[]; properties: { nativeSupplement: { type: string; minLength: number; }; root: { $ref: string; }; nativeCatalog: { type: string; minLength: number; }; matches: { type: string; items: { type: string; additionalProperties: boolean; required: string[]; properties: { identity: { type: string; additionalProperties: boolean; required: string[]; properties: { schema: { type: string; minLength: number; }; table: { type: string; minLength: number; }; index: { type: string; minLength: number; }; }; }; relationPath: { type: string; minLength: number; }; indexPath: { type: string; minLength: number; }; componentPaths: { type: string; items: { type: string[]; }; }; }; }; }; sameSnapshotVerified: { const: boolean; }; authenticated: { const: boolean; }; idealEqualityVerified: { const: boolean; }; }; }"
+}

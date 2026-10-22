@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 11185,
+        "line": 87,
+        "path": "src/core-ideals/facets-parquet-projection.ts",
+        "sha256": "1cc8bde733bdc1cc316601021186288dd0b86b91e11d3ca049d3a20cabcb7243"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "recoverFacetsFromParquet",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: FacetsParquetProjection, nativeBytes: Uint8Array<ArrayBufferLike>): Document"
+    ]
+  },
+  "id": "[\"api\",\".\",\"recoverFacetsFromParquet\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 11185,
+      "line": 87,
+      "path": "src/core-ideals/facets-parquet-projection.ts",
+      "sha256": "1cc8bde733bdc1cc316601021186288dd0b86b91e11d3ca049d3a20cabcb7243"
+    }
+  ],
+  "summary": "Recompute the complete author projection and compare exact emitted bytes.",
+  "title": "recoverFacetsFromParquet"
+}

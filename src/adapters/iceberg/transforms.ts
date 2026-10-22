@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Pinned Iceberg 1.11.0 single-source transform type rules; no value execution. */
 export interface IcebergTransformType {
  sourceType:string;

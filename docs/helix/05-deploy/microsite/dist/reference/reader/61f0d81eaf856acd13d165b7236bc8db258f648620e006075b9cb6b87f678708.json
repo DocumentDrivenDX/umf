@@ -1,0 +1,17 @@
+{
+  "alternatives": [
+    "{ field: SecurityRef; disposition: \"withheld\" | \"absent\"; }",
+    "{ field: SecurityRef; disposition: \"original\"; value: CoreLiteral; }",
+    "{ field: SecurityRef; disposition: \"transformed\"; outputType: SecurityRef; value: CoreLiteral; }"
+  ],
+  "authored": false,
+  "id": "[\"api\",\".\",\"SecurityOutput\"]",
+  "kind": "Type alias",
+  "members": [],
+  "parameters": [],
+  "purpose": "SecurityOutput is a type alias in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "SecurityOutput"
+}

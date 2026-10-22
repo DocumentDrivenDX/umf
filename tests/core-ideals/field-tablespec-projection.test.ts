@@ -1,13 +1,14 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {projectFieldToTableSpec,recoverFieldFromTableSpec,type FieldTableSpecRequest} from '../../src/core-ideals/field-tablespec-projection';
+import {projectFieldToTableSpec, recoverFieldFromTableSpec, type FieldTableSpecRequest} from '../../src/core-ideals/field-tablespec-projection';
 import {declareCoreElementKind} from '../../src/model/field-kind';
-import {upgradeFieldEnvelope} from '../../src/model/field-transition';
+
 import {classifyTableSpecField} from '../../src/core-ideals/tablespec-field';
-import {exportTableSpec,importTableSpec} from '../../src/adapters/tablespec';
+import {exportTableSpec, importTableSpec} from '../../src/adapters/tablespec';
 import {copyJson} from '../../src/model/json';
-import {readJsonValue,writeJsonValue} from '../../src/model/serialization';
+import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
 import {type Document} from '../../src/model/types';
-const doc=(extra:Record<string,unknown>={}):Document=>({umf:'0.2.0',id:'ideal',vocabularies:{},modules:[{id:'sales',namespace:'sales',elements:[{id:'id',name:'id',extensions:{},...extra}]}]});
+const doc=(extra:Record<string,unknown>={}):Document=>({umf:'0.10.0',id:'ideal',vocabularies:{},modules:[{id:'sales',namespace:'sales',elements:[{id:'id',name:'id',extensions:{},...extra}]}]});
 const request:FieldTableSpecRequest={id:'native',tableName:'Orders',columnName:'id',nativeType:'INTEGER',mode:'strict'};
 const author=(extra:Record<string,unknown>={})=>declareCoreElementKind(doc(extra),{module:'sales',element:'id'},'field');
 test('authored field projects to a complete native table and recovers author meaning with retained receipt',()=>{
@@ -15,7 +16,7 @@ test('authored field projects to a complete native table and recovers author mea
   const receipt=projectFieldToTableSpec(author(),{...request,nativeType,mode:'report'});expect(receipt.status).toBe('projected');expect(receipt.mapping.outcome).toBe('not-expressible');expect(receipt.residuals.map(r=>r.path)).toEqual(['/modules/0/namespace']);
   const text=exportTableSpec(receipt.target!);expect(JSON.parse(text).columns[0].data_type).toBe(nativeType);
   for(const format of ['json','yaml'] as const){const back=readJsonValue(writeJsonValue(copyJson(receipt),format),format) as unknown as typeof receipt;expect(recoverFieldFromTableSpec(back,text)).toEqual(receipt.source);}
-  const nativeOnly=upgradeFieldEnvelope(importTableSpec(text,{id:'reimport',format:'json'})).target;
+  const nativeOnly=importTableSpec(text,{id:'reimport',format:'json'});
   const classified=classifyTableSpecField(nativeOnly,{column:0,mode:'strict'});expect(classified.mapping.origin).toBe('classified');expect(classified.request.author).toBeUndefined();
  }
 });

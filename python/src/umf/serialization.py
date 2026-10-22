@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """JSON and YAML 1.2 readers preserving UMF's portable numeric profile."""
 
 import json

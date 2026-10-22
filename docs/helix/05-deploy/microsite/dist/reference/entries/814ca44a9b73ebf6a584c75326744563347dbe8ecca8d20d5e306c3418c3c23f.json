@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 13360,
+        "line": 14,
+        "path": "src/core-ideals/facets-postgresql-projection.ts",
+        "sha256": "6ce38a1459c90d94fcf25a9f4008d10771d7fc0566950c8c163c68ef434354db"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "FacetsPostgresqlRequest",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface FacetsPostgresqlRequest {id:string;namespace:string;tableName:string;columnName:string;nativeType:keyof typeof nativeCarriers;mode:'strict'|'report';encoding:'checked'|'type-modifier'|'carrier-only';obligation:'value-domain'|'exact-input'}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"FacetsPostgresqlRequest\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 13360,
+      "line": 14,
+      "path": "src/core-ideals/facets-postgresql-projection.ts",
+      "sha256": "6ce38a1459c90d94fcf25a9f4008d10771d7fc0566950c8c163c68ef434354db"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/facets-postgresql-projection.ts",
+  "title": "FacetsPostgresqlRequest"
+}

@@ -1,7 +1,10 @@
-import {declareCoreNullability,type Document,type Nullability,type NullabilityTableSpecRequest,type ScalarType} from '../../src';
+// SPDX-License-Identifier: MIT OR Apache-2.0
+import {CURRENT_CORE_VERSION} from '../../src/model/types';
+// Synthetic current-core fixture for active operation/projection behavior.
+import {declareCoreNullability, type Document, type Nullability, type NullabilityTableSpecRequest, type ScalarType} from '../../src';
 const types:Record<NullabilityTableSpecRequest['nativeType'],ScalarType>={BOOLEAN:'boolean',INTEGER:'integer',DECIMAL:'decimal',FLOAT:'float',TEXT:'string',VARCHAR:'string',CHAR:'string',DATE:'date',DATETIME:'timestamp',TIMESTAMP:'timestamp'};
 export function nullabilityTableSpecAuthor(nullability:Nullability='required',variant:'clean'|'loss'='clean',nativeType:NullabilityTableSpecRequest['nativeType']='VARCHAR'){
- const source:Document={umf:'0.3.0',id:'authored',vocabularies:{},modules:[{id:'m',namespace:'',elements:[{id:'value',name:'value',kind:'field',scalarType:types[nativeType],description:'Availability example',extensions:{}}]}]};
+ const source:Document={umf:CURRENT_CORE_VERSION,id:'authored',vocabularies:{},modules:[{id:'m',namespace:'',elements:[{id:'value',name:'value',kind:'field',scalarType:types[nativeType],description:'Availability example',extensions:{}}]}]};
  if(variant==='loss'){source.modules[0]!.namespace='sales';source.vocabularies.future={version:'1.0.0'};source.modules[0]!.elements[0]!.extensions.future={constraint:{exactInteger:'9007199254740993'},default:'not-execution'};}
  return declareCoreNullability(source,{module:'m',element:'value'},nullability);
 }

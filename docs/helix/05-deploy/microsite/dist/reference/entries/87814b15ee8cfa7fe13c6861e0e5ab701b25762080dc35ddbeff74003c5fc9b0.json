@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 8803,
+        "line": 21,
+        "path": "src/core-ideals/nullability-tablespec-projection.ts",
+        "sha256": "49bf5ea8e0debc912d6472e5034bb1060cfae4f034e48c0c28df176523c92b92"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "projectNullabilityToTableSpec",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: CoreNullabilityDeclaration, options: NullabilityTableSpecRequest): NullabilityTableSpecProjection & { diagnostics: Diagnostic[]; }"
+    ]
+  },
+  "id": "[\"api\",\".\",\"projectNullabilityToTableSpec\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 8803,
+      "line": 21,
+      "path": "src/core-ideals/nullability-tablespec-projection.ts",
+      "sha256": "49bf5ea8e0debc912d6472e5034bb1060cfae4f034e48c0c28df176523c92b92"
+    }
+  ],
+  "summary": "Public export · src/core-ideals/nullability-tablespec-projection.ts",
+  "title": "projectNullabilityToTableSpec"
+}

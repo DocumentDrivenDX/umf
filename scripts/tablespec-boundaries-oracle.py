@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Check the pinned loader's filename-selection primitive independently."""
 import hashlib,json,tempfile
 from pathlib import Path

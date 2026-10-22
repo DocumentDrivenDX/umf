@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
+import {CURRENT_CORE_VERSION} from '../generated/core-model';
 import {copyJson} from '../model/json';
 import {UmfError,type Document,type Json,type Diagnostic} from '../model/types';
 import {type CoreKindDeclaration,verifyCoreKindDeclaration} from '../model/field-kind';
@@ -6,7 +8,7 @@ import {getSqlServerColumnMetadata,exportSqlServerCatalog} from '../adapters/sql
 import {parseNativeJson,renderTree} from '../model/native-json';
 import {validateDocument} from '../validation/document';
 import {createValidator} from '../validation/schema';
-import legacy from '../../spec/core/schema.json';import fields from '../../spec/core/field-document.schema.json';import kinds from '../../spec/core/kind-operation.schema.json';import schema from '../../spec/core/sqlserver-record-classification.schema.json';
+import legacy from '../../spec/core/schema.json';import kinds from '../../spec/core/kind-operation-v6.schema.json';import schema from '../../spec/core/sqlserver-record-classification.schema.json';
 export {default as sqlserverRecordClassificationSchema} from '../../spec/core/sqlserver-record-classification.schema.json';
 export interface SqlServerRecordRequest {recordModule:string;recordId:string;mode:'strict'|'report';nativeSource:string;relation:{schema:string;name:string};authors?:CoreKindDeclaration[]}
 const binding={id:'umf.sqlserver.catalog.record',version:'1.0.0',nativeVersion:'16.0.4295.3',subset:'Captured table member roles only; permission-limited observations, no native identity/constraint equivalence'} as const;
@@ -15,11 +17,11 @@ export interface SqlServerRecordClassification {
  operation:'classify-sqlserver-record';version:'1.0.0';status:'classified'|'blocked';source:Document;target?:Document;request:SqlServerRecordRequest;binding:typeof binding;mappings:Mapping[];
  residuals:{path:string;value:Json;reason:string;recovery:'Source and native fragments retained; resolve conflict then recompute whole record classification'}[];diagnostics:Diagnostic[];
 }
-const validator=createValidator();validator.addSchema(legacy);validator.addSchema(fields);validator.addSchema(kinds);const check=validator.compile(schema),checkRequest=validator.compile(schema.properties.request);
+const validator=createValidator();validator.addSchema(legacy);validator.addSchema(kinds);const check=validator.compile(schema),checkRequest=validator.compile(schema.properties.request);
 export function classifySqlServerRecord(input:Document,options:SqlServerRecordRequest):SqlServerRecordClassification {
  const source=copyJson(input) as unknown as Document,request=copyJson(options) as unknown as SqlServerRecordRequest;
  if(!checkRequest(request))throw new UmfError('SQLSERVER_RECORD_REQUEST',JSON.stringify(checkRequest.errors));
- if(!validateDocument(source).valid||source.umf!=='0.2.0')throw new UmfError('SQLSERVER_RECORD_VERSION','Explicitly migrated valid envelope required');
+ if(!validateDocument(source).valid||source.umf!==CURRENT_CORE_VERSION)throw new UmfError('SQLSERVER_RECORD_VERSION','Valid current 0.10.0 envelope required');
  const archive=parseNativeJson(request.nativeSource);
  if(exportSqlServerCatalog(source)!==renderTree(archive)+'\n')throw new UmfError('SQLSERVER_RECORD_ARCHIVE','Native archive differs from captured tree');
  const version=archive.kind==='object'?archive.members.serverVersion:undefined;if(version?.kind!=='string'||version.value!=='16.0.4295.3')throw new UmfError('SQLSERVER_RECORD_SERVER','This binding requires SQL Server 16.0.4295.3');

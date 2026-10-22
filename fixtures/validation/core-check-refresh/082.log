@@ -1,0 +1,22 @@
+{"probe":0}
+{"probe":20}
+{"probe":40}
+{"probe":60}
+{"probe":80}
+{"cases":86,"rejections":27,"columns":37,"serializationRecoveries":2,"observational":false}
+{"probe":0}
+{"associations":[{"table":"compound","parentColumnId":0,"definition":"([value]>=(0) AND [other]<=(255))"},{"table":"cross_column","parentColumnId":0,"definition":"(([value]+[other])<=(255))"},{"table":"disabled","parentColumnId":1,"definition":"([value]>=(0) AND [value]<=(255))"},{"table":"escaped","parentColumnId":1,"definition":"([a]] AND b]>=(0) AND [a]] AND b]<=(255))"},{"table":"ranged","parentColumnId":1,"definition":"([value]>=(0) AND [value]<=(255))"},{"table":"untrusted","parentColumnId":1,"definition":"([value]>=(0) AND [value]<=(255))"}]}
+{"cases":11,"rejections":3,"columns":12,"serializationRecoveries":2}
+{"ddl":0,"total":145}
+{"ddl":40,"total":145}
+{"ddl":80,"total":145}
+{"ddl":120,"total":145}
+{"cases":238,"projected":145,"blocked":93,"probes":27,"rejections":10}
+{"case":0}
+{"case":40}
+{"case":80}
+{"case":120}
+{"case":160}
+{"case":200}
+{"cases":145,"idealRecoveries":145,"nativeRecoveries":145,"exactFacetRecoveries":57,"explicitResiduals":88,"fullCatalogNativeRecoveries":2}
+{"nativeCommands":4,"bindingAccepted":false}

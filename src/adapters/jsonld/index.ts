@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
+import {CURRENT_CORE_VERSION} from '../../generated/core-model';
 import jsonld from 'jsonld';
 import {importGeneralizedRdfDataset,getGeneralizedRdfQuads} from '../generalized-rdf';
 import {wellFormedIri,wellFormedLanguage} from './rdf-terms';
@@ -26,7 +28,7 @@ export function inspectJsonLdDocument(document:Document){return validateDocument
 function payload(document:Document):Payload{const c=inspectJsonLdDocument(document);if(!c.valid)throw new UmfError('JSONLD_DOCUMENT',JSON.stringify(c.diagnostics));const p=document.modules.find(m=>m.id==='jsonld')?.elements.find(e=>e.id==='document')?.extensions[JSONLD_EXTENSION];if(!p||document.vocabularies[JSONLD_EXTENSION]?.version!=='0.1.0')throw new UmfError('JSONLD_PAYLOAD','Expected pinned JSON-LD payload');return copyJson(p) as unknown as Payload;}
 export function importJsonLdDocument(text:string,options:{id:string;baseIRI:string;processingMode?:'json-ld-1.0'|'json-ld-1.1';contexts?:{url:string;documentUrl?:string;text:string}[];expandContext?:string}):Document{
  const p:Payload={profile:'jsonld-source',processingMode:options.processingMode??'json-ld-1.1',baseIRI:options.baseIRI,root:parseNativeJson(text),originalSource:text,contexts:(options.contexts??[]).map(c=>({url:c.url,documentUrl:c.documentUrl??c.url,root:parseNativeJson(c.text),originalSource:c.text})),...(options.expandContext===undefined?{}:{expandContext:parseNativeJson(options.expandContext)})};
- const d:Document={umf:'0.1.0',id:options.id,vocabularies:{[JSONLD_EXTENSION]:{version:'0.1.0'}},modules:[{id:'jsonld',namespace:'',elements:[{id:'document',extensions:{[JSONLD_EXTENSION]:p as unknown as Json}}]}]};payload(d);return d;
+ const d:Document={umf:CURRENT_CORE_VERSION,id:options.id,vocabularies:{[JSONLD_EXTENSION]:{version:'0.1.0'}},modules:[{id:'jsonld',namespace:'',elements:[{id:'document',extensions:{[JSONLD_EXTENSION]:p as unknown as Json}}]}]};payload(d);return d;
 }
 export function exportJsonLdDocument(document:Document):string{const p=payload(document);if(inspectJsonLdDocument(document).diagnostics.some(d=>d.code==='JSONLD_REPRESENTATION'))throw new UmfError('JSONLD_EXPORT','Unknown representation fields cannot be discarded');return renderTree(parseNativeJson(p.originalSource))===renderTree(p.root)?p.originalSource:renderTree(p.root)+'\n';}
 export function getJsonLdNode(document:Document,path:string):NativeJson{let n=payload(document).root;for(const k of nativePointer(path))n=treeChild(n,k);return copyJson(n) as unknown as NativeJson;}

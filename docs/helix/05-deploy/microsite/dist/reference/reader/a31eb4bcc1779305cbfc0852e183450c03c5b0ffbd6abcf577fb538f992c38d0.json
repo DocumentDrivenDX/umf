@@ -1,0 +1,56 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"PostgresqlKeyCollation\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "schema",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "name",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "provider",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "deterministic",
+      "optional": false,
+      "type": "boolean"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "locale",
+      "optional": false,
+      "type": "string | null"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "version",
+      "optional": false,
+      "type": "string | null"
+    }
+  ],
+  "parameters": [],
+  "purpose": "PostgresqlKeyCollation is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "PostgresqlKeyCollation"
+}

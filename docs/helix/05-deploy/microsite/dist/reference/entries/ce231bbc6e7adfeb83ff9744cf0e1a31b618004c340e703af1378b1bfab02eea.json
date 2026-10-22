@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 18719,
+        "line": 17,
+        "path": "src/extensions/security/policy.ts",
+        "sha256": "dc3775fd133994835bde80e3b3d6d6c2ac860c0831f686cdcc8070e99e461d0c"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "SecurityInspection",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface SecurityInspection extends Validation {source:Json;resolution?:Json}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"SecurityInspection\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 18719,
+      "line": 17,
+      "path": "src/extensions/security/policy.ts",
+      "sha256": "dc3775fd133994835bde80e3b3d6d6c2ac860c0831f686cdcc8070e99e461d0c"
+    }
+  ],
+  "summary": "Type declaration · src/extensions/security/policy.ts",
+  "title": "SecurityInspection"
+}

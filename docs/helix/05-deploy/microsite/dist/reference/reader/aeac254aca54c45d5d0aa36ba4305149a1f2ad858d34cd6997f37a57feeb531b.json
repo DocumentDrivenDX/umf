@@ -1,0 +1,23 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"reconcileDeltaCommits\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"DeltaCommit\"]"
+      ],
+      "name": "commits",
+      "optional": false,
+      "type": "DeltaCommit[]"
+    }
+  ],
+  "purpose": "Derives action state, never authorizes table reads/writes or expires tombstones.",
+  "related": [],
+  "returns": "DeltaReconciliation",
+  "task": "Other APIs",
+  "type": "(commits: DeltaCommit[]) => DeltaReconciliation"
+}

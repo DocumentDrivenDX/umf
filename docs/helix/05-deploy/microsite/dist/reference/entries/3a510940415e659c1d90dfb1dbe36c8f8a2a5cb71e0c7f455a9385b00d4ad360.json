@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 24721,
+        "line": 93,
+        "path": "src/core-ideals/relationship-postgresql.ts",
+        "sha256": "a4a1024fb993a68df2d03df3e0131884760bfd7846b5b4affc5f014e47eba822"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "projectRelationshipsToPostgresql",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: Document, physicalInput: Document, authorInput: CoreRelationshipDeclaration[], options: RelationshipPostgresqlRequest, backend: PostgresqlBackend): Promise<RelationshipPostgresqlProjection>"
+    ]
+  },
+  "id": "[\"api\",\".\",\"projectRelationshipsToPostgresql\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 24721,
+      "line": 93,
+      "path": "src/core-ideals/relationship-postgresql.ts",
+      "sha256": "a4a1024fb993a68df2d03df3e0131884760bfd7846b5b4affc5f014e47eba822"
+    }
+  ],
+  "summary": "New ordinary keyed tables, followed by ALTER TABLE FKs. This is not the full DDD generator.",
+  "title": "projectRelationshipsToPostgresql"
+}

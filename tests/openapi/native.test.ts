@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {importOpenapiDocument,exportOpenapiDocument,exportOpenapiBundle,getOpenapiNode,proposeOpenapiEdit,inspectOpenapi,readDocument,writeDocument,parseNativeYaml} from '../../src';
 import {renderTree,parseNativeJson} from '../../src/model/native-json';

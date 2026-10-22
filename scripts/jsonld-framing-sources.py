@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 import hashlib,json,shutil,subprocess
 from pathlib import Path
 pin='3bf782ba9a40dd1b143435abe386d38df64f2b47';cache=Path('.cache/jsonld-framing');out=Path('native/jsonld/framing-sources')

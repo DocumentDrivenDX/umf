@@ -1,0 +1,50 @@
+{
+  "data": {
+    "conflicts": [],
+    "correspondence": "unassessed",
+    "declarations": [
+      {
+        "bytes": 3765,
+        "path": "spec/extensions/delta/package.json",
+        "sha256": "82548a9be0b91b0b36ea324a17e144f4ea873853e72258cea97b44a172cb6551"
+      }
+    ],
+    "evidence": [],
+    "operation": {
+      "apiNames": [],
+      "coreProfiles": [],
+      "extensionVersions": [],
+      "fixturePaths": [],
+      "id": "umf.delta@0.1.0:import",
+      "kind": "import",
+      "limitations": [
+        "Recorded scope only; native equivalence and production adoption are separate."
+      ],
+      "runtime": {
+        "availability": "host-only",
+        "profileId": "umf.delta@0.1.0:import",
+        "requirements": [
+          "Native runtime / original qualification harness; not executed by this page."
+        ]
+      },
+      "sourceSystem": "Delta schema JSON · Protocol commit 3b1b99cd077ec9c84c8a94c250dea3730cc33392; deltalake 1.6.4 oracle",
+      "subset": "Recursive schema preservation, structural validation, copied pointer access and candidate edits. Table/protocol profile and execution support remain separate.",
+      "targetSystem": "UMF",
+      "title": "umf.delta · import"
+    }
+  },
+  "id": "[\"integration\",\"umf.delta@0.1.0:import\"]",
+  "kind": "integration",
+  "links": [
+    "[\"extension\",\"umf.delta\",\"0.1.0\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 134795,
+      "path": "docs/helix/05-deploy/reference/operations.json",
+      "sha256": "793743bbca36e56e90e82df5ef0408b628c434e58cb68aea4d6486349be78e61"
+    }
+  ],
+  "summary": "Recursive schema preservation, structural validation, copied pointer access and candidate edits. Table/protocol profile and execution support remain separate.",
+  "title": "umf.delta · import"
+}

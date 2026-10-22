@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 3175,
+        "line": 9,
+        "path": "src/extensions/actions/plan-types.ts",
+        "sha256": "94cd1d2105c503b66eadb99b4fd45013c57c93b3235cbe5d6dbd512cd0a35c68"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "ActionPlanDiagnostic",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface ActionPlanDiagnostic {code:string;path:string;message:string}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"ActionPlanDiagnostic\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 3175,
+      "line": 9,
+      "path": "src/extensions/actions/plan-types.ts",
+      "sha256": "94cd1d2105c503b66eadb99b4fd45013c57c93b3235cbe5d6dbd512cd0a35c68"
+    }
+  ],
+  "summary": "Type declaration · src/extensions/actions/plan-types.ts",
+  "title": "ActionPlanDiagnostic"
+}

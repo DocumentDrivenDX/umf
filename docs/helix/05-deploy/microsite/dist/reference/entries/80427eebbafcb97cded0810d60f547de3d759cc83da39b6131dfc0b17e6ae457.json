@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 8193,
+        "line": 57,
+        "path": "src/model/facets.ts",
+        "sha256": "54d789632de775afe7d97518c7fb5f2b493a4d7353ad46b3e91e265a1967208a"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "historicalCoreFacetPatch",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: CoreFacetInterpreted): CoreFacetPatch"
+    ]
+  },
+  "id": "[\"api\",\".\",\"historicalCoreFacetPatch\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 8193,
+      "line": 57,
+      "path": "src/model/facets.ts",
+      "sha256": "54d789632de775afe7d97518c7fb5f2b493a4d7353ad46b3e91e265a1967208a"
+    }
+  ],
+  "summary": "Historical projection bridge: refuses newer bounds rather than dropping them.",
+  "title": "historicalCoreFacetPatch"
+}

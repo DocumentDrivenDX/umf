@@ -1,0 +1,30 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"findPostgresqlCatalogRelation\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "qualified",
+      "optional": false,
+      "type": "{ schema: string; name: string; }"
+    }
+  ],
+  "purpose": "Returns native observations, including unknown fields; no entity/table equivalence.",
+  "related": [],
+  "returns": "NativeJson | undefined",
+  "task": "Inspect and select",
+  "type": "(document: Document, qualified: { schema: string; name: string; }) => NativeJson | undefined"
+}

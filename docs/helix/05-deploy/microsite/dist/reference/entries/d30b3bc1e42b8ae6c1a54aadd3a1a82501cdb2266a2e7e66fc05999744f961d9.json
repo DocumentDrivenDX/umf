@@ -1,0 +1,178 @@
+{
+  "data": {
+    "extensionId": "umf.arrow",
+    "manifest": {
+      "capabilities": {
+        "directions": [
+          "import",
+          "export"
+        ],
+        "evidence": [
+          "tests/arrow/schema.test.ts",
+          "tests/arrow/ipc.test.ts",
+          "fixtures/arrow/capability-results.json",
+          "fixtures/arrow/public-ipc-oracle-results.json",
+          "fixtures/arrow/upstream/schema-results.json"
+        ],
+        "native": {
+          "subset": "Schema JSON only, exact metadata/type parameter retention and candidate edits. Guarded schema-only IPC export via an explicit pinned backend; no arbitrary IPC import or array/data support claimed.",
+          "system": "Apache Arrow integration schema JSON",
+          "version": "Grammar profile 0.1.0; native feasibility evidence JS 21.2.0 / PyArrow 21.0.0"
+        },
+        "validation": "semantic"
+      },
+      "coreVersion": "0.10.0",
+      "description": "Arrow integration schema JSON with exact unknown content and ordered metadata",
+      "id": "umf.arrow",
+      "schema": {
+        "$defs": {
+          "node": {
+            "oneOf": [
+              {
+                "properties": {
+                  "kind": {
+                    "const": "null"
+                  }
+                },
+                "required": [
+                  "kind"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "kind": {
+                    "const": "boolean"
+                  },
+                  "value": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "kind": {
+                    "const": "string"
+                  },
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "kind": {
+                    "const": "number"
+                  },
+                  "value": {
+                    "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?([eE][+-]?[0-9]+)?$",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "items": {
+                    "items": {
+                      "$ref": "#/$defs/node"
+                    },
+                    "type": "array"
+                  },
+                  "kind": {
+                    "const": "array"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "items"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "kind": {
+                    "const": "object"
+                  },
+                  "members": {
+                    "additionalProperties": {
+                      "$ref": "#/$defs/node"
+                    },
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "members"
+                ],
+                "type": "object"
+              }
+            ]
+          }
+        },
+        "$id": "urn:umf:arrow:0.1.0",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": true,
+        "properties": {
+          "profile": {
+            "const": "arrow-integration-schema"
+          },
+          "root": {
+            "$ref": "#/$defs/node"
+          }
+        },
+        "required": [
+          "profile",
+          "root"
+        ],
+        "type": "object"
+      },
+      "scopes": [
+        "element"
+      ],
+      "semantics": "CONTRACT-016. Exact schema JSON preservation is separate from native IPC and record-batch validity. Unknown types/properties and duplicate metadata remain authoritative in source.",
+      "version": "0.1.0"
+    },
+    "registration": {
+      "apiIds": [
+        "[\"api\",\".\",\"arrowRegistry\"]"
+      ],
+      "coreProfiles": [],
+      "mode": "explicit"
+    },
+    "schemaId": "[\"schema\",\"spec/extensions/arrow/schema.json\",\"\"]",
+    "version": "0.1.0"
+  },
+  "id": "[\"extension\",\"umf.arrow\",\"0.1.0\"]",
+  "kind": "extension",
+  "links": [
+    "[\"api\",\".\",\"arrowRegistry\"]",
+    "[\"guide\",\"extensions\"]",
+    "[\"schema\",\"spec/extensions/arrow/schema.json\",\"\"]",
+    "[\"integration\",\"umf.arrow@0.1.0:import\"]",
+    "[\"integration\",\"umf.arrow@0.1.0:export\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 3768,
+      "path": "spec/extensions/arrow/package.json",
+      "sha256": "1c98900943479b97198ce187427f3940a468340858fc68229840a1ef65af0eb5"
+    }
+  ],
+  "summary": "Arrow integration schema JSON with exact unknown content and ordered metadata",
+  "title": "umf.arrow · 0.1.0"
+}

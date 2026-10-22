@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 18927,
+        "line": 147,
+        "path": "src/core-ideals/relationship-tablespec-projection.ts",
+        "sha256": "8786f0f4815e314e286fdbcebf874c91b48cd2f13f8ef658f5876d9097f552cd"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "verifyRelationshipTableSpecProjection",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: RelationshipTableSpecProjection, current: Document): RelationshipTableSpecProjection"
+    ]
+  },
+  "id": "[\"api\",\".\",\"verifyRelationshipTableSpecProjection\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 18927,
+      "line": 147,
+      "path": "src/core-ideals/relationship-tablespec-projection.ts",
+      "sha256": "8786f0f4815e314e286fdbcebf874c91b48cd2f13f8ef658f5876d9097f552cd"
+    }
+  ],
+  "summary": "Recomputes retained consistency; does not authenticate authors or native execution.",
+  "title": "verifyRelationshipTableSpecProjection"
+}

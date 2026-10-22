@@ -1,0 +1,44 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"RelationshipTableSpecRequest\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "profile",
+      "optional": false,
+      "type": "\"outgoing-metadata\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreRelationshipIdentity\"]"
+      ],
+      "name": "relationship",
+      "optional": false,
+      "type": "CoreRelationshipIdentity"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "mode",
+      "optional": false,
+      "type": "\"strict\" | \"report\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "columns",
+      "optional": false,
+      "type": "{ sourceColumn: string; targetField: { module: string; element: string; }; targetColumn: string; }[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "RelationshipTableSpecRequest is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "RelationshipTableSpecRequest"
+}

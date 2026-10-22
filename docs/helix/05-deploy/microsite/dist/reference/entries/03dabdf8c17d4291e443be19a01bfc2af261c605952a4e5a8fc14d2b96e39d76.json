@@ -1,0 +1,18 @@
+{
+  "data": {
+    "body": "\nUMF keeps shared schema metadata alongside native and unfamiliar meaning. A valid envelope is a container for those meanings; it is not proof that every payload was interpreted.\n\nA Document declares its identity, vocabularies and modules. Set umf to \"0.10.0\". Modules provide naming context. Elements have stable module/element identities; display names and namespaces do not merge identities. Core references point to those exact identities.\n\nFields describe values. Records declare membership and Keys. Groups organize declarations. Nullability describes ideal availability, independently of a database NULL, a missing writer input, a default or a reader result. Cardinality describes one/array/map shape, separately from relationship multiplicity.\n\nFacets refine declared domains: width, precision/scale, length, ranges and collection size retain explicit units. Exact integer and decimal literals use text carriers. Titles, aliases, examples, allowed values and defaults describe schema properties. bits128 and UUID describe exact 16-byte values; those value families do not certify native byte order or storage layouts.\n\nA Key is a named, ordered tuple of Field identities. A relationship names keyed Records, participation and lifecycle intent. Neither is a bare unique-index flag or a promise of referential enforcement. Native comparison, NULL, collation, filtered-index and enforcement-state details stay in bindings.\n\nUse the Core page to follow properties and definitions. Use the workbench to inspect a current Orders example. Structural schema differences show changed representation; migration, semantic compatibility and native equivalence need their own contracts and evidence.\n\nSemantic references name an external vocabulary, literal release and term. No catalog is fetched and no validator is inferred. Explicit validators and missing/unknown results stay separate from native enforcement. The semantic example retains both exact value declarations and semantic metadata.\n",
+    "relatedIds": []
+  },
+  "id": "[\"guide\",\"concepts\"]",
+  "kind": "guide",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 2029,
+      "path": "docs/helix/05-deploy/reference/guides/concepts.md",
+      "sha256": "95a2b9ff58a1a0cf3349d41961ed326e3cde85c2360106006e6753bcc535e775"
+    }
+  ],
+  "summary": "UMF keeps shared schema metadata alongside native and unfamiliar meaning. A valid envelope is a container for those meanings; it is not proof that every payload was interpreted.",
+  "title": "Core concepts: a shared vocabulary"
+}

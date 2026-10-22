@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
+import {CURRENT_CORE_VERSION} from '../generated/core-model';
 import {copyJson} from '../model/json';
 import {UmfError,type Document,type Json,type Diagnostic,type ExtensionPackage} from '../model/types';
 import {parseNativeJson,renderTree,type NativeJson} from '../model/native-json';
@@ -6,7 +8,7 @@ import {exportSqlServerCatalog,getSqlServerColumnMetadata} from '../adapters/sql
 import {inspectSqlServerFacetConstraints,type SqlServerFacetConstraintFact} from '../adapters/sqlserver/facet-constraints';
 import {validateDocument} from '../validation/document';
 import {createValidator} from '../validation/schema';
-import legacy from '../../spec/core/schema.json';import fields from '../../spec/core/field-document.schema.json';import availability from '../../spec/core/nullability-document.schema.json';import containers from '../../spec/core/cardinality-document.schema.json';import core from '../../spec/core/facet-document.schema.json';import authorSchema from '../../spec/core/facet-operation.schema.json';import nativeSchema from '../../spec/core/native-json.schema.json';
+import core from '../../spec/core/schema.json';import authorSchema from '../../spec/core/facet-operation-v3.schema.json';import nativeSchema from '../../spec/core/native-json.schema.json';
 import schema from '../../spec/core/sqlserver-facet-classification.schema.json';
 import captureSchema from '../../spec/extensions/sqlserver/capture.schema.json';
 import manifest from '../../spec/extensions/sqlserver-facets/package.json';
@@ -24,7 +26,7 @@ export interface SqlServerFacetClassification {
  mapping:{origin:'classified';idealPath:string;nativePath:string;nativeFragment:NativeJson;facets:CoreFacetPatch;observations:Observation[]};
  residuals:{path:string;targetPath:string|null;value:Json;reason:string;outcome:Exclude<Outcome,'exact'>;binding:typeof binding;recovery:typeof recovery}[];diagnostics:Diagnostic[];
 }
-const validator=createValidator();for(const s of [legacy,fields,availability,containers,core,authorSchema,nativeSchema])validator.addSchema(s);
+const validator=createValidator();for(const s of [core,authorSchema,nativeSchema])validator.addSchema(s);
 const check=validator.compile(schema),checkRequest=validator.compile(schema.properties.request);
 const canonical=(value:Json):string=>Array.isArray(value)?'['+value.map(canonical).join(',')+']':value!==null&&typeof value==='object'?'{'+Object.keys(value).sort().map(k=>JSON.stringify(k)+':'+canonical(value[k]!)).join(',')+'}':JSON.stringify(value);
 /** Interpret a selected physical column onto an explicitly selected logical Field.
@@ -32,7 +34,7 @@ const canonical=(value:Json):string=>Array.isArray(value)?'['+value.map(canonica
 export function classifySqlServerFacets(input:Document,options:SqlServerFacetRequest):SqlServerFacetClassification {
  const source=copyJson(input) as unknown as Document,request=copyJson(options) as unknown as SqlServerFacetRequest;
  if(!checkRequest(request))throw new UmfError('SQLSERVER_FACET_REQUEST',JSON.stringify(checkRequest.errors));
- if(source.umf!=='0.5.0'||!validateDocument(source).valid)throw new UmfError('SQLSERVER_FACET_SOURCE','Valid core 0.5.0 required; migrate explicitly');
+ if(source.umf!==CURRENT_CORE_VERSION||!validateDocument(source).valid)throw new UmfError('SQLSERVER_FACET_SOURCE','Valid core 0.10.0 required; migrate explicitly');
  const root=parseNativeJson(request.nativeSource);
  if(renderTree(root)+'\n'!==exportSqlServerCatalog(source))throw new UmfError('SQLSERVER_FACET_ARCHIVE','Original native source differs from retained catalog');
  if(root.kind!=='object'||root.members.serverVersion?.kind!=='string'||root.members.serverVersion.value!=='16.0.4295.3'||root.members.profile?.kind!=='string'||root.members.profile.value!=='sqlserver-catalog-v3'||root.members.state?.kind!=='string'||root.members.state.value!=='captured')throw new UmfError('SQLSERVER_FACET_VERSION','Pinned captured SQL Server v3 catalog required');
@@ -110,7 +112,7 @@ export function classifySqlServerFacets(input:Document,options:SqlServerFacetReq
  if(conflict||request.mode==='strict'&&result.residuals.length)result.status='blocked';
  else{
   const target=copyJson(source) as unknown as Document,selected=target.modules[mi]!.elements[ei]!;
-  if(!request.author&&Object.keys(result.mapping.facets).length)selected.facets=copyJson(result.mapping.facets);
+  if(!request.author&&Object.keys(result.mapping.facets).length)selected.facets=copyJson(result.mapping.facets) as unknown as NonNullable<typeof selected.facets>;
   target.vocabularies[SQLSERVER_FACETS_EXTENSION]??={version:'1.0.0'};
   selected.extensions[SQLSERVER_FACETS_EXTENSION]=copyJson({origin:'classified',physicalColumn:request.column,binding:{id:binding.id,version:binding.version},profile:request.profile,obligation:request.obligation,outcome:result.outcome,observations:result.mapping.observations});
   if(!validateDocument(target).valid)throw new UmfError('SQLSERVER_FACET_TARGET','Classification would violate core facet constraints');result.target=target;

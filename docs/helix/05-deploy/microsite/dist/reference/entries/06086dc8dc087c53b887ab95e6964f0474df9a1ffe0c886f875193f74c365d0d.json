@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 6284,
+        "line": 20,
+        "path": "src/core-ideals/postgresql-field.ts",
+        "sha256": "a754bd7f4b76833bd9f658da92f5dcf84f54e2d0c9f103695249467b8b362dfb"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "classifyPostgresqlField",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: Document, options: PostgresqlFieldRequest): PostgresqlFieldClassification"
+    ]
+  },
+  "id": "[\"api\",\".\",\"classifyPostgresqlField\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 6284,
+      "line": 20,
+      "path": "src/core-ideals/postgresql-field.ts",
+      "sha256": "a754bd7f4b76833bd9f658da92f5dcf84f54e2d0c9f103695249467b8b362dfb"
+    }
+  ],
+  "summary": "Native paths are JSON pointers into the retained capture text, not pointers into the tagged UMF encoding.",
+  "title": "classifyPostgresqlField"
+}

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
 const mixed=await Bun.file('fixtures/validation/core-selection.json').json(),adapters=await Bun.file('fixtures/validation/core-selection-adapters.json').json();
 const built=await Bun.build({entrypoints:['src/index.ts'],target:'browser',format:'esm',outdir:'.cache/core-selection-browser',naming:'umf.js'});if(!built.success)throw Error(String(built.logs));

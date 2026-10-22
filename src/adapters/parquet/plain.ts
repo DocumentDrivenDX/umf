@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 export type ParquetPhysicalValue={type:'BOOLEAN';value:boolean}|{type:'INT32'|'INT64';value:string}|{type:'FLOAT'|'DOUBLE'|'INT96'|'BYTE_ARRAY'|'FIXED_LEN_BYTE_ARRAY';hex:string};
 export function physicalValueBytes(v:ParquetPhysicalValue){return v.type==='BOOLEAN'?1:v.type==='INT32'?4:v.type==='INT64'?8:('hex' in v?v.hex.length/2+(v.type==='BYTE_ARRAY'?4:0):0);}
 /** Exact physical carriers only; caller owns logical interpretation. */

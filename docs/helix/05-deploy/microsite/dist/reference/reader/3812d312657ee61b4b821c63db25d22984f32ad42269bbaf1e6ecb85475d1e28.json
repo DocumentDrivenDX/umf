@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"recoverSqlServerKeySource\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SqlServerKeyClassification\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "SqlServerKeyClassification"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "current",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "recoverSqlServerKeySource accepts input, current and returns string.",
+  "related": [],
+  "returns": "string",
+  "task": "Import and export",
+  "type": "(input: SqlServerKeyClassification, current: Document) => string"
+}

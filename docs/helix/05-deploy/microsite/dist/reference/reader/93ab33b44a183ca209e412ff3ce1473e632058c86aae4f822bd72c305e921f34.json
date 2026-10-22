@@ -1,0 +1,35 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"validateProtectionParameters\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "policy",
+      "optional": false,
+      "type": "unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "catalog",
+      "optional": false,
+      "type": "unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "closure",
+      "optional": false,
+      "type": "unknown"
+    }
+  ],
+  "purpose": "validateProtectionParameters accepts policy, catalog, closure and returns ProtectionParameterValidation.",
+  "related": [],
+  "returns": "ProtectionParameterValidation",
+  "task": "Read and validate",
+  "type": "(policy: unknown, catalog: unknown, closure: unknown) => ProtectionParameterValidation"
+}

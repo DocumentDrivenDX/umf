@@ -3,7 +3,7 @@
     {
       "id": "orders",
       "source": {
-        "umf": "0.1.0",
+        "umf": "0.10.0",
         "id": "orders",
         "vocabularies": {
           "umf.avro": {
@@ -522,7 +522,7 @@
       "result": {
         "status": "projected",
         "source": {
-          "umf": "0.1.0",
+          "umf": "0.10.0",
           "id": "orders",
           "vocabularies": {
             "umf.avro": {
@@ -1324,7 +1324,7 @@
         ],
         "nativeSchema": "{\n  \"version\": \"1.0\",\n  \"table_name\": \"Orders\",\n  \"description\": \"Original UMF fixture: recursive order with native Avro defaults and metadata.\",\n  \"columns\": [\n    {\n      \"name\": \"id\",\n      \"nullable\": false,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"status\",\n      \"nullable\": false,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"token\",\n      \"nullable\": false,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"tags\",\n      \"nullable\": false,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"labels\",\n      \"nullable\": false,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"parent\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"amount\",\n      \"nullable\": false,\n      \"data_type\": \"DECIMAL\",\n      \"precision\": 9,\n      \"scale\": 2\n    },\n    {\n      \"name\": \"created\",\n      \"nullable\": false,\n      \"data_type\": \"TIMESTAMP\"\n    },\n    {\n      \"name\": \"payload\",\n      \"nullable\": false,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"active\",\n      \"nullable\": false,\n      \"data_type\": \"BOOLEAN\"\n    },\n    {\n      \"name\": \"score\",\n      \"nullable\": false,\n      \"data_type\": \"FLOAT\"\n    },\n    {\n      \"name\": \"ratio\",\n      \"nullable\": false,\n      \"data_type\": \"FLOAT\"\n    },\n    {\n      \"name\": \"count\",\n      \"nullable\": false,\n      \"data_type\": \"INTEGER\"\n    }\n  ]\n}\n",
         "target": {
-          "umf": "0.1.0",
+          "umf": "0.10.0",
           "id": "tablespec-result",
           "vocabularies": {
             "umf.tablespec": {
@@ -1691,7 +1691,7 @@
     {
       "id": "dependency",
       "source": {
-        "umf": "0.1.0",
+        "umf": "0.10.0",
         "id": "dependency",
         "vocabularies": {
           "umf.avro": {
@@ -1823,7 +1823,7 @@
       "result": {
         "status": "projected",
         "source": {
-          "umf": "0.1.0",
+          "umf": "0.10.0",
           "id": "dependency",
           "vocabularies": {
             "umf.avro": {
@@ -2007,7 +2007,7 @@
         ],
         "nativeSchema": "{\n  \"version\": \"1.0\",\n  \"table_name\": \"Orders\",\n  \"columns\": [\n    {\n      \"name\": \"amount\",\n      \"nullable\": true,\n      \"data_type\": \"DECIMAL\",\n      \"precision\": 15,\n      \"scale\": 3\n    }\n  ]\n}\n",
         "target": {
-          "umf": "0.1.0",
+          "umf": "0.10.0",
           "id": "tablespec-result",
           "vocabularies": {
             "umf.tablespec": {
@@ -2094,7 +2094,7 @@
     {
       "id": "temporal",
       "source": {
-        "umf": "0.1.0",
+        "umf": "0.10.0",
         "id": "temporal",
         "vocabularies": {
           "umf.avro": {
@@ -2284,7 +2284,7 @@
       "result": {
         "status": "projected",
         "source": {
-          "umf": "0.1.0",
+          "umf": "0.10.0",
           "id": "temporal",
           "vocabularies": {
             "umf.avro": {
@@ -2575,7 +2575,7 @@
         ],
         "nativeSchema": "{\n  \"version\": \"1.0\",\n  \"table_name\": \"Orders\",\n  \"columns\": [\n    {\n      \"name\": \"day\",\n      \"nullable\": false,\n      \"data_type\": \"DATE\"\n    },\n    {\n      \"name\": \"local\",\n      \"nullable\": false,\n      \"data_type\": \"DATETIME\"\n    },\n    {\n      \"name\": \"instant\",\n      \"nullable\": false,\n      \"data_type\": \"TIMESTAMP\"\n    },\n    {\n      \"name\": \"whole\",\n      \"nullable\": false,\n      \"data_type\": \"DECIMAL\",\n      \"precision\": 4,\n      \"scale\": 0\n    }\n  ]\n}\n",
         "target": {
-          "umf": "0.1.0",
+          "umf": "0.10.0",
           "id": "tablespec-result",
           "vocabularies": {
             "umf.tablespec": {

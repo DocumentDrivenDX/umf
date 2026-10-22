@@ -1,0 +1,41 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"getShaclTargetNodes\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "shapes",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"RdfNode\"]"
+      ],
+      "name": "shape",
+      "optional": false,
+      "type": "RdfNode"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "data",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "SHACL Core target union, before deactivation or constraint evaluation.",
+  "related": [],
+  "returns": "Value[]",
+  "task": "Inspect and select",
+  "type": "(shapes: Document, shape: RdfNode, data: Document) => Value[]"
+}

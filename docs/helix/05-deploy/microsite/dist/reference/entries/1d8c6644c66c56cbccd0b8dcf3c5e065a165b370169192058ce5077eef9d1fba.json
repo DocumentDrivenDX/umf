@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 13184,
+        "line": 28,
+        "path": "src/domain-packs/medical.ts",
+        "sha256": "d36364b8fc4c204dc5a9a0b6fd5b2ed1fea68b0d8066a0a317e3fe9da72326bc"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "projectMedicalFhir",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(inputs: { source_id: string; text: string; }[], namespace: string): MedicalTables"
+    ]
+  },
+  "id": "[\"api\",\".\",\"projectMedicalFhir\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 13184,
+      "line": 28,
+      "path": "src/domain-packs/medical.ts",
+      "sha256": "d36364b8fc4c204dc5a9a0b6fd5b2ed1fea68b0d8066a0a317e3fe9da72326bc"
+    }
+  ],
+  "summary": "Selected R4 views only. Originals, exact fragments and unresolved edges remain explicit.",
+  "title": "projectMedicalFhir"
+}

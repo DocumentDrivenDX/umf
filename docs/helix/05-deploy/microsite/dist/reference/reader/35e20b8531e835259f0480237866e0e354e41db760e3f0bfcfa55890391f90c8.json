@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"classifyTableSpecCardinality\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"TableSpecCardinalityRequest\"]"
+      ],
+      "name": "options",
+      "optional": false,
+      "type": "TableSpecCardinalityRequest"
+    }
+  ],
+  "purpose": "Classify declared column shape only. Retain vector/item/runtime refinements in the native archive.",
+  "related": [],
+  "returns": "TableSpecCardinalityClassification",
+  "task": "Other APIs",
+  "type": "(input: Document, options: TableSpecCardinalityRequest) => TableSpecCardinalityClassification"
+}

@@ -1,0 +1,44 @@
+umf: 0.10.0
+id: sales-schema
+vocabularies: {}
+modules:
+  - id: sales
+    namespace: sales
+    elements:
+      - id: order
+        name: Order
+        kind: record
+        extensions: {}
+        members:
+          - module: sales
+            element: orderId
+          - module: sales
+            element: tags
+        keys:
+          - id: order-key
+            name: order-key
+            fields:
+              - module: sales
+                element: orderId
+            primary: true
+      - id: orderId
+        name: orderId
+        kind: field
+        extensions: {}
+        scalarType: string
+        cardinality: one
+        nullability: required
+      - id: tags
+        name: tags
+        kind: field
+        extensions: {}
+        cardinality: array
+        itemType:
+          module: sales
+          element: tagValue
+      - id: tagValue
+        name: tag
+        kind: field
+        extensions: {}
+        scalarType: string
+        cardinality: one

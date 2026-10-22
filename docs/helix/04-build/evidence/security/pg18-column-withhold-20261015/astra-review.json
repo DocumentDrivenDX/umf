@@ -1,0 +1,63 @@
+{
+  "status": "reviewed-no-remaining-blocker-in-P01-scope",
+  "review": "Independent source review and actual isolated native replay; authoritative checkout unchanged by reviewer.",
+  "authoritativeRoot": "/Users/erik/.codex/worktrees/security-main-integration/umf",
+  "headAtReview": "47c0d6646ea79e054c7ab90e50754a75a85f1d97",
+  "scope": "pg-raw.P01 / US-056-AC6 fixed PostgreSQL18.6 column-privilege withholding only.",
+  "sourcePins": "final-source-pins.json",
+  "native": {
+    "execution": "independently executed unchanged copied governed runner",
+    "runId": "92f5dc40-f493-4876-a6ab-5e55bbe71acd",
+    "elapsedSeconds": 8.787479292,
+    "timeoutMs": 60000,
+    "observations": 119,
+    "refusals": 57,
+    "grantWeakeningRestorationRoutes": 6,
+    "sourceStable": true,
+    "cleanupVerified": true,
+    "receipt": "native-final.json"
+  },
+  "pureControls": {
+    "independentRefusalCases": 10,
+    "allPassAfterFix": true,
+    "preFixFalseClassifications": 5,
+    "classifierSourceWeakeningsDetected": 3,
+    "mutationQualification": "Two single-guard mutations plus one paired substring-state/hardcoded-report weakening; no claim each redundant guard individually necessary.",
+    "results": [
+      "refusal-before.json",
+      "refusal-after.json",
+      "classifier-mutations.json"
+    ]
+  },
+  "formal": {
+    "replayed": true,
+    "queries": 6,
+    "unsat": 3,
+    "sat": 3,
+    "artifact": "formal-replay.json",
+    "qualification": "Conditional reference/permission laws only; native checking and complete relevant routes are assumptions, not SQL/kernel refinement."
+  },
+  "fixedFindings": [
+    "Native refusal classifier previously accepted arbitrary 42501 substrings; now exact exit3/empty stdout/single ERROR42501/no FATAL or PANIC.",
+    "Owned PostgreSQL anonymous volume previously survived cleanup; now rm -fv with ownership/shared-use checks and verified absence before receipt publication.",
+    "Actual installed membership helper/dependency inventory was incomplete; both schemas and their relations/columns/constraints/policies/views/routines now retained."
+  ],
+  "oracleReview": "Expected rows are authored literals separate from native SQL; weakened secret rows derive only from those literals and authored actor IDs, never observed output. The complete required case assertion/covers/layer/timeout and other157 rows are unchanged.",
+  "retainedFailures": [
+    "initial-source pre-fix classifier",
+    "refusal-before.json five counterexamples",
+    "refusal-after-setup-failure.json is reviewer harness missing re namespace, not product failure",
+    "classifier-mutants/substring-state retains unsuccessful mutation setup with IndexError; not counted. Paired mutation avoids hardcoded/report guard redundancy and is separately named.",
+    "review-before-mutation-finalization.json is an explicitly superseded interim receipt, not a qualified final result.",
+    "parent retains initial inherited-table restoration failure; corrected restoration regrants only original permitted columns"
+  ],
+  "limits": [
+    "No other PostgreSQL18 B/L/P qualification or PostgreSQL17.9 promotion.",
+    "No complete production compiler/native profile, current-authority/DDL/custody/lifetime, arbitrary SQL side-channel or general prepared-plan theorem.",
+    "The CREATE FUNCTION attack proves protected-schema CREATE denial only.",
+    "Administrator/Docker/local socket access is excluded; deliberately weakened fixtures are sensitivity controls, never ordinary admitted paths.",
+    "Native clean replay verifies successful cleanup; no cleanup-failure injection campaign was performed."
+  ],
+  "blockingFindings": [],
+  "requirementsAudit": "source-evidence-audit.json"
+}

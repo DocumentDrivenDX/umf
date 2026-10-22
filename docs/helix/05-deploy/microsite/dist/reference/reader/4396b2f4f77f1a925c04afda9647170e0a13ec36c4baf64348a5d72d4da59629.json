@@ -1,0 +1,13 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"postgresqlRowProjectionSchema\"]",
+  "kind": "Schema",
+  "members": [],
+  "parameters": [],
+  "purpose": "JSON Schema exported as postgresqlRowProjectionSchema. Follow the related schema definition for object keys, value constraints and conditions.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "{ $schema: string; $id: string; type: string; required: string[]; properties: { status: { enum: string[]; }; source: { $ref: string; }; target: { $ref: string; }; nativeSchema: { type: string; }; policy: { type: string; required: string[]; properties: { id: { type: string; minLength: number; }; schemaId: { type: string; minLength: number; }; relation: { type: string; required: string[]; properties: { schema: { type: string; minLength: number; }; name: { type: string; minLength: number; }; }; additionalProperties: boolean; }; columns: { type: string; minProperties: number; additionalProperties: { enum: string[]; }; }; lossPolicy: { enum: string[]; }; }; additionalProperties: boolean; }; issues: { type: string; items: { type: string; required: string[]; properties: { path: { type: string; }; code: { type: string; }; classification: { enum: string[]; }; detail: { type: string; }; retainedInSource: { const: boolean; }; }; additionalProperties: boolean; }; }; mappings: { type: string; items: { type: string; required: string[]; properties: { column: { type: string; minLength: number; }; nativeType: { type: string; minLength: number; }; encoding: { type: string; minLength: number; }; targetPointer: { type: string; minLength: number; }; }; additionalProperties: boolean; }; }; complete: { const: boolean; }; sql: { type: string; }; }; additionalProperties: boolean; allOf: { if: { properties: { status: { const: string; }; }; }; then: { required: string[]; }; else: { not: { anyOf: { required: string[]; }[]; }; }; }[]; }"
+}

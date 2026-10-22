@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {createHash} from 'node:crypto';
 import {importOdcsDocument,exportOdcsDocument,inspectOdcsRelationships,readDocument,writeDocument} from '../src';
 const base='fixtures/odcs/relationships/',path='native/odcs/sources/docs/examples/references/relationships.odcs.yaml',raw=await Bun.file(path).text(),native=JSON.parse(exportOdcsDocument(importOdcsDocument(raw,{id:'upstream',format:'yaml'}),'json'));

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 7333,
+        "line": 49,
+        "path": "src/core-ideals/field-tablespec-projection.ts",
+        "sha256": "b7d552d9bfbaecb7dc9c66e796126894170b8ad80725dacdff3b06cb9db674de"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "recoverFieldFromTableSpec",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: FieldTableSpecProjection, nativeText: string): Document"
+    ]
+  },
+  "id": "[\"api\",\".\",\"recoverFieldFromTableSpec\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 7333,
+      "line": 49,
+      "path": "src/core-ideals/field-tablespec-projection.ts",
+      "sha256": "b7d552d9bfbaecb7dc9c66e796126894170b8ad80725dacdff3b06cb9db674de"
+    }
+  ],
+  "summary": "Recover retained author meaning only when the receipt and supplied native target still agree.",
+  "title": "recoverFieldFromTableSpec"
+}

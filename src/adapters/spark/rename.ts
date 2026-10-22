@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {exportSparkSchema,getSparkNode,proposeSparkNodeEdit} from './index';
 import {copyJson} from '../../model/json';
 import {renderTree,nativePointer,type NativeJson} from '../../model/native-json';

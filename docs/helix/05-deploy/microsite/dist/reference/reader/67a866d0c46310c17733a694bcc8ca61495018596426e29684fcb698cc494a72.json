@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"inspectCoreRecordMembers\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreRecordMembersIdentity\"]"
+      ],
+      "name": "identityInput",
+      "optional": false,
+      "type": "CoreRecordMembersIdentity"
+    }
+  ],
+  "purpose": "Explicit empty membership differs from an absent declaration. Qualifiers stay opaque.",
+  "related": [],
+  "returns": "CoreRecordMembersInspection",
+  "task": "Inspect and select",
+  "type": "(input: Document, identityInput: CoreRecordMembersIdentity) => CoreRecordMembersInspection"
+}

@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"classifyParquetField\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ParquetFieldRequest\"]"
+      ],
+      "name": "options",
+      "optional": false,
+      "type": "ParquetFieldRequest"
+    }
+  ],
+  "purpose": "Classify one checked native member. Does not infer scalar family, cardinality, requiredness or author intent.",
+  "related": [],
+  "returns": "ParquetFieldClassification",
+  "task": "Other APIs",
+  "type": "(input: Document, options: ParquetFieldRequest) => ParquetFieldClassification"
+}

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
 import {captureParquet,inspectParquetPages} from '../src';
 const base='fixtures/parquet/pages/',report=await Bun.file(base+'results.json').json(),negative=await Bun.file(base+'negative/manifest.json').json(),cases:any[]=[];

@@ -1,10 +1,12 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
+import {CURRENT_CORE_VERSION} from '../generated/core-model';
 import {copyJson} from '../model/json';
 import {UmfError,type Document,type Json,type Diagnostic,type Element} from '../model/types';
 import {exportPostgresqlCatalogCapture,getPostgresqlCatalogNode} from '../adapters/postgresql/catalog';
 import {parseNativeJson,renderTree} from '../model/native-json';
 import {validateDocument} from '../validation/document';
 import {createValidator} from '../validation/schema';
-import fields from '../../spec/core/field-document.schema.json';
+import fields from '../../spec/core/schema.json';
 import schema from '../../spec/core/postgresql-composite-classification.schema.json';
 export {default as postgresqlCompositeClassificationSchema} from '../../spec/core/postgresql-composite-classification.schema.json';
 export interface PostgresqlCompositeRequest {recordModule:string;recordId:string;mode:'strict'|'report';nativeSource:string;relation:{schema:string;name:string}}
@@ -19,7 +21,7 @@ const canonical=(value:Json):string=>Array.isArray(value)?'['+value.map(canonica
 export function classifyPostgresqlComposite(input:Document,options:PostgresqlCompositeRequest):PostgresqlCompositeClassification {
  const source=copyJson(input) as unknown as Document,request=copyJson(options) as unknown as PostgresqlCompositeRequest;
  if(!checkRequest(request))throw new UmfError('POSTGRESQL_COMPOSITE_REQUEST',JSON.stringify(checkRequest.errors));
- if(!validateDocument(source).valid||source.umf!=='0.2.0')throw new UmfError('POSTGRESQL_COMPOSITE_VERSION','Explicitly migrated valid envelope required');
+ if(!validateDocument(source).valid||source.umf!==CURRENT_CORE_VERSION)throw new UmfError('POSTGRESQL_COMPOSITE_VERSION','Valid current 0.10.0 envelope required');
  if(exportPostgresqlCatalogCapture(source).json!==renderTree(parseNativeJson(request.nativeSource)))throw new UmfError('POSTGRESQL_COMPOSITE_ARCHIVE','Native archive differs from captured tree');
  const version=getPostgresqlCatalogNode(source,'/serverVersion');if(version.kind!=='number'||Number(version.value)!==170004)throw new UmfError('POSTGRESQL_COMPOSITE_SERVER','This binding requires PostgreSQL 17.4');
  const types=getPostgresqlCatalogNode(source,'/snapshot/compositeTypes');

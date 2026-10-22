@@ -1,0 +1,17 @@
+bun test v1.4.2 (43848b5a7)
+
+tests/security/stored-query.test.ts:
+(pass) stored Field source resolution preserves original sources and conditional properties [523.97ms]
+(pass) source snapshots resist mutation and getters refuse without execution [5.72ms]
+
+tests/security/protection/current-query-read.test.ts:
+(pass) query source/property compatibility never grants an undisclosed protected token read [16.49ms]
+(pass) separately authored token-original policy preserves Staff/project membership and complete-fact refusal [47.58ms]
+
+tests/security/protection/current-query-source.test.ts:
+(pass) named current query sources resolve coherently and reject stale or substituted owner sources [78.19ms]
+
+ 5 pass
+ 0 fail
+ 107 expect() calls
+Ran 5 tests across 3 files. [982.00ms]

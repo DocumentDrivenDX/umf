@@ -1,0 +1,117 @@
+{
+  "version": "1.0",
+  "table_name": "workflow_events",
+  "description": "CONTRACT-058 bounded appellate fixture: workflow_events.",
+  "columns": [
+    {
+      "name": "event_id",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "workflow_events.event_id; preserve source scope and qualification."
+    },
+    {
+      "name": "ordinal",
+      "data_type": "INTEGER",
+      "nullable": false,
+      "description": "workflow_events.ordinal; preserve source scope and qualification."
+    },
+    {
+      "name": "window_id",
+      "data_type": "VARCHAR",
+      "nullable": true,
+      "description": "workflow_events.window_id; preserve source scope and qualification."
+    },
+    {
+      "name": "document_id",
+      "data_type": "VARCHAR",
+      "nullable": true,
+      "description": "workflow_events.document_id; preserve source scope and qualification."
+    },
+    {
+      "name": "recipient_id",
+      "data_type": "VARCHAR",
+      "nullable": true,
+      "description": "workflow_events.recipient_id; preserve source scope and qualification."
+    },
+    {
+      "name": "prompt_version",
+      "data_type": "VARCHAR",
+      "nullable": true,
+      "description": "workflow_events.prompt_version; preserve source scope and qualification."
+    },
+    {
+      "name": "alert_kind",
+      "data_type": "VARCHAR",
+      "nullable": true,
+      "description": "workflow_events.alert_kind; preserve source scope and qualification."
+    },
+    {
+      "name": "stage",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "workflow_events.stage; preserve source scope and qualification."
+    },
+    {
+      "name": "outcome",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "workflow_events.outcome; preserve source scope and qualification."
+    },
+    {
+      "name": "retry_of",
+      "data_type": "VARCHAR",
+      "nullable": true,
+      "description": "workflow_events.retry_of; preserve source scope and qualification."
+    },
+    {
+      "name": "review_id",
+      "data_type": "VARCHAR",
+      "nullable": true,
+      "description": "workflow_events.review_id; preserve source scope and qualification."
+    },
+    {
+      "name": "lookup_id",
+      "data_type": "VARCHAR",
+      "nullable": true,
+      "description": "workflow_events.lookup_id; preserve source scope and qualification."
+    },
+    {
+      "name": "detail",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "workflow_events.detail; preserve source scope and qualification."
+    }
+  ],
+  "primary_key": [
+    "event_id"
+  ],
+  "relationships": {
+    "foreign_keys": [
+      {
+        "column": "window_id",
+        "references_table": "collection_windows",
+        "references_column": "window_id"
+      },
+      {
+        "column": "document_id",
+        "references_table": "decisions",
+        "references_column": "document_id"
+      },
+      {
+        "column": "retry_of",
+        "references_table": "workflow_events",
+        "references_column": "event_id"
+      },
+      {
+        "column": "review_id",
+        "references_table": "fictional_reviews",
+        "references_column": "review_id"
+      },
+      {
+        "column": "lookup_id",
+        "references_table": "enrichment_fixtures",
+        "references_column": "lookup_id"
+      }
+    ]
+  }
+}

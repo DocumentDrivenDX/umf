@@ -1,0 +1,24 @@
+{
+  "scope": "Current-core Field, record-type and availability authoring; retired-marker refusal; no Cardinality native binding claim",
+  "browser": "153.0.8010.12",
+  "checks": {
+    "cases": 36,
+    "recoveries": 72,
+    "availabilityRecoveries": 24,
+    "itemRecordRecoveries": 2,
+    "refusals": 199,
+    "versionedReceipts": true
+  },
+  "externalRequests": [],
+  "fingerprints": {
+    "scripts/core-ideals/cardinality-field-operations-browser.ts": "244cd838082f819b82b035364e0ab57213d1c4f0537e17bbb6d789c06b21c818",
+    "scripts/core-ideals/cardinality-field-operations-cases.ts": "a99f27e2cf098687a1c5e0a58297e0f2d4ecc4cc2799658a8ae16935ddb48c1c",
+    "src/model/field-kind.ts": "b3ba0db55ec8ed5a466e8b116b9311035505457a060c59fa93512b9220e7b670",
+    "src/model/nullability.ts": "2ec3cc469eee2460332fcc99fc0e14fef416180bdeede59b2b34ac19a39e6957",
+    "src/model/record-type.ts": "8ac51b25f81eebbd78168922671f1633c439c7f62100922ba01a18f396c0f61e",
+    "spec/core/kind-operation-v6.schema.json": "e1de0aba1c3db6a09e85332a10441a0eec7a2dca0a4e4249fab67fcc491783b8",
+    "spec/core/record-type-operation-v6.schema.json": "2b40d2be0562794f918738d96ee8f974f7133f26ee8476583b944c9f676a255d",
+    "spec/core/nullability-operation-v5.schema.json": "442cc69c8998da361b775251b2e8842cece0d700fb1fa59dad4bd3de03f13c92",
+    "dist/umf.js": "753cdb246cbecdeea02cf481a8fa6e3d43428d92e22c1ed90b0e378970b9172a"
+  }
+}

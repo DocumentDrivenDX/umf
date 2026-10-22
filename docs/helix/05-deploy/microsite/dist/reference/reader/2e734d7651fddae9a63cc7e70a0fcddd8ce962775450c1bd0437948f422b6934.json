@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"projectNullabilityToAvro\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreNullabilityDeclaration\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "CoreNullabilityDeclaration"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"NullabilityAvroRequest\"]"
+      ],
+      "name": "options",
+      "optional": false,
+      "type": "NullabilityAvroRequest"
+    }
+  ],
+  "purpose": "projectNullabilityToAvro accepts input, options and returns NullabilityAvroProjection & { diagnostics: Diagnostic[]; }.",
+  "related": [],
+  "returns": "NullabilityAvroProjection & { diagnostics: Diagnostic[]; }",
+  "task": "Import and export",
+  "type": "(input: CoreNullabilityDeclaration, options: NullabilityAvroRequest) => NullabilityAvroProjection & { diagnostics: Diagnostic[]; }"
+}

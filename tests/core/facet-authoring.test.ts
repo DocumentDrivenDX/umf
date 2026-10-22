@@ -1,11 +1,12 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import * as u from '../../src';
 const identity={module:'m',element:'v'};
-const doc=(family:string):u.Document=>({umf:'0.5.0',id:'facets',vocabularies:{future:{version:'1.0.0'}},extensions:{future:{opaque:'9007199254740993'}},modules:[{id:'m',namespace:'',elements:[{id:'v',kind:'field',scalarType:family,extensions:{future:{unknown:[null,'keep']}}}]}]});
+const doc=(family:string):u.Document=>({umf:'0.10.0',id:'facets',vocabularies:{future:{version:'1.0.0'}},extensions:{future:{opaque:'9007199254740993'}},modules:[{id:'m',namespace:'',elements:[{id:'v',kind:'field',scalarType:family,extensions:{future:{unknown:[null,'keep']}}}]}]});
 test('authored facet groups have copied provenance, exact declared bounds and verifiable JSON/YAML receipts',()=>{
  const cases:[string,u.CoreFacetPatch][]=[['string',{length:{max:0,unit:'unicode-scalar'}}],['binary',{length:{max:16,unit:'byte'}}],['decimal',{precision:38,scale:9}],['integer',{integerWidth:{bits:128,signed:true}}],['integer',{integerWidth:{bits:1,signed:false}}],['decimal',{precision:Number.MAX_SAFE_INTEGER,scale:Number.MAX_SAFE_INTEGER}]];
  for(const [family,request] of cases){const source=doc(family),before=u.copyJson(source),result=u.declareCoreFacets(source,identity,request),meaning=u.inspectCoreFacets(result.target,identity).meaning;
-  expect(u.copyJson(source)).toEqual(before);expect(result.provenance.origin).toBe('authored');expect(result.target.modules[0]!.elements[0]!.facets).toEqual(request);
+  expect(u.copyJson(source)).toEqual(before);expect(result.provenance.origin).toBe('authored');expect(u.copyJson(result.target.modules[0]!.elements[0]!.facets)).toEqual(request as any);
   expect(u.copyJson(meaning)).toEqual(u.copyJson({state:'known',facets:request,interpreted:request,uninterpretedPaths:[]}));
   expect(result.target.extensions).toEqual(source.extensions);expect(result.target.modules[0]!.elements[0]!.extensions).toEqual(source.modules[0]!.elements[0]!.extensions);
   for(const format of ['json','yaml'] as const){const saved=u.readJsonValue(u.writeJsonValue(result,format),format) as unknown as typeof result;expect(u.verifyCoreFacetDeclaration(saved,saved.target)).toEqual(result);expect(u.readDocument(u.writeDocument(saved.target,format),format)).toEqual(result.target);}
@@ -24,7 +25,7 @@ test('invalid facet patches, conflicts, legacy authoring and hostile inputs refu
  const source=doc('decimal'),before=u.copyJson(source);
  for(const request of [{},{precision:2},{scale:1},{precision:1,scale:2},{precision:0,scale:0},{precision:3,scale:null},{length:{max:2,unit:'byte'}},{integerWidth:{bits:8,signed:true}},{precision:3,scale:1,future:true}])expect(()=>u.declareCoreFacets(source,identity,request as u.CoreFacetPatch)).toThrow();
  expect(u.copyJson(source)).toEqual(before);
- for(const umf of ['0.1.0','0.2.0','0.3.0','0.4.0'] as const){const legacy={...source,umf};legacy.modules=structuredClone(source.modules);legacy.modules[0]!.elements[0]!.facets={opaque:[false,null]};expect(u.inspectCoreFacets(legacy,identity).meaning).toEqual({state:'legacy',value:{opaque:[false,null]}});expect(()=>u.declareCoreFacets(legacy,identity,{precision:3,scale:1})).toThrow('migration');}
+ for(const umf of ['0.1.0','0.2.0','0.3.0','0.4.0','0.8.0','0.9.0'] as const){const legacy={...source,umf} as any;expect(()=>u.inspectCoreFacets(legacy,identity)).toThrow();expect(()=>u.declareCoreFacets(legacy,identity,{precision:3,scale:1})).toThrow();}
  expect(u.inspectCoreFacets(source,identity).meaning).toEqual({state:'missing'});
  const record=doc('integer');delete record.modules[0]!.elements[0]!.scalarType;record.modules[0]!.elements[0]!.kind='record';expect(u.inspectCoreFacets(record,identity).meaning).toEqual({state:'inapplicable'});
  expect(()=>u.declareCoreFacets(record,identity,{integerWidth:{bits:8,signed:true}})).toThrow('Field');

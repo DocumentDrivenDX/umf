@@ -1,0 +1,15 @@
+13 |   return `${match[1] === '-' ? '-' : ''}${trimmed}e${exponent}`;
+14 | }
+15 | export function readJsonValue(text: string, format: 'json' | 'yaml' = 'yaml'): Json {
+16 |   if (text.length > LIMITS.maxTextLength) throw new UmfError('LIMIT', 'Source text exceeds limit');
+17 |   if (format === 'json') {
+18 |     try { JSON.parse(text); } catch { throw new UmfError('SYNTAX', 'Invalid JSON syntax'); }
+                                                 ^
+UmfError: Invalid JSON syntax
+ path: "",
+ code: "SYNTAX"
+
+      at readJsonValue (/Users/erik/.codex/worktrees/security-action-source-custody/umf/src/model/serialization.ts:18:45)
+      at /Users/erik/.codex/worktrees/security-action-source-custody/umf/tools/security/protection-preparation-sources.ts:159:14
+
+Bun v1.4.2 (macOS arm64)

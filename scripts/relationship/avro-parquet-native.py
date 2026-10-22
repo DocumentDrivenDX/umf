@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Pin source-shaped Avro/Parquet evidence without inferring associations."""
 import hashlib
 import json

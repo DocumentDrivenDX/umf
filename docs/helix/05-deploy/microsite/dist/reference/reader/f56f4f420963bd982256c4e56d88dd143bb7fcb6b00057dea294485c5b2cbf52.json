@@ -1,0 +1,151 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"Element\"]",
+  "kind": "Type alias",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "id",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "name",
+      "optional": true,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "description",
+      "optional": true,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "scalarType",
+      "optional": true,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "extensions",
+      "optional": false,
+      "type": "Extensions"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "references",
+      "optional": true,
+      "type": "Reference[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "kind",
+      "optional": true,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "nullability",
+      "optional": true,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "cardinality",
+      "optional": true,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreItemTypeReference\"]"
+      ],
+      "name": "itemType",
+      "optional": true,
+      "type": "CoreItemTypeReference"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "facets",
+      "optional": true,
+      "type": "Facets"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "members",
+      "optional": true,
+      "type": "KeyFieldReference[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "keys",
+      "optional": true,
+      "type": "Key[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "title",
+      "optional": true,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "aliases",
+      "optional": true,
+      "type": "string[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "examples",
+      "optional": true,
+      "type": "Literal[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "allowedValues",
+      "optional": true,
+      "type": "Literal[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "default",
+      "optional": true,
+      "type": "{ [key: string]: unknown; value: Literal; on: \"missing\" | \"null\" | \"missing-or-null\"; }"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreSemanticTypeReference\"]"
+      ],
+      "name": "semanticTypes",
+      "optional": true,
+      "type": "CoreSemanticTypeReference[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "Element is a type alias in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "Element"
+}

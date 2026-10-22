@@ -1,0 +1,180 @@
+{
+  "data": {
+    "extensionId": "umf.sqlserver",
+    "manifest": {
+      "capabilities": {
+        "directions": [
+          "import",
+          "export"
+        ],
+        "evidence": [
+          "tests/sqlserver/catalog.test.ts",
+          "native/sqlserver/catalog.sql",
+          "fixtures/sqlserver/oracle.json",
+          "fixtures/sqlserver/browser.json",
+          "tests/sqlserver/constraints.test.ts",
+          "fixtures/sqlserver/constraints-oracle.json",
+          "tests/sqlserver/indexes.test.ts",
+          "fixtures/sqlserver/indexes-oracle.json"
+        ],
+        "native": {
+          "subset": "Table/column, key/foreign-key/check and index observations; exact recovery and metadata views. Permission-limited, not complete catalog or DDL reconstruction.",
+          "system": "Microsoft SQL Server",
+          "version": "SQL Server 2022; native evidence 16.0.4295.3; capture profiles v1/v2/v3"
+        },
+        "validation": "semantic"
+      },
+      "coreVersion": "0.10.0",
+      "description": "SQL Server catalog capture and core column metadata",
+      "id": "umf.sqlserver",
+      "schema": {
+        "$defs": {
+          "node": {
+            "oneOf": [
+              {
+                "properties": {
+                  "kind": {
+                    "const": "null"
+                  }
+                },
+                "required": [
+                  "kind"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "kind": {
+                    "const": "boolean"
+                  },
+                  "value": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "kind": {
+                    "const": "string"
+                  },
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "kind": {
+                    "const": "number"
+                  },
+                  "value": {
+                    "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?([eE][+-]?[0-9]+)?$",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "items": {
+                    "items": {
+                      "$ref": "#/$defs/node"
+                    },
+                    "type": "array"
+                  },
+                  "kind": {
+                    "const": "array"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "items"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "kind": {
+                    "const": "object"
+                  },
+                  "members": {
+                    "additionalProperties": {
+                      "$ref": "#/$defs/node"
+                    },
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "members"
+                ],
+                "type": "object"
+              }
+            ]
+          }
+        },
+        "$id": "urn:umf:sqlserver:0.1.0",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "properties": {
+          "profile": {
+            "const": "sqlserver-catalog-v1"
+          },
+          "root": {
+            "$ref": "#/$defs/node"
+          }
+        },
+        "required": [
+          "profile",
+          "root"
+        ],
+        "type": "object"
+      },
+      "scopes": [
+        "document"
+      ],
+      "semantics": "CONTRACT-031; bounded observations, not full server semantics or reconstruction",
+      "version": "0.1.0"
+    },
+    "registration": {
+      "apiIds": [
+        "[\"api\",\".\",\"sqlserverRegistry\"]"
+      ],
+      "coreProfiles": [],
+      "mode": "explicit"
+    },
+    "schemaId": "[\"schema\",\"spec/extensions/sqlserver/schema.json\",\"\"]",
+    "version": "0.1.0"
+  },
+  "id": "[\"extension\",\"umf.sqlserver\",\"0.1.0\"]",
+  "kind": "extension",
+  "links": [
+    "[\"api\",\".\",\"sqlserverRegistry\"]",
+    "[\"guide\",\"extensions\"]",
+    "[\"schema\",\"spec/extensions/sqlserver/schema.json\",\"\"]",
+    "[\"integration\",\"umf.sqlserver@0.1.0:import\"]",
+    "[\"integration\",\"umf.sqlserver@0.1.0:export\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 3674,
+      "path": "spec/extensions/sqlserver/package.json",
+      "sha256": "d9b2f90e25d504b71f3833035ea02348339980ef2b259a4e148b86375aa32ab6"
+    }
+  ],
+  "summary": "SQL Server catalog capture and core column metadata",
+  "title": "umf.sqlserver · 0.1.0"
+}

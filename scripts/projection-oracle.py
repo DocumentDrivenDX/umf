@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Independent source and target instance expectations for the authored projection."""
 import json, sys
 from pathlib import Path

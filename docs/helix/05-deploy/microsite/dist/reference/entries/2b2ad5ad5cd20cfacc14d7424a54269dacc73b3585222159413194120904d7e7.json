@@ -1,0 +1,33 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 4686,
+        "line": 1,
+        "path": "spec/projections/smithy-json-schema.schema.json",
+        "sha256": "b9ef9811b9aa27dcdd03f637d88b24257f9658253e80f3976353e68888e02cbc"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "smithyJsonSchemaProjectionSchema",
+    "runtime": "unassessed",
+    "signatureText": [
+      "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"$id\": \"urn:umf:projection:smithy-json-schema:0.1.0\",\n  \"type\": \"object\",\n  \"additionalProperties\": false,\n  \"required\": [\n    \"status\",\n    \"source\",\n    \"assembly\",\n    \"policy\",\n    \"complete\",\n    \"issues\",\n    \"converter\"\n  ],\n  \"properties\": {\n    \"status\": {\n      \"enum\": [\n        \"blocked\",\n        \"projected\"\n      ]\n    },\n    \"source\": {\n      \"$ref\": \"urn:umf:core:0.10.0\"\n    },\n    \"assembly\": {\n      \"$ref\": \"urn:umf:smithy:assembly-result:0.1.0\"\n    },\n    \"policy\": {\n      \"type\": \"object\",\n      \"additionalProperties\": false,\n      \"required\": [\n        \"id\",\n        \"rootShape\",\n        \"profile\",\n        \"usage\",\n        \"lossPolicy\",\n        \"baseUri\"\n      ],\n      \"properties\": {\n        \"id\": {\n          \"type\": \"string\",\n          \"minLength\": 1\n        },\n        \"rootShape\": {\n          \"type\": \"string\",\n          \"minLength\": 1\n        },\n        \"profile\": {\n          \"enum\": [\n            \"native-defaults-2020-12\",\n            \"native-root-definition-2020-12\",\n            \"native-service-context-2020-12\"\n          ]\n        },\n        \"usage\": {\n          \"const\": \"native-emission\"\n        },\n        \"lossPolicy\": {\n          \"enum\": [\n            \"strict\",\n            \"allow-reported-loss\"\n          ]\n        },\n        \"baseUri\": {\n          \"type\": \"string\",\n          \"minLength\": 1\n        },\n        \"serviceContext\": {\n          \"type\": \"string\",\n          \"minLength\": 1\n        }\n      },\n      \"allOf\": [\n        {\n          \"if\": {\n            \"properties\": {\n              \"profile\": {\n                \"const\": \"native-service-context-2020-12\"\n              }\n            }\n          },\n          \"then\": {\n            \"required\": [\n              \"serviceContext\"\n            ]\n          },\n          \"else\": {\n            \"not\": {\n              \"required\": [\n                \"serviceContext\"\n              ]\n            }\n          }\n        }\n      ]\n    },\n    \"complete\": {\n      \"const\": false\n    },\n    \"issues\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"required\": [\n          \"path\",\n          \"code\",\n          \"classification\",\n          \"detail\",\n          \"retainedInSource\"\n        ],\n        \"properties\": {\n          \"path\": {\n            \"type\": \"string\"\n          },\n          \"code\": {\n            \"type\": \"string\"\n          },\n          \"classification\": {\n            \"enum\": [\n              \"representation-change\",\n              \"not-enforced\",\n              \"unsupported\",\n              \"annotation-only\"\n            ]\n          },\n          \"detail\": {\n            \"type\": \"string\"\n          },\n          \"retainedInSource\": {\n            \"const\": true\n          }\n        },\n        \"additionalProperties\": false\n      }\n    },\n    \"nativeSchema\": {\n      \"type\": \"string\"\n    },\n    \"target\": {\n      \"$ref\": \"urn:umf:core:0.10.0\"\n    },\n    \"converter\": {\n      \"type\": \"string\",\n      \"minLength\": 1\n    },\n    \"adaptedSchema\": {\n      \"type\": \"string\"\n    }\n  },\n  \"allOf\": [\n    {\n      \"if\": {\n        \"properties\": {\n          \"status\": {\n            \"const\": \"projected\"\n          }\n        }\n      },\n      \"then\": {\n        \"required\": [\n          \"target\",\n          \"nativeSchema\"\n        ],\n        \"properties\": {\n          \"policy\": {\n            \"properties\": {\n              \"lossPolicy\": {\n                \"const\": \"allow-reported-loss\"\n              }\n            }\n          },\n          \"assembly\": {\n            \"properties\": {\n              \"status\": {\n                \"const\": \"assembled\"\n              }\n            }\n          }\n        }\n      },\n      \"else\": {\n        \"not\": {\n          \"required\": [\n            \"target\"\n          ]\n        }\n      }\n    },\n    {\n      \"if\": {\n        \"properties\": {\n          \"status\": {\n            \"const\": \"projected\"\n          },\n          \"policy\": {\n            \"properties\": {\n              \"profile\": {\n                \"enum\": [\n                  \"native-root-definition-2020-12\",\n                  \"native-service-context-2020-12\"\n                ]\n              }\n            }\n          }\n        }\n      },\n      \"then\": {\n        \"required\": [\n          \"adaptedSchema\"\n        ]\n      }\n    },\n    {\n      \"if\": {\n        \"required\": [\n          \"adaptedSchema\"\n        ]\n      },\n      \"then\": {\n        \"properties\": {\n          \"policy\": {\n            \"properties\": {\n              \"profile\": {\n                \"enum\": [\n                  \"native-root-definition-2020-12\",\n                  \"native-service-context-2020-12\"\n                ]\n              }\n            }\n          }\n        }\n      }\n    }\n  ]\n}\n"
+    ]
+  },
+  "id": "[\"api\",\".\",\"smithyJsonSchemaProjectionSchema\"]",
+  "kind": "api",
+  "links": [
+    "[\"schema\",\"spec/projections/smithy-json-schema.schema.json\",\"\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 4686,
+      "line": 1,
+      "path": "spec/projections/smithy-json-schema.schema.json",
+      "sha256": "b9ef9811b9aa27dcdd03f637d88b24257f9658253e80f3976353e68888e02cbc"
+    }
+  ],
+  "summary": "Public export · spec/projections/smithy-json-schema.schema.json",
+  "title": "smithyJsonSchemaProjectionSchema"
+}

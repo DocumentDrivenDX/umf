@@ -1,0 +1,41 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"declareCoreRecordMembers\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreRecordIdentity\"]"
+      ],
+      "name": "identity",
+      "optional": false,
+      "type": "CoreRecordIdentity"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreRecordIdentity\"]"
+      ],
+      "name": "requestInput",
+      "optional": false,
+      "type": "CoreRecordIdentity[]"
+    }
+  ],
+  "purpose": "declareCoreRecordMembers accepts input, identity, requestInput and returns CoreRecordMembersDeclaration.",
+  "related": [],
+  "returns": "CoreRecordMembersDeclaration",
+  "task": "Other APIs",
+  "type": "(input: Document, identity: CoreRecordIdentity, requestInput: CoreRecordIdentity[]) => CoreRecordMembersDeclaration"
+}

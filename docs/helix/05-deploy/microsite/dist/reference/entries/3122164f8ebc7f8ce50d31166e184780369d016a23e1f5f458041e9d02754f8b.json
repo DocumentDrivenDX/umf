@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 11350,
+        "line": 90,
+        "path": "src/core-ideals/nullability-parquet.ts",
+        "sha256": "39f4953ea29f062592b0bbabb130f68412267563fd5e89b64674caf912ad800b"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "verifyParquetNullabilityClassification",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: ParquetNullabilityClassification, current: Document): ParquetNullabilityClassification"
+    ]
+  },
+  "id": "[\"api\",\".\",\"verifyParquetNullabilityClassification\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 11350,
+      "line": 90,
+      "path": "src/core-ideals/nullability-parquet.ts",
+      "sha256": "39f4953ea29f062592b0bbabb130f68412267563fd5e89b64674caf912ad800b"
+    }
+  ],
+  "summary": "Receipt consistency is not authentication; any model edit requires reclassification.",
+  "title": "verifyParquetNullabilityClassification"
+}

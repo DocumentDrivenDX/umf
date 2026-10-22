@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 5204,
+        "line": 7,
+        "path": "src/core-ideals/field-report.ts",
+        "sha256": "1f5ca8e099eca9278c3584d8ac1e64e4ed03bbc26d39dd8d582b8a3d7ccbca68"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "FieldProjectionInspection",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface FieldProjectionInspection {operation:'inspect-field-projection';version:'1.0.0';status:'projected'|'blocked';receipt:AuthoredFieldProjection;mapping:{origin:'authored';idealPath:string;nativePath:string;binding:Binding;basis:{kind:'explicit-native-carrier';nativeType:string};outcome:'exact'|'unknown'|'not-expressible'};residuals:{sourcePath:string;sourceValue:Json;targetPath:null;outcome:'unknown'|'not-expressible';reason:string;binding:Binding;recovery:{strategy:'retained-receipt';receiptPath:'/receipt/source';instruction:string}}[];diagnostics:Diagnostic[]}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"FieldProjectionInspection\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 5204,
+      "line": 7,
+      "path": "src/core-ideals/field-report.ts",
+      "sha256": "1f5ca8e099eca9278c3584d8ac1e64e4ed03bbc26d39dd8d582b8a3d7ccbca68"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/field-report.ts",
+  "title": "FieldProjectionInspection"
+}

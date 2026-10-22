@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 import urllib.request,hashlib,json
 from pathlib import Path
 commit='d63e174a73312504393e8e1c21c0ef560d474860';base=Path('native/dbt/sources');base.mkdir(parents=True,exist_ok=True);files=[]

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 15485,
+        "line": 17,
+        "path": "src/projections/ddd-graphql/entities.ts",
+        "sha256": "7e511c56f33dc62a180428296c3fc6c7a253d2d84f11e7b655a2952b7209c79c"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "DddGraphqlEntityProjection",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface DddGraphqlEntityProjection {\n  status:'blocked'|'reported'|'proposed';logical:Document;policy:DddGraphqlEntityPolicy;\n  profile:'graphql-js-17.0.2-sdl';residuals:DddGraphqlEntityResidual[];mappings:DddGraphqlEntityMapping[];\n  candidate?:string;targetArchive?:Document;\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"DddGraphqlEntityProjection\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 15485,
+      "line": 17,
+      "path": "src/projections/ddd-graphql/entities.ts",
+      "sha256": "7e511c56f33dc62a180428296c3fc6c7a253d2d84f11e7b655a2952b7209c79c"
+    }
+  ],
+  "summary": "Type declaration · src/projections/ddd-graphql/entities.ts",
+  "title": "DddGraphqlEntityProjection"
+}

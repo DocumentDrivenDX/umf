@@ -1,0 +1,114 @@
+import {test,expect} from 'bun:test';
+import {inspectSecurityPolicy,requireSecurityInterpretation,readSecuritySource,writeSecuritySource,securityRegistry,securityPackage} from '../../src/extensions/security/policy';
+import {validateDocument} from '../../src/validation/document';
+import {securityFixture,ref} from './fixture';
+import type {SecurityExpr} from '../../src/extensions/security/types';
+import {copyJson} from '../../src/model/json';
+import {securityPolicyCorpus} from './browser-corpus';
+
+test('Staff/Project nested correlated policy resolves exact qualified types and keys',()=>{
+  // @covers US-055-AC1
+  const {policy,resolution}=securityFixture();const before=JSON.stringify({policy,resolution});
+  const result=requireSecurityInterpretation(policy,resolution);
+  expect(result.valid).toBe(true);expect(result.complete).toBe(true);expect(result.diagnostics).toEqual([]);
+  expect(JSON.stringify({policy,resolution})).toBe(before);
+  (result.source as any).id='changed';expect(policy.id).toBe('project-access');
+});
+
+test('display labels cannot resolve a different document and revisions must match',()=>{
+  // @covers US-055-AC2
+  for(const mutation of ['document','revision','duplicate-document','missing-document']){
+    const {policy,resolution}=securityFixture();
+    if(mutation==='document')policy.rules[0]!.target[0]!.documentId='other';
+    if(mutation==='revision')resolution.documents[0]!.revision='schema-2';
+    if(mutation==='duplicate-document')resolution.documents.push(resolution.documents[0]!);
+    if(mutation==='missing-document')resolution.documents=[];
+    expect(inspectSecurityPolicy(policy,resolution).complete,mutation).toBe(false);
+    expect(()=>requireSecurityInterpretation(policy,resolution),mutation).toThrow();
+  }
+});
+
+test('unknown security meaning and opaque native archives survive JSON/YAML',()=>{
+  // @covers US-055-AC9
+  const {policy,resolution}=securityFixture();
+  const source={...policy,future:{a:[null,'retained']},native:{text:'CREATE POLICY p;\n-- retained\n',dialect:'unknown'}};
+  for(const format of ['json','yaml'] as const){
+    const restored=readSecuritySource(writeSecuritySource(source,format),format);
+    expect(restored).toEqual(copyJson(source));
+    const result=inspectSecurityPolicy(restored,resolution);
+    expect(result.valid).toBe(true);expect(result.complete).toBe(false);
+    expect(result.source).toEqual(copyJson(source));expect(()=>requireSecurityInterpretation(restored,resolution)).toThrow();
+  }
+  const unfamiliar={...policy,version:'9.0.0',rules:[{futureOperator:'opaque'}]};
+  expect(readSecuritySource(writeSecuritySource(unfamiliar))).toEqual(unfamiliar);
+  expect(inspectSecurityPolicy(unfamiliar,resolution).valid).toBe(false);
+});
+
+test('operand, variable, role, action, classification and bound errors refuse interpretation',()=>{
+  // @covers US-055-AC3
+  const mutations:{name:string;mutate:(f:ReturnType<typeof securityFixture>)=>void}[]=[
+    {name:'wrong-role',mutate:f=>{f.policy.rules[1]!.condition={op:'exists',association:ref('Ownership'),as:'o',where:{op:'eq',left:{kind:'variable',name:'o',endpoint:'wrong'},right:{kind:'resource',identity:true}}};}},
+    {name:'unbound',mutate:f=>{f.policy.rules[1]!.condition={op:'eq',left:{kind:'variable',name:'missing',identity:true},right:{kind:'resource',identity:true}};}},
+    {name:'wrong-field-owner',mutate:f=>{f.policy.rules[1]!.condition={op:'eq',left:{kind:'resource',field:ref('active')},right:{kind:'constant',field:ref('active'),value:{boolean:true}}};}},
+    {name:'wrong-type',mutate:f=>{f.policy.rules[1]!.condition={op:'eq',left:{kind:'resource',field:ref('salary')},right:{kind:'constant',field:ref('staffId'),value:{string:'100'}}};}},
+    {name:'undeclared-action',mutate:f=>{f.policy.rules[0]!.actions=['root'];}},
+    {name:'unclassified-field',mutate:f=>{f.resolution.ontology.entities[2]!.fields.pop();}},
+    {name:'endpoint-arity',mutate:f=>{f.resolution.ontology.associations[0]!.endpoints[0]!.fields.push(ref('ownerProject'));}},
+    {name:'duplicate-rule',mutate:f=>{f.policy.rules.push(f.policy.rules[0]!);}},
+    {name:'unknown-op',mutate:f=>{f.policy.rules[0]!.condition={op:'future'} as any;}},
+    {name:'depth',mutate:f=>{let e:SecurityExpr={op:'literal',value:true};for(let i=0;i<16;i++)e={op:'not',arg:e};f.policy.rules[0]!.condition=e;}},
+    {name:'nodes',mutate:f=>{const e:SecurityExpr={op:'and',args:Array.from({length:64},()=>({op:'and',args:Array.from({length:64},()=>({op:'literal',value:true}))}))};f.policy.rules[0]!.condition=e;}},
+    {name:'non-permit-mask',mutate:f=>{f.policy.rules[1]!.disclosure=f.policy.rules[0]!.disclosure!;}},
+    {name:'ambiguous-selector',mutate:f=>{f.policy.rules[0]!.condition={op:'eq',left:{kind:'resource',identity:true,field:ref('salary')},right:{kind:'resource',identity:true}} as any;}},
+  ];
+  for(const {name,mutate}of mutations){const fixture=securityFixture();mutate(fixture);const original=JSON.stringify(fixture.policy);
+    expect(()=>requireSecurityInterpretation(fixture.policy,fixture.resolution),name).toThrow();expect(JSON.stringify(fixture.policy),name).toBe(original);}
+});
+
+test('unknown ontology/facet/key qualifiers refuse while original source remains retained',()=>{
+  // @covers US-055-AC3
+  for(const where of ['ontology','field','facet','key']){
+    const {policy,resolution}=securityFixture();
+    if(where==='ontology')(resolution.ontology as any).future=true;
+    if(where==='field')(resolution.ontology.entities[0]!.fields[0] as any).future=true;
+    if(where==='facet')resolution.documents[0]!.document.modules[0]!.elements.find(e=>e.id==='salary')!.facets={future:true};
+    if(where==='key')(resolution.documents[0]!.document.modules[0]!.elements[0]!.keys as any)[0].future=true;
+    const result=inspectSecurityPolicy(policy,resolution);expect(result.complete,where).toBe(false);
+    expect(result.resolution).toEqual(copyJson(resolution));expect(()=>requireSecurityInterpretation(policy,resolution)).toThrow();
+  }
+});
+
+test('registered policy preserves extension but core inspection requires explicit closure',()=>{
+  // @covers US-055-AC9
+  const {policy,resolution}=securityFixture();const doc=resolution.documents[0]!.document;
+  doc.vocabularies['umf.security']={version:'0.1.0'};doc.extensions={'umf.security':policy as any};
+  const result=validateDocument(doc,securityRegistry());
+  expect(result.valid).toBe(true);expect(result.complete).toBe(false);
+  expect(result.diagnostics.some(d=>d.code==='SECURITY_RESOLUTION_REQUIRED')).toBe(true);
+});
+
+test('typed entrypoint never invokes hostile accessors',()=>{
+  // @covers US-055-AC3
+  let calls=0;const source={get vocabulary(){calls++;return 'umf.security';}};
+  expect(inspectSecurityPolicy(source).valid).toBe(false);expect(calls).toBe(0);
+});
+
+test('browser corpus has independent valid/incomplete/refusal and preservation expectations',()=>{
+  // @covers US-055-AC10
+  const result=securityPolicyCorpus();expect(result.cases).toBe(24);expect(result.mismatches).toBe(0);
+});
+
+test('editing public package metadata cannot change the built-in registry',()=>{
+  // @covers US-055-AC3
+  const prior=securityPackage.version;
+  try {securityPackage.version='future';expect(securityRegistry().get('umf.security','0.1.0')).toBeDefined();}
+  finally {securityPackage.version=prior;}
+});
+
+
+test('core primary metadata preserves explicit security Key selection',()=>{
+ for(const primary of [true,false]){const {policy,resolution}=securityFixture();for(const record of resolution.documents[0]!.document.modules[0]!.elements)if(record.kind==='record')(record.keys as any)[0].primary=primary;const result:any=requireSecurityInterpretation(policy,resolution);expect(result.complete).toBe(true);expect(result.resolution.documents[0].document.modules[0].elements[0].keys[0].primary).toBe(primary);}
+ const {policy,resolution}=securityFixture(),resource:any=resolution.documents[0]!.document.modules[0]!.elements.find(e=>e.id==='Resource');resource.keys[0].primary=false;resource.keys.push({id:'secondary',name:'Secondary',primary:true,fields:[{module:'m',element:'salary'}]});const result:any=requireSecurityInterpretation(policy,resolution);expect(result.complete).toBe(true);expect(result.resolution.ontology.entities.find((e:any)=>e.type.elementId==='Resource').keyId).toBe('pk');
+ for(const keyIndex of [0,1])for(const primary of [null,'true',1]){const invalid=copyJson(resolution) as any;invalid.documents[0].document.modules[0].elements.find((e:any)=>e.id==='Resource').keys[keyIndex].primary=primary;expect(()=>requireSecurityInterpretation(policy,invalid)).toThrow();}
+ resource.keys[0].primary=true;expect(()=>requireSecurityInterpretation(policy,resolution)).toThrow();
+});

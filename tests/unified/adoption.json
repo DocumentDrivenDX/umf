@@ -1,0 +1,367 @@
+{
+  "umf": "0.10.0",
+  "id": "praxis-adoption-example",
+  "vocabularies": {
+    "umf.actions": {
+      "version": "0.1.0"
+    }
+  },
+  "modules": [
+    {
+      "id": "example",
+      "namespace": "example.praxis",
+      "elements": [
+        {
+          "id": "Project.code",
+          "name": "code",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "extensions": {}
+        },
+        {
+          "id": "Project.title",
+          "name": "title",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "extensions": {}
+        },
+        {
+          "id": "Project.note",
+          "name": "note",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "absent-allowed",
+          "extensions": {}
+        },
+        {
+          "id": "Customer.code",
+          "name": "code",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "extensions": {}
+        },
+        {
+          "id": "Project",
+          "name": "Project",
+          "kind": "record",
+          "members": [
+            {
+              "module": "example",
+              "element": "Project.code"
+            },
+            {
+              "module": "example",
+              "element": "Project.title"
+            },
+            {
+              "module": "example",
+              "element": "Project.note"
+            }
+          ],
+          "keys": [
+            {
+              "id": "pk",
+              "primary": true,
+              "fields": [
+                {
+                  "module": "example",
+                  "element": "Project.code"
+                }
+              ],
+              "name": "pk"
+            }
+          ],
+          "extensions": {}
+        },
+        {
+          "id": "Customer",
+          "name": "Customer",
+          "kind": "record",
+          "members": [
+            {
+              "module": "example",
+              "element": "Customer.code"
+            }
+          ],
+          "keys": [
+            {
+              "id": "pk",
+              "primary": true,
+              "fields": [
+                {
+                  "module": "example",
+                  "element": "Customer.code"
+                }
+              ],
+              "name": "pk"
+            }
+          ],
+          "extensions": {}
+        }
+      ],
+      "extensions": {
+        "umf.actions": {
+          "actions": [
+            {
+              "id": "open-project",
+              "name": "Open project",
+              "description": "Create a project with an optional note and existing client.",
+              "parameters": [
+                {
+                  "id": "code",
+                  "kind": "value",
+                  "field": {
+                    "module": "example",
+                    "element": "Project.code"
+                  },
+                  "required": true
+                },
+                {
+                  "id": "title",
+                  "kind": "value",
+                  "field": {
+                    "module": "example",
+                    "element": "Project.title"
+                  },
+                  "required": true
+                },
+                {
+                  "id": "note",
+                  "kind": "value",
+                  "field": {
+                    "module": "example",
+                    "element": "Project.note"
+                  },
+                  "required": false
+                },
+                {
+                  "id": "client",
+                  "kind": "entity",
+                  "target": {
+                    "module": "example",
+                    "element": "Customer",
+                    "key": "pk"
+                  },
+                  "required": true
+                }
+              ],
+              "outputs": [],
+              "preconditions": [
+                {
+                  "id": "fresh",
+                  "rule": {
+                    "language": "umf.actions.rules",
+                    "version": "1",
+                    "expression": "{\"op\":\"not\",\"args\":[{\"exists\":{\"state\":\"pre\",\"frame\":\"projectRead\"}}]}",
+                    "references": [
+                      {
+                        "record": {
+                          "module": "example",
+                          "element": "Project"
+                        }
+                      }
+                    ]
+                  },
+                  "failure": {
+                    "code": "FRESH",
+                    "message": "A project with that code exists"
+                  }
+                },
+                {
+                  "id": "exists",
+                  "rule": {
+                    "language": "umf.actions.rules",
+                    "version": "1",
+                    "expression": "{\"exists\":{\"state\":\"pre\",\"frame\":\"clientRead\"}}",
+                    "references": [
+                      {
+                        "record": {
+                          "module": "example",
+                          "element": "Customer"
+                        }
+                      }
+                    ]
+                  },
+                  "failure": {
+                    "code": "EXISTS",
+                    "message": "The referenced client does not exist"
+                  }
+                }
+              ],
+              "postconditions": [],
+              "failures": [
+                {
+                  "code": "FRESH",
+                  "message": "A project with that code exists",
+                  "retryable": false
+                },
+                {
+                  "code": "EXISTS",
+                  "message": "The referenced client does not exist",
+                  "retryable": false
+                }
+              ],
+              "reads": [
+                {
+                  "id": "projectRead",
+                  "record": {
+                    "module": "example",
+                    "element": "Project"
+                  },
+                  "selector": {
+                    "language": "umf.actions.keys",
+                    "version": "1",
+                    "expression": "{\"key\":\"pk\",\"components\":[{\"input\":\"code\"}]}",
+                    "references": [
+                      {
+                        "parameter": "code"
+                      }
+                    ]
+                  },
+                  "maxEntities": 1,
+                  "fields": [],
+                  "relationships": [],
+                  "create": false,
+                  "delete": false
+                },
+                {
+                  "id": "clientRead",
+                  "record": {
+                    "module": "example",
+                    "element": "Customer"
+                  },
+                  "selector": {
+                    "language": "umf.actions.keys",
+                    "version": "1",
+                    "expression": "{\"entity\":\"client\"}",
+                    "references": [
+                      {
+                        "parameter": "client"
+                      }
+                    ]
+                  },
+                  "maxEntities": 1,
+                  "fields": [],
+                  "relationships": [],
+                  "create": false,
+                  "delete": false
+                }
+              ],
+              "writes": [
+                {
+                  "id": "projectWrite",
+                  "record": {
+                    "module": "example",
+                    "element": "Project"
+                  },
+                  "selector": {
+                    "language": "umf.actions.keys",
+                    "version": "1",
+                    "expression": "{\"key\":\"pk\",\"components\":[{\"input\":\"code\"}]}",
+                    "references": [
+                      {
+                        "parameter": "code"
+                      }
+                    ]
+                  },
+                  "maxEntities": 1,
+                  "fields": [
+                    {
+                      "module": "example",
+                      "element": "Project.code"
+                    },
+                    {
+                      "module": "example",
+                      "element": "Project.title"
+                    },
+                    {
+                      "module": "example",
+                      "element": "Project.note"
+                    }
+                  ],
+                  "relationships": [],
+                  "create": true,
+                  "delete": false
+                }
+              ],
+              "binding": {
+                "kind": "recipe",
+                "profile": {
+                  "id": "graph-write",
+                  "version": "2"
+                },
+                "effects": [
+                  {
+                    "id": "project",
+                    "kind": "create",
+                    "record": {
+                      "module": "example",
+                      "element": "Project"
+                    },
+                    "key": "pk",
+                    "values": [
+                      {
+                        "field": {
+                          "module": "example",
+                          "element": "Project.code"
+                        },
+                        "value": {
+                          "parameter": "code"
+                        }
+                      },
+                      {
+                        "field": {
+                          "module": "example",
+                          "element": "Project.title"
+                        },
+                        "value": {
+                          "parameter": "title"
+                        }
+                      },
+                      {
+                        "field": {
+                          "module": "example",
+                          "element": "Project.note"
+                        },
+                        "value": {
+                          "parameter": "note"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              "authorization": {
+                "kind": "roles",
+                "profile": {
+                  "id": "umf.actions.roles",
+                  "version": "1"
+                },
+                "roles": [
+                  "editor"
+                ]
+              },
+              "attribution": {
+                "subject": "person-required"
+              },
+              "atomicity": "single-store",
+              "idempotency": "caller-key-optional",
+              "result": {
+                "identities": "created-and-changed",
+                "version": "store-opaque",
+                "receipt": "read-at-least"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,83 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"CoreRelationshipSelection\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "operation",
+      "optional": false,
+      "type": "\"select-core-relationships\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "version",
+      "optional": false,
+      "type": "\"2.0.0\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "source",
+      "optional": false,
+      "type": "SelectionSource"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreRelationshipQuery\"]"
+      ],
+      "name": "query",
+      "optional": false,
+      "type": "CoreRelationshipQuery"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreRelationshipSelectionEntry\"]"
+      ],
+      "name": "selection",
+      "optional": false,
+      "type": "CoreRelationshipSelectionEntry[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Diagnostic\"]"
+      ],
+      "name": "diagnostics",
+      "optional": false,
+      "type": "Diagnostic[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "residuals",
+      "optional": false,
+      "type": "[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "provenance",
+      "optional": false,
+      "type": "\"unverified\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "navigationScope",
+      "optional": false,
+      "type": "\"authored-presentation-only\""
+    }
+  ],
+  "parameters": [],
+  "purpose": "CoreRelationshipSelection is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "CoreRelationshipSelection"
+}

@@ -1,0 +1,33 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 3206,
+        "line": 1,
+        "path": "spec/extensions/spark/datatype-schema.json",
+        "sha256": "54e8ee5b1356ce74463709d59a03676fb7f17eb960438aee451e33027380fe7a"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "sparkDataTypeSchema",
+    "runtime": "unassessed",
+    "signatureText": [
+      "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"$id\": \"urn:umf:spark:datatype-json:0.1.0\",\n  \"$ref\": \"#/$defs/type\",\n  \"$defs\": {\n    \"type\": {\n      \"anyOf\": [\n        {\n          \"type\": \"string\",\n          \"minLength\": 1\n        },\n        {\n          \"type\": \"object\",\n          \"properties\": {\n            \"type\": {\n              \"const\": \"array\"\n            },\n            \"elementType\": {\n              \"$ref\": \"#/$defs/type\"\n            },\n            \"containsNull\": {\n              \"type\": \"boolean\"\n            }\n          },\n          \"required\": [\n            \"type\",\n            \"elementType\",\n            \"containsNull\"\n          ],\n          \"additionalProperties\": true\n        },\n        {\n          \"type\": \"object\",\n          \"properties\": {\n            \"type\": {\n              \"const\": \"map\"\n            },\n            \"keyType\": {\n              \"$ref\": \"#/$defs/type\"\n            },\n            \"valueType\": {\n              \"$ref\": \"#/$defs/type\"\n            },\n            \"valueContainsNull\": {\n              \"type\": \"boolean\"\n            }\n          },\n          \"required\": [\n            \"type\",\n            \"keyType\",\n            \"valueType\",\n            \"valueContainsNull\"\n          ],\n          \"additionalProperties\": true\n        },\n        {\n          \"type\": \"object\",\n          \"properties\": {\n            \"type\": {\n              \"const\": \"struct\"\n            },\n            \"fields\": {\n              \"type\": \"array\",\n              \"items\": {\n                \"$ref\": \"#/$defs/field\"\n              }\n            }\n          },\n          \"required\": [\n            \"type\",\n            \"fields\"\n          ],\n          \"additionalProperties\": true\n        },\n        {\n          \"type\": \"object\",\n          \"properties\": {\n            \"type\": {\n              \"const\": \"udt\"\n            },\n            \"class\": {\n              \"type\": \"string\"\n            },\n            \"pyClass\": {\n              \"type\": [\n                \"string\",\n                \"null\"\n              ]\n            },\n            \"serializedClass\": {\n              \"type\": \"string\"\n            },\n            \"sqlType\": {\n              \"$ref\": \"#/$defs/type\"\n            }\n          },\n          \"required\": [\n            \"type\"\n          ],\n          \"additionalProperties\": true\n        },\n        {\n          \"type\": \"object\",\n          \"properties\": {\n            \"type\": {\n              \"type\": \"string\",\n              \"minLength\": 1,\n              \"not\": {\n                \"enum\": [\n                  \"array\",\n                  \"map\",\n                  \"struct\",\n                  \"udt\"\n                ]\n              }\n            }\n          },\n          \"required\": [\n            \"type\"\n          ],\n          \"additionalProperties\": true\n        }\n      ]\n    },\n    \"field\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"name\": {\n          \"type\": \"string\"\n        },\n        \"type\": {\n          \"$ref\": \"#/$defs/type\"\n        },\n        \"nullable\": {\n          \"type\": \"boolean\"\n        },\n        \"metadata\": {\n          \"type\": \"object\"\n        }\n      },\n      \"required\": [\n        \"name\",\n        \"type\"\n      ],\n      \"additionalProperties\": true\n    }\n  }\n}\n"
+    ]
+  },
+  "id": "[\"api\",\".\",\"sparkDataTypeSchema\"]",
+  "kind": "api",
+  "links": [
+    "[\"schema\",\"spec/extensions/spark/datatype-schema.json\",\"\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 3206,
+      "line": 1,
+      "path": "spec/extensions/spark/datatype-schema.json",
+      "sha256": "54e8ee5b1356ce74463709d59a03676fb7f17eb960438aee451e33027380fe7a"
+    }
+  ],
+  "summary": "Public export · spec/extensions/spark/datatype-schema.json",
+  "title": "sparkDataTypeSchema"
+}

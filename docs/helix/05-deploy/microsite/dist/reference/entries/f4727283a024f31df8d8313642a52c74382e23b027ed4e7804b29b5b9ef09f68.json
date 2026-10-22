@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 8717,
+        "line": 12,
+        "path": "src/core-ideals/postgresql-record.ts",
+        "sha256": "5459ced3beb67e6060fe232a7f43a634066b351dab0ab11ae9880c33171bf325"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "PostgresqlRecordRequest",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface PostgresqlRecordRequest {recordModule:string;recordId:string;mode:'strict'|'report';nativeSource:string;relation:{schema:string;name:string};authors?:CoreKindDeclaration[]}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"PostgresqlRecordRequest\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 8717,
+      "line": 12,
+      "path": "src/core-ideals/postgresql-record.ts",
+      "sha256": "5459ced3beb67e6060fe232a7f43a634066b351dab0ab11ae9880c33171bf325"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/postgresql-record.ts",
+  "title": "PostgresqlRecordRequest"
+}

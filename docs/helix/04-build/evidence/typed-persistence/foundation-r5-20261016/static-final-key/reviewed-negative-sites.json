@@ -1,0 +1,873 @@
+{
+  "version": "umf-static-negative-sites/0.1",
+  "review": "Every source call site inspected; query carrier/record ownership, nullability, arity, action replay/input, ranked-search misuse and the five generated-model constructor/Key/update/projection misuse sites. Exact multiplicity retained (ty hybrid emits three diagnostics). Native/temporal support is not inferred. Prefix wrong literal and named parameter inspected at line7; both require string-carrier argument diagnostics, with exact source hashes. Same-carrier generated CustomerKey cannot replace ShipOrderInput selected OrderKey; line5 constructor argument must reject nominal Key identity on all three checkers.",
+  "checkers": {
+    "mypy": "2.4.0",
+    "pyright": "1.1.414",
+    "ty": "0.0.88"
+  },
+  "cases": [
+    {
+      "path": "tests/compilation/python/static/actions/negative/key_on_plain_executor.py",
+      "sourceSha256": "2589e79c0eb35fc4140c8b59cf5b327d92ccb0e7fc4ae958eac5f5519442ab77",
+      "sites": [
+        {
+          "line": 5,
+          "source": "Actions(executor).ship_order(value, idempotency_key=\"original\")",
+          "rules": {
+            "mypy": [
+              "call-arg"
+            ],
+            "ty": [
+              "no-matching-overload"
+            ],
+            "pyright": [
+              "reportCallIssue"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "path": "tests/compilation/python/static/actions/negative/missing_replay_key.py",
+      "sourceSha256": "8a7fcd4be390030ec4e23f0b8f82ead178bec19faeb0d847b65019d0346a4f42",
+      "sites": [
+        {
+          "line": 5,
+          "source": "ReplayingActions(executor).ship_order(value)",
+          "rules": {
+            "mypy": [
+              "call-arg"
+            ],
+            "ty": [
+              "no-matching-overload"
+            ],
+            "pyright": [
+              "reportCallIssue"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "path": "tests/compilation/python/static/actions/negative/plain_executor_replay.py",
+      "sourceSha256": "25e8c238cfa56683f7ee14bcbdf225e64c0222b046da551b436748e8e1b79e08",
+      "sites": [
+        {
+          "line": 5,
+          "source": "ReplayingActions(executor)",
+          "rules": {
+            "mypy": [
+              "type-var"
+            ],
+            "ty": [
+              "invalid-argument-type"
+            ],
+            "pyright": [
+              "reportArgumentType"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "path": "tests/compilation/python/static/actions/negative/validate_wrong_input.py",
+      "sourceSha256": "070426b7f7c4f57d53f4a565a0ef5db38d7fbfae45d97fbde0ecd55de210f008",
+      "sites": [
+        {
+          "line": 5,
+          "source": "Actions(executor).ship_order.validate(\"wrong\")",
+          "rules": {
+            "mypy": [
+              "arg-type"
+            ],
+            "ty": [
+              "no-matching-overload"
+            ],
+            "pyright": [
+              "reportArgumentType"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "path": "tests/compilation/python/static/actions/negative/wrong_input.py",
+      "sourceSha256": "fae7a0abb68128b0fbd44b89ecc1a8e6fb001ebbbc0b88002b9c8f5c0a048178",
+      "sites": [
+        {
+          "line": 5,
+          "source": "Actions(executor).ship_order(\"wrong\")",
+          "rules": {
+            "mypy": [
+              "arg-type"
+            ],
+            "ty": [
+              "no-matching-overload"
+            ],
+            "pyright": [
+              "reportArgumentType"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "path": "tests/compilation/python/static/actions/negative/wrong_key.py",
+      "sourceSha256": "b89e9b1f9697bd050891fe144e108b2bc576ce309d884b44705d1c4176f6285b",
+      "sites": [
+        {
+          "line": 5,
+          "source": "wrong = ShipOrderInput(order=CustomerKey(customer_id=\"one\"))",
+          "rules": {
+            "mypy": [
+              "arg-type"
+            ],
+            "pyright": [
+              "reportArgumentType"
+            ],
+            "ty": [
+              "invalid-argument-type"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "path": "tests/compilation/python/static/joins/negative/aggregate_decimal_result.py",
+      "sourceSha256": "c2cc6d3c6321e424b8918733b3d8f7164d72aa896b51b10882ac0bfdcfcd3e43",
+      "sites": [
+        {
+          "line": 7,
+          "source": "return row.total",
+          "rules": {
+            "mypy": [
+              "return-value"
+            ],
+            "ty": [
+              "invalid-return-type"
+            ],
+            "pyright": [
+              "reportReturnType"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "path": "tests/compilation/python/static/joins/negative/aggregate_float_parameter.py",
+      "sourceSha256": "c2e7e68a8036b9c87a83a61e41be90f706a99d23e8d2ea9d9e7db68c6d7afbc5",
+      "sites": [
+        {
+          "line": 5,
+          "source": "wrong = Minimum(minimum=1.5)",
+          "rules": {
+            "mypy": [
+              "arg-type"
+            ],
+            "ty": [
+              "invalid-argument-type"
+            ],
+            "pyright": [
+              "reportArgumentType"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "path": "tests/compilation/python/static/joins/negative/foreign_column.py",
+      "sourceSha256": "ba27560a1f949751a9fd783a5f44c6ab2663b32e7f156c51ea386bb3c4374df6",
+      "sites": [
+        {
+          "line": 5,
+          "source": "return Order.objects.join(Order.c.customer).filter(OrderLine.c.line_number > 1).limit(10).all()",
+          "rules": {
+            "mypy": [
+              "arg-type"
+            ],
+            "ty": [
+              "invalid-argument-type"
+            ],
+            "pyright": [
+              "reportArgumentType"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "path": "tests/compilation/python/static/joins/negative/foreign_projection.py",
+      "sourceSha256": "ad33329a70a1cd854b840321bc0a995fb77a1b2c9daf8dc6ddc88caf4ff1f677",
+      "sites": [
+        {
+          "line": 5,
+          "source": "return Order.objects.join(Order.c.customer).into(CustomerSummaryProjection).limit(10).all()",
+          "rules": {
+            "mypy": [
+              "arg-type"
+            ],
+            "ty": [
+              "invalid-argument-type"
+            ],
+            "pyright": [
+              "reportArgumentType"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "path": "tests/compilation/python/static/joins/negative/foreign_relationship.py",
+      "sourceSha256": "16dd794529795a7872be36e122d996e9c724e3774e3de5667dbc7c4e378081ec",
+      "sites": [
+        {
+          "line": 5,
+          "source": "return Customer.objects.join(Order.c.customer).limit(10).all()",
+          "rules": {
+            "mypy": [
+              "arg-type"
+            ],
+            "ty": [
+              "invalid-argument-type"
+            ],
+            "pyright": [
+              "reportArgumentType"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "path": "tests/compilation/python/static/joins/negative/null_result.py",
+      "sourceSha256": "8dc9785cbb57b1775055b4ab1d7bba47547a4dc6d173d9215c0b08bb6ab2945c",
+      "sites": [
+        {
+          "line": 4,
+          "source": "return row.name",
+          "rules": {
+            "mypy": [
+              "return-value"
+            ],
+            "ty": [
+              "invalid-return-type"
+            ],
+            "pyright": [
+              "reportReturnType"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "path": "tests/compilation/python/static/joins/negative/unknown_join_column.py",
+      "sourceSha256": "66bf408b4f5a89eb261c12171bc5de5ab8a74b4f1ff184a7394b27f3df4ce8c5",
+      "sites": [
+        {
+          "line": 5,
+          "source": "return Order.objects.join(Order.c.customer).filter(Customer.c.misspelled == 'name').limit(10).all()",
+          "rules": {
+            "mypy": [
+              "attr-defined"
+            ],
+            "ty": [
+              "unresolved-attribute"
+            ],
+            "pyright": [
+              "reportAttributeAccessIssue"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "path": "tests/compilation/python/static/models/negative/negative.py",
+      "sourceSha256": "d78e59d906d4b691f6ca5628d375c0e73abff6bf141d8ff498cdb1451ce5c3f8",
+      "sites": [
+        {
+          "line": 2,
+          "source": "bad_decimal = OrderPatch(amount='private-invalid')",
+          "rules": {
+            "mypy": [
+              "arg-type"
+            ],
+            "pyright": [
+              "reportArgumentType"
+            ],
+            "ty": [
+              "invalid-argument-type"
+            ]
+          }
+        },
+        {
+          "line": 3,
+          "source": "bad_patch = OrderPatch(unknown=1)",
+          "rules": {
+            "mypy": [
+              "call-arg"
+            ],
+            "pyright": [
+              "reportCallIssue"
+            ],
+            "ty": [
+              "unknown-argument"
+            ]
+          }
+        },
+        {
+          "line": 4,
+          "source": "bad_key = OrderKey(order_id=1)",
+          "rules": {
+            "mypy": [
+              "arg-type"
+            ],
+            "pyright": [
+              "reportArgumentType"
+            ],
+            "ty": [
+              "invalid-argument-type"
+            ]
+          }
+        },
+        {
+          "line": 5,
+          "source": "bad_update = Order.objects.update(typo=1)",
+          "rules": {
+            "mypy": [
+              "call-arg"
+            ],
+            "pyright": [
+              "reportCallIssue"
+            ],
+            "ty": [
+              "unknown-argument"
+            ]
+          }
+        },
+        {
+          "line": 6,
+          "source": "bad_projection = Order.objects.into(CustomerSummary)",
+          "rules": {
+            "mypy": [
+              "arg-type"
+            ],
+            "pyright": [
+              "reportCallIssue",
+              "reportArgumentType"
+            ],
+            "ty": [
+              "no-matching-overload"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "path": "tests/compilation/python/static/queries/negative/distinct_wrong_operand.py",
+      "sourceSha256": "5576fbf0beb79ffd2416775b6823014a0ae7ec6b499d58bdc7eb50aa04065c03",
+      "sites": [
+        {
+          "line": 7,
+          "source": "return Order.objects.filter(Order.c.order_id.is_distinct_from(123)).limit(10).all()",
+          "rules": {
+            "mypy": [
+              "arg-type"
+            ],
+            "ty": [
+              "invalid-argument-type"
+            ],
+            "pyright": [
+              "reportArgumentType"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "path": "tests/compilation/python/static/queries/negative/distinct_wrong_param.py",
+      "sourceSha256": "dd6113921a60c518eba4ea649f31191288d129619ea0ce5a53e2726c011b8b81",
+      "sites": [
+        {
+          "line": 7,
+          "source": "return Order.objects.filter(Order.c.order_id.is_not_distinct_from(value)).limit(10).all()",
+          "rules": {
+            "mypy": [
+              "arg-type"
+            ],
+            "ty": [
+              "invalid-argument-type"
+            ],
+            "pyright": [
+              "reportArgumentType"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "path": "tests/compilation/python/static/queries/negative/foreign_column_filter.py",
+      "sourceSha256": "af13630154ed99cf086ade33420f1e36d21af6f00708bd4bd8f0f895e3e9bf49",
+      "sites": [
+        {
+          "line": 9,
+          "source": "return Order.objects.filter(Customer.c.name == value).limit(10).all()",
+          "rules": {
+            "mypy": [
+              "arg-type"
+            ],
+            "ty": [
+              "invalid-argument-type"
+            ],
+            "pyright": [
+              "reportArgumentType"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "path": "tests/compilation/python/static/queries/negative/foreign_column_select.py",
+      "sourceSha256": "e86a816ef76abf8caa7bfd642aea013ffb79adbbd70ccd5c3f48c2820f6880d1",
+      "sites": [
+        {
+          "line": 9,
+          "source": "return Order.objects.select(Customer.c.name).limit(10).all()",
+          "rules": {
+            "mypy": [
+              "arg-type"
+            ],
+            "ty": [
+              "invalid-argument-type"
+            ],
+            "pyright": [
+              "reportArgumentType"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "path": "tests/compilation/python/static/queries/negative/foreign_projection.py",
+      "sourceSha256": "c2568d3e005377e99e9729ae74142ad0bca23fb38b5fbbc322d40ec7cd7db1b8",
+      "sites": [
+        {
+          "line": 7,
+          "source": "return Order.objects.into(CustomerSummary).limit(10).all()",
+          "rules": {
+            "mypy": [
+              "arg-type"
+            ],
+            "ty": [
+              "no-matching-overload"
+            ],
+            "pyright": [
+              "reportCallIssue",
+              "reportArgumentType"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "path": "tests/compilation/python/static/queries/negative/ninth_select_column.py",
+      "sourceSha256": "fb7c59edc9770f1388e8a3c24bb0c2021c584555af8841ed0eedc4670f889e6c",
+      "sites": [
+        {
+          "line": 9,
+          "source": "return Order.objects.select(Order.c.order_id, Order.c.order_id, Order.c.order_id, Order.c.order_id, Order.c.order_id, Order.c.order_id, Order.c.order_id, Order.c.order_id, Order.c.order_id).limit(10).all()",
+          "rules": {
+            "mypy": [
+              "call-overload"
+            ],
+            "ty": [
+              "no-matching-overload"
+            ],
+            "pyright": [
+              "reportCallIssue"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "path": "tests/compilation/python/static/queries/negative/null_optional_filter.py",
+      "sourceSha256": "531b7b8eb114ca4469033555e71c0405012cc70e059539dc101550bfc999e1bd",
+      "sites": [
+        {
+          "line": 7,
+          "source": "return Order.objects.filter(if_present(status, lambda value: Order.c.memo == value)).limit(10).all()",
+          "rules": {
+            "mypy": [
+              "arg-type"
+            ],
+            "ty": [
+              "invalid-argument-type"
+            ],
+            "pyright": [
+              "reportArgumentType"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "path": "tests/compilation/python/static/queries/negative/prefix_wrong_operand.py",
+      "sourceSha256": "6430d43248cae46c12ff08b5ff9bc45e367fc51b7588aeeac17868d04efe5ee1",
+      "sites": [
+        {
+          "line": 7,
+          "source": "return Order.objects.filter(Order.c.order_id.starts_with(123)).limit(10).all()",
+          "rules": {
+            "mypy": [
+              "arg-type"
+            ],
+            "pyright": [
+              "reportArgumentType"
+            ],
+            "ty": [
+              "invalid-argument-type"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "path": "tests/compilation/python/static/queries/negative/prefix_wrong_param.py",
+      "sourceSha256": "41d8e417fb927eedfebf6f7a0eba422af326424e605844e26e9fef144292b865",
+      "sites": [
+        {
+          "line": 7,
+          "source": "return Order.objects.filter(Order.c.order_id.starts_with(prefix)).limit(10).all()",
+          "rules": {
+            "mypy": [
+              "arg-type"
+            ],
+            "pyright": [
+              "reportArgumentType"
+            ],
+            "ty": [
+              "invalid-argument-type"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "path": "tests/compilation/python/static/queries/negative/unknown_column.py",
+      "sourceSha256": "b4209b63838dc5a3eca13e0cb7177ba87170d55a740c6d567e85c08b45b8794b",
+      "sites": [
+        {
+          "line": 9,
+          "source": "return Order.objects.filter(Order.c.ammount > Decimal(\"10\")).limit(10).all()",
+          "rules": {
+            "mypy": [
+              "attr-defined"
+            ],
+            "ty": [
+              "unresolved-attribute"
+            ],
+            "pyright": [
+              "reportAttributeAccessIssue"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "path": "tests/compilation/python/static/queries/negative/update_unknown_field.py",
+      "sourceSha256": "b69efd3ae0fcf9b7e2d539e566ae9e1e0993871bbbbddfcc143d4e720c7dfe09",
+      "sites": [
+        {
+          "line": 9,
+          "source": "return Order.objects.filter(Order.c.amount > Decimal(\"10\")).update(unknown=\"x\")",
+          "rules": {
+            "mypy": [
+              "call-arg"
+            ],
+            "ty": [
+              "unknown-argument"
+            ],
+            "pyright": [
+              "reportCallIssue"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "path": "tests/compilation/python/static/queries/negative/update_wrong_type.py",
+      "sourceSha256": "80231296d425114bbc2c6838fbbcf4f8a1ddc546335956c4300792384ffbd4b5",
+      "sites": [
+        {
+          "line": 9,
+          "source": "return Order.objects.filter(Order.c.amount > Decimal(\"10\")).update(amount=\"10\")",
+          "rules": {
+            "mypy": [
+              "arg-type"
+            ],
+            "ty": [
+              "invalid-argument-type"
+            ],
+            "pyright": [
+              "reportArgumentType"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "path": "tests/compilation/python/static/queries/negative/wrong_eq_operand.py",
+      "sourceSha256": "9608e3ef84dd0ef454f93791c4a1b42896cfda92db0387624693eed438caee24",
+      "sites": [
+        {
+          "line": 9,
+          "source": "return Order.objects.filter(Order.c.amount == \"10\").limit(10).all()",
+          "rules": {
+            "mypy": [
+              "arg-type"
+            ],
+            "ty": [
+              "invalid-argument-type"
+            ],
+            "pyright": [
+              "reportArgumentType"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "path": "tests/compilation/python/static/queries/negative/wrong_ne_operand.py",
+      "sourceSha256": "07ae3f8d96ef74597d68dab00e21f03ed4fdd5a48290c9ad8468c6f7fa7d0c6a",
+      "sites": [
+        {
+          "line": 9,
+          "source": "return Order.objects.filter(Order.c.amount != \"10\").limit(10).all()",
+          "rules": {
+            "mypy": [
+              "arg-type"
+            ],
+            "ty": [
+              "invalid-argument-type"
+            ],
+            "pyright": [
+              "reportArgumentType"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "path": "tests/compilation/python/static/queries/negative/wrong_operand.py",
+      "sourceSha256": "4a5596670a4214fa46afa1d70f20addfb5eebb1b0e3eb0e66c72dbc967c389d1",
+      "sites": [
+        {
+          "line": 9,
+          "source": "return Order.objects.filter(Order.c.amount > \"10\").limit(10).all()",
+          "rules": {
+            "mypy": [
+              "operator"
+            ],
+            "ty": [
+              "unsupported-operator"
+            ],
+            "pyright": [
+              "reportOperatorIssue"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "path": "tests/compilation/python/static/queries/negative/wrong_param.py",
+      "sourceSha256": "abd03aa8265f21a87aced6a2587c4a7581a578b02cea48a01556eecb25141ae2",
+      "sites": [
+        {
+          "line": 9,
+          "source": "return Order.objects.filter(Order.c.placed_at >= value).limit(10).all()",
+          "rules": {
+            "mypy": [
+              "operator"
+            ],
+            "ty": [
+              "unsupported-operator"
+            ],
+            "pyright": [
+              "reportOperatorIssue"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "path": "tests/compilation/python/static/search/negative/count.py",
+      "sourceSha256": "abb34c05f7352d1981e53d6b92a0349a1be10f1d1ff276394431cde6c588785e",
+      "sites": [
+        {
+          "line": 4,
+          "source": "return Doc.objects.search(Doc.s.text.matches(term)).count()",
+          "rules": {
+            "mypy": [
+              "attr-defined"
+            ],
+            "ty": [
+              "unresolved-attribute"
+            ],
+            "pyright": [
+              "reportAttributeAccessIssue"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "path": "tests/compilation/python/static/search/negative/exists.py",
+      "sourceSha256": "e428045579f67434425591e273ca5130af3d3b70265c92c4a12dd10d962752af",
+      "sites": [
+        {
+          "line": 4,
+          "source": "return Doc.objects.search(Doc.s.text.matches(term)).exists()",
+          "rules": {
+            "mypy": [
+              "attr-defined"
+            ],
+            "ty": [
+              "unresolved-attribute"
+            ],
+            "pyright": [
+              "reportAttributeAccessIssue"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "path": "tests/compilation/python/static/search/negative/foreign_leg.py",
+      "sourceSha256": "273ba37c595c41821ac6de99371b0f6063483351d3bbe780b77b334e91c2fe28",
+      "sites": [
+        {
+          "line": 5,
+          "source": "return Doc.objects.search(hybrid(a,b,fusion=rrf())).top(3)",
+          "rules": {
+            "mypy": [
+              "arg-type"
+            ],
+            "ty": [
+              "invalid-argument-type",
+              "invalid-argument-type",
+              "invalid-argument-type"
+            ],
+            "pyright": [
+              "reportArgumentType"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "path": "tests/compilation/python/static/search/negative/order_by.py",
+      "sourceSha256": "910bc242fe619caefe4be227e9d921576f7b91e2b2d85e3502066e280f14e708",
+      "sites": [
+        {
+          "line": 4,
+          "source": "return Doc.objects.search(Doc.s.text.matches(term)).order_by(Doc.c.id.asc())",
+          "rules": {
+            "mypy": [
+              "attr-defined"
+            ],
+            "ty": [
+              "unresolved-attribute"
+            ],
+            "pyright": [
+              "reportAttributeAccessIssue"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "path": "tests/compilation/python/static/search/negative/page.py",
+      "sourceSha256": "36452253d91ddc65f26de7af03cd577c6d92c43b55dca447f6eda2223dd8042d",
+      "sites": [
+        {
+          "line": 4,
+          "source": "return Doc.objects.search(Doc.s.text.matches(term)).page(size=2, after=None)",
+          "rules": {
+            "mypy": [
+              "attr-defined"
+            ],
+            "ty": [
+              "unresolved-attribute"
+            ],
+            "pyright": [
+              "reportAttributeAccessIssue"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "path": "tests/compilation/python/static/search/negative/update.py",
+      "sourceSha256": "841ec29692bc3a3228b5553c1a1ec264051fbdbec2c43ca81e480319171f84d4",
+      "sites": [
+        {
+          "line": 4,
+          "source": "return Doc.objects.search(Doc.s.text.matches(term)).update(body=\"other\")",
+          "rules": {
+            "mypy": [
+              "attr-defined"
+            ],
+            "ty": [
+              "unresolved-attribute"
+            ],
+            "pyright": [
+              "reportAttributeAccessIssue"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "path": "tests/compilation/python/static/search/negative/wrong_text.py",
+      "sourceSha256": "2968ab71633a2816eeece97215b8817e1b8c1774b1e5066b984c7efcbf1012df",
+      "sites": [
+        {
+          "line": 4,
+          "source": "return Doc.objects.search(Doc.s.text.matches(value)).top(3)",
+          "rules": {
+            "mypy": [
+              "arg-type"
+            ],
+            "ty": [
+              "invalid-argument-type"
+            ],
+            "pyright": [
+              "reportArgumentType"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "path": "tests/compilation/python/static/search/negative/wrong_vector.py",
+      "sourceSha256": "74591036a4f9e23da5b4209c91e629002ccdf274b5a5ad1f5e0c521a201d0348",
+      "sites": [
+        {
+          "line": 4,
+          "source": "return Doc.objects.search(Doc.s.semantic.near_vector(value)).top(3)",
+          "rules": {
+            "mypy": [
+              "arg-type"
+            ],
+            "ty": [
+              "invalid-argument-type"
+            ],
+            "pyright": [
+              "reportArgumentType"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

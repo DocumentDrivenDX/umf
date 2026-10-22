@@ -1,0 +1,42 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"evaluateProtectionValue\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "policy",
+      "optional": false,
+      "type": "unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "catalog",
+      "optional": false,
+      "type": "unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "closure",
+      "optional": false,
+      "type": "unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "selection",
+      "optional": false,
+      "type": "unknown"
+    }
+  ],
+  "purpose": "Present typed input only; no row authorization or canonical mutation.",
+  "related": [],
+  "returns": "ProtectionFunctionResult",
+  "task": "Other APIs",
+  "type": "(policy: unknown, catalog: unknown, closure: unknown, selection: unknown) => ProtectionFunctionResult"
+}

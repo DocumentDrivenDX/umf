@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {ensureSmithyRuntime} from './smithy-runtime';
 import {mkdtemp,rm} from 'node:fs/promises';
 import {tmpdir} from 'node:os';

@@ -1,0 +1,92 @@
+{
+  "status": "review-complete-no-open-product-findings",
+  "reviewer": "Astra Ultra independent retained reviewer",
+  "base": "206951ff20d766874b9af7d29fdf8027c3bab499",
+  "pins": {
+    "sourcePacketSha256": "f64d1c803a252bac9f13ea1c2de789a4404dbece137d7b0bd8c421b0ed246730",
+    "evidenceQualificationR2Sha256": "02eeebbfde5d16abf17771d12b965b692f8a0ae8ea41cb4feb01af571706cbd6",
+    "runtimeSha256": "83fe06abf2690c3806700049fb66b5e93d8a16f6f45025aeffd6adbde89673ad",
+    "rebuiltBundleSha256": "548b7ff64dabf3bc796afe99ecca265f5bcf242202e367ba7125e62c64f0a735",
+    "originalBundleSha256": "d333226d9186136704d3f84a9c9dbfc44796efebab563dbc732d60337d2e03eb"
+  },
+  "conclusion": "The frozen optimization preserves tested strong-Kleene truth, full dependency refusal, and the existing rule/disclosure/recipe fold. Only pure truth evaluation stops on F for AND or T for OR/exists; global preflight and budget ceilings are byte-identical. No product-code defect remains. One historical evidence-label finding is resolved by a separate qualification without rewriting the original receipt.",
+  "findings": [],
+  "resolvedFindings": [
+    {
+      "id": "SHORT-CIRCUIT-EVIDENCE-001",
+      "severity": "low",
+      "kind": "evidence-label",
+      "original": "The retained eager-budget-counterexample receipt and R1 narrative called a14-fact/13-edge parallel:Alice packet a12-edge counterexample. The embedded packet is authoritative.",
+      "independentResult": "Exact old d333 parallel:Alice14/13 refuses. Exact old base:Alice14/12 renders RA and base:Outsider14/12 renders empty; both pass held inspection. New548b7f passes all15 supplied vectors.",
+      "resolution": "Separate R2 counterexample qualification and TD/STP/implementation text identify the13-edge case and successful12-edge controls. Original packet, source, receipt and failed reviewer assumptions remain retained.",
+      "evidence": [
+        "process-replay.json",
+        "evidence-qualification-r2/counterexample-qualification.json",
+        "process-replay-r2.log",
+        "process-replay-r3.log"
+      ]
+    }
+  ],
+  "independentChecks": [
+    {
+      "artifact": "security-final.log",
+      "result": "333 tests,6027 assertions,0 failures; includes six top-level original security tests and all tests/security"
+    },
+    {
+      "artifact": "adversarial-controls.json",
+      "result": "353 checks:234 actual compiled AND/OR truth sequences of length2..4;40 existential populations length0..3; full old/new results; absorbing-branch missing coverage/projection/context, invalid values, source/storage substitutions and resource bounds refuse; unsupported typed constants refuse compilation"
+    },
+    {
+      "artifact": "mutation-controls.json",
+      "result": "4 actual isolated runtime mutations detected: early-U AND, OR, exists, and removed dependency preflight"
+    },
+    {
+      "artifact": "proof.json",
+      "result": "30 exact-source SMT queries replayed with Z34.15.4:12 UNSAT and18 SAT, including every theorem premise SAT"
+    },
+    {
+      "artifact": "browser-r3.json",
+      "result": "98 matching Bun/Chromium151.0.7922.34 controls; no page errors, external requests or Node/Bun browser globals; Playwright1.62.1. Supplied Chromium153.0.8010.12 remains a separate checked receipt"
+    },
+    {
+      "artifact": "process-replay.json",
+      "result": "15 actual new held-process producer/inspector operations, exact keys and frame hashes; parent cleanup verified; old13-edge refusal reproduced and two12-edge successes explicitly retained"
+    },
+    {
+      "artifact": "graph-context-tests.json",
+      "result": "6 supplied isolated graph mapping tests with simulated cursor, no SQL"
+    },
+    {
+      "artifact": "custody-audit.json",
+      "result": "3567 checks: exact257 captured builder inputs and rebuilt byte-identical bundle;570 unique accepted endpoint pins/2236 repeated occurrences; fresh supplied S24/S25/P04 receipts296/124/807 observations;42 retained accepted cases qualified"
+    },
+    {
+      "artifact": "closing-custody.json",
+      "result": "2549 original reconstruction inputs unchanged at close, plus257 exact builder pins; R2 evidence qualification verified"
+    }
+  ],
+  "analysis": [
+    "All scoped rules still execute and retain original order; the code after truth evaluation, including decision dominance, selected source occurrences, disclosure/recipe resolution and output folding, is unchanged.",
+    "U is never absorbing. Empty existential remains F. Preflight traverses the complete condition tree and full supplied populations before truth evaluation, including unused branches.",
+    "The suspected unsupported date constant bypass is disproved: original entity-term compilation admits only its closed scalar families and validates constants; date/time/timestamp/UUID controls refuse before runtime.",
+    "SMT establishes conditional ordered F/U/T fold properties over arbitrary finite relations, not a TypeScript translation or budget/termination proof. The skipped-preflight SAT item is an illustrative unvalidated-state premise, not a modeled implementation equivalence; the independent removed-preflight runtime mutant supplies a concrete negative control.",
+    "The old refusal cause is attributed to literal-work exhaustion by separately retained owner diagnostic instrumentation. Independent uninstrumented replay establishes exact observable refusal/success only. Avoid treating diagnostic-modified source as the production execution cohort.",
+    "The isolated graph draft explicitly restricts fact Fields to JSON home and graph witnesses to opaque-existential. It is not active Truss capture, complete non-JSON field support, Record-backed witness/attribute support, or backend acceptance."
+  ],
+  "retainedAttempts": [
+    "Reviewer reconstruction initially omitted base spike/evidence fixtures, top-level security tests and installed public-index adapter dependencies. The missing-import attempts and exact supplements are retained; the complete final333-test run passes.",
+    "Initial reviewer browser launch could not create its local loopback server in the sandbox; the authorized local-browser retry passes. This was not a product assertion failure.",
+    "Initial process harness incorrectly compared vector provenance metadata and expected the mislabeled14/12 refusal. Those source attempts/logs remain; final replay records exact cases without assuming outcomes.",
+    "Initial custody script used the wrong canonical-gate path and exact stdout filename matching; corrected to the historical acceptance.json and explicit fresh receipt paths, retaining failed scripts/logs.",
+    "Owner initial typecheck annotation, local-listener refusal, graph composition and diagnostic attempts remain in frozen/root-evidence and diagnostic-instrumentation."
+  ],
+  "limits": [
+    "No independent SQL/native database campaign, authenticated caller/source/current-cut proof, native graph admission, guarded release or query-operator qualification.",
+    "No new full158-case canonical gate: only supplied fresh S24/S25/P04 and current byte correspondence for42 retained cases. Full158 cases/34 criteria remain mandatory,45 implemented and113 missing; no promotion.",
+    "Source endpoint checks and captured selected inputs are not continuously held files, absence-of-ABA evidence, or a hermetic external runtime/toolchain closure.",
+    "The graph collector is an isolated draft; later collector deadline/output changes outside the frozen packet receive no credit here."
+  ],
+  "commands": "execution-summary.json",
+  "artifactManifest": "manifest.json",
+  "manifestFormat": "JSON object mapping relative artifact paths to {sha256, bytes}; manifest excludes itself. Expanded source/dependency trees are represented by exact retained ZIPs and maps; redundant base TAR archives are excluded."
+}

@@ -1,0 +1,19 @@
+{
+  "status": "exact-oracle-adoption",
+  "sourceDigests": {
+    "src/extensions/security/protection/disclosure.ts": "a8aec1e8fb596efb925b017127a8dff0b5c64c4cd3303194a9d123bfb443f238",
+    "tests/security/protection/disclosure-acceptance.ts": "1a7c0ab512ffa4f3f751414f09253a27a10b4c4150b0f9e8cd148bcf6cd2cfa9",
+    "tests/security/protection/disclosure-oracle.py": "3748a1da4ac2b4066f78297cfecd5024ab350dced882b8dc58c04245ef861561",
+    "tests/security/protection/disclosure-fixtures.json": "5f1814dc8530a2096bec83e940676f053ca8d38d9220ddbbf00d7dfe60b89074",
+    "tests/security/protection/disclosure-oracle.ts": "8932a897e7fbd7fda2ff2f31704b61f615bc35e29e88a00e5f03f0cd52ece6d2",
+    "docs/helix/03-test/security/cases.json": "55c8f095287955cf1d04cfc04462479f035b0764a6580bcc3e0c7083300e58cf"
+  },
+  "reviewSha256": "7a2dcfe64a3c1b186e73f51ffe4e0e2a499ca3df400183bbf31b11e235ac818c",
+  "allowedRelocations": [
+    "root API import path",
+    "fixture filename"
+  ],
+  "expectedObservationsPerRuntime": 175,
+  "observedStandaloneObservations": 358,
+  "scope": "Root custody record of independently authored/adopted oracle and reviewer-approved wrapper pattern; not a new independent native or authority review."
+}

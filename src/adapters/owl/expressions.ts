@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {copyJson} from '../../model/json';
 import {UmfError,type Document} from '../../model/types';
 import type {RdfNode,RdfLiteral} from '../rdf';

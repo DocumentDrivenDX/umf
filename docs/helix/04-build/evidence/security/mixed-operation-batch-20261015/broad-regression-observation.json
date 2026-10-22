@@ -1,0 +1,16 @@
+{
+  "status": "passed",
+  "command": [
+    "/opt/homebrew/bin/bun",
+    "test",
+    "tests/security",
+    "tests/actions-reference"
+  ],
+  "tests": 420,
+  "failures": 0,
+  "expectations": 5793,
+  "files": 95,
+  "elapsedSeconds": 346.15,
+  "toolSessionId": 1354,
+  "scope": "Observed actual tool execution before generated producer identity refresh. Logical runtime source was stable; work-budget corpus calibration changed before its final focused replay. This observation is not a complete held source inventory, new backend acceptance or a current rebuilt browser qualification."
+}

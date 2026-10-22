@@ -1,0 +1,22 @@
+{
+  "id": "owner-requirements-astra-review",
+  "status": "clean-within-scope",
+  "reviewer": "/root/astra_security_review",
+  "sources": {
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_requirements.rs": "937f259ae5cdca5afbee653d89f7882e6f0bb2a454a6703256d14625e8fe2711",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_backend.rs": "718bd958a01e5462ec22219edd03d330c664c8077b422954a269250d300c3b46",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_query_profile.rs": "6af9b6c910b6e6b2c1f20710de2a34abbbce81bd0a6b2e841c69d1b690ab9ad3",
+    "/Users/erik/Projects/weft/crates/weft-core/src/lib.rs": "18ebfe403765d103bf686860fc69e5b678cbdad056afa0e508f367b5662dd6ab",
+    "/Users/erik/Projects/weft/crates/weft-core/tests/security_admission.rs": "4721163f2a4c33b771e4fffb23c5bd5ec6b95cda3729428f5cdf4a129bfe2ed3"
+  },
+  "resolvedRecommendations": [
+    "Actual admitted COUNT derivation refuses work/text exhaustion before issuing requirements.",
+    "SUM retains its independent nullable computed domain and exact argument lineage.",
+    "Source-admitted predicate and aggregate original-action bindings remain distinct modes.",
+    "False permit and forbid IDs/effects remain in full actual Rule pointer inventories."
+  ],
+  "scope": "Private owner-issued requirement preservation; no result, capability or native admission qualification",
+  "nativeImplementationQualified": false,
+  "acceptanceCasesPromoted": [],
+  "testExecution": "Owner weft-admission-check receipt, executed by parent; reviewer did not duplicate test run."
+}

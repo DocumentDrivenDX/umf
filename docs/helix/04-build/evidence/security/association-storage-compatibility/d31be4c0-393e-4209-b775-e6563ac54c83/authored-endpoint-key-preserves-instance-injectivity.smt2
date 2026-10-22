@@ -1,0 +1,27 @@
+; benchmark generated from python API
+(set-info :status unknown)
+(declare-sort AssociationInstance 0)
+(declare-sort CompleteAssociationKey 0)
+(declare-sort CompleteTypedEndpointTuple 0)
+(declare-fun authored_unique_key (AssociationInstance) CompleteAssociationKey)
+(declare-fun key_determined_by_endpoints (CompleteTypedEndpointTuple) CompleteAssociationKey)
+(declare-fun complete_endpoints (AssociationInstance) CompleteTypedEndpointTuple)
+(declare-fun instance_b () AssociationInstance)
+(declare-fun instance_a () AssociationInstance)
+(assert
+ (forall ((instance_a AssociationInstance) (instance_b AssociationInstance) )(let (($x50 (= instance_a instance_b)))
+ (let ((?x51 (authored_unique_key instance_b)))
+ (let (($x53 (= (authored_unique_key instance_a) ?x51)))
+ (=> $x53 $x50)))))
+ )
+(assert
+ (forall ((instance AssociationInstance) )(let ((?x51 (authored_unique_key instance)))
+ (= ?x51 (key_determined_by_endpoints (complete_endpoints instance)))))
+ )
+(assert
+ (let ((?x45 (complete_endpoints instance_b)))
+(let ((?x44 (complete_endpoints instance_a)))
+(let (($x46 (= ?x44 ?x45)))
+(let (($x43 (and (distinct instance_a instance_b) true)))
+(and $x43 $x46))))))
+(check-sat)

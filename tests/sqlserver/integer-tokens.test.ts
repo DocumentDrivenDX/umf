@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {importSqlServerCatalog,exportSqlServerCatalog,proposeSqlServerCatalogEdit,getSqlServerColumnMetadata,readDocument,writeDocument} from '../../src';
 const source=await Bun.file('fixtures/sqlserver/catalog.json').text();

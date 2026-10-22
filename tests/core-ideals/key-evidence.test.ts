@@ -1,10 +1,15 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test, expect} from 'bun:test';
-import {verifyKeyEvidence} from '../../scripts/core-ideals/key-evidence';
+import {verifyKeyEvidence,requireCurrentCoreKeyQualification} from '../../scripts/core-ideals/key-evidence';
 const read = async (p: string) => new Uint8Array(await Bun.file(p).arrayBuffer());
-test('Key evidence requires complete current five-system qualifications without granting admission', async () => {
- const result = await verifyKeyEvidence();
+test('Key evidence preserves partial historical status and refuses current qualification', async () => {
+ const result = await verifyKeyEvidence(undefined,{allowUnqualifiedHistorical:true});
  expect(result.records).toHaveLength(21); expect(result.fingerprints).toBeGreaterThan(186);
  expect(result.idealAdmitted).toBe(false); expect(result.nativeEquivalence).toBe(false);
+ expect(result.historicalQualification).toBe('PARTIALLY_REVALIDATED');expect(result.currentCoreQualification).toBe('UNQUALIFIED');expect(result.unqualified.length).toBeGreaterThan(0);
+ expect(result.artifactRecovery.archiveSha256).toBe('a60ab9c3c190fc18a11ffd6968f6b6defc15c934e417979dee506f3cf425c943');
+ expect(()=>requireCurrentCoreKeyQualification(result)).toThrow('not qualified for the current core');
+ await expect(verifyKeyEvidence()).rejects.toThrow('stale');
 });
 test('Key evidence rejects missing, stale, failed, unsafe, incompatible and incomplete proofs', async () => {
  const cases: [string, (r:any)=>void, string][] = [
@@ -27,8 +32,8 @@ test('Key evidence rejects missing, stale, failed, unsafe, incompatible and inco
  ];
  for (const [name, change, message] of cases) {
   const path=`fixtures/validation/${name}.json`, value=JSON.parse(new TextDecoder().decode(await read(path)));change(value);
-  await expect(verifyKeyEvidence(p => p===path ? Promise.resolve(new TextEncoder().encode(JSON.stringify(value))) : read(p))).rejects.toThrow(message);
+  await expect(verifyKeyEvidence(p => p===path ? Promise.resolve(new TextEncoder().encode(JSON.stringify(value))) : read(p),{allowUnqualifiedHistorical:true})).rejects.toThrow(message);
  }
  await expect(verifyKeyEvidence(p => p==='src/core-ideals/key-avro.ts' ? Promise.resolve(new TextEncoder().encode('changed')) : read(p))).rejects.toThrow('stale');
- await expect(verifyKeyEvidence(p => p.endsWith('key-parquet-browser.json') ? Promise.reject(Error('missing proof')) : read(p))).rejects.toThrow('missing proof');
+ await expect(verifyKeyEvidence(p => p.endsWith('key-parquet-browser.json') ? Promise.reject(Error('missing proof')) : read(p),{allowUnqualifiedHistorical:true})).rejects.toThrow('missing proof');
 });

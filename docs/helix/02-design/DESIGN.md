@@ -149,6 +149,28 @@ Body: DM Sans, 16px / 1.65; introduction 18px.
 Code: DM Mono, 13px / 1.65; technical labels 12px with 1px tracking.
 Controls: DM Sans, 14px, semibold.
 
+## Proposed generated reference navigation
+
+[SD-032](solution-designs/SD-032-generated-reference.md) extends Developers with
+a Reference entry to Core, Extensions, Integrations, API and Examples. Keep
+Schemas as the domain-model browser. Playground gains guided operations linked
+from reference entries; existing route URLs remain valid. These are draft
+additions under FEAT-032, not evidence of delivered navigation.
+
+Show the selected profile and operation beside the page title. Put the declared
+capability, recorded test outcome and source correspondence in separate labeled
+rows. Native versions, subset, material losses and exclusions stay visible before
+expandable raw evidence. Status uses text as well as color. A structural schema
+diff must not be labeled semantic compatibility.
+
+Use one shared navigation renderer for newly generated pages and explicit shared
+navigation fragments in retained root pages. Preserve accessible focus, Back/Forward,
+mobile wrapping and current-route semantics. Reference tables scroll within the
+content area; workbench input remains editable after failure or cancellation.
+Read-only reference inspection follows the fixed-validator Content Security
+Policy baseline; execution profiles expose their additional requirements before
+loading. Exact routes and protocol remain in CONTRACT-077.
+
 ## Non-Goals
 
 This document records the interface and public identity. Runtime architecture,

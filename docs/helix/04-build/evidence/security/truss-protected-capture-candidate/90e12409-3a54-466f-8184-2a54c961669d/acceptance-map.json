@@ -1,0 +1,268 @@
+{
+  "nativeReceiptSha256": "33171158944fe1098b80cac4d77ebde792919b2bce18935f5810e2682e75bbf0",
+  "originalRequiredCases": 132,
+  "historicalAcceptedCases": 26,
+  "acceptancePromoted": false,
+  "relation": "Component evidence only; each referenced complete acceptance schedule remains unfinished",
+  "observations": [
+    {
+      "id": "fixed-server-version",
+      "requirements": [
+        "US-056-AC10"
+      ],
+      "trussSchedules": [],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "ordinary-not-writer-or-registrar-member",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC5"
+      ],
+      "trussSchedules": [
+        "PA-N04"
+      ],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "ordinary-cannot-create-schema",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC5"
+      ],
+      "trussSchedules": [
+        "PA-N04"
+      ],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "native-original-actor",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC5"
+      ],
+      "trussSchedules": [
+        "PA-N01"
+      ],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "forged-public-context",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC5"
+      ],
+      "trussSchedules": [
+        "PA-N05"
+      ],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "copied-public-context-different-connection",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC5"
+      ],
+      "trussSchedules": [
+        "PA-N05"
+      ],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "private-capability-different-connection",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC5"
+      ],
+      "trussSchedules": [
+        "PA-N05"
+      ],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "private-capability-different-login",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC5"
+      ],
+      "trussSchedules": [
+        "PA-N04"
+      ],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "different-attempt",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC5"
+      ],
+      "trussSchedules": [
+        "PA-N05"
+      ],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "different-input",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC5"
+      ],
+      "trussSchedules": [
+        "PA-N05"
+      ],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "unregistered-wrapper-even-with-private-capability",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC5"
+      ],
+      "trussSchedules": [
+        "PA-N03"
+      ],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "direct-registry-write",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC5"
+      ],
+      "trussSchedules": [
+        "PA-N04"
+      ],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "private-capability-read",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC5"
+      ],
+      "trussSchedules": [
+        "PA-N04"
+      ],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "refusals-have-zero-effects",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC5"
+      ],
+      "trussSchedules": [
+        "PA-N03",
+        "PA-N04",
+        "PA-N05"
+      ],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "host-pre-entry-native-context",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC5"
+      ],
+      "trussSchedules": [
+        "PA-N01"
+      ],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "actual-original-effect",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC5"
+      ],
+      "trussSchedules": [
+        "PA-N01"
+      ],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "native-one-use-in-same-transaction",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC5"
+      ],
+      "trussSchedules": [
+        "PA-N05"
+      ],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "host-one-use-survives-savepoint-rollback",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC5"
+      ],
+      "trussSchedules": [
+        "PA-N09"
+      ],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "rollback-removes-effect",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC5"
+      ],
+      "trussSchedules": [
+        "PA-N09"
+      ],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "native-alone-replay-demonstrates-host-requirement",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC5"
+      ],
+      "trussSchedules": [
+        "PA-N09"
+      ],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "private-capability-new-transaction",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC5"
+      ],
+      "trussSchedules": [
+        "PA-N05"
+      ],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "final-zero-committed-effects",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC5"
+      ],
+      "trussSchedules": [
+        "PA-N09"
+      ],
+      "completeSchedulePassed": false
+    },
+    {
+      "id": "restored-no-effect-select",
+      "requirements": [
+        "US-056-AC10",
+        "US-056-AC5"
+      ],
+      "trussSchedules": [
+        "PA-N04"
+      ],
+      "completeSchedulePassed": false
+    }
+  ],
+  "remaining": [
+    "Production authenticated actor and original subject mapping",
+    "Original owner authority and current coherent cut",
+    "Epoch/configuration/generation and complete installed closure",
+    "Protected registrar/private carrier lifecycle and exclusive original adapter dispatch",
+    "Resource admission, finalization/publication and seven semantic bodies"
+  ]
+}

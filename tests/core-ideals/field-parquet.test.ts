@@ -1,12 +1,13 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {parquetFieldPaths} from '../../scripts/core-ideals/parquet-field-cases';
-import {classifyParquetField,recoverParquetFieldBytes} from '../../src/core-ideals/parquet-field';
-import {importParquetSchema,getParquetFieldMetadata} from '../../src/adapters/parquet/field-metadata';
-import {upgradeFieldEnvelope} from '../../src/model/field-transition';
+import {classifyParquetField, recoverParquetFieldBytes} from '../../src/core-ideals/parquet-field';
+import {importParquetSchema, getParquetFieldMetadata} from '../../src/adapters/parquet/field-metadata';
+
 import {declareCoreElementKind} from '../../src/model/field-kind';
 import {copyJson} from '../../src/model/json';
-import {readJsonValue,writeJsonValue} from '../../src/model/serialization';
-async function load(path:string){const bytes=new Uint8Array(await Bun.file(path).arrayBuffer());return {bytes,source:upgradeFieldEnvelope(importParquetSchema(bytes,{id:path})).target};}
+import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
+async function load(path:string){const bytes=new Uint8Array(await Bun.file(path).arrayBuffer());return {bytes,source:importParquetSchema(bytes,{id:path})};}
 test('Parquet leaves retain repetition and exact native bytes; groups cannot become primitive Fields',async()=>{
  let repeated=0,groups=0;
  for(const path of parquetFieldPaths){const {bytes,source}=await load(path);for(const f of getParquetFieldMetadata(source).fields)for(const mode of ['strict','report'] as const){

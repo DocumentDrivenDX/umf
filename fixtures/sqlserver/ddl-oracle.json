@@ -12,7 +12,7 @@
     {
       "file": "schema.sql",
       "source": {
-        "umf": "0.1.0",
+        "umf": "0.10.0",
         "id": "schema.sql",
         "vocabularies": {
           "umf.sqlserver": {
@@ -2859,7 +2859,7 @@
                               "members": {
                                 "name": {
                                   "kind": "string",
-                                  "value": "PK__Types__3213E83FF3BFB29D"
+                                  "value": "PK__Types__3213E83F2C31356E"
                                 },
                                 "kind": {
                                   "kind": "string",
@@ -2931,7 +2931,7 @@
                                 },
                                 "name": {
                                   "kind": "string",
-                                  "value": "PK__Types__3213E83FF3BFB29D"
+                                  "value": "PK__Types__3213E83F2C31356E"
                                 },
                                 "type": {
                                   "kind": "number",
@@ -3263,7 +3263,7 @@
       "result": {
         "status": "projected",
         "source": {
-          "umf": "0.1.0",
+          "umf": "0.10.0",
           "id": "schema.sql",
           "vocabularies": {
             "umf.sqlserver": {
@@ -6110,7 +6110,7 @@
                                 "members": {
                                   "name": {
                                     "kind": "string",
-                                    "value": "PK__Types__3213E83FF3BFB29D"
+                                    "value": "PK__Types__3213E83F2C31356E"
                                   },
                                   "kind": {
                                     "kind": "string",
@@ -6182,7 +6182,7 @@
                                   },
                                   "name": {
                                     "kind": "string",
-                                    "value": "PK__Types__3213E83FF3BFB29D"
+                                    "value": "PK__Types__3213E83F2C31356E"
                                   },
                                   "type": {
                                     "kind": "number",
@@ -6621,10 +6621,10 @@
           {
             "sourcePath": "/tables/1/keys/0",
             "kind": "key",
-            "sql": "ALTER TABLE [sales].[Types] ADD CONSTRAINT [PK__Types__3213E83FF3BFB29D] PRIMARY KEY CLUSTERED ([id] ASC) WITH (IGNORE_DUP_KEY=OFF);"
+            "sql": "ALTER TABLE [sales].[Types] ADD CONSTRAINT [PK__Types__3213E83F2C31356E] PRIMARY KEY CLUSTERED ([id] ASC) WITH (IGNORE_DUP_KEY=OFF);"
           }
         ],
-        "nativeSource": "SET ANSI_NULLS ON;\nSET QUOTED_IDENTIFIER ON;\nSET ANSI_PADDING ON;\nSET ANSI_WARNINGS ON;\nSET ARITHABORT ON;\nSET CONCAT_NULL_YIELDS_NULL ON;\nSET NUMERIC_ROUNDABORT OFF;\nIF SCHEMA_ID(N'sales') IS NULL EXEC(N'CREATE SCHEMA [sales]');\nCREATE TABLE [sales].[LegacyTimestamp] (\n  [id] int NULL,\n  [version_stamp] timestamp NOT NULL\n);\nCREATE TABLE [sales].[Types] (\n  [id] bigint IDENTITY(9007199254740993,1) NOT NULL,\n  [flag] bit NOT NULL DEFAULT ((1)),\n  [tiny] tinyint NULL,\n  [small] smallint NULL,\n  [ordinary] int NULL,\n  [exact] decimal(38,9) NULL,\n  [numeric_value] numeric(20,3) NULL,\n  [cash] money NULL,\n  [small_cash] smallmoney NULL,\n  [approximate] float(53) NULL,\n  [single] real NULL,\n  [words] varchar(40) COLLATE Latin1_General_100_BIN2 NULL,\n  [unicode_words] nvarchar(40) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,\n  [unlimited] nvarchar(max) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,\n  [fixed_text] char(4) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,\n  [unicode_fixed] nchar(4) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,\n  [bytes] varbinary(max) NULL,\n  [fixed_bytes] binary(8) NULL,\n  [version_stamp] timestamp NOT NULL,\n  [day] date NULL,\n  [clock] time(7) NULL,\n  [local_stamp] datetime2(7) NULL,\n  [instant] datetimeoffset(7) NULL,\n  [legacy_stamp] datetime NULL,\n  [small_stamp] smalldatetime NULL,\n  [amount] decimal(18,4) NOT NULL,\n  [identifier] uniqueidentifier NULL,\n  [document] xml NULL,\n  [variant] sql_variant NULL,\n  [computed] AS ([ordinary]+(1))\n);\nEXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Exact decimal amount', @level0type=N'SCHEMA', @level0name=N'sales', @level1type=N'TABLE', @level1name=N'Types', @level2type=N'COLUMN', @level2name=N'exact';\nALTER TABLE [sales].[Types] ADD CONSTRAINT [PK__Types__3213E83FF3BFB29D] PRIMARY KEY CLUSTERED ([id] ASC) WITH (IGNORE_DUP_KEY=OFF);\n"
+        "nativeSource": "SET ANSI_NULLS ON;\nSET QUOTED_IDENTIFIER ON;\nSET ANSI_PADDING ON;\nSET ANSI_WARNINGS ON;\nSET ARITHABORT ON;\nSET CONCAT_NULL_YIELDS_NULL ON;\nSET NUMERIC_ROUNDABORT OFF;\nIF SCHEMA_ID(N'sales') IS NULL EXEC(N'CREATE SCHEMA [sales]');\nCREATE TABLE [sales].[LegacyTimestamp] (\n  [id] int NULL,\n  [version_stamp] timestamp NOT NULL\n);\nCREATE TABLE [sales].[Types] (\n  [id] bigint IDENTITY(9007199254740993,1) NOT NULL,\n  [flag] bit NOT NULL DEFAULT ((1)),\n  [tiny] tinyint NULL,\n  [small] smallint NULL,\n  [ordinary] int NULL,\n  [exact] decimal(38,9) NULL,\n  [numeric_value] numeric(20,3) NULL,\n  [cash] money NULL,\n  [small_cash] smallmoney NULL,\n  [approximate] float(53) NULL,\n  [single] real NULL,\n  [words] varchar(40) COLLATE Latin1_General_100_BIN2 NULL,\n  [unicode_words] nvarchar(40) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,\n  [unlimited] nvarchar(max) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,\n  [fixed_text] char(4) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,\n  [unicode_fixed] nchar(4) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,\n  [bytes] varbinary(max) NULL,\n  [fixed_bytes] binary(8) NULL,\n  [version_stamp] timestamp NOT NULL,\n  [day] date NULL,\n  [clock] time(7) NULL,\n  [local_stamp] datetime2(7) NULL,\n  [instant] datetimeoffset(7) NULL,\n  [legacy_stamp] datetime NULL,\n  [small_stamp] smalldatetime NULL,\n  [amount] decimal(18,4) NOT NULL,\n  [identifier] uniqueidentifier NULL,\n  [document] xml NULL,\n  [variant] sql_variant NULL,\n  [computed] AS ([ordinary]+(1))\n);\nEXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Exact decimal amount', @level0type=N'SCHEMA', @level0name=N'sales', @level1type=N'TABLE', @level1name=N'Types', @level2type=N'COLUMN', @level2name=N'exact';\nALTER TABLE [sales].[Types] ADD CONSTRAINT [PK__Types__3213E83F2C31356E] PRIMARY KEY CLUSTERED ([id] ASC) WITH (IGNORE_DUP_KEY=OFF);\n"
       },
       "generated": {
         "profile": "sqlserver-catalog-v3",
@@ -7410,7 +7410,7 @@
             ],
             "keys": [
               {
-                "name": "PK__Types__3213E83FF3BFB29D",
+                "name": "PK__Types__3213E83F2C31356E",
                 "kind": "PK",
                 "is_system_named": false,
                 "index_type": "CLUSTERED",
@@ -7431,7 +7431,7 @@
             "indexes": [
               {
                 "index_id": 1,
-                "name": "PK__Types__3213E83FF3BFB29D",
+                "name": "PK__Types__3213E83F2C31356E",
                 "type": 1,
                 "type_desc": "CLUSTERED",
                 "is_unique": true,
@@ -7527,7 +7527,7 @@
           }
         ],
         "source": {
-          "umf": "0.1.0",
+          "umf": "0.10.0",
           "id": "schema.sql",
           "vocabularies": {
             "umf.sqlserver": {
@@ -10378,7 +10378,7 @@
                                 "members": {
                                   "name": {
                                     "kind": "string",
-                                    "value": "PK__Types__3213E83FF3BFB29D"
+                                    "value": "PK__Types__3213E83F2C31356E"
                                   },
                                   "kind": {
                                     "kind": "string",
@@ -10450,7 +10450,7 @@
                                   },
                                   "name": {
                                     "kind": "string",
-                                    "value": "PK__Types__3213E83FF3BFB29D"
+                                    "value": "PK__Types__3213E83F2C31356E"
                                   },
                                   "type": {
                                     "kind": "number",
@@ -10786,7 +10786,7 @@
         "projection": {
           "status": "projected",
           "source": {
-            "umf": "0.1.0",
+            "umf": "0.10.0",
             "id": "schema.sql",
             "vocabularies": {
               "umf.sqlserver": {
@@ -13637,7 +13637,7 @@
                                   "members": {
                                     "name": {
                                       "kind": "string",
-                                      "value": "PK__Types__3213E83FF3BFB29D"
+                                      "value": "PK__Types__3213E83F2C31356E"
                                     },
                                     "kind": {
                                       "kind": "string",
@@ -13709,7 +13709,7 @@
                                     },
                                     "name": {
                                       "kind": "string",
-                                      "value": "PK__Types__3213E83FF3BFB29D"
+                                      "value": "PK__Types__3213E83F2C31356E"
                                     },
                                     "type": {
                                       "kind": "number",
@@ -14171,10 +14171,10 @@
             {
               "sourcePath": "/tables/1/keys/0",
               "kind": "key",
-              "sql": "ALTER TABLE [sales].[Types] ADD CONSTRAINT [PK__Types__3213E83FF3BFB29D] PRIMARY KEY CLUSTERED ([id] ASC) WITH (IGNORE_DUP_KEY=OFF);"
+              "sql": "ALTER TABLE [sales].[Types] ADD CONSTRAINT [PK__Types__3213E83F2C31356E] PRIMARY KEY CLUSTERED ([id] ASC) WITH (IGNORE_DUP_KEY=OFF);"
             }
           ],
-          "nativeSource": "SET ANSI_NULLS ON;\nSET QUOTED_IDENTIFIER ON;\nSET ANSI_PADDING ON;\nSET ANSI_WARNINGS ON;\nSET ARITHABORT ON;\nSET CONCAT_NULL_YIELDS_NULL ON;\nSET NUMERIC_ROUNDABORT OFF;\nIF SCHEMA_ID(N'sales') IS NULL EXEC(N'CREATE SCHEMA [sales]');\nCREATE TABLE [sales].[LegacyTimestamp] (\n  [id] int NULL,\n  [version_stamp] timestamp NOT NULL\n);\nCREATE TABLE [sales].[Types] (\n  [id] bigint IDENTITY(9007199254740993,1) NOT NULL,\n  [flag] bit NOT NULL DEFAULT ((0)),\n  [tiny] tinyint NULL,\n  [small] smallint NULL,\n  [ordinary] int NULL,\n  [exact] decimal(38,9) NULL,\n  [numeric_value] numeric(20,3) NULL,\n  [cash] money NULL,\n  [small_cash] smallmoney NULL,\n  [approximate] float(53) NULL,\n  [single] real NULL,\n  [words] varchar(64) COLLATE Latin1_General_100_BIN2 NULL,\n  [unicode_words] nvarchar(40) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,\n  [unlimited] nvarchar(max) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,\n  [fixed_text] char(4) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,\n  [unicode_fixed] nchar(4) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,\n  [bytes] varbinary(max) NULL,\n  [fixed_bytes] binary(8) NULL,\n  [version_stamp] timestamp NOT NULL,\n  [day] date NULL,\n  [clock] time(7) NULL,\n  [local_stamp] datetime2(7) NULL,\n  [instant] datetimeoffset(7) NULL,\n  [legacy_stamp] datetime NULL,\n  [small_stamp] smalldatetime NULL,\n  [amount] decimal(18,4) NOT NULL,\n  [identifier] uniqueidentifier NULL,\n  [document] xml NULL,\n  [variant] sql_variant NULL,\n  [computed] AS ([ordinary]+(1))\n);\nEXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Exact decimal amount', @level0type=N'SCHEMA', @level0name=N'sales', @level1type=N'TABLE', @level1name=N'Types', @level2type=N'COLUMN', @level2name=N'exact';\nEXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Edited length, quote '' and 雪', @level0type=N'SCHEMA', @level0name=N'sales', @level1type=N'TABLE', @level1name=N'Types', @level2type=N'COLUMN', @level2name=N'words';\nALTER TABLE [sales].[Types] ADD CONSTRAINT [PK__Types__3213E83FF3BFB29D] PRIMARY KEY CLUSTERED ([id] ASC) WITH (IGNORE_DUP_KEY=OFF);\n"
+          "nativeSource": "SET ANSI_NULLS ON;\nSET QUOTED_IDENTIFIER ON;\nSET ANSI_PADDING ON;\nSET ANSI_WARNINGS ON;\nSET ARITHABORT ON;\nSET CONCAT_NULL_YIELDS_NULL ON;\nSET NUMERIC_ROUNDABORT OFF;\nIF SCHEMA_ID(N'sales') IS NULL EXEC(N'CREATE SCHEMA [sales]');\nCREATE TABLE [sales].[LegacyTimestamp] (\n  [id] int NULL,\n  [version_stamp] timestamp NOT NULL\n);\nCREATE TABLE [sales].[Types] (\n  [id] bigint IDENTITY(9007199254740993,1) NOT NULL,\n  [flag] bit NOT NULL DEFAULT ((0)),\n  [tiny] tinyint NULL,\n  [small] smallint NULL,\n  [ordinary] int NULL,\n  [exact] decimal(38,9) NULL,\n  [numeric_value] numeric(20,3) NULL,\n  [cash] money NULL,\n  [small_cash] smallmoney NULL,\n  [approximate] float(53) NULL,\n  [single] real NULL,\n  [words] varchar(64) COLLATE Latin1_General_100_BIN2 NULL,\n  [unicode_words] nvarchar(40) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,\n  [unlimited] nvarchar(max) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,\n  [fixed_text] char(4) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,\n  [unicode_fixed] nchar(4) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,\n  [bytes] varbinary(max) NULL,\n  [fixed_bytes] binary(8) NULL,\n  [version_stamp] timestamp NOT NULL,\n  [day] date NULL,\n  [clock] time(7) NULL,\n  [local_stamp] datetime2(7) NULL,\n  [instant] datetimeoffset(7) NULL,\n  [legacy_stamp] datetime NULL,\n  [small_stamp] smalldatetime NULL,\n  [amount] decimal(18,4) NOT NULL,\n  [identifier] uniqueidentifier NULL,\n  [document] xml NULL,\n  [variant] sql_variant NULL,\n  [computed] AS ([ordinary]+(1))\n);\nEXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Exact decimal amount', @level0type=N'SCHEMA', @level0name=N'sales', @level1type=N'TABLE', @level1name=N'Types', @level2type=N'COLUMN', @level2name=N'exact';\nEXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Edited length, quote '' and 雪', @level0type=N'SCHEMA', @level0name=N'sales', @level1type=N'TABLE', @level1name=N'Types', @level2type=N'COLUMN', @level2name=N'words';\nALTER TABLE [sales].[Types] ADD CONSTRAINT [PK__Types__3213E83F2C31356E] PRIMARY KEY CLUSTERED ([id] ASC) WITH (IGNORE_DUP_KEY=OFF);\n"
         },
         "capture": {
           "profile": "sqlserver-catalog-v3",
@@ -14960,7 +14960,7 @@
               ],
               "keys": [
                 {
-                  "name": "PK__Types__3213E83FF3BFB29D",
+                  "name": "PK__Types__3213E83F2C31356E",
                   "kind": "PK",
                   "is_system_named": false,
                   "index_type": "CLUSTERED",
@@ -14981,7 +14981,7 @@
               "indexes": [
                 {
                   "index_id": 1,
-                  "name": "PK__Types__3213E83FF3BFB29D",
+                  "name": "PK__Types__3213E83F2C31356E",
                   "type": 1,
                   "type_desc": "CLUSTERED",
                   "is_unique": true,
@@ -15023,15 +15023,15 @@
           "length": 60
         },
         "umfRecoveries": 2,
-        "generatedDdlSha256": "09c77b7ff1d65ca30569f68f6044fcbc3ae9a77a82006b3bcae2d23ad7ef6c0e"
+        "generatedDdlSha256": "e706262b4961fe1114257f6dd399513495f5cc0c2b6fedb88052e16833ce88bf"
       },
       "sourceDdlSha256": "e842409841214b8ce9a63d1d87244d47fae815892f9df1e98164484a9863037e",
-      "generatedDdlSha256": "e54e7bcc19f79aa5a4c9e5fe72f3021bd081a2e70e0d658be53add33d8b1b0a1"
+      "generatedDdlSha256": "751a5212cfd6b278c6636141b4f2b7aaaa22c8613da8e21bf156c648e72c719f"
     },
     {
       "file": "constraints.sql",
       "source": {
-        "umf": "0.1.0",
+        "umf": "0.10.0",
         "id": "constraints.sql",
         "vocabularies": {
           "umf.sqlserver": {
@@ -17398,7 +17398,7 @@
       "result": {
         "status": "projected",
         "source": {
-          "umf": "0.1.0",
+          "umf": "0.10.0",
           "id": "constraints.sql",
           "vocabularies": {
             "umf.sqlserver": {
@@ -20592,7 +20592,7 @@
           }
         ],
         "source": {
-          "umf": "0.1.0",
+          "umf": "0.10.0",
           "id": "constraints.sql",
           "vocabularies": {
             "umf.sqlserver": {
@@ -22965,7 +22965,7 @@
         "projection": {
           "status": "projected",
           "source": {
-            "umf": "0.1.0",
+            "umf": "0.10.0",
             "id": "constraints.sql",
             "vocabularies": {
               "umf.sqlserver": {
@@ -26168,7 +26168,7 @@
     {
       "file": "indexes.sql",
       "source": {
-        "umf": "0.1.0",
+        "umf": "0.10.0",
         "id": "indexes.sql",
         "vocabularies": {
           "umf.sqlserver": {
@@ -29007,7 +29007,7 @@
       "result": {
         "status": "projected",
         "source": {
-          "umf": "0.1.0",
+          "umf": "0.10.0",
           "id": "indexes.sql",
           "vocabularies": {
             "umf.sqlserver": {
@@ -32837,7 +32837,7 @@
           }
         ],
         "source": {
-          "umf": "0.1.0",
+          "umf": "0.10.0",
           "id": "indexes.sql",
           "vocabularies": {
             "umf.sqlserver": {
@@ -35682,7 +35682,7 @@
         "projection": {
           "status": "projected",
           "source": {
-            "umf": "0.1.0",
+            "umf": "0.10.0",
             "id": "indexes.sql",
             "vocabularies": {
               "umf.sqlserver": {

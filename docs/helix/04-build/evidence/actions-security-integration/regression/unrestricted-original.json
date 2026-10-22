@@ -1,0 +1,81 @@
+{
+  "scope": "Actual unrestricted combined-main regression; failed, not a passing certificate",
+  "exitCode": 1,
+  "tests": 2484,
+  "passed": 2469,
+  "failed": 15,
+  "files": 444,
+  "assertions": 160677,
+  "durationSeconds": 3248.73,
+  "logSha256": "57cddaed9a3da92ce0699e947b4ee31ba30a7b481cef598d1ad2c827f364ed2d",
+  "failures": [
+    {
+      "file": "tests/arrow/flatbuffer-encode.test.ts",
+      "result": "(fail) US-016-AC8: every decoded native metadata model re-encodes with exact logical content [20084.88ms]"
+    },
+    {
+      "file": "tests/owl/annotations.test.ts",
+      "result": "(fail) US-029 annotation identity and malformed reifications agree with independent RDF parsing [5159.14ms]"
+    },
+    {
+      "file": "tests/iceberg/table-promotion.test.ts",
+      "result": "(fail) US-021-AC8: six primitive widenings match independent native evolution and preserve history [5044.66ms]"
+    },
+    {
+      "file": "tests/core-ideals/cardinality-conformance.test.ts",
+      "result": "(fail) Cardinality evidence gate rejects stale, missing, unsafe and failed proof [214.19ms]"
+    },
+    {
+      "file": "tests/core-ideals/facets-conformance.test.ts",
+      "result": "(fail) all five facet bindings preserve authored ideals, native refinements and explicit losses [2565.94ms]"
+    },
+    {
+      "file": "tests/core-ideals/facets-evidence.test.ts",
+      "result": "(fail) facet evidence requires all five accepted bindings without granting ideal admission [96.55ms]"
+    },
+    {
+      "file": "tests/core-ideals/facets-evidence.test.ts",
+      "result": "(fail) facet evidence refuses missing, stale, failed, unsafe and incompatible proofs [514.64ms]"
+    },
+    {
+      "file": "tests/core-ideals/facets-evidence.test.ts",
+      "result": "(fail) facet evidence validates exact historical-to-current revalidation and rejects unused or forged entries [62.14ms]"
+    },
+    {
+      "file": "tests/core-ideals/relationship-conformance.test.ts",
+      "result": "(fail) ideal admission and qualified five-system delivery require current executable proofs [905.60ms]"
+    },
+    {
+      "file": "tests/core-ideals/key-evidence.test.ts",
+      "result": "(fail) Key evidence requires complete current five-system qualifications without granting admission [185.14ms]"
+    },
+    {
+      "file": "tests/core-ideals/nullability-tablespec.test.ts",
+      "result": "(fail) selected profile/context classification separates exact declarations, coercions and unknowns [62255.69ms]"
+    },
+    {
+      "file": "tests/core-ideals/field-conformance.test.ts",
+      "result": "(fail) current native/browser evidence fingerprints pass; changed inputs and missing evidence fail [20.55ms]"
+    },
+    {
+      "file": "tests/core-ideals/key-conformance.test.ts",
+      "result": "(fail) Key ideal admission and five-system delivery retain both recovery directions without native equivalence [247.75ms]"
+    },
+    {
+      "file": "tests/core-ideals/nullability-conformance.test.ts",
+      "result": "(fail) Nullability gate requires current core and five native/browser evidence records [85.32ms]"
+    },
+    {
+      "file": "tests/parquet/schema.test.ts",
+      "result": "(fail) US-019-AC7: physical schema trees and levels match native columns [5001.02ms]"
+    }
+  ],
+  "ordinaryTimeoutRetryFiles": [
+    "tests/arrow/flatbuffer-encode.test.ts",
+    "tests/owl/annotations.test.ts",
+    "tests/iceberg/table-promotion.test.ts",
+    "tests/core-ideals/nullability-tablespec.test.ts",
+    "tests/parquet/schema.test.ts"
+  ],
+  "retryPolicy": "Unchanged complete files serially after semantic execution; original failed run retained."
+}

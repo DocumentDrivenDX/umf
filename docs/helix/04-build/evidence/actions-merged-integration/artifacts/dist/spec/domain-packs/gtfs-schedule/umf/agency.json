@@ -1,0 +1,31 @@
+{
+  "version": "1.0",
+  "table_name": "agency",
+  "description": "Basic agency.txt fields; conditional ID prevents unconditional key declaration.",
+  "columns": [
+    {
+      "name": "agency_id",
+      "data_type": "VARCHAR",
+      "nullable": true,
+      "description": "Conditional ID; may be omitted for a single agency."
+    },
+    {
+      "name": "agency_name",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "agency_name"
+    },
+    {
+      "name": "agency_url",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "agency_url"
+    },
+    {
+      "name": "agency_timezone",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "agency_timezone"
+    }
+  ]
+}

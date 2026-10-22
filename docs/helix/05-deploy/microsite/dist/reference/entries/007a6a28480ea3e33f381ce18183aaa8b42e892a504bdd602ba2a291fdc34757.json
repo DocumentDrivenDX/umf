@@ -1,0 +1,18 @@
+{
+  "data": {
+    "body": "\nEach extension declares its own identity, exact version, structural schema, meaning and permitted scopes. Independent native and domain vocabularies can coexist in one document.\n\nThe manifest declares capability; a trusted installed registry supplies validators. The SDK factory registers actions. Low-level validation starts with an empty registry unless the caller supplies one. Other shipped extensions expose explicit factories or registration APIs; unmapped reference entries keep that uncertainty visible.\n\nvalid means no known errors were found. complete means all declared content was checked in that invocation. Unknown extensions and unknown fields remain available and can make interpretation incomplete. Preservation does not make a semantic edit safe.\n\nReading a package never authorizes code execution, network resolution or database activity. Original payloads and schema sources remain downloadable. Select an extension and follow its schema, public APIs and per-operation integration records.\n",
+    "relatedIds": []
+  },
+  "id": "[\"guide\",\"extensions\"]",
+  "kind": "guide",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 1050,
+      "path": "docs/helix/05-deploy/reference/guides/extensions.md",
+      "sha256": "e07cbd82a2dc0c9cedc691f68bd2f574d7f5d1fb3d3965ef2e8694ea5a844b61"
+    }
+  ],
+  "summary": "Each extension declares its own identity, exact version, structural schema, meaning and permitted scopes. Independent native and domain vocabularies can coexist in one document.",
+  "title": "Extensions and partial understanding"
+}

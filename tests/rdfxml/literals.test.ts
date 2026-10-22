@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {probeRdfXml,probeGraphSignature} from '../../native/rdfxml/probe';
 test('SPIKE-006: literal repair preserves authored XML structure and every official graph outcome',async()=>{

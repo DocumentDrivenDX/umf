@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
+import semanticTypeReferenceSchema from '../../spec/core/semantic-type-reference.schema.json';
 import {test,expect} from 'bun:test';
 import Ajv from 'ajv/dist/2020';
 import {importGraphqlSchema,projectGraphqlInputToJsonSchema,exportGraphqlSchema,importJsonSchema,graphqlInputJsonSchemaProjectionSchema,coreSchema} from '../../src';
@@ -6,7 +8,7 @@ const policy={id:'input-document',schemaId:'https://example.test/graphql-input',
 test('US-010-AC1: input nullability, defaults, recursive lists and OneOf remain explicit',async()=>{
  const source=importGraphqlSchema(text,{id:'input-source'});const result=projectGraphqlInputToJsonSchema(source,policy);
  expect(result.status).toBe('projected');expect(result.source).toEqual(source);
- const ajv=new Ajv({strict:false});ajv.addSchema(coreSchema);expect(ajv.compile(graphqlInputJsonSchemaProjectionSchema)(result)).toBe(true);
+ const ajv=new Ajv({strict:false});ajv.addSchema(semanticTypeReferenceSchema);ajv.addSchema(coreSchema);expect(ajv.compile(graphqlInputJsonSchemaProjectionSchema)(result)).toBe(true);
  const validate=ajv.compile(JSON.parse(result.nativeSchema!));
  for(const value of [{required:'x'},{required:'x',defaulted:3,optional:null,list:[1,2],selector:{id:1},id:7,mode:'FAST',nested:{required:'y'}}])expect(validate(value)).toBe(true);
  for(const value of [null,{}, {required:null},{required:'x',defaulted:null},{required:'x',list:[null]},{required:'x',list:1},{required:'x',mode:'BAD'},{required:'x',selector:{}},{required:'x',selector:{id:null}},{required:'x',selector:{id:'a',name:'b'}},{required:'x',extra:1}])expect(validate(value)).toBe(false);

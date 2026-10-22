@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 export {};
 // Experimental port audit: record every mismatch; never treat compile success as conformance.
 const modulePath='../native/smithy/browser/target/javascript/smithy.js';

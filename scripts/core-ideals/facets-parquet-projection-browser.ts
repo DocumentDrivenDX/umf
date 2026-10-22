@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {chromium} from 'playwright';
@@ -19,7 +20,7 @@ try{
    projected++;
    const bytes=u.exportParquetCapture(r.target);
    const imported=u.importParquetSchema(bytes,{id:'parquet-facet-composition'});
-   const source=u.upgradeFacetEnvelope(u.upgradeCardinalityEnvelope(u.upgradeNullabilityEnvelope(u.upgradeFieldEnvelope(imported).target).target).target).target;
+   const source=imported;
    const family=row.author.target.modules[0].elements[0].scalarType;
    source.modules.push({id:'logical',namespace:'',elements:[{id:'value',kind:'field',cardinality:'one',scalarType:family,extensions:{}}]});
    const classified=u.classifyParquetFacets(source,{location:{index:1,scope:'present-non-null-leaf'},identity:{module:'logical',element:'value'},mode:'report',profile:'declared-schema',obligation:row.request.obligation});

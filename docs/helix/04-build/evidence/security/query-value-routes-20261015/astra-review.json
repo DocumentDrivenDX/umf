@@ -1,0 +1,139 @@
+{
+  "kind": "independent-astra-security-review",
+  "date": "2026-10-15",
+  "base": "470d2ef8bdc18a7df8d618374df33477b191f753",
+  "scope": "Private conditional per-use query value route inspection, source-owned ontology/storage/read-recipe mode conjunction, contributor/exclusion guard metadata, typed domains, and its finite diagnostic evidence. No query execution or native permission.",
+  "disposition": "No remaining blocking correctness finding within the stated component scope. Two independently reproduced defects were fixed and rechecked before this receipt.",
+  "resolvedFindings": [
+    {
+      "id": "R1",
+      "priority": 2,
+      "issue": "A valid range property literal larger than the existing4096 canonical UTF16 bound passed the no-catalog inspector path because preflight called typed identity directly and never reached the shared catalog property guard.",
+      "fix": "Check canonical literal encoding length before typed identity regardless of catalog presence.",
+      "controls": [
+        "no-catalog-range-canonical-4096",
+        "no-catalog-range-canonical-4097",
+        "no-catalog-range-canonical-5013"
+      ],
+      "evidence": [
+        "oversize-property-witness.json",
+        "parent-evidence/source-before-literal-bound.ts.gz",
+        "mutants/range-bound-omitted/result.json"
+      ],
+      "limit": "Local malformed/overbound-source containment, not an authority bypass."
+    },
+    {
+      "id": "R2",
+      "priority": 2,
+      "issue": "The new typed inline constant grouping refused an admitted nullable-domain null, although the original compiler and renderer accepted and rendered it. Core allowed-value identity deliberately refuses null.",
+      "fix": "Mirror the runtime special case: check nullable literal then use a distinct retained null identity; keep all original source occurrences.",
+      "controls": [
+        "inline-null-grouping-matches-renderer",
+        "null-and-zero-distinct-fold",
+        "graph-source-preserved-false",
+        "graph-source-preserved-true"
+      ],
+      "evidence": [
+        "before-null-fix-source.ts",
+        "null-witness.json",
+        "null-witness.log",
+        "mutants/null-identity-without-specialcase/result.json"
+      ],
+      "limit": "Logical availability/semantic compatibility defect; no native disclosure claim."
+    }
+  ],
+  "sourceAssessment": {
+    "custody": "Original WeakMap-issued program is required; owner/use are captured through the original JSON snapshot helper before use. Whole owner storage map is validated, including unrelated types, duplicate entries and canonical storage downgrade. Results are frozen/detached; caller modes/actions/authority and accessors refuse.",
+    "branches": "All scoped read-rule effects/conditions and applicable explicit context bindings survive. Groups use actual recipe identity, checked typed legacy values and checked null. Every lexical directive/token remains in sourceOccurrences; representativeDisposition is not a chosen runtime value. Exclusions reproduce withholding priority, distinct-transform conflict, original fallback and protected missing disclosure in the exercised finite family.",
+    "readDecisionMeaning": "The branch readDecision permit guard means actual row/action eligibility, as separately checked by field-free runtime reads. It does not assert selected public Field admission; missing public disclosure can coexist with a conditional separate hidden-original route, which still needs its own designation/permission and independent projection admission if selected.",
+    "modesAndDomains": "Ontology and applicable storage constraints remain even with no read branch. Selected read-recipe constraints apply conditionally to that branch. Prohibition and differing modes are retained without a silent winner. Original mode keeps the canonical live Field, including an opaque stored token, never the pre-storage input. Disclosed DTO origins/domains and public projection remain separate. Full Field identities and original selected transform declarations are retained.",
+    "bounds": "One literal/work budget spans required range preflight, typed recipe grouping, parameter validation and property checks. The no-catalog4096 canonical bound is now explicit. Packet/retained-text and source/group bounds fail atomically with empty route tables. These are selected bounds, not total snapshot allocation/CPU or unbounded source-closure proofs.",
+    "apiBoundary": "No public root export, existing runtime change, new permission action designation, native call or policy-to-SQL compiler was introduced."
+  },
+  "independentExecution": {
+    "oracle": {
+      "controls": 112,
+      "bun": "1.4.2",
+      "chromium": "153.0.8010.12",
+      "fullParity": true,
+      "externalRequests": 0,
+      "pageErrors": 0,
+      "hostGlobals": "Bun/process undefined",
+      "fixture": "base-fixture.json",
+      "provenance": "Reuses previously independently authored Person/Asset/Link core0.8 sources, with new independently authored catalog/storage and expectations. No repository fixture helper is imported by this oracle.",
+      "includes": "All64 combinations of missing/original/withheld/equivalent and distinct constants compared to actual action fold; separate require/forbid source guards; graph/context bindings; typed null; DTO/live-token/prestorage distinctions; source/mode/budget/custody refusals.",
+      "receipt": "browser-result.json"
+    },
+    "sourceMutations": {
+      "variants": 12,
+      "allDetectedBothRuntimes": true,
+      "noImportOrRuntimeExceptionsCounted": true,
+      "ids": [
+        "withheld-guard-omitted",
+        "distinct-transform-guard-omitted",
+        "live-token-to-prestorage",
+        "hidden-original-unmasks-projection",
+        "silent-mode-winner",
+        "storage-constraint-omitted",
+        "raw-literal-grouping",
+        "range-bound-omitted",
+        "null-identity-without-specialcase",
+        "whole-owner-validation-omitted",
+        "property-budget-reset",
+        "context-bindings-omitted"
+      ],
+      "receipt": "mutation-results.json",
+      "isolatedLedgerResetFailure": "property-total-work-atomic-refusal"
+    },
+    "repositoryFocusedTest": {
+      "tests": 1,
+      "assertions": 309,
+      "result": "root-focused-test.log"
+    },
+    "actualGuardProducer": {
+      "checks": 192,
+      "valuations": 64,
+      "receipt": "generated-guards/receipt.json"
+    },
+    "formal": {
+      "queries": 13,
+      "unsat": 8,
+      "sat": 5,
+      "freshContextReplays": true,
+      "solver": "4.15.4",
+      "actualApiResultsRechecked": 128,
+      "receipt": "formal/receipt.json",
+      "scope": "The exact generated guard metadata for the named six-Boolean-context source family is compared to an independent finite fold. It does not prove arbitrary expression truth, source authentication, TypeScript general refinement, scalar/pair scope, Weft designation or native authorization."
+    }
+  },
+  "historicalEvidence": [
+    "The initial oversized range witness and initial reviewed helper predate later declaration-table metadata additions. Parent exact pre-bound preimage is retained separately; final bound-removal mutation reproduces the defect against final source.",
+    "Parent fixed raw-spelling constant grouping before the independently captured initial source; review independently confirmed1 versus1e0 equivalence and actual render behavior. The raw-grouping mutation is a deliberate weakening, not a claim that the initial captured source still had that defect.",
+    "An initial no-read oracle fixture removed every policy rule and was refused upstream by the whole-catalog compiler. It was replaced with a valid unused source-owned read action, keeping the no-read-branch expectation. Separately the private detachment test initially aliased a shared expected Field object; fixed to clone use references. Initial failure logs/sources remain, not counted as implementation defects.",
+    "The graph probes initially exposed the actual nullable-inline grouping defect, independently isolated by null-witness.json; these were not changed to avoid null.",
+    "Initial browser attempt could not bind a loopback listener under sandbox; it was retained and not counted. Authorized local-only replay then passed.",
+    "The parent build regenerated actions/plan-identity.ts after the first successful browser run. Original pins/results and preimage are retained. All112 controls and all12 mutants were replayed in both runtimes against the final dependency bytes before this receipt."
+  ],
+  "remainingIntegrationRequirements": [
+    "Join each supplied occurrence/path/operator/operation/property requirement to the exact original Weft-issued preparation/designation; this API authenticates none of those labels and invents no designation.",
+    "Evaluate actual retained read/require/forbid conditions and contributor/exclusion groups on the same complete current cut as read rendering and each separately required original-action check. Inspection is neither branch selection nor grant.",
+    "Keep hidden original operands separate from selected public projection, canonical stored tokens separate from pre-storage plaintext, and known absence separate from scalar NULL. Qualify per-use scalar/value-domain/presence and paired transform/key/runtime scopes.",
+    "Implement existing-owner native lowering and original current-authority/release custody before P03/B08 or whole-backend admission. This source prerequisite does not satisfy those integration requirements."
+  ],
+  "qualificationLimits": [
+    "Supplied owner/cut/source custody and complete compiler occurrence correspondence remain external premises. Retained source identity is not authentication.",
+    "Finite controls and generated finite SMT correspondence do not establish all policy expressions, arbitrary native queries, cryptographic behavior, injectivity, ordering or absence encodings.",
+    "All158 original case definitions are byte-identical to base470d2ef8, with no assertion/criteria/timeout/runner/status promotion.",
+    "Static selected dependency pins include final generated action plan identity; they are not a hermetic runtime/package provenance theorem.",
+    "Parent-owned full158 gate/build/broad regression work is separate; full gate is pending at this review finalization. Parent309 browser receipt is inspected, while reviewer112 both-runtime controls,309 focused assertions,192 generated observations and13 proof queries are independently executed."
+  ],
+  "selectedSources": {
+    "count": 113,
+    "pins": "final-source-pins.json",
+    "endpointStable": true,
+    "helperSha256": "2eccc51f05a3e34280a1b1e5b44dbfdb9b43acd739e96d20236a649d02347f59",
+    "generatedIdentitySha256": "44140534b00e5074ee727eddbec86f0df163503846e3bb748f9d9e5fa554cb93"
+  },
+  "acceptanceCasesPromoted": [],
+  "rootSourcesEditedByReviewer": false
+}

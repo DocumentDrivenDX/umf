@@ -37,6 +37,33 @@ ddx:
 
 ## Core ideal acceptance gates
 
+### Proposed field migration acceptance
+
+FR-18/19, FEAT-007 COMP-06–11, US-051-AC11–16 and
+[SD-007](../02-design/solution-designs/SD-007-schema-migrations.md) require the
+following separate proof layers. The [build plan](../04-build/schema-migration-plan.md)
+sequences reconciliation with CONTRACT-081/TD-085/STP-085 in the existing U1/U2
+implementation stream. Allocate remaining criteria in TD-051/STP-051 before
+residual implementation; reuse native cases already owned by STP-085.
+
+| Primary layer / criteria | Required proof |
+| --- | --- |
+| Portable contract / AC11, AC16 | Stable-ID intent, exact sources, dependency/unknown retention, backend capability refusal, deterministic plans and receipt tamper controls; Bun and real Chromium agree |
+| Native integration / AC12 | Optional and required date additions; tightening; default versus backfill; empty/populated data; full target constraint checks with concurrent-write protection |
+| Native integration / AC13 | Dependent key/FK/policy/action/catalog/client changes; explicit retirement versus purge; retained-data recovery and irreversible purge accounting |
+| Native integration / AC14 | Proven preservation versus authored conversion; invalid values, timezone/format decisions, overflow/rounding, target key collisions and retained source values |
+| Host end-to-end / AC15 | Resume after every phase, drift, approval tampering, competing migrators/writers, cancellation, lost commit response, generated-client cutover and honest recovery |
+
+The reconciled story-test allocation must map each criterion to named fixtures
+and tests with parseable
+`@covers US-051-ACn` markers. AC16's portable capability cases are primary;
+backend-specific native execution is supplementary evidence required for each
+support claim. PostgreSQL, Truss and Ashlar remain distinct native profiles.
+Sampling does not prove whole-dataset acceptance. Evidence must bind exact
+sources, native/driver versions, transforms, installed artifacts, target generation
+and limits. Birthdays/reject values stay in access-controlled host data stores;
+portable receipts contain bounded summaries and protected evidence references.
+
 ### Authored relationship and binding amendment
 
 FR-42–FR-44, FEAT-006, US-045–US-049 and CONTRACT-041–044 govern this
@@ -3213,3 +3240,96 @@ replacement, independent count/FK audits and exact Unicode/multiline source JSON
 read-back. Partial dates, timezone offsets, decimal text, native interpretation
 labels and unresolved references must remain recoverable. Structural/data checks
 do not establish clinical validity, native FHIR conformance or population realism.
+
+## Public-company intelligence fixed corpus
+
+US-078 and STP-078 own the AC matrix for FEAT-027/CONTRACT-058. Layer allocation:
+Bun exercises exact source/context retention and independent screen controls;
+TableSpec archive plus DuckDB independently verify cell values, source/schema
+bytes and FK closure; actual Chromium exercises projections, pack/table/ontology
+navigation and manifest download. Fixed observed inputs are not replayed.
+Full EDGAR coverage, narrative extraction, native graph and live Databricks/model/
+email qualification remain separate gates.
+## Shared security acceptance allocation
+
+FEAT-008 and US-079, US-056 and US-057 define the owner-requested security slice. STP-079 allocates authoring/typing/composition/disclosure/portable evaluation to contract and browser integration tests. STP-056 allocates backend mappings, bypass, privacy and drift to native integration. STP-057 allocates writes/history/revocation/propagation to native concurrent integration. All P0 criteria require 100% exercising coverage with canonical citations; missing native runs block qualification. The per-AC matrices live in the story plans. Backend procedures SEC-PG-RAW, SEC-TRUSS, SEC-DELTA-RAW and SEC-ASHLAR supplement this strategy; SQL Server is a future admission witness, not an initial release backend.
+
+## Typed data access SDK strategy
+
+FR-52 to FR-55, FEAT-028 to FEAT-031, CONTRACT-067 to CONTRACT-074 and STP-080 to
+STP-088 define proposed coverage. STPs own per-AC matrices. No planned test is
+current evidence; the DSL typing spike is design-time evidence only.
+
+- Generator unit and contract tests: `umf.access` conflict table, closure and
+  census, naming, determinism, hand-edit refusal and drift check; Bun and real
+  Chromium byte parity.
+- Python value tests: `MISSING` presence, strict carriers, decimal scale rule,
+  temporal kinds, revalidation of nested mutation, golden-vector agreement with
+  UMF core validators.
+- Static tests: positive and negative corpora on pinned pyright and mypy (with
+  `check_untyped_defs`), covering every CONTRACT-071 typing row and generated
+  call-site signatures. Failures must be for the intended reason.
+- Catalog tests: capture determinism, Weft-blocked forms per target, variant
+  expansion, drift check, `NotCompiledForTarget` and `PLAN_DRIFT`.
+- Native lanes per target: pinned Postgres, Lakebase, local Spark/Delta and a
+  separately selected Unity Catalog workspace, each running the shared
+  conformance suite plus read, search, action and bulk witnesses. Injected commit
+  loss must reconcile to `Committed` or `Conflict` on Postgres and Lakebase when a
+  reconnection is available, and classify as `Indeterminate` otherwise and on
+  Delta targets.
+- Engine lanes run in Truss and Ashlar repositories against their own fixtures.
+
+Evidence retains exact pins, commands, versions, observed outcomes, failed attempts
+and limits. Unavailable managed or engine lanes stay unqualified and are never
+silently skipped in an overall claim.
+
+## Core0.10 semantic-reference restoration — 2026-10-17
+
+STP-090 allocates US-090 to restored semantic registry/core tests, new UUID/128-bit
+composition tests, independent structural-schema checks and a real Chromium public
+bundle run. Scope includes exact reference identity, copied callbacks, unknown
+qualifiers, explicit migration, forged/stale receipt refusal and edited rollback.
+Unchanged core0.9 behavior and published schema hashes are separate regression
+checks. No test here establishes external term correctness or native admission.
+
+
+## Typed ontology adoption verification
+
+FR-56 / FEAT-033 OA-22–28 use the existing Bun, Python subprocess and real
+Chromium layers. Contract/admission tests own legacy-action diagnostics and
+old/new recipe-profile distinctions (US-091 AC11–13). Isolated Python synthetic
+host tests own sync/async inputs, precondition refusals, batch settlement,
+validation and post-dispatch uncertainty (US-092 AC13–15). Chromium owns portable
+byte parity; installed embedded V8 owns Python-generator parity. These are local
+component gates; fake execution does not qualify a production graph executor.
+
+US-092 AC13/15 add a blocking settlement matrix over both atomic/stopping flags,
+including invalid leading/gapped/no-stop unattempted outcomes and actual rollback.
+The isolated Python layer owns original-cancellation identity, task cancellation
+state, timeout translation, TaskGroup sibling failure, spontaneous transport
+cancellation, pre-dispatch cancellation and concurrent invocation-key isolation.
+It also verifies visible cause/context traversal, hidden context, cycles and
+reused cancellation objects for the typed uncertainty helper. Read/validation
+controls must not gain write annotations. Receipt omissions are checked per field
+and explicit empty receipts remain valid. These reuse the current process harness;
+run on the supported CI interpreter matrix and qualify only versions with evidence.
+
+The source-Weft native CI cohort must provide the prepared-module compiler API
+used by the installed SDK. Its PostgreSQL cursor controls distinguish unrelated
+membership from declared-group MEMBER scope. Privileged outcome-table RLS,
+column and grant drift is tested at the explicit full-correspondence diagnostic
+boundary under operator quiescence; restoring the catalog must restore ordinary
+authenticated receipt recovery. Ordinary calls retain forged-receipt refusal,
+principal isolation and slot-serialization controls without full catalog scans,
+as required by CONTRACT-079/081.
+
+The blocking commands are `bun test tests/access-adoption.test.ts`, the existing
+unified/native-client and action-admission regressions, `bun run typecheck`,
+`bun run build`, `bun run check:unified-client-boundaries`,
+`bun test tests/access-unified-browser.test.ts`, `bun scripts/build-codegen.ts --check`
+and installed codegen corpus replay. Existing mypy/pyright/ty checkers validate
+positive and deliberately wrong batch/key inputs. No new test framework is needed;
+the new local tests add a small Python process, while Chromium reuses its current
+single browser session. Exact timings belong in execution evidence.
+Linux wheel/interpreter qualification (US-092 AC16), link projections and real-host
+conformance are separately required before those support claims are published.

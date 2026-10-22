@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 4009,
+        "line": 27,
+        "path": "src/extensions/binding/bit128-record.ts",
+        "sha256": "d99a33c739237562456b6a6773f31dbc328c84450b9e763cb0fa300169dd4f0f"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "decodeBit128Record",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(bindingInput: Document, sourceInput: Document, identity: Bit128Ref, input: Record<string, string | null>): Bit128RecordValue[]"
+    ]
+  },
+  "id": "[\"api\",\".\",\"decodeBit128Record\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 4009,
+      "line": 27,
+      "path": "src/extensions/binding/bit128-record.ts",
+      "sha256": "d99a33c739237562456b6a6773f31dbc328c84450b9e763cb0fa300169dd4f0f"
+    }
+  ],
+  "summary": "Public export · src/extensions/binding/bit128-record.ts",
+  "title": "decodeBit128Record"
+}

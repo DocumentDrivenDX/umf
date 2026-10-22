@@ -1,0 +1,576 @@
+{
+  "kind": "focused-design-rereview",
+  "date": "2026-10-15",
+  "reviewer": {
+    "model": "gpt-6-astra",
+    "task": "/root/astra_design_review"
+  },
+  "originalReviewedCommit": "dd7b81f6bb5aa6a08cb97bb8c4882eed683dcaba",
+  "integratedBase": {
+    "reportedByParent": "6950b663",
+    "consumerExpansion": "08f91765",
+    "identityNote": "The manifest below identifies reviewed working-tree bytes, not an asserted commit of those repairs."
+  },
+  "scope": "Consumer-reconciled typed persistence specification, original twelve findings and SQL-to-actions overlap TA-01 through TA-03; focused normative consistency and cross-workstream execution plan review.",
+  "verdict": "Draft ready for staged implementation under the recorded gates. No remaining blocking normative findings from this focused rereview. This is not runtime, native-platform, expanded static-typing or sibling-adoption qualification.",
+  "blockingFindings": [],
+  "originalFindingDispositions": [
+    {
+      "id": "AE01",
+      "status": "resolved-in-reconciled-draft",
+      "resolution": "Full declaration/source-bound ActionRef resolves through the trusted host to the exact engine-issued RevisionRef; identifiers and catalog metadata confer no registration authority.",
+      "files": [
+        "docs/helix/02-design/contracts/CONTRACT-068-generated-python-types.md",
+        "docs/helix/02-design/contracts/CONTRACT-069-engine-target-adapters.md",
+        "docs/helix/02-design/technical-designs/TD-087-truss-target-adapter.md",
+        "docs/helix/03-test/test-plans/STP-087-truss-target-adapter.md"
+      ]
+    },
+    {
+      "id": "AE02",
+      "status": "resolved-in-reconciled-draft",
+      "resolution": "Complete immutable original engine results, safe codes, revision, net changes, noOp, verification and receipt survive typed projections and replay. Raw results use separate NativeOutcomeDetails. Named action result views narrow created/changed without replacing original inventories.",
+      "files": [
+        "docs/helix/02-design/contracts/CONTRACT-068-generated-python-types.md",
+        "docs/helix/02-design/contracts/CONTRACT-069-engine-target-adapters.md",
+        "docs/helix/02-design/contracts/CONTRACT-072-runtime-targets.md",
+        "docs/helix/02-design/technical-designs/TD-087-truss-target-adapter.md",
+        "docs/helix/03-test/test-plans/STP-087-truss-target-adapter.md"
+      ]
+    },
+    {
+      "id": "AE03",
+      "status": "resolved-in-reconciled-draft",
+      "resolution": "Manifest controls retain full outcome unions, caller submission keys, original host-issued attempt custody and recovery references, including acknowledgement loss before any job reference exists.",
+      "files": [
+        "docs/helix/02-design/contracts/CONTRACT-069-engine-target-adapters.md",
+        "docs/helix/02-design/contracts/CONTRACT-072-runtime-targets.md",
+        "docs/helix/02-design/technical-designs/TD-087-truss-target-adapter.md",
+        "docs/helix/03-test/test-plans/STP-087-truss-target-adapter.md"
+      ]
+    },
+    {
+      "id": "AE04",
+      "status": "resolved-in-reconciled-draft",
+      "resolution": "Native dependency and side-effect closure is admitted and fenced at the effect transaction. roles/1 preserves independently authenticated-human semantics and refuses service targets; administrativeSingleTenant cannot waive that boundary.",
+      "files": [
+        "docs/helix/02-design/contracts/CONTRACT-072-runtime-targets.md",
+        "docs/helix/02-design/contracts/CONTRACT-073-native-sql-action-profile.md",
+        "docs/helix/01-frame/user-stories/US-085-typed-actions-on-raw-tables.md",
+        "docs/helix/02-design/technical-designs/TD-085-typed-actions-on-raw-tables.md",
+        "docs/helix/03-test/test-plans/STP-085-typed-actions-on-raw-tables.md"
+      ]
+    },
+    {
+      "id": "AE05",
+      "status": "resolved-in-reconciled-draft",
+      "resolution": "Receipt/reconciliation is bound to original database/store/writer incarnation and restore continuity. Unknown continuity or settlement is Indeterminate; aborted status alone is ABORTED_CAUSE_UNKNOWN, not Conflict. TimedOut requires positive original noncommit.",
+      "files": [
+        "docs/helix/02-design/contracts/CONTRACT-072-runtime-targets.md",
+        "docs/helix/02-design/contracts/CONTRACT-073-native-sql-action-profile.md",
+        "docs/helix/02-design/technical-designs/TD-085-typed-actions-on-raw-tables.md",
+        "docs/helix/03-test/test-plans/STP-085-typed-actions-on-raw-tables.md"
+      ]
+    },
+    {
+      "id": "AE06",
+      "status": "resolved-in-reconciled-draft",
+      "resolution": "Continuation binds the full ordering tuple, codecs, query/variant/parameters/catalog identity and runtime target binding; snapshot inventory covers all participating relations.",
+      "files": [
+        "docs/helix/02-design/contracts/CONTRACT-071-query-command-catalog.md",
+        "docs/helix/02-design/contracts/CONTRACT-072-runtime-targets.md",
+        "docs/helix/02-design/technical-designs/TD-083-precompiled-reads-on-raw-tables.md",
+        "docs/helix/03-test/test-plans/STP-083-precompiled-reads-on-raw-tables.md"
+      ]
+    },
+    {
+      "id": "AE07",
+      "status": "resolved-in-reconciled-draft",
+      "resolution": "Distinct owner/version-pinned truss-command and native-command artifacts retain the complete program and security/source inputs. Weft owns structural digest and parameter-hole rules; missing interface is WEFT_BLOCKED. Native-bulk is separately named, never a cast of a frozen manifest plan.",
+      "files": [
+        "docs/helix/02-design/contracts/CONTRACT-071-query-command-catalog.md",
+        "docs/helix/02-design/contracts/CONTRACT-073-native-sql-action-profile.md",
+        "docs/helix/02-design/technical-designs/TD-086-precompiled-bulk-commands.md",
+        "docs/helix/03-test/test-plans/STP-086-precompiled-bulk-commands.md",
+        "docs/helix/02-design/technical-designs/TD-087-truss-target-adapter.md",
+        "docs/helix/03-test/test-plans/STP-087-truss-target-adapter.md"
+      ]
+    },
+    {
+      "id": "AE08",
+      "status": "resolved-in-reconciled-draft",
+      "resolution": "Bounded catalog hydration conjoins exact selected Key and original complete filter/parameters under current admission. Asynchronous current-row filtered hydration requires partial opt-in; stale nonmatches drop without refill, while native errors propagate.",
+      "files": [
+        "docs/helix/02-design/contracts/CONTRACT-071-query-command-catalog.md",
+        "docs/helix/02-design/contracts/CONTRACT-074-search.md",
+        "docs/helix/01-frame/user-stories/US-084-semantic-and-keyword-search.md",
+        "docs/helix/02-design/technical-designs/TD-084-semantic-and-keyword-search.md",
+        "docs/helix/03-test/test-plans/STP-084-semantic-and-keyword-search.md"
+      ]
+    },
+    {
+      "id": "AE09",
+      "status": "resolved-in-reconciled-draft",
+      "resolution": "selectedKey explicitly selects query identity; alternate referenced Keys use distinct exact DTOs or refuse. Nested occurrence bindings forbid omitted positions/present MISSING while preserving null and absent-map-key distinctions.",
+      "files": [
+        "docs/helix/02-design/contracts/CONTRACT-067-access-sdk-generator.md",
+        "docs/helix/02-design/contracts/CONTRACT-068-generated-python-types.md",
+        "docs/helix/02-design/contracts/CONTRACT-070-access-extension.md",
+        "docs/helix/02-design/technical-designs/TD-080-generate-typed-package.md",
+        "docs/helix/03-test/test-plans/STP-080-generate-typed-package.md",
+        "docs/helix/02-design/technical-designs/TD-081-typed-models-and-codecs.md",
+        "docs/helix/03-test/test-plans/STP-081-typed-models-and-codecs.md"
+      ]
+    },
+    {
+      "id": "AE10",
+      "status": "resolved-in-reconciled-draft",
+      "resolution": "MISSING controls predicate inclusion; present None retains SQL UNKNOWN comparison semantics with explicit null tests. Null-safe comparison is separately declared and qualified.",
+      "files": [
+        "docs/helix/02-design/contracts/CONTRACT-071-query-command-catalog.md",
+        "docs/helix/02-design/technical-designs/TD-082-type-checked-query-declarations.md",
+        "docs/helix/03-test/test-plans/STP-082-type-checked-query-declarations.md"
+      ]
+    },
+    {
+      "id": "AE11",
+      "status": "resolved-in-reconciled-draft",
+      "resolution": "Serialized recoverable writing preserves four reserved stage-two files. Catalog manifest retains stage-one inputDigest/runtimeAbi; runtime load/use compares loaded generation before target calls even without --check. Search has a bounded multi-leg/fusion/hydration program artifact.",
+      "files": [
+        "docs/helix/02-design/contracts/CONTRACT-067-access-sdk-generator.md",
+        "docs/helix/02-design/contracts/CONTRACT-071-query-command-catalog.md",
+        "docs/helix/02-design/contracts/CONTRACT-074-search.md",
+        "docs/helix/02-design/technical-designs/TD-080-generate-typed-package.md",
+        "docs/helix/03-test/test-plans/STP-080-generate-typed-package.md",
+        "docs/helix/02-design/technical-designs/TD-084-semantic-and-keyword-search.md",
+        "docs/helix/03-test/test-plans/STP-084-semantic-and-keyword-search.md"
+      ]
+    },
+    {
+      "id": "AE12",
+      "status": "resolved-in-reconciled-draft",
+      "resolution": "Non-Key ordering is part of the bounded form matrix; raw bulk follows qualified native action execution, and Truss bulk follows gateway/control adoption. The shared ledger separates existing browser proof from new SDK/native/source-cohort work.",
+      "files": [
+        "docs/helix/01-frame/features/FEAT-029-precompiled-queries-and-search.md",
+        "docs/helix/01-frame/user-stories/US-083-precompiled-reads-on-raw-tables.md",
+        "docs/helix/02-design/technical-designs/TD-083-precompiled-reads-on-raw-tables.md",
+        "docs/helix/03-test/test-plans/STP-083-precompiled-reads-on-raw-tables.md",
+        "docs/helix/02-design/technical-designs/TD-085-typed-actions-on-raw-tables.md",
+        "docs/helix/02-design/technical-designs/TD-086-precompiled-bulk-commands.md",
+        "docs/helix/02-design/technical-designs/TD-087-truss-target-adapter.md"
+      ]
+    }
+  ],
+  "sqlToActionsDispositions": [
+    {
+      "id": "TA-01",
+      "status": "resolved-in-reconciled-draft",
+      "sameCorrectionAs": "AE03"
+    },
+    {
+      "id": "TA-02",
+      "status": "resolved-in-reconciled-draft",
+      "sameCorrectionAs": "AE02"
+    },
+    {
+      "id": "TA-03",
+      "status": "resolved-in-reconciled-draft",
+      "sameCorrectionAs": "AE07"
+    }
+  ],
+  "consumerReconciliation": [
+    "Python 3.11 target, pyright/mypy/ty, thin generated metadata/models and shared runtime validation are consistent; explicit update kwargs replace dictionary-shaped bulk updates.",
+    "Bounded DSL forms, aggregates, explicit null-safe comparisons and to-one joins have named gates. Owner-set typing refuses repeated/self/ambiguous joins until an alias surface qualifies; same-owner comparison avoids a foreign Column[Any,T] escape.",
+    "Async operations, streams, validation, timeout settlement and typed created/changed result views are specified without claiming the existing spike proves them. Streaming delivers complete pages and explicit failure, with cleanup/quarantine and compatible host-transaction admission.",
+    "Schema-neutral catalogs bind runtime resolution to host-supplied independent expectations. Cache reuse cannot cache authority or dependency fences; DDL invalidation proof or fresh verification is required. Privilege reports include runtime metadata/admission/reconciliation work and unresolved host obligations.",
+    "Praxis Lakebase/Postgres reads can proceed in parallel with Truss. Shared semantics and Weft owner artifacts precede dependent catalogs; raw bulk follows native action qualification. Existing browser SQL-to-actions work remains independent and retains its frozen source cohort."
+  ],
+  "boundedChoicesNotBlockers": [
+    "roles/1 refuses service targets until a separate service authorization profile is defined and qualified.",
+    "Repeated/self/ambiguous joins and unqualified native frame or commit receipt mechanisms refuse instead of silently broadening support.",
+    "Asynchronous filtered search permits explicit partial results; complete current top-k requires a qualified coherent index/table snapshot.",
+    "Truss lexical exactness, publication location/release cadence and implementation spending ceiling remain explicit owner decisions."
+  ],
+  "remainingQualificationGates": [
+    "Weft-owned versioned command/search artifact interfaces, structural digest projection, capture boundary and golden corpus; no local SQL lowering or stripped-SQL substitute.",
+    "Actual Python 3.11 interpreter execution plus generated ABI and expanded DSL/model/result forms on all three pinned checkers, including optional joins and narrowed read-only result views.",
+    "Independent native witnesses per backend/version for schema resolution/cache invalidation, privileges, human-role correspondence, transitive dependency admission/fencing, atomic result markers, uniqueness/concurrency, receipts, timeout/cancellation and original-scope reconciliation.",
+    "Truss exact issued revision, rich original outcomes, protected controls/recovery and native/local profile adoption; Ashlar immutable publication/resolver/fencing/ACK obligations with original witnesses.",
+    "New umf.access model content and merged producer sources require a new separately prepared and admitted source cohort. Existing browser component evidence does not qualify this SDK."
+  ],
+  "checks": {
+    "filesystemTraceability": {
+      "stories": "US-080 through US-088",
+      "acceptanceCriteria": 82,
+      "errors": [],
+      "method": "Read current filesystem texts; each story AC appears in its TD and @covers STP mapping; scanned manifest sources for merge-conflict markers."
+    },
+    "parentStructureCheck": "Parent reports 82 AC structural/YAML/diff checks passed before final report link; parent will run final full checker. Not independently rerun here because it invokes git.",
+    "existingTypingReplay": {
+      "artifact": "docs/helix/04-build/evidence/typed-persistence/consumer-reconciliation/typing-replay.json",
+      "observed": "pyright 1.1.414, mypy 2.4.0 and ty 0.0.88 each report the expected 12 negative diagnostics for the existing scoped spike targeting 3.11; host Python 3.14.8.",
+      "limit": "Not new Python 3.11 interpreter, expanded typing, generated SDK or native execution evidence."
+    },
+    "lastWordingCorrections": [
+      "CONTRACT-073 refusal table permits read-only admission observations before business dispatch, matching its admission section and CONTRACT-072.",
+      "STP-081 names shared-runtime validation of generated models, matching thin-source requirements."
+    ]
+  },
+  "limitations": [
+    "Initial independent exact-dd review is preserved separately. This is a focused rereview after joint specification repairs, not a new independent implementation audit.",
+    "CONTRACT-905 is not present in this working tree; its browser-local profile was reviewed as a separate SQL-to-actions source snapshot recorded in the overlap report, not silently treated as a local contract. No sibling repository modifications, native executions or new implementation support claims. Current working-tree hashes govern this verdict; later edits require appropriate rereview.",
+    "Self-hash and mutable structure-check evidence are intentionally excluded from the source manifest to avoid circular or instantly stale claims."
+  ],
+  "sources": [
+    {
+      "path": "docs/helix/00-discover/consumer-requirements-input.md",
+      "sha256": "9a7c640748d919ce9e13a528d0bfbd2e9ffef2cdaf1404b0345a0ac352cccbc6",
+      "bytes": 5484
+    },
+    {
+      "path": "docs/helix/00-discover/research-palantir-osdk.md",
+      "sha256": "29e6437054f2bc0d3f6461c9c04e1dccc25da4cb9f6d4cfb23c50fe698e4aad8",
+      "bytes": 4958
+    },
+    {
+      "path": "docs/helix/01-frame/concerns.md",
+      "sha256": "c26b984c4bd39fdcdbcd58fecfd534310d1ce7c1c292ab980d8c7d7124084a98",
+      "bytes": 9017
+    },
+    {
+      "path": "docs/helix/01-frame/cross-cutting-requirements.md",
+      "sha256": "4f325db04b1b627aece5b577f695a684a0c6a92ce2f34f194bcb9eed60845879",
+      "bytes": 22336
+    },
+    {
+      "path": "docs/helix/01-frame/features/FEAT-028-typed-model-generation.md",
+      "sha256": "7a90f16c26bd400e6dbfb1314e6169bd0bc0b9bd4b1a9d65ec2cc7b246588dd3",
+      "bytes": 8553
+    },
+    {
+      "path": "docs/helix/01-frame/features/FEAT-029-precompiled-queries-and-search.md",
+      "sha256": "9cc48e2414206c43159bb098bd699dc6aec32e6a127f41e38e0a8ee1c85050ce",
+      "bytes": 13804
+    },
+    {
+      "path": "docs/helix/01-frame/features/FEAT-030-typed-actions-and-native-targets.md",
+      "sha256": "bfa4bec2addb1c0d76c381cebb65a43b36c53737c4281189737d026ba8f5ec89",
+      "bytes": 11625
+    },
+    {
+      "path": "docs/helix/01-frame/features/FEAT-031-engine-target-adapters.md",
+      "sha256": "0a35f81131d45ab06fcf278a060682f118382163a96f82787264f51778a79d97",
+      "bytes": 7955
+    },
+    {
+      "path": "docs/helix/01-frame/user-stories/US-080-generate-typed-package.md",
+      "sha256": "88018d99b6139aa4735c24d241539120386f49aa22bd93527c1416630a293073",
+      "bytes": 8492
+    },
+    {
+      "path": "docs/helix/01-frame/user-stories/US-081-typed-models-and-codecs.md",
+      "sha256": "f633ec473504ebe84508a8da193674ca94eb5a4c434bf16863019cf9ae44545a",
+      "bytes": 10345
+    },
+    {
+      "path": "docs/helix/01-frame/user-stories/US-082-type-checked-query-declarations.md",
+      "sha256": "0666834f012dd5970799aa0731a27dc6328692a3a9363546b49ca63d508d3340",
+      "bytes": 9875
+    },
+    {
+      "path": "docs/helix/01-frame/user-stories/US-083-precompiled-reads-on-raw-tables.md",
+      "sha256": "31b2dc0e2295bfb51817aadd0f41e72908923220c33d7c11775a7168f9fbbc98",
+      "bytes": 17483
+    },
+    {
+      "path": "docs/helix/01-frame/user-stories/US-084-semantic-and-keyword-search.md",
+      "sha256": "b2d22eedc8c9dbbee60e7f4410666f307d034be811ba9e95dbaf85882d4bb838",
+      "bytes": 8013
+    },
+    {
+      "path": "docs/helix/01-frame/user-stories/US-085-typed-actions-on-raw-tables.md",
+      "sha256": "1934dcd447fbd34912ab004eef13e4bcbb020e1b8031bfa899de11113adbc6da",
+      "bytes": 15551
+    },
+    {
+      "path": "docs/helix/01-frame/user-stories/US-086-precompiled-bulk-commands.md",
+      "sha256": "60696951ea64fd7a9d2ad4ce532c5efd4556819c61a10b04d15f9092408b3897",
+      "bytes": 7407
+    },
+    {
+      "path": "docs/helix/01-frame/user-stories/US-087-truss-target-adapter.md",
+      "sha256": "085e4dcd69d41ba584c99b3c4b518e0a123a8b6d57fc6f19e3b066bbb7ac6393",
+      "bytes": 10025
+    },
+    {
+      "path": "docs/helix/01-frame/user-stories/US-088-ashlar-target-adapter.md",
+      "sha256": "30ee8457e8a18a718b9a99955214fc90260b6158a51c96b3a9137f5132927f03",
+      "bytes": 6838
+    },
+    {
+      "path": "docs/helix/02-design/adr/ADR-004-typed-data-access-sdk.md",
+      "sha256": "779319607f8ea945ec630b491f7738f6247b23ff7d6d9a7ec18c3a799caa4711",
+      "bytes": 5532
+    },
+    {
+      "path": "docs/helix/02-design/architecture.md",
+      "sha256": "abe18bfb3f6dc32254ac2e8d7962b9e2b0ce7ff033a93c8f18032776cb3630d0",
+      "bytes": 46341
+    },
+    {
+      "path": "docs/helix/02-design/contracts/CONTRACT-040-core-ideals.md",
+      "sha256": "dd10992251b118dc87310afc2ef9642c1ab7bf9c4c37c17968112957c67dc0fb",
+      "bytes": 68377
+    },
+    {
+      "path": "docs/helix/02-design/contracts/CONTRACT-049-schema-properties.md",
+      "sha256": "5564e1d7f66f0c309544d867e16c7b0cef62bef23425bc42f5c300072f1a493a",
+      "bytes": 20091
+    },
+    {
+      "path": "docs/helix/02-design/contracts/CONTRACT-067-access-sdk-generator.md",
+      "sha256": "2bb077ee262f72614da27292ee29772eab8c553e8c4e27b2eee38885970ce377",
+      "bytes": 14293
+    },
+    {
+      "path": "docs/helix/02-design/contracts/CONTRACT-068-generated-python-types.md",
+      "sha256": "17c6e051f77fecbdf61af5f72318fc90ef28cee59de88954a457d990384d7a0d",
+      "bytes": 15516
+    },
+    {
+      "path": "docs/helix/02-design/contracts/CONTRACT-069-engine-target-adapters.md",
+      "sha256": "a866b179a72259e155cce2fe4e326300fb99ab40e3166ca75e95cdd3b1bda4a3",
+      "bytes": 10483
+    },
+    {
+      "path": "docs/helix/02-design/contracts/CONTRACT-070-access-extension.md",
+      "sha256": "71d1c217e3045a12faffede3ec43818b78f95321ee5e43ea0a4041141b07c7dc",
+      "bytes": 15902
+    },
+    {
+      "path": "docs/helix/02-design/contracts/CONTRACT-071-query-command-catalog.md",
+      "sha256": "603d25bce21c2044869fe6ee0ade1faf9091978d369e06ba98ac7aedf21ee6c5",
+      "bytes": 33071
+    },
+    {
+      "path": "docs/helix/02-design/contracts/CONTRACT-072-runtime-targets.md",
+      "sha256": "e546acdc49118edbca49b21dd8dfbb7ff7ff4e915b2fdbc07b164373f3b040e3",
+      "bytes": 30283
+    },
+    {
+      "path": "docs/helix/02-design/contracts/CONTRACT-073-native-sql-action-profile.md",
+      "sha256": "6b54852cb499e3bf6fe393152287878411d9153bc4b2b9ab449c92283c920c53",
+      "bytes": 21399
+    },
+    {
+      "path": "docs/helix/02-design/contracts/CONTRACT-074-search.md",
+      "sha256": "a1b631b2aa4c1ad5007a0e70f0ba9add14ec024071b3ad011bc0b879ebd2b439",
+      "bytes": 13547
+    },
+    {
+      "path": "docs/helix/02-design/contracts/CONTRACT-900-declarative-actions.md",
+      "sha256": "92cb0efa67f4f9007be0bba2821e3198fe24811ce55a79301fbad332a596ba59",
+      "bytes": 32798
+    },
+    {
+      "path": "docs/helix/02-design/contracts/CONTRACT-901-transactional-action-profile.md",
+      "sha256": "3d0a8f71df96523da3381e8aab8e8630426734479c0d80e0578af8910b01a834",
+      "bytes": 30302
+    },
+    {
+      "path": "docs/helix/02-design/contracts/CONTRACT-902-portable-action-plan.md",
+      "sha256": "1dc02280f45cdca8293f58f76d43adc9cdf281cb87a6ceee3dce3ecbf393d272",
+      "bytes": 13941
+    },
+    {
+      "path": "docs/helix/02-design/contracts/CONTRACT-903-frozen-action-manifest.md",
+      "sha256": "a1e0ddd8041c024854257c0fb2e1b17dc9edbfd5362d3492dc47420114098018",
+      "bytes": 10782
+    },
+    {
+      "path": "docs/helix/02-design/contracts/CONTRACT-904-bulk-action-coordination.md",
+      "sha256": "422a588c4cf2c3bdbc8969884a776e5711d8d60a8746cf408bd2b51a3f892795",
+      "bytes": 24312
+    },
+    {
+      "path": "docs/helix/02-design/solution-designs/SD-028-typed-model-generation.md",
+      "sha256": "290c5c19597f7803eb1b89d43232f24491b7d0e2da95aa3af87db3be2d71e708",
+      "bytes": 7778
+    },
+    {
+      "path": "docs/helix/02-design/solution-designs/SD-029-precompiled-queries-and-search.md",
+      "sha256": "49becd6da09e538c08d7ba8564dc93dd8ff8bffcc4f4884664b69e8e5b15bf04",
+      "bytes": 10560
+    },
+    {
+      "path": "docs/helix/02-design/solution-designs/SD-030-typed-actions-and-native-targets.md",
+      "sha256": "2d167da074071e25e1d69f5b51ea23127dce258bbf23f0c274d771eec4b48785",
+      "bytes": 9545
+    },
+    {
+      "path": "docs/helix/02-design/solution-designs/SD-031-engine-target-adapters.md",
+      "sha256": "f6b8f1642cc3db729db1ac3364b50e7797b5ee05cf81f8225b8c05ff21c45021",
+      "bytes": 8140
+    },
+    {
+      "path": "docs/helix/02-design/technical-designs/TD-080-generate-typed-package.md",
+      "sha256": "f7a967a10936bce20ccf147160027e8acb5f5a6c8e4e86d5d4a7ea70dc250405",
+      "bytes": 9560
+    },
+    {
+      "path": "docs/helix/02-design/technical-designs/TD-081-typed-models-and-codecs.md",
+      "sha256": "72220a8fd0d57332ddeda143c8fab8ca4699a5b76dc31dc1da97c419fdfda437",
+      "bytes": 10414
+    },
+    {
+      "path": "docs/helix/02-design/technical-designs/TD-082-type-checked-query-declarations.md",
+      "sha256": "f6fbe1f518762a7432b27ed67abf0efc89f4c3d07743d7eb722538e20ae88829",
+      "bytes": 11091
+    },
+    {
+      "path": "docs/helix/02-design/technical-designs/TD-083-precompiled-reads-on-raw-tables.md",
+      "sha256": "b00985b156b6f6c0ce3c94a3bf929dbceff30513abf17b2a59b03981b28de0b1",
+      "bytes": 16817
+    },
+    {
+      "path": "docs/helix/02-design/technical-designs/TD-084-semantic-and-keyword-search.md",
+      "sha256": "5ef20e721eed2bffc37823bdb3a42925bdf55813ff3ad2933b575777ca6d7503",
+      "bytes": 9278
+    },
+    {
+      "path": "docs/helix/02-design/technical-designs/TD-085-typed-actions-on-raw-tables.md",
+      "sha256": "895eff722409e3bd130b73d2f6a7e110c5770852ff76c19259f65ebc26ae85a2",
+      "bytes": 17271
+    },
+    {
+      "path": "docs/helix/02-design/technical-designs/TD-086-precompiled-bulk-commands.md",
+      "sha256": "1881956d8c68b00aeefef0fbfc6294b59c182915fa2158d8af487bbe630fe185",
+      "bytes": 8435
+    },
+    {
+      "path": "docs/helix/02-design/technical-designs/TD-087-truss-target-adapter.md",
+      "sha256": "29dc256643a80a13123b8ed25408ec63a8b169a148b3fcc26427d18162f7afbc",
+      "bytes": 11951
+    },
+    {
+      "path": "docs/helix/02-design/technical-designs/TD-088-ashlar-target-adapter.md",
+      "sha256": "0d8dd1c0d03a6c44a2cde7026e4c2d2706d9e6ca037a40d6ac2ead2680f17561",
+      "bytes": 7896
+    },
+    {
+      "path": "docs/helix/03-test/test-plan.md",
+      "sha256": "82a8d86babeec42f086838c8aa13424168d4e754f6c70f6903a3ff71f29804d4",
+      "bytes": 224616
+    },
+    {
+      "path": "docs/helix/03-test/test-plans/STP-080-generate-typed-package.md",
+      "sha256": "c69fa4071598069b3ca6e8764cc23a678a62ad2909c501cf4aa5ac4432fbe9ef",
+      "bytes": 6933
+    },
+    {
+      "path": "docs/helix/03-test/test-plans/STP-081-typed-models-and-codecs.md",
+      "sha256": "967986a5e8acf9859ddd35106b6ad001da0fd0164468e556b05fe1f4ad8f060b",
+      "bytes": 7516
+    },
+    {
+      "path": "docs/helix/03-test/test-plans/STP-082-type-checked-query-declarations.md",
+      "sha256": "a2dc7f4ca04f9d2101358b45bbada875d9e6b6ab6d26f7870d51aa919a58dad0",
+      "bytes": 7787
+    },
+    {
+      "path": "docs/helix/03-test/test-plans/STP-083-precompiled-reads-on-raw-tables.md",
+      "sha256": "a7280792e2473e7cefbd460886302b269a3ac01a1ecec3d2e0bf26fd87b40354",
+      "bytes": 13504
+    },
+    {
+      "path": "docs/helix/03-test/test-plans/STP-084-semantic-and-keyword-search.md",
+      "sha256": "f0bab0f4bbc9fee5bc6cc359168643c631699e4fde428cad13efdc5da3e6a2e7",
+      "bytes": 5872
+    },
+    {
+      "path": "docs/helix/03-test/test-plans/STP-085-typed-actions-on-raw-tables.md",
+      "sha256": "68c7c777b390e993a6f7c8fea7b6292417035683fce87ca80ffaeaa7c60cc26b",
+      "bytes": 11296
+    },
+    {
+      "path": "docs/helix/03-test/test-plans/STP-086-precompiled-bulk-commands.md",
+      "sha256": "84787603c2e179a20476da26e2cee59885cbcf670c98e50d59f27182f11c42b9",
+      "bytes": 6237
+    },
+    {
+      "path": "docs/helix/03-test/test-plans/STP-087-truss-target-adapter.md",
+      "sha256": "c6703cfd2ef21d65b20d14b7af1d4a1434015bc4e265a8f4b16a8d29f1b2e6c1",
+      "bytes": 8011
+    },
+    {
+      "path": "docs/helix/03-test/test-plans/STP-088-ashlar-target-adapter.md",
+      "sha256": "4ed39736049ba209e9a0e177996a08aae840f8eeb5fe15cbf59cfe79c005f1a1",
+      "bytes": 5739
+    },
+    {
+      "path": "docs/helix/04-build/evidence/typed-persistence/astra-expanded-review.json",
+      "sha256": "59c8fb721a210a488cccc0f025ea53bbd2dc1225bfd735c7d56705a7de7ff6f8",
+      "bytes": 10462
+    },
+    {
+      "path": "docs/helix/04-build/evidence/typed-persistence/consumer-reconciliation/typing-replay.json",
+      "sha256": "333d112926d0d96d7efb218a3067bd48d891950afd67e0f9e18242a1abb09653",
+      "bytes": 2400
+    },
+    {
+      "path": "docs/helix/04-build/evidence/typed-persistence/dsl-typing-spike/README.md",
+      "sha256": "397181ccd2ce12069475453aba881fa374b7960ca2d8cd62fd166f7ab3aa8ca6",
+      "bytes": 5167
+    },
+    {
+      "path": "docs/helix/04-build/evidence/typed-persistence/dsl-typing-spike/bad.py",
+      "sha256": "fcca8ab614e94d6719d3bed2d773ce4734bbdcec8c499476ffbadf5129ea348f",
+      "bytes": 1072
+    },
+    {
+      "path": "docs/helix/04-build/evidence/typed-persistence/dsl-typing-spike/dsl.py",
+      "sha256": "8d3198c770f0446c12421d8fe548574181e501c45ed80c57870f36d82aeae315",
+      "bytes": 3816
+    },
+    {
+      "path": "docs/helix/04-build/evidence/typed-persistence/dsl-typing-spike/e9.py",
+      "sha256": "c7ed8b888f1efd3fed6e087885784541879354ee5a89ed234e158f9afa34589f",
+      "bytes": 171
+    },
+    {
+      "path": "docs/helix/04-build/evidence/typed-persistence/dsl-typing-spike/good.py",
+      "sha256": "9f87981a81185126b89ee56902b3317b1360c3ed9557694636bdb6d0b1b49e3b",
+      "bytes": 780
+    },
+    {
+      "path": "docs/helix/04-build/evidence/typed-persistence/dsl-typing-spike/shop/models.py",
+      "sha256": "36ab46af3da89194bfd8b2b4c35b4ee551f196d8d308a47529de096637c43ca1",
+      "bytes": 1758
+    },
+    {
+      "path": "docs/helix/04-build/evidence/typed-persistence/sql-to-actions-overlap-review.json",
+      "sha256": "d1a2f014f926cb545e1fc1fbbf850511c8ebd0ad6242302fd19fe3276e031ed0",
+      "bytes": 20053
+    },
+    {
+      "path": "docs/helix/04-build/implementation-plan.md",
+      "sha256": "885771114181cdf64d08d63dbc493cbc04d1c5147ab53ed862c5173b8a98ad11",
+      "bytes": 1132915
+    },
+    {
+      "path": "docs/helix/04-build/typed-persistence-design.md",
+      "sha256": "85aa386fbbc3df021c068d16e656612224737b45ef97f2f64ff5e35ae301ee5f",
+      "bytes": 22485
+    },
+    {
+      "path": "docs/helix/04-build/weft-requirements-typed-access.md",
+      "sha256": "e10c50dd4260956e6b7e4c4603f489e1a300b4ed37a5835dfd488e72e9206576",
+      "bytes": 24922
+    },
+    {
+      "path": "docs/helix/README.md",
+      "sha256": "6ed02e1d1c79db2c0fbfd14f14cba51a3b688559ca6b78d67903211e61aa4866",
+      "bytes": 88335
+    }
+  ]
+}

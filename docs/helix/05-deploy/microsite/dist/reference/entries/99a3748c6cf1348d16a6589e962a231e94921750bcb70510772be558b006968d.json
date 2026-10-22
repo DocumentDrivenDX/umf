@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 11134,
+        "line": 91,
+        "path": "src/core-ideals/key-avro-projection.ts",
+        "sha256": "ff7ee2aa3d799c7c9543f0411bdc207e08f1d542bba1559b9badaac02f142141"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "verifyKeysAvroProjection",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: KeyAvroProjection, current: Document): KeyAvroProjection"
+    ]
+  },
+  "id": "[\"api\",\".\",\"verifyKeysAvroProjection\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 11134,
+      "line": 91,
+      "path": "src/core-ideals/key-avro-projection.ts",
+      "sha256": "ff7ee2aa3d799c7c9543f0411bdc207e08f1d542bba1559b9badaac02f142141"
+    }
+  ],
+  "summary": "Recompute projection and match current native representation; not source authentication.",
+  "title": "verifyKeysAvroProjection"
+}

@@ -1,0 +1,28 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"readProtectionSource\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "text",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "Default: 'json'.",
+      "links": [],
+      "name": "format",
+      "optional": true,
+      "type": "\"json\" | \"yaml\""
+    }
+  ],
+  "purpose": "readProtectionSource accepts text, format and returns Json.",
+  "related": [],
+  "returns": "Json",
+  "task": "Read and validate",
+  "type": "(text: string, format?: \"json\" | \"yaml\") => Json"
+}

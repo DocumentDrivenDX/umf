@@ -1,0 +1,58 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"PreparedActionIdentities\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "profile",
+      "optional": false,
+      "type": "\"umf.actions.keys.prepared/1\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "source",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Action\"]"
+      ],
+      "name": "action",
+      "optional": false,
+      "type": "Action"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ActionInputs\"]"
+      ],
+      "name": "admitInputs",
+      "optional": false,
+      "type": "(inputs: ActionInputs, outputs?: boolean) => ActionInputs"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ActionInputs\"]",
+        "[\"api\",\".\",\"SelectedActionIdentity\"]"
+      ],
+      "name": "select",
+      "optional": false,
+      "type": "(frameId: string, inputs: ActionInputs) => SelectedActionIdentity"
+    }
+  ],
+  "parameters": [],
+  "purpose": "PreparedActionIdentities is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "PreparedActionIdentities"
+}

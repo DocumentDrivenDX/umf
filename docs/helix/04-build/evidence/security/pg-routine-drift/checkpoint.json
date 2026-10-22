@@ -1,0 +1,49 @@
+{
+  "version": "umf.security.pg-routine-drift-checkpoint/0.1.0",
+  "nativeCommand": [
+    "python3",
+    "tools/security/pg-routine-drift-probe.py"
+  ],
+  "nativeExitCode": 0,
+  "nativeObservations": 72,
+  "unitCommand": [
+    "python3",
+    "tools/security/pg-routine-custody.test.py"
+  ],
+  "unitExitCode": 0,
+  "unitTests": 4,
+  "python": "3.9.6",
+  "nativeReceipt": "../pg-routine-drift.json",
+  "nativeSourceCustody": "Five declared inputs captured before helper/native execution, native SQL executed from captured bytes, exact invocation checked, all pins verified unchanged before publication. Not authentication or hermetic runtime proof.",
+  "unitSourceCustody": "Current source-specific post-run test/helper pins in astra-review.json; no separate pre-execution unit freeze claim.",
+  "acceptanceTrace": {
+    "case": "pg-raw.B10",
+    "assertion": "Authorization can consult hidden Assignment facts; ordinary direct/list/count/diagnostic paths disclose none.",
+    "result": "counterexample-found remains unchanged; scoped detected-drift/prepared-call controls only.",
+    "acceptance": "Historical26/132 unchanged; all132 required cases binding."
+  },
+  "open": [
+    "Atomic installation check-to-use exclusion",
+    "Full transitive routine/relation/operator/view/type/role/config dependency coverage",
+    "Authenticated exact backend registration",
+    "Ordinary direct SQL bypass/complete diagnostic closure",
+    "Authority and publication lifecycle integration",
+    "Original B10 and complete native backend qualification"
+  ],
+  "attempts": [
+    "Initial failed run omitted persistent psql database; corrected and retained.",
+    "Two earlier72-observation source-specific receipts preserved before runner/type refinements."
+  ],
+  "logs": {
+    "pre-type-refinement-positive.log": "91701a5b407a1243298a9eaf31f36fb3cb2372539103cb72165b3eecc94604fa",
+    "initial-failed-run.log": "d728c24af87436120ccc149e355e1896a682663407409777a52843068228f23b",
+    "custody-unit.log": "feabb4add9e2ca3374e538560634d1ec97dc4f4ce89aab12f3d726e36ea9b2f6",
+    "astra-review.json": "1ede9fc204d91ffd513cfdb8848fb39576224db812ae8c3cdfff34f87c8b19fe",
+    "pre-refinement-receipt.json": "d6fce7a7a3bb2e2442c36bbb23e85a7cb564a8bf79814d397e52a036483b6d33",
+    "pre-refinement-run.log": "f7a6ab7fb8b3888eb6be7311bf171b63012070464e242b11e24b44bcd673ab16",
+    "current-native-run.log": "7c2c0fe625bb98454714adfc7bde6fc01b98cfe561585dd7a6a79cc269dd0912",
+    "pre-type-refinement-run.log": "7c2c0fe625bb98454714adfc7bde6fc01b98cfe561585dd7a6a79cc269dd0912",
+    "pre-type-refinement-receipt.json": "529daa61e71acf06a4c63942770bd5ad7d0d5d205a73255b92ffc40395358f30",
+    "positive-disclosure.log": "e123e22a82a0a34e89c13f2a59b3fab989267ba37e276ab05203a3e1f5f4ac35"
+  }
+}

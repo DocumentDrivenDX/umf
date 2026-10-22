@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {enforceProjectionPolicy} from './projection-policy-schema';
 const schema=await Bun.file('spec/core/record-postgresql-projection.schema.json').json(),field=await Bun.file('spec/core/field-sqlserver-projection.schema.json').json();
 schema.$id='urn:umf:core:record-sqlserver-projection:1.0.0';schema.title='Authored record to SQL Server DDL';schema.properties.operation.const='project-record-sqlserver';schema.properties.request.properties.fields.items.properties.nativeType=field.properties.request.properties.nativeType;

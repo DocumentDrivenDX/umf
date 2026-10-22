@@ -12,29 +12,7 @@
   ],
   "$defs": {
     "document": {
-      "oneOf": [
-        {
-          "$ref": "urn:umf:core:0.1.0"
-        },
-        {
-          "$ref": "urn:umf:core:0.2.0"
-        },
-        {
-          "$ref": "urn:umf:core:0.3.0"
-        },
-        {
-          "$ref": "urn:umf:core:0.4.0"
-        },
-        {
-          "$ref": "urn:umf:core:0.5.0"
-        },
-        {
-          "$ref": "urn:umf:core:0.6.0"
-        },
-        {
-          "$ref": "urn:umf:core:0.7.0"
-        }
-      ]
+      "$ref": "urn:umf:core:0.10.0"
     },
     "archive": {
       "oneOf": [
@@ -707,10 +685,10 @@
           "const": "1.0.0"
         },
         "source": {
-          "$ref": "urn:umf:core:0.7.0"
+          "$ref": "urn:umf:core:0.10.0"
         },
         "target": {
-          "$ref": "urn:umf:core:0.1.0"
+          "$ref": "urn:umf:core:0.10.0"
         },
         "binding": {
           "enum": [

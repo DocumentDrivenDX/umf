@@ -1,0 +1,343 @@
+{
+  "artifactId": "natural-count-self-join",
+  "compiledOwnerIr": {
+    "rules": [
+      {
+        "actions": [
+          "read"
+        ],
+        "condition": {
+          "literal": true
+        },
+        "disclosure": [
+          [
+            {
+              "documentId": "domain",
+              "elementId": "salary",
+              "moduleId": "m"
+            },
+            "withheld"
+          ]
+        ],
+        "effect": "permit",
+        "id": "reader",
+        "target": {
+          "documentId": "domain",
+          "elementId": "Resource",
+          "moduleId": "m"
+        }
+      },
+      {
+        "actions": [
+          "read"
+        ],
+        "condition": {
+          "exists": {
+            "association": {
+              "documentId": "domain",
+              "elementId": "Ownership",
+              "moduleId": "m"
+            },
+            "condition": {
+              "and": [
+                {
+                  "equal": [
+                    {
+                      "endpoint": {
+                        "association": {
+                          "documentId": "domain",
+                          "elementId": "Ownership",
+                          "moduleId": "m"
+                        },
+                        "binding": {
+                          "variable": 0
+                        },
+                        "keyId": "pk",
+                        "role": "resource",
+                        "target": {
+                          "documentId": "domain",
+                          "elementId": "Resource",
+                          "moduleId": "m"
+                        }
+                      }
+                    },
+                    {
+                      "identity": {
+                        "binding": "resource",
+                        "keyId": "pk",
+                        "target": {
+                          "documentId": "domain",
+                          "elementId": "Resource",
+                          "moduleId": "m"
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "exists": {
+                    "association": {
+                      "documentId": "domain",
+                      "elementId": "Assignment",
+                      "moduleId": "m"
+                    },
+                    "condition": {
+                      "and": [
+                        {
+                          "equal": [
+                            {
+                              "endpoint": {
+                                "association": {
+                                  "documentId": "domain",
+                                  "elementId": "Assignment",
+                                  "moduleId": "m"
+                                },
+                                "binding": {
+                                  "variable": 1
+                                },
+                                "keyId": "pk",
+                                "role": "staff",
+                                "target": {
+                                  "documentId": "domain",
+                                  "elementId": "Staff",
+                                  "moduleId": "m"
+                                }
+                              }
+                            },
+                            {
+                              "identity": {
+                                "binding": "subject",
+                                "keyId": "pk",
+                                "target": {
+                                  "documentId": "domain",
+                                  "elementId": "Staff",
+                                  "moduleId": "m"
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "equal": [
+                            {
+                              "endpoint": {
+                                "association": {
+                                  "documentId": "domain",
+                                  "elementId": "Assignment",
+                                  "moduleId": "m"
+                                },
+                                "binding": {
+                                  "variable": 1
+                                },
+                                "keyId": "pk",
+                                "role": "project",
+                                "target": {
+                                  "documentId": "domain",
+                                  "elementId": "Project",
+                                  "moduleId": "m"
+                                }
+                              }
+                            },
+                            {
+                              "endpoint": {
+                                "association": {
+                                  "documentId": "domain",
+                                  "elementId": "Ownership",
+                                  "moduleId": "m"
+                                },
+                                "binding": {
+                                  "variable": 0
+                                },
+                                "keyId": "pk",
+                                "role": "project",
+                                "target": {
+                                  "documentId": "domain",
+                                  "elementId": "Project",
+                                  "moduleId": "m"
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "equal": [
+                            {
+                              "field": {
+                                "binding": {
+                                  "variable": 1
+                                },
+                                "domain": {
+                                  "allowedValues": null,
+                                  "cardinality": "one",
+                                  "facets": {},
+                                  "nullability": "required",
+                                  "scalarType": "boolean"
+                                },
+                                "field": {
+                                  "documentId": "domain",
+                                  "elementId": "active",
+                                  "moduleId": "m"
+                                }
+                              }
+                            },
+                            {
+                              "constant": {
+                                "domain": {
+                                  "allowedValues": null,
+                                  "cardinality": "one",
+                                  "facets": {},
+                                  "nullability": "required",
+                                  "scalarType": "boolean"
+                                },
+                                "field": {
+                                  "documentId": "domain",
+                                  "elementId": "active",
+                                  "moduleId": "m"
+                                },
+                                "literal": {
+                                  "boolean": true
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    "slot": 1
+                  }
+                }
+              ]
+            },
+            "slot": 0
+          }
+        },
+        "disclosure": [],
+        "effect": "require",
+        "id": "membership",
+        "target": {
+          "documentId": "domain",
+          "elementId": "Resource",
+          "moduleId": "m"
+        }
+      }
+    ],
+    "version": "weft.security.logical-ir/0.1.0"
+  },
+  "packet": {
+    "version": "umf.security.graph-parity-candidate/0.1.0",
+    "sql": "(((SELECT valid FROM (SELECT (EXISTS(SELECT 1 FROM truss.prop_def p WHERE p.type_id OPERATOR(pg_catalog.=) '1'::pg_catalog.int4 AND p.prop_id OPERATOR(pg_catalog.=) '101'::pg_catalog.int4 AND p.home OPERATOR(pg_catalog.=) 'json'::pg_catalog.text AND p.scalar_type OPERATOR(pg_catalog.=) 'string'::pg_catalog.text AND p.nullability OPERATOR(pg_catalog.=) 'required'::pg_catalog.text AND p.cardinality OPERATOR(pg_catalog.=) 'one'::pg_catalog.text AND p.retired_rev IS NULL) AND EXISTS(SELECT 1 FROM truss.prop_def p WHERE p.type_id OPERATOR(pg_catalog.=) '1'::pg_catalog.int4 AND p.prop_id OPERATOR(pg_catalog.=) '102'::pg_catalog.int4 AND p.home OPERATOR(pg_catalog.=) 'json'::pg_catalog.text AND p.scalar_type OPERATOR(pg_catalog.=) 'string'::pg_catalog.text AND p.nullability OPERATOR(pg_catalog.=) 'required'::pg_catalog.text AND p.cardinality OPERATOR(pg_catalog.=) 'one'::pg_catalog.text AND p.retired_rev IS NULL) AND EXISTS(SELECT 1 FROM truss.type_def t WHERE t.type_id OPERATOR(pg_catalog.=) '1'::pg_catalog.int4 AND t.kind OPERATOR(pg_catalog.=) 'record'::pg_catalog.text AND NOT t.provisional AND t.retired_rev IS NULL) AND NOT EXISTS(SELECT 1 FROM truss.object g WHERE g.type_id OPERATOR(pg_catalog.=) '1'::pg_catalog.int4 AND NOT ((pg_catalog.jsonb_typeof(g.props OPERATOR(pg_catalog.->) '101'::pg_catalog.text) OPERATOR(pg_catalog.=) 'string'::pg_catalog.text) IS TRUE AND (pg_catalog.jsonb_typeof(g.props OPERATOR(pg_catalog.->) '102'::pg_catalog.text) OPERATOR(pg_catalog.=) 'string'::pg_catalog.text) IS TRUE)))::pg_catalog.text AS valid) candidate_validity)::pg_catalog.bool) IS TRUE AND ((SELECT valid FROM (SELECT (EXISTS(SELECT 1 FROM truss.prop_def p WHERE p.type_id OPERATOR(pg_catalog.=) '4'::pg_catalog.int4 AND p.prop_id OPERATOR(pg_catalog.=) '401'::pg_catalog.int4 AND p.home OPERATOR(pg_catalog.=) 'json'::pg_catalog.text AND p.scalar_type OPERATOR(pg_catalog.=) 'string'::pg_catalog.text AND p.nullability OPERATOR(pg_catalog.=) 'required'::pg_catalog.text AND p.cardinality OPERATOR(pg_catalog.=) 'one'::pg_catalog.text AND p.retired_rev IS NULL) AND EXISTS(SELECT 1 FROM truss.prop_def p WHERE p.type_id OPERATOR(pg_catalog.=) '4'::pg_catalog.int4 AND p.prop_id OPERATOR(pg_catalog.=) '402'::pg_catalog.int4 AND p.home OPERATOR(pg_catalog.=) 'json'::pg_catalog.text AND p.scalar_type OPERATOR(pg_catalog.=) 'string'::pg_catalog.text AND p.nullability OPERATOR(pg_catalog.=) 'required'::pg_catalog.text AND p.cardinality OPERATOR(pg_catalog.=) 'one'::pg_catalog.text AND p.retired_rev IS NULL) AND EXISTS(SELECT 1 FROM truss.prop_def p WHERE p.type_id OPERATOR(pg_catalog.=) '4'::pg_catalog.int4 AND p.prop_id OPERATOR(pg_catalog.=) '403'::pg_catalog.int4 AND p.home OPERATOR(pg_catalog.=) 'json'::pg_catalog.text AND p.scalar_type OPERATOR(pg_catalog.=) 'boolean'::pg_catalog.text AND p.nullability OPERATOR(pg_catalog.=) 'required'::pg_catalog.text AND p.cardinality OPERATOR(pg_catalog.=) 'one'::pg_catalog.text AND p.retired_rev IS NULL) AND EXISTS(SELECT 1 FROM truss.type_def t WHERE t.type_id OPERATOR(pg_catalog.=) '4'::pg_catalog.int4 AND t.kind OPERATOR(pg_catalog.=) 'record'::pg_catalog.text AND NOT t.provisional AND t.retired_rev IS NULL) AND EXISTS(SELECT 1 FROM truss.rel_def r WHERE r.rel_type_id OPERATOR(pg_catalog.=) '41'::pg_catalog.int4 AND r.assoc_type_id OPERATOR(pg_catalog.=) '4'::pg_catalog.int4 AND r.retired_rev IS NULL) AND NOT EXISTS(SELECT 1 FROM truss.edge g WHERE g.rel_type_id OPERATOR(pg_catalog.=) '41'::pg_catalog.int4 AND NOT ((pg_catalog.jsonb_typeof(g.props OPERATOR(pg_catalog.->) '401'::pg_catalog.text) OPERATOR(pg_catalog.=) 'string'::pg_catalog.text) IS TRUE AND (pg_catalog.jsonb_typeof(g.props OPERATOR(pg_catalog.->) '402'::pg_catalog.text) OPERATOR(pg_catalog.=) 'string'::pg_catalog.text) IS TRUE AND (pg_catalog.jsonb_typeof(g.props OPERATOR(pg_catalog.->) '403'::pg_catalog.text) OPERATOR(pg_catalog.=) 'boolean'::pg_catalog.text) IS TRUE)))::pg_catalog.text AS valid) candidate_validity)::pg_catalog.bool) IS TRUE AND ((SELECT valid FROM (SELECT (EXISTS(SELECT 1 FROM truss.prop_def p WHERE p.type_id OPERATOR(pg_catalog.=) '5'::pg_catalog.int4 AND p.prop_id OPERATOR(pg_catalog.=) '501'::pg_catalog.int4 AND p.home OPERATOR(pg_catalog.=) 'json'::pg_catalog.text AND p.scalar_type OPERATOR(pg_catalog.=) 'string'::pg_catalog.text AND p.nullability OPERATOR(pg_catalog.=) 'required'::pg_catalog.text AND p.cardinality OPERATOR(pg_catalog.=) 'one'::pg_catalog.text AND p.retired_rev IS NULL) AND EXISTS(SELECT 1 FROM truss.prop_def p WHERE p.type_id OPERATOR(pg_catalog.=) '5'::pg_catalog.int4 AND p.prop_id OPERATOR(pg_catalog.=) '502'::pg_catalog.int4 AND p.home OPERATOR(pg_catalog.=) 'json'::pg_catalog.text AND p.scalar_type OPERATOR(pg_catalog.=) 'string'::pg_catalog.text AND p.nullability OPERATOR(pg_catalog.=) 'required'::pg_catalog.text AND p.cardinality OPERATOR(pg_catalog.=) 'one'::pg_catalog.text AND p.retired_rev IS NULL) AND EXISTS(SELECT 1 FROM truss.type_def t WHERE t.type_id OPERATOR(pg_catalog.=) '5'::pg_catalog.int4 AND t.kind OPERATOR(pg_catalog.=) 'record'::pg_catalog.text AND NOT t.provisional AND t.retired_rev IS NULL) AND EXISTS(SELECT 1 FROM truss.rel_def r WHERE r.rel_type_id OPERATOR(pg_catalog.=) '51'::pg_catalog.int4 AND r.assoc_type_id OPERATOR(pg_catalog.=) '5'::pg_catalog.int4 AND r.retired_rev IS NULL) AND NOT EXISTS(SELECT 1 FROM truss.edge g WHERE g.rel_type_id OPERATOR(pg_catalog.=) '51'::pg_catalog.int4 AND NOT ((pg_catalog.jsonb_typeof(g.props OPERATOR(pg_catalog.->) '501'::pg_catalog.text) OPERATOR(pg_catalog.=) 'string'::pg_catalog.text) IS TRUE AND (pg_catalog.jsonb_typeof(g.props OPERATOR(pg_catalog.->) '502'::pg_catalog.text) OPERATOR(pg_catalog.=) 'string'::pg_catalog.text) IS TRUE)))::pg_catalog.text AS valid) candidate_validity)::pg_catalog.bool) IS TRUE AND ((TRUE) IS TRUE) AND ((CASE WHEN EXISTS(SELECT 1 FROM (SELECT g.id::pg_catalog.text AS native_id,g.rel_type_id::pg_catalog.text AS native_type,g.source_id::pg_catalog.text AS source_id,g.source_type::pg_catalog.text AS source_type,g.target_id::pg_catalog.text AS target_id,g.target_type::pg_catalog.text AS target_type,CASE WHEN pg_catalog.jsonb_typeof(g.props OPERATOR(pg_catalog.->) '501'::pg_catalog.text) OPERATOR(pg_catalog.=) 'string'::pg_catalog.text THEN (g.props OPERATOR(pg_catalog.->>) '501'::pg_catalog.text)::pg_catalog.text ELSE NULL END AS \"resource_id\",CASE WHEN pg_catalog.jsonb_typeof(g.props OPERATOR(pg_catalog.->) '502'::pg_catalog.text) OPERATOR(pg_catalog.=) 'string'::pg_catalog.text THEN (g.props OPERATOR(pg_catalog.->>) '502'::pg_catalog.text)::pg_catalog.text ELSE NULL END AS \"project_id\" FROM truss.edge g WHERE g.rel_type_id OPERATOR(pg_catalog.=) '51'::pg_catalog.int4) AS \"association_0\" WHERE ((((\"association_0\".\"resource_id\" OPERATOR(pg_catalog.=) $1)) AND (CASE WHEN EXISTS(SELECT 1 FROM (SELECT g.id::pg_catalog.text AS native_id,g.rel_type_id::pg_catalog.text AS native_type,g.source_id::pg_catalog.text AS source_id,g.source_type::pg_catalog.text AS source_type,g.target_id::pg_catalog.text AS target_id,g.target_type::pg_catalog.text AS target_type,CASE WHEN pg_catalog.jsonb_typeof(g.props OPERATOR(pg_catalog.->) '401'::pg_catalog.text) OPERATOR(pg_catalog.=) 'string'::pg_catalog.text THEN (g.props OPERATOR(pg_catalog.->>) '401'::pg_catalog.text)::pg_catalog.text ELSE NULL END AS \"employee_id\",CASE WHEN pg_catalog.jsonb_typeof(g.props OPERATOR(pg_catalog.->) '402'::pg_catalog.text) OPERATOR(pg_catalog.=) 'string'::pg_catalog.text THEN (g.props OPERATOR(pg_catalog.->>) '402'::pg_catalog.text)::pg_catalog.text ELSE NULL END AS \"project_id\",CASE WHEN pg_catalog.jsonb_typeof(g.props OPERATOR(pg_catalog.->) '403'::pg_catalog.text) OPERATOR(pg_catalog.=) 'boolean'::pg_catalog.text THEN (g.props OPERATOR(pg_catalog.->>) '403'::pg_catalog.text)::pg_catalog.bool ELSE NULL END AS \"active\" FROM truss.edge g WHERE g.rel_type_id OPERATOR(pg_catalog.=) '41'::pg_catalog.int4) AS \"association_1\" WHERE ((((\"association_1\".\"employee_id\" OPERATOR(pg_catalog.=) (SELECT \"subject_row\".\"id\" FROM (SELECT g.id::pg_catalog.text AS native_id,g.type_id::pg_catalog.text AS native_type,CASE WHEN pg_catalog.jsonb_typeof(g.props OPERATOR(pg_catalog.->) '101'::pg_catalog.text) OPERATOR(pg_catalog.=) 'string'::pg_catalog.text THEN (g.props OPERATOR(pg_catalog.->>) '101'::pg_catalog.text)::pg_catalog.text ELSE NULL END AS \"id\",CASE WHEN pg_catalog.jsonb_typeof(g.props OPERATOR(pg_catalog.->) '102'::pg_catalog.text) OPERATOR(pg_catalog.=) 'string'::pg_catalog.text THEN (g.props OPERATOR(pg_catalog.->>) '102'::pg_catalog.text)::pg_catalog.text ELSE NULL END AS \"native_login\" FROM truss.object g WHERE g.type_id OPERATOR(pg_catalog.=) '1'::pg_catalog.int4) AS \"subject_row\" WHERE \"subject_row\".\"native_login\" OPERATOR(pg_catalog.=) SESSION_USER::pg_catalog.text))) AND ((\"association_1\".\"project_id\" OPERATOR(pg_catalog.=) \"association_0\".\"project_id\")) AND ((\"association_1\".\"active\" OPERATOR(pg_catalog.=) TRUE)))) IS TRUE) THEN TRUE WHEN EXISTS(SELECT 1 FROM (SELECT g.id::pg_catalog.text AS native_id,g.rel_type_id::pg_catalog.text AS native_type,g.source_id::pg_catalog.text AS source_id,g.source_type::pg_catalog.text AS source_type,g.target_id::pg_catalog.text AS target_id,g.target_type::pg_catalog.text AS target_type,CASE WHEN pg_catalog.jsonb_typeof(g.props OPERATOR(pg_catalog.->) '401'::pg_catalog.text) OPERATOR(pg_catalog.=) 'string'::pg_catalog.text THEN (g.props OPERATOR(pg_catalog.->>) '401'::pg_catalog.text)::pg_catalog.text ELSE NULL END AS \"employee_id\",CASE WHEN pg_catalog.jsonb_typeof(g.props OPERATOR(pg_catalog.->) '402'::pg_catalog.text) OPERATOR(pg_catalog.=) 'string'::pg_catalog.text THEN (g.props OPERATOR(pg_catalog.->>) '402'::pg_catalog.text)::pg_catalog.text ELSE NULL END AS \"project_id\",CASE WHEN pg_catalog.jsonb_typeof(g.props OPERATOR(pg_catalog.->) '403'::pg_catalog.text) OPERATOR(pg_catalog.=) 'boolean'::pg_catalog.text THEN (g.props OPERATOR(pg_catalog.->>) '403'::pg_catalog.text)::pg_catalog.bool ELSE NULL END AS \"active\" FROM truss.edge g WHERE g.rel_type_id OPERATOR(pg_catalog.=) '41'::pg_catalog.int4) AS \"association_1\" WHERE ((((\"association_1\".\"employee_id\" OPERATOR(pg_catalog.=) (SELECT \"subject_row\".\"id\" FROM (SELECT g.id::pg_catalog.text AS native_id,g.type_id::pg_catalog.text AS native_type,CASE WHEN pg_catalog.jsonb_typeof(g.props OPERATOR(pg_catalog.->) '101'::pg_catalog.text) OPERATOR(pg_catalog.=) 'string'::pg_catalog.text THEN (g.props OPERATOR(pg_catalog.->>) '101'::pg_catalog.text)::pg_catalog.text ELSE NULL END AS \"id\",CASE WHEN pg_catalog.jsonb_typeof(g.props OPERATOR(pg_catalog.->) '102'::pg_catalog.text) OPERATOR(pg_catalog.=) 'string'::pg_catalog.text THEN (g.props OPERATOR(pg_catalog.->>) '102'::pg_catalog.text)::pg_catalog.text ELSE NULL END AS \"native_login\" FROM truss.object g WHERE g.type_id OPERATOR(pg_catalog.=) '1'::pg_catalog.int4) AS \"subject_row\" WHERE \"subject_row\".\"native_login\" OPERATOR(pg_catalog.=) SESSION_USER::pg_catalog.text))) AND ((\"association_1\".\"project_id\" OPERATOR(pg_catalog.=) \"association_0\".\"project_id\")) AND ((\"association_1\".\"active\" OPERATOR(pg_catalog.=) TRUE)))) IS NULL) THEN NULL::pg_catalog.bool ELSE FALSE END))) IS TRUE) THEN TRUE WHEN EXISTS(SELECT 1 FROM (SELECT g.id::pg_catalog.text AS native_id,g.rel_type_id::pg_catalog.text AS native_type,g.source_id::pg_catalog.text AS source_id,g.source_type::pg_catalog.text AS source_type,g.target_id::pg_catalog.text AS target_id,g.target_type::pg_catalog.text AS target_type,CASE WHEN pg_catalog.jsonb_typeof(g.props OPERATOR(pg_catalog.->) '501'::pg_catalog.text) OPERATOR(pg_catalog.=) 'string'::pg_catalog.text THEN (g.props OPERATOR(pg_catalog.->>) '501'::pg_catalog.text)::pg_catalog.text ELSE NULL END AS \"resource_id\",CASE WHEN pg_catalog.jsonb_typeof(g.props OPERATOR(pg_catalog.->) '502'::pg_catalog.text) OPERATOR(pg_catalog.=) 'string'::pg_catalog.text THEN (g.props OPERATOR(pg_catalog.->>) '502'::pg_catalog.text)::pg_catalog.text ELSE NULL END AS \"project_id\" FROM truss.edge g WHERE g.rel_type_id OPERATOR(pg_catalog.=) '51'::pg_catalog.int4) AS \"association_0\" WHERE ((((\"association_0\".\"resource_id\" OPERATOR(pg_catalog.=) $1)) AND (CASE WHEN EXISTS(SELECT 1 FROM (SELECT g.id::pg_catalog.text AS native_id,g.rel_type_id::pg_catalog.text AS native_type,g.source_id::pg_catalog.text AS source_id,g.source_type::pg_catalog.text AS source_type,g.target_id::pg_catalog.text AS target_id,g.target_type::pg_catalog.text AS target_type,CASE WHEN pg_catalog.jsonb_typeof(g.props OPERATOR(pg_catalog.->) '401'::pg_catalog.text) OPERATOR(pg_catalog.=) 'string'::pg_catalog.text THEN (g.props OPERATOR(pg_catalog.->>) '401'::pg_catalog.text)::pg_catalog.text ELSE NULL END AS \"employee_id\",CASE WHEN pg_catalog.jsonb_typeof(g.props OPERATOR(pg_catalog.->) '402'::pg_catalog.text) OPERATOR(pg_catalog.=) 'string'::pg_catalog.text THEN (g.props OPERATOR(pg_catalog.->>) '402'::pg_catalog.text)::pg_catalog.text ELSE NULL END AS \"project_id\",CASE WHEN pg_catalog.jsonb_typeof(g.props OPERATOR(pg_catalog.->) '403'::pg_catalog.text) OPERATOR(pg_catalog.=) 'boolean'::pg_catalog.text THEN (g.props OPERATOR(pg_catalog.->>) '403'::pg_catalog.text)::pg_catalog.bool ELSE NULL END AS \"active\" FROM truss.edge g WHERE g.rel_type_id OPERATOR(pg_catalog.=) '41'::pg_catalog.int4) AS \"association_1\" WHERE ((((\"association_1\".\"employee_id\" OPERATOR(pg_catalog.=) (SELECT \"subject_row\".\"id\" FROM (SELECT g.id::pg_catalog.text AS native_id,g.type_id::pg_catalog.text AS native_type,CASE WHEN pg_catalog.jsonb_typeof(g.props OPERATOR(pg_catalog.->) '101'::pg_catalog.text) OPERATOR(pg_catalog.=) 'string'::pg_catalog.text THEN (g.props OPERATOR(pg_catalog.->>) '101'::pg_catalog.text)::pg_catalog.text ELSE NULL END AS \"id\",CASE WHEN pg_catalog.jsonb_typeof(g.props OPERATOR(pg_catalog.->) '102'::pg_catalog.text) OPERATOR(pg_catalog.=) 'string'::pg_catalog.text THEN (g.props OPERATOR(pg_catalog.->>) '102'::pg_catalog.text)::pg_catalog.text ELSE NULL END AS \"native_login\" FROM truss.object g WHERE g.type_id OPERATOR(pg_catalog.=) '1'::pg_catalog.int4) AS \"subject_row\" WHERE \"subject_row\".\"native_login\" OPERATOR(pg_catalog.=) SESSION_USER::pg_catalog.text))) AND ((\"association_1\".\"project_id\" OPERATOR(pg_catalog.=) \"association_0\".\"project_id\")) AND ((\"association_1\".\"active\" OPERATOR(pg_catalog.=) TRUE)))) IS TRUE) THEN TRUE WHEN EXISTS(SELECT 1 FROM (SELECT g.id::pg_catalog.text AS native_id,g.rel_type_id::pg_catalog.text AS native_type,g.source_id::pg_catalog.text AS source_id,g.source_type::pg_catalog.text AS source_type,g.target_id::pg_catalog.text AS target_id,g.target_type::pg_catalog.text AS target_type,CASE WHEN pg_catalog.jsonb_typeof(g.props OPERATOR(pg_catalog.->) '401'::pg_catalog.text) OPERATOR(pg_catalog.=) 'string'::pg_catalog.text THEN (g.props OPERATOR(pg_catalog.->>) '401'::pg_catalog.text)::pg_catalog.text ELSE NULL END AS \"employee_id\",CASE WHEN pg_catalog.jsonb_typeof(g.props OPERATOR(pg_catalog.->) '402'::pg_catalog.text) OPERATOR(pg_catalog.=) 'string'::pg_catalog.text THEN (g.props OPERATOR(pg_catalog.->>) '402'::pg_catalog.text)::pg_catalog.text ELSE NULL END AS \"project_id\",CASE WHEN pg_catalog.jsonb_typeof(g.props OPERATOR(pg_catalog.->) '403'::pg_catalog.text) OPERATOR(pg_catalog.=) 'boolean'::pg_catalog.text THEN (g.props OPERATOR(pg_catalog.->>) '403'::pg_catalog.text)::pg_catalog.bool ELSE NULL END AS \"active\" FROM truss.edge g WHERE g.rel_type_id OPERATOR(pg_catalog.=) '41'::pg_catalog.int4) AS \"association_1\" WHERE ((((\"association_1\".\"employee_id\" OPERATOR(pg_catalog.=) (SELECT \"subject_row\".\"id\" FROM (SELECT g.id::pg_catalog.text AS native_id,g.type_id::pg_catalog.text AS native_type,CASE WHEN pg_catalog.jsonb_typeof(g.props OPERATOR(pg_catalog.->) '101'::pg_catalog.text) OPERATOR(pg_catalog.=) 'string'::pg_catalog.text THEN (g.props OPERATOR(pg_catalog.->>) '101'::pg_catalog.text)::pg_catalog.text ELSE NULL END AS \"id\",CASE WHEN pg_catalog.jsonb_typeof(g.props OPERATOR(pg_catalog.->) '102'::pg_catalog.text) OPERATOR(pg_catalog.=) 'string'::pg_catalog.text THEN (g.props OPERATOR(pg_catalog.->>) '102'::pg_catalog.text)::pg_catalog.text ELSE NULL END AS \"native_login\" FROM truss.object g WHERE g.type_id OPERATOR(pg_catalog.=) '1'::pg_catalog.int4) AS \"subject_row\" WHERE \"subject_row\".\"native_login\" OPERATOR(pg_catalog.=) SESSION_USER::pg_catalog.text))) AND ((\"association_1\".\"project_id\" OPERATOR(pg_catalog.=) \"association_0\".\"project_id\")) AND ((\"association_1\".\"active\" OPERATOR(pg_catalog.=) TRUE)))) IS NULL) THEN NULL::pg_catalog.bool ELSE FALSE END))) IS NULL) THEN NULL::pg_catalog.bool ELSE FALSE END)) IS TRUE)",
+    "sources": {
+      "Staff": {
+        "sql": "SELECT g.id::pg_catalog.text AS native_id,g.type_id::pg_catalog.text AS native_type,CASE WHEN pg_catalog.jsonb_typeof(g.props OPERATOR(pg_catalog.->) '101'::pg_catalog.text) OPERATOR(pg_catalog.=) 'string'::pg_catalog.text THEN (g.props OPERATOR(pg_catalog.->>) '101'::pg_catalog.text)::pg_catalog.text ELSE NULL END AS \"id\",CASE WHEN pg_catalog.jsonb_typeof(g.props OPERATOR(pg_catalog.->) '102'::pg_catalog.text) OPERATOR(pg_catalog.=) 'string'::pg_catalog.text THEN (g.props OPERATOR(pg_catalog.->>) '102'::pg_catalog.text)::pg_catalog.text ELSE NULL END AS \"native_login\" FROM truss.object g WHERE g.type_id OPERATOR(pg_catalog.=) '1'::pg_catalog.int4",
+        "validitySql": "SELECT (EXISTS(SELECT 1 FROM truss.prop_def p WHERE p.type_id OPERATOR(pg_catalog.=) '1'::pg_catalog.int4 AND p.prop_id OPERATOR(pg_catalog.=) '101'::pg_catalog.int4 AND p.home OPERATOR(pg_catalog.=) 'json'::pg_catalog.text AND p.scalar_type OPERATOR(pg_catalog.=) 'string'::pg_catalog.text AND p.nullability OPERATOR(pg_catalog.=) 'required'::pg_catalog.text AND p.cardinality OPERATOR(pg_catalog.=) 'one'::pg_catalog.text AND p.retired_rev IS NULL) AND EXISTS(SELECT 1 FROM truss.prop_def p WHERE p.type_id OPERATOR(pg_catalog.=) '1'::pg_catalog.int4 AND p.prop_id OPERATOR(pg_catalog.=) '102'::pg_catalog.int4 AND p.home OPERATOR(pg_catalog.=) 'json'::pg_catalog.text AND p.scalar_type OPERATOR(pg_catalog.=) 'string'::pg_catalog.text AND p.nullability OPERATOR(pg_catalog.=) 'required'::pg_catalog.text AND p.cardinality OPERATOR(pg_catalog.=) 'one'::pg_catalog.text AND p.retired_rev IS NULL) AND EXISTS(SELECT 1 FROM truss.type_def t WHERE t.type_id OPERATOR(pg_catalog.=) '1'::pg_catalog.int4 AND t.kind OPERATOR(pg_catalog.=) 'record'::pg_catalog.text AND NOT t.provisional AND t.retired_rev IS NULL) AND NOT EXISTS(SELECT 1 FROM truss.object g WHERE g.type_id OPERATOR(pg_catalog.=) '1'::pg_catalog.int4 AND NOT ((pg_catalog.jsonb_typeof(g.props OPERATOR(pg_catalog.->) '101'::pg_catalog.text) OPERATOR(pg_catalog.=) 'string'::pg_catalog.text) IS TRUE AND (pg_catalog.jsonb_typeof(g.props OPERATOR(pg_catalog.->) '102'::pg_catalog.text) OPERATOR(pg_catalog.=) 'string'::pg_catalog.text) IS TRUE)))::pg_catalog.text AS valid"
+      },
+      "Project": {
+        "sql": "SELECT g.id::pg_catalog.text AS native_id,g.type_id::pg_catalog.text AS native_type,CASE WHEN pg_catalog.jsonb_typeof(g.props OPERATOR(pg_catalog.->) '201'::pg_catalog.text) OPERATOR(pg_catalog.=) 'string'::pg_catalog.text THEN (g.props OPERATOR(pg_catalog.->>) '201'::pg_catalog.text)::pg_catalog.text ELSE NULL END AS \"id\" FROM truss.object g WHERE g.type_id OPERATOR(pg_catalog.=) '2'::pg_catalog.int4",
+        "validitySql": "SELECT (EXISTS(SELECT 1 FROM truss.prop_def p WHERE p.type_id OPERATOR(pg_catalog.=) '2'::pg_catalog.int4 AND p.prop_id OPERATOR(pg_catalog.=) '201'::pg_catalog.int4 AND p.home OPERATOR(pg_catalog.=) 'json'::pg_catalog.text AND p.scalar_type OPERATOR(pg_catalog.=) 'string'::pg_catalog.text AND p.nullability OPERATOR(pg_catalog.=) 'required'::pg_catalog.text AND p.cardinality OPERATOR(pg_catalog.=) 'one'::pg_catalog.text AND p.retired_rev IS NULL) AND EXISTS(SELECT 1 FROM truss.type_def t WHERE t.type_id OPERATOR(pg_catalog.=) '2'::pg_catalog.int4 AND t.kind OPERATOR(pg_catalog.=) 'record'::pg_catalog.text AND NOT t.provisional AND t.retired_rev IS NULL) AND NOT EXISTS(SELECT 1 FROM truss.object g WHERE g.type_id OPERATOR(pg_catalog.=) '2'::pg_catalog.int4 AND NOT ((pg_catalog.jsonb_typeof(g.props OPERATOR(pg_catalog.->) '201'::pg_catalog.text) OPERATOR(pg_catalog.=) 'string'::pg_catalog.text) IS TRUE)))::pg_catalog.text AS valid"
+      },
+      "Resource": {
+        "sql": "SELECT g.id::pg_catalog.text AS native_id,g.type_id::pg_catalog.text AS native_type,CASE WHEN pg_catalog.jsonb_typeof(g.props OPERATOR(pg_catalog.->) '301'::pg_catalog.text) OPERATOR(pg_catalog.=) 'string'::pg_catalog.text THEN (g.props OPERATOR(pg_catalog.->>) '301'::pg_catalog.text)::pg_catalog.text ELSE NULL END AS \"id\" FROM truss.object g WHERE g.type_id OPERATOR(pg_catalog.=) '3'::pg_catalog.int4",
+        "validitySql": "SELECT (EXISTS(SELECT 1 FROM truss.prop_def p WHERE p.type_id OPERATOR(pg_catalog.=) '3'::pg_catalog.int4 AND p.prop_id OPERATOR(pg_catalog.=) '301'::pg_catalog.int4 AND p.home OPERATOR(pg_catalog.=) 'json'::pg_catalog.text AND p.scalar_type OPERATOR(pg_catalog.=) 'string'::pg_catalog.text AND p.nullability OPERATOR(pg_catalog.=) 'required'::pg_catalog.text AND p.cardinality OPERATOR(pg_catalog.=) 'one'::pg_catalog.text AND p.retired_rev IS NULL) AND EXISTS(SELECT 1 FROM truss.type_def t WHERE t.type_id OPERATOR(pg_catalog.=) '3'::pg_catalog.int4 AND t.kind OPERATOR(pg_catalog.=) 'record'::pg_catalog.text AND NOT t.provisional AND t.retired_rev IS NULL) AND NOT EXISTS(SELECT 1 FROM truss.object g WHERE g.type_id OPERATOR(pg_catalog.=) '3'::pg_catalog.int4 AND NOT ((pg_catalog.jsonb_typeof(g.props OPERATOR(pg_catalog.->) '301'::pg_catalog.text) OPERATOR(pg_catalog.=) 'string'::pg_catalog.text) IS TRUE)))::pg_catalog.text AS valid"
+      },
+      "Ownership": {
+        "sql": "SELECT g.id::pg_catalog.text AS native_id,g.rel_type_id::pg_catalog.text AS native_type,g.source_id::pg_catalog.text AS source_id,g.source_type::pg_catalog.text AS source_type,g.target_id::pg_catalog.text AS target_id,g.target_type::pg_catalog.text AS target_type,CASE WHEN pg_catalog.jsonb_typeof(g.props OPERATOR(pg_catalog.->) '501'::pg_catalog.text) OPERATOR(pg_catalog.=) 'string'::pg_catalog.text THEN (g.props OPERATOR(pg_catalog.->>) '501'::pg_catalog.text)::pg_catalog.text ELSE NULL END AS \"resource_id\",CASE WHEN pg_catalog.jsonb_typeof(g.props OPERATOR(pg_catalog.->) '502'::pg_catalog.text) OPERATOR(pg_catalog.=) 'string'::pg_catalog.text THEN (g.props OPERATOR(pg_catalog.->>) '502'::pg_catalog.text)::pg_catalog.text ELSE NULL END AS \"project_id\" FROM truss.edge g WHERE g.rel_type_id OPERATOR(pg_catalog.=) '51'::pg_catalog.int4",
+        "validitySql": "SELECT (EXISTS(SELECT 1 FROM truss.prop_def p WHERE p.type_id OPERATOR(pg_catalog.=) '5'::pg_catalog.int4 AND p.prop_id OPERATOR(pg_catalog.=) '501'::pg_catalog.int4 AND p.home OPERATOR(pg_catalog.=) 'json'::pg_catalog.text AND p.scalar_type OPERATOR(pg_catalog.=) 'string'::pg_catalog.text AND p.nullability OPERATOR(pg_catalog.=) 'required'::pg_catalog.text AND p.cardinality OPERATOR(pg_catalog.=) 'one'::pg_catalog.text AND p.retired_rev IS NULL) AND EXISTS(SELECT 1 FROM truss.prop_def p WHERE p.type_id OPERATOR(pg_catalog.=) '5'::pg_catalog.int4 AND p.prop_id OPERATOR(pg_catalog.=) '502'::pg_catalog.int4 AND p.home OPERATOR(pg_catalog.=) 'json'::pg_catalog.text AND p.scalar_type OPERATOR(pg_catalog.=) 'string'::pg_catalog.text AND p.nullability OPERATOR(pg_catalog.=) 'required'::pg_catalog.text AND p.cardinality OPERATOR(pg_catalog.=) 'one'::pg_catalog.text AND p.retired_rev IS NULL) AND EXISTS(SELECT 1 FROM truss.type_def t WHERE t.type_id OPERATOR(pg_catalog.=) '5'::pg_catalog.int4 AND t.kind OPERATOR(pg_catalog.=) 'record'::pg_catalog.text AND NOT t.provisional AND t.retired_rev IS NULL) AND EXISTS(SELECT 1 FROM truss.rel_def r WHERE r.rel_type_id OPERATOR(pg_catalog.=) '51'::pg_catalog.int4 AND r.assoc_type_id OPERATOR(pg_catalog.=) '5'::pg_catalog.int4 AND r.retired_rev IS NULL) AND NOT EXISTS(SELECT 1 FROM truss.edge g WHERE g.rel_type_id OPERATOR(pg_catalog.=) '51'::pg_catalog.int4 AND NOT ((pg_catalog.jsonb_typeof(g.props OPERATOR(pg_catalog.->) '501'::pg_catalog.text) OPERATOR(pg_catalog.=) 'string'::pg_catalog.text) IS TRUE AND (pg_catalog.jsonb_typeof(g.props OPERATOR(pg_catalog.->) '502'::pg_catalog.text) OPERATOR(pg_catalog.=) 'string'::pg_catalog.text) IS TRUE)))::pg_catalog.text AS valid"
+      },
+      "Assignment": {
+        "sql": "SELECT g.id::pg_catalog.text AS native_id,g.rel_type_id::pg_catalog.text AS native_type,g.source_id::pg_catalog.text AS source_id,g.source_type::pg_catalog.text AS source_type,g.target_id::pg_catalog.text AS target_id,g.target_type::pg_catalog.text AS target_type,CASE WHEN pg_catalog.jsonb_typeof(g.props OPERATOR(pg_catalog.->) '401'::pg_catalog.text) OPERATOR(pg_catalog.=) 'string'::pg_catalog.text THEN (g.props OPERATOR(pg_catalog.->>) '401'::pg_catalog.text)::pg_catalog.text ELSE NULL END AS \"employee_id\",CASE WHEN pg_catalog.jsonb_typeof(g.props OPERATOR(pg_catalog.->) '402'::pg_catalog.text) OPERATOR(pg_catalog.=) 'string'::pg_catalog.text THEN (g.props OPERATOR(pg_catalog.->>) '402'::pg_catalog.text)::pg_catalog.text ELSE NULL END AS \"project_id\",CASE WHEN pg_catalog.jsonb_typeof(g.props OPERATOR(pg_catalog.->) '403'::pg_catalog.text) OPERATOR(pg_catalog.=) 'boolean'::pg_catalog.text THEN (g.props OPERATOR(pg_catalog.->>) '403'::pg_catalog.text)::pg_catalog.bool ELSE NULL END AS \"active\" FROM truss.edge g WHERE g.rel_type_id OPERATOR(pg_catalog.=) '41'::pg_catalog.int4",
+        "validitySql": "SELECT (EXISTS(SELECT 1 FROM truss.prop_def p WHERE p.type_id OPERATOR(pg_catalog.=) '4'::pg_catalog.int4 AND p.prop_id OPERATOR(pg_catalog.=) '401'::pg_catalog.int4 AND p.home OPERATOR(pg_catalog.=) 'json'::pg_catalog.text AND p.scalar_type OPERATOR(pg_catalog.=) 'string'::pg_catalog.text AND p.nullability OPERATOR(pg_catalog.=) 'required'::pg_catalog.text AND p.cardinality OPERATOR(pg_catalog.=) 'one'::pg_catalog.text AND p.retired_rev IS NULL) AND EXISTS(SELECT 1 FROM truss.prop_def p WHERE p.type_id OPERATOR(pg_catalog.=) '4'::pg_catalog.int4 AND p.prop_id OPERATOR(pg_catalog.=) '402'::pg_catalog.int4 AND p.home OPERATOR(pg_catalog.=) 'json'::pg_catalog.text AND p.scalar_type OPERATOR(pg_catalog.=) 'string'::pg_catalog.text AND p.nullability OPERATOR(pg_catalog.=) 'required'::pg_catalog.text AND p.cardinality OPERATOR(pg_catalog.=) 'one'::pg_catalog.text AND p.retired_rev IS NULL) AND EXISTS(SELECT 1 FROM truss.prop_def p WHERE p.type_id OPERATOR(pg_catalog.=) '4'::pg_catalog.int4 AND p.prop_id OPERATOR(pg_catalog.=) '403'::pg_catalog.int4 AND p.home OPERATOR(pg_catalog.=) 'json'::pg_catalog.text AND p.scalar_type OPERATOR(pg_catalog.=) 'boolean'::pg_catalog.text AND p.nullability OPERATOR(pg_catalog.=) 'required'::pg_catalog.text AND p.cardinality OPERATOR(pg_catalog.=) 'one'::pg_catalog.text AND p.retired_rev IS NULL) AND EXISTS(SELECT 1 FROM truss.type_def t WHERE t.type_id OPERATOR(pg_catalog.=) '4'::pg_catalog.int4 AND t.kind OPERATOR(pg_catalog.=) 'record'::pg_catalog.text AND NOT t.provisional AND t.retired_rev IS NULL) AND EXISTS(SELECT 1 FROM truss.rel_def r WHERE r.rel_type_id OPERATOR(pg_catalog.=) '41'::pg_catalog.int4 AND r.assoc_type_id OPERATOR(pg_catalog.=) '4'::pg_catalog.int4 AND r.retired_rev IS NULL) AND NOT EXISTS(SELECT 1 FROM truss.edge g WHERE g.rel_type_id OPERATOR(pg_catalog.=) '41'::pg_catalog.int4 AND NOT ((pg_catalog.jsonb_typeof(g.props OPERATOR(pg_catalog.->) '401'::pg_catalog.text) OPERATOR(pg_catalog.=) 'string'::pg_catalog.text) IS TRUE AND (pg_catalog.jsonb_typeof(g.props OPERATOR(pg_catalog.->) '402'::pg_catalog.text) OPERATOR(pg_catalog.=) 'string'::pg_catalog.text) IS TRUE AND (pg_catalog.jsonb_typeof(g.props OPERATOR(pg_catalog.->) '403'::pg_catalog.text) OPERATOR(pg_catalog.=) 'boolean'::pg_catalog.text) IS TRUE)))::pg_catalog.text AS valid"
+      }
+    },
+    "specs": {
+      "Staff": {
+        "kind": "object",
+        "typeId": "1",
+        "owner": "1",
+        "fields": [
+          [
+            "staffId",
+            "101",
+            "id",
+            "string"
+          ],
+          [
+            "login",
+            "102",
+            "native_login",
+            "string"
+          ]
+        ]
+      },
+      "Project": {
+        "kind": "object",
+        "typeId": "2",
+        "owner": "2",
+        "fields": [
+          [
+            "projectId",
+            "201",
+            "id",
+            "string"
+          ]
+        ]
+      },
+      "Resource": {
+        "kind": "object",
+        "typeId": "3",
+        "owner": "3",
+        "fields": [
+          [
+            "resourceId",
+            "301",
+            "id",
+            "string"
+          ]
+        ]
+      },
+      "Assignment": {
+        "kind": "edge",
+        "typeId": "41",
+        "owner": "4",
+        "fields": [
+          [
+            "assignmentStaff",
+            "401",
+            "employee_id",
+            "string"
+          ],
+          [
+            "assignmentProject",
+            "402",
+            "project_id",
+            "string"
+          ],
+          [
+            "active",
+            "403",
+            "active",
+            "boolean"
+          ]
+        ]
+      },
+      "Ownership": {
+        "kind": "edge",
+        "typeId": "51",
+        "owner": "5",
+        "fields": [
+          [
+            "ownerResource",
+            "501",
+            "resource_id",
+            "string"
+          ],
+          [
+            "ownerProject",
+            "502",
+            "project_id",
+            "string"
+          ]
+        ]
+      }
+    }
+  }
+}

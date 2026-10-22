@@ -1,8 +1,9 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {chromium} from 'playwright';
 import {importAvroSchema} from '../../src/adapters/avro';
-import {classifyAvroRelationships,type AvroRelationshipRequest} from '../../src/core-ideals/relationship-avro';
+import {classifyAvroRelationships, type AvroRelationshipRequest} from '../../src/core-ideals/relationship-avro';
 const fixtures=(await Bun.file('fixtures/avro/relationship-discovery-cases.json').json()).cases;
 const cases=fixtures.map((c:any)=>{const source=importAvroSchema(c.schemaText,{id:c.id}),request:AvroRelationshipRequest={mode:'report',profile:'schema-structure',nativeSource:{schema:c.schemaText,dependencies:[]}};return {source,request,expected:classifyAvroRelationships(source,request)};});
 const bundleRequest:AvroRelationshipRequest={mode:'report',profile:'schema-structure',nativeSource:{schema:' "sales.Order" \n',dependencies:[{id:'orders',schema:fixtures[0].schemaText}]}},bundleSource=importAvroSchema(bundleRequest.nativeSource.schema,{id:'bundle-browser',dependencies:bundleRequest.nativeSource.dependencies});

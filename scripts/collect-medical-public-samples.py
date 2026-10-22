@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Explicit developer collection from downloaded, fingerprinted public archives.
 
 Requires pydicom 3.0.2. This never runs in pack ingestion or in the browser.

@@ -1,0 +1,42 @@
+{
+  "status": "source-level-shared-origin-regressions-passed",
+  "command": [
+    "cargo",
+    "test",
+    "--offline",
+    "--locked",
+    "-p",
+    "weft-core",
+    "--lib",
+    "--",
+    "--nocapture"
+  ],
+  "cwd": "/Users/erik/Projects/weft",
+  "exitCode": 0,
+  "summary": {
+    "passed": 124,
+    "failed": 0,
+    "ignored": 0,
+    "measured": 0,
+    "filteredOut": 0
+  },
+  "rawOutputSha256": "ab4bf1ac78c2c7a0e1f74631b77e57fc0cdde82a44ba05d9d6b3b2ce7893adba",
+  "selectedSourcePins": {
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_semantic_coverage.rs": "77c265449b54fa611c3b52953b3fa15df88bb8b70e43ddc9c1cbbea293988534"
+  },
+  "controls": [
+    "Shared originalIDs preserve all capability origins without duplicating contracts",
+    "Both sourcecomplete alternatives retained",
+    "Each second-origin atom remains mandatory despite complete first alternative",
+    "Actual zeroedge empty declaration retains selection and refuses still-required deployment"
+  ],
+  "scope": "Source-level private correspondence under explicit fixture requirement premise. Selected source pin is not full build custody; kind/occurrence completeness, issuer authentication, native enforcement and integrated refresh remain open.",
+  "review": {
+    "reviewer": "Astra ultra",
+    "mode": "read-only",
+    "result": "No actionable findings; controls nonvacuous within source-level correspondence",
+    "independentRustExecution": false
+  },
+  "freshNativeExecution": false,
+  "promotedAcceptanceCases": []
+}

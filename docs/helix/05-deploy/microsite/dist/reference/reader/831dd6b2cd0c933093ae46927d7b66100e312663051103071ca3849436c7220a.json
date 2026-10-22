@@ -1,0 +1,30 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"lookupMedicalTerminology\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "query",
+      "optional": false,
+      "type": "{ system: string; release: string; code: string; }"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"MedicalTerminologyRecord\"]"
+      ],
+      "name": "records",
+      "optional": true,
+      "type": "MedicalTerminologyRecord[] | undefined"
+    }
+  ],
+  "purpose": "Exact local lookup; an unavailable dictionary is not evidence that a code is invalid.",
+  "related": [],
+  "returns": "{ status: \"matched\" | \"not-in-subset\" | \"source-unavailable\"; matches: MedicalTerminologyRecord[]; }",
+  "task": "Other APIs",
+  "type": "(query: { system: string; release: string; code: string; }, records?: MedicalTerminologyRecord[]) => { status: \"matched\" | \"not-in-subset\" | \"source-unavailable\"; matches: MedicalTerminologyRecord[]; }"
+}

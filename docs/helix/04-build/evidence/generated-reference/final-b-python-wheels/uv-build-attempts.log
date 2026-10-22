@@ -1,0 +1,18 @@
+Building wheel...
+Traceback (most recent call last):
+  File "<string>", line 8, in <module>
+    import hatchling.build as backend
+ModuleNotFoundError: No module named 'hatchling'
+error: Failed to build `/Users/erik/.codex/worktrees/d8be/umf/python`
+  cause: The build backend returned an error
+  cause: Call to `hatchling.build.build_wheel` failed (exit status: 1)
+
+hint: This error likely indicates that `umf-core@0.9.0` depends on `hatchling`, but doesn't declare it as a build dependency. If `umf-core` is a first-party package, consider adding `hatchling` to its `build-system.requires`. Otherwise, either add it to your `pyproject.toml` under:
+
+[tool.uv.extra-build-dependencies]
+umf-core = ["hatchling"]
+
+or `uv pip install hatchling` into the environment and re-run with `--no-build-isolation`.
+error: Could not acquire lock
+  cause: Could not create temporary file
+  cause: Operation not permitted (os error 1) at path "/Users/erik/.cache/uv/.tmpo2UMcO"

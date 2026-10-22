@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 3373,
+        "line": 12,
+        "path": "src/model/csv-boolean-lexical.ts",
+        "sha256": "b1a40aaeba2c97bc181736bb87ef204240490b25614b3a643ad61b77bd1af2cc"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "CsvBooleanLexicalRequest",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface CsvBooleanLexicalRequest {\n profile:'umf.csv-boolean-lexical/1.0.0';field:{module:string;element:string};\n token:'true'|'false'|'True'|'False';sourceContext:Json;\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"CsvBooleanLexicalRequest\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 3373,
+      "line": 12,
+      "path": "src/model/csv-boolean-lexical.ts",
+      "sha256": "b1a40aaeba2c97bc181736bb87ef204240490b25614b3a643ad61b77bd1af2cc"
+    }
+  ],
+  "summary": "Type declaration · src/model/csv-boolean-lexical.ts",
+  "title": "CsvBooleanLexicalRequest"
+}

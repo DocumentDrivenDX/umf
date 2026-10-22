@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 6757,
+        "line": 15,
+        "path": "src/core-ideals/key-avro.ts",
+        "sha256": "2a613118190de3ee3fe61302b460343e2d7d6bb6a7779706702e49123d348ac6"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "AvroKeyObservation",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface AvroKeyObservation {nativePath:string;name:string;fields:{name:string;nativePath:string}[];enforcement:'not-expressible';authorIntent:'unknown';provenance:'inferred';scope:'schema-declaration'}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"AvroKeyObservation\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 6757,
+      "line": 15,
+      "path": "src/core-ideals/key-avro.ts",
+      "sha256": "2a613118190de3ee3fe61302b460343e2d7d6bb6a7779706702e49123d348ac6"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/key-avro.ts",
+  "title": "AvroKeyObservation"
+}

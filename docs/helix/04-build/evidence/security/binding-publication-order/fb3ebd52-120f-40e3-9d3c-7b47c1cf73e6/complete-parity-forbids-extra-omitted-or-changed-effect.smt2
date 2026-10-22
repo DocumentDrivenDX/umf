@@ -1,0 +1,21 @@
+; benchmark generated from python API
+(set-info :status unknown)
+(declare-sort Definition 0)
+(declare-fun physical_value_after (Definition) Int)
+(declare-fun physical_value_before (Definition) Int)
+(declare-fun inventory_before (Definition) Bool)
+(declare-fun inventory_after (Definition) Bool)
+(declare-fun fault_definition () Definition)
+(assert
+ (forall ((definition Definition) )(let (($x42 (= (physical_value_before definition) (physical_value_after definition))))
+ (let (($x43 (inventory_before definition)))
+ (let (($x46 (= $x43 (inventory_after definition))))
+ (and $x46 (=> $x43 $x42))))))
+ )
+(assert
+ (let ((?x36 (physical_value_after fault_definition)))
+(let ((?x35 (physical_value_before fault_definition)))
+(let (($x37 (and (distinct ?x35 ?x36) true)))
+(let (($x32 (inventory_before fault_definition)))
+(or (and (distinct $x32 (inventory_after fault_definition)) true) (and $x32 $x37)))))))
+(check-sat)

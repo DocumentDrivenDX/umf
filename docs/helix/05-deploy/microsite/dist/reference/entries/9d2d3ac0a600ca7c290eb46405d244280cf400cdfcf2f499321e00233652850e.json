@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 6252,
+        "line": 13,
+        "path": "src/core-ideals/sqlserver-field.ts",
+        "sha256": "262111d80c56a8f09e9ea6a380826e7176614841d15eb20c0d4989aed372e607"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "SqlServerFieldClassification",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface SqlServerFieldClassification {\n operation:'classify-sqlserver-field';version:'1.0.0';status:'classified'|'blocked';source:Document;target?:Document;request:SqlServerFieldRequest;binding:typeof binding;\n mapping:{origin:'classified';kind:'field';idealPath:string;nativePath:string;nativeFragment:Json;basis:'checked-catalog-column-membership';outcome:'exact'|'unknown'};\n residuals:{path:string;value:Json;reason:string;recovery:'Original assertion and native fragment retained in source; reclassify with corrected provenance'}[];diagnostics:Diagnostic[];\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"SqlServerFieldClassification\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 6252,
+      "line": 13,
+      "path": "src/core-ideals/sqlserver-field.ts",
+      "sha256": "262111d80c56a8f09e9ea6a380826e7176614841d15eb20c0d4989aed372e607"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/sqlserver-field.ts",
+  "title": "SqlServerFieldClassification"
+}

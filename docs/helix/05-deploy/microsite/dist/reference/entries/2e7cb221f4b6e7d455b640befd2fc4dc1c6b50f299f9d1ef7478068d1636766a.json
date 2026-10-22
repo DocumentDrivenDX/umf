@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 13857,
+        "line": 19,
+        "path": "src/extensions/security/write.ts",
+        "sha256": "bd7475dd43d42407e8900136c9dc5647195c9e02cdaa0d1d5b65bd83d196dee0"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "SecurityWriteRequest",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface SecurityWriteRequest {operation:'create'|'update'|'delete';original?:SecurityWriteState;proposed?:SecurityWriteState}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"SecurityWriteRequest\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 13857,
+      "line": 19,
+      "path": "src/extensions/security/write.ts",
+      "sha256": "bd7475dd43d42407e8900136c9dc5647195c9e02cdaa0d1d5b65bd83d196dee0"
+    }
+  ],
+  "summary": "Type declaration · src/extensions/security/write.ts",
+  "title": "SecurityWriteRequest"
+}

@@ -1,0 +1,23 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"inspectIcebergTableTransforms\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "Current selected fields only: no historical spec rebinding or transform execution.",
+  "related": [],
+  "returns": "IcebergTableTransforms",
+  "task": "Inspect and select",
+  "type": "(document: Document) => IcebergTableTransforms"
+}

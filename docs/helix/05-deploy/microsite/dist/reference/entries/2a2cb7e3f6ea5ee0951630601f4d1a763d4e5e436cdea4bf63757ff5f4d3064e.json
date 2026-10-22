@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 8193,
+        "line": 19,
+        "path": "src/model/facets.ts",
+        "sha256": "54d789632de775afe7d97518c7fb5f2b493a4d7353ad46b3e91e265a1967208a"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "CoreFacetDeclaration",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface CoreFacetDeclaration {operation:'declare-core-facets';version:'3.0.0';source:Document;target:Document;identity:CoreFacetIdentity;request:CoreFacetPatch;provenance:{origin:'authored';idealPath:string;binding:{id:'umf.core.facets.authoring';version:'3.0.0'};basis:'explicit-author-declaration';nativePath:null}}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"CoreFacetDeclaration\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 8193,
+      "line": 19,
+      "path": "src/model/facets.ts",
+      "sha256": "54d789632de775afe7d97518c7fb5f2b493a4d7353ad46b3e91e265a1967208a"
+    }
+  ],
+  "summary": "Type declaration · src/model/facets.ts",
+  "title": "CoreFacetDeclaration"
+}

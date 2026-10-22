@@ -1,0 +1,53 @@
+{
+  "payload": {
+    "innsigle": "1",
+    "type": "https://innsigle.dev/claim/colophon/v1",
+    "issued_at": "2026-10-16T21:04:22Z",
+    "issuer": {
+      "id": "documentdrivendx-umf",
+      "name": "DocumentDrivenDX UMF",
+      "key_id": "ed25519:47994639d3e328f8464e99c3f926b293",
+      "key_url": "https://documentdrivendx.github.io/umf/.well-known/innsigle/keys.json"
+    },
+    "subjects": [
+      {
+        "uri": "https://documentdrivendx.github.io/umf/actions/execution.html/",
+        "digest": {
+          "alg": "sha256",
+          "value": "d920965773764659ebcf0190e2ee7ef61b4b7dbcdf5a12e7ea068b2540ae0c9a"
+        }
+      }
+    ],
+    "colophon": {
+      "schema_version": "1",
+      "composition": "mixed",
+      "ingredients": [
+        {
+          "kind": "human",
+          "name": "operator",
+          "role": "outline"
+        },
+        {
+          "kind": "model",
+          "name": "Claude",
+          "role": "expand"
+        },
+        {
+          "kind": "human",
+          "name": "operator",
+          "role": "final-edit"
+        }
+      ],
+      "notes": null
+    }
+  },
+  "payload_encoding": "json",
+  "signatures": [
+    {
+      "key_id": "ed25519:47994639d3e328f8464e99c3f926b293",
+      "alg": "ed25519",
+      "sig": "2sitkXULL-w_Majqg0kia4biOv415yBmkbrNDKPhSBTOmMWH7U4sjDN_b9koPbcCTEVlj6NbDbzf9UkQQQ_vAw",
+      "signed_at": "2026-10-16T21:04:22Z"
+    }
+  ]
+}

@@ -1,0 +1,448 @@
+{
+  "status": "passed",
+  "runId": "b43170ee-8787-44c3-aed9-c0e0948bc80e",
+  "sourceDigests": {
+    "/Users/erik/.codex/worktrees/1598/umf/tools/security/truss-subject-probe.py": "47582b5cadd0933e319a2e26b0b19c007718b256bf688fc8b026c7aa1bbed8c7",
+    "tests/security/native/pg-raw-membership.py": "19a062f5cb18532b9da3925d6444faa78f2a92c2bfe8bfaedfd78887ef9d29ab",
+    "tests/security/native/pg-raw-membership.sql": "ac5640077786e81b80e536acc7c5d89d8f6747e1d8f425f17c4e3dfc3b37daf6",
+    "tests/security/native/pg-raw-membership-oracle.json": "1b04b8a2fe0de4f72ca2926398ff2717909bdbdee9d53e4284e4f4bd2fc5acee",
+    "tools/security/truss-subject-probe.ts": "e5bc5c102167fdd0ce6c937844442b7c8476f31275610491f344cdc7483b38c8",
+    "tools/security/truss-principal-typecheck.json": "9be1b3f8fcd2609e0d25754f872d0e505f6bf4ef4afed5b0b76183d04913d8be",
+    "/Users/erik/Projects/truss/tests/pg-principal-wire.test.ts": "1eb2f948ff70b2b7d4b6e9596e3e5b3b707775339ef2a2d4162acaece88456e5",
+    "/Users/erik/Projects/truss/packages/pg-runtime/src/index.ts": "3f9090957a5b94b677022f0682a919b94591fff8e3ba87fe7e5ae35c6e3f6d7d",
+    "/Users/erik/Projects/truss/packages/pg-runtime/src/native-query.ts": "a404706f40228a3c43514da2447db19c2b0dd5a37f491f7cfa63bcf15cac4b76",
+    "/Users/erik/Projects/truss/packages/pg-runtime/src/wire.ts": "1a9cf79f5d1b700d7813ee24dabd6bcf3abc2f9a4eee134c7c223cd4dc5e0cd0",
+    "/Users/erik/Projects/truss/packages/pg-runtime/src/journal.ts": "83acc32f461371df5108df7a1dd5177d7edea5a749ea4a1f07b71ed4073d3be3",
+    "/Users/erik/Projects/truss/packages/pg-runtime/package.json": "958e5c9e451ec2d9c523c5c3dcafad3b259d8a2b4204c9397d4fb8ea1ef7a562",
+    "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/package.json": "f7b678a8055c234669e8dd272dd624771e29d9f0e3a3353f15c3005ab1a5fd29"
+  },
+  "versions": {
+    "postgresql": {
+      "number": "170009",
+      "build": "PostgreSQL 17.9 (Debian 17.9-1.pgdg13+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"
+    },
+    "bun": "1.4.2",
+    "pg": "8.16.3",
+    "python": "3.9.6",
+    "imageId": "sha256:2a0d0fe14825b0939f78a8cad5cd4e6aa68bf94d0e5dd96e24b6d23af4315545"
+  },
+  "observations": [
+    {
+      "id": "umf_sec_alice:count-empty-success",
+      "expected": "0",
+      "observed": "0"
+    },
+    {
+      "id": "umf_sec_alice:mapping-private",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "umf_sec_alice:commit",
+      "expected": "committed",
+      "observed": "committed"
+    },
+    {
+      "id": "umf_sec_alice:no-quarantine",
+      "expected": 0,
+      "observed": 0
+    },
+    {
+      "id": "umf_sec_bob:count-empty-success",
+      "expected": "0",
+      "observed": "0"
+    },
+    {
+      "id": "umf_sec_bob:mapping-private",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "umf_sec_bob:commit",
+      "expected": "committed",
+      "observed": "committed"
+    },
+    {
+      "id": "umf_sec_bob:no-quarantine",
+      "expected": 0,
+      "observed": 0
+    },
+    {
+      "id": "umf_sec_outsider:count-empty-success",
+      "expected": "0",
+      "observed": "0"
+    },
+    {
+      "id": "umf_sec_outsider:mapping-private",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "umf_sec_outsider:commit",
+      "expected": "committed",
+      "observed": "committed"
+    },
+    {
+      "id": "umf_sec_outsider:no-quarantine",
+      "expected": 0,
+      "observed": 0
+    },
+    {
+      "id": "missing:begin-refused",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "missing:empty-query-refused",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "missing:quarantine",
+      "expected": 1,
+      "observed": 1
+    },
+    {
+      "id": "missing:new-admission-refused",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "duplicate:begin-refused",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "duplicate:empty-query-refused",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "duplicate:quarantine",
+      "expected": 1,
+      "observed": 1
+    },
+    {
+      "id": "duplicate:new-admission-refused",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "null:begin-refused",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "null:empty-query-refused",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "null:quarantine",
+      "expected": 1,
+      "observed": 1
+    },
+    {
+      "id": "null:new-admission-refused",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "wrong-oid:begin-refused",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "wrong-oid:empty-query-refused",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "wrong-oid:quarantine",
+      "expected": 1,
+      "observed": 1
+    },
+    {
+      "id": "wrong-oid:new-admission-refused",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "wrong-column:begin-refused",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "wrong-column:empty-query-refused",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "wrong-column:quarantine",
+      "expected": 1,
+      "observed": 1
+    },
+    {
+      "id": "wrong-column:new-admission-refused",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "native-error:begin-refused",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "native-error:empty-query-refused",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "native-error:quarantine",
+      "expected": 1,
+      "observed": 1
+    },
+    {
+      "id": "native-error:new-admission-refused",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "application-overlap:false:native-wait-observed",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "application-overlap:false:local-refusal:0",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "application-overlap:false:local-refusal:1",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "application-overlap:false:local-refusal:2",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "application-overlap:false:local-refusal:3",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "application-overlap:false:local-refusal:4",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "application-overlap:false:local-refusal:5",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "application-overlap:false:no-new-original-journal",
+      "expected": 98,
+      "observed": 98
+    },
+    {
+      "id": "application-overlap:false:first-result",
+      "expected": "original-first",
+      "observed": "original-first"
+    },
+    {
+      "id": "application-overlap:false:next-result",
+      "expected": "subsequent",
+      "observed": "subsequent"
+    },
+    {
+      "id": "application-overlap:false:next-checkout",
+      "expected": "healthy",
+      "observed": "healthy"
+    },
+    {
+      "id": "application-overlap:false:no-quarantine",
+      "expected": 0,
+      "observed": 0
+    },
+    {
+      "id": "application-overlap:true:native-wait-observed",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "application-overlap:true:local-refusal:0",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "application-overlap:true:local-refusal:1",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "application-overlap:true:local-refusal:2",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "application-overlap:true:local-refusal:3",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "application-overlap:true:local-refusal:4",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "application-overlap:true:local-refusal:5",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "application-overlap:true:no-new-original-journal",
+      "expected": 111,
+      "observed": 111
+    },
+    {
+      "id": "application-overlap:true:first-result",
+      "expected": "original-first",
+      "observed": "original-first"
+    },
+    {
+      "id": "application-overlap:true:next-result",
+      "expected": "subsequent",
+      "observed": "subsequent"
+    },
+    {
+      "id": "application-overlap:true:next-checkout",
+      "expected": "healthy",
+      "observed": "healthy"
+    },
+    {
+      "id": "application-overlap:true:no-quarantine",
+      "expected": 0,
+      "observed": 0
+    },
+    {
+      "id": "preflight-original-native-wait",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "preflight-not-returned-during-wait",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "pending-preflight-local-refusal:0",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "pending-preflight-local-refusal:1",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "pending-preflight-local-refusal:2",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "pending-preflight-local-refusal:3",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "pending-preflight-local-refusal:4",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "after-pending-preflight-empty-count",
+      "expected": "0",
+      "observed": "0"
+    },
+    {
+      "id": "composite-native-query",
+      "expected": "1",
+      "observed": "1"
+    },
+    {
+      "id": "composite-reversed-order-refused",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "unstable-or-writable:{\"isolation\":\"read_committed\",\"accessMode\":\"read_only\"}",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "unstable-or-writable:{\"isolation\":\"repeatable_read\",\"accessMode\":\"read_write\"}",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "mode-refusal-keeps-healthy-source",
+      "expected": "1",
+      "observed": "1"
+    },
+    {
+      "id": "invalid-selection:undefined",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "invalid-selection:[]",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "invalid-selection:[\"subject_key\",\"subject_key\"]",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "invalid-selection:[\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\"]",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "native-original-subject-key-roster",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "native-original-composite-key-values",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "original-preflight-attempts",
+      "expected": 11,
+      "observed": 11
+    },
+    {
+      "id": "only-admitted-empty-queries",
+      "expected": 4,
+      "observed": 4
+    },
+    {
+      "id": "original-journal-complete-including-native-error",
+      "expected": true,
+      "observed": true
+    }
+  ],
+  "journalEvidence": {
+    "privateDirectory": "/private/tmp/umf-truss-subject-journal-gaydjal1",
+    "originalQueries": 185,
+    "preflights": 11,
+    "emptyQueries": 4
+  },
+  "scope": "Actual Truss pg-runtime optional subject preflight on fixed private fixture routine and PostgreSQL 17.9 original ordinary SCRAM sessions. Exact one ordered non-null TEXT tuple required before application SQL; stable read-only snapshot only. Routine deployment/source, authority generation/guard and all typed graph adoption remain external unqualified premises; no full B15 or acceptance criterion."
+}

@@ -1,0 +1,9 @@
+[
+  {
+    "stage": "native-concurrency-oracle",
+    "expected": "55000",
+    "observed": "55P03",
+    "reason": "Competing E blocks first on original anchor row FOR UPDATE NOWAIT, before inspecting its conflicting fullxid. Both contenders must refuse promptly; this control alone does not establish conflicting xid rejection.",
+    "fix": "Expect the exact earlier native lock refusal; forged full epoch and postcommit successor xid have separate55000 controls."
+  }
+]

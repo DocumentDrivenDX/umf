@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 12556,
+        "line": 83,
+        "path": "src/adapters/tablespec/index.ts",
+        "sha256": "8bfaa3f0ec637beffce4a7fae4a2389656f7829acfabc185105e346ad7e8194f"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "editTableSpecTable",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(document: Document, changes: Record<string, NativeJson>): Document"
+    ]
+  },
+  "id": "[\"api\",\".\",\"editTableSpecTable\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 12556,
+      "line": 83,
+      "path": "src/adapters/tablespec/index.ts",
+      "sha256": "8bfaa3f0ec637beffce4a7fae4a2389656f7829acfabc185105e346ad7e8194f"
+    }
+  ],
+  "summary": "Merge explicit table metadata; column ordering/identity requires separate operations.",
+  "title": "editTableSpecTable"
+}

@@ -1,0 +1,23 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"historicalCoreFacetPatch\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreFacetInterpreted\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "CoreFacetInterpreted"
+    }
+  ],
+  "purpose": "Historical projection bridge: refuses newer bounds rather than dropping them.",
+  "related": [],
+  "returns": "CoreFacetPatch",
+  "task": "Other APIs",
+  "type": "(input: CoreFacetInterpreted) => CoreFacetPatch"
+}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 17873,
+        "line": 102,
+        "path": "src/core-ideals/relationship-sqlserver-projection.ts",
+        "sha256": "e39914f71aaef4806cacbcf64171fa152048b02cecc8320a4a2f6bf76357f39a"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "recoverRelationshipSqlServerBinding",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: RelationshipSqlServerProjection, current: { format: \"sqlserver-ddl\"; sql: string; }): Document"
+    ]
+  },
+  "id": "[\"api\",\".\",\"recoverRelationshipSqlServerBinding\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 17873,
+      "line": 102,
+      "path": "src/core-ideals/relationship-sqlserver-projection.ts",
+      "sha256": "e39914f71aaef4806cacbcf64171fa152048b02cecc8320a4a2f6bf76357f39a"
+    }
+  ],
+  "summary": "Public export · src/core-ideals/relationship-sqlserver-projection.ts",
+  "title": "recoverRelationshipSqlServerBinding"
+}

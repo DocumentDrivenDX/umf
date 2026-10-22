@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 4857,
+        "line": 9,
+        "path": "src/adapters/delta/parquet.ts",
+        "sha256": "26fdcbe08ecb36f04c1208e17b40eb2afc0ce58aa570f480ff65b9590223acc9"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "DeltaParquetActions",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface DeltaParquetActions {source:Document;status:'projected'|'blocked';complete:false;diagnostics:Diagnostic[];log?:Document;actions?:{row:number;action:string;value:NativeJson}[];omittedNullFields?:{row:number;path:string}[];scalarConversions?:DeltaScalarConversion[]}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"DeltaParquetActions\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 4857,
+      "line": 9,
+      "path": "src/adapters/delta/parquet.ts",
+      "sha256": "26fdcbe08ecb36f04c1208e17b40eb2afc0ce58aa570f480ff65b9590223acc9"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/delta/parquet.ts",
+  "title": "DeltaParquetActions"
+}

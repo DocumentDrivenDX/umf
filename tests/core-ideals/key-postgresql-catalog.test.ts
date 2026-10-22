@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
 import {inspectPostgresqlKeyCatalog} from '../../src/adapters/postgresql/key-catalog';
 import proof from '../../fixtures/validation/key-postgresql-discovery-native.json';

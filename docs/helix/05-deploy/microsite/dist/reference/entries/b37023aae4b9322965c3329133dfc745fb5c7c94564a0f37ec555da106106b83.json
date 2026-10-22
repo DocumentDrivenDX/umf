@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 12168,
+        "line": 106,
+        "path": "src/adapters/openapi/index.ts",
+        "sha256": "ed159dd79e74b077144ebcbfd16276e61a13c3406c490ad9cf2fbe7adb80ca2e"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "exportOpenapiBundle",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(document: Document): { resources: { uri: string; text: string; format: \"json\" | \"yaml\"; }[]; source: Document; diagnostics: Diagnostic[]; baseUri?: string; schema: string; format: \"json\" | \"yaml\"; }"
+    ]
+  },
+  "id": "[\"api\",\".\",\"exportOpenapiBundle\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 12168,
+      "line": 106,
+      "path": "src/adapters/openapi/index.ts",
+      "sha256": "ed159dd79e74b077144ebcbfd16276e61a13c3406c490ad9cf2fbe7adb80ca2e"
+    }
+  ],
+  "summary": "Public export · src/adapters/openapi/index.ts",
+  "title": "exportOpenapiBundle"
+}

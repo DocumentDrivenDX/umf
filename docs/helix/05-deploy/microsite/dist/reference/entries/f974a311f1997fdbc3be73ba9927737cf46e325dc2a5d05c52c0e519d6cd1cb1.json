@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 6973,
+        "line": 12,
+        "path": "src/adapters/graphql/index.ts",
+        "sha256": "991af77edfd0bcb1de8b2589af596f7807ea67179da0baf5da6c009aaeb31590"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "GraphqlPayload",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface GraphqlPayload {profile:'graphql-js-17.0.2-sdl';mode?:'schema'|'fragment';ast:DocumentNode;originalSource:string;}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"GraphqlPayload\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 6973,
+      "line": 12,
+      "path": "src/adapters/graphql/index.ts",
+      "sha256": "991af77edfd0bcb1de8b2589af596f7807ea67179da0baf5da6c009aaeb31590"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/graphql/index.ts",
+  "title": "GraphqlPayload"
+}

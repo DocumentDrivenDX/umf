@@ -1,0 +1,639 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
+"""Native same-table search: shared sync/async snapshot, admission and decoding."""
+
+from __future__ import annotations
+
+import asyncio
+import inspect
+import json
+import math
+import time
+from collections.abc import Mapping
+from dataclasses import dataclass
+from datetime import timedelta
+from decimal import Decimal
+from typing import Any, Protocol, cast
+
+from pydantic import TypeAdapter
+
+from .codec_support import checked_row
+from .dsl import Score, Scored, SearchResult
+from .postgres_read import (
+    _ROLE,
+    ReadObligationUnmet,
+    TimedOut,
+    _catalog_fence_programs,
+    _compiled_admissions,
+    _early_relation_locks,
+    _observe_resolution,
+    _output_value,
+    _projection_admissions,
+    _snapshot_free_timeout,
+    _term_admissions,
+    native_read_admission,
+)
+from .reviewed import validate_list_parameters
+from .search_catalog import SearchEntry, SearchVariant
+from .targets import (
+    AsyncPostgresTarget,
+    PostgresConfiguration,
+    PostgresTarget,
+    TargetMismatch,
+    _milliseconds,
+    binding_digest,
+)
+from .types import Vector
+from .values import validate_vector
+
+
+class SearchError(ValueError):
+    pass
+
+
+class EmbedderMismatch(SearchError):
+    pass
+
+
+class Embedder(Protocol):
+    def identity(self) -> Mapping[str, object]: ...
+    def embed(self, texts: list[str]) -> list[Vector]: ...
+
+
+@dataclass(frozen=True)
+class _Hit:
+    key: tuple[Any, ...]
+    item: Any
+    score: Score
+
+
+def _statement(
+    entry: SearchEntry, path: str, params: Mapping[str, object], app_schema: str
+) -> tuple[str, tuple[object, ...]]:
+    program = entry.artifact()
+    value: Any = program
+    for part in path.strip("/").split("/"):
+        value = value[int(part)] if isinstance(value, list) else value[part]
+    slots = []
+    for parameter in value["parameters"]:
+        source = parameter["source"]
+        if "input" in source:
+            slots.append(params[source["input"]])
+        elif "appSchema" in source:
+            slots.append(app_schema)
+        elif "literal" in source:
+            literal = source["literal"]
+            if not isinstance(literal, dict) or set(literal) != {"string"}:
+                raise SearchError("unknown native search literal carrier")
+            slots.append(literal["string"])
+        else:
+            raise SearchError("unknown native search parameter source")
+    style = json.loads(entry.program.statements_json)[path]
+    return style["sql"], tuple(slots[index] for index in style["order"])
+
+
+def _decode(value: object, output: Mapping[str, Any]) -> object:
+    if value is None:
+        if not output["nullable"]:
+            raise SearchError("native non-null search output is null")
+        return None
+    carrier = output["carrier"]
+    try:
+        value = _output_value(value, dict(output))
+    except ReadObligationUnmet as error:
+        raise SearchError(str(error)) from error
+    if carrier in ("binary", "vector"):
+        return value
+    expected = {"string": str, "boolean": bool, "integer": int, "decimal": Decimal}.get(
+        carrier
+    )
+    if (
+        expected is None
+        or type(value) is not expected
+        or isinstance(value, Decimal)
+        and not value.is_finite()
+    ):
+        raise SearchError("native search scalar carrier mismatch")
+    return value
+
+
+def _hits(entry: SearchEntry, columns: tuple[str, ...], rows: list[Any]) -> list[_Hit]:
+    program = entry.artifact()
+    outputs = program["outputs"]
+    keys = program["keyOutputs"]
+    expected = tuple(v["name"] for v in outputs + keys) + ("__umf_score",)
+    if len(rows) > program["topK"]:
+        raise SearchError("native search exceeded its owner bound")
+    result = []
+    seen = set()
+    for row in rows:
+        checked = checked_row(expected, columns, row)
+        values = {v["name"]: _decode(checked[v["name"]], v) for v in outputs}
+        decoded = entry.result.model_validate(values, strict=True)
+        item = (
+            tuple(getattr(decoded, n) for n in entry.tuple_fields)
+            if entry.tuple_fields
+            else decoded
+        )
+        key_values = tuple(_decode(checked[v["name"]], v) for v in keys)
+        by_ref = {
+            (v["field"]["module"], v["field"]["element"]): value
+            for v, value in zip(keys, key_values, strict=True)
+        }
+        entry.key_model.model_validate(
+            {
+                name: by_ref[(module, field)]
+                for module, field, name in entry.key_model.UMF_FIELDS
+            },
+            strict=True,
+        )
+        if key_values in seen:
+            raise SearchError("duplicate complete search Key")
+        seen.add(key_values)
+        score_value = checked["__umf_score"]
+        if type(score_value) is not float:
+            raise SearchError("native score carrier mismatch")
+        score = Score(score_value, program["scoreKind"])
+        result.append(_Hit(key_values, item, score))
+    return result
+
+
+def _finish(variant: SearchVariant, legs: list[list[_Hit]]) -> SearchResult[Any]:
+    if variant.fusion is None:
+        if len(legs) != 1:
+            raise SearchError("fusion required for multiple native legs")
+        hits = legs[0][: variant.top_k]
+        items = tuple(
+            Scored(hit.item, index + 1, hit.score) for index, hit in enumerate(hits)
+        )
+    else:
+        if variant.fusion.kind != "rrf":
+            raise SearchError("target-defined fusion requires its own native program")
+        scores: dict[tuple[Any, ...], float] = {}
+        rows: dict[tuple[Any, ...], Any] = {}
+        for leg in legs:
+            for rank, hit in enumerate(leg, 1):
+                if hit.key in rows and rows[hit.key] != hit.item:
+                    raise SearchError(
+                        "same-snapshot search legs disagree on the original row"
+                    )
+                rows[hit.key] = hit.item
+                scores[hit.key] = scores.get(hit.key, 0.0) + 1.0 / (
+                    variant.fusion.constant + rank
+                )
+        ordered = sorted(scores, key=lambda key: (-scores[key], key))[: variant.top_k]
+        items = tuple(
+            Scored(rows[key], index + 1, Score(scores[key], "rrf"))
+            for index, key in enumerate(ordered)
+        )
+    return SearchResult(
+        items,
+        0,
+        any(e.artifact()["approximate"] for e in variant.entries),
+        any(e.artifact()["partial"] for e in variant.entries),
+    )
+
+
+def _metadata_programs(
+    program: Mapping[str, Any], app_schema: str
+) -> tuple[tuple[str, dict[str, object], str], ...]:
+    obligations = program["obligations"]
+    fence = _catalog_fence_programs(program)
+    programs = [] if fence is None else [(sql, parameters, "native text-search catalog fence differs") for sql, parameters in fence[1]]
+    programs.extend([(sql, parameters, "native search source schema differs")
+                for sql, parameters in _projection_admissions(obligations, app_schema)])
+    programs.extend((sql, parameters, "native search term configuration or index differs")
+                    for sql, parameters in _term_admissions(obligations, app_schema))
+    configuration = obligations.get("keywordConfiguration")
+    if configuration is not None:
+        if (
+            not isinstance(configuration, dict)
+            or configuration.get("version") != "umf.keyword-configuration/0.1"
+            or configuration.get("nativeCatalogBeforeAfter") is not True
+            or not isinstance(configuration.get("configurations"), list)
+            or len(configuration["configurations"]) != 1
+        ):
+            raise TargetMismatch("native keyword configuration packet required")
+        programs.extend((sql, parameters, "native keyword configuration differs")
+                        for sql, parameters in _compiled_admissions(configuration["configurations"], app_schema))
+    return tuple(programs)
+
+
+def _schema_admissions(program: Mapping[str, Any], app_schema: str):
+    for sql, parameters, mismatch in _metadata_programs(program, app_schema):
+        yield ("execute", sql, parameters)
+        observed = yield ("many", 2)
+        if len(observed) != 1 or len(observed[0]) != 1 or observed[0][0] is not True:
+            raise TargetMismatch(mismatch)
+
+
+def _filter_parameters(program: Mapping[str, Any], values: Mapping[str, object]) -> None:
+    """Validate retained source selection descriptors before native binding."""
+    descriptors = program["request"]["selection"].get("parameters", [])
+    validate_list_parameters(descriptors, values)
+    carriers = {"string": str, "integer": int, "decimal": Decimal, "boolean": bool}
+    for descriptor in descriptors:
+        if descriptor.get("container") == "list":
+            continue
+        annotation = carriers[descriptor["carrier"]]
+        TypeAdapter(cast(Any, annotation | None if descriptor["nullable"] else annotation)).validate_python(values[descriptor["name"]], strict=True)
+
+
+def _program(
+    variant: SearchVariant,
+    parameters: Mapping[str, object],
+    configuration: PostgresConfiguration,
+    embedders: Mapping[str, Any],
+    deadline: float,
+    *,
+    verify_only: bool = False,
+    target_profile: str,
+    database: str,
+):
+    prepared = []
+    for entry in variant.entries:
+        program = entry.artifact()
+        if (
+            program["target"] != target_profile
+            or binding_digest(program["binding"]) != configuration.binding_sha256
+        ):
+            raise TargetMismatch("native search binding differs from configured target")
+        if program["binding"]["schema"] not in (None, configuration.app_schema):
+            raise TargetMismatch("native search schema differs")
+        params = dict(parameters)
+        if not verify_only:
+            _filter_parameters(program, params)
+            value = params[entry.query_argument]
+            if program["index"]["kind"] == "vector":
+                vector = program["index"]["vector"]
+                dimensions = vector["dimensions"]
+                if entry.embed:
+                    if vector["computedBy"] != "host" or type(value) is not str:
+                        raise EmbedderMismatch(
+                            "host text embedding is unavailable for the selected index"
+                        )
+                    embedder = embedders.get(program["index"]["id"])
+                    wanted = {
+                        "model": vector["model"]["id"],
+                        "version": vector["model"]["version"],
+                        "dimensions": dimensions,
+                    }
+                    if embedder is None or dict(embedder.identity()) != wanted:
+                        raise EmbedderMismatch("EMBEDDER_MISMATCH")
+                    embedded = yield ("embed", embedder, [value])
+                    if type(embedded) is not list or len(embedded) != 1:
+                        raise EmbedderMismatch("EMBEDDER_MISMATCH")
+                    value = embedded[0]
+                value = validate_vector(value, dimensions=dimensions)
+                if vector["metric"] == "cosine" and not any(v != 0.0 for v in value):
+                    raise SearchError("undefined zero-norm cosine query")
+                params[program["queryParameter"]] = json.dumps(
+                    value, separators=(",", ":"), allow_nan=False
+                )
+            else:
+                if type(value) is not str:
+                    raise SearchError("plain keyword text required")
+                params[program["queryParameter"]] = value
+        # Parse the original packet before BEGIN or native search SQL.
+        _metadata_programs(program, configuration.app_schema)
+        binding = program["binding"]
+        selection = program["selectionTemplate"]
+        mode = binding.get("schemaBinding")
+        if (selection["binding"] != binding
+            or selection["obligations"].get("schemaBinding") != mode
+            or mode not in (None, "qualified", "search-path")
+            or mode is not None and ((mode == "qualified") != (binding["schema"] is not None))):
+            raise TargetMismatch("native search original schema binding context differs")
+        prepared.append((entry, program, params))
+    yield ("begin",)
+    locked = set()
+    for _, original, _ in prepared:
+        fence = _catalog_fence_programs(original)
+        if fence is not None and fence[0] not in locked:
+            yield ("catalog-fence", fence[0])
+            locked.add(fence[0])
+    relation_locks: set[str] = set()
+    for _, original, _ in prepared:
+        locks = tuple(sql for sql in original["selectionTemplate"]["lockSql"] if sql not in relation_locks)
+        yield from _early_relation_locks(original["binding"], locks, configuration.app_schema)
+        relation_locks.update(locks)
+    native_contexts = []
+    for _, original, _ in prepared:
+        mode = original["binding"].get("schemaBinding")
+        context = None
+        if mode is not None:
+            context = yield from _observe_resolution(original["binding"], configuration.app_schema, mode, database)
+        native_contexts.append(context)
+    yield (
+        "execute",
+        "SELECT pg_catalog.set_config('search_path',%s,true),pg_catalog.set_config('row_security','on',true)",
+        ('pg_catalog, "' + configuration.app_schema.replace('"', '""') + '", pg_temp',),
+    )
+    original_roles = []
+    results = []
+    for entry, program, params in prepared:
+        role, _ = yield from native_read_admission(
+            program["binding"],
+            configuration.app_schema,
+            (),
+        )
+        original_roles.append(role)
+        yield from _schema_admissions(program, configuration.app_schema)
+        yield (
+            "execute",
+            *_statement(entry, "/nativeAdmission", params, configuration.app_schema),
+        )
+        observed = yield ("many", 2)
+        if observed != [(True,)]:
+            raise TargetMismatch(
+                "native search index/expression/extension correspondence refused"
+            )
+        if verify_only:
+            yield from _schema_admissions(program, configuration.app_schema)
+            continue
+        for index in range(len(program["preflights"])):
+            yield (
+                "execute",
+                *_statement(
+                    entry, "/preflights/" + str(index), params, configuration.app_schema
+                ),
+            )
+            checked = yield ("many", 2)
+            if checked != [(False,)]:
+                raise SearchError("native search metric domain refused")
+        yield (
+            "execute",
+            *_statement(entry, "/statement", params, configuration.app_schema),
+        )
+        columns = yield ("columns",)
+        rows = yield ("many", program["topK"] + 1)
+        yield from _schema_admissions(program, configuration.app_schema)
+        results.append(_hits(entry, columns, rows))
+    for (_, original, _), context in zip(prepared, native_contexts, strict=True):
+        if context is not None:
+            observed = yield from _observe_resolution(original["binding"], configuration.app_schema, original["binding"]["schemaBinding"], database)
+            if observed != context:
+                raise ReadObligationUnmet("native search binding context changed inside snapshot")
+    yield ("execute", _ROLE)
+    after = yield ("one",)
+    if any(role != after for role in original_roles):
+        raise ReadObligationUnmet("native search role changed inside snapshot")
+    yield ("rollback",)
+    return None if verify_only else _finish(variant, results)
+
+
+class PostgresSearchTarget(PostgresTarget):
+    def __init__(
+        self,
+        connection: Any,
+        configuration: PostgresConfiguration,
+        *,
+        embedders: Mapping[str, Embedder] | None = None,
+        search_variants: tuple[SearchVariant, ...] = (),
+    ):
+        super().__init__(connection, configuration)
+        self.embedders = dict(embedders or {})
+        self.search_variants = search_variants
+
+    def _run_search(
+        self,
+        variant: SearchVariant,
+        parameters: Mapping[str, object],
+        timeout: timedelta | None,
+        verify: bool = False,
+    ):
+        duration = _milliseconds(timeout, self.configuration.default_timeout) / 1000
+        deadline = time.monotonic() + duration
+        if self.connection.info.transaction_status != 0:
+            raise ReadObligationUnmet("idle search connection required")
+        if not variant.pin.matches(self.identity()):
+            raise TargetMismatch("search target identity differs")
+        program = _program(
+            variant,
+            parameters,
+            self.configuration,
+            self.embedders,
+            deadline,
+            verify_only=verify,
+            target_profile=self.profile,
+            database=self.connection.info.dbname,
+        )
+        result: Any = None
+        began = False
+        cursor: Any = None
+        try:
+            while True:
+                if time.monotonic() >= deadline:
+                    raise TimedOut("search deadline expired")
+                try:
+                    operation = program.send(result)
+                except StopIteration as done:
+                    return done.value
+                kind = operation[0]
+                if kind == "embed":
+                    result = operation[1].embed(operation[2])
+                    if inspect.isawaitable(result):
+                        if inspect.iscoroutine(result):
+                            result.close()
+                        raise EmbedderMismatch("synchronous embedder required")
+                elif kind == "begin":
+                    self.connection.execute(
+                        "BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY"
+                    )
+                    began = True
+                    result = None
+                elif kind in ("catalog-fence", "snapshot-free"):
+                    self.connection.execute(_snapshot_free_timeout(deadline))
+                    self.connection.execute(operation[1])
+                    result = None
+                elif kind == "execute":
+                    self.connection.execute(
+                        "SELECT pg_catalog.set_config('statement_timeout',%s,true)",
+                        (str(max(1, math.ceil((deadline - time.monotonic()) * 1000))),),
+                    )
+                    cursor = self.connection.execute(
+                        operation[1], operation[2] if len(operation) > 2 else None
+                    )
+                    result = None
+                elif kind == "many":
+                    result = cursor.fetchmany(operation[1])
+                elif kind == "one":
+                    result = cursor.fetchone()
+                elif kind == "columns":
+                    result = tuple(c.name for c in cursor.description)
+                elif kind == "rollback":
+                    self.connection.rollback()
+                    began = False
+                    result = None
+        except BaseException as error:
+            if began:
+                try:
+                    self.connection.rollback()
+                # Retain native failure custody across cleanup, cancellation and audit boundaries.
+                except BaseException:  # noqa: BLE001
+                    self.connection.close()
+                    raise ReadObligationUnmet("search cleanup failed") from error
+            if getattr(error, "sqlstate", None) == "57014" or isinstance(
+                error, TimeoutError
+            ):
+                raise TimedOut("search deadline expired") from error
+            raise
+
+    def verify(self) -> None:
+        if not self.search_variants:
+            raise TargetMismatch(
+                "explicit source-bound search variants required for eager verification"
+            )
+        for variant in self.search_variants:
+            self._run_search(variant, {}, None, True)
+
+    def search(
+        self,
+        variant: SearchVariant,
+        parameters: Mapping[str, object],
+        *,
+        timeout: timedelta | None = None,
+    ) -> SearchResult[Any]:
+        if not variant.pin.matches(self.identity()):
+            raise TargetMismatch("search target identity differs")
+        return cast(SearchResult[Any], self._run_search(variant, parameters, timeout))
+
+
+class AsyncPostgresSearchTarget(AsyncPostgresTarget):
+    def __init__(
+        self,
+        connection: Any,
+        configuration: PostgresConfiguration,
+        *,
+        embedders: Mapping[str, Any] | None = None,
+        search_variants: tuple[SearchVariant, ...] = (),
+    ):
+        super().__init__(connection, configuration)
+        self.embedders = dict(embedders or {})
+        self.search_variants = search_variants
+
+    async def _run_search(
+        self,
+        variant: SearchVariant,
+        parameters: Mapping[str, object],
+        timeout: timedelta | None,
+        verify: bool = False,
+    ):
+        duration = _milliseconds(timeout, self.configuration.default_timeout) / 1000
+        deadline = time.monotonic() + duration
+        if self.connection.info.transaction_status != 0:
+            raise ReadObligationUnmet("idle search connection required")
+        if not variant.pin.matches(self.identity()):
+            raise TargetMismatch("search target identity differs")
+        program = _program(
+            variant,
+            parameters,
+            self.configuration,
+            self.embedders,
+            deadline,
+            verify_only=verify,
+            target_profile=self.profile,
+            database=self.connection.info.dbname,
+        )
+        result: Any = None
+        began = False
+        cursor: Any = None
+        try:
+            async with asyncio.timeout(duration):
+                while True:
+                    try:
+                        operation = program.send(result)
+                    except StopIteration as done:
+                        return done.value
+                    kind = operation[0]
+                    if kind == "embed":
+                        result = await asyncio.to_thread(
+                            operation[1].embed, operation[2]
+                        )
+                        if inspect.isawaitable(result):
+                            result = await result
+                    elif kind == "begin":
+                        await self.connection.execute(
+                            "BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY"
+                        )
+                        began = True
+                        result = None
+                    elif kind in ("catalog-fence", "snapshot-free"):
+                        await self.connection.execute(_snapshot_free_timeout(deadline))
+                        await self.connection.execute(operation[1])
+                        result = None
+                    elif kind == "execute":
+                        await self.connection.execute(
+                            "SELECT pg_catalog.set_config('statement_timeout',%s,true)",
+                            (
+                                str(
+                                    max(
+                                        1,
+                                        math.ceil((deadline - time.monotonic()) * 1000),
+                                    )
+                                ),
+                            ),
+                        )
+                        cursor = await self.connection.execute(
+                            operation[1], operation[2] if len(operation) > 2 else None
+                        )
+                        result = None
+                    elif kind == "many":
+                        result = await cursor.fetchmany(operation[1])
+                    elif kind == "one":
+                        result = await cursor.fetchone()
+                    elif kind == "columns":
+                        result = tuple(c.name for c in cursor.description)
+                    elif kind == "rollback":
+                        await self.connection.rollback()
+                        began = False
+                        result = None
+        except BaseException as error:
+            if began:
+
+                async def cleanup():
+                    async with asyncio.timeout(2):
+                        await self.connection.rollback()
+
+                task = asyncio.create_task(cleanup())
+                try:
+                    await asyncio.shield(task)
+                # Retain native failure custody across cleanup, cancellation and audit boundaries.
+                except BaseException:  # noqa: BLE001
+                    await self.connection.close()
+                    raise ReadObligationUnmet("search cleanup failed") from error
+            if getattr(error, "sqlstate", None) == "57014" or isinstance(
+                error, TimeoutError
+            ):
+                raise TimedOut("search deadline expired") from error
+            raise
+
+    async def verify(self) -> None:
+        if not self.search_variants:
+            raise TargetMismatch(
+                "explicit source-bound search variants required for eager verification"
+            )
+        for variant in self.search_variants:
+            await self._run_search(variant, {}, None, True)
+
+    async def search(
+        self,
+        variant: SearchVariant,
+        parameters: Mapping[str, object],
+        *,
+        timeout: timedelta | None = None,
+    ) -> SearchResult[Any]:
+        if not variant.pin.matches(self.identity()):
+            raise TargetMismatch("search target identity differs")
+        return cast(
+            SearchResult[Any], await self._run_search(variant, parameters, timeout)
+        )
+
+
+class LakebaseSearchTarget(PostgresSearchTarget):
+    kind = "lakebase"
+    profile = "lakebase18"
+
+
+class AsyncLakebaseSearchTarget(AsyncPostgresSearchTarget):
+    kind = "lakebase"
+    profile = "lakebase18"

@@ -1,0 +1,42 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"ParquetCardinalityRequest\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "index",
+      "optional": false,
+      "type": "number"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "identity",
+      "optional": false,
+      "type": "{ module: string; element: string; }"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "profile",
+      "optional": false,
+      "type": "\"unresolved\" | \"present-value-schema\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "mode",
+      "optional": false,
+      "type": "\"strict\" | \"report\""
+    }
+  ],
+  "parameters": [],
+  "purpose": "ParquetCardinalityRequest is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "ParquetCardinalityRequest"
+}

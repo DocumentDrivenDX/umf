@@ -1,0 +1,46 @@
+{
+  "interfaceVersion": "weft-mutation-compile/0.1.0",
+  "dialect": "weft-mutation/0.1.0",
+  "sql": "UPDATE Customer SET active=FALSE WHERE last_seen<:cutoff",
+  "parameters": {
+    "cutoff": {
+      "integerToken": "100"
+    }
+  },
+  "model": {
+    "mediaType": "application/json",
+    "utf8": "{\n  \"umf\": \"0.10.0\",\n  \"id\": \"bulk-update-owner-fixture\",\n  \"vocabularies\": {\n    \"umf.actions\": {\n      \"version\": \"0.1.0\"\n    }\n  },\n  \"modules\": [\n    {\n      \"id\": \"sales\",\n      \"namespace\": \"sales\",\n      \"elements\": [\n        {\n          \"id\": \"customer-id\",\n          \"name\": \"id\",\n          \"kind\": \"field\",\n          \"scalarType\": \"string\",\n          \"cardinality\": \"one\",\n          \"nullability\": \"required\",\n          \"extensions\": {}\n        },\n        {\n          \"id\": \"active\",\n          \"name\": \"active\",\n          \"kind\": \"field\",\n          \"scalarType\": \"boolean\",\n          \"cardinality\": \"one\",\n          \"nullability\": \"required\",\n          \"extensions\": {}\n        },\n        {\n          \"id\": \"last-seen\",\n          \"name\": \"last_seen\",\n          \"kind\": \"field\",\n          \"scalarType\": \"integer\",\n          \"cardinality\": \"one\",\n          \"nullability\": \"required\",\n          \"extensions\": {}\n        },\n        {\n          \"id\": \"customer\",\n          \"name\": \"Customer\",\n          \"kind\": \"record\",\n          \"members\": [\n            {\n              \"module\": \"sales\",\n              \"element\": \"customer-id\"\n            },\n            {\n              \"module\": \"sales\",\n              \"element\": \"active\"\n            },\n            {\n              \"module\": \"sales\",\n              \"element\": \"last-seen\"\n            }\n          ],\n          \"keys\": [\n            {\n              \"id\": \"pk\",\n              \"name\": \"primary\",\n              \"primary\": true,\n              \"fields\": [\n                {\n                  \"module\": \"sales\",\n                  \"element\": \"customer-id\"\n                }\n              ]\n            }\n          ],\n          \"extensions\": {}\n        }\n      ],\n      \"extensions\": {\n        \"umf.actions\": {\n          \"actions\": [\n            {\n              \"id\": \"set-active\",\n              \"name\": \"Set active\",\n              \"description\": \"Set one required active Field using a typed value input.\",\n              \"parameters\": [\n                {\n                  \"id\": \"customer\",\n                  \"kind\": \"entity\",\n                  \"target\": {\n                    \"module\": \"sales\",\n                    \"element\": \"customer\",\n                    \"key\": \"pk\"\n                  },\n                  \"required\": true\n                },\n                {\n                  \"id\": \"active-value\",\n                  \"kind\": \"value\",\n                  \"field\": {\n                    \"module\": \"sales\",\n                    \"element\": \"active\"\n                  },\n                  \"required\": true\n                }\n              ],\n              \"outputs\": [],\n              \"preconditions\": [],\n              \"postconditions\": [],\n              \"failures\": [],\n              \"reads\": [],\n              \"writes\": [\n                {\n                  \"id\": \"customer-write\",\n                  \"record\": {\n                    \"module\": \"sales\",\n                    \"element\": \"customer\"\n                  },\n                  \"selector\": {\n                    \"language\": \"umf.actions.keys\",\n                    \"version\": \"1\",\n                    \"expression\": \"{\\\"entity\\\":\\\"customer\\\"}\",\n                    \"references\": [\n                      {\n                        \"parameter\": \"customer\"\n                      }\n                    ]\n                  },\n                  \"maxEntities\": 1,\n                  \"fields\": [\n                    {\n                      \"module\": \"sales\",\n                      \"element\": \"active\"\n                    }\n                  ],\n                  \"relationships\": [],\n                  \"create\": false,\n                  \"delete\": false\n                }\n              ],\n              \"binding\": {\n                \"kind\": \"recipe\",\n                \"profile\": {\n                  \"id\": \"graph-write\",\n                  \"version\": \"1\"\n                },\n                \"effects\": [\n                  {\n                    \"id\": \"set-active\",\n                    \"kind\": \"set\",\n                    \"entity\": {\n                      \"parameter\": \"customer\"\n                    },\n                    \"values\": [\n                      {\n                        \"field\": {\n                          \"module\": \"sales\",\n                          \"element\": \"active\"\n                        },\n                        \"value\": {\n                          \"parameter\": \"active-value\"\n                        }\n                      }\n                    ]\n                  }\n                ]\n              },\n              \"authorization\": {\n                \"kind\": \"roles\",\n                \"profile\": {\n                  \"id\": \"umf.actions.roles\",\n                  \"version\": \"1\"\n                },\n                \"roles\": [\n                  \"bulk-editor\"\n                ]\n              },\n              \"attribution\": {\n                \"subject\": \"person-required\"\n              },\n              \"atomicity\": \"single-store\",\n              \"idempotency\": \"caller-key-optional\",\n              \"result\": {\n                \"identities\": \"created-and-changed\",\n                \"version\": \"store-opaque\",\n                \"receipt\": \"read-at-least\"\n              }\n            }\n          ]\n        }\n      }\n    }\n  ]\n}\n",
+    "sha256": "1b78acfa477a19da0bad939c47e77f58bd103fd118a7d609bae503def1879bf1"
+  },
+  "modelPin": {
+    "documentId": "bulk-update-owner-fixture",
+    "revision": "fixture1",
+    "umfVersion": "0.10.0",
+    "sha256": "1b78acfa477a19da0bad939c47e77f58bd103fd118a7d609bae503def1879bf1"
+  },
+  "action": {
+    "identity": {
+      "module": "sales",
+      "action": "set-active"
+    },
+    "documentSha256": "1b78acfa477a19da0bad939c47e77f58bd103fd118a7d609bae503def1879bf1",
+    "invocation": {
+      "id": "umf.actions.tx",
+      "version": "1"
+    }
+  },
+  "target": {
+    "module": "sales",
+    "element": "customer",
+    "key": "pk"
+  },
+  "selectionProfile": {
+    "id": "weft.update-selection",
+    "version": "1"
+  },
+  "batchSize": 2,
+  "limits": {
+    "maxItems": 10000,
+    "maxManifestBytes": 16777216
+  }
+}

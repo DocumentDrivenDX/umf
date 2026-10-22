@@ -1,0 +1,69 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"CoreScalarTypeInspection\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "operation",
+      "optional": false,
+      "type": "\"inspect-core-scalar-type\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "version",
+      "optional": false,
+      "type": "\"0.3.0\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "source",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreScalarTypeIdentity\"]"
+      ],
+      "name": "identity",
+      "optional": false,
+      "type": "CoreScalarTypeIdentity"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "path",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreScalarTypeMeaning\"]"
+      ],
+      "name": "meaning",
+      "optional": false,
+      "type": "CoreScalarTypeMeaning"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "provenance",
+      "optional": false,
+      "type": "\"unverified\""
+    }
+  ],
+  "parameters": [],
+  "purpose": "CoreScalarTypeInspection is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "CoreScalarTypeInspection"
+}

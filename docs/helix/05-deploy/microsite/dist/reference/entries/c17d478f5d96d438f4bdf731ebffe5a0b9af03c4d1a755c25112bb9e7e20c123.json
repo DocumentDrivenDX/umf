@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 8516,
+        "line": 12,
+        "path": "src/core-ideals/sqlserver-record.ts",
+        "sha256": "9f2801c32316478aa602119c8e37ed0f02e653bcc96717b8fd5b2a37fb52c340"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "SqlServerRecordRequest",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface SqlServerRecordRequest {recordModule:string;recordId:string;mode:'strict'|'report';nativeSource:string;relation:{schema:string;name:string};authors?:CoreKindDeclaration[]}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"SqlServerRecordRequest\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 8516,
+      "line": 12,
+      "path": "src/core-ideals/sqlserver-record.ts",
+      "sha256": "9f2801c32316478aa602119c8e37ed0f02e653bcc96717b8fd5b2a37fb52c340"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/sqlserver-record.ts",
+  "title": "SqlServerRecordRequest"
+}

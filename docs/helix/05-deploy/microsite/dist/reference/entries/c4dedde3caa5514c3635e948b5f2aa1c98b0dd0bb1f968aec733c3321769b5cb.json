@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 7247,
+        "line": 15,
+        "path": "src/core-ideals/field-parquet-projection.ts",
+        "sha256": "07d54692d8315fb79d3aee32ab08a69c42e1d8d5ae6bd5b996bd8793e8a01dcf"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "FieldParquetProjection",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface FieldParquetProjection {\n operation:'project-field-parquet';version:'1.0.0';status:'projected'|'blocked';source:Document;author:CoreKindDeclaration;request:FieldParquetRequest;target?:Document;binding:typeof binding;diagnostics:Diagnostic[];\n mapping:{origin:'authored';idealPath:string;nativePath:'/schema/1';outcome:'exact'|'unknown'|'not-expressible'};\n residuals:{path:string;value:Json;reason:string;outcome:'unknown'|'not-expressible';recovery:'Recover source meaning with retained projection receipt; native-only import does not recover author intent'}[];\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"FieldParquetProjection\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 7247,
+      "line": 15,
+      "path": "src/core-ideals/field-parquet-projection.ts",
+      "sha256": "07d54692d8315fb79d3aee32ab08a69c42e1d8d5ae6bd5b996bd8793e8a01dcf"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/field-parquet-projection.ts",
+  "title": "FieldParquetProjection"
+}

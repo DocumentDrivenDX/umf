@@ -1,0 +1,50 @@
+{
+  "data": {
+    "conflicts": [],
+    "correspondence": "unassessed",
+    "declarations": [
+      {
+        "bytes": 5121,
+        "path": "spec/extensions/avro-cardinality/package.json",
+        "sha256": "c2ceda15755139a6d8761fdfeb637aeb05380c63e1d862e29f96bad77166315f"
+      }
+    ],
+    "evidence": [],
+    "operation": {
+      "apiNames": [],
+      "coreProfiles": [],
+      "extensionVersions": [],
+      "fixturePaths": [],
+      "id": "umf.avro.cardinality@1.0.0:import",
+      "kind": "import",
+      "limitations": [
+        "Recorded scope only; native equivalence and production adoption are separate."
+      ],
+      "runtime": {
+        "availability": "host-only",
+        "profileId": "umf.avro.cardinality@1.0.0:import",
+        "requirements": [
+          "Native runtime / original qualification harness; not executed by this page."
+        ]
+      },
+      "sourceSystem": "Avro · 1.12.0",
+      "subset": "Declared shape of present non-null values; native union branches, availability, logical refinements and codec behavior remain separate",
+      "targetSystem": "UMF",
+      "title": "umf.avro.cardinality · import"
+    }
+  },
+  "id": "[\"integration\",\"umf.avro.cardinality@1.0.0:import\"]",
+  "kind": "integration",
+  "links": [
+    "[\"extension\",\"umf.avro.cardinality\",\"1.0.0\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 134795,
+      "path": "docs/helix/05-deploy/reference/operations.json",
+      "sha256": "793743bbca36e56e90e82df5ef0408b628c434e58cb68aea4d6486349be78e61"
+    }
+  ],
+  "summary": "Declared shape of present non-null values; native union branches, availability, logical refinements and codec behavior remain separate",
+  "title": "umf.avro.cardinality · import"
+}

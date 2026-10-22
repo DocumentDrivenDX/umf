@@ -1,0 +1,35 @@
+{
+  "runId": "b91ece77-a1f6-4ba9-a4e4-749bf3de2bfe",
+  "sourcePins": {
+    "tools/security/pg-old-snapshot-admission-probe.py": "d75c6f3a77090bb49d550f8a20407bdf15ee63a4c3d354370a1446a2407a0819",
+    "tests/security/native/pg-raw-membership.sql": "ac5640077786e81b80e536acc7c5d89d8f6747e1d8f425f17c4e3dfc3b37daf6",
+    "tests/security/native/pg-raw-drain.sql": "c262ca3aef8139d2877e83861c1194d0815a911ccabd96d7dc0f7db52b3673f3",
+    "tests/security/native/pg-raw-persistent-drain.sql": "e43390b61f5db35ea0517bc4f3bc1e71afafc3a6818292855f85b2757f2e5d14",
+    "tests/security/native/pg-raw-membership-oracle.json": "1b04b8a2fe0de4f72ca2926398ff2717909bdbdee9d53e4284e4f4bd2fc5acee",
+    "docs/helix/03-test/security/cases.json": "37308740d5d8b57f6f4647c1a44feee71cbfde02d8f5bee1334299654a610ba9"
+  },
+  "case": {
+    "id": "pg-raw.L06",
+    "backend": "pg-raw",
+    "covers": [
+      "US-057-AC3"
+    ],
+    "name": "old-snapshot-new-generation",
+    "assertion": "Begin repeatable-read before revoke, attempt first protected read after acknowledgment; restart/refuse old authority facts.",
+    "required": true,
+    "layer": "native-concurrent",
+    "status": "not-run",
+    "command": null,
+    "evidence": null,
+    "testSource": null,
+    "oracleSource": null,
+    "implementationSources": [],
+    "timeoutMs": 60000,
+    "assertionIds": [
+      "pg-raw.L06"
+    ]
+  },
+  "argv": [
+    "tools/security/pg-old-snapshot-admission-probe.py"
+  ]
+}

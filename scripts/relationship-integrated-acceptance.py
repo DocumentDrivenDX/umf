@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Verify and publish final relationship integration evidence. Standard library only.
 
 Run from the integration checkout, or pass --root. No output is written unless

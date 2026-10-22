@@ -1,0 +1,23 @@
+{
+  "reviewer": "Astra ultra",
+  "mode": "read-only",
+  "status": "no remaining findings in selected scope",
+  "proofSha256": "8d45f32be34177089cef300e75d12ded9f490fe81202666f8cd8be6f117ad983",
+  "checks": {
+    "freshContextFormulaReplays": 11,
+    "unsat": 5,
+    "sat": 6,
+    "pythonVectors": 32,
+    "nativeInventoryPredicates": 29,
+    "sourcePins": 7,
+    "savedFormulaHashes": "all match"
+  },
+  "feedbackApplied": [
+    "Hash exact saved SMT bytes and recheck before proof publication",
+    "Treat complete faithful native rows as an explicit premise, not packet-admission output"
+  ],
+  "limitations": [
+    "No native execution by review",
+    "No whole-validator/SQL refinement, authentication, coherent-cut qualification or acceptance promotion"
+  ]
+}

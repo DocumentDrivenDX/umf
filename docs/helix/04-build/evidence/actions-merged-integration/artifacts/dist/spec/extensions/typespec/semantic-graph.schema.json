@@ -1,0 +1,393 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "status",
+    "source",
+    "compilation",
+    "roots",
+    "nodes",
+    "complete",
+    "limitations",
+    "issues"
+  ],
+  "properties": {
+    "status": {
+      "enum": [
+        "available",
+        "blocked"
+      ]
+    },
+    "source": {
+      "$ref": "urn:umf:core:0.1.0"
+    },
+    "compilation": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "urn:umf:typespec:compiler-report:0.1.0",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "compiler",
+        "valid",
+        "complete",
+        "diagnostics",
+        "limitations",
+        "libraries"
+      ],
+      "properties": {
+        "compiler": {
+          "const": "@typespec/compiler@1.16.0"
+        },
+        "valid": {
+          "type": "boolean"
+        },
+        "complete": {
+          "const": false
+        },
+        "diagnostics": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "code",
+              "severity",
+              "message"
+            ],
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "severity": {
+                "enum": [
+                  "error",
+                  "warning"
+                ]
+              },
+              "message": {
+                "type": "string"
+              },
+              "file": {
+                "type": "string"
+              },
+              "start": {
+                "type": "integer"
+              },
+              "end": {
+                "type": "integer"
+              }
+            }
+          }
+        },
+        "limitations": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1
+        },
+        "libraries": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "roots": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "expression",
+          "target"
+        ],
+        "properties": {
+          "expression": {
+            "type": "string"
+          },
+          "target": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "nodes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "kind",
+          "label",
+          "attributes",
+          "edges"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "kind": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "attributes": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [],
+            "properties": {
+              "doc": {
+                "type": "string"
+              },
+              "optional": {
+                "type": "boolean"
+              },
+              "default": {
+                "$ref": "#/$defs/value"
+              },
+              "value": {
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "kind",
+                      "value"
+                    ],
+                    "properties": {
+                      "kind": {
+                        "enum": [
+                          "number",
+                          "string"
+                        ]
+                      },
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "kind",
+                      "value"
+                    ],
+                    "properties": {
+                      "kind": {
+                        "const": "boolean"
+                      },
+                      "value": {
+                        "type": "boolean"
+                      }
+                    }
+                  }
+                ]
+              },
+              "expression": {
+                "type": "boolean"
+              },
+              "stringValue": {
+                "type": "string"
+              },
+              "isInterpolated": {
+                "type": "boolean"
+              },
+              "decorators": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "name",
+                    "args"
+                  ],
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "args": {
+                      "type": "array",
+                      "items": {
+                        "oneOf": [
+                          {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "required": [
+                              "type"
+                            ],
+                            "properties": {
+                              "type": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "required": [
+                              "value"
+                            ],
+                            "properties": {
+                              "value": {
+                                "$ref": "#/$defs/value"
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "edges": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "role",
+                "target"
+              ],
+              "properties": {
+                "role": {
+                  "type": "string"
+                },
+                "target": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "index": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "location": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "file",
+              "start",
+              "end"
+            ],
+            "properties": {
+              "file": {
+                "type": "string"
+              },
+              "start": {
+                "type": "integer"
+              },
+              "end": {
+                "type": "integer"
+              }
+            }
+          }
+        }
+      }
+    },
+    "complete": {
+      "const": false
+    },
+    "limitations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "issues": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "code",
+          "detail"
+        ],
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "detail": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:typespec:semantic-graph:0.1.0",
+  "$defs": {
+    "value": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "type"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "value": {
+          "type": [
+            "string",
+            "boolean",
+            "null"
+          ]
+        },
+        "scalar": {
+          "type": "string"
+        },
+        "member": {
+          "type": "string"
+        },
+        "constructor": {
+          "type": "string"
+        },
+        "args": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/value"
+          }
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/value"
+          }
+        },
+        "properties": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "name",
+              "value"
+            ],
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "value": {
+                "$ref": "#/$defs/value"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 12646,
+        "line": 15,
+        "path": "src/extensions/actions/selector.ts",
+        "sha256": "5c76f609c8784c105970ae3f83a97ced884287b38f395fccb6785389a864235a"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "SelectedActionIdentity",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface SelectedActionIdentity {entity:ActionEntityInput;tupleHex:string}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"SelectedActionIdentity\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 12646,
+      "line": 15,
+      "path": "src/extensions/actions/selector.ts",
+      "sha256": "5c76f609c8784c105970ae3f83a97ced884287b38f395fccb6785389a864235a"
+    }
+  ],
+  "summary": "Type declaration · src/extensions/actions/selector.ts",
+  "title": "SelectedActionIdentity"
+}

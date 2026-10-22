@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
+import {CURRENT_CORE_VERSION} from '../../generated/core-model';
 import manifest from '../../../spec/extensions/parquet/package.json';
 import {checkParquetFieldMetadata} from './field-metadata';
 import {Registry} from '../../registry/registry';
@@ -11,7 +13,7 @@ export function parquetRegistry(){return new Registry().register(parquetPackage)
 /** Captures even malformed source, without interpreting or normalizing any bytes. */
 export function captureParquet(bytes:Uint8Array,options:{id:string}):Document{
  if(!(bytes instanceof Uint8Array)||bytes.byteLength>PARQUET_MAX_BYTES)throw new UmfError('PARQUET_LIMIT','Expected at most 1000000 source bytes');
- const hex=Array.from(bytes,b=>b.toString(16).padStart(2,'0')).join(''),doc:Document={umf:'0.1.0',id:options.id,vocabularies:{[PARQUET_EXTENSION]:{version:'0.1.0'}},modules:[{id:'parquet',namespace:'',elements:[{id:'source',extensions:{[PARQUET_EXTENSION]:{profile:'parquet-file-source',encoding:'hex',bytes:hex}}}]}]};exportParquetCapture(doc);return doc;
+ const hex=Array.from(bytes,b=>b.toString(16).padStart(2,'0')).join(''),doc:Document={umf:CURRENT_CORE_VERSION,id:options.id,vocabularies:{[PARQUET_EXTENSION]:{version:'0.1.0'}},modules:[{id:'parquet',namespace:'',elements:[{id:'source',extensions:{[PARQUET_EXTENSION]:{profile:'parquet-file-source',encoding:'hex',bytes:hex}}}]}]};exportParquetCapture(doc);return doc;
 }
 export function exportParquetCapture(doc:Document):Uint8Array{
  if(!validateDocument(doc,parquetRegistry()).valid)throw new UmfError('PARQUET_CAPTURE','Invalid Parquet capture envelope');

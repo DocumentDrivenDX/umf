@@ -1,0 +1,24 @@
+build	Check action guide generation and examples	﻿2026-10-11T03:21:00.5298025Z ##[group]Run bun run test:docs:build
+build	Check action guide generation and examples	2026-10-11T03:21:00.5298408Z ^[[36;1mbun run test:docs:build^[[0m
+build	Check action guide generation and examples	2026-10-11T03:21:00.5298706Z ^[[36;1mbun run test:docs:examples^[[0m
+build	Check action guide generation and examples	2026-10-11T03:21:00.5299002Z ^[[36;1mbun run test:docs:browser^[[0m
+build	Check action guide generation and examples	2026-10-11T03:21:00.5361807Z shell: /usr/bin/bash -e {0}
+build	Check action guide generation and examples	2026-10-11T03:21:00.5362099Z ##[endgroup]
+build	Check action guide generation and examples	2026-10-11T03:21:00.5461341Z $ python3 scripts/actions-docs/render-diagrams.py --check && bun scripts/actions-docs/build.ts --check && bun scripts/actions-docs/check.ts && python3 scripts/actions-docs/render-negative-control.py && python3 scripts/actions-docs/build-negative-controls.py
+build	Check action guide generation and examples	2026-10-11T03:21:00.5801532Z Checked 8 distinct diagrams, each with desktop/mobile layout
+build	Check action guide generation and examples	2026-10-11T03:21:10.4208896Z 81 | }
+build	Check action guide generation and examples	2026-10-11T03:21:10.4210214Z 82 | for(const f of await readdir(join(source,'diagrams'))){const path=join(source,'diagrams',f);inputs[path]=hash(await readFile(path));}
+build	Check action guide generation and examples	2026-10-11T03:21:10.4212198Z 83 | for(const path of ['scripts/actions-docs/build.ts','scripts/actions-docs/browser-example.ts','scripts/actions-docs/portable-example.ts','scripts/actions-docs/render-diagrams.py','src/index.ts','fixtures/actions/approve.json','package.json','bun.lock','tsconfig.json','.github/workflows/microsite.yml'])inputs[path]=hash(await readFile(path));
+build	Check action guide generation and examples	2026-10-11T03:21:10.4215228Z 84 | for(const pattern of ['patches/**/*','src/**/*.ts','spec/**/*.json','scripts/actions-docs/*','fixtures/actions/*.json','docs/helix/02-design/contracts/*.md','docs/helix/04-build/evidence/actions-certification.md','docs/helix/04-build/evidence/actions-certification.json','docs/helix/04-build/evidence/actions-documentation-execution.md','docs/helix/04-build/evidence/actions-documentation-source-impact.json'])for await(const path of new Bun.Glob(pattern).scan('.'))inputs[path]=hash(await readFile(path));
+build	Check action guide generation and examples	2026-10-11T03:21:10.4220836Z 85 | const manifest=JSON.stringify({profile:'umf.actions.documentation-build/1',ownership:'Only microsite/dist/actions; diagrams are inline inside signed HTML',inputs:Object.fromEntries(Object.entries(inputs).sort(([a],[b])=>a<b?-1:a>b?1:0)),outputs:Object.fromEntries(Object.entries(outputs).map(([p,v])=>[p,hash(v)])),assetHashes},null,2)+'\n';outputs['manifest.json']=manifest;
+build	Check action guide generation and examples	2026-10-11T03:21:10.4223736Z 86 | if(check){const actual=(await readdir(output)).sort();if(JSON.stringify(actual)!==JSON.stringify(Object.keys(outputs).sort()))throw Error('Generated output ownership differs');for(const[p,v]of Object.entries(outputs))if(await readFile(join(output,p),'utf8')!==v)throw Error('Stale generated output '+p);console.log('Deterministic guide output, snippets and asset manifest match');}
+build	Check action guide generation and examples	2026-10-11T03:21:10.4225423Z                                                                                                                                                                                                                                                                                  ^
+build	Check action guide generation and examples	2026-10-11T03:21:10.4226025Z error: Stale generated output manifest.json
+build	Check action guide generation and examples	2026-10-11T03:21:10.4226435Z       at /home/runner/work/umf/umf/scripts/actions-docs/build.ts:86:269
+build	Check action guide generation and examples	2026-10-11T03:21:10.4226731Z 
+build	Check action guide generation and examples	2026-10-11T03:21:10.4271227Z ##[error]
+build	Check action guide generation and examples	      at /home/runner/work/umf/umf/scripts/actions-docs/build.ts:86:269
+build	Check action guide generation and examples	2026-10-11T03:21:10.4280082Z 
+build	Check action guide generation and examples	2026-10-11T03:21:10.4280305Z Bun v1.4.2 (Linux x64)
+build	Check action guide generation and examples	2026-10-11T03:21:10.4644050Z error: script "test:docs:build" exited with code 1
+build	Check action guide generation and examples	2026-10-11T03:21:10.4655559Z ##[error]Process completed with exit code 1.

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {exportArrowIpcCapture} from './capture';
 import {decodeArrowFlatbuffer} from './flatbuffer-decode';
 import {copyJson} from '../../model/json';

@@ -1,0 +1,682 @@
+{
+  "data": {
+    "extensionId": "umf.dashboard",
+    "manifest": {
+      "capabilities": {
+        "directions": [
+          "import",
+          "export"
+        ],
+        "evidence": [
+          "tests/dashboard/profile.test.ts"
+        ],
+        "native": {
+          "subset": "Versioned semantic declarations in UMF JSON/YAML; expressions retained, not executed; no Lakeview, Tableau or other BI tool compatibility claimed",
+          "system": "UMF-authored dashboard profile",
+          "version": "0.1.0"
+        },
+        "validation": "semantic"
+      },
+      "coreVersion": "0.10.0",
+      "description": "Platform-neutral analytics dashboard declarations: pages, datasets, visuals, text and filters",
+      "id": "umf.dashboard",
+      "schema": {
+        "$defs": {
+          "color": {
+            "pattern": "^#[0-9A-Fa-f]{6}$",
+            "type": "string"
+          },
+          "dashboard": {
+            "properties": {
+              "description": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "kind": {
+                "const": "dashboard"
+              },
+              "layout": {
+                "properties": {
+                  "columns": {
+                    "minimum": 1,
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "columns"
+                ],
+                "type": "object"
+              },
+              "pages": {
+                "items": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "minItems": 1,
+                "type": "array"
+              },
+              "theme": {
+                "$ref": "#/$defs/theme"
+              },
+              "title": {
+                "minLength": 1,
+                "type": "string"
+              }
+            },
+            "required": [
+              "kind",
+              "title",
+              "pages",
+              "layout"
+            ],
+            "type": "object"
+          },
+          "data": {
+            "properties": {
+              "description": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "kind": {
+                "const": "data"
+              }
+            },
+            "required": [
+              "kind"
+            ],
+            "type": "object"
+          },
+          "dataset": {
+            "properties": {
+              "description": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "fields": {
+                "additionalProperties": {
+                  "$ref": "#/$defs/field"
+                },
+                "minProperties": 1,
+                "type": "object"
+              },
+              "grain": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "kind": {
+                "const": "dataset"
+              },
+              "source": {
+                "oneOf": [
+                  {
+                    "properties": {
+                      "kind": {
+                        "const": "table"
+                      },
+                      "table": {
+                        "minLength": 1,
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "table"
+                    ],
+                    "type": "object"
+                  },
+                  {
+                    "properties": {
+                      "kind": {
+                        "const": "query"
+                      },
+                      "query": {
+                        "$ref": "#/$defs/expression"
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "query"
+                    ],
+                    "type": "object"
+                  }
+                ]
+              },
+              "title": {
+                "minLength": 1,
+                "type": "string"
+              }
+            },
+            "required": [
+              "kind",
+              "title",
+              "source",
+              "fields"
+            ],
+            "type": "object"
+          },
+          "encoding": {
+            "properties": {
+              "aggregation": {
+                "enum": [
+                  "none",
+                  "measure",
+                  "sum",
+                  "avg",
+                  "count",
+                  "count-distinct",
+                  "min",
+                  "max",
+                  "custom"
+                ]
+              },
+              "channel": {
+                "enum": [
+                  "x",
+                  "y",
+                  "value",
+                  "target",
+                  "color",
+                  "size",
+                  "angle",
+                  "label",
+                  "detail",
+                  "tooltip",
+                  "column"
+                ]
+              },
+              "expression": {
+                "$ref": "#/$defs/expression"
+              },
+              "field": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "format": {
+                "properties": {
+                  "abbreviation": {
+                    "enum": [
+                      "none",
+                      "compact"
+                    ]
+                  },
+                  "currency": {
+                    "pattern": "^[A-Z]{3}$",
+                    "type": "string"
+                  },
+                  "decimals": {
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "kind": {
+                    "enum": [
+                      "number",
+                      "currency",
+                      "percent",
+                      "date"
+                    ]
+                  }
+                },
+                "required": [
+                  "kind"
+                ],
+                "type": "object"
+              },
+              "scale": {
+                "enum": [
+                  "quantitative",
+                  "temporal",
+                  "categorical"
+                ]
+              },
+              "sort": {
+                "properties": {
+                  "by": {
+                    "enum": [
+                      "value-ascending",
+                      "value-descending",
+                      "label-ascending",
+                      "label-descending",
+                      "custom"
+                    ]
+                  },
+                  "values": {
+                    "items": {
+                      "type": "string"
+                    },
+                    "minItems": 1,
+                    "type": "array"
+                  }
+                },
+                "required": [
+                  "by"
+                ],
+                "type": "object"
+              },
+              "title": {
+                "minLength": 1,
+                "type": "string"
+              }
+            },
+            "required": [
+              "channel",
+              "field",
+              "aggregation"
+            ],
+            "type": "object"
+          },
+          "expression": {
+            "properties": {
+              "language": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "text": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "version": {
+                "minLength": 1,
+                "type": "string"
+              }
+            },
+            "required": [
+              "language",
+              "text"
+            ],
+            "type": "object"
+          },
+          "field": {
+            "properties": {
+              "description": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "expression": {
+                "$ref": "#/$defs/expression"
+              },
+              "role": {
+                "enum": [
+                  "column",
+                  "measure"
+                ]
+              },
+              "title": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "type": {
+                "enum": [
+                  "string",
+                  "boolean",
+                  "integer",
+                  "decimal",
+                  "date",
+                  "date-time"
+                ]
+              }
+            },
+            "required": [
+              "role"
+            ],
+            "type": "object"
+          },
+          "filter": {
+            "properties": {
+              "control": {
+                "enum": [
+                  "single-select",
+                  "multi-select",
+                  "date-range",
+                  "range",
+                  "text-search"
+                ]
+              },
+              "default": {
+                "properties": {
+                  "values": {
+                    "items": {
+                      "type": [
+                        "string",
+                        "number",
+                        "boolean"
+                      ]
+                    },
+                    "minItems": 1,
+                    "type": "array"
+                  }
+                },
+                "required": [
+                  "values"
+                ],
+                "type": "object"
+              },
+              "kind": {
+                "const": "filter"
+              },
+              "position": {
+                "$ref": "#/$defs/position"
+              },
+              "targets": {
+                "items": {
+                  "properties": {
+                    "dataset": {
+                      "$ref": "#/$defs/reference"
+                    },
+                    "field": {
+                      "minLength": 1,
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "dataset",
+                    "field"
+                  ],
+                  "type": "object"
+                },
+                "minItems": 1,
+                "type": "array"
+              },
+              "title": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "trace": {
+                "minLength": 1,
+                "type": "string"
+              }
+            },
+            "required": [
+              "kind",
+              "title",
+              "control",
+              "targets",
+              "position"
+            ],
+            "type": "object"
+          },
+          "modeColor": {
+            "minProperties": 1,
+            "properties": {
+              "dark": {
+                "$ref": "#/$defs/color"
+              },
+              "light": {
+                "$ref": "#/$defs/color"
+              }
+            },
+            "type": "object"
+          },
+          "page": {
+            "properties": {
+              "description": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "kind": {
+                "const": "page"
+              },
+              "role": {
+                "enum": [
+                  "canvas",
+                  "global-filters"
+                ]
+              },
+              "title": {
+                "minLength": 1,
+                "type": "string"
+              }
+            },
+            "required": [
+              "kind",
+              "title",
+              "role"
+            ],
+            "type": "object"
+          },
+          "position": {
+            "properties": {
+              "height": {
+                "minimum": 1,
+                "type": "integer"
+              },
+              "width": {
+                "minimum": 1,
+                "type": "integer"
+              },
+              "x": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "y": {
+                "minimum": 0,
+                "type": "integer"
+              }
+            },
+            "required": [
+              "x",
+              "y",
+              "width",
+              "height"
+            ],
+            "type": "object"
+          },
+          "reference": {
+            "properties": {
+              "element": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "module": {
+                "minLength": 1,
+                "type": "string"
+              }
+            },
+            "required": [
+              "module",
+              "element"
+            ],
+            "type": "object"
+          },
+          "text": {
+            "properties": {
+              "content": {
+                "properties": {
+                  "format": {
+                    "enum": [
+                      "plain",
+                      "markdown"
+                    ]
+                  },
+                  "text": {
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "format",
+                  "text"
+                ],
+                "type": "object"
+              },
+              "kind": {
+                "const": "text"
+              },
+              "position": {
+                "$ref": "#/$defs/position"
+              },
+              "trace": {
+                "minLength": 1,
+                "type": "string"
+              }
+            },
+            "required": [
+              "kind",
+              "content",
+              "position"
+            ],
+            "type": "object"
+          },
+          "theme": {
+            "properties": {
+              "fontFamily": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "name": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "palette": {
+                "items": {
+                  "$ref": "#/$defs/color"
+                },
+                "minItems": 1,
+                "type": "array"
+              },
+              "roles": {
+                "properties": {
+                  "canvasBackground": {
+                    "$ref": "#/$defs/modeColor"
+                  },
+                  "font": {
+                    "$ref": "#/$defs/modeColor"
+                  },
+                  "selection": {
+                    "$ref": "#/$defs/modeColor"
+                  },
+                  "widgetBackground": {
+                    "$ref": "#/$defs/modeColor"
+                  },
+                  "widgetBorder": {
+                    "$ref": "#/$defs/modeColor"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          },
+          "visual": {
+            "properties": {
+              "chart": {
+                "enum": [
+                  "counter",
+                  "bar",
+                  "line",
+                  "area",
+                  "scatter",
+                  "pie",
+                  "heatmap",
+                  "table"
+                ]
+              },
+              "dataset": {
+                "$ref": "#/$defs/reference"
+              },
+              "description": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "encodings": {
+                "items": {
+                  "$ref": "#/$defs/encoding"
+                },
+                "minItems": 1,
+                "type": "array"
+              },
+              "kind": {
+                "const": "visual"
+              },
+              "position": {
+                "$ref": "#/$defs/position"
+              },
+              "rows": {
+                "enum": [
+                  "aggregated",
+                  "detail"
+                ]
+              },
+              "title": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "trace": {
+                "minLength": 1,
+                "type": "string"
+              }
+            },
+            "required": [
+              "kind",
+              "title",
+              "chart",
+              "dataset",
+              "encodings",
+              "position"
+            ],
+            "type": "object"
+          }
+        },
+        "$id": "urn:umf:dashboard:0.1.0",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "oneOf": [
+          {
+            "$ref": "#/$defs/dashboard"
+          },
+          {
+            "$ref": "#/$defs/page"
+          },
+          {
+            "$ref": "#/$defs/data"
+          },
+          {
+            "$ref": "#/$defs/dataset"
+          },
+          {
+            "$ref": "#/$defs/visual"
+          },
+          {
+            "$ref": "#/$defs/text"
+          },
+          {
+            "$ref": "#/$defs/filter"
+          }
+        ],
+        "title": "UMF-authored dashboard semantic profile 0.1.0"
+      },
+      "scopes": [
+        "document",
+        "module",
+        "element"
+      ],
+      "semantics": "CONTRACT-055. Pages, datasets, visuals, text blocks and filters are declarations independent of any BI platform. Dataset queries, field expressions and custom aggregations are retained with their language/version and are not parsed, executed or translated. Layout is an abstract grid; rendering, interactivity beyond declared filter targets, permissions and refresh are not described. Unknown fields remain incomplete interpretation. No native Lakeview or Tableau serialization is claimed.",
+      "version": "0.1.0"
+    },
+    "registration": {
+      "apiIds": [
+        "[\"api\",\".\",\"dashboardRegistry\"]"
+      ],
+      "coreProfiles": [],
+      "mode": "explicit"
+    },
+    "schemaId": "[\"schema\",\"spec/extensions/dashboard/schema.json\",\"\"]",
+    "version": "0.1.0"
+  },
+  "id": "[\"extension\",\"umf.dashboard\",\"0.1.0\"]",
+  "kind": "extension",
+  "links": [
+    "[\"api\",\".\",\"dashboardRegistry\"]",
+    "[\"guide\",\"consumers\"]",
+    "[\"schema\",\"spec/extensions/dashboard/schema.json\",\"\"]",
+    "[\"integration\",\"umf.dashboard@0.1.0:import\"]",
+    "[\"integration\",\"umf.dashboard@0.1.0:export\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 15045,
+      "path": "spec/extensions/dashboard/package.json",
+      "sha256": "1eeca38db3fa0d132e79748355d85a2546a47b0f99557709b6e48f06eddfee6a"
+    }
+  ],
+  "summary": "Platform-neutral analytics dashboard declarations: pages, datasets, visuals, text and filters",
+  "title": "umf.dashboard · 0.1.0"
+}

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
 import {bindingRegistry,copyJson,getBinding,inspectBinding,migrateBindingRelationships,readBindingDocument,rollbackBindingRelationships,writeBindingDocument,type Document} from '../../src';
 import {bindingMigrationCase} from '../../scripts/binding/stable-ids-cases';
@@ -25,7 +26,7 @@ test('@covers US-046-AC3 @covers US-046-AC9: duplicate, missing, stale and legac
   (b:Document,l:Document)=>payload(b).relationships.push({...payload(b).relationships[0]}),
   (b:Document,l:Document)=>payload(b).relationships[0].name='missing',
   (b:Document,l:Document)=>l.id='different',
-  (b:Document,l:Document)=>{l.umf='0.6.0';payload(b).logical.coreVersion='0.6.0';},
+  (b:Document,l:Document)=>{(l as {umf:string}).umf='0.6.0';payload(b).logical.coreVersion='0.6.0';},
   (b:Document,l:Document)=>(l.modules[0]!.relationships as any[]).push({...((l.modules[0]!.relationships as any[])[0]),id:'other',inverse:'different'}),
   (b:Document,l:Document)=>payload(b).relationships[0].id={opaque:'collision'},
  ]){const {binding,logical}=bindingMigrationCase();mutate(binding,logical);const before=copyJson(binding) as unknown as Document;expect(()=>migrateBindingRelationships(binding,logical)).toThrow();expect(binding).toEqual(before);}
@@ -66,7 +67,7 @@ test('public binding inspection refuses mismatched profiles and accessors withou
 
 test('published migration/receipt/rollback schema validates full retained representation and rejects missing content',async()=>{
  const {createValidator}=await import('../../src/validation/schema');const validator=createValidator(false);
- for(const file of ['schema','field-document.schema','nullability-document.schema','cardinality-document.schema','facet-document.schema','key-document.schema','relationship-document.schema'])validator.addSchema(await Bun.file(`spec/core/${file}.json`).json());
+ validator.addSchema(await Bun.file('spec/core/schema.json').json());
  for(const file of ['binding/schema','binding-stable/schema'])validator.addSchema(await Bun.file(`spec/extensions/${file}.json`).json());
  const check=validator.compile(await Bun.file('spec/extensions/binding-stable/migration.schema.json').json());
  const {binding,logical}=bindingMigrationCase(),r=migrateBindingRelationships(binding,logical);

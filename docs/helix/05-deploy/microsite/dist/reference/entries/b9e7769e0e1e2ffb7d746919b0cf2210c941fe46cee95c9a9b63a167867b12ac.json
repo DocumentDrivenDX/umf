@@ -1,0 +1,104 @@
+{
+  "data": {
+    "extensionId": "umf.postgresql.cardinality",
+    "manifest": {
+      "capabilities": {
+        "directions": [
+          "import"
+        ],
+        "evidence": [
+          "tests/core-ideals/cardinality-postgresql.test.ts",
+          "fixtures/validation/cardinality-postgresql-catalog-native.json"
+        ],
+        "native": {
+          "subset": "Declared column shape under selected metadata profile; not whole-model validation, item typing or execution equivalence",
+          "system": "PostgreSQL",
+          "version": "17.4"
+        },
+        "validation": "structural"
+      },
+      "coreVersion": "0.10.0",
+      "description": "Qualified PostgreSQL column shape observations with native refinements retained",
+      "id": "umf.postgresql.cardinality",
+      "schema": {
+        "$id": "urn:umf:postgresql:cardinality-binding:1.0.0",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": true,
+        "properties": {
+          "basis": {
+            "const": "Explicit captured native type relationships; bounds, rank, item and execution semantics remain native"
+          },
+          "binding": {
+            "const": {
+              "id": "umf.postgresql.cardinality",
+              "version": "1.0.0"
+            }
+          },
+          "interpretation": {
+            "enum": [
+              "declared",
+              "unknown",
+              "unsupported"
+            ]
+          },
+          "nativePath": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "nativeSupplement": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "origin": {
+            "const": "classified"
+          },
+          "profile": {
+            "enum": [
+              "stored-value",
+              "unresolved"
+            ]
+          }
+        },
+        "required": [
+          "origin",
+          "nativeSupplement",
+          "binding",
+          "profile",
+          "interpretation",
+          "nativePath",
+          "basis"
+        ],
+        "title": "Retained PostgreSQL Cardinality scope",
+        "type": "object"
+      },
+      "scopes": [
+        "element"
+      ],
+      "semantics": "CONTRACT-040 and TD-042; shape classification, not native replacement",
+      "version": "1.0.0"
+    },
+    "registration": {
+      "apiIds": [],
+      "coreProfiles": [],
+      "mode": "unmapped"
+    },
+    "schemaId": "[\"schema\",\"spec/extensions/postgresql-cardinality/schema.json\",\"\"]",
+    "version": "1.0.0"
+  },
+  "id": "[\"extension\",\"umf.postgresql.cardinality\",\"1.0.0\"]",
+  "kind": "extension",
+  "links": [
+    "[\"guide\",\"extensions\"]",
+    "[\"schema\",\"spec/extensions/postgresql-cardinality/schema.json\",\"\"]",
+    "[\"integration\",\"umf.postgresql.cardinality@1.0.0:import\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 1951,
+      "path": "spec/extensions/postgresql-cardinality/package.json",
+      "sha256": "9fbc522b4eee9427eebb12436b577aac4d2d205ea3aa8e82ef1d4c51472d68cd"
+    }
+  ],
+  "summary": "Qualified PostgreSQL column shape observations with native refinements retained",
+  "title": "umf.postgresql.cardinality · 1.0.0"
+}

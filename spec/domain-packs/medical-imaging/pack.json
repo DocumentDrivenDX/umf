@@ -1,9 +1,48 @@
 {
+  "artifact_collections": [
+    {
+      "version": "1.0.0",
+      "id": "dicom-originals",
+      "title": "DICOM original instances",
+      "view": "imaging",
+      "semantic_kinds": [
+        "DICOM_instance"
+      ],
+      "source_ids": [
+        "dicom_binary",
+        "tcia_binary"
+      ],
+      "media_types": [
+        "application/dicom"
+      ],
+      "metadata_schema_ids": [
+        "instances"
+      ],
+      "derived_schema_ids": [
+        "attributes"
+      ],
+      "ontology_schema_ids": [
+        "ontology"
+      ],
+      "description": "Original Part 10 bytes; DICOM JSON and attribute tables are separate projections. Selected instances only; no complete study, pixel decoding or live PACS qualification.",
+      "identity": {
+        "description": "Source-declared Study, Series and SOP Instance UIDs; no inferred patient identity.",
+        "fields": [
+          "StudyInstanceUID",
+          "SeriesInstanceUID",
+          "SOPInstanceUID"
+        ]
+      },
+      "grouping": {
+        "description": "Selected instances may belong to a series; full series completeness is not asserted."
+      }
+    }
+  ],
   "id": "medical-imaging",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "family": {
     "id": "medical",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "label": "Imaging: DICOM and PACS metadata"
   },
   "execution_profile": {
@@ -201,7 +240,7 @@
       "data_kind": "unknown",
       "reference": "data/instances.csv",
       "format": "csv",
-      "revision": "medical-imaging-1.1.0",
+      "revision": "medical-imaging-1.2.0",
       "checksum": {
         "algorithm": "sha256",
         "value": "a9de843fb268c76ae8454e246986df1844ae7077df6b0b459529a0db7501d9cd"
@@ -230,7 +269,7 @@
       "data_kind": "unknown",
       "reference": "data/attributes.csv",
       "format": "csv",
-      "revision": "medical-imaging-1.1.0",
+      "revision": "medical-imaging-1.2.0",
       "checksum": {
         "algorithm": "sha256",
         "value": "642ad1c908d4abbf35b609e7e100a6192df48c950a2fffc79b63ce1863af9070"

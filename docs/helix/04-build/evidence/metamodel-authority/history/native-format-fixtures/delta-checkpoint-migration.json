@@ -1,0 +1,13 @@
+{
+  "source": "fixtures/delta/checkpoint/results.json",
+  "originalSha256": "f65103d478d074f27fe5540aa8a811c70b16cbb5b1ea06d8530d6157b06348e5",
+  "changes": [
+    "/results/0/checkpoint/source/umf",
+    "/results/1/sources/0/source/umf",
+    "/results/1/checkpoint/source/umf",
+    "/results/2/sources/0/source/umf",
+    "/results/2/sources/1/source/umf",
+    "/results/2/checkpoint/source/umf"
+  ],
+  "scope": "Authored UMF source capture envelopes only; native log payloads, expected diagnostics and reconciled states unchanged."
+}

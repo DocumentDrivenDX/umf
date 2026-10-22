@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Pinned parser and sample-codec evidence for facet type selection fixtures."""
 import io,json,hashlib,decimal,warnings
 from pathlib import Path

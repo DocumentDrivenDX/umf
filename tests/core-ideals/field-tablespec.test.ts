@@ -1,13 +1,14 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {classifyTableSpecField,verifyTableSpecFieldClassification} from '../../src/core-ideals/tablespec-field';
-import {importTableSpec,importTableSpecBundle,exportTableSpec,exportTableSpecBundle} from '../../src/adapters/tablespec';
-import {upgradeFieldEnvelope} from '../../src/model/field-transition';
+import {classifyTableSpecField, verifyTableSpecFieldClassification} from '../../src/core-ideals/tablespec-field';
+import {importTableSpec, importTableSpecBundle, exportTableSpec, exportTableSpecBundle} from '../../src/adapters/tablespec';
+
 import {declareCoreElementKind} from '../../src/model/field-kind';
-import {readDocument,writeDocument} from '../../src/model/document';
+import {readDocument, writeDocument} from '../../src/model/document';
 import {copyJson} from '../../src/model/json';
 const text=' {"version":"1.0","table_name":"T","columns":[{"name":"x","data_type":"FUTURE","opaque":9007199254740993}]}\n';
 const identity={module:'table',element:'column:0'};
-const source=()=>upgradeFieldEnvelope(importTableSpec(text,{id:'test',format:'json'})).target;
+const source=()=>importTableSpec(text,{id:'test',format:'json'});
 test('classifies an unknown native column type without inventing scalar family and recovers exact text',()=>{
  for(const mode of ['strict','report'] as const){const doc=source(),result=classifyTableSpecField(doc,{column:0,mode});
   expect(result.status).toBe('classified');expect(result.mapping.outcome).toBe('exact');expect(result.mapping.origin).toBe('classified');
@@ -31,11 +32,12 @@ test('stale author receipts and metadata cannot be used as a native classificati
  const result=classifyTableSpecField(edited,{column:0,mode:'report',author});expect(result.status).toBe('blocked');expect(result.residuals[0]!.reason).toContain('STALE');
  const doc=source();doc.modules[0]!.elements[0]!.name='wrong';expect(()=>classifyTableSpecField(doc,{column:0,mode:'strict'})).toThrow();
  expect(()=>classifyTableSpecField(source(),{column:4,mode:'strict'})).toThrow();
- expect(()=>classifyTableSpecField(importTableSpec(text,{id:'old',format:'json'}),{column:0,mode:'strict'})).toThrow();
+ const imported=importTableSpec(text,{id:'current-native',format:'json'});expect(classifyTableSpecField(imported,{column:0,mode:'strict'}).status).toBe('classified');
+ const retired=copyJson(imported) as unknown as Record<string,unknown>;retired.umf='0.8.0';expect(()=>classifyTableSpecField(retired as unknown as typeof imported,{column:0,mode:'strict'})).toThrow();
 });
 test('split sources retain sidecars and shadowed metadata after classification',()=>{
  const files={'table.yaml':'version: "1.0"\ntable_name: T\ncolumns: [{shadowed: true}]\n','columns/x.yaml':'column:\n  name: x\n  data_type: INTEGER\nderivation: {opaque: yes}\n','notes.bin':'untouched\u0000sidecar'};
- const doc=upgradeFieldEnvelope(importTableSpecBundle(files,{id:'split'})).target;
+ const doc=importTableSpecBundle(files,{id:'split'});
  const result=classifyTableSpecField(doc,{column:0,mode:'strict'});expect(result.status).toBe('classified');
  for(const format of ['json','yaml'] as const)expect(exportTableSpecBundle(readDocument(writeDocument(result.target!,format),format))).toEqual(files);
 });

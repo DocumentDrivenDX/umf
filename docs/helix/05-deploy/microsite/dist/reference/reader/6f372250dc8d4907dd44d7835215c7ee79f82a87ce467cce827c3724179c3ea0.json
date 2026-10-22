@@ -1,0 +1,71 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"DddGraphqlPolicy\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "sourceProfile",
+      "optional": false,
+      "type": "\"core-ideals\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"DddGraphqlEndpoint\"]"
+      ],
+      "name": "endpoints",
+      "optional": false,
+      "type": "DddGraphqlEndpoint[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"DddGraphqlRelationshipName\"]"
+      ],
+      "name": "relationships",
+      "optional": false,
+      "type": "DddGraphqlRelationshipName[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"DddGraphqlEntityName\"]"
+      ],
+      "name": "entities",
+      "optional": false,
+      "type": "DddGraphqlEntityName[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"DddGraphqlFieldName\"]"
+      ],
+      "name": "fields",
+      "optional": false,
+      "type": "DddGraphqlFieldName[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "scalars",
+      "optional": false,
+      "type": "{ string: string; boolean: string; integer: string; decimal: string; 'date-time': string; bytes: string; }"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "root",
+      "optional": false,
+      "type": "{ kind: \"synthetic-schema-root\"; typeName: string; fieldName: string; }"
+    }
+  ],
+  "parameters": [],
+  "purpose": "DddGraphqlPolicy is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "DddGraphqlPolicy"
+}

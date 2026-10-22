@@ -1,0 +1,41 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"recoverDddPostgresqlNative\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"DddPostgresqlProjection\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "DddPostgresqlProjection"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "current",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"PostgresqlBackend\"]"
+      ],
+      "name": "backend",
+      "optional": false,
+      "type": "PostgresqlBackend"
+    }
+  ],
+  "purpose": "recoverDddPostgresqlNative accepts input, current, backend and returns Promise<string>.",
+  "related": [],
+  "returns": "Promise<string>",
+  "task": "Import and export",
+  "type": "(input: DddPostgresqlProjection, current: Document, backend: PostgresqlBackend) => Promise<string>"
+}

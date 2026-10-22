@@ -1,0 +1,96 @@
+{
+  "status": "conditional-proof-passed",
+  "solverVersion": "4.15.4",
+  "sourceDigests": {
+    "/Users/erik/.codex/worktrees/1598/umf/tools/security/prove-publication-drain.py": "836403618716452e7755e11f6b22360a676c68c33ca381697ea6ea09da7d5d0a",
+    "src/extensions/security/authority-guard.ts": "fb551273b2141ca3c3a906bfdbd0a3ba6a4addcb2ce6e3953b1b351716b4cdb3",
+    "tools/security/truss-original-use-release.ts": "29b834336f8699ea05c891012ad1e364ebeecd8b8f1ca994345aa35657692653"
+  },
+  "cases": [
+    {
+      "id": "initial-drain-invariant",
+      "violation": {
+        "result": "unsat",
+        "smt": "(declare-fun readers () Int)\n(declare-fun changing () Bool)\n(declare-fun pending_publications () Int)\n(assert (let ((a!1 (not (and (>= readers 0)\n                     (>= pending_publications 0)\n                     (<= pending_publications readers)\n                     (=> changing (= readers 0))))))\n  (and (= readers 0) (= pending_publications 0) (not changing) a!1)))\n",
+        "replayResult": "unsat",
+        "witness": null
+      },
+      "negativeControl": {
+        "result": "sat",
+        "smt": "(declare-fun readers () Int)\n(declare-fun changing () Bool)\n(declare-fun pending_publications () Int)\n(assert (let ((a!1 (not (and (>= readers 0)\n                     (>= pending_publications 0)\n                     (<= pending_publications readers)\n                     (=> changing (= readers 0))))))\n  (and (= readers 0) (= pending_publications 1) (not changing) a!1)))\n",
+        "replayResult": "sat",
+        "witness": "[readers = 0, pending_publications = 1, changing = False]"
+      },
+      "positive": {
+        "result": "sat",
+        "smt": "(declare-fun readers () Int)\n(declare-fun changing () Bool)\n(declare-fun pending_publications () Int)\n(assert (and (= readers 0)\n     (= pending_publications 0)\n     (not changing)\n     (>= readers 0)\n     (>= pending_publications 0)\n     (<= pending_publications readers)\n     (=> changing (= readers 0))))\n",
+        "replayResult": "sat",
+        "witness": "[readers = 0, pending_publications = 0, changing = False]"
+      }
+    },
+    {
+      "id": "all-admitted-transitions-preserve-drain",
+      "violation": {
+        "result": "unsat",
+        "smt": "(declare-fun next_readers () Int)\n(declare-fun next_changing () Bool)\n(declare-fun next_pending () Int)\n(declare-fun pending_publications () Int)\n(declare-fun readers () Int)\n(declare-fun changing () Bool)\n(assert (let ((a!1 (or (and (not changing)\n                    (= next_readers (+ readers 1))\n                    (= next_pending pending_publications)\n                    (= next_changing changing))\n               (and (not changing)\n                    (> readers pending_publications)\n                    (= next_readers readers)\n                    (= next_pending (+ pending_publications 1))\n                    (= next_changing changing))\n               (and (> pending_publications 0)\n                    (= next_readers readers)\n                    (= next_pending (- pending_publications 1))\n                    (= next_changing changing))\n               (and (> readers pending_publications)\n                    (= next_readers (- readers 1))\n                    (= next_pending pending_publications)\n                    (= next_changing changing))\n               (and (= readers 0)\n                    (not changing)\n                    (= next_readers readers)\n                    (= next_pending pending_publications)\n                    next_changing)\n               (and changing\n                    (= next_readers readers)\n                    (= next_pending pending_publications)\n                    (not next_changing))))\n      (a!2 (not (and (>= next_readers 0)\n                     (>= next_pending 0)\n                     (<= next_pending next_readers)\n                     (=> next_changing (= next_readers 0))))))\n  (and (>= readers 0)\n       (>= pending_publications 0)\n       (<= pending_publications readers)\n       (=> changing (= readers 0))\n       a!1\n       a!2)))\n",
+        "replayResult": "unsat",
+        "witness": null
+      },
+      "negativeControl": {
+        "result": "sat",
+        "smt": "(declare-fun next_readers () Int)\n(declare-fun next_changing () Bool)\n(declare-fun next_pending () Int)\n(declare-fun changing () Bool)\n(declare-fun pending_publications () Int)\n(declare-fun readers () Int)\n(assert (let ((a!1 (not (and (>= next_readers 0)\n                     (>= next_pending 0)\n                     (<= next_pending next_readers)\n                     (=> next_changing (= next_readers 0))))))\n  (and (>= readers 0)\n       (>= pending_publications 0)\n       (<= pending_publications readers)\n       (=> changing (= readers 0))\n       (= readers 1)\n       (= pending_publications 1)\n       (> readers 0)\n       (= next_readers (- readers 1))\n       (= next_pending pending_publications)\n       (= next_changing changing)\n       a!1)))\n",
+        "replayResult": "sat",
+        "witness": "[readers = 1,\n next_changing = False,\n pending_publications = 1,\n next_readers = 0,\n next_pending = 1,\n changing = False]"
+      },
+      "positive": {
+        "result": "sat",
+        "smt": "(declare-fun next_readers () Int)\n(declare-fun next_changing () Bool)\n(declare-fun next_pending () Int)\n(declare-fun pending_publications () Int)\n(declare-fun readers () Int)\n(declare-fun changing () Bool)\n(assert (let ((a!1 (or (and (not changing)\n                    (= next_readers (+ readers 1))\n                    (= next_pending pending_publications)\n                    (= next_changing changing))\n               (and (not changing)\n                    (> readers pending_publications)\n                    (= next_readers readers)\n                    (= next_pending (+ pending_publications 1))\n                    (= next_changing changing))\n               (and (> pending_publications 0)\n                    (= next_readers readers)\n                    (= next_pending (- pending_publications 1))\n                    (= next_changing changing))\n               (and (> readers pending_publications)\n                    (= next_readers (- readers 1))\n                    (= next_pending pending_publications)\n                    (= next_changing changing))\n               (and (= readers 0)\n                    (not changing)\n                    (= next_readers readers)\n                    (= next_pending pending_publications)\n                    next_changing)\n               (and changing\n                    (= next_readers readers)\n                    (= next_pending pending_publications)\n                    (not next_changing)))))\n  (and (>= readers 0)\n       (>= pending_publications 0)\n       (<= pending_publications readers)\n       (=> changing (= readers 0))\n       a!1\n       (>= next_readers 0)\n       (>= next_pending 0)\n       (<= next_pending next_readers)\n       (=> next_changing (= next_readers 0)))))\n",
+        "replayResult": "sat",
+        "witness": "[changing = False,\n next_pending = 0,\n next_readers = 2,\n pending_publications = 1,\n next_changing = False,\n readers = 2]"
+      }
+    },
+    {
+      "id": "authority-change-excludes-unpublished-data",
+      "violation": {
+        "result": "unsat",
+        "smt": "(declare-fun pending_publications () Int)\n(declare-fun changing () Bool)\n(declare-fun readers () Int)\n(assert (and (>= readers 0)\n     (>= pending_publications 0)\n     (<= pending_publications readers)\n     (=> changing (= readers 0))\n     changing\n     (> pending_publications 0)))\n",
+        "replayResult": "unsat",
+        "witness": null
+      },
+      "negativeControl": {
+        "result": "sat",
+        "smt": "(declare-fun pending_publications () Int)\n(declare-fun changing () Bool)\n(declare-fun readers () Int)\n(assert (and (= readers 0) changing (= pending_publications 1)))\n",
+        "replayResult": "sat",
+        "witness": "[readers = 0, pending_publications = 1, changing = True]"
+      },
+      "positive": {
+        "result": "sat",
+        "smt": "(declare-fun pending_publications () Int)\n(declare-fun changing () Bool)\n(declare-fun readers () Int)\n(assert (and (>= readers 0)\n     (>= pending_publications 0)\n     (<= pending_publications readers)\n     (=> changing (= readers 0))\n     changing\n     (= pending_publications 0)))\n",
+        "replayResult": "sat",
+        "witness": "[readers = 0, pending_publications = 0, changing = True]"
+      }
+    },
+    {
+      "id": "change-admission-requires-publication-drain",
+      "violation": {
+        "result": "unsat",
+        "smt": "(declare-fun pending_publications () Int)\n(declare-fun next_changing () Bool)\n(declare-fun next_pending () Int)\n(declare-fun readers () Int)\n(declare-fun next_readers () Int)\n(declare-fun changing () Bool)\n(assert (and (>= readers 0)\n     (>= pending_publications 0)\n     (<= pending_publications readers)\n     (=> changing (= readers 0))\n     (= readers 0)\n     (not changing)\n     (= next_readers readers)\n     (= next_pending pending_publications)\n     next_changing\n     (> pending_publications 0)))\n",
+        "replayResult": "unsat",
+        "witness": null
+      },
+      "negativeControl": {
+        "result": "sat",
+        "smt": "(declare-fun next_pending () Int)\n(declare-fun next_readers () Int)\n(declare-fun changing () Bool)\n(declare-fun next_changing () Bool)\n(declare-fun pending_publications () Int)\n(declare-fun readers () Int)\n(assert (and (>= readers 0)\n     (>= pending_publications 0)\n     (<= pending_publications readers)\n     (=> changing (= readers 0))\n     (= readers 1)\n     (= pending_publications 1)\n     (> readers 0)\n     (= next_readers (- readers 1))\n     (= next_pending pending_publications)\n     (= next_changing changing)\n     (= next_readers 0)\n     (> next_pending 0)))\n",
+        "replayResult": "sat",
+        "witness": "[readers = 1,\n next_changing = False,\n pending_publications = 1,\n next_readers = 0,\n next_pending = 1,\n changing = False]"
+      },
+      "positive": {
+        "result": "sat",
+        "smt": "(declare-fun pending_publications () Int)\n(declare-fun next_changing () Bool)\n(declare-fun next_pending () Int)\n(declare-fun readers () Int)\n(declare-fun next_readers () Int)\n(declare-fun changing () Bool)\n(assert (and (>= readers 0)\n     (>= pending_publications 0)\n     (<= pending_publications readers)\n     (=> changing (= readers 0))\n     (= readers 0)\n     (not changing)\n     (= next_readers readers)\n     (= next_pending pending_publications)\n     next_changing\n     (= pending_publications 0)))\n",
+        "replayResult": "sat",
+        "witness": "[readers = 0,\n next_changing = True,\n pending_publications = 0,\n next_readers = 0,\n next_pending = 0,\n changing = False]"
+      }
+    }
+  ],
+  "scope": "Inductive abstract unbounded reader/publication-count model: empty initial state and all modeled transitions preserve pending<=readers and changing=>readers==0. Therefore changing excludes pending publications. Premises: every protected operation retains its own guard through publication completion, all authority mutators use the same coordinator, truthful callback settlement, atomic serialized coordinator transitions, and no bypass/independent writers. Read completion transition is admitted only after that operation publishes; global counts abstract individual lease custody. Premature lease release has a SAT counterexample. Does not verify TS execution/refinement, native/distributed lock participation, callback source authenticity, streaming/final bytes, crashes, liveness/fairness or complete backend acceptance."
+}

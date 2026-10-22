@@ -1,0 +1,20 @@
+{
+  "status": "STARTUP_REFUSED_NO_DISCOVERY_SQL",
+  "startSubmitted": true,
+  "startExitCode": 1,
+  "startError": "timed out: Clusters are failing to launch. Cluster launch will be retried.",
+  "startupBoundSeconds": 120,
+  "discoverySqlSubmitted": 0,
+  "fixtureTablesCreated": 0,
+  "runnerExecuted": false,
+  "outerStopRequested": true,
+  "warehouseStopped": true,
+  "qualification": false,
+  "nativeAuthority": false,
+  "r5ParserApplied": false,
+  "sourceHashes": {
+    "runner.py": "98c7ba4d8c9243f51f6c301bca096b07c72b3df49c54b5ddaff1447cf3eabef9",
+    "plan.json": "4ba690ab34c83bd8b2bb2dd9f2734b377c981c795cbc0b45d4f022974ef7f14c",
+    "test_runner.py": "7a26235d023349cb4e2a9a858ebfbc77c4d4148b0f8069fa30b1460606c16e70"
+  }
+}

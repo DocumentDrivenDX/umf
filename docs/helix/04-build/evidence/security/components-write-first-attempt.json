@@ -1,0 +1,80 @@
+{
+  "status": "failed",
+  "generatedAt": "2026-10-08T16:46:39.620892+00:00",
+  "scope": "Policy inspection/preservation, bounded host-attested fact evaluation, immutable registration, single-realm authority coordination, write admission, composition and POSIX runner components; no native backend qualification",
+  "sourceDigests": {
+    "spec/extensions/security/ontology.schema.json": "590c2d2d851280bad715ac928ad333215617e53b23d52c6bd9e4982b8566fcef",
+    "spec/extensions/security/package.json": "6e47d79862a7b1b9d6cd83327bd00bf576d88285b443ac993b6f85bded9beff0",
+    "spec/extensions/security/schema.json": "da6875e8889a7d0adb215964e4298b6642ba6667710d7a274888dcff2a9ef6fc",
+    "src/extensions/security/authority-guard.ts": "fb551273b2141ca3c3a906bfdbd0a3ba6a4addcb2ce6e3953b1b351716b4cdb3",
+    "src/extensions/security/evaluate.ts": "ffe04a0fee624638f1811749f15e351c52df682d1147f01c9ad4cd30cc43a498",
+    "src/extensions/security/logic.ts": "66cd7c1c754698322422fd97f1a8ddd2babfa6095a96ea52a1485b86b457adf8",
+    "src/extensions/security/policy.ts": "55650c6c0d055ace3b7adcaf2e8bff42d7eff4aa1f24fd0dae55f2e245d91871",
+    "src/extensions/security/registration.ts": "6a1a50bf9d41cf0f477cc220a82425c31a47d7dfa45bde52bb880fe85878af8f",
+    "src/extensions/security/types.ts": "eca63268da13b8ba7aabe9383da415f36a0e3beadca132ffbb356948886818b8",
+    "src/extensions/security/write.ts": "958766455c7af883fda40ee5e4674e042fad27c30e29050e00dd59daf1bf7ba7",
+    "tests/security/acceptance-case.ts": "e32ac60407a84d82d14ccf51e1bf9aacfaf1b99de1cd6c54d8ee0dea5b36716e",
+    "tests/security/acceptance-oracle.ts": "bdc260eb0d1e17786fd2ff9047cbb86bfc6d1305fb3e2db1cc9bd0fd8d1374a9",
+    "tests/security/authority-guard.test.ts": "84457d309925151ce76775ad7d4355a032ff00f7350021c3ee7e3262d31e2bf3",
+    "tests/security/browser-corpus.ts": "00e8ee7f4cdc18cd000a0dbf7830cef744e5990209f86a47ae947b5bbc162bc0",
+    "tests/security/evaluate.test.ts": "3530aa9860434998e3c40020864b8817e007816d3a8a5197f821fcbb5f7bad65",
+    "tests/security/evaluation-fixture.ts": "ecb9bbae23a4b26232fda959c59aa4dbe79a111699c670f1356dd0c7d251d8ad",
+    "tests/security/fixture.ts": "572f914713ea24d3e06b85a953cc9176fd98adf2e585e1cd6d838f27c1b694c6",
+    "tests/security/formal-acceptance.py": "cba43969bfdf2c02a84a0e351160d7657f3cf74848f062431717d39a0ff6389f",
+    "tests/security/formal-oracle.json": "5ef17e3c733278b471c7891a18f95be1e9f33de5b9e4478193046f20e6925088",
+    "tests/security/logic.test.ts": "b71dbadec94b91a7ea1e6e5654c79e819fb632bb5bc865587ebd8f81ad92da99",
+    "tests/security/policy.test.ts": "42ad6a997c17d64b4f0a94f311bb3e7dba8346b35cb62b7e8236bf396e1c083a",
+    "tests/security/registration.test.ts": "a22cf29e2919e38125dcbb428781823bbfdc947ff30ff5d2681c271df273f8e2",
+    "tests/security/run-command.test.ts": "577fab85f0b795919e11d29cce5cdc163718359a5008753d459d736bf4bc50f1",
+    "tests/security/write-fixture.ts": "980ba7d36909c332f689c7074780a129efcd44adc9bfe67d14106cbb639218ca",
+    "tests/security/write.test.ts": "716d4cab90c90bf7afa5ea494aad2653b0c445ca0bd9f7bdef3a11de94e399fc",
+    "tools/security/browser.ts": "23ecb1ca5e787b91b2c2df2bb63529d61f7b5b8d0f3ebac7d0e1c21f52b5bab0",
+    "tools/security/components.py": "16b2fad1238f1c2f42c77a6146cdf5359e7cab405e226b0bff346c750683ab2a",
+    "tools/security/run-command.ts": "a467d18160b9f05a459ef69b47179d4c2221f33f71ac6169b59946a6760e7dce",
+    "tools/security/validate-evidence.py": "6ee0013989d3272cf9f19a9163a75ffdd10222b988bbf0a5b5f3c88501e002fd",
+    "src/index.ts": "ac669cb58587879b4007f674a1e67ed32efcfad2ef514aaec243c7cf0d231c95",
+    "src/model/json.ts": "b2c3f48bb779972af5beadfb22ec1db48c793dcdaf572293afa62904016465e7",
+    "src/model/types.ts": "54f4e6df10f7f358e81fbb637fe39869df077f82751aa6221b3532e3c9167785",
+    "scripts/security-schema.py": "c0cc80ec2fb6ce517eae3f825d55c43a76c1b7c0233d4cbad5c4bb2a97694f37",
+    "scripts/acceptance-traceability.ts": "e0a89b39c7c16baddb55f9cb7f0ac18888754f68c26b7008cce42ffebb13ce91",
+    "tests/traceability/acceptance-ledger.test.ts": "5a39b524a4f4b32b28ea3002a35f97a5dd8feae2304effbdd2d9e5481f64f04a",
+    "bun.lock": "98a99f7d306f7269db103bdbfafe5f9ad9ed34b02024276ad0cce45df27f5cc3"
+  },
+  "sourcesUnchanged": true,
+  "runs": [
+    {
+      "command": [
+        "bun",
+        "test",
+        "--timeout",
+        "15000",
+        "./tests/security",
+        "./tests/traceability/acceptance-ledger.test.ts",
+        "./tests/core/key-tuple.test.ts"
+      ],
+      "exitCode": 0,
+      "stdout": "bun test v1.4.2 (43848b5a7)\n",
+      "stderr": "\ntests/security/write.test.ts:\n(pass) writes require both states and exact field permission; admission has no effects [129.52ms]\n(pass) ownership changes require a separately granted action even with permitted old/new states [34.29ms]\n(pass) incomplete states, mixed authority and changed authorization facts refuse [5.12ms]\n(pass) create and delete admit only their declared state shape [35.97ms]\n(pass) policy attribute changes need separate authority and null/absence remain distinct [134.08ms]\n\ntests/security/registration.test.ts:\n(pass) opaque host registration pins immutable complete definitions and refuses foreign handles [13.48ms]\n(pass) stale classification and core source reuse cannot alter an existing registered revision [12.61ms]\n\ntests/security/policy.test.ts:\n(pass) Staff/Project nested correlated policy resolves exact qualified types and keys [0.90ms]\n(pass) display labels cannot resolve a different document and revisions must match [5.78ms]\n(pass) unknown security meaning and opaque native archives survive JSON/YAML [16.35ms]\n(pass) operand, variable, role, action, classification and bound errors refuse interpretation [12.69ms]\n(pass) unknown ontology/facet/key qualifiers refuse while original source remains retained [9.27ms]\n(pass) registered policy preserves extension but core inspection requires explicit closure [15.09ms]\n(pass) typed entrypoint never invokes hostile accessors [0.06ms]\n(pass) browser corpus has independent valid/incomplete/refusal and preservation expectations [26.80ms]\n(pass) editing public package metadata cannot change the built-in registry [10.39ms]\n\ntests/security/evaluate.test.ts:\n(pass) correlated ownership and active same-Project assignment govern a broad read grant [33.27ms]\n(pass) incomplete, stale, malformed or ambiguous host inputs refuse the whole collection [29.77ms]\n(pass) forbids dominate and false permits never add masks [18.54ms]\n(pass) query-use admission refuses withholding and requires a separate original-value action [107.23ms]\n(pass) original null, absence and typed constant replacement remain distinct [13.38ms]\n(pass) hostile accessors cannot run at the evaluation boundary [0.11ms]\n(pass) an empty collection still admits every scoped complete dependency [5.18ms]\n(pass) transform conflicts refuse; withholding dominates all transform permutations [13.45ms]\n(pass) any/all owners and nonempty-owner requirements have explicit different meanings [17.67ms]\n(pass) keys compare exact Unicode and integers without normalization or host rounding [14.40ms]\n\ntests/security/logic.test.ts:\n(pass) strong Kleene tables agree with an independently enumerated oracle [0.09ms]\n(pass) all 27 grant/require/forbid combinations agree with composition oracle [0.40ms]\n(pass) all disposition triples and permutations preserve dominance and conflicts [2.53ms]\n(pass) false permits never contribute obligations and protected omission refuses [0.06ms]\n(pass) runtime boundary rejects malformed/unknown meaning without invoking accessors [0.45ms]\n\ntests/security/authority-guard.test.ts:\n(pass) revocation drains prior final releases and later readers observe the new generation [0.41ms]\n(pass) active cancellation cannot release the guard while application buffers remain live [0.13ms]\n(pass) queued cancellation never invokes the producer or cancels a still active reader [0.11ms]\n(pass) unknown transition outcomes close admission and cannot acknowledge a fresh generation [0.11ms]\n(pass) generation reuse refuses before effects and preserves the current generation [0.04ms]\n(pass) close before an acquired producer starts prevents effects [0.04ms]\n(pass) resource bounds refuse excess admission without invoking the producer [0.39ms]\n\ntests/security/run-command.test.ts:\n(pass) collects successful bounded stdout and stderr [10.37ms]\n(pass) deadline terminates the runner and inherited-pipe descendant [253.08ms]\n(pass) parent completion cleans up descendants retaining output pipes [61.75ms]\n(pass) combined output cap fails closed and terminates [15.28ms]\n(pass) spawn failure returns a bounded failure [0.52ms]\n\ntests/traceability/acceptance-ledger.test.ts:\n(pass) every governed acceptance criterion has one auditable traceability classification [323.17ms]\n(pass) partial security citations never close the open backend acceptance gate [187.76ms]\n(pass) the PostgreSQL generator browser-parity criterion retains reviewed harness evidence [190.40ms]\n\ntests/core/key-tuple.test.ts:\n(pass) key tuple vectors and domain boundaries produce exact frames or atomic refusals [70.00ms]\n(pass) stable key ID survives name/list changes while retained receipts detect stale context [0.90ms]\n(pass) tuple verification rejects forged and nonminimal frames and altered retained inputs [1.21ms]\n(pass) unknown relevant qualifiers block and unrelated native extension content survives [1.42ms]\n(pass) shortest length/count framing and no getter evaluation [5.23ms]\n(pass) resource bounds and a bad later component refuse the whole tuple [4.88ms]\n(pass) current document context and result schema reject prior versions without downgrading [1.43ms]\n\n 53 pass\n 0 fail\n 1898 expect() calls\nRan 53 tests across 9 files. [2.08s]\n"
+    },
+    {
+      "command": [
+        "bun",
+        "run",
+        "typecheck"
+      ],
+      "exitCode": 1,
+      "stdout": "src/extensions/security/write.ts(52,13): error TS18048: 'covered' is possibly 'undefined'.\n",
+      "stderr": "$ bun node_modules/typescript/bin/tsc --noEmit && bun node_modules/typescript/bin/tsc -p tsconfig.tools.json\nerror: script \"typecheck\" exited with code 1\n"
+    },
+    {
+      "command": [
+        "bun",
+        "run",
+        "test:schemas"
+      ],
+      "exitCode": 0,
+      "stdout": "{\n  \"packages\": 60,\n  \"passed\": 60,\n  \"failures\": []\n}\n{\n  \"schemas\": 349,\n  \"passed\": 349,\n  \"failures\": []\n}\n",
+      "stderr": "$ bun scripts/audit-extension-packages.ts && bun scripts/audit-json-schemas.ts\n"
+    }
+  ]
+}

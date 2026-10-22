@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {reconcileDeltaMultipartCheckpoint,exportParquetCapture,coreSchema} from '../../src';
 import {sparkStringHash} from '../../src/adapters/delta/spark-hash';

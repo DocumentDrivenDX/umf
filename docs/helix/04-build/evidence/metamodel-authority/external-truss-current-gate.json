@@ -1,0 +1,34 @@
+{
+  "profile": "umf.metamodel-authority.external-native-gate/1",
+  "status": "blocked-current-native-qualification",
+  "scope": "Truss native preparation profile only. Current authored logical UMF tests are separate; no historical native observations are relabelled.",
+  "upstreamRepository": "DocumentDrivenDX/truss",
+  "observedHead": "c932c54a8f90b7303f1032eadd835960d6611c8c",
+  "workspaceHasUnrelatedChanges": true,
+  "modifiedUpstream": false,
+  "sources": {
+    "packages/browser/catalog.ts": "20335014083c16341e63c93957b91a262f54b9df41445784a09ccc5e1c5c358e",
+    "packages/browser/actions.ts": "cdd5df370f4e929e0e83d932fdc9d1700ae82d1f132045bf091c798568197016",
+    "packages/umf-bun/src/index.ts": "d7b2b2a1e330715f706dc4ef57ca489c198e4f7fed0c82208c6b471f5ae63d5b",
+    "packages/umf-bun/src/catalog-core-assertion-identities.ts": "8e26b39365daedde304410f6e591e6b5430a9c5251792ffb404b5799fd885f10",
+    "packages/postgresql/src/security-native-key.ts": "0190bf385159decd0e5e89340936a2e324bff9a5f6291791a492caa6226c1d51"
+  },
+  "findings": [
+    "Browser catalog explicitly admits core0.8 and action model pins emit0.8.",
+    "Bun profile supports original0.7/0.8 sources with frozen receipt identities.",
+    "PostgreSQL security key model pins require0.8.",
+    "UMF preparation-source compiler pins original Truss compiler c0c6449481a87eed38d3f7a6ebebc1f4ab4beeb4 and original model/binding/lowering byte identities.",
+    "An upstream consumer/profile/package upgrade and renewed native compiler/binding/lowering observations are required; changing token markers or old artifact hashes would not qualify support."
+  ],
+  "preserved": [
+    "tests/security/original-products-action-packet.json",
+    "tests/security/preparation-program-original/",
+    "tools/security/protection-preparation-sources.ts"
+  ],
+  "currentReplacements": [
+    "tests/security/fixtures/current-products-model.json",
+    "tests/security/core-extension-closure.test.ts",
+    "tests/security/preparation-sources.test.ts"
+  ],
+  "review": "Root and Sol accepted current logical coverage plus explicit native refusal while retaining source feature and exact original qualification. External native gate remains open; schema/API/browser release must exclude this native profile from current-core support claims."
+}

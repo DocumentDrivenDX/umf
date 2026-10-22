@@ -1,0 +1,36 @@
+{
+  "data": {
+    "apiIds": [],
+    "expected": {
+      "bytes": 103,
+      "path": "docs/helix/05-deploy/reference/examples/expected.json",
+      "sha256": "7ea4708756f2ab539e0acf22175e625e65cd5ccd25c8fdbc1579b79472d1d821"
+    },
+    "guideIds": [
+      "[\"guide\",\"concepts\"]"
+    ],
+    "inputs": [
+      {
+        "bytes": 718,
+        "path": "docs/helix/05-deploy/reference/examples/semantic-types.json",
+        "sha256": "0e3e661fae91bf2a9a48cd1dc8098b2130e9b7bdceb9871a3cbe6a269af79110"
+      }
+    ],
+    "operationId": "core-validate"
+  },
+  "id": "[\"example\",\"core-semantic\"]",
+  "kind": "example",
+  "links": [
+    "[\"guide\",\"concepts\"]",
+    "[\"integration\",\"core-validate\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 718,
+      "path": "docs/helix/05-deploy/reference/examples/semantic-types.json",
+      "sha256": "0e3e661fae91bf2a9a48cd1dc8098b2130e9b7bdceb9871a3cbe6a269af79110"
+    }
+  ],
+  "summary": "Validate a core document",
+  "title": "core semantic"
+}

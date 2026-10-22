@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"recoverRelationshipAvroIdeal\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"RelationshipAvroProjection\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "RelationshipAvroProjection"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "current",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "recoverRelationshipAvroIdeal accepts input, current and returns Document.",
+  "related": [],
+  "returns": "Document",
+  "task": "Import and export",
+  "type": "(input: RelationshipAvroProjection, current: Document) => Document"
+}

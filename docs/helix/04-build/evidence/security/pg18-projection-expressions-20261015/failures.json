@@ -1,0 +1,27 @@
+[
+  {
+    "stage": "initial-runner",
+    "failure": "initdb temporary local socket server passed local readiness then restarted; second query found no local server",
+    "fix": "TCP readiness sees only final server",
+    "qualified": false
+  },
+  {
+    "stage": "initial-cleanup",
+    "failure": "docker ps short ID compared with inspect full ID, cleanup refused",
+    "fix": "verify one original ID prefix, ownership label and exclusive volume users; failed fixture removed and absence verified",
+    "qualified": false
+  },
+  {
+    "stage": "qualified-operators-first-attempt",
+    "failure": "bucket input3/origin3/width10 returned30; OPERATOR(...) has generic precedence",
+    "fix": "explicit parentheses around quotient multiplication before origin addition",
+    "preimage": "failed-operator-precedence.ts.txt",
+    "qualified": false
+  },
+  {
+    "stage": "independent-observation-mutation",
+    "failure": "prior observation loop accepted repeated index0 instead of requiring all210 original indices",
+    "fix": "exact two-element list, exact integer index equal to enumerate position, exact string or null native value",
+    "qualified": false
+  }
+]

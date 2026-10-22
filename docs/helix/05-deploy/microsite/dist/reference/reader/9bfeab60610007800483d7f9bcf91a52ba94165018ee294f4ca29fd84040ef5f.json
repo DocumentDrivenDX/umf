@@ -1,0 +1,39 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"renameArrowIpcField\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "options",
+      "optional": false,
+      "type": "{ fieldPath: number[]; name: string; uninterpretedMetadata: \"preserve-and-report\"; }"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ArrowFlatbufferEncodingBackend\"]"
+      ],
+      "name": "backend",
+      "optional": false,
+      "type": "ArrowFlatbufferEncodingBackend"
+    }
+  ],
+  "purpose": "Renames a positional field without changing physical types or record/dictionary messages.",
+  "related": [],
+  "returns": "ArrowIpcRenameResult",
+  "task": "Other APIs",
+  "type": "(document: Document, options: { fieldPath: number[]; name: string; uninterpretedMetadata: \"preserve-and-report\"; }, backend: ArrowFlatbufferEncodingBackend) => ArrowIpcRenameResult"
+}

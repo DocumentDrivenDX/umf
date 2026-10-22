@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"verifyRelationshipParquetProjection\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"RelationshipParquetProjection\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "RelationshipParquetProjection"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "current",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "Verify retained consistency against a current or freshly imported native document.",
+  "related": [],
+  "returns": "RelationshipParquetProjection",
+  "task": "Other APIs",
+  "type": "(input: RelationshipParquetProjection, current: Document) => RelationshipParquetProjection"
+}

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import type {SqlServerFacetPredicateCandidate} from '../../src/adapters/sqlserver/facet-predicate';
 /** Syntax observations only; no CHECK enforcement or core facet claim. */
 export const predicateCases: {text:string;column:string;expected:SqlServerFacetPredicateCandidate[]}[] = [

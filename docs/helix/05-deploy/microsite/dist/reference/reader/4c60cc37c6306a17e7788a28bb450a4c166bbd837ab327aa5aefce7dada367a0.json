@@ -1,0 +1,37 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"getDashboardDefinition\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "doc",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "module",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "element",
+      "optional": false,
+      "type": "string"
+    }
+  ],
+  "purpose": "getDashboardDefinition accepts doc, module, element and returns DashboardDefinition.",
+  "related": [],
+  "returns": "DashboardDefinition",
+  "task": "Inspect and select",
+  "type": "(doc: Document, module: string, element: string) => DashboardDefinition"
+}

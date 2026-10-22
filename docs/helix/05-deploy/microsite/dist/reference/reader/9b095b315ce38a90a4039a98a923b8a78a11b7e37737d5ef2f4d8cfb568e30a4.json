@@ -1,0 +1,41 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"selectCoreRelationships\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreRelationshipQuery\"]"
+      ],
+      "name": "queryInput",
+      "optional": false,
+      "type": "CoreRelationshipQuery"
+    },
+    {
+      "description": "Default: new Registry().",
+      "links": [
+        "[\"api\",\".\",\"Registry\"]"
+      ],
+      "name": "registry",
+      "optional": true,
+      "type": "Registry"
+    }
+  ],
+  "purpose": "selectCoreRelationships accepts input, queryInput, registry and returns CoreRelationshipSelection.",
+  "related": [],
+  "returns": "CoreRelationshipSelection",
+  "task": "Inspect and select",
+  "type": "(input: Document, queryInput: CoreRelationshipQuery, registry?: Registry) => CoreRelationshipSelection"
+}

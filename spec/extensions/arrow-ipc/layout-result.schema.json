@@ -5,7 +5,7 @@
   "type": "object",
   "properties": {
     "source": {
-      "$ref": "urn:umf:core:0.1.0"
+      "$ref": "urn:umf:core:0.10.0"
     },
     "format": {
       "enum": [
@@ -67,7 +67,7 @@
             ]
           },
           "metadata": {
-            "$ref": "urn:umf:core:0.1.0"
+            "$ref": "urn:umf:core:0.10.0"
           }
         },
         "required": [
@@ -97,7 +97,7 @@
           "maximum": 1000000
         },
         "metadata": {
-          "$ref": "urn:umf:core:0.1.0"
+          "$ref": "urn:umf:core:0.10.0"
         }
       },
       "required": [

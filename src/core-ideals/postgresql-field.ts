@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
+import {CURRENT_CORE_VERSION} from '../generated/core-model';
 import {copyJson} from '../model/json';
 import {UmfError,type Document,type Json,type Diagnostic} from '../model/types';
 import {verifyCoreKindDeclaration,type CoreKindDeclaration} from '../model/field-kind';
@@ -5,7 +7,7 @@ import {getPostgresqlColumnMetadata,exportPostgresqlCatalogCapture,getPostgresql
 import {parseNativeJson,renderTree} from '../model/native-json';
 import {validateDocument} from '../validation/document';
 import {createValidator} from '../validation/schema';
-import legacy from '../../spec/core/schema.json';import fields from '../../spec/core/field-document.schema.json';import kinds from '../../spec/core/kind-operation.schema.json';import schema from '../../spec/core/postgresql-field-classification.schema.json';
+import legacy from '../../spec/core/schema.json';import kinds from '../../spec/core/kind-operation-v6.schema.json';import schema from '../../spec/core/postgresql-field-classification.schema.json';
 export {default as postgresqlFieldClassificationSchema} from '../../spec/core/postgresql-field-classification.schema.json';
 export interface PostgresqlFieldRequest {column:string;nativeSource:string;mode:'strict'|'report';author?:CoreKindDeclaration}
 const binding={id:'umf.postgresql.catalog.field',version:'1.0.0',nativeVersion:'17.4',subset:'Captured catalog column membership; excludes raw DDL and native constraint/value equivalence'} as const;
@@ -14,12 +16,12 @@ export interface PostgresqlFieldClassification {
  mapping:{origin:'classified';kind:'field';idealPath:string;nativePath:string;nativeFragment:Json;basis:'checked-catalog-column-membership';outcome:'exact'|'unknown'};
  residuals:{path:string;value:Json;reason:string;recovery:'Original assertion and native fragment retained in source; reclassify with corrected provenance'}[];diagnostics:Diagnostic[];
 }
-const validator=createValidator();validator.addSchema(legacy);validator.addSchema(fields);validator.addSchema(kinds);const check=validator.compile(schema),checkRequest=validator.compile(schema.properties.request);
+const validator=createValidator();validator.addSchema(legacy);validator.addSchema(kinds);const check=validator.compile(schema),checkRequest=validator.compile(schema.properties.request);
 /** Native paths are JSON pointers into the retained capture text, not pointers into the tagged UMF encoding. */
 export function classifyPostgresqlField(input:Document,options:PostgresqlFieldRequest):PostgresqlFieldClassification {
  const source=copyJson(input) as unknown as Document,request=copyJson(options) as unknown as PostgresqlFieldRequest;
  if(!checkRequest(request))throw new UmfError('POSTGRESQL_FIELD_REQUEST',JSON.stringify(checkRequest.errors));
- if(!validateDocument(source).valid||source.umf!=='0.2.0')throw new UmfError('POSTGRESQL_FIELD_VERSION','Explicitly migrated valid envelope required');
+ if(!validateDocument(source).valid||source.umf!==CURRENT_CORE_VERSION)throw new UmfError('POSTGRESQL_FIELD_VERSION','Valid current 0.10.0 envelope required');
  const exported=exportPostgresqlCatalogCapture(source);
  if(renderTree(parseNativeJson(request.nativeSource))!==exported.json)throw new UmfError('POSTGRESQL_FIELD_ARCHIVE','Native archive differs from captured tree');
  const version=getPostgresqlCatalogNode(source,'/serverVersion');if(version.kind!=='number'||Number(version.value)!==170004)throw new UmfError('POSTGRESQL_FIELD_SERVER','This binding requires PostgreSQL 17.4');

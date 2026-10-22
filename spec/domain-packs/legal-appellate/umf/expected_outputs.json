@@ -1,0 +1,90 @@
+{
+  "version": "1.0",
+  "table_name": "expected_outputs",
+  "description": "CONTRACT-058 bounded appellate fixture: expected_outputs.",
+  "columns": [
+    {
+      "name": "expectation_id",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "expected_outputs.expectation_id; preserve source scope and qualification."
+    },
+    {
+      "name": "event_id",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "expected_outputs.event_id; preserve source scope and qualification."
+    },
+    {
+      "name": "expected_action",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "expected_outputs.expected_action; preserve source scope and qualification."
+    },
+    {
+      "name": "notification_key",
+      "data_type": "VARCHAR",
+      "nullable": true,
+      "description": "expected_outputs.notification_key; preserve source scope and qualification."
+    },
+    {
+      "name": "open_failure_count",
+      "data_type": "INTEGER",
+      "nullable": false,
+      "description": "expected_outputs.open_failure_count; preserve source scope and qualification."
+    },
+    {
+      "name": "affected_document_id",
+      "data_type": "VARCHAR",
+      "nullable": true,
+      "description": "expected_outputs.affected_document_id; preserve source scope and qualification."
+    },
+    {
+      "name": "expected_review_status",
+      "data_type": "VARCHAR",
+      "nullable": true,
+      "description": "expected_outputs.expected_review_status; preserve source scope and qualification."
+    },
+    {
+      "name": "expected_actionable",
+      "data_type": "BOOLEAN",
+      "nullable": true,
+      "description": "expected_outputs.expected_actionable; preserve source scope and qualification."
+    },
+    {
+      "name": "expected_enrichment_status",
+      "data_type": "VARCHAR",
+      "nullable": true,
+      "description": "expected_outputs.expected_enrichment_status; preserve source scope and qualification."
+    },
+    {
+      "name": "expected_counsel_name",
+      "data_type": "VARCHAR",
+      "nullable": true,
+      "description": "expected_outputs.expected_counsel_name; preserve source scope and qualification."
+    },
+    {
+      "name": "detail",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "expected_outputs.detail; preserve source scope and qualification."
+    }
+  ],
+  "primary_key": [
+    "expectation_id"
+  ],
+  "relationships": {
+    "foreign_keys": [
+      {
+        "column": "event_id",
+        "references_table": "workflow_events",
+        "references_column": "event_id"
+      },
+      {
+        "column": "affected_document_id",
+        "references_table": "decisions",
+        "references_column": "document_id"
+      }
+    ]
+  }
+}

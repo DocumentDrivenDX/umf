@@ -1,0 +1,113 @@
+"""PG17.9 installation exclusion and deliberate check-to-use interleaving spike."""
+import hashlib,json,re,sys,time,concurrent.futures
+from pathlib import Path
+root=Path.cwd().resolve();self_path=Path(__file__).resolve()
+if self_path!=root/'tools/security/pg-installation-exclusion-probe.py' or len(sys.argv)!=1 or Path(sys.argv[0]).resolve()!=self_path:raise RuntimeError('Unknown exact probe invocation')
+plan_path='docs/helix/03-test/security/cases.json';plan_bytes=(root/plan_path).read_bytes();plan=json.loads(plan_bytes)
+base=next(c for c in plan['cases'] if c['id']=='pg-raw.B01')
+paths=['tools/security/pg-installation-exclusion-probe.py','tools/security/pg-routine-drift-probe.py','tools/security/pg-routine-custody.py','tests/security/native/pg-raw-membership.sql',base['oracleSource'],plan_path]
+captured={p:(root/p).read_bytes() for p in paths}
+if captured[plan_path]!=plan_bytes:raise RuntimeError('Plan changed before capture')
+helper=captured['tools/security/pg-routine-drift-probe.py'].decode();boundary="try:\n if name in require(command(['docker','container','ls','-a','--format','{{.Names}}'])).splitlines():"
+if helper.count(boundary)!=1:raise RuntimeError('Reviewed helper boundary changed')
+prefix=helper.split(boundary)[0]
+replacements={
+ "if self_path!=root/'tools/security/pg-routine-drift-probe.py' or len(sys.argv)!=1 or Path(sys.argv[0]).resolve()!=self_path:raise RuntimeError('Unknown exact probe invocation')":"if self_path!=root/'tools/security/pg-installation-exclusion-probe.py' or len(sys.argv)!=1 or Path(sys.argv[0]).resolve()!=self_path:raise RuntimeError('Unknown exact helper invocation')",
+ "plan_path=paths[-1];plan_bytes=(root/plan_path).read_bytes()":"plan_path=paths[-1];plan_bytes=_captured[plan_path]",
+ "frozen={p:(root/p).read_bytes() for p in paths};assert frozen[plan_path]==plan_bytes":"frozen={p:_captured[p] for p in paths}\nif frozen[plan_path]!=plan_bytes:raise RuntimeError('Captured plan differs')",
+ "  self.log.flush();self.log.seek(0);raw=self.log.read();self.log.seek(0,2);return raw":"  size=os.fstat(self.log.fileno()).st_size\n  if size>8388608:raise RuntimeError('Native diagnostic trace bound')\n  return os.pread(self.log.fileno(),size,0)",
+}
+for old,new in replacements.items():
+ if prefix.count(old)!=1:raise RuntimeError('Reviewed helper read boundary changed')
+ prefix=prefix.replace(old,new)
+if any((root/p).read_bytes()!=raw for p,raw in captured.items()):raise RuntimeError('Inputs changed before helper execution')
+# Prefix definitions execute captured helper/plan/oracle bytes; no old probe main is run.
+# Functions require one shared original global namespace, not copied function globals.
+context={'__file__':str(self_path),'_captured':captured};exec(compile(prefix,str(root/'tools/security/pg-routine-drift-probe.py'),'exec'),context)
+command=context['command'];require=context['require'];sql=context['sql'];native_inventory=context['native_inventory'];guarded_execute=context['guarded_execute'];check=context['check'];Session=context['Session'];InstalledRoutine=context['InstalledRoutine']
+sessions=context['sessions'];observations=context['observations'];credentials=context['credentials'];oracle=context['oracle'];run_id=context['run_id'];name=context['name'];body=context['body'];configuration=context['configuration']
+key=529088;traces=[];receipt=None;container=None;creation_attempted=False
+out=root/'docs/helix/04-build/evidence/security/pg-installation-exclusion';out.mkdir(parents=True,exist_ok=True)
+def restore():
+ for flag in configuration[1:]:sql('ALTER FUNCTION security_raw.diagnostic_closed_resources() RESET '+flag.split('=')[0])
+ for flag in configuration[1:]:sql('ALTER FUNCTION security_raw.diagnostic_closed_resources() SET '+flag)
+def save_trace(actor,phase,raw,private_oid):
+ path=out/(actor+'-'+phase+'.log');matches=len(re.findall(rb':relid\s+'+str(private_oid).encode()+rb'\b',raw));traces.append({'actor':actor,'phase':phase,'path':str(path.relative_to(root)),'sha256':hashlib.sha256(raw).hexdigest(),'bytes':len(raw),'privateOid':private_oid,'privateRelidMatches':matches,'raw':raw});return matches
+try:
+ if name in require(command(['docker','container','ls','-a','--format','{{.Names}}'])).splitlines():raise RuntimeError('Preexisting owned fixture refused')
+ creation_attempted=True
+ container=require(command(['docker','run','-d','--name',name,'--label','umf.security.run='+run_id,'-e','POSTGRES_HOST_AUTH_METHOD=scram-sha-256','-e','POSTGRES_INITDB_ARGS=--auth-host=scram-sha-256 --auth-local=trust','-e','POSTGRES_PASSWORD','postgres:17.9'],env={**context['os'].environ,'POSTGRES_PASSWORD':credentials['postgres']}));context['container']=container
+ deadline=time.monotonic()+30
+ while True:
+  ready=command(['docker','exec','-i',container,'sh','-c','IFS= read -r PGPASSWORD || exit 1; export PGPASSWORD; exec psql -h 127.0.0.1 -X -q -A -t -v ON_ERROR_STOP=1 -d postgres -U postgres'],input=credentials['postgres']+'\nSELECT 1;\n',timeout=3)
+  if ready.returncode==0 and ready.stdout.strip()=='1':break
+  if time.monotonic()>deadline:raise TimeoutError('Authenticated readiness deadline')
+  time.sleep(.1)
+ sql(captured['tests/security/native/pg-raw-membership.sql'].decode())
+ for actor in oracle['actors']:sql("ALTER ROLE "+actor+" PASSWORD '"+credentials[actor]+"';")
+ engine=json.loads(sql("SELECT json_build_object('version',version(),'number',current_setting('server_version_num'))"));check('engine','170009',engine['number'])
+ sql("SET ROLE umf_sec_guardian; CREATE FUNCTION security_raw.diagnostic_closed_resources() RETURNS json LANGUAGE SQL STABLE SECURITY DEFINER SET search_path=pg_catalog SET debug_print_plan=off SET debug_print_parse=off SET debug_print_rewritten=off AS $body$"+body+"$body$; REVOKE ALL ON FUNCTION security_raw.diagnostic_closed_resources() FROM PUBLIC; GRANT EXECUTE ON FUNCTION security_raw.diagnostic_closed_resources() TO umf_sec_alice,umf_sec_bob,umf_sec_outsider; RESET ROLE;")
+ original=native_inventory()
+ for field,expected in [('owner','umf_sec_guardian'),('language','sql'),('definer',True),('volatility','s'),('signature',''),('configuration',configuration),('body',body),('binary',None)]:check('original:'+field,expected,original[field])
+ check('original-public-execute',False,json.loads(sql("SELECT to_json(EXISTS(SELECT 1 FROM aclexplode(proacl) WHERE grantee=0 AND privilege_type='EXECUTE')) FROM pg_proc WHERE oid='security_raw.diagnostic_closed_resources()'::regprocedure")))
+ guard=InstalledRoutine(original);private_oid=int(sql("SELECT 'security_raw.m2m_employee_project'::regclass::oid"))
+ for actor,expected in oracle['actors'].items():
+  session=Session(actor);session.query('SET client_min_messages=debug1; SET debug_print_plan=on; SET debug_print_parse=on; SET debug_print_rewritten=on')
+  identity=json.loads(session.query("SELECT json_build_object('pid',pg_backend_pid(),'user',session_user,'superuser',current_setting('is_superuser'),'bypass',(SELECT rolbypassrls FROM pg_roles WHERE rolname=session_user))"));check('ordinary:'+actor,{'pid':identity['pid'],'user':actor,'superuser':'off','bypass':False},identity)
+  session.query("PREPARE guarded_rows AS SELECT json_build_object('rows',security_raw.diagnostic_closed_resources(),'pid',pg_backend_pid(),'user',session_user)")
+  wanted={'rows':expected['rows'],'pid':identity['pid'],'user':actor};check('baseline:'+actor,wanted,guarded_execute(session,guard))
+  # Deterministic separate-installer interleaving after the actual equality check.
+  class ChangeAfterAdmission:
+   def admit(self,current):
+    guard.admit(current);check('race-original-admitted:'+actor,original,current)
+    for setting in ['debug_print_plan','debug_print_parse','debug_print_rewritten']:sql('ALTER FUNCTION security_raw.diagnostic_closed_resources() SET '+setting+'=on')
+  start=len(session.traces());before=session.calls;check('unexcluded-race-rows:'+actor,wanted,guarded_execute(session,ChangeAfterAdmission()))
+  check('unexcluded-race-executed:'+actor,1,session.calls-before);check('unexcluded-race-drifted:'+actor,False,native_inventory()==original)
+  check('unexcluded-race-private-plan:'+actor,True,save_trace(actor,'unexcluded-race',session.traces()[start:],private_oid)>0);restore();guard.admit(native_inventory())
+  # Read/validate/execute under shared transaction lock; installer must use exclusive.
+  session.query('BEGIN; SELECT pg_advisory_xact_lock_shared('+str(key)+')')
+  installer=Session('postgres');installer_pid=int(installer.query('SELECT pg_backend_pid()'))
+  with concurrent.futures.ThreadPoolExecutor(max_workers=1) as executor:
+   future=executor.submit(installer.query,'BEGIN; SELECT pg_advisory_xact_lock('+str(key)+'); ALTER FUNCTION security_raw.diagnostic_closed_resources() SET debug_print_plan=on; COMMIT')
+   deadline=time.monotonic()+4;lock_state=None
+   while time.monotonic()<deadline:
+    lock_state=json.loads(sql("SELECT json_build_object('writerWaiting',EXISTS(SELECT 1 FROM pg_locks WHERE locktype='advisory' AND classid=0 AND objid="+str(key)+" AND objsubid=1 AND pid="+str(installer_pid)+" AND mode='ExclusiveLock' AND NOT granted),'readerHeld',EXISTS(SELECT 1 FROM pg_locks WHERE locktype='advisory' AND classid=0 AND objid="+str(key)+" AND objsubid=1 AND pid="+str(identity['pid'])+" AND mode='ShareLock' AND granted))"))
+    if lock_state['writerWaiting']:break
+    if future.done():raise AssertionError('Installer completed without exclusion')
+    time.sleep(.02)
+   check('native-exclusion-held:'+actor,{'writerWaiting':True,'readerHeld':True},lock_state);check('writer-not-completed:'+actor,False,future.done())
+   start=len(session.traces());check('protected-prepared-rows:'+actor,wanted,guarded_execute(session,guard))
+   protected=session.traces()[start:];check('protected-private-plan-absent:'+actor,0,save_trace(actor,'protected-call',protected,private_oid))
+   check('protected-live-outer-diagnostics:'+actor,{'relationIds':[],'planRows':['1','1']},{'relationIds':[int(v) for v in re.findall(rb':relid\s+([0-9]+)',protected)],'planRows':[v.decode() for v in re.findall(rb'plan_rows\s+([0-9.]+)',protected)]})
+   check('protected-installation-still-original:'+actor,original,native_inventory());check('writer-still-not-completed:'+actor,False,future.done())
+   session.query('COMMIT');future.result(timeout=5)
+  check('installer-drift-after-release:'+actor,False,native_inventory()==original)
+  before=session.calls;refused=False
+  try:guarded_execute(session,guard)
+  except ValueError:refused=True
+  check('post-mutation-refuses:'+actor,{'refused':True,'executions':0},{'refused':refused,'executions':session.calls-before})
+  restore();check('restored-original-call:'+actor,wanted,guarded_execute(session,guard));session.close();installer.close()
+ if any((root/p).read_bytes()!=raw for p,raw in captured.items()):raise RuntimeError('Declared source changed')
+ receipt={'version':'umf.security.pg-installation-exclusion-spike/0.1.0','status':'scoped-exclusion-and-race-controls-passed','runId':run_id,'engine':engine,'sourcePins':{p:hashlib.sha256(raw).hexdigest() for p,raw in captured.items()},'executedHelperPrefixSha256':hashlib.sha256(prefix.encode()).hexdigest(),'originalRoutine':original,'originalB10Assertion':context['case']['assertion'],'lockKey':key,'observations':observations,'traces':[{k:v for k,v in t.items() if k!='raw'} for t in traces],'scope':'PG17.9 ten-field installation tuple, ordinary persistent SCRAM prepared sessions. Unexcluded installer interleaving exposes private plan after a valid check. Cooperating exclusive installer waits while reader shared lock protects validation/execution; mutation after release causes zero-dispatch refusal. Native observation and conditional cooperative protocol only, not authenticated profile, uncoordinated/direct SQL closure, transitive dependencies, cancellation/publication safety, formal native refinement or B10 qualification.'}
+except BaseException as error:
+ (out/'failed-observations.json').write_text(json.dumps({'status':'failed','errorType':type(error).__name__,'observations':observations,'sourcePins':{p:hashlib.sha256(raw).hexdigest() for p,raw in captured.items()}},indent=2)+'\n')
+ for t in traces:(out/('failed-'+Path(t['path']).name)).write_bytes(t['raw'])
+ raise
+finally:
+ close_errors=[]
+ try:
+  for session in sessions:
+   try:session.close()
+   except BaseException as error:close_errors.append(type(error).__name__)
+ finally:
+  if container is None and creation_attempted:
+   matches=[line.split()[0] for line in require(command(['docker','container','ls','-a','--format','{{.ID}} {{.Names}}'])).splitlines() if len(line.split())==2 and line.split()[1]==name]
+   if len(matches)>1:raise RuntimeError('Ambiguous owned fixture')
+   if matches:container=matches[0]
+  if container:
+   if require(command(['docker','inspect','--format','{{index .Config.Labels "umf.security.run"}}',container]))!=run_id:raise RuntimeError('Fixture ownership differs')
+   require(command(['docker','rm','-f',container]))
+ if close_errors:raise RuntimeError('Session cleanup refused: '+','.join(close_errors))
+if receipt is None:raise RuntimeError('Missing scoped evidence')
+for t in traces:(root/t['path']).write_bytes(t['raw'])
+(out/'native.json').write_text(json.dumps(receipt,indent=2)+'\n');print(json.dumps({'status':receipt['status'],'observations':len(observations),'traces':len(traces),'scope':receipt['scope']}))

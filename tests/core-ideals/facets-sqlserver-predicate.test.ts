@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {inspectSqlServerFacetPredicate as inspect} from '../../src/adapters/sqlserver/facet-predicate';
 import {predicateCases,unsupportedPredicates} from '../../scripts/core-ideals/facets-sqlserver-predicate-cases';

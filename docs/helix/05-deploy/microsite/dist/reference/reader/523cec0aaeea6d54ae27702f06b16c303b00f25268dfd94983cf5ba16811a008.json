@@ -1,0 +1,13 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"typespecSyntaxLocationsSchema\"]",
+  "kind": "Schema",
+  "members": [],
+  "parameters": [],
+  "purpose": "JSON Schema exported as typespecSyntaxLocationsSchema. Follow the related schema definition for object keys, value constraints and conditions.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "{ $schema: string; $id: string; type: string; items: { type: string; additionalProperties: boolean; required: string[]; properties: { kind: { type: string; }; start: { type: string; }; end: { type: string; }; }; }; }"
+}

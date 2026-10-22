@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Publish new qualification fingerprints only after logged native and live execution.
 Previous records remain recoverable at the immutable baseline revision.
 """
@@ -22,7 +23,20 @@ def local(p):
  return p
 def main():
  native=load(OUT/'native-browser.json');assert native['complete'] is True
- for p,h in native['sourceInputs'].items():assert digest(p)==h,'Source changed after execution: '+p
+ publisher='scripts/publish-core-check-refresh.py'
+ publisher_original=native['sourceInputs'][publisher]
+ publisher_current=digest(publisher)
+ for p,h in native['sourceInputs'].items():
+  if p==publisher and publisher_current!=h:
+   original=subprocess.check_output(['git','show',native['sourceRevision']+':'+publisher])
+   assert hashlib.sha256(original).hexdigest()==h,'Publisher original execution-source identity changed'
+   runtime=load(OUT/'container-runtime.json')
+   assert runtime['sourceRevision']==native['sourceRevision'],'Finalization source revision differs'
+   declaration=runtime['finalizationPublisher']
+   assert declaration['path']==publisher and declaration['sha256']==publisher_current,'Finalization publisher is not exactly declared'
+   assert declaration['scope']=='Publication-only tooling; native, auxiliary and regression execution source remains sourceRevision.'
+  else:assert digest(p)==h,'Source changed after execution: '+p
+ publisher_record={'path':publisher,'executionSourceRevision':native['sourceRevision'],'executionSourceSha256':publisher_original,'finalizationSha256':publisher_current,'scope':'Publication-only tooling; all other captured execution inputs remain exact'}
  assert [r['command'] for r in native['runs']]==native['commands']
  aux=load(OUT/'auxiliary.json')
  runs=native['runs']+aux['runs']
@@ -33,15 +47,19 @@ def main():
   check_run(run);text=Path(run['log']).read_text()
   summaries=list(re.finditer(r'\n\s*(\d+) pass\n\s*(\d+) fail\n\s*(\d+) expect\(\) calls\nRan (\d+) tests across (\d+) files\.',text));assert summaries
   match=summaries[-1];ok,bad,checks,total,size=map(int,match.groups())
-  assert bad==0 and ok==total and size==len(run['command'])-2
-  assert run['command'][:2]==['bun','test'] and all(p.endswith('.test.ts') for p in run['command'][2:])
-  counted.extend(run['command'][2:]);passed+=ok;failed+=bad;assertions+=checks;files+=size
+  assert run['command'][:2] in [['bun','test'],['bun','scripts/run-tests.ts']]
+  test_files=run['command'][2:]
+  if test_files[:3]==['--timeout','30000','--parallel=1']:test_files=test_files[3:]
+  elif test_files[:2]==['--timeout','30000']:test_files=test_files[2:]
+  assert bad==0 and ok==total and size==len(test_files)
+  assert all(p.endswith('.test.ts') and p.startswith('tests/') for p in test_files)
+  counted.extend(test_files);passed+=ok;failed+=bad;assertions+=checks;files+=size
  expected=sorted(p for p in subprocess.check_output(['rg','--files','tests'],text=True).splitlines() if p.endswith('.test.ts') and not ('/core-ideals/' in p and (p.endswith('conformance.test.ts') or p.endswith('evidence.test.ts'))))
  assert sorted(counted)==expected and len(counted)==len(set(counted)),'Incomplete or overlapping live regression'
  regression_record={'tests':passed,'failures':failed,'assertions':assertions,'files':files,'execution':{'path':str(OUT/'regression.json'),'sha256':digest(OUT/'regression.json')}}
  browser=load('fixtures/validation/core-field-browser.json')['browser'];assert browser==native['expectedBrowser'],'Browser differs from the explicit replay pin'
  # Normalize fingerprint names only on records actually changed by this replay.
- changed=subprocess.check_output(['git','diff','--name-only',BASE],text=True).splitlines()
+ changed=subprocess.check_output(['git','diff','--name-only','--diff-filter=ACMRT',BASE],text=True).splitlines()
  normalized=[]
  for p in changed:
   if p.startswith('fixtures/validation/') and p.endswith('.json'):
@@ -120,6 +138,6 @@ def main():
  source=load(OUT/'relationship-source-hashes.json')
  rel={'complete':True,'nativeEquivalence':False,'browser':browser,'sourceHashes':source,'proofHashes':{p:digest(p) for p in proofs},'commands':[{'command':c,'exitCode':0,'log':lookup(c)['log'],'sha256':lookup(c)['logSha256']} for c in relcommands],'currentReplay':execution,'previousEvidence':{'revision':BASE,'path':'fixtures/validation/relationship-gate-refresh.json'}}
  save('fixtures/validation/relationship-gate-refresh.json',rel)
- save(OUT/'publication.json',{'complete':True,'baselineRevision':BASE,'nativeBrowserCommands':len(native['runs']),'regression':{'passed':passed,'failed':failed,'assertions':assertions,'files':files},'browser':browser,'normalizedProofPaths':normalized,'publishedRoots':sorted(rootpaths),'execution':execution})
+ save(OUT/'publication.json',{'complete':True,'baselineRevision':BASE,'nativeBrowserCommands':len(native['runs']),'regression':{'passed':passed,'failed':failed,'assertions':assertions,'files':files},'browser':browser,'normalizedProofPaths':normalized,'publishedRoots':sorted(rootpaths),'execution':execution,'finalizationPublisher':publisher_record})
  print(json.dumps({'published':len(rootpaths),'nativeBrowserCommands':len(native['runs']),'liveTests':passed,'browser':browser}))
 if __name__=='__main__':main()

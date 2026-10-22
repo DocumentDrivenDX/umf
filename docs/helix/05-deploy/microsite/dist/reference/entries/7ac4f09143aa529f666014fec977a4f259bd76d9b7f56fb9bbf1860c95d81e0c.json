@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 18719,
+        "line": 15,
+        "path": "src/extensions/security/policy.ts",
+        "sha256": "dc3775fd133994835bde80e3b3d6d6c2ac860c0831f686cdcc8070e99e461d0c"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "securityPackage",
+    "runtime": "unassessed",
+    "signatureText": [
+      "securityPackage=copyJson(manifest) as unknown as ExtensionPackage"
+    ]
+  },
+  "id": "[\"api\",\".\",\"securityPackage\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 18719,
+      "line": 15,
+      "path": "src/extensions/security/policy.ts",
+      "sha256": "dc3775fd133994835bde80e3b3d6d6c2ac860c0831f686cdcc8070e99e461d0c"
+    }
+  ],
+  "summary": "Public export · src/extensions/security/policy.ts",
+  "title": "securityPackage"
+}

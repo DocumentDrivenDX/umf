@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 8446,
+        "line": 22,
+        "path": "src/core-ideals/nullability-postgresql-projection.ts",
+        "sha256": "333852a5764633d0f4c22d21c886a93c15ce82e25b5884779b3c69638e6253f2"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "projectNullabilityToPostgresql",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: CoreNullabilityDeclaration, options: NullabilityPostgresqlRequest, backend: PostgresqlBackend): Promise<NullabilityPostgresqlProjection>"
+    ]
+  },
+  "id": "[\"api\",\".\",\"projectNullabilityToPostgresql\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 8446,
+      "line": 22,
+      "path": "src/core-ideals/nullability-postgresql-projection.ts",
+      "sha256": "333852a5764633d0f4c22d21c886a93c15ce82e25b5884779b3c69638e6253f2"
+    }
+  ],
+  "summary": "Public export · src/core-ideals/nullability-postgresql-projection.ts",
+  "title": "projectNullabilityToPostgresql"
+}

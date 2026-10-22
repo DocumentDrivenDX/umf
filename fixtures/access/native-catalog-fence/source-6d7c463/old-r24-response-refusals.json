@@ -1,0 +1,65 @@
+{
+  "scope": "Exact original source-produced response playback through immutable R24, not compiler/native qualification",
+  "sourceCommit": "6d7c463481a87b870b3bd025d6cf0dd0d5f08213",
+  "results": [
+    {
+      "artifact": "scalar-action",
+      "version": "weft.native-action/0.2",
+      "code": "NATIVE_PROGRAM_INTEGRITY",
+      "sha256": "51ea7e616c01dc963647f402048a9f6f0b11f823f168d5bdbdefec172447823e",
+      "businessSQLCalls": 0,
+      "connectionConstructed": false
+    },
+    {
+      "artifact": "effect-action",
+      "version": "weft.native-action/0.2",
+      "code": "NATIVE_PROGRAM_INTEGRITY",
+      "sha256": "2ffc4a4518aecf54869d0c821f8510aee571f91a849e0ef4eb5e6b78388d6fda",
+      "businessSQLCalls": 0,
+      "connectionConstructed": false
+    },
+    {
+      "artifact": "bulk",
+      "version": "weft.native-bulk/0.2",
+      "code": "NATIVE_PROGRAM_INTEGRITY",
+      "sha256": "011309132d9d86ce780dcc1ef67ec2b99ad24631f649adcfad85fbfd7cd79e65",
+      "businessSQLCalls": 0,
+      "connectionConstructed": false
+    },
+    {
+      "artifact": "ranked",
+      "version": "weft.search/0.2",
+      "code": "NATIVE_PROGRAM_INTEGRITY",
+      "sha256": "83e2311c7222b74cbe19d7b33b4039e0daa4986ab0d17f18b84cb857b4b82f74",
+      "businessSQLCalls": 0,
+      "connectionConstructed": false
+    }
+  ],
+  "additionalRawReadRefusal": {
+    "version": "weft.raw-read/0.2",
+    "code": "catalog digest mismatch",
+    "scope": "Retained failed attempt: direct constructor omitted required SDK catalog wrapper digest. Does not establish version barrier.",
+    "businessSQLCalls": 0,
+    "connectionConstructed": false,
+    "sha256": "8d3d357f48ba6d542acf8eb7753c2098aa3a442f38fa430ae427691b4980866e",
+    "status": "invalid-wrapper-inconclusive"
+  },
+  "validRawReadWrapperControl": {
+    "scope": "Actual original producer responses via immutable R24 ReviewedSQL.build; standalone reviewed models use valid stageOne=None. No connection or execution.",
+    "results": [
+      {
+        "version": "weft.raw-read/0.1",
+        "status": "accepted",
+        "catalogDigestValid": true
+      },
+      {
+        "version": "weft.raw-read/0.2",
+        "status": "refused",
+        "code": "unsupported catalog artifact",
+        "wrapperConstruction": "old ReviewedSQL.build",
+        "stageOne": null,
+        "businessSQLCalls": 0
+      }
+    ]
+  }
+}

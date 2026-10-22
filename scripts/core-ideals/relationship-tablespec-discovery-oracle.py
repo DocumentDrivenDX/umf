@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Pinned relationship-carrier discovery, not authored projection or enforcement."""
 import hashlib, importlib.metadata, json, runpy
 from copy import deepcopy

@@ -1,0 +1,55 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"SqlServerRelationshipLayoutPolicy\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "profile",
+      "optional": false,
+      "type": "\"sqlserver-relationship-layout-1\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "targetVersion",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SqlServerLayoutField\"]"
+      ],
+      "name": "fieldLayouts",
+      "optional": false,
+      "type": "SqlServerLayoutField[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SqlServerLayoutKey\"]"
+      ],
+      "name": "keyLayouts",
+      "optional": false,
+      "type": "SqlServerLayoutKey[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SqlServerRelationshipLayout\"]"
+      ],
+      "name": "relationshipLayouts",
+      "optional": false,
+      "type": "SqlServerRelationshipLayout[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "SqlServerRelationshipLayoutPolicy is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "SqlServerRelationshipLayoutPolicy"
+}

@@ -1,0 +1,244 @@
+{
+  "version": "independent-component-review/1",
+  "reviewer": "Astra Ultra independent review",
+  "date": "2026-10-16",
+  "status": "review-complete-no-remaining-findings",
+  "baseCommit": "17221c40c261c784c427186b314ef02679c079ea",
+  "profile": "umf.security.private-disclosure-child/0.2-candidate",
+  "verdict": "R1 held-child source and the separate R2 replay-CLI custody repair are consistent with the tested private data-only component scope. HELD-001 is resolved in R2; no remaining actionable findings.",
+  "inputs": [
+    {
+      "path": "frozen/review.zip",
+      "sha256": "e1a29f77c0a3a486deeaeb5ef7b3b957a832889ea2d45c4a731af878cd59f82e",
+      "bytes": 9276291
+    },
+    {
+      "path": "frozen-r2/review.zip",
+      "sha256": "0963b141ced25d7d37a29d04708251bd9d6ca96ec0ba2736829d221b4e3e2392",
+      "bytes": 3924
+    },
+    {
+      "path": "frozen/selected-source-inputs.zip",
+      "sha256": "270b417359e27cfefb68d86a096fdc9040a9b191988ceea32accb892d7d6aff0",
+      "bytes": 406671
+    },
+    {
+      "path": "frozen/bundle/current-native-disclosure-child.mjs",
+      "sha256": "d333226d9186136704d3f84a9c9dbfc44796efebab563dbc732d60337d2e03eb",
+      "bytes": 1065165
+    },
+    {
+      "path": "frozen/bundle/manifest.json",
+      "sha256": "4e50675be3a39433ea99ecae646938cec1f1a7cda931ab5f98b49cb26ada4951",
+      "bytes": 32386
+    },
+    {
+      "path": "frozen/overlay/tools/security/current-native-disclosure-child.ts",
+      "sha256": "5c08644a1cbaa7a11da881e536a478d334946f9b2bbed5487603db6fbc51d701",
+      "bytes": 6442
+    },
+    {
+      "path": "frozen/overlay/tools/security/current-native-disclosure-child-main.ts",
+      "sha256": "9040c2dda0c1a36be9f54aefa42c7f26085b01988719d64d7dcbf08b901b566d",
+      "bytes": 847
+    },
+    {
+      "path": "frozen/overlay/tools/security/build-current-native-disclosure-child.ts",
+      "sha256": "238f9d173a42a536f60ffda6905c649060e303715cb461a14cc0f583992ee9b2",
+      "bytes": 4482
+    },
+    {
+      "path": "frozen-r2/tools/security/replay-held-native-disclosure.py",
+      "sha256": "1994e9a6ec20e52b131a299928f7a1999e669c89aec0f123a31fe58316b2e933",
+      "bytes": 10390
+    },
+    {
+      "path": "frozen/evidence/14-weft_sql-0.4.37.dev0-cp39-abi3-macosx_11_0_arm64.whl",
+      "sha256": "2b5806d53cb50b95b56f0dda0dee8ea79e6f1d72b839f5ec74304943fe3022ad",
+      "bytes": 6934865
+    },
+    {
+      "path": "frozen/evidence/15-_current_query_pipe.py",
+      "sha256": "39c7ab62660f64241f59008f5cb0b16b721f741657c44d321189237655031d7f",
+      "bytes": 8807
+    },
+    {
+      "path": "frozen/evidence/16-receipt.json",
+      "sha256": "c1a0299242907ad79fc4437ae5ced9b67a36d9e305be455121b5149a2177f49d",
+      "bytes": 4569392
+    },
+    {
+      "path": "reconstructed-source.zip",
+      "sha256": "fc07318945f5088e36235eff09b16f2b7cb99e2fc6146dde9861dede35bcce8a",
+      "bytes": 28830878
+    }
+  ],
+  "sourceBasis": {
+    "reconstructedFiles": 2456,
+    "selectedBundleInputs": 257,
+    "metafileInputs": 252,
+    "additionalPins": [
+      "builder",
+      "package.json",
+      "bun.lock",
+      "tsconfig.json",
+      "bunfig.toml"
+    ],
+    "r2Delta": "Only replay-held-native-disclosure.py; child/session/main/builder/tests and bundle unchanged.",
+    "custodyAudit": "custody-audit.json",
+    "supplementalGovernance": "supplemental-governance/pins.json"
+  },
+  "resolvedFindings": [
+    {
+      "id": "HELD-001",
+      "priority": "P2",
+      "originalDisposition": "initial-review.json",
+      "repair": "Capture exact pipe bytes and execute compile/exec in a fresh ModuleType without importlib/pycache; capture wheel-manifest bytes; compare both inputs again before issuing the receipt; report captured digests.",
+      "repairSource": {
+        "path": "frozen-r2/tools/security/replay-held-native-disclosure.py",
+        "sha256": "1994e9a6ec20e52b131a299928f7a1999e669c89aec0f123a31fe58316b2e933",
+        "bytes": 10390
+      },
+      "verification": [
+        "cli-r2-poisoned-cache-execution.json",
+        "cli-r2-pipe-drift-execution.json",
+        "cli-r2-manifest-drift-execution.json"
+      ],
+      "result": "Actual 52-record replay succeeds with an ignored poisoned cache. Both post-capture drift campaigns refuse at close without a success receipt."
+    }
+  ],
+  "remainingFindings": [],
+  "independentExecutions": [
+    {
+      "command": [
+        "/opt/homebrew/bin/bun",
+        "tools/security/build-current-native-disclosure-child.ts",
+        "/private/tmp/umf-held-native-disclosure-astra-20261016/rebuilt-bundle"
+      ],
+      "cwd": "/private/tmp/umf-held-native-disclosure-astra-20261016/reconstructed",
+      "evidence": "build.log",
+      "result": "byte-identical executable; 257 selected source/config pins"
+    },
+    {
+      "command": [
+        "/opt/homebrew/bin/bun",
+        "test",
+        "tests/security/current-native-disclosure-child.test.ts",
+        "tests/security/current-disclosure-child.test.ts",
+        "tests/security/current-query-child.test.ts"
+      ],
+      "cwd": "/private/tmp/umf-held-native-disclosure-astra-20261016/reconstructed",
+      "evidence": "held-and-legacy-tests.log",
+      "passedTests": 19,
+      "failedTests": 0,
+      "assertions": 812
+    },
+    {
+      "command": [
+        "python3",
+        "/private/tmp/umf-held-native-disclosure-astra-20261016/process-controls.py"
+      ],
+      "evidence": "process-controls.json",
+      "passedControls": 143,
+      "originalVectors": 72
+    },
+    {
+      "command": [
+        "/opt/homebrew/bin/bun",
+        "/private/tmp/umf-held-native-disclosure-astra-20261016/session-controls.ts"
+      ],
+      "evidence": "session-controls.json",
+      "passedControls": 69
+    },
+    {
+      "command": [
+        "python3",
+        "/private/tmp/umf-held-native-disclosure-astra-20261016/build-controls.py"
+      ],
+      "evidence": "build-controls.json",
+      "passedControls": 10
+    },
+    {
+      "command": [
+        "python3",
+        "/private/tmp/umf-held-native-disclosure-astra-20261016/cli-preflight-controls.py"
+      ],
+      "evidence": "cli-preflight-controls.json",
+      "passedControls": 8
+    },
+    {
+      "command": [
+        "python3",
+        "/private/tmp/umf-held-native-disclosure-astra-20261016/run-cli.py",
+        "normal"
+      ],
+      "evidence": "cli-normal-execution.json",
+      "records": 52,
+      "result": "47 data-only matches, 4 structural refusals with canceled child, 1 whole-V2 refusal"
+    },
+    {
+      "command": [
+        "/private/tmp/truss-practical-performance-env/bin/python",
+        "/private/tmp/umf-held-native-disclosure-astra-20261016/run-cli-r2.py",
+        "poisoned-cache"
+      ],
+      "evidence": "cli-r2-poisoned-cache-execution.json",
+      "records": 52,
+      "result": "normal R2 replay succeeds; adjacent cache marker not executed"
+    },
+    {
+      "command": [
+        "/private/tmp/truss-practical-performance-env/bin/python",
+        "/private/tmp/umf-held-native-disclosure-astra-20261016/run-cli-r2.py",
+        "pipe-drift"
+      ],
+      "evidence": "cli-r2-pipe-drift-execution.json",
+      "result": "closing custody assertion refuses, exit 1, no receipt"
+    },
+    {
+      "command": [
+        "/private/tmp/truss-practical-performance-env/bin/python",
+        "/private/tmp/umf-held-native-disclosure-astra-20261016/run-cli-r2.py",
+        "manifest-drift"
+      ],
+      "evidence": "cli-r2-manifest-drift-execution.json",
+      "result": "closing custody assertion refuses, exit 1, no receipt"
+    },
+    {
+      "command": [
+        "python3",
+        "/private/tmp/umf-held-native-disclosure-astra-20261016/custody-audit.py"
+      ],
+      "evidence": "custody-audit.json",
+      "passedChecks": 3704
+    }
+  ],
+  "reviewConclusions": [
+    "One closed initialization and one actual atomic WithinOperation evaluation hold the compiled program, original sources and produced batch until one inspection. The original whole V2 inspector precedes canonical equality to the held original batch. Terminal paths clear retained references and correlation state.",
+    "All 72 vectors trace to the original 66 producer packets and six mixed/empty packets. Process controls retain exact original results, full length-prefixed frame hashes, strict shapes, Unicode/numeric/key checks, sequencing, refusal and EOF behavior. A source-valid alternate selected occurrence is accepted by whole V2 but rejected by held-original equality.",
+    "Direct process inspection accepts the exact 16 MiB endpoint and refuses one byte above; this uses padding, not a maximum semantic batch. Direct scanner controls exercise depth 64/65 and nodes 100016/100017 separately from V2 semantic validity.",
+    "The actual reviewed Python extension and parent object remain live through fresh structural checking and held-child inspection of the 52 supplied native records. Untouched driver cells, private-key bag and order are reconstructed; four corrupted frames refuse structurally, while selected occurrence 999/999 matches structurally and then refuses whole V2.",
+    "Custody checks verify complete core module bytes/revisions/selected-module closure for all 52 records, four opaque source roles, bundle/source correspondence, exact legacy API source isolation and unchanged source endpoints. Rebuilt executable is byte-identical.",
+    "Supplemental STP and implementation checkpoint correctly retain the R1 finding, R2 repair, exact independent counts, old pipe cap and unchanged acceptance scope."
+  ],
+  "suppliedEvidence": {
+    "authorFullSecuritySuite": {
+      "testsPassed": 332,
+      "assertions": 5929,
+      "evidence": "frozen/evidence/01-umf-native-disclosure-child-security-r2-20261016.log",
+      "independentlyRerun": false
+    },
+    "authorToolsTypecheck": "Author reports exit 0; retained log is empty, not an independently observed typecheck exit.",
+    "laterAuthorR2Replay": "supplemental-r2/owner-receipt.json; 52 records independently compared with reviewer R2 replay.",
+    "originalNativeCampaign": "Previously audited supplied 52-record PG18.6 campaign; no new database execution in this review."
+  },
+  "scopeLimits": [
+    "No new SQL/database campaign. Fresh child lifetime covers this replay, not the earlier historical SQL execution. Native records are supplied evidence, not an independent native replay.",
+    "Data-only inspection is not evidence of native execution: an unchanged original batch can be echoed without a database. Actual caller, authenticated sources, complete current cut, native carrier/key bag, closing guards and guarded release remain host obligations.",
+    "The reused pinned Truss pipe caps requests at 4194304 bytes; 16777216-byte inspection coverage belongs to direct child/new-consumer controls. No installed Truss query API adoption is claimed.",
+    "SourceReceipt is this profile’s entire initializer-frame digest, distinct from 0.1 and Truss registration receipts. It cannot replace registration authority or be compared as an equal hash to a different envelope.",
+    "Parent owns timeout, cancellation and cleanup. Reference clearing is not secure memory zeroization. Canonical batch equality does not replace private-key/complete-bag checks for equal cell values.",
+    "External Bun/Python executable closure is non-hermetic. Source endpoint comparisons are not held-file, anti-ABA or authentication proofs. Tests are not a formal semantic refinement proof.",
+    "Private evaluation census remains internal, not ordinary reader output. No operator/action permission, public release, native authority, backend admission or acceptance promotion. All original 158 UMF and 132 Weft allocations remain; UMF 45 implemented/113 missing unchanged."
+  ]
+}

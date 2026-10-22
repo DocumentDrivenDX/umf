@@ -1,0 +1,76 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"RdfIriRenameReport\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "source",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "from",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "to",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "status",
+      "optional": false,
+      "type": "\"blocked\" | \"candidate\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "complete",
+      "optional": false,
+      "type": "false"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "changes",
+      "optional": false,
+      "type": "{ path: string; before: string; after: string; }[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "candidate",
+      "optional": true,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Diagnostic\"]"
+      ],
+      "name": "diagnostics",
+      "optional": false,
+      "type": "Diagnostic[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "RdfIriRenameReport is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "RdfIriRenameReport"
+}

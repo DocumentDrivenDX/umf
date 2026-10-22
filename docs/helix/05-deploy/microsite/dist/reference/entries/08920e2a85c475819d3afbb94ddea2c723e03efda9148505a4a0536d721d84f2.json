@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 10689,
+        "line": 23,
+        "path": "src/core-ideals/cardinality-tablespec.ts",
+        "sha256": "02179b61cbcde1fe5d820c9143241bf28f8a2561d3ff43145380265bb5fd1c20"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "TableSpecCardinalityClassification",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface TableSpecCardinalityClassification {\n operation:'classify-tablespec-cardinality';version:'1.0.0';status:'classified'|'blocked';source:Document;target?:Document;request:TableSpecCardinalityRequest;binding:typeof binding;\n mapping:{origin:'classified';idealPath:string;nativePath:string;nativeFragment:NativeJson;cardinality:Cardinality;interpretation:'declared'|'unknown'|'unsupported';outcome:'exact'|'unknown'|'not-expressible';basis:'Explicit native data_type and uncoerced dimension under selected metadata profile; item and execution semantics remain native'};\n residuals:{path:string;value:Json;reason:string;recovery:typeof recovery}[];diagnostics:Diagnostic[];\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"TableSpecCardinalityClassification\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 10689,
+      "line": 23,
+      "path": "src/core-ideals/cardinality-tablespec.ts",
+      "sha256": "02179b61cbcde1fe5d820c9143241bf28f8a2561d3ff43145380265bb5fd1c20"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/cardinality-tablespec.ts",
+  "title": "TableSpecCardinalityClassification"
+}

@@ -1,0 +1,78 @@
+{
+  "date": "2026-10-20",
+  "scope": "portable typed ontology client and synthetic host only",
+  "baseCommit": "5ba77cff91a121a44c82f6bce32a78d8842161b5",
+  "workingTreeSourcePins": {
+    "src/access/index.ts": "778118664a60ff3ac2a95b988f331cd00676eeab8688aa2e56dbef5092a0334c",
+    "src/access/python-runtime.ts": "adb5270c084c358dd11290ec9b6a7d2cb2153429947dcd9cf3df7ac4486e49d0",
+    "src/extensions/actions/analysis.ts": "0821a8332d0ab7a3e396150abfd8494b1b2f7f9adb2f18e21ebc6d6fc3deae3d",
+    "src/extensions/actions/types.ts": "5f8b2e31a21dc81657b99e7c210950b57c4f72cebef33d72efd462419a7b3e32",
+    "src/extensions/actions/plan-identity.ts": "f2cd9299c780ef91f22f14279fdbc7e94f147f9e3b5068928c339909000a9af9",
+    "spec/extensions/actions/schema.json": "41eeb67807fc8a540785ffdd712caaa007bd3627a6a612e1adc2400d0ec5b382",
+    "spec/extensions/actions/package.json": "b77e7cee2ac6ad9d482122a63d0ab6044c341b2757135a0c896213c3fa596d62",
+    "python/umf_codegen/src/umf_codegen/_assets/generator.js.gz": "49de005988ca608f82078fbad4cb5e768c2bb2654d4efc2ef478e25f1e0e93e9",
+    "python/umf_codegen/src/umf_codegen/_assets/manifest.json": "d2158dbdf426dac665ed8924289ecdee670f14587c5252375ff0e65dbdb42c5e",
+    "python/umf_codegen/src/umf_codegen/_release.py": "d06da02065122925256a40c13c7118a03cc987a539d6bc86d72ba911e4b7b733",
+    "tests/access-adoption.test.ts": "1b233990d36f1455097eaa4b27f44cd70cb4e44ce264d972ae5d595d4b6967a9",
+    "tests/access-unified-browser.test.ts": "5bf83ef43e10ef7445fa85df9969f9ce6d92c4e2977120aedc4837a82d44069d",
+    "tests/unified/adoption.json": "73adaa1d97f6045dc8e4540d2ad5b4384acf1c1e342885c55149cdd2facb3b94",
+    "tests/unified/adoption_probe.py": "99a53e1d68eac0418bf7bd2f77acff804213a1871a859c135f6f174328eda189",
+    "tests/unified/adoption_typecheck_positive.py": "77ae171923bc2151edaf4498124077859e1a63981b4a4de6e06a2684b19fbc6f",
+    "tests/unified/adoption_typecheck_negative.py": "4d0192f2f73d9ee716fa245847e45f0143b489ec00a3c6b59cecf3e22186ed31",
+    "tests/unified/application.py": "15ab6e70b4377dbdc570aec1b73d47e273970aa503f08bc026eda9137296c465",
+    "scripts/check-unified-client-boundaries.ts": "efb3813719056f93f6ce2b09905125442ecde6b6aa7d207fd29b1e73527dbb8d",
+    "scripts/codegen-corpus.ts": "ffcf6e8c26897e74f2c917def498bf5cce80999d91936889bc4d8cc237cce3d6",
+    "tests/compilation/boundaries.test.ts": "7b530fad171484c1bb75de45a2ce66d24738132f39f8a80ccc9ae4810ae6d00c",
+    "scripts/check-access-python-boundaries.py": "ddf5b781274106a2324e08ba320f7bcc0dc8bf73df9fa7a04012a49dae35f6f3"
+  },
+  "localWheel": {
+    "name": "umf_codegen-0.1.0a1-py3-none-any.whl",
+    "sha256": "52cd4457d162f9ce3d277431e9a9d33bd1f824d46924865dafa71134b097750a",
+    "published": false
+  },
+  "results": {
+    "focusedBun": {
+      "passed": 82,
+      "skipped": 1,
+      "failed": 0
+    },
+    "chromium": {
+      "passed": 1,
+      "sources": 4,
+      "completeBytesEqual": true
+    },
+    "installedCodegen": {
+      "cases": 27,
+      "completeResultsAndRefusalsEqual": true
+    },
+    "typing": {
+      "mypy": "2.4.0 strict",
+      "pyright": "1.1.414 standard",
+      "ty": "0.0.88",
+      "positivePassed": true,
+      "intendedErrorsPerTool": 4
+    },
+    "typescript": true,
+    "build": true,
+    "boundaries": true,
+    "extensionPackages": 71,
+    "exploratoryPyrightStrictSourcePassed": false,
+    "boundaryTestSuite": {
+      "passed": 24,
+      "failed": 0,
+      "checkerChanged": false
+    }
+  },
+  "nativeGraphExecutorQualified": false,
+  "linuxPythonMatrixQualified": false,
+  "releasePublished": false,
+  "review": {
+    "findingsFixed": [
+      "normalized parameter name collisions",
+      "ambiguous qualified action identities",
+      "malformed inventory source diagnostics",
+      "bounded snapshot despite inconsistent sequence length"
+    ],
+    "remainingActionableFindings": 0
+  }
+}

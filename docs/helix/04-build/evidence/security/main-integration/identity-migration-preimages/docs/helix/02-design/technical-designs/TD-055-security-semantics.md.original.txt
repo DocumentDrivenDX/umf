@@ -1,0 +1,139 @@
+---
+ddx:
+  id: TD-055
+  type: technical-design
+  activity: design
+  status: draft
+  authoring:
+    home: repo
+  links:
+    - id: US-055
+      kind: informed_by
+    - id: SD-008
+      kind: informed_by
+---
+
+# TD-055: Policy package, typed validation and portable evaluator
+
+**User Story:** [[US-055]] | **Feature:** FEAT-008 | **Solution Design:** [[SD-008]]
+
+## Scope
+
+Story-level realization of US-055-AC1–10; CONTRACT-052/053 govern exact surfaces.
+
+## Technical Approach
+
+Policy package, typed validation and portable evaluator. Inherit complete-fact admission, mandatory restrictions and native
+refusal from SD-008. No source policy can choose a trusted issuer or native role.
+
+## Component Changes
+
+Spike files under `02-design/spikes/security/` establish bounded feasibility.
+Production components follow the existing portable-library/runtime separation;
+new package/schema/API details must conform to CONTRACT-001 and CONTRACT-052.
+Backend-specific source and receipt adoption are consumer-owned.
+
+The production extension package and standalone policy/ontology schemas now
+live in `spec/extensions/security/`, generated reproducibly by
+`scripts/security-schema.py` with the existing core literal schema. Portable
+types, preservation, registry integration and bounded typed inspection live in
+`src/extensions/security/`. CONTRACT-052 specifies the concrete serialized
+surface. Registry inspection alone does not resolve host-supplied immutable
+documents; the explicit typed-closure API supplies that gate. Full fact admission
+and expression execution remain subsequent implementation steps.
+
+Input: Policy source and admitted complete facts. Output: decision/disclosure and retained source.
+Authoring retains unknown source; activation requires understood meaning.
+
+## API/Interface Design
+
+Use CONTRACT-052 policy meaning and CONTRACT-053 receipt admission. Weft-owned
+lowering interfaces require pinned owner agreement before production integration;
+no invented local compiler API is silently adopted.
+
+## Security
+
+Original caller and trusted attributes are host inputs with independently
+qualified provenance. Invalid/incomplete context refuses before effects. Native
+owners, BYPASSRLS and definer dependencies are explicitly inventoried/excluded.
+Private observations cannot escape through read, error or progress surfaces.
+
+## Testing
+
+Bun contract tests, real Chromium parity and generated counterexamples. Every exercising test cites `@covers US-055-AC` with its full numeric
+criterion ID. STP-055 owns per-criterion cases; declaration-only checks do not
+qualify execution. Qualification requires zero skipped required cases.
+
+## Performance
+
+Bound semantic expressions under CONTRACT-052. Measure native policy overhead,
+plans and drain at 1k/100k/1M records; resource timeout is an explicit refusal.
+
+## Migration & Rollback
+
+Version source and bindings separately. Preserve native/unknown source and prior
+admitted installation. Failed activation closes admission or retains the prior
+profile; never remove protection while broad ordinary grants remain.
+
+## Implementation Sequence
+
+1. Create exercising contract/native fixtures and record red or not-run states.
+2. Implement the scoped component and independent expected-result comparison.
+3. Reproduce formal/native/browser checks at matching source fingerprints.
+4. Admit only the exact completed subset and publish criterion receipts.
+
+## Risks
+
+Missing native capability, incomplete authority participation or unreviewed
+compiler interface blocks that profile. Continue independent semantic validation;
+never substitute synthetic fixtures for actual consumer adoption.
+
+## Implemented read spike boundary
+
+`src/extensions/security/evaluate.ts` provides bounded access and collection
+evaluation over immutable copies of host-attested facts. Exact qualified Core
+Key tuples, relevant inventory/attribute closure, Strong Kleene expressions,
+permit/require/forbid composition, disclosure conflicts and separate original-use
+actions follow CONTRACT-052. Empty collections still admit all scoped
+dependencies. Results disclose selected field representations without hidden
+input identities. Host authentication, authority freshness, physical query use
+and final-release synchronization require independently qualified consumers.
+Evidence in `04-build/evidence/security/` is scoped to those components and
+cannot close native backend acceptance.
+
+`SecurityReadRegistration` now supplies immutable in-process definition selection,
+with atomic content pins and bounded opaque handles. It rejects same-revision
+classification changes while retaining the prior meaning. Construction is a
+trusted host operation; native credential verification/current source authority
+remain consumer obligations. CONTRACT-052 specifies its exact trust and resource
+boundaries. All twelve named semantic runners are implemented; no native backend
+criterion is closed by this registry.
+
+Typed source dependency closure is now exported through
+`securityPolicyDependencies`. It requires complete interpretation and supplies
+qualified live fields, identity/endpoint components and association inventories.
+This is a semantic input to native writer classification, not a physical mapping
+or compiler implementation. Uninterpreted content refuses dependency analysis.
+
+
+## Complete query-use dependency admission
+
+The portable evaluator and owner Rust simulation now preflight prohibited fields
+and original-action dependencies before row evaluation. Empty collections and
+false primary-action branches cannot skip those selected dependencies. Original
+disclosed query values require coverage/presence even when excluded from output.
+All five operators retain disclosed/original-authorized/prohibited modes and
+separate raw-value permission. Fifteen new real-Chromium observations exercise
+empty prohibited queries, complete original-action cuts and incomplete original-
+action cuts; the Rust corpus contains 75 cross-language evaluation scenarios.
+These checks qualify logical admission, not native query execution or inference
+resistance. Original-action request provenance is a native profile obligation
+under CONTRACT-053; a request action string alone is not a credential.
+
+### Unbounded relational existence proof
+
+The owner asked whether formal logic is applied to the security system. It is: policy semantics use typed relationships and F/T/U interpretation, with scoped indeterminacy and mandatory composition. The initial retained proofs include bounded relational witnesses; their scope must not be described as arbitrary population correctness.
+
+`tools/security/prove-existence-unbounded.py` adds a quantified first-order theorem over arbitrary indexed witness populations. It independently defines logical existence as the least upper bound in the disjunction order F < U < T, including the base F for an empty population. Z3 4.15.4 proves that the native CASE-priority algebra (any T, else any U, else F) refines that definition, that unknown-only negation cannot grant, and that empty populations yield F. Violations are UNSAT; positive and deliberately weakened/default controls are SAT. The integer index is an abstract witness label, not a native key carrier or identity conversion.
+
+This proof has no two-witness population bound. It still assumes identical, complete and stable logical/native witnesses and scalar truth correspondence. It does not prove source authentication, SQL parser/compiler implementation, native collection completeness or release authority. Native implementation diagnostics and full backend acceptance remain separate obligations. The retained script, source pins and solver results are in `existence-unbounded-formal.json`.

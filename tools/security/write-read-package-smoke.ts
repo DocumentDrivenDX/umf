@@ -1,0 +1,10 @@
+import {createHash} from 'node:crypto';
+import {writeFixture} from '../../tests/security/write-fixture';
+const name='@umf/core',api=await import(name),f=writeFixture();
+const run=(x:any)=>api.evaluateSecurityWrite(x.policy,x.resolution,x.profile,{operation:'update',original:x.original,proposed:x.proposed}).decision;
+const before=JSON.stringify(f),positive=run(f);if(positive!=='permit'||JSON.stringify(f)!==before)throw Error('Built package explicit blind grant differs');
+const masked=structuredClone(f);masked.profile.readProtection.blindWriteActions=[];if(run(masked)!=='deny')throw Error('Built package admits masked mutation');
+const legacy=structuredClone(f) as any;delete legacy.profile.readProtection;if(run(legacy)!=='indeterminate')throw Error('Built package retains legacy default');
+const paths=['package.json','src/extensions/security/write.ts','src/extensions/security/evaluate.ts','tests/security/write-fixture.ts','tools/security/write-read-package-smoke.ts','dist/umf.js','dist/src/index.d.ts','dist/src/extensions/security/write.d.ts'];
+const sourceDigests=Object.fromEntries(await Promise.all(paths.map(async p=>[p,createHash('sha256').update(new Uint8Array(await Bun.file(p).arrayBuffer())).digest('hex')])));
+await Bun.write('docs/helix/04-build/evidence/security/write-protection-20261015/package-smoke.json',JSON.stringify({status:'built-write-read-correction-passed',bun:Bun.version,sourceDigests,explicitBlindPermit:true,maskedMutationDenied:true,legacyOmissionRefused:true,inputUnchanged:true,scope:'Actual emitted library API and declaration smoke only; legacy correction, no full S24/S25, catalog, native or current-authority qualification.'},null,2)+'\n');console.log(JSON.stringify({status:'built-write-read-correction-passed'}));

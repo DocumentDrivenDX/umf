@@ -1,0 +1,18 @@
+{
+  "alternatives": [
+    "{ parameter: string; } & { [key: string]: unknown; }",
+    "{ output: string; } & { [key: string]: unknown; }",
+    "{ record: ActionReference; } & { [key: string]: unknown; }",
+    "{ relationship: ActionRelationshipReference; } & { [key: string]: unknown; }"
+  ],
+  "authored": false,
+  "id": "[\"api\",\".\",\"ActionRuleReference\"]",
+  "kind": "Type alias",
+  "members": [],
+  "parameters": [],
+  "purpose": "ActionRuleReference is a type alias in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "ActionRuleReference"
+}

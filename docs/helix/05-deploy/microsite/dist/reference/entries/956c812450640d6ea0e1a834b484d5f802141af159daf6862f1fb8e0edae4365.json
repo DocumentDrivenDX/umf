@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 10517,
+        "line": 14,
+        "path": "src/core-ideals/record-postgresql-projection.ts",
+        "sha256": "56b7ec26a017a6bcabf67767e530c7a46593775800216a5498a92677671d0fae"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "projectRecordToPostgresql",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: CoreKindDeclaration, options: RecordPostgresqlRequest, backend: PostgresqlBackend): Promise<RecordPostgresqlProjection>"
+    ]
+  },
+  "id": "[\"api\",\".\",\"projectRecordToPostgresql\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 10517,
+      "line": 14,
+      "path": "src/core-ideals/record-postgresql-projection.ts",
+      "sha256": "56b7ec26a017a6bcabf67767e530c7a46593775800216a5498a92677671d0fae"
+    }
+  ],
+  "summary": "Public export · src/core-ideals/record-postgresql-projection.ts",
+  "title": "projectRecordToPostgresql"
+}

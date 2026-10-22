@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 12461,
+        "line": 17,
+        "path": "src/core-ideals/facets-parquet.ts",
+        "sha256": "6d4acf71a6abbb6975897cb5ca8ff60114a59ba16ce7de573c28f5c933b347a8"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "ParquetFacetRequest",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface ParquetFacetRequest {location:{index:number;scope:'present-non-null-leaf'};identity:{module:string;element:string};mode:'strict'|'report';profile:'declared-schema'|'pyarrow-safe-array-input'|'unresolved';obligation:'value-domain'|'exact-input';author?:CoreFacetDeclaration;}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"ParquetFacetRequest\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 12461,
+      "line": 17,
+      "path": "src/core-ideals/facets-parquet.ts",
+      "sha256": "6d4acf71a6abbb6975897cb5ca8ff60114a59ba16ce7de573c28f5c933b347a8"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/facets-parquet.ts",
+  "title": "ParquetFacetRequest"
+}

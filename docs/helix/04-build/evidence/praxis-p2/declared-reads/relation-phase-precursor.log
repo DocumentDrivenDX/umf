@@ -1,0 +1,20 @@
+Traceback (most recent call last):
+  File "/Users/erik/.codex/worktrees/a0fd/umf/tests/unified/table_reads_native.py", line 292, in <module>
+    asyncio.run(run_async())
+  File "/Users/erik/.local/share/uv/python/cpython-3.11.17-macos-aarch64-none/lib/python3.11/asyncio/runners.py", line 190, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "/Users/erik/.local/share/uv/python/cpython-3.11.17-macos-aarch64-none/lib/python3.11/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/erik/.local/share/uv/python/cpython-3.11.17-macos-aarch64-none/lib/python3.11/asyncio/base_events.py", line 654, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/Users/erik/.codex/worktrees/a0fd/umf/tests/unified/table_reads_native.py", line 230, in run_async
+    await async_cases(label,factory,AsyncSession)
+  File "/Users/erik/.codex/worktrees/a0fd/umf/tests/unified/table_reads_native.py", line 210, in async_cases
+    check(label+'-actual-native-'+stage+'-wait',waiting)
+  File "/Users/erik/.codex/worktrees/a0fd/umf/tests/unified/table_reads_native.py", line 77, in check
+    assert condition, name
+           ^^^^^^^^^
+AssertionError: psycopg3-async-actual-native-relation-wait

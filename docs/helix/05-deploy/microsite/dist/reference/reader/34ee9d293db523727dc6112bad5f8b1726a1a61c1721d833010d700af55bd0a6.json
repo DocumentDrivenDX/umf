@@ -1,0 +1,67 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"DashboardFilter\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "kind",
+      "optional": false,
+      "type": "\"filter\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "title",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "trace",
+      "optional": true,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "control",
+      "optional": false,
+      "type": "\"range\" | \"single-select\" | \"multi-select\" | \"date-range\" | \"text-search\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"DashboardReference\"]"
+      ],
+      "name": "targets",
+      "optional": false,
+      "type": "{ dataset: DashboardReference; field: string; }[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "default",
+      "optional": true,
+      "type": "{ values: (string | number | boolean)[]; }"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"DashboardPosition\"]"
+      ],
+      "name": "position",
+      "optional": false,
+      "type": "DashboardPosition"
+    }
+  ],
+  "parameters": [],
+  "purpose": "DashboardFilter is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "DashboardFilter"
+}

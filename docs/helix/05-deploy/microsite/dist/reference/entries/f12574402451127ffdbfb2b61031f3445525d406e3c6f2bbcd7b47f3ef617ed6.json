@@ -1,0 +1,227 @@
+{
+  "data": {
+    "extensionId": "umf.sqlserver.relationships",
+    "manifest": {
+      "capabilities": {
+        "directions": [
+          "import",
+          "export"
+        ],
+        "evidence": [
+          "tests/core-ideals/relationship-sqlserver.test.ts",
+          "fixtures/validation/relationship-sqlserver-native.json",
+          "fixtures/validation/relationship-sqlserver-browser.json"
+        ],
+        "native": {
+          "subset": "SQL Server 2022 captured FK observations and authored integral-key FK/junction new tables; no lifecycle/minimum or native equivalence inference",
+          "system": "SQL Server",
+          "version": "16.0.4295.3"
+        },
+        "validation": "structural"
+      },
+      "coreVersion": "0.10.0",
+      "description": "Qualified SQL Server relationship observations",
+      "id": "umf.sqlserver.relationships",
+      "schema": {
+        "$id": "urn:umf:sqlserver:relationship-binding:1.0.0",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": true,
+        "properties": {
+          "binding": {
+            "const": {
+              "id": "umf.sqlserver.relationships",
+              "nativeVersion": "16.0.4295.3",
+              "subset": "SQL Server 2022 captured FK observations and authored integral-key FK/junction new tables; no lifecycle/minimum or native equivalence inference",
+              "version": "1.0.0"
+            }
+          },
+          "observations": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "authorIntent": {
+                  "const": "unknown"
+                },
+                "deleteAction": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "enforcement": {
+                  "enum": [
+                    "enabled-trusted",
+                    "enabled-untrusted",
+                    "disabled",
+                    "unknown"
+                  ]
+                },
+                "name": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "nativeForeignKey": {},
+                "nativePath": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "notForReplication": {
+                  "type": "boolean"
+                },
+                "provenance": {
+                  "const": "inferred"
+                },
+                "referencedKeys": {
+                  "items": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "nativeKey": {},
+                      "path": {
+                        "minLength": 1,
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "path",
+                      "nativeKey"
+                    ],
+                    "type": "object"
+                  },
+                  "minItems": 0,
+                  "type": "array"
+                },
+                "resolution": {
+                  "enum": [
+                    "captured-tuple-candidate",
+                    "unresolved"
+                  ]
+                },
+                "sourceFields": {
+                  "items": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "element": {
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "module": {
+                        "minLength": 1,
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "module",
+                      "element"
+                    ],
+                    "type": "object"
+                  },
+                  "minItems": 0,
+                  "type": "array"
+                },
+                "table": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "name": {
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "schema": {
+                      "minLength": 1,
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "schema",
+                    "name"
+                  ],
+                  "type": "object"
+                },
+                "targetFields": {
+                  "items": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "element": {
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "module": {
+                        "minLength": 1,
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "module",
+                      "element"
+                    ],
+                    "type": "object"
+                  },
+                  "minItems": 0,
+                  "type": "array"
+                },
+                "updateAction": {
+                  "minLength": 1,
+                  "type": "string"
+                }
+              },
+              "required": [
+                "nativePath",
+                "table",
+                "name",
+                "nativeForeignKey",
+                "referencedKeys",
+                "sourceFields",
+                "targetFields",
+                "enforcement",
+                "authorIntent",
+                "provenance",
+                "deleteAction",
+                "updateAction",
+                "notForReplication",
+                "resolution"
+              ],
+              "type": "object"
+            },
+            "minItems": 0,
+            "type": "array"
+          },
+          "origin": {
+            "const": "classified"
+          }
+        },
+        "required": [
+          "origin",
+          "binding",
+          "observations"
+        ],
+        "type": "object"
+      },
+      "scopes": [
+        "document"
+      ],
+      "semantics": "CONTRACT-041 and TD-045. Native observations preserve refinements and never infer authored intent.",
+      "version": "1.0.0"
+    },
+    "registration": {
+      "apiIds": [],
+      "coreProfiles": [],
+      "mode": "unmapped"
+    },
+    "schemaId": "[\"schema\",\"spec/extensions/sqlserver-relationships/schema.json\",\"\"]",
+    "version": "1.0.0"
+  },
+  "id": "[\"extension\",\"umf.sqlserver.relationships\",\"1.0.0\"]",
+  "kind": "extension",
+  "links": [
+    "[\"guide\",\"extensions\"]",
+    "[\"schema\",\"spec/extensions/sqlserver-relationships/schema.json\",\"\"]",
+    "[\"integration\",\"umf.sqlserver.relationships@1.0.0:import\"]",
+    "[\"integration\",\"umf.sqlserver.relationships@1.0.0:export\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 5551,
+      "path": "spec/extensions/sqlserver-relationships/package.json",
+      "sha256": "fee7e7d918ef141eb06bc049b3c0b283f846b42a9332a33cc603fbcb18798767"
+    }
+  ],
+  "summary": "Qualified SQL Server relationship observations",
+  "title": "umf.sqlserver.relationships · 1.0.0"
+}

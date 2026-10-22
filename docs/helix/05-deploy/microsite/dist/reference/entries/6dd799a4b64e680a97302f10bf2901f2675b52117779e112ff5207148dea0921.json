@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 11096,
+        "line": 21,
+        "path": "src/core-ideals/cardinality-tablespec-projection.ts",
+        "sha256": "0374b5ef84a307bacc0d40e25e527534e4bf0f35495846042f266c1457d4a03a"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "projectCardinalityToTableSpec",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: CoreCardinalityDeclaration, options: CardinalityTableSpecRequest): CardinalityTableSpecProjection & { diagnostics: Diagnostic[]; }"
+    ]
+  },
+  "id": "[\"api\",\".\",\"projectCardinalityToTableSpec\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 11096,
+      "line": 21,
+      "path": "src/core-ideals/cardinality-tablespec-projection.ts",
+      "sha256": "0374b5ef84a307bacc0d40e25e527534e4bf0f35495846042f266c1457d4a03a"
+    }
+  ],
+  "summary": "Public export · src/core-ideals/cardinality-tablespec-projection.ts",
+  "title": "projectCardinalityToTableSpec"
+}

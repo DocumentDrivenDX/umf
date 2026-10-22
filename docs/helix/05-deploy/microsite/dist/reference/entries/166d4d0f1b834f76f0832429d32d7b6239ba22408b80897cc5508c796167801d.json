@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 10134,
+        "line": 26,
+        "path": "src/core-ideals/cardinality-parquet-projection.ts",
+        "sha256": "b725eb0556c1957ae88e2a5935dcd804ad8bfddca9767ec472b90959eeb97239"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "projectCardinalityToParquet",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: CoreCardinalityDeclaration, options: CardinalityParquetRequest): CardinalityParquetProjection"
+    ]
+  },
+  "id": "[\"api\",\".\",\"projectCardinalityToParquet\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 10134,
+      "line": 26,
+      "path": "src/core-ideals/cardinality-parquet-projection.ts",
+      "sha256": "b725eb0556c1957ae88e2a5935dcd804ad8bfddca9767ec472b90959eeb97239"
+    }
+  ],
+  "summary": "Public export · src/core-ideals/cardinality-parquet-projection.ts",
+  "title": "projectCardinalityToParquet"
+}

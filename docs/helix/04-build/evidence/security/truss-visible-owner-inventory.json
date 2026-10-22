@@ -1,0 +1,1127 @@
+{
+  "status": "passed-visible-owner-inventory-component",
+  "scope": "Original qualified-property0.15 owner export under fixture superuser, visible rows only; no authenticated cut/RLS visibility/property/source mapping or full native coverage",
+  "runId": "e4a4d81b-c151-4077-a5a0-705bb0d17f33",
+  "sourceDigests": {
+    "tools/security/truss-visible-owner-inventory-probe.py": "55118a32d1d398dc6ffd2b44290f067d9159b56c408f08b35aec06b2b5a584f6",
+    "docs/helix/03-test/security/cases.json": "71eb930c78ad5e63e35c2b343a276ee5d78e9a38fe3ce78b840f81384fe4d2aa",
+    "tests/security/native/pg-raw-membership.py": "19a062f5cb18532b9da3925d6444faa78f2a92c2bfe8bfaedfd78887ef9d29ab",
+    "tests/security/native/pg-raw-membership-oracle.json": "1b04b8a2fe0de4f72ca2926398ff2717909bdbdee9d53e4284e4f4bd2fc5acee",
+    "tests/security/native/pg-raw-membership.sql": "ac5640077786e81b80e536acc7c5d89d8f6747e1d8f425f17c4e3dfc3b37daf6",
+    "tests/security/native/pg-raw-pool.ts": "b0f2bdbbf2678da18f634d59ad6c27daa9e39e5764415c326355597ca8de764e",
+    "/Users/erik/.codex/worktrees/1598/umf/tools/security/truss-visible-owner-inventory-probe.py": "55118a32d1d398dc6ffd2b44290f067d9159b56c408f08b35aec06b2b5a584f6",
+    "/Users/erik/Projects/truss/docs/helix/04-build/evidence/qualified-property-layout-0.15.owner-export.sql": "cc725df53f0d74e13bb51fda29603f8cafe8c0cee237667778566f81b33f5011",
+    "/Users/erik/Projects/truss/packages/postgresql/native/dataset-visible-owner-inventory.sql": "3a5258fe88887ee94361bb481208357ceede56fd8bb90511955b0f5335ad86b3",
+    "/Users/erik/Projects/truss/packages/postgresql/native/dataset-unfiltered-owner-inventory.sql": "812bee2904a26a7c845e0f5cd3ee3d98583c9130a83d783300ac521205a2909d",
+    "tools/security/decode-native-visible-owner-wire.ts": "4522b93e42f921029fae7d6bab61b8e155dae497227ffc34e9da7a960678136c",
+    "/Users/erik/Projects/truss/packages/postgresql/src/dataset-visible-owner-inventory.ts": "a433219b29d3f9c91c2806d24f3cfa44ca7bd846dfbdefb26789c2b248f5779e",
+    "/Users/erik/Projects/truss/packages/postgresql/src/acceptance-json.ts": "fc1c87ece1c30fe3951ac83c307bebc202e4267875d11e286d45731fad41b4c0"
+  },
+  "observations": [
+    {
+      "id": "installed-collector-source-and-authority-correspondence",
+      "expected": [
+        {
+          "name": "runtime_collect_unfiltered_dataset_owners",
+          "body": " SELECT * FROM truss.runtime_collect_visible_dataset_owners() ",
+          "identityArguments": "",
+          "result": "TABLE(owner_kind text, owner_id text, discriminator_id text, source_id text, source_type text, target_id text, target_type text)",
+          "language": "sql",
+          "volatility": "s",
+          "parallel": "u",
+          "returnsSet": true,
+          "securityDefiner": false,
+          "settings": [
+            "search_path=pg_catalog, pg_temp",
+            "row_security=off"
+          ],
+          "owner": "postgres",
+          "publicExecute": false
+        },
+        {
+          "name": "runtime_collect_visible_dataset_owners",
+          "body": "\nDECLARE objects jsonb; edges jsonb;\nBEGIN\n  -- Only fixed-width native IDs enter bounded local buffers. Never retain props.\n  SELECT coalesce(jsonb_agg(jsonb_build_array(o.id::text,o.type_id::text)),'[]'::jsonb) INTO objects\n    FROM (SELECT x.id,x.type_id FROM truss.object x LIMIT 1001) o;\n  SELECT coalesce(jsonb_agg(jsonb_build_array(e.id::text,e.rel_type_id::text,e.source_id::text,e.source_type::text,e.target_id::text,e.target_type::text)),'[]'::jsonb) INTO edges\n    FROM (SELECT x.id,x.rel_type_id,x.source_id,x.source_type,x.target_id,x.target_type FROM truss.edge x LIMIT 10001) e;\n  IF jsonb_array_length(objects)>1000 OR jsonb_array_length(edges)>10000 THEN\n    RAISE EXCEPTION 'visible dataset owner capacity exceeded' USING ERRCODE='54000';\n  END IF;\n  RETURN QUERY\n    SELECT 'object'::text,v->>0,v->>1,NULL::text,NULL::text,NULL::text,NULL::text FROM jsonb_array_elements(objects) v\n    UNION ALL\n    SELECT 'edge'::text,v->>0,v->>1,v->>2,v->>3,v->>4,v->>5 FROM jsonb_array_elements(edges) v;\nEND;\n",
+          "identityArguments": "",
+          "result": "TABLE(owner_kind text, owner_id text, discriminator_id text, source_id text, source_type text, target_id text, target_type text)",
+          "language": "plpgsql",
+          "volatility": "s",
+          "parallel": "u",
+          "returnsSet": true,
+          "securityDefiner": false,
+          "settings": [
+            "search_path=pg_catalog, pg_temp"
+          ],
+          "owner": "postgres",
+          "publicExecute": false
+        }
+      ],
+      "observed": [
+        {
+          "name": "runtime_collect_unfiltered_dataset_owners",
+          "body": " SELECT * FROM truss.runtime_collect_visible_dataset_owners() ",
+          "identityArguments": "",
+          "result": "TABLE(owner_kind text, owner_id text, discriminator_id text, source_id text, source_type text, target_id text, target_type text)",
+          "language": "sql",
+          "volatility": "s",
+          "parallel": "u",
+          "returnsSet": true,
+          "securityDefiner": false,
+          "settings": [
+            "search_path=pg_catalog, pg_temp",
+            "row_security=off"
+          ],
+          "owner": "postgres",
+          "publicExecute": false
+        },
+        {
+          "name": "runtime_collect_visible_dataset_owners",
+          "body": "\nDECLARE objects jsonb; edges jsonb;\nBEGIN\n  -- Only fixed-width native IDs enter bounded local buffers. Never retain props.\n  SELECT coalesce(jsonb_agg(jsonb_build_array(o.id::text,o.type_id::text)),'[]'::jsonb) INTO objects\n    FROM (SELECT x.id,x.type_id FROM truss.object x LIMIT 1001) o;\n  SELECT coalesce(jsonb_agg(jsonb_build_array(e.id::text,e.rel_type_id::text,e.source_id::text,e.source_type::text,e.target_id::text,e.target_type::text)),'[]'::jsonb) INTO edges\n    FROM (SELECT x.id,x.rel_type_id,x.source_id,x.source_type,x.target_id,x.target_type FROM truss.edge x LIMIT 10001) e;\n  IF jsonb_array_length(objects)>1000 OR jsonb_array_length(edges)>10000 THEN\n    RAISE EXCEPTION 'visible dataset owner capacity exceeded' USING ERRCODE='54000';\n  END IF;\n  RETURN QUERY\n    SELECT 'object'::text,v->>0,v->>1,NULL::text,NULL::text,NULL::text,NULL::text FROM jsonb_array_elements(objects) v\n    UNION ALL\n    SELECT 'edge'::text,v->>0,v->>1,v->>2,v->>3,v->>4,v->>5 FROM jsonb_array_elements(edges) v;\nEND;\n",
+          "identityArguments": "",
+          "result": "TABLE(owner_kind text, owner_id text, discriminator_id text, source_id text, source_type text, target_id text, target_type text)",
+          "language": "plpgsql",
+          "volatility": "s",
+          "parallel": "u",
+          "returnsSet": true,
+          "securityDefiner": false,
+          "settings": [
+            "search_path=pg_catalog, pg_temp"
+          ],
+          "owner": "postgres",
+          "publicExecute": false
+        }
+      ]
+    },
+    {
+      "id": "collector-body-drift-detected-and-rollback-restored",
+      "expected": {
+        "mutated": [
+          {
+            "name": "runtime_collect_unfiltered_dataset_owners",
+            "body": " SELECT * FROM truss.runtime_collect_visible_dataset_owners() WHERE false ",
+            "identityArguments": "",
+            "result": "TABLE(owner_kind text, owner_id text, discriminator_id text, source_id text, source_type text, target_id text, target_type text)",
+            "language": "sql",
+            "volatility": "s",
+            "parallel": "u",
+            "returnsSet": true,
+            "securityDefiner": false,
+            "settings": [
+              "search_path=pg_catalog, pg_temp",
+              "row_security=off"
+            ],
+            "owner": "postgres",
+            "publicExecute": false
+          },
+          {
+            "name": "runtime_collect_visible_dataset_owners",
+            "body": "\nDECLARE objects jsonb; edges jsonb;\nBEGIN\n  -- Only fixed-width native IDs enter bounded local buffers. Never retain props.\n  SELECT coalesce(jsonb_agg(jsonb_build_array(o.id::text,o.type_id::text)),'[]'::jsonb) INTO objects\n    FROM (SELECT x.id,x.type_id FROM truss.object x LIMIT 1001) o;\n  SELECT coalesce(jsonb_agg(jsonb_build_array(e.id::text,e.rel_type_id::text,e.source_id::text,e.source_type::text,e.target_id::text,e.target_type::text)),'[]'::jsonb) INTO edges\n    FROM (SELECT x.id,x.rel_type_id,x.source_id,x.source_type,x.target_id,x.target_type FROM truss.edge x LIMIT 10001) e;\n  IF jsonb_array_length(objects)>1000 OR jsonb_array_length(edges)>10000 THEN\n    RAISE EXCEPTION 'visible dataset owner capacity exceeded' USING ERRCODE='54000';\n  END IF;\n  RETURN QUERY\n    SELECT 'object'::text,v->>0,v->>1,NULL::text,NULL::text,NULL::text,NULL::text FROM jsonb_array_elements(objects) v\n    UNION ALL\n    SELECT 'edge'::text,v->>0,v->>1,v->>2,v->>3,v->>4,v->>5 FROM jsonb_array_elements(edges) v;\nEND;\n",
+            "identityArguments": "",
+            "result": "TABLE(owner_kind text, owner_id text, discriminator_id text, source_id text, source_type text, target_id text, target_type text)",
+            "language": "plpgsql",
+            "volatility": "s",
+            "parallel": "u",
+            "returnsSet": true,
+            "securityDefiner": false,
+            "settings": [
+              "search_path=pg_catalog, pg_temp"
+            ],
+            "owner": "postgres",
+            "publicExecute": false
+          }
+        ],
+        "restored": [
+          {
+            "name": "runtime_collect_unfiltered_dataset_owners",
+            "body": " SELECT * FROM truss.runtime_collect_visible_dataset_owners() ",
+            "identityArguments": "",
+            "result": "TABLE(owner_kind text, owner_id text, discriminator_id text, source_id text, source_type text, target_id text, target_type text)",
+            "language": "sql",
+            "volatility": "s",
+            "parallel": "u",
+            "returnsSet": true,
+            "securityDefiner": false,
+            "settings": [
+              "search_path=pg_catalog, pg_temp",
+              "row_security=off"
+            ],
+            "owner": "postgres",
+            "publicExecute": false
+          },
+          {
+            "name": "runtime_collect_visible_dataset_owners",
+            "body": "\nDECLARE objects jsonb; edges jsonb;\nBEGIN\n  -- Only fixed-width native IDs enter bounded local buffers. Never retain props.\n  SELECT coalesce(jsonb_agg(jsonb_build_array(o.id::text,o.type_id::text)),'[]'::jsonb) INTO objects\n    FROM (SELECT x.id,x.type_id FROM truss.object x LIMIT 1001) o;\n  SELECT coalesce(jsonb_agg(jsonb_build_array(e.id::text,e.rel_type_id::text,e.source_id::text,e.source_type::text,e.target_id::text,e.target_type::text)),'[]'::jsonb) INTO edges\n    FROM (SELECT x.id,x.rel_type_id,x.source_id,x.source_type,x.target_id,x.target_type FROM truss.edge x LIMIT 10001) e;\n  IF jsonb_array_length(objects)>1000 OR jsonb_array_length(edges)>10000 THEN\n    RAISE EXCEPTION 'visible dataset owner capacity exceeded' USING ERRCODE='54000';\n  END IF;\n  RETURN QUERY\n    SELECT 'object'::text,v->>0,v->>1,NULL::text,NULL::text,NULL::text,NULL::text FROM jsonb_array_elements(objects) v\n    UNION ALL\n    SELECT 'edge'::text,v->>0,v->>1,v->>2,v->>3,v->>4,v->>5 FROM jsonb_array_elements(edges) v;\nEND;\n",
+            "identityArguments": "",
+            "result": "TABLE(owner_kind text, owner_id text, discriminator_id text, source_id text, source_type text, target_id text, target_type text)",
+            "language": "plpgsql",
+            "volatility": "s",
+            "parallel": "u",
+            "returnsSet": true,
+            "securityDefiner": false,
+            "settings": [
+              "search_path=pg_catalog, pg_temp"
+            ],
+            "owner": "postgres",
+            "publicExecute": false
+          }
+        ]
+      },
+      "observed": {
+        "mutated": [
+          {
+            "name": "runtime_collect_unfiltered_dataset_owners",
+            "body": " SELECT * FROM truss.runtime_collect_visible_dataset_owners() WHERE false ",
+            "identityArguments": "",
+            "result": "TABLE(owner_kind text, owner_id text, discriminator_id text, source_id text, source_type text, target_id text, target_type text)",
+            "language": "sql",
+            "volatility": "s",
+            "parallel": "u",
+            "returnsSet": true,
+            "securityDefiner": false,
+            "settings": [
+              "search_path=pg_catalog, pg_temp",
+              "row_security=off"
+            ],
+            "owner": "postgres",
+            "publicExecute": false
+          },
+          {
+            "name": "runtime_collect_visible_dataset_owners",
+            "body": "\nDECLARE objects jsonb; edges jsonb;\nBEGIN\n  -- Only fixed-width native IDs enter bounded local buffers. Never retain props.\n  SELECT coalesce(jsonb_agg(jsonb_build_array(o.id::text,o.type_id::text)),'[]'::jsonb) INTO objects\n    FROM (SELECT x.id,x.type_id FROM truss.object x LIMIT 1001) o;\n  SELECT coalesce(jsonb_agg(jsonb_build_array(e.id::text,e.rel_type_id::text,e.source_id::text,e.source_type::text,e.target_id::text,e.target_type::text)),'[]'::jsonb) INTO edges\n    FROM (SELECT x.id,x.rel_type_id,x.source_id,x.source_type,x.target_id,x.target_type FROM truss.edge x LIMIT 10001) e;\n  IF jsonb_array_length(objects)>1000 OR jsonb_array_length(edges)>10000 THEN\n    RAISE EXCEPTION 'visible dataset owner capacity exceeded' USING ERRCODE='54000';\n  END IF;\n  RETURN QUERY\n    SELECT 'object'::text,v->>0,v->>1,NULL::text,NULL::text,NULL::text,NULL::text FROM jsonb_array_elements(objects) v\n    UNION ALL\n    SELECT 'edge'::text,v->>0,v->>1,v->>2,v->>3,v->>4,v->>5 FROM jsonb_array_elements(edges) v;\nEND;\n",
+            "identityArguments": "",
+            "result": "TABLE(owner_kind text, owner_id text, discriminator_id text, source_id text, source_type text, target_id text, target_type text)",
+            "language": "plpgsql",
+            "volatility": "s",
+            "parallel": "u",
+            "returnsSet": true,
+            "securityDefiner": false,
+            "settings": [
+              "search_path=pg_catalog, pg_temp"
+            ],
+            "owner": "postgres",
+            "publicExecute": false
+          }
+        ],
+        "restored": [
+          {
+            "name": "runtime_collect_unfiltered_dataset_owners",
+            "body": " SELECT * FROM truss.runtime_collect_visible_dataset_owners() ",
+            "identityArguments": "",
+            "result": "TABLE(owner_kind text, owner_id text, discriminator_id text, source_id text, source_type text, target_id text, target_type text)",
+            "language": "sql",
+            "volatility": "s",
+            "parallel": "u",
+            "returnsSet": true,
+            "securityDefiner": false,
+            "settings": [
+              "search_path=pg_catalog, pg_temp",
+              "row_security=off"
+            ],
+            "owner": "postgres",
+            "publicExecute": false
+          },
+          {
+            "name": "runtime_collect_visible_dataset_owners",
+            "body": "\nDECLARE objects jsonb; edges jsonb;\nBEGIN\n  -- Only fixed-width native IDs enter bounded local buffers. Never retain props.\n  SELECT coalesce(jsonb_agg(jsonb_build_array(o.id::text,o.type_id::text)),'[]'::jsonb) INTO objects\n    FROM (SELECT x.id,x.type_id FROM truss.object x LIMIT 1001) o;\n  SELECT coalesce(jsonb_agg(jsonb_build_array(e.id::text,e.rel_type_id::text,e.source_id::text,e.source_type::text,e.target_id::text,e.target_type::text)),'[]'::jsonb) INTO edges\n    FROM (SELECT x.id,x.rel_type_id,x.source_id,x.source_type,x.target_id,x.target_type FROM truss.edge x LIMIT 10001) e;\n  IF jsonb_array_length(objects)>1000 OR jsonb_array_length(edges)>10000 THEN\n    RAISE EXCEPTION 'visible dataset owner capacity exceeded' USING ERRCODE='54000';\n  END IF;\n  RETURN QUERY\n    SELECT 'object'::text,v->>0,v->>1,NULL::text,NULL::text,NULL::text,NULL::text FROM jsonb_array_elements(objects) v\n    UNION ALL\n    SELECT 'edge'::text,v->>0,v->>1,v->>2,v->>3,v->>4,v->>5 FROM jsonb_array_elements(edges) v;\nEND;\n",
+            "identityArguments": "",
+            "result": "TABLE(owner_kind text, owner_id text, discriminator_id text, source_id text, source_type text, target_id text, target_type text)",
+            "language": "plpgsql",
+            "volatility": "s",
+            "parallel": "u",
+            "returnsSet": true,
+            "securityDefiner": false,
+            "settings": [
+              "search_path=pg_catalog, pg_temp"
+            ],
+            "owner": "postgres",
+            "publicExecute": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "collector-executable-metadata-drift-detected-and-restored",
+      "expected": {
+        "mutated": [
+          {
+            "name": "runtime_collect_unfiltered_dataset_owners",
+            "body": " SELECT * FROM truss.runtime_collect_visible_dataset_owners() ",
+            "identityArguments": "",
+            "result": "TABLE(owner_kind text, owner_id text, discriminator_id text, source_id text, source_type text, target_id text, target_type text)",
+            "language": "sql",
+            "volatility": "i",
+            "parallel": "s",
+            "returnsSet": true,
+            "securityDefiner": true,
+            "settings": [
+              "search_path=pg_catalog, pg_temp",
+              "row_security=off"
+            ],
+            "owner": "postgres",
+            "publicExecute": false
+          },
+          {
+            "name": "runtime_collect_visible_dataset_owners",
+            "body": "\nDECLARE objects jsonb; edges jsonb;\nBEGIN\n  -- Only fixed-width native IDs enter bounded local buffers. Never retain props.\n  SELECT coalesce(jsonb_agg(jsonb_build_array(o.id::text,o.type_id::text)),'[]'::jsonb) INTO objects\n    FROM (SELECT x.id,x.type_id FROM truss.object x LIMIT 1001) o;\n  SELECT coalesce(jsonb_agg(jsonb_build_array(e.id::text,e.rel_type_id::text,e.source_id::text,e.source_type::text,e.target_id::text,e.target_type::text)),'[]'::jsonb) INTO edges\n    FROM (SELECT x.id,x.rel_type_id,x.source_id,x.source_type,x.target_id,x.target_type FROM truss.edge x LIMIT 10001) e;\n  IF jsonb_array_length(objects)>1000 OR jsonb_array_length(edges)>10000 THEN\n    RAISE EXCEPTION 'visible dataset owner capacity exceeded' USING ERRCODE='54000';\n  END IF;\n  RETURN QUERY\n    SELECT 'object'::text,v->>0,v->>1,NULL::text,NULL::text,NULL::text,NULL::text FROM jsonb_array_elements(objects) v\n    UNION ALL\n    SELECT 'edge'::text,v->>0,v->>1,v->>2,v->>3,v->>4,v->>5 FROM jsonb_array_elements(edges) v;\nEND;\n",
+            "identityArguments": "",
+            "result": "TABLE(owner_kind text, owner_id text, discriminator_id text, source_id text, source_type text, target_id text, target_type text)",
+            "language": "plpgsql",
+            "volatility": "s",
+            "parallel": "u",
+            "returnsSet": true,
+            "securityDefiner": false,
+            "settings": [
+              "search_path=pg_catalog, pg_temp"
+            ],
+            "owner": "postgres",
+            "publicExecute": false
+          }
+        ],
+        "restored": [
+          {
+            "name": "runtime_collect_unfiltered_dataset_owners",
+            "body": " SELECT * FROM truss.runtime_collect_visible_dataset_owners() ",
+            "identityArguments": "",
+            "result": "TABLE(owner_kind text, owner_id text, discriminator_id text, source_id text, source_type text, target_id text, target_type text)",
+            "language": "sql",
+            "volatility": "s",
+            "parallel": "u",
+            "returnsSet": true,
+            "securityDefiner": false,
+            "settings": [
+              "search_path=pg_catalog, pg_temp",
+              "row_security=off"
+            ],
+            "owner": "postgres",
+            "publicExecute": false
+          },
+          {
+            "name": "runtime_collect_visible_dataset_owners",
+            "body": "\nDECLARE objects jsonb; edges jsonb;\nBEGIN\n  -- Only fixed-width native IDs enter bounded local buffers. Never retain props.\n  SELECT coalesce(jsonb_agg(jsonb_build_array(o.id::text,o.type_id::text)),'[]'::jsonb) INTO objects\n    FROM (SELECT x.id,x.type_id FROM truss.object x LIMIT 1001) o;\n  SELECT coalesce(jsonb_agg(jsonb_build_array(e.id::text,e.rel_type_id::text,e.source_id::text,e.source_type::text,e.target_id::text,e.target_type::text)),'[]'::jsonb) INTO edges\n    FROM (SELECT x.id,x.rel_type_id,x.source_id,x.source_type,x.target_id,x.target_type FROM truss.edge x LIMIT 10001) e;\n  IF jsonb_array_length(objects)>1000 OR jsonb_array_length(edges)>10000 THEN\n    RAISE EXCEPTION 'visible dataset owner capacity exceeded' USING ERRCODE='54000';\n  END IF;\n  RETURN QUERY\n    SELECT 'object'::text,v->>0,v->>1,NULL::text,NULL::text,NULL::text,NULL::text FROM jsonb_array_elements(objects) v\n    UNION ALL\n    SELECT 'edge'::text,v->>0,v->>1,v->>2,v->>3,v->>4,v->>5 FROM jsonb_array_elements(edges) v;\nEND;\n",
+            "identityArguments": "",
+            "result": "TABLE(owner_kind text, owner_id text, discriminator_id text, source_id text, source_type text, target_id text, target_type text)",
+            "language": "plpgsql",
+            "volatility": "s",
+            "parallel": "u",
+            "returnsSet": true,
+            "securityDefiner": false,
+            "settings": [
+              "search_path=pg_catalog, pg_temp"
+            ],
+            "owner": "postgres",
+            "publicExecute": false
+          }
+        ]
+      },
+      "observed": {
+        "mutated": [
+          {
+            "name": "runtime_collect_unfiltered_dataset_owners",
+            "body": " SELECT * FROM truss.runtime_collect_visible_dataset_owners() ",
+            "identityArguments": "",
+            "result": "TABLE(owner_kind text, owner_id text, discriminator_id text, source_id text, source_type text, target_id text, target_type text)",
+            "language": "sql",
+            "volatility": "i",
+            "parallel": "s",
+            "returnsSet": true,
+            "securityDefiner": true,
+            "settings": [
+              "search_path=pg_catalog, pg_temp",
+              "row_security=off"
+            ],
+            "owner": "postgres",
+            "publicExecute": false
+          },
+          {
+            "name": "runtime_collect_visible_dataset_owners",
+            "body": "\nDECLARE objects jsonb; edges jsonb;\nBEGIN\n  -- Only fixed-width native IDs enter bounded local buffers. Never retain props.\n  SELECT coalesce(jsonb_agg(jsonb_build_array(o.id::text,o.type_id::text)),'[]'::jsonb) INTO objects\n    FROM (SELECT x.id,x.type_id FROM truss.object x LIMIT 1001) o;\n  SELECT coalesce(jsonb_agg(jsonb_build_array(e.id::text,e.rel_type_id::text,e.source_id::text,e.source_type::text,e.target_id::text,e.target_type::text)),'[]'::jsonb) INTO edges\n    FROM (SELECT x.id,x.rel_type_id,x.source_id,x.source_type,x.target_id,x.target_type FROM truss.edge x LIMIT 10001) e;\n  IF jsonb_array_length(objects)>1000 OR jsonb_array_length(edges)>10000 THEN\n    RAISE EXCEPTION 'visible dataset owner capacity exceeded' USING ERRCODE='54000';\n  END IF;\n  RETURN QUERY\n    SELECT 'object'::text,v->>0,v->>1,NULL::text,NULL::text,NULL::text,NULL::text FROM jsonb_array_elements(objects) v\n    UNION ALL\n    SELECT 'edge'::text,v->>0,v->>1,v->>2,v->>3,v->>4,v->>5 FROM jsonb_array_elements(edges) v;\nEND;\n",
+            "identityArguments": "",
+            "result": "TABLE(owner_kind text, owner_id text, discriminator_id text, source_id text, source_type text, target_id text, target_type text)",
+            "language": "plpgsql",
+            "volatility": "s",
+            "parallel": "u",
+            "returnsSet": true,
+            "securityDefiner": false,
+            "settings": [
+              "search_path=pg_catalog, pg_temp"
+            ],
+            "owner": "postgres",
+            "publicExecute": false
+          }
+        ],
+        "restored": [
+          {
+            "name": "runtime_collect_unfiltered_dataset_owners",
+            "body": " SELECT * FROM truss.runtime_collect_visible_dataset_owners() ",
+            "identityArguments": "",
+            "result": "TABLE(owner_kind text, owner_id text, discriminator_id text, source_id text, source_type text, target_id text, target_type text)",
+            "language": "sql",
+            "volatility": "s",
+            "parallel": "u",
+            "returnsSet": true,
+            "securityDefiner": false,
+            "settings": [
+              "search_path=pg_catalog, pg_temp",
+              "row_security=off"
+            ],
+            "owner": "postgres",
+            "publicExecute": false
+          },
+          {
+            "name": "runtime_collect_visible_dataset_owners",
+            "body": "\nDECLARE objects jsonb; edges jsonb;\nBEGIN\n  -- Only fixed-width native IDs enter bounded local buffers. Never retain props.\n  SELECT coalesce(jsonb_agg(jsonb_build_array(o.id::text,o.type_id::text)),'[]'::jsonb) INTO objects\n    FROM (SELECT x.id,x.type_id FROM truss.object x LIMIT 1001) o;\n  SELECT coalesce(jsonb_agg(jsonb_build_array(e.id::text,e.rel_type_id::text,e.source_id::text,e.source_type::text,e.target_id::text,e.target_type::text)),'[]'::jsonb) INTO edges\n    FROM (SELECT x.id,x.rel_type_id,x.source_id,x.source_type,x.target_id,x.target_type FROM truss.edge x LIMIT 10001) e;\n  IF jsonb_array_length(objects)>1000 OR jsonb_array_length(edges)>10000 THEN\n    RAISE EXCEPTION 'visible dataset owner capacity exceeded' USING ERRCODE='54000';\n  END IF;\n  RETURN QUERY\n    SELECT 'object'::text,v->>0,v->>1,NULL::text,NULL::text,NULL::text,NULL::text FROM jsonb_array_elements(objects) v\n    UNION ALL\n    SELECT 'edge'::text,v->>0,v->>1,v->>2,v->>3,v->>4,v->>5 FROM jsonb_array_elements(edges) v;\nEND;\n",
+            "identityArguments": "",
+            "result": "TABLE(owner_kind text, owner_id text, discriminator_id text, source_id text, source_type text, target_id text, target_type text)",
+            "language": "plpgsql",
+            "volatility": "s",
+            "parallel": "u",
+            "returnsSet": true,
+            "securityDefiner": false,
+            "settings": [
+              "search_path=pg_catalog, pg_temp"
+            ],
+            "owner": "postgres",
+            "publicExecute": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "collector-added-overload-detected-and-restored",
+      "expected": {
+        "mutated": [
+          {
+            "name": "runtime_collect_unfiltered_dataset_owners",
+            "body": " SELECT * FROM truss.runtime_collect_visible_dataset_owners() ",
+            "identityArguments": "",
+            "result": "TABLE(owner_kind text, owner_id text, discriminator_id text, source_id text, source_type text, target_id text, target_type text)",
+            "language": "sql",
+            "volatility": "s",
+            "parallel": "u",
+            "returnsSet": true,
+            "securityDefiner": false,
+            "settings": [
+              "search_path=pg_catalog, pg_temp",
+              "row_security=off"
+            ],
+            "owner": "postgres",
+            "publicExecute": false
+          },
+          {
+            "name": "runtime_collect_unfiltered_dataset_owners",
+            "body": " SELECT * FROM truss.runtime_collect_visible_dataset_owners() ",
+            "identityArguments": "unused integer",
+            "result": "TABLE(owner_kind text, owner_id text, discriminator_id text, source_id text, source_type text, target_id text, target_type text)",
+            "language": "sql",
+            "volatility": "s",
+            "parallel": "u",
+            "returnsSet": true,
+            "securityDefiner": false,
+            "settings": [
+              "search_path=pg_catalog, pg_temp",
+              "row_security=off"
+            ],
+            "owner": "postgres",
+            "publicExecute": true
+          },
+          {
+            "name": "runtime_collect_visible_dataset_owners",
+            "body": "\nDECLARE objects jsonb; edges jsonb;\nBEGIN\n  -- Only fixed-width native IDs enter bounded local buffers. Never retain props.\n  SELECT coalesce(jsonb_agg(jsonb_build_array(o.id::text,o.type_id::text)),'[]'::jsonb) INTO objects\n    FROM (SELECT x.id,x.type_id FROM truss.object x LIMIT 1001) o;\n  SELECT coalesce(jsonb_agg(jsonb_build_array(e.id::text,e.rel_type_id::text,e.source_id::text,e.source_type::text,e.target_id::text,e.target_type::text)),'[]'::jsonb) INTO edges\n    FROM (SELECT x.id,x.rel_type_id,x.source_id,x.source_type,x.target_id,x.target_type FROM truss.edge x LIMIT 10001) e;\n  IF jsonb_array_length(objects)>1000 OR jsonb_array_length(edges)>10000 THEN\n    RAISE EXCEPTION 'visible dataset owner capacity exceeded' USING ERRCODE='54000';\n  END IF;\n  RETURN QUERY\n    SELECT 'object'::text,v->>0,v->>1,NULL::text,NULL::text,NULL::text,NULL::text FROM jsonb_array_elements(objects) v\n    UNION ALL\n    SELECT 'edge'::text,v->>0,v->>1,v->>2,v->>3,v->>4,v->>5 FROM jsonb_array_elements(edges) v;\nEND;\n",
+            "identityArguments": "",
+            "result": "TABLE(owner_kind text, owner_id text, discriminator_id text, source_id text, source_type text, target_id text, target_type text)",
+            "language": "plpgsql",
+            "volatility": "s",
+            "parallel": "u",
+            "returnsSet": true,
+            "securityDefiner": false,
+            "settings": [
+              "search_path=pg_catalog, pg_temp"
+            ],
+            "owner": "postgres",
+            "publicExecute": false
+          }
+        ],
+        "restored": [
+          {
+            "name": "runtime_collect_unfiltered_dataset_owners",
+            "body": " SELECT * FROM truss.runtime_collect_visible_dataset_owners() ",
+            "identityArguments": "",
+            "result": "TABLE(owner_kind text, owner_id text, discriminator_id text, source_id text, source_type text, target_id text, target_type text)",
+            "language": "sql",
+            "volatility": "s",
+            "parallel": "u",
+            "returnsSet": true,
+            "securityDefiner": false,
+            "settings": [
+              "search_path=pg_catalog, pg_temp",
+              "row_security=off"
+            ],
+            "owner": "postgres",
+            "publicExecute": false
+          },
+          {
+            "name": "runtime_collect_visible_dataset_owners",
+            "body": "\nDECLARE objects jsonb; edges jsonb;\nBEGIN\n  -- Only fixed-width native IDs enter bounded local buffers. Never retain props.\n  SELECT coalesce(jsonb_agg(jsonb_build_array(o.id::text,o.type_id::text)),'[]'::jsonb) INTO objects\n    FROM (SELECT x.id,x.type_id FROM truss.object x LIMIT 1001) o;\n  SELECT coalesce(jsonb_agg(jsonb_build_array(e.id::text,e.rel_type_id::text,e.source_id::text,e.source_type::text,e.target_id::text,e.target_type::text)),'[]'::jsonb) INTO edges\n    FROM (SELECT x.id,x.rel_type_id,x.source_id,x.source_type,x.target_id,x.target_type FROM truss.edge x LIMIT 10001) e;\n  IF jsonb_array_length(objects)>1000 OR jsonb_array_length(edges)>10000 THEN\n    RAISE EXCEPTION 'visible dataset owner capacity exceeded' USING ERRCODE='54000';\n  END IF;\n  RETURN QUERY\n    SELECT 'object'::text,v->>0,v->>1,NULL::text,NULL::text,NULL::text,NULL::text FROM jsonb_array_elements(objects) v\n    UNION ALL\n    SELECT 'edge'::text,v->>0,v->>1,v->>2,v->>3,v->>4,v->>5 FROM jsonb_array_elements(edges) v;\nEND;\n",
+            "identityArguments": "",
+            "result": "TABLE(owner_kind text, owner_id text, discriminator_id text, source_id text, source_type text, target_id text, target_type text)",
+            "language": "plpgsql",
+            "volatility": "s",
+            "parallel": "u",
+            "returnsSet": true,
+            "securityDefiner": false,
+            "settings": [
+              "search_path=pg_catalog, pg_temp"
+            ],
+            "owner": "postgres",
+            "publicExecute": false
+          }
+        ]
+      },
+      "observed": {
+        "mutated": [
+          {
+            "name": "runtime_collect_unfiltered_dataset_owners",
+            "body": " SELECT * FROM truss.runtime_collect_visible_dataset_owners() ",
+            "identityArguments": "",
+            "result": "TABLE(owner_kind text, owner_id text, discriminator_id text, source_id text, source_type text, target_id text, target_type text)",
+            "language": "sql",
+            "volatility": "s",
+            "parallel": "u",
+            "returnsSet": true,
+            "securityDefiner": false,
+            "settings": [
+              "search_path=pg_catalog, pg_temp",
+              "row_security=off"
+            ],
+            "owner": "postgres",
+            "publicExecute": false
+          },
+          {
+            "name": "runtime_collect_unfiltered_dataset_owners",
+            "body": " SELECT * FROM truss.runtime_collect_visible_dataset_owners() ",
+            "identityArguments": "unused integer",
+            "result": "TABLE(owner_kind text, owner_id text, discriminator_id text, source_id text, source_type text, target_id text, target_type text)",
+            "language": "sql",
+            "volatility": "s",
+            "parallel": "u",
+            "returnsSet": true,
+            "securityDefiner": false,
+            "settings": [
+              "search_path=pg_catalog, pg_temp",
+              "row_security=off"
+            ],
+            "owner": "postgres",
+            "publicExecute": true
+          },
+          {
+            "name": "runtime_collect_visible_dataset_owners",
+            "body": "\nDECLARE objects jsonb; edges jsonb;\nBEGIN\n  -- Only fixed-width native IDs enter bounded local buffers. Never retain props.\n  SELECT coalesce(jsonb_agg(jsonb_build_array(o.id::text,o.type_id::text)),'[]'::jsonb) INTO objects\n    FROM (SELECT x.id,x.type_id FROM truss.object x LIMIT 1001) o;\n  SELECT coalesce(jsonb_agg(jsonb_build_array(e.id::text,e.rel_type_id::text,e.source_id::text,e.source_type::text,e.target_id::text,e.target_type::text)),'[]'::jsonb) INTO edges\n    FROM (SELECT x.id,x.rel_type_id,x.source_id,x.source_type,x.target_id,x.target_type FROM truss.edge x LIMIT 10001) e;\n  IF jsonb_array_length(objects)>1000 OR jsonb_array_length(edges)>10000 THEN\n    RAISE EXCEPTION 'visible dataset owner capacity exceeded' USING ERRCODE='54000';\n  END IF;\n  RETURN QUERY\n    SELECT 'object'::text,v->>0,v->>1,NULL::text,NULL::text,NULL::text,NULL::text FROM jsonb_array_elements(objects) v\n    UNION ALL\n    SELECT 'edge'::text,v->>0,v->>1,v->>2,v->>3,v->>4,v->>5 FROM jsonb_array_elements(edges) v;\nEND;\n",
+            "identityArguments": "",
+            "result": "TABLE(owner_kind text, owner_id text, discriminator_id text, source_id text, source_type text, target_id text, target_type text)",
+            "language": "plpgsql",
+            "volatility": "s",
+            "parallel": "u",
+            "returnsSet": true,
+            "securityDefiner": false,
+            "settings": [
+              "search_path=pg_catalog, pg_temp"
+            ],
+            "owner": "postgres",
+            "publicExecute": false
+          }
+        ],
+        "restored": [
+          {
+            "name": "runtime_collect_unfiltered_dataset_owners",
+            "body": " SELECT * FROM truss.runtime_collect_visible_dataset_owners() ",
+            "identityArguments": "",
+            "result": "TABLE(owner_kind text, owner_id text, discriminator_id text, source_id text, source_type text, target_id text, target_type text)",
+            "language": "sql",
+            "volatility": "s",
+            "parallel": "u",
+            "returnsSet": true,
+            "securityDefiner": false,
+            "settings": [
+              "search_path=pg_catalog, pg_temp",
+              "row_security=off"
+            ],
+            "owner": "postgres",
+            "publicExecute": false
+          },
+          {
+            "name": "runtime_collect_visible_dataset_owners",
+            "body": "\nDECLARE objects jsonb; edges jsonb;\nBEGIN\n  -- Only fixed-width native IDs enter bounded local buffers. Never retain props.\n  SELECT coalesce(jsonb_agg(jsonb_build_array(o.id::text,o.type_id::text)),'[]'::jsonb) INTO objects\n    FROM (SELECT x.id,x.type_id FROM truss.object x LIMIT 1001) o;\n  SELECT coalesce(jsonb_agg(jsonb_build_array(e.id::text,e.rel_type_id::text,e.source_id::text,e.source_type::text,e.target_id::text,e.target_type::text)),'[]'::jsonb) INTO edges\n    FROM (SELECT x.id,x.rel_type_id,x.source_id,x.source_type,x.target_id,x.target_type FROM truss.edge x LIMIT 10001) e;\n  IF jsonb_array_length(objects)>1000 OR jsonb_array_length(edges)>10000 THEN\n    RAISE EXCEPTION 'visible dataset owner capacity exceeded' USING ERRCODE='54000';\n  END IF;\n  RETURN QUERY\n    SELECT 'object'::text,v->>0,v->>1,NULL::text,NULL::text,NULL::text,NULL::text FROM jsonb_array_elements(objects) v\n    UNION ALL\n    SELECT 'edge'::text,v->>0,v->>1,v->>2,v->>3,v->>4,v->>5 FROM jsonb_array_elements(edges) v;\nEND;\n",
+            "identityArguments": "",
+            "result": "TABLE(owner_kind text, owner_id text, discriminator_id text, source_id text, source_type text, target_id text, target_type text)",
+            "language": "plpgsql",
+            "volatility": "s",
+            "parallel": "u",
+            "returnsSet": true,
+            "securityDefiner": false,
+            "settings": [
+              "search_path=pg_catalog, pg_temp"
+            ],
+            "owner": "postgres",
+            "publicExecute": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "native-jsonb-property-presence-and-exact-numeric-tokens",
+      "expected": {
+        "missingPresent": false,
+        "nullPresent": true,
+        "nullToken": "null",
+        "largeToken": "9007199254740993",
+        "scaledToken": "1.2300",
+        "exponentToken": "1000"
+      },
+      "observed": {
+        "missingPresent": false,
+        "nullPresent": true,
+        "nullToken": "null",
+        "largeToken": "9007199254740993",
+        "scaledToken": "1.2300",
+        "exponentToken": "1000"
+      }
+    },
+    {
+      "id": "native-jsonb-duplicate-source-meaning-unrecoverable",
+      "expected": {
+        "lastMemberToken": "2",
+        "sameNativeValue": true
+      },
+      "observed": {
+        "lastMemberToken": "2",
+        "sameNativeValue": true
+      }
+    },
+    {
+      "id": "truncated-native-wire-refused-before-decoded-output",
+      "expected": "refused-empty-output",
+      "observed": "refused-empty-output"
+    },
+    {
+      "id": "native-wire-byte-substitution-refused",
+      "expected": "byte-mismatch-empty-output",
+      "observed": "byte-mismatch-empty-output"
+    },
+    {
+      "id": "typed-owner-kind-discriminator-and-large-id",
+      "expected": [
+        {
+          "owner_kind": "edge",
+          "owner_id": "1",
+          "discriminator_id": "1",
+          "source_id": "1",
+          "source_type": "1",
+          "target_id": "1",
+          "target_type": "2"
+        },
+        {
+          "owner_kind": "object",
+          "owner_id": "1",
+          "discriminator_id": "1",
+          "source_id": null,
+          "source_type": null,
+          "target_id": null,
+          "target_type": null
+        },
+        {
+          "owner_kind": "object",
+          "owner_id": "1",
+          "discriminator_id": "2",
+          "source_id": null,
+          "source_type": null,
+          "target_id": null,
+          "target_type": null
+        },
+        {
+          "owner_kind": "object",
+          "owner_id": "9007199254740993",
+          "discriminator_id": "1",
+          "source_id": null,
+          "source_type": null,
+          "target_id": null,
+          "target_type": null
+        }
+      ],
+      "observed": [
+        {
+          "owner_kind": "edge",
+          "owner_id": "1",
+          "discriminator_id": "1",
+          "source_id": "1",
+          "source_type": "1",
+          "target_id": "1",
+          "target_type": "2"
+        },
+        {
+          "owner_kind": "object",
+          "owner_id": "1",
+          "discriminator_id": "1",
+          "source_id": null,
+          "source_type": null,
+          "target_id": null,
+          "target_type": null
+        },
+        {
+          "owner_kind": "object",
+          "owner_id": "1",
+          "discriminator_id": "2",
+          "source_id": null,
+          "source_type": null,
+          "target_id": null,
+          "target_type": null
+        },
+        {
+          "owner_kind": "object",
+          "owner_id": "9007199254740993",
+          "discriminator_id": "1",
+          "source_id": null,
+          "source_type": null,
+          "target_id": null,
+          "target_type": null
+        }
+      ]
+    },
+    {
+      "id": "same-endpoint-parallel-occurrence-unavailable",
+      "expected": "23505",
+      "observed": "23505"
+    },
+    {
+      "id": "ungranted-ordinary-function-execution-refused",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "invoker-hidden-owner-population-incomplete",
+      "expected": [
+        {
+          "owner_kind": "edge",
+          "owner_id": "1",
+          "discriminator_id": "1",
+          "source_id": "1",
+          "source_type": "1",
+          "target_id": "1",
+          "target_type": "2"
+        }
+      ],
+      "observed": [
+        {
+          "owner_kind": "edge",
+          "owner_id": "1",
+          "discriminator_id": "1",
+          "source_id": "1",
+          "source_type": "1",
+          "target_id": "1",
+          "target_type": "2"
+        }
+      ]
+    },
+    {
+      "id": "authenticated-inventory_ordinary_role",
+      "expected": {
+        "sessionUser": "inventory_ordinary_role",
+        "currentUser": "inventory_ordinary_role",
+        "clientAddress": "127.0.0.1",
+        "superuser": false,
+        "bypassRls": false
+      },
+      "observed": {
+        "sessionUser": "inventory_ordinary_role",
+        "currentUser": "inventory_ordinary_role",
+        "clientAddress": "127.0.0.1",
+        "superuser": false,
+        "bypassRls": false
+      }
+    },
+    {
+      "id": "wrong-password-inventory_ordinary_role",
+      "expected": "authentication-refusal-empty-output",
+      "observed": "authentication-refusal-empty-output"
+    },
+    {
+      "id": "authenticated-inventory_visible_role",
+      "expected": {
+        "sessionUser": "inventory_visible_role",
+        "currentUser": "inventory_visible_role",
+        "clientAddress": "127.0.0.1",
+        "superuser": false,
+        "bypassRls": false
+      },
+      "observed": {
+        "sessionUser": "inventory_visible_role",
+        "currentUser": "inventory_visible_role",
+        "clientAddress": "127.0.0.1",
+        "superuser": false,
+        "bypassRls": false
+      }
+    },
+    {
+      "id": "wrong-password-inventory_visible_role",
+      "expected": "authentication-refusal-empty-output",
+      "observed": "authentication-refusal-empty-output"
+    },
+    {
+      "id": "unfiltered-candidate-refuses-hidden-population",
+      "expected": "42501-empty-output",
+      "observed": "42501-empty-output"
+    },
+    {
+      "id": "unfiltered-candidate-fixture-admin-exact-owners",
+      "expected": [
+        {
+          "owner_kind": "edge",
+          "owner_id": "1",
+          "discriminator_id": "1",
+          "source_id": "1",
+          "source_type": "1",
+          "target_id": "1",
+          "target_type": "2"
+        },
+        {
+          "owner_kind": "object",
+          "owner_id": "1",
+          "discriminator_id": "1",
+          "source_id": null,
+          "source_type": null,
+          "target_id": null,
+          "target_type": null
+        },
+        {
+          "owner_kind": "object",
+          "owner_id": "1",
+          "discriminator_id": "2",
+          "source_id": null,
+          "source_type": null,
+          "target_id": null,
+          "target_type": null
+        },
+        {
+          "owner_kind": "object",
+          "owner_id": "9007199254740993",
+          "discriminator_id": "1",
+          "source_id": null,
+          "source_type": null,
+          "target_id": null,
+          "target_type": null
+        }
+      ],
+      "observed": [
+        {
+          "owner_kind": "edge",
+          "owner_id": "1",
+          "discriminator_id": "1",
+          "source_id": "1",
+          "source_type": "1",
+          "target_id": "1",
+          "target_type": "2"
+        },
+        {
+          "owner_kind": "object",
+          "owner_id": "1",
+          "discriminator_id": "1",
+          "source_id": null,
+          "source_type": null,
+          "target_id": null,
+          "target_type": null
+        },
+        {
+          "owner_kind": "object",
+          "owner_id": "1",
+          "discriminator_id": "2",
+          "source_id": null,
+          "source_type": null,
+          "target_id": null,
+          "target_type": null
+        },
+        {
+          "owner_kind": "object",
+          "owner_id": "9007199254740993",
+          "discriminator_id": "1",
+          "source_id": null,
+          "source_type": null,
+          "target_id": null,
+          "target_type": null
+        }
+      ]
+    },
+    {
+      "id": "unfiltered-candidate-refuses-hidden-edge-population",
+      "expected": "42501-empty-output",
+      "observed": "42501-empty-output"
+    },
+    {
+      "id": "unfiltered-candidate-ordinary-no-rls-exact-owners",
+      "expected": [
+        {
+          "owner_kind": "edge",
+          "owner_id": "1",
+          "discriminator_id": "1",
+          "source_id": "1",
+          "source_type": "1",
+          "target_id": "1",
+          "target_type": "2"
+        },
+        {
+          "owner_kind": "object",
+          "owner_id": "1",
+          "discriminator_id": "1",
+          "source_id": null,
+          "source_type": null,
+          "target_id": null,
+          "target_type": null
+        },
+        {
+          "owner_kind": "object",
+          "owner_id": "1",
+          "discriminator_id": "2",
+          "source_id": null,
+          "source_type": null,
+          "target_id": null,
+          "target_type": null
+        },
+        {
+          "owner_kind": "object",
+          "owner_id": "9007199254740993",
+          "discriminator_id": "1",
+          "source_id": null,
+          "source_type": null,
+          "target_id": null,
+          "target_type": null
+        }
+      ],
+      "observed": [
+        {
+          "owner_kind": "edge",
+          "owner_id": "1",
+          "discriminator_id": "1",
+          "source_id": "1",
+          "source_type": "1",
+          "target_id": "1",
+          "target_type": "2"
+        },
+        {
+          "owner_kind": "object",
+          "owner_id": "1",
+          "discriminator_id": "1",
+          "source_id": null,
+          "source_type": null,
+          "target_id": null,
+          "target_type": null
+        },
+        {
+          "owner_kind": "object",
+          "owner_id": "1",
+          "discriminator_id": "2",
+          "source_id": null,
+          "source_type": null,
+          "target_id": null,
+          "target_type": null
+        },
+        {
+          "owner_kind": "object",
+          "owner_id": "9007199254740993",
+          "discriminator_id": "1",
+          "source_id": null,
+          "source_type": null,
+          "target_id": null,
+          "target_type": null
+        }
+      ]
+    },
+    {
+      "id": "unfiltered-candidate-table-owner-rls-exemption",
+      "expected": [
+        {
+          "owner_kind": "edge",
+          "owner_id": "1",
+          "discriminator_id": "1",
+          "source_id": "1",
+          "source_type": "1",
+          "target_id": "1",
+          "target_type": "2"
+        },
+        {
+          "owner_kind": "object",
+          "owner_id": "1",
+          "discriminator_id": "1",
+          "source_id": null,
+          "source_type": null,
+          "target_id": null,
+          "target_type": null
+        },
+        {
+          "owner_kind": "object",
+          "owner_id": "1",
+          "discriminator_id": "2",
+          "source_id": null,
+          "source_type": null,
+          "target_id": null,
+          "target_type": null
+        },
+        {
+          "owner_kind": "object",
+          "owner_id": "9007199254740993",
+          "discriminator_id": "1",
+          "source_id": null,
+          "source_type": null,
+          "target_id": null,
+          "target_type": null
+        }
+      ],
+      "observed": [
+        {
+          "owner_kind": "edge",
+          "owner_id": "1",
+          "discriminator_id": "1",
+          "source_id": "1",
+          "source_type": "1",
+          "target_id": "1",
+          "target_type": "2"
+        },
+        {
+          "owner_kind": "object",
+          "owner_id": "1",
+          "discriminator_id": "1",
+          "source_id": null,
+          "source_type": null,
+          "target_id": null,
+          "target_type": null
+        },
+        {
+          "owner_kind": "object",
+          "owner_id": "1",
+          "discriminator_id": "2",
+          "source_id": null,
+          "source_type": null,
+          "target_id": null,
+          "target_type": null
+        },
+        {
+          "owner_kind": "object",
+          "owner_id": "9007199254740993",
+          "discriminator_id": "1",
+          "source_id": null,
+          "source_type": null,
+          "target_id": null,
+          "target_type": null
+        }
+      ]
+    },
+    {
+      "id": "unfiltered-candidate-forced-owner-rls-refusal",
+      "expected": "42501-empty-output",
+      "observed": "42501-empty-output"
+    },
+    {
+      "id": "1000-visible-objects-admitted",
+      "expected": "1000",
+      "observed": "1000"
+    },
+    {
+      "id": "1001-visible-objects-capacity",
+      "expected": "54000",
+      "observed": "54000"
+    },
+    {
+      "id": "volatile-policy-single-capture-no-second-scan",
+      "expected": [
+        {
+          "owner_kind": "edge",
+          "owner_id": "1",
+          "discriminator_id": "1",
+          "source_id": "1",
+          "source_type": "1",
+          "target_id": "1",
+          "target_type": "2"
+        }
+      ],
+      "observed": [
+        {
+          "owner_kind": "edge",
+          "owner_id": "1",
+          "discriminator_id": "1",
+          "source_id": "1",
+          "source_type": "1",
+          "target_id": "1",
+          "target_type": "2"
+        }
+      ]
+    },
+    {
+      "id": "volatile-policy-double-scan-mutant-exceeds-bound",
+      "expected": "1001",
+      "observed": "1001"
+    },
+    {
+      "id": "10000-visible-edges-admitted",
+      "expected": "10000",
+      "observed": "10000"
+    },
+    {
+      "id": "10001-visible-edges-capacity",
+      "expected": "54000",
+      "observed": "54000"
+    }
+  ],
+  "ownerWire": {
+    "encoding": "original-psql-stdout-utf8",
+    "bytesHex": "5b7b226f776e65725f6b696e64223a2265646765222c226f776e65725f6964223a2231222c226469736372696d696e61746f725f6964223a2231222c22736f757263655f6964223a2231222c22736f757263655f74797065223a2231222c227461726765745f6964223a2231222c227461726765745f74797065223a2232227d2c200a207b226f776e65725f6b696e64223a226f626a656374222c226f776e65725f6964223a2231222c226469736372696d696e61746f725f6964223a2231222c22736f757263655f6964223a6e756c6c2c22736f757263655f74797065223a6e756c6c2c227461726765745f6964223a6e756c6c2c227461726765745f74797065223a6e756c6c7d2c200a207b226f776e65725f6b696e64223a226f626a656374222c226f776e65725f6964223a2231222c226469736372696d696e61746f725f6964223a2232222c22736f757263655f6964223a6e756c6c2c22736f757263655f74797065223a6e756c6c2c227461726765745f6964223a6e756c6c2c227461726765745f74797065223a6e756c6c7d2c200a207b226f776e65725f6b696e64223a226f626a656374222c226f776e65725f6964223a2239303037313939323534373430393933222c226469736372696d696e61746f725f6964223a2231222c22736f757263655f6964223a6e756c6c2c22736f757263655f74797065223a6e756c6c2c227461726765745f6964223a6e756c6c2c227461726765745f74797065223a6e756c6c7d5d0a",
+    "sha256": "9f44ac439f50acb98e64418e71587bd4bd4f3273e73be4d4440babb5fc85b34a"
+  },
+  "decoderStaging": {
+    "directory": "/private/tmp/umf-visible-owner-wire-77z4hnst",
+    "bridgeSha256": "e16f2b98c485a8d0d539b3c5c8b73b8f4b3e8f03ce5a2d6ba3c9ba8371f6d557",
+    "importRewrite": "original absolute decoder import redirected to frozen local source copy"
+  },
+  "decodedOwnerWire": {
+    "wireSha256": "9f44ac439f50acb98e64418e71587bd4bd4f3273e73be4d4440babb5fc85b34a",
+    "originalText": "[{\"owner_kind\":\"edge\",\"owner_id\":\"1\",\"discriminator_id\":\"1\",\"source_id\":\"1\",\"source_type\":\"1\",\"target_id\":\"1\",\"target_type\":\"2\"}, \n {\"owner_kind\":\"object\",\"owner_id\":\"1\",\"discriminator_id\":\"1\",\"source_id\":null,\"source_type\":null,\"target_id\":null,\"target_type\":null}, \n {\"owner_kind\":\"object\",\"owner_id\":\"1\",\"discriminator_id\":\"2\",\"source_id\":null,\"source_type\":null,\"target_id\":null,\"target_type\":null}, \n {\"owner_kind\":\"object\",\"owner_id\":\"9007199254740993\",\"discriminator_id\":\"1\",\"source_id\":null,\"source_type\":null,\"target_id\":null,\"target_type\":null}]\n",
+    "rows": [
+      {
+        "owner_kind": "edge",
+        "owner_id": "1",
+        "discriminator_id": "1",
+        "source_id": "1",
+        "source_type": "1",
+        "target_id": "1",
+        "target_type": "2"
+      },
+      {
+        "owner_kind": "object",
+        "owner_id": "1",
+        "discriminator_id": "1",
+        "source_id": null,
+        "source_type": null,
+        "target_id": null,
+        "target_type": null
+      },
+      {
+        "owner_kind": "object",
+        "owner_id": "1",
+        "discriminator_id": "2",
+        "source_id": null,
+        "source_type": null,
+        "target_id": null,
+        "target_type": null
+      },
+      {
+        "owner_kind": "object",
+        "owner_id": "9007199254740993",
+        "discriminator_id": "1",
+        "source_id": null,
+        "source_type": null,
+        "target_id": null,
+        "target_type": null
+      }
+    ],
+    "scope": "decoded_invoker_visible_owner_wire_only"
+  },
+  "nativeImplementationQualified": false,
+  "version": "170009",
+  "imageId": "sha256:2a0d0fe14825b0939f78a8cad5cd4e6aa68bf94d0e5dd96e24b6d23af4315545",
+  "engineBuild": "PostgreSQL 17.9 (Debian 17.9-1.pgdg13+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"
+}

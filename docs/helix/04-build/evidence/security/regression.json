@@ -1,0 +1,20 @@
+{
+  "status": "diagnostic-handle-expired",
+  "command": [
+    "bun",
+    "test",
+    "tests"
+  ],
+  "sessionHandle": 4723,
+  "complete": false,
+  "qualified": false,
+  "scope": "Broad diagnostic regression; source edits occurred during the run, so this is not acceptance evidence for final current sources. Verify the live tool handle before treating the run as active.",
+  "observedFailureFamilies": [
+    "Traceability total expected 433 vs expanded 470; changed test subsequently passed in focused replay",
+    "Prototype-sensitive strict equality of ordinary and null-prototype JSON copies in existing conformance/round-trip scripts",
+    "Stale native TableSpec evidence source fingerprints",
+    "Historical absolute /home/erik evidence paths rejected by current safe-path admission"
+  ],
+  "securityFocusedEvidence": "components.json; 29 tests, 1788 assertions, zero failures",
+  "notes": "Tool handle 4723 is no longer available; terminal exit status was not retained. This run cannot qualify final sources. Existing native evidence was not rehashed to conceal failures."
+}

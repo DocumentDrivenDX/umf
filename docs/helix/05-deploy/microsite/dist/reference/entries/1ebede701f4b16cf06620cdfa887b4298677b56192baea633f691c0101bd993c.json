@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 6434,
+        "line": 4,
+        "path": "src/adapters/parquet/logical.ts",
+        "sha256": "fc5d114b8b0843cc649e8f7c4b5b8252bde30d69c6e2d3f3b1b3bfa380d7ab42"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "ParquetLogicalInspection",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface ParquetLogicalInspection extends ParquetSchemaInspection {annotations?:ParquetLogicalAnnotation[]}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"ParquetLogicalInspection\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 6434,
+      "line": 4,
+      "path": "src/adapters/parquet/logical.ts",
+      "sha256": "fc5d114b8b0843cc649e8f7c4b5b8252bde30d69c6e2d3f3b1b3bfa380d7ab42"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/parquet/logical.ts",
+  "title": "ParquetLogicalInspection"
+}

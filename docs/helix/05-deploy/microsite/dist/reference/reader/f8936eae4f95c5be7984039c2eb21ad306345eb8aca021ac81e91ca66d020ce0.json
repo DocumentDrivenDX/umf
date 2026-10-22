@@ -1,0 +1,41 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"recoverPostgresqlDdlKinds\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"PostgresqlDdlKinds\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "PostgresqlDdlKinds"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "current",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"PostgresqlBackend\"]"
+      ],
+      "name": "backend",
+      "optional": false,
+      "type": "PostgresqlBackend"
+    }
+  ],
+  "purpose": "recoverPostgresqlDdlKinds accepts input, current, backend and returns Promise<string>.",
+  "related": [],
+  "returns": "Promise<string>",
+  "task": "Import and export",
+  "type": "(input: PostgresqlDdlKinds, current: Document, backend: PostgresqlBackend) => Promise<string>"
+}

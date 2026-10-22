@@ -1,12 +1,13 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {createHash} from 'node:crypto';
 import {sqlserverNullabilityProjectionCases} from './nullability-sqlserver-projection-cases';
-import {projectNullabilityToSqlServer,recoverNullabilityFromSqlServer} from '../../src/core-ideals/nullability-sqlserver-projection';
-import {classifySqlServerNullability,recoverSqlServerNullabilitySource} from '../../src/core-ideals/nullability-sqlserver';
-import {importSqlServerCatalog,getSqlServerColumnMetadata} from '../../src/adapters/sqlserver';
-import {upgradeFieldEnvelope} from '../../src/model/field-transition';
-import {upgradeNullabilityEnvelope} from '../../src/model/nullability-transition';
+import {projectNullabilityToSqlServer, recoverNullabilityFromSqlServer} from '../../src/core-ideals/nullability-sqlserver-projection';
+import {classifySqlServerNullability, recoverSqlServerNullabilitySource} from '../../src/core-ideals/nullability-sqlserver';
+import {importSqlServerCatalog, getSqlServerColumnMetadata} from '../../src/adapters/sqlserver';
+
+
 import {classifySqlServerField} from '../../src/core-ideals/sqlserver-field';
-import {sqlServerIdentifier as identifier,sqlServerLiteral as literal} from '../../src/core-ideals/sqlserver-syntax';
+import {sqlServerIdentifier as identifier, sqlServerLiteral as literal} from '../../src/core-ideals/sqlserver-syntax';
 const image='mcr.microsoft.com/mssql/server@sha256:4402d880dd4c34bfa7d8705e56a86cd6c88da80a1f6bbbe741f999e76264a090',name='umf-nullability-down-'+crypto.randomUUID(),password='Umf!'+crypto.randomUUID()+'A9';
 async function run(args:string[],input?:string){const p=Bun.spawn(args,{stdin:input===undefined?'ignore':new Blob([input]),stdout:'pipe',stderr:'pipe'});const [out,err,code]=await Promise.all([new Response(p.stdout).text(),new Response(p.stderr).text(),p.exited]);if(code)throw Error(err||out||'Process failed');return out;}
 let created=false,sqlcmd='/opt/mssql-tools18/bin/sqlcmd';
@@ -60,14 +61,14 @@ try{
  const query=await Bun.file('native/sqlserver/catalog-v3.sql').text(),availabilityQuery=await Bun.file('native/sqlserver/nullability.sql').text();
  const capture=await json(query);capture.query=query;if(capture.serverVersion!=='16.0.4295.3')throw Error('Wrong native version');
  capture.availabilityEvidence={query:availabilityQuery,sourceSql:rows.filter(r=>r.result.nativeSql).map(r=>r.result.nativeSql).join('\n'),...await json(availabilityQuery)};
- const nativeSource=JSON.stringify(capture),source=upgradeFieldEnvelope(importSqlServerCatalog(nativeSource,{id:'native-nullability'})).target,columns=getSqlServerColumnMetadata(source);
+ const nativeSource=JSON.stringify(capture),source=importSqlServerCatalog(nativeSource,{id:'native-nullability'}),columns=getSqlServerColumnMetadata(source);
  let classified=0,nativeRecoveries=0;const observations=[];
  for(const row of rows){
   const column=columns.find(c=>c.table.schema==='availability'&&c.table.name===row.request.tableName);
   if(row.result.status==='blocked'){if(column)throw Error('Blocked table exists');continue;}
   if(!column)throw Error('Missing native table');
   const field=classifySqlServerField(source,{column:column.path,nativeSource,mode:'strict'});
-  const observed=classifySqlServerNullability(upgradeNullabilityEnvelope(field.target!).target,{column:column.path,nativeSource,mode:'strict',scope:'stored-relation',carrier:'sql-null'});
+  const observed=classifySqlServerNullability(field.target!,{column:column.path,nativeSource,mode:'strict',scope:'stored-relation',carrier:'sql-null'});
   if(observed.status!=='classified'||observed.mapping.nullability!==(row.expectedNotNull?'required':'absent-allowed'))throw Error('Native availability differs');
   if(recoverSqlServerNullabilitySource(observed,observed.target!)!==nativeSource)throw Error('Native source recovery');
   classified++;nativeRecoveries++;observations.push({id:row.id,authored:row.label,observed:observed.mapping.nullability,origin:observed.mapping.origin});

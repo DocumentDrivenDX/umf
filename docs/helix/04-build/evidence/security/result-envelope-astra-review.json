@@ -1,0 +1,272 @@
+{
+  "id": "result-envelope-astra-review",
+  "reviewer": "/root/astra_security_review",
+  "requestedModel": "Astra ultra",
+  "status": "clean-within-scope",
+  "generatedAt": "2026-10-10T04:28:59.263523+00:00",
+  "sources": {
+    "docs/helix/02-design/spikes/SPIKE-010-security-result-coverage.md": "687d0c3129c3c8a3ac3bcc10a24cfabdc4159a71d736b920bb2e86a2af7fe63d",
+    "tools/security/prove-result-envelope.py": "4b028ded6ea8feefb6d887f3413d30d4bbc159b0667979feea14d1a4b4ea7272",
+    "docs/helix/04-build/evidence/security/result-envelope-proof.json": "5e041b0d8eb0fad7bbb10c8d14c6e14e39d481ddeb14aa43ed642330354bcc7d"
+  },
+  "proofSourceDigests": {
+    "/Users/erik/.codex/worktrees/1598/umf/tools/security/prove-result-envelope.py": "4b028ded6ea8feefb6d887f3413d30d4bbc159b0667979feea14d1a4b4ea7272",
+    "/Users/erik/.codex/worktrees/1598/umf/docs/helix/02-design/spikes/SPIKE-010-security-result-coverage.md": "687d0c3129c3c8a3ac3bcc10a24cfabdc4159a71d736b920bb2e86a2af7fe63d",
+    "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/bin/python3.9": "6e7ae61f68a3838094fc56590f84c52069a97d7816f6bb79e0e85995b340e464",
+    "/Users/erik/.codex/worktrees/1598/umf/docs/helix/02-design/contracts/CONTRACT-052-security-semantics.md": "f5fb7b8eaa9f993040e99efbda53b1159586debf5662866d62dee139148b31b1",
+    "/Users/erik/.codex/worktrees/1598/umf/docs/helix/02-design/contracts/CONTRACT-053-security-enforcement.md": "0c63c0636d272324c22b2b35bae0806453fca3fde93b419eb89358450a9382c2",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_composition.rs": "6fa62658499a4d60308235d010bea0e9bfc0caf03fcbf61cca932be9f441674d",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_literals.rs": "8bd7995326ab3c544800f59980e8a60b0b83d81ba5138bc42ffeb351f82c7cd4",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_query_profile.rs": "6af9b6c910b6e6b2c1f20710de2a34abbbce81bd0a6b2e841c69d1b690ab9ad3",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_query_uses.rs": "71d57b69776cf6217fb4b25780e0eae815c4f589cf21aff0e289efbf164d9183",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_scan_obligations.rs": "4d9bf60f49ab0d16be173573f6d36349110d45b0a73e2513e70dfed21ca2b113",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_lowering.rs": "1921ba60fcd7d56cce6e510198f20b6e1eb887845db6f8b2ff3234c73bf51d72",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/__init__.py": "53c4529a01f38e7c0d593b7548c79e0d7398aa09f7d7cbd1773470859ee2febd",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3++.h": "756177103b3cf81d2c1082762cbea399c5c0189d66b53c9a073ec43c2ce8b7a8",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3.h": "60cc2bb3e1df2c0fc6105b6a73c032b9d4f47487471616994ba63df8d81898a8",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_algebraic.h": "7659d6dec25e49e2dd6546a6ca6c05adb27437a989d857af0cbcc7191adb45a6",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_api.h": "972a61b3df5c76f06fbfa9e02d38442474841199281f068ae605ce3c17b1df92",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_ast_containers.h": "6687f3ec9483f3774b8951be0f9944ab47f61bedbd42193d075dd88c612fb248",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_fixedpoint.h": "cc8a424163dd6a92a1bfe07dea68edb8fc8dabb58f612b1e85a033a21178dedc",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_fpa.h": "f357754480a39788653f91063af53f2e054b2382a8486171a0a17a99e1354947",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_macros.h": "9d92f8136abef10dd8429a28fd9068e9b3e4feb5696072763cd8d0edc1f00b24",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_optimization.h": "d6b857c21186f0710d8729ad3b7d9b39baa07b5c81855e106d3619c6423f48cc",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_polynomial.h": "e1894c40edb37115cf221a8ef2f7e5557c7360c3c0583f05582f849ebdd78c36",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_rcf.h": "5f2219157573043338df52808a2597f52cf9b179aa8b8006b4893571027632c7",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_spacer.h": "dd23be86e4fc74cd0adf6ca944834d165b93f6a6f3af81923116db97a7ee1ddd",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_v1.h": "30d1776dafddd426d06a4a737d51d37731b45790fc26573b361562e3758ebb04",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_version.h": "1e026257aeb2cad8bafd1d788e1ce4e1cddc1b0b67d01ea3d9b8d6c12ed3c608",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/libz3.4.15.dylib": "80b90ad4090016b67ada7d64039ea0b76b8f5a6f2747ea0ca96f9a6709841b58",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/libz3.dll": "88b20513993816cf71e29969c5232a8eb03dda05deefce71879ecc1e3519b2aa",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/libz3.dylib": "80b90ad4090016b67ada7d64039ea0b76b8f5a6f2747ea0ca96f9a6709841b58",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/msvcp140.dll": "0f885b509a685d2bbfa652fed26b5fb31d88fbdab0a978c641d1c7b8aa460aa9",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/msvcp140_1.dll": "bfad5aef4c63a669e3c140655cdfdf395b6c979b400a447bd5dcb65ed8826c3d",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/msvcp140_2.dll": "3ea06f0ee098b4823cb79599df3780e7f23cce52c19aac31d2a0d47efe33a5e9",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/msvcp140_atomic_wait.dll": "640b2aefced484d0368eea5bdd06addd0658a3a70a49256e560d6923b404a479",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/msvcp140_codecvt_ids.dll": "f2069a52880ec885ee7f0511186100eb7fada0411a2b4948fafea7735b878a18",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/vcomp140.dll": "55aba23cdcd6484fbb06f4155b8ca75adfce7a881f10afd0c49457165e677164",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/vcruntime140.dll": "d5e4d9a3e835fa679450145d6a7d94e36573a509317111904d9b3712c30d9066",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/vcruntime140_1.dll": "1f2d41c4aa5db0bc33ebf7b66d72943a817d7ce6cbe880502a9403823633093f",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/vcruntime140_threads.dll": "219915cf20822f34d5e7c1fdd4e21ae7f3396881096c51036225fb8f84b47afa",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/z3.py": "928428b680721433616cd2ca6662c1ada979f4f322ccdd3825b09b5237dc7f26",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/z3consts.py": "59737a55612e9bddb33f7ec4a27db9fbc880a92053fa8a88919fcc934e1f7573",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/z3core.py": "801867d32d0eb6525c00a3dfeff2a877590c74fc0cb776d6cde1d4e7b8aa6d7f",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/z3num.py": "d7ad7cceb560867f55dcbd87c5866e1c365fddec92faa22321bf91b60c431dee",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/z3poly.py": "fd06029418e5899b300fe3b3a300d110c8e174e633cba8b751314f22a583394e",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/z3printer.py": "714f9fa34a1da9281bdc1a98d8e89d650daca6e99cd1839d325c4d3605a99730",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/z3rcf.py": "504e0339b1bb06075c19ca52e51457716671218a2f2191d0c9754e0b75bede87",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/z3types.py": "ba728354b4a9ee40bcfbd899f405d904bc4bb023e41807044c06c318548c3080",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/z3util.py": "7087f1bbb0119e0e8f545d70cba9a21446ff267cda1289e55b3c2e4e644effd9"
+  },
+  "sourcesUnchanged": true,
+  "reviewCommand": {
+    "argv": [
+      "/private/tmp/umf-security-proof-venv/bin/python",
+      "/private/tmp/result-envelope-astra-review.py"
+    ],
+    "cwd": "/Users/erik/.codex/worktrees/1598/umf",
+    "sourceSha256": "6fe0139da3bf357fe7c1e616f3c66351dbe4de557f16c0aa00f51516c2767082",
+    "source": "\"\"\"Independent retained-formula replay; no owner or native execution.\"\"\"\nimport hashlib\nimport importlib.util\nimport json\nfrom pathlib import Path\nimport sys\nfrom datetime import datetime, timezone\n\nROOT = Path('/Users/erik/.codex/worktrees/1598/umf')\nSELF = Path('/private/tmp/result-envelope-astra-review.py')\nif len(sys.argv) != 1 or Path.cwd().resolve() != ROOT or Path(__file__).resolve() != SELF:\n    raise RuntimeError('Unknown independent review invocation')\nsha = lambda raw: hashlib.sha256(raw).hexdigest()\nreview_bytes = SELF.read_bytes()\nrelative_sources = [\n    'docs/helix/02-design/spikes/SPIKE-010-security-result-coverage.md',\n    'tools/security/prove-result-envelope.py',\n    'docs/helix/04-build/evidence/security/result-envelope-proof.json',\n]\ncaptured = {p: (ROOT / p).read_bytes() for p in relative_sources}\nproof = json.loads(captured[relative_sources[2]])\noutput = ROOT / 'docs/helix/04-build/evidence/security/result-envelope-astra-review.json'\nprior = output.read_bytes() if output.exists() else None\nowner_bytes = {p: Path(p).read_bytes() for p in proof['sources']}\nif (len(owner_bytes) != 47 or proof['status'] != 'passed'\n        or proof['sourcesUnchanged'] is not True\n        or proof['ownerImplementationQualified'] is not False\n        or proof['nativeImplementationQualified'] is not False\n        or proof['acceptanceCasesPromoted'] != []):\n    raise RuntimeError('Unexpected proof scope or source coverage')\nif any(sha(raw) != proof['sources'][p] for p, raw in owner_bytes.items()):\n    raise RuntimeError('Stale proof sources')\nfor p in relative_sources[:2]:\n    if owner_bytes[str(ROOT / p)] != captured[p]:\n        raise RuntimeError('Proof and reviewed source differ')\nspec = importlib.util.find_spec('z3')\nif spec is None or spec.origin not in owner_bytes:\n    raise RuntimeError('Unpinned solver entry')\nif str(Path(sys.executable).resolve()) not in owner_bytes:\n    raise RuntimeError('Unpinned Python executable')\nimport z3\nif z3.get_version_string() != proof['solver']['version']:\n    raise RuntimeError('Solver version changed')\n\nexpected = {}\nfor bound in [1, 4, 16, 254]:\n    for prefix in ['envelope-contains-composed', 'unknown-never-releases', 'withheld-dominates']:\n        expected[f'{prefix}-{bound}'] = 'unsat'\n    for outcome in [0, 1, 2]:\n        expected[f'nonvacuous-release-{bound}-outcome-{outcome}'] = 'sat'\nfor identity in ['mutant-first-permit-only-coverage', 'mutant-omit-unknown-rule',\n                 'mutant-envelope-original-choice', 'mutant-protected-default-original',\n                 'mutant-abstract-inventory-omission']:\n    expected[identity] = 'sat'\nchecks = proof['checks']\nif len(checks) != len(expected) or {c['id'] for c in checks} != set(expected):\n    raise RuntimeError('Unexpected, missing or duplicate formula IDs')\nreplays = []\nfor check in checks:\n    outcome = expected[check['id']]\n    if any(check[k] != outcome for k in ['expected', 'observed', 'replayResult']):\n        raise RuntimeError('Unexpected retained outcome')\n    formula = check['formula']\n    if any(command in formula for command in ['model-add', 'model-del', 'model-converter']):\n        raise RuntimeError('Post-solve command retained')\n    context = z3.Context()\n    solver = z3.Solver(ctx=context)\n    solver.set(timeout=10000)\n    solver.from_string(formula)\n    observed = str(solver.check())\n    if observed != outcome:\n        raise RuntimeError(f\"{check['id']}: {observed}, expected {outcome}\")\n    replays.append({'id': check['id'], 'expected': outcome, 'observed': observed,\n                    'formulaSha256': sha(formula.encode('utf-8'))})\n\nif any(Path(p).read_bytes() != raw for p, raw in owner_bytes.items()):\n    raise RuntimeError('Proof source changed during independent replay')\nif any((ROOT / p).read_bytes() != raw for p, raw in captured.items()):\n    raise RuntimeError('Reviewed artifact changed during replay')\nif SELF.read_bytes() != review_bytes:\n    raise RuntimeError('Independent review generator changed')\nif (output.read_bytes() if output.exists() else None) != prior:\n    raise RuntimeError('Previous review changed during replay')\nreceipt = {\n    'id': 'result-envelope-astra-review',\n    'reviewer': '/root/astra_security_review', 'requestedModel': 'Astra ultra',\n    'status': 'clean-within-scope', 'generatedAt': datetime.now(timezone.utc).isoformat(),\n    'sources': {p: sha(raw) for p, raw in captured.items()},\n    'proofSourceDigests': proof['sources'], 'sourcesUnchanged': True,\n    'reviewCommand': {'argv': [sys.executable, str(SELF)], 'cwd': str(ROOT),\n                     'sourceSha256': sha(review_bytes), 'source': review_bytes.decode('utf-8'),\n                     'pythonVersion': sys.version, 'solverVersion': z3.get_version_string()},\n    'observations': {'independentFreshContextReplays': len(replays),\n                     'unsat': sum(c['observed'] == 'unsat' for c in replays),\n                     'sat': sum(c['observed'] == 'sat' for c in replays),\n                     'currentProofSourcePins': len(owner_bytes), 'postSolveModelCommands': 0},\n    'formulaReplays': replays,\n    'resolvedFindings': [\n        'Retain pre-solve declarative SMT and independently parse/replay it.',\n        'Replace repeated misleading extraction-mutant labels with one abstract omission control.',\n        'Retain explicit positive protected-field populations for each selected bound and outcome.',\n        'Separate model-definition sanity checks and bounded envelope coverage from implementation/native refinement.',\n    ],\n    'scope': 'SPIKE-010 abstract result envelope and proposed owner derivation only. This review independently replays exact retained formulas and checks current source pins; it does not rerun the proof generator, execute owner Rust, establish formula extraction/refinement, or perform native actions.',\n    'ownerImplementationQualified': False, 'nativeImplementationQualified': False,\n    'acceptanceCasesPromoted': [],\n    'next': 'Implement ordered result validation and complete semantic/native admission; preserve LOWERING-UNSUPPORTED.',\n}\nif prior is not None:\n    digest = sha(prior)\n    archive = output.with_name('result-envelope-astra-review-prior-' + digest[:16] + '.json')\n    if archive.exists():\n        if archive.read_bytes() != prior:\n            raise RuntimeError('Historical review archive collision')\n    else:\n        archive.write_bytes(prior)\n    receipt['previousReceipt'] = {'path': str(archive), 'sha256': digest,\n                                  'scope': 'Historical review; no freshness carried forward.'}\noutput.write_text(json.dumps(receipt, indent=2) + '\\n')\nprint(json.dumps({'status': receipt['status'], **receipt['observations'], 'output': str(output)}))\n",
+    "pythonVersion": "3.9.6 (default, Aug 25 2026, 21:26:21) \n[Clang 21.0.0 (clang-2100.3.34.2)]",
+    "solverVersion": "4.15.4"
+  },
+  "observations": {
+    "independentFreshContextReplays": 29,
+    "unsat": 12,
+    "sat": 17,
+    "currentProofSourcePins": 47,
+    "postSolveModelCommands": 0
+  },
+  "formulaReplays": [
+    {
+      "id": "envelope-contains-composed-1",
+      "expected": "unsat",
+      "observed": "unsat",
+      "formulaSha256": "7aeec68fee139f2f9bd3e420fb7faea104703a2c1f43a8f7b4ec300e2706f8a0"
+    },
+    {
+      "id": "unknown-never-releases-1",
+      "expected": "unsat",
+      "observed": "unsat",
+      "formulaSha256": "d09a3b6d49e5cbc5d76dfcc359b78ed4fb4d847b790477aff94f5acdd7fe1811"
+    },
+    {
+      "id": "withheld-dominates-1",
+      "expected": "unsat",
+      "observed": "unsat",
+      "formulaSha256": "b2b37d54fb95550a84dd1f8651ef1283b0a345a3f2c833e35a53c879b7b4970b"
+    },
+    {
+      "id": "nonvacuous-release-1-outcome-0",
+      "expected": "sat",
+      "observed": "sat",
+      "formulaSha256": "aa622ec3f594aa0bf34aaa3beb81f3b0fbd3cd1c19bd62ca526b025627ee7189"
+    },
+    {
+      "id": "nonvacuous-release-1-outcome-1",
+      "expected": "sat",
+      "observed": "sat",
+      "formulaSha256": "37f477bd62fbfd0181e1944bb3b51ae2fd49e6fa919a6f79c27f6da3567f667e"
+    },
+    {
+      "id": "nonvacuous-release-1-outcome-2",
+      "expected": "sat",
+      "observed": "sat",
+      "formulaSha256": "0f28874189b088feb400e4e724e3bed465cc3081aabf2d4ef3cb15dcec8ef622"
+    },
+    {
+      "id": "envelope-contains-composed-4",
+      "expected": "unsat",
+      "observed": "unsat",
+      "formulaSha256": "111dd61bbe287560aab893f69971e4dd3026dff7fe4e2bbf917f139f0681d194"
+    },
+    {
+      "id": "unknown-never-releases-4",
+      "expected": "unsat",
+      "observed": "unsat",
+      "formulaSha256": "6abb54df23037ddc0acf8cc02f01389827c53d3cfa29a10b028ecd5c6107060a"
+    },
+    {
+      "id": "withheld-dominates-4",
+      "expected": "unsat",
+      "observed": "unsat",
+      "formulaSha256": "f912e26f06e981b4a81a0a6d34a003c4521d86d089772d8f952fb3f1e1e73467"
+    },
+    {
+      "id": "nonvacuous-release-4-outcome-0",
+      "expected": "sat",
+      "observed": "sat",
+      "formulaSha256": "498fba0fe6b55456c72980d727fdfb42fa27e5aa880dc619d6c8ad85b49d12a1"
+    },
+    {
+      "id": "nonvacuous-release-4-outcome-1",
+      "expected": "sat",
+      "observed": "sat",
+      "formulaSha256": "86de1c28203efe55ffc6f9d2f257657a243fdec4df32df3cebc41e2386e6cb79"
+    },
+    {
+      "id": "nonvacuous-release-4-outcome-2",
+      "expected": "sat",
+      "observed": "sat",
+      "formulaSha256": "dfa51f4ecf4884dd3bb2838e0d58890762013bb03070bb0119967e927aec3b34"
+    },
+    {
+      "id": "envelope-contains-composed-16",
+      "expected": "unsat",
+      "observed": "unsat",
+      "formulaSha256": "1de7a34fc810925a93f7179631e0da3384f626808d6e48193a7dd35850dc68ec"
+    },
+    {
+      "id": "unknown-never-releases-16",
+      "expected": "unsat",
+      "observed": "unsat",
+      "formulaSha256": "75e6aec116e2f6c7c08e57a7eecb96b8502d3d22273b1829910dbc123f0530bc"
+    },
+    {
+      "id": "withheld-dominates-16",
+      "expected": "unsat",
+      "observed": "unsat",
+      "formulaSha256": "e71b63864a7183663beec43e2618fe82ab67bd12789e3a3622373a1a9509ec7c"
+    },
+    {
+      "id": "nonvacuous-release-16-outcome-0",
+      "expected": "sat",
+      "observed": "sat",
+      "formulaSha256": "2120bef0b61c2170392c9f09847f2c33fd9904187463f7091ae793ff1c20ae2e"
+    },
+    {
+      "id": "nonvacuous-release-16-outcome-1",
+      "expected": "sat",
+      "observed": "sat",
+      "formulaSha256": "03f4cf524015a2889af8b9f745f72675ed987a63fb1f0371869db800bd654c05"
+    },
+    {
+      "id": "nonvacuous-release-16-outcome-2",
+      "expected": "sat",
+      "observed": "sat",
+      "formulaSha256": "9b5d96a50f49604e2884117580b4b367b48313f426bdd768b7bdb1e177c4c799"
+    },
+    {
+      "id": "envelope-contains-composed-254",
+      "expected": "unsat",
+      "observed": "unsat",
+      "formulaSha256": "80fc311f001e7176e07bf684bbbe614e7264366847d9a83fef2a5db338781799"
+    },
+    {
+      "id": "unknown-never-releases-254",
+      "expected": "unsat",
+      "observed": "unsat",
+      "formulaSha256": "c5f324ef0157f92c081314eea2c381786515c09c622b1763ed8a56cfbd497b54"
+    },
+    {
+      "id": "withheld-dominates-254",
+      "expected": "unsat",
+      "observed": "unsat",
+      "formulaSha256": "cd9b8fc92b44b1faca415cb189a49c0c98066526f82a8b605d091b40ab822404"
+    },
+    {
+      "id": "nonvacuous-release-254-outcome-0",
+      "expected": "sat",
+      "observed": "sat",
+      "formulaSha256": "bb5291cede1d64f344596ce05f933e1c89e1f6e7eb68cf808145c63386e5c934"
+    },
+    {
+      "id": "nonvacuous-release-254-outcome-1",
+      "expected": "sat",
+      "observed": "sat",
+      "formulaSha256": "f38eb2767a528bc64601348a6211d3c3da5c656f9791e1d80b71c2b3335bbab4"
+    },
+    {
+      "id": "nonvacuous-release-254-outcome-2",
+      "expected": "sat",
+      "observed": "sat",
+      "formulaSha256": "f81a32006b1969027a97ada162684e0c86596b6a05b500fcee9754843650c754"
+    },
+    {
+      "id": "mutant-first-permit-only-coverage",
+      "expected": "sat",
+      "observed": "sat",
+      "formulaSha256": "9e2c83c02a497d8077ed428173536a9e0852cfedc1a494fd1f59834e669ad64f"
+    },
+    {
+      "id": "mutant-omit-unknown-rule",
+      "expected": "sat",
+      "observed": "sat",
+      "formulaSha256": "25b6be7f93f87bb272652f67854e6d90c3bac2a3df0eaf6f36b676dc70762f6b"
+    },
+    {
+      "id": "mutant-envelope-original-choice",
+      "expected": "sat",
+      "observed": "sat",
+      "formulaSha256": "5266582c04c804ebb1029af668f555d04fc2de04abfdfc5c127ec5207e4a5cc4"
+    },
+    {
+      "id": "mutant-protected-default-original",
+      "expected": "sat",
+      "observed": "sat",
+      "formulaSha256": "bf7d235ec3d4d74de4c0a85d6fe3e9bbcddf0e828b418cc2642b523ade607e89"
+    },
+    {
+      "id": "mutant-abstract-inventory-omission",
+      "expected": "sat",
+      "observed": "sat",
+      "formulaSha256": "144188ae42cc296892558a47bb1823a508872797c70cb6056c691d156f6ae21a"
+    }
+  ],
+  "resolvedFindings": [
+    "Retain pre-solve declarative SMT and independently parse/replay it.",
+    "Replace repeated misleading extraction-mutant labels with one abstract omission control.",
+    "Retain explicit positive protected-field populations for each selected bound and outcome.",
+    "Separate model-definition sanity checks and bounded envelope coverage from implementation/native refinement."
+  ],
+  "scope": "SPIKE-010 abstract result envelope and proposed owner derivation only. This review independently replays exact retained formulas and checks current source pins; it does not rerun the proof generator, execute owner Rust, establish formula extraction/refinement, or perform native actions.",
+  "ownerImplementationQualified": false,
+  "nativeImplementationQualified": false,
+  "acceptanceCasesPromoted": [],
+  "next": "Implement ordered result validation and complete semantic/native admission; preserve LOWERING-UNSUPPORTED.",
+  "previousReceipt": {
+    "path": "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/result-envelope-astra-review-prior-104f299c5ac17526.json",
+    "sha256": "104f299c5ac17526fb05e869fc478e14aee880dc3f0f5d390bd9112fe4125c60",
+    "scope": "Historical review; no freshness carried forward."
+  }
+}

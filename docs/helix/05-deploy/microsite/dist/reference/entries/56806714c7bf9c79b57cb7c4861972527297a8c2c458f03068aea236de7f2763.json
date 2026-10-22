@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 11495,
+        "line": 15,
+        "path": "src/core-ideals/relationship-parquet-projection.ts",
+        "sha256": "310e246a7573b10c07d474963f775153ed726b7f4541bd3a8a1e5f9072f70e85"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "RelationshipParquetRequest",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface RelationshipParquetRequest extends Omit<ParquetRelationshipCarrier,'components'> {id:string;profile:'target-key-record';relationship:CoreRelationshipIdentity;mode:'strict'|'report';components:(ParquetRelationshipCarrier['components'][number]&{targetField:RelationshipEndpoint})[]}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"RelationshipParquetRequest\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 11495,
+      "line": 15,
+      "path": "src/core-ideals/relationship-parquet-projection.ts",
+      "sha256": "310e246a7573b10c07d474963f775153ed726b7f4541bd3a8a1e5f9072f70e85"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/relationship-parquet-projection.ts",
+  "title": "RelationshipParquetRequest"
+}

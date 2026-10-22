@@ -1,0 +1,85 @@
+{
+  "status": "conditional-proof-passed",
+  "runId": "0656c0e2-d0a2-4802-bc88-d11a5a07bee1",
+  "sourcePins": {
+    "tools/security/prove-graph-principal-binding.py": "47612d79813ec7eebdb86e975f5ad1ec49966b23ab2d0ee33d0a1bce0b2dd86a",
+    "tests/security/native/truss-graph-membership-overlay.sql": "30b88772b0352baaf9b9daeee7152254229b05839f9278a6ea064f064cb47fbf",
+    "docs/helix/02-design/contracts/CONTRACT-062-security-semantics.md": "6308b06510766b162bfa6eb6e410784f98ed2959a736ca29c51a1ddb4f40193a"
+  },
+  "solverVersion": "4.15.4",
+  "cases": [
+    {
+      "id": "unique-count-min-selector-preserves-eligibility",
+      "violation": {
+        "result": "unsat",
+        "smt": "(declare-fun staff_id_2 () Int)\n(declare-fun staff_id_1 () Int)\n(declare-fun staff_id_0 () Int)\n(declare-fun sql_minimum () Int)\n(declare-fun caller_match_2 () Bool)\n(declare-fun caller_match_1 () Bool)\n(declare-fun caller_match_0 () Bool)\n(declare-fun eligible_2 () Bool)\n(declare-fun eligible_1 () Bool)\n(declare-fun eligible_0 () Bool)\n(assert (distinct staff_id_0 staff_id_1 staff_id_2))\n(assert (and (>= staff_id_0 (- 9223372036854775808)) (< staff_id_0 9223372036854775808)))\n(assert (and (>= staff_id_1 (- 9223372036854775808)) (< staff_id_1 9223372036854775808)))\n(assert (and (>= staff_id_2 (- 9223372036854775808)) (< staff_id_2 9223372036854775808)))\n(assert (=> (> (+ (ite caller_match_0 1 0)\n          (ite caller_match_1 1 0)\n          (ite caller_match_2 1 0))\n       0)\n    (or (and caller_match_0 (= sql_minimum staff_id_0))\n        (and caller_match_1 (= sql_minimum staff_id_1))\n        (and caller_match_2 (= sql_minimum staff_id_2)))))\n(assert (=> caller_match_0 (<= sql_minimum staff_id_0)))\n(assert (=> caller_match_1 (<= sql_minimum staff_id_1)))\n(assert (=> caller_match_2 (<= sql_minimum staff_id_2)))\n(assert (let ((a!1 (= (+ (ite caller_match_0 1 0)\n                 (ite caller_match_1 1 0)\n                 (ite caller_match_2 1 0))\n              1)))\n(let ((a!2 (and a!1\n                (or (and caller_match_0 (= sql_minimum staff_id_0) eligible_0)\n                    (and caller_match_1 (= sql_minimum staff_id_1) eligible_1)\n                    (and caller_match_2 (= sql_minimum staff_id_2) eligible_2)))))\n  (distinct (and a!1\n                 (or (and caller_match_0 eligible_0)\n                     (and caller_match_1 eligible_1)\n                     (and caller_match_2 eligible_2)))\n            a!2))))\n",
+        "model": null
+      },
+      "positivePopulation": {
+        "result": "sat",
+        "smt": "(declare-fun staff_id_2 () Int)\n(declare-fun staff_id_1 () Int)\n(declare-fun staff_id_0 () Int)\n(declare-fun sql_minimum () Int)\n(declare-fun caller_match_2 () Bool)\n(declare-fun caller_match_1 () Bool)\n(declare-fun caller_match_0 () Bool)\n(declare-fun eligible_2 () Bool)\n(declare-fun eligible_1 () Bool)\n(declare-fun eligible_0 () Bool)\n(assert (distinct staff_id_0 staff_id_1 staff_id_2))\n(assert (and (>= staff_id_0 (- 9223372036854775808)) (< staff_id_0 9223372036854775808)))\n(assert (and (>= staff_id_1 (- 9223372036854775808)) (< staff_id_1 9223372036854775808)))\n(assert (and (>= staff_id_2 (- 9223372036854775808)) (< staff_id_2 9223372036854775808)))\n(assert (=> (> (+ (ite caller_match_0 1 0)\n          (ite caller_match_1 1 0)\n          (ite caller_match_2 1 0))\n       0)\n    (or (and caller_match_0 (= sql_minimum staff_id_0))\n        (and caller_match_1 (= sql_minimum staff_id_1))\n        (and caller_match_2 (= sql_minimum staff_id_2)))))\n(assert (=> caller_match_0 (<= sql_minimum staff_id_0)))\n(assert (=> caller_match_1 (<= sql_minimum staff_id_1)))\n(assert (=> caller_match_2 (<= sql_minimum staff_id_2)))\n(assert (let ((a!1 (= (+ (ite caller_match_0 1 0)\n                 (ite caller_match_1 1 0)\n                 (ite caller_match_2 1 0))\n              1)))\n  (and a!1\n       a!1\n       (or (and caller_match_0 eligible_0)\n           (and caller_match_1 eligible_1)\n           (and caller_match_2 eligible_2)))))\n",
+        "model": "[caller_match_2 = True,\n sql_minimum = 0,\n staff_id_2 = 0,\n staff_id_1 = -1,\n caller_match_1 = False,\n staff_id_0 = -2,\n caller_match_0 = False,\n eligible_2 = True,\n eligible_1 = True,\n eligible_0 = True]"
+      },
+      "erasedControl": {
+        "result": "sat",
+        "smt": "(declare-fun staff_id_2 () Int)\n(declare-fun staff_id_1 () Int)\n(declare-fun staff_id_0 () Int)\n(declare-fun sql_minimum () Int)\n(declare-fun caller_match_2 () Bool)\n(declare-fun caller_match_1 () Bool)\n(declare-fun caller_match_0 () Bool)\n(declare-fun eligible_2 () Bool)\n(declare-fun eligible_1 () Bool)\n(declare-fun eligible_0 () Bool)\n(assert (distinct staff_id_0 staff_id_1 staff_id_2))\n(assert (and (>= staff_id_0 (- 9223372036854775808)) (< staff_id_0 9223372036854775808)))\n(assert (and (>= staff_id_1 (- 9223372036854775808)) (< staff_id_1 9223372036854775808)))\n(assert (and (>= staff_id_2 (- 9223372036854775808)) (< staff_id_2 9223372036854775808)))\n(assert (=> (> (+ (ite caller_match_0 1 0)\n          (ite caller_match_1 1 0)\n          (ite caller_match_2 1 0))\n       0)\n    (or (and caller_match_0 (= sql_minimum staff_id_0))\n        (and caller_match_1 (= sql_minimum staff_id_1))\n        (and caller_match_2 (= sql_minimum staff_id_2)))))\n(assert (=> caller_match_0 (<= sql_minimum staff_id_0)))\n(assert (=> caller_match_1 (<= sql_minimum staff_id_1)))\n(assert (=> caller_match_2 (<= sql_minimum staff_id_2)))\n(assert (let ((a!1 (+ (ite caller_match_0 1 0)\n              (ite caller_match_1 1 0)\n              (ite caller_match_2 1 0)))\n      (a!2 (or (and caller_match_0 (= sql_minimum staff_id_0) eligible_0)\n               (and caller_match_1 (= sql_minimum staff_id_1) eligible_1)\n               (and caller_match_2 (= sql_minimum staff_id_2) eligible_2))))\n(let ((a!3 (distinct (and (= a!1 1)\n                          (or (and caller_match_0 eligible_0)\n                              (and caller_match_1 eligible_1)\n                              (and caller_match_2 eligible_2)))\n                     a!2)))\n  (and (= a!1 2) a!2 a!3))))\n",
+        "model": "[caller_match_2 = True,\n sql_minimum = -2,\n staff_id_2 = 0,\n eligible_0 = True,\n staff_id_1 = -1,\n caller_match_1 = False,\n staff_id_0 = -2,\n caller_match_0 = True,\n eligible_2 = True,\n eligible_1 = True]"
+      }
+    },
+    {
+      "id": "missing-or-ambiguous-refuses-before-output",
+      "violation": {
+        "result": "unsat",
+        "smt": "(declare-fun complete_binding_count () Int)\n(declare-fun candidate_resource_count () Int)\n(declare-fun operation_evaluated () Bool)\n(assert (>= complete_binding_count 0))\n(assert (>= candidate_resource_count 0))\n(assert (and operation_evaluated\n     (distinct complete_binding_count 1)\n     (not (and operation_evaluated (distinct complete_binding_count 1)))))\n",
+        "model": null
+      },
+      "positivePopulation": {
+        "result": "sat",
+        "smt": "(declare-fun complete_binding_count () Int)\n(declare-fun candidate_resource_count () Int)\n(declare-fun operation_evaluated () Bool)\n(assert (>= complete_binding_count 0))\n(assert (>= candidate_resource_count 0))\n(assert (and operation_evaluated\n     (= complete_binding_count 2)\n     (> candidate_resource_count 0)\n     operation_evaluated\n     (distinct complete_binding_count 1)))\n",
+        "model": "[candidate_resource_count = 1,\n operation_evaluated = True,\n complete_binding_count = 2]"
+      },
+      "erasedControl": {
+        "result": "sat",
+        "smt": "(declare-fun complete_binding_count () Int)\n(declare-fun candidate_resource_count () Int)\n(declare-fun operation_evaluated () Bool)\n(assert (>= complete_binding_count 0))\n(assert (>= candidate_resource_count 0))\n(assert (and operation_evaluated\n     (= complete_binding_count 2)\n     (not (and operation_evaluated (< complete_binding_count 1)))))\n",
+        "model": "[candidate_resource_count = 0,\n operation_evaluated = True,\n complete_binding_count = 2]"
+      }
+    },
+    {
+      "id": "empty-resources-do-not-bypass-principal-preflight",
+      "violation": {
+        "result": "unsat",
+        "smt": "(declare-fun complete_binding_count () Int)\n(declare-fun candidate_resource_count () Int)\n(declare-fun operation_evaluated () Bool)\n(assert (>= complete_binding_count 0))\n(assert (>= candidate_resource_count 0))\n(assert (and operation_evaluated\n     (distinct complete_binding_count 1)\n     (= candidate_resource_count 0)\n     (not (and operation_evaluated (distinct complete_binding_count 1)))))\n",
+        "model": null
+      },
+      "positivePopulation": {
+        "result": "sat",
+        "smt": "(declare-fun complete_binding_count () Int)\n(declare-fun candidate_resource_count () Int)\n(declare-fun operation_evaluated () Bool)\n(assert (>= complete_binding_count 0))\n(assert (>= candidate_resource_count 0))\n(assert (and operation_evaluated\n     (= complete_binding_count 0)\n     (= candidate_resource_count 0)\n     operation_evaluated\n     (distinct complete_binding_count 1)))\n",
+        "model": "[candidate_resource_count = 0,\n operation_evaluated = True,\n complete_binding_count = 0]"
+      },
+      "erasedControl": {
+        "result": "sat",
+        "smt": "(declare-fun complete_binding_count () Int)\n(declare-fun candidate_resource_count () Int)\n(declare-fun operation_evaluated () Bool)\n(assert (>= complete_binding_count 0))\n(assert (>= candidate_resource_count 0))\n(assert (and operation_evaluated\n     (= complete_binding_count 0)\n     (= candidate_resource_count 0)\n     (distinct (and operation_evaluated (distinct complete_binding_count 1))\n               (and operation_evaluated\n                    (distinct complete_binding_count 1)\n                    (> candidate_resource_count 0)))))\n",
+        "model": "[candidate_resource_count = 0,\n operation_evaluated = True,\n complete_binding_count = 0]"
+      }
+    },
+    {
+      "id": "json-string-tag-required-for-login",
+      "violation": {
+        "result": "unsat",
+        "smt": "(declare-fun json_is_string () Bool)\n(declare-fun decoded_text_equals_native_login () Bool)\n(assert (and json_is_string decoded_text_equals_native_login (not json_is_string)))\n",
+        "model": null
+      },
+      "positivePopulation": {
+        "result": "sat",
+        "smt": "(declare-fun decoded_text_equals_native_login () Bool)\n(declare-fun json_is_string () Bool)\n(assert (and json_is_string decoded_text_equals_native_login))\n",
+        "model": "[json_is_string = True,\n decoded_text_equals_native_login = True]"
+      },
+      "erasedControl": {
+        "result": "sat",
+        "smt": "(declare-fun decoded_text_equals_native_login () Bool)\n(declare-fun json_is_string () Bool)\n(assert (and (not json_is_string)\n     decoded_text_equals_native_login\n     (distinct (and json_is_string decoded_text_equals_native_login)\n               decoded_text_equals_native_login)))\n",
+        "model": "[json_is_string = False,\n decoded_text_equals_native_login = True]"
+      }
+    }
+  ],
+  "scope": "Four conditional denotational laws with12 pre-solve queries: three arbitrary distinct int64 Staff IDs, complete exactly typed match/eligibility Boolean premises and exact count/min semantics; count/preflight laws use arbitrary nonnegative counts. Matches native control shapes only by explicit human review, not an automatic SQL/Rust translation/refinement. Does not prove original caller authentication, complete/accepted native facts, property/key decoding, every query invoking the helper, transaction freshness, diagnostic closure or current-authority publication. Unevaluated calls are not admitted operations. No original acceptance promotion."
+}

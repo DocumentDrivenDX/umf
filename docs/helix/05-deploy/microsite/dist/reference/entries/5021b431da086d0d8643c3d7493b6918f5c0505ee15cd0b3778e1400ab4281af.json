@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 16995,
+        "line": 19,
+        "path": "src/core-ideals/key-sqlserver-projection.ts",
+        "sha256": "704dc3248d8af0d98a9a67180bcf880fa35b19e331cc22c4b3abfc93b42ed194"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "KeySqlServerProjection",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface KeySqlServerProjection {\n operation:'project-keys-sqlserver';version:'1.0.0';status:'projected'|'blocked';source:Document;authors:CoreKeyDeclaration[];request:KeySqlServerRequest;binding:typeof binding;requiredSessionOptions:typeof sqlServerKeySessionOptions;target?:{format:'sqlserver-ddl';sql:string};nativeSql?:string;\n mappings:{keyId:string;keyName:string;idealPath:string;nativePath:string;columns:string[];nativeColumns:string[];primary:boolean;constraintName:string;origin:'authored';enforcement:'primary-key-not-null'|'unique-not-null';equality:'exact-on-representable-values'|'unknown';outcome:'not-expressible'}[];\n residuals:{path:string;value:Json;reason:string;outcome:'unknown'|'not-expressible';recovery:typeof recovery}[];diagnostics:Diagnostic[];\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"KeySqlServerProjection\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 16995,
+      "line": 19,
+      "path": "src/core-ideals/key-sqlserver-projection.ts",
+      "sha256": "704dc3248d8af0d98a9a67180bcf880fa35b19e331cc22c4b3abfc93b42ed194"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/key-sqlserver-projection.ts",
+  "title": "KeySqlServerProjection"
+}

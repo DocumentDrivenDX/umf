@@ -1,0 +1,69 @@
+{
+  "data": {
+    "conflicts": [],
+    "correspondence": "unknown",
+    "declarations": [],
+    "evidence": [
+      {
+        "closureComplete": false,
+        "commands": [],
+        "correspondence": "unknown",
+        "id": "protobuf-emission-corpus-record",
+        "inputHashes": [],
+        "limitations": [
+          "Recorded scope only; native equivalence and production adoption are separate.",
+          "Complete tested dependency closure is not recorded; current-source qualification is unknown."
+        ],
+        "outcome": "mixed",
+        "readerId": "protobuf-corpus",
+        "scope": "Original bounded compiler/behavior record.",
+        "selector": "",
+        "source": {
+          "bytes": 2526,
+          "path": "fixtures/protobuf/emission-corpus-results.json",
+          "sha256": "47a749386ce5ff14b699158a678412a3ac1d0dd76840cb51a49b2057986535b4"
+        },
+        "supersedes": [],
+        "versions": {
+          "compiler": "protocompile 0.14.1",
+          "nativeOracle": "protoc 36.2",
+          "printer": "protoprint 1.18.1"
+        }
+      }
+    ],
+    "operation": {
+      "apiNames": [],
+      "coreProfiles": [],
+      "extensionVersions": [],
+      "fixturePaths": [],
+      "id": "protobuf-emission-corpus",
+      "kind": "round-trip",
+      "limitations": [
+        "Recorded scope only; native equivalence and production adoption are separate."
+      ],
+      "runtime": {
+        "availability": "host-only",
+        "profileId": "protobuf-emission-corpus",
+        "requirements": [
+          "Native runtime / original qualification harness; not executed by this page."
+        ]
+      },
+      "sourceSystem": "Protobuf",
+      "subset": "Original bounded compiler/behavior record.",
+      "targetSystem": "Protobuf",
+      "title": "Protobuf · emission corpus"
+    }
+  },
+  "id": "[\"integration\",\"protobuf-emission-corpus\"]",
+  "kind": "integration",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 134795,
+      "path": "docs/helix/05-deploy/reference/operations.json",
+      "sha256": "793743bbca36e56e90e82df5ef0408b628c434e58cb68aea4d6486349be78e61"
+    }
+  ],
+  "summary": "Original bounded compiler/behavior record.",
+  "title": "Protobuf · emission corpus"
+}

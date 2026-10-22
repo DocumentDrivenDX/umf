@@ -1,0 +1,30 @@
+{
+  "status": "pass",
+  "command": [
+    "/Users/erik/.codex/worktrees/security-main-integration/umf/node_modules/typescript/bin/tsc",
+    "--ignoreConfig",
+    "--noEmit",
+    "--strict",
+    "--skipLibCheck",
+    "--target",
+    "ES2022",
+    "--module",
+    "ESNext",
+    "--moduleResolution",
+    "bundler",
+    "--types",
+    "bun,node",
+    "--typeRoots",
+    "/Users/erik/.codex/worktrees/security-main-integration/umf/node_modules/@types",
+    "/private/tmp/truss-security-main-integration/packages/umf-bun/src/catalog-pending-report-basis.ts"
+  ],
+  "compilerVersion": "Version 7.0.2",
+  "sourceSha256": {
+    "/private/tmp/truss-security-main-integration/packages/umf-bun/src/catalog-pending-report-basis.ts": "32fe210ee6a5e46a8820c55ffd2a51569f95fdb71e617b6fb25b8f3d129ebe5a"
+  },
+  "exitCode": 0,
+  "stdout": "",
+  "stderr": "",
+  "scope": "strict private helper and imported TypeScript closure with existing local bun/node ambient types; no complete installed toolchain custody",
+  "preliminaryAttempt": "without explicit ambient types/config isolation failed on unresolved Node/Bun names; same helper source subsequently passes with declared environment"
+}

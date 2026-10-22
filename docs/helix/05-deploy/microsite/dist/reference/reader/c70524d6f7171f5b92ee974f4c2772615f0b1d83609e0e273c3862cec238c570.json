@@ -1,0 +1,78 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"CoreRecordTypeDeclaration\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "operation",
+      "optional": false,
+      "type": "\"declare-core-record-type\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "version",
+      "optional": false,
+      "type": "\"6.0.0\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "source",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "target",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreKindDeclaration\"]"
+      ],
+      "name": "fieldAuthor",
+      "optional": false,
+      "type": "CoreKindDeclaration"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreKindDeclaration\"]"
+      ],
+      "name": "recordAuthor",
+      "optional": false,
+      "type": "CoreKindDeclaration"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "reference",
+      "optional": false,
+      "type": "{ role: \"record-type\"; module: string; element: string; }"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "provenance",
+      "optional": false,
+      "type": "{ origin: \"authored\"; idealPath: string; recordPath: string; nativePath: null; basis: \"explicit-record-type-declaration\"; binding: { id: \"umf.core.record-type.authoring\"; version: \"6.0.0\"; }; }"
+    }
+  ],
+  "parameters": [],
+  "purpose": "CoreRecordTypeDeclaration is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "CoreRecordTypeDeclaration"
+}

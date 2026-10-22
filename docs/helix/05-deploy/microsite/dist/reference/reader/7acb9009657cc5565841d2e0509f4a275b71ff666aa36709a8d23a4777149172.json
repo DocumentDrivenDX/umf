@@ -1,0 +1,55 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"projectBindingTablesToSqlServer\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "logical",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "binding",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SqlServerTablePolicy\"]"
+      ],
+      "name": "policy",
+      "optional": false,
+      "type": "SqlServerTablePolicy"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "lossPolicy",
+      "optional": false,
+      "type": "\"strict\" | \"report\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "nativeSource",
+      "optional": true,
+      "type": "string | undefined"
+    }
+  ],
+  "purpose": "Relationship-independent SQL Server 2022 table proposal from an authored physical binding.",
+  "related": [],
+  "returns": "SqlServerTableProjection",
+  "task": "Import and export",
+  "type": "(logical: Document, binding: Document, policy: SqlServerTablePolicy, lossPolicy: \"strict\" | \"report\", nativeSource?: string) => SqlServerTableProjection"
+}

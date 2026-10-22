@@ -1,0 +1,33 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 4905,
+        "line": 1,
+        "path": "spec/core/field-classification-inspection.schema.json",
+        "sha256": "6d6b8093934c597719dcfb0e1daf4fa846bdf0e0caab5e674973ab15f22b3116"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "fieldClassificationInspectionSchema",
+    "runtime": "unassessed",
+    "signatureText": [
+      "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"$id\": \"urn:umf:core:field-classification-inspection:1.0.0\",\n  \"title\": \"Verified common native Field classification metadata\",\n  \"type\": \"object\",\n  \"additionalProperties\": false,\n  \"required\": [\n    \"operation\",\n    \"version\",\n    \"status\",\n    \"receipt\",\n    \"mapping\",\n    \"residuals\",\n    \"diagnostics\"\n  ],\n  \"properties\": {\n    \"operation\": {\n      \"const\": \"inspect-field-classification\"\n    },\n    \"version\": {\n      \"const\": \"1.0.0\"\n    },\n    \"status\": {\n      \"enum\": [\n        \"classified\",\n        \"blocked\"\n      ]\n    },\n    \"receipt\": {\n      \"oneOf\": [\n        {\n          \"$ref\": \"urn:umf:core:tablespec-field-classification:1.0.0\"\n        },\n        {\n          \"$ref\": \"urn:umf:core:postgresql-field-classification:1.0.0\"\n        },\n        {\n          \"$ref\": \"urn:umf:core:sqlserver-field-classification:1.0.0\"\n        },\n        {\n          \"$ref\": \"urn:umf:core:avro-field-classification:1.0.0\"\n        },\n        {\n          \"$ref\": \"urn:umf:core:parquet-field-classification:1.0.0\"\n        }\n      ]\n    },\n    \"mapping\": {\n      \"type\": \"object\",\n      \"additionalProperties\": false,\n      \"required\": [\n        \"origin\",\n        \"idealPath\",\n        \"nativePath\",\n        \"binding\",\n        \"basis\",\n        \"outcome\",\n        \"kind\",\n        \"nativeFragment\"\n      ],\n      \"properties\": {\n        \"origin\": {\n          \"const\": \"classified\"\n        },\n        \"idealPath\": {\n          \"type\": \"string\"\n        },\n        \"nativePath\": {\n          \"type\": \"string\"\n        },\n        \"binding\": {\n          \"type\": \"object\",\n          \"additionalProperties\": false,\n          \"required\": [\n            \"id\",\n            \"version\",\n            \"nativeVersion\",\n            \"subset\"\n          ],\n          \"properties\": {\n            \"id\": {\n              \"type\": \"string\"\n            },\n            \"version\": {\n              \"type\": \"string\"\n            },\n            \"nativeVersion\": {\n              \"type\": \"string\"\n            },\n            \"subset\": {\n              \"type\": \"string\"\n            }\n          }\n        },\n        \"basis\": {\n          \"type\": \"string\"\n        },\n        \"outcome\": {\n          \"enum\": [\n            \"exact\",\n            \"unknown\",\n            \"not-expressible\"\n          ]\n        },\n        \"kind\": {\n          \"const\": \"field\"\n        },\n        \"nativeFragment\": {},\n        \"dependencyId\": {\n          \"type\": \"string\",\n          \"minLength\": 1\n        }\n      }\n    },\n    \"residuals\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"additionalProperties\": false,\n        \"required\": [\n          \"sourcePath\",\n          \"sourceValue\",\n          \"targetPath\",\n          \"outcome\",\n          \"reason\",\n          \"binding\",\n          \"recovery\"\n        ],\n        \"properties\": {\n          \"sourcePath\": {\n            \"type\": \"string\"\n          },\n          \"sourceValue\": {},\n          \"targetPath\": {\n            \"type\": \"null\"\n          },\n          \"outcome\": {\n            \"const\": \"unknown\"\n          },\n          \"reason\": {\n            \"type\": \"string\"\n          },\n          \"binding\": {\n            \"type\": \"object\",\n            \"additionalProperties\": false,\n            \"required\": [\n              \"id\",\n              \"version\",\n              \"nativeVersion\",\n              \"subset\"\n            ],\n            \"properties\": {\n              \"id\": {\n                \"type\": \"string\"\n              },\n              \"version\": {\n                \"type\": \"string\"\n              },\n              \"nativeVersion\": {\n                \"type\": \"string\"\n              },\n              \"subset\": {\n                \"type\": \"string\"\n              }\n            }\n          },\n          \"recovery\": {\n            \"type\": \"object\",\n            \"additionalProperties\": false,\n            \"required\": [\n              \"strategy\",\n              \"receiptPath\",\n              \"instruction\"\n            ],\n            \"properties\": {\n              \"strategy\": {\n                \"const\": \"retained-source-and-receipt\"\n              },\n              \"receiptPath\": {\n                \"const\": \"/receipt/source\"\n              },\n              \"instruction\": {\n                \"type\": \"string\"\n              }\n            }\n          }\n        }\n      }\n    },\n    \"diagnostics\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"additionalProperties\": false,\n        \"required\": [\n          \"code\",\n          \"path\",\n          \"message\",\n          \"severity\"\n        ],\n        \"properties\": {\n          \"code\": {\n            \"type\": \"string\"\n          },\n          \"path\": {\n            \"type\": \"string\"\n          },\n          \"message\": {\n            \"type\": \"string\"\n          },\n          \"severity\": {\n            \"enum\": [\n              \"error\",\n              \"warning\"\n            ]\n          }\n        }\n      }\n    }\n  }\n}\n"
+    ]
+  },
+  "id": "[\"api\",\".\",\"fieldClassificationInspectionSchema\"]",
+  "kind": "api",
+  "links": [
+    "[\"schema\",\"spec/core/field-classification-inspection.schema.json\",\"\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 4905,
+      "line": 1,
+      "path": "spec/core/field-classification-inspection.schema.json",
+      "sha256": "6d6b8093934c597719dcfb0e1daf4fa846bdf0e0caab5e674973ab15f22b3116"
+    }
+  ],
+  "summary": "Public export · spec/core/field-classification-inspection.schema.json",
+  "title": "fieldClassificationInspectionSchema"
+}

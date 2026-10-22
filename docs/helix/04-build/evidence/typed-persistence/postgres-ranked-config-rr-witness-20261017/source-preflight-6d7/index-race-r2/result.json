@@ -1,0 +1,112 @@
+{
+  "status": "pass",
+  "scope": "original c1cd versus6d7 source-SQL race witness only, not SDK/wheel qualification",
+  "nativeAuthority": false,
+  "temporal": "HELD",
+  "writer": [
+    "action_writer",
+    false,
+    false
+  ],
+  "red": {
+    "indexReadyValid": [
+      true,
+      false
+    ],
+    "ddlStillRunningAtReady": true,
+    "guardBeforeEffect": [
+      [
+        true
+      ]
+    ],
+    "effect": {
+      "status": "TUPLES_OK",
+      "sqlstate": null,
+      "error": "",
+      "rows": [
+        [
+          "one"
+        ]
+      ]
+    },
+    "guardAfterEffect": [
+      [
+        true
+      ]
+    ],
+    "sequenceBefore": [
+      1,
+      true
+    ],
+    "sequenceAfter": [
+      2,
+      true
+    ],
+    "originalEffectSqlSha256": "a19bd8a8acb4f7ca545a1561aea6d2922c0f0c28d90803219474fe2ce95c4525",
+    "concurrentDdlOutcome": {
+      "completed": true
+    }
+  },
+  "green": {
+    "xminAfterEarlyLock": null,
+    "concurrentDdlOutcome": {
+      "sqlstate": "57014",
+      "message": "canceling statement due to statement timeout"
+    },
+    "actualDdlWaiting": [
+      [
+        "orders",
+        "ShareUpdateExclusiveLock",
+        false,
+        "Lock",
+        "relation"
+      ]
+    ],
+    "sequenceBefore": [
+      2,
+      true
+    ],
+    "sequenceAfter": [
+      2,
+      true
+    ],
+    "effect": {
+      "status": "TUPLES_OK",
+      "sqlstate": null,
+      "error": "",
+      "rows": [
+        [
+          "one"
+        ]
+      ]
+    },
+    "originalHeldGuardTrue": true
+  },
+  "businessRowsRolledBack": true,
+  "cleanup": [
+    {
+      "operation": "actorRollback",
+      "status": "returned"
+    },
+    {
+      "operation": "actorClose",
+      "closed": true
+    },
+    {
+      "operation": "ddlClose",
+      "closed": true
+    },
+    {
+      "operation": "adminClose",
+      "closed": true
+    }
+  ],
+  "ownedThreadStopped": true,
+  "ownedServerStopped": true,
+  "sourceArtifactsUnchanged": true,
+  "sourceArtifactsSha256": {
+    "old": "59f2c2d754caf8db65e08870487ac5429e8622f05c6552b62b443cbcecb1031c",
+    "new": "51ea7e616c01dc963647f402048a9f6f0b11f823f168d5bdbdefec172447823e"
+  },
+  "harnessSha256": "5c6f899b2c2f13b2858c58e22663403838fa984497dc856ebb7a51fa1199e88c"
+}

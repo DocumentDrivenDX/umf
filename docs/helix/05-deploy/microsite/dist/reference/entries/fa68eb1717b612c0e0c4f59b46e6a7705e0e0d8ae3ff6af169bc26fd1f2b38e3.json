@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 5354,
+        "line": 10,
+        "path": "src/extensions/security/protection/obligations.ts",
+        "sha256": "0105db6c3fe19034fc7adb20a2d102b8fe463044a1323b0491a40d1d6c94bfec"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "ProtectionDeclarationInspection",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface ProtectionDeclarationInspection extends Omit<ProtectionParameterValidation,'status'|'validated'> {\n status:'declared-obligations'|'refused';ontology:Json;purposes:readonly SecurityActionPurposeDeclaration[];\n obligations:readonly ProtectionDeclarationObligation[];\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"ProtectionDeclarationInspection\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 5354,
+      "line": 10,
+      "path": "src/extensions/security/protection/obligations.ts",
+      "sha256": "0105db6c3fe19034fc7adb20a2d102b8fe463044a1323b0491a40d1d6c94bfec"
+    }
+  ],
+  "summary": "Type declaration · src/extensions/security/protection/obligations.ts",
+  "title": "ProtectionDeclarationInspection"
+}

@@ -1,0 +1,134 @@
+{
+  "command": "python3 docs/helix/02-design/spikes/security/lifecycle.py",
+  "server": "PostgreSQL 17.9 (Debian 17.9-1.pgdg13+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+  "cases": [
+    {
+      "id": "native-guard-drain",
+      "covers": [
+        "US-057-AC2",
+        "US-057-AC3"
+      ],
+      "status": "passed",
+      "observedWaitingLock": true,
+      "reader": [
+        "",
+        "ADMITTED",
+        "RA",
+        "ROWS_READY",
+        "FINAL_NATIVE_RELEASE",
+        "DRAINED",
+        "",
+        "0",
+        "AFTER_ACK"
+      ],
+      "revoker": [
+        "",
+        "ACK"
+      ],
+      "scope": "Participating PostgreSQL READ COMMITTED protocol; native result boundary only"
+    },
+    {
+      "id": "application-buffer-release",
+      "covers": [
+        "US-057-AC2",
+        "US-057-AC3",
+        "US-057-AC7"
+      ],
+      "status": "passed",
+      "actor": "umf_security_alice",
+      "observedWaitingLock": true,
+      "events": [
+        "native-transaction-committed",
+        "buffer-live",
+        "native-revoker-waiting",
+        "application-final-release",
+        "native-session-guard-released",
+        "revocation-acknowledged"
+      ],
+      "observedBufferedRows": [
+        "RA"
+      ],
+      "revoker": [
+        "",
+        "BUFFER_ACK"
+      ],
+      "scope": "Participating Python/psql host buffer with session guard; negative control demonstrates early session close is unsafe; no public backend driver qualification"
+    },
+    {
+      "id": "application-buffer-cancel",
+      "covers": [
+        "US-057-AC2",
+        "US-057-AC3",
+        "US-057-AC7"
+      ],
+      "status": "passed",
+      "actor": "umf_security_alice",
+      "observedWaitingLock": true,
+      "events": [
+        "native-transaction-committed",
+        "buffer-live",
+        "native-revoker-waiting",
+        "application-buffer-invalidated",
+        "native-session-guard-released",
+        "revocation-acknowledged"
+      ],
+      "observedBufferedRows": [
+        "RA"
+      ],
+      "revoker": [
+        "",
+        "BUFFER_ACK"
+      ],
+      "scope": "Participating Python/psql host buffer with session guard; negative control demonstrates early session close is unsafe; no public backend driver qualification"
+    },
+    {
+      "id": "application-buffer-early-native-close-negative-control",
+      "covers": [
+        "US-057-AC2",
+        "US-057-AC3",
+        "US-057-AC7"
+      ],
+      "status": "passed",
+      "actor": "umf_security_alice",
+      "observedWaitingLock": true,
+      "events": [
+        "native-transaction-committed",
+        "buffer-live",
+        "native-revoker-waiting",
+        "native-session-closed",
+        "revocation-acknowledged",
+        "revoked-buffer-still-releasable"
+      ],
+      "observedBufferedRows": [
+        "RA"
+      ],
+      "revoker": [
+        "",
+        "BUFFER_ACK"
+      ],
+      "scope": "Participating Python/psql host buffer with session guard; negative control demonstrates early session close is unsafe; no public backend driver qualification"
+    },
+    {
+      "id": "old-snapshot-negative-control",
+      "covers": [
+        "US-057-AC3",
+        "US-057-AC7"
+      ],
+      "status": "passed",
+      "fresh": "f",
+      "stale": [
+        "t",
+        "SNAPSHOT_OPEN",
+        "t",
+        "STALE_OBSERVED"
+      ],
+      "observed": "RLS on an old snapshot still grants after removal; naive guard-only design is unsafe",
+      "scope": "Counterexample establishes required restart/refusal; no production admission implemented"
+    }
+  ],
+  "sourceDigests": {
+    "docs/helix/02-design/spikes/security/lifecycle.py": "1838e60896d77efe6117bebb49cdac0b3288faa7d5667f8fea50f6a943738c9e",
+    "docs/helix/02-design/spikes/security/postgresql.sql": "245b6ef1980a54c7d8a5a32e4c9175209eb1046773cb8417aaa38fcfd2971fa4"
+  },
+  "scope": "Native and explicit application-buffer feasibility with negative controls; no full backend lifecycle acceptance"
+}

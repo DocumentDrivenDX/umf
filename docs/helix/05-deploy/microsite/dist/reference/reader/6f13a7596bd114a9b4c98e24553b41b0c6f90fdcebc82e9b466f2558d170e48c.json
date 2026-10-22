@@ -1,0 +1,46 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"SemanticTypeRegistry\"]",
+  "kind": "Class",
+  "members": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SemanticTypeReference\"]",
+        "[\"api\",\".\",\"JsonObject\"]",
+        "[\"api\",\".\",\"SemanticTypeValidator\"]"
+      ],
+      "name": "register",
+      "optional": false,
+      "type": "(reference: SemanticTypeReference, definition: JsonObject, validator?: SemanticTypeValidator) => SemanticTypeRegistry"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SemanticTypeReference\"]",
+        "[\"api\",\".\",\"JsonObject\"]"
+      ],
+      "name": "lookup",
+      "optional": false,
+      "type": "(reference: SemanticTypeReference) => JsonObject | undefined"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SemanticTypeReference\"]",
+        "[\"api\",\".\",\"Json\"]",
+        "[\"api\",\".\",\"SemanticTypeValueResult\"]"
+      ],
+      "name": "check",
+      "optional": false,
+      "type": "(reference: SemanticTypeReference, value: Json) => SemanticTypeValueResult"
+    }
+  ],
+  "parameters": [],
+  "purpose": "No remote lookup or code loading. Callers explicitly install trusted implementations.",
+  "related": [],
+  "returns": "",
+  "task": "Extensions",
+  "type": "SemanticTypeRegistry"
+}

@@ -1,0 +1,44 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"SecurityDisclosureColumnV2\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SecurityRef\"]"
+      ],
+      "name": "field",
+      "optional": false,
+      "type": "SecurityRef"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "storageEffect",
+      "optional": false,
+      "type": "\"canonical\" | \"stored-transformed\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "storageTransform",
+      "optional": true,
+      "type": "{ id: string; version: string; }"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "valueProfile",
+      "optional": true,
+      "type": "\"umf-gregorian-date/1.0.0\""
+    }
+  ],
+  "parameters": [],
+  "purpose": "SecurityDisclosureColumnV2 is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "SecurityDisclosureColumnV2"
+}

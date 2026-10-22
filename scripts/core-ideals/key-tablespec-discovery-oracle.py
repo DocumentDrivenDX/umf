@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Native Key discovery only: declarations and generated row validation are distinct."""
 import hashlib, importlib, importlib.metadata, json, runpy
 from pathlib import Path

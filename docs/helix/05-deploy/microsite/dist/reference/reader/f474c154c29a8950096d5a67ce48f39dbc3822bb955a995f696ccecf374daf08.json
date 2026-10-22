@@ -1,0 +1,23 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"compileTypeSpecDocument\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "compileTypeSpecDocument accepts document and returns Promise<{ compiler: string; libraries: { [x: string]: string; }; valid: boolean; complete: false; diagnostics: { file?: string; start?: number; end?: number; code: string; severity: DiagnosticSeverity; message: string; }[]; limitations: string[]; }>.",
+  "related": [],
+  "returns": "Promise<{ compiler: string; libraries: { [x: string]: string; }; valid: boolean; complete: false; diagnostics: { file?: string; start?: number; end?: number; code: string; severity: DiagnosticSeverity; message: string; }[]; limitations: string[]; }>",
+  "task": "Other APIs",
+  "type": "(document: Document) => Promise<{ compiler: string; libraries: { [x: string]: string; }; valid: boolean; complete: false; diagnostics: { file?: string; start?: number; end?: number; code: string; severity: DiagnosticSeverity; message: string; }[]; limitations: string[]; }>"
+}

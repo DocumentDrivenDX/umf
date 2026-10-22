@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"classifyPostgresqlCardinality\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"PostgresqlCardinalityRequest\"]"
+      ],
+      "name": "options",
+      "optional": false,
+      "type": "PostgresqlCardinalityRequest"
+    }
+  ],
+  "purpose": "Classify declared column shape only. Retain vector/item/runtime refinements in the native archive.",
+  "related": [],
+  "returns": "PostgresqlCardinalityClassification",
+  "task": "Other APIs",
+  "type": "(input: Document, options: PostgresqlCardinalityRequest) => PostgresqlCardinalityClassification"
+}

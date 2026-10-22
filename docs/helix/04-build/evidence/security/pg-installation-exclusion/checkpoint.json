@@ -1,0 +1,19 @@
+{
+  "status": "qualified-checkpoint-passed",
+  "nativeObservations": 61,
+  "formalFormulas": 8,
+  "pureCustodyTests": 4,
+  "acceptanceCasesPromoted": [],
+  "historicalAcceptance": "26/132",
+  "requiredCases": 132,
+  "goal": "active",
+  "receipts": {
+    "native.json": "af342a025ec64c7842ae2063990c8371a990ac243ef7694dd76c036c43a5bcef",
+    "formal.json": "c37739ae746df375e5dcddd3f2c6c2da6e426d65e78c1ef3d92f1c9a0ef4230c",
+    "astra-review.json": "fa1788fcae6c568adced5be883966e0d2f021bc18ff26e5674170cfe05e594a3",
+    "run.log": "89abffb35b881297fd31d863f5d4cb65f4b74b5fd107da29c4673ada2e08548a"
+  },
+  "failedAttempt": "failed-nonvacuity-run.log",
+  "historicalReceipt": "pre-refinement/native.json",
+  "scope": "Conditional cooperative protocol only; no native refinement, complete enforcement or full backend qualification."
+}

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
 const base='fixtures/dbt/semantic-metrics/',raw=await Bun.file(base+'semantic-manifest.json').text(),source=await Bun.file(base+'source.json.json').text(),cases=[];
 for(const c of (await Bun.file(base+'results.json').json()).results)cases.push({...c,edited:await Bun.file(base+c.id+'.edited.json.json').text()});

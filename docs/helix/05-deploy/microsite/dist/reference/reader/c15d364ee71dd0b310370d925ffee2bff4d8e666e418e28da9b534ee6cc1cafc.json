@@ -1,0 +1,45 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"CoreDatasetRelationship\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "instanceId",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "identity",
+      "optional": false,
+      "type": "{ module: string; id: string; }"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "sourceInstanceId",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreKeyIdentity\"]",
+        "[\"api\",\".\",\"CoreKeyTupleValue\"]"
+      ],
+      "name": "target",
+      "optional": false,
+      "type": "{ identity: CoreKeyIdentity; values: CoreKeyTupleValue[]; }"
+    }
+  ],
+  "parameters": [],
+  "purpose": "CoreDatasetRelationship is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "CoreDatasetRelationship"
+}

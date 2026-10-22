@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
 import {createHash} from 'node:crypto';
 import {captureParquet,exportAvroSchema,exportParquetCapture,importAvroSchema,inspectParquetSchema,readDocument,writeDocument} from '../../src';

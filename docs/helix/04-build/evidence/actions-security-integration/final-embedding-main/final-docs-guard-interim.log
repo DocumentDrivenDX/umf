@@ -1,0 +1,7 @@
+$ python3 scripts/actions-docs/render-diagrams.py --check && bun scripts/actions-docs/build.ts --check && bun scripts/actions-docs/check.ts && python3 scripts/actions-docs/render-negative-control.py && python3 scripts/actions-docs/build-negative-controls.py
+Checked 8 distinct diagrams, each with desktop/mobile layout
+Deterministic guide output, snippets and asset manifest match
+Portable tutorial, generated assets and unchanged historic certificate checked
+Checked 8 distinct diagrams, each with desktop/mobile layout
+Render-drift negative control rejected; check left corrupted bytes unchanged
+Untouched build passes; all seven malformed-source/output controls refuse without repair

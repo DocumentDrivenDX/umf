@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 7884,
+        "line": 12,
+        "path": "src/adapters/postgresql/index.ts",
+        "sha256": "2fc7d43f7d4ebe141833440c26c113079fa85ff41be1056e0bca158edea69b9d"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "PostgresqlBackend",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface PostgresqlBackend {identity:'@libpg-query/parser@17.6.10';parse(sql:string):Promise<unknown>;deparse(tree:unknown):Promise<string>;codecRoundTrip(tree:unknown):unknown;}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"PostgresqlBackend\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 7884,
+      "line": 12,
+      "path": "src/adapters/postgresql/index.ts",
+      "sha256": "2fc7d43f7d4ebe141833440c26c113079fa85ff41be1056e0bca158edea69b9d"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/postgresql/index.ts",
+  "title": "PostgresqlBackend"
+}

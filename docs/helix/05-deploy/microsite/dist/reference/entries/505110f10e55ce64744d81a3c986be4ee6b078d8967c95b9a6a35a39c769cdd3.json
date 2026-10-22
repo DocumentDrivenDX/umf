@@ -1,0 +1,33 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 2528,
+        "line": 1,
+        "path": "spec/extensions/spark/rename-result.schema.json",
+        "sha256": "c08c3bc3a02c9b0c90a8f1f3a0b833679a8d6c81d51b9b24f5ff7d13e67d35c5"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "sparkRenameSchema",
+    "runtime": "unassessed",
+    "signatureText": [
+      "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"$id\": \"urn:umf:spark:rename:0.1.0\",\n  \"type\": \"object\",\n  \"required\": [\n    \"source\",\n    \"document\",\n    \"complete\",\n    \"validation\",\n    \"renamedCollationPaths\",\n    \"diagnostics\"\n  ],\n  \"properties\": {\n    \"source\": {\n      \"$ref\": \"urn:umf:core:0.10.0\"\n    },\n    \"document\": {\n      \"$ref\": \"urn:umf:core:0.10.0\"\n    },\n    \"complete\": {\n      \"const\": false\n    },\n    \"validation\": {\n      \"type\": \"object\",\n      \"required\": [\n        \"valid\",\n        \"complete\",\n        \"diagnostics\"\n      ],\n      \"properties\": {\n        \"valid\": {\n          \"type\": \"boolean\"\n        },\n        \"complete\": {\n          \"type\": \"boolean\"\n        },\n        \"diagnostics\": {\n          \"type\": \"array\",\n          \"items\": {\n            \"type\": \"object\",\n            \"required\": [\n              \"code\",\n              \"path\",\n              \"severity\",\n              \"message\"\n            ],\n            \"properties\": {\n              \"code\": {\n                \"type\": \"string\"\n              },\n              \"path\": {\n                \"type\": \"string\"\n              },\n              \"severity\": {\n                \"enum\": [\n                  \"error\",\n                  \"warning\",\n                  \"info\"\n                ]\n              },\n              \"message\": {\n                \"type\": \"string\"\n              }\n            },\n            \"additionalProperties\": false\n          }\n        }\n      },\n      \"additionalProperties\": false\n    },\n    \"renamedCollationPaths\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"required\": [\n          \"from\",\n          \"to\"\n        ],\n        \"properties\": {\n          \"from\": {\n            \"type\": \"string\"\n          },\n          \"to\": {\n            \"type\": \"string\"\n          }\n        },\n        \"additionalProperties\": false\n      }\n    },\n    \"diagnostics\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"required\": [\n          \"code\",\n          \"path\",\n          \"severity\",\n          \"message\"\n        ],\n        \"properties\": {\n          \"code\": {\n            \"type\": \"string\"\n          },\n          \"path\": {\n            \"type\": \"string\"\n          },\n          \"severity\": {\n            \"enum\": [\n              \"error\",\n              \"warning\",\n              \"info\"\n            ]\n          },\n          \"message\": {\n            \"type\": \"string\"\n          }\n        },\n        \"additionalProperties\": false\n      }\n    }\n  },\n  \"additionalProperties\": false\n}\n"
+    ]
+  },
+  "id": "[\"api\",\".\",\"sparkRenameSchema\"]",
+  "kind": "api",
+  "links": [
+    "[\"schema\",\"spec/extensions/spark/rename-result.schema.json\",\"\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 2528,
+      "line": 1,
+      "path": "spec/extensions/spark/rename-result.schema.json",
+      "sha256": "c08c3bc3a02c9b0c90a8f1f3a0b833679a8d6c81d51b9b24f5ff7d13e67d35c5"
+    }
+  ],
+  "summary": "Public export · spec/extensions/spark/rename-result.schema.json",
+  "title": "sparkRenameSchema"
+}

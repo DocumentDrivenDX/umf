@@ -1,0 +1,50 @@
+{
+  "data": {
+    "conflicts": [],
+    "correspondence": "unassessed",
+    "declarations": [
+      {
+        "bytes": 1650,
+        "path": "spec/extensions/arrow-ipc/package.json",
+        "sha256": "2853107a7c644ef416a1b53b00ae35b3c476d99d7eec5b38c8d4b8f472d22aae"
+      }
+    ],
+    "evidence": [],
+    "operation": {
+      "apiNames": [],
+      "coreProfiles": [],
+      "extensionVersions": [],
+      "fixturePaths": [],
+      "id": "umf.arrow.ipc@0.1.0:export",
+      "kind": "export",
+      "limitations": [
+        "Recorded scope only; native equivalence and production adoption are separate."
+      ],
+      "runtime": {
+        "availability": "host-only",
+        "profileId": "umf.arrow.ipc@0.1.0:export",
+        "requirements": [
+          "Native runtime / original qualification harness; not executed by this page."
+        ]
+      },
+      "sourceSystem": "Apache Arrow IPC source bytes · Capture profile 0.1.0; optional observations apache-arrow 21.2.0",
+      "subset": "Exact original bytes up to 1000000 bytes, including unrecognized and invalid content. No semantic edits, complete framing validation or decoded data model.",
+      "targetSystem": "Apache Arrow IPC source bytes · Capture profile 0.1.0; optional observations apache-arrow 21.2.0",
+      "title": "umf.arrow.ipc · export"
+    }
+  },
+  "id": "[\"integration\",\"umf.arrow.ipc@0.1.0:export\"]",
+  "kind": "integration",
+  "links": [
+    "[\"extension\",\"umf.arrow.ipc\",\"0.1.0\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 134795,
+      "path": "docs/helix/05-deploy/reference/operations.json",
+      "sha256": "793743bbca36e56e90e82df5ef0408b628c434e58cb68aea4d6486349be78e61"
+    }
+  ],
+  "summary": "Exact original bytes up to 1000000 bytes, including unrecognized and invalid content. No semantic edits, complete framing validation or decoded data model.",
+  "title": "umf.arrow.ipc · export"
+}

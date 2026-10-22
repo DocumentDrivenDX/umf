@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 12741,
+        "line": 18,
+        "path": "src/core-ideals/facets-avro-projection.ts",
+        "sha256": "abac2c8eb870231cd1ed192e5a4b3800f05af5f0a4955d9ed69d7218f4576dba"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "FacetsAvroProjection",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface FacetsAvroProjection {\n operation:'project-facets-avro';version:'1.0.0';status:'projected'|'blocked';source:Document;author:Author;request:FacetsAvroRequest;target?:{format:'avro-schema-json';schema:string};nativeSchema?:string;binding:typeof binding;diagnostics:Diagnostic[];\n mapping:{origin:'authored';idealPath:string;nativePath:'/fields/0/type';facets:CoreFacetPatch;encoding:FacetsAvroRequest['encoding'];profile:FacetsAvroRequest['profile'];outcome:Outcome};\n residuals:{path:string;value:Json;reason:string;outcome:Exclude<Outcome,'exact'>;recovery:typeof recovery}[];\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"FacetsAvroProjection\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 12741,
+      "line": 18,
+      "path": "src/core-ideals/facets-avro-projection.ts",
+      "sha256": "abac2c8eb870231cd1ed192e5a4b3800f05af5f0a4955d9ed69d7218f4576dba"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/facets-avro-projection.ts",
+  "title": "FacetsAvroProjection"
+}

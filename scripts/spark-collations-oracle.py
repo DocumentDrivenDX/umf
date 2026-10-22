@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Native evidence for field-local annotation loss and rejection; no UDT evaluation."""
 import copy,json,os,sys
 from pathlib import Path

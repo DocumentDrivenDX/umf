@@ -1,0 +1,50 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"PreparedCoreKeyTuples\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "profile",
+      "optional": false,
+      "type": "\"umf.core.key-tuples.prepared/1\""
+    },
+    {
+      "description": "Immutable, private-copy source; this is not a current-store assertion.",
+      "links": [
+        "[\"api\",\".\",\"Json\"]"
+      ],
+      "name": "source",
+      "optional": false,
+      "type": "Json"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreKeyIdentity\"]",
+        "[\"api\",\".\",\"CoreKeyTupleValue\"]",
+        "[\"api\",\".\",\"CoreKeyTupleReceipt\"]"
+      ],
+      "name": "encode",
+      "optional": false,
+      "type": "(identity: CoreKeyIdentity, values: CoreKeyTupleValue[]) => CoreKeyTupleReceipt"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreKeyTupleReceipt\"]"
+      ],
+      "name": "verify",
+      "optional": false,
+      "type": "(receipt: CoreKeyTupleReceipt) => CoreKeyTupleReceipt"
+    }
+  ],
+  "parameters": [],
+  "purpose": "PreparedCoreKeyTuples is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "PreparedCoreKeyTuples"
+}

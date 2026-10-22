@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 6166,
+        "line": 56,
+        "path": "src/extensions/security/dependencies.ts",
+        "sha256": "a94e291f78ad38dfdc73b7b03fb7f7ed7547dd3adb678040e952be71e3e8f2c7"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "securityIdentityTransportDependencies",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(policyInput: SecurityPolicy, resolutionInput: SecurityResolution): SecurityIdentityTransportDependencies"
+    ]
+  },
+  "id": "[\"api\",\".\",\"securityIdentityTransportDependencies\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 6166,
+      "line": 56,
+      "path": "src/extensions/security/dependencies.ts",
+      "sha256": "a94e291f78ad38dfdc73b7b03fb7f7ed7547dd3adb678040e952be71e3e8f2c7"
+    }
+  ],
+  "summary": "Identity/endpoint reconstruction closure, not complete disclosure or issuer authority.\n\nKey and endpoint component order comes from the validated original model. Native\nproviders must preserve that order; neither row pos",
+  "title": "securityIdentityTransportDependencies"
+}

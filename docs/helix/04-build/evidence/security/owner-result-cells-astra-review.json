@@ -1,0 +1,66 @@
+{
+  "id": "owner-result-cells-astra-review",
+  "status": "clean-within-scope",
+  "reviewer": "/root/astra_security_review",
+  "generatedAt": "2026-10-10T05:07:05.376205+00:00",
+  "reviewMethod": "Read-only installed implementation, governing schema/contract and actual regression inspection; independent source-digest audit of parent-executed Rust evidence. No independent Rust test run or code-refinement proof claimed.",
+  "sourceDigests": {
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_result_cells.rs": "ead96f775728e5788b214da5d9c9973ba23426bbea7b492583285df58296cd63",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_result_check.rs": "18453e38d31a7aea89f844dd6fff2f54a3c807c27521d394d0dc131c326a6ffd",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_backend.rs": "eff05fbafa7aef4eafb0e0f814793dec9cb913c36c399c3a613d2cf486493031",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_lowering.rs": "1921ba60fcd7d56cce6e510198f20b6e1eb887845db6f8b2ff3234c73bf51d72",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_literals.rs": "8bd7995326ab3c544800f59980e8a60b0b83d81ba5138bc42ffeb351f82c7cd4",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_ontology.rs": "a1e19a2605a2d247b6c58f252886d0ab45077cd2e3d53f0bffb995a2ae2a7d19",
+    "/Users/erik/Projects/weft/crates/weft-core/src/json.rs": "b359cd2ff4b53f8e79690e7edc1a724f5f4f06df3a3af18de8f3fc89d79fde1d",
+    "/Users/erik/Projects/weft/crates/weft-core/src/lib.rs": "6a5968ebe55fe7d7352dfbb5dbb9415290a6b975ec2f56a8f2a8639ba1339786",
+    "/Users/erik/Projects/weft/crates/weft-core/src/compile.rs": "6f23265ac68dbbf5240d05285e3128c460ae50053140a880eb058d7272b72585",
+    "/Users/erik/Projects/weft/crates/weft-core/tests/security_admission.rs": "556b8c1be3fb7d7312ede354f56bbae180c7b1c33a99d334ed37336ac113934f",
+    "/Users/erik/Projects/weft/docs/helix/02-design/contracts/CONTRACT-005-security-compilation.md": "4795e4e4a20df552b28ed009cb51053a1ddbda5cc073d937876d8c29ceacb1c0",
+    "/Users/erik/Projects/weft/docs/helix/02-design/contracts/security-cells-v0.1.schema.json": "73c7345d444cd40c1bd15f2ee718cedd40531513943395d53104d452a0f0661f",
+    "/Users/erik/Projects/weft/spec/upstream/umf-0.8.0.schema.json": "79e72f2ebef434c7d1e09d372c74d330b24109bb8af9778745a8d41275acee6e",
+    "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/weft-admission.json": "840b122307073f0ba97a5afee8e03c57185206843ba967d36ccbb5e780b5fe32"
+  },
+  "sourcesUnchanged": true,
+  "reviewObservations": [
+    {
+      "id": "contract-and-source-custody",
+      "observation": "Declaration/source correspondence is required first. SHA256 is computed over retained contract bytes before parsing, then complete structural equality to the corresponding declaration is required. Batch version/hash/rows and each cell member set are closed."
+    },
+    {
+      "id": "ordered-model-values",
+      "observation": "Rows match actual ordered column count; each outcome ID is resolved within its own column and exact disposition must match. Values use the selected original model domain and exact normalization; constant values must equal that declared outcome class."
+    },
+    {
+      "id": "numeric-null-and-valueless-controls",
+      "observation": "Parent-executed controls accept equivalent exact large-integer tokens; refuse a different domain-valid value for the selected transform and integer-width overflow. Transformed(null) accepts only the declared nullable domain/value; replacement0 refuses. A later Withheld cell carrying any value refuses the whole batch."
+    },
+    {
+      "id": "ledger-diagnostic-correction",
+      "finding": "resolved",
+      "observation": "Every cell literal/normalized budget error maps to WFT-LIMIT in result phase. Initial declaration errors remain unchanged. Actual same-domain1M string batches with2 or6cells pass;8cells below the32MiB parser limit refuse WFT-LIMIT, isolating aggregate cell ledger exhaustion."
+    },
+    {
+      "id": "atomic-and-empty-behavior",
+      "observation": "Method returns Result<()> only after all cells pass and emits no partial object, release token or callback. Empty rows still require declaration/source/hash agreement and do not imply query permission."
+    },
+    {
+      "id": "closed-activation-scope",
+      "observation": "No policy-truth or outcome-selection correspondence is established. Scalar result domains/Absent stay outside initial direct declaration subset; native codecs, current authority, installation and guarded release remain open. Compiler lowering remains unconditionally refused."
+    }
+  ],
+  "parentExecutedEvidence": {
+    "path": "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/weft-admission.json",
+    "sha256": "840b122307073f0ba97a5afee8e03c57185206843ba967d36ccbb5e780b5fe32",
+    "commands": 4,
+    "allExitCodesZero": true,
+    "libraryTests": 66,
+    "securityAdmissionTests": 57
+  },
+  "independentPinAudit": {
+    "auditedSourceCount": 409,
+    "stale": []
+  },
+  "scope": "Pure owner-context contract/cell correspondence for the selected direct-field model-domain subset. This review does not establish runtime policy truth, authorized outcome selection, native value/source correspondence, streaming release, compiler lowering or backend acceptance.",
+  "nativeImplementationQualified": false,
+  "acceptanceCasesPromoted": []
+}

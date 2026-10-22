@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 4415,
+        "line": 18,
+        "path": "src/adapters/delta/log.ts",
+        "sha256": "62fc9e0d08a0dc21e39bbba86ce3d597b645493561bd3e56a608508a13a5d1dc"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "DeltaLogLine",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface DeltaLogLine {line:number;start:number;end:number;terminator:''|'\\n'|'\\r\\n';status:'parsed'|'blank'|'invalid';action?:string;node?:NativeJson}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"DeltaLogLine\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 4415,
+      "line": 18,
+      "path": "src/adapters/delta/log.ts",
+      "sha256": "62fc9e0d08a0dc21e39bbba86ce3d597b645493561bd3e56a608508a13a5d1dc"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/delta/log.ts",
+  "title": "DeltaLogLine"
+}

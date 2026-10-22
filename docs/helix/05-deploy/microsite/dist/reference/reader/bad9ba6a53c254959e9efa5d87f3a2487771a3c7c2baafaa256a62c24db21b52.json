@@ -1,0 +1,63 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"BindingField\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "storage",
+      "optional": false,
+      "type": "\"column\" | \"embedded\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "column",
+      "optional": true,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "documentColumn",
+      "optional": true,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "path",
+      "optional": true,
+      "type": "string[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "field",
+      "optional": true,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "module",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "element",
+      "optional": false,
+      "type": "string"
+    }
+  ],
+  "parameters": [],
+  "purpose": "BindingField is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "BindingField"
+}

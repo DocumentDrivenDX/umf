@@ -1,0 +1,33 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"DbtDependencySelection\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "source",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"DbtManifestGraph\"]",
+        "[\"api\",\".\",\"Diagnostic\"]"
+      ],
+      "name": "selection",
+      "optional": false,
+      "type": "{ status: \"selected\" | \"blocked\"; complete: false; roots: string[]; includeMacros: boolean; maxDepth: number; maxNodes: number; nodes: (DbtManifestGraph[\"nodes\"][number] & { depth: number; })[]; edges: DbtManifestGraph[\"edges\"]; boundary: { edge: DbtManifestGraph[\"edges\"][number]; reason: \"macro-excluded\" | \"depth-limit\" | \"node-limit\"; }[]; diagnostics: Diagnostic[]; }"
+    }
+  ],
+  "parameters": [],
+  "purpose": "DbtDependencySelection is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "DbtDependencySelection"
+}

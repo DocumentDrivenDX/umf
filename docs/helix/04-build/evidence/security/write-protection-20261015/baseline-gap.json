@@ -1,0 +1,126 @@
+{
+  "status": "baseline-gap-reproduced",
+  "baselineCommit": "323f4a04bb5820bad83415e2f899abdb3cbb8b9f",
+  "bun": "1.4.2",
+  "sourceDigests": {
+    "tools/security/write-protection-gap.ts": "635508238e5f4aca4da17fe5cd6b8a728d1d9ab0ed2cf1e45e15f2327f566844",
+    "src/extensions/security/write.ts": "83ca53c219cf038fc92664746f6188dc2894337a046d4fcd87f4048faa6d74c1",
+    "src/extensions/security/evaluate.ts": "e64385876ad398b677b73c2718584fcbbd36fca69bd1d69803c24ec82df532ee",
+    "src/extensions/security/policy.ts": "111ff9253f8cba446a9d40cc6321050e2d4a7399c074e32cff288a5a343d253c",
+    "tests/security/write-fixture.ts": "f52a37706b72a798adb300d5aa6af4f98a0cba8a1a8d1581c0bd2193bac1bc69",
+    "tests/security/evaluation-fixture.ts": "ecb9bbae23a4b26232fda959c59aa4dbe79a111699c670f1356dd0c7d251d8ad",
+    "tests/security/fixture.ts": "572f914713ea24d3e06b85a953cc9176fd98adf2e585e1cd6d838f27c1b694c6",
+    "docs/helix/02-design/contracts/CONTRACT-062-security-semantics.md": "2491a37814b5915bd4827cb291d41296331dfb94b6f47931a4f3bf5e721d6b1b"
+  },
+  "rows": [
+    {
+      "id": "withheld",
+      "read": {
+        "decision": "permit",
+        "output": [
+          {
+            "field": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "salary"
+            },
+            "disposition": "withheld"
+          }
+        ]
+      },
+      "write": {
+        "decision": "permit"
+      },
+      "hasReadBinding": false,
+      "hasBlindWriteBinding": false,
+      "meetsNewWriteRule": false
+    },
+    {
+      "id": "mask-equal",
+      "read": {
+        "decision": "permit",
+        "output": [
+          {
+            "field": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "salary"
+            },
+            "disposition": "transformed",
+            "outputType": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "salary"
+            },
+            "value": {
+              "integerToken": "0"
+            }
+          }
+        ]
+      },
+      "write": {
+        "decision": "permit"
+      },
+      "hasReadBinding": false,
+      "hasBlindWriteBinding": false,
+      "meetsNewWriteRule": false
+    },
+    {
+      "id": "mask-different",
+      "read": {
+        "decision": "permit",
+        "output": [
+          {
+            "field": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "salary"
+            },
+            "disposition": "transformed",
+            "outputType": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "salary"
+            },
+            "value": {
+              "integerToken": "0"
+            }
+          }
+        ]
+      },
+      "write": {
+        "decision": "permit"
+      },
+      "hasReadBinding": false,
+      "hasBlindWriteBinding": false,
+      "meetsNewWriteRule": false
+    },
+    {
+      "id": "original",
+      "read": {
+        "decision": "permit",
+        "output": [
+          {
+            "field": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "salary"
+            },
+            "disposition": "original",
+            "value": {
+              "integerToken": "100"
+            }
+          }
+        ]
+      },
+      "write": {
+        "decision": "permit"
+      },
+      "hasReadBinding": false,
+      "hasBlindWriteBinding": false,
+      "meetsNewWriteRule": true
+    }
+  ],
+  "scope": "Actual admitted legacy evaluator missing SEC15 original-read or field-bound blind-write gate; finite host-attested semantic counterexamples, not production bypass/native admission.",
+  "acceptanceCasesPromoted": []
+}

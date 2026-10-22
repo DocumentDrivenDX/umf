@@ -32,7 +32,7 @@ Stages can also run individually: `prepare`, `native`, `auxiliary`, `regression`
 runs and archive failed attempts. Resume only within the same checkout and source
 revision. Publication requires successful logs; it cannot substitute for execution.
 
-The image installs Bun 1.3.14, Go 1.27.1, protoc 36.2, Playwright 1.63.0 with
+The image installs Bun 1.4.2, Go 1.27.1, protoc 36.2, Playwright 1.63.0 with
 Chromium 153.0.8010.12, Python 3.12 and OpenJDK 21. Ubuntu package patch versions
 are recorded by the execution environment rather than claimed as immutable.
 Python oracle versions are pinned in the requirements and Dockerfile; jsonschema

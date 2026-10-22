@@ -1,0 +1,313 @@
+TLC2 Version 2.19 of 08 August 2024 (rev: 5a47802)
+Warning: Please run the Java VM which executes TLC with a throughput optimized garbage collector by passing the "-XX:+UseParallelGC" property.
+(Use the -nowarning option to disable this warning.)
+Running breadth-first search Model-Checking with fp 9 and seed 4059514305683168457 with 1 worker on 16 cores with 1024MB heap and 64MB offheap memory [pid: 1] (Linux 7.0.14-orbstack-00380-ga7e0a2dc9535 aarch64, Ubuntu 21.0.12.1 x86_64, MSBDiskFPSet, DiskStateQueue).
+Parsing file /work/Commands.tla
+Parsing file /tmp/Naturals.tla
+Parsing file /tmp/Integers.tla
+Parsing file /tmp/FiniteSets.tla
+Parsing file /tmp/TLC.tla
+Parsing file /tmp/Sequences.tla
+Semantic processing of module Naturals
+Semantic processing of module Integers
+Semantic processing of module Sequences
+Semantic processing of module FiniteSets
+Semantic processing of module TLC
+Semantic processing of module Commands
+Starting... (2026-10-09 18:44:50)
+Computing initial states...
+Finished computing initial states: 1 distinct state generated at 2026-10-09 18:44:50.
+Error: Invariant AtMostOnce is violated.
+Error: The behavior up to this point is:
+State 1: <Initial predicate>
+/\ watermark = 0
+/\ authorized = TRUE
+/\ stock = 2
+/\ counts = <<0, 0>>
+/\ pc = <<"ready", "ready">>
+/\ protected = FALSE
+/\ applied = {}
+/\ deployment = 1
+/\ retried = <<FALSE, FALSE>>
+/\ outbox = {}
+/\ rev = <<1, 1>>
+/\ replayed = <<FALSE, FALSE>>
+/\ crashed = <<FALSE, FALSE>>
+/\ result = << [revision |-> 0, version |-> 0, status |-> "empty"],
+   [revision |-> 0, version |-> 0, status |-> "empty"] >>
+/\ acked = <<FALSE, FALSE>>
+/\ snapshot = <<0, 0>>
+/\ ledger = << [revision |-> 0, version |-> 0, status |-> "empty"],
+   [revision |-> 0, version |-> 0, status |-> "empty"],
+   [revision |-> 0, version |-> 0, status |-> "empty"],
+   [revision |-> 0, version |-> 0, status |-> "empty"] >>
+/\ owner = 0
+
+State 2: <Admit line 21, col 13 to line 24, col 102 of module Commands>
+/\ watermark = 0
+/\ authorized = TRUE
+/\ stock = 2
+/\ counts = <<0, 0>>
+/\ pc = <<"admitted", "ready">>
+/\ protected = FALSE
+/\ applied = {}
+/\ deployment = 1
+/\ retried = <<FALSE, FALSE>>
+/\ outbox = {}
+/\ rev = <<1, 1>>
+/\ replayed = <<FALSE, FALSE>>
+/\ crashed = <<FALSE, FALSE>>
+/\ result = << [revision |-> 0, version |-> 0, status |-> "empty"],
+   [revision |-> 0, version |-> 0, status |-> "empty"] >>
+/\ acked = <<FALSE, FALSE>>
+/\ snapshot = <<0, 0>>
+/\ ledger = << [revision |-> 0, version |-> 0, status |-> "empty"],
+   [revision |-> 0, version |-> 0, status |-> "empty"],
+   [revision |-> 0, version |-> 0, status |-> "empty"],
+   [revision |-> 0, version |-> 0, status |-> "empty"] >>
+/\ owner = 0
+
+State 3: <Lock line 25, col 12 to line 28, col 91 of module Commands>
+/\ watermark = 0
+/\ authorized = TRUE
+/\ stock = 2
+/\ counts = <<0, 0>>
+/\ pc = <<"locked", "ready">>
+/\ protected = FALSE
+/\ applied = {}
+/\ deployment = 1
+/\ retried = <<FALSE, FALSE>>
+/\ outbox = {}
+/\ rev = <<1, 1>>
+/\ replayed = <<FALSE, FALSE>>
+/\ crashed = <<FALSE, FALSE>>
+/\ result = << [revision |-> 0, version |-> 0, status |-> "empty"],
+   [revision |-> 0, version |-> 0, status |-> "empty"] >>
+/\ acked = <<FALSE, FALSE>>
+/\ snapshot = <<0, 0>>
+/\ ledger = << [revision |-> 0, version |-> 0, status |-> "empty"],
+   [revision |-> 0, version |-> 0, status |-> "empty"],
+   [revision |-> 0, version |-> 0, status |-> "empty"],
+   [revision |-> 0, version |-> 0, status |-> "empty"] >>
+/\ owner = 1
+
+State 4: <Decide line 29, col 14 to line 43, col 58 of module Commands>
+/\ watermark = 0
+/\ authorized = TRUE
+/\ stock = 2
+/\ counts = <<0, 0>>
+/\ pc = <<"prepared", "ready">>
+/\ protected = FALSE
+/\ applied = {}
+/\ deployment = 1
+/\ retried = <<FALSE, FALSE>>
+/\ outbox = {}
+/\ rev = <<1, 1>>
+/\ replayed = <<FALSE, FALSE>>
+/\ crashed = <<FALSE, FALSE>>
+/\ result = << [revision |-> 0, version |-> 0, status |-> "empty"],
+   [revision |-> 0, version |-> 0, status |-> "empty"] >>
+/\ acked = <<FALSE, FALSE>>
+/\ snapshot = <<2, 0>>
+/\ ledger = << [revision |-> 0, version |-> 0, status |-> "empty"],
+   [revision |-> 0, version |-> 0, status |-> "empty"],
+   [revision |-> 0, version |-> 0, status |-> "empty"],
+   [revision |-> 0, version |-> 0, status |-> "empty"] >>
+/\ owner = 1
+
+State 5: <Commit line 44, col 14 to line 56, col 61 of module Commands>
+/\ watermark = 0
+/\ authorized = TRUE
+/\ stock = 1
+/\ counts = <<1, 0>>
+/\ pc = <<"committed", "ready">>
+/\ protected = FALSE
+/\ applied = {}
+/\ deployment = 1
+/\ retried = <<FALSE, FALSE>>
+/\ outbox = {1}
+/\ rev = <<1, 1>>
+/\ replayed = <<FALSE, FALSE>>
+/\ crashed = <<FALSE, FALSE>>
+/\ result = << [revision |-> 1, version |-> 1, status |-> "success"],
+   [revision |-> 0, version |-> 0, status |-> "empty"] >>
+/\ acked = <<FALSE, FALSE>>
+/\ snapshot = <<2, 0>>
+/\ ledger = << [revision |-> 1, version |-> 1, status |-> "success"],
+   [revision |-> 0, version |-> 0, status |-> "empty"],
+   [revision |-> 0, version |-> 0, status |-> "empty"],
+   [revision |-> 0, version |-> 0, status |-> "empty"] >>
+/\ owner = 0
+
+State 6: <Crash line 62, col 13 to line 67, col 82 of module Commands>
+/\ watermark = 0
+/\ authorized = TRUE
+/\ stock = 1
+/\ counts = <<1, 0>>
+/\ pc = <<"crashed", "ready">>
+/\ protected = FALSE
+/\ applied = {}
+/\ deployment = 1
+/\ retried = <<FALSE, FALSE>>
+/\ outbox = {1}
+/\ rev = <<1, 1>>
+/\ replayed = <<FALSE, FALSE>>
+/\ crashed = <<TRUE, FALSE>>
+/\ result = << [revision |-> 0, version |-> 0, status |-> "empty"],
+   [revision |-> 0, version |-> 0, status |-> "empty"] >>
+/\ acked = <<FALSE, FALSE>>
+/\ snapshot = <<2, 0>>
+/\ ledger = << [revision |-> 1, version |-> 1, status |-> "success"],
+   [revision |-> 0, version |-> 0, status |-> "empty"],
+   [revision |-> 0, version |-> 0, status |-> "empty"],
+   [revision |-> 0, version |-> 0, status |-> "empty"] >>
+/\ owner = 0
+
+State 7: <Retry line 68, col 15 to line 72, col 91 of module Commands>
+/\ watermark = 0
+/\ authorized = TRUE
+/\ stock = 1
+/\ counts = <<1, 0>>
+/\ pc = <<"ready", "ready">>
+/\ protected = FALSE
+/\ applied = {}
+/\ deployment = 1
+/\ retried = <<TRUE, FALSE>>
+/\ outbox = {1}
+/\ rev = <<2, 1>>
+/\ replayed = <<FALSE, FALSE>>
+/\ crashed = <<TRUE, FALSE>>
+/\ result = << [revision |-> 0, version |-> 0, status |-> "empty"],
+   [revision |-> 0, version |-> 0, status |-> "empty"] >>
+/\ acked = <<FALSE, FALSE>>
+/\ snapshot = <<2, 0>>
+/\ ledger = << [revision |-> 1, version |-> 1, status |-> "success"],
+   [revision |-> 0, version |-> 0, status |-> "empty"],
+   [revision |-> 0, version |-> 0, status |-> "empty"],
+   [revision |-> 0, version |-> 0, status |-> "empty"] >>
+/\ owner = 0
+
+State 8: <Admit line 21, col 13 to line 24, col 102 of module Commands>
+/\ watermark = 0
+/\ authorized = TRUE
+/\ stock = 1
+/\ counts = <<1, 0>>
+/\ pc = <<"admitted", "ready">>
+/\ protected = FALSE
+/\ applied = {}
+/\ deployment = 1
+/\ retried = <<TRUE, FALSE>>
+/\ outbox = {1}
+/\ rev = <<2, 1>>
+/\ replayed = <<FALSE, FALSE>>
+/\ crashed = <<TRUE, FALSE>>
+/\ result = << [revision |-> 0, version |-> 0, status |-> "empty"],
+   [revision |-> 0, version |-> 0, status |-> "empty"] >>
+/\ acked = <<FALSE, FALSE>>
+/\ snapshot = <<2, 0>>
+/\ ledger = << [revision |-> 1, version |-> 1, status |-> "success"],
+   [revision |-> 0, version |-> 0, status |-> "empty"],
+   [revision |-> 0, version |-> 0, status |-> "empty"],
+   [revision |-> 0, version |-> 0, status |-> "empty"] >>
+/\ owner = 0
+
+State 9: <Lock line 25, col 12 to line 28, col 91 of module Commands>
+/\ watermark = 0
+/\ authorized = TRUE
+/\ stock = 1
+/\ counts = <<1, 0>>
+/\ pc = <<"locked", "ready">>
+/\ protected = FALSE
+/\ applied = {}
+/\ deployment = 1
+/\ retried = <<TRUE, FALSE>>
+/\ outbox = {1}
+/\ rev = <<2, 1>>
+/\ replayed = <<FALSE, FALSE>>
+/\ crashed = <<TRUE, FALSE>>
+/\ result = << [revision |-> 0, version |-> 0, status |-> "empty"],
+   [revision |-> 0, version |-> 0, status |-> "empty"] >>
+/\ acked = <<FALSE, FALSE>>
+/\ snapshot = <<2, 0>>
+/\ ledger = << [revision |-> 1, version |-> 1, status |-> "success"],
+   [revision |-> 0, version |-> 0, status |-> "empty"],
+   [revision |-> 0, version |-> 0, status |-> "empty"],
+   [revision |-> 0, version |-> 0, status |-> "empty"] >>
+/\ owner = 1
+
+State 10: <Deploy line 73, col 11 to line 75, col 86 of module Commands>
+/\ watermark = 0
+/\ authorized = TRUE
+/\ stock = 1
+/\ counts = <<1, 0>>
+/\ pc = <<"locked", "ready">>
+/\ protected = FALSE
+/\ applied = {}
+/\ deployment = 2
+/\ retried = <<TRUE, FALSE>>
+/\ outbox = {1}
+/\ rev = <<2, 1>>
+/\ replayed = <<FALSE, FALSE>>
+/\ crashed = <<TRUE, FALSE>>
+/\ result = << [revision |-> 0, version |-> 0, status |-> "empty"],
+   [revision |-> 0, version |-> 0, status |-> "empty"] >>
+/\ acked = <<FALSE, FALSE>>
+/\ snapshot = <<2, 0>>
+/\ ledger = << [revision |-> 1, version |-> 1, status |-> "success"],
+   [revision |-> 0, version |-> 0, status |-> "empty"],
+   [revision |-> 0, version |-> 0, status |-> "empty"],
+   [revision |-> 0, version |-> 0, status |-> "empty"] >>
+/\ owner = 1
+
+State 11: <Decide line 29, col 14 to line 43, col 58 of module Commands>
+/\ watermark = 0
+/\ authorized = TRUE
+/\ stock = 1
+/\ counts = <<1, 0>>
+/\ pc = <<"prepared", "ready">>
+/\ protected = FALSE
+/\ applied = {}
+/\ deployment = 2
+/\ retried = <<TRUE, FALSE>>
+/\ outbox = {1}
+/\ rev = <<2, 1>>
+/\ replayed = <<FALSE, FALSE>>
+/\ crashed = <<TRUE, FALSE>>
+/\ result = << [revision |-> 0, version |-> 0, status |-> "empty"],
+   [revision |-> 0, version |-> 0, status |-> "empty"] >>
+/\ acked = <<FALSE, FALSE>>
+/\ snapshot = <<1, 0>>
+/\ ledger = << [revision |-> 1, version |-> 1, status |-> "success"],
+   [revision |-> 0, version |-> 0, status |-> "empty"],
+   [revision |-> 0, version |-> 0, status |-> "empty"],
+   [revision |-> 0, version |-> 0, status |-> "empty"] >>
+/\ owner = 1
+
+State 12: <Commit line 44, col 14 to line 56, col 61 of module Commands>
+/\ watermark = 0
+/\ authorized = TRUE
+/\ stock = 0
+/\ counts = <<2, 0>>
+/\ pc = <<"committed", "ready">>
+/\ protected = FALSE
+/\ applied = {}
+/\ deployment = 2
+/\ retried = <<TRUE, FALSE>>
+/\ outbox = {1, 2}
+/\ rev = <<2, 1>>
+/\ replayed = <<FALSE, FALSE>>
+/\ crashed = <<TRUE, FALSE>>
+/\ result = << [revision |-> 2, version |-> 2, status |-> "success"],
+   [revision |-> 0, version |-> 0, status |-> "empty"] >>
+/\ acked = <<FALSE, FALSE>>
+/\ snapshot = <<1, 0>>
+/\ ledger = << [revision |-> 1, version |-> 1, status |-> "success"],
+   [revision |-> 2, version |-> 2, status |-> "success"],
+   [revision |-> 0, version |-> 0, status |-> "empty"],
+   [revision |-> 0, version |-> 0, status |-> "empty"] >>
+/\ owner = 0
+
+3934 states generated, 1653 distinct states found, 526 states left on queue.
+The depth of the complete state graph search is 12.
+The average outdegree of the complete state graph is 1 (minimum is 0, the maximum 7 and the 95th percentile is 4).
+Finished in 00s at (2026-10-09 18:44:50)

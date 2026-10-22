@@ -1,0 +1,21 @@
+{
+  "id": "pg-raw.P04",
+  "backend": "pg-raw",
+  "covers": [
+    "US-057-AC1"
+  ],
+  "name": "mask-write-back-refusal",
+  "assertion": "A subject whose read disposition on a field is transformed or withheld cannot mutate that field: evaluateSecurityWrite and the write routine refuse without an original read disposition or declared blind-write permission, including a proposed value equal to the mask output; absent column UPDATE privilege is a direct-SQL negative control; RETURNING old/new never discloses the pre-image of a masked or withheld column; failed checks leave no effects.",
+  "required": true,
+  "layer": "native",
+  "status": "not-run",
+  "command": null,
+  "evidence": null,
+  "testSource": null,
+  "oracleSource": null,
+  "implementationSources": [],
+  "timeoutMs": 60000,
+  "assertionIds": [
+    "pg-raw.P04"
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "scope": "unbounded exact integer coefficients; positive width; no SQL engine or domain admission proof",
+  "z3": "4.15.4",
+  "checks": [
+    {
+      "law": "lower-bound",
+      "result": "unsat"
+    },
+    {
+      "law": "upper-bound",
+      "result": "unsat"
+    },
+    {
+      "law": "bucket-lattice-membership",
+      "result": "unsat"
+    },
+    {
+      "law": "truncation-without-negative-remainder-correction",
+      "result": "sat",
+      "witness": "[x = -1,\n width = 2,\n origin = 0,\n div0 = [(1, 2) -> 0, else -> -1],\n mod0 = [else -> 0]]"
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 12168,
+        "line": 89,
+        "path": "src/adapters/openapi/index.ts",
+        "sha256": "ed159dd79e74b077144ebcbfd16276e61a13c3406c490ad9cf2fbe7adb80ca2e"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "lookupOpenapiResource",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(document: Document, reference: string, fromUri?: string | undefined): { uri: string; pointer: string; node: NativeJson; interpretation: \"literal-document-pointer-only\"; }"
+    ]
+  },
+  "id": "[\"api\",\".\",\"lookupOpenapiResource\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 12168,
+      "line": 89,
+      "path": "src/adapters/openapi/index.ts",
+      "sha256": "ed159dd79e74b077144ebcbfd16276e61a13c3406c490ad9cf2fbe7adb80ca2e"
+    }
+  ],
+  "summary": "Literal URI + JSON Pointer lookup only; not an OpenAPI/JSON Schema scope resolver.",
+  "title": "lookupOpenapiResource"
+}

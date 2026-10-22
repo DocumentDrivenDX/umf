@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import type {Term} from '@rdfjs/types';
 import type SHACLValidator from 'rdf-validate-shacl';
 import ShapesGraph from 'rdf-validate-shacl/src/shapes-graph.js';

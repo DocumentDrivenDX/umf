@@ -1,0 +1,39 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"validateSecurityDisclosure\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "input",
+      "optional": false,
+      "type": "unknown"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SecurityPolicy\"]"
+      ],
+      "name": "policyInput",
+      "optional": false,
+      "type": "SecurityPolicy"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SecurityResolution\"]"
+      ],
+      "name": "resolutionInput",
+      "optional": false,
+      "type": "SecurityResolution"
+    }
+  ],
+  "purpose": "Shape/domain validation only. Transport, pins and dispositions do not authenticate or authorize a result.",
+  "related": [],
+  "returns": "SecurityDisclosureBatch",
+  "task": "Read and validate",
+  "type": "(input: unknown, policyInput: SecurityPolicy, resolutionInput: SecurityResolution) => SecurityDisclosureBatch"
+}

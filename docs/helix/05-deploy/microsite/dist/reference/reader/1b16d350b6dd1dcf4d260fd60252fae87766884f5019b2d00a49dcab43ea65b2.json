@@ -1,0 +1,49 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"SmithyAssemblyEvent\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "id",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "severity",
+      "optional": false,
+      "type": "\"SUPPRESSED\" | \"NOTE\" | \"WARNING\" | \"DANGER\" | \"ERROR\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "message",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "source",
+      "optional": true,
+      "type": "{ filename: string; line: number; column: number; }"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "shapeId",
+      "optional": true,
+      "type": "string"
+    }
+  ],
+  "parameters": [],
+  "purpose": "SmithyAssemblyEvent is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "SmithyAssemblyEvent"
+}

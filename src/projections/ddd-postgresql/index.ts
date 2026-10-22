@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
+import {CURRENT_CORE_VERSION} from '../../generated/core-model';
 import {copyJson} from '../../model/json';
 import {UmfError,pointer,type Document,type Json,type Diagnostic} from '../../model/types';
 import {renderTree} from '../../model/native-json';
@@ -11,7 +13,7 @@ import {projectDddTablesToPostgresql,type DddPostgresqlTablePolicy} from './tabl
 import {projectBindingIndexesToPostgresql} from '../binding-postgresql/indexes';
 import {validatePostgresqlRelationshipLayout,type PostgresqlRelationshipLayoutPolicy,type PostgresqlLayoutType} from './relationship-layout';
 import {createValidator} from '../../validation/schema';
-import core from '../../../spec/core/schema.json';import fields from '../../../spec/core/field-document.schema.json';import availability from '../../../spec/core/nullability-document.schema.json';import containers from '../../../spec/core/cardinality-document.schema.json';import facets from '../../../spec/core/facet-document.schema.json';import keys from '../../../spec/core/key-document.schema.json';import relationships from '../../../spec/core/relationship-document.schema.json';import layoutSchema from '../../../spec/projections/postgresql-relationship-layout.schema.json';
+import core from '../../../spec/core/schema.json';import layoutSchema from '../../../spec/projections/postgresql-relationship-layout.schema.json';
 import policySchema from '../../../spec/projections/ddd-postgresql-policy.schema.json';import resultSchema from '../../../spec/projections/ddd-postgresql-projection.schema.json';
 export {default as dddPostgresqlPolicySchema} from '../../../spec/projections/ddd-postgresql-policy.schema.json';
 export {default as dddPostgresqlProjectionSchema} from '../../../spec/projections/ddd-postgresql-projection.schema.json';
@@ -21,7 +23,7 @@ export interface DddPostgresqlProjection {
  mappings:{source:'logical'|'binding'|'policy';path:string;statement:number;kind:'schema'|'table'|'column'|'embedded-check'|'partition'|'key'|'relationship'|'index';target:string;outcome:'exact'|'approximated'}[];
  residuals:{source:'logical'|'binding'|'policy';path:string;value:Json;outcome:'unknown'|'not-expressible'|'approximated';reason:string}[];diagnostics:Diagnostic[];nativeSource?:string;targetArchive?:Document;
 }
-const v=createValidator(false);for(const s of [core,fields,availability,containers,facets,keys,relationships,layoutSchema,policySchema])v.addSchema(s);const policyCheck=v.compile(policySchema),resultCheck=v.compile(resultSchema);
+const v=createValidator(false);for(const s of [core,layoutSchema,policySchema])v.addSchema(s);const policyCheck=v.compile(policySchema),resultCheck=v.compile(resultSchema);
 const canonical=(value:Json):string=>Array.isArray(value)?'['+value.map(canonical).join(',')+']':value!==null&&typeof value==='object'?'{'+Object.keys(value).sort().map(k=>JSON.stringify(k)+':'+canonical(value[k]!)).join(',')+'}':JSON.stringify(value);
 const equal=(a:unknown,b:unknown)=>canonical(copyJson(a))===canonical(copyJson(b));
 const identity=(r:{module:string;element:string})=>JSON.stringify([r.module,r.element]);
@@ -35,7 +37,7 @@ const typedColumn=(name:string,type:PostgresqlLayoutType)=>identifier(name)+' '+
 export async function projectDddToPostgresql(logicalInput:Document,bindingInput:Document,policyInput:DddPostgresqlPolicy,backend:PostgresqlBackend):Promise<DddPostgresqlProjection>{
  const source=copyJson(logicalInput) as unknown as Document,binding=copyJson(bindingInput) as unknown as Document,policy=copyJson(policyInput) as unknown as DddPostgresqlPolicy;
  if(!policyCheck(policy))throw new UmfError('DDD_POSTGRESQL_POLICY',JSON.stringify(policyCheck.errors));
- if(source.umf!=='0.7.0'||!validateDocument(source).valid)throw new UmfError('DDD_POSTGRESQL_SOURCE','Valid core 0.7.0 authored graph required');
+ if(source.umf!==CURRENT_CORE_VERSION||!validateDocument(source).valid)throw new UmfError('DDD_POSTGRESQL_SOURCE','Valid core 0.10.0 authored graph required');
  const r:DddPostgresqlProjection={operation:'project-ddd-postgresql',version:'1.0.0',status:'projected',source,binding,policy,nativeVersion:'17.4',mappings:[],residuals:[],diagnostics:[]};
  const loss=(origin:'logical'|'binding'|'policy',path:string,value:unknown,reason:string,outcome:'unknown'|'not-expressible'|'approximated'='not-expressible')=>r.residuals.push({source:origin,path,value:copyJson(value),reason,outcome});
  const block=(path:string,message:string)=>{r.status='blocked';r.diagnostics.push({code:'DDD_POSTGRESQL_BLOCK',path,message,severity:'error'});};

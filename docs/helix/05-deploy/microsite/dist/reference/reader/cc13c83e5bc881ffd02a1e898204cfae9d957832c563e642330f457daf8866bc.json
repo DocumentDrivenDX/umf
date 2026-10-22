@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"classifyAvroNullability\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"AvroNullabilityRequest\"]"
+      ],
+      "name": "options",
+      "optional": false,
+      "type": "AvroNullabilityRequest"
+    }
+  ],
+  "purpose": "classifyAvroNullability accepts input, options and returns AvroNullabilityClassification.",
+  "related": [],
+  "returns": "AvroNullabilityClassification",
+  "task": "Other APIs",
+  "type": "(input: Document, options: AvroNullabilityRequest) => AvroNullabilityClassification"
+}

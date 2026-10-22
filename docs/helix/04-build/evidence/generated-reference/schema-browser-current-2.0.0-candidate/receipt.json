@@ -1,0 +1,144 @@
+{
+  "profile": "umf.schema-browser-candidate-proof/1",
+  "status": "verified local candidate; unpublished; not the installed consumer pin",
+  "package": {
+    "name": "@documentdrivendx/umf-schema-browser",
+    "version": "2.0.0",
+    "currentConsumerPin": "1.1.2",
+    "currentCore": "0.10.0",
+    "archive": "documentdrivendx-umf-schema-browser-2.0.0.tgz",
+    "archiveSha256": "bbbc5b82f57b1e9bfa456d89dc0e668f269abca760c9c8b7752695f41da43c60",
+    "archiveBytes": 2178097
+  },
+  "source": {
+    "headRevision": "19fe5f1bc98840e3177e0d05584321c1e274bfdd",
+    "workingTreeInputs": 1216,
+    "bun": "1.4.2",
+    "lockfileSha256": "35d4053486465fc2d59a5fb6b91084968ebf3a4b9697ec01a053be55aa03df04",
+    "provenanceInputs": {
+      "docs/helix/05-deploy/microsite/demo.ts": "4aa27106c2d6982e72f44ab31ee1423652c8ac6d4c79ca62598b01112df0d714",
+      "docs/helix/05-deploy/schema-browser/examples/host.js": "1d6a83f181a312aac3a6dfa37923165ecceb5e7b4a6f039f950c18fad2615faa",
+      "scripts/check-core-authority.ts": "913dbdc54b6a111cb8c3b4663514d90b7183d816b21732d91a9ed0fc80373ea6",
+      "spec/metamodel/generated/core-constraints.json": "779df69b9e3eee3e6473ecbbb16e276aa900953eab9bbaa3a97340411fe393b3",
+      "spec/core/schema.json": "7da53c7f5f426b44ea3b31b0eb9f52e4e8dd4a6c6792374c322196505768a63d"
+    },
+    "sourceClosureRecheck": "all 1,216 provenance inputs matched the current source tree after candidate build; zero drift"
+  },
+  "reproducibility": {
+    "cleanBuilds": 2,
+    "releaseManifestByteIdentical": true,
+    "releaseManifestBytes": 7164,
+    "releaseManifestSha256": "0036ea0f1fddafc948b5970a834d22393f1160a1e06bf24dfac58279c4d3f5a0",
+    "assetManifestByteIdentical": true,
+    "assetManifestBytes": 5218,
+    "assetManifestSha256": "750fddfa184fc8eb89eb2602422b4de621cd950f954f62d126314f943805c5f8",
+    "packagePayloadFiles": 73,
+    "allPackageReleaseChecksumsVerified": true
+  },
+  "tests": {
+    "bun": "1.4.2",
+    "domainPackAndBoundaryTests": {
+      "passed": 31,
+      "failed": 0,
+      "assertions": 240,
+      "files": [
+        "tests/domain-packs/schema-browser-package.test.ts",
+        "tests/domain-packs/schema-browser-reproducibility.test.ts",
+        "tests/domain-packs/schema-browser-embedding.test.ts",
+        "tests/domain-packs/schema-browser-site-parity.test.ts",
+        "tests/metamodel/authority-boundaries.test.ts"
+      ]
+    },
+    "authoritySourceCensus": {
+      "passed": true,
+      "files": 3138,
+      "retiredPaths": 79
+    },
+    "authorityBoundaries": {
+      "passed": 15,
+      "assertions": 119
+    }
+  },
+  "installedPack": {
+    "npm": "11.20.0",
+    "operation": "npm pack then offline npm install from local archive",
+    "exactPayloadParityWithBuild": true,
+    "authorityDistributionScan": {
+      "passed": true,
+      "files": 75
+    }
+  },
+  "chromium": {
+    "browser": "153.0.8010.12",
+    "entry": "installed package examples/index.html",
+    "checks": [
+      "strict same-origin CSP host loaded",
+      "host selected registered customer model and Customer record",
+      "record inspector rendered",
+      "zero external requests",
+      "zero console/page errors"
+    ],
+    "screenshot": "installed-pack-customer.png",
+    "screenshotSha256": "d7ea0e77be2a5c9c34e8a59db699703353b77aefa3fde3ad5012a3754b37f353"
+  },
+  "scope": {
+    "claims": [
+      "source candidate 2.0.0 builds reproducibly under Bun 1.4.2",
+      "offline-packed and installed artifact matches complete release/asset inventory",
+      "installed package example works in the tested Chromium version under its stated strict CSP",
+      "the final provenance includes the current host example and current-core source authority checker"
+    ],
+    "doesNotClaim": [
+      "publication",
+      "consumer pin update",
+      "site/reference build or deploy",
+      "cross-browser support beyond this Chromium build"
+    ]
+  },
+  "logs": {
+    "candidate-a.build.log": {
+      "sha256": "392012e9ef268bc6320dd2070105e19fa16a8b90c66677ab7be4a55d85bc4fe9",
+      "bytes": 433
+    },
+    "candidate-b.build.log": {
+      "sha256": "4e33fc6c94f18a52a0b987dfc6f9397f687b17ec036e028344abd574a955fcda",
+      "bytes": 433
+    },
+    "candidate-integrity.log": {
+      "sha256": "c44b165646ba981fd866f93f06875ab4df00826daf556441573b6f2d1f42d347",
+      "bytes": 520
+    },
+    "package-tests.log": {
+      "sha256": "4d7eadcb4ff842d3dd1ff97ffde02fb20cae3c7120112b24aed68720e07d3a46",
+      "bytes": 3935
+    },
+    "authority-source.log": {
+      "sha256": "cdb35a0814546540516ea5181de492d1cf9f21394bc4663b9c682f592ceda873",
+      "bytes": 251
+    },
+    "authority-boundaries.log": {
+      "sha256": "df034dedb2e2905bc3a52987326bc75cb64be6e940f795dd3e459d04c36a3e47",
+      "bytes": 2230
+    },
+    "npm-pack.log": {
+      "sha256": "307fffdb8486da7e069be2a491c777a8bda8fb61d31aab183cebed1196920422",
+      "bytes": 8154
+    },
+    "npm-install.log": {
+      "sha256": "53c8a419fbe01f1d4584d869f6c8ba3b1c265f18b2e0011e6c980bf760a68d79",
+      "bytes": 273
+    },
+    "installed-pack-integrity.log": {
+      "sha256": "ba812bbb064a7fcdc4194a5994ef791753d28742f97f57d37c12800084bbb739",
+      "bytes": 178
+    },
+    "installed-pack-chromium.log": {
+      "sha256": "6d17ad0c7d4db51b86f1e9c7ccd2e4eb9bda1e3ad9de6f71b40e27f17390f641",
+      "bytes": 648
+    },
+    "source-provenance-recheck.log": {
+      "sha256": "f651d243cde406145a2ce9e352acda77b258500e4f599fe494bd430f29be6694",
+      "bytes": 117
+    }
+  }
+}

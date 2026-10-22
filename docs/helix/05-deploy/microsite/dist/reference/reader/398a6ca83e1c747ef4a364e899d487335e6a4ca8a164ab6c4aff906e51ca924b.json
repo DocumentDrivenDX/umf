@@ -1,0 +1,21 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"inspectDomainPackLoader\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "input",
+      "optional": false,
+      "type": "unknown"
+    }
+  ],
+  "purpose": "Admission only. This function neither invokes nor resolves a companion.",
+  "related": [],
+  "returns": "{ valid: boolean; complete: boolean; diagnostics: string[]; }",
+  "task": "Inspect and select",
+  "type": "(input: unknown) => { valid: boolean; complete: boolean; diagnostics: string[]; }"
+}

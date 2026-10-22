@@ -1,0 +1,216 @@
+{
+  "stage": "/private/tmp/truss-role-paths-merged-wheel-0gh25x1a",
+  "wheelSha256": "2b5f428acfd2eb30d580ddb45ab7075daf4a9946bcd17ed793c6996b3cc2e5a0",
+  "sourceWheelInstalledExact": true,
+  "files": [
+    {
+      "path": "truss/__init__.py",
+      "sha256": "bf1506e355d85a9a406689be1ee0751d98e6c1feaae1409a00a678b6f658411c"
+    },
+    {
+      "path": "truss/_acceptance_json.py",
+      "sha256": "303638af137138a796542aa5425985d147e510a23639fca9b2d6221966337a01"
+    },
+    {
+      "path": "truss/_accounted_receive.py",
+      "sha256": "f1f6bc7d84d3cbdc4ba93ddb514d68898f60c99358c7cb2a719701139d674e78"
+    },
+    {
+      "path": "truss/_directory_resources.py",
+      "sha256": "1c3bff1ec23e9d241b710188223539adfdf896a31601c6ce5d46f46d2bc0ab48"
+    },
+    {
+      "path": "truss/_host_contracts.py",
+      "sha256": "97e464504590447190510200cef27519e812a7cc871d330c63b7846478e87ada"
+    },
+    {
+      "path": "truss/_host_execution.py",
+      "sha256": "2c5ebedfe467cdcaaba8a01dd32113a5dae644256301fc5f1e3b2656114c1137"
+    },
+    {
+      "path": "truss/_host_session.py",
+      "sha256": "504b6e2d6acc048ae5daf20a8785315480ccda6fd054fea339f0e381fb66a760"
+    },
+    {
+      "path": "truss/_installation_archive.py",
+      "sha256": "d1674fb5f8537873e3b41ce46618fd3aac1c73db7c8b34a90fe741cba6918f72"
+    },
+    {
+      "path": "truss/_installation_resources.py",
+      "sha256": "abaab39777891125da2f522cd2a0f3a6702896a05464cf344eddbc2acff08759"
+    },
+    {
+      "path": "truss/_installed_admission_inventory.py",
+      "sha256": "7d925a5bc7c70a66f86e47f5bf75025be263189d9799bdf4e2f065495faa1f67"
+    },
+    {
+      "path": "truss/_inventory_sql/column-acl.sql",
+      "sha256": "f328a40200427d5e5b67179233e9d77b77c6ed4478608d1f5e269122976090fd"
+    },
+    {
+      "path": "truss/_inventory_sql/dependency.sql",
+      "sha256": "b6d3b3eb4fe10d817a57c0e2d1ab723fc630233b4d15985bc5e6aaa366a3ba74"
+    },
+    {
+      "path": "truss/_inventory_sql/manifest.json",
+      "sha256": "3544d094ff90df4b6966414cfd203db607ae347dd2a4923dc72c92758188f890"
+    },
+    {
+      "path": "truss/_inventory_sql/namespace-acl.sql",
+      "sha256": "b28027fe1b0c15780c3000988d5396dc83acfa5d8228fe5488a7bd5ec5d5af17"
+    },
+    {
+      "path": "truss/_inventory_sql/relation-acl.sql",
+      "sha256": "10ae36d576209b954b218908d2a9c4f4a4344803b18457eaa5bb42c12415c8eb"
+    },
+    {
+      "path": "truss/_inventory_sql/routine-acl.sql",
+      "sha256": "7af67d9bc4e1a6873814197926d7f92cf69bbb299c83f0145731fcb6bebdbe7e"
+    },
+    {
+      "path": "truss/_native_adoption.py",
+      "sha256": "33250104dd68592782252f04e42d0636e0b57f03227aba40574f980d206afadb"
+    },
+    {
+      "path": "truss/_native_arbitration.py",
+      "sha256": "024a89ba0eb6d639e9f9d1ddb6628c9d2e0a5cbd8c20a132df84c463bf142cb5"
+    },
+    {
+      "path": "truss/_native_driver_profile.py",
+      "sha256": "0b59771a582d1e0b4fa43d338fe3e1585f74939e890bedd4c3da079a961935bb"
+    },
+    {
+      "path": "truss/_native_operation.py",
+      "sha256": "c05026b4cfbcd48b572a3b608f938bd7fe036ce888530ce39a732a22ec2501f3"
+    },
+    {
+      "path": "truss/_native_pg8000.py",
+      "sha256": "4cf0efaf089602e79d175ca9ea0fbf879cf526ed825c07d670f231eee54a57a1"
+    },
+    {
+      "path": "truss/_native_result_custody.py",
+      "sha256": "f3f8202ff82a3c5e8ed03dce9cade773965c560d8f92ea7f7eb2531bd10590ca"
+    },
+    {
+      "path": "truss/_native_transactions.py",
+      "sha256": "e413651f97a8e19e134ddb059462881aa2b9fc6d66dfe5151cf7e549b56b1ae4"
+    },
+    {
+      "path": "truss/_operation_admission.py",
+      "sha256": "f96462208c14230670370d0b12f9b5d38ef1c20861175bcab8777c2c687dbb30"
+    },
+    {
+      "path": "truss/_operation_arbitration.py",
+      "sha256": "8077672c71406e30ba9885627374b9d415ee76dfea166c264730059a9ca25b42"
+    },
+    {
+      "path": "truss/_operation_ordinal.py",
+      "sha256": "10d4717462ff14c7524ed793db0ac7b94f56e1d6b88158081a4f300981193977"
+    },
+    {
+      "path": "truss/_operation_registry.py",
+      "sha256": "7e74c34c9b0a874af8e7c0c743357aff2c848cc4c8ae3ed2404542ce18ec667d"
+    },
+    {
+      "path": "truss/_query_execution.py",
+      "sha256": "9cf9d08a45f0b31ef1621c9bed47eb879715771583dd467ecb57b8278115b0aa"
+    },
+    {
+      "path": "truss/_receipt_position.py",
+      "sha256": "e7c42049947c4bda44c0ac9e62e23b73143c6129f07f9ee889ef186364f19eba"
+    },
+    {
+      "path": "truss/_resource_account.py",
+      "sha256": "6a10966e502c16a3ab8972bba34a999ca675fdb7a59e5c3ac93a7c713b6468f1"
+    },
+    {
+      "path": "truss/_row_event_attribution.py",
+      "sha256": "5ef265df339899cde5fba9e3f229d0709671f29ecb15ebf54bbeced7e8b9181b"
+    },
+    {
+      "path": "truss/_row_group_custody.py",
+      "sha256": "b39f7f4e17243d846fc60b3fff02807d168a93c23adf793a8be4fcd2abf3dcdd"
+    },
+    {
+      "path": "truss/_row_image.py",
+      "sha256": "0c793edbd8c45e440511ffbd2ac7e344c47be80f85ee28bf0164ce6e1f073df9"
+    },
+    {
+      "path": "truss/_row_image_capture.py",
+      "sha256": "377bb631b3dd939436dc89c50b6ca4f188a99e5352e8a18d8f6a30037f593125"
+    },
+    {
+      "path": "truss/_row_image_scalar_shape.py",
+      "sha256": "1e639bfed2680ce589d8af65fe255b4498a61246384fb593e3313d673fbdccdc"
+    },
+    {
+      "path": "truss/_row_image_tree.py",
+      "sha256": "8ff76ee2a95ec60db0bdfecded4e1f35bc302d711be0f71f14d42178cabb5386"
+    },
+    {
+      "path": "truss/_row_operation_address.py",
+      "sha256": "51af38dbda5c94f8a3ca8c92af3abef1f9919d1d44f6ae1c872c609b747eaf08"
+    },
+    {
+      "path": "truss/_row_operation_context.py",
+      "sha256": "aeaa86163233a597c554f977d3c82badcbf8290a336e47b5e1ff8c64c66794ca"
+    },
+    {
+      "path": "truss/_row_operation_custody.py",
+      "sha256": "1783d3bccfae06526f3be9149622e7f4ae9afd0cd833a7905e7a8b27300a0445"
+    },
+    {
+      "path": "truss/_row_registry_correspondence.py",
+      "sha256": "f0229b5032aa1801dba1cf85ddf0d6be84a087baf1f51c9482475a5b1e6c2282"
+    },
+    {
+      "path": "truss/_row_touch_registry.py",
+      "sha256": "332c37d656bbf825ab119422714330277d9988eef280fc6f72fff26e2d5e778b"
+    },
+    {
+      "path": "truss/cli.py",
+      "sha256": "6a6b3fb751a73b7d338f531d514ec3e4b94c7fb58d4fe80351ff630a7cc7df37"
+    },
+    {
+      "path": "truss/contracts.py",
+      "sha256": "a5a71937709f3a8704de9e33b87e8aadcb743ea9adcdeea8037a7d76b069bdbd"
+    },
+    {
+      "path": "truss/execution.py",
+      "sha256": "0df49d51e760bfa36a814dd0cca31b8d266ae3378d46f63b9e94f2ef63cdcff5"
+    },
+    {
+      "path": "truss/groups.py",
+      "sha256": "e6911d22e53fde65a6e9ebb441ab7d3a1428a312b8342e9e2e3c9e07b0228c00"
+    },
+    {
+      "path": "truss/imports.py",
+      "sha256": "22c151c516770c2284a386659c0884e666ae4780eaf7aa7920c0a8e8d2787592"
+    },
+    {
+      "path": "truss/local_runtime.py",
+      "sha256": "1a837b5575c2f8b08e2b699256a90d971ed7e2112d40bccc7c197b92ad6023a9"
+    },
+    {
+      "path": "truss/migration_planning.py",
+      "sha256": "1523a466555ab7b4075f501edd0570f9465c67a67558d2733b5c06984571c3a6"
+    },
+    {
+      "path": "truss/numeric.py",
+      "sha256": "4833d54fda887fa70171511761d28ea75a0dc22aa89a50c3eae2a88f2b972d18"
+    },
+    {
+      "path": "truss/py.typed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "truss/timestamp.py",
+      "sha256": "b08dbf2a9c48754282f05429a58b66515c75a815f6e1282d3c485248f762120c"
+    },
+    {
+      "path": "truss/weft.py",
+      "sha256": "331af0ce6b2f974f7d8ba69c1da90825dfa92c7e57a06cec5aed90a3ec4cd3be"
+    }
+  ],
+  "scope": "Merged candidate; native and suite qualification follows"
+}

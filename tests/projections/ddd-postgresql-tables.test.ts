@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
 import {backend} from '../../native/postgresql/runtime';
 import {getPostgresqlSource,projectDddTablesToPostgresql,type Document} from '../../src';

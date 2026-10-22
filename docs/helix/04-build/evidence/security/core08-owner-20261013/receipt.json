@@ -1,0 +1,32 @@
+{
+  "parentRevision": "da52e02febcded8a97b7f0fad6fa2ee9f012fcf8",
+  "scope": "Versioned internal original source inspectors: core0.7 retains result0.1; core0.8 receives separately closed result0.2. No native admission/issuer or bare-role type authority.",
+  "tests": {
+    "files": 4,
+    "passed": 4,
+    "expectCalls": 132,
+    "newCurrentControls": 48,
+    "independentControls": 8
+  },
+  "browser": {
+    "version": "153.0.8010.12",
+    "controls": 48,
+    "externalRequests": 0
+  },
+  "typecheck": "passed",
+  "schemas": 388,
+  "schemaFailures": 0,
+  "packages": 65,
+  "packageFailures": 0,
+  "acceptance": "Original132 required cases unchanged; no backend case promotion or full gate rerun.",
+  "sourceDigests": {
+    "src/model/record-members.ts": "a9a572f0dba54ef616861508ea48520dd9d068450ea5138722ae9f8f9f9ae36d",
+    "src/model/scalar-type.ts": "62451e2538f0a31e978b5fe14b0ad0a7644a3c7db7fa13095dc7be5cbccabb00",
+    "src/model/reference-links.ts": "182076b3f5a241950fc92812a1878f7ef9331331bc59beeb5a223ad3e3de4565",
+    "spec/core/record-members-inspection-v0.2.schema.json": "2a52c731a9bad09730caedaffa5b670eec243a33cbf8f0d4c430fd76f5af7214",
+    "spec/core/scalar-type-inspection-v0.2.schema.json": "341b9f85b68edab382946be1d2b8cb3907c34362ae5363678b1436e800443139",
+    "spec/core/reference-links-inspection-v0.2.schema.json": "1547fb7271212d4377838ace60834acda8fc999d0582d27ac7112a71db1bb228",
+    "tools/security/core08-owner-cases.ts": "1c90c666e8330067965db189f6ad4e56581a4e509fe8f9ce9c11f22a2470acf0",
+    "tests/security-core08-owner.test.ts": "0004eb1d8a916ad3e78b5b0f8b93e3fad151cd90b3c56b48c768a8432dce0bf6"
+  }
+}

@@ -1,0 +1,1167 @@
+{
+  "data": {
+    "pointer": "",
+    "profileVersions": [],
+    "references": [
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0"
+      }
+    ],
+    "role": "other",
+    "schemaPath": "spec/core/sqlserver-key-classification.schema.json",
+    "sourceData": {
+      "kind": "object",
+      "members": {
+        "$id": {
+          "kind": "string",
+          "value": "urn:umf:core:sqlserver-key-classification:1.0.0"
+        },
+        "$schema": {
+          "kind": "string",
+          "value": "https://json-schema.org/draft/2020-12/schema"
+        },
+        "additionalProperties": {
+          "kind": "boolean",
+          "value": false
+        },
+        "allOf": {
+          "items": [
+            {
+              "kind": "object",
+              "members": {
+                "else": {
+                  "kind": "object",
+                  "members": {
+                    "properties": {
+                      "kind": "object",
+                      "members": {
+                        "diagnostics": {
+                          "kind": "object",
+                          "members": {
+                            "items": {
+                              "kind": "object",
+                              "members": {
+                                "properties": {
+                                  "kind": "object",
+                                  "members": {
+                                    "severity": {
+                                      "kind": "object",
+                                      "members": {
+                                        "const": {
+                                          "kind": "string",
+                                          "value": "error"
+                                        }
+                                      }
+                                    }
+                                  }
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "object"
+                                }
+                              }
+                            },
+                            "minItems": {
+                              "kind": "number",
+                              "value": "1"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "array"
+                            }
+                          }
+                        },
+                        "residuals": {
+                          "kind": "object",
+                          "members": {
+                            "minItems": {
+                              "kind": "number",
+                              "value": "1"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "array"
+                            }
+                          }
+                        },
+                        "target": {
+                          "kind": "boolean",
+                          "value": false
+                        }
+                      }
+                    }
+                  }
+                },
+                "if": {
+                  "kind": "object",
+                  "members": {
+                    "properties": {
+                      "kind": "object",
+                      "members": {
+                        "status": {
+                          "kind": "object",
+                          "members": {
+                            "const": {
+                              "kind": "string",
+                              "value": "classified"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "then": {
+                  "kind": "object",
+                  "members": {
+                    "properties": {
+                      "kind": "object",
+                      "members": {
+                        "diagnostics": {
+                          "kind": "object",
+                          "members": {
+                            "items": {
+                              "kind": "object",
+                              "members": {
+                                "properties": {
+                                  "kind": "object",
+                                  "members": {
+                                    "severity": {
+                                      "kind": "object",
+                                      "members": {
+                                        "const": {
+                                          "kind": "string",
+                                          "value": "warning"
+                                        }
+                                      }
+                                    }
+                                  }
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "object"
+                                }
+                              }
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "array"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "required": {
+                      "items": [
+                        {
+                          "kind": "string",
+                          "value": "target"
+                        }
+                      ],
+                      "kind": "array"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "kind": "object",
+              "members": {
+                "else": {
+                  "kind": "object",
+                  "members": {
+                    "properties": {
+                      "kind": "object",
+                      "members": {
+                        "residuals": {
+                          "kind": "object",
+                          "members": {
+                            "minItems": {
+                              "kind": "number",
+                              "value": "1"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "array"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "if": {
+                  "kind": "object",
+                  "members": {
+                    "properties": {
+                      "kind": "object",
+                      "members": {
+                        "outcome": {
+                          "kind": "object",
+                          "members": {
+                            "const": {
+                              "kind": "string",
+                              "value": "exact"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "then": {
+                  "kind": "object",
+                  "members": {
+                    "properties": {
+                      "kind": "object",
+                      "members": {
+                        "residuals": {
+                          "kind": "object",
+                          "members": {
+                            "maxItems": {
+                              "kind": "number",
+                              "value": "0"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "array"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "kind": "object",
+              "members": {
+                "if": {
+                  "kind": "object",
+                  "members": {
+                    "properties": {
+                      "kind": "object",
+                      "members": {
+                        "request": {
+                          "kind": "object",
+                          "members": {
+                            "properties": {
+                              "kind": "object",
+                              "members": {
+                                "mode": {
+                                  "kind": "object",
+                                  "members": {
+                                    "const": {
+                                      "kind": "string",
+                                      "value": "strict"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "object"
+                            }
+                          }
+                        },
+                        "status": {
+                          "kind": "object",
+                          "members": {
+                            "const": {
+                              "kind": "string",
+                              "value": "classified"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "then": {
+                  "kind": "object",
+                  "members": {
+                    "properties": {
+                      "kind": "object",
+                      "members": {
+                        "outcome": {
+                          "kind": "object",
+                          "members": {
+                            "const": {
+                              "kind": "string",
+                              "value": "exact"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ],
+          "kind": "array"
+        },
+        "properties": {
+          "kind": "object",
+          "members": {
+            "binding": {
+              "kind": "object",
+              "members": {
+                "const": {
+                  "kind": "object",
+                  "members": {
+                    "id": {
+                      "kind": "string",
+                      "value": "umf.sqlserver.keys"
+                    },
+                    "nativeVersion": {
+                      "kind": "string",
+                      "value": "16.0.4295.3"
+                    },
+                    "subset": {
+                      "kind": "string",
+                      "value": "Captured SQL Server 2022 v3 rowstore index observations, native equality and enforcement only; no authored identity, source authentication or native equivalence"
+                    },
+                    "version": {
+                      "kind": "string",
+                      "value": "1.0.0"
+                    }
+                  }
+                }
+              }
+            },
+            "diagnostics": {
+              "kind": "object",
+              "members": {
+                "items": {
+                  "kind": "object",
+                  "members": {
+                    "additionalProperties": {
+                      "kind": "boolean",
+                      "value": false
+                    },
+                    "properties": {
+                      "kind": "object",
+                      "members": {
+                        "code": {
+                          "kind": "object",
+                          "members": {
+                            "minLength": {
+                              "kind": "number",
+                              "value": "1"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "string"
+                            }
+                          }
+                        },
+                        "message": {
+                          "kind": "object",
+                          "members": {
+                            "minLength": {
+                              "kind": "number",
+                              "value": "1"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "string"
+                            }
+                          }
+                        },
+                        "path": {
+                          "kind": "object",
+                          "members": {
+                            "minLength": {
+                              "kind": "number",
+                              "value": "1"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "string"
+                            }
+                          }
+                        },
+                        "severity": {
+                          "kind": "object",
+                          "members": {
+                            "enum": {
+                              "items": [
+                                {
+                                  "kind": "string",
+                                  "value": "warning"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "error"
+                                }
+                              ],
+                              "kind": "array"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "required": {
+                      "items": [
+                        {
+                          "kind": "string",
+                          "value": "code"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "path"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "message"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "severity"
+                        }
+                      ],
+                      "kind": "array"
+                    },
+                    "type": {
+                      "kind": "string",
+                      "value": "object"
+                    }
+                  }
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "array"
+                }
+              }
+            },
+            "observations": {
+              "kind": "object",
+              "members": {
+                "items": {
+                  "kind": "object",
+                  "members": {
+                    "additionalProperties": {
+                      "kind": "boolean",
+                      "value": false
+                    },
+                    "properties": {
+                      "kind": "object",
+                      "members": {
+                        "authorIntent": {
+                          "kind": "object",
+                          "members": {
+                            "const": {
+                              "kind": "string",
+                              "value": "unknown"
+                            }
+                          }
+                        },
+                        "enforcement": {
+                          "kind": "object",
+                          "members": {
+                            "enum": {
+                              "items": [
+                                {
+                                  "kind": "string",
+                                  "value": "immediate-unique-nonnull"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "conditional"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "nullable"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "not-unique"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "unavailable"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "unknown"
+                                }
+                              ],
+                              "kind": "array"
+                            }
+                          }
+                        },
+                        "equality": {
+                          "kind": "object",
+                          "members": {
+                            "enum": {
+                              "items": [
+                                {
+                                  "kind": "string",
+                                  "value": "exact-on-representable-values"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "incompatible"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "unknown"
+                                }
+                              ],
+                              "kind": "array"
+                            }
+                          }
+                        },
+                        "fields": {
+                          "kind": "object",
+                          "members": {
+                            "items": {
+                              "kind": "object",
+                              "members": {
+                                "additionalProperties": {
+                                  "kind": "boolean",
+                                  "value": false
+                                },
+                                "properties": {
+                                  "kind": "object",
+                                  "members": {
+                                    "element": {
+                                      "kind": "object",
+                                      "members": {
+                                        "minLength": {
+                                          "kind": "number",
+                                          "value": "1"
+                                        },
+                                        "type": {
+                                          "kind": "string",
+                                          "value": "string"
+                                        }
+                                      }
+                                    },
+                                    "module": {
+                                      "kind": "object",
+                                      "members": {
+                                        "minLength": {
+                                          "kind": "number",
+                                          "value": "1"
+                                        },
+                                        "type": {
+                                          "kind": "string",
+                                          "value": "string"
+                                        }
+                                      }
+                                    }
+                                  }
+                                },
+                                "required": {
+                                  "items": [
+                                    {
+                                      "kind": "string",
+                                      "value": "module"
+                                    },
+                                    {
+                                      "kind": "string",
+                                      "value": "element"
+                                    }
+                                  ],
+                                  "kind": "array"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "object"
+                                }
+                              }
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "array"
+                            }
+                          }
+                        },
+                        "identity": {
+                          "kind": "object",
+                          "members": {
+                            "additionalProperties": {
+                              "kind": "boolean",
+                              "value": false
+                            },
+                            "properties": {
+                              "kind": "object",
+                              "members": {
+                                "indexId": {
+                                  "kind": "object",
+                                  "members": {
+                                    "minimum": {
+                                      "kind": "number",
+                                      "value": "0"
+                                    },
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "integer"
+                                    }
+                                  }
+                                },
+                                "name": {
+                                  "kind": "object",
+                                  "members": {
+                                    "anyOf": {
+                                      "items": [
+                                        {
+                                          "kind": "object",
+                                          "members": {
+                                            "minLength": {
+                                              "kind": "number",
+                                              "value": "1"
+                                            },
+                                            "type": {
+                                              "kind": "string",
+                                              "value": "string"
+                                            }
+                                          }
+                                        },
+                                        {
+                                          "kind": "object",
+                                          "members": {
+                                            "type": {
+                                              "kind": "string",
+                                              "value": "null"
+                                            }
+                                          }
+                                        }
+                                      ],
+                                      "kind": "array"
+                                    }
+                                  }
+                                },
+                                "schema": {
+                                  "kind": "object",
+                                  "members": {
+                                    "minLength": {
+                                      "kind": "number",
+                                      "value": "1"
+                                    },
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "string"
+                                    }
+                                  }
+                                },
+                                "table": {
+                                  "kind": "object",
+                                  "members": {
+                                    "minLength": {
+                                      "kind": "number",
+                                      "value": "1"
+                                    },
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "string"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "required": {
+                              "items": [
+                                {
+                                  "kind": "string",
+                                  "value": "schema"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "table"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "indexId"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "name"
+                                }
+                              ],
+                              "kind": "array"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "object"
+                            }
+                          }
+                        },
+                        "ignoreDuplicateKey": {
+                          "kind": "object",
+                          "members": {
+                            "type": {
+                              "kind": "string",
+                              "value": "boolean"
+                            }
+                          }
+                        },
+                        "nativePath": {
+                          "kind": "object",
+                          "members": {
+                            "minLength": {
+                              "kind": "number",
+                              "value": "1"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "string"
+                            }
+                          }
+                        },
+                        "primary": {
+                          "kind": "object",
+                          "members": {
+                            "type": {
+                              "kind": "string",
+                              "value": "boolean"
+                            }
+                          }
+                        },
+                        "provenance": {
+                          "kind": "object",
+                          "members": {
+                            "const": {
+                              "kind": "string",
+                              "value": "inferred"
+                            }
+                          }
+                        },
+                        "reasons": {
+                          "kind": "object",
+                          "members": {
+                            "items": {
+                              "kind": "object",
+                              "members": {
+                                "minLength": {
+                                  "kind": "number",
+                                  "value": "1"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "array"
+                            }
+                          }
+                        },
+                        "scope": {
+                          "kind": "object",
+                          "members": {
+                            "const": {
+                              "kind": "string",
+                              "value": "captured-table-stored-values"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "required": {
+                      "items": [
+                        {
+                          "kind": "string",
+                          "value": "identity"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "nativePath"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "fields"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "primary"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "enforcement"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "equality"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "ignoreDuplicateKey"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "authorIntent"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "provenance"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "scope"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "reasons"
+                        }
+                      ],
+                      "kind": "array"
+                    },
+                    "type": {
+                      "kind": "string",
+                      "value": "object"
+                    }
+                  }
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "array"
+                }
+              }
+            },
+            "operation": {
+              "kind": "object",
+              "members": {
+                "const": {
+                  "kind": "string",
+                  "value": "classify-sqlserver-keys"
+                }
+              }
+            },
+            "outcome": {
+              "kind": "object",
+              "members": {
+                "enum": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "exact"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "unknown"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "not-expressible"
+                    }
+                  ],
+                  "kind": "array"
+                }
+              }
+            },
+            "request": {
+              "kind": "object",
+              "members": {
+                "additionalProperties": {
+                  "kind": "boolean",
+                  "value": false
+                },
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "mode": {
+                      "kind": "object",
+                      "members": {
+                        "enum": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "strict"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "report"
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    },
+                    "nativeSource": {
+                      "kind": "object",
+                      "members": {
+                        "minLength": {
+                          "kind": "number",
+                          "value": "1"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "profile": {
+                      "kind": "object",
+                      "members": {
+                        "const": {
+                          "kind": "string",
+                          "value": "captured-stored-values"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "nativeSource"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "mode"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "profile"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "residuals": {
+              "kind": "object",
+              "members": {
+                "items": {
+                  "kind": "object",
+                  "members": {
+                    "additionalProperties": {
+                      "kind": "boolean",
+                      "value": false
+                    },
+                    "properties": {
+                      "kind": "object",
+                      "members": {
+                        "outcome": {
+                          "kind": "object",
+                          "members": {
+                            "enum": {
+                              "items": [
+                                {
+                                  "kind": "string",
+                                  "value": "unknown"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "not-expressible"
+                                }
+                              ],
+                              "kind": "array"
+                            }
+                          }
+                        },
+                        "path": {
+                          "kind": "object",
+                          "members": {
+                            "minLength": {
+                              "kind": "number",
+                              "value": "1"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "string"
+                            }
+                          }
+                        },
+                        "reason": {
+                          "kind": "object",
+                          "members": {
+                            "minLength": {
+                              "kind": "number",
+                              "value": "1"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "string"
+                            }
+                          }
+                        },
+                        "recovery": {
+                          "kind": "object",
+                          "members": {
+                            "const": {
+                              "kind": "string",
+                              "value": "Original native catalog retained; authored key intent is not inferred"
+                            }
+                          }
+                        },
+                        "value": {
+                          "kind": "object",
+                          "members": {}
+                        }
+                      }
+                    },
+                    "required": {
+                      "items": [
+                        {
+                          "kind": "string",
+                          "value": "path"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "value"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "outcome"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "reason"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "recovery"
+                        }
+                      ],
+                      "kind": "array"
+                    },
+                    "type": {
+                      "kind": "string",
+                      "value": "object"
+                    }
+                  }
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "array"
+                }
+              }
+            },
+            "source": {
+              "kind": "object",
+              "members": {
+                "$ref": {
+                  "kind": "string",
+                  "value": "urn:umf:core:0.10.0"
+                }
+              }
+            },
+            "status": {
+              "kind": "object",
+              "members": {
+                "enum": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "classified"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "blocked"
+                    }
+                  ],
+                  "kind": "array"
+                }
+              }
+            },
+            "target": {
+              "kind": "object",
+              "members": {
+                "$ref": {
+                  "kind": "string",
+                  "value": "urn:umf:core:0.10.0"
+                }
+              }
+            },
+            "version": {
+              "kind": "object",
+              "members": {
+                "const": {
+                  "kind": "string",
+                  "value": "1.0.0"
+                }
+              }
+            }
+          }
+        },
+        "required": {
+          "items": [
+            {
+              "kind": "string",
+              "value": "operation"
+            },
+            {
+              "kind": "string",
+              "value": "version"
+            },
+            {
+              "kind": "string",
+              "value": "status"
+            },
+            {
+              "kind": "string",
+              "value": "outcome"
+            },
+            {
+              "kind": "string",
+              "value": "source"
+            },
+            {
+              "kind": "string",
+              "value": "request"
+            },
+            {
+              "kind": "string",
+              "value": "binding"
+            },
+            {
+              "kind": "string",
+              "value": "observations"
+            },
+            {
+              "kind": "string",
+              "value": "residuals"
+            },
+            {
+              "kind": "string",
+              "value": "diagnostics"
+            }
+          ],
+          "kind": "array"
+        },
+        "title": {
+          "kind": "string",
+          "value": "SQL Server Key observations and explicit residual recovery"
+        },
+        "type": {
+          "kind": "string",
+          "value": "object"
+        }
+      }
+    }
+  },
+  "id": "[\"schema\",\"spec/core/sqlserver-key-classification.schema.json\",\"\"]",
+  "kind": "schema",
+  "links": [
+    "[\"schema\",\"spec/core/schema.json\",\"\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 7973,
+      "path": "spec/core/sqlserver-key-classification.schema.json",
+      "sha256": "d976caf6a2efed173f87cd313cede56623ae762b1ff4f304808f885cc52aeca4"
+    }
+  ],
+  "summary": "spec/core/sqlserver-key-classification.schema.json",
+  "title": "SQL Server Key observations and explicit residual recovery"
+}

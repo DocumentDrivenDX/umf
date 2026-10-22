@@ -1,0 +1,71 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"CoreRecordMembersDeclaration\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "operation",
+      "optional": false,
+      "type": "\"declare-core-record-members\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreRecordIdentity\"]"
+      ],
+      "name": "request",
+      "optional": false,
+      "type": "CoreRecordIdentity[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "version",
+      "optional": false,
+      "type": "\"2.0.0\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "source",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "target",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreRecordIdentity\"]"
+      ],
+      "name": "identity",
+      "optional": false,
+      "type": "CoreRecordIdentity"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "provenance",
+      "optional": false,
+      "type": "{ origin: \"authored\"; idealPath: string; basis: \"explicit-author-declaration\"; nativePath: null; binding: { id: string; version: \"2.0.0\"; }; }"
+    }
+  ],
+  "parameters": [],
+  "purpose": "CoreRecordMembersDeclaration is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "CoreRecordMembersDeclaration"
+}

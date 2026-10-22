@@ -1,0 +1,84 @@
+2026-10-17 08:28:21.745 EDT [3125] LOG:  starting PostgreSQL 18.6 (Homebrew) on aarch64-apple-darwin27.0.0, compiled by Apple clang version 21.0.0 (clang-2100.3.34.2), 64-bit
+2026-10-17 08:28:21.746 EDT [3125] LOG:  listening on Unix socket "/private/tmp/sdk-search-filter-native-r25-311-r1/fixture/socket/.s.PGSQL.55513"
+2026-10-17 08:28:21.769 EDT [3132] LOG:  database system was shut down at 2026-10-17 08:28:21 EDT
+2026-10-17 08:28:21.777 EDT [3125] LOG:  database system is ready to accept connections
+2026-10-17 08:28:21.901 EDT [3139] WARNING:  there is already a transaction in progress
+2026-10-17 08:28:22.309 EDT [3139] WARNING:  there is already a transaction in progress
+2026-10-17 08:28:22.825 EDT [3139] WARNING:  there is already a transaction in progress
+2026-10-17 08:28:23.281 EDT [3139] WARNING:  there is already a transaction in progress
+2026-10-17 08:28:23.663 EDT [3139] WARNING:  there is already a transaction in progress
+2026-10-17 08:28:24.119 EDT [3139] WARNING:  there is already a transaction in progress
+2026-10-17 08:28:24.583 EDT [3139] WARNING:  there is already a transaction in progress
+2026-10-17 08:28:25.072 EDT [3139] WARNING:  there is already a transaction in progress
+2026-10-17 08:28:25.510 EDT [3139] WARNING:  there is already a transaction in progress
+2026-10-17 08:28:26.086 EDT [3139] WARNING:  there is already a transaction in progress
+2026-10-17 08:28:26.731 EDT [3139] WARNING:  there is already a transaction in progress
+2026-10-17 08:28:27.191 EDT [3139] WARNING:  there is already a transaction in progress
+2026-10-17 08:28:27.549 EDT [3139] WARNING:  there is already a transaction in progress
+2026-10-17 08:28:28.007 EDT [3139] WARNING:  there is already a transaction in progress
+2026-10-17 08:28:28.504 EDT [3139] WARNING:  there is already a transaction in progress
+2026-10-17 08:28:29.040 EDT [3139] WARNING:  there is already a transaction in progress
+2026-10-17 08:28:29.564 EDT [3139] WARNING:  there is already a transaction in progress
+2026-10-17 08:28:30.053 EDT [3139] WARNING:  there is already a transaction in progress
+2026-10-17 08:28:30.581 EDT [3139] WARNING:  there is already a transaction in progress
+2026-10-17 08:28:31.065 EDT [3139] WARNING:  there is already a transaction in progress
+2026-10-17 08:28:31.483 EDT [3139] WARNING:  there is already a transaction in progress
+2026-10-17 08:28:32.036 EDT [3139] WARNING:  there is already a transaction in progress
+2026-10-17 08:28:32.549 EDT [3139] WARNING:  there is already a transaction in progress
+2026-10-17 08:28:33.037 EDT [3139] WARNING:  there is already a transaction in progress
+2026-10-17 08:28:33.515 EDT [3139] WARNING:  there is already a transaction in progress
+2026-10-17 08:28:33.997 EDT [3139] WARNING:  there is already a transaction in progress
+2026-10-17 08:28:34.473 EDT [3139] WARNING:  there is already a transaction in progress
+2026-10-17 08:28:34.998 EDT [3139] WARNING:  there is already a transaction in progress
+2026-10-17 08:28:35.483 EDT [3139] WARNING:  there is already a transaction in progress
+2026-10-17 08:28:35.966 EDT [3139] WARNING:  there is already a transaction in progress
+2026-10-17 08:28:36.619 EDT [3139] WARNING:  there is already a transaction in progress
+2026-10-17 08:28:37.083 EDT [3139] WARNING:  there is already a transaction in progress
+2026-10-17 08:28:37.638 EDT [3323] WARNING:  there is already a transaction in progress
+2026-10-17 08:28:38.135 EDT [3323] WARNING:  there is already a transaction in progress
+2026-10-17 08:28:39.206 EDT [3340] WARNING:  there is already a transaction in progress
+2026-10-17 08:28:39.676 EDT [3340] WARNING:  there is already a transaction in progress
+2026-10-17 08:28:40.127 EDT [3340] WARNING:  there is already a transaction in progress
+2026-10-17 08:28:40.629 EDT [3340] WARNING:  there is already a transaction in progress
+2026-10-17 08:28:41.115 EDT [3340] WARNING:  there is already a transaction in progress
+2026-10-17 08:28:41.631 EDT [3340] WARNING:  there is already a transaction in progress
+2026-10-17 08:28:42.167 EDT [3340] WARNING:  there is already a transaction in progress
+2026-10-17 08:28:42.641 EDT [3340] WARNING:  there is already a transaction in progress
+2026-10-17 08:28:43.115 EDT [3340] WARNING:  there is already a transaction in progress
+2026-10-17 08:28:43.553 EDT [3340] WARNING:  there is already a transaction in progress
+2026-10-17 08:28:45.078 EDT [3403] ERROR:  canceling statement due to statement timeout
+2026-10-17 08:28:45.078 EDT [3403] STATEMENT:  ALTER TEXT SEARCH CONFIGURATION pg_catalog.english ALTER MAPPING FOR asciiword WITH pg_catalog.simple
+2026-10-17 08:28:45.299 EDT [3340] WARNING:  there is already a transaction in progress
+2026-10-17 08:28:46.400 EDT [3421] ERROR:  canceling statement due to statement timeout
+2026-10-17 08:28:46.400 EDT [3421] STATEMENT:  ALTER TEXT SEARCH CONFIGURATION pg_catalog.english ALTER MAPPING FOR asciiword WITH pg_catalog.simple
+2026-10-17 08:28:48.726 EDT [3451] ERROR:  canceling statement due to statement timeout
+2026-10-17 08:28:48.726 EDT [3451] STATEMENT:  ALTER TEXT SEARCH CONFIGURATION pg_catalog.english ALTER MAPPING FOR asciiword WITH pg_catalog.simple
+2026-10-17 08:28:50.972 EDT [3340] ERROR:  could not obtain lock on relation "pg_ts_config_map"
+2026-10-17 08:28:50.972 EDT [3340] STATEMENT:  LOCK TABLE "native_fence"."ts_catalog_lock" IN SHARE MODE NOWAIT
+2026-10-17 08:28:50.991 EDT [3340] WARNING:  there is already a transaction in progress
+2026-10-17 08:28:51.002 EDT [3340] ERROR:  could not obtain lock on relation "pg_ts_config_map"
+2026-10-17 08:28:51.002 EDT [3340] STATEMENT:  LOCK TABLE "native_fence"."ts_catalog_lock" IN SHARE MODE NOWAIT
+2026-10-17 08:28:51.649 EDT [3489] WARNING:  there is already a transaction in progress
+2026-10-17 08:28:52.070 EDT [3489] WARNING:  there is already a transaction in progress
+2026-10-17 08:28:52.529 EDT [3489] WARNING:  there is already a transaction in progress
+2026-10-17 08:28:52.981 EDT [3489] WARNING:  there is already a transaction in progress
+2026-10-17 08:28:53.487 EDT [3489] WARNING:  there is already a transaction in progress
+2026-10-17 08:28:53.946 EDT [3489] WARNING:  there is already a transaction in progress
+2026-10-17 08:28:54.431 EDT [3489] WARNING:  there is already a transaction in progress
+2026-10-17 08:28:54.932 EDT [3489] WARNING:  there is already a transaction in progress
+2026-10-17 08:28:55.444 EDT [3489] WARNING:  there is already a transaction in progress
+2026-10-17 08:28:55.927 EDT [3489] WARNING:  there is already a transaction in progress
+2026-10-17 08:28:57.505 EDT [3546] ERROR:  canceling statement due to statement timeout
+2026-10-17 08:28:57.505 EDT [3546] STATEMENT:  ALTER TEXT SEARCH CONFIGURATION pg_catalog.english ALTER MAPPING FOR asciiword WITH pg_catalog.simple
+2026-10-17 08:28:57.720 EDT [3489] WARNING:  there is already a transaction in progress
+2026-10-17 08:28:58.863 EDT [3562] ERROR:  canceling statement due to statement timeout
+2026-10-17 08:28:58.863 EDT [3562] STATEMENT:  ALTER TEXT SEARCH CONFIGURATION pg_catalog.english ALTER MAPPING FOR asciiword WITH pg_catalog.simple
+2026-10-17 08:29:00.908 EDT [3585] ERROR:  canceling statement due to statement timeout
+2026-10-17 08:29:00.908 EDT [3585] STATEMENT:  ALTER TEXT SEARCH CONFIGURATION pg_catalog.english ALTER MAPPING FOR asciiword WITH pg_catalog.simple
+2026-10-17 08:29:03.514 EDT [3125] LOG:  received fast shutdown request
+2026-10-17 08:29:03.514 EDT [3125] LOG:  aborting any active transactions
+2026-10-17 08:29:03.516 EDT [3125] LOG:  background worker "logical replication launcher" (PID 3135) exited with exit code 1
+2026-10-17 08:29:03.516 EDT [3130] LOG:  shutting down
+2026-10-17 08:29:03.516 EDT [3130] LOG:  checkpoint starting: shutdown immediate
+2026-10-17 08:29:03.568 EDT [3130] LOG:  checkpoint complete: wrote 231 buffers (1.4%), wrote 3 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.047 s, sync=0.001 s, total=0.052 s; sync files=0, longest=0.000 s, average=0.000 s; distance=1573 kB, estimate=1573 kB; lsn=0/1916438, redo lsn=0/1916438
+2026-10-17 08:29:03.580 EDT [3125] LOG:  database system is shut down

@@ -1,0 +1,50 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"ActionRuleState\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ActionInputs\"]"
+      ],
+      "name": "inputs",
+      "optional": false,
+      "type": "ActionInputs"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ActionInputs\"]"
+      ],
+      "name": "outputs",
+      "optional": true,
+      "type": "ActionInputs"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ActionBusinessState\"]"
+      ],
+      "name": "pre",
+      "optional": false,
+      "type": "ActionBusinessState"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ActionBusinessState\"]"
+      ],
+      "name": "post",
+      "optional": true,
+      "type": "ActionBusinessState"
+    }
+  ],
+  "parameters": [],
+  "purpose": "ActionRuleState is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "ActionRuleState"
+}

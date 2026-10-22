@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 4966,
+        "line": 24,
+        "path": "src/generated/core-model.ts",
+        "sha256": "180733ad73a139e0eeff9a2357e3ec9d36194c863284a87df7a716d590c92b6a"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "CoreKeyDefinition",
+    "runtime": "type-only",
+    "signatureText": [
+      "export type Key = {\"id\":Id;\"name\":Id;\"fields\":(KeyFieldReference)[];\"primary\"?:boolean;[key:string]:unknown;};"
+    ]
+  },
+  "id": "[\"api\",\".\",\"CoreKeyDefinition\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 4966,
+      "line": 24,
+      "path": "src/generated/core-model.ts",
+      "sha256": "180733ad73a139e0eeff9a2357e3ec9d36194c863284a87df7a716d590c92b6a"
+    }
+  ],
+  "summary": "Type declaration · src/generated/core-model.ts",
+  "title": "CoreKeyDefinition"
+}

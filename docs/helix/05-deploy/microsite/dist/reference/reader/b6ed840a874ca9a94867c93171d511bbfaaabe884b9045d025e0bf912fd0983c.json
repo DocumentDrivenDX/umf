@@ -1,0 +1,41 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"verifyCoreDatasetValuesCompact\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreDatasetCompactValueCheck\"]"
+      ],
+      "name": "receiptInput",
+      "optional": false,
+      "type": "CoreDatasetCompactValueCheck"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "current",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreDatasetInput\"]"
+      ],
+      "name": "expectedInput",
+      "optional": false,
+      "type": "CoreDatasetInput"
+    }
+  ],
+  "purpose": "verifyCoreDatasetValuesCompact accepts receiptInput, current, expectedInput and returns CoreDatasetCompactValueCheck.",
+  "related": [],
+  "returns": "CoreDatasetCompactValueCheck",
+  "task": "Other APIs",
+  "type": "(receiptInput: CoreDatasetCompactValueCheck, current: Document, expectedInput: CoreDatasetInput) => CoreDatasetCompactValueCheck"
+}

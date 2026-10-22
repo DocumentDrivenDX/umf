@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 24721,
+        "line": 91,
+        "path": "src/core-ideals/relationship-postgresql.ts",
+        "sha256": "a4a1024fb993a68df2d03df3e0131884760bfd7846b5b4affc5f014e47eba822"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "RelationshipPostgresqlProjection",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface RelationshipPostgresqlProjection {operation:'project-relationships-postgresql';version:'1.0.0';status:'projected'|'blocked';source:Document;physicalBinding:Document;authors:CoreRelationshipDeclaration[];request:RelationshipPostgresqlRequest;binding:typeof binding;layout:PostgresqlRelationshipLayoutResult;target?:Document;nativeSql?:string;mappings:{relationship:{module:string;id:string};idealPath:string;carrierTable:string;constraints:string[];targetKey:string;outcome:'approximated'}[];residuals:Residual[];diagnostics:Diagnostic[]}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"RelationshipPostgresqlProjection\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 24721,
+      "line": 91,
+      "path": "src/core-ideals/relationship-postgresql.ts",
+      "sha256": "a4a1024fb993a68df2d03df3e0131884760bfd7846b5b4affc5f014e47eba822"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/relationship-postgresql.ts",
+  "title": "RelationshipPostgresqlProjection"
+}

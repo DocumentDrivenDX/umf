@@ -1,0 +1,13 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"datasetSourcePackage\"]",
+  "kind": "Package",
+  "members": [],
+  "parameters": [],
+  "purpose": "datasetSourcePackage is a package in Extensions. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Extensions",
+  "type": "{ id: string; version: string; coreVersion: string; description: string; schema: { $schema: string; $id: string; type: string; required: string[]; properties: { kind: { enum: string[]; }; data_kind: { enum: string[]; }; description: { type: string; }; generator: { type: string; required: string[]; properties: { id: { type: string; minLength: number; }; version: { type: string; pattern: string; }; }; additionalProperties: boolean; }; reference: { type: string; minLength: number; }; format: { type: string; minLength: number; }; revision: { type: string; minLength: number; }; checksum: { type: string; required: string[]; properties: { algorithm: { const: string; }; value: { type: string; pattern: string; }; }; additionalProperties: boolean; }; license: { type: string; properties: { id: { type: string; minLength: number; }; reference: { type: string; minLength: number; }; redistribution: { enum: string[]; }; attribution: { type: string; }; notices: { type: string; items: { type: string; }; }; }; additionalProperties: boolean; }; provenance: { type: string; properties: { publisher: { type: string; minLength: number; }; retrieved_at: { type: string; minLength: number; }; source_ids: { type: string; items: { type: string; minLength: number; }; }; transformations: { type: string; items: { type: string; minLength: number; }; }; }; additionalProperties: boolean; }; }; allOf: ({ if: { properties: { kind: { const: string; }; }; }; then: { properties: { reference: {}; format: {}; generator?: never; }; required: string[]; }; } | { if: { properties: { kind: { const: string; }; }; }; then: { properties: { generator: {}; reference?: never; format?: never; }; required: string[]; }; })[]; additionalProperties: boolean; }; semantics: string; scopes: string[]; capabilities: { validation: string; directions: never[]; evidence: string[]; }; }"
+}

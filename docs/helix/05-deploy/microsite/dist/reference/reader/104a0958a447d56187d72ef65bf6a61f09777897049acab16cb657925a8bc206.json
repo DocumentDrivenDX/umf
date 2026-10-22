@@ -1,0 +1,80 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"DddGraphqlEntityProjection\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "status",
+      "optional": false,
+      "type": "\"blocked\" | \"reported\" | \"proposed\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "logical",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"DddGraphqlEntityPolicy\"]"
+      ],
+      "name": "policy",
+      "optional": false,
+      "type": "DddGraphqlEntityPolicy"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "profile",
+      "optional": false,
+      "type": "\"graphql-js-17.0.2-sdl\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"DddGraphqlEntityResidual\"]"
+      ],
+      "name": "residuals",
+      "optional": false,
+      "type": "DddGraphqlEntityResidual[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"DddGraphqlEntityMapping\"]"
+      ],
+      "name": "mappings",
+      "optional": false,
+      "type": "DddGraphqlEntityMapping[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "candidate",
+      "optional": true,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "targetArchive",
+      "optional": true,
+      "type": "Document"
+    }
+  ],
+  "parameters": [],
+  "purpose": "DddGraphqlEntityProjection is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "DddGraphqlEntityProjection"
+}

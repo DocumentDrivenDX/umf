@@ -1,0 +1,30 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"recoverKeysSqlServerIdeal\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"KeySqlServerProjection\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "KeySqlServerProjection"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "current",
+      "optional": false,
+      "type": "{ format: \"sqlserver-ddl\"; sql: string; }"
+    }
+  ],
+  "purpose": "recoverKeysSqlServerIdeal accepts input, current and returns Document.",
+  "related": [],
+  "returns": "Document",
+  "task": "Import and export",
+  "type": "(input: KeySqlServerProjection, current: { format: \"sqlserver-ddl\"; sql: string; }) => Document"
+}

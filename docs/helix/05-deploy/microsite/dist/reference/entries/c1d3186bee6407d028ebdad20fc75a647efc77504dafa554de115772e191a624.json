@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 5229,
+        "line": 16,
+        "path": "src/model/relationship-selection.ts",
+        "sha256": "ff2eb21664a68d63a4765d488c94d84a41b395b0adb21f3e3d7ae4fc98b8e562"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "CoreRelationshipSelection",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface CoreRelationshipSelection {operation:'select-core-relationships';version:'2.0.0';source:SelectionSource;query:CoreRelationshipQuery;selection:CoreRelationshipSelectionEntry[];diagnostics:Diagnostic[];residuals:[];provenance:'unverified';navigationScope:'authored-presentation-only'}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"CoreRelationshipSelection\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 5229,
+      "line": 16,
+      "path": "src/model/relationship-selection.ts",
+      "sha256": "ff2eb21664a68d63a4765d488c94d84a41b395b0adb21f3e3d7ae4fc98b8e562"
+    }
+  ],
+  "summary": "Type declaration · src/model/relationship-selection.ts",
+  "title": "CoreRelationshipSelection"
+}

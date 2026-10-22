@@ -1,0 +1,16 @@
+{
+  "alternatives": [
+    "{ state: \"missing\" | \"inapplicable\"; }",
+    "{ state: \"known\" | \"partial\"; facets: CoreFacets; interpreted: CoreFacetInterpreted; uninterpretedPaths: string[]; }"
+  ],
+  "authored": false,
+  "id": "[\"api\",\".\",\"CoreFacetMeaning\"]",
+  "kind": "Type alias",
+  "members": [],
+  "parameters": [],
+  "purpose": "CoreFacetMeaning is a type alias in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "CoreFacetMeaning"
+}

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {importOwlTurtle,getOwlAxiomAnnotations,writeDocument,readDocument,exportOwlTurtle} from '../src';
 const p='@prefix owl: <http://www.w3.org/2002/07/owl#> . @prefix ex: <https://example.org/> . @prefix xsd: <http://www.w3.org/2001/XMLSchema#> . ';
 const cases=[

@@ -1,0 +1,77 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"TableSpecKeyObservation\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "nativePath",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "kind",
+      "optional": false,
+      "type": "\"primary\" | \"alternate\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "state",
+      "optional": false,
+      "type": "\"declared\" | \"absent\" | \"empty\" | \"invalid\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "interpretation",
+      "optional": false,
+      "type": "\"unsupported\" | \"unknown\" | \"declared\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "columns",
+      "optional": false,
+      "type": "string[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "resolvedFields",
+      "optional": false,
+      "type": "{ module: string; element: string; }[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "enforcement",
+      "optional": false,
+      "type": "\"unknown\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "authorIntent",
+      "optional": false,
+      "type": "\"unknown\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "basis",
+      "optional": false,
+      "type": "string"
+    }
+  ],
+  "parameters": [],
+  "purpose": "TableSpecKeyObservation is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "TableSpecKeyObservation"
+}

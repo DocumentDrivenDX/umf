@@ -1,9 +1,11 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
+import {assertJsonDataEqual} from './json-data-assert';
 import assert from 'node:assert/strict';
 import {createHash,randomUUID} from 'node:crypto';
-import {importPostgresqlCatalogCapture,getPostgresqlColumnMetadata,upgradeFieldEnvelope,upgradeNullabilityEnvelope,upgradeCardinalityEnvelope,classifyPostgresqlCardinality,recoverPostgresqlCardinalitySource} from '../../src';
+import {importPostgresqlCatalogCapture, getPostgresqlColumnMetadata, classifyPostgresqlCardinality, recoverPostgresqlCardinalitySource} from '../../src';
 import {backend} from '../../native/postgresql/runtime';
 import {postgresqlCardinalityProjectionCases} from './cardinality-postgresql-projection-cases';
-import {projectCardinalityToPostgresql,recoverCardinalityFromPostgresql} from '../../src/core-ideals/cardinality-postgresql-projection';
+import {projectCardinalityToPostgresql, recoverCardinalityFromPostgresql} from '../../src/core-ideals/cardinality-postgresql-projection';
 const name='umf-cardinality-down-'+randomUUID();let created=false;
 async function run(args:string[],input?:string){
  const p=Bun.spawn(args,{stdin:input===undefined?'ignore':'pipe',stdout:'pipe',stderr:'pipe'});
@@ -32,14 +34,14 @@ try{
   ]:c.request.storage==='jsonb-object'?[["'{\"x\":1}'",'00000'],["'{\"x\":1,\"x\":2}'",'00000'],["'7'",'23514'],["'null'",'23514'],['NULL','00000']]:[['7','00000'],['NULL','00000']];
   const probes=[];
   for(const [value,expected] of vectors){const statement='INSERT INTO '+target+' VALUES('+value+')',state=await probe(statement);assert.equal(state,expected,statement);probes.push({statement,state});}
-  assert.deepEqual(await recoverCardinalityFromPostgresql(result,result.nativeSql!,backend),c.author.target);idealRecoveries++;
+  assertJsonDataEqual(await recoverCardinalityFromPostgresql(result,result.nativeSql!,backend),c.author.target);idealRecoveries++;
   rows.push({...c,result,probes});
  }
  const supplementQuery=await Bun.file('native/postgresql/catalog/cardinality-v1.sql').text();
  const pair=(await sql('BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY;\n'+query+'\n'+supplementQuery+'\nCOMMIT;')).trim().split('\n').map(v=>JSON.parse(v));assert.equal(pair.length,2);
  const capture={profile:'postgresql-catalog-capture-v1',state:'captured',serverVersion:170004,query,snapshot:pair[0],reconstruction:{format:'pg-dump-plain-schema-only',toolVersion:(await exec(['pg_dump','--version'])).trim(),sql:await exec(['pg_dump','-U','postgres','--schema-only','postgres'])}};
  const nativeSource=JSON.stringify(capture),supplement=JSON.stringify(pair[1]);
- const model=upgradeCardinalityEnvelope(upgradeNullabilityEnvelope(upgradeFieldEnvelope(importPostgresqlCatalogCapture(nativeSource,{id:'projected-capture'})).target).target).target;
+ const model=importPostgresqlCatalogCapture(nativeSource,{id:'projected-capture'});
  for(const e of model.modules.find(m=>m.id==='postgresql.columns')!.elements)e.kind='field';
  const observations=[];
  for(const row of rows){
@@ -48,8 +50,8 @@ try{
   assert.ok(column);
   const r=classifyPostgresqlCardinality(model,{column:column.path,nativeSource,supplement,mode:'report',profile:'stored-value'});
   assert.equal(r.status,'classified');assert.equal(r.mapping.cardinality,row.request.storage==='scalar'?'one':row.request.storage==='array'?'array':'unspecified');
-  assert.deepEqual(recoverPostgresqlCardinalitySource(r,r.target!),{nativeSource,supplement});
-  assert.deepEqual(await recoverCardinalityFromPostgresql(row.result,row.result.nativeSql!,backend),row.author.target);
+  assertJsonDataEqual(recoverPostgresqlCardinalitySource(r,r.target!),{nativeSource,supplement});
+  assertJsonDataEqual(await recoverCardinalityFromPostgresql(row.result,row.result.nativeSql!,backend),row.author.target);
   observations.push({table:row.request.tableName,authored:row.author.provenance.cardinality,observed:r.mapping.cardinality,outcome:r.mapping.outcome,residualReasons:r.residuals.map(r=>r.reason)});
  }
  const paths=['scripts/core-ideals/cardinality-postgresql-projection-oracle.ts','scripts/core-ideals/cardinality-postgresql-projection-cases.ts','src/core-ideals/cardinality-postgresql-projection.ts','spec/core/cardinality-postgresql-projection.schema.json','native/postgresql/catalog/image.json','native/postgresql/catalog/snapshot.sql','native/postgresql/catalog/cardinality-v1.sql','src/core-ideals/cardinality-postgresql.ts','src/adapters/postgresql/cardinality-catalog.ts'];

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {UmfError} from '../../model/types';
 const trim=(s:string)=>s.replace(/^[\t\r\n ]+|[\t\r\n ]+$/g,'');
 const grammar=/^([+-]?)([0-9]+(?:\.[0-9]*)?|\.[0-9]+)(?:[eE]([+-]?[0-9]+))?$(?![\s\S])/;

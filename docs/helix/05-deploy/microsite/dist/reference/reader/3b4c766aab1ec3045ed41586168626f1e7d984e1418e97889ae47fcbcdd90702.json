@@ -1,0 +1,88 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"OpenapiSchemaExtraction\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "source",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "pointer",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "retrievalUri",
+      "optional": true,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "openapiVersion",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "dialect",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "dialectOrigin",
+      "optional": false,
+      "type": "\"schema\" | \"document\" | \"openapi-default\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"NativeJson\"]"
+      ],
+      "name": "schema",
+      "optional": false,
+      "type": "NativeJson"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "nativeSchema",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "complete",
+      "optional": false,
+      "type": "false"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "limitations",
+      "optional": false,
+      "type": "string[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "OpenapiSchemaExtraction is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "OpenapiSchemaExtraction"
+}

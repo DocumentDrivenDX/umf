@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 30583,
+        "line": 105,
+        "path": "src/adapters/jsonld/index.ts",
+        "sha256": "df7e73156be5314a3b3118d9d3b21ba8c28f254fe5ea38c25036e0892b839eb7"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "RdfToJsonLdReport",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface RdfToJsonLdReport {source:Document;id:string;baseIRI:string;processingMode:'json-ld-1.0'|'json-ld-1.1';lossPolicy:'report'|'reject';useNativeTypes:boolean;useRdfType:boolean;rdfDirection:null|'i18n-datatype'|'compound-literal';status:'candidate'|'blocked';complete:false;candidate?:Document;diagnostics:Diagnostic[]}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"RdfToJsonLdReport\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 30583,
+      "line": 105,
+      "path": "src/adapters/jsonld/index.ts",
+      "sha256": "df7e73156be5314a3b3118d9d3b21ba8c28f254fe5ea38c25036e0892b839eb7"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/jsonld/index.ts",
+  "title": "RdfToJsonLdReport"
+}

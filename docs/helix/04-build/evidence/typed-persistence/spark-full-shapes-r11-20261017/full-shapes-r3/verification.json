@@ -1,0 +1,30 @@
+{
+  "checks": [
+    "actual generated full native schema instance construction and codec",
+    "native full shape firstpage exact independent oracle",
+    "native fullshape snapshot rows stable after bothrelation updates",
+    "generated typed fullshape snapshot public API matches exact oracle",
+    "generated nine-field model projection includes native joined Customer name",
+    "rawstream17 explicit limit custody",
+    "native original stream page_size7 exactoracle",
+    "typedstream25 explicit limit custody",
+    "generated typed stream page_size11 exactoracle",
+    "modelstream25 explicit limit custody",
+    "generated ninefield model stream page_size11 exact native oracle",
+    "native nonpage fixedsnapshot full projections exact independent oracle",
+    "numericstream38 explicit limit custody",
+    "native exact Decimal38 and Bigint cursor stream equals independent oracle",
+    "exactpage14 explicit limit custody",
+    "exactfullpage limit is explicit unknown without extra fetch",
+    "actual native exhaustion is normal completion",
+    "native fullshape earlyclose restores job group",
+    "invalid stream size refused 0",
+    "invalid stream size refused True",
+    "invalid stream size refused 51",
+    "actual native wrongdimension Vector refuses before result release"
+  ],
+  "failure": null,
+  "sparkStopped": true,
+  "elapsedSeconds": 29.67001120909117,
+  "temporalQualification": "held"
+}

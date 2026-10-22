@@ -85,3 +85,47 @@ separates schema, data, native-engine and realism evidence; review requires
 independently releasable pack scopes; runtime boundaries keep dataset execution
 in TableSpec. Ecology additionally preserves sampling effort, taxonomy revisions,
 censoring, coordinate uncertainty and source-specific reuse restrictions.
+## Shared security concern application (2026-10-08)
+
+FEAT-008 retains the selected fidelity, qualified identity, bounded processing, conformance, browser portability and durable runtime-boundary concerns. Policy metadata is untrusted input; authenticated attributes and current authority are host obligations. No account UI or authentication-provider slot is added to this library. Unknown policy meaning may be retained but cannot authorize execution.
+
+## Typed data access SDK application
+
+FEAT-028 to FEAT-031 adopt the existing fidelity, identity, reproducibility,
+bounded-processing, conformance and consumer-runtime concerns. ADR-002's
+`typescript-bun` selection remains for the stage-one generator. ADR-004 adds the
+`umf_access` Python distribution for the DSL, catalog build and runtime; Python
+is a target and runtime language for this capability only. No UI or
+authentication provider is selected; datastores are host-selected targets, not
+UMF dependencies.
+
+Select `modularity-and-encapsulation` for `src/compilation/` and
+`python/umf_access/`. Architecture owns the module map; CONTRACT-067 to
+CONTRACT-074 own public boundaries. Semantic review checks include relevant-
+assertion closure, codec invariants, absence of runtime SQL assembly and absence
+of engine storage access.
+
+## Generated reference application
+
+FEAT-032 reuses the selected fidelity, identity, reproducibility, bounded
+processing, conformance and consumer-runtime concerns. ADR-002's strict
+TypeScript/Bun and real-browser constraints remain applicable with the existing
+project overrides. No new frontend framework, authentication, datastore or
+environment/configuration service is introduced for this static consumer.
+Apply `modularity-and-encapsulation` to the proposed reference model, build,
+browser and runtime modules mapped in Architecture. CONTRACT-077 owns shared
+surfaces; TD-089 requires boundary-checker adoption and negative controls before
+dependent implementation. This selection does not claim an existing checker
+already enforces those new paths.
+
+## Generated ontology access
+
+FEAT-033 follows the existing fidelity, identity, reproducibility, bounded
+processing and consumer-runtime constraints. ADR-002 governs the generator;
+generated Python uses only the standard library. Future generator/codec modules
+retain the existing encapsulation requirements. Developers need no extra setup.
+
+The owner's shared-API clarification makes stdlib-only generated models and
+runtime expression composition common to table and ontology access. Compilation,
+preparation and optional runtime dependencies belong inside consumer bindings;
+mandatory `@query`/`Param` application scaffolding is superseded by ADR-004.

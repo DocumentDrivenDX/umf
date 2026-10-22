@@ -1,0 +1,87 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"JsonLdFramingReport\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"NativeJson\"]"
+      ],
+      "name": "frame",
+      "optional": false,
+      "type": "NativeJson"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"JsonLdFramingOptions\"]"
+      ],
+      "name": "framingOptions",
+      "optional": false,
+      "type": "JsonLdFramingOptions"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "source",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "lossPolicy",
+      "optional": false,
+      "type": "\"report\" | \"reject\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "status",
+      "optional": false,
+      "type": "\"blocked\" | \"candidate\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "complete",
+      "optional": false,
+      "type": "false"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "candidate",
+      "optional": true,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "resourcesUsed",
+      "optional": false,
+      "type": "string[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Diagnostic\"]"
+      ],
+      "name": "diagnostics",
+      "optional": false,
+      "type": "Diagnostic[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "JsonLdFramingReport is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "JsonLdFramingReport"
+}

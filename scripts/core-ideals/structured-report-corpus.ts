@@ -1,1 +1,2 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {structuredReportCases} from './structured-report-cases';import {inspectStructuredClassification} from '../../src/core-ideals/structured-report';import {backend} from '../../native/postgresql/runtime';const rows=[];for(const receipt of await structuredReportCases())rows.push({receipt,result:await inspectStructuredClassification(receipt,backend)});await Bun.write('fixtures/validation/structured-report-corpus.json',JSON.stringify({rows},null,2)+'\n');

@@ -1,0 +1,814 @@
+{
+  "mypy": {
+    "positive": {
+      "passed": true,
+      "checkerVersion": "mypy 2.4.0 (compiled: yes)",
+      "exitCode": 0,
+      "covered": [],
+      "count": 0,
+      "diagnostics": [],
+      "failure": null
+    },
+    "negative": {
+      "passed": true,
+      "checkerVersion": "mypy 2.4.0 (compiled: yes)",
+      "exitCode": 1,
+      "covered": [
+        "tests/compilation/python/static/actions/negative/key_on_plain_executor.py",
+        "tests/compilation/python/static/actions/negative/missing_replay_key.py",
+        "tests/compilation/python/static/actions/negative/plain_executor_replay.py",
+        "tests/compilation/python/static/actions/negative/validate_wrong_input.py",
+        "tests/compilation/python/static/actions/negative/wrong_input.py",
+        "tests/compilation/python/static/joins/negative/aggregate_decimal_result.py",
+        "tests/compilation/python/static/joins/negative/aggregate_float_parameter.py",
+        "tests/compilation/python/static/joins/negative/foreign_column.py",
+        "tests/compilation/python/static/joins/negative/foreign_projection.py",
+        "tests/compilation/python/static/joins/negative/foreign_relationship.py",
+        "tests/compilation/python/static/joins/negative/null_result.py",
+        "tests/compilation/python/static/joins/negative/unknown_join_column.py",
+        "tests/compilation/python/static/models/negative/negative.py",
+        "tests/compilation/python/static/queries/negative/distinct_wrong_operand.py",
+        "tests/compilation/python/static/queries/negative/distinct_wrong_param.py",
+        "tests/compilation/python/static/queries/negative/foreign_column_filter.py",
+        "tests/compilation/python/static/queries/negative/foreign_column_select.py",
+        "tests/compilation/python/static/queries/negative/foreign_projection.py",
+        "tests/compilation/python/static/queries/negative/ninth_select_column.py",
+        "tests/compilation/python/static/queries/negative/null_optional_filter.py",
+        "tests/compilation/python/static/queries/negative/prefix_wrong_operand.py",
+        "tests/compilation/python/static/queries/negative/prefix_wrong_param.py",
+        "tests/compilation/python/static/queries/negative/unknown_column.py",
+        "tests/compilation/python/static/queries/negative/update_unknown_field.py",
+        "tests/compilation/python/static/queries/negative/update_wrong_type.py",
+        "tests/compilation/python/static/queries/negative/wrong_eq_operand.py",
+        "tests/compilation/python/static/queries/negative/wrong_ne_operand.py",
+        "tests/compilation/python/static/queries/negative/wrong_operand.py",
+        "tests/compilation/python/static/queries/negative/wrong_param.py",
+        "tests/compilation/python/static/search/negative/count.py",
+        "tests/compilation/python/static/search/negative/exists.py",
+        "tests/compilation/python/static/search/negative/foreign_leg.py",
+        "tests/compilation/python/static/search/negative/order_by.py",
+        "tests/compilation/python/static/search/negative/page.py",
+        "tests/compilation/python/static/search/negative/update.py",
+        "tests/compilation/python/static/search/negative/wrong_text.py",
+        "tests/compilation/python/static/search/negative/wrong_vector.py"
+      ],
+      "count": 37,
+      "diagnostics": [
+        {
+          "path": "tests/compilation/python/static/actions/negative/key_on_plain_executor.py",
+          "line": 5,
+          "rule": "call-arg"
+        },
+        {
+          "path": "tests/compilation/python/static/actions/negative/missing_replay_key.py",
+          "line": 5,
+          "rule": "call-arg"
+        },
+        {
+          "path": "tests/compilation/python/static/actions/negative/plain_executor_replay.py",
+          "line": 5,
+          "rule": "type-var"
+        },
+        {
+          "path": "tests/compilation/python/static/actions/negative/validate_wrong_input.py",
+          "line": 5,
+          "rule": "arg-type"
+        },
+        {
+          "path": "tests/compilation/python/static/actions/negative/wrong_input.py",
+          "line": 5,
+          "rule": "arg-type"
+        },
+        {
+          "path": "tests/compilation/python/static/joins/negative/aggregate_decimal_result.py",
+          "line": 7,
+          "rule": "return-value"
+        },
+        {
+          "path": "tests/compilation/python/static/joins/negative/aggregate_float_parameter.py",
+          "line": 5,
+          "rule": "arg-type"
+        },
+        {
+          "path": "tests/compilation/python/static/joins/negative/foreign_column.py",
+          "line": 5,
+          "rule": "arg-type"
+        },
+        {
+          "path": "tests/compilation/python/static/joins/negative/foreign_projection.py",
+          "line": 5,
+          "rule": "arg-type"
+        },
+        {
+          "path": "tests/compilation/python/static/joins/negative/foreign_relationship.py",
+          "line": 5,
+          "rule": "arg-type"
+        },
+        {
+          "path": "tests/compilation/python/static/joins/negative/null_result.py",
+          "line": 4,
+          "rule": "return-value"
+        },
+        {
+          "path": "tests/compilation/python/static/joins/negative/unknown_join_column.py",
+          "line": 5,
+          "rule": "attr-defined"
+        },
+        {
+          "path": "tests/compilation/python/static/models/negative/negative.py",
+          "line": 2,
+          "rule": "arg-type"
+        },
+        {
+          "path": "tests/compilation/python/static/models/negative/negative.py",
+          "line": 3,
+          "rule": "call-arg"
+        },
+        {
+          "path": "tests/compilation/python/static/models/negative/negative.py",
+          "line": 4,
+          "rule": "arg-type"
+        },
+        {
+          "path": "tests/compilation/python/static/models/negative/negative.py",
+          "line": 5,
+          "rule": "call-arg"
+        },
+        {
+          "path": "tests/compilation/python/static/models/negative/negative.py",
+          "line": 6,
+          "rule": "arg-type"
+        },
+        {
+          "path": "tests/compilation/python/static/queries/negative/distinct_wrong_operand.py",
+          "line": 7,
+          "rule": "arg-type"
+        },
+        {
+          "path": "tests/compilation/python/static/queries/negative/distinct_wrong_param.py",
+          "line": 7,
+          "rule": "arg-type"
+        },
+        {
+          "path": "tests/compilation/python/static/queries/negative/foreign_column_filter.py",
+          "line": 9,
+          "rule": "arg-type"
+        },
+        {
+          "path": "tests/compilation/python/static/queries/negative/foreign_column_select.py",
+          "line": 9,
+          "rule": "arg-type"
+        },
+        {
+          "path": "tests/compilation/python/static/queries/negative/foreign_projection.py",
+          "line": 7,
+          "rule": "arg-type"
+        },
+        {
+          "path": "tests/compilation/python/static/queries/negative/ninth_select_column.py",
+          "line": 9,
+          "rule": "call-overload"
+        },
+        {
+          "path": "tests/compilation/python/static/queries/negative/null_optional_filter.py",
+          "line": 7,
+          "rule": "arg-type"
+        },
+        {
+          "path": "tests/compilation/python/static/queries/negative/prefix_wrong_operand.py",
+          "line": 7,
+          "rule": "arg-type"
+        },
+        {
+          "path": "tests/compilation/python/static/queries/negative/prefix_wrong_param.py",
+          "line": 7,
+          "rule": "arg-type"
+        },
+        {
+          "path": "tests/compilation/python/static/queries/negative/unknown_column.py",
+          "line": 9,
+          "rule": "attr-defined"
+        },
+        {
+          "path": "tests/compilation/python/static/queries/negative/update_unknown_field.py",
+          "line": 9,
+          "rule": "call-arg"
+        },
+        {
+          "path": "tests/compilation/python/static/queries/negative/update_wrong_type.py",
+          "line": 9,
+          "rule": "arg-type"
+        },
+        {
+          "path": "tests/compilation/python/static/queries/negative/wrong_eq_operand.py",
+          "line": 9,
+          "rule": "arg-type"
+        },
+        {
+          "path": "tests/compilation/python/static/queries/negative/wrong_ne_operand.py",
+          "line": 9,
+          "rule": "arg-type"
+        },
+        {
+          "path": "tests/compilation/python/static/queries/negative/wrong_operand.py",
+          "line": 9,
+          "rule": "operator"
+        },
+        {
+          "path": "tests/compilation/python/static/queries/negative/wrong_param.py",
+          "line": 9,
+          "rule": "operator"
+        },
+        {
+          "path": "tests/compilation/python/static/search/negative/count.py",
+          "line": 4,
+          "rule": "attr-defined"
+        },
+        {
+          "path": "tests/compilation/python/static/search/negative/exists.py",
+          "line": 4,
+          "rule": "attr-defined"
+        },
+        {
+          "path": "tests/compilation/python/static/search/negative/foreign_leg.py",
+          "line": 5,
+          "rule": "arg-type"
+        },
+        {
+          "path": "tests/compilation/python/static/search/negative/order_by.py",
+          "line": 4,
+          "rule": "attr-defined"
+        },
+        {
+          "path": "tests/compilation/python/static/search/negative/page.py",
+          "line": 4,
+          "rule": "attr-defined"
+        },
+        {
+          "path": "tests/compilation/python/static/search/negative/update.py",
+          "line": 4,
+          "rule": "attr-defined"
+        },
+        {
+          "path": "tests/compilation/python/static/search/negative/wrong_text.py",
+          "line": 4,
+          "rule": "arg-type"
+        },
+        {
+          "path": "tests/compilation/python/static/search/negative/wrong_vector.py",
+          "line": 4,
+          "rule": "arg-type"
+        }
+      ],
+      "failure": null
+    }
+  },
+  "pyright": {
+    "positive": {
+      "passed": true,
+      "checkerVersion": "pyright 1.1.414",
+      "exitCode": 0,
+      "covered": [],
+      "count": 0,
+      "diagnostics": [],
+      "failure": null
+    },
+    "negative": {
+      "passed": true,
+      "checkerVersion": "pyright 1.1.414",
+      "exitCode": 1,
+      "covered": [
+        "tests/compilation/python/static/actions/negative/key_on_plain_executor.py",
+        "tests/compilation/python/static/actions/negative/missing_replay_key.py",
+        "tests/compilation/python/static/actions/negative/plain_executor_replay.py",
+        "tests/compilation/python/static/actions/negative/validate_wrong_input.py",
+        "tests/compilation/python/static/actions/negative/wrong_input.py",
+        "tests/compilation/python/static/joins/negative/aggregate_decimal_result.py",
+        "tests/compilation/python/static/joins/negative/aggregate_float_parameter.py",
+        "tests/compilation/python/static/joins/negative/foreign_column.py",
+        "tests/compilation/python/static/joins/negative/foreign_projection.py",
+        "tests/compilation/python/static/joins/negative/foreign_relationship.py",
+        "tests/compilation/python/static/joins/negative/null_result.py",
+        "tests/compilation/python/static/joins/negative/unknown_join_column.py",
+        "tests/compilation/python/static/models/negative/negative.py",
+        "tests/compilation/python/static/queries/negative/distinct_wrong_operand.py",
+        "tests/compilation/python/static/queries/negative/distinct_wrong_param.py",
+        "tests/compilation/python/static/queries/negative/foreign_column_filter.py",
+        "tests/compilation/python/static/queries/negative/foreign_column_select.py",
+        "tests/compilation/python/static/queries/negative/foreign_projection.py",
+        "tests/compilation/python/static/queries/negative/ninth_select_column.py",
+        "tests/compilation/python/static/queries/negative/null_optional_filter.py",
+        "tests/compilation/python/static/queries/negative/prefix_wrong_operand.py",
+        "tests/compilation/python/static/queries/negative/prefix_wrong_param.py",
+        "tests/compilation/python/static/queries/negative/unknown_column.py",
+        "tests/compilation/python/static/queries/negative/update_unknown_field.py",
+        "tests/compilation/python/static/queries/negative/update_wrong_type.py",
+        "tests/compilation/python/static/queries/negative/wrong_eq_operand.py",
+        "tests/compilation/python/static/queries/negative/wrong_ne_operand.py",
+        "tests/compilation/python/static/queries/negative/wrong_operand.py",
+        "tests/compilation/python/static/queries/negative/wrong_param.py",
+        "tests/compilation/python/static/search/negative/count.py",
+        "tests/compilation/python/static/search/negative/exists.py",
+        "tests/compilation/python/static/search/negative/foreign_leg.py",
+        "tests/compilation/python/static/search/negative/order_by.py",
+        "tests/compilation/python/static/search/negative/page.py",
+        "tests/compilation/python/static/search/negative/update.py",
+        "tests/compilation/python/static/search/negative/wrong_text.py",
+        "tests/compilation/python/static/search/negative/wrong_vector.py"
+      ],
+      "count": 37,
+      "diagnostics": [
+        {
+          "path": "tests/compilation/python/static/actions/negative/key_on_plain_executor.py",
+          "line": 5,
+          "rule": "reportCallIssue"
+        },
+        {
+          "path": "tests/compilation/python/static/actions/negative/missing_replay_key.py",
+          "line": 5,
+          "rule": "reportCallIssue"
+        },
+        {
+          "path": "tests/compilation/python/static/actions/negative/plain_executor_replay.py",
+          "line": 5,
+          "rule": "reportArgumentType"
+        },
+        {
+          "path": "tests/compilation/python/static/actions/negative/validate_wrong_input.py",
+          "line": 5,
+          "rule": "reportArgumentType"
+        },
+        {
+          "path": "tests/compilation/python/static/actions/negative/wrong_input.py",
+          "line": 5,
+          "rule": "reportArgumentType"
+        },
+        {
+          "path": "tests/compilation/python/static/joins/negative/aggregate_decimal_result.py",
+          "line": 7,
+          "rule": "reportReturnType"
+        },
+        {
+          "path": "tests/compilation/python/static/joins/negative/aggregate_float_parameter.py",
+          "line": 5,
+          "rule": "reportArgumentType"
+        },
+        {
+          "path": "tests/compilation/python/static/joins/negative/foreign_column.py",
+          "line": 5,
+          "rule": "reportArgumentType"
+        },
+        {
+          "path": "tests/compilation/python/static/joins/negative/foreign_projection.py",
+          "line": 5,
+          "rule": "reportArgumentType"
+        },
+        {
+          "path": "tests/compilation/python/static/joins/negative/foreign_relationship.py",
+          "line": 5,
+          "rule": "reportArgumentType"
+        },
+        {
+          "path": "tests/compilation/python/static/joins/negative/null_result.py",
+          "line": 4,
+          "rule": "reportReturnType"
+        },
+        {
+          "path": "tests/compilation/python/static/joins/negative/unknown_join_column.py",
+          "line": 5,
+          "rule": "reportAttributeAccessIssue"
+        },
+        {
+          "path": "tests/compilation/python/static/models/negative/negative.py",
+          "line": 2,
+          "rule": "reportArgumentType"
+        },
+        {
+          "path": "tests/compilation/python/static/models/negative/negative.py",
+          "line": 3,
+          "rule": "reportCallIssue"
+        },
+        {
+          "path": "tests/compilation/python/static/models/negative/negative.py",
+          "line": 4,
+          "rule": "reportArgumentType"
+        },
+        {
+          "path": "tests/compilation/python/static/models/negative/negative.py",
+          "line": 5,
+          "rule": "reportCallIssue"
+        },
+        {
+          "path": "tests/compilation/python/static/models/negative/negative.py",
+          "line": 6,
+          "rule": "reportArgumentType"
+        },
+        {
+          "path": "tests/compilation/python/static/models/negative/negative.py",
+          "line": 6,
+          "rule": "reportCallIssue"
+        },
+        {
+          "path": "tests/compilation/python/static/queries/negative/distinct_wrong_operand.py",
+          "line": 7,
+          "rule": "reportArgumentType"
+        },
+        {
+          "path": "tests/compilation/python/static/queries/negative/distinct_wrong_param.py",
+          "line": 7,
+          "rule": "reportArgumentType"
+        },
+        {
+          "path": "tests/compilation/python/static/queries/negative/foreign_column_filter.py",
+          "line": 9,
+          "rule": "reportArgumentType"
+        },
+        {
+          "path": "tests/compilation/python/static/queries/negative/foreign_column_select.py",
+          "line": 9,
+          "rule": "reportArgumentType"
+        },
+        {
+          "path": "tests/compilation/python/static/queries/negative/foreign_projection.py",
+          "line": 7,
+          "rule": "reportArgumentType"
+        },
+        {
+          "path": "tests/compilation/python/static/queries/negative/foreign_projection.py",
+          "line": 7,
+          "rule": "reportCallIssue"
+        },
+        {
+          "path": "tests/compilation/python/static/queries/negative/ninth_select_column.py",
+          "line": 9,
+          "rule": "reportCallIssue"
+        },
+        {
+          "path": "tests/compilation/python/static/queries/negative/null_optional_filter.py",
+          "line": 7,
+          "rule": "reportArgumentType"
+        },
+        {
+          "path": "tests/compilation/python/static/queries/negative/prefix_wrong_operand.py",
+          "line": 7,
+          "rule": "reportArgumentType"
+        },
+        {
+          "path": "tests/compilation/python/static/queries/negative/prefix_wrong_param.py",
+          "line": 7,
+          "rule": "reportArgumentType"
+        },
+        {
+          "path": "tests/compilation/python/static/queries/negative/unknown_column.py",
+          "line": 9,
+          "rule": "reportAttributeAccessIssue"
+        },
+        {
+          "path": "tests/compilation/python/static/queries/negative/update_unknown_field.py",
+          "line": 9,
+          "rule": "reportCallIssue"
+        },
+        {
+          "path": "tests/compilation/python/static/queries/negative/update_wrong_type.py",
+          "line": 9,
+          "rule": "reportArgumentType"
+        },
+        {
+          "path": "tests/compilation/python/static/queries/negative/wrong_eq_operand.py",
+          "line": 9,
+          "rule": "reportArgumentType"
+        },
+        {
+          "path": "tests/compilation/python/static/queries/negative/wrong_ne_operand.py",
+          "line": 9,
+          "rule": "reportArgumentType"
+        },
+        {
+          "path": "tests/compilation/python/static/queries/negative/wrong_operand.py",
+          "line": 9,
+          "rule": "reportOperatorIssue"
+        },
+        {
+          "path": "tests/compilation/python/static/queries/negative/wrong_param.py",
+          "line": 9,
+          "rule": "reportOperatorIssue"
+        },
+        {
+          "path": "tests/compilation/python/static/search/negative/count.py",
+          "line": 4,
+          "rule": "reportAttributeAccessIssue"
+        },
+        {
+          "path": "tests/compilation/python/static/search/negative/exists.py",
+          "line": 4,
+          "rule": "reportAttributeAccessIssue"
+        },
+        {
+          "path": "tests/compilation/python/static/search/negative/foreign_leg.py",
+          "line": 5,
+          "rule": "reportArgumentType"
+        },
+        {
+          "path": "tests/compilation/python/static/search/negative/order_by.py",
+          "line": 4,
+          "rule": "reportAttributeAccessIssue"
+        },
+        {
+          "path": "tests/compilation/python/static/search/negative/page.py",
+          "line": 4,
+          "rule": "reportAttributeAccessIssue"
+        },
+        {
+          "path": "tests/compilation/python/static/search/negative/update.py",
+          "line": 4,
+          "rule": "reportAttributeAccessIssue"
+        },
+        {
+          "path": "tests/compilation/python/static/search/negative/wrong_text.py",
+          "line": 4,
+          "rule": "reportArgumentType"
+        },
+        {
+          "path": "tests/compilation/python/static/search/negative/wrong_vector.py",
+          "line": 4,
+          "rule": "reportArgumentType"
+        }
+      ],
+      "failure": null
+    }
+  },
+  "ty": {
+    "positive": {
+      "passed": true,
+      "checkerVersion": "ty 0.0.88 (64e7f1860 2026-10-15)",
+      "exitCode": 0,
+      "covered": [],
+      "count": 0,
+      "diagnostics": [],
+      "failure": null
+    },
+    "negative": {
+      "passed": true,
+      "checkerVersion": "ty 0.0.88 (64e7f1860 2026-10-15)",
+      "exitCode": 1,
+      "covered": [
+        "tests/compilation/python/static/actions/negative/key_on_plain_executor.py",
+        "tests/compilation/python/static/actions/negative/missing_replay_key.py",
+        "tests/compilation/python/static/actions/negative/plain_executor_replay.py",
+        "tests/compilation/python/static/actions/negative/validate_wrong_input.py",
+        "tests/compilation/python/static/actions/negative/wrong_input.py",
+        "tests/compilation/python/static/joins/negative/aggregate_decimal_result.py",
+        "tests/compilation/python/static/joins/negative/aggregate_float_parameter.py",
+        "tests/compilation/python/static/joins/negative/foreign_column.py",
+        "tests/compilation/python/static/joins/negative/foreign_projection.py",
+        "tests/compilation/python/static/joins/negative/foreign_relationship.py",
+        "tests/compilation/python/static/joins/negative/null_result.py",
+        "tests/compilation/python/static/joins/negative/unknown_join_column.py",
+        "tests/compilation/python/static/models/negative/negative.py",
+        "tests/compilation/python/static/queries/negative/distinct_wrong_operand.py",
+        "tests/compilation/python/static/queries/negative/distinct_wrong_param.py",
+        "tests/compilation/python/static/queries/negative/foreign_column_filter.py",
+        "tests/compilation/python/static/queries/negative/foreign_column_select.py",
+        "tests/compilation/python/static/queries/negative/foreign_projection.py",
+        "tests/compilation/python/static/queries/negative/ninth_select_column.py",
+        "tests/compilation/python/static/queries/negative/null_optional_filter.py",
+        "tests/compilation/python/static/queries/negative/prefix_wrong_operand.py",
+        "tests/compilation/python/static/queries/negative/prefix_wrong_param.py",
+        "tests/compilation/python/static/queries/negative/unknown_column.py",
+        "tests/compilation/python/static/queries/negative/update_unknown_field.py",
+        "tests/compilation/python/static/queries/negative/update_wrong_type.py",
+        "tests/compilation/python/static/queries/negative/wrong_eq_operand.py",
+        "tests/compilation/python/static/queries/negative/wrong_ne_operand.py",
+        "tests/compilation/python/static/queries/negative/wrong_operand.py",
+        "tests/compilation/python/static/queries/negative/wrong_param.py",
+        "tests/compilation/python/static/search/negative/count.py",
+        "tests/compilation/python/static/search/negative/exists.py",
+        "tests/compilation/python/static/search/negative/foreign_leg.py",
+        "tests/compilation/python/static/search/negative/order_by.py",
+        "tests/compilation/python/static/search/negative/page.py",
+        "tests/compilation/python/static/search/negative/update.py",
+        "tests/compilation/python/static/search/negative/wrong_text.py",
+        "tests/compilation/python/static/search/negative/wrong_vector.py"
+      ],
+      "count": 37,
+      "diagnostics": [
+        {
+          "path": "tests/compilation/python/static/actions/negative/key_on_plain_executor.py",
+          "line": 5,
+          "rule": "no-matching-overload"
+        },
+        {
+          "path": "tests/compilation/python/static/actions/negative/missing_replay_key.py",
+          "line": 5,
+          "rule": "no-matching-overload"
+        },
+        {
+          "path": "tests/compilation/python/static/actions/negative/plain_executor_replay.py",
+          "line": 5,
+          "rule": "invalid-argument-type"
+        },
+        {
+          "path": "tests/compilation/python/static/actions/negative/validate_wrong_input.py",
+          "line": 5,
+          "rule": "no-matching-overload"
+        },
+        {
+          "path": "tests/compilation/python/static/actions/negative/wrong_input.py",
+          "line": 5,
+          "rule": "no-matching-overload"
+        },
+        {
+          "path": "tests/compilation/python/static/joins/negative/aggregate_decimal_result.py",
+          "line": 7,
+          "rule": "invalid-return-type"
+        },
+        {
+          "path": "tests/compilation/python/static/joins/negative/aggregate_float_parameter.py",
+          "line": 5,
+          "rule": "invalid-argument-type"
+        },
+        {
+          "path": "tests/compilation/python/static/joins/negative/foreign_column.py",
+          "line": 5,
+          "rule": "invalid-argument-type"
+        },
+        {
+          "path": "tests/compilation/python/static/joins/negative/foreign_projection.py",
+          "line": 5,
+          "rule": "invalid-argument-type"
+        },
+        {
+          "path": "tests/compilation/python/static/joins/negative/foreign_relationship.py",
+          "line": 5,
+          "rule": "invalid-argument-type"
+        },
+        {
+          "path": "tests/compilation/python/static/joins/negative/null_result.py",
+          "line": 4,
+          "rule": "invalid-return-type"
+        },
+        {
+          "path": "tests/compilation/python/static/joins/negative/unknown_join_column.py",
+          "line": 5,
+          "rule": "unresolved-attribute"
+        },
+        {
+          "path": "tests/compilation/python/static/models/negative/negative.py",
+          "line": 2,
+          "rule": "invalid-argument-type"
+        },
+        {
+          "path": "tests/compilation/python/static/models/negative/negative.py",
+          "line": 3,
+          "rule": "unknown-argument"
+        },
+        {
+          "path": "tests/compilation/python/static/models/negative/negative.py",
+          "line": 4,
+          "rule": "invalid-argument-type"
+        },
+        {
+          "path": "tests/compilation/python/static/models/negative/negative.py",
+          "line": 5,
+          "rule": "unknown-argument"
+        },
+        {
+          "path": "tests/compilation/python/static/models/negative/negative.py",
+          "line": 6,
+          "rule": "no-matching-overload"
+        },
+        {
+          "path": "tests/compilation/python/static/queries/negative/distinct_wrong_operand.py",
+          "line": 7,
+          "rule": "invalid-argument-type"
+        },
+        {
+          "path": "tests/compilation/python/static/queries/negative/distinct_wrong_param.py",
+          "line": 7,
+          "rule": "invalid-argument-type"
+        },
+        {
+          "path": "tests/compilation/python/static/queries/negative/foreign_column_filter.py",
+          "line": 9,
+          "rule": "invalid-argument-type"
+        },
+        {
+          "path": "tests/compilation/python/static/queries/negative/foreign_column_select.py",
+          "line": 9,
+          "rule": "invalid-argument-type"
+        },
+        {
+          "path": "tests/compilation/python/static/queries/negative/foreign_projection.py",
+          "line": 7,
+          "rule": "no-matching-overload"
+        },
+        {
+          "path": "tests/compilation/python/static/queries/negative/ninth_select_column.py",
+          "line": 9,
+          "rule": "no-matching-overload"
+        },
+        {
+          "path": "tests/compilation/python/static/queries/negative/null_optional_filter.py",
+          "line": 7,
+          "rule": "invalid-argument-type"
+        },
+        {
+          "path": "tests/compilation/python/static/queries/negative/prefix_wrong_operand.py",
+          "line": 7,
+          "rule": "invalid-argument-type"
+        },
+        {
+          "path": "tests/compilation/python/static/queries/negative/prefix_wrong_param.py",
+          "line": 7,
+          "rule": "invalid-argument-type"
+        },
+        {
+          "path": "tests/compilation/python/static/queries/negative/unknown_column.py",
+          "line": 9,
+          "rule": "unresolved-attribute"
+        },
+        {
+          "path": "tests/compilation/python/static/queries/negative/update_unknown_field.py",
+          "line": 9,
+          "rule": "unknown-argument"
+        },
+        {
+          "path": "tests/compilation/python/static/queries/negative/update_wrong_type.py",
+          "line": 9,
+          "rule": "invalid-argument-type"
+        },
+        {
+          "path": "tests/compilation/python/static/queries/negative/wrong_eq_operand.py",
+          "line": 9,
+          "rule": "invalid-argument-type"
+        },
+        {
+          "path": "tests/compilation/python/static/queries/negative/wrong_ne_operand.py",
+          "line": 9,
+          "rule": "invalid-argument-type"
+        },
+        {
+          "path": "tests/compilation/python/static/queries/negative/wrong_operand.py",
+          "line": 9,
+          "rule": "unsupported-operator"
+        },
+        {
+          "path": "tests/compilation/python/static/queries/negative/wrong_param.py",
+          "line": 9,
+          "rule": "unsupported-operator"
+        },
+        {
+          "path": "tests/compilation/python/static/search/negative/count.py",
+          "line": 4,
+          "rule": "unresolved-attribute"
+        },
+        {
+          "path": "tests/compilation/python/static/search/negative/exists.py",
+          "line": 4,
+          "rule": "unresolved-attribute"
+        },
+        {
+          "path": "tests/compilation/python/static/search/negative/foreign_leg.py",
+          "line": 5,
+          "rule": "invalid-argument-type"
+        },
+        {
+          "path": "tests/compilation/python/static/search/negative/foreign_leg.py",
+          "line": 5,
+          "rule": "invalid-argument-type"
+        },
+        {
+          "path": "tests/compilation/python/static/search/negative/foreign_leg.py",
+          "line": 5,
+          "rule": "invalid-argument-type"
+        },
+        {
+          "path": "tests/compilation/python/static/search/negative/order_by.py",
+          "line": 4,
+          "rule": "unresolved-attribute"
+        },
+        {
+          "path": "tests/compilation/python/static/search/negative/page.py",
+          "line": 4,
+          "rule": "unresolved-attribute"
+        },
+        {
+          "path": "tests/compilation/python/static/search/negative/update.py",
+          "line": 4,
+          "rule": "unresolved-attribute"
+        },
+        {
+          "path": "tests/compilation/python/static/search/negative/wrong_text.py",
+          "line": 4,
+          "rule": "invalid-argument-type"
+        },
+        {
+          "path": "tests/compilation/python/static/search/negative/wrong_vector.py",
+          "line": 4,
+          "rule": "invalid-argument-type"
+        }
+      ],
+      "failure": null
+    }
+  }
+}

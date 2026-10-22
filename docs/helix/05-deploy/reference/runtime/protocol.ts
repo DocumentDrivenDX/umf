@@ -1,0 +1,2 @@
+export interface Request {protocol:1;requestId:string;operationId:string;coreProfile:string;registryProfile:string;inputs:Record<string,string>}
+export interface Response {protocol:1;requestId:string;state:'completed'|'refused'|'failed';outputs:{name:string;mediaType:string;text:string}[];diagnostics:{code:string;path:string;message:string;severity:'error'|'warning'}[];retainedSources:{name:string;mediaType:string;text:string}[]}

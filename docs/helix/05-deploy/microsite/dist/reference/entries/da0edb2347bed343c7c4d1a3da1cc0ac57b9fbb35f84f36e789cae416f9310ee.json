@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 10104,
+        "line": 80,
+        "path": "src/core-ideals/key-parquet-projection.ts",
+        "sha256": "47ab7b2c61153c79c86c5132bac0bc55f9977ea459ff252db5c3544fd5eb0a2c"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "verifyKeysParquetProjection",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: KeyParquetProjection, current: Document): KeyParquetProjection"
+    ]
+  },
+  "id": "[\"api\",\".\",\"verifyKeysParquetProjection\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 10104,
+      "line": 80,
+      "path": "src/core-ideals/key-parquet-projection.ts",
+      "sha256": "47ab7b2c61153c79c86c5132bac0bc55f9977ea459ff252db5c3544fd5eb0a2c"
+    }
+  ],
+  "summary": "Recompute projection and match current native representation; not source authentication.",
+  "title": "verifyKeysParquetProjection"
+}

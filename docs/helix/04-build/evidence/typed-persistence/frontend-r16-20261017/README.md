@@ -1,0 +1,7 @@
+# Installed coherent R16 frontend — 2026-10-17
+
+Temporal qualification remains **HELD**. SDK sourceb51c8773 builds wheel4b507d3c72b9779f888ffbf905fe0feb4a30631a5c66a703754bbcc913d00447; original Weft source3f64056 builds wheele744819a3f0b0fc3d528ffbc36f5421dcfb28b4bbc8eb0256268506afa1a7811. All47 SDK payloads match frozen Git source, wheel and installed bytes, and both installed compiler payloads match the exact wheel. No private compiler source/binary is included.
+
+All three pinned checkers pass positive clients and66 exact-negative files; installed discovery passes293 tests with no failures/errors/skips. Native read/key suites and refactor regeneration remain explicit separate suites, not counted as unit evidence. Static inputs and unit source are retained from the frozen Git commit; later working-tree changes do not relabel this cohort. IntermediateR15 installed293/allthreechecker pass logs are retained as predecessor evidence only; R16 logs are authoritative for the coherent wheel pair.
+
+The profile adds exact original Spark HLL output metadata and the distinct Ashlar direct Field compiler selector, retaining original compiler admission and native owner authority. R16 native search/action/bulk, publicschema/instance and Ashlar proofs are separate scoped packets. Unknown semantics, temporal qualification, managed native authority/receipts, original Truss capabilities, compiler publication, signing and final deployment remain independently gated; this is not full SDK acceptance or a whole-source typing-clean claim.

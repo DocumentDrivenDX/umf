@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Python/JVM parameterized schema outcomes and explicit negative-scale configuration."""
 import json,os,sys
 from pathlib import Path

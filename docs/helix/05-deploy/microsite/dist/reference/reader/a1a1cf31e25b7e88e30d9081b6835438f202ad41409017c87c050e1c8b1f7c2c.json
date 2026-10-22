@@ -1,0 +1,58 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"CoreFacetInterpreted\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "length",
+      "optional": true,
+      "type": "{ min?: number; max?: number; unit: \"unicode-scalar\" | \"byte\"; }"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "precision",
+      "optional": true,
+      "type": "number"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "scale",
+      "optional": true,
+      "type": "number"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "integerWidth",
+      "optional": true,
+      "type": "{ bits: number; signed: boolean; }"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "collectionSize",
+      "optional": true,
+      "type": "{ min?: number; max?: number; }"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreLiteral\"]"
+      ],
+      "name": "range",
+      "optional": true,
+      "type": "{ min?: CoreLiteral; max?: CoreLiteral; minInclusive?: boolean; maxInclusive?: boolean; }"
+    }
+  ],
+  "parameters": [],
+  "purpose": "CoreFacetInterpreted is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "CoreFacetInterpreted"
+}

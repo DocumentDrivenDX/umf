@@ -1,0 +1,212 @@
+{
+  "status": "pass",
+  "scope": "STP-081 AC7 non-temporal installed two-wheel proof; no native or temporal qualification",
+  "commands": [
+    {
+      "label": "build-seeded-wheel",
+      "argv": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-m",
+        "build",
+        "--wheel",
+        "--no-isolation",
+        "--outdir",
+        "/private/tmp/sdk-runtime-fix-r5-20261016/seeded-wheel",
+        "/private/tmp/sdk-runtime-fix-r5-20261016/seeded-source"
+      ],
+      "exitCode": 0
+    },
+    {
+      "label": "author-fixture",
+      "argv": [
+        "/private/tmp/sdk-bun142-recovered/bun",
+        "/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/scripts/access-runtime-fix-fixture.ts",
+        "/private/tmp/sdk-runtime-fix-r5-20261016/fixture"
+      ],
+      "exitCode": 0
+    },
+    {
+      "label": "generate-once",
+      "argv": [
+        "/private/tmp/sdk-bun142-recovered/bun",
+        "/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/scripts/umf-access-generate.ts",
+        "generate",
+        "--request",
+        "/private/tmp/sdk-runtime-fix-r5-20261016/fixture/request.json",
+        "--profile",
+        "/private/tmp/sdk-runtime-fix-r5-20261016/fixture/profile.json",
+        "--output",
+        "/private/tmp/sdk-runtime-fix-r5-20261016/generated"
+      ],
+      "exitCode": 0
+    },
+    {
+      "label": "dependency-site",
+      "argv": [
+        "/private/tmp/umf-sdk-merged/venv/bin/python",
+        "-I",
+        "-c",
+        "import sysconfig;print(sysconfig.get_path('purelib'))"
+      ],
+      "exitCode": 0
+    },
+    {
+      "label": "seeded-venv",
+      "argv": [
+        "uv",
+        "venv",
+        "--python",
+        "/private/tmp/umf-sdk-merged/venv/bin/python",
+        "/private/tmp/sdk-runtime-fix-r5-20261016/seeded-env"
+      ],
+      "exitCode": 0
+    },
+    {
+      "label": "seeded-install",
+      "argv": [
+        "uv",
+        "pip",
+        "install",
+        "--python",
+        "/private/tmp/sdk-runtime-fix-r5-20261016/seeded-env/bin/python",
+        "--no-deps",
+        "/private/tmp/sdk-runtime-fix-r5-20261016/seeded-wheel/umf_access-0.1.0.dev0-py3-none-any.whl"
+      ],
+      "exitCode": 0
+    },
+    {
+      "label": "seeded-site",
+      "argv": [
+        "/private/tmp/sdk-runtime-fix-r5-20261016/seeded-env/bin/python",
+        "-I",
+        "-c",
+        "import sysconfig;print(sysconfig.get_path('purelib'))"
+      ],
+      "exitCode": 0
+    },
+    {
+      "label": "seeded-probe",
+      "argv": [
+        "/private/tmp/sdk-runtime-fix-r5-20261016/seeded-env/bin/python",
+        "-I",
+        "-B",
+        "-c",
+        "import hashlib,importlib.metadata,json,sys,zipfile\nfrom pathlib import Path\nimport umf_access\nfrom decimal import Decimal\nwheel=Path(sys.argv[1]);generated=Path(sys.argv[2]);mode=sys.argv[3]\nassert sys.version_info[:3] == (3,14,8)\nassert importlib.metadata.version('pydantic') == '2.14.1'\nassert umf_access.RUNTIME_ABI == 'umf-access-runtime/0.1'\nsite=Path(umf_access.__file__).parent.parent\nwith zipfile.ZipFile(wheel) as archive:\n payloads=[n for n in archive.namelist() if n.startswith('umf_access/') and not n.endswith('/')]\n for name in payloads: assert(site/name).read_bytes()==archive.read(name),name\nsys.path.insert(0,str(generated))\nfrom runtime_fix import OrderCreate\nfrom runtime_fix.codecs import encode_Order_create\nif mode=='seeded':\n result=encode_Order_create(OrderCreate(order_id='proof',amount=Decimal('1.234')))\n assert result['amount'].as_tuple()==Decimal('1.234').as_tuple()\nelse:\n try: encode_Order_create(OrderCreate(order_id='proof',amount=Decimal('1.234')))\n except ValueError as error:\n  assert 'amount' in str(error) and 'scale' in str(error)\n else: raise AssertionError('scale defect survived fixed wheel')\nprint(json.dumps({'status':'pass','mode':mode,'wheelSha256':hashlib.sha256(wheel.read_bytes()).hexdigest(),'runtime':umf_access.__file__,'verifiedPayloads':len(payloads)}))\n",
+        "/private/tmp/sdk-runtime-fix-r5-20261016/seeded-wheel/umf_access-0.1.0.dev0-py3-none-any.whl",
+        "/private/tmp/sdk-runtime-fix-r5-20261016/generated",
+        "seeded"
+      ],
+      "exitCode": 0
+    },
+    {
+      "label": "seeded-drift-check",
+      "argv": [
+        "/private/tmp/sdk-bun142-recovered/bun",
+        "/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/scripts/umf-access-generate.ts",
+        "check",
+        "--request",
+        "/private/tmp/sdk-runtime-fix-r5-20261016/fixture/request.json",
+        "--profile",
+        "/private/tmp/sdk-runtime-fix-r5-20261016/fixture/profile.json",
+        "--output",
+        "/private/tmp/sdk-runtime-fix-r5-20261016/generated"
+      ],
+      "exitCode": 0
+    },
+    {
+      "label": "fixed-venv",
+      "argv": [
+        "uv",
+        "venv",
+        "--python",
+        "/private/tmp/umf-sdk-merged/venv/bin/python",
+        "/private/tmp/sdk-runtime-fix-r5-20261016/fixed-env"
+      ],
+      "exitCode": 0
+    },
+    {
+      "label": "fixed-install",
+      "argv": [
+        "uv",
+        "pip",
+        "install",
+        "--python",
+        "/private/tmp/sdk-runtime-fix-r5-20261016/fixed-env/bin/python",
+        "--no-deps",
+        "/private/tmp/sdk-runtime-fix-r5-20261016/fixed-wheel/umf_access-0.1.0.dev0-py3-none-any.whl"
+      ],
+      "exitCode": 0
+    },
+    {
+      "label": "fixed-site",
+      "argv": [
+        "/private/tmp/sdk-runtime-fix-r5-20261016/fixed-env/bin/python",
+        "-I",
+        "-c",
+        "import sysconfig;print(sysconfig.get_path('purelib'))"
+      ],
+      "exitCode": 0
+    },
+    {
+      "label": "fixed-probe",
+      "argv": [
+        "/private/tmp/sdk-runtime-fix-r5-20261016/fixed-env/bin/python",
+        "-I",
+        "-B",
+        "-c",
+        "import hashlib,importlib.metadata,json,sys,zipfile\nfrom pathlib import Path\nimport umf_access\nfrom decimal import Decimal\nwheel=Path(sys.argv[1]);generated=Path(sys.argv[2]);mode=sys.argv[3]\nassert sys.version_info[:3] == (3,14,8)\nassert importlib.metadata.version('pydantic') == '2.14.1'\nassert umf_access.RUNTIME_ABI == 'umf-access-runtime/0.1'\nsite=Path(umf_access.__file__).parent.parent\nwith zipfile.ZipFile(wheel) as archive:\n payloads=[n for n in archive.namelist() if n.startswith('umf_access/') and not n.endswith('/')]\n for name in payloads: assert(site/name).read_bytes()==archive.read(name),name\nsys.path.insert(0,str(generated))\nfrom runtime_fix import OrderCreate\nfrom runtime_fix.codecs import encode_Order_create\nif mode=='seeded':\n result=encode_Order_create(OrderCreate(order_id='proof',amount=Decimal('1.234')))\n assert result['amount'].as_tuple()==Decimal('1.234').as_tuple()\nelse:\n try: encode_Order_create(OrderCreate(order_id='proof',amount=Decimal('1.234')))\n except ValueError as error:\n  assert 'amount' in str(error) and 'scale' in str(error)\n else: raise AssertionError('scale defect survived fixed wheel')\nprint(json.dumps({'status':'pass','mode':mode,'wheelSha256':hashlib.sha256(wheel.read_bytes()).hexdigest(),'runtime':umf_access.__file__,'verifiedPayloads':len(payloads)}))\n",
+        "/private/tmp/sdk-runtime-fix-r5-20261016/fixed-wheel/umf_access-0.1.0.dev0-py3-none-any.whl",
+        "/private/tmp/sdk-runtime-fix-r5-20261016/generated",
+        "fixed"
+      ],
+      "exitCode": 0
+    },
+    {
+      "label": "fixed-drift-check",
+      "argv": [
+        "/private/tmp/sdk-bun142-recovered/bun",
+        "/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/scripts/umf-access-generate.ts",
+        "check",
+        "--request",
+        "/private/tmp/sdk-runtime-fix-r5-20261016/fixture/request.json",
+        "--profile",
+        "/private/tmp/sdk-runtime-fix-r5-20261016/fixture/profile.json",
+        "--output",
+        "/private/tmp/sdk-runtime-fix-r5-20261016/generated"
+      ],
+      "exitCode": 0
+    }
+  ],
+  "fixedWheelSha256": "c360781c703b326d676c9e033e53b314502d6636fc3bbc00c6b555a83dab023c",
+  "seededWheelSha256": "004c7b98e041085ab4dc45db17f2a159f46c9315bc2ea94055310400a9932fb5",
+  "changedRuntimePayloads": [
+    "umf_access/values.py"
+  ],
+  "generatedInventory": {
+    "runtime_fix/__init__.py": "1b38905cfbf7a7db0172d360a6311e9acf70c5e7346e6bede8ae17f8eb70e68f",
+    "runtime_fix/_umf/manifest.json": "24385c6364391751ac819cee9cd46f9deb5c18d10f82e2e4d3b2d9b09e2a6e32",
+    "runtime_fix/_umf/sources.json": "edb2b42a4ac56606ef107c069a4ecdcfc27ea5c4be3fb8a94c8d49da7c72ebdc",
+    "runtime_fix/codecs.py": "68b5293e8c52b09864ed5fad4955873915ce08a087b3a82906ecb17054325ba4",
+    "runtime_fix/fields.py": "2de0c3149b2512d61d4687d0674ffa7d6d08bd65f6670bc85f583501107ad188",
+    "runtime_fix/keys.py": "b0e44c60a9f1a326906fbfdb3b1e45fa443ec87b5508f668223842f04818a8d6",
+    "runtime_fix/models.py": "c9b5aa47d21b6b27473f43b4fecdea39efd5d18bc89b545ab6251516d4c27c03",
+    "runtime_fix/py.typed": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+  },
+  "observations": [
+    {
+      "status": "pass",
+      "mode": "seeded",
+      "wheelSha256": "004c7b98e041085ab4dc45db17f2a159f46c9315bc2ea94055310400a9932fb5",
+      "runtime": "/private/tmp/sdk-runtime-fix-r5-20261016/seeded-env/lib/python3.14/site-packages/umf_access/__init__.py",
+      "verifiedPayloads": 33
+    },
+    {
+      "status": "pass",
+      "mode": "fixed",
+      "wheelSha256": "c360781c703b326d676c9e033e53b314502d6636fc3bbc00c6b555a83dab023c",
+      "runtime": "/private/tmp/sdk-runtime-fix-r5-20261016/fixed-env/lib/python3.14/site-packages/umf_access/__init__.py",
+      "verifiedPayloads": 33
+    }
+  ],
+  "temporal": "HELD"
+}

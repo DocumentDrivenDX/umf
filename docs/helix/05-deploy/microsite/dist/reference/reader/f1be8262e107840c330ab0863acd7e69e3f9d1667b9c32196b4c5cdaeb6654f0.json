@@ -1,0 +1,80 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"ProtobufProjection\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "status",
+      "optional": false,
+      "type": "\"blocked\" | \"projected\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "source",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ProtobufProjectionOptions\"]"
+      ],
+      "name": "policy",
+      "optional": false,
+      "type": "ProtobufProjectionOptions"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ProjectionIssue\"]"
+      ],
+      "name": "issues",
+      "optional": false,
+      "type": "ProjectionIssue[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "mappings",
+      "optional": false,
+      "type": "{ sourcePath: string; targetMessage: string; targetField: string; number: number; }[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "nativeSource",
+      "optional": true,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "target",
+      "optional": true,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Diagnostic\"]"
+      ],
+      "name": "targetDiagnostics",
+      "optional": true,
+      "type": "Diagnostic[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "ProtobufProjection is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "ProtobufProjection"
+}

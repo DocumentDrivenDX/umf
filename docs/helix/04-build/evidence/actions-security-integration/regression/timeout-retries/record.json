@@ -1,0 +1,67 @@
+{
+  "scope": "Serial unchanged full-file retries of actual regression timeouts; original failures retained",
+  "records": [
+    {
+      "command": [
+        "bun",
+        "test",
+        "tests/arrow/flatbuffer-encode.test.ts"
+      ],
+      "exitCode": 0,
+      "testFileSha256": "d2a5cf666c087b00a8f547d7ed11445208b958bad150592fbf526e844150e490",
+      "log": "1.log",
+      "logSha256": "8f808ab571f56d23b8b7f63ee7a7c148ec092918c9941650274b54a502426a9a",
+      "durationSeconds": 11.945611000061035
+    },
+    {
+      "command": [
+        "bun",
+        "test",
+        "tests/owl/annotations.test.ts"
+      ],
+      "exitCode": 0,
+      "testFileSha256": "277b05069039ef24fe4c7a846c6da444f7f606c5e492a443be462af07b23878d",
+      "log": "2.log",
+      "logSha256": "9fdc215fe43fc407425d32ff2d955495ca01466e5d12bb3862855c5e1a033663",
+      "durationSeconds": 6.139719009399414
+    },
+    {
+      "command": [
+        "bun",
+        "test",
+        "tests/iceberg/table-promotion.test.ts"
+      ],
+      "exitCode": 0,
+      "testFileSha256": "f866a703f5fe30220e74b6b4ccac7d16d9e2bb136519d460647d793f2bfb8814",
+      "log": "3.log",
+      "logSha256": "ac60b0a53ac6ccc2ed466cbc8c9c527470486e58bcfc51726c9d103a592da6ff",
+      "durationSeconds": 5.179850101470947
+    },
+    {
+      "command": [
+        "bun",
+        "test",
+        "tests/core-ideals/nullability-tablespec.test.ts"
+      ],
+      "exitCode": 0,
+      "testFileSha256": "85d8c062500fa8d19f0694b40e0c18801e6146c94157593d084284894be0a306",
+      "log": "4.log",
+      "logSha256": "76c5cbd20c8c95459345aedeb3beb75ff6f5c12be8a96246b39341d95e07aa24",
+      "durationSeconds": 18.093083143234253
+    },
+    {
+      "command": [
+        "bun",
+        "test",
+        "tests/parquet/schema.test.ts"
+      ],
+      "exitCode": 0,
+      "testFileSha256": "5727377e3ced49a4d44b88630e044bbd2d47984807e6e1adc6b0d2e935497e20",
+      "log": "5.log",
+      "logSha256": "64d3288c7771bf3247ca20821956bab294ab9b98743027609cf7b26da07c7747",
+      "durationSeconds": 3.7666988372802734
+    }
+  ],
+  "complete": true,
+  "allPassed": true
+}

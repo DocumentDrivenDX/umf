@@ -1,0 +1,50 @@
+{
+  "data": {
+    "conflicts": [],
+    "correspondence": "unassessed",
+    "declarations": [
+      {
+        "bytes": 6642,
+        "path": "spec/extensions/jsonld/package.json",
+        "sha256": "071e09ab53751452f525a470f529bbb013a1873875058a4b6ca76624bcfe625d"
+      }
+    ],
+    "evidence": [],
+    "operation": {
+      "apiNames": [],
+      "coreProfiles": [],
+      "extensionVersions": [],
+      "fixturePaths": [],
+      "id": "umf.jsonld@0.1.0:import",
+      "kind": "import",
+      "limitations": [
+        "Recorded scope only; native equivalence and production adoption are separate."
+      ],
+      "runtime": {
+        "availability": "host-only",
+        "profileId": "umf.jsonld@0.1.0:import",
+        "requirements": [
+          "Native runtime / original qualification harness; not executed by this page."
+        ]
+      },
+      "sourceSystem": "JSON-LD · 1.0/1.1; jsonld.js 9.0.0 + UMF processing patch",
+      "subset": "JSON source and explicit context bundle; exact-number expansion with recorded loss events or rejection; flattening and standalone compaction with recorded corpus discrepancies; framing selected views with retained sources, strict flag validation and recorded compatibility blocks; RDF-to-JSON-LD projection with lexical/native type policies; qualified JSON-LD-to-RDF proposals with explicitly recorded strict/binary64 numeric policies with explicit quantization and finite-overflow blocks; optional generalized dataset projection through umf.generalized-rdf; malformed terms omitted with explicit loss events; compound-literal direction conversion with graph/list round-trip evidence; no network",
+      "targetSystem": "UMF",
+      "title": "umf.jsonld · import"
+    }
+  },
+  "id": "[\"integration\",\"umf.jsonld@0.1.0:import\"]",
+  "kind": "integration",
+  "links": [
+    "[\"extension\",\"umf.jsonld\",\"0.1.0\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 134795,
+      "path": "docs/helix/05-deploy/reference/operations.json",
+      "sha256": "793743bbca36e56e90e82df5ef0408b628c434e58cb68aea4d6486349be78e61"
+    }
+  ],
+  "summary": "JSON source and explicit context bundle; exact-number expansion with recorded loss events or rejection; flattening and standalone compaction with recorded corpus discrepancies; framing selected views with retained sources, strict flag validation and recorded compatibility blocks; RDF-to-JSON-LD projection with lexical/native type policies; qualified JSON-LD-to-RDF proposals with explicitly recorded strict/binary64 numeric policies with explicit quantization and finite-overflow blocks; optional generalized dataset projection through umf.generalized-rdf; malformed terms omitted with explicit loss events; compound-literal direction conversion with graph/list round-trip evidence; no network",
+  "title": "umf.jsonld · import"
+}

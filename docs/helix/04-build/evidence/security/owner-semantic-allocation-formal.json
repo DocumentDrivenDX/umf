@@ -1,0 +1,193 @@
+{
+  "status": "conditional-proof-passed",
+  "solverVersion": "4.15.4",
+  "sourceDigests": {
+    "/Users/erik/.codex/worktrees/1598/umf/tools/security/prove-owner-semantic-allocation.py": "ae3d05d62b2cbd8c11af1be64d8101909c3f2cf74b16ec23faf51de24a0e4798",
+    "/Users/erik/.codex/worktrees/1598/umf/docs/helix/02-design/spikes/security/owner-semantic-allocation-v0.1.md": "b9c8146f9bc93af34af9c0ea1db5f8eccf441f89ee86be4f702036f680a87fd7",
+    "/Users/erik/.codex/worktrees/1598/umf/docs/helix/02-design/spikes/security/obligation-assignment-v0.1.md": "d195c2d5a22f1f90dc9a93ecca903a6f4d071839939e8b5b26f9dd521f151c69",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_semantic_coverage.rs": "ff8a8472cc97a731a4dcb5cba0ccab1d44d4d0e6c2f334a2339bc550ff8bee72",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_requirements.rs": "937f259ae5cdca5afbee653d89f7882e6f0bb2a454a6703256d14625e8fe2711",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_backend.rs": "62d32617f85920fb4d8e858c79216c3673a384e613184d9b14af31d6e76033e8"
+  },
+  "sourcesUnchanged": true,
+  "cases": [
+    {
+      "id": "selected-zero-edge-capability-remains-in-custody",
+      "covers": [
+        "US-056-AC7",
+        "US-056-AC10"
+      ],
+      "violation": {
+        "smt": "(declare-fun retained_selection_b (String) Bool)\n(declare-fun b () String)\n(declare-fun retained_selection_a (String) Bool)\n(declare-fun edge_b (String String) Bool)\n(declare-fun edge_a (String String) Bool)\n(declare-fun selection_b (String) Bool)\n(declare-fun selection_a (String) Bool)\n(declare-fun a () String)\n(assert (let ((a!1 (forall ((scope String))\n             (and (not (edge_a scope b)) (not (edge_b scope b))))))\n  (and (forall ((capability String))\n         (= (retained_selection_a capability) (selection_a capability)))\n       (forall ((capability String))\n         (= (retained_selection_b capability) (selection_b capability)))\n       (= a \"cap-a\")\n       (= b \"cap-b\")\n       (selection_a a)\n       (selection_b a)\n       (not (selection_a b))\n       (selection_b b)\n       a!1\n       (forall ((scope String) (capability String))\n         (= (edge_a scope capability) (edge_b scope capability)))\n       (= (retained_selection_a b) (retained_selection_b b)))))\n",
+        "result": "unsat",
+        "replayResult": "unsat",
+        "witness": null
+      },
+      "negativeControl": {
+        "smt": "(declare-fun retained_selection_b (String) Bool)\n(declare-fun b () String)\n(declare-fun retained_selection_a (String) Bool)\n(declare-fun edge_b (String String) Bool)\n(declare-fun edge_a (String String) Bool)\n(declare-fun selection_b (String) Bool)\n(declare-fun selection_a (String) Bool)\n(declare-fun a () String)\n(assert (let ((a!1 (forall ((scope String))\n             (and (not (edge_a scope b)) (not (edge_b scope b)))))\n      (a!2 (forall ((capability String))\n             (= (exists ((scope String)) (edge_a scope capability))\n                (retained_selection_a capability))))\n      (a!3 (forall ((capability String))\n             (= (exists ((scope String)) (edge_b scope capability))\n                (retained_selection_b capability)))))\n  (and (= a \"cap-a\")\n       (= b \"cap-b\")\n       (selection_a a)\n       (selection_b a)\n       (not (selection_a b))\n       (selection_b b)\n       a!1\n       (forall ((scope String) (capability String))\n         (= (edge_a scope capability) (edge_b scope capability)))\n       a!2\n       a!3\n       (= (retained_selection_a b) (retained_selection_b b)))))\n",
+        "result": "sat",
+        "replayResult": "sat",
+        "witness": "[a = \"cap-a\",\n b = \"cap-b\",\n selection_a = [Concat(Unit(99),\n                       Concat(Unit(97),\n                              Concat(Unit(112),\n                                     Concat(Unit(45),\n                                        Unit(98))))) ->\n                False,\n                else -> True],\n retained_selection_b = [else -> False],\n edge_a = [else -> False],\n retained_selection_a = [else -> False],\n selection_b = [else -> True],\n edge_b = [else -> False]]"
+      },
+      "positivePopulation": {
+        "smt": "(declare-fun retained_selection_b (String) Bool)\n(declare-fun b () String)\n(declare-fun retained_selection_a (String) Bool)\n(declare-fun edge_b (String String) Bool)\n(declare-fun edge_a (String String) Bool)\n(declare-fun selection_b (String) Bool)\n(declare-fun selection_a (String) Bool)\n(declare-fun a () String)\n(assert (let ((a!1 (forall ((scope String))\n             (and (not (edge_a scope b)) (not (edge_b scope b))))))\n  (and (forall ((capability String))\n         (= (retained_selection_a capability) (selection_a capability)))\n       (forall ((capability String))\n         (= (retained_selection_b capability) (selection_b capability)))\n       (= a \"cap-a\")\n       (= b \"cap-b\")\n       (selection_a a)\n       (selection_b a)\n       (not (selection_a b))\n       (selection_b b)\n       a!1\n       (forall ((scope String) (capability String))\n         (= (edge_a scope capability) (edge_b scope capability)))\n       (distinct (retained_selection_a b) (retained_selection_b b)))))\n",
+        "result": "sat",
+        "replayResult": "sat",
+        "witness": "[a = \"cap-a\",\n b = \"cap-b\",\n selection_a = [Concat(Unit(99),\n                       Concat(Unit(97),\n                              Concat(Unit(112),\n                                     Concat(Unit(45),\n                                        Unit(98))))) ->\n                False,\n                else -> True],\n retained_selection_a = [Concat(Unit(99),\n                                Concat(Unit(97),\n                                       Concat(Unit(112),\n                                        Concat(Unit(45),\n                                        Unit(98))))) ->\n                         False,\n                         Concat(Unit(99),\n                                Concat(Unit(97),\n                                       Concat(Unit(112),\n                                        Concat(Unit(45),\n                                        Unit(97))))) ->\n                         True,\n                         else -> selection_a(Var(0))],\n retained_selection_b = [Concat(Unit(99),\n                                Concat(Unit(97),\n                                       Concat(Unit(112),\n                                        Concat(Unit(45),\n                                        Unit(98))))) ->\n                         True,\n                         Concat(Unit(99),\n                                Concat(Unit(97),\n                                       Concat(Unit(112),\n                                        Concat(Unit(45),\n                                        Unit(97))))) ->\n                         True,\n                         else -> selection_b(Var(0))],\n edge_a = [else -> False],\n edge_b = [else -> False],\n selection_b = [else -> True]]"
+      }
+    },
+    {
+      "id": "all-complete-selected-candidates-retained",
+      "covers": [
+        "US-056-AC7",
+        "US-056-AC10"
+      ],
+      "violation": {
+        "smt": "(declare-fun b () String)\n(declare-fun a () String)\n(declare-fun assigned (String String) Bool)\n(declare-fun complete (String String) Bool)\n(declare-fun selected (String) Bool)\n(assert (let ((a!1 (forall ((scope String) (capability String))\n             (= (assigned scope capability)\n                (and (selected capability) (complete scope capability))))))\n  (and a!1\n       (selected a)\n       (complete \"scan/s0/read\" a)\n       (not (assigned \"scan/s0/read\" a))\n       (= a \"cap-a\")\n       (= b \"cap-b\"))))\n",
+        "result": "unsat",
+        "replayResult": "unsat",
+        "witness": null
+      },
+      "negativeControl": {
+        "smt": "(declare-fun b () String)\n(declare-fun a () String)\n(declare-fun assigned (String String) Bool)\n(declare-fun complete (String String) Bool)\n(declare-fun selected (String) Bool)\n(assert (and (selected a)\n     (complete \"scan/s0/read\" a)\n     (not (assigned \"scan/s0/read\" a))\n     (selected b)\n     (complete \"scan/s0/read\" b)\n     (assigned \"scan/s0/read\" b)\n     (= a \"cap-a\")\n     (= b \"cap-b\")))\n",
+        "result": "sat",
+        "replayResult": "sat",
+        "witness": "[a = \"cap-a\",\n b = \"cap-b\",\n assigned = [(Concat(Unit(115),\n                     Concat(Unit(99),\n                            Concat(Unit(97),\n                                   Concat(Unit(110),\n                                        Concat(Unit(47),\n                                        Concat(Unit(115),\n                                        Concat(Unit(48),\n                                        Concat(Unit(47),\n                                        Concat(Unit(114),\n                                        Concat(Unit(101),\n                                        Concat(Unit(97),\n                                        Unit(100)))))))))))),\n              Concat(Unit(99),\n                     Concat(Unit(97),\n                            Concat(Unit(112),\n                                   Concat(Unit(45),\n                                        Unit(98)))))) ->\n             True,\n             else -> False],\n selected = [else -> True],\n complete = [else -> True]]"
+      },
+      "positivePopulation": {
+        "smt": "(declare-fun b () String)\n(declare-fun a () String)\n(declare-fun assigned (String String) Bool)\n(declare-fun complete (String String) Bool)\n(declare-fun selected (String) Bool)\n(assert (let ((a!1 (forall ((scope String) (capability String))\n             (= (assigned scope capability)\n                (and (selected capability) (complete scope capability))))))\n  (and a!1\n       (selected a)\n       (complete \"scan/s0/read\" a)\n       (assigned \"scan/s0/read\" a)\n       (selected b)\n       (complete \"scan/s0/read\" b)\n       (assigned \"scan/s0/read\" b)\n       (= a \"cap-a\")\n       (= b \"cap-b\"))))\n",
+        "result": "sat",
+        "replayResult": "sat",
+        "witness": "[a = \"cap-a\",\n b = \"cap-b\",\n assigned = [(Concat(Unit(115),\n                     Concat(Unit(99),\n                            Concat(Unit(97),\n                                   Concat(Unit(110),\n                                        Concat(Unit(47),\n                                        Concat(Unit(115),\n                                        Concat(Unit(48),\n                                        Concat(Unit(47),\n                                        Concat(Unit(114),\n                                        Concat(Unit(101),\n                                        Concat(Unit(97),\n                                        Unit(100)))))))))))),\n              Concat(Unit(99),\n                     Concat(Unit(97),\n                            Concat(Unit(112),\n                                   Concat(Unit(45),\n                                        Unit(97)))))) ->\n             True,\n             (Concat(Unit(115),\n                     Concat(Unit(99),\n                            Concat(Unit(97),\n                                   Concat(Unit(110),\n                                        Concat(Unit(47),\n                                        Concat(Unit(115),\n                                        Concat(Unit(48),\n                                        Concat(Unit(47),\n                                        Concat(Unit(114),\n                                        Concat(Unit(101),\n                                        Concat(Unit(97),\n                                        Unit(100)))))))))))),\n              Concat(Unit(99),\n                     Concat(Unit(97),\n                            Concat(Unit(112),\n                                   Concat(Unit(45),\n                                        Unit(98)))))) ->\n             True,\n             else ->\n             Not(Or(Not(selected(Var(1))),\n                    Not(complete(Var(0), Var(1)))))],\n selected = [else -> True],\n complete = [else -> True]]"
+      }
+    },
+    {
+      "id": "unselected-candidate-never-assigned",
+      "covers": [
+        "US-056-AC7",
+        "US-056-AC10"
+      ],
+      "violation": {
+        "smt": "(declare-fun b () String)\n(declare-fun a () String)\n(declare-fun assigned (String String) Bool)\n(declare-fun selected (String) Bool)\n(declare-fun complete (String String) Bool)\n(assert (let ((a!1 (forall ((scope String) (capability String))\n             (= (assigned scope capability)\n                (and (selected capability) (complete scope capability))))))\n  (and a!1\n       (not (selected a))\n       (assigned \"scan/s0/read\" a)\n       (= a \"cap-a\")\n       (= b \"cap-b\"))))\n",
+        "result": "unsat",
+        "replayResult": "unsat",
+        "witness": null
+      },
+      "negativeControl": {
+        "smt": "(declare-fun b () String)\n(declare-fun a () String)\n(declare-fun assigned (String String) Bool)\n(declare-fun complete (String String) Bool)\n(declare-fun selected (String) Bool)\n(assert (and (not (selected a))\n     (complete \"scan/s0/read\" a)\n     (assigned \"scan/s0/read\" a)\n     (= a \"cap-a\")\n     (= b \"cap-b\")))\n",
+        "result": "sat",
+        "replayResult": "sat",
+        "witness": "[a = \"cap-a\",\n b = \"cap-b\",\n assigned = [else -> True],\n selected = [else -> False],\n complete = [else -> True]]"
+      },
+      "positivePopulation": {
+        "smt": "(declare-fun b () String)\n(declare-fun a () String)\n(declare-fun assigned (String String) Bool)\n(declare-fun complete (String String) Bool)\n(declare-fun selected (String) Bool)\n(assert (let ((a!1 (forall ((scope String) (capability String))\n             (= (assigned scope capability)\n                (and (selected capability) (complete scope capability))))))\n  (and a!1\n       (not (selected a))\n       (complete \"scan/s0/read\" a)\n       (not (assigned \"scan/s0/read\" a))\n       (= a \"cap-a\")\n       (= b \"cap-b\"))))\n",
+        "result": "sat",
+        "replayResult": "sat",
+        "witness": "[a = \"cap-a\",\n b = \"cap-b\",\n assigned = [(Concat(Unit(115),\n                     Concat(Unit(99),\n                            Concat(Unit(97),\n                                   Concat(Unit(110),\n                                        Concat(Unit(47),\n                                        Concat(Unit(115),\n                                        Concat(Unit(48),\n                                        Concat(Unit(47),\n                                        Concat(Unit(114),\n                                        Concat(Unit(101),\n                                        Concat(Unit(97),\n                                        Unit(100)))))))))))),\n              Concat(Unit(99),\n                     Concat(Unit(97),\n                            Concat(Unit(112),\n                                   Concat(Unit(45),\n                                        Unit(97)))))) ->\n             False,\n             else ->\n             Not(Or(Not(selected(Var(1))),\n                    Not(complete(Var(0), Var(1)))))],\n selected = [else -> False],\n complete = [else -> True]]"
+      }
+    },
+    {
+      "id": "partial-feature-union-does-not-cover-complete-scope",
+      "covers": [
+        "US-056-AC7",
+        "US-056-AC10"
+      ],
+      "violation": {
+        "smt": "(declare-fun covered () Bool)\n(declare-fun complete_b () Bool)\n(declare-fun complete_a () Bool)\n(declare-fun fragment_b () Bool)\n(declare-fun fragment_a () Bool)\n(assert (and (= covered (or complete_a complete_b))\n     fragment_a\n     fragment_b\n     (not complete_a)\n     (not complete_b)\n     covered))\n",
+        "result": "unsat",
+        "replayResult": "unsat",
+        "witness": null
+      },
+      "negativeControl": {
+        "smt": "(declare-fun covered () Bool)\n(declare-fun complete_b () Bool)\n(declare-fun complete_a () Bool)\n(declare-fun fragment_b () Bool)\n(declare-fun fragment_a () Bool)\n(assert (and (= covered (or fragment_a fragment_b))\n     fragment_a\n     fragment_b\n     (not complete_a)\n     (not complete_b)\n     covered))\n",
+        "result": "sat",
+        "replayResult": "sat",
+        "witness": "[fragment_b = True,\n fragment_a = True,\n complete_a = False,\n complete_b = False,\n covered = True]"
+      },
+      "positivePopulation": {
+        "smt": "(declare-fun covered () Bool)\n(declare-fun complete_b () Bool)\n(declare-fun complete_a () Bool)\n(declare-fun fragment_b () Bool)\n(declare-fun fragment_a () Bool)\n(assert (and (= covered (or complete_a complete_b))\n     fragment_a\n     fragment_b\n     complete_a\n     (not complete_b)\n     covered))\n",
+        "result": "sat",
+        "replayResult": "sat",
+        "witness": "[fragment_b = True,\n fragment_a = True,\n complete_a = True,\n complete_b = False,\n covered = True]"
+      }
+    },
+    {
+      "id": "selfjoin-and-action-scopes-remain-distinct",
+      "covers": [
+        "US-056-AC7",
+        "US-056-AC10"
+      ],
+      "violation": {
+        "smt": "(declare-datatypes ((Scope 0)) (((scan_action (occurrence String) (action String)) (application))))\n(declare-fun y () String)\n(declare-fun s0 () String)\n(declare-fun x () String)\n(declare-fun s1 () String)\n(assert (and (= s0 \"s0\")\n     (= s1 \"s1\")\n     (= x \"read\")\n     (= y \"query-original\")\n     (or (= (scan_action s0 x) (scan_action s1 x))\n         (= (scan_action s0 x) (scan_action s0 y)))))\n",
+        "result": "unsat",
+        "replayResult": "unsat",
+        "witness": null
+      },
+      "negativeControl": {
+        "smt": "(declare-datatypes ((Scope 0)) (((scan_action (occurrence String) (action String)) (application))))\n(declare-fun y () String)\n(declare-fun s0 () String)\n(declare-fun x () String)\n(declare-fun s1 () String)\n(assert (and (= s0 \"s0\")\n     (= s1 \"s1\")\n     (= x \"read\")\n     (= y \"query-original\")\n     (distinct (scan_action s0 x) (scan_action s1 x))\n     (distinct (scan_action s0 x) (scan_action s0 y))\n     (= (action (scan_action s0 x)) (action (scan_action s1 x)))\n     (= (occurrence (scan_action s0 x)) (occurrence (scan_action s0 y)))))\n",
+        "result": "sat",
+        "replayResult": "sat",
+        "witness": "[x = \"read\", y = \"query-original\", s0 = \"s0\", s1 = \"s1\"]"
+      },
+      "positivePopulation": {
+        "smt": "(declare-datatypes ((Scope 0)) (((scan_action (occurrence String) (action String)) (application))))\n(declare-fun y () String)\n(declare-fun s0 () String)\n(declare-fun x () String)\n(declare-fun s1 () String)\n(assert (and (= s0 \"s0\")\n     (= s1 \"s1\")\n     (= x \"read\")\n     (= y \"query-original\")\n     (distinct (scan_action s0 x) (scan_action s1 x))\n     (distinct (scan_action s0 x) (scan_action s0 y))))\n",
+        "result": "sat",
+        "replayResult": "sat",
+        "witness": "[x = \"read\", y = \"query-original\", s0 = \"s0\", s1 = \"s1\"]"
+      }
+    },
+    {
+      "id": "per-scan-coverage-cannot-discharge-whole-application",
+      "covers": [
+        "US-056-AC7",
+        "US-056-AC10"
+      ],
+      "violation": {
+        "smt": "(declare-fun admit () Bool)\n(declare-fun whole_application () Bool)\n(declare-fun scan1_covered () Bool)\n(declare-fun scan0_covered () Bool)\n(assert (and (= admit (and scan0_covered scan1_covered whole_application))\n     scan0_covered\n     scan1_covered\n     (not whole_application)\n     admit))\n",
+        "result": "unsat",
+        "replayResult": "unsat",
+        "witness": null
+      },
+      "negativeControl": {
+        "smt": "(declare-fun admit () Bool)\n(declare-fun whole_application () Bool)\n(declare-fun scan1_covered () Bool)\n(declare-fun scan0_covered () Bool)\n(assert (and (= admit (and scan0_covered scan1_covered))\n     scan0_covered\n     scan1_covered\n     (not whole_application)\n     admit))\n",
+        "result": "sat",
+        "replayResult": "sat",
+        "witness": "[scan1_covered = True,\n whole_application = False,\n scan0_covered = True,\n admit = True]"
+      },
+      "positivePopulation": {
+        "smt": "(declare-fun admit () Bool)\n(declare-fun whole_application () Bool)\n(declare-fun scan1_covered () Bool)\n(declare-fun scan0_covered () Bool)\n(assert (and (= admit (and scan0_covered scan1_covered whole_application))\n     scan0_covered\n     scan1_covered\n     whole_application\n     admit))\n",
+        "result": "sat",
+        "replayResult": "sat",
+        "witness": "[scan1_covered = True,\n whole_application = True,\n scan0_covered = True,\n admit = True]"
+      }
+    },
+    {
+      "id": "assignment-correspondence-cannot-discharge-native-evidence",
+      "covers": [
+        "US-056-AC7",
+        "US-056-AC10"
+      ],
+      "violation": {
+        "smt": "(declare-fun admit () Bool)\n(declare-fun native_verified () Bool)\n(declare-fun relation_matches () Bool)\n(assert (and (= admit (and relation_matches native_verified))\n     relation_matches\n     (not native_verified)\n     admit))\n",
+        "result": "unsat",
+        "replayResult": "unsat",
+        "witness": null
+      },
+      "negativeControl": {
+        "smt": "(declare-fun admit () Bool)\n(declare-fun native_verified () Bool)\n(declare-fun relation_matches () Bool)\n(assert (and (= admit relation_matches) relation_matches (not native_verified) admit))\n",
+        "result": "sat",
+        "replayResult": "sat",
+        "witness": "[native_verified = False,\n relation_matches = True,\n admit = True]"
+      },
+      "positivePopulation": {
+        "smt": "(declare-fun admit () Bool)\n(declare-fun native_verified () Bool)\n(declare-fun relation_matches () Bool)\n(assert (and (= admit (and relation_matches native_verified))\n     relation_matches\n     native_verified\n     admit))\n",
+        "result": "sat",
+        "replayResult": "sat",
+        "witness": "[native_verified = True,\n relation_matches = True,\n admit = True]"
+      }
+    }
+  ],
+  "nativeImplementationQualified": false,
+  "acceptanceCasesPromoted": [],
+  "scope": "Seven conditional laws over selected/complete candidate predicates, exact unbounded allocation relation, algebraic scope identity and independent whole-application/native conjuncts. Feature-union, first-match omission and collapsed-scope SAT controls model unsafe alternatives; they are not mutations/refinement proofs of Rust. Correct extraction, source/registration/profile authentication, native case sufficiency, execution and enforcement remain independent premises."
+}

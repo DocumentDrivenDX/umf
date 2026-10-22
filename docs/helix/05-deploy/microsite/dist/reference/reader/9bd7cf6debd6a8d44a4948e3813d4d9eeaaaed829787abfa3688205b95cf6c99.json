@@ -1,0 +1,67 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"Bit128BindingPayload\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "profile",
+      "optional": false,
+      "type": "\"umf-binding-3\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CURRENT_CORE_VERSION\"]"
+      ],
+      "name": "logical",
+      "optional": false,
+      "type": "{ documentId: string; coreVersion: typeof CURRENT_CORE_VERSION; }"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "target",
+      "optional": false,
+      "type": "{ system: string; version: string; subset: string; }"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "elements",
+      "optional": false,
+      "type": "{ module: string; element: string; table?: string; partition?: string | null; }[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Bit128FieldBinding\"]"
+      ],
+      "name": "fields",
+      "optional": false,
+      "type": "(Bit128FieldBinding | { module: string; element: string; field?: string; storage: \"column\" | \"embedded\"; column?: string; documentColumn?: string; path?: string[]; })[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "relationships",
+      "optional": false,
+      "type": "unknown[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "indexes",
+      "optional": false,
+      "type": "unknown[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "Bit128BindingPayload is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "Bit128BindingPayload"
+}

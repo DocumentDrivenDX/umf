@@ -1,7 +1,8 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Pinned host-only discovery. It does not classify ideal facets. */
 import assert from 'node:assert/strict';
 import {createHash,randomUUID} from 'node:crypto';
-import {importSqlServerCatalog,exportSqlServerCatalog,getSqlServerColumnMetadata,readDocument,writeDocument} from '../../src';
+import {importSqlServerCatalog, exportSqlServerCatalog, getSqlServerColumnMetadata, readDocument, writeDocument} from '../../src';
 import {sqlServerFacetDiscoveryCases} from './facets-sqlserver-discovery-cases';
 const image='mcr.microsoft.com/mssql/server@sha256:4402d880dd4c34bfa7d8705e56a86cd6c88da80a1f6bbbe741f999e76264a090',name='umf-facets-sqlserver-'+randomUUID(),password='Umf!'+randomUUID()+'A9';
 const observe=process.argv.includes('--observe');let created=false,sqlcmd='/opt/mssql-tools18/bin/sqlcmd';

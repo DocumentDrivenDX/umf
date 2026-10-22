@@ -1,9 +1,10 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {relationshipSqlServerCases,relationshipSqlServerCase} from '../../scripts/core-ideals/relationship-sqlserver-cases';
-import {projectRelationshipToSqlServer,recoverRelationshipSqlServerIdeal,recoverRelationshipSqlServerBinding,recoverRelationshipSqlServerNative,verifyRelationshipSqlServerProjection} from '../../src/core-ideals/relationship-sqlserver-projection';
-import {classifySqlServerRelationships,recoverSqlServerRelationshipSource} from '../../src/core-ideals/relationship-sqlserver';
+import {projectRelationshipToSqlServer, recoverRelationshipSqlServerIdeal, recoverRelationshipSqlServerBinding, recoverRelationshipSqlServerNative, verifyRelationshipSqlServerProjection} from '../../src/core-ideals/relationship-sqlserver-projection';
+import {classifySqlServerRelationships, recoverSqlServerRelationshipSource} from '../../src/core-ideals/relationship-sqlserver';
 import {importSqlServerCatalog} from '../../src/adapters/sqlserver';
-import {readJsonValue,writeJsonValue} from '../../src/model/serialization';
+import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
 // @covers US-045-AC4 @covers US-045-AC6 @covers US-045-AC7 @covers US-045-AC8
 for(const c of relationshipSqlServerCases())test('SQL Server relationship '+c.name,()=>{
  const before=JSON.stringify(c),r=projectRelationshipToSqlServer(c.source,c.author,c.binding,c.request);expect(JSON.stringify(c)).toBe(before);expect(r.status).toBe(c.expected);if(r.status==='blocked'){expect(r.target).toBeUndefined();return;}

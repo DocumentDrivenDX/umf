@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 10546,
+        "line": 139,
+        "path": "src/adapters/delta/ddl.ts",
+        "sha256": "e1f3594cf3bed5590c10cf18a857e89b77e446dfe3794d9ad0c103f368a470d0"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "generateDeltaDDLBundle",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(inputs: readonly Document[]): { sql: string; tables: { documentId: string; sql: string; definition: DeltaDefinition; schemaJson: string; qualification: string; }[]; qualification: string; }"
+    ]
+  },
+  "id": "[\"api\",\".\",\"generateDeltaDDLBundle\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 10546,
+      "line": 139,
+      "path": "src/adapters/delta/ddl.ts",
+      "sha256": "e1f3594cf3bed5590c10cf18a857e89b77e446dfe3794d9ad0c103f368a470d0"
+    }
+  ],
+  "summary": "Complete ordered proposal; no partial bundle escapes a failed table export.",
+  "title": "generateDeltaDDLBundle"
+}

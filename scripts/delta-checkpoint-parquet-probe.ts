@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {readCheckpointParquetTrial} from './experiments/checkpoint-parquet-decoder';
 const exact=process.argv.includes('--exact');
 import {parquetReadObjects} from 'hyparquet';

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import * as u from '../../src';
 import {cardinalityTableSpecCases,tableSpecCardinalitySource} from '../../scripts/core-ideals/cardinality-tablespec-cases';
@@ -35,14 +36,14 @@ test('authored intent, item references and opaque assertions cannot be overwritt
  const unknown=u.copyJson(source) as unknown as u.Document;unknown.modules[0]!.elements[0]!.cardinality='future';
  expect(u.classifyTableSpecCardinality(unknown,{...request,mode:'report'}).status).toBe('blocked');
 });
-test('tampered and stale receipts, malformed requests and legacy source versions refuse',()=>{
+test('tampered and stale receipts, malformed requests and retired core markers refuse',()=>{
  const source=tableSpecCardinalitySource(text),r=u.classifyTableSpecCardinality(source,request);
  const tampered=u.copyJson(r) as unknown as u.TableSpecCardinalityClassification;tampered.mapping.cardinality='one';
  expect(()=>u.verifyTableSpecCardinalityClassification(tampered,tampered.target!)).toThrow('Receipt disagrees');
  const stale=u.copyJson(r.target!) as unknown as u.Document;stale.modules[0]!.elements[0]!.description='changed';
  expect(()=>u.recoverTableSpecCardinalitySource(r,stale)).toThrow('Target changed');
  expect(()=>u.classifyTableSpecCardinality(source,{...request,column:-1})).toThrow();
- expect(()=>u.classifyTableSpecCardinality(u.importTableSpec(text,{id:'old',format:'json'}),request)).toThrow('0.4.0');
+ const retired=u.copyJson(source) as any;retired.umf='0.4.0';expect(()=>u.classifyTableSpecCardinality(retired,request)).toThrow();
  let getters=0;const unsafe={...request};Object.defineProperty(unsafe,'profile',{get(){getters++;return 'runtime-model';},enumerable:true});
  expect(()=>u.classifyTableSpecCardinality(source,unsafe)).toThrow();expect(getters).toBe(0);
  const existing=u.copyJson(source) as unknown as u.Document;existing.vocabularies[u.TABLESPEC_CARDINALITY_EXTENSION]={version:'2.0.0'};
@@ -61,8 +62,8 @@ test('unsafe numeric coercion stays residual while exact large integer tokens re
 test('split archives preserve comments, unknown siblings and opaque files after classification',()=>{
  const files={'table.yaml':'version: "1.0"\ntable_name: vectors\nfuture: 9007199254740993\n','columns/value.yaml':'# retained\ncolumn: {name: value, data_type: EMBEDDING, dimension: 3, future_shape: [a, b]}\nunknownSibling: true\n','notes.txt':'opaque future file\n'};
  const imported=u.importTableSpecBundle(files,{id:'split'});
- const fields=u.classifyTableSpecField(u.upgradeFieldEnvelope(imported).target,{column:0,mode:'strict'}).target!;
- const source=u.upgradeCardinalityEnvelope(u.upgradeNullabilityEnvelope(fields).target).target;
+ const fields=u.classifyTableSpecField(imported,{column:0,mode:'strict'}).target!;
+ const source=fields;
  const result=u.classifyTableSpecCardinality(source,request);expect(result.mapping.cardinality).toBe('array');
  for(const format of ['json','yaml'] as const){
   const receipt=u.readJsonValue(u.writeJsonValue(u.copyJson(result),format),format) as unknown as u.TableSpecCardinalityClassification;

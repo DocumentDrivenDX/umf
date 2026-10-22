@@ -1,0 +1,33 @@
+$ bun test tests/compilation/boundaries.test.ts
+bun test v1.4.3 (26aa4e1a9)
+
+tests/compilation/boundaries.test.ts:
+(pass) actual compilation boundary checker > allows public IR dependency [400.20ms]
+(pass) actual compilation boundary checker > rejects forbidden direction and private reach-through [524.01ms]
+(pass) actual compilation boundary checker > rejects host imports, globals, dynamic loading and unresolved imports [1484.99ms]
+(pass) actual compilation boundary checker > rejects cycles including re-exports [256.21ms]
+(pass) actual compilation boundary checker > IR external dependencies are type-only, including relative imports [363.74ms]
+(pass) actual compilation boundary checker > admits direct public semantic symbols through renamed and star re-exports [2562.64ms]
+(pass) actual compilation boundary checker > refuses private or same-named impostor symbols and leaf module loading [8290.51ms]
+(pass) actual compilation boundary checker > IR admits erased public type queries but refuses runtime use [2737.26ms]
+(pass) actual compilation boundary checker > Python metadata's generated marker seam admits no other generated or semantic APIs [2542.38ms]
+(pass) actual compilation boundary checker > rejects network and runtime code execution in portable modules [1456.46ms]
+(pass) actual Python boundary checker > stdlib extensions pass and third-party imports refuse under python3 [914.31ms]
+(pass) actual Python boundary checker > stdlib extensions pass and third-party imports refuse under python3.14 [4125.77ms]
+(pass) actual Python boundary checker > allows runtime to DSL public boundary [794.23ms]
+(pass) actual Python boundary checker > rejects drivers and Weft outside owned integrations [608.58ms]
+(pass) actual Python boundary checker > rejects private access and relative-import cycles [478.76ms]
+(pass) actual Python boundary checker > bulk exception is narrow; target cannot import generated packages or engines [1578.67ms]
+(pass) actual Python boundary checker > rejects dynamic imports and malformed syntax [1020.24ms]
+(pass) actual Python boundary checker > discovers src layout and rejects host I/O and dynamic import APIs [1859.29ms]
+(pass) actual Python boundary checker > rejects empty scans and scans both source layouts [775.33ms]
+(pass) actual Python boundary checker > named runtime foundations have explicit ownership; arbitrary helpers refuse [1725.61ms]
+(pass) actual Python boundary checker > lifecycle administration owns only its public compiler verifier and native exception imports [4053.55ms]
+(pass) actual Python boundary checker > ordinary head observations cannot import migration authority or general Psycopg2 APIs [2211.01ms]
+(pass) actual Python boundary checker > declared native reads own only the prepared Weft module entry point [1923.90ms]
+(pass) local command and installed pre-commit hook reject real violations [3117.90ms]
+
+ 24 pass
+ 0 fail
+ 174 expect() calls
+Ran 24 tests across 1 file. [46.06s]

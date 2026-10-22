@@ -1,0 +1,49 @@
+{
+  "status": "CORRECTED_SOURCE_ENCODING_PROPOSAL_HELD_PENDING_ROOT_REVIEW",
+  "host": "adb-7405607548213398.18.azuredatabricks.net",
+  "profile": "aidev-cus",
+  "warehouse": "d4b8eb5b4d6e34b8",
+  "startCompute": false,
+  "sqlStatements": 0,
+  "requests": [
+    {
+      "sourceFile": "/private/tmp/sdk-managed-atomic-20261016-r1/statement-009.json",
+      "sourceSha256": "a3da55c6526a4c27ef3d50e64d4d554c0767f0c314bf0e0fb7a9203a2f3dec27",
+      "statementId": "01f1c989-64c6-1f4d-a6d8-46936c649cbe",
+      "requestStatementSha256": "920e625dc94803d07e9ad3e004ceb5908b4e1918d7f76b653496a2e57dc35149",
+      "method": "GET",
+      "path": "/api/2.0/sql/history/queries?filter_by.statement_ids=01f1c989-64c6-1f4d-a6d8-46936c649cbe&filter_by.warehouse_ids=d4b8eb5b4d6e34b8&include_metrics=true&max_results=1"
+    },
+    {
+      "sourceFile": "/private/tmp/sdk-managed-atomic-20261016-r1/statement-015.json",
+      "sourceSha256": "3d52978aa9840d55e3ad10488c4d7b5fac7562de4f34711a1e9a3f7f2d4e6c14",
+      "statementId": "01f1c989-7047-1e3d-ad0c-8edf39f5646f",
+      "requestStatementSha256": "7cac573c946825aae9be7a9f91593fa5df830df45e3e2f2d8823b859dd525c81",
+      "method": "GET",
+      "path": "/api/2.0/sql/history/queries?filter_by.statement_ids=01f1c989-7047-1e3d-ad0c-8edf39f5646f&filter_by.warehouse_ids=d4b8eb5b4d6e34b8&include_metrics=true&max_results=1"
+    }
+  ],
+  "bounds": {
+    "getCalls": 2,
+    "pagesPerStatement": 1,
+    "nativeRowsPerPage": 1,
+    "perCallSeconds": 20,
+    "wholeSeconds": 45,
+    "retries": 0,
+    "redirects": 0
+  },
+  "scope": "owned prior exactStatementId historical metadata discovery only, not production history; no native qualification",
+  "validation": [
+    "require exactly matching query_id and exact warehouse_id (or native legacyendpoint_id ifdocumented)",
+    "is_final/status/executed_as nativeidentity/plans_state/cache_query_id retained; absence/ambiguity failsclosed",
+    "do not follow spark_ui_url,lookup_key or inferred profileendpoint; no undocumentedendpoint/header/sessionoptions",
+    "no resulttableUUID claimed from sourceSQLhash or tablefullnames/path",
+    "if queryprofile unavailable/cachehit, retain prerequisite; do not modify/reexecute originalSQL"
+  ],
+  "wireEncodingAuthority": [
+    "https://raw.githubusercontent.com/databricks/databricks-sdk-py/main/databricks/sdk/_base_client.py#L126-L150",
+    "https://raw.githubusercontent.com/databricks/databricks-sdk-py/main/databricks/sdk/service/sql.py#L8433-L8484",
+    "https://docs.databricks.com/api/query-history/v1/query-history"
+  ],
+  "previousAttempt": "twoGET HTTP400 invalid endpointid caused by JSONarray encoded as scalar; no retry performed"
+}

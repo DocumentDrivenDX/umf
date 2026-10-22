@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 24077,
+        "line": 20,
+        "path": "src/projections/ddd-postgresql/index.ts",
+        "sha256": "61f7ac7b7a701e5071a50185f9660fa7e8441b48c75a07f71e0a8c020d8db3f2"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "DddPostgresqlProjection",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface DddPostgresqlProjection {\n operation:'project-ddd-postgresql';version:'1.0.0';status:'projected'|'blocked';source:Document;binding:Document;policy:DddPostgresqlPolicy;nativeVersion:'17.4';\n mappings:{source:'logical'|'binding'|'policy';path:string;statement:number;kind:'schema'|'table'|'column'|'embedded-check'|'partition'|'key'|'relationship'|'index';target:string;outcome:'exact'|'approximated'}[];\n residuals:{source:'logical'|'binding'|'policy';path:string;value:Json;outcome:'unknown'|'not-expressible'|'approximated';reason:string}[];diagnostics:Diagnostic[];nativeSource?:string;targetArchive?:Document;\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"DddPostgresqlProjection\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 24077,
+      "line": 20,
+      "path": "src/projections/ddd-postgresql/index.ts",
+      "sha256": "61f7ac7b7a701e5071a50185f9660fa7e8441b48c75a07f71e0a8c020d8db3f2"
+    }
+  ],
+  "summary": "Type declaration · src/projections/ddd-postgresql/index.ts",
+  "title": "DddPostgresqlProjection"
+}

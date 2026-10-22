@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Extract schema portions; retain original compressed integration inputs separately."""
 import gzip,json
 from pathlib import Path

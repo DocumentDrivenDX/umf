@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 12555,
+        "line": 96,
+        "path": "src/core-ideals/nullability-postgresql.ts",
+        "sha256": "63d02480f83901ad06ea80156ce732e0d2d23fea20066b9cafb7040e848d4c49"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "verifyPostgresqlNullabilityClassification",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: PostgresqlNullabilityClassification, current: Document): PostgresqlNullabilityClassification"
+    ]
+  },
+  "id": "[\"api\",\".\",\"verifyPostgresqlNullabilityClassification\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 12555,
+      "line": 96,
+      "path": "src/core-ideals/nullability-postgresql.ts",
+      "sha256": "63d02480f83901ad06ea80156ce732e0d2d23fea20066b9cafb7040e848d4c49"
+    }
+  ],
+  "summary": "Receipt consistency is not authentication; any model edit requires reclassification.",
+  "title": "verifyPostgresqlNullabilityClassification"
+}

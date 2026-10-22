@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {importShaclTurtle,importRdfTurtle,proposeShaclEngineValidation,exportRdfNQuads} from '../src';
 const prefix='@prefix ex: <https://example.org/> . @prefix sh: <http://www.w3.org/ns/shacl#> . @prefix xsd: <http://www.w3.org/2001/XMLSchema#> . ',cases:any[]=[];
 function add(id:string,constraint:string,object:string,expected:boolean,dataExtra=''){cases.push({id,expected,shapes:prefix+'ex:s sh:targetNode ex:a ; sh:property [sh:path ex:p ; '+constraint+'] .',data:prefix+'ex:a ex:p '+object+' . '+dataExtra});}

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Independent Apache Thrift Compact Protocol observations, not Parquet IDL validation."""
 import json,struct,math
 from pathlib import Path

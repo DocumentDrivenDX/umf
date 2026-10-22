@@ -1,0 +1,41 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"prepareActionPlanModel\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ActionPlanModelPin\"]"
+      ],
+      "name": "model",
+      "optional": false,
+      "type": "ActionPlanModelPin"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"PortableActionPin\"]"
+      ],
+      "name": "action",
+      "optional": false,
+      "type": "PortableActionPin"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ActionPlanInspectionContext\"]"
+      ],
+      "name": "context",
+      "optional": false,
+      "type": "ActionPlanInspectionContext"
+    }
+  ],
+  "purpose": "prepareActionPlanModel accepts model, action, context and returns ActionPlanArtifact.",
+  "related": [],
+  "returns": "ActionPlanArtifact",
+  "task": "Inspect and select",
+  "type": "(model: ActionPlanModelPin, action: PortableActionPin, context: ActionPlanInspectionContext) => ActionPlanArtifact"
+}

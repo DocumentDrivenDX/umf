@@ -1,0 +1,23 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"getSqlServerIndexMetadata\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "Preserve heap and all observed index rows; column ordinals do not imply portable keys.",
+  "related": [],
+  "returns": "SqlServerIndexMetadata",
+  "task": "Inspect and select",
+  "type": "(document: Document) => SqlServerIndexMetadata"
+}

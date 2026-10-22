@@ -1,0 +1,11 @@
+{
+  "date": "2026-10-15",
+  "kind": "temporal-python-carrier-subset-clarification",
+  "contract": "docs/helix/02-design/contracts/CONTRACT-075-access-temporal-profile.md",
+  "previousSha256": "ae6ecfa2ae7c91168286edd1c2b5ad803382c25e765ea7312d7048fffda327ba",
+  "currentSha256": "f5fd731cba3d7bf985c489c6e561e1ce58b79621d486724ca7329057bc7a7615",
+  "change": "Explicit exact stdlib date/datetime/timezone carrier classes matching Python implementation; no token grammar or portable source change",
+  "portableSourceUnchanged": true,
+  "portableEvidence": "temporal-profile/verification.json",
+  "pythonGeneratedAgreement": "UNTESTED pending B-TP-004 installed-wheel/generated-output replay"
+}

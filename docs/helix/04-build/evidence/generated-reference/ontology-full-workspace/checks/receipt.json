@@ -1,0 +1,14 @@
+{
+  "scope": "Host full-ontology default and responsive graph viewport; immutable schema-browser 2.0.0",
+  "inputDigest": "df78f6c33410373e94194a081039c399c6826e5f2e53f08138b63b04809dec3f",
+  "manifestSha256": "5c53e53c215d9e104458def0ad9ef62a2c7e2af59aa80179ff0243fc4381d02c",
+  "browserChecks": {
+    "main": 30,
+    "reader": 14,
+    "ontology": 16
+  },
+  "referenceTests": 22,
+  "referenceAssertions": 13295,
+  "toolsTypeScript": "pass",
+  "independentGenerationAndDriftRefusal": "pass; reference test suite spawns two independent generations"
+}

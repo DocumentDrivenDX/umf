@@ -1,0 +1,912 @@
+{
+  "relational": {
+    "umf": "0.10.0",
+    "id": "typed-access-relational",
+    "vocabularies": {
+      "umf.access": {
+        "version": "0.1.0"
+      }
+    },
+    "modules": [
+      {
+        "id": "fixture",
+        "namespace": "fixture",
+        "elements": [
+          {
+            "id": "Item",
+            "kind": "record",
+            "members": [
+              {
+                "module": "fixture",
+                "element": "id"
+              },
+              {
+                "module": "fixture",
+                "element": "a"
+              },
+              {
+                "module": "fixture",
+                "element": "b"
+              },
+              {
+                "module": "fixture",
+                "element": "n"
+              },
+              {
+                "module": "fixture",
+                "element": "amount"
+              },
+              {
+                "module": "fixture",
+                "element": "label"
+              },
+              {
+                "module": "fixture",
+                "element": "day"
+              },
+              {
+                "module": "fixture",
+                "element": "instant"
+              },
+              {
+                "module": "fixture",
+                "element": "local"
+              },
+              {
+                "module": "fixture",
+                "element": "requiredValue"
+              }
+            ],
+            "keys": [
+              {
+                "id": "pk",
+                "name": "pk",
+                "fields": [
+                  {
+                    "module": "fixture",
+                    "element": "id"
+                  }
+                ]
+              }
+            ],
+            "extensions": {},
+            "name": "Item"
+          },
+          {
+            "id": "id",
+            "name": "id",
+            "kind": "field",
+            "scalarType": "string",
+            "cardinality": "one",
+            "nullability": "required",
+            "extensions": {}
+          },
+          {
+            "id": "a",
+            "name": "a",
+            "kind": "field",
+            "scalarType": "boolean",
+            "cardinality": "one",
+            "nullability": "absent-allowed",
+            "extensions": {}
+          },
+          {
+            "id": "b",
+            "name": "b",
+            "kind": "field",
+            "scalarType": "boolean",
+            "cardinality": "one",
+            "nullability": "absent-allowed",
+            "extensions": {}
+          },
+          {
+            "id": "n",
+            "name": "n",
+            "kind": "field",
+            "scalarType": "integer",
+            "cardinality": "one",
+            "nullability": "absent-allowed",
+            "extensions": {},
+            "facets": {
+              "integerWidth": {
+                "bits": 64,
+                "signed": true
+              }
+            }
+          },
+          {
+            "id": "amount",
+            "name": "amount",
+            "kind": "field",
+            "scalarType": "decimal",
+            "cardinality": "one",
+            "nullability": "absent-allowed",
+            "extensions": {},
+            "facets": {
+              "precision": 12,
+              "scale": 2
+            }
+          },
+          {
+            "id": "label",
+            "name": "label",
+            "kind": "field",
+            "scalarType": "string",
+            "cardinality": "one",
+            "nullability": "absent-allowed",
+            "extensions": {}
+          },
+          {
+            "id": "day",
+            "name": "day",
+            "kind": "field",
+            "scalarType": "date",
+            "cardinality": "one",
+            "nullability": "absent-allowed",
+            "extensions": {}
+          },
+          {
+            "id": "instant",
+            "name": "instant",
+            "kind": "field",
+            "scalarType": "timestamp",
+            "cardinality": "one",
+            "nullability": "absent-allowed",
+            "extensions": {}
+          },
+          {
+            "id": "local",
+            "name": "local",
+            "kind": "field",
+            "scalarType": "timestamp",
+            "cardinality": "one",
+            "nullability": "absent-allowed",
+            "extensions": {}
+          },
+          {
+            "id": "requiredValue",
+            "kind": "field",
+            "scalarType": "string",
+            "cardinality": "one",
+            "nullability": "required",
+            "extensions": {},
+            "name": "requiredValue"
+          }
+        ],
+        "extensions": {
+          "umf.access": {
+            "views": [
+              {
+                "record": {
+                  "module": "fixture",
+                  "element": "Item"
+                },
+                "fields": [
+                  {
+                    "field": {
+                      "module": "fixture",
+                      "element": "id"
+                    },
+                    "row": {
+                      "missing": false,
+                      "null": false
+                    },
+                    "create": {
+                      "missing": false,
+                      "null": false
+                    },
+                    "mutable": false,
+                    "generated": false
+                  },
+                  {
+                    "field": {
+                      "module": "fixture",
+                      "element": "a"
+                    },
+                    "row": {
+                      "missing": false,
+                      "null": true
+                    },
+                    "create": {
+                      "missing": true,
+                      "null": true
+                    },
+                    "mutable": true,
+                    "generated": false
+                  },
+                  {
+                    "field": {
+                      "module": "fixture",
+                      "element": "b"
+                    },
+                    "row": {
+                      "missing": false,
+                      "null": true
+                    },
+                    "create": {
+                      "missing": true,
+                      "null": true
+                    },
+                    "mutable": true,
+                    "generated": false
+                  },
+                  {
+                    "field": {
+                      "module": "fixture",
+                      "element": "n"
+                    },
+                    "row": {
+                      "missing": false,
+                      "null": true
+                    },
+                    "create": {
+                      "missing": true,
+                      "null": true
+                    },
+                    "mutable": true,
+                    "generated": false
+                  },
+                  {
+                    "field": {
+                      "module": "fixture",
+                      "element": "amount"
+                    },
+                    "row": {
+                      "missing": false,
+                      "null": true
+                    },
+                    "create": {
+                      "missing": true,
+                      "null": true
+                    },
+                    "mutable": true,
+                    "generated": false
+                  },
+                  {
+                    "field": {
+                      "module": "fixture",
+                      "element": "label"
+                    },
+                    "row": {
+                      "missing": false,
+                      "null": true
+                    },
+                    "create": {
+                      "missing": true,
+                      "null": true
+                    },
+                    "mutable": true,
+                    "generated": false
+                  },
+                  {
+                    "field": {
+                      "module": "fixture",
+                      "element": "day"
+                    },
+                    "row": {
+                      "missing": false,
+                      "null": true
+                    },
+                    "create": {
+                      "missing": true,
+                      "null": true
+                    },
+                    "mutable": true,
+                    "generated": false
+                  },
+                  {
+                    "field": {
+                      "module": "fixture",
+                      "element": "instant"
+                    },
+                    "row": {
+                      "missing": false,
+                      "null": true
+                    },
+                    "create": {
+                      "missing": true,
+                      "null": true
+                    },
+                    "mutable": true,
+                    "generated": false,
+                    "temporal": "instant"
+                  },
+                  {
+                    "field": {
+                      "module": "fixture",
+                      "element": "local"
+                    },
+                    "row": {
+                      "missing": false,
+                      "null": true
+                    },
+                    "create": {
+                      "missing": true,
+                      "null": true
+                    },
+                    "mutable": true,
+                    "generated": false,
+                    "temporal": "local"
+                  },
+                  {
+                    "field": {
+                      "module": "fixture",
+                      "element": "requiredValue"
+                    },
+                    "row": {
+                      "missing": false,
+                      "null": false
+                    },
+                    "create": {
+                      "missing": false,
+                      "null": false
+                    },
+                    "mutable": true,
+                    "generated": false
+                  }
+                ]
+              }
+            ],
+            "columns": [
+              {
+                "binding": {
+                  "sourceId": "typed-access-pg-binding",
+                  "module": "fixture"
+                },
+                "target": {
+                  "platform": "postgresql",
+                  "majorVersion": "17"
+                },
+                "columns": [
+                  {
+                    "field": {
+                      "module": "fixture",
+                      "element": "id"
+                    },
+                    "type": "text",
+                    "notNull": true,
+                    "generation": null
+                  },
+                  {
+                    "field": {
+                      "module": "fixture",
+                      "element": "a"
+                    },
+                    "type": "boolean",
+                    "notNull": false,
+                    "generation": null
+                  },
+                  {
+                    "field": {
+                      "module": "fixture",
+                      "element": "b"
+                    },
+                    "type": "boolean",
+                    "notNull": false,
+                    "generation": null
+                  },
+                  {
+                    "field": {
+                      "module": "fixture",
+                      "element": "n"
+                    },
+                    "type": "bigint",
+                    "notNull": false,
+                    "generation": null
+                  },
+                  {
+                    "field": {
+                      "module": "fixture",
+                      "element": "amount"
+                    },
+                    "type": "numeric(12,2)",
+                    "notNull": false,
+                    "generation": null
+                  },
+                  {
+                    "field": {
+                      "module": "fixture",
+                      "element": "label"
+                    },
+                    "type": "text",
+                    "notNull": false,
+                    "generation": null
+                  },
+                  {
+                    "field": {
+                      "module": "fixture",
+                      "element": "day"
+                    },
+                    "type": "date",
+                    "notNull": false,
+                    "generation": null
+                  },
+                  {
+                    "field": {
+                      "module": "fixture",
+                      "element": "instant"
+                    },
+                    "type": "timestamptz",
+                    "notNull": false,
+                    "generation": null
+                  },
+                  {
+                    "field": {
+                      "module": "fixture",
+                      "element": "local"
+                    },
+                    "type": "timestamp(6)",
+                    "notNull": false,
+                    "generation": null
+                  },
+                  {
+                    "field": {
+                      "module": "fixture",
+                      "element": "requiredValue"
+                    },
+                    "type": "text",
+                    "notNull": true,
+                    "generation": null
+                  }
+                ]
+              }
+            ],
+            "search": [],
+            "searchBindings": []
+          }
+        }
+      }
+    ]
+  },
+  "propertyStore": {
+    "umf": "0.10.0",
+    "id": "typed-access-engine",
+    "vocabularies": {
+      "umf.access": {
+        "version": "0.1.0"
+      }
+    },
+    "modules": [
+      {
+        "id": "fixture",
+        "namespace": "fixture",
+        "elements": [
+          {
+            "id": "Item",
+            "kind": "record",
+            "members": [
+              {
+                "module": "fixture",
+                "element": "id"
+              },
+              {
+                "module": "fixture",
+                "element": "a"
+              },
+              {
+                "module": "fixture",
+                "element": "b"
+              },
+              {
+                "module": "fixture",
+                "element": "n"
+              },
+              {
+                "module": "fixture",
+                "element": "amount"
+              },
+              {
+                "module": "fixture",
+                "element": "label"
+              },
+              {
+                "module": "fixture",
+                "element": "day"
+              },
+              {
+                "module": "fixture",
+                "element": "instant"
+              },
+              {
+                "module": "fixture",
+                "element": "local"
+              },
+              {
+                "module": "fixture",
+                "element": "requiredValue"
+              }
+            ],
+            "keys": [
+              {
+                "id": "pk",
+                "name": "pk",
+                "fields": [
+                  {
+                    "module": "fixture",
+                    "element": "id"
+                  }
+                ]
+              }
+            ],
+            "extensions": {},
+            "name": "Item"
+          },
+          {
+            "id": "id",
+            "name": "id",
+            "kind": "field",
+            "scalarType": "string",
+            "cardinality": "one",
+            "nullability": "required",
+            "extensions": {}
+          },
+          {
+            "id": "a",
+            "name": "a",
+            "kind": "field",
+            "scalarType": "boolean",
+            "cardinality": "one",
+            "nullability": "absent-allowed",
+            "extensions": {}
+          },
+          {
+            "id": "b",
+            "name": "b",
+            "kind": "field",
+            "scalarType": "boolean",
+            "cardinality": "one",
+            "nullability": "absent-allowed",
+            "extensions": {}
+          },
+          {
+            "id": "n",
+            "name": "n",
+            "kind": "field",
+            "scalarType": "integer",
+            "cardinality": "one",
+            "nullability": "absent-allowed",
+            "extensions": {},
+            "facets": {
+              "integerWidth": {
+                "bits": 64,
+                "signed": true
+              }
+            }
+          },
+          {
+            "id": "amount",
+            "name": "amount",
+            "kind": "field",
+            "scalarType": "decimal",
+            "cardinality": "one",
+            "nullability": "absent-allowed",
+            "extensions": {},
+            "facets": {
+              "precision": 12,
+              "scale": 2
+            }
+          },
+          {
+            "id": "label",
+            "name": "label",
+            "kind": "field",
+            "scalarType": "string",
+            "cardinality": "one",
+            "nullability": "absent-allowed",
+            "extensions": {}
+          },
+          {
+            "id": "day",
+            "name": "day",
+            "kind": "field",
+            "scalarType": "date",
+            "cardinality": "one",
+            "nullability": "absent-allowed",
+            "extensions": {}
+          },
+          {
+            "id": "instant",
+            "name": "instant",
+            "kind": "field",
+            "scalarType": "timestamp",
+            "cardinality": "one",
+            "nullability": "absent-allowed",
+            "extensions": {}
+          },
+          {
+            "id": "local",
+            "name": "local",
+            "kind": "field",
+            "scalarType": "timestamp",
+            "cardinality": "one",
+            "nullability": "absent-allowed",
+            "extensions": {}
+          },
+          {
+            "id": "requiredValue",
+            "kind": "field",
+            "scalarType": "string",
+            "cardinality": "one",
+            "nullability": "required",
+            "extensions": {},
+            "name": "requiredValue"
+          }
+        ],
+        "extensions": {
+          "umf.access": {
+            "views": [
+              {
+                "record": {
+                  "module": "fixture",
+                  "element": "Item"
+                },
+                "fields": [
+                  {
+                    "field": {
+                      "module": "fixture",
+                      "element": "id"
+                    },
+                    "row": {
+                      "missing": false,
+                      "null": false
+                    },
+                    "create": {
+                      "missing": false,
+                      "null": false
+                    },
+                    "mutable": false,
+                    "generated": false
+                  },
+                  {
+                    "field": {
+                      "module": "fixture",
+                      "element": "a"
+                    },
+                    "row": {
+                      "missing": true,
+                      "null": true
+                    },
+                    "create": {
+                      "missing": true,
+                      "null": true
+                    },
+                    "mutable": true,
+                    "generated": false
+                  },
+                  {
+                    "field": {
+                      "module": "fixture",
+                      "element": "b"
+                    },
+                    "row": {
+                      "missing": true,
+                      "null": true
+                    },
+                    "create": {
+                      "missing": true,
+                      "null": true
+                    },
+                    "mutable": true,
+                    "generated": false
+                  },
+                  {
+                    "field": {
+                      "module": "fixture",
+                      "element": "n"
+                    },
+                    "row": {
+                      "missing": true,
+                      "null": true
+                    },
+                    "create": {
+                      "missing": true,
+                      "null": true
+                    },
+                    "mutable": true,
+                    "generated": false
+                  },
+                  {
+                    "field": {
+                      "module": "fixture",
+                      "element": "amount"
+                    },
+                    "row": {
+                      "missing": true,
+                      "null": true
+                    },
+                    "create": {
+                      "missing": true,
+                      "null": true
+                    },
+                    "mutable": true,
+                    "generated": false
+                  },
+                  {
+                    "field": {
+                      "module": "fixture",
+                      "element": "label"
+                    },
+                    "row": {
+                      "missing": true,
+                      "null": true
+                    },
+                    "create": {
+                      "missing": true,
+                      "null": true
+                    },
+                    "mutable": true,
+                    "generated": false
+                  },
+                  {
+                    "field": {
+                      "module": "fixture",
+                      "element": "day"
+                    },
+                    "row": {
+                      "missing": true,
+                      "null": true
+                    },
+                    "create": {
+                      "missing": true,
+                      "null": true
+                    },
+                    "mutable": true,
+                    "generated": false
+                  },
+                  {
+                    "field": {
+                      "module": "fixture",
+                      "element": "instant"
+                    },
+                    "row": {
+                      "missing": true,
+                      "null": true
+                    },
+                    "create": {
+                      "missing": true,
+                      "null": true
+                    },
+                    "mutable": true,
+                    "generated": false,
+                    "temporal": "instant"
+                  },
+                  {
+                    "field": {
+                      "module": "fixture",
+                      "element": "local"
+                    },
+                    "row": {
+                      "missing": true,
+                      "null": true
+                    },
+                    "create": {
+                      "missing": true,
+                      "null": true
+                    },
+                    "mutable": true,
+                    "generated": false,
+                    "temporal": "local"
+                  },
+                  {
+                    "field": {
+                      "module": "fixture",
+                      "element": "requiredValue"
+                    },
+                    "row": {
+                      "missing": false,
+                      "null": false
+                    },
+                    "create": {
+                      "missing": false,
+                      "null": false
+                    },
+                    "mutable": true,
+                    "generated": false
+                  }
+                ]
+              }
+            ],
+            "columns": [],
+            "search": [],
+            "searchBindings": []
+          }
+        }
+      }
+    ]
+  },
+  "binding": {
+    "umf": "0.10.0",
+    "id": "typed-access-pg-binding",
+    "vocabularies": {
+      "umf.binding": {
+        "version": "0.1.0"
+      }
+    },
+    "modules": [],
+    "extensions": {
+      "umf.binding": {
+        "profile": "umf-binding-1",
+        "logical": {
+          "documentId": "typed-access-relational",
+          "coreVersion": "0.10.0"
+        },
+        "target": {
+          "system": "postgresql",
+          "version": "17",
+          "subset": "single-table-tranche-a-fixture"
+        },
+        "elements": [
+          {
+            "module": "fixture",
+            "element": "Item",
+            "table": "typed_access_items"
+          }
+        ],
+        "fields": [
+          {
+            "module": "fixture",
+            "element": "id",
+            "storage": "column",
+            "column": "id"
+          },
+          {
+            "module": "fixture",
+            "element": "a",
+            "storage": "column",
+            "column": "a"
+          },
+          {
+            "module": "fixture",
+            "element": "b",
+            "storage": "column",
+            "column": "b"
+          },
+          {
+            "module": "fixture",
+            "element": "n",
+            "storage": "column",
+            "column": "n"
+          },
+          {
+            "module": "fixture",
+            "element": "amount",
+            "storage": "column",
+            "column": "amount"
+          },
+          {
+            "module": "fixture",
+            "element": "label",
+            "storage": "column",
+            "column": "label"
+          },
+          {
+            "module": "fixture",
+            "element": "day",
+            "storage": "column",
+            "column": "day"
+          },
+          {
+            "module": "fixture",
+            "element": "instant",
+            "storage": "column",
+            "column": "instant"
+          },
+          {
+            "module": "fixture",
+            "element": "local",
+            "storage": "column",
+            "column": "local"
+          },
+          {
+            "module": "fixture",
+            "element": "requiredValue",
+            "storage": "column",
+            "column": "required_value"
+          }
+        ],
+        "relationships": [],
+        "indexes": []
+      }
+    }
+  }
+}

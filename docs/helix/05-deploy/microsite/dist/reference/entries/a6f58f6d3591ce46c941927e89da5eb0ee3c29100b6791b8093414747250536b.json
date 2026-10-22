@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 288,
+        "line": 2,
+        "path": "src/model/errors.ts",
+        "sha256": "66ce08de12f9bbf0d19da058d70a9be645fe1c8ca5ee1a666b0289281a0ee08c"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "UmfError",
+    "runtime": "unassessed",
+    "signatureText": [
+      "export class UmfError extends Error {constructor(readonly code:string,message:string,readonly path=''){super(message);this.name='UmfError';}}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"UmfError\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 288,
+      "line": 2,
+      "path": "src/model/errors.ts",
+      "sha256": "66ce08de12f9bbf0d19da058d70a9be645fe1c8ca5ee1a666b0289281a0ee08c"
+    }
+  ],
+  "summary": "Generic errors have no generated/core-language dependency.",
+  "title": "UmfError"
+}

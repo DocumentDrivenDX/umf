@@ -1,12 +1,13 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
-import {classifyAvroCardinality,recoverAvroCardinalityBundle,type AvroCardinalityRequest} from '../../src/core-ideals/cardinality-avro';
+import {classifyAvroCardinality, recoverAvroCardinalityBundle, type AvroCardinalityRequest} from '../../src/core-ideals/cardinality-avro';
 import {avroAvailabilitySource} from '../../scripts/core-ideals/nullability-avro-cases';
-import {upgradeCardinalityEnvelope} from '../../src/model/cardinality-transition';
+
 import {exportAvroBundle} from '../../src/adapters/avro';
-import {readJsonValue,writeJsonValue} from '../../src/model/serialization';
+import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
 import {validateDocument} from '../../src/validation/document';
 import fixture from '../../fixtures/avro/cardinality-cases.json';
-function prepare(schema:string,dependencies:{id:string;schema:string}[]=[]){const initial=avroAvailabilitySource(schema,dependencies,'cardinality.Example');return {source:upgradeCardinalityEnvelope(initial.source).target,request:{column:initial.column,nativeSource:schema,dependencies,identity:{module:'logical',element:'value'},profile:'present-non-null-schema',mode:'strict'} as AvroCardinalityRequest};}
+function prepare(schema:string,dependencies:{id:string;schema:string}[]=[]){const initial=avroAvailabilitySource(schema,dependencies,'cardinality.Example');return {source:initial.source,request:{column:initial.column,nativeSource:schema,dependencies,identity:{module:'logical',element:'value'},profile:'present-non-null-schema',mode:'strict'} as AvroCardinalityRequest};}
 
 test('schema shape classification publishes nested logical Fields and preserves exact native text through both receipt formats',()=>{
  for(const c of fixture.cases){

@@ -41,6 +41,14 @@ Example schemas and fake values alone leave relationships, semantic rules and co
 - PACK-05: Distinguish official originals, traceable projections and generated supplements with source versions, checksums, reuse terms and transformation lineage. CSV ZIP serialization must define exact values, null/empty distinctions, time and Unicode before publication.
 - PACK-06: Qualify each consumer path with actual schema-generation, export/reload and independent semantic checks. DuckDB is a portable relational lane; Sail is a fast Spark-compatible lane; Spark and optional operator-run Databricks qualification remain distinct evidence.
 
+- PACK-07: Ship a versioned, explicitly selected loader companion for bounded source acquisition, backfill, refresh and retained-input replay. Expose configuration, dependencies, checkpoint/recovery policy, source scope and machine-readable run evidence. Retain original bytes and revisions; failed collection cannot masquerade as empty coverage. Consumer execution stays outside the portable library.
+
+- PACK-08: The browser presents a compact, responsive workspace with readable display labels and exact identifiers, adequate field widths, searchable field details, and explicit links between tables, ontology and source artifacts. Structured technical metadata uses progressive disclosure; original metadata and material qualifications remain accessible.
+
+- PACK-09: Distribute the schema browser as an independently versioned reusable software package. Consumers can host the assets and mount the same tables, artifact and ontology views with their own catalog, without a UMF microsite dependency or end-user Bun runtime. Embed routing and styles remain isolated; original metadata and rights guarantees apply unchanged. Publish to npm for installation by name; the microsite consumes an exact integrity-locked released package and verifies asset/workspace parity, with no independent renderer build.
+
+- PACK-10: Publish a versioned embedding contract and catalog schema with bounded inline/lazy sources, configurable categories, annotations and revision history. Hosts can select entries and receive readiness, navigation and structured errors through an ESM API or origin-checked iframe protocol. Strict-CSP source inspection requires no dynamic code generation. Ship independent themed assets and reusable keyboard-accessible property/map components, structural revision comparison, reproducible build provenance and exact-source preservation. Qualify these in a generic browser host before release.
+
 ## User Stories
 
 - [US-060: Reuse a domain pack across schema and dataset tooling](../user-stories/US-060-domain-pack-catalog.md).
@@ -71,4 +79,4 @@ Per-domain profile semantics and archive compatibility beyond the delivered lega
 
 ## Out of Scope
 
-UMF data-generation or database-execution runtime, automatic source fetching, production loading, universal domain equivalence and blanket scientific/business realism claims.
+UMF data-generation or database-execution runtime, implicit source fetching, production database loading, universal domain equivalence and blanket scientific/business realism claims.

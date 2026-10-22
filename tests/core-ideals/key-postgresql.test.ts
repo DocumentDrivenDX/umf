@@ -1,8 +1,9 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {backend} from '../../native/postgresql/runtime';
 import {importPostgresqlCatalogCapture} from '../../src/adapters/postgresql/catalog';
-import {classifyPostgresqlKeys,verifyPostgresqlKeyClassification,recoverPostgresqlKeySource,postgresqlKeysPackage} from '../../src/core-ideals/key-postgresql';
-import {readJsonValue,writeJsonValue} from '../../src/model/serialization';
+import {classifyPostgresqlKeys, verifyPostgresqlKeyClassification, recoverPostgresqlKeySource, postgresqlKeysPackage} from '../../src/core-ideals/key-postgresql';
+import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
 import {validateDocument} from '../../src/validation/document';
 import {Registry} from '../../src/registry/registry';
 import proof from '../../fixtures/validation/key-postgresql-discovery-native.json';

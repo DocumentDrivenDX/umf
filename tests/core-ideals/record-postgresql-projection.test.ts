@@ -1,11 +1,12 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {postgresqlRecordCase,postgresqlRecordProjectionCases} from '../../scripts/core-ideals/record-postgresql-projection-cases';
-import {projectRecordToPostgresql,recoverRecordFromPostgresql} from '../../src/core-ideals/record-postgresql-projection';
+import {projectRecordToPostgresql, recoverRecordFromPostgresql} from '../../src/core-ideals/record-postgresql-projection';
 import {getPostgresqlDdlDeclarations} from '../../src/adapters/postgresql/declarations';
-import {getPostgresqlSource,exportPostgresqlSql} from '../../src/adapters/postgresql';
+import {getPostgresqlSource, exportPostgresqlSql} from '../../src/adapters/postgresql';
 import {backend} from '../../native/postgresql/runtime';
 import {copyJson} from '../../src/model/json';
-import {readJsonValue,writeJsonValue} from '../../src/model/serialization';
+import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
 test('record members compile in ideal order and recover source through both receipt formats',async()=>{
  for(const empty of [false,true]){const {source,author,request}=postgresqlRecordCase('Orders',empty),result=await projectRecordToPostgresql(author,request,backend);
  expect(result.status).toBe('projected');expect(result.residuals).toEqual([]);expect(getPostgresqlSource(result.target!)).toBe(result.nativeSql!);

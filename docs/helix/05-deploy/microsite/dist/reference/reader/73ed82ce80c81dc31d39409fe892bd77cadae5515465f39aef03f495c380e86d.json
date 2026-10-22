@@ -1,0 +1,48 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"evaluateShaclPropertyPath\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "shapes",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"RdfNode\"]"
+      ],
+      "name": "shape",
+      "optional": false,
+      "type": "RdfNode"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "data",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "focus",
+      "optional": false,
+      "type": "Value"
+    }
+  ],
+  "purpose": "Focus blank labels are local to data. Named datasets require explicit graph selection before this call.",
+  "related": [],
+  "returns": "Value[]",
+  "task": "Other APIs",
+  "type": "(shapes: Document, shape: RdfNode, data: Document, focus: Value) => Value[]"
+}

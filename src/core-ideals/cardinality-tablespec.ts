@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
+import {CURRENT_CORE_VERSION} from '../generated/core-model';
 import {copyJson} from '../model/json';
 import {UmfError,pointer,type Document,type Json,type Diagnostic,type Cardinality,type ExtensionPackage} from '../model/types';
 import {type NativeJson} from '../model/native-json';
@@ -5,11 +7,9 @@ import {verifyCoreCardinalityDeclaration,type CoreCardinalityDeclaration} from '
 import {exportTableSpec,exportTableSpecBundle,getTableSpecColumn,TABLESPEC_EXTENSION} from '../adapters/tablespec';
 import {validateDocument} from '../validation/document';
 import {createValidator} from '../validation/schema';
-import legacy from '../../spec/core/schema.json';
-import fields from '../../spec/core/field-document.schema.json';
-import availability from '../../spec/core/nullability-document.schema.json';
-import core from '../../spec/core/cardinality-document.schema.json';
-import authorSchema from '../../spec/core/cardinality-operation.schema.json';
+
+import core from '../../spec/core/schema.json';
+import authorSchema from '../../spec/core/cardinality-operation-v4.schema.json';
 import nativeSchema from '../../spec/core/native-json.schema.json';
 import schema from '../../spec/core/tablespec-cardinality-classification.schema.json';
 import manifest from '../../spec/extensions/tablespec-cardinality/package.json';
@@ -26,7 +26,7 @@ export interface TableSpecCardinalityClassification {
  mapping:{origin:'classified';idealPath:string;nativePath:string;nativeFragment:NativeJson;cardinality:Cardinality;interpretation:'declared'|'unknown'|'unsupported';outcome:'exact'|'unknown'|'not-expressible';basis:'Explicit native data_type and uncoerced dimension under selected metadata profile; item and execution semantics remain native'};
  residuals:{path:string;value:Json;reason:string;recovery:typeof recovery}[];diagnostics:Diagnostic[];
 }
-const validator=createValidator();for(const s of [legacy,fields,availability,core,authorSchema,nativeSchema])validator.addSchema(s);
+const validator=createValidator();for(const s of [core,authorSchema,nativeSchema])validator.addSchema(s);
 const check=validator.compile(schema),checkRequest=validator.compile(schema.properties.request);
 function nativeArchive(source:Document):string|Record<string,string>{
  const payload=source.extensions?.[TABLESPEC_EXTENSION];
@@ -37,7 +37,7 @@ const canonical=(value:Json):string=>Array.isArray(value)?'['+value.map(canonica
 export function classifyTableSpecCardinality(input:Document,options:TableSpecCardinalityRequest):TableSpecCardinalityClassification {
  const source=copyJson(input) as unknown as Document,request=copyJson(options) as unknown as TableSpecCardinalityRequest;
  if(!checkRequest(request))throw new UmfError('TABLESPEC_CARDINALITY_REQUEST',JSON.stringify(checkRequest.errors));
- if(!validateDocument(source).valid||source.umf!=='0.4.0')throw new UmfError('TABLESPEC_CARDINALITY_SOURCE','Valid core 0.4.0 required; migrate explicitly');
+ if(!validateDocument(source).valid||source.umf!==CURRENT_CORE_VERSION)throw new UmfError('TABLESPEC_CARDINALITY_SOURCE','Valid core 0.10.0 required; migrate explicitly');
  nativeArchive(source); // Verify metadata/archive consistency without pretending to run native validation.
  const nativeFragment=getTableSpecColumn(source,request.column);
  if(nativeFragment.kind!=='object')throw new UmfError('TABLESPEC_CARDINALITY_COLUMN','Expected native column');

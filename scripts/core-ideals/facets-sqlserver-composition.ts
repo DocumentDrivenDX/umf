@@ -1,6 +1,8 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Compose emitted SQL with independently captured catalog tables, preserving
  * native inference separately from retained author intent. */
 import assert from 'node:assert/strict';
+import {assertJsonDataEqual} from './json-data-assert';
 import {createHash} from 'node:crypto';
 import * as u from '../../src';
 import {facetsSqlServerProjectionCases} from './facets-sqlserver-projection-cases';
@@ -16,12 +18,12 @@ for(const [index,row] of facetsSqlServerProjectionCases().entries()){
  // Full aggregate catalog recovery is qualified separately by the native oracle.
  const nativeSource=JSON.stringify({...capture,tables:[table]},null,2)+'\n';
  let source=u.importSqlServerCatalog(nativeSource,{id:'sqlserver-facet-composition'});
- source=u.upgradeFacetEnvelope(u.upgradeCardinalityEnvelope(u.upgradeNullabilityEnvelope(u.upgradeFieldEnvelope(source).target).target).target).target;
+
  const column=u.getSqlServerColumnMetadata(source)[0]!,identity={module:'logical',element:'value'};
  source.modules.push({id:'logical',namespace:'',elements:[{id:'value',kind:'field',name:column.element.name!,cardinality:'one',...(column.element.scalarType?{scalarType:column.element.scalarType}:{}),extensions:{}}]});
  const classification=u.classifySqlServerFacets(source,{column:column.path,nativeSource,identity,mode:'report',profile:'stored-value',obligation:row.request.obligation});assert.equal(classification.status,'classified');assert.ok(classification.target);
  assert.equal(u.recoverSqlServerFacetSource(classification,classification.target),nativeSource);nativeRecoveries++;
- assert.deepEqual(u.recoverFacetsFromSqlServer(projection,projection.nativeSql!),projection.source);idealRecoveries++;
+ assertJsonDataEqual(u.recoverFacetsFromSqlServer(projection,projection.nativeSql!),projection.source);idealRecoveries++;
  const authored=row.author.operation==='declare-core-facets'?row.author.request:{};
  const same=Object.entries(authored).every(([k,v])=>JSON.stringify((classification.mapping.facets as Record<string,unknown>)[k])===JSON.stringify(v));
  const nativeRefinements=Object.fromEntries(Object.entries(classification.mapping.facets).filter(([k])=>!Object.hasOwn(authored,k))),residuals=[...projection.residuals,...classification.residuals];
@@ -31,12 +33,12 @@ for(const [index,row] of facetsSqlServerProjectionCases().entries()){
 assert.equal(results.length,proof.projected);
 // Also exercise the original aggregate capture, not only table views.
 let full=u.importSqlServerCatalog(proof.sourceText,{id:'sqlserver-full-composition'});
-full=u.upgradeFacetEnvelope(u.upgradeCardinalityEnvelope(u.upgradeNullabilityEnvelope(u.upgradeFieldEnvelope(full).target).target).target).target;
+
 const fullRow=facetsSqlServerProjectionCases().find(r=>r.name==='smallint-8-true'&&r.request.mode==='report'&&r.request.encoding==='checked')!;
 const fullColumn=u.getSqlServerColumnMetadata(full).find(c=>c.table.name===fullRow.request.tableName)!;
 full.modules.push({id:'logical',namespace:'',elements:[{id:'value',kind:'field',name:'value',cardinality:'one',scalarType:'integer',extensions:{}}]});
 const fullResult=u.classifySqlServerFacets(full,{column:fullColumn.path,nativeSource:proof.sourceText,identity:{module:'logical',element:'value'},mode:'strict',profile:'stored-value',obligation:'value-domain'});
-assert.equal(fullResult.status,'classified');assert.deepEqual(fullResult.mapping.facets,{integerWidth:{bits:8,signed:true}});
+assert.equal(fullResult.status,'classified');assertJsonDataEqual(fullResult.mapping.facets,{integerWidth:{bits:8,signed:true}});
 let fullCatalogNativeRecoveries=0;
 for(const format of ['json','yaml'] as const){const receipt=u.readJsonValue(u.writeJsonValue(u.copyJson(fullResult),format),format) as unknown as typeof fullResult;assert.equal(u.recoverSqlServerFacetSource(receipt,receipt.target!),proof.sourceText);fullCatalogNativeRecoveries++;}
 const paths=['scripts/core-ideals/facets-sqlserver-composition.ts','scripts/core-ideals/facets-sqlserver-projection-cases.ts','src/core-ideals/facets-sqlserver.ts','src/core-ideals/facets-sqlserver-projection.ts','src/adapters/sqlserver/facet-constraints.ts','src/adapters/sqlserver/facet-predicate.ts','src/adapters/sqlserver/facet-type.ts','fixtures/validation/facets-sqlserver-projection-native.json'];

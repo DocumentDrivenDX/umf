@@ -737,7 +737,7 @@
       }
     }
   },
-  "version": "1.1.0",
+  "version": "1.2.0",
   "csv_conventions": {
     "encoding": "UTF-8",
     "null_value": "\\N",
@@ -792,5 +792,40 @@
       "csv_evidence_pages"
     ],
     "qualification": "Mixed legal tabular inputs: generate eight fabricated operations tables; ingest three fixed observed evidence tables without replay. Unknown rights prohibit redistributable source archives. Graph schema describes fabricated operations only; no graph storage acceptance."
-  }
+  },
+  "artifact_collections": [
+    {
+      "version": "1.0.0",
+      "id": "litigation-originals",
+      "title": "Original litigation documents",
+      "view": "documents",
+      "semantic_kinds": [
+        "court_filing",
+        "trial_exhibit"
+      ],
+      "source_ids": [
+        "complaint",
+        "memorandum-opinion",
+        "rowley-deposition",
+        "okelley-deposition",
+        "PTX0014",
+        "PTX0032",
+        "PTX0110"
+      ],
+      "media_types": [
+        "application/pdf"
+      ],
+      "metadata_schema_ids": [
+        "evidence_documents",
+        "cases"
+      ],
+      "derived_schema_ids": [
+        "evidence_pages"
+      ],
+      "ontology_schema_ids": [
+        "ontology"
+      ],
+      "description": "Selected original PDFs; firm operations remain fabricated and unrelated."
+    }
+  ]
 }

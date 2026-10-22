@@ -1,0 +1,100 @@
+{
+  "data": {
+    "extensionId": "umf.delta.definition",
+    "manifest": {
+      "capabilities": {
+        "directions": [
+          "import",
+          "export"
+        ],
+        "evidence": [
+          "tests/delta/ddl.test.ts",
+          "fixtures/delta/ddl-browser-results.json"
+        ],
+        "native": {
+          "subset": "Managed CREATE and complete ordered proposal bundles; atomic/decimal/timestamp_ntz and qualified recursive STRUCT/ARRAY/MAP types, explicit nullability, column comments, clustering or partitioning, five selected properties; no execution, migration, keys, other column metadata, unknown types or arbitrary properties",
+          "system": "Azure Databricks SQL",
+          "version": "Documentation inspected 2026-10-08; native execution not yet verified"
+        },
+        "validation": "structural"
+      },
+      "coreVersion": "0.10.0",
+      "description": "Authored managed Databricks Delta table definitions and strict CREATE generation",
+      "id": "umf.delta.definition",
+      "schema": {
+        "$id": "urn:umf:delta-definition:0.1.0",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": true,
+        "properties": {
+          "clusterBy": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "name": {
+            "items": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "maxItems": 3,
+            "minItems": 1,
+            "type": "array"
+          },
+          "partitionBy": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "profile": {
+            "const": "databricks-managed-delta/0.1"
+          },
+          "properties": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "type": "object"
+          }
+        },
+        "required": [
+          "profile",
+          "name",
+          "clusterBy",
+          "partitionBy",
+          "properties"
+        ],
+        "type": "object"
+      },
+      "scopes": [
+        "document"
+      ],
+      "semantics": "CONTRACT-050. Exact Delta schema remains in umf.delta; definition stores authored name, clustering/partitioning and properties independently of observed native table UUID/protocol. Unknown meaning is preserved and blocks DDL.",
+      "version": "0.1.0"
+    },
+    "registration": {
+      "apiIds": [],
+      "coreProfiles": [],
+      "mode": "unmapped"
+    },
+    "schemaId": "[\"schema\",\"spec/extensions/delta-definition/schema.json\",\"\"]",
+    "version": "0.1.0"
+  },
+  "id": "[\"extension\",\"umf.delta.definition\",\"0.1.0\"]",
+  "kind": "extension",
+  "links": [
+    "[\"guide\",\"extensions\"]",
+    "[\"schema\",\"spec/extensions/delta-definition/schema.json\",\"\"]",
+    "[\"integration\",\"umf.delta.definition@0.1.0:import\"]",
+    "[\"integration\",\"umf.delta.definition@0.1.0:export\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 2099,
+      "path": "spec/extensions/delta-definition/package.json",
+      "sha256": "48e30f9320d64e7675347394045f23f6878ffa6d3d2f4f7f0c6f257cbe654e4b"
+    }
+  ],
+  "summary": "Authored managed Databricks Delta table definitions and strict CREATE generation",
+  "title": "umf.delta.definition · 0.1.0"
+}

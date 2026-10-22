@@ -1,0 +1,415 @@
+{
+  "data": {
+    "pointer": "",
+    "profileVersions": [],
+    "references": [
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/openapi/upstream/3.2-meta.json\",\"\"]",
+        "target": "#/$defs/extensible"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/openapi/upstream/3.2-meta.json\",\"\"]",
+        "target": "#/$defs/extensible"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/openapi/upstream/3.2-meta.json\",\"\"]",
+        "target": "#/$defs/extensible"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/openapi/upstream/3.2-meta.json\",\"\"]",
+        "target": "#/$defs/discriminator"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/openapi/upstream/3.2-meta.json\",\"\"]",
+        "target": "#/$defs/external-docs"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/openapi/upstream/3.2-meta.json\",\"\"]",
+        "target": "#/$defs/xml"
+      }
+    ],
+    "role": "extension-payload",
+    "schemaPath": "spec/extensions/openapi/upstream/3.2-meta.json",
+    "sourceData": {
+      "kind": "object",
+      "members": {
+        "$defs": {
+          "kind": "object",
+          "members": {
+            "discriminator": {
+              "kind": "object",
+              "members": {
+                "$ref": {
+                  "kind": "string",
+                  "value": "#/$defs/extensible"
+                },
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "defaultMapping": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "mapping": {
+                      "kind": "object",
+                      "members": {
+                        "additionalProperties": {
+                          "kind": "object",
+                          "members": {
+                            "type": {
+                              "kind": "string",
+                              "value": "string"
+                            }
+                          }
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "object"
+                        }
+                      }
+                    },
+                    "propertyName": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "propertyName"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                },
+                "unevaluatedProperties": {
+                  "kind": "boolean",
+                  "value": false
+                }
+              }
+            },
+            "extensible": {
+              "kind": "object",
+              "members": {
+                "patternProperties": {
+                  "kind": "object",
+                  "members": {
+                    "^x-": {
+                      "kind": "boolean",
+                      "value": true
+                    }
+                  }
+                }
+              }
+            },
+            "external-docs": {
+              "kind": "object",
+              "members": {
+                "$ref": {
+                  "kind": "string",
+                  "value": "#/$defs/extensible"
+                },
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "description": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "url": {
+                      "kind": "object",
+                      "members": {
+                        "format": {
+                          "kind": "string",
+                          "value": "uri-reference"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "url"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                },
+                "unevaluatedProperties": {
+                  "kind": "boolean",
+                  "value": false
+                }
+              }
+            },
+            "xml": {
+              "kind": "object",
+              "members": {
+                "$ref": {
+                  "kind": "string",
+                  "value": "#/$defs/extensible"
+                },
+                "dependentSchemas": {
+                  "kind": "object",
+                  "members": {
+                    "nodeType": {
+                      "kind": "object",
+                      "members": {
+                        "properties": {
+                          "kind": "object",
+                          "members": {
+                            "attribute": {
+                              "kind": "boolean",
+                              "value": false
+                            },
+                            "wrapped": {
+                              "kind": "boolean",
+                              "value": false
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "attribute": {
+                      "kind": "object",
+                      "members": {
+                        "deprecated": {
+                          "kind": "boolean",
+                          "value": true
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "boolean"
+                        }
+                      }
+                    },
+                    "name": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "namespace": {
+                      "kind": "object",
+                      "members": {
+                        "format": {
+                          "kind": "string",
+                          "value": "iri"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "nodeType": {
+                      "kind": "object",
+                      "members": {
+                        "enum": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "element"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "attribute"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "text"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "cdata"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "none"
+                            }
+                          ],
+                          "kind": "array"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "prefix": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "wrapped": {
+                      "kind": "object",
+                      "members": {
+                        "deprecated": {
+                          "kind": "boolean",
+                          "value": true
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "boolean"
+                        }
+                      }
+                    }
+                  }
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                },
+                "unevaluatedProperties": {
+                  "kind": "boolean",
+                  "value": false
+                }
+              }
+            }
+          }
+        },
+        "$dynamicAnchor": {
+          "kind": "string",
+          "value": "meta"
+        },
+        "$id": {
+          "kind": "string",
+          "value": "https://spec.openapis.org/oas/3.2/meta/2026-02-26"
+        },
+        "$schema": {
+          "kind": "string",
+          "value": "https://json-schema.org/draft/2020-12/schema"
+        },
+        "$vocabulary": {
+          "kind": "object",
+          "members": {
+            "https://spec.openapis.org/oas/3.2/vocab/base": {
+              "kind": "boolean",
+              "value": true
+            }
+          }
+        },
+        "description": {
+          "kind": "string",
+          "value": "A JSON Schema Vocabulary used in the OpenAPI JSON Schema Dialect"
+        },
+        "properties": {
+          "kind": "object",
+          "members": {
+            "discriminator": {
+              "kind": "object",
+              "members": {
+                "$ref": {
+                  "kind": "string",
+                  "value": "#/$defs/discriminator"
+                }
+              }
+            },
+            "example": {
+              "kind": "object",
+              "members": {
+                "deprecated": {
+                  "kind": "boolean",
+                  "value": true
+                }
+              }
+            },
+            "externalDocs": {
+              "kind": "object",
+              "members": {
+                "$ref": {
+                  "kind": "string",
+                  "value": "#/$defs/external-docs"
+                }
+              }
+            },
+            "xml": {
+              "kind": "object",
+              "members": {
+                "$ref": {
+                  "kind": "string",
+                  "value": "#/$defs/xml"
+                }
+              }
+            }
+          }
+        },
+        "title": {
+          "kind": "string",
+          "value": "OAS Base Vocabulary"
+        },
+        "type": {
+          "items": [
+            {
+              "kind": "string",
+              "value": "object"
+            },
+            {
+              "kind": "string",
+              "value": "boolean"
+            }
+          ],
+          "kind": "array"
+        }
+      }
+    }
+  },
+  "id": "[\"schema\",\"spec/extensions/openapi/upstream/3.2-meta.json\",\"\"]",
+  "kind": "schema",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 2485,
+      "path": "spec/extensions/openapi/upstream/3.2-meta.json",
+      "sha256": "f444d02ef7d36f30293983fad8118c823a3c70a49a8e5aa6f1afe21215e35417"
+    }
+  ],
+  "summary": "A JSON Schema Vocabulary used in the OpenAPI JSON Schema Dialect",
+  "title": "OAS Base Vocabulary"
+}

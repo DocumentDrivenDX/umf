@@ -1,0 +1,96 @@
+{"testProcess":"tests/core-ideals/facets-avro-projection.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/core-ideals/facets-avro-projection.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/core-ideals/facets-avro-projection.test.ts:
+(pass) authored domains distinguish exact carriers from unenforced approximations [49.05ms]
+(pass) fixed bounds preserve lower-bound losses and refuse impossible or oversized carriers [17.87ms]
+(pass) all profile, encoding and mode combinations recover authored ideals with explicit losses [580.97ms]
+(pass) receipt integrity, unknown metadata, invalid names and exact-input counterexamples remain explicit [5.31ms]
+
+ 4 pass
+ 0 fail
+ 215 expect() calls
+Ran 4 tests across 1 file. [10.65s]
+{"testProcess":"tests/core-ideals/facets-avro-projection.test.ts","exitCode":0,"pass":4,"fail":0,"assertions":215,"completeSummary":true,"logSha256":"62a152ed9ed2524047798849fe935b641bbaaaf3f564df65f0d2e6e59a7a0051"}
+{"testProcess":"tests/core-ideals/facets-avro-selection.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/core-ideals/facets-avro-selection.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/core-ideals/facets-avro-selection.test.ts:
+(pass) facet selection retains named declarations, branch order, containers and null context [17.90ms]
+(pass) reference use and dependency definition retain distinct identities and unknown tokens [1.67ms]
+(pass) union widths remain distinct; array/map items are never promoted onto containers [3.89ms]
+(pass) facet zero-size profile does not widen previously qualified Cardinality resolution [1.12ms]
+(pass) selection cannot interpret defaults, metadata, missing dependencies or duplicate names as types [0.90ms]
+
+ 5 pass
+ 0 fail
+ 67 expect() calls
+Ran 5 tests across 1 file. [3.16s]
+{"testProcess":"tests/core-ideals/facets-avro-selection.test.ts","exitCode":0,"pass":5,"fail":0,"assertions":67,"completeSummary":true,"logSha256":"208c312cfc24e6d4ba46d705e833359f008a4d733c171c04e61386921e279844"}
+{"testProcess":"tests/core-ideals/facets-avro-type.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/core-ideals/facets-avro-type.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/core-ideals/facets-avro-type.test.ts:
+(pass) Avro declaration facts never claim codec enforcement or input exactness [4.25ms]
+(pass) fixed exact size includes zero without relabeling a nonzero exact size as a maximum [9.52ms]
+(pass) decimal coefficient domains require exact pairs and bounded signed carrier capacity [3.79ms]
+(pass) unknown and invalid logical meaning stays native instead of becoming a physical scalar facet [0.66ms]
+(pass) custom constraints and exact tokens remain unclaimed and copied [0.16ms]
+(pass) malformed or future tagged representation refuses interpretation and does not execute getters [0.32ms]
+(pass) every native discovery schema remains available with explicit declaration or refusal [11.06ms]
+
+ 7 pass
+ 0 fail
+ 332 expect() calls
+Ran 7 tests across 1 file. [524.00ms]
+{"testProcess":"tests/core-ideals/facets-avro-type.test.ts","exitCode":0,"pass":7,"fail":0,"assertions":332,"completeSummary":true,"logSha256":"d50333746ba59e75e515b3dafe40b4f50e0d7e9a38d7b3c2498edc50144f23e1"}
+{"testProcess":"tests/core-ideals/facets-avro.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/core-ideals/facets-avro.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/core-ideals/facets-avro.test.ts:
+(pass) declaration and writer profiles separate native domain from enforcement counterexamples [1225.87ms]
+(pass) fixed, union and explicit item selection retain native refinements [642.96ms]
+(pass) original source texts, dependency order, unknown numeric tokens and defaults recover exactly [552.02ms]
+(pass) authored bounds require fresh provenance and cannot be silently overwritten [529.74ms]
+(pass) shape conflicts, archive changes, invalid profiles and unsafe inputs refuse [344.27ms]
+(pass) closed operation and extension schemas constrain real classification output [122.75ms]
+(pass) unannotated precision metadata stays unknown and authored losses point back to the ideal [326.00ms]
+
+ 7 pass
+ 0 fail
+ 48 expect() calls
+Ran 7 tests across 1 file. [14.36s]
+{"testProcess":"tests/core-ideals/facets-avro.test.ts","exitCode":0,"pass":7,"fail":0,"assertions":48,"completeSummary":true,"logSha256":"be9664509e52b76028546b0246cbfff339afeb69c55542d5f10448ecf879b001"}
+{"testProcess":"tests/core-ideals/facets-conformance.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/core-ideals/facets-conformance.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/core-ideals/facets-conformance.test.ts:
+124 |  // unrelated stale fingerprints. Every actual file is read once per verification.
+125 |  for (const {path, record} of pending) for (const [p, h] of Object.entries(record.sha256)) {
+126 |   const current = digest(await content(p)), expected = String(h);
+127 |   if (current !== expected) {
+128 |    const key = local(p), row = replay.changes[key];
+129 |    assert.ok(row, `${path}: stale ${p}`);
+                ^
+AssertionError: fixtures/validation/field-gate-refresh-evidence.json: stale dist/avro-facet-selection.js
+ generatedMessage: false,
+     actual: undefined,
+   expected: true,
+   operator: "==",
+       diff: "simple",
+       code: "ERR_ASSERTION"
+
+      at verifyFacetEvidence (/Users/erik/.codex/worktrees/d8be/umf/scripts/core-ideals/facets-evidence.ts:129:11)
+      at /Users/erik/.codex/worktrees/d8be/umf/tests/core-ideals/facets-conformance.test.ts:8:8
+(fail) all five facet bindings preserve authored ideals, native refinements and explicit losses [97.21ms]
+
+ 0 pass
+ 1 fail
+Ran 1 test across 1 file. [11.68s]
+{"testProcess":"tests/core-ideals/facets-conformance.test.ts","exitCode":1,"pass":0,"fail":1,"assertions":0,"completeSummary":true,"logSha256":"4d7d0351de7e8e340eaa8c6416565201da6123948363c1661961e817018d558d"}
+Complete test file failed or terminated: tests/core-ideals/facets-conformance.test.ts
+
+ 23 pass
+ 1 fail
+ 662 expect() calls
+Ran 24 tests across 5 files. [40.87s]

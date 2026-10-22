@@ -1,10 +1,11 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {createHash} from 'node:crypto';
 import {avroNullabilityProjectionCases} from './nullability-avro-projection-cases';
-import {projectNullabilityToAvro,recoverNullabilityFromAvro} from '../../src/core-ideals/nullability-avro-projection';
-import {classifyAvroNullability,recoverAvroNullabilityBundle} from '../../src/core-ideals/nullability-avro';
+import {projectNullabilityToAvro, recoverNullabilityFromAvro} from '../../src/core-ideals/nullability-avro-projection';
+import {classifyAvroNullability, recoverAvroNullabilityBundle} from '../../src/core-ideals/nullability-avro';
 import {avroAvailabilitySource} from './nullability-avro-cases';
 import {exportAvroSchema} from '../../src/adapters/avro';
-import {readJsonValue,writeJsonValue} from '../../src/model/serialization';
+import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
 import {copyJson} from '../../src/model/json';
 const rows=[];let idealRecoveries=0,nativeRecoveries=0,classified=0,blocked=0;
 for(const c of avroNullabilityProjectionCases()){

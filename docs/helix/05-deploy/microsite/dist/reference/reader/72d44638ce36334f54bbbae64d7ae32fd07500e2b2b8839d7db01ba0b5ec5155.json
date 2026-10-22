@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"inspectCoreScalarType\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreScalarTypeIdentity\"]"
+      ],
+      "name": "identityInput",
+      "optional": false,
+      "type": "CoreScalarTypeIdentity"
+    }
+  ],
+  "purpose": "Inspect a value-family label without inferring role, native domain or container item type.",
+  "related": [],
+  "returns": "CoreScalarTypeInspection",
+  "task": "Inspect and select",
+  "type": "(input: Document, identityInput: CoreScalarTypeIdentity) => CoreScalarTypeInspection"
+}

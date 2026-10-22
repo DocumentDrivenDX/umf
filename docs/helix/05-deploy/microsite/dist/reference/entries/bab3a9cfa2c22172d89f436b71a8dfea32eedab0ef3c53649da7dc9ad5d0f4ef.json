@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 7603,
+        "line": 19,
+        "path": "src/core-ideals/cardinality-parquet.ts",
+        "sha256": "735f70ed570f457e8fd8ce84d606dbd8d2ea89bfdc1fb3556613962b2d330631"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "ParquetCardinalityClassification",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface ParquetCardinalityClassification {\n operation:'classify-parquet-cardinality';version:'1.0.0';status:'classified'|'blocked';source:Document;target?:Document;request:ParquetCardinalityRequest;binding:typeof binding;\n mapping:{origin:'classified';cardinality:Cardinality;outcome:'exact'|'approximated'|'unknown';basis:typeof basis;nodes:Node[]};\n residuals:{path:string;value:Json;reason:string;recovery:typeof recovery}[];diagnostics:Diagnostic[];\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"ParquetCardinalityClassification\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 7603,
+      "line": 19,
+      "path": "src/core-ideals/cardinality-parquet.ts",
+      "sha256": "735f70ed570f457e8fd8ce84d606dbd8d2ea89bfdc1fb3556613962b2d330631"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/cardinality-parquet.ts",
+  "title": "ParquetCardinalityClassification"
+}

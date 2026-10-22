@@ -1,0 +1,23 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"getGeneralizedRdfQuads\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "getGeneralizedRdfQuads accepts document and returns GeneralizedRdfQuad[].",
+  "related": [],
+  "returns": "GeneralizedRdfQuad[]",
+  "task": "Inspect and select",
+  "type": "(document: Document) => GeneralizedRdfQuad[]"
+}

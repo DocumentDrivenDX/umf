@@ -1,13 +1,14 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {chromium} from 'playwright';
-import {importParquetSchema,upgradeFieldEnvelope,upgradeNullabilityEnvelope,upgradeCardinalityEnvelope,classifyParquetCardinality} from '../../src';
+import {importParquetSchema, classifyParquetCardinality} from '../../src';
 const proof='fixtures/validation/cardinality-parquet-profile-native.json',native=await Bun.file(proof).json();
 const cases:any[]=[];
 for(const row of native.cases){
  const bytes=new Uint8Array(await Bun.file(row.path).arrayBuffer());
  assert.equal(createHash('sha256').update(bytes).digest('hex'),row.sha256);
- const source=upgradeCardinalityEnvelope(upgradeNullabilityEnvelope(upgradeFieldEnvelope(importParquetSchema(bytes,{id:row.id})).target).target).target;
+ const source=importParquetSchema(bytes,{id:row.id});
  for(const profile of ['present-value-schema','unresolved'] as const)for(const mode of ['strict','report'] as const){
   const request={index:1,identity:{module:'logical',element:'value'},profile,mode};
   const receipt=classifyParquetCardinality(source,request);

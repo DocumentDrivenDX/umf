@@ -1,0 +1,33 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 3087,
+        "line": 1,
+        "path": "spec/extensions/parquet/levels.schema.json",
+        "sha256": "f69d1c4e94d716d4f98ad9cf34fa8e5221bf8d555f931d808d83c4c25a4fc965"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "parquetLevelsSchema",
+    "runtime": "unassessed",
+    "signatureText": [
+      "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"$id\": \"urn:umf:parquet:levels:0.1.0\",\n  \"type\": \"object\",\n  \"required\": [\n    \"source\",\n    \"status\",\n    \"complete\",\n    \"diagnostics\"\n  ],\n  \"properties\": {\n    \"source\": {\n      \"$ref\": \"urn:umf:core:0.10.0\"\n    },\n    \"status\": {\n      \"enum\": [\n        \"decoded\",\n        \"blocked\"\n      ]\n    },\n    \"complete\": {\n      \"const\": false\n    },\n    \"diagnostics\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"code\": {\n            \"type\": \"string\"\n          },\n          \"path\": {\n            \"type\": \"string\"\n          },\n          \"severity\": {\n            \"enum\": [\n              \"error\",\n              \"warning\"\n            ]\n          },\n          \"message\": {\n            \"type\": \"string\"\n          }\n        },\n        \"required\": [\n          \"code\",\n          \"path\",\n          \"severity\",\n          \"message\"\n        ],\n        \"additionalProperties\": false\n      }\n    },\n    \"pages\": {\n      \"type\": \"array\",\n      \"maxItems\": 10000,\n      \"items\": {\n        \"type\": \"object\",\n        \"required\": [\n          \"rowGroup\",\n          \"column\",\n          \"offset\",\n          \"repetition\",\n          \"definition\",\n          \"repetitionPadding\",\n          \"definitionPadding\",\n          \"valuesOffset\",\n          \"nonNullValues\",\n          \"rowStarts\"\n        ],\n        \"properties\": {\n          \"rowGroup\": {\n            \"type\": \"integer\",\n            \"minimum\": 0\n          },\n          \"column\": {\n            \"type\": \"integer\",\n            \"minimum\": 0\n          },\n          \"offset\": {\n            \"type\": \"integer\",\n            \"minimum\": 0\n          },\n          \"repetition\": {\n            \"type\": \"array\",\n            \"maxItems\": 100000,\n            \"items\": {\n              \"type\": \"integer\",\n              \"minimum\": 0,\n              \"maximum\": 64\n            }\n          },\n          \"definition\": {\n            \"type\": \"array\",\n            \"maxItems\": 100000,\n            \"items\": {\n              \"type\": \"integer\",\n              \"minimum\": 0,\n              \"maximum\": 64\n            }\n          },\n          \"repetitionPadding\": {\n            \"type\": \"array\",\n            \"maxItems\": 7,\n            \"items\": {\n              \"type\": \"integer\",\n              \"minimum\": 0,\n              \"maximum\": 127\n            }\n          },\n          \"definitionPadding\": {\n            \"type\": \"array\",\n            \"maxItems\": 7,\n            \"items\": {\n              \"type\": \"integer\",\n              \"minimum\": 0,\n              \"maximum\": 127\n            }\n          },\n          \"valuesOffset\": {\n            \"type\": \"integer\",\n            \"minimum\": 0,\n            \"maximum\": 8388608\n          },\n          \"nonNullValues\": {\n            \"type\": \"integer\",\n            \"minimum\": 0,\n            \"maximum\": 100000\n          },\n          \"rowStarts\": {\n            \"type\": \"integer\",\n            \"minimum\": 0,\n            \"maximum\": 100000\n          }\n        },\n        \"additionalProperties\": false\n      }\n    }\n  },\n  \"additionalProperties\": false\n}\n"
+    ]
+  },
+  "id": "[\"api\",\".\",\"parquetLevelsSchema\"]",
+  "kind": "api",
+  "links": [
+    "[\"schema\",\"spec/extensions/parquet/levels.schema.json\",\"\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 3087,
+      "line": 1,
+      "path": "spec/extensions/parquet/levels.schema.json",
+      "sha256": "f69d1c4e94d716d4f98ad9cf34fa8e5221bf8d555f931d808d83c4c25a4fc965"
+    }
+  ],
+  "summary": "Public export · spec/extensions/parquet/levels.schema.json",
+  "title": "parquetLevelsSchema"
+}

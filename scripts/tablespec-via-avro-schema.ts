@@ -1,6 +1,7 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 export {};
 const s={type:'string'},object=(properties:Record<string,unknown>,required=Object.keys(properties))=>({type:'object',properties,required,additionalProperties:false}),ref=(id:string,path='')=>({$ref:'urn:umf:projection:'+id+':0.1.0'+path});
-const source={$ref:'urn:umf:core:0.1.0'},first={anyOf:['postgresql-avro','sqlserver-avro','parquet-avro'].map(id=>ref(id))};
+const source={$ref:'urn:umf:core:0.10.0'},first={anyOf:['postgresql-avro','sqlserver-avro','parquet-avro'].map(id=>ref(id))};
 const policy={oneOf:['postgresql','sqlserver','parquet'].map(kind=>object({sourceKind:{const:kind},toAvro:ref(kind+'-avro','#/properties/policy'),toTableSpec:ref('avro-tablespec','#/properties/policy')}))};
 const issues={type:'array',items:{oneOf:['sourceToAvro','avroToTableSpec'].map(stage=>object({stage:{const:stage},sourceDocumentPath:{const:'/stages/'+stage+'/source'},issue:ref('avro-tablespec','#/properties/issues/items')}))}};
 const properties={status:{enum:['blocked','projected']},source,policy,stages:object({sourceToAvro:first,avroToTableSpec:ref('avro-tablespec')},['sourceToAvro']),issues,target:source,nativeSchema:s};

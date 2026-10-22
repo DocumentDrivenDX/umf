@@ -1,0 +1,7 @@
+# Pure frozen-manifest constructor handoff
+
+Owned implementation checkout: /Users/erik/.codex/worktrees/security-action-source-custody/umf, based on UMF main f1f635a9.
+
+Public API: constructActionManifest({plan,action,basis,rows},context). Each ordered row is {entity,guard,keyReceipt}; keyReceipt is the unchanged original encodeCoreKeyTuple receipt including full pinned source. The result is {artifact,keyReceipts,sealed:false,complete:false,authority:false}. CONTRACT-903 owns exact types, bounds and semantics. The library derives all constant/entity inputs, original read/write frame versions and deterministic batches, then applies the original manifest inspector. It preserves supplied order; Truss must prove that order, the complete selection and original snapshot/guard/current-authority correspondence, and independently seal the exact returned Artifact.
+
+The current implementation replays the earlier US-902 dependency and US-903 validators, rather than inventing another plan format or mutation vocabulary. Restored protocol versions remain plan/1, plan-model/1, manifest/1 and bulk/1 against original core0.8/actions0.1/tx1. Producer build and browser ESM digests identify these current sources. Do not replace historical compiler/preparation/enrollment pins with these new pins or infer native acceptance from portable success. Native seal/finalizer custody, queue/recovery/effects and the live website goal remain unqualified.

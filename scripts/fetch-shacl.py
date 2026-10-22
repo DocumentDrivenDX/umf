@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Fetch only the pinned SHACL 1.0 suite (never the adjacent SHACL 1.2 suite)."""
 import concurrent.futures,hashlib,json,urllib.request
 from pathlib import Path

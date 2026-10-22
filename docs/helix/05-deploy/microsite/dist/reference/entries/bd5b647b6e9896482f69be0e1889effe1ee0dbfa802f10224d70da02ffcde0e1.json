@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 4957,
+        "line": 47,
+        "path": "src/domain-packs/profile.ts",
+        "sha256": "f050120eb409d7f8c1c79ca907b848077def53a2fcdc00151a6d0376dc7bef34"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "requireDomainPackProfile",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: unknown): { valid: boolean; complete: boolean; diagnostics: string[]; }"
+    ]
+  },
+  "id": "[\"api\",\".\",\"requireDomainPackProfile\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 4957,
+      "line": 47,
+      "path": "src/domain-packs/profile.ts",
+      "sha256": "f050120eb409d7f8c1c79ca907b848077def53a2fcdc00151a6d0376dc7bef34"
+    }
+  ],
+  "summary": "Public export · src/domain-packs/profile.ts",
+  "title": "requireDomainPackProfile"
+}

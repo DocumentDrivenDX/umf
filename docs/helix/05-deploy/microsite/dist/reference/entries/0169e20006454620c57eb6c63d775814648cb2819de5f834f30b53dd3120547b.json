@@ -1,0 +1,50 @@
+{
+  "data": {
+    "conflicts": [],
+    "correspondence": "unassessed",
+    "declarations": [
+      {
+        "bytes": 3650,
+        "path": "spec/extensions/json-schema/package.json",
+        "sha256": "32bac6cf2a6fcb6d0f4367084f7e358887e263969f0b1697145abb0b413c4582"
+      }
+    ],
+    "evidence": [],
+    "operation": {
+      "apiNames": [],
+      "coreProfiles": [],
+      "extensionVersions": [],
+      "fixturePaths": [],
+      "id": "umf.json-schema@0.1.0:import",
+      "kind": "import",
+      "limitations": [
+        "Recorded scope only; native equivalence and production adoption are separate."
+      ],
+      "runtime": {
+        "availability": "host-only",
+        "profileId": "umf.json-schema@0.1.0:import",
+        "requirements": [
+          "Native runtime / original qualification harness; not executed by this page."
+        ]
+      },
+      "sourceSystem": "JSON Schema · 2020-12",
+      "subset": "Native JSON tree preservation; semantic validation limited to known dialect/keywords and JavaScript-compatible numerics, format annotation-only; see CONTRACT-002 and evidence.",
+      "targetSystem": "UMF",
+      "title": "umf.json-schema · import"
+    }
+  },
+  "id": "[\"integration\",\"umf.json-schema@0.1.0:import\"]",
+  "kind": "integration",
+  "links": [
+    "[\"extension\",\"umf.json-schema\",\"0.1.0\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 134795,
+      "path": "docs/helix/05-deploy/reference/operations.json",
+      "sha256": "793743bbca36e56e90e82df5ef0408b628c434e58cb68aea4d6486349be78e61"
+    }
+  ],
+  "summary": "Native JSON tree preservation; semantic validation limited to known dialect/keywords and JavaScript-compatible numerics, format annotation-only; see CONTRACT-002 and evidence.",
+  "title": "umf.json-schema · import"
+}

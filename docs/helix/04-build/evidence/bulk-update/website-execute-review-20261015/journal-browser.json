@@ -1,0 +1,140 @@
+{
+  "scope": "Independent actual Chromium IndexedDB journal controls on original transpiled bulk-intent module; no engine effect execution",
+  "browser": "153.0.8010.12",
+  "sourceSha256": "2b1d0d4c8b29c6efa135c6e59adeb693d5fd9932f80adcf39f1a4af07e8829f2",
+  "passed": 33,
+  "cases": [
+    {
+      "name": "Competing tabs atomically retain exactly one original submission input",
+      "passed": true
+    },
+    {
+      "name": "Changed context settlement refuses without replacing original",
+      "passed": true
+    },
+    {
+      "name": "Changed input settlement refuses without replacing original",
+      "passed": true
+    },
+    {
+      "name": "Complete submitted carrier survives journal read",
+      "passed": true
+    },
+    {
+      "name": "Complete claimed carrier survives journal read",
+      "passed": true
+    },
+    {
+      "name": "Complete idle carrier survives journal read",
+      "passed": true
+    },
+    {
+      "name": "Complete conflict carrier survives journal read",
+      "passed": true
+    },
+    {
+      "name": "Complete unsupported carrier survives journal read",
+      "passed": true
+    },
+    {
+      "name": "Complete control-unknown/submit carrier survives journal read",
+      "passed": true
+    },
+    {
+      "name": "Complete control-failure/submit carrier survives journal read",
+      "passed": true
+    },
+    {
+      "name": "Complete unresolved/submit carrier survives journal read",
+      "passed": true
+    },
+    {
+      "name": "Complete control-unknown/claim carrier survives journal read",
+      "passed": true
+    },
+    {
+      "name": "Complete control-failure/claim carrier survives journal read",
+      "passed": true
+    },
+    {
+      "name": "Complete unresolved/claim carrier survives journal read",
+      "passed": true
+    },
+    {
+      "name": "Separate claim reservation leaves original submit control intact",
+      "passed": true
+    },
+    {
+      "name": "Competing pages atomically reserve one original execution",
+      "passed": true
+    },
+    {
+      "name": "Complete execution committed carrier survives journal",
+      "passed": true
+    },
+    {
+      "name": "Complete execution conflict carrier survives journal",
+      "passed": true
+    },
+    {
+      "name": "Complete execution rejected carrier survives journal",
+      "passed": true
+    },
+    {
+      "name": "Complete execution failed carrier survives journal",
+      "passed": true
+    },
+    {
+      "name": "Complete execution indeterminate carrier survives journal",
+      "passed": true
+    },
+    {
+      "name": "Complete execution unsupported carrier survives journal",
+      "passed": true
+    },
+    {
+      "name": "Maximum original batch slot execute:9999 admitted",
+      "passed": true
+    },
+    {
+      "name": "Maximum original batch slot claim:9999 admitted",
+      "passed": true
+    },
+    {
+      "name": "Invalid batch slot execute:10000 refused",
+      "passed": true
+    },
+    {
+      "name": "Invalid batch slot execute:01 refused",
+      "passed": true
+    },
+    {
+      "name": "Invalid batch slot execute:-1 refused",
+      "passed": true
+    },
+    {
+      "name": "Invalid batch slot claim:10000 refused",
+      "passed": true
+    },
+    {
+      "name": "Invalid batch slot execute:1x refused",
+      "passed": true
+    },
+    {
+      "name": "Native ordered transaction boundary",
+      "passed": true
+    },
+    {
+      "name": "Native abort transaction boundary",
+      "passed": true
+    },
+    {
+      "name": "Native relaxed transaction boundary",
+      "passed": true
+    },
+    {
+      "name": "Native quota transaction boundary",
+      "passed": true
+    }
+  ]
+}

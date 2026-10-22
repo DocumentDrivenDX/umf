@@ -1,0 +1,30 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"getOwlAxiomAnnotations\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "quadIndex",
+      "optional": false,
+      "type": "number"
+    }
+  ],
+  "purpose": "Match RDF reification terms exactly, retaining nested annotation links as a finite graph.",
+  "related": [],
+  "returns": "OwlAxiomAnnotations",
+  "task": "Inspect and select",
+  "type": "(document: Document, quadIndex: number) => OwlAxiomAnnotations"
+}

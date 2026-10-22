@@ -1,0 +1,77 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"ActionPlanCapabilities\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ActionPlanCapability\"]"
+      ],
+      "name": "plan",
+      "optional": false,
+      "type": "ActionPlanCapability"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ActionPlanCapability\"]"
+      ],
+      "name": "selection",
+      "optional": false,
+      "type": "ActionPlanCapability"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ActionPlanCapability\"]"
+      ],
+      "name": "manifest",
+      "optional": false,
+      "type": "ActionPlanCapability"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ActionPlanCapability\"]"
+      ],
+      "name": "bulk",
+      "optional": false,
+      "type": "ActionPlanCapability"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ActionPlanCapability\"]"
+      ],
+      "name": "guard",
+      "optional": false,
+      "type": "ActionPlanCapability"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ActionPlanCapability\"]"
+      ],
+      "name": "snapshot",
+      "optional": false,
+      "type": "ActionPlanCapability"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ActionExecutorProfile\"]"
+      ],
+      "name": "action",
+      "optional": false,
+      "type": "ActionExecutorProfile"
+    }
+  ],
+  "parameters": [],
+  "purpose": "ActionPlanCapabilities is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "ActionPlanCapabilities"
+}

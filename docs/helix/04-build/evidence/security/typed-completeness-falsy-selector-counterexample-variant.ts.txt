@@ -1,0 +1,33 @@
+/** Physical admission SQL only. Caller owns original binding, eligibility,
+ * type/key correspondence, source custody and final-release qualification. */
+import type {SecurityPhysicalType} from './security-predicate';
+const fail=():never=>{throw Error('TRUSS_SECURITY_SOURCE_COMPLETENESS_UNSUPPORTED');};
+const valid=(v:unknown):v is string=>typeof v==='string'&&v.length>0&&!v.includes('\0')&&![...v].some(c=>{const n=c.codePointAt(0)!;return n>=0xd800&&n<=0xdfff;});
+const ident=(v:unknown)=>{if(!valid(v)||new TextEncoder().encode(v).length>63)return fail();return '"'+v.replaceAll('"','""')+'"';};
+const ref=(v:SecurityPhysicalType['type'])=>{if(!v||Object.keys(v).some(k=>!['documentId','moduleId','elementId'].includes(k))||![v.documentId,v.moduleId,v.elementId].every(valid))return fail();return JSON.stringify([v.documentId,v.moduleId,v.elementId]);};
+function selector(d:SecurityPhysicalType['discriminator'],alias:string){
+ if(!d)return 'TRUE';
+ if(Object.keys(d).some(k=>!['column','carrier','value'].includes(k))||!valid(d.value)||d.value.length>65536||!['text','int4','int8'].includes(d.carrier))return fail();
+ if(d.carrier!=='text'){
+  if(!/^(0|-?[1-9][0-9]*)$/.test(d.value)||d.value.length>20)return fail();
+  const n=BigInt(d.value),bits=d.carrier==='int4'?31n:63n;
+  if(n<-(1n<<bits)||n>=(1n<<bits))return fail();
+ }
+ return ident(alias)+'.'+ident(d.column)+' OPERATOR(pg_catalog.=) '+"E'"+d.value.replaceAll('\\','\\\\').replaceAll("'","\\'")+"'::pg_catalog."+d.carrier;
+}
+export function lowerSecuritySourceCompleteness(input:{root:SecurityPhysicalType;carrier:{schema:string;table:string;fields:readonly {ref:SecurityPhysicalType['type'];column:string}[];discriminator?:SecurityPhysicalType['discriminator']}}):string{
+ try {
+ const {root,carrier}=structuredClone(input);
+ // A typed root cannot be completed by an untyped carrier with the same key.
+ if(Boolean(root.discriminator)!==Boolean(carrier.discriminator)||!root.keyFields.length||root.keyFields.length>32||!carrier.fields.length||carrier.fields.length>128)return fail();
+ if(new Set(root.keyFields.map(f=>ref(f.ref))).size!==root.keyFields.length||new Set(carrier.fields.map(f=>ref(f.ref))).size!==carrier.fields.length||new Set(root.keyFields.map(f=>f.column)).size!==root.keyFields.length||new Set(carrier.fields.map(f=>f.column)).size!==carrier.fields.length)return fail();
+ const relation=root.keyFields.map(f=>{
+  const mapped=carrier.fields.find(m=>ref(m.ref)===ref(f.ref));if(!mapped)return fail();
+  return ident('original_row')+'.'+ident(mapped.column)+' OPERATOR(pg_catalog.=) '+ident('collection_root')+'.'+ident(f.column);
+ }).join(' AND ');
+ const selectedCarrier='('+selector(carrier.discriminator,'original_row')+') AND '+relation;
+ const required=carrier.fields.map(f=>ident('original_row')+'.'+ident(f.column)+' IS NULL').join(' OR ');
+ const table=ident(carrier.schema)+'.'+ident(carrier.table);
+ return 'NOT EXISTS(SELECT 1 FROM '+ident(root.home.schema)+'.'+ident(root.home.table)+' AS '+ident('collection_root')+' WHERE ('+selector(root.discriminator,'collection_root')+') AND ((SELECT pg_catalog.count(*) FROM '+table+' AS '+ident('original_row')+' WHERE '+selectedCarrier+') OPERATOR(pg_catalog.<>) 1 OR EXISTS(SELECT 1 FROM '+table+' AS '+ident('original_row')+' WHERE '+selectedCarrier+' AND ('+required+'))))';
+ } catch { return fail(); }
+}

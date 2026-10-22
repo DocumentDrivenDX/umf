@@ -1,0 +1,28 @@
+{
+  "scope": "Actual original compiler source/custody control only; no native SQL or managed qualification.",
+  "compilerWheelSha256": "e744819a3f0b0fc3d528ffbc36f5421dcfb28b4bbc8eb0256268506afa1a7811",
+  "checks": [
+    {
+      "method": "ashlar-spark4-pages",
+      "status": "compiled",
+      "originalPacketRetained": true,
+      "uncappedSourceRetained": true,
+      "programSha256": "0e8645ab3575163eab88e0f7a4d6e12b63825c42ffc65e50e6fafbd205b42206"
+    },
+    {
+      "method": "ashlar-dbsql-20261016-pages",
+      "status": "compiled",
+      "originalPacketRetained": true,
+      "uncappedSourceRetained": true,
+      "programSha256": "13f82b2d9023c50ca680b7f327e7239b25680152cbd77f279723d94bfceb294e"
+    },
+    {
+      "method": "ashlar-spark4-fields",
+      "status": "refused"
+    },
+    {
+      "method": "unknown-profile",
+      "status": "refused"
+    }
+  ]
+}

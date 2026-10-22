@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"verifyTableSpecNullabilityClassification\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"TableSpecNullabilityClassification\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "TableSpecNullabilityClassification"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "current",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "Receipt consistency is not authentication; any model edit requires reclassification.",
+  "related": [],
+  "returns": "TableSpecNullabilityClassification",
+  "task": "Other APIs",
+  "type": "(input: TableSpecNullabilityClassification, current: Document) => TableSpecNullabilityClassification"
+}

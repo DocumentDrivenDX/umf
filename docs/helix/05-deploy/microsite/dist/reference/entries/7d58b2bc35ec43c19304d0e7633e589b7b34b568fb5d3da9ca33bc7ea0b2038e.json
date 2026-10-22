@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 11899,
+        "line": 18,
+        "path": "src/core-ideals/facets-tablespec-projection.ts",
+        "sha256": "08157ca5b4e8e823cf787b519353965f20aea615adca206cba415a341b067e5c"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "FacetsTableSpecProjection",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface FacetsTableSpecProjection {\n operation:'project-facets-tablespec';version:'1.0.0';status:'projected'|'blocked';source:Document;author:Author;request:FacetsTableSpecRequest;target?:Document;binding:typeof binding;diagnostics:Diagnostic[];\n mapping:{origin:'authored';idealPath:string;nativePath:'/columns/0';facets:CoreFacetPatch;profile:TableSpecFacetProfile;outcome:Outcome};\n residuals:{path:string;value:Json;reason:string;outcome:Exclude<Outcome,'exact'>;recovery:typeof recovery}[];\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"FacetsTableSpecProjection\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 11899,
+      "line": 18,
+      "path": "src/core-ideals/facets-tablespec-projection.ts",
+      "sha256": "08157ca5b4e8e823cf787b519353965f20aea615adca206cba415a341b067e5c"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/facets-tablespec-projection.ts",
+  "title": "FacetsTableSpecProjection"
+}

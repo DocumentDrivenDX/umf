@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"verifySqlServerRelationshipClassification\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SqlServerRelationshipClassification\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "SqlServerRelationshipClassification"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "current",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "verifySqlServerRelationshipClassification accepts input, current and returns SqlServerRelationshipClassification & { [x: string]: {}; }.",
+  "related": [],
+  "returns": "SqlServerRelationshipClassification & { [x: string]: {}; }",
+  "task": "Other APIs",
+  "type": "(input: SqlServerRelationshipClassification, current: Document) => SqlServerRelationshipClassification & { [x: string]: {}; }"
+}

@@ -1,4 +1,7 @@
-import {stringify} from 'yaml';
+import {renderRecordMap} from '../schema-browser/components';
+import {relationshipGeometry} from './ontology-layout';
+import {displayLabel} from './presentation';
+import {pretty as prettyValue} from '../schema-browser/format-runtime';
 import {key,type Parsed,type Definition,type Entry} from './explorer-model';
 export interface Edge {key:string;module:string;value:any}
 export function ontologyModel(parsed:Parsed){
@@ -6,21 +9,21 @@ export function ontologyModel(parsed:Parsed){
  const edges:Edge[]=(parsed.document?.modules??[]).flatMap(m=>(Array.isArray(m.relationships)?m.relationships:[]).map((r:any)=>({key:JSON.stringify(['relationship',m.id,r.id]),module:m.id,value:r})));
  return {records,fields,edges};
 }
-const el=(tag:string,text?:string,cls?:string)=>{const n=document.createElement(tag);if(text!==undefined)n.textContent=text;if(cls)n.className=cls;return n;};
-const pretty=(s:string)=>s.replace(/_/g,' ').replace(/^./,c=>c.toUpperCase());
+const el=(tag:string,text?:string,cls?:string)=>{const n=document.createElement(tag);if(tag==='pre')n.tabIndex=0;if(text!==undefined)n.textContent=text;if(cls)n.className=cls;return n;};
+const pretty=displayLabel;
 const span=(v:any)=>v?`${v.min}..${v.max}`:'Not declared';
 const endpointKey=(e:any)=>key(e.module,e.element);
-export function renderOntology(root:HTMLElement,parsed:Parsed,entry:Entry,entries:Entry[],params:URLSearchParams){
+export function renderOntology(root:HTMLElement,parsed:Parsed,entry:Entry,entries:Entry[],params:URLSearchParams,annotations:Record<string,import('../schema-browser/types').Annotation[]>={}){
  const model=ontologyModel(parsed),selected=params.get('definition'),edge=model.edges.find(e=>e.key===params.get('relationship'));
  const definition=parsed.definitions.find(d=>d.key===selected);
- const href=(values:Record<string,string>)=>'#'+new URLSearchParams({schema:entry.id,...values});
+ const href=(values:Record<string,string>)=>'#'+new URLSearchParams({schema:entry.id,...(params.get('revision')?{revision:params.get('revision')!}:{}),...values});
  const link=(text:string,values:Record<string,string>,cls='ref-link')=>{const a=el('a',text,cls) as HTMLAnchorElement;a.href=href(values);return a;};
- const ref=(value:any)=>{const d=parsed.definitions.find(d=>d.key===endpointKey(value));return d?link(pretty(d.title),{definition:d.key}):el('span',`${value.module} / ${value.element} · unresolved`,'unresolved');};
+ const ref=(value:any)=>{const d=parsed.definitions.find(d=>d.key===endpointKey(value));return d?link(d.value.kind==='field'?d.title:pretty(d.title),{definition:d.key}):el('span',`${value.module} / ${value.element} · unresolved`,'unresolved');};
  const section=(title:string)=>{const s=el('section',undefined,'detail-block');s.append(el('h3',title));root.append(s);return s;};
- const raw=(parent:HTMLElement,title:string,value:unknown)=>{const d=el('details',undefined,'raw-content');d.append(el('summary',title),el('pre',stringify(value,{aliasDuplicateObjects:false,lineWidth:0})));parent.append(d);};
+ const raw=(parent:HTMLElement,title:string,value:unknown)=>{const d=el('details',undefined,'raw-content');d.append(el('summary',title),el('pre',prettyValue(value)));parent.append(d);};
  const relations=(record:Definition,side:'source'|'target')=>model.edges.filter(e=>(e.value[side]??[]).some((p:any)=>endpointKey(p)===record.key));
  const nav=el('nav',undefined,'definition-list');nav.setAttribute('aria-label','Ontology views');
- nav.append(link('Model overview',{}));for(const d of model.records)nav.append(link(pretty(d.title),{definition:d.key}));root.append(nav);
+ nav.append(link('Model overview',{}));const recordLabel=el('label','Jump to record'),recordSelect=el('select') as HTMLSelectElement;recordSelect.setAttribute('aria-label','Jump to record');const empty=el('option','Choose a record') as HTMLOptionElement;empty.value='';recordSelect.append(empty);for(const d of model.records){const option=el('option',pretty(d.title)) as HTMLOptionElement;option.value=d.key;recordSelect.append(option);}recordSelect.value=definition?.value.kind==='record'?definition.key:'';recordSelect.onchange=()=>{location.hash=href(recordSelect.value?{definition:recordSelect.value}:{});};recordLabel.append(recordSelect);nav.append(recordLabel);root.append(nav);
  const summary=el('div',undefined,'stats');for(const text of [`${model.records.length} records`,`${model.fields.length} properties`,`${model.edges.length} relationships`])summary.append(el('span',text,'tag'));root.append(summary);
  root.append(el('p','UMF record and relationship model · arrows represent declared schema relationships.','ontology-caption'));
  const target=definition?.value.kind==='record'?definition:undefined;
@@ -37,7 +40,7 @@ export function renderOntology(root:HTMLElement,parsed:Parsed,entry:Entry,entrie
   if(definition.value.description)b.append(el('p',String(definition.value.description)));
   if(target){
    const profile=entries.find(e=>e.id===`pack:${entry.pack}@${entry.packVersion}`);
-   const targets=profile?JSON.parse(profile.text).execution_profile?.targets:undefined;
+   const targets=profile?.text?JSON.parse(profile.text).execution_profile?.targets:undefined;
    // CONTRACT-053 maps each graph Record to its exact table schema ID.
    const table=targets?.graph?.includes('ontology')&&entries.find(e=>e.id===`schema:${entry.pack}@${entry.packVersion}:${target.id}`&&targets.tabular?.includes(target.id));
    if(table){const a=el('a','View corresponding table','ref-link') as HTMLAnchorElement;a.href='#'+new URLSearchParams({schema:table.id});b.append(a);}
@@ -56,34 +59,10 @@ export function renderOntology(root:HTMLElement,parsed:Parsed,entry:Entry,entrie
   raw(b,'Constraints and retained metadata',definition.value);
  }
  const map=section(target?'Relationship neighborhood':'Relationship map');
- const controls=el('div',undefined,'definition-list'),select=el('select') as HTMLSelectElement;select.setAttribute('aria-label','Focus record');
- const all=el('option','Full model') as HTMLOptionElement;all.value='';select.append(all);
- for(const r of model.records){const option=el('option',pretty(r.title)) as HTMLOptionElement;option.value=r.key;select.append(option);}
- const initial=params.get('focus')??target?.key??(edge?.value.source?.[0]?endpointKey(edge.value.source[0]):undefined)??model.records[0]?.key??'';select.value=initial;
- controls.append(el('label','Focus: '),select);const full=el('button','Show full model') as HTMLButtonElement;full.type='button';controls.append(full);map.append(controls);
- const canvas=el('div',undefined,'ontology-map');map.append(canvas);
- const draw=(focus:string)=>{
-  canvas.replaceChildren();const focusEdges=model.edges.filter(e=>[...(e.value.source??[]),...(e.value.target??[])].some(p=>endpointKey(p)===focus));
-  const keys=new Set([focus,...focusEdges.flatMap(e=>[...(e.value.source??[]),...(e.value.target??[])].map(endpointKey))]);
-  const records=focus?model.records.filter(r=>keys.has(r.key)):model.records;
-  const positions=new Map(records.map((r,i)=>[r.key,{x:35+(i%3)*250,y:35+Math.floor(i/3)*120}]));
-  const ns='http://www.w3.org/2000/svg';const svg=(tag:string,attrs:Record<string,string>={})=>{const n=document.createElementNS(ns,tag);for(const [k,v] of Object.entries(attrs))n.setAttribute(k,v);return n;};
-  const g=svg('svg',{viewBox:`0 0 780 ${Math.max(180,Math.ceil(records.length/3)*120+30)}`,role:'img','aria-label':focus?'Record relationship neighborhood':'Full record relationship map'});
-  const defs=svg('defs'),marker=svg('marker',{id:'ontology-arrow',viewBox:'0 0 10 10',refX:'9',refY:'5',markerWidth:'6',markerHeight:'6',orient:'auto'});marker.append(svg('path',{d:'M 0 0 L 10 5 L 0 10 z',fill:'#526b45'}));defs.append(marker);g.append(defs);
-  const edges=focus?focusEdges:model.edges,visibleEdges:Edge[]=[];
-  for(const e of edges){if(e.value.source?.length!==1||e.value.target?.length!==1)continue;let visible=false;for(const s of e.value.source??[])for(const t of e.value.target??[]){const a=positions.get(endpointKey(s)),b=positions.get(endpointKey(t));if(!a||!b)continue;visible=true;
-   const anchor=svg('a',{href:href({relationship:e.key,focus}),tabindex:'0','aria-label':'Inspect relationship '+String(e.value.name??e.value.id)}),title=svg('title');title.textContent=`${e.value.name??e.value.id}: ${span(e.value.sourceMultiplicity)} → ${span(e.value.targetMultiplicity)}`;
-   const dx=b.x-a.x,dy=b.y-a.y,ratio=dx===0&&dy===0?0:Math.min(dx===0?Infinity:108/Math.abs(dx),dy===0?Infinity:35/Math.abs(dy));
-   const bow=dy===0&&Math.abs(dx)>250?88:0,mx=(a.x+b.x)/2+102.5,my=(a.y+b.y)/2+31+bow/2;
-   const path=svg('path',{d:endpointKey(s)===endpointKey(t)?`M ${a.x+160} ${a.y} C ${a.x+270} ${a.y-35} ${a.x+270} ${a.y+95} ${a.x+160} ${a.y+60}`:`M ${a.x+102.5+dx*ratio} ${a.y+31+dy*ratio} Q ${mx} ${(a.y+b.y)/2+31+bow} ${b.x+102.5-dx*ratio} ${b.y+31-dy*ratio}`,fill:'none',stroke:'#526b45','stroke-width':'3',...(e.value.directed===true?{'marker-end':'url(#ontology-arrow)'}:{})});anchor.append(title,path,svg('circle',{cx:String(mx),cy:String(my),r:'11',fill:'#526b45'}));const badge=svg('text',{x:String(mx),y:String(my+4),'text-anchor':'middle',fill:'white','font-size':'11'});badge.textContent=String(edges.indexOf(e)+1);anchor.append(badge);g.append(anchor);
-  }if(visible)visibleEdges.push(e);}
-  for(const r of records){const p=positions.get(r.key)!,a=svg('a',{href:href({definition:r.key}),tabindex:'0','aria-label':'Inspect record '+pretty(r.title)});a.append(svg('rect',{x:String(p.x),y:String(p.y),width:'205',height:'62',rx:'8',fill:r.key===focus?'#dce6cc':'#fffdf7',stroke:'#526b45','stroke-width':'2'}));const text=svg('text',{x:String(p.x+10),y:String(p.y+25)});text.textContent=pretty(r.title);const count=svg('text',{x:String(p.x+10),y:String(p.y+47),class:'map-count'});count.textContent=`${(r.value.members as any[]??[]).length} properties`;a.append(text,count);g.append(a);}
-  canvas.append(g);
-  const complex=edges.filter(e=>e.value.source?.length!==1||e.value.target?.length!==1);if(complex.length)canvas.append(el('p',`${complex.length} relationships have multiple or unspecified endpoints; inspect their full declarations in Relationships. They are not drawn as binary arrows.`));
-  const labels=el('div',undefined,'map-relationships');for(const e of visibleEdges){const p=el('p');p.append(link(`${edges.indexOf(e)+1}. ${e.value.name??e.value.id}`,{relationship:e.key,focus}),document.createTextNode(` · ${span(e.value.sourceMultiplicity)} → ${span(e.value.targetMultiplicity)}`));labels.append(p);}canvas.append(labels);
-  const unresolved=edges.filter(e=>[...(e.value.source??[]),...(e.value.target??[])].some(p=>!model.records.some(r=>r.key===endpointKey(p))));if(unresolved.length)canvas.append(el('p',`${unresolved.length} relationships have endpoints outside the displayed record model; retained in the relationship list.`,'unresolved'));
- };
- const change=(focus:string)=>{const next=new URLSearchParams(location.hash.slice(1));next.set('focus',focus);history.replaceState(null,'','#'+next);select.value=focus;draw(focus);};select.onchange=()=>change(select.value);full.onclick=()=>change('');draw(initial);
+ const initial=params.get('focus')??target?.key??(edge?.value.source?.[0]?endpointKey(edge.value.source[0]):undefined)??'';
+ const binary=model.edges.filter(e=>e.value.source?.length===1&&e.value.target?.length===1);
+ renderRecordMap(map,{records:model.records.map(r=>({id:r.key,label:pretty(r.title),properties:(r.value.members as any[]??[]).length})),edges:binary.map(e=>({id:e.key,source:endpointKey(e.value.source[0]),target:endpointKey(e.value.target[0]),label:String(e.value.name??e.value.id)+' · '+span(e.value.sourceMultiplicity)+' → '+span(e.value.targetMultiplicity),directed:e.value.directed===true}))},{focus:initial,annotations,onFocusChange:(focus)=>{const next=new URLSearchParams(location.hash.slice(1));next.set('focus',focus);history.replaceState(null,'',location.href.split('#')[0]+'#'+next);},onNavigate:(id,kind)=>{location.hash=href(kind==='relationship'?{relationship:id}:{definition:id});}});
+ if(binary.length!==model.edges.length)map.append(el('p',`${model.edges.length-binary.length} relationships have multiple or unspecified endpoints; inspect their full declarations in Relationships. They are not drawn as binary arrows.`));
  const list=section('Relationships');for(const e of model.edges){const p=el('p');p.append(link(String(e.value.name??e.value.id),{relationship:e.key}));list.append(p);}if(!model.edges.length)list.append(el('p','None declared.'));
  const hierarchy=section('Records and properties');for(const r of model.records){const d=el('details');d.append(el('summary',pretty(r.title)),link('Open record',{definition:r.key}));for(const m of r.value.members as any[]??[]){const p=el('p');p.append(ref(m.field??m));d.append(p);}hierarchy.append(d);}
  const other=parsed.definitions.filter(d=>d.value.kind!=='record'&&d.value.kind!=='field');if(other.length){const b=section('Other definitions');for(const d of other)b.append(link(d.title,{definition:d.key}));}

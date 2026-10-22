@@ -1,0 +1,96 @@
+{
+  "status": "unprofiled-action-substitution-reproduced",
+  "observations": [
+    {
+      "operator": "predicate",
+      "selectedAction": "query-original",
+      "expected": "indeterminate",
+      "observed": "indeterminate"
+    },
+    {
+      "operator": "predicate",
+      "selectedAction": "unrelated-export",
+      "expected": "permit",
+      "observed": "permit"
+    },
+    {
+      "operator": "predicate",
+      "selectedAction": "read",
+      "expected": "indeterminate",
+      "observed": "indeterminate"
+    },
+    {
+      "operator": "order",
+      "selectedAction": "query-original",
+      "expected": "indeterminate",
+      "observed": "indeterminate"
+    },
+    {
+      "operator": "order",
+      "selectedAction": "unrelated-export",
+      "expected": "permit",
+      "observed": "permit"
+    },
+    {
+      "operator": "order",
+      "selectedAction": "read",
+      "expected": "indeterminate",
+      "observed": "indeterminate"
+    },
+    {
+      "operator": "group",
+      "selectedAction": "query-original",
+      "expected": "indeterminate",
+      "observed": "indeterminate"
+    },
+    {
+      "operator": "group",
+      "selectedAction": "unrelated-export",
+      "expected": "permit",
+      "observed": "permit"
+    },
+    {
+      "operator": "group",
+      "selectedAction": "read",
+      "expected": "indeterminate",
+      "observed": "indeterminate"
+    },
+    {
+      "operator": "join",
+      "selectedAction": "query-original",
+      "expected": "indeterminate",
+      "observed": "indeterminate"
+    },
+    {
+      "operator": "join",
+      "selectedAction": "unrelated-export",
+      "expected": "permit",
+      "observed": "permit"
+    },
+    {
+      "operator": "join",
+      "selectedAction": "read",
+      "expected": "indeterminate",
+      "observed": "indeterminate"
+    },
+    {
+      "operator": "aggregate",
+      "selectedAction": "query-original",
+      "expected": "indeterminate",
+      "observed": "indeterminate"
+    },
+    {
+      "operator": "aggregate",
+      "selectedAction": "unrelated-export",
+      "expected": "permit",
+      "observed": "permit"
+    },
+    {
+      "operator": "aggregate",
+      "selectedAction": "read",
+      "expected": "indeterminate",
+      "observed": "indeterminate"
+    }
+  ],
+  "scope": "No designated action can be represented by the current field classification. query-original is an external intended designation, not a stored binding. The current evaluator permits any separately granted action supplied by the request. This is an unprofiled evaluator/host-binding prerequisite, not native bypass evidence or accepted B08."
+}

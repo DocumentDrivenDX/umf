@@ -1,8 +1,9 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {createHash} from 'node:crypto';
 import {readFileSync} from 'node:fs';
 import {version as graphqlJs} from 'graphql';
 import {relationshipExtraCases} from './relationship-extras-cases';
-import {projectRelationshipToExtra,classifyRelationshipExtra,importRelationshipExtraArchive} from '../../src';
+import {projectRelationshipToExtra, classifyRelationshipExtra, importRelationshipExtraArchive} from '../../src';
 if(graphqlJs!=='17.0.2')throw Error('Unpinned GraphQL.js');
 const cases=[];
 for(const c of relationshipExtraCases()){

@@ -1,0 +1,62 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"SecurityPolicySourceMigration\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "status",
+      "optional": false,
+      "type": "\"refused\" | \"migrated\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Json\"]"
+      ],
+      "name": "source",
+      "optional": false,
+      "type": "Json"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Json\"]"
+      ],
+      "name": "target",
+      "optional": true,
+      "type": "Json"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "complete",
+      "optional": false,
+      "type": "false"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "authority",
+      "optional": false,
+      "type": "false"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Diagnostic\"]"
+      ],
+      "name": "diagnostics",
+      "optional": false,
+      "type": "readonly Diagnostic[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "SecurityPolicySourceMigration is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "SecurityPolicySourceMigration"
+}

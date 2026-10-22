@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
+import {CURRENT_CORE_VERSION} from '../../generated/core-model';
 import schema from '../../../spec/projections/postgresql-relationship-layout.schema.json';
 import {copyJson} from '../../model/json';
 import {UmfError,type Document,type Element,type Json,type Diagnostic} from '../../model/types';
@@ -56,7 +58,7 @@ export function validatePostgresqlRelationshipLayout(logicalInput:Document,bindi
  const result:PostgresqlRelationshipLayoutResult={operation:'validate-postgresql-relationship-layout',version:'1.0.0',status:'blocked',lossPolicy,logical,binding,policy:raw,diagnostics:[],residuals:[]};
  const error=(code:string,path:string,message:string)=>result.diagnostics.push({code:'POSTGRESQL_LAYOUT_'+code,path,message,severity:'error'});
  const residual=(source:'logical'|'binding'|'policy',path:string,reason:string,value:unknown)=>result.residuals.push({source,path,reason,value:copyJson(value)});
- const validation=validateDocument(logical);if(!validation.valid||logical.umf!=='0.7.0'){error('MODEL','/logical','A valid core 0.7.0 relationship document is required');return result;}
+ const validation=validateDocument(logical);if(!validation.valid||logical.umf!==CURRENT_CORE_VERSION){error('MODEL','/logical','A valid core 0.10.0 relationship document is required');return result;}
  const checked=inspectBinding(binding,logical);if(!checked.valid){result.diagnostics.push(...checked.diagnostics);return result;}
  const payload=binding.extensions!['umf.binding'] as unknown as BindingPayload;
  if(payload.profile!=='umf-binding-2'||binding.vocabularies['umf.binding']?.version!=='0.2.0'){error('BINDING','/binding','Explicit stable-ID binding migration is required');return result;}

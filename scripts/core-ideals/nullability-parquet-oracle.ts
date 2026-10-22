@@ -1,8 +1,9 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {parquetAvailabilitySource} from './nullability-parquet-cases';
-import {classifyParquetNullability,recoverParquetNullabilityBytes} from '../../src/core-ideals/nullability-parquet';
-import {readJsonValue,writeJsonValue} from '../../src/model/serialization';
+import {classifyParquetNullability, recoverParquetNullabilityBytes} from '../../src/core-ideals/nullability-parquet';
+import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
 import {copyJson} from '../../src/model/json';
-import {importParquetSchema,getParquetFieldMetadata} from '../../src/adapters/parquet/field-metadata';
+import {importParquetSchema, getParquetFieldMetadata} from '../../src/adapters/parquet/field-metadata';
 import {exportParquetCapture} from '../../src/adapters/parquet';
 import {createHash} from 'node:crypto';
 const child=Bun.spawn(['.venv/bin/python','scripts/core-ideals/nullability-parquet-native.py'],{stdout:'inherit',stderr:'inherit'});if(await child.exited!==0)throw Error('Native discovery failed');

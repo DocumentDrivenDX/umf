@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 12555,
+        "line": 18,
+        "path": "src/core-ideals/nullability-postgresql.ts",
+        "sha256": "63d02480f83901ad06ea80156ce732e0d2d23fea20066b9cafb7040e848d4c49"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "PostgresqlNullabilityRequest",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface PostgresqlNullabilityRequest {\n column:string;nativeSource:string;mode:'strict'|'report';scope:'stored-relation'|'query-result'|'write-input'|'unresolved';carrier:'sql-null'|'unresolved';author?:CoreNullabilityDeclaration;\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"PostgresqlNullabilityRequest\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 12555,
+      "line": 18,
+      "path": "src/core-ideals/nullability-postgresql.ts",
+      "sha256": "63d02480f83901ad06ea80156ce732e0d2d23fea20066b9cafb7040e848d4c49"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/nullability-postgresql.ts",
+  "title": "PostgresqlNullabilityRequest"
+}

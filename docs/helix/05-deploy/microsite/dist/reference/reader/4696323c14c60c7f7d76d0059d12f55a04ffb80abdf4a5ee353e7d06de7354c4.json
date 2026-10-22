@@ -1,0 +1,71 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"AvroDocumentProjection\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "status",
+      "optional": false,
+      "type": "\"blocked\" | \"projected\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "source",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"AvroDocumentBindings\"]"
+      ],
+      "name": "policy",
+      "optional": false,
+      "type": "AvroDocumentBindings"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ProjectionIssue\"]"
+      ],
+      "name": "issues",
+      "optional": false,
+      "type": "ProjectionIssue[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "mappings",
+      "optional": false,
+      "type": "{ name: string; sourcePath: string; targetPointer: string; }[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "target",
+      "optional": true,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "nativeSchema",
+      "optional": true,
+      "type": "string"
+    }
+  ],
+  "parameters": [],
+  "purpose": "AvroDocumentProjection is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "AvroDocumentProjection"
+}

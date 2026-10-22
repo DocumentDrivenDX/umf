@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import * as graphql from '../../../node_modules/@typespec/graphql/dist/src/tsp-index.js';
 import * as json_schema from '../../../node_modules/@typespec/json-schema/dist/src/tsp-index.js';
 import * as protobuf from '../../../node_modules/@typespec/protobuf/dist/src/tsp-index.js';

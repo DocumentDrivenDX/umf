@@ -1,0 +1,50 @@
+{
+  "data": {
+    "conflicts": [],
+    "correspondence": "unassessed",
+    "declarations": [
+      {
+        "bytes": 4665,
+        "path": "spec/extensions/spark/package.json",
+        "sha256": "a402b39a48a436641c5bc06d64ec94cb6611e793a53b738f1075d366ade2ad9f"
+      }
+    ],
+    "evidence": [],
+    "operation": {
+      "apiNames": [],
+      "coreProfiles": [],
+      "extensionVersions": [],
+      "fixturePaths": [],
+      "id": "umf.spark@0.1.0:import",
+      "kind": "import",
+      "limitations": [
+        "Recorded scope only; native equivalence and production adoption are separate."
+      ],
+      "runtime": {
+        "availability": "host-only",
+        "profileId": "umf.spark@0.1.0:import",
+        "requirements": [
+          "Native runtime / original qualification harness; not executed by this page."
+        ]
+      },
+      "sourceSystem": "Apache Spark DataType schema JSON · 4.0.1 grammar baseline; Python and JVM evidence separately qualified",
+      "subset": "Known array/map/struct shape validation, exact source preservation and candidate edits. Atomic names/parameters and UDT declarations retain interpretation limits; no JVM/browser execution, DDL or data coercion claim.",
+      "targetSystem": "UMF",
+      "title": "umf.spark · import"
+    }
+  },
+  "id": "[\"integration\",\"umf.spark@0.1.0:import\"]",
+  "kind": "integration",
+  "links": [
+    "[\"extension\",\"umf.spark\",\"0.1.0\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 134795,
+      "path": "docs/helix/05-deploy/reference/operations.json",
+      "sha256": "793743bbca36e56e90e82df5ef0408b628c434e58cb68aea4d6486349be78e61"
+    }
+  ],
+  "summary": "Known array/map/struct shape validation, exact source preservation and candidate edits. Atomic names/parameters and UDT declarations retain interpretation limits; no JVM/browser execution, DDL or data coercion claim.",
+  "title": "umf.spark · import"
+}

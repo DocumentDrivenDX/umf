@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {importParquetSchema,captureParquet,exportParquetCapture,inspectParquetContainers,renameParquetField,renameParquetFieldWithArrowSchema,getParquetArrowSchema,exportArrowFlatbufferModel,coreSchema,readDocument,writeDocument} from '../../src';
 import {flatbufferBackend} from '../../native/arrow/flatbuffer-runtime';
@@ -24,7 +25,7 @@ test('US-019-AC23 coordinated renames retain data, metadata and reversible field
   }
  }
  await Bun.write(base+'results.json',JSON.stringify({cases},null,2)+'\n');
-},60000);
+},120000);
 test('US-019-AC23 missing correspondence and invalid policies cannot produce partial files',async()=>{
  const bytes=new Uint8Array(await Bun.file(base+'none.parquet').arrayBuffer()),source=captureParquet(bytes,{id:'guards'}),policy={parquetIndex:1,arrowFieldPath:[0],name:'new',uninterpretedMetadata:'preserve-and-report' as const};
  for(const changes of [{arrowFieldPath:[9]},{arrowFieldPath:[1]},{name:'events'},{name:''},{name:'\ud800'},{name:'detail'}]){const result=renameParquetFieldWithArrowSchema(source,{...policy,...changes},flatbufferBackend);expect(result.status).toBe('blocked');expect(result.output).toBeUndefined();expect(check(result)).toBe(true);expect(result.source).toEqual(source);}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 22939,
+        "line": 12,
+        "path": "src/projections/ddd-postgresql/relationship-layout.ts",
+        "sha256": "b8bc072daaa0fa2b7d97adebc163faae18cd5e1c8c2e8cc0eec65fc8d999f7ce"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "PostgresqlLayoutType",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface PostgresqlLayoutType {sqlType:string;nullable:boolean;collation:null|'C'}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"PostgresqlLayoutType\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 22939,
+      "line": 12,
+      "path": "src/projections/ddd-postgresql/relationship-layout.ts",
+      "sha256": "b8bc072daaa0fa2b7d97adebc163faae18cd5e1c8c2e8cc0eec65fc8d999f7ce"
+    }
+  ],
+  "summary": "Type declaration · src/projections/ddd-postgresql/relationship-layout.ts",
+  "title": "PostgresqlLayoutType"
+}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 8193,
+        "line": 17,
+        "path": "src/model/facets.ts",
+        "sha256": "54d789632de775afe7d97518c7fb5f2b493a4d7353ad46b3e91e265a1967208a"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "CoreFacetMeaning",
+    "runtime": "type-only",
+    "signatureText": [
+      "export type CoreFacetMeaning={state:'missing'|'inapplicable'}|{state:'known'|'partial';facets:CoreFacets;interpreted:CoreFacetInterpreted;uninterpretedPaths:string[]};"
+    ]
+  },
+  "id": "[\"api\",\".\",\"CoreFacetMeaning\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 8193,
+      "line": 17,
+      "path": "src/model/facets.ts",
+      "sha256": "54d789632de775afe7d97518c7fb5f2b493a4d7353ad46b3e91e265a1967208a"
+    }
+  ],
+  "summary": "Type declaration · src/model/facets.ts",
+  "title": "CoreFacetMeaning"
+}

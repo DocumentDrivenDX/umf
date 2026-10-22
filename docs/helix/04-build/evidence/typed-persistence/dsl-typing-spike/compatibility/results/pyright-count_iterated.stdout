@@ -1,0 +1,30 @@
+{
+    "version": "1.1.414",
+    "time": "1792086736285",
+    "generalDiagnostics": [
+        {
+            "file": "/Users/erik/.codex/worktrees/39bf/umf/docs/helix/04-build/evidence/typed-persistence/dsl-typing-spike/compatibility/negative/count_iterated.py",
+            "severity": "error",
+            "message": "Argument of type \"int\" cannot be assigned to parameter \"iterable\" of type \"Iterable[_T@list]\" in function \"__init__\"\n  \"int\" is incompatible with protocol \"Iterable[_T@list]\"\n    \"__iter__\" is not present",
+            "range": {
+                "start": {
+                    "line": 6,
+                    "character": 5
+                },
+                "end": {
+                    "line": 6,
+                    "character": 19
+                }
+            },
+            "rule": "reportArgumentType"
+        }
+    ],
+    "summary": {
+        "filesAnalyzed": 1,
+        "errorCount": 1,
+        "warningCount": 0,
+        "informationCount": 0,
+        "timeInSec": 0.301
+    }
+}
+

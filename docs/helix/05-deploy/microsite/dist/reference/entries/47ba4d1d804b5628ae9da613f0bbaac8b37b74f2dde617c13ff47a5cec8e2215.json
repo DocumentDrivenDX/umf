@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 6938,
+        "line": 54,
+        "path": "src/core-ideals/tablespec-record.ts",
+        "sha256": "a35f2b4388568de12b7f41323c7ee6132860aef09430beb5c30321794c7f0c5b"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "verifyTableSpecRecordClassification",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: TableSpecRecordClassification, current: Document): TableSpecRecordClassification"
+    ]
+  },
+  "id": "[\"api\",\".\",\"verifyTableSpecRecordClassification\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 6938,
+      "line": 54,
+      "path": "src/core-ideals/tablespec-record.ts",
+      "sha256": "a35f2b4388568de12b7f41323c7ee6132860aef09430beb5c30321794c7f0c5b"
+    }
+  ],
+  "summary": "Whole-record receipt verification; native or authored changes require recomputation.",
+  "title": "verifyTableSpecRecordClassification"
+}

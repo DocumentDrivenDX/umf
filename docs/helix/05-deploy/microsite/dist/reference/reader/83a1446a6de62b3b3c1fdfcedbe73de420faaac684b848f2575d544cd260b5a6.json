@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"projectRecordToAvro\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreKindDeclaration\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "CoreKindDeclaration"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"RecordAvroRequest\"]"
+      ],
+      "name": "options",
+      "optional": false,
+      "type": "RecordAvroRequest"
+    }
+  ],
+  "purpose": "projectRecordToAvro accepts input, options and returns RecordAvroProjection.",
+  "related": [],
+  "returns": "RecordAvroProjection",
+  "task": "Import and export",
+  "type": "(input: CoreKindDeclaration, options: RecordAvroRequest) => RecordAvroProjection"
+}

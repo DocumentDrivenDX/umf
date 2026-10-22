@@ -1,0 +1,192 @@
+{
+  "data": {
+    "extensionId": "umf.parquet.facets",
+    "manifest": {
+      "capabilities": {
+        "directions": [
+          "import",
+          "export"
+        ],
+        "evidence": [
+          "tests/core-ideals/facets-parquet.test.ts",
+          "fixtures/validation/facets-parquet-discovery-native.json",
+          "fixtures/validation/facets-parquet-type-browser.json",
+          "tests/core-ideals/facets-parquet-projection.test.ts",
+          "fixtures/validation/facets-parquet-projection-native.json"
+        ],
+        "native": {
+          "subset": "Explicit present non-null physical leaf declarations; native bytes, container context and unknown metadata retained; input conversion and enforcement remain separate",
+          "system": "Parquet",
+          "version": "parquet-format 219e3f12a62f9476e830c21e26d030d231f7c017 / PyArrow 21.0.0"
+        },
+        "validation": "structural"
+      },
+      "coreVersion": "0.10.0",
+      "description": "Parquet scalar facet classification and authored projection with retained native semantics",
+      "id": "umf.parquet.facets",
+      "schema": {
+        "$id": "urn:umf:parquet:facet-binding:1.0.0",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": true,
+        "properties": {
+          "binding": {
+            "const": {
+              "id": "umf.parquet.facets",
+              "version": "1.0.0"
+            }
+          },
+          "location": {
+            "additionalProperties": false,
+            "properties": {
+              "index": {
+                "maximum": 9007199254740991,
+                "minimum": 1,
+                "type": "integer"
+              },
+              "scope": {
+                "const": "present-non-null-leaf"
+              }
+            },
+            "required": [
+              "index",
+              "scope"
+            ],
+            "type": "object"
+          },
+          "obligation": {
+            "enum": [
+              "value-domain",
+              "exact-input"
+            ]
+          },
+          "observations": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "basis": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "concept": {
+                  "enum": [
+                    "length",
+                    "decimal",
+                    "integerWidth",
+                    "conversion",
+                    "native"
+                  ]
+                },
+                "idealPath": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "interpretation": {
+                  "enum": [
+                    "declared",
+                    "inferred",
+                    "unknown",
+                    "unsupported"
+                  ]
+                },
+                "location": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "index": {
+                      "maximum": 9007199254740991,
+                      "minimum": 1,
+                      "type": "integer"
+                    },
+                    "scope": {
+                      "const": "present-non-null-leaf"
+                    }
+                  },
+                  "required": [
+                    "index",
+                    "scope"
+                  ],
+                  "type": "object"
+                },
+                "outcome": {
+                  "enum": [
+                    "exact",
+                    "approximated",
+                    "not-expressible",
+                    "unknown"
+                  ]
+                }
+              },
+              "required": [
+                "concept",
+                "idealPath",
+                "location",
+                "interpretation",
+                "outcome",
+                "basis"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "origin": {
+            "const": "classified"
+          },
+          "outcome": {
+            "enum": [
+              "exact",
+              "approximated",
+              "not-expressible",
+              "unknown"
+            ]
+          },
+          "profile": {
+            "enum": [
+              "declared-schema",
+              "pyarrow-safe-array-input",
+              "unresolved"
+            ]
+          }
+        },
+        "required": [
+          "origin",
+          "location",
+          "binding",
+          "profile",
+          "obligation",
+          "outcome",
+          "observations"
+        ],
+        "title": "Retained Parquet facet interpretation profile",
+        "type": "object"
+      },
+      "scopes": [
+        "element"
+      ],
+      "semantics": "CONTRACT-040 and TD-043; profile-qualified facet classification; declaration meaning is separate from native enforcement; classification and authored projection are experimental; binding qualification is recorded separately in versioned acceptance evidence",
+      "version": "1.0.0"
+    },
+    "registration": {
+      "apiIds": [],
+      "coreProfiles": [],
+      "mode": "unmapped"
+    },
+    "schemaId": "[\"schema\",\"spec/extensions/parquet-facets/schema.json\",\"\"]",
+    "version": "1.0.0"
+  },
+  "id": "[\"extension\",\"umf.parquet.facets\",\"1.0.0\"]",
+  "kind": "extension",
+  "links": [
+    "[\"guide\",\"extensions\"]",
+    "[\"schema\",\"spec/extensions/parquet-facets/schema.json\",\"\"]",
+    "[\"integration\",\"umf.parquet.facets@1.0.0:import\"]",
+    "[\"integration\",\"umf.parquet.facets@1.0.0:export\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 4401,
+      "path": "spec/extensions/parquet-facets/package.json",
+      "sha256": "2805d389a01e6556f7ff615a948b586f0991a50bba5af40ad7ff0c94d70144f8"
+    }
+  ],
+  "summary": "Parquet scalar facet classification and authored projection with retained native semantics",
+  "title": "umf.parquet.facets · 1.0.0"
+}

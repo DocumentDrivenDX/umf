@@ -1,0 +1,11 @@
+{
+  "status": "counterexample-found",
+  "exitCode": 1,
+  "stdout": "",
+  "stderr": "32 | checks.pendingOriginalStoredCaptured=await originalAttempt;\n33 | const repairedValues=structuredClone(report.values);repairedValues[1].string='foreign';\n34 | const valuesAttempt=binding.matches(repairedValues,original.nativeStored[0]);\n35 | repairedValues[1].string=report.values[1].string;\n36 | checks.pendingInvalidValuesRefused=!await valuesAttempt;\n37 | if(Object.values(checks).some(v=>!v))throw Error('Stored key assembly replay mismatch: '+JSON.stringify(checks));\n                                                ^\nerror: Stored key assembly replay mismatch: {\"original\":true,\"foreignNamespaceRefused\":true,\"copiedSelection\":true,\"codecPinMismatchRefused\":true,\"pendingProducerCaptured\":true,\"pendingInvalidStoredRefused\":false,\"pendingOriginalStoredCaptured\":false,\"pendingInvalidValuesRefused\":false}\n      at /Users/erik/.codex/worktrees/1598/umf/tools/security/truss-stored-key-replay.ts:37:44\n\nBun v1.4.2 (macOS arm64)\n",
+  "sourceDigests": {
+    "docs/helix/04-build/evidence/security/stored-key-await-vulnerable.ts.txt": "4174bd415bacf51bae86db90598e294f1f23178813675b84806c26440082e502",
+    "tools/security/truss-stored-key-replay.ts": "5aa8f794a6eb7d3264586376da47aeb3117b0dc461798fb8d90d47a4166350d8"
+  },
+  "scope": "Pre-fix current assembly snapshot. Invalid original stored key/values can be repaired during await and accepted; valid bytes can be changed and rejected. No native deployment or authorization claim."
+}

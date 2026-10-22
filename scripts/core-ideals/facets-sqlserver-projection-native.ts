@@ -1,9 +1,11 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
+import {assertJsonDataEqual} from './json-data-assert';
 /** Independent native execution of authored facet projection output. */
 import assert from 'node:assert/strict';
 import {createHash,randomUUID} from 'node:crypto';
-import {importSqlServerCatalog,exportSqlServerCatalog,getSqlServerColumnMetadata,readDocument,writeDocument} from '../../src';
+import {importSqlServerCatalog, exportSqlServerCatalog, getSqlServerColumnMetadata, readDocument, writeDocument} from '../../src';
 import {facetsSqlServerProjectionCases} from './facets-sqlserver-projection-cases';
-import {projectFacetsToSqlServer,recoverFacetsFromSqlServer} from '../../src/core-ideals/facets-sqlserver-projection';
+import {projectFacetsToSqlServer, recoverFacetsFromSqlServer} from '../../src/core-ideals/facets-sqlserver-projection';
 const image='mcr.microsoft.com/mssql/server@sha256:4402d880dd4c34bfa7d8705e56a86cd6c88da80a1f6bbbe741f999e76264a090',name='umf-facets-sqlserver-'+randomUUID(),password='Umf!'+randomUUID()+'A9';
 let created=false,sqlcmd='/opt/mssql-tools18/bin/sqlcmd';
 async function run(args:string[],input?:string){const p=Bun.spawn(args,{stdin:input===undefined?'ignore':new Blob([input]),stdout:'pipe',stderr:'pipe'});const [stdout,stderr,code]=await Promise.all([new Response(p.stdout).text(),new Response(p.stderr).text(),p.exited]);assert.equal(code,0,stderr||stdout);return {stdout,stderr};}
@@ -25,7 +27,7 @@ try{
  for(const [index,c] of emitted.entries()){
   if(index%40===0)console.log(JSON.stringify({ddl:index,total:emitted.length}));
   await sql('umf_facets',c.result.nativeSql!);
-  assert.deepEqual(recoverFacetsFromSqlServer(c.result,c.result.nativeSql!),c.author.target);
+  assertJsonDataEqual(recoverFacetsFromSqlServer(c.result,c.result.nativeSql!),c.author.target);
  }
  const pick=(name:string,encoding='checked')=>emitted.find(c=>c.name===name&&c.request.encoding===encoding&&c.request.mode==='report')!;
  const probes:{id:string;statement:string;error:number;expected:string|null}[]=[];

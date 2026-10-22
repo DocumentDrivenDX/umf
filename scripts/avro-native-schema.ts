@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 export {};
 const end='(?![\\s\\S])',simple='[A-Za-z_][A-Za-z0-9_]*',full=simple+'(?:\\.'+simple+')*';
 const ref=(name:string)=>({$ref:'#/$defs/'+name});

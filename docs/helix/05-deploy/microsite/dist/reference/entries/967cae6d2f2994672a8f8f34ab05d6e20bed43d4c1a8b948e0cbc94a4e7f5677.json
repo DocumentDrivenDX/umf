@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 9170,
+        "line": 40,
+        "path": "src/core-ideals/relationship-tablespec.ts",
+        "sha256": "3426ef871291205963d483d6c9c03fcdbcbd54ebac5418031ac985d947ed9a6e"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "classifyTableSpecRelationships",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: Document, options: TableSpecRelationshipRequest): TableSpecRelationshipClassification"
+    ]
+  },
+  "id": "[\"api\",\".\",\"classifyTableSpecRelationships\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 9170,
+      "line": 40,
+      "path": "src/core-ideals/relationship-tablespec.ts",
+      "sha256": "3426ef871291205963d483d6c9c03fcdbcbd54ebac5418031ac985d947ed9a6e"
+    }
+  ],
+  "summary": "Observe native declarations without upgrading the envelope or creating authored relationships.",
+  "title": "classifyTableSpecRelationships"
+}

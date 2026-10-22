@@ -1,11 +1,12 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {copyJson} from '../model/json';
 import {UmfError,pointer,type Document,type Json,type Diagnostic} from '../model/types';
 import {verifyCoreKindDeclaration,type CoreKindDeclaration} from '../model/field-kind';
 import {importPostgresqlSql,getPostgresqlSource,type PostgresqlBackend} from '../adapters/postgresql';
 import {createValidator} from '../validation/schema';
 import legacy from '../../spec/core/schema.json';
-import fields from '../../spec/core/field-document.schema.json';
-import kinds from '../../spec/core/kind-operation.schema.json';
+
+import kinds from '../../spec/core/kind-operation-v6.schema.json';
 import schema from '../../spec/core/field-postgresql-projection.schema.json';
 export {default as fieldPostgresqlProjectionSchema} from '../../spec/core/field-postgresql-projection.schema.json';
 import {carriers,identifier,literal} from './postgresql-syntax';
@@ -16,7 +17,7 @@ export interface FieldPostgresqlProjection {
  mapping:{origin:'authored';idealPath:string;nativePath:'/stmts/0/stmt/CreateStmt/tableElts/0/ColumnDef';outcome:'exact'|'unknown'|'not-expressible'};
  residuals:{path:string;value:Json;reason:string;outcome:'unknown'|'not-expressible';recovery:'Recover source meaning with retained projection receipt; native-only import does not recover author intent'}[];
 }
-const validator=createValidator();validator.addSchema(legacy);validator.addSchema(fields);validator.addSchema(kinds);const check=validator.compile(schema);
+const validator=createValidator();validator.addSchema(legacy);validator.addSchema(kinds);const check=validator.compile(schema);
 const checkRequest=validator.compile({...schema.properties.request});
 export async function projectFieldToPostgresql(input:CoreKindDeclaration,options:FieldPostgresqlRequest,backend:PostgresqlBackend):Promise<FieldPostgresqlProjection> {
  const copied=copyJson(input) as unknown as CoreKindDeclaration;

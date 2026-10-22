@@ -1,0 +1,79 @@
+{
+  "id": "owner-result-selection-astra-review",
+  "status": "clean-within-scope",
+  "reviewer": "/root/astra_security_review",
+  "generatedAt": "2026-10-10T05:38:52.255850+00:00",
+  "reviewMethod": "Read-only installed source, governing contract and actual regression inspection; independent full digest audit of the parent-executed Rust receipt. No independent Rust or native execution and no formal refinement claim.",
+  "sourceDigests": {
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_result_selection.rs": "67ba1894fa681cca7b66779f799a0f6a75d5496b29a9f7238f257dff48e47cc8",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_result_cells.rs": "2d75f65f3831562574a43403597731b7bfef9f3e27eb99a579be06d07b697c23",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_result_check.rs": "168a09338fc736cc34b1e72c27ecc73f3dc8cdbb398e9f2e4140942ad39d264a",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_backend.rs": "72dd684638a85692663acf8c56beccd25791df5cb332953ba37c092890156bdf",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_requirements.rs": "937f259ae5cdca5afbee653d89f7882e6f0bb2a454a6703256d14625e8fe2711",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_composition.rs": "6fa62658499a4d60308235d010bea0e9bfc0caf03fcbf61cca932be9f441674d",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_lowering.rs": "1921ba60fcd7d56cce6e510198f20b6e1eb887845db6f8b2ff3234c73bf51d72",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_literals.rs": "8bd7995326ab3c544800f59980e8a60b0b83d81ba5138bc42ffeb351f82c7cd4",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_ontology.rs": "a1e19a2605a2d247b6c58f252886d0ab45077cd2e3d53f0bffb995a2ae2a7d19",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_ir.rs": "422e4b2641a276fefc8d2dc97a4414cdb8db960ed42c6fd5d28bd52671cf4e9f",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_scan_obligations.rs": "4d9bf60f49ab0d16be173573f6d36349110d45b0a73e2513e70dfed21ca2b113",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_query_profile.rs": "6af9b6c910b6e6b2c1f20710de2a34abbbce81bd0a6b2e841c69d1b690ab9ad3",
+    "/Users/erik/Projects/weft/crates/weft-core/src/json.rs": "b359cd2ff4b53f8e79690e7edc1a724f5f4f06df3a3af18de8f3fc89d79fde1d",
+    "/Users/erik/Projects/weft/crates/weft-core/src/compile.rs": "6f23265ac68dbbf5240d05285e3128c460ae50053140a880eb058d7272b72585",
+    "/Users/erik/Projects/weft/crates/weft-core/src/lib.rs": "17ad58d674dacb00f75120a6cd3a55c45d9bf30f19ff9a5cd2233628f165e5cb",
+    "/Users/erik/Projects/weft/crates/weft-core/tests/security_admission.rs": "cfa623d9b03f6ed00fa1a5f31a87a0ce09682491089494d91b0f75369a767991",
+    "/Users/erik/Projects/weft/docs/helix/02-design/contracts/CONTRACT-005-security-compilation.md": "ac95da120325ce8a6a8e9e456e14cb5dfe70242fe0241899990adee01bc8fd29",
+    "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/weft-admission.json": "87a134f13368ff3d499a4e8b8489e778821b9457563319e8362d396e98428037",
+    "/private/tmp/owner-result-selection-astra-review.py": "6899c58e5c39e08f830bed8e0d0b2e4d441f06f34877df6d2a24003958fe7886"
+  },
+  "sourcesUnchanged": true,
+  "reviewObservations": [
+    {
+      "id": "complete-supplied-scope",
+      "observation": "Inspected actual requirements and selection loop: exact row, scan and action cardinality plus existing compose exact rule-ID set require every actual matching rule in every required scope. Supplied truths remain typed caller simulation inputs."
+    },
+    {
+      "id": "ordered-scan-selection",
+      "observation": "Projected fields are deduplicated only within their actual scan occurrence. Ordered output lookup retains that occurrence, so same-qualified self-join fields can select different outcomes; the mixed-scope swap control refuses."
+    },
+    {
+      "id": "fold-and-outcome-correspondence",
+      "observation": "Every scan/action must compose to Permit. Primary projected fields use existing Original/Withheld/exact normalized constant semantics. Full prior declaration and cell checks bind output domain, constant class, outcome ID, source revision, contract bytes and row width before selection."
+    },
+    {
+      "id": "secondary-action-isolation",
+      "observation": "Parent-executed fixture now uses the actual actions array. It admits salary predicate use under query-original, passes the complete baseline, and flips only secondary-permit to False while primary truths remain unchanged; exact selection refusal is asserted."
+    },
+    {
+      "id": "later-row-isolation",
+      "observation": "Two domain-valid Original rows and two valid truth inventories pass. Changing only membership in the later truth row refuses the complete unit result."
+    },
+    {
+      "id": "selection-ledger-isolation",
+      "observation": "4096 small Original rows independently pass declaration/cell checks. Valid ontology whitespace increases the per-compose source charge; selection alone refuses WFT-LIMIT in result phase. The contract names charged categories and excludes other composition policy/model inspection and normalization work."
+    },
+    {
+      "id": "scope-and-closed-lowering",
+      "observation": "Method returns unit after all checks, no checked batch or release token. Empty batches grant no query permission. Original row values, actual conditions, row correlation/provenance, current authority, native cuts and release remain unestablished; public lowering remains closed."
+    }
+  ],
+  "resolvedFindings": [
+    "Added isolated secondary-action, later-row and selection-ledger controls.",
+    "Corrected the new secondary fixture from unknown singular action to the original actions array before the passing replay.",
+    "Qualified ledger text to the actual charged categories."
+  ],
+  "parentExecutedEvidence": {
+    "path": "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/weft-admission.json",
+    "sha256": "87a134f13368ff3d499a4e8b8489e778821b9457563319e8362d396e98428037",
+    "commands": 4,
+    "allExitCodesZero": true,
+    "libraryTests": 66,
+    "securityAdmissionTests": 58
+  },
+  "independentPinAudit": {
+    "auditedSourceCount": 410,
+    "stale": []
+  },
+  "scope": "Conditional supplied-truth selection for the existing direct-field model-domain result subset. Does not establish evaluated facts, authenticated truth, original-value row correspondence, actual correlation, native completeness/current cuts, query-wide authorization, compiler lowering or release.",
+  "nativeImplementationQualified": false,
+  "acceptanceCasesPromoted": []
+}

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {importSparkSchema,projectSparkToArrow,exportArrowFlatbufferModel,readDocument,writeDocument} from '../src';
 const base='fixtures/projections/spark-arrow/',native=await Bun.file(base+'native-results.json').json();const results=[];
 const canonical=(v:any):string=>v&&typeof v==='object'?Array.isArray(v)?'['+v.map(canonical).join(',')+']':'{'+Object.keys(v).sort().map(k=>JSON.stringify(k)+':'+canonical(v[k])).join(',')+'}':JSON.stringify(v);

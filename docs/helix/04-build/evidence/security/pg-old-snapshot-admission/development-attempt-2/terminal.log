@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/Users/erik/.codex/worktrees/security-main-integration/umf/tools/security/pg-old-snapshot-admission-probe.py", line 90, in <module>
+    check(label+':specific-refusal',True,'Unsupported publisher snapshot' in result['diagnostic'])
+  File "/Users/erik/.codex/worktrees/security-main-integration/umf/tools/security/pg-old-snapshot-admission-probe.py", line 22, in check
+    if expected!=observed:raise AssertionError(id)
+AssertionError: serializable:specific-refusal

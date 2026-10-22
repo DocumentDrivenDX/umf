@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 8267,
+        "line": 14,
+        "path": "src/core-ideals/nullability-parquet-projection.ts",
+        "sha256": "1764b89974dce6f552ccfa8f9bc8dd34f90c98cfb33a534e4574b51c2296deda"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "NullabilityParquetRequest",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface NullabilityParquetRequest {id:string;recordName:string;fieldName:string;nativeType:keyof typeof parquetCarriers;mode:'strict'|'report';scope:'row-leaf-value'|'repeated-element-value'|'write-input'|'unresolved';carrier:'definition-level'|'unresolved'}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"NullabilityParquetRequest\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 8267,
+      "line": 14,
+      "path": "src/core-ideals/nullability-parquet-projection.ts",
+      "sha256": "1764b89974dce6f552ccfa8f9bc8dd34f90c98cfb33a534e4574b51c2296deda"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/nullability-parquet-projection.ts",
+  "title": "NullabilityParquetRequest"
+}

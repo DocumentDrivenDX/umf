@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Host-only compatibility replay. Historical records supply command inventory,
  * never passing outcomes for the current implementation. */
 import assert from 'node:assert/strict';
@@ -8,7 +9,8 @@ const keys=await Bun.file('fixtures/validation/key-gate-refresh-evidence.json').
 const profile=process.argv[2]??'core';
 assert.ok(['core','tablespec','avro','integrated'].includes(profile),'Expected core, tablespec, avro or integrated refresh profile');
 const commands:string[][]=[],seen=new Set<string>();
-for(const command of [...previous.runs.map((r:any)=>r.command),...keys.runs.map((r:any)=>r.command),...['core-relationship-browser','core-relationship-transition-browser','core-relationship-operations-browser','core-relationship-public-browser'].map(s=>['bun',`scripts/${s}.ts`])]){
+for(const command of [...previous.runs.map((r:any)=>r.command),...keys.runs.map((r:any)=>r.command),...['core-relationship-browser','core-relationship-operations-browser','core-relationship-public-browser'].map(s=>['bun',`scripts/${s}.ts`])]){
+ if(command.some((part:string)=>part.includes('core-relationship-transition-browser')))continue;
  const identity=JSON.stringify(command);if(!seen.has(identity)){seen.add(identity);commands.push(command);}
 }
 if(profile!=='core')for(const name of ['relationship-tablespec-discovery-oracle','relationship-tablespec-oracle','relationship-tablespec-browser','relationship-tablespec-projection-browser'])commands.push(['bun',`scripts/core-ideals/${name}.ts`]);

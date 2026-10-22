@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:weft:security:admission-obligation-parameters:0.1.0",
+  "description": "Draft SPIKE-010 closed projection shape only; UTF8 bytes, original owner/site compatibility, selected prerequisite closure and DAG are separate owner checks. No source/evidence/native admission.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "version",
+    "semanticSources",
+    "enforcementSite",
+    "prerequisites",
+    "evidenceCaseIds"
+  ],
+  "properties": {
+    "version": {
+      "const": "weft.security.admission-obligation/0.1.0"
+    },
+    "semanticSources": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 4096,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/identity"
+      }
+    },
+    "enforcementSite": {
+      "enum": [
+        "host",
+        "backend",
+        "native"
+      ]
+    },
+    "prerequisites": {
+      "type": "array",
+      "minItems": 0,
+      "maxItems": 4096,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/identity"
+      }
+    },
+    "evidenceCaseIds": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 4096,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/identity"
+      }
+    }
+  },
+  "$defs": {
+    "identity": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 4096,
+      "pattern": "^[^\\u0000]+$"
+    }
+  }
+}

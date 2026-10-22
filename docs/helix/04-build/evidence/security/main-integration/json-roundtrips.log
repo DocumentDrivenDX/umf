@@ -1,0 +1,17 @@
+bun test v1.4.2 (43848b5a7)
+
+tests/core-ideals/cardinality-avro-projection.test.ts:
+(pass) explicit native shape mismatches and absent item meaning are residuals with exact ideal recovery [3708.64ms]
+(pass) nested item and value types map recursively with independent availability and qualified scalar families [242.63ms]
+(pass) cycles, unknown metadata, native diagnostics and target edits remain explicit and recoverable [372.81ms]
+(pass) dependency changes and large uninterpreted native tokens cannot be hidden by ideal recovery [526.55ms]
+(pass) fresh native ingestion composes with retained ideal recovery without inventing original author intent [30892.26ms]
+
+tests/core-ideals/key-authored-roundtrips.test.ts:
+(pass) Key shared authored contract preserves plural identity and rejects forged receipts across five systems [18514.82ms]
+(pass) all Key bindings reject conflicting tuples, changed stable IDs and missing or cross-record ownership [13.76ms]
+
+ 7 pass
+ 0 fail
+ 225 expect() calls
+Ran 7 tests across 2 files. [61.97s]

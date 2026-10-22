@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 4905,
+        "line": 35,
+        "path": "src/adapters/parquet/field-metadata.ts",
+        "sha256": "4ab6e9e2c566276dfc5cbcc7d96c667f2acd5bbc5efb08a611912342bfd3827e"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "importParquetSchema",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(bytes: Uint8Array<ArrayBufferLike>, options: { id: string; }): Document"
+    ]
+  },
+  "id": "[\"api\",\".\",\"importParquetSchema\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 4905,
+      "line": 35,
+      "path": "src/adapters/parquet/field-metadata.ts",
+      "sha256": "4ab6e9e2c566276dfc5cbcc7d96c667f2acd5bbc5efb08a611912342bfd3827e"
+    }
+  ],
+  "summary": "Public export · src/adapters/parquet/field-metadata.ts",
+  "title": "importParquetSchema"
+}

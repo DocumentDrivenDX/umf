@@ -1,0 +1,174 @@
+{
+  "scope": "uuid-model1 actual multi-field native Avro/Parquet data, nullable pair group and malformed pair refusal; file formats do not enforce Keys/FK/indexes",
+  "versions": {
+    "avro": "1.12.0",
+    "fastavro": "1.12.2",
+    "pyarrow": "21.0.0",
+    "python": "3.13.16 (main, Oct  3 2026, 00:54:36) [Clang 22.1.3 ]"
+  },
+  "inputSha256": "68000a9019c7659227bb801b0edf006d8e446288f619a78aaef39be7d86375b8",
+  "observations": [
+    {
+      "system": "avro",
+      "domain": "uuid",
+      "kind": "native-uuid",
+      "signed": null,
+      "checks": 780,
+      "independentOracleFields": true,
+      "nativeSchema": "{\"type\": \"record\", \"name\": \"children\", \"namespace\": \"umf.model.r1\", \"fields\": [{\"type\": {\"type\": \"fixed\", \"logicalType\": \"uuid\", \"name\": \"umf_1_0_uuid\", \"namespace\": \"umf.model.r1.values\", \"size\": 16}, \"name\": \"id\"}, {\"type\": [\"null\", {\"type\": \"fixed\", \"logicalType\": \"uuid\", \"name\": \"umf_1_1_uuid\", \"namespace\": \"umf.model.r1.values\", \"size\": 16}], \"name\": \"parent\"}]}",
+      "warnings": [
+        "Logical type uuid requires literal type string, not fixed."
+      ]
+    },
+    {
+      "system": "avro",
+      "domain": "uuid",
+      "kind": "bytes16",
+      "signed": null,
+      "checks": 780,
+      "independentOracleFields": true,
+      "nativeSchema": "{\"type\": \"record\", \"name\": \"children\", \"namespace\": \"umf.model.r1\", \"fields\": [{\"type\": {\"type\": \"fixed\", \"name\": \"umf_1_0_bytes\", \"namespace\": \"umf.model.r1.values\", \"size\": 16}, \"name\": \"id\"}, {\"type\": [\"null\", {\"type\": \"fixed\", \"name\": \"umf_1_1_bytes\", \"namespace\": \"umf.model.r1.values\", \"size\": 16}], \"name\": \"parent\"}]}",
+      "warnings": []
+    },
+    {
+      "system": "avro",
+      "domain": "uuid",
+      "kind": "uuid-text",
+      "signed": null,
+      "checks": 780,
+      "independentOracleFields": true,
+      "nativeSchema": "{\"type\": \"record\", \"name\": \"children\", \"namespace\": \"umf.model.r1\", \"fields\": [{\"type\": {\"type\": \"string\", \"logicalType\": \"uuid\"}, \"name\": \"id\"}, {\"type\": [\"null\", {\"type\": \"string\", \"logicalType\": \"uuid\"}], \"name\": \"parent\"}]}",
+      "warnings": []
+    },
+    {
+      "system": "avro",
+      "domain": "uuid",
+      "kind": "words64",
+      "signed": true,
+      "checks": 782,
+      "independentOracleFields": true,
+      "nativeSchema": "{\"type\": \"record\", \"name\": \"children\", \"namespace\": \"umf.model.r1\", \"fields\": [{\"type\": {\"type\": \"record\", \"name\": \"umf_1_0_pair\", \"namespace\": \"umf.model.r1.values\", \"fields\": [{\"type\": \"long\", \"name\": \"id_hi\"}, {\"type\": \"long\", \"name\": \"id_lo\"}]}, \"name\": \"id_hi__pair\"}, {\"type\": [\"null\", {\"type\": \"record\", \"name\": \"umf_1_1_pair\", \"namespace\": \"umf.model.r1.values\", \"fields\": [{\"type\": \"long\", \"name\": \"parent_hi\"}, {\"type\": \"long\", \"name\": \"parent_lo\"}]}], \"name\": \"parent_hi__pair\"}]}",
+      "warnings": []
+    },
+    {
+      "system": "avro",
+      "domain": "bits128",
+      "kind": "bytes16",
+      "signed": null,
+      "checks": 780,
+      "independentOracleFields": true,
+      "nativeSchema": "{\"type\": \"record\", \"name\": \"children\", \"namespace\": \"umf.model.r1\", \"fields\": [{\"type\": {\"type\": \"fixed\", \"name\": \"umf_1_0_bytes\", \"namespace\": \"umf.model.r1.values\", \"size\": 16}, \"name\": \"id\"}, {\"type\": [\"null\", {\"type\": \"fixed\", \"name\": \"umf_1_1_bytes\", \"namespace\": \"umf.model.r1.values\", \"size\": 16}], \"name\": \"parent\"}]}",
+      "warnings": []
+    },
+    {
+      "system": "avro",
+      "domain": "bits128",
+      "kind": "hex128-text",
+      "signed": null,
+      "checks": 780,
+      "independentOracleFields": true,
+      "nativeSchema": "{\"type\": \"record\", \"name\": \"children\", \"namespace\": \"umf.model.r1\", \"fields\": [{\"type\": \"string\", \"name\": \"id\"}, {\"type\": [\"null\", \"string\"], \"name\": \"parent\"}]}",
+      "warnings": []
+    },
+    {
+      "system": "avro",
+      "domain": "bits128",
+      "kind": "words64",
+      "signed": true,
+      "checks": 782,
+      "independentOracleFields": true,
+      "nativeSchema": "{\"type\": \"record\", \"name\": \"children\", \"namespace\": \"umf.model.r1\", \"fields\": [{\"type\": {\"type\": \"record\", \"name\": \"umf_1_0_pair\", \"namespace\": \"umf.model.r1.values\", \"fields\": [{\"type\": \"long\", \"name\": \"id_hi\"}, {\"type\": \"long\", \"name\": \"id_lo\"}]}, \"name\": \"id_hi__pair\"}, {\"type\": [\"null\", {\"type\": \"record\", \"name\": \"umf_1_1_pair\", \"namespace\": \"umf.model.r1.values\", \"fields\": [{\"type\": \"long\", \"name\": \"parent_hi\"}, {\"type\": \"long\", \"name\": \"parent_lo\"}]}], \"name\": \"parent_hi__pair\"}]}",
+      "warnings": []
+    },
+    {
+      "system": "parquet",
+      "domain": "uuid",
+      "kind": "native-uuid",
+      "signed": null,
+      "checks": 390,
+      "independentOracleFields": true,
+      "nativeSchema": "<pyarrow._parquet.ParquetSchema object at 0x10b0516c0>\nrequired group field_id=-1 schema {\n  required fixed_len_byte_array(16) field_id=-1 id (UUID);\n  optional fixed_len_byte_array(16) field_id=-1 parent (UUID);\n}\n",
+      "warnings": []
+    },
+    {
+      "system": "parquet",
+      "domain": "uuid",
+      "kind": "bytes16",
+      "signed": null,
+      "checks": 390,
+      "independentOracleFields": true,
+      "nativeSchema": "<pyarrow._parquet.ParquetSchema object at 0x108ed6b80>\nrequired group field_id=-1 schema {\n  required fixed_len_byte_array(16) field_id=-1 id;\n  optional fixed_len_byte_array(16) field_id=-1 parent;\n}\n",
+      "warnings": []
+    },
+    {
+      "system": "parquet",
+      "domain": "uuid",
+      "kind": "uuid-text",
+      "signed": null,
+      "checks": 390,
+      "independentOracleFields": true,
+      "nativeSchema": "<pyarrow._parquet.ParquetSchema object at 0x10aa419c0>\nrequired group field_id=-1 schema {\n  required binary field_id=-1 id (String);\n  optional binary field_id=-1 parent (String);\n}\n",
+      "warnings": []
+    },
+    {
+      "system": "parquet",
+      "domain": "uuid",
+      "kind": "words64",
+      "signed": true,
+      "checks": 391,
+      "independentOracleFields": true,
+      "nativeSchema": "<pyarrow._parquet.ParquetSchema object at 0x10b12afc0>\nrequired group field_id=-1 schema {\n  required group field_id=-1 id_hi__pair {\n    required int64 field_id=-1 id_hi;\n    required int64 field_id=-1 id_lo;\n  }\n  optional group field_id=-1 parent_hi__pair {\n    required int64 field_id=-1 parent_hi;\n    required int64 field_id=-1 parent_lo;\n  }\n}\n",
+      "warnings": []
+    },
+    {
+      "system": "parquet",
+      "domain": "uuid",
+      "kind": "words64",
+      "signed": false,
+      "checks": 391,
+      "independentOracleFields": true,
+      "nativeSchema": "<pyarrow._parquet.ParquetSchema object at 0x10b1194c0>\nrequired group field_id=-1 schema {\n  required group field_id=-1 id_hi__pair {\n    required int64 field_id=-1 id_hi (Int(bitWidth=64, isSigned=false));\n    required int64 field_id=-1 id_lo (Int(bitWidth=64, isSigned=false));\n  }\n  optional group field_id=-1 parent_hi__pair {\n    required int64 field_id=-1 parent_hi (Int(bitWidth=64, isSigned=false));\n    required int64 field_id=-1 parent_lo (Int(bitWidth=64, isSigned=false));\n  }\n}\n",
+      "warnings": []
+    },
+    {
+      "system": "parquet",
+      "domain": "bits128",
+      "kind": "bytes16",
+      "signed": null,
+      "checks": 390,
+      "independentOracleFields": true,
+      "nativeSchema": "<pyarrow._parquet.ParquetSchema object at 0x10ab42100>\nrequired group field_id=-1 schema {\n  required fixed_len_byte_array(16) field_id=-1 id;\n  optional fixed_len_byte_array(16) field_id=-1 parent;\n}\n",
+      "warnings": []
+    },
+    {
+      "system": "parquet",
+      "domain": "bits128",
+      "kind": "hex128-text",
+      "signed": null,
+      "checks": 390,
+      "independentOracleFields": true,
+      "nativeSchema": "<pyarrow._parquet.ParquetSchema object at 0x10b14ab40>\nrequired group field_id=-1 schema {\n  required binary field_id=-1 id (String);\n  optional binary field_id=-1 parent (String);\n}\n",
+      "warnings": []
+    },
+    {
+      "system": "parquet",
+      "domain": "bits128",
+      "kind": "words64",
+      "signed": true,
+      "checks": 391,
+      "independentOracleFields": true,
+      "nativeSchema": "<pyarrow._parquet.ParquetSchema object at 0x10b14b500>\nrequired group field_id=-1 schema {\n  required group field_id=-1 id_hi__pair {\n    required int64 field_id=-1 id_hi;\n    required int64 field_id=-1 id_lo;\n  }\n  optional group field_id=-1 parent_hi__pair {\n    required int64 field_id=-1 parent_hi;\n    required int64 field_id=-1 parent_lo;\n  }\n}\n",
+      "warnings": []
+    },
+    {
+      "system": "parquet",
+      "domain": "bits128",
+      "kind": "words64",
+      "signed": false,
+      "checks": 391,
+      "independentOracleFields": true,
+      "nativeSchema": "<pyarrow._parquet.ParquetSchema object at 0x10b1340c0>\nrequired group field_id=-1 schema {\n  required group field_id=-1 id_hi__pair {\n    required int64 field_id=-1 id_hi (Int(bitWidth=64, isSigned=false));\n    required int64 field_id=-1 id_lo (Int(bitWidth=64, isSigned=false));\n  }\n  optional group field_id=-1 parent_hi__pair {\n    required int64 field_id=-1 parent_hi (Int(bitWidth=64, isSigned=false));\n    required int64 field_id=-1 parent_lo (Int(bitWidth=64, isSigned=false));\n  }\n}\n",
+      "warnings": []
+    }
+  ]
+}

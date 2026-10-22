@@ -1,11 +1,13 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
+import {assertJsonDataEqual} from './json-data-assert';
 /** Independent SQL Server execution of projector-generated DDL. Host-only. */
 import assert from 'node:assert/strict';
 import {createHash,randomUUID} from 'node:crypto';
-import {importSqlServerCatalog,exportSqlServerCatalog,getSqlServerIndexMetadata,getSqlServerColumnMetadata} from '../../src/adapters/sqlserver';
-import {readDocument,writeDocument} from '../../src';
+import {importSqlServerCatalog, exportSqlServerCatalog, getSqlServerIndexMetadata, getSqlServerColumnMetadata} from '../../src/adapters/sqlserver';
+import {readDocument, writeDocument} from '../../src';
 import {sqlserverKeyProjectionCases} from './key-sqlserver-projection-cases';
-import {projectKeysToSqlServer,recoverKeysSqlServerIdeal} from '../../src/core-ideals/key-sqlserver-projection';
-import {classifySqlServerKeys,recoverSqlServerKeySource} from '../../src/core-ideals/key-sqlserver';
+import {projectKeysToSqlServer, recoverKeysSqlServerIdeal} from '../../src/core-ideals/key-sqlserver-projection';
+import {classifySqlServerKeys, recoverSqlServerKeySource} from '../../src/core-ideals/key-sqlserver';
 import {sqlServerKeySessionOptions} from '../../src/core-ideals/key-sqlserver-carriers';
 const image='mcr.microsoft.com/mssql/server@sha256:4402d880dd4c34bfa7d8705e56a86cd6c88da80a1f6bbbe741f999e76264a090',name='umf-key-projector-'+randomUUID(),password='Umf!'+randomUUID()+'A9';
 let created=false,sqlcmd='/opt/mssql-tools18/bin/sqlcmd';
@@ -24,7 +26,7 @@ try{
   c.request.namespace='dbo';c.request.tableName='key_projection_'+i;c.request.keyNames.forEach(k=>k.name+='_'+i);
   const receipt=projectKeysToSqlServer(c.source,c.authors,c.request);assert.equal(receipt.status,c.expected);
   if(receipt.status==='blocked'){assert.equal(receipt.nativeSql,undefined);continue;}
-  receipts.push(receipt);await sql('umf_keys',receipt.nativeSql!);assert.deepEqual(recoverKeysSqlServerIdeal(receipt,receipt.target!),c.source);recoveryCount++;
+  receipts.push(receipt);await sql('umf_keys',receipt.nativeSql!);assertJsonDataEqual(recoverKeysSqlServerIdeal(receipt,receipt.target!),c.source);recoveryCount++;
   const table='[dbo].'+quote(c.request.tableName),columns=c.request.columns.map(col=>quote(col.name)).join(', '),first=c.request.columns[0]!.nativeType;
   const value=first==='bit'?'1':first==='varbinary'?'0x01':first==='nvarchar'?"N'a'":first==='decimal'&&c.name==='decimal'?'1.23':'1';
   const insert=(a:string,b:string)=>`INSERT INTO ${table} (${columns}) VALUES (${a},${b});`;

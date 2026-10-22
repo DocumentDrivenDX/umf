@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Native PyArrow consumption boundaries, independent of UMF's framing traversal."""
 from pathlib import Path
 import json,struct

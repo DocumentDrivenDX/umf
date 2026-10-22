@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Read actual UMF-produced Arrow schemas and compare native schema plus both recoveries."""
 import json
 from pathlib import Path

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 import json,math
 from decimal import Decimal
 def exact(text):return json.loads(text,parse_float=Decimal,parse_int=lambda s:Decimal(s) if s=='-0' else int(s))

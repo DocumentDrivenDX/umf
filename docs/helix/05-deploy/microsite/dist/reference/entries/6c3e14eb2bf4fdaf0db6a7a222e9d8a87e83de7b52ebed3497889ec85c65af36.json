@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 6084,
+        "line": 13,
+        "path": "src/core-ideals/key-parquet.ts",
+        "sha256": "3f4adad3eb5e9e893dbfc49be2d47a7155ccc3c3780a24ebf207f0f409a2f708"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "ParquetKeyRequest",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface ParquetKeyRequest {mode:'strict'|'report';profile:'file-schema'}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"ParquetKeyRequest\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 6084,
+      "line": 13,
+      "path": "src/core-ideals/key-parquet.ts",
+      "sha256": "3f4adad3eb5e9e893dbfc49be2d47a7155ccc3c3780a24ebf207f0f409a2f708"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/key-parquet.ts",
+  "title": "ParquetKeyRequest"
+}

@@ -1,0 +1,49 @@
+{
+  "reviewedAt": "2026-10-15T01:22:36.014113+00:00",
+  "status": "no actionable source finding in final public API/private-limit addendum",
+  "supersedes": "Earlier wire review no-root-export conclusion and the before-private-limit addendum only. Historical files are preserved.",
+  "sourcePins": "public-api-addendum/source-pins.json (15 selected final files)",
+  "rootSha256": "e3fb3a6565b66a7b48bd55fb9ac9b7ab06f9451fafad73a9bab18354c7cecb8c",
+  "catalogSha256": "92804f3d6a91b91dc95b6e1b42e5d7de5f9850cc19449d4c7700d62595c829d3",
+  "changesReviewed": [
+    "Direct root re-exports of source read/write, package, inspection, interpretation-refusal and inspection type.",
+    "Private SOURCE_TEXT_LIMIT=4000000 makes the wire text budget independent of mutable exported core LIMITS.maxTextLength.",
+    "Root-entry browser/test coverage and exact-failure mutation setup including shared original native assets."
+  ],
+  "independentVerification": {
+    "publicEntryControls": 14,
+    "wireControlsReplayedOnFinalSource": 143,
+    "suppliedFocusedTestsRerun": 11,
+    "result": "passed",
+    "artifacts": [
+      "controls.ts",
+      "results.json",
+      "wire-controls.ts",
+      "wire-results.json",
+      "tests.log"
+    ]
+  },
+  "suppliedEvidenceInspected": {
+    "chromiumControls": 34,
+    "chromium": "153.0.8010.12",
+    "externalRequests": 0,
+    "bundleUtf16Units": 11950218,
+    "bundleBytes": 11950365,
+    "wireMutationVariants": 5,
+    "envelopeMutationVariants": 4,
+    "allSelectedSourcePinsMatch": true,
+    "independentlyRerun": false
+  },
+  "conclusions": [
+    "All five runtime exports are exact identities of the reviewed implementations; no semantic registration or execution wrapper is added.",
+    "Unknown JSON/YAML source round-trips, detached inspection, complete:false and unconditional interpretation refusal remain intact through the public root.",
+    "Widened, non-finite or lowered public core text metadata cannot alter the private wire text allowance.",
+    "The actual root SDK browser runner is now covered; its 16-million-unit fixture bundle ceiling is distinct from API input budgets."
+  ],
+  "limits": [
+    "No domain/function/query/custody semantics, transform execution, native authority or protected-release qualification.",
+    "No total allocation/CPU, arbitrary code sandbox, complete SDK regression or complete build-dependency provenance proof.",
+    "Envelope mutations intentionally share original native assets and node_modules; setup failures are not counted as discriminating behavioral failures, and dependency isolation is not hermetic.",
+    "Full acceptance gate refresh remains a separate parent obligation; no case promotion or gate-freshness claim."
+  ]
+}

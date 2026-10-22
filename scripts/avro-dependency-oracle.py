@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Explicit shared-name environments, with native behavior after dependency edits."""
 import io,json
 from pathlib import Path

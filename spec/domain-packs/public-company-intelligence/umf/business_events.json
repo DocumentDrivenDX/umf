@@ -1,0 +1,72 @@
+{
+  "version": "1.0",
+  "table_name": "business_events",
+  "description": "Public-company intelligence business_events; source/context and interpretation qualifications apply.",
+  "columns": [
+    {
+      "name": "id",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "business_events.id; exact source literal or explicitly authored research metadata."
+    },
+    {
+      "name": "company_id",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "business_events.company_id; exact source literal or explicitly authored research metadata."
+    },
+    {
+      "name": "filing_id",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "business_events.filing_id; exact source literal or explicitly authored research metadata."
+    },
+    {
+      "name": "event_kind",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "business_events.event_kind; exact source literal or explicitly authored research metadata."
+    },
+    {
+      "name": "evidence_basis",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "business_events.evidence_basis; exact source literal or explicitly authored research metadata."
+    },
+    {
+      "name": "reported_at",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "business_events.reported_at; exact source literal or explicitly authored research metadata."
+    },
+    {
+      "name": "event_date",
+      "data_type": "VARCHAR",
+      "nullable": true,
+      "description": "business_events.event_date; exact source literal or explicitly authored research metadata."
+    },
+    {
+      "name": "native_item",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "business_events.native_item; exact source literal or explicitly authored research metadata."
+    }
+  ],
+  "primary_key": [
+    "id"
+  ],
+  "relationships": {
+    "foreign_keys": [
+      {
+        "column": "company_id",
+        "references_table": "companies",
+        "references_column": "id"
+      },
+      {
+        "column": "filing_id",
+        "references_table": "filings",
+        "references_column": "id"
+      }
+    ]
+  }
+}

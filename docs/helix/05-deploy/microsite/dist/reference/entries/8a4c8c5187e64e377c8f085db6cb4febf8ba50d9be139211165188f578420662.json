@@ -1,0 +1,186 @@
+{
+  "data": {
+    "extensionId": "umf.generalized-rdf",
+    "manifest": {
+      "capabilities": {
+        "directions": [
+          "import",
+          "export"
+        ],
+        "evidence": [
+          "tests/generalized-rdf/dataset.test.ts",
+          "fixtures/generalized-rdf/oracle-results.json",
+          "fixtures/generalized-rdf/browser-results.json"
+        ],
+        "native": {
+          "subset": "JSON array of quads, node predicates including blank nodes, exact string lexical forms and source-local blank scope; unknown structures archived and block interpretation; no literal subjects/predicates or standard N-Quads export",
+          "system": "JSON-LD generalized RDF dataset",
+          "version": "JSON-LD 1.0/1.1 processing API; RDFJS-shaped JSON term records"
+        },
+        "validation": "semantic"
+      },
+      "coreVersion": "0.10.0",
+      "description": "JSON-LD generalized dataset JSON with blank predicates and source-local blank identity",
+      "id": "umf.generalized-rdf",
+      "schema": {
+        "$defs": {
+          "node": {
+            "oneOf": [
+              {
+                "properties": {
+                  "kind": {
+                    "const": "null"
+                  }
+                },
+                "required": [
+                  "kind"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "kind": {
+                    "const": "boolean"
+                  },
+                  "value": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "kind": {
+                    "const": "string"
+                  },
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "kind": {
+                    "const": "number"
+                  },
+                  "value": {
+                    "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?([eE][+-]?[0-9]+)?$",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "items": {
+                    "items": {
+                      "$ref": "#/$defs/node"
+                    },
+                    "type": "array"
+                  },
+                  "kind": {
+                    "const": "array"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "items"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "kind": {
+                    "const": "object"
+                  },
+                  "members": {
+                    "additionalProperties": {
+                      "$ref": "#/$defs/node"
+                    },
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "members"
+                ],
+                "type": "object"
+              }
+            ]
+          }
+        },
+        "$id": "urn:umf:generalized-rdf:0.1.0",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": true,
+        "properties": {
+          "blankNodeScope": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "originalSource": {
+            "maxLength": 4000000,
+            "type": "string"
+          },
+          "profile": {
+            "const": "jsonld-generalized-dataset"
+          },
+          "root": {
+            "$ref": "#/$defs/node"
+          }
+        },
+        "required": [
+          "profile",
+          "blankNodeScope",
+          "root",
+          "originalSource"
+        ],
+        "type": "object"
+      },
+      "scopes": [
+        "element"
+      ],
+      "semantics": "CONTRACT-027; JSON-LD generalized RDF subset: node subjects/predicates, literal objects, named/default graphs; no RDF 1.1 syntax or entailment claim",
+      "version": "0.1.0"
+    },
+    "registration": {
+      "apiIds": [
+        "[\"api\",\".\",\"generalizedRdfRegistry\"]"
+      ],
+      "coreProfiles": [],
+      "mode": "explicit"
+    },
+    "schemaId": "[\"schema\",\"spec/extensions/generalized-rdf/schema.json\",\"\"]",
+    "version": "0.1.0"
+  },
+  "id": "[\"extension\",\"umf.generalized-rdf\",\"0.1.0\"]",
+  "kind": "extension",
+  "links": [
+    "[\"api\",\".\",\"generalizedRdfRegistry\"]",
+    "[\"guide\",\"extensions\"]",
+    "[\"schema\",\"spec/extensions/generalized-rdf/schema.json\",\"\"]",
+    "[\"integration\",\"umf.generalized-rdf@0.1.0:import\"]",
+    "[\"integration\",\"umf.generalized-rdf@0.1.0:export\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 3933,
+      "path": "spec/extensions/generalized-rdf/package.json",
+      "sha256": "6ca51a5d19c8f99cfffb7cdb36afa31867b14b6513ab00bfa5d10c089603da4f"
+    }
+  ],
+  "summary": "JSON-LD generalized dataset JSON with blank predicates and source-local blank identity",
+  "title": "umf.generalized-rdf · 0.1.0"
+}

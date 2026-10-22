@@ -1,0 +1,98 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"ProtectionDeclarationInspection\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "status",
+      "optional": false,
+      "type": "\"declared-obligations\" | \"refused\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Json\"]"
+      ],
+      "name": "ontology",
+      "optional": false,
+      "type": "Json"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SecurityActionPurposeDeclaration\"]"
+      ],
+      "name": "purposes",
+      "optional": false,
+      "type": "readonly SecurityActionPurposeDeclaration[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ProtectionDeclarationObligation\"]"
+      ],
+      "name": "obligations",
+      "optional": false,
+      "type": "readonly ProtectionDeclarationObligation[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Json\"]"
+      ],
+      "name": "policy",
+      "optional": false,
+      "type": "Json"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Diagnostic\"]"
+      ],
+      "name": "diagnostics",
+      "optional": false,
+      "type": "readonly Diagnostic[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "complete",
+      "optional": false,
+      "type": "false"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Json\"]"
+      ],
+      "name": "catalog",
+      "optional": false,
+      "type": "Json"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Json\"]"
+      ],
+      "name": "closure",
+      "optional": false,
+      "type": "Json"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "authority",
+      "optional": false,
+      "type": "false"
+    }
+  ],
+  "parameters": [],
+  "purpose": "ProtectionDeclarationInspection is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "ProtectionDeclarationInspection"
+}

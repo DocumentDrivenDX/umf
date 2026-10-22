@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {importRdfNQuads,exportRdfNQuads,getRdfQuads,proposeRdfQuadEdit,readDocument,writeDocument} from '../src';
 const manifest=await Bun.file('native/rdf/sources/manifest.json').json(),results=[];
 for(const c of [...manifest.cases,{id:'authored-schema',positive:true,path:'native/rdf/examples/schema.nq',type:'authored'}]){const raw=await Bun.file(c.path).text();let d;try{d=importRdfNQuads(raw,{id:c.id});}catch(e){if(c.positive)throw Error(c.id+': '+String(e));results.push({...c,status:'rejected'});continue;}if(!c.positive)throw Error('Negative accepted: '+c.id);

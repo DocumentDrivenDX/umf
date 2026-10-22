@@ -1,10 +1,11 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {copyJson} from '../model/json';
 import {UmfError,type Document,type Json,type Diagnostic,type ExtensionPackage} from '../model/types';
 import {exportParquetCapture} from '../adapters/parquet';
 import {getParquetFieldMetadata} from '../adapters/parquet/field-metadata';
 import {validateDocument} from '../validation/document';
 import {createValidator} from '../validation/schema';
-import legacy from '../../spec/core/schema.json';import fields from '../../spec/core/field-document.schema.json';import nullability from '../../spec/core/nullability-document.schema.json';import cardinality from '../../spec/core/cardinality-document.schema.json';import facets from '../../spec/core/facet-document.schema.json';import keys from '../../spec/core/key-document.schema.json';
+import legacy from '../../spec/core/schema.json';
 import schema from '../../spec/core/parquet-key-classification.schema.json';
 import manifest from '../../spec/extensions/parquet-keys/package.json';
 export const PARQUET_KEYS_EXTENSION='umf.parquet.keys';
@@ -14,7 +15,7 @@ export interface ParquetKeyRequest {mode:'strict'|'report';profile:'file-schema'
 export interface ParquetKeyObservation {nativePath:string;index:number;path:string[];kind:'physical-leaf'|'physical-group';definitionLevel:number;repetitionLevel:number;nativeField:Json;enforcement:'not-expressible';authorIntent:'unknown';provenance:'inferred';scope:'file-schema'}
 const binding=schema.properties.binding.const,recovery='Original native archive retained; no authored key inferred' as const;
 export interface ParquetKeyClassification {operation:'classify-parquet-keys';version:'1.0.0';status:'classified'|'blocked';source:Document;target?:Document;request:ParquetKeyRequest;binding:typeof binding;observations:ParquetKeyObservation[];residuals:{path:string;value:Json;outcome:'not-expressible';reason:string;recovery:typeof recovery}[];diagnostics:Diagnostic[]}
-const validator=createValidator(false);for(const s of [legacy,fields,nullability,cardinality,facets,keys])validator.addSchema(s);
+const validator=createValidator(false);for(const s of [legacy])validator.addSchema(s);
 const check=validator.compile(schema),requestCheck=validator.compile(schema.properties.request);
 const canonical=(v:Json):string=>Array.isArray(v)?'a['+v.map(canonical).join(',')+']':v!==null&&typeof v==='object'?'o{'+Object.keys(v).sort().map(k=>JSON.stringify(k)+':'+canonical(v[k]!)).join(',')+'}':JSON.stringify(v);
 const same=(a:unknown,b:unknown)=>canonical(copyJson(a))===canonical(copyJson(b));

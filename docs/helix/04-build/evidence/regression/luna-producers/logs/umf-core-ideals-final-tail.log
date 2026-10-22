@@ -1,0 +1,44 @@
+{"testProcess":"tests/core-ideals/facets-sqlserver-predicate.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/core-ideals/facets-sqlserver-predicate.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/core-ideals/facets-sqlserver-predicate.test.ts:
+(pass) bounded expressions retain exact literals and delimit identifiers [0.61ms]
+(pass) unsupported syntax and resource limits refuse the entire expression [0.71ms]
+(pass) captured native CHECK syntax is distinct from enabled, trusted enforcement [0.64ms]
+(pass) non-string native JSON stays intact and accessors cannot execute [0.18ms]
+
+ 4 pass
+ 0 fail
+ 241 expect() calls
+Ran 4 tests across 1 file. [14.00ms]
+{"testProcess":"tests/core-ideals/facets-sqlserver-predicate.test.ts","exitCode":0,"pass":4,"fail":0,"assertions":241,"completeSummary":true,"logSha256":"dd5cc367f64773633e8b61e7555d20e319edc2ffc6fcedcecd2305271be0cf17"}
+{"testProcess":"tests/core-ideals/facets-sqlserver-projection-native.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/core-ideals/facets-sqlserver-projection-native.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/core-ideals/facets-sqlserver-projection-native.test.ts:
+3 | import {projectFacetsToSqlServer} from '../../src';
+4 | import {facetsSqlServerProjectionCases} from '../../scripts/core-ideals/facets-sqlserver-projection-cases';
+5 | const proof=await Bun.file('fixtures/validation/facets-sqlserver-projection-native.json').json();
+6 | test('pinned native execution matches current authored DDL and keeps exact value counterexamples',async()=>{
+7 |  expect(proof.serverVersion).toBe('16.0.4295.3');expect(proof.projected).toBe(145);expect(proof.blocked).toBe(93);expect(proof.probes.length).toBe(27);expect(proof.serializationRecoveries).toBe(2);expect(proof.idealRecoveries).toBe(145);
+8 |  for(const [path,hash] of Object.entries(proof.sha256 as Record<string,string>))expect(createHash('sha256').update(new Uint8Array(await Bun.file(path).arrayBuffer())).digest('hex'),path).toBe(hash);
+                                                                                                                                                                                               ^
+error: scripts/core-ideals/facets-sqlserver-projection-native.ts
+
+Expected: "702d7e3b07fed0525adbc82bcd0c08e83c1225f34045f895556498583665f1a1"
+Received: "25328be6bdea7acd67f92d1b7a987194cbf2100eedb9a52f83a5f6f1f2c63328"
+
+      at <anonymous> (/Users/erik/.codex/worktrees/d8be/umf/tests/core-ideals/facets-sqlserver-projection-native.test.ts:8:188)
+(fail) pinned native execution matches current authored DDL and keeps exact value counterexamples [0.84ms]
+
+ 0 pass
+ 1 fail
+ 7 expect() calls
+Ran 1 test across 1 file. [4.16s]
+{"testProcess":"tests/core-ideals/facets-sqlserver-projection-native.test.ts","exitCode":1,"pass":0,"fail":1,"assertions":7,"completeSummary":true,"logSha256":"36ce1af4381f0d42a7f628108485db02127dcd051ec60cb3dcafd08b96d26a17"}
+Complete test file failed or terminated: tests/core-ideals/facets-sqlserver-projection-native.test.ts
+
+ 4 pass
+ 1 fail
+ 248 expect() calls
+Ran 5 tests across 2 files. [4.19s]

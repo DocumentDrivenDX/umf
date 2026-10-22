@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 3175,
+        "line": 6,
+        "path": "src/extensions/actions/plan-types.ts",
+        "sha256": "94cd1d2105c503b66eadb99b4fd45013c57c93b3235cbe5d6dbd512cd0a35c68"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "ActionPlanArtifact",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface ActionPlanArtifact {mediaType:string;utf8:string;sha256:string;[key:string]:unknown}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"ActionPlanArtifact\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 3175,
+      "line": 6,
+      "path": "src/extensions/actions/plan-types.ts",
+      "sha256": "94cd1d2105c503b66eadb99b4fd45013c57c93b3235cbe5d6dbd512cd0a35c68"
+    }
+  ],
+  "summary": "Type declaration · src/extensions/actions/plan-types.ts",
+  "title": "ActionPlanArtifact"
+}

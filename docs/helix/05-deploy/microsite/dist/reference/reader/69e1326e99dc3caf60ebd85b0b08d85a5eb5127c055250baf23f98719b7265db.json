@@ -1,0 +1,59 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"evaluateSecurityAccess\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SecurityPolicy\"]"
+      ],
+      "name": "policy",
+      "optional": false,
+      "type": "SecurityPolicy"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SecurityResolution\"]"
+      ],
+      "name": "resolution",
+      "optional": false,
+      "type": "SecurityResolution"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SecurityFactCut\"]"
+      ],
+      "name": "cut",
+      "optional": false,
+      "type": "SecurityFactCut"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SecurityEvaluationRequest\"]"
+      ],
+      "name": "request",
+      "optional": false,
+      "type": "Omit<SecurityEvaluationRequest, \"resources\">"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SecurityFact\"]"
+      ],
+      "name": "resource",
+      "optional": false,
+      "type": "SecurityFact"
+    }
+  ],
+  "purpose": "Pure semantic evaluation; host admission and native receipt enforcement remain separate.",
+  "related": [],
+  "returns": "SecurityAccessResult",
+  "task": "Other APIs",
+  "type": "(policy: SecurityPolicy, resolution: SecurityResolution, cut: SecurityFactCut, request: Omit<SecurityEvaluationRequest, \"resources\">, resource: SecurityFact) => SecurityAccessResult"
+}

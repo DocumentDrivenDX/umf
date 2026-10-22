@@ -1,0 +1,687 @@
+{
+  "data": {
+    "pointer": "",
+    "profileVersions": [],
+    "references": [
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/kind-operation-v6.schema.json\",\"\"]",
+        "target": "urn:umf:core:kind-operation:6.0.0"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/record-type-operation-v6.schema.json\",\"\"]",
+        "target": "urn:umf:core:record-type-operation:6.0.0"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0#/$defs/reference"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/record-type-operation-v6.schema.json\",\"\"]",
+        "target": "urn:umf:core:record-type-operation:6.0.0"
+      }
+    ],
+    "role": "other",
+    "schemaPath": "spec/core/record-type-journal.schema.json",
+    "sourceData": {
+      "kind": "object",
+      "members": {
+        "$id": {
+          "kind": "string",
+          "value": "urn:umf:core:record-type-journal:0.1.0"
+        },
+        "$schema": {
+          "kind": "string",
+          "value": "https://json-schema.org/draft/2020-12/schema"
+        },
+        "additionalProperties": {
+          "kind": "boolean",
+          "value": false
+        },
+        "properties": {
+          "kind": "object",
+          "members": {
+            "base": {
+              "kind": "object",
+              "members": {
+                "$ref": {
+                  "kind": "string",
+                  "value": "urn:umf:core:0.10.0"
+                }
+              }
+            },
+            "enforcement": {
+              "kind": "object",
+              "members": {
+                "const": {
+                  "kind": "string",
+                  "value": "none"
+                }
+              }
+            },
+            "events": {
+              "kind": "object",
+              "members": {
+                "items": {
+                  "kind": "object",
+                  "members": {
+                    "anyOf": {
+                      "items": [
+                        {
+                          "kind": "object",
+                          "members": {
+                            "allOf": {
+                              "items": [
+                                {
+                                  "kind": "object",
+                                  "members": {
+                                    "$ref": {
+                                      "kind": "string",
+                                      "value": "urn:umf:core:kind-operation:6.0.0"
+                                    }
+                                  }
+                                },
+                                {
+                                  "kind": "object",
+                                  "members": {
+                                    "properties": {
+                                      "kind": "object",
+                                      "members": {
+                                        "operation": {
+                                          "kind": "object",
+                                          "members": {
+                                            "const": {
+                                              "kind": "string",
+                                              "value": "declare-core-kind"
+                                            }
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "required": {
+                                      "items": [
+                                        {
+                                          "kind": "string",
+                                          "value": "operation"
+                                        }
+                                      ],
+                                      "kind": "array"
+                                    },
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "object"
+                                    }
+                                  }
+                                }
+                              ],
+                              "kind": "array"
+                            }
+                          }
+                        },
+                        {
+                          "kind": "object",
+                          "members": {
+                            "$ref": {
+                              "kind": "string",
+                              "value": "urn:umf:core:record-type-operation:6.0.0"
+                            }
+                          }
+                        }
+                      ],
+                      "kind": "array"
+                    }
+                  }
+                },
+                "maxItems": {
+                  "kind": "number",
+                  "value": "32"
+                },
+                "minItems": {
+                  "kind": "number",
+                  "value": "1"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "array"
+                }
+              }
+            },
+            "issuerAuthority": {
+              "kind": "object",
+              "members": {
+                "const": {
+                  "kind": "string",
+                  "value": "unverified"
+                }
+              }
+            },
+            "operation": {
+              "kind": "object",
+              "members": {
+                "const": {
+                  "kind": "string",
+                  "value": "inspect-core-record-type-journal"
+                }
+              }
+            },
+            "receiptConsistency": {
+              "kind": "object",
+              "members": {
+                "const": {
+                  "kind": "string",
+                  "value": "verified"
+                }
+              }
+            },
+            "source": {
+              "kind": "object",
+              "members": {
+                "$ref": {
+                  "kind": "string",
+                  "value": "urn:umf:core:0.10.0"
+                }
+              }
+            },
+            "types": {
+              "kind": "object",
+              "members": {
+                "items": {
+                  "kind": "object",
+                  "members": {
+                    "additionalProperties": {
+                      "kind": "boolean",
+                      "value": false
+                    },
+                    "properties": {
+                      "kind": "object",
+                      "members": {
+                        "eventIndex": {
+                          "kind": "object",
+                          "members": {
+                            "maximum": {
+                              "kind": "number",
+                              "value": "31"
+                            },
+                            "minimum": {
+                              "kind": "number",
+                              "value": "0"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "integer"
+                            }
+                          }
+                        },
+                        "identity": {
+                          "kind": "object",
+                          "members": {
+                            "additionalProperties": {
+                              "kind": "boolean",
+                              "value": false
+                            },
+                            "properties": {
+                              "kind": "object",
+                              "members": {
+                                "element": {
+                                  "kind": "object",
+                                  "members": {
+                                    "minLength": {
+                                      "kind": "number",
+                                      "value": "1"
+                                    },
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "string"
+                                    }
+                                  }
+                                },
+                                "module": {
+                                  "kind": "object",
+                                  "members": {
+                                    "minLength": {
+                                      "kind": "number",
+                                      "value": "1"
+                                    },
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "string"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "required": {
+                              "items": [
+                                {
+                                  "kind": "string",
+                                  "value": "module"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "element"
+                                }
+                              ],
+                              "kind": "array"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "object"
+                            }
+                          }
+                        },
+                        "link": {
+                          "kind": "object",
+                          "members": {
+                            "additionalProperties": {
+                              "kind": "boolean",
+                              "value": false
+                            },
+                            "properties": {
+                              "kind": "object",
+                              "members": {
+                                "index": {
+                                  "kind": "object",
+                                  "members": {
+                                    "minimum": {
+                                      "kind": "number",
+                                      "value": "0"
+                                    },
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "integer"
+                                    }
+                                  }
+                                },
+                                "path": {
+                                  "kind": "object",
+                                  "members": {
+                                    "pattern": {
+                                      "kind": "string",
+                                      "value": "^/modules/[0-9]+/elements/[0-9]+/references/[0-9]+$"
+                                    },
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "string"
+                                    }
+                                  }
+                                },
+                                "reference": {
+                                  "kind": "object",
+                                  "members": {
+                                    "$ref": {
+                                      "kind": "string",
+                                      "value": "urn:umf:core:0.10.0#/$defs/reference"
+                                    },
+                                    "properties": {
+                                      "kind": "object",
+                                      "members": {
+                                        "role": {
+                                          "kind": "object",
+                                          "members": {
+                                            "const": {
+                                              "kind": "string",
+                                              "value": "record-type"
+                                            }
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "object"
+                                    }
+                                  }
+                                },
+                                "target": {
+                                  "kind": "object",
+                                  "members": {
+                                    "additionalProperties": {
+                                      "kind": "boolean",
+                                      "value": false
+                                    },
+                                    "properties": {
+                                      "kind": "object",
+                                      "members": {
+                                        "identity": {
+                                          "kind": "object",
+                                          "members": {
+                                            "additionalProperties": {
+                                              "kind": "boolean",
+                                              "value": false
+                                            },
+                                            "properties": {
+                                              "kind": "object",
+                                              "members": {
+                                                "element": {
+                                                  "kind": "object",
+                                                  "members": {
+                                                    "minLength": {
+                                                      "kind": "number",
+                                                      "value": "1"
+                                                    },
+                                                    "type": {
+                                                      "kind": "string",
+                                                      "value": "string"
+                                                    }
+                                                  }
+                                                },
+                                                "module": {
+                                                  "kind": "object",
+                                                  "members": {
+                                                    "minLength": {
+                                                      "kind": "number",
+                                                      "value": "1"
+                                                    },
+                                                    "type": {
+                                                      "kind": "string",
+                                                      "value": "string"
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            },
+                                            "required": {
+                                              "items": [
+                                                {
+                                                  "kind": "string",
+                                                  "value": "module"
+                                                },
+                                                {
+                                                  "kind": "string",
+                                                  "value": "element"
+                                                }
+                                              ],
+                                              "kind": "array"
+                                            },
+                                            "type": {
+                                              "kind": "string",
+                                              "value": "object"
+                                            }
+                                          }
+                                        },
+                                        "kind": {
+                                          "kind": "object",
+                                          "members": {
+                                            "const": {
+                                              "kind": "string",
+                                              "value": "record"
+                                            }
+                                          }
+                                        },
+                                        "path": {
+                                          "kind": "object",
+                                          "members": {
+                                            "pattern": {
+                                              "kind": "string",
+                                              "value": "^/modules/[0-9]+/elements/[0-9]+$"
+                                            },
+                                            "type": {
+                                              "kind": "string",
+                                              "value": "string"
+                                            }
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "required": {
+                                      "items": [
+                                        {
+                                          "kind": "string",
+                                          "value": "identity"
+                                        },
+                                        {
+                                          "kind": "string",
+                                          "value": "path"
+                                        },
+                                        {
+                                          "kind": "string",
+                                          "value": "kind"
+                                        }
+                                      ],
+                                      "kind": "array"
+                                    },
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "object"
+                                    }
+                                  }
+                                },
+                                "typeAssertion": {
+                                  "kind": "object",
+                                  "members": {
+                                    "const": {
+                                      "kind": "string",
+                                      "value": "unverified"
+                                    }
+                                  }
+                                },
+                                "uninterpretedPaths": {
+                                  "kind": "object",
+                                  "members": {
+                                    "items": {
+                                      "kind": "object",
+                                      "members": {
+                                        "type": {
+                                          "kind": "string",
+                                          "value": "string"
+                                        }
+                                      }
+                                    },
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "array"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "required": {
+                              "items": [
+                                {
+                                  "kind": "string",
+                                  "value": "index"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "path"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "reference"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "target"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "uninterpretedPaths"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "typeAssertion"
+                                }
+                              ],
+                              "kind": "array"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "object"
+                            }
+                          }
+                        },
+                        "path": {
+                          "kind": "object",
+                          "members": {
+                            "pattern": {
+                              "kind": "string",
+                              "value": "^/modules/[0-9]+/elements/[0-9]+/references/[0-9]+$"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "string"
+                            }
+                          }
+                        },
+                        "receipt": {
+                          "kind": "object",
+                          "members": {
+                            "$ref": {
+                              "kind": "string",
+                              "value": "urn:umf:core:record-type-operation:6.0.0"
+                            }
+                          }
+                        },
+                        "recordPath": {
+                          "kind": "object",
+                          "members": {
+                            "pattern": {
+                              "kind": "string",
+                              "value": "^/modules/[0-9]+/elements/[0-9]+$"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "string"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "required": {
+                      "items": [
+                        {
+                          "kind": "string",
+                          "value": "eventIndex"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "identity"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "path"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "recordPath"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "link"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "receipt"
+                        }
+                      ],
+                      "kind": "array"
+                    },
+                    "type": {
+                      "kind": "string",
+                      "value": "object"
+                    }
+                  }
+                },
+                "maxItems": {
+                  "kind": "number",
+                  "value": "32"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "array"
+                }
+              }
+            },
+            "version": {
+              "kind": "object",
+              "members": {
+                "const": {
+                  "kind": "string",
+                  "value": "0.1.0"
+                }
+              }
+            }
+          }
+        },
+        "required": {
+          "items": [
+            {
+              "kind": "string",
+              "value": "operation"
+            },
+            {
+              "kind": "string",
+              "value": "version"
+            },
+            {
+              "kind": "string",
+              "value": "base"
+            },
+            {
+              "kind": "string",
+              "value": "source"
+            },
+            {
+              "kind": "string",
+              "value": "events"
+            },
+            {
+              "kind": "string",
+              "value": "types"
+            },
+            {
+              "kind": "string",
+              "value": "receiptConsistency"
+            },
+            {
+              "kind": "string",
+              "value": "issuerAuthority"
+            },
+            {
+              "kind": "string",
+              "value": "enforcement"
+            }
+          ],
+          "kind": "array"
+        },
+        "title": {
+          "kind": "string",
+          "value": "Explicit original0.7/v6 kind and type transition journal consistency"
+        },
+        "type": {
+          "kind": "string",
+          "value": "object"
+        }
+      }
+    }
+  },
+  "id": "[\"schema\",\"spec/core/record-type-journal.schema.json\",\"\"]",
+  "kind": "schema",
+  "links": [
+    "[\"schema\",\"spec/core/kind-operation-v6.schema.json\",\"\"]",
+    "[\"schema\",\"spec/core/record-type-operation-v6.schema.json\",\"\"]",
+    "[\"schema\",\"spec/core/schema.json\",\"\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 5131,
+      "path": "spec/core/record-type-journal.schema.json",
+      "sha256": "0126fc14797372308d2f4154ebd46d4f5b6b389e061d70e6c81c05278de576d3"
+    }
+  ],
+  "summary": "spec/core/record-type-journal.schema.json",
+  "title": "Explicit original0.7/v6 kind and type transition journal consistency"
+}

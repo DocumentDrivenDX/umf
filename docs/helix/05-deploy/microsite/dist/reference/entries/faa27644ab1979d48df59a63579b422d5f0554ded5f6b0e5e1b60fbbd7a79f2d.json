@@ -1,0 +1,2163 @@
+{
+  "data": {
+    "pointer": "",
+    "profileVersions": [],
+    "references": [],
+    "role": "extension-payload",
+    "schemaPath": "spec/extensions/domain-pack/schema.json",
+    "sourceData": {
+      "kind": "object",
+      "members": {
+        "$id": {
+          "kind": "string",
+          "value": "urn:umf:domain-pack:1.0.0"
+        },
+        "$schema": {
+          "kind": "string",
+          "value": "https://json-schema.org/draft/2020-12/schema"
+        },
+        "additionalProperties": {
+          "kind": "boolean",
+          "value": true
+        },
+        "anyOf": {
+          "items": [
+            {
+              "kind": "object",
+              "members": {
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "generator": {
+                      "kind": "object",
+                      "members": {}
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "generator"
+                    }
+                  ],
+                  "kind": "array"
+                }
+              }
+            },
+            {
+              "kind": "object",
+              "members": {
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "sources": {
+                      "kind": "object",
+                      "members": {}
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "sources"
+                    }
+                  ],
+                  "kind": "array"
+                }
+              }
+            }
+          ],
+          "kind": "array"
+        },
+        "properties": {
+          "kind": "object",
+          "members": {
+            "artifact_collections": {
+              "kind": "object",
+              "members": {
+                "items": {
+                  "kind": "object",
+                  "members": {
+                    "additionalProperties": {
+                      "kind": "boolean",
+                      "value": true
+                    },
+                    "anyOf": {
+                      "items": [
+                        {
+                          "kind": "object",
+                          "members": {
+                            "properties": {
+                              "kind": "object",
+                              "members": {
+                                "source_ids": {
+                                  "kind": "object",
+                                  "members": {
+                                    "minItems": {
+                                      "kind": "number",
+                                      "value": "1"
+                                    },
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "array"
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "kind": "object",
+                          "members": {
+                            "properties": {
+                              "kind": "object",
+                              "members": {
+                                "loader_inventory_source_id": {
+                                  "kind": "object",
+                                  "members": {
+                                    "minLength": {
+                                      "kind": "number",
+                                      "value": "1"
+                                    },
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "string"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "required": {
+                              "items": [
+                                {
+                                  "kind": "string",
+                                  "value": "loader_inventory_source_id"
+                                }
+                              ],
+                              "kind": "array"
+                            }
+                          }
+                        }
+                      ],
+                      "kind": "array"
+                    },
+                    "properties": {
+                      "kind": "object",
+                      "members": {
+                        "derived_schema_ids": {
+                          "kind": "object",
+                          "members": {
+                            "items": {
+                              "kind": "object",
+                              "members": {
+                                "minLength": {
+                                  "kind": "number",
+                                  "value": "1"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            },
+                            "maxItems": {
+                              "kind": "number",
+                              "value": "10000"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "array"
+                            },
+                            "uniqueItems": {
+                              "kind": "boolean",
+                              "value": true
+                            }
+                          }
+                        },
+                        "description": {
+                          "kind": "object",
+                          "members": {
+                            "type": {
+                              "kind": "string",
+                              "value": "string"
+                            }
+                          }
+                        },
+                        "grouping": {
+                          "kind": "object",
+                          "members": {
+                            "additionalProperties": {
+                              "kind": "boolean",
+                              "value": true
+                            },
+                            "properties": {
+                              "kind": "object",
+                              "members": {
+                                "description": {
+                                  "kind": "object",
+                                  "members": {
+                                    "minLength": {
+                                      "kind": "number",
+                                      "value": "1"
+                                    },
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "string"
+                                    }
+                                  }
+                                },
+                                "fields": {
+                                  "kind": "object",
+                                  "members": {
+                                    "items": {
+                                      "kind": "object",
+                                      "members": {
+                                        "minLength": {
+                                          "kind": "number",
+                                          "value": "1"
+                                        },
+                                        "type": {
+                                          "kind": "string",
+                                          "value": "string"
+                                        }
+                                      }
+                                    },
+                                    "maxItems": {
+                                      "kind": "number",
+                                      "value": "10000"
+                                    },
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "array"
+                                    },
+                                    "uniqueItems": {
+                                      "kind": "boolean",
+                                      "value": true
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "required": {
+                              "items": [
+                                {
+                                  "kind": "string",
+                                  "value": "description"
+                                }
+                              ],
+                              "kind": "array"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "object"
+                            }
+                          }
+                        },
+                        "id": {
+                          "kind": "object",
+                          "members": {
+                            "pattern": {
+                              "kind": "string",
+                              "value": "^[A-Za-z][A-Za-z0-9_-]*$"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "string"
+                            }
+                          }
+                        },
+                        "identity": {
+                          "kind": "object",
+                          "members": {
+                            "additionalProperties": {
+                              "kind": "boolean",
+                              "value": true
+                            },
+                            "properties": {
+                              "kind": "object",
+                              "members": {
+                                "description": {
+                                  "kind": "object",
+                                  "members": {
+                                    "minLength": {
+                                      "kind": "number",
+                                      "value": "1"
+                                    },
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "string"
+                                    }
+                                  }
+                                },
+                                "fields": {
+                                  "kind": "object",
+                                  "members": {
+                                    "items": {
+                                      "kind": "object",
+                                      "members": {
+                                        "minLength": {
+                                          "kind": "number",
+                                          "value": "1"
+                                        },
+                                        "type": {
+                                          "kind": "string",
+                                          "value": "string"
+                                        }
+                                      }
+                                    },
+                                    "maxItems": {
+                                      "kind": "number",
+                                      "value": "10000"
+                                    },
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "array"
+                                    },
+                                    "uniqueItems": {
+                                      "kind": "boolean",
+                                      "value": true
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "required": {
+                              "items": [
+                                {
+                                  "kind": "string",
+                                  "value": "description"
+                                }
+                              ],
+                              "kind": "array"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "object"
+                            }
+                          }
+                        },
+                        "loader_inventory_source_id": {
+                          "kind": "object",
+                          "members": {
+                            "minLength": {
+                              "kind": "number",
+                              "value": "1"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "string"
+                            }
+                          }
+                        },
+                        "media_types": {
+                          "kind": "object",
+                          "members": {
+                            "items": {
+                              "kind": "object",
+                              "members": {
+                                "minLength": {
+                                  "kind": "number",
+                                  "value": "1"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            },
+                            "maxItems": {
+                              "kind": "number",
+                              "value": "10000"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "array"
+                            },
+                            "uniqueItems": {
+                              "kind": "boolean",
+                              "value": true
+                            }
+                          }
+                        },
+                        "metadata_schema_ids": {
+                          "kind": "object",
+                          "members": {
+                            "items": {
+                              "kind": "object",
+                              "members": {
+                                "minLength": {
+                                  "kind": "number",
+                                  "value": "1"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            },
+                            "maxItems": {
+                              "kind": "number",
+                              "value": "10000"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "array"
+                            },
+                            "uniqueItems": {
+                              "kind": "boolean",
+                              "value": true
+                            }
+                          }
+                        },
+                        "ontology_schema_ids": {
+                          "kind": "object",
+                          "members": {
+                            "items": {
+                              "kind": "object",
+                              "members": {
+                                "minLength": {
+                                  "kind": "number",
+                                  "value": "1"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            },
+                            "maxItems": {
+                              "kind": "number",
+                              "value": "10000"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "array"
+                            },
+                            "uniqueItems": {
+                              "kind": "boolean",
+                              "value": true
+                            }
+                          }
+                        },
+                        "semantic_kinds": {
+                          "kind": "object",
+                          "members": {
+                            "items": {
+                              "kind": "object",
+                              "members": {
+                                "minLength": {
+                                  "kind": "number",
+                                  "value": "1"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            },
+                            "maxItems": {
+                              "kind": "number",
+                              "value": "10000"
+                            },
+                            "minItems": {
+                              "kind": "number",
+                              "value": "1"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "array"
+                            },
+                            "uniqueItems": {
+                              "kind": "boolean",
+                              "value": true
+                            }
+                          }
+                        },
+                        "source_ids": {
+                          "kind": "object",
+                          "members": {
+                            "items": {
+                              "kind": "object",
+                              "members": {
+                                "minLength": {
+                                  "kind": "number",
+                                  "value": "1"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            },
+                            "maxItems": {
+                              "kind": "number",
+                              "value": "10000"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "array"
+                            },
+                            "uniqueItems": {
+                              "kind": "boolean",
+                              "value": true
+                            }
+                          }
+                        },
+                        "title": {
+                          "kind": "object",
+                          "members": {
+                            "minLength": {
+                              "kind": "number",
+                              "value": "1"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "string"
+                            }
+                          }
+                        },
+                        "version": {
+                          "kind": "object",
+                          "members": {
+                            "const": {
+                              "kind": "string",
+                              "value": "1.0.0"
+                            }
+                          }
+                        },
+                        "view": {
+                          "kind": "object",
+                          "members": {
+                            "enum": {
+                              "items": [
+                                {
+                                  "kind": "string",
+                                  "value": "documents"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "imaging"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "other"
+                                }
+                              ],
+                              "kind": "array"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "required": {
+                      "items": [
+                        {
+                          "kind": "string",
+                          "value": "version"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "id"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "title"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "view"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "semantic_kinds"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "source_ids"
+                        }
+                      ],
+                      "kind": "array"
+                    },
+                    "type": {
+                      "kind": "string",
+                      "value": "object"
+                    }
+                  }
+                },
+                "maxItems": {
+                  "kind": "number",
+                  "value": "64"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "array"
+                }
+              }
+            },
+            "composition": {
+              "kind": "object",
+              "members": {
+                "additionalProperties": {
+                  "kind": "boolean",
+                  "value": true
+                },
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "components": {
+                      "kind": "object",
+                      "members": {
+                        "items": {
+                          "kind": "object",
+                          "members": {
+                            "additionalProperties": {
+                              "kind": "boolean",
+                              "value": true
+                            },
+                            "properties": {
+                              "kind": "object",
+                              "members": {
+                                "checksum": {
+                                  "kind": "object",
+                                  "members": {
+                                    "additionalProperties": {
+                                      "kind": "boolean",
+                                      "value": true
+                                    },
+                                    "properties": {
+                                      "kind": "object",
+                                      "members": {
+                                        "algorithm": {
+                                          "kind": "object",
+                                          "members": {
+                                            "const": {
+                                              "kind": "string",
+                                              "value": "sha256"
+                                            }
+                                          }
+                                        },
+                                        "value": {
+                                          "kind": "object",
+                                          "members": {
+                                            "pattern": {
+                                              "kind": "string",
+                                              "value": "^[a-f0-9]{64}$"
+                                            },
+                                            "type": {
+                                              "kind": "string",
+                                              "value": "string"
+                                            }
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "required": {
+                                      "items": [
+                                        {
+                                          "kind": "string",
+                                          "value": "algorithm"
+                                        },
+                                        {
+                                          "kind": "string",
+                                          "value": "value"
+                                        }
+                                      ],
+                                      "kind": "array"
+                                    },
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "object"
+                                    }
+                                  }
+                                },
+                                "id": {
+                                  "kind": "object",
+                                  "members": {
+                                    "pattern": {
+                                      "kind": "string",
+                                      "value": "^[a-z][a-z0-9-]*$"
+                                    },
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "string"
+                                    }
+                                  }
+                                },
+                                "label": {
+                                  "kind": "object",
+                                  "members": {
+                                    "minLength": {
+                                      "kind": "number",
+                                      "value": "1"
+                                    },
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "string"
+                                    }
+                                  }
+                                },
+                                "version": {
+                                  "kind": "object",
+                                  "members": {
+                                    "pattern": {
+                                      "kind": "string",
+                                      "value": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+                                    },
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "string"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "required": {
+                              "items": [
+                                {
+                                  "kind": "string",
+                                  "value": "id"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "version"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "label"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "checksum"
+                                }
+                              ],
+                              "kind": "array"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "object"
+                            }
+                          }
+                        },
+                        "maxItems": {
+                          "kind": "number",
+                          "value": "32"
+                        },
+                        "minItems": {
+                          "kind": "number",
+                          "value": "1"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "array"
+                        }
+                      }
+                    },
+                    "version": {
+                      "kind": "object",
+                      "members": {
+                        "const": {
+                          "kind": "string",
+                          "value": "1.0.0"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "version"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "components"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "description": {
+              "kind": "object",
+              "members": {
+                "type": {
+                  "kind": "string",
+                  "value": "string"
+                }
+              }
+            },
+            "domain_types": {
+              "kind": "object",
+              "members": {
+                "additionalProperties": {
+                  "kind": "object",
+                  "members": {
+                    "additionalProperties": {
+                      "kind": "boolean",
+                      "value": true
+                    },
+                    "properties": {
+                      "kind": "object",
+                      "members": {
+                        "description": {
+                          "kind": "object",
+                          "members": {
+                            "type": {
+                              "kind": "string",
+                              "value": "string"
+                            }
+                          }
+                        },
+                        "detection": {
+                          "kind": "object",
+                          "members": {
+                            "type": {
+                              "kind": "string",
+                              "value": "object"
+                            }
+                          }
+                        },
+                        "sample_generation": {
+                          "kind": "object",
+                          "members": {
+                            "additionalProperties": {
+                              "kind": "boolean",
+                              "value": true
+                            },
+                            "properties": {
+                              "kind": "object",
+                              "members": {
+                                "method": {
+                                  "kind": "object",
+                                  "members": {
+                                    "pattern": {
+                                      "kind": "string",
+                                      "value": "^generate_[A-Za-z0-9_]+$"
+                                    },
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "string"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "required": {
+                              "items": [
+                                {
+                                  "kind": "string",
+                                  "value": "method"
+                                }
+                              ],
+                              "kind": "array"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "object"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "type": {
+                      "kind": "string",
+                      "value": "object"
+                    }
+                  }
+                },
+                "minProperties": {
+                  "kind": "number",
+                  "value": "1"
+                },
+                "propertyNames": {
+                  "kind": "object",
+                  "members": {
+                    "pattern": {
+                      "kind": "string",
+                      "value": "^[A-Za-z_][A-Za-z0-9_]*$"
+                    },
+                    "type": {
+                      "kind": "string",
+                      "value": "string"
+                    }
+                  }
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "family": {
+              "kind": "object",
+              "members": {
+                "additionalProperties": {
+                  "kind": "boolean",
+                  "value": true
+                },
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "id": {
+                      "kind": "object",
+                      "members": {
+                        "minLength": {
+                          "kind": "number",
+                          "value": "1"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "label": {
+                      "kind": "object",
+                      "members": {
+                        "minLength": {
+                          "kind": "number",
+                          "value": "1"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "version": {
+                      "kind": "object",
+                      "members": {
+                        "pattern": {
+                          "kind": "string",
+                          "value": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "id"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "version"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "label"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "generator": {
+              "kind": "object",
+              "members": {
+                "additionalProperties": {
+                  "kind": "boolean",
+                  "value": true
+                },
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "id": {
+                      "kind": "object",
+                      "members": {
+                        "minLength": {
+                          "kind": "number",
+                          "value": "1"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "version": {
+                      "kind": "object",
+                      "members": {
+                        "pattern": {
+                          "kind": "string",
+                          "value": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "id"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "version"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "id": {
+              "kind": "object",
+              "members": {
+                "minLength": {
+                  "kind": "number",
+                  "value": "1"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "string"
+                }
+              }
+            },
+            "preservation": {
+              "kind": "object",
+              "members": {
+                "additionalProperties": {
+                  "kind": "boolean",
+                  "value": true
+                },
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "derivations": {
+                      "kind": "object",
+                      "members": {
+                        "items": {
+                          "kind": "object",
+                          "members": {
+                            "additionalProperties": {
+                              "kind": "boolean",
+                              "value": true
+                            },
+                            "properties": {
+                              "kind": "object",
+                              "members": {
+                                "qualification": {
+                                  "kind": "object",
+                                  "members": {
+                                    "minLength": {
+                                      "kind": "number",
+                                      "value": "1"
+                                    },
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "string"
+                                    }
+                                  }
+                                },
+                                "schema_id": {
+                                  "kind": "object",
+                                  "members": {
+                                    "minLength": {
+                                      "kind": "number",
+                                      "value": "1"
+                                    },
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "string"
+                                    }
+                                  }
+                                },
+                                "source_identity": {
+                                  "kind": "object",
+                                  "members": {
+                                    "minLength": {
+                                      "kind": "number",
+                                      "value": "1"
+                                    },
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "string"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "required": {
+                              "items": [
+                                {
+                                  "kind": "string",
+                                  "value": "schema_id"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "source_identity"
+                                }
+                              ],
+                              "kind": "array"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "object"
+                            }
+                          }
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "array"
+                        }
+                      }
+                    },
+                    "events": {
+                      "kind": "object",
+                      "members": {
+                        "const": {
+                          "kind": "string",
+                          "value": "PREMIS-3.0-semantic-mapping"
+                        }
+                      }
+                    },
+                    "fixity": {
+                      "kind": "object",
+                      "members": {
+                        "const": {
+                          "kind": "string",
+                          "value": "sha256"
+                        }
+                      }
+                    },
+                    "handoff": {
+                      "kind": "object",
+                      "members": {
+                        "const": {
+                          "kind": "string",
+                          "value": "BagIt-1.0"
+                        }
+                      }
+                    },
+                    "originals": {
+                      "kind": "object",
+                      "members": {
+                        "const": {
+                          "kind": "string",
+                          "value": "authoritative-immutable-bytes"
+                        }
+                      }
+                    },
+                    "primary_runtime": {
+                      "kind": "object",
+                      "members": {
+                        "const": {
+                          "kind": "string",
+                          "value": "tablespec-python"
+                        }
+                      }
+                    },
+                    "provenance": {
+                      "kind": "object",
+                      "members": {
+                        "const": {
+                          "kind": "string",
+                          "value": "PROV-O-JSON-LD"
+                        }
+                      }
+                    },
+                    "qualification": {
+                      "kind": "object",
+                      "members": {
+                        "minLength": {
+                          "kind": "number",
+                          "value": "1"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "version": {
+                      "kind": "object",
+                      "members": {
+                        "const": {
+                          "kind": "string",
+                          "value": "1.0.0"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "version"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "handoff"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "fixity"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "events"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "provenance"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "originals"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "primary_runtime"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "scale_presets": {
+              "kind": "object",
+              "members": {
+                "additionalProperties": {
+                  "kind": "object",
+                  "members": {
+                    "additionalProperties": {
+                      "kind": "boolean",
+                      "value": true
+                    },
+                    "properties": {
+                      "kind": "object",
+                      "members": {
+                        "children": {
+                          "kind": "object",
+                          "members": {
+                            "additionalProperties": {
+                              "kind": "object",
+                              "members": {
+                                "additionalProperties": {
+                                  "kind": "boolean",
+                                  "value": true
+                                },
+                                "properties": {
+                                  "kind": "object",
+                                  "members": {
+                                    "distribution": {
+                                      "kind": "object",
+                                      "members": {
+                                        "enum": {
+                                          "items": [
+                                            {
+                                              "kind": "string",
+                                              "value": "uniform"
+                                            },
+                                            {
+                                              "kind": "string",
+                                              "value": "skewed"
+                                            }
+                                          ],
+                                          "kind": "array"
+                                        }
+                                      }
+                                    },
+                                    "parent": {
+                                      "kind": "object",
+                                      "members": {
+                                        "minLength": {
+                                          "kind": "number",
+                                          "value": "1"
+                                        },
+                                        "type": {
+                                          "kind": "string",
+                                          "value": "string"
+                                        }
+                                      }
+                                    },
+                                    "per_parent": {
+                                      "kind": "object",
+                                      "members": {
+                                        "minimum": {
+                                          "kind": "number",
+                                          "value": "0"
+                                        },
+                                        "type": {
+                                          "kind": "string",
+                                          "value": "number"
+                                        }
+                                      }
+                                    }
+                                  }
+                                },
+                                "required": {
+                                  "items": [
+                                    {
+                                      "kind": "string",
+                                      "value": "parent"
+                                    },
+                                    {
+                                      "kind": "string",
+                                      "value": "per_parent"
+                                    }
+                                  ],
+                                  "kind": "array"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "object"
+                                }
+                              }
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "object"
+                            }
+                          }
+                        },
+                        "roots": {
+                          "kind": "object",
+                          "members": {
+                            "additionalProperties": {
+                              "kind": "object",
+                              "members": {
+                                "minimum": {
+                                  "kind": "number",
+                                  "value": "0"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "integer"
+                                }
+                              }
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "object"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "required": {
+                      "items": [
+                        {
+                          "kind": "string",
+                          "value": "roots"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "children"
+                        }
+                      ],
+                      "kind": "array"
+                    },
+                    "type": {
+                      "kind": "string",
+                      "value": "object"
+                    }
+                  }
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "schemas": {
+              "kind": "object",
+              "members": {
+                "items": {
+                  "kind": "object",
+                  "members": {
+                    "additionalProperties": {
+                      "kind": "boolean",
+                      "value": true
+                    },
+                    "properties": {
+                      "kind": "object",
+                      "members": {
+                        "format": {
+                          "kind": "object",
+                          "members": {
+                            "minLength": {
+                              "kind": "number",
+                              "value": "1"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "string"
+                            }
+                          }
+                        },
+                        "id": {
+                          "kind": "object",
+                          "members": {
+                            "minLength": {
+                              "kind": "number",
+                              "value": "1"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "string"
+                            }
+                          }
+                        },
+                        "reference": {
+                          "kind": "object",
+                          "members": {
+                            "minLength": {
+                              "kind": "number",
+                              "value": "1"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "string"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "required": {
+                      "items": [
+                        {
+                          "kind": "string",
+                          "value": "id"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "format"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "reference"
+                        }
+                      ],
+                      "kind": "array"
+                    },
+                    "type": {
+                      "kind": "string",
+                      "value": "object"
+                    }
+                  }
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "array"
+                }
+              }
+            },
+            "source_bindings": {
+              "kind": "object",
+              "members": {
+                "items": {
+                  "kind": "object",
+                  "members": {
+                    "additionalProperties": {
+                      "kind": "boolean",
+                      "value": true
+                    },
+                    "properties": {
+                      "kind": "object",
+                      "members": {
+                        "role": {
+                          "kind": "object",
+                          "members": {
+                            "enum": {
+                              "items": [
+                                {
+                                  "kind": "string",
+                                  "value": "rows"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "reference"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "terminology"
+                                }
+                              ],
+                              "kind": "array"
+                            }
+                          }
+                        },
+                        "schema_id": {
+                          "kind": "object",
+                          "members": {
+                            "minLength": {
+                              "kind": "number",
+                              "value": "1"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "string"
+                            }
+                          }
+                        },
+                        "source_id": {
+                          "kind": "object",
+                          "members": {
+                            "minLength": {
+                              "kind": "number",
+                              "value": "1"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "string"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "required": {
+                      "items": [
+                        {
+                          "kind": "string",
+                          "value": "schema_id"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "source_id"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "role"
+                        }
+                      ],
+                      "kind": "array"
+                    },
+                    "type": {
+                      "kind": "string",
+                      "value": "object"
+                    }
+                  }
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "array"
+                }
+              }
+            },
+            "sources": {
+              "kind": "object",
+              "members": {
+                "additionalProperties": {
+                  "kind": "object",
+                  "members": {
+                    "$id": {
+                      "kind": "string",
+                      "value": "urn:umf:dataset-source:1.0.0"
+                    },
+                    "$schema": {
+                      "kind": "string",
+                      "value": "https://json-schema.org/draft/2020-12/schema"
+                    },
+                    "additionalProperties": {
+                      "kind": "boolean",
+                      "value": true
+                    },
+                    "allOf": {
+                      "items": [
+                        {
+                          "kind": "object",
+                          "members": {
+                            "if": {
+                              "kind": "object",
+                              "members": {
+                                "properties": {
+                                  "kind": "object",
+                                  "members": {
+                                    "kind": {
+                                      "kind": "object",
+                                      "members": {
+                                        "const": {
+                                          "kind": "string",
+                                          "value": "external"
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "then": {
+                              "kind": "object",
+                              "members": {
+                                "properties": {
+                                  "kind": "object",
+                                  "members": {
+                                    "format": {
+                                      "kind": "object",
+                                      "members": {}
+                                    },
+                                    "reference": {
+                                      "kind": "object",
+                                      "members": {}
+                                    }
+                                  }
+                                },
+                                "required": {
+                                  "items": [
+                                    {
+                                      "kind": "string",
+                                      "value": "reference"
+                                    },
+                                    {
+                                      "kind": "string",
+                                      "value": "format"
+                                    }
+                                  ],
+                                  "kind": "array"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "kind": "object",
+                          "members": {
+                            "if": {
+                              "kind": "object",
+                              "members": {
+                                "properties": {
+                                  "kind": "object",
+                                  "members": {
+                                    "kind": {
+                                      "kind": "object",
+                                      "members": {
+                                        "const": {
+                                          "kind": "string",
+                                          "value": "synthetic"
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "then": {
+                              "kind": "object",
+                              "members": {
+                                "properties": {
+                                  "kind": "object",
+                                  "members": {
+                                    "generator": {
+                                      "kind": "object",
+                                      "members": {}
+                                    }
+                                  }
+                                },
+                                "required": {
+                                  "items": [
+                                    {
+                                      "kind": "string",
+                                      "value": "generator"
+                                    }
+                                  ],
+                                  "kind": "array"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      ],
+                      "kind": "array"
+                    },
+                    "properties": {
+                      "kind": "object",
+                      "members": {
+                        "checksum": {
+                          "kind": "object",
+                          "members": {
+                            "additionalProperties": {
+                              "kind": "boolean",
+                              "value": true
+                            },
+                            "properties": {
+                              "kind": "object",
+                              "members": {
+                                "algorithm": {
+                                  "kind": "object",
+                                  "members": {
+                                    "const": {
+                                      "kind": "string",
+                                      "value": "sha256"
+                                    }
+                                  }
+                                },
+                                "value": {
+                                  "kind": "object",
+                                  "members": {
+                                    "pattern": {
+                                      "kind": "string",
+                                      "value": "^[a-f0-9]{64}$"
+                                    },
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "string"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "required": {
+                              "items": [
+                                {
+                                  "kind": "string",
+                                  "value": "algorithm"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "value"
+                                }
+                              ],
+                              "kind": "array"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "object"
+                            }
+                          }
+                        },
+                        "data_kind": {
+                          "kind": "object",
+                          "members": {
+                            "enum": {
+                              "items": [
+                                {
+                                  "kind": "string",
+                                  "value": "fabricated"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "observed"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "deidentified"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "unknown"
+                                }
+                              ],
+                              "kind": "array"
+                            }
+                          }
+                        },
+                        "description": {
+                          "kind": "object",
+                          "members": {
+                            "type": {
+                              "kind": "string",
+                              "value": "string"
+                            }
+                          }
+                        },
+                        "format": {
+                          "kind": "object",
+                          "members": {
+                            "minLength": {
+                              "kind": "number",
+                              "value": "1"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "string"
+                            }
+                          }
+                        },
+                        "generator": {
+                          "kind": "object",
+                          "members": {
+                            "additionalProperties": {
+                              "kind": "boolean",
+                              "value": true
+                            },
+                            "properties": {
+                              "kind": "object",
+                              "members": {
+                                "id": {
+                                  "kind": "object",
+                                  "members": {
+                                    "minLength": {
+                                      "kind": "number",
+                                      "value": "1"
+                                    },
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "string"
+                                    }
+                                  }
+                                },
+                                "version": {
+                                  "kind": "object",
+                                  "members": {
+                                    "pattern": {
+                                      "kind": "string",
+                                      "value": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+                                    },
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "string"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "required": {
+                              "items": [
+                                {
+                                  "kind": "string",
+                                  "value": "id"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "version"
+                                }
+                              ],
+                              "kind": "array"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "object"
+                            }
+                          }
+                        },
+                        "kind": {
+                          "kind": "object",
+                          "members": {
+                            "enum": {
+                              "items": [
+                                {
+                                  "kind": "string",
+                                  "value": "synthetic"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "external"
+                                }
+                              ],
+                              "kind": "array"
+                            }
+                          }
+                        },
+                        "license": {
+                          "kind": "object",
+                          "members": {
+                            "additionalProperties": {
+                              "kind": "boolean",
+                              "value": true
+                            },
+                            "properties": {
+                              "kind": "object",
+                              "members": {
+                                "attribution": {
+                                  "kind": "object",
+                                  "members": {
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "string"
+                                    }
+                                  }
+                                },
+                                "id": {
+                                  "kind": "object",
+                                  "members": {
+                                    "minLength": {
+                                      "kind": "number",
+                                      "value": "1"
+                                    },
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "string"
+                                    }
+                                  }
+                                },
+                                "notices": {
+                                  "kind": "object",
+                                  "members": {
+                                    "items": {
+                                      "kind": "object",
+                                      "members": {
+                                        "type": {
+                                          "kind": "string",
+                                          "value": "string"
+                                        }
+                                      }
+                                    },
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "array"
+                                    }
+                                  }
+                                },
+                                "redistribution": {
+                                  "kind": "object",
+                                  "members": {
+                                    "enum": {
+                                      "items": [
+                                        {
+                                          "kind": "string",
+                                          "value": "allowed"
+                                        },
+                                        {
+                                          "kind": "string",
+                                          "value": "restricted"
+                                        },
+                                        {
+                                          "kind": "string",
+                                          "value": "unknown"
+                                        }
+                                      ],
+                                      "kind": "array"
+                                    }
+                                  }
+                                },
+                                "reference": {
+                                  "kind": "object",
+                                  "members": {
+                                    "minLength": {
+                                      "kind": "number",
+                                      "value": "1"
+                                    },
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "string"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "object"
+                            }
+                          }
+                        },
+                        "provenance": {
+                          "kind": "object",
+                          "members": {
+                            "additionalProperties": {
+                              "kind": "boolean",
+                              "value": true
+                            },
+                            "properties": {
+                              "kind": "object",
+                              "members": {
+                                "publisher": {
+                                  "kind": "object",
+                                  "members": {
+                                    "minLength": {
+                                      "kind": "number",
+                                      "value": "1"
+                                    },
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "string"
+                                    }
+                                  }
+                                },
+                                "retrieved_at": {
+                                  "kind": "object",
+                                  "members": {
+                                    "minLength": {
+                                      "kind": "number",
+                                      "value": "1"
+                                    },
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "string"
+                                    }
+                                  }
+                                },
+                                "source_ids": {
+                                  "kind": "object",
+                                  "members": {
+                                    "items": {
+                                      "kind": "object",
+                                      "members": {
+                                        "minLength": {
+                                          "kind": "number",
+                                          "value": "1"
+                                        },
+                                        "type": {
+                                          "kind": "string",
+                                          "value": "string"
+                                        }
+                                      }
+                                    },
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "array"
+                                    }
+                                  }
+                                },
+                                "transformations": {
+                                  "kind": "object",
+                                  "members": {
+                                    "items": {
+                                      "kind": "object",
+                                      "members": {
+                                        "minLength": {
+                                          "kind": "number",
+                                          "value": "1"
+                                        },
+                                        "type": {
+                                          "kind": "string",
+                                          "value": "string"
+                                        }
+                                      }
+                                    },
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "array"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "object"
+                            }
+                          }
+                        },
+                        "reference": {
+                          "kind": "object",
+                          "members": {
+                            "minLength": {
+                              "kind": "number",
+                              "value": "1"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "string"
+                            }
+                          }
+                        },
+                        "revision": {
+                          "kind": "object",
+                          "members": {
+                            "minLength": {
+                              "kind": "number",
+                              "value": "1"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "string"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "required": {
+                      "items": [
+                        {
+                          "kind": "string",
+                          "value": "kind"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "data_kind"
+                        }
+                      ],
+                      "kind": "array"
+                    },
+                    "type": {
+                      "kind": "string",
+                      "value": "object"
+                    }
+                  }
+                },
+                "minProperties": {
+                  "kind": "number",
+                  "value": "1"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "version": {
+              "kind": "object",
+              "members": {
+                "pattern": {
+                  "kind": "string",
+                  "value": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "string"
+                }
+              }
+            }
+          }
+        },
+        "required": {
+          "items": [
+            {
+              "kind": "string",
+              "value": "id"
+            },
+            {
+              "kind": "string",
+              "value": "version"
+            },
+            {
+              "kind": "string",
+              "value": "domain_types"
+            }
+          ],
+          "kind": "array"
+        },
+        "type": {
+          "kind": "string",
+          "value": "object"
+        }
+      }
+    }
+  },
+  "id": "[\"schema\",\"spec/extensions/domain-pack/schema.json\",\"\"]",
+  "kind": "schema",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 16109,
+      "path": "spec/extensions/domain-pack/schema.json",
+      "sha256": "e34054015eae699987d7fd0640bdbc17906b129fa46b2c5770753ebf0723931e"
+    }
+  ],
+  "summary": "spec/extensions/domain-pack/schema.json",
+  "title": "schema.json"
+}

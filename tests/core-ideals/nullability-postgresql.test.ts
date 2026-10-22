@@ -1,6 +1,7 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {postgresqlAvailabilitySource,postgresqlNullabilityCases} from '../../scripts/core-ideals/nullability-postgresql-cases';
-import {classifyPostgresqlNullability,verifyPostgresqlNullabilityClassification,recoverPostgresqlNullabilitySource,postgresqlNullabilityPackage,POSTGRESQL_NULLABILITY_EXTENSION,declareCoreNullability,copyJson,readJsonValue,writeJsonValue,Registry,validateDocument} from '../../src';
+import {classifyPostgresqlNullability, verifyPostgresqlNullabilityClassification, recoverPostgresqlNullabilitySource, postgresqlNullabilityPackage, POSTGRESQL_NULLABILITY_EXTENSION, declareCoreNullability, copyJson, readJsonValue, writeJsonValue, Registry, validateDocument} from '../../src';
 import type {PostgresqlNullabilityRequest} from '../../src';
 const fixture=await Bun.file('fixtures/validation/nullability-postgresql-native.json').json(),text:string=fixture.nativeSource;
 const base={scope:'stored-relation',carrier:'sql-null',mode:'strict'} as const;
@@ -66,7 +67,7 @@ test('missing flags, triggers, unsupported profiles and source state remain expl
  const {source,column}=postgresqlAvailabilitySource(text,'plain');
  const modified=structuredClone(source);(modified.modules[0]!.elements[0]!.extensions['umf.postgresql.catalog'] as Record<string,unknown>).state='modified';
  expect(()=>classifyPostgresqlNullability(modified,{...base,column,nativeSource:text})).toThrow();
- for(const version of ['0.1.0','0.2.0'] as const){const legacy=structuredClone(source);legacy.umf=version;expect(()=>classifyPostgresqlNullability(legacy,{...base,column,nativeSource:text})).toThrow();}
+ for(const version of ['0.1.0','0.2.0'] as const){const legacy={...structuredClone(source),umf:version};expect(()=>classifyPostgresqlNullability(legacy as any,{...base,column,nativeSource:text})).toThrow();}
  const incompatible=structuredClone(source);incompatible.vocabularies[POSTGRESQL_NULLABILITY_EXTENSION]={version:'2.0.0'};
  expect(classifyPostgresqlNullability(incompatible,{...base,column,nativeSource:text,mode:'report'}).status).toBe('blocked');
  const noField=structuredClone(source);delete noField.modules.find(m=>m.id==='postgresql.columns')!.elements.find(e=>e.id===column)!.kind;

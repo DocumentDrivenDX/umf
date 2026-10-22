@@ -1,0 +1,23 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"getPostgresqlColumnMetadata\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "getPostgresqlColumnMetadata accepts document and returns PostgresqlColumnMetadata[].",
+  "related": [],
+  "returns": "PostgresqlColumnMetadata[]",
+  "task": "Inspect and select",
+  "type": "(document: Document) => PostgresqlColumnMetadata[]"
+}

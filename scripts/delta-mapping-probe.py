@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Native metadata-only loading is evidence, not proof of mapping validity or data read support."""
 import json,tempfile,copy,sys
 from pathlib import Path

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Capture dbt's native semantic manifest without executing MetricFlow queries."""
 import os,json,subprocess,hashlib,sys
 from pathlib import Path

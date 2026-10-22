@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 11033,
+        "line": 12,
+        "path": "src/projections/binding-sqlserver/indexes.ts",
+        "sha256": "efe11b3e74207a5f2f135a54f13457df64fe3ca08a7a6e38a917600c64448a98"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "SqlServerPlannedColumn",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface SqlServerPlannedColumn {schema:string;table:string;column:string;maxLength:number}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"SqlServerPlannedColumn\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 11033,
+      "line": 12,
+      "path": "src/projections/binding-sqlserver/indexes.ts",
+      "sha256": "efe11b3e74207a5f2f135a54f13457df64fe3ca08a7a6e38a917600c64448a98"
+    }
+  ],
+  "summary": "Type declaration · src/projections/binding-sqlserver/indexes.ts",
+  "title": "SqlServerPlannedColumn"
+}

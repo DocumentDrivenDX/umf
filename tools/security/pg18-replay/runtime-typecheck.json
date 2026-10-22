@@ -1,0 +1,22 @@
+{
+  "extends": "../truss-principal-typecheck.json",
+  "files": [
+    "./identity-runtime.ts",
+    "./scale-runtime.ts",
+    "./write-runtime.ts",
+    "./field-write-runtime.ts"
+  ],
+  "compilerOptions": {
+    "typeRoots": [
+      "/private/tmp/umf-pg18-replay-types-20261015/node_modules/@types"
+    ],
+    "paths": {
+      "pg": [
+        "/private/tmp/umf-pg18-replay-types-20261015/node_modules/@types/pg/index.d.ts"
+      ],
+      "@documentdrivendx/truss-postgresql": [
+        "/Users/erik/Projects/truss/packages/postgresql/src/index.ts"
+      ]
+    }
+  }
+}

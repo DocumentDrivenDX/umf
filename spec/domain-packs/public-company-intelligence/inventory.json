@@ -1,0 +1,916 @@
+{
+  "version": "1.0.0",
+  "id": "public-company-intelligence-sec-selection-v1",
+  "allowed_hosts": [
+    "data.sec.gov",
+    "www.sec.gov"
+  ],
+  "request_interval_ms": 1000,
+  "max_bytes": 10485760,
+  "max_total_bytes": 209715200,
+  "max_documents": 50,
+  "timeout_ms": 30000,
+  "retries": 2,
+  "entries": [
+    {
+      "id": "full-submissions-0000320193",
+      "url": "https://data.sec.gov/submissions/CIK0000320193.json",
+      "media_type": "application/json",
+      "license": {
+        "redistribution": "allowed",
+        "reference": "https://www.sec.gov/about/webmaster-frequently-asked-questions"
+      },
+      "metadata": {
+        "company_cik": "0000320193",
+        "source_kind": "submissions",
+        "selected_on": "2026-10-09",
+        "membership_basis": "selected-research-universe",
+        "snapshot_sha256": "2821703cf04e1138923243a87cc5148673feb9d3792a5b6a7747d1e1a093bf7f",
+        "projection_reference": "sources/scoped-submissions-0000320193.json",
+        "coverage": "Full SEC response acquisition; scoped projection is a separate adapter. Refresh may produce changed bytes."
+      }
+    },
+    {
+      "id": "full-companyfacts-0000320193",
+      "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000320193.json",
+      "media_type": "application/json",
+      "license": {
+        "redistribution": "allowed",
+        "reference": "https://www.sec.gov/about/webmaster-frequently-asked-questions"
+      },
+      "metadata": {
+        "company_cik": "0000320193",
+        "source_kind": "companyfacts",
+        "selected_on": "2026-10-09",
+        "membership_basis": "selected-research-universe",
+        "snapshot_sha256": "73a86c6aedc31f77cac2ea4df5f80f0b3bd7e6eb58bb4e01444fbedf3afb9c43",
+        "projection_reference": "sources/scoped-companyfacts-0000320193.json",
+        "coverage": "Full SEC response acquisition; scoped projection is a separate adapter. Refresh may produce changed bytes."
+      }
+    },
+    {
+      "id": "full-submissions-0000789019",
+      "url": "https://data.sec.gov/submissions/CIK0000789019.json",
+      "media_type": "application/json",
+      "license": {
+        "redistribution": "allowed",
+        "reference": "https://www.sec.gov/about/webmaster-frequently-asked-questions"
+      },
+      "metadata": {
+        "company_cik": "0000789019",
+        "source_kind": "submissions",
+        "selected_on": "2026-10-09",
+        "membership_basis": "selected-research-universe",
+        "snapshot_sha256": "2484a2a3b5677d892a1b25af573ce4eda7b6f449f5eda41bac6b3f106dc3139c",
+        "projection_reference": "sources/scoped-submissions-0000789019.json",
+        "coverage": "Full SEC response acquisition; scoped projection is a separate adapter. Refresh may produce changed bytes."
+      }
+    },
+    {
+      "id": "full-companyfacts-0000789019",
+      "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000789019.json",
+      "media_type": "application/json",
+      "license": {
+        "redistribution": "allowed",
+        "reference": "https://www.sec.gov/about/webmaster-frequently-asked-questions"
+      },
+      "metadata": {
+        "company_cik": "0000789019",
+        "source_kind": "companyfacts",
+        "selected_on": "2026-10-09",
+        "membership_basis": "selected-research-universe",
+        "snapshot_sha256": "f8aae2965b20ad0df44bdf7ccbedf797d275b6b8dc030154a7a311361bb7246f",
+        "projection_reference": "sources/scoped-companyfacts-0000789019.json",
+        "coverage": "Full SEC response acquisition; scoped projection is a separate adapter. Refresh may produce changed bytes."
+      }
+    },
+    {
+      "id": "full-submissions-0001652044",
+      "url": "https://data.sec.gov/submissions/CIK0001652044.json",
+      "media_type": "application/json",
+      "license": {
+        "redistribution": "allowed",
+        "reference": "https://www.sec.gov/about/webmaster-frequently-asked-questions"
+      },
+      "metadata": {
+        "company_cik": "0001652044",
+        "source_kind": "submissions",
+        "selected_on": "2026-10-09",
+        "membership_basis": "selected-research-universe",
+        "snapshot_sha256": "9434407b197d6322de4bece8ad3b69459c8d6ddf3a68526b4b22b02e8175d33c",
+        "projection_reference": "sources/scoped-submissions-0001652044.json",
+        "coverage": "Full SEC response acquisition; scoped projection is a separate adapter. Refresh may produce changed bytes."
+      }
+    },
+    {
+      "id": "full-companyfacts-0001652044",
+      "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001652044.json",
+      "media_type": "application/json",
+      "license": {
+        "redistribution": "allowed",
+        "reference": "https://www.sec.gov/about/webmaster-frequently-asked-questions"
+      },
+      "metadata": {
+        "company_cik": "0001652044",
+        "source_kind": "companyfacts",
+        "selected_on": "2026-10-09",
+        "membership_basis": "selected-research-universe",
+        "snapshot_sha256": "a017f26ee88cb4a639d1c1ddb06d53b4afe22f0ac89cabec7cd67c88919fe1c5",
+        "projection_reference": "sources/scoped-companyfacts-0001652044.json",
+        "coverage": "Full SEC response acquisition; scoped projection is a separate adapter. Refresh may produce changed bytes."
+      }
+    },
+    {
+      "id": "full-submissions-0001018724",
+      "url": "https://data.sec.gov/submissions/CIK0001018724.json",
+      "media_type": "application/json",
+      "license": {
+        "redistribution": "allowed",
+        "reference": "https://www.sec.gov/about/webmaster-frequently-asked-questions"
+      },
+      "metadata": {
+        "company_cik": "0001018724",
+        "source_kind": "submissions",
+        "selected_on": "2026-10-09",
+        "membership_basis": "selected-research-universe",
+        "snapshot_sha256": "1f5bb6be4033e2378bfa0d14e0d9276a08d8dfb070b263f59ca0e77d68ced058",
+        "projection_reference": "sources/scoped-submissions-0001018724.json",
+        "coverage": "Full SEC response acquisition; scoped projection is a separate adapter. Refresh may produce changed bytes."
+      }
+    },
+    {
+      "id": "full-companyfacts-0001018724",
+      "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001018724.json",
+      "media_type": "application/json",
+      "license": {
+        "redistribution": "allowed",
+        "reference": "https://www.sec.gov/about/webmaster-frequently-asked-questions"
+      },
+      "metadata": {
+        "company_cik": "0001018724",
+        "source_kind": "companyfacts",
+        "selected_on": "2026-10-09",
+        "membership_basis": "selected-research-universe",
+        "snapshot_sha256": "7549fb68446eee40e1f50a166fa06b2d2ee6349e07c8553a4828757e032d3cd4",
+        "projection_reference": "sources/scoped-companyfacts-0001018724.json",
+        "coverage": "Full SEC response acquisition; scoped projection is a separate adapter. Refresh may produce changed bytes."
+      }
+    },
+    {
+      "id": "full-submissions-0001326801",
+      "url": "https://data.sec.gov/submissions/CIK0001326801.json",
+      "media_type": "application/json",
+      "license": {
+        "redistribution": "allowed",
+        "reference": "https://www.sec.gov/about/webmaster-frequently-asked-questions"
+      },
+      "metadata": {
+        "company_cik": "0001326801",
+        "source_kind": "submissions",
+        "selected_on": "2026-10-09",
+        "membership_basis": "selected-research-universe",
+        "snapshot_sha256": "ffa346d3218c358a538c06c856bc758642c4065e8a0fd0d4477aee6a71d905a9",
+        "projection_reference": "sources/scoped-submissions-0001326801.json",
+        "coverage": "Full SEC response acquisition; scoped projection is a separate adapter. Refresh may produce changed bytes."
+      }
+    },
+    {
+      "id": "full-companyfacts-0001326801",
+      "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001326801.json",
+      "media_type": "application/json",
+      "license": {
+        "redistribution": "allowed",
+        "reference": "https://www.sec.gov/about/webmaster-frequently-asked-questions"
+      },
+      "metadata": {
+        "company_cik": "0001326801",
+        "source_kind": "companyfacts",
+        "selected_on": "2026-10-09",
+        "membership_basis": "selected-research-universe",
+        "snapshot_sha256": "7518e76d6dac2d016e1a3d1dec1cc55ff9ea3bdd58a151b16fcaa067a6c9d94e",
+        "projection_reference": "sources/scoped-companyfacts-0001326801.json",
+        "coverage": "Full SEC response acquisition; scoped projection is a separate adapter. Refresh may produce changed bytes."
+      }
+    },
+    {
+      "id": "full-submissions-0001045810",
+      "url": "https://data.sec.gov/submissions/CIK0001045810.json",
+      "media_type": "application/json",
+      "license": {
+        "redistribution": "allowed",
+        "reference": "https://www.sec.gov/about/webmaster-frequently-asked-questions"
+      },
+      "metadata": {
+        "company_cik": "0001045810",
+        "source_kind": "submissions",
+        "selected_on": "2026-10-09",
+        "membership_basis": "selected-research-universe",
+        "snapshot_sha256": "163eaadd6981af5f889928aaa7868486c1bb7a2e6d3564dace3d8c5b487274c8",
+        "projection_reference": "sources/scoped-submissions-0001045810.json",
+        "coverage": "Full SEC response acquisition; scoped projection is a separate adapter. Refresh may produce changed bytes."
+      }
+    },
+    {
+      "id": "full-companyfacts-0001045810",
+      "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001045810.json",
+      "media_type": "application/json",
+      "license": {
+        "redistribution": "allowed",
+        "reference": "https://www.sec.gov/about/webmaster-frequently-asked-questions"
+      },
+      "metadata": {
+        "company_cik": "0001045810",
+        "source_kind": "companyfacts",
+        "selected_on": "2026-10-09",
+        "membership_basis": "selected-research-universe",
+        "snapshot_sha256": "19ef503a5770f5660964b3c3aea6937579d9b359da344afe6a9adf59c63d26ff",
+        "projection_reference": "sources/scoped-companyfacts-0001045810.json",
+        "coverage": "Full SEC response acquisition; scoped projection is a separate adapter. Refresh may produce changed bytes."
+      }
+    },
+    {
+      "id": "full-submissions-0000019617",
+      "url": "https://data.sec.gov/submissions/CIK0000019617.json",
+      "media_type": "application/json",
+      "license": {
+        "redistribution": "allowed",
+        "reference": "https://www.sec.gov/about/webmaster-frequently-asked-questions"
+      },
+      "metadata": {
+        "company_cik": "0000019617",
+        "source_kind": "submissions",
+        "selected_on": "2026-10-09",
+        "membership_basis": "selected-research-universe",
+        "snapshot_sha256": "b614df84adb3dbba87f64167e1e034a0e224ebafd175d915e9879c07eb42d1a2",
+        "projection_reference": "sources/scoped-submissions-0000019617.json",
+        "coverage": "Full SEC response acquisition; scoped projection is a separate adapter. Refresh may produce changed bytes."
+      }
+    },
+    {
+      "id": "full-companyfacts-0000019617",
+      "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000019617.json",
+      "media_type": "application/json",
+      "license": {
+        "redistribution": "allowed",
+        "reference": "https://www.sec.gov/about/webmaster-frequently-asked-questions"
+      },
+      "metadata": {
+        "company_cik": "0000019617",
+        "source_kind": "companyfacts",
+        "selected_on": "2026-10-09",
+        "membership_basis": "selected-research-universe",
+        "snapshot_sha256": "e4e9d0af2dcb5d685d3f8cee366b234dd5d4546cd67c010e1390307e0a87fa8f",
+        "projection_reference": "sources/scoped-companyfacts-0000019617.json",
+        "coverage": "Full SEC response acquisition; scoped projection is a separate adapter. Refresh may produce changed bytes."
+      }
+    },
+    {
+      "id": "full-submissions-0001403161",
+      "url": "https://data.sec.gov/submissions/CIK0001403161.json",
+      "media_type": "application/json",
+      "license": {
+        "redistribution": "allowed",
+        "reference": "https://www.sec.gov/about/webmaster-frequently-asked-questions"
+      },
+      "metadata": {
+        "company_cik": "0001403161",
+        "source_kind": "submissions",
+        "selected_on": "2026-10-09",
+        "membership_basis": "selected-research-universe",
+        "snapshot_sha256": "7f985aa8d9b9b7171d7784aa41af99770be5bc86afc2b1d508aa977f5aa0dc18",
+        "projection_reference": "sources/scoped-submissions-0001403161.json",
+        "coverage": "Full SEC response acquisition; scoped projection is a separate adapter. Refresh may produce changed bytes."
+      }
+    },
+    {
+      "id": "full-companyfacts-0001403161",
+      "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001403161.json",
+      "media_type": "application/json",
+      "license": {
+        "redistribution": "allowed",
+        "reference": "https://www.sec.gov/about/webmaster-frequently-asked-questions"
+      },
+      "metadata": {
+        "company_cik": "0001403161",
+        "source_kind": "companyfacts",
+        "selected_on": "2026-10-09",
+        "membership_basis": "selected-research-universe",
+        "snapshot_sha256": "df3caf7c5667296569fc3074ce2ff13629c9a555184a06c5ea9925b43e63971d",
+        "projection_reference": "sources/scoped-companyfacts-0001403161.json",
+        "coverage": "Full SEC response acquisition; scoped projection is a separate adapter. Refresh may produce changed bytes."
+      }
+    },
+    {
+      "id": "full-submissions-0000070858",
+      "url": "https://data.sec.gov/submissions/CIK0000070858.json",
+      "media_type": "application/json",
+      "license": {
+        "redistribution": "allowed",
+        "reference": "https://www.sec.gov/about/webmaster-frequently-asked-questions"
+      },
+      "metadata": {
+        "company_cik": "0000070858",
+        "source_kind": "submissions",
+        "selected_on": "2026-10-09",
+        "membership_basis": "selected-research-universe",
+        "snapshot_sha256": "65fd24b6c2c5feedffd25ca609c67462a813aae8b99dcbb5f8d779e311c33527",
+        "projection_reference": "sources/scoped-submissions-0000070858.json",
+        "coverage": "Full SEC response acquisition; scoped projection is a separate adapter. Refresh may produce changed bytes."
+      }
+    },
+    {
+      "id": "full-companyfacts-0000070858",
+      "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000070858.json",
+      "media_type": "application/json",
+      "license": {
+        "redistribution": "allowed",
+        "reference": "https://www.sec.gov/about/webmaster-frequently-asked-questions"
+      },
+      "metadata": {
+        "company_cik": "0000070858",
+        "source_kind": "companyfacts",
+        "selected_on": "2026-10-09",
+        "membership_basis": "selected-research-universe",
+        "snapshot_sha256": "a19e195ef148b3b7ced44a7a7cecad1bb4af7f9aefd534ef968108d594110c1e",
+        "projection_reference": "sources/scoped-companyfacts-0000070858.json",
+        "coverage": "Full SEC response acquisition; scoped projection is a separate adapter. Refresh may produce changed bytes."
+      }
+    },
+    {
+      "id": "full-submissions-0000034088",
+      "url": "https://data.sec.gov/submissions/CIK0000034088.json",
+      "media_type": "application/json",
+      "license": {
+        "redistribution": "allowed",
+        "reference": "https://www.sec.gov/about/webmaster-frequently-asked-questions"
+      },
+      "metadata": {
+        "company_cik": "0000034088",
+        "source_kind": "submissions",
+        "selected_on": "2026-10-09",
+        "membership_basis": "selected-research-universe",
+        "snapshot_sha256": "c86c3d1c16e5ac086be3ac2f5eaedbb3c2891ac3127a10d2566b0049cbde82df",
+        "projection_reference": "sources/scoped-submissions-0000034088.json",
+        "coverage": "Full SEC response acquisition; scoped projection is a separate adapter. Refresh may produce changed bytes."
+      }
+    },
+    {
+      "id": "full-companyfacts-0000034088",
+      "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000034088.json",
+      "media_type": "application/json",
+      "license": {
+        "redistribution": "allowed",
+        "reference": "https://www.sec.gov/about/webmaster-frequently-asked-questions"
+      },
+      "metadata": {
+        "company_cik": "0000034088",
+        "source_kind": "companyfacts",
+        "selected_on": "2026-10-09",
+        "membership_basis": "selected-research-universe",
+        "snapshot_sha256": "9b95535419e5662e3deed01de803e83deead477a4c81316e1c45186368fdd8b8",
+        "projection_reference": "sources/scoped-companyfacts-0000034088.json",
+        "coverage": "Full SEC response acquisition; scoped projection is a separate adapter. Refresh may produce changed bytes."
+      }
+    },
+    {
+      "id": "full-submissions-0000093410",
+      "url": "https://data.sec.gov/submissions/CIK0000093410.json",
+      "media_type": "application/json",
+      "license": {
+        "redistribution": "allowed",
+        "reference": "https://www.sec.gov/about/webmaster-frequently-asked-questions"
+      },
+      "metadata": {
+        "company_cik": "0000093410",
+        "source_kind": "submissions",
+        "selected_on": "2026-10-09",
+        "membership_basis": "selected-research-universe",
+        "snapshot_sha256": "1c2aca29a8206b7438c67cb04be68ca883e69f85a97fd8993d52546f8aefb40b",
+        "projection_reference": "sources/scoped-submissions-0000093410.json",
+        "coverage": "Full SEC response acquisition; scoped projection is a separate adapter. Refresh may produce changed bytes."
+      }
+    },
+    {
+      "id": "full-companyfacts-0000093410",
+      "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000093410.json",
+      "media_type": "application/json",
+      "license": {
+        "redistribution": "allowed",
+        "reference": "https://www.sec.gov/about/webmaster-frequently-asked-questions"
+      },
+      "metadata": {
+        "company_cik": "0000093410",
+        "source_kind": "companyfacts",
+        "selected_on": "2026-10-09",
+        "membership_basis": "selected-research-universe",
+        "snapshot_sha256": "c09b160603412cb45acf1bb9bf3732e531dedfb548afa0e275fd8aefd7ab397e",
+        "projection_reference": "sources/scoped-companyfacts-0000093410.json",
+        "coverage": "Full SEC response acquisition; scoped projection is a separate adapter. Refresh may produce changed bytes."
+      }
+    },
+    {
+      "id": "full-submissions-0000200406",
+      "url": "https://data.sec.gov/submissions/CIK0000200406.json",
+      "media_type": "application/json",
+      "license": {
+        "redistribution": "allowed",
+        "reference": "https://www.sec.gov/about/webmaster-frequently-asked-questions"
+      },
+      "metadata": {
+        "company_cik": "0000200406",
+        "source_kind": "submissions",
+        "selected_on": "2026-10-09",
+        "membership_basis": "selected-research-universe",
+        "snapshot_sha256": "269cec583b49d64b87a61196490d6d2a685ce697346269d4d1f8fe9d673fbfb6",
+        "projection_reference": "sources/scoped-submissions-0000200406.json",
+        "coverage": "Full SEC response acquisition; scoped projection is a separate adapter. Refresh may produce changed bytes."
+      }
+    },
+    {
+      "id": "full-companyfacts-0000200406",
+      "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000200406.json",
+      "media_type": "application/json",
+      "license": {
+        "redistribution": "allowed",
+        "reference": "https://www.sec.gov/about/webmaster-frequently-asked-questions"
+      },
+      "metadata": {
+        "company_cik": "0000200406",
+        "source_kind": "companyfacts",
+        "selected_on": "2026-10-09",
+        "membership_basis": "selected-research-universe",
+        "snapshot_sha256": "7141c0c988fa1d30f779687b4c78ab561e19aa5990a58ad86a66467d0a783980",
+        "projection_reference": "sources/scoped-companyfacts-0000200406.json",
+        "coverage": "Full SEC response acquisition; scoped projection is a separate adapter. Refresh may produce changed bytes."
+      }
+    },
+    {
+      "id": "full-submissions-0001318605",
+      "url": "https://data.sec.gov/submissions/CIK0001318605.json",
+      "media_type": "application/json",
+      "license": {
+        "redistribution": "allowed",
+        "reference": "https://www.sec.gov/about/webmaster-frequently-asked-questions"
+      },
+      "metadata": {
+        "company_cik": "0001318605",
+        "source_kind": "submissions",
+        "selected_on": "2026-10-09",
+        "membership_basis": "selected-research-universe",
+        "snapshot_sha256": "76ef728de78f5a7048154847052d1be4b76d32be9e790f57d8ce14a026be6c3a",
+        "projection_reference": "sources/scoped-submissions-0001318605.json",
+        "coverage": "Full SEC response acquisition; scoped projection is a separate adapter. Refresh may produce changed bytes."
+      }
+    },
+    {
+      "id": "full-companyfacts-0001318605",
+      "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001318605.json",
+      "media_type": "application/json",
+      "license": {
+        "redistribution": "allowed",
+        "reference": "https://www.sec.gov/about/webmaster-frequently-asked-questions"
+      },
+      "metadata": {
+        "company_cik": "0001318605",
+        "source_kind": "companyfacts",
+        "selected_on": "2026-10-09",
+        "membership_basis": "selected-research-universe",
+        "snapshot_sha256": "d0c2b9288d027a6d735039a6fe874a348b65a7fdbc6c133130666c777c885204",
+        "projection_reference": "sources/scoped-companyfacts-0001318605.json",
+        "coverage": "Full SEC response acquisition; scoped projection is a separate adapter. Refresh may produce changed bytes."
+      }
+    },
+    {
+      "id": "full-submissions-0000731766",
+      "url": "https://data.sec.gov/submissions/CIK0000731766.json",
+      "media_type": "application/json",
+      "license": {
+        "redistribution": "allowed",
+        "reference": "https://www.sec.gov/about/webmaster-frequently-asked-questions"
+      },
+      "metadata": {
+        "company_cik": "0000731766",
+        "source_kind": "submissions",
+        "selected_on": "2026-10-09",
+        "membership_basis": "selected-research-universe",
+        "snapshot_sha256": "94fb1cf4af39ab0f3b8370f724bb74cf918a0ab597b245e96dc9925f63ab1a5b",
+        "projection_reference": "sources/scoped-submissions-0000731766.json",
+        "coverage": "Full SEC response acquisition; scoped projection is a separate adapter. Refresh may produce changed bytes."
+      }
+    },
+    {
+      "id": "full-companyfacts-0000731766",
+      "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000731766.json",
+      "media_type": "application/json",
+      "license": {
+        "redistribution": "allowed",
+        "reference": "https://www.sec.gov/about/webmaster-frequently-asked-questions"
+      },
+      "metadata": {
+        "company_cik": "0000731766",
+        "source_kind": "companyfacts",
+        "selected_on": "2026-10-09",
+        "membership_basis": "selected-research-universe",
+        "snapshot_sha256": "6c9dff59732b7c597542b2d5eadaae0313ca0de03defdba2c00203e693632d76",
+        "projection_reference": "sources/scoped-companyfacts-0000731766.json",
+        "coverage": "Full SEC response acquisition; scoped projection is a separate adapter. Refresh may produce changed bytes."
+      }
+    },
+    {
+      "id": "full-submissions-0000080424",
+      "url": "https://data.sec.gov/submissions/CIK0000080424.json",
+      "media_type": "application/json",
+      "license": {
+        "redistribution": "allowed",
+        "reference": "https://www.sec.gov/about/webmaster-frequently-asked-questions"
+      },
+      "metadata": {
+        "company_cik": "0000080424",
+        "source_kind": "submissions",
+        "selected_on": "2026-10-09",
+        "membership_basis": "selected-research-universe",
+        "snapshot_sha256": "0830f11b13de75ab5a8ab636c01c5a474d8fee43052e2dcba3542c59825dd7b2",
+        "projection_reference": "sources/scoped-submissions-0000080424.json",
+        "coverage": "Full SEC response acquisition; scoped projection is a separate adapter. Refresh may produce changed bytes."
+      }
+    },
+    {
+      "id": "full-companyfacts-0000080424",
+      "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000080424.json",
+      "media_type": "application/json",
+      "license": {
+        "redistribution": "allowed",
+        "reference": "https://www.sec.gov/about/webmaster-frequently-asked-questions"
+      },
+      "metadata": {
+        "company_cik": "0000080424",
+        "source_kind": "companyfacts",
+        "selected_on": "2026-10-09",
+        "membership_basis": "selected-research-universe",
+        "snapshot_sha256": "606ad7056b611e91cfab9f7568b747404405772add188600efa5ccda5824f3d8",
+        "projection_reference": "sources/scoped-companyfacts-0000080424.json",
+        "coverage": "Full SEC response acquisition; scoped projection is a separate adapter. Refresh may produce changed bytes."
+      }
+    },
+    {
+      "id": "full-submissions-0000021344",
+      "url": "https://data.sec.gov/submissions/CIK0000021344.json",
+      "media_type": "application/json",
+      "license": {
+        "redistribution": "allowed",
+        "reference": "https://www.sec.gov/about/webmaster-frequently-asked-questions"
+      },
+      "metadata": {
+        "company_cik": "0000021344",
+        "source_kind": "submissions",
+        "selected_on": "2026-10-09",
+        "membership_basis": "selected-research-universe",
+        "snapshot_sha256": "8591f2d5a02913481a2bc76458ab5c905f94e72f0856a18b6fa57e3f46235e39",
+        "projection_reference": "sources/scoped-submissions-0000021344.json",
+        "coverage": "Full SEC response acquisition; scoped projection is a separate adapter. Refresh may produce changed bytes."
+      }
+    },
+    {
+      "id": "full-companyfacts-0000021344",
+      "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000021344.json",
+      "media_type": "application/json",
+      "license": {
+        "redistribution": "allowed",
+        "reference": "https://www.sec.gov/about/webmaster-frequently-asked-questions"
+      },
+      "metadata": {
+        "company_cik": "0000021344",
+        "source_kind": "companyfacts",
+        "selected_on": "2026-10-09",
+        "membership_basis": "selected-research-universe",
+        "snapshot_sha256": "53d363a9aa3071406cda9857654358f4dca42e174a1defb8cc1ce9ad2a4c9e40",
+        "projection_reference": "sources/scoped-companyfacts-0000021344.json",
+        "coverage": "Full SEC response acquisition; scoped projection is a separate adapter. Refresh may produce changed bytes."
+      }
+    },
+    {
+      "id": "full-submissions-0000858877",
+      "url": "https://data.sec.gov/submissions/CIK0000858877.json",
+      "media_type": "application/json",
+      "license": {
+        "redistribution": "allowed",
+        "reference": "https://www.sec.gov/about/webmaster-frequently-asked-questions"
+      },
+      "metadata": {
+        "company_cik": "0000858877",
+        "source_kind": "submissions",
+        "selected_on": "2026-10-09",
+        "membership_basis": "selected-research-universe",
+        "snapshot_sha256": "e5b71737d6042c04e57d335d1e3c746bcd07a2495b75b087b6d177768d29a392",
+        "projection_reference": "sources/scoped-submissions-0000858877.json",
+        "coverage": "Full SEC response acquisition; scoped projection is a separate adapter. Refresh may produce changed bytes."
+      }
+    },
+    {
+      "id": "full-companyfacts-0000858877",
+      "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000858877.json",
+      "media_type": "application/json",
+      "license": {
+        "redistribution": "allowed",
+        "reference": "https://www.sec.gov/about/webmaster-frequently-asked-questions"
+      },
+      "metadata": {
+        "company_cik": "0000858877",
+        "source_kind": "companyfacts",
+        "selected_on": "2026-10-09",
+        "membership_basis": "selected-research-universe",
+        "snapshot_sha256": "f9f6cfb3c04bb8102552f121868831471a474165074ccc7c539f6f80f19d1b99",
+        "projection_reference": "sources/scoped-companyfacts-0000858877.json",
+        "coverage": "Full SEC response acquisition; scoped projection is a separate adapter. Refresh may produce changed bytes."
+      }
+    },
+    {
+      "id": "full-submissions-0000063908",
+      "url": "https://data.sec.gov/submissions/CIK0000063908.json",
+      "media_type": "application/json",
+      "license": {
+        "redistribution": "allowed",
+        "reference": "https://www.sec.gov/about/webmaster-frequently-asked-questions"
+      },
+      "metadata": {
+        "company_cik": "0000063908",
+        "source_kind": "submissions",
+        "selected_on": "2026-10-09",
+        "membership_basis": "selected-research-universe",
+        "snapshot_sha256": "5ca5bd9a4dbc4878d898899a2ae41a8da1a0a42e24fc280a7f84e47f126f454e",
+        "projection_reference": "sources/scoped-submissions-0000063908.json",
+        "coverage": "Full SEC response acquisition; scoped projection is a separate adapter. Refresh may produce changed bytes."
+      }
+    },
+    {
+      "id": "full-companyfacts-0000063908",
+      "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000063908.json",
+      "media_type": "application/json",
+      "license": {
+        "redistribution": "allowed",
+        "reference": "https://www.sec.gov/about/webmaster-frequently-asked-questions"
+      },
+      "metadata": {
+        "company_cik": "0000063908",
+        "source_kind": "companyfacts",
+        "selected_on": "2026-10-09",
+        "membership_basis": "selected-research-universe",
+        "snapshot_sha256": "0394e814d75510be107679b026e2df6e5d02d4f2029166911aa4924f9556681f",
+        "projection_reference": "sources/scoped-companyfacts-0000063908.json",
+        "coverage": "Full SEC response acquisition; scoped projection is a separate adapter. Refresh may produce changed bytes."
+      }
+    },
+    {
+      "id": "full-submissions-0000040545",
+      "url": "https://data.sec.gov/submissions/CIK0000040545.json",
+      "media_type": "application/json",
+      "license": {
+        "redistribution": "allowed",
+        "reference": "https://www.sec.gov/about/webmaster-frequently-asked-questions"
+      },
+      "metadata": {
+        "company_cik": "0000040545",
+        "source_kind": "submissions",
+        "selected_on": "2026-10-09",
+        "membership_basis": "selected-research-universe",
+        "snapshot_sha256": "ef3b1c78870ba9b87b5b7e92f92a4a34eceea3c11f8f5c1e5b076d2a59aab718",
+        "projection_reference": "sources/scoped-submissions-0000040545.json",
+        "coverage": "Full SEC response acquisition; scoped projection is a separate adapter. Refresh may produce changed bytes."
+      }
+    },
+    {
+      "id": "full-companyfacts-0000040545",
+      "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000040545.json",
+      "media_type": "application/json",
+      "license": {
+        "redistribution": "allowed",
+        "reference": "https://www.sec.gov/about/webmaster-frequently-asked-questions"
+      },
+      "metadata": {
+        "company_cik": "0000040545",
+        "source_kind": "companyfacts",
+        "selected_on": "2026-10-09",
+        "membership_basis": "selected-research-universe",
+        "snapshot_sha256": "8c18acb17bbe0760fae6205c5df75b805480c58d4d1dbbabeba206d9ca36e1e3",
+        "projection_reference": "sources/scoped-companyfacts-0000040545.json",
+        "coverage": "Full SEC response acquisition; scoped projection is a separate adapter. Refresh may produce changed bytes."
+      }
+    },
+    {
+      "id": "full-submissions-0000886982",
+      "url": "https://data.sec.gov/submissions/CIK0000886982.json",
+      "media_type": "application/json",
+      "license": {
+        "redistribution": "allowed",
+        "reference": "https://www.sec.gov/about/webmaster-frequently-asked-questions"
+      },
+      "metadata": {
+        "company_cik": "0000886982",
+        "source_kind": "submissions",
+        "selected_on": "2026-10-09",
+        "membership_basis": "selected-research-universe",
+        "snapshot_sha256": "6f95f2c0dfee7988b5473323662e24b9afffeed83b476ea1440540042cdcfd3e",
+        "projection_reference": "sources/scoped-submissions-0000886982.json",
+        "coverage": "Full SEC response acquisition; scoped projection is a separate adapter. Refresh may produce changed bytes."
+      }
+    },
+    {
+      "id": "full-companyfacts-0000886982",
+      "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000886982.json",
+      "media_type": "application/json",
+      "license": {
+        "redistribution": "allowed",
+        "reference": "https://www.sec.gov/about/webmaster-frequently-asked-questions"
+      },
+      "metadata": {
+        "company_cik": "0000886982",
+        "source_kind": "companyfacts",
+        "selected_on": "2026-10-09",
+        "membership_basis": "selected-research-universe",
+        "snapshot_sha256": "1c11e703efb2c23b1403b0cc65d6565fdc1e926e1cf6ee005d04cf9cc428f20f",
+        "projection_reference": "sources/scoped-companyfacts-0000886982.json",
+        "coverage": "Full SEC response acquisition; scoped projection is a separate adapter. Refresh may produce changed bytes."
+      }
+    },
+    {
+      "id": "full-submissions-0000831001",
+      "url": "https://data.sec.gov/submissions/CIK0000831001.json",
+      "media_type": "application/json",
+      "license": {
+        "redistribution": "allowed",
+        "reference": "https://www.sec.gov/about/webmaster-frequently-asked-questions"
+      },
+      "metadata": {
+        "company_cik": "0000831001",
+        "source_kind": "submissions",
+        "selected_on": "2026-10-09",
+        "membership_basis": "selected-research-universe",
+        "snapshot_sha256": "c71861d6bd301d0ce6c1cff23eb1474de66240ca31c25f5055ecf6348964f39f",
+        "projection_reference": "sources/scoped-submissions-0000831001.json",
+        "coverage": "Full SEC response acquisition; scoped projection is a separate adapter. Refresh may produce changed bytes."
+      }
+    },
+    {
+      "id": "full-companyfacts-0000831001",
+      "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000831001.json",
+      "media_type": "application/json",
+      "license": {
+        "redistribution": "allowed",
+        "reference": "https://www.sec.gov/about/webmaster-frequently-asked-questions"
+      },
+      "metadata": {
+        "company_cik": "0000831001",
+        "source_kind": "companyfacts",
+        "selected_on": "2026-10-09",
+        "membership_basis": "selected-research-universe",
+        "snapshot_sha256": "62b4f569a7426a758480e6918a9762aee95ec91f8aaf2cd2deb71cca457948b3",
+        "projection_reference": "sources/scoped-companyfacts-0000831001.json",
+        "coverage": "Full SEC response acquisition; scoped projection is a separate adapter. Refresh may produce changed bytes."
+      }
+    },
+    {
+      "id": "full-submissions-0001067983",
+      "url": "https://data.sec.gov/submissions/CIK0001067983.json",
+      "media_type": "application/json",
+      "license": {
+        "redistribution": "allowed",
+        "reference": "https://www.sec.gov/about/webmaster-frequently-asked-questions"
+      },
+      "metadata": {
+        "company_cik": "0001067983",
+        "source_kind": "submissions",
+        "selected_on": "2026-10-09",
+        "membership_basis": "selected-research-universe",
+        "snapshot_sha256": "ab313de3258a0251e6f41c0398573a0c5a94618fd2f67b9cf1d136f3eaad9da2",
+        "projection_reference": "sources/scoped-submissions-0001067983.json",
+        "coverage": "Full SEC response acquisition; scoped projection is a separate adapter. Refresh may produce changed bytes."
+      }
+    },
+    {
+      "id": "full-companyfacts-0001067983",
+      "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001067983.json",
+      "media_type": "application/json",
+      "license": {
+        "redistribution": "allowed",
+        "reference": "https://www.sec.gov/about/webmaster-frequently-asked-questions"
+      },
+      "metadata": {
+        "company_cik": "0001067983",
+        "source_kind": "companyfacts",
+        "selected_on": "2026-10-09",
+        "membership_basis": "selected-research-universe",
+        "snapshot_sha256": "3fef3a683cac2db4c08b6811eb74cfe84d3a81984524dc1104ea4fcbcba4ce1d",
+        "projection_reference": "sources/scoped-companyfacts-0001067983.json",
+        "coverage": "Full SEC response acquisition; scoped projection is a separate adapter. Refresh may produce changed bytes."
+      }
+    },
+    {
+      "id": "full-submissions-0001108524",
+      "url": "https://data.sec.gov/submissions/CIK0001108524.json",
+      "media_type": "application/json",
+      "license": {
+        "redistribution": "allowed",
+        "reference": "https://www.sec.gov/about/webmaster-frequently-asked-questions"
+      },
+      "metadata": {
+        "company_cik": "0001108524",
+        "source_kind": "submissions",
+        "selected_on": "2026-10-09",
+        "membership_basis": "selected-research-universe",
+        "snapshot_sha256": "a17395341045ab4f90af3c9a631da7a393704f21c22074ffc5d64b6d1c73f719",
+        "projection_reference": "sources/scoped-submissions-0001108524.json",
+        "coverage": "Full SEC response acquisition; scoped projection is a separate adapter. Refresh may produce changed bytes."
+      }
+    },
+    {
+      "id": "full-companyfacts-0001108524",
+      "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001108524.json",
+      "media_type": "application/json",
+      "license": {
+        "redistribution": "allowed",
+        "reference": "https://www.sec.gov/about/webmaster-frequently-asked-questions"
+      },
+      "metadata": {
+        "company_cik": "0001108524",
+        "source_kind": "companyfacts",
+        "selected_on": "2026-10-09",
+        "membership_basis": "selected-research-universe",
+        "snapshot_sha256": "c36bddafd22061dfe573fa22199074d882196f6667cf641eb30c8cec5a340ae5",
+        "projection_reference": "sources/scoped-companyfacts-0001108524.json",
+        "coverage": "Full SEC response acquisition; scoped projection is a separate adapter. Refresh may produce changed bytes."
+      }
+    },
+    {
+      "id": "full-submissions-0000004962",
+      "url": "https://data.sec.gov/submissions/CIK0000004962.json",
+      "media_type": "application/json",
+      "license": {
+        "redistribution": "allowed",
+        "reference": "https://www.sec.gov/about/webmaster-frequently-asked-questions"
+      },
+      "metadata": {
+        "company_cik": "0000004962",
+        "source_kind": "submissions",
+        "selected_on": "2026-10-09",
+        "membership_basis": "selected-research-universe",
+        "snapshot_sha256": "da953532f1c70b6894790bb609ced7c937bdc5ca90a0ceec78d996404ee724ec",
+        "projection_reference": "sources/scoped-submissions-0000004962.json",
+        "coverage": "Full SEC response acquisition; scoped projection is a separate adapter. Refresh may produce changed bytes."
+      }
+    },
+    {
+      "id": "full-companyfacts-0000004962",
+      "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000004962.json",
+      "media_type": "application/json",
+      "license": {
+        "redistribution": "allowed",
+        "reference": "https://www.sec.gov/about/webmaster-frequently-asked-questions"
+      },
+      "metadata": {
+        "company_cik": "0000004962",
+        "source_kind": "companyfacts",
+        "selected_on": "2026-10-09",
+        "membership_basis": "selected-research-universe",
+        "snapshot_sha256": "8fe514defe349eb117b04523e2e5371387cef70748eabd0445040fe0a9f4840f",
+        "projection_reference": "sources/scoped-companyfacts-0000004962.json",
+        "coverage": "Full SEC response acquisition; scoped projection is a separate adapter. Refresh may produce changed bytes."
+      }
+    },
+    {
+      "id": "full-submissions-0000077476",
+      "url": "https://data.sec.gov/submissions/CIK0000077476.json",
+      "media_type": "application/json",
+      "license": {
+        "redistribution": "allowed",
+        "reference": "https://www.sec.gov/about/webmaster-frequently-asked-questions"
+      },
+      "metadata": {
+        "company_cik": "0000077476",
+        "source_kind": "submissions",
+        "selected_on": "2026-10-09",
+        "membership_basis": "selected-research-universe",
+        "snapshot_sha256": "1e91c4847dc7e570398a5ae8e06d3a2826657a5216b9c5dd10f194da4924cc5d",
+        "projection_reference": "sources/scoped-submissions-0000077476.json",
+        "coverage": "Full SEC response acquisition; scoped projection is a separate adapter. Refresh may produce changed bytes."
+      }
+    },
+    {
+      "id": "full-companyfacts-0000077476",
+      "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000077476.json",
+      "media_type": "application/json",
+      "license": {
+        "redistribution": "allowed",
+        "reference": "https://www.sec.gov/about/webmaster-frequently-asked-questions"
+      },
+      "metadata": {
+        "company_cik": "0000077476",
+        "source_kind": "companyfacts",
+        "selected_on": "2026-10-09",
+        "membership_basis": "selected-research-universe",
+        "snapshot_sha256": "c35234bfb4a1fe24cc1f3b47bdf61f7a46833428dc27070af7e8ca449a94a025",
+        "projection_reference": "sources/scoped-companyfacts-0000077476.json",
+        "coverage": "Full SEC response acquisition; scoped projection is a separate adapter. Refresh may produce changed bytes."
+      }
+    }
+  ]
+}

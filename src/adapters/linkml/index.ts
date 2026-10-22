@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
+import {CURRENT_CORE_VERSION} from '../../generated/core-model';
 import manifest from '../../../spec/extensions/linkml/package.json';
 import Ajv2019 from 'ajv/dist/2019';
 import {installJsonEquality} from '../../validation/schema';
@@ -36,7 +38,7 @@ function payload(document:Document):Payload{
 export function importLinkmlDocument(text:string,options:{id:string;format:'json'|'yaml';metamodelVersion?:string}):Document{
  if(!['json','yaml'].includes(options.format))throw new UmfError('LINKML_FORMAT','Explicit JSON or YAML format required');
  const value:Payload={profile:'linkml-json-yaml',metamodelVersion:options.metamodelVersion===undefined?'1.11.0':options.metamodelVersion,root:parse(text,options.format),originalSource:text,originalFormat:options.format};
- const d:Document={umf:'0.1.0',id:options.id,vocabularies:{[LINKML_EXTENSION]:{version:'0.1.0'}},modules:[{id:'schema',namespace:'',elements:[{id:'schema',extensions:{[LINKML_EXTENSION]:value as unknown as Json}}]}]};payload(d);return d;
+ const d:Document={umf:CURRENT_CORE_VERSION,id:options.id,vocabularies:{[LINKML_EXTENSION]:{version:'0.1.0'}},modules:[{id:'schema',namespace:'',elements:[{id:'schema',extensions:{[LINKML_EXTENSION]:value as unknown as Json}}]}]};payload(d);return d;
 }
 export function exportLinkmlDocument(document:Document,format?:'json'|'yaml'){
  const p=payload(document);if(format!==undefined&&!['json','yaml'].includes(format))throw new UmfError('LINKML_FORMAT','Unsupported native format');

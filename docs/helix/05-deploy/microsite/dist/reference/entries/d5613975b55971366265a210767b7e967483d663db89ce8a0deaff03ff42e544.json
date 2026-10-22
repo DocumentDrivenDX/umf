@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 5209,
+        "line": 17,
+        "path": "src/adapters/delta/sidecars.ts",
+        "sha256": "765fa7897cd2361332ec2879c71253363a96406ea17c5b0e1e32a487b63b994c"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "reconcileDeltaCheckpointSidecars",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(checkpoint: DeltaCommit, commits: DeltaCommit[], sidecars: DeltaSidecar[]): DeltaSidecarReconciliation"
+    ]
+  },
+  "id": "[\"api\",\".\",\"reconcileDeltaCheckpointSidecars\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 5209,
+      "line": 17,
+      "path": "src/adapters/delta/sidecars.ts",
+      "sha256": "765fa7897cd2361332ec2879c71253363a96406ea17c5b0e1e32a487b63b994c"
+    }
+  ],
+  "summary": "Exact caller-bound paths, no filesystem/network lookup or URI alias resolution.",
+  "title": "reconcileDeltaCheckpointSidecars"
+}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 11528,
+        "line": 16,
+        "path": "src/extensions/security/protection/disclosure.ts",
+        "sha256": "a8aec1e8fb596efb925b017127a8dff0b5c64c4cd3303194a9d123bfb443f238"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "SecurityDisclosureCellV2",
+    "runtime": "type-only",
+    "signatureText": [
+      "export type SecurityDisclosureCellV2=\n |{disposition:'original';value:CoreLiteral}\n |{disposition:'absent'|'withheld'}\n |{disposition:'transformed';selection:{ruleIndex:number;disclosureIndex:number};outputDomain:SecurityRef;\n transform:{id:string;version:string};value:CoreLiteral;valueProfile?:typeof GREGORIAN_DATE_PROFILE};"
+    ]
+  },
+  "id": "[\"api\",\".\",\"SecurityDisclosureCellV2\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 11528,
+      "line": 16,
+      "path": "src/extensions/security/protection/disclosure.ts",
+      "sha256": "a8aec1e8fb596efb925b017127a8dff0b5c64c4cd3303194a9d123bfb443f238"
+    }
+  ],
+  "summary": "Type declaration · src/extensions/security/protection/disclosure.ts",
+  "title": "SecurityDisclosureCellV2"
+}

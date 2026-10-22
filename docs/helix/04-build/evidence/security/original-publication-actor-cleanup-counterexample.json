@@ -1,0 +1,9 @@
+{
+  "status": "counterexample-observed",
+  "sourceArchive": "docs/helix/04-build/evidence/security/original-publication-actor-cleanup-vulnerable.ts.txt",
+  "sourceSha256": "5afb3134420dfa93b0034bc01ac971c1cf4903dd8c0c299eb9a05e3765bbbbf4",
+  "failedNativeControl": "exact-release-retains-sibling-publication",
+  "expected": "Releasing first Alice publisher retains the second enrolled Alice publication",
+  "observed": "Actual owned native test failed retention assertion after actor-scoped DELETE",
+  "scope": "Two ordinary native publisher sessions both retain buffers after backend loss. Exact returned registry count was not retained by the failed assertion; source and control failure are retained. No unauthorized publication was executed."
+}

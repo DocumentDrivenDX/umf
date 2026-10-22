@@ -1,0 +1,33 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 2126,
+        "line": 1,
+        "path": "spec/core/kind-operation-v6.schema.json",
+        "sha256": "e1de0aba1c3db6a09e85332a10441a0eec7a2dca0a4e4249fab67fcc491783b8"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "coreKindOperationV6Schema",
+    "runtime": "unassessed",
+    "signatureText": [
+      "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"$id\": \"urn:umf:core:kind-operation:6.0.0\",\n  \"title\": \"Core kind author declaration receipt\",\n  \"$defs\": {\n    \"kind\": {\n      \"enum\": [\n        \"field\",\n        \"record\",\n        \"group\"\n      ]\n    },\n    \"identity\": {\n      \"type\": \"object\",\n      \"additionalProperties\": false,\n      \"required\": [\n        \"module\",\n        \"element\"\n      ],\n      \"properties\": {\n        \"module\": {\n          \"type\": \"string\",\n          \"minLength\": 1\n        },\n        \"element\": {\n          \"type\": \"string\",\n          \"minLength\": 1\n        }\n      }\n    },\n    \"declaration\": {\n      \"type\": \"object\",\n      \"additionalProperties\": false,\n      \"required\": [\n        \"operation\",\n        \"version\",\n        \"source\",\n        \"target\",\n        \"identity\",\n        \"provenance\"\n      ],\n      \"properties\": {\n        \"operation\": {\n          \"const\": \"declare-core-kind\"\n        },\n        \"version\": {\n          \"const\": \"6.0.0\"\n        },\n        \"source\": {\n          \"$ref\": \"urn:umf:core:0.10.0\"\n        },\n        \"target\": {\n          \"$ref\": \"urn:umf:core:0.10.0\"\n        },\n        \"identity\": {\n          \"$ref\": \"#/$defs/identity\"\n        },\n        \"provenance\": {\n          \"type\": \"object\",\n          \"additionalProperties\": false,\n          \"required\": [\n            \"origin\",\n            \"idealPath\",\n            \"kind\",\n            \"binding\",\n            \"basis\",\n            \"nativePath\"\n          ],\n          \"properties\": {\n            \"origin\": {\n              \"const\": \"authored\"\n            },\n            \"idealPath\": {\n              \"type\": \"string\"\n            },\n            \"kind\": {\n              \"$ref\": \"#/$defs/kind\"\n            },\n            \"binding\": {\n              \"const\": {\n                \"id\": \"umf.core.kind.authoring\",\n                \"version\": \"6.0.0\"\n              }\n            },\n            \"basis\": {\n              \"const\": \"explicit-author-declaration\"\n            },\n            \"nativePath\": {\n              \"type\": \"null\"\n            }\n          }\n        }\n      }\n    }\n  },\n  \"$ref\": \"#/$defs/declaration\"\n}\n"
+    ]
+  },
+  "id": "[\"api\",\".\",\"coreKindOperationV6Schema\"]",
+  "kind": "api",
+  "links": [
+    "[\"schema\",\"spec/core/kind-operation-v6.schema.json\",\"\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 2126,
+      "line": 1,
+      "path": "spec/core/kind-operation-v6.schema.json",
+      "sha256": "e1de0aba1c3db6a09e85332a10441a0eec7a2dca0a4e4249fab67fcc491783b8"
+    }
+  ],
+  "summary": "Public export · spec/core/kind-operation-v6.schema.json",
+  "title": "coreKindOperationV6Schema"
+}

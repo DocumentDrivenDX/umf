@@ -1,0 +1,94 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"ParquetRecordClassification\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "operation",
+      "optional": false,
+      "type": "\"classify-parquet-record\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "version",
+      "optional": false,
+      "type": "\"1.0.0\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "status",
+      "optional": false,
+      "type": "\"blocked\" | \"classified\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "source",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "target",
+      "optional": true,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ParquetRecordRequest\"]"
+      ],
+      "name": "request",
+      "optional": false,
+      "type": "ParquetRecordRequest"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "binding",
+      "optional": false,
+      "type": "{ readonly id: \"umf.parquet.record\"; readonly version: \"1.0.0\"; readonly nativeVersion: \"parquet-format@219e3f12a62f9476e830c21e26d030d231f7c017\"; readonly subset: \"Unannotated root/struct definitions after LIST/MAP interpretation; direct members only, no cardinality or value-domain equivalence\"; }"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "mappings",
+      "optional": false,
+      "type": "Mapping[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Json\"]"
+      ],
+      "name": "residuals",
+      "optional": false,
+      "type": "{ path: string; value: Json; reason: string; recovery: \"Source and native fragments retained; resolve conflict then recompute whole record classification\"; }[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Diagnostic\"]"
+      ],
+      "name": "diagnostics",
+      "optional": false,
+      "type": "Diagnostic[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "ParquetRecordClassification is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "ParquetRecordClassification"
+}

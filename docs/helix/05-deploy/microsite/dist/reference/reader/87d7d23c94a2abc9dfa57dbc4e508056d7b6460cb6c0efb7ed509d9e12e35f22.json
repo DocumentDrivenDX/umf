@@ -1,0 +1,91 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"FacetsAvroRequest\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "id",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "recordName",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "namespace",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "fieldName",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "nativeType",
+      "optional": false,
+      "type": "\"string\" | \"boolean\" | \"date\" | \"float\" | \"fixed\" | \"int\" | \"long\" | \"double\" | \"bytes\" | \"time-millis\" | \"time-micros\" | \"timestamp-millis\" | \"timestamp-micros\" | \"local-timestamp-micros\" | \"decimal-bytes\" | \"decimal-fixed\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "fixedName",
+      "optional": true,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "fixedSize",
+      "optional": true,
+      "type": "number"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "mode",
+      "optional": false,
+      "type": "\"strict\" | \"report\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "encoding",
+      "optional": false,
+      "type": "\"carrier-only\" | \"native-type\" | \"metadata-only\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "profile",
+      "optional": false,
+      "type": "\"declared-schema\" | \"apache-datum-writer\" | \"fastavro-schemaless-writer\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "obligation",
+      "optional": false,
+      "type": "\"value-domain\" | \"exact-input\""
+    }
+  ],
+  "parameters": [],
+  "purpose": "FacetsAvroRequest is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "FacetsAvroRequest"
+}

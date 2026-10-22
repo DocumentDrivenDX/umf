@@ -1,0 +1,38 @@
+bun test v1.4.2 (43848b5a7)
+
+tests/security/catalog-disclosure-batch.test.ts:
+ 5 | import {createCandidateEntityTermScopeSet,resolveCandidateEntityTerm} from './entity-terms-candidate';
+ 6 | import {normalizeCandidateAssociationExpression,compileCandidateAssociationCondition,requireIssuedCandidateCompactCondition} from './association-expression';
+ 7 | import {checkProtectionFunctionDefinitions} from './protection/functions';
+ 8 | import {inspectProtectionObligations} from './protection/obligations';
+ 9 | const programs=new WeakMap<object,any>();
+10 | const fail=(message:string):never=>{throw Error('SECURITY_CATALOG_PROGRAM_UNRESOLVED: '+message);};
+                                                                                                    ^
+error: SECURITY_CATALOG_PROGRAM_UNRESOLVED: Whole catalog function/domain closure failed
+      at fail (/Users/erik/.codex/worktrees/security-main-integration/umf/src/extensions/security/catalog-program-candidate.ts:10:96)
+      at compileCandidateCatalogProgram (/Users/erik/.codex/worktrees/security-main-integration/umf/src/extensions/security/catalog-program-candidate.ts:34:116)
+      at run (/Users/erik/.codex/worktrees/security-main-integration/umf/tests/security/catalog-disclosure-batch-corpus.ts:21:41)
+      at runCatalogDisclosureBatchCorpus (/Users/erik/.codex/worktrees/security-main-integration/umf/tests/security/catalog-disclosure-batch-corpus.ts:35:143)
+      at <anonymous> (/Users/erik/.codex/worktrees/security-main-integration/umf/tests/security/catalog-disclosure-batch.test.ts:4:129)
+(fail) canonical atomic disclosure batch retains fold provenance through actual recipes and original codecs [388.11ms]
+
+tests/security/catalog-collection.test.ts:
+(pass) atomic collection preserves original, absent, null and withheld cells across flat and graph facts [22.29ms]
+(pass) legacy inline constants remain independent of source null, absence or unavailable projection [8.98ms]
+(pass) catalog collection runs all admitted pure recipes with exact typed outputs [40.62ms]
+(pass) catalog constant validates present null but refuses known absence and unavailable input [17.75ms]
+(pass) Gregorian rendered output retains exact value-profile context [10.29ms]
+(pass) owner read role, actual grant, forged handles and empty-request metadata remain enforced [12.97ms]
+(pass) deny filtering preserves order while late unknown, conflict or invalid output clears the whole collection [12.68ms]
+(pass) one output ledger spans repeated selectors and refuses a late oversized batch without partial rows [7.29ms]
+(pass) empty requested targets preflight source output dependencies without inventing inline/withheld inputs [16.59ms]
+(pass) unconditional inline transformation suppresses empty-target original dependencies [4.21ms]
+(pass) catalog value work shares the action ledger across every rendered row [16.34ms]
+
+tests/security/catalog-disclosure-selection.test.ts:
+(pass) canonical disclosure selection retains exact source occurrences without granting native authority [85.23ms]
+
+ 12 pass
+ 1 fail
+ 94 expect() calls
+Ran 13 tests across 3 files. [1066.00ms]

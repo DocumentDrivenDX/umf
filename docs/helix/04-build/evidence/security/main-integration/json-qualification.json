@@ -1,0 +1,96 @@
+{
+  "profile": "umf-security-main-json-qualification/0.1",
+  "recordedAt": "2026-10-10T20:27:58.839734+00:00",
+  "status": "scoped-fixes-passed-broader-merge-gate-open",
+  "scope": "Reject non-index sparse-array carriers without losing JSON meaning. Conformance compares complete admitted JSON values rather than builtin prototype choice; unchanged-input claim is JSON state, not object/prototype/descriptor identity. Actual pinned SQL Server facet replay and stable follow-on composition pass. Original132-case backend security acceptance remains open.",
+  "sourcePins": {
+    "src/model/json.ts": "c58fac512cbbea7746f4a6cb0119ac13c8bad4ebf769c7bfc48c30b1b80d5cf5",
+    "tests/core/json-array-carriers.test.ts": "b7025bfdb2210555e405f4bc31e3b20ae8f4a119c4831eb91d7e868ec7f9077f",
+    "scripts/core-ideals/cardinality-avro-composition.ts": "76377fc18a63772e9dd0e6fc4b2f912637d994aafd9dd8e2b0a0013933518a57",
+    "scripts/core-ideals/key-roundtrips.ts": "bd61983040254a6015a97c195d67f81260b40239eb4e86ff9a0c2aaa0e2650c9",
+    "scripts/core-ideals/relationship-conformance.ts": "a19682de664dbdd8f0540942dce140c59db7c287e73b5cc67b55d4d17a05dde1",
+    "scripts/core-ideals/facets-sqlserver-composition.ts": "bf60196dc1f6d9c010da33bfc6bda07a735d551b01ded666e8c49a9d13b3e4c1",
+    "fixtures/validation/facets-sqlserver-projection-native.json": "f9a22cb00011e23428f55ee9a3de78b35a8d6945e24596c2f6c8cccaa78b8f1e",
+    "fixtures/validation/facets-sqlserver-composition.json": "73fcb33893eb06b3c70feaf296143eb4c9b9e795351f442cd967ac036e3e3c58",
+    "docs/helix/04-build/evidence/security/logic-browser.json": "2acd5326e9677e861e629752d3793a4cc1f57321819128eb8b5c91834a984c4c"
+  },
+  "checks": [
+    {
+      "name": "json-roundtrips",
+      "log": "docs/helix/04-build/evidence/security/main-integration/json-roundtrips.log",
+      "sha256": "ec3dc7cad729c061b235fc8c2eedc31dae2cbaa90a9bc1acd0df2008c8331a03",
+      "outcome": "passed"
+    },
+    {
+      "name": "relationship-json-roundtrips",
+      "log": "docs/helix/04-build/evidence/security/main-integration/relationship-json-roundtrips.log",
+      "sha256": "91698fea80501c72d69eb74a510c34f6bcd9187ef228a658422e71cd077c22c4",
+      "outcome": "passed"
+    },
+    {
+      "name": "sqlserver-native",
+      "log": "docs/helix/04-build/evidence/security/main-integration/sqlserver-native.log",
+      "sha256": "6a35663fd1b1fa1fc2b0d221c3b081f4e41f5a54fbf3dda447de7dc6f1b51fbf",
+      "outcome": "passed"
+    },
+    {
+      "name": "sqlserver-composition-premature-attempt",
+      "log": "docs/helix/04-build/evidence/security/main-integration/sqlserver-composition-premature-attempt.log",
+      "sha256": "2ce13c99be3ff05b0bca4abda12d24baafe28ecf8074f89c7f4a907af73fde54",
+      "outcome": "failed-before-correction-and-final-native-completion"
+    },
+    {
+      "name": "sqlserver-composition",
+      "log": "docs/helix/04-build/evidence/security/main-integration/sqlserver-composition.log",
+      "sha256": "7f6b7b6378c61380948a65e439fbcca042125fa857f761371fbff22354e3dc4e",
+      "outcome": "passed"
+    },
+    {
+      "name": "sqlserver-receipts",
+      "log": "docs/helix/04-build/evidence/security/main-integration/sqlserver-receipts.log",
+      "sha256": "f63e5cbe4295255656f83c89eefc827281d00011703eda1e71f19261835aa868",
+      "outcome": "passed"
+    },
+    {
+      "name": "array-security",
+      "log": "docs/helix/04-build/evidence/security/main-integration/array-security.log",
+      "sha256": "a3bae1aeded193587f366aa5003dadc3b9c485f776d01282e6464d0d319cb6f4",
+      "outcome": "passed"
+    },
+    {
+      "name": "array-controls",
+      "log": "docs/helix/04-build/evidence/security/main-integration/array-controls.log",
+      "sha256": "b9815dff1d0454a9a23ce63691898ddc7035e0eb6b1a23bb05131993249cb120",
+      "outcome": "passed"
+    },
+    {
+      "name": "copier-typecheck",
+      "log": "docs/helix/04-build/evidence/security/main-integration/copier-typecheck.log",
+      "sha256": "79026c23638c604d4c76d405715bad40f28a56044d20bc97ba3114137511fcbd",
+      "outcome": "passed"
+    },
+    {
+      "name": "copier-browser",
+      "log": "docs/helix/04-build/evidence/security/main-integration/copier-browser.log",
+      "sha256": "4a892d54afe643e2e8a9e6e3e8af8137406d934100468e84ae5dd3c5b7701868",
+      "outcome": "passed"
+    },
+    {
+      "name": "integrated-core-security-traceability",
+      "tests": 307,
+      "failures": 0,
+      "files": 52,
+      "assertions": 7227,
+      "log": "docs/helix/04-build/evidence/security/main-integration/copier-integrated-tests.log",
+      "sha256": "0663390e9a777810ff914f9e79318e76b05f3c554f7a8ab4fe52076a1f05010d",
+      "outcome": "passed"
+    }
+  ],
+  "independentReview": "Astra ultra independently confirmed original sparse-array bypass, then reviewed final index bounds and comparison controls. No remaining actionable finding in correction. Reviewer did not execute native replay or promote acceptance cases.",
+  "open": [
+    "Current full integration regression and all native/browser evidence gates still require qualification.",
+    "Core0.8 read-only operation browser receipts need replay against updated shared copier.",
+    "Weft/Truss main integration and original132-case acceptance remain unfinished."
+  ],
+  "custodyLimits": "SQL Server producer qualifies its declared six source pins/selected fixtures; no complete transitive build/runtime custody claim. Original historical receipts preserved in Git and legacy-evidence. Initial broad run has source mutations and cannot qualify final source."
+}

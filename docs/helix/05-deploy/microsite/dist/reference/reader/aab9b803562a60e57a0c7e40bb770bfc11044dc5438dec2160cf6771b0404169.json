@@ -1,0 +1,23 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"decodeParquetPhysical\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "source",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "Bounded PLAIN and dictionary carriers; scalar semantics and row assembly are separate.",
+  "related": [],
+  "returns": "ParquetPhysical",
+  "task": "Serialize",
+  "type": "(source: Document) => ParquetPhysical"
+}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 10799,
+        "line": 22,
+        "path": "src/core-ideals/cardinality-avro.ts",
+        "sha256": "32623f8e74a885c41d33becca81a715e31e7dc10c80540b98eeaf2a23932e91f"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "AvroCardinalityClassification",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface AvroCardinalityClassification {\n operation:'classify-avro-cardinality';version:'1.0.0';status:'classified'|'blocked';source:Document;target?:Document;request:AvroCardinalityRequest;binding:typeof binding;\n mapping:{origin:'classified';cardinality:Cardinality;outcome:'exact'|'unknown'|'not-expressible';basis:typeof basis;nodes:Node[]};\n residuals:{path:string;value:Json;reason:string;recovery:typeof recovery}[];diagnostics:Diagnostic[];\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"AvroCardinalityClassification\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 10799,
+      "line": 22,
+      "path": "src/core-ideals/cardinality-avro.ts",
+      "sha256": "32623f8e74a885c41d33becca81a715e31e7dc10c80540b98eeaf2a23932e91f"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/cardinality-avro.ts",
+  "title": "AvroCardinalityClassification"
+}

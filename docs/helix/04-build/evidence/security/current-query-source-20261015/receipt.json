@@ -1,0 +1,37 @@
+{
+  "status": "component-correspondence-passed",
+  "acceptanceReceipt": false,
+  "casePromoted": null,
+  "sourceDigests": {
+    "tests/security/protection/current-query-source.json": "2216a7ad3093c90437db035fb337d21ac67589dee5eb148b0eb4d7fd1ff75059",
+    "tests/security/protection/current-query-source-corpus.ts": "f6b4ea099f138d5aefafcc244172942346bb8a44975aed67903bb552531391dc",
+    "tests/security/protection/current-query-source.test.ts": "ecb6a93617c3c842fc47c5e9cbf4be98f26a47429400bba38a467498207c62c8",
+    "tests/security/protection/current-query-read-scenarios.json": "de7e5a72f59fde30b5d57704f9f1513bafbf0e77a8f9094ae566fbbd582ecc3f",
+    "tests/security/protection/current-query-read.test.ts": "156896f16a6a022012976d4147b39ca299658e7cb60a063a4e0405b8b72eabc4",
+    "tools/security/current-query-lineage.ts": "92a463adf3d51ba8be5951b0c24e50dc66b97b38160b28eea3af024cb84188f6",
+    "tools/security/current-query-source-browser.ts": "50036667a2518c6705d6ab1ff68e0a63f32b6f31c724dea6b017d97ec628a9ea"
+  },
+  "independentChecks": {
+    "currentOwnerBunChromium": 19,
+    "freshWeftCurrentOwnerCorrespondence": 75,
+    "focusedTests": 5,
+    "focusedExpectations": 107,
+    "weftCommittedSourceFixturePins": 21
+  },
+  "weftCommit": "05b68633ee082509f956fb67b8b3e012692048b5",
+  "latestFullGate": {
+    "accepted": 45,
+    "requiredUnbound": 113,
+    "required": 158,
+    "criteria": 34
+  },
+  "scope": "Exact new named current source, actual Application AST lineage and conditional stored owner correspondence; separately revisioned supplied logical read facts. No current native fact custody/permission, mixed-mode physical query lowering, token custody, native dispatch or P03/B08 qualification. No new solver or refinement theorem.",
+  "independentReview": {
+    "disposition": "No blocker within explicitly non-authoritative scope",
+    "archiveSha256": "825e314ef90b91b64a41e3b933f630be490df43dcfc3eba706f636b21810ef10",
+    "lineageControls": 75,
+    "exactMetadataControls": 20,
+    "independentLogicalSourceControls": 13,
+    "weftCommittedBlobsVerified": 21
+  }
+}

@@ -1,0 +1,72 @@
+---
+ddx:
+  id: US-056
+  type: user-story
+  activity: frame
+  status: draft
+  authoring:
+    home: repo
+  links:
+    - id: FEAT-008
+      kind: informed_by
+    - id: umf.prd
+      kind: informed_by
+---
+
+# US-056: Qualify security on relational and graph storage
+
+**Feature:** FEAT-008. **Feature Requirements:** SEC-02, SEC-06–08, SEC-11–12. **PRD Requirements:** FR-45. **Priority:** P0.
+
+## Story
+
+**As a** Schema Integration Maintainer
+**I want** to qualify security on relational and graph storage
+**So that** I can reuse policies with evidence of zero unauthorized disclosure in the admitted corpus.
+
+## Context
+
+The shared security slice separates logical policy from native enforcement.
+CONTRACT-052/053 own exact semantics, outcomes and evidence; a declared profile
+is insufficient to qualify an actual storage installation.
+
+## Walkthrough
+
+1. I select the Clients/Projects/Staff ontology and a versioned policy.
+2. I select complete trusted facts and the intended storage profile.
+3. I run validation and the story-specific conformance scenarios.
+4. I inspect refusals, counterexamples and qualified evidence before admission.
+
+## Acceptance Criteria
+
+- [ ] **US-056-AC1** — Given a policy and a raw relational mapping, when I install its admitted profile, then native reads match the independent semantic oracle.
+- [ ] **US-056-AC2** — Given the same policy and an actual Truss mapping, when I execute it, then typed object and edge visibility matches the oracle.
+- [ ] **US-056-AC3** — Given the same policy and a raw Delta mapping, when I execute it, then native visibility matches the oracle.
+- [ ] **US-056-AC4** — Given the same policy and an actual Ashlar publication, when I execute it, then node and edge disclosure matches the oracle.
+- [ ] **US-056-AC5** — Given an ordinary database identity, when I attempt direct or indirect bypass paths, then protected data remains inaccessible.
+- [ ] **US-056-AC6** — Given logical fields inside a shared bag, when I request a field-protected profile, then only a faithful disclosure implementation is admitted.
+- [ ] **US-056-AC7** — Given unsupported obligations or weaker native composition, when I request installation, then it refuses without weakening the active policy.
+- [ ] **US-056-AC8** — Given private authorization facts, when a reader uses the authorized data surface, then those facts cannot be listed or leaked through diagnostics.
+- [ ] **US-056-AC9** — Given an installed profile, when its roles, routines, mappings or policies drift, then its prior qualification cannot authorize execution.
+- [ ] **US-056-AC10** — Given native tests and formal analysis, when I inspect acceptance, then each claim names its versions, source, assumptions and exercising evidence.
+
+## Edge Cases
+
+Incomplete facts refuse access; equal labels do not imply equal identity.
+Unsupported native behavior cannot be downgraded to a successful translation.
+
+## Test Scenarios
+
+| Scenario | State | Expected |
+| --- | --- | --- |
+| Assigned Staff | Alice active on Project A; resource owned by A | Read permitted after all obligations |
+| Sibling Project | Alice assigned A; resource owned by B in same Client | Read denied |
+| Revoked assignment | Alice has no current active assignment to A | Later read denied |
+| Incomplete facts | Assignment provider has incomplete coverage | No authorized disclosure |
+
+## Dependencies
+
+FEAT-008, FR-45, CONTRACT-052/053, SD-008, TD-056. US-056 and US-057 depend on US-055 interpretation.
+
+## Out of Scope
+
+Production administration, arbitrary policy code and recursive inheritance.

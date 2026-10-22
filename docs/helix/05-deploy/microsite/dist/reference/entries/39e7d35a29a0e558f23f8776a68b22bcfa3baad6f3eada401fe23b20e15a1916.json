@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 2796,
+        "line": 8,
+        "path": "src/extensions/security/registration.ts",
+        "sha256": "6a1a50bf9d41cf0f477cc220a82425c31a47d7dfa45bde52bb880fe85878af8f"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "SecurityReadHandle",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface SecurityReadHandle {readonly kind:'registered-security-read'}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"SecurityReadHandle\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 2796,
+      "line": 8,
+      "path": "src/extensions/security/registration.ts",
+      "sha256": "6a1a50bf9d41cf0f477cc220a82425c31a47d7dfa45bde52bb880fe85878af8f"
+    }
+  ],
+  "summary": "Opaque in-process selection handle; never a native authorization credential.",
+  "title": "SecurityReadHandle"
+}

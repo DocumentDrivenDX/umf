@@ -1,0 +1,31 @@
+{
+  "status": "review-findings-resolved",
+  "reviewer": "/root/astra_security_review",
+  "nativeImplementationQualified": false,
+  "sourceDigests": {
+    "/Users/erik/Projects/weft/crates/weft-core/src/compile.rs": "6f23265ac68dbbf5240d05285e3128c460ae50053140a880eb058d7272b72585",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_backend.rs": "b505d276c8902f0e80538603e08f359ddfdb65a42b53b7baee088a65aa618d98",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_lowering.rs": "1921ba60fcd7d56cce6e510198f20b6e1eb887845db6f8b2ff3234c73bf51d72",
+    "/Users/erik/Projects/weft/crates/weft-core/src/lib.rs": "afbe02faddc74a707ae01ef3ef775cf7bd552cb9ecfdbaa094b813b07624a6ff",
+    "/Users/erik/Projects/weft/crates/weft-core/tests/security_admission.rs": "77a6dca2ce17ca7ab78d080c2776d7f1c0d88ff915bff3b35fd2b8724d95d5e3",
+    "/Users/erik/Projects/weft/docs/helix/02-design/contracts/CONTRACT-005-security-compilation.md": "34cf76ecf5bc08448fffffeb86e86cc5166a5bd35dd6ec4f25d9cca6462b85b5",
+    "/Users/erik/Projects/weft/docs/helix/02-design/contracts/compile-request-v0.4.schema.json": "1e9fdf07b8bea744fa1408eae33e7c1663f2a85206c198560a5d98f2ed6c38fb",
+    "tools/security/weft-admission-check.py": "0437b5b9086dc367325b627ea08d5ed0ae3edab9dd67a84b423839d7a1bbc725"
+  },
+  "resolvedFindings": [
+    "Malformed or warning callback Diagnostic cannot violate blocked compile0.4 error shape"
+  ],
+  "verifiedBoundaries": [
+    "Actual owner source/logical/query/profile admission before callback",
+    "Private-constructor immutable source-bound context and exact query pointer",
+    "Security callback once on admitted projection/count and zero on tested owner refusals",
+    "No ordinary registration fallback",
+    "Exact registered backend ID/version/target membership",
+    "No backend.lower invocation under any tested manifest status or candidate option",
+    "Closed bounded manifest declaration/reference checks; unknown selected domain/binding interpretation remains unimplemented",
+    "External context-substitution compile-fail control"
+  ],
+  "rustEvidence": "weft-admission.json",
+  "independentReproduction": "Reviewer relinked its external warning client against the actual rebuilt owner rlib and verified exact three-member blocked0.4 output with fixed bounded error",
+  "scope": "Rust compile0.4 explicit registration and declaration-shape/identity boundary only. Physical lowering stays unconditionally refused; semantic capability/binding/coverage/result admission, native installation and Python/browser security registration APIs remain incomplete."
+}

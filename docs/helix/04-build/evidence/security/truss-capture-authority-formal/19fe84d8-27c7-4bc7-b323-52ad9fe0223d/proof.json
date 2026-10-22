@@ -1,0 +1,98 @@
+{
+  "status": "conditional-proof-passed",
+  "solver": "4.15.4",
+  "sourceSha256": {
+    "tools/security/prove-capture-authority.py": "ae54636203b525e4770c111a904103f1050ff611194596f86a2314d271521d0b",
+    "docs/helix/04-build/evidence/security/truss-protected-capture-candidate/85d31486-2f88-48e5-b492-ec15b9d730f3/native.json": "045839e3d6660a42583d90e48f9017b2aff803ce1da453898639d9a7e02d0392",
+    "tools/security/truss-protected-capture-candidate.py": "bae49b9dda32aa2fd78de64ba46804bae1f67b9f8931f61cf7933baa180fe1e1",
+    "tools/security/truss-protected-capture-candidate.sql": "395777be81d8de24789983e93b7c84ba2eb903e19e4b427bbeb54d74661c175d",
+    "docs/helix/02-design/contracts/CONTRACT-063-security-enforcement.md": "634f3d1d456b81616f4e0f7ecab4d57424dec430de1d6882f8886a593145c341",
+    "docs/helix/01-frame/user-stories/US-056-security-bindings.md": "c11ecdec8e6b429e7bef2f60d2a9faa42ee0699bc5f0d1627f76d9b486f91171",
+    "/private/tmp/truss-security-main-integration/packages/python/src/truss/_operation_admission.py": "f96462208c14230670370d0b12f9b5d38ef1c20861175bcab8777c2c687dbb30",
+    "/private/tmp/truss-security-main-integration/docs/helix/02-design/adr/ADR-008-trusted-embedding-host.md": "0ce6283047c287d6032b67bf2effbcb108a8321bf9523935d92f6ca598d7d335",
+    "tools/security/check-protected-capture-safety.py": "e3cdb4eba6f1085869f43e0927b636d024350d250716bd7ece4ebe89309b84d5"
+  },
+  "nativeReceiptSha256": "045839e3d6660a42583d90e48f9017b2aff803ce1da453898639d9a7e02d0392",
+  "recognizedSourceFragments": [
+    "SELECT k.* INTO a FROM protected_capture.authority k WHERE k.actor_oid=$1 FOR SHARE;",
+    "IF NOT FOUND OR NOT a.permitted OR a.generation<>$2 THEN",
+    "PERFORM protected_capture.check_authority(c.actor_oid,c.authority_generation);",
+    "IF current_setting('transaction_isolation') <> 'read committed' THEN"
+  ],
+  "recognizedCompleteBodies": [
+    "check_authority",
+    "write"
+  ],
+  "queries": [
+    {
+      "id": "revoked-refuses",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smt2Sha256": "70ff011cf0f2cc058f377bb0a3a4ebba505b76a0c5cd91140b1a9483cac13486",
+      "model": null
+    },
+    {
+      "id": "stale-generation-refuses",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smt2Sha256": "6172f31ca99fc550a73399d7fc47f3ebe6623500d15475394a9123637f8a26d5",
+      "model": null
+    },
+    {
+      "id": "missing-authority-refuses",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smt2Sha256": "8325b7b36900eef8cf043716aab8748d4efcef48351ac8df2fd839a324ae3572",
+      "model": null
+    },
+    {
+      "id": "current-authority-nonvacuity",
+      "expected": "sat",
+      "observed": "sat",
+      "smt2Sha256": "c6e274c1c4ff62d0c332097f2f2a241d01618a0cddf28354e9f25b22cfdf3a24",
+      "model": "[next_generation = 1,\n captured_generation = 1,\n row_found = True,\n generation = 1,\n permitted = True]"
+    },
+    {
+      "id": "erase-permission-accepts-revoked",
+      "expected": "sat",
+      "observed": "sat",
+      "smt2Sha256": "d673015a897c02e4a93c23bbac51313de288ba2481200adf65bf52b5ca8d7b50",
+      "model": "[next_generation = 1,\n captured_generation = 1,\n row_found = True,\n generation = 1,\n permitted = False]"
+    },
+    {
+      "id": "erase-generation-accepts-stale",
+      "expected": "sat",
+      "observed": "sat",
+      "smt2Sha256": "15cc5b5903f123059ef40127ba40711ff48a53cf3b40ae153d62c572b3c6ff79",
+      "model": "[next_generation = 1,\n generation = 2,\n captured_generation = 1,\n row_found = True,\n permitted = True]"
+    },
+    {
+      "id": "participating-revoker-cannot-advance-held-row",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smt2Sha256": "5652d8746138ca338e5ad3bbdd34f057c08c659664324188a0282d4d70f24b25",
+      "model": null
+    },
+    {
+      "id": "erase-serialization-permits-advance",
+      "expected": "sat",
+      "observed": "sat",
+      "smt2Sha256": "af9cb6f063d970c521df84d568443675cc31227404be4ea0f1a49b82e19ba6da",
+      "model": "[generation = 1,\n next_generation = 2,\n captured_generation = 1,\n shared_lock_held = True]"
+    }
+  ],
+  "scope": "Unbounded positive generation integers and Boolean found/permitted predicate model corresponding by exact complete-body recognition to the fixed native guard. Serialization is an explicit mathematical premise, not a derived PostgreSQL semantics theorem.",
+  "premises": [
+    "Truthful complete current authority row and original captured generation",
+    "Correct SQL Boolean/FOUND interpretation and atomic exception rollback",
+    "Participating exclusive revocation conflicts with held shared row lock",
+    "Same transaction retains lock until completion; savepoint rollback releases it",
+    "Actual owner subject mapping, full callable closure and policy source/current-cut binding remain unqualified"
+  ],
+  "limitations": [
+    "No automatic SQL/Python/compiler refinement proof",
+    "No ontology policy resolution, publication-buffer drain or deadlock/liveness theorem",
+    "Native lock-timeout schedule is separate evidence; abstract serialization law assumes conflict semantics"
+  ],
+  "acceptancePromoted": false
+}

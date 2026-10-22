@@ -1,0 +1,102 @@
+{
+  "format": "umf.domain-graph-candidate-inventory",
+  "version": "1.0.0",
+  "candidates": [
+    {
+      "pack": "archaeology",
+      "fixture": "spec/domain-packs/archaeology/graph/fixture.json",
+      "archive": "fixtures/domain-packs/archaeology-1.0.0.zip",
+      "source_pack": "spec/domain-packs/archaeology/pack.json"
+    },
+    {
+      "pack": "commerce",
+      "fixture": "spec/domain-packs/commerce/graph/fixture.json",
+      "archive": "fixtures/domain-packs/commerce-1.0.0.zip",
+      "source_pack": "spec/domain-packs/commerce/pack.json"
+    },
+    {
+      "pack": "construction",
+      "fixture": "spec/domain-packs/construction/graph/fixture.json",
+      "archive": "fixtures/domain-packs/construction-1.0.0.zip",
+      "source_pack": "spec/domain-packs/construction/pack.json"
+    },
+    {
+      "pack": "cybersecurity",
+      "fixture": "spec/domain-packs/cybersecurity/graph/fixture.json",
+      "archive": "fixtures/domain-packs/cybersecurity-1.0.0.zip",
+      "source_pack": "spec/domain-packs/cybersecurity/pack.json"
+    },
+    {
+      "pack": "ecology",
+      "fixture": "spec/domain-packs/ecology/graph/fixture.json",
+      "archive": "fixtures/domain-packs/ecology-1.0.0.zip",
+      "source_pack": "spec/domain-packs/ecology/pack.json"
+    },
+    {
+      "pack": "education",
+      "fixture": "spec/domain-packs/education/graph/fixture.json",
+      "archive": "fixtures/domain-packs/education-1.0.0.zip",
+      "source_pack": "spec/domain-packs/education/pack.json"
+    },
+    {
+      "pack": "energy",
+      "fixture": "spec/domain-packs/energy/graph/fixture.json",
+      "archive": "fixtures/domain-packs/energy-1.0.0.zip",
+      "source_pack": "spec/domain-packs/energy/pack.json"
+    },
+    {
+      "pack": "hr",
+      "fixture": "spec/domain-packs/hr/graph/fixture.json",
+      "archive": "fixtures/domain-packs/hr-1.0.0.zip",
+      "source_pack": "spec/domain-packs/hr/pack.json"
+    },
+    {
+      "pack": "legal",
+      "fixture": "spec/domain-packs/legal/graph/fixture.json",
+      "archive": "fixtures/domain-packs/legal-1.0.0.zip",
+      "source_pack": "fixtures/domain-packs/source-packs/legal-1.0.0.json"
+    },
+    {
+      "pack": "manufacturing",
+      "fixture": "spec/domain-packs/manufacturing/graph/fixture.json",
+      "archive": "fixtures/domain-packs/manufacturing-1.0.0.zip",
+      "source_pack": "spec/domain-packs/manufacturing/pack.json"
+    },
+    {
+      "pack": "martech",
+      "fixture": "spec/domain-packs/martech/graph/fixture.json",
+      "archive": "fixtures/domain-packs/martech-1.0.0.zip",
+      "source_pack": "spec/domain-packs/martech/pack.json"
+    },
+    {
+      "pack": "medical",
+      "fixture": "spec/domain-packs/medical/graph/fixture.json",
+      "archive": "fixtures/domain-packs/medical-1.0.0.zip",
+      "source_pack": "fixtures/domain-packs/source-packs/medical-1.0.0.json"
+    },
+    {
+      "pack": "payments",
+      "fixture": "spec/domain-packs/payments/graph/fixture.json",
+      "archive": "fixtures/domain-packs/payments-1.0.0.zip",
+      "source_pack": "spec/domain-packs/payments/pack.json"
+    },
+    {
+      "pack": "real-estate",
+      "fixture": "spec/domain-packs/real-estate/graph/fixture.json",
+      "archive": "fixtures/domain-packs/real-estate-1.0.0.zip",
+      "source_pack": "spec/domain-packs/real-estate/pack.json"
+    },
+    {
+      "pack": "supply-chain",
+      "fixture": "spec/domain-packs/supply-chain/graph/fixture.json",
+      "archive": "fixtures/domain-packs/supply-chain-1.0.0.zip",
+      "source_pack": "spec/domain-packs/supply-chain/pack.json"
+    },
+    {
+      "pack": "transit",
+      "fixture": "spec/domain-packs/transit/graph/fixture.json",
+      "archive": "fixtures/domain-packs/transit-1.0.0.zip",
+      "source_pack": "spec/domain-packs/transit/pack.json"
+    }
+  ]
+}

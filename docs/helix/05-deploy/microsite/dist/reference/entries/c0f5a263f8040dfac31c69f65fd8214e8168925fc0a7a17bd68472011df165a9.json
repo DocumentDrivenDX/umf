@@ -1,0 +1,68 @@
+{
+  "data": {
+    "conflicts": [],
+    "correspondence": "unknown",
+    "declarations": [],
+    "evidence": [
+      {
+        "closureComplete": false,
+        "commands": [],
+        "correspondence": "unknown",
+        "id": "protobuf-descriptor-record",
+        "inputHashes": [],
+        "limitations": [
+          "Recorded scope only; native equivalence and production adoption are separate.",
+          "Complete tested dependency closure is not recorded; current-source qualification is unknown."
+        ],
+        "outcome": "passed",
+        "readerId": "protobuf-descriptor",
+        "scope": "Recorded descriptor corpus; source lexical fidelity is separate.",
+        "selector": "",
+        "source": {
+          "bytes": 1247,
+          "path": "fixtures/protobuf/descriptor-results.json",
+          "sha256": "e35a5d2debe12a15b3ee1bd8db1ddb7e49fdec5f8d82ceb3f88522e8addb0d1a"
+        },
+        "supersedes": [],
+        "versions": {
+          "compiler": "libprotoc 36.2",
+          "runtime": "@bufbuild/protobuf 2.15.0"
+        }
+      }
+    ],
+    "operation": {
+      "apiNames": [],
+      "coreProfiles": [],
+      "extensionVersions": [],
+      "fixturePaths": [],
+      "id": "protobuf-descriptor",
+      "kind": "round-trip",
+      "limitations": [
+        "Recorded scope only; native equivalence and production adoption are separate."
+      ],
+      "runtime": {
+        "availability": "host-only",
+        "profileId": "protobuf-descriptor",
+        "requirements": [
+          "Native runtime / original qualification harness; not executed by this page."
+        ]
+      },
+      "sourceSystem": "Protobuf",
+      "subset": "Recorded descriptor corpus; source lexical fidelity is separate.",
+      "targetSystem": "Protobuf",
+      "title": "Protobuf · native descriptor recovery"
+    }
+  },
+  "id": "[\"integration\",\"protobuf-descriptor\"]",
+  "kind": "integration",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 134795,
+      "path": "docs/helix/05-deploy/reference/operations.json",
+      "sha256": "793743bbca36e56e90e82df5ef0408b628c434e58cb68aea4d6486349be78e61"
+    }
+  ],
+  "summary": "Recorded descriptor corpus; source lexical fidelity is separate.",
+  "title": "Protobuf · native descriptor recovery"
+}

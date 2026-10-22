@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Pinned native observations; neither carrier establishes author intent."""
 import json
 import hashlib

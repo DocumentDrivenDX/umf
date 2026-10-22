@@ -1,6 +1,7 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {sqlserverAvailabilitySource,sqlserverNullabilityCases} from '../../scripts/core-ideals/nullability-sqlserver-cases';
-import {classifySqlServerNullability,verifySqlServerNullabilityClassification,recoverSqlServerNullabilitySource,sqlserverNullabilityPackage,SQLSERVER_NULLABILITY_EXTENSION,declareCoreNullability,copyJson,readJsonValue,writeJsonValue,Registry,validateDocument} from '../../src';
+import {classifySqlServerNullability, verifySqlServerNullabilityClassification, recoverSqlServerNullabilitySource, sqlserverNullabilityPackage, SQLSERVER_NULLABILITY_EXTENSION, declareCoreNullability, copyJson, readJsonValue, writeJsonValue, Registry, validateDocument} from '../../src';
 import type {SqlServerNullabilityRequest} from '../../src';
 const fixture=await Bun.file('fixtures/validation/nullability-sqlserver-native.json').json(),text:string=fixture.nativeSource;
 const base={scope:'stored-relation',carrier:'sql-null',mode:'strict'} as const;
@@ -69,7 +70,7 @@ test('modified captures, incorrect envelope versions and unsafe numeric refineme
   expect(()=>classifySqlServerNullability(source,{...base,column,nativeSource})).toThrow();
  }
  const {source,column}=sqlserverAvailabilitySource(text,'plain');
- for(const version of ['0.1.0','0.2.0'] as const){const legacy=structuredClone(source);legacy.umf=version;expect(()=>classifySqlServerNullability(legacy,{...base,column,nativeSource:text})).toThrow();}
+ for(const version of ['0.1.0','0.2.0'] as const){const legacy={...structuredClone(source),umf:version};expect(()=>classifySqlServerNullability(legacy as any,{...base,column,nativeSource:text})).toThrow();}
  const capture=JSON.parse(text);capture.availabilityEvidence.column_refinements.find((r:any)=>r.table==='plain').generated_always_type='underflow';
  const nativeSource=JSON.stringify(capture).replace('"underflow"','1e-999'),changed=sqlserverAvailabilitySource(nativeSource,'plain');
  expect(classifySqlServerNullability(changed.source,{...base,column:changed.column,nativeSource,mode:'report'}).mapping.nullability).toBe('unspecified');

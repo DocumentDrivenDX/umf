@@ -1,0 +1,446 @@
+{
+  "data": {
+    "pointer": "",
+    "profileVersions": [],
+    "references": [
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0"
+      }
+    ],
+    "role": "extension-payload",
+    "schemaPath": "spec/extensions/parquet/metadata-transform.schema.json",
+    "sourceData": {
+      "kind": "object",
+      "members": {
+        "$id": {
+          "kind": "string",
+          "value": "urn:umf:parquet:metadata-transform:0.1.0"
+        },
+        "$schema": {
+          "kind": "string",
+          "value": "https://json-schema.org/draft/2020-12/schema"
+        },
+        "additionalProperties": {
+          "kind": "boolean",
+          "value": false
+        },
+        "allOf": {
+          "items": [
+            {
+              "kind": "object",
+              "members": {
+                "else": {
+                  "kind": "object",
+                  "members": {
+                    "not": {
+                      "kind": "object",
+                      "members": {
+                        "anyOf": {
+                          "items": [
+                            {
+                              "kind": "object",
+                              "members": {
+                                "properties": {
+                                  "kind": "object",
+                                  "members": {
+                                    "output": {
+                                      "kind": "boolean",
+                                      "value": true
+                                    }
+                                  }
+                                },
+                                "required": {
+                                  "items": [
+                                    {
+                                      "kind": "string",
+                                      "value": "output"
+                                    }
+                                  ],
+                                  "kind": "array"
+                                }
+                              }
+                            },
+                            {
+                              "kind": "object",
+                              "members": {
+                                "properties": {
+                                  "kind": "object",
+                                  "members": {
+                                    "added": {
+                                      "kind": "boolean",
+                                      "value": true
+                                    }
+                                  }
+                                },
+                                "required": {
+                                  "items": [
+                                    {
+                                      "kind": "string",
+                                      "value": "added"
+                                    }
+                                  ],
+                                  "kind": "array"
+                                }
+                              }
+                            },
+                            {
+                              "kind": "object",
+                              "members": {
+                                "properties": {
+                                  "kind": "object",
+                                  "members": {
+                                    "unchangedPrefixBytes": {
+                                      "kind": "boolean",
+                                      "value": true
+                                    }
+                                  }
+                                },
+                                "required": {
+                                  "items": [
+                                    {
+                                      "kind": "string",
+                                      "value": "unchangedPrefixBytes"
+                                    }
+                                  ],
+                                  "kind": "array"
+                                }
+                              }
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    }
+                  }
+                },
+                "if": {
+                  "kind": "object",
+                  "members": {
+                    "properties": {
+                      "kind": "object",
+                      "members": {
+                        "status": {
+                          "kind": "object",
+                          "members": {
+                            "const": {
+                              "kind": "string",
+                              "value": "transformed"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "then": {
+                  "kind": "object",
+                  "members": {
+                    "properties": {
+                      "kind": "object",
+                      "members": {
+                        "added": {
+                          "kind": "boolean",
+                          "value": true
+                        },
+                        "output": {
+                          "kind": "boolean",
+                          "value": true
+                        },
+                        "unchangedPrefixBytes": {
+                          "kind": "boolean",
+                          "value": true
+                        }
+                      }
+                    },
+                    "required": {
+                      "items": [
+                        {
+                          "kind": "string",
+                          "value": "output"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "added"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "unchangedPrefixBytes"
+                        }
+                      ],
+                      "kind": "array"
+                    }
+                  }
+                }
+              }
+            }
+          ],
+          "kind": "array"
+        },
+        "properties": {
+          "kind": "object",
+          "members": {
+            "added": {
+              "kind": "object",
+              "members": {
+                "items": {
+                  "kind": "object",
+                  "members": {
+                    "additionalProperties": {
+                      "kind": "boolean",
+                      "value": false
+                    },
+                    "properties": {
+                      "kind": "object",
+                      "members": {
+                        "key": {
+                          "kind": "object",
+                          "members": {
+                            "type": {
+                              "kind": "string",
+                              "value": "string"
+                            }
+                          }
+                        },
+                        "value": {
+                          "kind": "object",
+                          "members": {
+                            "type": {
+                              "kind": "string",
+                              "value": "string"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "required": {
+                      "items": [
+                        {
+                          "kind": "string",
+                          "value": "key"
+                        }
+                      ],
+                      "kind": "array"
+                    },
+                    "type": {
+                      "kind": "string",
+                      "value": "object"
+                    }
+                  }
+                },
+                "maxItems": {
+                  "kind": "number",
+                  "value": "1000"
+                },
+                "minItems": {
+                  "kind": "number",
+                  "value": "1"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "array"
+                }
+              }
+            },
+            "complete": {
+              "kind": "object",
+              "members": {
+                "const": {
+                  "kind": "boolean",
+                  "value": false
+                }
+              }
+            },
+            "diagnostics": {
+              "kind": "object",
+              "members": {
+                "items": {
+                  "kind": "object",
+                  "members": {
+                    "additionalProperties": {
+                      "kind": "boolean",
+                      "value": false
+                    },
+                    "properties": {
+                      "kind": "object",
+                      "members": {
+                        "code": {
+                          "kind": "object",
+                          "members": {
+                            "type": {
+                              "kind": "string",
+                              "value": "string"
+                            }
+                          }
+                        },
+                        "message": {
+                          "kind": "object",
+                          "members": {
+                            "type": {
+                              "kind": "string",
+                              "value": "string"
+                            }
+                          }
+                        },
+                        "path": {
+                          "kind": "object",
+                          "members": {
+                            "type": {
+                              "kind": "string",
+                              "value": "string"
+                            }
+                          }
+                        },
+                        "severity": {
+                          "kind": "object",
+                          "members": {
+                            "enum": {
+                              "items": [
+                                {
+                                  "kind": "string",
+                                  "value": "error"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "warning"
+                                }
+                              ],
+                              "kind": "array"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "required": {
+                      "items": [
+                        {
+                          "kind": "string",
+                          "value": "code"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "path"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "severity"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "message"
+                        }
+                      ],
+                      "kind": "array"
+                    },
+                    "type": {
+                      "kind": "string",
+                      "value": "object"
+                    }
+                  }
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "array"
+                }
+              }
+            },
+            "output": {
+              "kind": "object",
+              "members": {
+                "$ref": {
+                  "kind": "string",
+                  "value": "urn:umf:core:0.10.0"
+                }
+              }
+            },
+            "source": {
+              "kind": "object",
+              "members": {
+                "$ref": {
+                  "kind": "string",
+                  "value": "urn:umf:core:0.10.0"
+                }
+              }
+            },
+            "status": {
+              "kind": "object",
+              "members": {
+                "enum": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "transformed"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "blocked"
+                    }
+                  ],
+                  "kind": "array"
+                }
+              }
+            },
+            "unchangedPrefixBytes": {
+              "kind": "object",
+              "members": {
+                "minimum": {
+                  "kind": "number",
+                  "value": "4"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "integer"
+                }
+              }
+            }
+          }
+        },
+        "required": {
+          "items": [
+            {
+              "kind": "string",
+              "value": "source"
+            },
+            {
+              "kind": "string",
+              "value": "status"
+            },
+            {
+              "kind": "string",
+              "value": "complete"
+            },
+            {
+              "kind": "string",
+              "value": "diagnostics"
+            }
+          ],
+          "kind": "array"
+        },
+        "type": {
+          "kind": "string",
+          "value": "object"
+        }
+      }
+    }
+  },
+  "id": "[\"schema\",\"spec/extensions/parquet/metadata-transform.schema.json\",\"\"]",
+  "kind": "schema",
+  "links": [
+    "[\"schema\",\"spec/core/schema.json\",\"\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 2635,
+      "path": "spec/extensions/parquet/metadata-transform.schema.json",
+      "sha256": "559fb97ad7951e23c6de119f4598732d0cc1bf7d7252beedac5ba16ff81bb67f"
+    }
+  ],
+  "summary": "spec/extensions/parquet/metadata-transform.schema.json",
+  "title": "metadata-transform.schema.json"
+}

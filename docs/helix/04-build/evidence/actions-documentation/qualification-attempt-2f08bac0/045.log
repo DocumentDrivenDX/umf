@@ -1,0 +1,10 @@
+WARNING: Using incubator modules: jdk.incubator.vector
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/10/09 21:13:24 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+/work/.venv/lib/python3.12/site-packages/pydantic/v1/main.py:1106: DeprecationWarning: The condition_parser parameter is deprecated as of GX Core 1.9.0 and will be removed in GX Core 2.0. Please use Condition objects (e.g., Column('column_name') > 0) instead of string-based row conditions.
+  values = validator(cls_, values)
+/work/.venv/lib/python3.12/site-packages/pydantic/v1/main.py:1106: DeprecationWarning: Passing a string to the row_condition parameter is deprecated as of GX Core 1.9.0 and will be removed in GX Core 2.0. Please use Condition objects (e.g., Column('column_name') > 0) instead of string-based row conditions.
+  values = validator(cls_, values)
+{"cases": 10, "executed": 5, "noConstraint": 4, "nativeRefusals": 1}

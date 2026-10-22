@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 5580,
+        "line": 13,
+        "path": "src/adapters/linkml/merge.ts",
+        "sha256": "0ea2a012990891242b6af2de3a5c9e38912c44541ed88a1b8f2c780730bae51c"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "proposeLinkmlImportMerge",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: LinkmlImportContext, options: { mode: \"view\" | \"merge-imports\"; }): LinkmlImportMergeReport"
+    ]
+  },
+  "id": "[\"api\",\".\",\"proposeLinkmlImportMerge\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 5580,
+      "line": 13,
+      "path": "src/adapters/linkml/merge.ts",
+      "sha256": "0ea2a012990891242b6af2de3a5c9e38912c44541ed88a1b8f2c780730bae51c"
+    }
+  ],
+  "summary": "Materialize supplied declarations using an explicitly selected native precedence policy.",
+  "title": "proposeLinkmlImportMerge"
+}

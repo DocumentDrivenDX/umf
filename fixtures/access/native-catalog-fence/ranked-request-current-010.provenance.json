@@ -1,0 +1,27 @@
+{
+  "purpose": "Current-format successor fixture for search resolution-order controls; historical source/artifact retained unchanged.",
+  "predecessor": {
+    "path": "fixtures/access/native-catalog-fence/source-6d7c463/ranked-request.json",
+    "sha256": "574f826dc39d063f2cd2f05bd477ecd8ad34da26869d34c4c6a4c764a243de13"
+  },
+  "model": {
+    "path": "fixtures/access/search/postgresql18-source-exact-model.json",
+    "sha256": "0b9d90c1b75786e7122952483a735b4330a1d62c23b1401f299bcd65bed24bce",
+    "coreValidation": {
+      "valid": true,
+      "complete": false,
+      "warning": "UNKNOWN_EXTENSION; umf.access content retained"
+    }
+  },
+  "physicalBinding": {
+    "path": "fixtures/access/search/postgresql18-source-exact-binding.json",
+    "sha256": "9e356cf53b0aac1b98ad102ea45baeebd6f91639b33bbc82acdb92d5822aaf8f"
+  },
+  "successor": {
+    "path": "fixtures/access/native-catalog-fence/ranked-request-current-010.json",
+    "sha256": "b466b869d6af3a977e384386b6cd2d28d8232436aa6f7e1161ad3b33301a3388",
+    "weftArtifact": "weft.search/0.2",
+    "compiledArtifactSha256": "a91209581579e27f7501f5da526d56b2c8d45d9cd23b53880163b7ae1369eef8"
+  },
+  "semanticScope": "Same authored typed-search-e2e search declarations and ranked SQL control; current 0.10 model and source-exact PostgreSQL binding replace only the historical 0.8 source payload/pins. Current owner scalar column is represented in the source-binding table."
+}

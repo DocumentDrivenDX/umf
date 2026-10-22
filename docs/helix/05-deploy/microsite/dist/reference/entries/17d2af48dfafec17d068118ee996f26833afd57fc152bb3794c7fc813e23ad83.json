@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 10292,
+        "line": 19,
+        "path": "src/model/relationships.ts",
+        "sha256": "b83675753a170cc0477c45c6010e1c5c2b056a8902f55c5adb1dc9ecd42786ec"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "CoreRelationshipLookup",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface CoreRelationshipLookup extends OperationContext {operation:'lookup-core-relationship';version:'3.0.0';source:Source;identity:CoreRelationshipIdentity;path:string;relationship:CoreRelationship;uninterpretedPaths:string[];provenance:'unverified'}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"CoreRelationshipLookup\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 10292,
+      "line": 19,
+      "path": "src/model/relationships.ts",
+      "sha256": "b83675753a170cc0477c45c6010e1c5c2b056a8902f55c5adb1dc9ecd42786ec"
+    }
+  ],
+  "summary": "Type declaration · src/model/relationships.ts",
+  "title": "CoreRelationshipLookup"
+}

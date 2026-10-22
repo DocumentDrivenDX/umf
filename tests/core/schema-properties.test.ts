@@ -1,6 +1,7 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {describe,test,expect} from 'bun:test';
 import {schemaPropertiesFixture,schemaPropertiesCases} from '../../scripts/core-schema-properties-cases';
-import {selectCoreElements,validateDocument,readDocument,writeDocument,declareCoreSchemaProperties,inspectCoreSchemaProperties,validateCoreFieldValue,resolveCoreDefault,upgradeSchemaPropertiesEnvelope,rollbackSchemaPropertiesEnvelope,verifySchemaPropertiesUpgrade} from '../../src/index';
+import {selectCoreElements,validateDocument,readDocument,writeDocument,declareCoreSchemaProperties,inspectCoreSchemaProperties,validateCoreFieldValue,resolveCoreDefault} from '../../src/index';
 import {type Document} from '../../src/model/types';
 const field=(element:string)=>({module:'m',element});
 describe('CONTRACT-049 schema properties',()=>{
@@ -29,16 +30,12 @@ describe('CONTRACT-049 schema properties',()=>{
   const r=declareCoreSchemaProperties(doc,{scope:'document'},{title:'Changed'});expect(r.future).toEqual(doc.future);
   const label=doc.modules[0]!.elements[2]!;delete label.examples;delete label.default;(label.facets as any).length.future=true;expect(()=>declareCoreSchemaProperties(doc,{scope:'element',...field('label')},{facets:{length:{min:2,unit:'unicode-scalar'}}})).toThrow();
  });
- test('legacy collisions archived, rollback retains subsequent assertions',()=>{
-  const old:Document={umf:'0.7.0',id:'legacy',title:{opaque:true},vocabularies:{},modules:[{id:'m',namespace:'n',aliases:{opaque:true},elements:[{id:'f',kind:'field',scalarType:'string',extensions:{},examples:'old',default:{opaque:true},allowedValues:'old',facets:{length:{max:3,unit:'unicode-scalar',min:'old'},range:{opaque:true},collectionSize:{opaque:true}}}]}]};
-  const receipt=upgradeSchemaPropertiesEnvelope(old);expect(receipt.residuals).toHaveLength(8);expect(verifySchemaPropertiesUpgrade(receipt)).toEqual(receipt);expect(receipt.target.title).toBeUndefined();const current=declareCoreSchemaProperties(receipt.target,{scope:'element',module:'m',element:'f'},{title:'New'});const rollback=rollbackSchemaPropertiesEnvelope(receipt,current);expect(rollback.target).toEqual(old);expect(rollback.source).toEqual(current);const forged=structuredClone(receipt);forged.residuals=[];expect(()=>verifySchemaPropertiesUpgrade(forged)).toThrow();
- });
- test('0.8.0 metadata selection follows item types and retains new properties',()=>{const doc=schemaPropertiesFixture(),selection=selectCoreElements(doc,{references:'transitive',identities:[field('vector')],cardinalities:['array']});expect(selection.selection.map(e=>e.element.id)).toEqual(['vector-item','vector']);expect(selection.selection[1]!.element.default).toEqual(doc.modules[0]!.elements[5]!.default);});
+ test('current-core metadata selection follows item types and retains new properties',()=>{const doc=schemaPropertiesFixture(),selection=selectCoreElements(doc,{references:'transitive',identities:[field('vector')],cardinalities:['array']});expect(selection.selection.map(e=>e.element.id)).toEqual(['vector-item','vector']);expect(selection.selection[1]!.element.default).toEqual(doc.modules[0]!.elements[5]!.default);});
  test('zero maximum lengths, absolute tokens and known default preservation',()=>{
   const doc=schemaPropertiesFixture(),label=doc.modules[0]!.elements[2]!;delete label.default;label.facets={length:{min:0,max:0,unit:'unicode-scalar'}};label.examples=[{string:''}];expect(validateDocument(doc).valid).toBe(true);expect(validateCoreFieldValue(doc,field('label'),{string:''}).valid).toBe(true);
   expect(validateCoreFieldValue(doc,field('quantity'),{integerToken:'1\n'}).valid).toBe(false);expect(validateCoreFieldValue(doc,field('byte'),{binaryHex:'ff\n'}).valid).toBe(false);
   const patched=declareCoreSchemaProperties(doc,{scope:'element',...field('quantity')},{facets:{range:{min:{integerToken:'1'},max:{integerToken:'2'}}}});expect((patched.modules[0]!.elements[0]!.facets as any).integerWidth.bits).toBe(64);expect(validateDocument(patched).valid).toBe(true);const bounds=declareCoreSchemaProperties(patched,{scope:'element',...field('quantity')},{facets:{range:{maxInclusive:true}}});expect(validateDocument(bounds).valid).toBe(true);
  });
  test('hostile accessors are never executed',()=>{let calls=0;const request={};Object.defineProperty(request,'title',{enumerable:true,get(){calls++;return 'bad';}});expect(()=>declareCoreSchemaProperties(schemaPropertiesFixture(),{scope:'document'},request)).toThrow();expect(calls).toBe(0);});
- test('legacy lookalikes stay unknown and need explicit migration',()=>{const old=schemaPropertiesFixture();old.umf='0.7.0';old.modules[0]!.elements.forEach(e=>{delete e.facets;delete e.default;delete e.allowedValues;delete e.examples;});expect(validateDocument(old).valid).toBe(true);expect(()=>declareCoreSchemaProperties(old,{scope:'document'},{title:'New'})).toThrow();});
+ test('retired core marker is rejected by current authoring and validation',()=>{const old={...schemaPropertiesFixture(),umf:'0.7.0'} as any;expect(validateDocument(old).valid).toBe(false);expect(()=>declareCoreSchemaProperties(old,{scope:'document'},{title:'New'})).toThrow();});
 });

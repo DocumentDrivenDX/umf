@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Derive all declaration descriptors from the pinned IDL using thriftpy2's compiler."""
 import hashlib,json,re
 from pathlib import Path

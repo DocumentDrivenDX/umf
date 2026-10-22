@@ -1,0 +1,18 @@
+{
+ "$schema":"https://json-schema.org/draft/2020-12/schema",
+ "$id":"urn:umf:security:spike:relationship-selector:1",
+ "title":"Draft security relationship selector, not a public ontology version",
+ "type":"object",
+ "properties":{
+  "kind":{"const":"core-relationship"},
+  "relationship":{"$ref":"#/$defs/relationshipRef"},
+  "witness":{"oneOf":[{"type":"object","properties":{"kind":{"const":"record-key"},"type":{"$ref":"#/$defs/ref"},"keyId":{"$ref":"#/$defs/text"}},"required":["kind","type","keyId"],"additionalProperties":false},{"type":"object","properties":{"kind":{"const":"opaque-existential"}},"required":["kind"],"additionalProperties":false}]},
+  "endpoints":{"type":"array","minItems":2,"maxItems":2,"items":{"type":"object","properties":{"role":{"$ref":"#/$defs/text"},"side":{"enum":["source","target"]},"target":{"$ref":"#/$defs/ref"},"keyId":{"$ref":"#/$defs/text"}},"required":["role","side","target","keyId"],"additionalProperties":false}}
+ },
+ "required":["kind","relationship","witness","endpoints"],"additionalProperties":false,
+ "$defs":{
+  "text":{"type":"string","minLength":1,"maxLength":4096},
+  "ref":{"type":"object","properties":{"documentId":{"$ref":"#/$defs/text"},"moduleId":{"$ref":"#/$defs/text"},"elementId":{"$ref":"#/$defs/text"}},"required":["documentId","moduleId","elementId"],"additionalProperties":false},
+  "relationshipRef":{"type":"object","properties":{"documentId":{"$ref":"#/$defs/text"},"moduleId":{"$ref":"#/$defs/text"},"relationshipId":{"$ref":"#/$defs/text"}},"required":["documentId","moduleId","relationshipId"],"additionalProperties":false}
+ }
+}

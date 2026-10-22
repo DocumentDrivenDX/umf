@@ -1,0 +1,61 @@
+bun test v1.4.2 (43848b5a7)
+
+tests/security/protection/wire.test.ts:
+
+# Unhandled error between tests
+-------------------------------
+169 | function checkStrictMode(it, msg, mode = it.opts.strictSchema) {
+170 |     if (!mode)
+171 |         return;
+172 |     msg = `strict mode: ${msg}`;
+173 |     if (mode === true)
+174 |         throw new Error(msg);
+                        ^
+error: strict mode: required property "algorithm" is not defined at "urn:umf:security-protection:0.1.0#/allOf/2/then" (strictRequired)
+      at checkStrictMode (/Users/erik/.codex/worktrees/security-main-integration/umf/node_modules/ajv/dist/compile/util.js:174:19)
+      at code (/Users/erik/.codex/worktrees/security-main-integration/umf/node_modules/ajv/dist/vocabularies/validation/required.js:33:32)
+      at keywordCode (/Users/erik/.codex/worktrees/security-main-integration/umf/node_modules/ajv/dist/compile/validate/index.js:464:13)
+      at <anonymous> (/Users/erik/.codex/worktrees/security-main-integration/umf/node_modules/ajv/dist/compile/validate/index.js:222:17)
+      at code (/Users/erik/.codex/worktrees/security-main-integration/umf/node_modules/ajv/dist/compile/codegen/index.js:439:13)
+      at block (/Users/erik/.codex/worktrees/security-main-integration/umf/node_modules/ajv/dist/compile/codegen/index.js:568:18)
+      at iterateKeywords (/Users/erik/.codex/worktrees/security-main-integration/umf/node_modules/ajv/dist/compile/validate/index.js:219:9)
+      at groupKeywords (/Users/erik/.codex/worktrees/security-main-integration/umf/node_modules/ajv/dist/compile/validate/index.js:200:13)
+      at <anonymous> (/Users/erik/.codex/worktrees/security-main-integration/umf/node_modules/ajv/dist/compile/validate/index.js:192:13)
+      at code (/Users/erik/.codex/worktrees/security-main-integration/umf/node_modules/ajv/dist/compile/codegen/index.js:439:13)
+-------------------------------
+
+
+tests/security/protection/catalog.test.ts:
+
+# Unhandled error between tests
+-------------------------------
+169 | function checkStrictMode(it, msg, mode = it.opts.strictSchema) {
+170 |     if (!mode)
+171 |         return;
+172 |     msg = `strict mode: ${msg}`;
+173 |     if (mode === true)
+174 |         throw new Error(msg);
+                        ^
+error: strict mode: required property "algorithm" is not defined at "urn:umf:security-protection:0.1.0#/allOf/2/then" (strictRequired)
+      at checkStrictMode (/Users/erik/.codex/worktrees/security-main-integration/umf/node_modules/ajv/dist/compile/util.js:174:19)
+      at code (/Users/erik/.codex/worktrees/security-main-integration/umf/node_modules/ajv/dist/vocabularies/validation/required.js:33:32)
+      at keywordCode (/Users/erik/.codex/worktrees/security-main-integration/umf/node_modules/ajv/dist/compile/validate/index.js:464:13)
+      at <anonymous> (/Users/erik/.codex/worktrees/security-main-integration/umf/node_modules/ajv/dist/compile/validate/index.js:222:17)
+      at code (/Users/erik/.codex/worktrees/security-main-integration/umf/node_modules/ajv/dist/compile/codegen/index.js:439:13)
+      at block (/Users/erik/.codex/worktrees/security-main-integration/umf/node_modules/ajv/dist/compile/codegen/index.js:568:18)
+      at iterateKeywords (/Users/erik/.codex/worktrees/security-main-integration/umf/node_modules/ajv/dist/compile/validate/index.js:219:9)
+      at groupKeywords (/Users/erik/.codex/worktrees/security-main-integration/umf/node_modules/ajv/dist/compile/validate/index.js:200:13)
+      at <anonymous> (/Users/erik/.codex/worktrees/security-main-integration/umf/node_modules/ajv/dist/compile/validate/index.js:192:13)
+      at code (/Users/erik/.codex/worktrees/security-main-integration/umf/node_modules/ajv/dist/compile/codegen/index.js:439:13)
+-------------------------------
+
+
+tests/security/protection/source.test.ts:
+(pass) protection source preserves unknown catalog content in JSON and YAML [7.13ms]
+(pass) protection boundary refuses host imports/globals and accepts library source [1.29ms]
+
+ 2 pass
+ 2 fail
+ 2 errors
+ 14 expect() calls
+Ran 4 tests across 3 files. [333.00ms]

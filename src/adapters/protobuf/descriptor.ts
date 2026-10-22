@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {fromBinary,toBinary,type DescMessage,ScalarType} from '@bufbuild/protobuf';
 import {FileDescriptorSetSchema} from '@bufbuild/protobuf/wkt';
 import {reflect,reflectList,type ReflectMessage} from '@bufbuild/protobuf/reflect';

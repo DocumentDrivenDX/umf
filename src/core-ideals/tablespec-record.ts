@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
+import {CURRENT_CORE_VERSION} from '../generated/core-model';
 import {copyJson} from '../model/json';
 import {UmfError,type Document,type Json,type Diagnostic} from '../model/types';
 import {type CoreKindDeclaration,verifyCoreKindDeclaration} from '../model/field-kind';
@@ -6,8 +8,8 @@ import {getTableSpecTable,exportTableSpec,exportTableSpecBundle,TABLESPEC_EXTENS
 import {validateDocument} from '../validation/document';
 import {createValidator} from '../validation/schema';
 import legacy from '../../spec/core/schema.json';
-import fields from '../../spec/core/field-document.schema.json';
-import kinds from '../../spec/core/kind-operation.schema.json';
+
+import kinds from '../../spec/core/kind-operation-v6.schema.json';
 import schema from '../../spec/core/tablespec-record-classification.schema.json';
 export {default as tableSpecRecordClassificationSchema} from '../../spec/core/tablespec-record-classification.schema.json';
 export interface TableSpecRecordRequest {recordModule:string;recordId:string;mode:'strict'|'report';authors?:CoreKindDeclaration[]}
@@ -17,12 +19,12 @@ export interface TableSpecRecordClassification {
  operation:'classify-tablespec-record';version:'1.0.0';status:'classified'|'blocked';source:Document;target?:Document;request:TableSpecRecordRequest;binding:typeof binding;mappings:Mapping[];
  residuals:{path:string;value:Json;reason:string;recovery:'Source and native fragments retained; resolve conflict then recompute whole record classification'}[];diagnostics:Diagnostic[];
 }
-const validator=createValidator();validator.addSchema(legacy);validator.addSchema(fields);validator.addSchema(kinds);const check=validator.compile(schema),checkRequest=validator.compile(schema.properties.request);
+const validator=createValidator();validator.addSchema(legacy);validator.addSchema(kinds);const check=validator.compile(schema),checkRequest=validator.compile(schema.properties.request);
 /** One record and its named members; atomic across every column. Physical/context groupings stay native. */
 export function classifyTableSpecRecord(input:Document,options:TableSpecRecordRequest):TableSpecRecordClassification {
  const source=copyJson(input) as unknown as Document,request=copyJson(options) as unknown as TableSpecRecordRequest;
  if(!checkRequest(request))throw new UmfError('TABLESPEC_RECORD_REQUEST',JSON.stringify(checkRequest.errors));
- if(!validateDocument(source).valid||source.umf!=='0.2.0')throw new UmfError('TABLESPEC_RECORD_VERSION','Explicitly migrated valid envelope required');
+ if(!validateDocument(source).valid||source.umf!==CURRENT_CORE_VERSION)throw new UmfError('TABLESPEC_RECORD_VERSION','Valid current 0.10.0 envelope required');
  const payload=source.extensions?.[TABLESPEC_EXTENSION];
  if(payload&&typeof payload==='object'&&!Array.isArray(payload)&&Object.hasOwn(payload,'splitFiles'))exportTableSpecBundle(source);else exportTableSpec(source);
  const native=getTableSpecTable(source),mi=source.modules.findIndex(m=>m.id==='table'),module=source.modules[mi]!;

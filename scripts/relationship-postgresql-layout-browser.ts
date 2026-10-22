@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
 import {postgresqlLayoutCases} from './relationship-postgresql-layout-cases';
 import {validatePostgresqlRelationshipLayout} from '../src';

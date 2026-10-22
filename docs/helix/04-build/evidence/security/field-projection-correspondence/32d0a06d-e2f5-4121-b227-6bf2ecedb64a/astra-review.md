@@ -1,0 +1,21 @@
+Independent scoped review — field-family source correspondence
+
+Disposition: no remaining blocker found within the declared private original-0.7 field projection scope. Reviewed the implementation and decisive controls, audited retained host results and exact source archives, and independently replayed all 18 saved SMT queries in fresh Z3 4.15.4 contexts. No host suite, producer, Cargo, browser or native execution was performed by this review.
+
+The host evidence is `a5c3813e-26c4-4365-98fa-437ff5e4981b`: 83 passing tests, zero failures, 734 assertions across seven files; strict TypeScript command exited zero with empty diagnostics. All 704 unique source pins match both exact ZIP entries and current files, including both directly read test corpora. The formal evidence is `field-projection-correspondence/32d0a06d-e2f5-4121-b227-6bf2ecedb64a`: all 10 source pins match exact ZIP entries and current files. These current-byte checks were repeated immediately before retaining this review; unrelated concurrent main changes do not expand the tested scope.
+
+| Artifact | SHA-256 |
+| --- | --- |
+| Host receipt.json | c91ca175a026934d09c7ff282934b7179bee92dd0b5dcdf7829bd659eadeb2ad |
+| Host sources.zip | 1f5dd7a093469e554597b1f40ef0625d6c2c4b1b6ce7127418d72b6e3fd9d200 |
+| Host host.txt | 33bf8c6a44204f17c9bcd5c6b6ee1a6b24e10bc4d69563ba5192240bab75fc4c |
+| Formal proof.json | 4cc9eb8dfd705bb7374d23d4644b411859406bba6732f296451a983d49e0e2af |
+| Formal sources.zip | 15b0a8a24060ff956184161d9afa7f120dc7a8a5980c92e064c043b3a4741d8a |
+
+The implementation compares kind, nullability, cardinality and facet meaning before filtering owner states. It binds original source identity, requested path, operation, version and profile, preserves itemType presence, complete qualified references and opaque qualifiers, and retains exact compared owner meanings beside issued entries. Object key order is immaterial; array order and member presence remain material. Facet unknown paths come from the separately retained original source-validation diagnostics. Inspection of the pinned record and field validators confirmed the same diagnostic families and ordering, avoiding a comparison against only the field owner's own claimed unknown paths.
+
+The controls exercise actual pinned owner processing and Record behavior, plus deliberately altered loaded owner observations: kind/cardinality substitutions and omissions, item reference/qualifier/presence changes, facet raw/interpreted/path/state changes, all numeric interpreted groups, missing-to-known invention, and unknown-unit invention. Object-order positives retain the intended equality. The projection remains explicitly unqualified: fieldMeanings does not assert complete interpretation or complete assertion-family membership.
+
+Independent formal replay produced 8 UNSAT and 10 SAT results, each matching the retained expected result and exact saved SMT hash. The corrected item-value erasure control explicitly retains a known array with an item present while removing only the item-value guard; its replayed population has source_state=0, source_card=1 and item_present=true. The earlier 3ecf8b83 proof is historical: its item-value population did not require the admitted array context. Earlier host/proof source variants are not substituted for these final receipts. Per-query replay results are retained in astra-replay.json.
+
+The formal result is conditional guard correspondence over abstract meaning carriers and state/context categories. Independently expected source projections, faithful carrier interpretation and source/context admission are premises. Unequal abstract values prove substitution is possible when a guard is removed; they do not prove a particular concrete JSON deletion, numeric bound semantics, or the JavaScript comparator. This is not owner/JavaScript/compiler/SQL refinement, a complete assertion-family inventory, native enforcement, authentication or backend admission. Ambient tool/dependency integrity remains a runtime premise; no hermetic build claim is made. Scalar type and other owner families, distinct family identity and complete interpretation remain separate work. No acceptance case is promoted; the existing 26/132 qualification is unchanged.

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 12461,
+        "line": 23,
+        "path": "src/core-ideals/facets-parquet.ts",
+        "sha256": "6d4acf71a6abbb6975897cb5ca8ff60114a59ba16ce7de573c28f5c933b347a8"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "ParquetFacetClassification",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface ParquetFacetClassification {\n operation:'classify-parquet-facets';version:'1.0.0';status:'classified'|'blocked';outcome:Outcome;source:Document;target?:Document;request:ParquetFacetRequest;binding:typeof binding;\n mapping:{origin:'classified';idealPath:string;location:ParquetFacetRequest['location'];nativeFragment:Json;facets:CoreFacetPatch;observations:Observation[]};\n residuals:{path:string;location:ParquetFacetRequest['location'];targetPath:string|null;value:Json;reason:string;outcome:Exclude<Outcome,'exact'>;binding:typeof binding;recovery:typeof recovery}[];diagnostics:Diagnostic[];\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"ParquetFacetClassification\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 12461,
+      "line": 23,
+      "path": "src/core-ideals/facets-parquet.ts",
+      "sha256": "6d4acf71a6abbb6975897cb5ca8ff60114a59ba16ce7de573c28f5c933b347a8"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/facets-parquet.ts",
+  "title": "ParquetFacetClassification"
+}

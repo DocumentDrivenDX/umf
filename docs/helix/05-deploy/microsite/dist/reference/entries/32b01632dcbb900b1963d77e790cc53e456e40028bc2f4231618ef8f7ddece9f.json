@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 15824,
+        "line": 14,
+        "path": "src/model/key-tuple.ts",
+        "sha256": "94703a6988b001fdf2209ad2864199f7cd399c3c92bafb81e086e2aaadebf70c"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "CoreKeyTupleValue",
+    "runtime": "type-only",
+    "signatureText": [
+      "export type CoreKeyTupleValue={boolean:boolean}|{integerToken:string}|{decimalToken:string}|{string:string}|{binaryHex:string}|{bits128Hex:string}|{uuid:string};"
+    ]
+  },
+  "id": "[\"api\",\".\",\"CoreKeyTupleValue\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 15824,
+      "line": 14,
+      "path": "src/model/key-tuple.ts",
+      "sha256": "94703a6988b001fdf2209ad2864199f7cd399c3c92bafb81e086e2aaadebf70c"
+    }
+  ],
+  "summary": "Type declaration · src/model/key-tuple.ts",
+  "title": "CoreKeyTupleValue"
+}

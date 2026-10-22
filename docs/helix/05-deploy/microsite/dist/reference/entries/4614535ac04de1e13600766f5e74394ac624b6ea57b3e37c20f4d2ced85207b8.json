@@ -1,0 +1,725 @@
+{
+  "data": {
+    "extensionId": "umf.domain-pack",
+    "manifest": {
+      "capabilities": {
+        "directions": [],
+        "evidence": [
+          "tests/domain-packs/schema.test.ts"
+        ],
+        "validation": "structural"
+      },
+      "coreVersion": "0.10.0",
+      "description": "Portable sample-domain pack metadata with opaque implementation and schema references",
+      "id": "umf.domain-pack",
+      "schema": {
+        "$id": "urn:umf:domain-pack:1.0.0",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": true,
+        "anyOf": [
+          {
+            "properties": {
+              "generator": {}
+            },
+            "required": [
+              "generator"
+            ]
+          },
+          {
+            "properties": {
+              "sources": {}
+            },
+            "required": [
+              "sources"
+            ]
+          }
+        ],
+        "properties": {
+          "artifact_collections": {
+            "items": {
+              "additionalProperties": true,
+              "anyOf": [
+                {
+                  "properties": {
+                    "source_ids": {
+                      "minItems": 1,
+                      "type": "array"
+                    }
+                  }
+                },
+                {
+                  "properties": {
+                    "loader_inventory_source_id": {
+                      "minLength": 1,
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "loader_inventory_source_id"
+                  ]
+                }
+              ],
+              "properties": {
+                "derived_schema_ids": {
+                  "items": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "maxItems": 10000,
+                  "type": "array",
+                  "uniqueItems": true
+                },
+                "description": {
+                  "type": "string"
+                },
+                "grouping": {
+                  "additionalProperties": true,
+                  "properties": {
+                    "description": {
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "fields": {
+                      "items": {
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "maxItems": 10000,
+                      "type": "array",
+                      "uniqueItems": true
+                    }
+                  },
+                  "required": [
+                    "description"
+                  ],
+                  "type": "object"
+                },
+                "id": {
+                  "pattern": "^[A-Za-z][A-Za-z0-9_-]*$",
+                  "type": "string"
+                },
+                "identity": {
+                  "additionalProperties": true,
+                  "properties": {
+                    "description": {
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "fields": {
+                      "items": {
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "maxItems": 10000,
+                      "type": "array",
+                      "uniqueItems": true
+                    }
+                  },
+                  "required": [
+                    "description"
+                  ],
+                  "type": "object"
+                },
+                "loader_inventory_source_id": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "media_types": {
+                  "items": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "maxItems": 10000,
+                  "type": "array",
+                  "uniqueItems": true
+                },
+                "metadata_schema_ids": {
+                  "items": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "maxItems": 10000,
+                  "type": "array",
+                  "uniqueItems": true
+                },
+                "ontology_schema_ids": {
+                  "items": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "maxItems": 10000,
+                  "type": "array",
+                  "uniqueItems": true
+                },
+                "semantic_kinds": {
+                  "items": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "maxItems": 10000,
+                  "minItems": 1,
+                  "type": "array",
+                  "uniqueItems": true
+                },
+                "source_ids": {
+                  "items": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "maxItems": 10000,
+                  "type": "array",
+                  "uniqueItems": true
+                },
+                "title": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "version": {
+                  "const": "1.0.0"
+                },
+                "view": {
+                  "enum": [
+                    "documents",
+                    "imaging",
+                    "other"
+                  ]
+                }
+              },
+              "required": [
+                "version",
+                "id",
+                "title",
+                "view",
+                "semantic_kinds",
+                "source_ids"
+              ],
+              "type": "object"
+            },
+            "maxItems": 64,
+            "type": "array"
+          },
+          "composition": {
+            "additionalProperties": true,
+            "properties": {
+              "components": {
+                "items": {
+                  "additionalProperties": true,
+                  "properties": {
+                    "checksum": {
+                      "additionalProperties": true,
+                      "properties": {
+                        "algorithm": {
+                          "const": "sha256"
+                        },
+                        "value": {
+                          "pattern": "^[a-f0-9]{64}$",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "algorithm",
+                        "value"
+                      ],
+                      "type": "object"
+                    },
+                    "id": {
+                      "pattern": "^[a-z][a-z0-9-]*$",
+                      "type": "string"
+                    },
+                    "label": {
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "version": {
+                      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "version",
+                    "label",
+                    "checksum"
+                  ],
+                  "type": "object"
+                },
+                "maxItems": 32,
+                "minItems": 1,
+                "type": "array"
+              },
+              "version": {
+                "const": "1.0.0"
+              }
+            },
+            "required": [
+              "version",
+              "components"
+            ],
+            "type": "object"
+          },
+          "description": {
+            "type": "string"
+          },
+          "domain_types": {
+            "additionalProperties": {
+              "additionalProperties": true,
+              "properties": {
+                "description": {
+                  "type": "string"
+                },
+                "detection": {
+                  "type": "object"
+                },
+                "sample_generation": {
+                  "additionalProperties": true,
+                  "properties": {
+                    "method": {
+                      "pattern": "^generate_[A-Za-z0-9_]+$",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "method"
+                  ],
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            },
+            "minProperties": 1,
+            "propertyNames": {
+              "pattern": "^[A-Za-z_][A-Za-z0-9_]*$",
+              "type": "string"
+            },
+            "type": "object"
+          },
+          "family": {
+            "additionalProperties": true,
+            "properties": {
+              "id": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "label": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "version": {
+                "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$",
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "version",
+              "label"
+            ],
+            "type": "object"
+          },
+          "generator": {
+            "additionalProperties": true,
+            "properties": {
+              "id": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "version": {
+                "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$",
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "version"
+            ],
+            "type": "object"
+          },
+          "id": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "preservation": {
+            "additionalProperties": true,
+            "properties": {
+              "derivations": {
+                "items": {
+                  "additionalProperties": true,
+                  "properties": {
+                    "qualification": {
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "schema_id": {
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "source_identity": {
+                      "minLength": 1,
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "schema_id",
+                    "source_identity"
+                  ],
+                  "type": "object"
+                },
+                "type": "array"
+              },
+              "events": {
+                "const": "PREMIS-3.0-semantic-mapping"
+              },
+              "fixity": {
+                "const": "sha256"
+              },
+              "handoff": {
+                "const": "BagIt-1.0"
+              },
+              "originals": {
+                "const": "authoritative-immutable-bytes"
+              },
+              "primary_runtime": {
+                "const": "tablespec-python"
+              },
+              "provenance": {
+                "const": "PROV-O-JSON-LD"
+              },
+              "qualification": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "version": {
+                "const": "1.0.0"
+              }
+            },
+            "required": [
+              "version",
+              "handoff",
+              "fixity",
+              "events",
+              "provenance",
+              "originals",
+              "primary_runtime"
+            ],
+            "type": "object"
+          },
+          "scale_presets": {
+            "additionalProperties": {
+              "additionalProperties": true,
+              "properties": {
+                "children": {
+                  "additionalProperties": {
+                    "additionalProperties": true,
+                    "properties": {
+                      "distribution": {
+                        "enum": [
+                          "uniform",
+                          "skewed"
+                        ]
+                      },
+                      "parent": {
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "per_parent": {
+                        "minimum": 0,
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "parent",
+                      "per_parent"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "object"
+                },
+                "roots": {
+                  "additionalProperties": {
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "type": "object"
+                }
+              },
+              "required": [
+                "roots",
+                "children"
+              ],
+              "type": "object"
+            },
+            "type": "object"
+          },
+          "schemas": {
+            "items": {
+              "additionalProperties": true,
+              "properties": {
+                "format": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "id": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "reference": {
+                  "minLength": 1,
+                  "type": "string"
+                }
+              },
+              "required": [
+                "id",
+                "format",
+                "reference"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "source_bindings": {
+            "items": {
+              "additionalProperties": true,
+              "properties": {
+                "role": {
+                  "enum": [
+                    "rows",
+                    "reference",
+                    "terminology"
+                  ]
+                },
+                "schema_id": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "source_id": {
+                  "minLength": 1,
+                  "type": "string"
+                }
+              },
+              "required": [
+                "schema_id",
+                "source_id",
+                "role"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "sources": {
+            "additionalProperties": {
+              "$id": "urn:umf:dataset-source:1.0.0",
+              "$schema": "https://json-schema.org/draft/2020-12/schema",
+              "additionalProperties": true,
+              "allOf": [
+                {
+                  "if": {
+                    "properties": {
+                      "kind": {
+                        "const": "external"
+                      }
+                    }
+                  },
+                  "then": {
+                    "properties": {
+                      "format": {},
+                      "reference": {}
+                    },
+                    "required": [
+                      "reference",
+                      "format"
+                    ]
+                  }
+                },
+                {
+                  "if": {
+                    "properties": {
+                      "kind": {
+                        "const": "synthetic"
+                      }
+                    }
+                  },
+                  "then": {
+                    "properties": {
+                      "generator": {}
+                    },
+                    "required": [
+                      "generator"
+                    ]
+                  }
+                }
+              ],
+              "properties": {
+                "checksum": {
+                  "additionalProperties": true,
+                  "properties": {
+                    "algorithm": {
+                      "const": "sha256"
+                    },
+                    "value": {
+                      "pattern": "^[a-f0-9]{64}$",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "algorithm",
+                    "value"
+                  ],
+                  "type": "object"
+                },
+                "data_kind": {
+                  "enum": [
+                    "fabricated",
+                    "observed",
+                    "deidentified",
+                    "unknown"
+                  ]
+                },
+                "description": {
+                  "type": "string"
+                },
+                "format": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "generator": {
+                  "additionalProperties": true,
+                  "properties": {
+                    "id": {
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "version": {
+                      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "version"
+                  ],
+                  "type": "object"
+                },
+                "kind": {
+                  "enum": [
+                    "synthetic",
+                    "external"
+                  ]
+                },
+                "license": {
+                  "additionalProperties": true,
+                  "properties": {
+                    "attribution": {
+                      "type": "string"
+                    },
+                    "id": {
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "notices": {
+                      "items": {
+                        "type": "string"
+                      },
+                      "type": "array"
+                    },
+                    "redistribution": {
+                      "enum": [
+                        "allowed",
+                        "restricted",
+                        "unknown"
+                      ]
+                    },
+                    "reference": {
+                      "minLength": 1,
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                },
+                "provenance": {
+                  "additionalProperties": true,
+                  "properties": {
+                    "publisher": {
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "retrieved_at": {
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "source_ids": {
+                      "items": {
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "type": "array"
+                    },
+                    "transformations": {
+                      "items": {
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "reference": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "revision": {
+                  "minLength": 1,
+                  "type": "string"
+                }
+              },
+              "required": [
+                "kind",
+                "data_kind"
+              ],
+              "type": "object"
+            },
+            "minProperties": 1,
+            "type": "object"
+          },
+          "version": {
+            "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "version",
+          "domain_types"
+        ],
+        "type": "object"
+      },
+      "scopes": [
+        "document"
+      ],
+      "semantics": "References are data. No imports, fetching, generation, loading or ontology semantics are authorized.",
+      "version": "1.0.0"
+    },
+    "registration": {
+      "apiIds": [],
+      "coreProfiles": [],
+      "mode": "unmapped"
+    },
+    "schemaId": "[\"schema\",\"spec/extensions/domain-pack/schema.json\",\"\"]",
+    "version": "1.0.0"
+  },
+  "id": "[\"extension\",\"umf.domain-pack\",\"1.0.0\"]",
+  "kind": "extension",
+  "links": [
+    "[\"guide\",\"consumers\"]",
+    "[\"schema\",\"spec/extensions/domain-pack/schema.json\",\"\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 17965,
+      "path": "spec/extensions/domain-pack/package.json",
+      "sha256": "e659ba01883a7114d5b38b81cc1fac0717fa0b36a69731747620a67007dcb0e9"
+    }
+  ],
+  "summary": "Portable sample-domain pack metadata with opaque implementation and schema references",
+  "title": "umf.domain-pack · 1.0.0"
+}

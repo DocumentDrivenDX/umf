@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {recordCase} from './record-tablespec-cases';
 import {copyJson} from '../../src/model/json';
 import {declareCoreElementKind} from '../../src/model/field-kind';

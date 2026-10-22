@@ -1,0 +1,44 @@
+{
+  "status": "conditional-projection-model",
+  "solverVersion": "4.15.4",
+  "sourceDigests": {
+    "/private/tmp/umf-write-comparison-astra-final-20261013-5hvn9r7d/prove-write-comparison.py": "cfba9fe3b5a79a7866ec79743e7fbbbc3bf070bc09cd1b1dcd19c79d4a0bc7f5",
+    "src/extensions/security/write.ts": "83ca53c219cf038fc92664746f6188dc2894337a046d4fcd87f4048faa6d74c1",
+    "src/model/key-tuple.ts": "5baba1577035aefba2ff1786b646b35e9fc7266fd99eaf42c9b5a4b13b1381aa",
+    "src/model/schema-literals.ts": "ade564372bfd387bfe6d3d4a7c20a6517562f0a9d235743a5622bcbba54fe89d",
+    "tests/security/write.test.ts": "6bb93bdd0d4b48cac22f8b88c8791dfc89b87d33eb441fd958a68a5133198862"
+  },
+  "cases": [
+    {
+      "id": "equal-normalized-known-projections-cannot-be-a-change",
+      "result": "unsat",
+      "smt": "(declare-fun new_value () Int)\n(declare-fun old_value () Int)\n(declare-fun old_kind () Int)\n(declare-fun new_kind () Int)\n(assert (let ((a!1 (not (and (= old_kind new_kind)\n                     (or (distinct old_kind 3) (= old_value new_value))))))\n  (and (>= old_kind 0)\n       (<= old_kind 3)\n       (= old_kind new_kind)\n       (= old_value new_value)\n       a!1)))\n",
+      "witness": null
+    },
+    {
+      "id": "comparison-is-symmetric",
+      "result": "unsat",
+      "smt": "(declare-fun old_value () Int)\n(declare-fun new_value () Int)\n(declare-fun new_kind () Int)\n(declare-fun old_kind () Int)\n(assert (let ((a!1 (distinct (and (= old_kind new_kind)\n                          (or (distinct old_kind 3) (= old_value new_value)))\n                     (and (= new_kind old_kind)\n                          (or (distinct new_kind 3) (= new_value old_value))))))\n  (and a!1)))\n",
+      "witness": null
+    },
+    {
+      "id": "changed-policy-used-ownership-needs-both-state-grants",
+      "result": "unsat",
+      "smt": "(declare-fun policy_new () Bool)\n(declare-fun policy_old () Bool)\n(declare-fun owner_new () Bool)\n(declare-fun owner_old () Bool)\n(declare-fun new_value () Int)\n(declare-fun old_value () Int)\n(declare-fun old_kind () Int)\n(declare-fun new_kind () Int)\n(declare-fun base () Bool)\n(assert (let ((a!1 (not (and (= old_kind new_kind)\n                     (or (distinct old_kind 3) (= old_value new_value))))))\n  (and a!1\n       base\n       (or (not a!1) (and owner_old owner_new))\n       (or (not a!1) (and policy_old policy_new))\n       (not (and owner_old owner_new policy_old policy_new)))))\n",
+      "witness": null
+    },
+    {
+      "id": "distinct-carriers-can-have-equal-typed-meaning",
+      "result": "sat",
+      "smt": "(declare-fun new_value () Int)\n(declare-fun old_value () Int)\n(declare-fun old_kind () Int)\n(declare-fun new_kind () Int)\n(declare-fun new_carrier () Int)\n(declare-fun old_carrier () Int)\n(assert (and (distinct old_carrier new_carrier)\n     (= old_kind 3)\n     (= new_kind 3)\n     (= old_value new_value)\n     (= old_kind new_kind)\n     (or (distinct old_kind 3) (= old_value new_value))))\n",
+      "witness": "[old_carrier = 1,\n new_carrier = 0,\n new_value = 0,\n old_value = 0,\n old_kind = 3,\n new_kind = 3]"
+    },
+    {
+      "id": "explicit-absence-and-null-are-distinct",
+      "result": "sat",
+      "smt": "(declare-fun new_value () Int)\n(declare-fun old_value () Int)\n(declare-fun old_kind () Int)\n(declare-fun new_kind () Int)\n(assert (let ((a!1 (not (and (= old_kind new_kind)\n                     (or (distinct old_kind 3) (= old_value new_value))))))\n  (and (= old_kind 1) (= new_kind 2) a!1)))\n",
+      "witness": "[old_kind = 1, new_kind = 2]"
+    }
+  ],
+  "scope": "One canonical identity/field atom: kind0 omitted,1 explicit absence,2 null,3 known canonical value. Correct typed key grouping, normalization, unique map entries and complete traversal are premises. Symmetric equal atoms do not change classification despite distinct source carriers. A modeled changed policy-used ownership atom needs owner and policy grants on both states. This is not proof of whole-inventory/index implementation, TypeScript refinement, core normalization, budgets/heap/CPU, native facts/effects/transactions, host binding authentication or backend admission."
+}

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
+import {CURRENT_CORE_VERSION} from '../../generated/core-model';
 import manifest from '../../../spec/extensions/sqlserver/package.json';
 import captureSchema from '../../../spec/extensions/sqlserver/capture.schema.json';
 import {Registry} from '../../registry/registry';
@@ -93,7 +95,7 @@ export function getSqlServerIndexMetadata(document:Document):SqlServerIndexMetad
 }
 function consistent(document:Document){const module=document.modules.find(m=>m.id==='sqlserver.columns'),fields=getSqlServerColumnMetadata(document);if(!module||module.namespace!==''||module.elements.length!==fields.length||fields.some((f,i)=>['id','name','description','scalarType'].some(k=>module.elements[i]?.[k]!==f.element[k])))throw new UmfError('SQLSERVER_METADATA','Native columns and core metadata disagree');}
 export function importSqlServerCatalog(text:string,options:{id:string}):Document{
- const root=parseNativeJson(text),doc:Document={umf:'0.1.0',id:options.id,vocabularies:{[SQLSERVER_EXTENSION]:{version:'0.1.0'}},extensions:{[SQLSERVER_EXTENSION]:{profile:'sqlserver-catalog-v1',root} as unknown as Json},modules:[]};payload(doc);doc.modules.push({id:'sqlserver.columns',namespace:'',elements:derive(root).map(c=>c.element)});return doc;
+ const root=parseNativeJson(text),doc:Document={umf:CURRENT_CORE_VERSION,id:options.id,vocabularies:{[SQLSERVER_EXTENSION]:{version:'0.1.0'}},extensions:{[SQLSERVER_EXTENSION]:{profile:'sqlserver-catalog-v1',root} as unknown as Json},modules:[]};payload(doc);doc.modules.push({id:'sqlserver.columns',namespace:'',elements:derive(root).map(c=>c.element)});return doc;
 }
 export function exportSqlServerCatalog(document:Document):string{
  consistent(document);if(inspectSqlServer(document).diagnostics.some(d=>d.code==='SQLSERVER_ENCODING'))throw new UmfError('SQLSERVER_ENCODING','Unknown source encoding cannot be discarded');return renderTree(payload(document).root)+'\n';

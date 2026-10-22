@@ -1,0 +1,50 @@
+{
+  "data": {
+    "conflicts": [],
+    "correspondence": "unassessed",
+    "declarations": [
+      {
+        "bytes": 5521,
+        "path": "spec/extensions/sqlserver-keys/package.json",
+        "sha256": "5746365036738facbaf07b8dadbec79b048346d4ae3b4e99ff3e7691303506ef"
+      }
+    ],
+    "evidence": [],
+    "operation": {
+      "apiNames": [],
+      "coreProfiles": [],
+      "extensionVersions": [],
+      "fixturePaths": [],
+      "id": "umf.sqlserver.keys@1.0.0:export",
+      "kind": "export",
+      "limitations": [
+        "Recorded scope only; native equivalence and production adoption are separate."
+      ],
+      "runtime": {
+        "availability": "host-only",
+        "profileId": "umf.sqlserver.keys@1.0.0:export",
+        "requirements": [
+          "Native runtime / original qualification harness; not executed by this page."
+        ]
+      },
+      "sourceSystem": "SQL Server · 16.0.4295.3",
+      "subset": "Captured SQL Server 2022 v3 rowstore index observations, native equality and enforcement only; no authored identity, source authentication or native equivalence",
+      "targetSystem": "SQL Server · 16.0.4295.3",
+      "title": "umf.sqlserver.keys · export"
+    }
+  },
+  "id": "[\"integration\",\"umf.sqlserver.keys@1.0.0:export\"]",
+  "kind": "integration",
+  "links": [
+    "[\"extension\",\"umf.sqlserver.keys\",\"1.0.0\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 134795,
+      "path": "docs/helix/05-deploy/reference/operations.json",
+      "sha256": "793743bbca36e56e90e82df5ef0408b628c434e58cb68aea4d6486349be78e61"
+    }
+  ],
+  "summary": "Captured SQL Server 2022 v3 rowstore index observations, native equality and enforcement only; no authored identity, source authentication or native equivalence",
+  "title": "umf.sqlserver.keys · export"
+}

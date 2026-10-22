@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 10672,
+        "line": 83,
+        "path": "src/core-ideals/cardinality-postgresql.ts",
+        "sha256": "8624729e3e4a4761c06957adb6d1ce137db425877db15d65f3571ca5fbd46727"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "verifyPostgresqlCardinalityClassification",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: PostgresqlCardinalityClassification, current: Document): PostgresqlCardinalityClassification"
+    ]
+  },
+  "id": "[\"api\",\".\",\"verifyPostgresqlCardinalityClassification\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 10672,
+      "line": 83,
+      "path": "src/core-ideals/cardinality-postgresql.ts",
+      "sha256": "8624729e3e4a4761c06957adb6d1ce137db425877db15d65f3571ca5fbd46727"
+    }
+  ],
+  "summary": "Receipt consistency is not authentication; any model edit requires reclassification.",
+  "title": "verifyPostgresqlCardinalityClassification"
+}

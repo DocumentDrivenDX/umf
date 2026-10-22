@@ -1,6 +1,7 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {parquetAvailabilitySource,parquetNullabilityCases} from '../../scripts/core-ideals/nullability-parquet-cases';
-import {classifyParquetNullability,verifyParquetNullabilityClassification,recoverParquetNullabilityBytes,parquetNullabilityPackage,PARQUET_NULLABILITY_EXTENSION,declareCoreNullability,copyJson,readJsonValue,writeJsonValue,Registry,validateDocument} from '../../src';
+import {classifyParquetNullability, verifyParquetNullabilityClassification, recoverParquetNullabilityBytes, parquetNullabilityPackage, PARQUET_NULLABILITY_EXTENSION, declareCoreNullability, copyJson, readJsonValue, writeJsonValue, Registry, validateDocument} from '../../src';
 import type {ParquetNullabilityRequest} from '../../src';
 const fixture=await Bun.file('fixtures/validation/nullability-parquet-native.json').json();
 const base={scope:'row-leaf-value',carrier:'definition-level',mode:'strict'} as const;

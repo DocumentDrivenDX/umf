@@ -1,0 +1,33 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 4159,
+        "line": 1,
+        "path": "spec/core/key-tuple-operation-v4.schema.json",
+        "sha256": "fe7d93da41ac331696686bd32fb0be8ca62b7a5638b95b975034195d66dff2cc"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "coreKeyTupleOperationSchema",
+    "runtime": "unassessed",
+    "signatureText": [
+      "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"$id\": \"urn:umf:core:key-tuple-operation:4.0.0\",\n  \"title\": \"Current core key tuple encoding receipt\",\n  \"type\": \"object\",\n  \"required\": [\n    \"operation\",\n    \"version\",\n    \"profile\",\n    \"source\",\n    \"identity\",\n    \"values\",\n    \"keyPath\",\n    \"bytesHex\"\n  ],\n  \"additionalProperties\": false,\n  \"properties\": {\n    \"operation\": {\n      \"const\": \"encode-core-key-tuple\"\n    },\n    \"version\": {\n      \"const\": \"4.0.0\"\n    },\n    \"profile\": {\n      \"enum\": [\n        \"umf-key-tuple-v1\",\n        \"umf-key-tuple-v2\"\n      ]\n    },\n    \"source\": {\n      \"$ref\": \"urn:umf:core:0.10.0\"\n    },\n    \"identity\": {\n      \"$ref\": \"#/$defs/identity\"\n    },\n    \"values\": {\n      \"type\": \"array\",\n      \"minItems\": 1,\n      \"items\": {\n        \"$ref\": \"#/$defs/value\"\n      }\n    },\n    \"keyPath\": {\n      \"type\": \"string\",\n      \"pattern\": \"^/modules/[0-9]+/elements/[0-9]+/keys/[0-9]+$\"\n    },\n    \"bytesHex\": {\n      \"type\": \"string\",\n      \"pattern\": \"^554d464b3[12]([0-9a-f]{2})+$\",\n      \"maxLength\": 8000000\n    }\n  },\n  \"$defs\": {\n    \"identity\": {\n      \"type\": \"object\",\n      \"required\": [\n        \"module\",\n        \"element\",\n        \"key\"\n      ],\n      \"additionalProperties\": false,\n      \"properties\": {\n        \"module\": {\n          \"type\": \"string\",\n          \"minLength\": 1\n        },\n        \"element\": {\n          \"type\": \"string\",\n          \"minLength\": 1\n        },\n        \"key\": {\n          \"type\": \"string\",\n          \"minLength\": 1\n        }\n      }\n    },\n    \"value\": {\n      \"oneOf\": [\n        {\n          \"type\": \"object\",\n          \"required\": [\n            \"boolean\"\n          ],\n          \"additionalProperties\": false,\n          \"properties\": {\n            \"boolean\": {\n              \"type\": \"boolean\"\n            }\n          }\n        },\n        {\n          \"type\": \"object\",\n          \"required\": [\n            \"integerToken\"\n          ],\n          \"additionalProperties\": false,\n          \"properties\": {\n            \"integerToken\": {\n              \"type\": \"string\",\n              \"pattern\": \"^-?(0|[1-9][0-9]*)(\\\\.[0-9]+)?([eE][+-]?[0-9]+)?$\"\n            }\n          }\n        },\n        {\n          \"type\": \"object\",\n          \"required\": [\n            \"decimalToken\"\n          ],\n          \"additionalProperties\": false,\n          \"properties\": {\n            \"decimalToken\": {\n              \"type\": \"string\",\n              \"pattern\": \"^-?(0|[1-9][0-9]*)(\\\\.[0-9]+)?([eE][+-]?[0-9]+)?$\"\n            }\n          }\n        },\n        {\n          \"type\": \"object\",\n          \"required\": [\n            \"string\"\n          ],\n          \"additionalProperties\": false,\n          \"properties\": {\n            \"string\": {\n              \"type\": \"string\"\n            }\n          }\n        },\n        {\n          \"type\": \"object\",\n          \"required\": [\n            \"binaryHex\"\n          ],\n          \"additionalProperties\": false,\n          \"properties\": {\n            \"binaryHex\": {\n              \"type\": \"string\",\n              \"pattern\": \"^([0-9a-fA-F]{2})*$\"\n            }\n          }\n        },\n        {\n          \"type\": \"object\",\n          \"required\": [\n            \"bits128Hex\"\n          ],\n          \"properties\": {\n            \"bits128Hex\": {\n              \"type\": \"string\",\n              \"minLength\": 32,\n              \"maxLength\": 32,\n              \"pattern\": \"^[0-9a-fA-F]{32}$(?![\\\\s\\\\S])\"\n            }\n          },\n          \"additionalProperties\": false\n        },\n        {\n          \"type\": \"object\",\n          \"required\": [\n            \"uuid\"\n          ],\n          \"properties\": {\n            \"uuid\": {\n              \"type\": \"string\",\n              \"minLength\": 36,\n              \"maxLength\": 36,\n              \"pattern\": \"^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$(?![\\\\s\\\\S])\"\n            }\n          },\n          \"additionalProperties\": false\n        }\n      ]\n    }\n  },\n  \"description\": \"Structural receipt validation is insufficient: verification recomputes exact tuple bytes from retained candidate source/values and checks current document context. This establishes neither authorship nor native enforcement.\"\n}\n"
+    ]
+  },
+  "id": "[\"api\",\".\",\"coreKeyTupleOperationSchema\"]",
+  "kind": "api",
+  "links": [
+    "[\"schema\",\"spec/core/key-tuple-operation-v4.schema.json\",\"\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 4159,
+      "line": 1,
+      "path": "spec/core/key-tuple-operation-v4.schema.json",
+      "sha256": "fe7d93da41ac331696686bd32fb0be8ca62b7a5638b95b975034195d66dff2cc"
+    }
+  ],
+  "summary": "Public export · spec/core/key-tuple-operation-v4.schema.json",
+  "title": "coreKeyTupleOperationSchema"
+}

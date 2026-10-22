@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 // @covers US-002-AC1 US-002-AC2 US-002-AC3 US-002-AC4
 import {test,expect} from 'bun:test';
 import Ajv2020 from 'ajv/dist/2020';

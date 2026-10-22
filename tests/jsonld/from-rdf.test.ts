@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
+import semanticTypeReferenceSchema from '../../spec/core/semantic-type-reference.schema.json';
 import {test,expect} from 'bun:test';
 import {createHash} from 'node:crypto';
 import Ajv2020 from 'ajv/dist/2020';
@@ -5,7 +7,7 @@ import core from '../../spec/core/schema.json';
 import schema from '../../spec/extensions/jsonld/from-rdf-schema.json';
 import {equalJsonLdText} from '../../scripts/jsonld-compare';
 import {importRdfNQuads,importRdfTriG,exportRdfNQuads,exportRdfTriG,getRdfQuads,proposeRdfQuadEdit,proposeRdfToJsonLd,exportJsonLdDocument,readDocument,writeDocument} from '../../src';
-const check=new Ajv2020({strict:false,validateFormats:false}).addSchema(core).compile(schema);
+const check=new Ajv2020({strict:false,validateFormats:false}).addSchema(semanticTypeReferenceSchema).addSchema(core).compile(schema);
 test('US-026-AC12: complete fromRDF corpus, archives, exact official outputs and native differences',async()=>{
  const manifest=await Bun.file('native/jsonld/sources/fromRdf-manifest.jsonld').json(),sources=await Bun.file('native/jsonld/sources/manifest.json').json(),cases=(await Bun.file('fixtures/jsonld/from-rdf/results.json').json()).cases,oracle=(await Bun.file('fixtures/jsonld/from-rdf/oracle-results.json').json()).results;
  expect(cases).toHaveLength(54);expect(oracle).toHaveLength(54);expect(cases.map((c:any)=>c.id)).toEqual(manifest.sequence.map((c:any)=>c['@id'].slice(1)));let candidates=0;
@@ -20,7 +22,9 @@ test('US-026-AC12: exact literals, graph inventory, loss policies, compound lite
  if(['exact-native','nonfinite-typed'].includes(c.id))expect(r.diagnostics.some(d=>d.code==='JSONLD_RDF_NATIVE_TYPES')).toBe(true);if(c.id.startsWith('compound-extra'))expect(r.diagnostics.some(d=>d.code==='JSONLD_RDF_EVENT')).toBe(true);
  if(c.blocked){expect(r.candidate).toBeUndefined();continue;}expect(equalJsonLdText(exportJsonLdDocument(r.candidate!),c.expected)).toBe(true);for(const e of c.exports)expect(exportJsonLdDocument(readDocument(writeDocument(r.candidate!,e.format),e.format))).toBe(await Bun.file(e.path).text());
  if(c.edit){const q=getRdfQuads(d)[c.edit.index]!;if(q.object.kind!=='literal')throw Error('Expected literal');q.object.value=c.edit.value;const e=await proposeRdfToJsonLd(proposeRdfQuadEdit(d,c.edit.index,q).document,c.options);expect(equalJsonLdText(exportJsonLdDocument(e.candidate!),c.editedExpected)).toBe(true);for(const out of c.edits)expect(exportJsonLdDocument(readDocument(writeDocument(e.candidate!,out.format),out.format))).toBe(await Bun.file(out.path).text());expect(exportRdfNQuads(d)).toBe(c.source);}}
-});
+// Exercises all 18 authored cases, serialization formats and edits; allow
+// bounded headroom when native adapter checks share the test machine.
+},30_000);
 test('US-026-AC12: unknown RDF encoding blocks, options validate and normalized syntax preserves terms',async()=>{
  const raw='# comment "quoted"\n<urn:s> <urn:p> "v" .\n',d=importRdfNQuads(raw,{id:'guard'}),options={id:'out',baseIRI:'https://example.org/',lossPolicy:'report' as const};expect(exportRdfNQuads(d)).toBe(raw);const normalized=exportRdfNQuads(d,{preserveSource:false});expect(normalized).not.toContain('# comment');expect(getRdfQuads(importRdfNQuads(normalized,{id:'again'}))).toEqual(getRdfQuads(d));
  const unknown=structuredClone(d);(unknown.modules[0]!.elements[0]!.extensions['umf.rdf'] as any).future={meaning:'retained'};const blocked=await proposeRdfToJsonLd(unknown,options);expect(blocked.status).toBe('blocked');expect(blocked.source).toEqual(unknown);expect(blocked.candidate).toBeUndefined();

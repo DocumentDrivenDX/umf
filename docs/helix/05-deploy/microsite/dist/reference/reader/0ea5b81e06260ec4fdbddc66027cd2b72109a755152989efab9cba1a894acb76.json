@@ -1,0 +1,30 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"bits128ToInteger\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Bit128Value\"]"
+      ],
+      "name": "value",
+      "optional": false,
+      "type": "Bit128Value"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "signed",
+      "optional": false,
+      "type": "boolean"
+    }
+  ],
+  "purpose": "bits128ToInteger accepts value, signed and returns { integerToken: string; }.",
+  "related": [],
+  "returns": "{ integerToken: string; }",
+  "task": "Other APIs",
+  "type": "(value: Bit128Value, signed: boolean) => { integerToken: string; }"
+}

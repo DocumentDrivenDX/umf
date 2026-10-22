@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {importSparkSchema,exportSparkSchema,projectSparkToArrow,exportArrowFlatbufferModel,coreSchema,sparkArrowProjectionSchema} from '../../src';
 import {createValidator} from '../../src/validation/schema';

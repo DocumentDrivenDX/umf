@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {isAbsolute, relative, resolve, sep} from 'node:path';
@@ -23,8 +24,16 @@ const commands = ['key-tablespec-oracle','key-postgresql-discovery','key-postgre
 
 /** Checks current qualification evidence, not authentication or ideal admission.
  * Earlier binding acceptance records remain historical rather than being rehashed. */
-export async function verifyKeyEvidence(reader: KeyEvidenceReader = read) {
+type KeyHistoricalEvidence={historicalQualification:'COMPLETE'|'PARTIALLY_REVALIDATED';currentCoreQualification:'UNQUALIFIED'|'QUALIFIED';unqualified:{proof:string;path:string;pinnedSha256:string;observedSha256:string}[]};
+export function requireCurrentCoreKeyQualification(evidence:{currentCoreQualification:string}):void {if(evidence.currentCoreQualification!=='QUALIFIED')throw new Error('Key native evidence is not qualified for the current core');}
+export async function verifyKeyEvidence(reader: KeyEvidenceReader = read,options:{allowUnqualifiedHistorical?:boolean}={}) {
  const contents = new Map<string, Uint8Array>();
+ const unqualified:KeyHistoricalEvidence['unqualified']=[];
+ const historyPath='docs/helix/04-build/evidence/metamodel-authority/history/manifest.json';
+ const history=JSON.parse(new TextDecoder().decode(await reader(historyPath)));
+ const recoveryPath='docs/helix/04-build/evidence/metamodel-authority/historical-field-artifact-recovery/comparison.json';
+ const recovery=JSON.parse(new TextDecoder().decode(await reader(recoveryPath)));
+ assert.equal(recovery.archiveSha256,'a60ab9c3c190fc18a11ffd6968f6b6defc15c934e417979dee506f3cf425c943');
  const pending: {path: string; record: any}[] = [];
  function safe(path: string) {
   assert.ok(typeof path === 'string' && path.length && !path.includes('\\'), `unsafe evidence path: ${path}`);
@@ -125,9 +134,19 @@ export async function verifyKeyEvidence(reader: KeyEvidenceReader = read) {
  let fingerprints = 0;
  // Structural checks precede hashes so malformed proofs have useful diagnostics.
  for (const {path, record} of pending) for (const [p, h] of Object.entries(record.sha256)) {
-  assert.equal(digest(await bytes(p)), h, `${path}: stale ${p}`); fingerprints++;
+  let actual:string;try{actual=digest(await bytes(p));}catch(error){if(!options.allowUnqualifiedHistorical||!String(error).includes('ENOENT'))throw error;actual='MISSING';}
+  if(actual!==h){
+   const archived=history.entries.find((entry:any)=>entry.path===p&&entry.sha256===h)?.archive;
+   if(archived&&digest(await bytes(archived))===h){fingerprints++;continue;}
+   if(options.allowUnqualifiedHistorical){
+    if(p.startsWith('dist/')){const artifact=recovery.comparisons.find((entry:any)=>entry.path===p&&entry.expected===h);assert.ok(artifact&&!artifact.matches,`${path}: dist artifact must be explicitly unrecovered`);}
+    unqualified.push({proof:path,path:p,pinnedSha256:String(h),observedSha256:actual});fingerprints++;continue;
+   }
+   assert.equal(actual,h,`${path}: stale ${p}`);
+  }
+  fingerprints++;
  }
- return {systems:[...keySystems], records, fingerprints, refreshSha256:digest(await bytes(refreshPath)), idealAdmitted:false, nativeEquivalence:false};
+ return {systems:[...keySystems],records,fingerprints,refreshSha256:digest(await bytes(refreshPath)),idealAdmitted:false,nativeEquivalence:false,historicalQualification:unqualified.length?'PARTIALLY_REVALIDATED':'COMPLETE',currentCoreQualification:'UNQUALIFIED' as const,unqualified,artifactRecovery:{path:recoveryPath,archiveSha256:recovery.archiveSha256,outcome:recovery.outcome}};
 }
 
 if (import.meta.main) console.log(JSON.stringify(await verifyKeyEvidence()));

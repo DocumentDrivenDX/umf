@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 17873,
+        "line": 15,
+        "path": "src/core-ideals/relationship-sqlserver-projection.ts",
+        "sha256": "e39914f71aaef4806cacbcf64171fa152048b02cecc8320a4a2f6bf76357f39a"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "RelationshipSqlServerRequest",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface RelationshipSqlServerRequest {id:string;relationship:CoreRelationshipIdentity;profile:'new-key-tables';mode:'strict'|'report';namespace:string;sourceKey:SqlServerRelationshipKey;targetKey:SqlServerRelationshipKey;referenceColumns:string[];constraintName:string;deleteAction:'NO_ACTION'|'CASCADE'|'SET_NULL';updateAction:'NO_ACTION'|'CASCADE'|'SET_NULL';junction?:{tableName:string;sourceColumns:string[];sourceConstraintName:string;pairConstraintName:string}}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"RelationshipSqlServerRequest\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 17873,
+      "line": 15,
+      "path": "src/core-ideals/relationship-sqlserver-projection.ts",
+      "sha256": "e39914f71aaef4806cacbcf64171fa152048b02cecc8320a4a2f6bf76357f39a"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/relationship-sqlserver-projection.ts",
+  "title": "RelationshipSqlServerRequest"
+}

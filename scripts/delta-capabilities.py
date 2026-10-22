@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Delta-rs schema parsing probe; table/protocol validity is a separate question."""
 import copy,json,hashlib
 from pathlib import Path

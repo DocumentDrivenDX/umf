@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {parquetMetadata,parquetReadObjects,parquetSchema} from 'hyparquet';
 /** Decoder experiment, not the UMF public API. Original bytes remain authoritative. */
 export async function readCheckpointParquetTrial(file:ArrayBuffer){

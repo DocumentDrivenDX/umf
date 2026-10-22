@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 4848,
+        "line": 19,
+        "path": "src/extensions/binding/raw-profiles.ts",
+        "sha256": "b93646cd0fee7ab283404f7cb54e1426f7a15997a874a931104b5bb5bdd25810"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "inspectRawTableBinding",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(binding: Document, logical: Document, target: RawTableBindingTarget, module: string): Validation"
+    ]
+  },
+  "id": "[\"api\",\".\",\"inspectRawTableBinding\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 4848,
+      "line": 19,
+      "path": "src/extensions/binding/raw-profiles.ts",
+      "sha256": "b93646cd0fee7ab283404f7cb54e1426f7a15997a874a931104b5bb5bdd25810"
+    }
+  ],
+  "summary": "Inspect the explicit, direct-column subset; never infer SQL, native types or enforcement.",
+  "title": "inspectRawTableBinding"
+}

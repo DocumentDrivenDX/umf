@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Pinned native facet discovery; no UMF facet classification or binding acceptance."""
 import io, json, decimal, warnings, hashlib
 from pathlib import Path

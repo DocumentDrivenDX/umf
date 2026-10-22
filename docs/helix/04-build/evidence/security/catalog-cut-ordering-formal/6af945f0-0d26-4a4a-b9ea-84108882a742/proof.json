@@ -1,0 +1,61 @@
+{
+  "status": "conditional-proof-passed",
+  "z3Version": "4.15.4",
+  "sourceDigests": {
+    "/Users/erik/.codex/worktrees/security-main-integration/umf/tools/security/prove-catalog-cut-ordering.py": "908ca87f3bc9098c5efa8fa3384a76857bb085d0ffafebdbfd3abbc41504e254",
+    "/private/tmp/truss-security-main-integration/scripts/python-catalog-cut-worker.py": "6740675a79e0161c7c0e0857c57f6bc2472648e4d246974f48490f40975cd984",
+    "/private/tmp/truss-security-main-integration/scripts/check-python-catalog-cut-native.py": "9da276381189b395a4a7d470547f17d1888979e3ea7a91750b6091a9b39d1508",
+    "/private/tmp/truss-security-main-integration/packages/postgresql/native/security-query-source-census-pg16.sql": "a49c7d34a4749e146f172840739938673640dd1094ac9e5610b96cdae4747176"
+  },
+  "queries": [
+    {
+      "id": "fresh-snapshot-plus-complete-commit-barrier-prevents-source-drift",
+      "expected": "unsat",
+      "result": "unsat",
+      "freshContextReplay": "unsat",
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun lock () Int)\n(declare-fun snapshot () Int)\n(declare-fun execution () Int)\n(declare-fun new_source () Int)\n(declare-fun old_source () Int)\n(declare-fun release () Int)\n(declare-fun commit () Int)\n(assert\n (>= lock 0))\n(assert\n (>= snapshot 0))\n(assert\n (> execution snapshot))\n(assert\n (and (distinct old_source new_source) true))\n(assert\n (<= lock snapshot))\n(assert\n (< execution release))\n(assert\n (let (($x21 (< commit lock)))\n (or $x21 (>= commit release))))\n(assert\n (let ((?x31 (ite (>= execution commit) new_source old_source)))\n(let ((?x29 (ite (>= snapshot commit) new_source old_source)))\n(and (distinct ?x29 ?x31) true))))\n(check-sat)\n",
+      "witness": null
+    },
+    {
+      "id": "old-repeatable-read-snapshot-survives-held-commit-barrier",
+      "expected": "sat",
+      "result": "sat",
+      "freshContextReplay": "sat",
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun lock () Int)\n(declare-fun snapshot () Int)\n(declare-fun execution () Int)\n(declare-fun new_source () Int)\n(declare-fun old_source () Int)\n(declare-fun commit () Int)\n(declare-fun release () Int)\n(assert\n (>= lock 0))\n(assert\n (>= snapshot 0))\n(assert\n (> execution snapshot))\n(assert\n (and (distinct old_source new_source) true))\n(assert\n (< snapshot commit))\n(assert\n (< commit lock))\n(assert\n (< lock execution))\n(assert\n (< execution release))\n(assert\n (let (($x21 (< commit lock)))\n (or $x21 (>= commit release))))\n(assert\n (let ((?x31 (ite (>= execution commit) new_source old_source)))\n(let ((?x29 (ite (>= snapshot commit) new_source old_source)))\n(and (distinct ?x29 ?x31) true))))\n(check-sat)\n",
+      "witness": "[commit = 1,\n snapshot = 0,\n execution = 3,\n lock = 2,\n new_source = 0,\n release = 4,\n old_source = -1]"
+    },
+    {
+      "id": "catalog-statement-locks-do-not-drain-uncommitted-writer",
+      "expected": "sat",
+      "result": "sat",
+      "freshContextReplay": "sat",
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun lock () Int)\n(declare-fun snapshot () Int)\n(declare-fun execution () Int)\n(declare-fun new_source () Int)\n(declare-fun old_source () Int)\n(declare-fun release () Int)\n(declare-fun catalog_unlock () Int)\n(declare-fun write () Int)\n(declare-fun commit () Int)\n(assert\n (>= lock 0))\n(assert\n (>= snapshot 0))\n(assert\n (> execution snapshot))\n(assert\n (and (distinct old_source new_source) true))\n(assert\n (<= lock snapshot))\n(assert\n (< execution release))\n(assert\n (< write catalog_unlock))\n(assert\n (< catalog_unlock lock))\n(assert\n (< write commit))\n(assert\n (< snapshot commit))\n(assert\n (< commit execution))\n(assert\n (let ((?x31 (ite (>= execution commit) new_source old_source)))\n(let ((?x29 (ite (>= snapshot commit) new_source old_source)))\n(and (distinct ?x29 ?x31) true))))\n(check-sat)\n",
+      "witness": "[commit = 2,\n snapshot = 1,\n execution = 3,\n release = 4,\n lock = 1,\n write = -1,\n old_source = 1,\n catalog_unlock = 0,\n new_source = 0]"
+    },
+    {
+      "id": "release-before-execution-allows-late-commit",
+      "expected": "sat",
+      "result": "sat",
+      "freshContextReplay": "sat",
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun lock () Int)\n(declare-fun snapshot () Int)\n(declare-fun execution () Int)\n(declare-fun new_source () Int)\n(declare-fun old_source () Int)\n(declare-fun release () Int)\n(declare-fun commit () Int)\n(assert\n (>= lock 0))\n(assert\n (>= snapshot 0))\n(assert\n (> execution snapshot))\n(assert\n (and (distinct old_source new_source) true))\n(assert\n (<= lock snapshot))\n(assert\n (< snapshot release))\n(assert\n (<= release commit))\n(assert\n (< commit execution))\n(assert\n (let ((?x31 (ite (>= execution commit) new_source old_source)))\n(let ((?x29 (ite (>= snapshot commit) new_source old_source)))\n(and (distinct ?x29 ?x31) true))))\n(check-sat)\n",
+      "witness": "[commit = 1,\n new_source = 0,\n snapshot = 0,\n execution = 2,\n lock = 0,\n release = 1,\n old_source = -1]"
+    },
+    {
+      "id": "held-source-cut-alone-does-not-hold-authorization-facts",
+      "expected": "sat",
+      "result": "sat",
+      "freshContextReplay": "sat",
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun lock () Int)\n(declare-fun snapshot () Int)\n(declare-fun execution () Int)\n(declare-fun new_source () Int)\n(declare-fun old_source () Int)\n(declare-fun release () Int)\n(declare-fun commit () Int)\n(declare-fun authorization_fact_commit () Int)\n(assert\n (>= lock 0))\n(assert\n (>= snapshot 0))\n(assert\n (> execution snapshot))\n(assert\n (and (distinct old_source new_source) true))\n(assert\n (<= lock snapshot))\n(assert\n (< execution release))\n(assert\n (let (($x21 (< commit lock)))\n (or $x21 (>= commit release))))\n(assert\n (< snapshot authorization_fact_commit))\n(assert\n (< authorization_fact_commit execution))\n(assert\n (let ((?x31 (ite (>= execution commit) new_source old_source)))\n (let ((?x29 (ite (>= snapshot commit) new_source old_source)))\n (= ?x29 ?x31))))\n(assert\n (let (($x38 (< snapshot authorization_fact_commit)))\n(and (distinct $x38 (< execution authorization_fact_commit)) true)))\n(check-sat)\n",
+      "witness": "[commit = 0,\n new_source = 0,\n authorization_fact_commit = 2,\n snapshot = 1,\n execution = 3,\n old_source = 1,\n lock = 1,\n release = 4]"
+    },
+    {
+      "id": "fresh-data-authority-and-source-commit-cuts-prevent-stale-release",
+      "expected": "unsat",
+      "result": "unsat",
+      "freshContextReplay": "unsat",
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun lock () Int)\n(declare-fun snapshot () Int)\n(declare-fun execution () Int)\n(declare-fun new_source () Int)\n(declare-fun old_source () Int)\n(declare-fun release () Int)\n(declare-fun commit () Int)\n(declare-fun authorization_fact_commit () Int)\n(assert\n (>= lock 0))\n(assert\n (>= snapshot 0))\n(assert\n (> execution snapshot))\n(assert\n (and (distinct old_source new_source) true))\n(assert\n (<= lock snapshot))\n(assert\n (< execution release))\n(assert\n (let (($x21 (< commit lock)))\n (or $x21 (>= commit release))))\n(assert\n (or (< authorization_fact_commit lock) (>= authorization_fact_commit release)))\n(assert\n (let (($x38 (< snapshot authorization_fact_commit)))\n(let (($x42 (and (distinct $x38 (< execution authorization_fact_commit)) true)))\n(let ((?x31 (ite (>= execution commit) new_source old_source)))\n(let ((?x29 (ite (>= snapshot commit) new_source old_source)))\n(let (($x32 (and (distinct ?x29 ?x31) true)))\n(or $x32 $x42)))))))\n(check-sat)\n",
+      "witness": null
+    }
+  ],
+  "scope": "Single committed source transition and one authorization-fact transition over unbounded integer times. Truthful observation at snapshot, current native execution semantics, complete commit-time exclusion until final release and fresh post-barrier snapshot are explicit premises. No physical all-writer/advisory-key/SQL/driver refinement, arbitrary multiple-transition/ABA proof, provider authentication, completeness/injectivity, inherited-snapshot detection, operation handback or backend acceptance. Native PostgreSQL16.15 retained controls separately exercise old snapshots, pending catalog writer commit, finite DDL blocking and cooperative advisory drain."
+}

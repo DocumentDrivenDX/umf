@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {captureDeltaLog,reconcileDeltaCommits,writeDocument,readDocument,exportDeltaLog} from '../src';
 import {renderTree} from '../src/model/native-json';
 const base='fixtures/delta/history/',results=[],commits=[];

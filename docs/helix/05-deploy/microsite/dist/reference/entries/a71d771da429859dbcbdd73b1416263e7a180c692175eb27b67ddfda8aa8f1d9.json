@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 12556,
+        "line": 63,
+        "path": "src/adapters/tablespec/index.ts",
+        "sha256": "8bfaa3f0ec637beffce4a7fae4a2389656f7829acfabc185105e346ad7e8194f"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "editTableSpecColumn",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(document: Document, index: number, changes: Record<string, NativeJson>): Document"
+    ]
+  },
+  "id": "[\"api\",\".\",\"editTableSpecColumn\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 12556,
+      "line": 63,
+      "path": "src/adapters/tablespec/index.ts",
+      "sha256": "8bfaa3f0ec637beffce4a7fae4a2389656f7829acfabc185105e346ad7e8194f"
+    }
+  ],
+  "summary": "Merge explicit native field changes on a copy, retaining unspecified fields.",
+  "title": "editTableSpecColumn"
+}

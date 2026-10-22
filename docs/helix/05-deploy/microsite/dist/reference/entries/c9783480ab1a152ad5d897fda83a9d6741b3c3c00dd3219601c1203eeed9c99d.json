@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 3281,
+        "line": 7,
+        "path": "src/adapters/parquet/bodies.ts",
+        "sha256": "05976bb07a14b777772157c7bd261952e2390cb623ea5780a6bd0b5c31b54b53"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "ParquetPageBodies",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface ParquetPageBodies {source:Document;status:'decoded'|'blocked';complete:false;diagnostics:Diagnostic[];pages?:ParquetDecodedPage[];decodedBytes?:number}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"ParquetPageBodies\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 3281,
+      "line": 7,
+      "path": "src/adapters/parquet/bodies.ts",
+      "sha256": "05976bb07a14b777772157c7bd261952e2390cb623ea5780a6bd0b5c31b54b53"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/parquet/bodies.ts",
+  "title": "ParquetPageBodies"
+}

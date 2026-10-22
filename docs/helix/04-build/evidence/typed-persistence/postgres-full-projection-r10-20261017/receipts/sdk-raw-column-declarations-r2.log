@@ -1,0 +1,11 @@
+bun test v1.4.2 (744846f84)
+
+tests/compilation/access-raw-columns.test.ts:
+(pass) original model and physical binding admit closed non-temporal raw ColumnSets [308.14ms]
+(pass) native column declarations refuse domain changes and ungoverned vector meanings [912.20ms]
+(pass) source binding and complete row policy remain independently mandatory [233.34ms]
+
+ 3 pass
+ 0 fail
+ 19 expect() calls
+Ran 3 tests across 1 file. [12.53s]

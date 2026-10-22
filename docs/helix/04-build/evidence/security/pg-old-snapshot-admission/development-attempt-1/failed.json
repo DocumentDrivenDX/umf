@@ -1,0 +1,133 @@
+{
+  "status": "failed",
+  "error": "JSONDecodeError",
+  "sourcePins": {
+    "tools/security/pg-old-snapshot-admission-probe.py": "3f761e27029360e31ff59495923e033523963c1d09427b4b2f4918f493e2611d",
+    "tests/security/native/pg-raw-membership.sql": "ac5640077786e81b80e536acc7c5d89d8f6747e1d8f425f17c4e3dfc3b37daf6",
+    "tests/security/native/pg-raw-drain.sql": "c262ca3aef8139d2877e83861c1194d0815a911ccabd96d7dc0f7db52b3673f3",
+    "tests/security/native/pg-raw-persistent-drain.sql": "e43390b61f5db35ea0517bc4f3bc1e71afafc3a6818292855f85b2757f2e5d14",
+    "tests/security/native/pg-raw-membership-oracle.json": "1b04b8a2fe0de4f72ca2926398ff2717909bdbdee9d53e4284e4f4bd2fc5acee",
+    "docs/helix/03-test/security/cases.json": "37308740d5d8b57f6f4647c1a44feee71cbfde02d8f5bee1334299654a610ba9"
+  },
+  "observations": [
+    {
+      "id": "engine",
+      "expected": "170009",
+      "observed": "170009"
+    },
+    {
+      "id": "ordinary:umf_sec_issuer",
+      "expected": {
+        "user": "umf_sec_issuer",
+        "super": "off",
+        "bypass": false
+      },
+      "observed": {
+        "user": "umf_sec_issuer",
+        "super": "off",
+        "bypass": false
+      }
+    },
+    {
+      "id": "ordinary:umf_sec_revoker",
+      "expected": {
+        "user": "umf_sec_revoker",
+        "super": "off",
+        "bypass": false
+      },
+      "observed": {
+        "user": "umf_sec_revoker",
+        "super": "off",
+        "bypass": false
+      }
+    },
+    {
+      "id": "repeatable-read:restored-assignments",
+      "expected": [
+        [
+          "Alice",
+          "A",
+          true
+        ],
+        [
+          "Alice",
+          "B",
+          false
+        ],
+        [
+          "Bob",
+          "B",
+          true
+        ]
+      ],
+      "observed": [
+        [
+          "Alice",
+          "A",
+          true
+        ],
+        [
+          "Alice",
+          "B",
+          false
+        ],
+        [
+          "Bob",
+          "B",
+          true
+        ]
+      ]
+    },
+    {
+      "id": "repeatable-read:snapshot-anchored",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "repeatable-read:revocation-acknowledged",
+      "expected": [
+        "revoked"
+      ],
+      "observed": [
+        "revoked"
+      ]
+    }
+  ],
+  "transcripts": [
+    {
+      "actor": "umf_sec_issuer",
+      "sql": "SELECT json_build_object('user',session_user,'super',current_setting('is_superuser'),'bypass',(SELECT rolbypassrls FROM pg_roles WHERE rolname=session_user))",
+      "stdoutHex": "7b227573657222203a2022756d665f7365635f697373756572222c2022737570657222203a20226f6666222c202262797061737322203a2066616c73657d",
+      "diagnosticHex": "",
+      "sqlstate": "00000"
+    },
+    {
+      "actor": "umf_sec_revoker",
+      "sql": "SELECT json_build_object('user',session_user,'super',current_setting('is_superuser'),'bypass',(SELECT rolbypassrls FROM pg_roles WHERE rolname=session_user))",
+      "stdoutHex": "7b227573657222203a2022756d665f7365635f7265766f6b6572222c2022737570657222203a20226f6666222c202262797061737322203a2066616c73657d",
+      "diagnosticHex": "",
+      "sqlstate": "00000"
+    },
+    {
+      "actor": "umf_sec_alice",
+      "sql": "BEGIN ISOLATION LEVEL repeatable read",
+      "stdoutHex": "",
+      "diagnosticHex": "",
+      "sqlstate": "00000"
+    },
+    {
+      "actor": "umf_sec_alice",
+      "sql": "SELECT txid_current_snapshot()::text",
+      "stdoutHex": "3832343a3832343a",
+      "diagnosticHex": "",
+      "sqlstate": "00000"
+    },
+    {
+      "actor": "umf_sec_revoker",
+      "sql": "SELECT security_drain.revoke_alice()",
+      "stdoutHex": "7265766f6b6564",
+      "diagnosticHex": "",
+      "sqlstate": "00000"
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"projectSecCompanyFacts\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "input",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "sourceId",
+      "optional": false,
+      "type": "string"
+    }
+  ],
+  "purpose": "Every standard entity-wide Company Facts observation; no deduplication or Number conversion.",
+  "related": [],
+  "returns": "PublicCompanyRow[]",
+  "task": "Import and export",
+  "type": "(input: string, sourceId: string) => PublicCompanyRow[]"
+}

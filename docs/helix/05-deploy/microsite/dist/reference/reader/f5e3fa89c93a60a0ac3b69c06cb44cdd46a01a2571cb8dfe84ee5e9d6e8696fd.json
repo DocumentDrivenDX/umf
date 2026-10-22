@@ -1,0 +1,104 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"FacetsParquetProjection\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "operation",
+      "optional": false,
+      "type": "\"project-facets-parquet\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "version",
+      "optional": false,
+      "type": "\"1.0.0\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "status",
+      "optional": false,
+      "type": "\"blocked\" | \"projected\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "source",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "author",
+      "optional": false,
+      "type": "Author"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"FacetsParquetRequest\"]"
+      ],
+      "name": "request",
+      "optional": false,
+      "type": "FacetsParquetRequest"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "target",
+      "optional": true,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "binding",
+      "optional": false,
+      "type": "{ id: string; version: string; nativeVersion: string; subset: string; }"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Diagnostic\"]"
+      ],
+      "name": "diagnostics",
+      "optional": false,
+      "type": "Diagnostic[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreFacetPatch\"]",
+        "[\"api\",\".\",\"FacetsParquetRequest\"]"
+      ],
+      "name": "mapping",
+      "optional": false,
+      "type": "{ origin: \"authored\"; idealPath: string; nativeIndex: 1; facets: CoreFacetPatch; encoding: FacetsParquetRequest[\"encoding\"]; profile: FacetsParquetRequest[\"profile\"]; outcome: Outcome; }"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Json\"]"
+      ],
+      "name": "residuals",
+      "optional": false,
+      "type": "{ path: string; value: Json; reason: string; outcome: Exclude<Outcome, \"exact\">; recovery: typeof recovery; }[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "FacetsParquetProjection is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "FacetsParquetProjection"
+}

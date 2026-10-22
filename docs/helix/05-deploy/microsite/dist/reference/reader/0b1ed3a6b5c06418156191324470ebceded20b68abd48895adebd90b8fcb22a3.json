@@ -1,0 +1,23 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"inspectArrowIpcLayout\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "Inspects encapsulated metadata/body boundaries; does not execute array or dictionary semantics.",
+  "related": [],
+  "returns": "ArrowIpcLayout",
+  "task": "Inspect and select",
+  "type": "(document: Document) => ArrowIpcLayout"
+}

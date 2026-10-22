@@ -1,0 +1,121 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"CoreDatasetValueCheck\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "operation",
+      "optional": false,
+      "type": "\"validate-core-dataset-values\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "version",
+      "optional": false,
+      "type": "\"1.0.0\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "scope",
+      "optional": false,
+      "type": "\"supplied-dataset-only\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "provenance",
+      "optional": false,
+      "type": "\"unverified\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "source",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreDatasetInput\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "CoreDatasetInput"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Validation\"]"
+      ],
+      "name": "documentValidation",
+      "optional": false,
+      "type": "Validation"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreRecordValueCheck\"]"
+      ],
+      "name": "records",
+      "optional": false,
+      "type": "{ instanceId: string; result: CoreRecordValueCheck; }[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreKeyTupleReceipt\"]"
+      ],
+      "name": "keys",
+      "optional": false,
+      "type": "{ instanceId: string; result: CoreKeyTupleReceipt; }[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreKeyTupleReceipt\"]"
+      ],
+      "name": "relationships",
+      "optional": false,
+      "type": "{ instanceId: string; identity: { module: string; id: string; }; sourceInstanceId: string; targetInstanceId: string; targetKey: CoreKeyTupleReceipt; }[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Validation\"]"
+      ],
+      "name": "datasetValidation",
+      "optional": false,
+      "type": "Validation"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "obligations",
+      "optional": false,
+      "type": "{ id: \"dataset.keys\" | \"dataset.relationships\"; state: \"satisfied\" | \"invalid\" | \"unresolved\"; scope: \"supplied-dataset-only\"; }[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Json\"]"
+      ],
+      "name": "residuals",
+      "optional": false,
+      "type": "{ path: string; value: Json; reason: string; }[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "CoreDatasetValueCheck is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "CoreDatasetValueCheck"
+}

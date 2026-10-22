@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 24077,
+        "line": 142,
+        "path": "src/projections/ddd-postgresql/index.ts",
+        "sha256": "61f7ac7b7a701e5071a50185f9660fa7e8441b48c75a07f71e0a8c020d8db3f2"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "verifyDddPostgresqlProjection",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: DddPostgresqlProjection, current: Document, backend: PostgresqlBackend): Promise<DddPostgresqlProjection>"
+    ]
+  },
+  "id": "[\"api\",\".\",\"verifyDddPostgresqlProjection\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 24077,
+      "line": 142,
+      "path": "src/projections/ddd-postgresql/index.ts",
+      "sha256": "61f7ac7b7a701e5071a50185f9660fa7e8441b48c75a07f71e0a8c020d8db3f2"
+    }
+  ],
+  "summary": "Public export · src/projections/ddd-postgresql/index.ts",
+  "title": "verifyDddPostgresqlProjection"
+}

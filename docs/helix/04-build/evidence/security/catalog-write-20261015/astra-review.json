@@ -1,0 +1,113 @@
+{
+  "status": "No remaining actionable defect found in the reviewed finite logical component scope.",
+  "date": "2026-10-15",
+  "reviewer": "Astra independent review subagent",
+  "authoritativeRoot": "/Users/erik/.codex/worktrees/security-main-integration/umf",
+  "baseline": "aa997a81fa44cbb9b90ada2c4f2d9e8a53e7a293",
+  "scope": "Canonical source-closed multi-target logical write guard; complete typed before/after Record and association comparison; all-state ordinary/read-or-blind/vault requirements; shared operation ledgers; governed S24/S25 adoption. No authoritative repository edits, native processes or source-owner authentication performed.",
+  "currentFindings": [],
+  "resolvedFindings": [
+    {
+      "issue": "Changed stored carrier could omit vaultWriteAction and still permit.",
+      "evidence": "vault-before.json / vault-after.json; genuine preimage and mechanically relocated module retained.",
+      "result": "Independent well-typed missing-action fixture: preimage permit, corrected indeterminate."
+    },
+    {
+      "issue": "Ordinary nullable scalar comparison called the core allowed-value identity operation on null.",
+      "evidence": "null-witness.json / pre-null-write.ts / pre-null-module.ts",
+      "result": "Independent unchanged nullable Subject/witness fields: preimage indeterminate, corrected permit; null vs absence remains distinct."
+    },
+    {
+      "issue": "Blind-action aliases checked only against the same type profile.",
+      "evidence": "S24/cross-type-alias; omit-global-blind-separation mutant",
+      "result": "Complete-profile ordinary/read action separation now enforced."
+    },
+    {
+      "issue": "Create/delete needed conservative ownership checks for declared owned associations even when the inventory was empty.",
+      "evidence": "create/delete-empty-owned-inventory-still-needs-owner; omit-empty-owned-create-delete mutant",
+      "result": "Corrected to require ownership and source-dependent policy actions."
+    }
+  ],
+  "independentExecution": {
+    "bun": "1.4.2",
+    "chromium": "153.0.8010.12",
+    "sameRowsEachRuntime": 1947,
+    "S24": 144,
+    "S25": 58,
+    "additionalWriteControls": 132,
+    "priorActionControls": 1088,
+    "priorCollectionControls": 525,
+    "parity": true,
+    "externalRequests": 0,
+    "pageErrors": [],
+    "hostGlobalsAbsent": true,
+    "result": "All exact expectations passed; no native lifecycle independently run."
+  },
+  "sourceWeakening": {
+    "variants": 19,
+    "originalControls": 334,
+    "allSelectedFailuresObserved": true,
+    "scope": "Bun isolated copies; expected concrete failed rows, no import/crash accepted as discrimination. Full original source copies excluded from archive; changed modules and exact edit selectors retained."
+  },
+  "formal": {
+    "queries": 16,
+    "unsat": 10,
+    "sat": 6,
+    "z3": "4.15.4",
+    "scope": "Conditional quantified logical obligations, multiset arithmetic and budget judgments; assumes faithful typed comparison, complete mappings/cuts and all-state grants. The monotone bound is an assumed accounting law, not implementation extraction or total CPU/heap proof."
+  },
+  "adoption": {
+    "jsonByteExact": true,
+    "pythonOriginalPrefixExact": true,
+    "pythonAppend": "stdout count/version metadata only",
+    "typescriptChanges": "Two module-import relocations, fixture filename relocation, type-only any[] boundary cast. No expected outcomes changed.",
+    "bindingsChangedOnly": [
+      "S24",
+      "S25"
+    ],
+    "requiredCases": 158,
+    "assertionsCoversLayersTimeoutsUnchanged": true,
+    "independentlyReplayedGovernedObservations": {
+      "S24": 296,
+      "S25": 124
+    },
+    "sourcePinsPerGovernedWrapper": 68
+  },
+  "qualification": "The unchanged S24/S25 contract/browser assertions are supported by these actual guard executions, including mask-equal changed values and exact token/encrypt vault actions. This is not qualification of native cases or the whole goal. Logical no-op updates still need object permission but do not prove absence of physical SET/trigger intent. Equal opaque endpoint multisets do not prove absence of physical replacement.",
+  "limits": [
+    "Trusted issued compiler/source and owner mapping/cut attestation remain premises; no native credentials, permit/seal, current-authority or backend admission.",
+    "No crypto, key, vault, reverse or storage side effect is executed or proven.",
+    "Opaque witness handles have per-cut dedup meaning only; cross-cut comparison preserves role-labelled endpoint multiplicity.",
+    "Private resource ledgers bound declared operations/retained text, not total pre-snapshot allocation, CPU or heap.",
+    "Selected 75-source provenance plus Bun/browser tool versions is not a hermetic toolchain or dependency-authenticity proof."
+  ],
+  "developmentEvidence": [
+    "Malformed empty-actions no-op fixture corrected to a valid nonmatching grant; exact deny unchanged.",
+    "Encrypt keyed custody fixture initially omitted keyRef; corrected to the published keyed wire contract, no expected decisions changed.",
+    "True forbid was initially mislabelled conflict; corrected to deny under original strong-Kleene evaluator and a separate genuine transform conflict added.",
+    "New-anchor mutation first survived because the independent fixture accidentally changed the new anchor Record; corrected to a true no-op anchor; all three flat/Record/opaque anchor failures now observed.",
+    "One isolated dependency-guard deletion caused a syntactic empty-loop error; retained separately, corrected with a no-op body, and not counted as discrimination.",
+    "Initial missing-vault probe was masked by the separate null defect; null-witness.json records it and isolated nonnull before/after proves the vault defect."
+  ],
+  "sourceCount": 75,
+  "sourceCustodyUnchanged": true,
+  "artifacts": {
+    "source-pins.json": "87597a1bd1102228eddf602708c92fb763a5652f6c6df7a87e1a72108165eca6",
+    "source-custody.json": "da9e8ec60ee7b2a8d93a183781649183496b19df086683a8825ca453f22dcd37",
+    "adoption-review.json": "b88e37e02f08a8ba9e830d4af773f4e9708f387277974ac0021e2f2918ee6ba5",
+    "oracle-freeze.json": "b77833bb2ad3502f852700f5f7254c84ac2c663c29c4c567f2af6c815eac950c",
+    "all-results.json": "b63aa63d1173f2bd52c06e95e48c4ee3fff94d23ef3f3ab5cb91268a913fcd34",
+    "browser-results.json": "66ababde9e1377aad963352d7983ed9ef27f843a0832f88235ee43df90b99fa8",
+    "mutation-results.json": "99e5559677684acd8e3563274083a0af7d00cb9d0c719f7268334ef69309f7e6",
+    "formal.py": "4e897e9d3e09ba2e0e782e298b4eae7c3a586fd61cbfe2669e7cbe4ce6190b1f",
+    "formal-replay.json": "23526e51b1b976e8070673c42f3f677b5adf190f6502001ed3b725bb709ed0c8",
+    "governed-S24.json": "df69a268a8c564b41712493fc3444d1e3df8a2c71c977c9e077f056bffed902a",
+    "governed-S25.json": "740f93553cdcb4cd1e9a8066a0e8ac4bdebcafd0d732f3e64f403ab24ee9b347",
+    "vault-before.json": "02ca50acbde110f97fa40e5626cdd3aaddc9a3f0c95fd6efc71de92af9b642ce",
+    "vault-after.json": "7fa90b9cb758f7ea9b8162b323bc96f16902d5e083df7541d51e09604dad0d19",
+    "null-witness.json": "bc25da0be02940b5f4d43edb1dbcfa0b3d89f50a119bf0ceaec7b75fbc00e4ca",
+    "independent-fixtures.py": "4174d9b38b11f12c150149be95e019c26ecc82381822ba64ef382949e69edb7e",
+    "fixtures.json": "49826165b0278102ac5fa1822d411bbf8f2e9b163f39ad381959b60ba0c1745a",
+    "acceptance-oracle.ts": "500ad806e12cc9fe89c766bbfed75c633c1dc86a7e36aa32fba6ebcf00b1a2d0"
+  }
+}

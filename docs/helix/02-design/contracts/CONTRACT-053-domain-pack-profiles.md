@@ -94,6 +94,50 @@ execution requires explicit consumer value conversion and acceptance. This
 candidate fixture MUST label that limitation and retain source pack provenance.
 It is not a Truss/Ashlar native artifact or an ontology conformance certificate.
 
+## Explicit CSV Boolean lexical conversion profile
+
+The caller-selected profile `umf.csv-boolean-lexical/1.0.0` MUST interpret only
+exact supplied CSV cell tokens `true`, `false`, `True` and `False` for an authored
+core 0.8.0 scalar Boolean Field. Lowercase spellings are the original medical
+source CSV grammar; title-case spellings are retained TableSpec normalized ZIP
+CSV output. This named finite grammar is not universal CSV semantics. Whitespace,
+other case patterns, numeric spellings and every other token MUST refuse. The
+profile MUST NOT apply to String Fields, reinterpret JSON strings, or activate
+implicitly for a pack, graph fixture, archive or native engine.
+
+The public `validateCsvBooleanLexical(source, request)` operation MUST take the
+exact profile identifier, explicit `{module,element}` Field identity, original
+`token` and JSON `sourceContext`. It MUST preserve original source, request,
+Field identity and token; its result MUST contain the explicit typed Boolean
+carrier and original public `validateCoreFieldValue` validation. Public Core
+Field semantics own value validity, including selected constraints and unknowns;
+conversion MUST NOT replace them with a second validator. The receipt MUST mark
+source-context provenance `unverified`: caller-provided locators or hashes do not
+prove extraction from external bytes. A consumer MUST separately bind source
+bytes, row/cell identity and selected model revision before relying on the result.
+
+This operation accepts a present lexical token only. Missing and native null
+remain distinct caller source states outside conversion and MUST pass unchanged
+to the applicable public Record presence/value API; no null marker or absence
+becomes `false`, a supplied Boolean token or an applied default. An explicit
+consumer may choose this profile for historical graph lexical cells while
+preserving that graph's original owning pack, model, bytes and token. It MUST NOT
+rewrite historical source descriptors or represent the original lexical cell as
+an originally typed canonical UMF Boolean.
+
+The versioned request and receipt JSON Schema MUST close the operation-owned
+shape while preserving arbitrary JSON source context within bounded JSON copy
+limits. Serialized UTF-8 JSON of the source/request pair and complete receipt
+MUST each be at most 4,000,000 bytes; excess input or receipt MUST refuse without
+truncation. Receipt verification MUST
+compare original expected source/request and recompute the complete public
+operation, refusing missing, stale, forged or extra operation fields. Required
+acceptance coverage includes all four tokens, authored Boolean constraints,
+unknown selected semantics, wrong Field kinds, every unsupported token class,
+missing/null separation, changed source/request/typed result/validation receipts,
+and Bun plus real browser behavior. No broader TableSpec conversion or native
+execution equivalence follows from this profile.
+
 ## Compatibility and Errors
 
 Packs without this profile retain legal/medical behavior. Structural admission of

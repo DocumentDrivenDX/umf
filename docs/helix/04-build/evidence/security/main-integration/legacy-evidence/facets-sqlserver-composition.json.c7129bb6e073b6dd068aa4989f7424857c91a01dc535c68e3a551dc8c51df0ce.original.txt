@@ -1,0 +1,4187 @@
+{
+  "scope": "SQL Server 2022 emitted DDL composed with stored-value classification of complete single-table catalog views; inference is not authorship or equivalence",
+  "serverVersion": "16.0.4295.3",
+  "bindingAccepted": false,
+  "counts": {
+    "cases": 145,
+    "idealRecoveries": 145,
+    "nativeRecoveries": 145,
+    "exactFacetRecoveries": 57,
+    "explicitResiduals": 88,
+    "fullCatalogNativeRecoveries": 2
+  },
+  "results": [
+    {
+      "name": "length-nvarchar-0",
+      "table": "case_0",
+      "encoding": "checked",
+      "mode": "strict",
+      "obligation": "value-domain",
+      "authored": {
+        "length": {
+          "max": 0,
+          "unit": "unicode-scalar"
+        }
+      },
+      "emitted": {
+        "length": {
+          "max": 0,
+          "unit": "unicode-scalar"
+        }
+      },
+      "classified": {
+        "length": {
+          "max": 0,
+          "unit": "unicode-scalar"
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "name": "length-nvarchar-0",
+      "table": "case_1",
+      "encoding": "checked",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "length": {
+          "max": 0,
+          "unit": "unicode-scalar"
+        }
+      },
+      "emitted": {
+        "length": {
+          "max": 0,
+          "unit": "unicode-scalar"
+        }
+      },
+      "classified": {
+        "length": {
+          "max": 0,
+          "unit": "unicode-scalar"
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "name": "length-nvarchar-0",
+      "table": "case_3",
+      "encoding": "type-modifier",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "length": {
+          "max": 0,
+          "unit": "unicode-scalar"
+        }
+      },
+      "emitted": {},
+      "classified": {},
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Selected carrier/encoding cannot honor the length; checked MAX carriers are bounded to 2147483647 and native modifiers require positive bounded sizes",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "UTF-16 storage admits isolated surrogates; LEN with a sentinel is not Unicode validity enforcement",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Native byte/UTF-16 capacity, collation, padding and malformed Unicode do not establish a portable Unicode-scalar length facet",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "length-nvarchar-0",
+      "table": "case_5",
+      "encoding": "carrier-only",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "length": {
+          "max": 0,
+          "unit": "unicode-scalar"
+        }
+      },
+      "emitted": {},
+      "classified": {},
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Selected carrier/encoding cannot honor the length; checked MAX carriers are bounded to 2147483647 and native modifiers require positive bounded sizes",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "UTF-16 storage admits isolated surrogates; LEN with a sentinel is not Unicode validity enforcement",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Native byte/UTF-16 capacity, collation, padding and malformed Unicode do not establish a portable Unicode-scalar length facet",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "length-varchar-0",
+      "table": "case_6",
+      "encoding": "checked",
+      "mode": "strict",
+      "obligation": "value-domain",
+      "authored": {
+        "length": {
+          "max": 0,
+          "unit": "unicode-scalar"
+        }
+      },
+      "emitted": {
+        "length": {
+          "max": 0,
+          "unit": "unicode-scalar"
+        }
+      },
+      "classified": {
+        "length": {
+          "max": 0,
+          "unit": "unicode-scalar"
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "name": "length-varchar-0",
+      "table": "case_7",
+      "encoding": "checked",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "length": {
+          "max": 0,
+          "unit": "unicode-scalar"
+        }
+      },
+      "emitted": {
+        "length": {
+          "max": 0,
+          "unit": "unicode-scalar"
+        }
+      },
+      "classified": {
+        "length": {
+          "max": 0,
+          "unit": "unicode-scalar"
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "name": "length-varchar-0",
+      "table": "case_9",
+      "encoding": "type-modifier",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "length": {
+          "max": 0,
+          "unit": "unicode-scalar"
+        }
+      },
+      "emitted": {},
+      "classified": {},
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Selected carrier/encoding cannot honor the length; checked MAX carriers are bounded to 2147483647 and native modifiers require positive bounded sizes",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "The selected legacy code page cannot represent the full Unicode scalar domain",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Native byte/UTF-16 capacity, collation, padding and malformed Unicode do not establish a portable Unicode-scalar length facet",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "length-varchar-0",
+      "table": "case_11",
+      "encoding": "carrier-only",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "length": {
+          "max": 0,
+          "unit": "unicode-scalar"
+        }
+      },
+      "emitted": {},
+      "classified": {},
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Selected carrier/encoding cannot honor the length; checked MAX carriers are bounded to 2147483647 and native modifiers require positive bounded sizes",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "The selected legacy code page cannot represent the full Unicode scalar domain",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Native byte/UTF-16 capacity, collation, padding and malformed Unicode do not establish a portable Unicode-scalar length facet",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "length-nchar-0",
+      "table": "case_13",
+      "encoding": "checked",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "length": {
+          "max": 0,
+          "unit": "unicode-scalar"
+        }
+      },
+      "emitted": {},
+      "classified": {},
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Selected carrier/encoding cannot honor the length; checked MAX carriers are bounded to 2147483647 and native modifiers require positive bounded sizes",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "UTF-16 storage admits isolated surrogates; LEN with a sentinel is not Unicode validity enforcement",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Fixed native storage pads values; a maximum length facet does not imply padding",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Native byte/UTF-16 capacity, collation, padding and malformed Unicode do not establish a portable Unicode-scalar length facet",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "length-nchar-0",
+      "table": "case_15",
+      "encoding": "type-modifier",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "length": {
+          "max": 0,
+          "unit": "unicode-scalar"
+        }
+      },
+      "emitted": {},
+      "classified": {},
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Selected carrier/encoding cannot honor the length; checked MAX carriers are bounded to 2147483647 and native modifiers require positive bounded sizes",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "UTF-16 storage admits isolated surrogates; LEN with a sentinel is not Unicode validity enforcement",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Fixed native storage pads values; a maximum length facet does not imply padding",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Native byte/UTF-16 capacity, collation, padding and malformed Unicode do not establish a portable Unicode-scalar length facet",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "length-nchar-0",
+      "table": "case_17",
+      "encoding": "carrier-only",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "length": {
+          "max": 0,
+          "unit": "unicode-scalar"
+        }
+      },
+      "emitted": {},
+      "classified": {},
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Selected carrier/encoding cannot honor the length; checked MAX carriers are bounded to 2147483647 and native modifiers require positive bounded sizes",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "UTF-16 storage admits isolated surrogates; LEN with a sentinel is not Unicode validity enforcement",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Fixed native storage pads values; a maximum length facet does not imply padding",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Native byte/UTF-16 capacity, collation, padding and malformed Unicode do not establish a portable Unicode-scalar length facet",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "length-nvarchar-2",
+      "table": "case_19",
+      "encoding": "checked",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "length": {
+          "max": 2,
+          "unit": "unicode-scalar"
+        }
+      },
+      "emitted": {
+        "length": {
+          "max": 2,
+          "unit": "unicode-scalar"
+        }
+      },
+      "classified": {},
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "UTF-16 storage admits isolated surrogates; LEN with a sentinel is not Unicode validity enforcement",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "CHECK is unresolved for the selected value scope: Predicate/type combination requires additional native or collation qualification",
+          "outcome": "unknown"
+        },
+        {
+          "reason": "Native byte/UTF-16 capacity, collation, padding and malformed Unicode do not establish a portable Unicode-scalar length facet",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "length-nvarchar-2",
+      "table": "case_21",
+      "encoding": "type-modifier",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "length": {
+          "max": 2,
+          "unit": "unicode-scalar"
+        }
+      },
+      "emitted": {
+        "length": {
+          "max": 2,
+          "unit": "unicode-scalar"
+        }
+      },
+      "classified": {},
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Native type size counts UTF-16 units or code-page bytes, not Unicode scalars; supplementary values can be excluded",
+          "outcome": "approximated"
+        },
+        {
+          "reason": "UTF-16 storage admits isolated surrogates; LEN with a sentinel is not Unicode validity enforcement",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Native byte/UTF-16 capacity, collation, padding and malformed Unicode do not establish a portable Unicode-scalar length facet",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "length-nvarchar-2",
+      "table": "case_23",
+      "encoding": "carrier-only",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "length": {
+          "max": 2,
+          "unit": "unicode-scalar"
+        }
+      },
+      "emitted": {},
+      "classified": {},
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Selected carrier/encoding cannot honor the length; checked MAX carriers are bounded to 2147483647 and native modifiers require positive bounded sizes",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "UTF-16 storage admits isolated surrogates; LEN with a sentinel is not Unicode validity enforcement",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Native byte/UTF-16 capacity, collation, padding and malformed Unicode do not establish a portable Unicode-scalar length facet",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "length-varchar-2",
+      "table": "case_25",
+      "encoding": "checked",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "length": {
+          "max": 2,
+          "unit": "unicode-scalar"
+        }
+      },
+      "emitted": {
+        "length": {
+          "max": 2,
+          "unit": "unicode-scalar"
+        }
+      },
+      "classified": {},
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "The selected legacy code page cannot represent the full Unicode scalar domain",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "CHECK is unresolved for the selected value scope: Predicate/type combination requires additional native or collation qualification",
+          "outcome": "unknown"
+        },
+        {
+          "reason": "Native byte/UTF-16 capacity, collation, padding and malformed Unicode do not establish a portable Unicode-scalar length facet",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "length-varchar-2",
+      "table": "case_27",
+      "encoding": "type-modifier",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "length": {
+          "max": 2,
+          "unit": "unicode-scalar"
+        }
+      },
+      "emitted": {
+        "length": {
+          "max": 2,
+          "unit": "unicode-scalar"
+        }
+      },
+      "classified": {},
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Native type size counts UTF-16 units or code-page bytes, not Unicode scalars; supplementary values can be excluded",
+          "outcome": "approximated"
+        },
+        {
+          "reason": "The selected legacy code page cannot represent the full Unicode scalar domain",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Native byte/UTF-16 capacity, collation, padding and malformed Unicode do not establish a portable Unicode-scalar length facet",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "length-varchar-2",
+      "table": "case_29",
+      "encoding": "carrier-only",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "length": {
+          "max": 2,
+          "unit": "unicode-scalar"
+        }
+      },
+      "emitted": {},
+      "classified": {},
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Selected carrier/encoding cannot honor the length; checked MAX carriers are bounded to 2147483647 and native modifiers require positive bounded sizes",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "The selected legacy code page cannot represent the full Unicode scalar domain",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Native byte/UTF-16 capacity, collation, padding and malformed Unicode do not establish a portable Unicode-scalar length facet",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "length-nchar-2",
+      "table": "case_31",
+      "encoding": "checked",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "length": {
+          "max": 2,
+          "unit": "unicode-scalar"
+        }
+      },
+      "emitted": {},
+      "classified": {},
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Selected carrier/encoding cannot honor the length; checked MAX carriers are bounded to 2147483647 and native modifiers require positive bounded sizes",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "UTF-16 storage admits isolated surrogates; LEN with a sentinel is not Unicode validity enforcement",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Fixed native storage pads values; a maximum length facet does not imply padding",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Native byte/UTF-16 capacity, collation, padding and malformed Unicode do not establish a portable Unicode-scalar length facet",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "length-nchar-2",
+      "table": "case_33",
+      "encoding": "type-modifier",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "length": {
+          "max": 2,
+          "unit": "unicode-scalar"
+        }
+      },
+      "emitted": {
+        "length": {
+          "max": 2,
+          "unit": "unicode-scalar"
+        }
+      },
+      "classified": {},
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Native type size counts UTF-16 units or code-page bytes, not Unicode scalars; supplementary values can be excluded",
+          "outcome": "approximated"
+        },
+        {
+          "reason": "UTF-16 storage admits isolated surrogates; LEN with a sentinel is not Unicode validity enforcement",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Fixed native storage pads values; a maximum length facet does not imply padding",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Native byte/UTF-16 capacity, collation, padding and malformed Unicode do not establish a portable Unicode-scalar length facet",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "length-nchar-2",
+      "table": "case_35",
+      "encoding": "carrier-only",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "length": {
+          "max": 2,
+          "unit": "unicode-scalar"
+        }
+      },
+      "emitted": {},
+      "classified": {},
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Selected carrier/encoding cannot honor the length; checked MAX carriers are bounded to 2147483647 and native modifiers require positive bounded sizes",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "UTF-16 storage admits isolated surrogates; LEN with a sentinel is not Unicode validity enforcement",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Fixed native storage pads values; a maximum length facet does not imply padding",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Native byte/UTF-16 capacity, collation, padding and malformed Unicode do not establish a portable Unicode-scalar length facet",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "length-nvarchar-4001",
+      "table": "case_37",
+      "encoding": "checked",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "length": {
+          "max": 4001,
+          "unit": "unicode-scalar"
+        }
+      },
+      "emitted": {
+        "length": {
+          "max": 4001,
+          "unit": "unicode-scalar"
+        }
+      },
+      "classified": {},
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "UTF-16 storage admits isolated surrogates; LEN with a sentinel is not Unicode validity enforcement",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "CHECK is unresolved for the selected value scope: Predicate/type combination requires additional native or collation qualification",
+          "outcome": "unknown"
+        },
+        {
+          "reason": "Native byte/UTF-16 capacity, collation, padding and malformed Unicode do not establish a portable Unicode-scalar length facet",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "length-nvarchar-4001",
+      "table": "case_39",
+      "encoding": "type-modifier",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "length": {
+          "max": 4001,
+          "unit": "unicode-scalar"
+        }
+      },
+      "emitted": {},
+      "classified": {},
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Selected carrier/encoding cannot honor the length; checked MAX carriers are bounded to 2147483647 and native modifiers require positive bounded sizes",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "UTF-16 storage admits isolated surrogates; LEN with a sentinel is not Unicode validity enforcement",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Native byte/UTF-16 capacity, collation, padding and malformed Unicode do not establish a portable Unicode-scalar length facet",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "length-nvarchar-4001",
+      "table": "case_41",
+      "encoding": "carrier-only",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "length": {
+          "max": 4001,
+          "unit": "unicode-scalar"
+        }
+      },
+      "emitted": {},
+      "classified": {},
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Selected carrier/encoding cannot honor the length; checked MAX carriers are bounded to 2147483647 and native modifiers require positive bounded sizes",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "UTF-16 storage admits isolated surrogates; LEN with a sentinel is not Unicode validity enforcement",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Native byte/UTF-16 capacity, collation, padding and malformed Unicode do not establish a portable Unicode-scalar length facet",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "length-varchar-4001",
+      "table": "case_43",
+      "encoding": "checked",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "length": {
+          "max": 4001,
+          "unit": "unicode-scalar"
+        }
+      },
+      "emitted": {
+        "length": {
+          "max": 4001,
+          "unit": "unicode-scalar"
+        }
+      },
+      "classified": {},
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "The selected legacy code page cannot represent the full Unicode scalar domain",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "CHECK is unresolved for the selected value scope: Predicate/type combination requires additional native or collation qualification",
+          "outcome": "unknown"
+        },
+        {
+          "reason": "Native byte/UTF-16 capacity, collation, padding and malformed Unicode do not establish a portable Unicode-scalar length facet",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "length-varchar-4001",
+      "table": "case_45",
+      "encoding": "type-modifier",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "length": {
+          "max": 4001,
+          "unit": "unicode-scalar"
+        }
+      },
+      "emitted": {
+        "length": {
+          "max": 4001,
+          "unit": "unicode-scalar"
+        }
+      },
+      "classified": {},
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Native type size counts UTF-16 units or code-page bytes, not Unicode scalars; supplementary values can be excluded",
+          "outcome": "approximated"
+        },
+        {
+          "reason": "The selected legacy code page cannot represent the full Unicode scalar domain",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Native byte/UTF-16 capacity, collation, padding and malformed Unicode do not establish a portable Unicode-scalar length facet",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "length-varchar-4001",
+      "table": "case_47",
+      "encoding": "carrier-only",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "length": {
+          "max": 4001,
+          "unit": "unicode-scalar"
+        }
+      },
+      "emitted": {},
+      "classified": {},
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Selected carrier/encoding cannot honor the length; checked MAX carriers are bounded to 2147483647 and native modifiers require positive bounded sizes",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "The selected legacy code page cannot represent the full Unicode scalar domain",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Native byte/UTF-16 capacity, collation, padding and malformed Unicode do not establish a portable Unicode-scalar length facet",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "length-nchar-4001",
+      "table": "case_49",
+      "encoding": "checked",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "length": {
+          "max": 4001,
+          "unit": "unicode-scalar"
+        }
+      },
+      "emitted": {},
+      "classified": {},
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Selected carrier/encoding cannot honor the length; checked MAX carriers are bounded to 2147483647 and native modifiers require positive bounded sizes",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "UTF-16 storage admits isolated surrogates; LEN with a sentinel is not Unicode validity enforcement",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Fixed native storage pads values; a maximum length facet does not imply padding",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Native byte/UTF-16 capacity, collation, padding and malformed Unicode do not establish a portable Unicode-scalar length facet",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "length-nchar-4001",
+      "table": "case_51",
+      "encoding": "type-modifier",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "length": {
+          "max": 4001,
+          "unit": "unicode-scalar"
+        }
+      },
+      "emitted": {},
+      "classified": {},
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Selected carrier/encoding cannot honor the length; checked MAX carriers are bounded to 2147483647 and native modifiers require positive bounded sizes",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "UTF-16 storage admits isolated surrogates; LEN with a sentinel is not Unicode validity enforcement",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Fixed native storage pads values; a maximum length facet does not imply padding",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Native byte/UTF-16 capacity, collation, padding and malformed Unicode do not establish a portable Unicode-scalar length facet",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "length-nchar-4001",
+      "table": "case_53",
+      "encoding": "carrier-only",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "length": {
+          "max": 4001,
+          "unit": "unicode-scalar"
+        }
+      },
+      "emitted": {},
+      "classified": {},
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Selected carrier/encoding cannot honor the length; checked MAX carriers are bounded to 2147483647 and native modifiers require positive bounded sizes",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "UTF-16 storage admits isolated surrogates; LEN with a sentinel is not Unicode validity enforcement",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Fixed native storage pads values; a maximum length facet does not imply padding",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Native byte/UTF-16 capacity, collation, padding and malformed Unicode do not establish a portable Unicode-scalar length facet",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "length-nvarchar-2147483648",
+      "table": "case_55",
+      "encoding": "checked",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "length": {
+          "max": 2147483648,
+          "unit": "unicode-scalar"
+        }
+      },
+      "emitted": {},
+      "classified": {},
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Selected carrier/encoding cannot honor the length; checked MAX carriers are bounded to 2147483647 and native modifiers require positive bounded sizes",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "UTF-16 storage admits isolated surrogates; LEN with a sentinel is not Unicode validity enforcement",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Native byte/UTF-16 capacity, collation, padding and malformed Unicode do not establish a portable Unicode-scalar length facet",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "length-nvarchar-2147483648",
+      "table": "case_57",
+      "encoding": "type-modifier",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "length": {
+          "max": 2147483648,
+          "unit": "unicode-scalar"
+        }
+      },
+      "emitted": {},
+      "classified": {},
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Selected carrier/encoding cannot honor the length; checked MAX carriers are bounded to 2147483647 and native modifiers require positive bounded sizes",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "UTF-16 storage admits isolated surrogates; LEN with a sentinel is not Unicode validity enforcement",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Native byte/UTF-16 capacity, collation, padding and malformed Unicode do not establish a portable Unicode-scalar length facet",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "length-nvarchar-2147483648",
+      "table": "case_59",
+      "encoding": "carrier-only",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "length": {
+          "max": 2147483648,
+          "unit": "unicode-scalar"
+        }
+      },
+      "emitted": {},
+      "classified": {},
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Selected carrier/encoding cannot honor the length; checked MAX carriers are bounded to 2147483647 and native modifiers require positive bounded sizes",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "UTF-16 storage admits isolated surrogates; LEN with a sentinel is not Unicode validity enforcement",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Native byte/UTF-16 capacity, collation, padding and malformed Unicode do not establish a portable Unicode-scalar length facet",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "length-varchar-2147483648",
+      "table": "case_61",
+      "encoding": "checked",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "length": {
+          "max": 2147483648,
+          "unit": "unicode-scalar"
+        }
+      },
+      "emitted": {},
+      "classified": {},
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Selected carrier/encoding cannot honor the length; checked MAX carriers are bounded to 2147483647 and native modifiers require positive bounded sizes",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "The selected legacy code page cannot represent the full Unicode scalar domain",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Native byte/UTF-16 capacity, collation, padding and malformed Unicode do not establish a portable Unicode-scalar length facet",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "length-varchar-2147483648",
+      "table": "case_63",
+      "encoding": "type-modifier",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "length": {
+          "max": 2147483648,
+          "unit": "unicode-scalar"
+        }
+      },
+      "emitted": {},
+      "classified": {},
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Selected carrier/encoding cannot honor the length; checked MAX carriers are bounded to 2147483647 and native modifiers require positive bounded sizes",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "The selected legacy code page cannot represent the full Unicode scalar domain",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Native byte/UTF-16 capacity, collation, padding and malformed Unicode do not establish a portable Unicode-scalar length facet",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "length-varchar-2147483648",
+      "table": "case_65",
+      "encoding": "carrier-only",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "length": {
+          "max": 2147483648,
+          "unit": "unicode-scalar"
+        }
+      },
+      "emitted": {},
+      "classified": {},
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Selected carrier/encoding cannot honor the length; checked MAX carriers are bounded to 2147483647 and native modifiers require positive bounded sizes",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "The selected legacy code page cannot represent the full Unicode scalar domain",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Native byte/UTF-16 capacity, collation, padding and malformed Unicode do not establish a portable Unicode-scalar length facet",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "length-nchar-2147483648",
+      "table": "case_67",
+      "encoding": "checked",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "length": {
+          "max": 2147483648,
+          "unit": "unicode-scalar"
+        }
+      },
+      "emitted": {},
+      "classified": {},
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Selected carrier/encoding cannot honor the length; checked MAX carriers are bounded to 2147483647 and native modifiers require positive bounded sizes",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "UTF-16 storage admits isolated surrogates; LEN with a sentinel is not Unicode validity enforcement",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Fixed native storage pads values; a maximum length facet does not imply padding",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Native byte/UTF-16 capacity, collation, padding and malformed Unicode do not establish a portable Unicode-scalar length facet",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "length-nchar-2147483648",
+      "table": "case_69",
+      "encoding": "type-modifier",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "length": {
+          "max": 2147483648,
+          "unit": "unicode-scalar"
+        }
+      },
+      "emitted": {},
+      "classified": {},
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Selected carrier/encoding cannot honor the length; checked MAX carriers are bounded to 2147483647 and native modifiers require positive bounded sizes",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "UTF-16 storage admits isolated surrogates; LEN with a sentinel is not Unicode validity enforcement",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Fixed native storage pads values; a maximum length facet does not imply padding",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Native byte/UTF-16 capacity, collation, padding and malformed Unicode do not establish a portable Unicode-scalar length facet",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "length-nchar-2147483648",
+      "table": "case_71",
+      "encoding": "carrier-only",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "length": {
+          "max": 2147483648,
+          "unit": "unicode-scalar"
+        }
+      },
+      "emitted": {},
+      "classified": {},
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Selected carrier/encoding cannot honor the length; checked MAX carriers are bounded to 2147483647 and native modifiers require positive bounded sizes",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "UTF-16 storage admits isolated surrogates; LEN with a sentinel is not Unicode validity enforcement",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Fixed native storage pads values; a maximum length facet does not imply padding",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Native byte/UTF-16 capacity, collation, padding and malformed Unicode do not establish a portable Unicode-scalar length facet",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "bytes-varbinary-0",
+      "table": "case_72",
+      "encoding": "checked",
+      "mode": "strict",
+      "obligation": "value-domain",
+      "authored": {
+        "length": {
+          "max": 0,
+          "unit": "byte"
+        }
+      },
+      "emitted": {
+        "length": {
+          "max": 0,
+          "unit": "byte"
+        }
+      },
+      "classified": {
+        "length": {
+          "max": 0,
+          "unit": "byte"
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "name": "bytes-varbinary-0",
+      "table": "case_73",
+      "encoding": "checked",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "length": {
+          "max": 0,
+          "unit": "byte"
+        }
+      },
+      "emitted": {
+        "length": {
+          "max": 0,
+          "unit": "byte"
+        }
+      },
+      "classified": {
+        "length": {
+          "max": 0,
+          "unit": "byte"
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "name": "bytes-varbinary-0",
+      "table": "case_75",
+      "encoding": "type-modifier",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "length": {
+          "max": 0,
+          "unit": "byte"
+        }
+      },
+      "emitted": {},
+      "classified": {},
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Selected carrier/encoding cannot honor the length; checked MAX carriers are bounded to 2147483647 and native modifiers require positive bounded sizes",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "bytes-varbinary-0",
+      "table": "case_77",
+      "encoding": "carrier-only",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "length": {
+          "max": 0,
+          "unit": "byte"
+        }
+      },
+      "emitted": {},
+      "classified": {},
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Selected carrier/encoding cannot honor the length; checked MAX carriers are bounded to 2147483647 and native modifiers require positive bounded sizes",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "bytes-binary-0",
+      "table": "case_79",
+      "encoding": "checked",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "length": {
+          "max": 0,
+          "unit": "byte"
+        }
+      },
+      "emitted": {},
+      "classified": {
+        "length": {
+          "max": 1,
+          "unit": "byte"
+        }
+      },
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Selected carrier/encoding cannot honor the length; checked MAX carriers are bounded to 2147483647 and native modifiers require positive bounded sizes",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Fixed native storage pads values; a maximum length facet does not imply padding",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Fixed binary padding is not represented by a maximum byte bound",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "bytes-binary-0",
+      "table": "case_81",
+      "encoding": "type-modifier",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "length": {
+          "max": 0,
+          "unit": "byte"
+        }
+      },
+      "emitted": {},
+      "classified": {
+        "length": {
+          "max": 1,
+          "unit": "byte"
+        }
+      },
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Selected carrier/encoding cannot honor the length; checked MAX carriers are bounded to 2147483647 and native modifiers require positive bounded sizes",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Fixed native storage pads values; a maximum length facet does not imply padding",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Fixed binary padding is not represented by a maximum byte bound",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "bytes-binary-0",
+      "table": "case_83",
+      "encoding": "carrier-only",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "length": {
+          "max": 0,
+          "unit": "byte"
+        }
+      },
+      "emitted": {},
+      "classified": {
+        "length": {
+          "max": 1,
+          "unit": "byte"
+        }
+      },
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Selected carrier/encoding cannot honor the length; checked MAX carriers are bounded to 2147483647 and native modifiers require positive bounded sizes",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Fixed native storage pads values; a maximum length facet does not imply padding",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Fixed binary padding is not represented by a maximum byte bound",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "bytes-varbinary-2",
+      "table": "case_84",
+      "encoding": "checked",
+      "mode": "strict",
+      "obligation": "value-domain",
+      "authored": {
+        "length": {
+          "max": 2,
+          "unit": "byte"
+        }
+      },
+      "emitted": {
+        "length": {
+          "max": 2,
+          "unit": "byte"
+        }
+      },
+      "classified": {
+        "length": {
+          "max": 2,
+          "unit": "byte"
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "name": "bytes-varbinary-2",
+      "table": "case_85",
+      "encoding": "checked",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "length": {
+          "max": 2,
+          "unit": "byte"
+        }
+      },
+      "emitted": {
+        "length": {
+          "max": 2,
+          "unit": "byte"
+        }
+      },
+      "classified": {
+        "length": {
+          "max": 2,
+          "unit": "byte"
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "name": "bytes-varbinary-2",
+      "table": "case_86",
+      "encoding": "type-modifier",
+      "mode": "strict",
+      "obligation": "value-domain",
+      "authored": {
+        "length": {
+          "max": 2,
+          "unit": "byte"
+        }
+      },
+      "emitted": {
+        "length": {
+          "max": 2,
+          "unit": "byte"
+        }
+      },
+      "classified": {
+        "length": {
+          "max": 2,
+          "unit": "byte"
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "name": "bytes-varbinary-2",
+      "table": "case_87",
+      "encoding": "type-modifier",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "length": {
+          "max": 2,
+          "unit": "byte"
+        }
+      },
+      "emitted": {
+        "length": {
+          "max": 2,
+          "unit": "byte"
+        }
+      },
+      "classified": {
+        "length": {
+          "max": 2,
+          "unit": "byte"
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "name": "bytes-varbinary-2",
+      "table": "case_89",
+      "encoding": "carrier-only",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "length": {
+          "max": 2,
+          "unit": "byte"
+        }
+      },
+      "emitted": {},
+      "classified": {},
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Selected carrier/encoding cannot honor the length; checked MAX carriers are bounded to 2147483647 and native modifiers require positive bounded sizes",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "bytes-binary-2",
+      "table": "case_91",
+      "encoding": "checked",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "length": {
+          "max": 2,
+          "unit": "byte"
+        }
+      },
+      "emitted": {},
+      "classified": {
+        "length": {
+          "max": 1,
+          "unit": "byte"
+        }
+      },
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Selected carrier/encoding cannot honor the length; checked MAX carriers are bounded to 2147483647 and native modifiers require positive bounded sizes",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Fixed native storage pads values; a maximum length facet does not imply padding",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Fixed binary padding is not represented by a maximum byte bound",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "bytes-binary-2",
+      "table": "case_93",
+      "encoding": "type-modifier",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "length": {
+          "max": 2,
+          "unit": "byte"
+        }
+      },
+      "emitted": {
+        "length": {
+          "max": 2,
+          "unit": "byte"
+        }
+      },
+      "classified": {
+        "length": {
+          "max": 2,
+          "unit": "byte"
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Fixed native storage pads values; a maximum length facet does not imply padding",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Fixed binary padding is not represented by a maximum byte bound",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "bytes-binary-2",
+      "table": "case_95",
+      "encoding": "carrier-only",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "length": {
+          "max": 2,
+          "unit": "byte"
+        }
+      },
+      "emitted": {},
+      "classified": {
+        "length": {
+          "max": 1,
+          "unit": "byte"
+        }
+      },
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Selected carrier/encoding cannot honor the length; checked MAX carriers are bounded to 2147483647 and native modifiers require positive bounded sizes",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Fixed native storage pads values; a maximum length facet does not imply padding",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Fixed binary padding is not represented by a maximum byte bound",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "bytes-varbinary-8001",
+      "table": "case_96",
+      "encoding": "checked",
+      "mode": "strict",
+      "obligation": "value-domain",
+      "authored": {
+        "length": {
+          "max": 8001,
+          "unit": "byte"
+        }
+      },
+      "emitted": {
+        "length": {
+          "max": 8001,
+          "unit": "byte"
+        }
+      },
+      "classified": {
+        "length": {
+          "max": 8001,
+          "unit": "byte"
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "name": "bytes-varbinary-8001",
+      "table": "case_97",
+      "encoding": "checked",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "length": {
+          "max": 8001,
+          "unit": "byte"
+        }
+      },
+      "emitted": {
+        "length": {
+          "max": 8001,
+          "unit": "byte"
+        }
+      },
+      "classified": {
+        "length": {
+          "max": 8001,
+          "unit": "byte"
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "name": "bytes-varbinary-8001",
+      "table": "case_99",
+      "encoding": "type-modifier",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "length": {
+          "max": 8001,
+          "unit": "byte"
+        }
+      },
+      "emitted": {},
+      "classified": {},
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Selected carrier/encoding cannot honor the length; checked MAX carriers are bounded to 2147483647 and native modifiers require positive bounded sizes",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "bytes-varbinary-8001",
+      "table": "case_101",
+      "encoding": "carrier-only",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "length": {
+          "max": 8001,
+          "unit": "byte"
+        }
+      },
+      "emitted": {},
+      "classified": {},
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Selected carrier/encoding cannot honor the length; checked MAX carriers are bounded to 2147483647 and native modifiers require positive bounded sizes",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "bytes-binary-8001",
+      "table": "case_103",
+      "encoding": "checked",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "length": {
+          "max": 8001,
+          "unit": "byte"
+        }
+      },
+      "emitted": {},
+      "classified": {
+        "length": {
+          "max": 1,
+          "unit": "byte"
+        }
+      },
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Selected carrier/encoding cannot honor the length; checked MAX carriers are bounded to 2147483647 and native modifiers require positive bounded sizes",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Fixed native storage pads values; a maximum length facet does not imply padding",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Fixed binary padding is not represented by a maximum byte bound",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "bytes-binary-8001",
+      "table": "case_105",
+      "encoding": "type-modifier",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "length": {
+          "max": 8001,
+          "unit": "byte"
+        }
+      },
+      "emitted": {},
+      "classified": {
+        "length": {
+          "max": 1,
+          "unit": "byte"
+        }
+      },
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Selected carrier/encoding cannot honor the length; checked MAX carriers are bounded to 2147483647 and native modifiers require positive bounded sizes",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Fixed native storage pads values; a maximum length facet does not imply padding",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Fixed binary padding is not represented by a maximum byte bound",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "bytes-binary-8001",
+      "table": "case_107",
+      "encoding": "carrier-only",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "length": {
+          "max": 8001,
+          "unit": "byte"
+        }
+      },
+      "emitted": {},
+      "classified": {
+        "length": {
+          "max": 1,
+          "unit": "byte"
+        }
+      },
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Selected carrier/encoding cannot honor the length; checked MAX carriers are bounded to 2147483647 and native modifiers require positive bounded sizes",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Fixed native storage pads values; a maximum length facet does not imply padding",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Fixed binary padding is not represented by a maximum byte bound",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "bytes-varbinary-2147483648",
+      "table": "case_109",
+      "encoding": "checked",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "length": {
+          "max": 2147483648,
+          "unit": "byte"
+        }
+      },
+      "emitted": {},
+      "classified": {},
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Selected carrier/encoding cannot honor the length; checked MAX carriers are bounded to 2147483647 and native modifiers require positive bounded sizes",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "bytes-varbinary-2147483648",
+      "table": "case_111",
+      "encoding": "type-modifier",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "length": {
+          "max": 2147483648,
+          "unit": "byte"
+        }
+      },
+      "emitted": {},
+      "classified": {},
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Selected carrier/encoding cannot honor the length; checked MAX carriers are bounded to 2147483647 and native modifiers require positive bounded sizes",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "bytes-varbinary-2147483648",
+      "table": "case_113",
+      "encoding": "carrier-only",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "length": {
+          "max": 2147483648,
+          "unit": "byte"
+        }
+      },
+      "emitted": {},
+      "classified": {},
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Selected carrier/encoding cannot honor the length; checked MAX carriers are bounded to 2147483647 and native modifiers require positive bounded sizes",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "bytes-binary-2147483648",
+      "table": "case_115",
+      "encoding": "checked",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "length": {
+          "max": 2147483648,
+          "unit": "byte"
+        }
+      },
+      "emitted": {},
+      "classified": {
+        "length": {
+          "max": 1,
+          "unit": "byte"
+        }
+      },
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Selected carrier/encoding cannot honor the length; checked MAX carriers are bounded to 2147483647 and native modifiers require positive bounded sizes",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Fixed native storage pads values; a maximum length facet does not imply padding",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Fixed binary padding is not represented by a maximum byte bound",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "bytes-binary-2147483648",
+      "table": "case_117",
+      "encoding": "type-modifier",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "length": {
+          "max": 2147483648,
+          "unit": "byte"
+        }
+      },
+      "emitted": {},
+      "classified": {
+        "length": {
+          "max": 1,
+          "unit": "byte"
+        }
+      },
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Selected carrier/encoding cannot honor the length; checked MAX carriers are bounded to 2147483647 and native modifiers require positive bounded sizes",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Fixed native storage pads values; a maximum length facet does not imply padding",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Fixed binary padding is not represented by a maximum byte bound",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "bytes-binary-2147483648",
+      "table": "case_119",
+      "encoding": "carrier-only",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "length": {
+          "max": 2147483648,
+          "unit": "byte"
+        }
+      },
+      "emitted": {},
+      "classified": {
+        "length": {
+          "max": 1,
+          "unit": "byte"
+        }
+      },
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Selected carrier/encoding cannot honor the length; checked MAX carriers are bounded to 2147483647 and native modifiers require positive bounded sizes",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Fixed native storage pads values; a maximum length facet does not imply padding",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Fixed binary padding is not represented by a maximum byte bound",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "tinyint-8-true",
+      "table": "case_121",
+      "encoding": "checked",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": true
+        }
+      },
+      "emitted": {},
+      "classified": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": false
+        }
+      },
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Selected carrier cannot contain/enforce this integer domain; checked decimal width is bounded by the 38-digit coefficient domain",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "tinyint-8-true",
+      "table": "case_123",
+      "encoding": "type-modifier",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": true
+        }
+      },
+      "emitted": {},
+      "classified": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": false
+        }
+      },
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Selected carrier cannot contain/enforce this integer domain; checked decimal width is bounded by the 38-digit coefficient domain",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "tinyint-8-true",
+      "table": "case_125",
+      "encoding": "carrier-only",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": true
+        }
+      },
+      "emitted": {},
+      "classified": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": false
+        }
+      },
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Selected carrier cannot contain/enforce this integer domain; checked decimal width is bounded by the 38-digit coefficient domain",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "smallint-8-true",
+      "table": "case_126",
+      "encoding": "checked",
+      "mode": "strict",
+      "obligation": "value-domain",
+      "authored": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": true
+        }
+      },
+      "emitted": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": true
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": true
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "name": "smallint-8-true",
+      "table": "case_127] quote",
+      "encoding": "checked",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": true
+        }
+      },
+      "emitted": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": true
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": true
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "name": "smallint-8-true",
+      "table": "case_129",
+      "encoding": "type-modifier",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": true
+        }
+      },
+      "emitted": {},
+      "classified": {
+        "integerWidth": {
+          "bits": 16,
+          "signed": true
+        }
+      },
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Selected carrier cannot contain/enforce this integer domain; checked decimal width is bounded by the 38-digit coefficient domain",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "smallint-8-true",
+      "table": "case_131",
+      "encoding": "carrier-only",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": true
+        }
+      },
+      "emitted": {},
+      "classified": {
+        "integerWidth": {
+          "bits": 16,
+          "signed": true
+        }
+      },
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Selected carrier cannot contain/enforce this integer domain; checked decimal width is bounded by the 38-digit coefficient domain",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "tinyint-8-false",
+      "table": "case_132",
+      "encoding": "checked",
+      "mode": "strict",
+      "obligation": "value-domain",
+      "authored": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": false
+        }
+      },
+      "emitted": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": false
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": false
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "name": "tinyint-8-false",
+      "table": "case_133",
+      "encoding": "checked",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": false
+        }
+      },
+      "emitted": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": false
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": false
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "name": "tinyint-8-false",
+      "table": "case_134",
+      "encoding": "type-modifier",
+      "mode": "strict",
+      "obligation": "value-domain",
+      "authored": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": false
+        }
+      },
+      "emitted": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": false
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": false
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "name": "tinyint-8-false",
+      "table": "case_135",
+      "encoding": "type-modifier",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": false
+        }
+      },
+      "emitted": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": false
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": false
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "name": "tinyint-8-false",
+      "table": "case_136",
+      "encoding": "carrier-only",
+      "mode": "strict",
+      "obligation": "value-domain",
+      "authored": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": false
+        }
+      },
+      "emitted": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": false
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": false
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "name": "tinyint-8-false",
+      "table": "case_137",
+      "encoding": "carrier-only",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": false
+        }
+      },
+      "emitted": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": false
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": false
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "name": "smallint-8-false",
+      "table": "case_138",
+      "encoding": "checked",
+      "mode": "strict",
+      "obligation": "value-domain",
+      "authored": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": false
+        }
+      },
+      "emitted": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": false
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": false
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "name": "smallint-8-false",
+      "table": "case_139",
+      "encoding": "checked",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": false
+        }
+      },
+      "emitted": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": false
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": false
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "name": "smallint-8-false",
+      "table": "case_141",
+      "encoding": "type-modifier",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": false
+        }
+      },
+      "emitted": {},
+      "classified": {
+        "integerWidth": {
+          "bits": 16,
+          "signed": true
+        }
+      },
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Selected carrier cannot contain/enforce this integer domain; checked decimal width is bounded by the 38-digit coefficient domain",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "smallint-8-false",
+      "table": "case_143",
+      "encoding": "carrier-only",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": false
+        }
+      },
+      "emitted": {},
+      "classified": {
+        "integerWidth": {
+          "bits": 16,
+          "signed": true
+        }
+      },
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Selected carrier cannot contain/enforce this integer domain; checked decimal width is bounded by the 38-digit coefficient domain",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "tinyint-16-true",
+      "table": "case_145",
+      "encoding": "checked",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "integerWidth": {
+          "bits": 16,
+          "signed": true
+        }
+      },
+      "emitted": {},
+      "classified": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": false
+        }
+      },
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Selected carrier cannot contain/enforce this integer domain; checked decimal width is bounded by the 38-digit coefficient domain",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "tinyint-16-true",
+      "table": "case_147",
+      "encoding": "type-modifier",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "integerWidth": {
+          "bits": 16,
+          "signed": true
+        }
+      },
+      "emitted": {},
+      "classified": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": false
+        }
+      },
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Selected carrier cannot contain/enforce this integer domain; checked decimal width is bounded by the 38-digit coefficient domain",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "tinyint-16-true",
+      "table": "case_149",
+      "encoding": "carrier-only",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "integerWidth": {
+          "bits": 16,
+          "signed": true
+        }
+      },
+      "emitted": {},
+      "classified": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": false
+        }
+      },
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Selected carrier cannot contain/enforce this integer domain; checked decimal width is bounded by the 38-digit coefficient domain",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "smallint-16-true",
+      "table": "case_150",
+      "encoding": "checked",
+      "mode": "strict",
+      "obligation": "value-domain",
+      "authored": {
+        "integerWidth": {
+          "bits": 16,
+          "signed": true
+        }
+      },
+      "emitted": {
+        "integerWidth": {
+          "bits": 16,
+          "signed": true
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 16,
+          "signed": true
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "name": "smallint-16-true",
+      "table": "case_151",
+      "encoding": "checked",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "integerWidth": {
+          "bits": 16,
+          "signed": true
+        }
+      },
+      "emitted": {
+        "integerWidth": {
+          "bits": 16,
+          "signed": true
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 16,
+          "signed": true
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "name": "smallint-16-true",
+      "table": "case_152",
+      "encoding": "type-modifier",
+      "mode": "strict",
+      "obligation": "value-domain",
+      "authored": {
+        "integerWidth": {
+          "bits": 16,
+          "signed": true
+        }
+      },
+      "emitted": {
+        "integerWidth": {
+          "bits": 16,
+          "signed": true
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 16,
+          "signed": true
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "name": "smallint-16-true",
+      "table": "case_153",
+      "encoding": "type-modifier",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "integerWidth": {
+          "bits": 16,
+          "signed": true
+        }
+      },
+      "emitted": {
+        "integerWidth": {
+          "bits": 16,
+          "signed": true
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 16,
+          "signed": true
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "name": "smallint-16-true",
+      "table": "case_154",
+      "encoding": "carrier-only",
+      "mode": "strict",
+      "obligation": "value-domain",
+      "authored": {
+        "integerWidth": {
+          "bits": 16,
+          "signed": true
+        }
+      },
+      "emitted": {
+        "integerWidth": {
+          "bits": 16,
+          "signed": true
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 16,
+          "signed": true
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "name": "smallint-16-true",
+      "table": "case_155",
+      "encoding": "carrier-only",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "integerWidth": {
+          "bits": 16,
+          "signed": true
+        }
+      },
+      "emitted": {
+        "integerWidth": {
+          "bits": 16,
+          "signed": true
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 16,
+          "signed": true
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "name": "tinyint-16-false",
+      "table": "case_157",
+      "encoding": "checked",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "integerWidth": {
+          "bits": 16,
+          "signed": false
+        }
+      },
+      "emitted": {},
+      "classified": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": false
+        }
+      },
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Selected carrier cannot contain/enforce this integer domain; checked decimal width is bounded by the 38-digit coefficient domain",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "tinyint-16-false",
+      "table": "case_159",
+      "encoding": "type-modifier",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "integerWidth": {
+          "bits": 16,
+          "signed": false
+        }
+      },
+      "emitted": {},
+      "classified": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": false
+        }
+      },
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Selected carrier cannot contain/enforce this integer domain; checked decimal width is bounded by the 38-digit coefficient domain",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "tinyint-16-false",
+      "table": "case_161",
+      "encoding": "carrier-only",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "integerWidth": {
+          "bits": 16,
+          "signed": false
+        }
+      },
+      "emitted": {},
+      "classified": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": false
+        }
+      },
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Selected carrier cannot contain/enforce this integer domain; checked decimal width is bounded by the 38-digit coefficient domain",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "smallint-16-false",
+      "table": "case_163",
+      "encoding": "checked",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "integerWidth": {
+          "bits": 16,
+          "signed": false
+        }
+      },
+      "emitted": {},
+      "classified": {
+        "integerWidth": {
+          "bits": 16,
+          "signed": true
+        }
+      },
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Selected carrier cannot contain/enforce this integer domain; checked decimal width is bounded by the 38-digit coefficient domain",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "smallint-16-false",
+      "table": "case_165",
+      "encoding": "type-modifier",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "integerWidth": {
+          "bits": 16,
+          "signed": false
+        }
+      },
+      "emitted": {},
+      "classified": {
+        "integerWidth": {
+          "bits": 16,
+          "signed": true
+        }
+      },
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Selected carrier cannot contain/enforce this integer domain; checked decimal width is bounded by the 38-digit coefficient domain",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "smallint-16-false",
+      "table": "case_167",
+      "encoding": "carrier-only",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "integerWidth": {
+          "bits": 16,
+          "signed": false
+        }
+      },
+      "emitted": {},
+      "classified": {
+        "integerWidth": {
+          "bits": 16,
+          "signed": true
+        }
+      },
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Selected carrier cannot contain/enforce this integer domain; checked decimal width is bounded by the 38-digit coefficient domain",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "decimal-integer-64",
+      "table": "case_169",
+      "encoding": "checked",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "integerWidth": {
+          "bits": 64,
+          "signed": true
+        }
+      },
+      "emitted": {
+        "integerWidth": {
+          "bits": 64,
+          "signed": true
+        }
+      },
+      "classified": {
+        "precision": 38,
+        "scale": 0
+      },
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {
+        "precision": 38,
+        "scale": 0
+      },
+      "residuals": [
+        {
+          "reason": "Native carrier belongs to a different scalar family; the checked representation does not authorize implicit value conversion",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "CHECK is unresolved for the selected value scope: Whole CHECK expression is outside the bounded syntax subset",
+          "outcome": "unknown"
+        }
+      ]
+    },
+    {
+      "name": "decimal-integer-64",
+      "table": "case_171",
+      "encoding": "type-modifier",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "integerWidth": {
+          "bits": 64,
+          "signed": true
+        }
+      },
+      "emitted": {},
+      "classified": {
+        "precision": 38,
+        "scale": 9
+      },
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {
+        "precision": 38,
+        "scale": 9
+      },
+      "residuals": [
+        {
+          "reason": "Selected carrier cannot contain/enforce this integer domain; checked decimal width is bounded by the 38-digit coefficient domain",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Native carrier belongs to a different scalar family; the checked representation does not authorize implicit value conversion",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "decimal-integer-64",
+      "table": "case_173",
+      "encoding": "carrier-only",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "integerWidth": {
+          "bits": 64,
+          "signed": true
+        }
+      },
+      "emitted": {},
+      "classified": {
+        "precision": 38,
+        "scale": 9
+      },
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {
+        "precision": 38,
+        "scale": 9
+      },
+      "residuals": [
+        {
+          "reason": "Selected carrier cannot contain/enforce this integer domain; checked decimal width is bounded by the 38-digit coefficient domain",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Native carrier belongs to a different scalar family; the checked representation does not authorize implicit value conversion",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "decimal-integer-126",
+      "table": "case_175",
+      "encoding": "checked",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "integerWidth": {
+          "bits": 126,
+          "signed": true
+        }
+      },
+      "emitted": {
+        "integerWidth": {
+          "bits": 126,
+          "signed": true
+        }
+      },
+      "classified": {
+        "precision": 38,
+        "scale": 0
+      },
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {
+        "precision": 38,
+        "scale": 0
+      },
+      "residuals": [
+        {
+          "reason": "Native carrier belongs to a different scalar family; the checked representation does not authorize implicit value conversion",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "CHECK is unresolved for the selected value scope: Whole CHECK expression is outside the bounded syntax subset",
+          "outcome": "unknown"
+        }
+      ]
+    },
+    {
+      "name": "decimal-integer-126",
+      "table": "case_177",
+      "encoding": "type-modifier",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "integerWidth": {
+          "bits": 126,
+          "signed": true
+        }
+      },
+      "emitted": {},
+      "classified": {
+        "precision": 38,
+        "scale": 9
+      },
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {
+        "precision": 38,
+        "scale": 9
+      },
+      "residuals": [
+        {
+          "reason": "Selected carrier cannot contain/enforce this integer domain; checked decimal width is bounded by the 38-digit coefficient domain",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Native carrier belongs to a different scalar family; the checked representation does not authorize implicit value conversion",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "decimal-integer-126",
+      "table": "case_179",
+      "encoding": "carrier-only",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "integerWidth": {
+          "bits": 126,
+          "signed": true
+        }
+      },
+      "emitted": {},
+      "classified": {
+        "precision": 38,
+        "scale": 9
+      },
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {
+        "precision": 38,
+        "scale": 9
+      },
+      "residuals": [
+        {
+          "reason": "Selected carrier cannot contain/enforce this integer domain; checked decimal width is bounded by the 38-digit coefficient domain",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Native carrier belongs to a different scalar family; the checked representation does not authorize implicit value conversion",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "decimal-integer-127",
+      "table": "case_181",
+      "encoding": "checked",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "integerWidth": {
+          "bits": 127,
+          "signed": true
+        }
+      },
+      "emitted": {
+        "integerWidth": {
+          "bits": 127,
+          "signed": true
+        }
+      },
+      "classified": {
+        "precision": 38,
+        "scale": 0
+      },
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {
+        "precision": 38,
+        "scale": 0
+      },
+      "residuals": [
+        {
+          "reason": "Native carrier belongs to a different scalar family; the checked representation does not authorize implicit value conversion",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "CHECK is unresolved for the selected value scope: Whole CHECK expression is outside the bounded syntax subset",
+          "outcome": "unknown"
+        }
+      ]
+    },
+    {
+      "name": "decimal-integer-127",
+      "table": "case_183",
+      "encoding": "type-modifier",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "integerWidth": {
+          "bits": 127,
+          "signed": true
+        }
+      },
+      "emitted": {},
+      "classified": {
+        "precision": 38,
+        "scale": 9
+      },
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {
+        "precision": 38,
+        "scale": 9
+      },
+      "residuals": [
+        {
+          "reason": "Selected carrier cannot contain/enforce this integer domain; checked decimal width is bounded by the 38-digit coefficient domain",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Native carrier belongs to a different scalar family; the checked representation does not authorize implicit value conversion",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "decimal-integer-127",
+      "table": "case_185",
+      "encoding": "carrier-only",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "integerWidth": {
+          "bits": 127,
+          "signed": true
+        }
+      },
+      "emitted": {},
+      "classified": {
+        "precision": 38,
+        "scale": 9
+      },
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {
+        "precision": 38,
+        "scale": 9
+      },
+      "residuals": [
+        {
+          "reason": "Selected carrier cannot contain/enforce this integer domain; checked decimal width is bounded by the 38-digit coefficient domain",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Native carrier belongs to a different scalar family; the checked representation does not authorize implicit value conversion",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "decimal-integer-128",
+      "table": "case_187",
+      "encoding": "checked",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "integerWidth": {
+          "bits": 128,
+          "signed": true
+        }
+      },
+      "emitted": {},
+      "classified": {
+        "precision": 38,
+        "scale": 9
+      },
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {
+        "precision": 38,
+        "scale": 9
+      },
+      "residuals": [
+        {
+          "reason": "Selected carrier cannot contain/enforce this integer domain; checked decimal width is bounded by the 38-digit coefficient domain",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Native carrier belongs to a different scalar family; the checked representation does not authorize implicit value conversion",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "decimal-integer-128",
+      "table": "case_189",
+      "encoding": "type-modifier",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "integerWidth": {
+          "bits": 128,
+          "signed": true
+        }
+      },
+      "emitted": {},
+      "classified": {
+        "precision": 38,
+        "scale": 9
+      },
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {
+        "precision": 38,
+        "scale": 9
+      },
+      "residuals": [
+        {
+          "reason": "Selected carrier cannot contain/enforce this integer domain; checked decimal width is bounded by the 38-digit coefficient domain",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Native carrier belongs to a different scalar family; the checked representation does not authorize implicit value conversion",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "decimal-integer-128",
+      "table": "case_191",
+      "encoding": "carrier-only",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "integerWidth": {
+          "bits": 128,
+          "signed": true
+        }
+      },
+      "emitted": {},
+      "classified": {
+        "precision": 38,
+        "scale": 9
+      },
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {
+        "precision": 38,
+        "scale": 9
+      },
+      "residuals": [
+        {
+          "reason": "Selected carrier cannot contain/enforce this integer domain; checked decimal width is bounded by the 38-digit coefficient domain",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Native carrier belongs to a different scalar family; the checked representation does not authorize implicit value conversion",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "decimal-5-2",
+      "table": "case_192",
+      "encoding": "checked",
+      "mode": "strict",
+      "obligation": "value-domain",
+      "authored": {
+        "precision": 5,
+        "scale": 2
+      },
+      "emitted": {
+        "precision": 5,
+        "scale": 2
+      },
+      "classified": {
+        "precision": 5,
+        "scale": 2
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "name": "decimal-5-2",
+      "table": "case_193",
+      "encoding": "checked",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "precision": 5,
+        "scale": 2
+      },
+      "emitted": {
+        "precision": 5,
+        "scale": 2
+      },
+      "classified": {
+        "precision": 5,
+        "scale": 2
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "name": "decimal-5-2",
+      "table": "case_194",
+      "encoding": "type-modifier",
+      "mode": "strict",
+      "obligation": "value-domain",
+      "authored": {
+        "precision": 5,
+        "scale": 2
+      },
+      "emitted": {
+        "precision": 5,
+        "scale": 2
+      },
+      "classified": {
+        "precision": 5,
+        "scale": 2
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "name": "decimal-5-2",
+      "table": "case_195",
+      "encoding": "type-modifier",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "precision": 5,
+        "scale": 2
+      },
+      "emitted": {
+        "precision": 5,
+        "scale": 2
+      },
+      "classified": {
+        "precision": 5,
+        "scale": 2
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "name": "decimal-5-2",
+      "table": "case_197",
+      "encoding": "carrier-only",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "precision": 5,
+        "scale": 2
+      },
+      "emitted": {},
+      "classified": {
+        "precision": 38,
+        "scale": 9
+      },
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Native decimal precision/scale requires a checked or type-modifier decimal carrier with precision at most 38",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "decimal-3-3",
+      "table": "case_198",
+      "encoding": "checked",
+      "mode": "strict",
+      "obligation": "value-domain",
+      "authored": {
+        "precision": 3,
+        "scale": 3
+      },
+      "emitted": {
+        "precision": 3,
+        "scale": 3
+      },
+      "classified": {
+        "precision": 3,
+        "scale": 3
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "name": "decimal-3-3",
+      "table": "case_199",
+      "encoding": "checked",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "precision": 3,
+        "scale": 3
+      },
+      "emitted": {
+        "precision": 3,
+        "scale": 3
+      },
+      "classified": {
+        "precision": 3,
+        "scale": 3
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "name": "decimal-3-3",
+      "table": "case_200",
+      "encoding": "type-modifier",
+      "mode": "strict",
+      "obligation": "value-domain",
+      "authored": {
+        "precision": 3,
+        "scale": 3
+      },
+      "emitted": {
+        "precision": 3,
+        "scale": 3
+      },
+      "classified": {
+        "precision": 3,
+        "scale": 3
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "name": "decimal-3-3",
+      "table": "case_201",
+      "encoding": "type-modifier",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "precision": 3,
+        "scale": 3
+      },
+      "emitted": {
+        "precision": 3,
+        "scale": 3
+      },
+      "classified": {
+        "precision": 3,
+        "scale": 3
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "name": "decimal-3-3",
+      "table": "case_203",
+      "encoding": "carrier-only",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "precision": 3,
+        "scale": 3
+      },
+      "emitted": {},
+      "classified": {
+        "precision": 38,
+        "scale": 9
+      },
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Native decimal precision/scale requires a checked or type-modifier decimal carrier with precision at most 38",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "decimal-38-0",
+      "table": "case_204",
+      "encoding": "checked",
+      "mode": "strict",
+      "obligation": "value-domain",
+      "authored": {
+        "precision": 38,
+        "scale": 0
+      },
+      "emitted": {
+        "precision": 38,
+        "scale": 0
+      },
+      "classified": {
+        "precision": 38,
+        "scale": 0
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "name": "decimal-38-0",
+      "table": "case_205",
+      "encoding": "checked",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "precision": 38,
+        "scale": 0
+      },
+      "emitted": {
+        "precision": 38,
+        "scale": 0
+      },
+      "classified": {
+        "precision": 38,
+        "scale": 0
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "name": "decimal-38-0",
+      "table": "case_206",
+      "encoding": "type-modifier",
+      "mode": "strict",
+      "obligation": "value-domain",
+      "authored": {
+        "precision": 38,
+        "scale": 0
+      },
+      "emitted": {
+        "precision": 38,
+        "scale": 0
+      },
+      "classified": {
+        "precision": 38,
+        "scale": 0
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "name": "decimal-38-0",
+      "table": "case_207",
+      "encoding": "type-modifier",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "precision": 38,
+        "scale": 0
+      },
+      "emitted": {
+        "precision": 38,
+        "scale": 0
+      },
+      "classified": {
+        "precision": 38,
+        "scale": 0
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "name": "decimal-38-0",
+      "table": "case_209",
+      "encoding": "carrier-only",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "precision": 38,
+        "scale": 0
+      },
+      "emitted": {},
+      "classified": {
+        "precision": 38,
+        "scale": 9
+      },
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Native decimal precision/scale requires a checked or type-modifier decimal carrier with precision at most 38",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "decimal-38-38",
+      "table": "case_210",
+      "encoding": "checked",
+      "mode": "strict",
+      "obligation": "value-domain",
+      "authored": {
+        "precision": 38,
+        "scale": 38
+      },
+      "emitted": {
+        "precision": 38,
+        "scale": 38
+      },
+      "classified": {
+        "precision": 38,
+        "scale": 38
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "name": "decimal-38-38",
+      "table": "case_211",
+      "encoding": "checked",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "precision": 38,
+        "scale": 38
+      },
+      "emitted": {
+        "precision": 38,
+        "scale": 38
+      },
+      "classified": {
+        "precision": 38,
+        "scale": 38
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "name": "decimal-38-38",
+      "table": "case_212",
+      "encoding": "type-modifier",
+      "mode": "strict",
+      "obligation": "value-domain",
+      "authored": {
+        "precision": 38,
+        "scale": 38
+      },
+      "emitted": {
+        "precision": 38,
+        "scale": 38
+      },
+      "classified": {
+        "precision": 38,
+        "scale": 38
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "name": "decimal-38-38",
+      "table": "case_213",
+      "encoding": "type-modifier",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "precision": 38,
+        "scale": 38
+      },
+      "emitted": {
+        "precision": 38,
+        "scale": 38
+      },
+      "classified": {
+        "precision": 38,
+        "scale": 38
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "name": "decimal-38-38",
+      "table": "case_215",
+      "encoding": "carrier-only",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "precision": 38,
+        "scale": 38
+      },
+      "emitted": {},
+      "classified": {
+        "precision": 38,
+        "scale": 9
+      },
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Native decimal precision/scale requires a checked or type-modifier decimal carrier with precision at most 38",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "decimal-39-0",
+      "table": "case_217",
+      "encoding": "checked",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "precision": 39,
+        "scale": 0
+      },
+      "emitted": {},
+      "classified": {
+        "precision": 38,
+        "scale": 9
+      },
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Native decimal precision/scale requires a checked or type-modifier decimal carrier with precision at most 38",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "decimal-39-0",
+      "table": "case_219",
+      "encoding": "type-modifier",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "precision": 39,
+        "scale": 0
+      },
+      "emitted": {},
+      "classified": {
+        "precision": 38,
+        "scale": 9
+      },
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Native decimal precision/scale requires a checked or type-modifier decimal carrier with precision at most 38",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "decimal-39-0",
+      "table": "case_221",
+      "encoding": "carrier-only",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {
+        "precision": 39,
+        "scale": 0
+      },
+      "emitted": {},
+      "classified": {
+        "precision": 38,
+        "scale": 9
+      },
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Native decimal precision/scale requires a checked or type-modifier decimal carrier with precision at most 38",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "facetless-real",
+      "table": "case_222",
+      "encoding": "checked",
+      "mode": "strict",
+      "obligation": "value-domain",
+      "authored": {},
+      "emitted": {},
+      "classified": {},
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "name": "facetless-real",
+      "table": "case_223",
+      "encoding": "checked",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {},
+      "emitted": {},
+      "classified": {},
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "name": "facetless-real",
+      "table": "case_225",
+      "encoding": "checked",
+      "mode": "report",
+      "obligation": "exact-input",
+      "authored": {},
+      "emitted": {},
+      "classified": {},
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Binary64 1.0000000000000002 narrows to binary32 1.0",
+          "outcome": "approximated"
+        },
+        {
+          "reason": "Binary64 1.0000000000000002 narrows to binary32 1.0",
+          "outcome": "approximated"
+        }
+      ]
+    },
+    {
+      "name": "facetless-float(53)",
+      "table": "case_226",
+      "encoding": "checked",
+      "mode": "strict",
+      "obligation": "value-domain",
+      "authored": {},
+      "emitted": {},
+      "classified": {},
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "name": "facetless-float(53)",
+      "table": "case_227",
+      "encoding": "checked",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {},
+      "emitted": {},
+      "classified": {},
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "name": "facetless-float(53)",
+      "table": "case_229",
+      "encoding": "checked",
+      "mode": "report",
+      "obligation": "exact-input",
+      "authored": {},
+      "emitted": {},
+      "classified": {},
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Catalog carrier and facet enforcement do not prove exact conversion of arbitrary SQL input expressions",
+          "outcome": "unknown"
+        },
+        {
+          "reason": "Catalog value-domain facts do not prove exact conversion of arbitrary SQL inputs",
+          "outcome": "unknown"
+        }
+      ]
+    },
+    {
+      "name": "facetless-decimal",
+      "table": "case_230",
+      "encoding": "checked",
+      "mode": "strict",
+      "obligation": "value-domain",
+      "authored": {},
+      "emitted": {},
+      "classified": {
+        "precision": 38,
+        "scale": 9
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {
+        "precision": 38,
+        "scale": 9
+      },
+      "residuals": []
+    },
+    {
+      "name": "facetless-decimal",
+      "table": "case_231",
+      "encoding": "checked",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {},
+      "emitted": {},
+      "classified": {
+        "precision": 38,
+        "scale": 9
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {
+        "precision": 38,
+        "scale": 9
+      },
+      "residuals": []
+    },
+    {
+      "name": "facetless-decimal",
+      "table": "case_233",
+      "encoding": "checked",
+      "mode": "report",
+      "obligation": "exact-input",
+      "authored": {},
+      "emitted": {},
+      "classified": {
+        "precision": 38,
+        "scale": 9
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {
+        "precision": 38,
+        "scale": 9
+      },
+      "residuals": [
+        {
+          "reason": "Decimal conversion can round before CHECK evaluation; runtime settings can instead produce errors or NULL",
+          "outcome": "approximated"
+        },
+        {
+          "reason": "Decimal input can round before CHECK evaluation; runtime settings can also produce error or NULL",
+          "outcome": "approximated"
+        }
+      ]
+    },
+    {
+      "name": "facetless-int",
+      "table": "case_234",
+      "encoding": "checked",
+      "mode": "strict",
+      "obligation": "value-domain",
+      "authored": {},
+      "emitted": {},
+      "classified": {
+        "integerWidth": {
+          "bits": 32,
+          "signed": true
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {
+        "integerWidth": {
+          "bits": 32,
+          "signed": true
+        }
+      },
+      "residuals": []
+    },
+    {
+      "name": "facetless-int",
+      "table": "case_235",
+      "encoding": "checked",
+      "mode": "report",
+      "obligation": "value-domain",
+      "authored": {},
+      "emitted": {},
+      "classified": {
+        "integerWidth": {
+          "bits": 32,
+          "signed": true
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {
+        "integerWidth": {
+          "bits": 32,
+          "signed": true
+        }
+      },
+      "residuals": []
+    },
+    {
+      "name": "facetless-int",
+      "table": "case_237",
+      "encoding": "checked",
+      "mode": "report",
+      "obligation": "exact-input",
+      "authored": {},
+      "emitted": {},
+      "classified": {
+        "integerWidth": {
+          "bits": 32,
+          "signed": true
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {
+        "integerWidth": {
+          "bits": 32,
+          "signed": true
+        }
+      },
+      "residuals": [
+        {
+          "reason": "Catalog carrier and facet enforcement do not prove exact conversion of arbitrary SQL input expressions",
+          "outcome": "unknown"
+        },
+        {
+          "reason": "Catalog value-domain facts do not prove exact conversion of arbitrary SQL inputs",
+          "outcome": "unknown"
+        }
+      ]
+    }
+  ],
+  "sha256": {
+    "scripts/core-ideals/facets-sqlserver-composition.ts": "9ea71fe7c95fad459926ff355ef59009b0632cfd693c71e653a702d30f9ba29e",
+    "scripts/core-ideals/facets-sqlserver-projection-cases.ts": "33710e009c987a923660f97e05a0523b5d11f3e69fba59943a9c1c19b07cfdef",
+    "src/core-ideals/facets-sqlserver.ts": "f0b77c6f98aafff72dd89d544e5c9c1251991cda57cd225aad0b20e160e40d8d",
+    "src/core-ideals/facets-sqlserver-projection.ts": "dfa4c5215c388172575d2995a363829ff6c810e734255a7a67584940fc9ffc6d",
+    "src/adapters/sqlserver/facet-constraints.ts": "ed642046a2385bc016a21e7ea7c7d0d0dcd661f49b1cf5b7697f861a3dea4f04",
+    "src/adapters/sqlserver/facet-predicate.ts": "53edc4e5f5611c91c06170551fde20c280f5a65cbf64e857e87c7b584d08d579",
+    "src/adapters/sqlserver/facet-type.ts": "8831415c9ca140be4a3d7eec773e164abd1858597f42805fa7ca67e3331706ff",
+    "fixtures/validation/facets-sqlserver-projection-native.json": "a390ce31928959a8485d783d3cd735aba2f9d8b1978017c8aae0333290c949ce"
+  }
+}

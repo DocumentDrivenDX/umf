@@ -1,4 +1,4 @@
-# medical-carrier 1.1.0
+# medical-carrier 1.2.0
 
 9 unchanged official HL7 carrier resources and 19 authored supplemental FHIR-shaped resources, plus four workflow events; 13 unchanged CMS DE-SynPUF native CSV records (three beneficiaries, five inpatient and five carrier claims).
 

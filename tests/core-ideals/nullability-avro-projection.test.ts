@@ -1,8 +1,9 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {avroNullabilityProjectionCases} from '../../scripts/core-ideals/nullability-avro-projection-cases';
-import {projectNullabilityToAvro,recoverNullabilityFromAvro} from '../../src/core-ideals/nullability-avro-projection';
+import {projectNullabilityToAvro, recoverNullabilityFromAvro} from '../../src/core-ideals/nullability-avro-projection';
 import {exportAvroSchema} from '../../src/adapters/avro';
-import {readJsonValue,writeJsonValue} from '../../src/model/serialization';
+import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
 import {copyJson} from '../../src/model/json';
 test('authored Avro availability projects null carriers and recovers every ideal and residual',()=>{
  for(const c of avroNullabilityProjectionCases()){

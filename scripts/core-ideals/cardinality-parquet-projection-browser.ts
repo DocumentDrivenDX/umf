@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {chromium} from 'playwright';
@@ -34,7 +35,7 @@ try{
    if(!r.target){blocked++;continue;}projected++;
    const nativeBytes=new Uint8Array(c.bytes);
    const imported=u.importParquetSchema(nativeBytes,{id:'fresh-native'});
-   const source=u.upgradeCardinalityEnvelope(u.upgradeNullabilityEnvelope(u.upgradeFieldEnvelope(imported).target).target).target;
+   const source=imported;
    const classified=u.classifyParquetCardinality(source,{index:1,identity:{module:'logical',element:'value'},profile:'present-value-schema',mode:'report'});
    if(!classified.target)throw Error('Fresh native classification failed');
    if(r.mapping.outcome==='exact')for(const pair of r.mapping.items){

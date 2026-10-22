@@ -1,0 +1,31 @@
+{
+  "status": "review-findings-resolved",
+  "reviewer": "/root/astra_security_review",
+  "nativeImplementationQualified": false,
+  "sourceDigests": {
+    "/Users/erik/Projects/weft/docs/helix/02-design/contracts/CONTRACT-005-security-compilation.md": "66f4effb73fcf8624301fcf127670852520372e4a4932d16ceaf6baabbb9d9f9",
+    "/Users/erik/Projects/weft/docs/helix/02-design/contracts/compile-request-v0.4.schema.json": "1e9fdf07b8bea744fa1408eae33e7c1663f2a85206c198560a5d98f2ed6c38fb",
+    "/Users/erik/Projects/weft/docs/helix/02-design/contracts/compile-response-v0.4.schema.json": "8a79dab6a5eae1523f6245c65f73aeafc6a00fedc8c799ffd6cf9376cd00b026",
+    "/Users/erik/Projects/weft/docs/helix/02-design/contracts/security-cells-v0.1.schema.json": "73c7345d444cd40c1bd15f2ee718cedd40531513943395d53104d452a0f0661f",
+    "/Users/erik/Projects/weft/docs/helix/02-design/contracts/security-backend-manifest-v0.1.schema.json": "2b8a6870b9984d27c2638ce3e8a97e33a7289a5dc384e32c2173eff19ec4c945",
+    "tools/security/weft-protocol-conformance.ts": "01edbe0007e2c2ec517e77c694dd07f4dd34369d742e91efba0aedd2ce39c636",
+    "tools/security/weft_protocol_evidence.py": "2c4feb471ff4eb72a3cb354aff6f13d136239ec8669483f22bf113a462613c60",
+    "tools/security/weft-protocol-evidence-controls.py": "86e6ba42c8e087282994d16319d3685cf6046b991d8ec3e8f310e56833c4a410",
+    "tools/security/validate-evidence.py": "1f6c4cd2dfad80b384adab41c3ec9c11485d7f406ed4b9ade603b07bb1aaf498"
+  },
+  "resolvedFindings": [
+    "Exact serialized result-contract byte/hash/object correspondence",
+    "Complete constant transform literal and normalized rule/target/field linkage",
+    "Owned security lowering return and strict manifest/candidate selection",
+    "Separate bounded result-cell parsing and no prefix release",
+    "Frozen pre-execution source and Ajv dependency closure",
+    "Independent exact source coverage and complete expectation table",
+    "Frozen independent mutant-runner helper and input execution"
+  ],
+  "evidence": {
+    "transportChecks": 54,
+    "receiptMutationChecks": 607,
+    "strictTypecheck": "passed"
+  },
+  "scope": "Reviewed draft contract/schema and transport-only evidence tooling. Owner dispatch, runtime domain/duplicate-member/budget validation, native admission and backend acceptance remain unimplemented and unqualified."
+}

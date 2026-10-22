@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 9440,
+        "line": 70,
+        "path": "src/model/keys.ts",
+        "sha256": "1db47232b3abfccf2674530e8cce2503901119f15c80d3e6ca929a7e492258ec"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "verifyCoreKeyOperation",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: CoreKeyOperation, current: Document): CoreKeyOperation"
+    ]
+  },
+  "id": "[\"api\",\".\",\"verifyCoreKeyOperation\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 9440,
+      "line": 70,
+      "path": "src/model/keys.ts",
+      "sha256": "1db47232b3abfccf2674530e8cce2503901119f15c80d3e6ca929a7e492258ec"
+    }
+  ],
+  "summary": "Recomputes retained meaning and current context; not cryptographic authorship.",
+  "title": "verifyCoreKeyOperation"
+}

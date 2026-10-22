@@ -1,0 +1,30 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"proposeRdfIriRename\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "options",
+      "optional": false,
+      "type": "{ from: string; to: string; }"
+    }
+  ],
+  "purpose": "Explicit identity change, never a claim that the renamed IRI denotes the same resource.",
+  "related": [],
+  "returns": "RdfIriRenameReport",
+  "task": "Author and edit",
+  "type": "(document: Document, options: { from: string; to: string; }) => RdfIriRenameReport"
+}

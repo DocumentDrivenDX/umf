@@ -1,0 +1,302 @@
+{
+  "data": {
+    "extensionId": "umf.postgresql.relationships",
+    "manifest": {
+      "capabilities": {
+        "directions": [
+          "import",
+          "export"
+        ],
+        "evidence": [
+          "tests/core-ideals/relationship-postgresql.test.ts",
+          "fixtures/validation/relationship-postgresql-native.json",
+          "fixtures/validation/relationship-postgresql-browser.json"
+        ],
+        "native": {
+          "subset": "Observed DDL/catalog FKs and authored new ordinary keyed tables with homogeneous FK/junction endpoint layouts; retained meaning, no native equivalence or deployed-state guarantee",
+          "system": "PostgreSQL",
+          "version": "17.4"
+        },
+        "validation": "structural"
+      },
+      "coreVersion": "0.10.0",
+      "description": "PostgreSQL FK observations and retained authored relationship projections",
+      "id": "umf.postgresql.relationships",
+      "schema": {
+        "$defs": {
+          "node": {
+            "oneOf": [
+              {
+                "properties": {
+                  "kind": {
+                    "const": "null"
+                  }
+                },
+                "required": [
+                  "kind"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "kind": {
+                    "const": "boolean"
+                  },
+                  "value": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "kind": {
+                    "const": "string"
+                  },
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "kind": {
+                    "const": "number"
+                  },
+                  "value": {
+                    "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?([eE][+-]?[0-9]+)?$",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "items": {
+                    "items": {
+                      "$ref": "#/$defs/node"
+                    },
+                    "type": "array"
+                  },
+                  "kind": {
+                    "const": "array"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "items"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "kind": {
+                    "const": "object"
+                  },
+                  "members": {
+                    "additionalProperties": {
+                      "$ref": "#/$defs/node"
+                    },
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "members"
+                ],
+                "type": "object"
+              }
+            ]
+          }
+        },
+        "$id": "urn:umf:postgresql:relationship-binding:1.0.0",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": true,
+        "properties": {
+          "binding": {
+            "const": {
+              "id": "umf.postgresql.relationships",
+              "nativeVersion": "17.4",
+              "subset": "Observed DDL/catalog FKs and authored new ordinary keyed tables with homogeneous FK/junction endpoint layouts; retained meaning, no native equivalence or deployed-state guarantee",
+              "version": "1.0.0"
+            }
+          },
+          "observations": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "authorIntent": {
+                  "const": "unknown"
+                },
+                "deferrable": {
+                  "type": "boolean"
+                },
+                "enforcement": {
+                  "const": "unverified-native-observation"
+                },
+                "initiallyDeferred": {
+                  "type": "boolean"
+                },
+                "match": {
+                  "enum": [
+                    "simple",
+                    "full",
+                    "partial",
+                    "unknown"
+                  ]
+                },
+                "name": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "nativeNode": {
+                  "$ref": "#/$defs/node"
+                },
+                "nativePath": {
+                  "type": "string"
+                },
+                "onDelete": {
+                  "enum": [
+                    "no-action",
+                    "restrict",
+                    "cascade",
+                    "set-null",
+                    "set-default",
+                    "unknown"
+                  ]
+                },
+                "onUpdate": {
+                  "enum": [
+                    "no-action",
+                    "restrict",
+                    "cascade",
+                    "set-null",
+                    "set-default",
+                    "unknown"
+                  ]
+                },
+                "origin": {
+                  "enum": [
+                    "ddl",
+                    "catalog"
+                  ]
+                },
+                "sourceColumns": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                "sourceTable": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "targetColumns": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                "targetKeyCandidates": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                "targetTable": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "validated": {
+                  "type": [
+                    "boolean",
+                    "null"
+                  ]
+                }
+              },
+              "required": [
+                "nativePath",
+                "nativeNode",
+                "origin",
+                "name",
+                "sourceTable",
+                "targetTable",
+                "sourceColumns",
+                "targetColumns",
+                "targetKeyCandidates",
+                "match",
+                "onUpdate",
+                "onDelete",
+                "validated",
+                "deferrable",
+                "initiallyDeferred",
+                "authorIntent",
+                "enforcement"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "origin": {
+            "const": "classified"
+          }
+        },
+        "required": [
+          "origin",
+          "binding",
+          "observations"
+        ],
+        "title": "PostgreSQL native FK observations",
+        "type": "object"
+      },
+      "scopes": [
+        "document"
+      ],
+      "semantics": "CONTRACT-041. Captured observations never establish authored relationships. Native actions, deferral, validation, MATCH behavior and Key candidates remain qualified and recoverable; no native equivalence.",
+      "version": "1.0.0"
+    },
+    "registration": {
+      "apiIds": [],
+      "coreProfiles": [],
+      "mode": "unmapped"
+    },
+    "schemaId": "[\"schema\",\"spec/extensions/postgresql-relationships/schema.json\",\"\"]",
+    "version": "1.0.0"
+  },
+  "id": "[\"extension\",\"umf.postgresql.relationships\",\"1.0.0\"]",
+  "kind": "extension",
+  "links": [
+    "[\"guide\",\"extensions\"]",
+    "[\"schema\",\"spec/extensions/postgresql-relationships/schema.json\",\"\"]",
+    "[\"integration\",\"umf.postgresql.relationships@1.0.0:import\"]",
+    "[\"integration\",\"umf.postgresql.relationships@1.0.0:export\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 7017,
+      "path": "spec/extensions/postgresql-relationships/package.json",
+      "sha256": "9a47b68d2f2163e01dbd17ee5307582d5a4d95e4250e03e22b425823b9b0c2ed"
+    }
+  ],
+  "summary": "PostgreSQL FK observations and retained authored relationship projections",
+  "title": "umf.postgresql.relationships · 1.0.0"
+}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 11451,
+        "line": 6,
+        "path": "src/projections/arrow-spark.ts",
+        "sha256": "86b1eec8778a75f301b813c6b9bcc5bf06a9d9885a5f73d4d273e2b0e5f0ff27"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "ArrowSparkPolicy",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface ArrowSparkPolicy {id:string;preferTimestampNtz:boolean;variant:'spark-tagged-struct'|'preserve-struct';lossPolicy:'strict'|'allow-reported-loss'}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"ArrowSparkPolicy\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 11451,
+      "line": 6,
+      "path": "src/projections/arrow-spark.ts",
+      "sha256": "86b1eec8778a75f301b813c6b9bcc5bf06a9d9885a5f73d4d273e2b0e5f0ff27"
+    }
+  ],
+  "summary": "Type declaration · src/projections/arrow-spark.ts",
+  "title": "ArrowSparkPolicy"
+}

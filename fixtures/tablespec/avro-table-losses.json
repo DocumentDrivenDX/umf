@@ -5,7 +5,7 @@
       "result": {
         "status": "projected",
         "source": {
-          "umf": "0.1.0",
+          "umf": "0.10.0",
           "id": "monolithic",
           "vocabularies": {
             "umf.tablespec": {
@@ -224,7 +224,7 @@
         ],
         "nativeSchema": "{\n  \"type\": \"record\",\n  \"name\": \"Target\",\n  \"namespace\": \"example\",\n  \"fields\": [\n    {\n      \"name\": \"id\",\n      \"type\": \"int\"\n    }\n  ]\n}\n",
         "target": {
-          "umf": "0.1.0",
+          "umf": "0.10.0",
           "id": "target",
           "vocabularies": {
             "umf.avro": {
@@ -302,7 +302,7 @@
       "result": {
         "status": "projected",
         "source": {
-          "umf": "0.1.0",
+          "umf": "0.10.0",
           "id": "split",
           "vocabularies": {
             "umf.tablespec": {
@@ -527,7 +527,7 @@
         ],
         "nativeSchema": "{\n  \"type\": \"record\",\n  \"name\": \"Target\",\n  \"namespace\": \"example\",\n  \"fields\": [\n    {\n      \"name\": \"id\",\n      \"type\": \"int\"\n    }\n  ]\n}\n",
         "target": {
-          "umf": "0.1.0",
+          "umf": "0.10.0",
           "id": "target",
           "vocabularies": {
             "umf.avro": {

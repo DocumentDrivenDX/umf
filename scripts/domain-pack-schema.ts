@@ -1,6 +1,8 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
+import {CURRENT_CORE_VERSION} from '../src/model/types';
 import {generateDomainPackSchema} from '../src/domain-packs/schema';
 const schema=generateDomainPackSchema();
-const manifest={id:'umf.domain-pack',version:'1.0.0',coreVersion:'0.1.0',
+const manifest={id:'umf.domain-pack',version:'1.0.0',coreVersion:CURRENT_CORE_VERSION,
  description:'Portable sample-domain pack metadata with opaque implementation and schema references',
  schema,semantics:'References are data. No imports, fetching, generation, loading or ontology semantics are authorized.',
  scopes:['document'],capabilities:{validation:'structural',directions:[],evidence:['tests/domain-packs/schema.test.ts']}};

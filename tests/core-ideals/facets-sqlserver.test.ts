@@ -1,6 +1,7 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import * as u from '../../src';
-import {classifySqlServerFacets as classify,recoverSqlServerFacetSource as recover,sqlserverFacetsPackage,SQLSERVER_FACETS_EXTENSION} from '../../src/core-ideals/facets-sqlserver';
+import {classifySqlServerFacets as classify, recoverSqlServerFacetSource as recover, sqlserverFacetsPackage, SQLSERVER_FACETS_EXTENSION} from '../../src/core-ideals/facets-sqlserver';
 import {sqlserverFacetCase as sample,sqlserverFacetExamples} from '../../scripts/core-ideals/facets-sqlserver-cases';
 function run(table:string,column='value',options:any={}){const c=sample(table,column,options);return classify(c.document,c.request);}
 test('width, decimal coefficient and byte bounds classify under explicit non-null scopes',()=>{

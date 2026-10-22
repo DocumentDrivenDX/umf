@@ -1,0 +1,10 @@
+2026-10-17 06:51:37.522 EDT [7284] LOG:  starting PostgreSQL 18.6 (Homebrew) on aarch64-apple-darwin27.0.0, compiled by Apple clang version 21.0.0 (clang-2100.3.34.2), 64-bit
+2026-10-17 06:51:37.523 EDT [7284] LOG:  listening on Unix socket "/private/tmp/sdk-source-exact-r24-20261017/reviewed-native-r1/socket/.s.PGSQL.55513"
+2026-10-17 06:51:37.536 EDT [7290] LOG:  database system was shut down at 2026-10-17 06:51:37 EDT
+2026-10-17 06:51:37.540 EDT [7284] LOG:  database system is ready to accept connections
+2026-10-17 06:51:38.082 EDT [7303] ERROR:  canceling statement due to statement timeout
+2026-10-17 06:51:38.082 EDT [7303] STATEMENT:  LOCK TABLE "orders" IN ACCESS SHARE MODE
+2026-10-17 06:51:42.968 EDT [7296] ERROR:  canceling statement due to statement timeout
+2026-10-17 06:51:42.968 EDT [7296] STATEMENT:  LOCK TABLE "orders" IN ACCESS SHARE MODE
+2026-10-17 06:51:43.065 EDT [7284] LOG:  received immediate shutdown request
+2026-10-17 06:51:43.069 EDT [7284] LOG:  database system is shut down

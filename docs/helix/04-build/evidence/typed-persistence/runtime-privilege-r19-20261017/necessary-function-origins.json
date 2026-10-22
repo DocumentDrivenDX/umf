@@ -1,0 +1,1269 @@
+{
+  "60": {
+    "function": {
+      "oid": 60,
+      "schema": "pg_catalog",
+      "name": "booleq",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "bool",
+          "oid": 16
+        },
+        {
+          "schema": "pg_catalog",
+          "name": "bool",
+          "oid": 16
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "bool",
+        "oid": 16
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    "origins": [
+      {
+        "statementId": "owner-business-1",
+        "sourceOwner": "original Weft program",
+        "originalSqlSha256": "21e922fa5e31f242f25ad1f95f3c82eaf046d5f4377d9aaad35550b26cf97eba"
+      },
+      {
+        "statementId": "owner-var-1",
+        "sourceOwner": "exact original owner Var probe",
+        "originalSqlSha256": "b1378f5141ae6bd2fce753ad7598344e160ec4b3ffaedd023d3c4bb5e35dccfa"
+      },
+      {
+        "statementId": "owner-var-1",
+        "sourceOwner": "exact original owner Var probe",
+        "originalSqlSha256": "b1378f5141ae6bd2fce753ad7598344e160ec4b3ffaedd023d3c4bb5e35dccfa"
+      },
+      {
+        "statementId": "owner-var-1",
+        "sourceOwner": "exact original owner Var probe",
+        "originalSqlSha256": "b1378f5141ae6bd2fce753ad7598344e160ec4b3ffaedd023d3c4bb5e35dccfa"
+      },
+      {
+        "statementId": "owner-var-1",
+        "sourceOwner": "exact original owner Var probe",
+        "originalSqlSha256": "b1378f5141ae6bd2fce753ad7598344e160ec4b3ffaedd023d3c4bb5e35dccfa"
+      },
+      {
+        "statementId": "owner-var-1",
+        "sourceOwner": "exact original owner Var probe",
+        "originalSqlSha256": "b1378f5141ae6bd2fce753ad7598344e160ec4b3ffaedd023d3c4bb5e35dccfa"
+      }
+    ]
+  },
+  "62": {
+    "function": {
+      "oid": 62,
+      "schema": "pg_catalog",
+      "name": "nameeq",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "name",
+          "oid": 19
+        },
+        {
+          "schema": "pg_catalog",
+          "name": "name",
+          "oid": 19
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "bool",
+        "oid": 16
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    "origins": [
+      {
+        "statementId": "_ROLE",
+        "sourceOwner": "SDK fixed runtime",
+        "originalSqlSha256": "2e5f6cbb0fbdd9a25756cf2427fafd55c2578c1e03499a6d287d0981d5aa9fe6"
+      },
+      {
+        "statementId": "_TABLE",
+        "sourceOwner": "SDK fixed runtime",
+        "originalSqlSha256": "2c0f17ae15c2fba1c085d832dbffd8300e93fda505f38db36e70c1fe47eeb0d7"
+      },
+      {
+        "statementId": "_KEYS",
+        "sourceOwner": "SDK fixed runtime",
+        "originalSqlSha256": "4ab8f52c86d796021d053f5f5e6b7f726a3d5e9511d0564f2054c9da88c54c70"
+      },
+      {
+        "statementId": "_KEYS",
+        "sourceOwner": "SDK fixed runtime",
+        "originalSqlSha256": "4ab8f52c86d796021d053f5f5e6b7f726a3d5e9511d0564f2054c9da88c54c70"
+      },
+      {
+        "statementId": "_KEYS",
+        "sourceOwner": "SDK fixed runtime",
+        "originalSqlSha256": "4ab8f52c86d796021d053f5f5e6b7f726a3d5e9511d0564f2054c9da88c54c70"
+      },
+      {
+        "statementId": "_RESOLUTION",
+        "sourceOwner": "SDK fixed runtime",
+        "originalSqlSha256": "8e4c47059c4ea8f811d19a13d65332b0e4129afb625db10a9ceb621b33b55d5c"
+      }
+    ]
+  },
+  "162": {
+    "function": {
+      "oid": 162,
+      "schema": "pg_catalog",
+      "name": "int24gt",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "int2",
+          "oid": 21
+        },
+        {
+          "schema": "pg_catalog",
+          "name": "int4",
+          "oid": 23
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "bool",
+        "oid": 16
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    "origins": [
+      {
+        "statementId": "_COLUMNS",
+        "sourceOwner": "SDK fixed runtime",
+        "originalSqlSha256": "f72756ea19e874a864df94d7fca92f5199a58aa8e2212240b0c2acddb779b33b"
+      },
+      {
+        "statementId": "_COLUMNS",
+        "sourceOwner": "SDK fixed runtime",
+        "originalSqlSha256": "f72756ea19e874a864df94d7fca92f5199a58aa8e2212240b0c2acddb779b33b"
+      },
+      {
+        "statementId": "_COLUMNS",
+        "sourceOwner": "SDK fixed runtime",
+        "originalSqlSha256": "f72756ea19e874a864df94d7fca92f5199a58aa8e2212240b0c2acddb779b33b"
+      },
+      {
+        "statementId": "_SHAPE",
+        "sourceOwner": "SDK fixed runtime",
+        "originalSqlSha256": "ec2166fbf89ba2e33f93756dc2ab135aea1dfbf6ebcfc4c91078a45c8c1fba54"
+      },
+      {
+        "statementId": "_SHAPE",
+        "sourceOwner": "SDK fixed runtime",
+        "originalSqlSha256": "ec2166fbf89ba2e33f93756dc2ab135aea1dfbf6ebcfc4c91078a45c8c1fba54"
+      },
+      {
+        "statementId": "_SHAPE",
+        "sourceOwner": "SDK fixed runtime",
+        "originalSqlSha256": "ec2166fbf89ba2e33f93756dc2ab135aea1dfbf6ebcfc4c91078a45c8c1fba54"
+      }
+    ]
+  },
+  "184": {
+    "function": {
+      "oid": 184,
+      "schema": "pg_catalog",
+      "name": "oideq",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "oid",
+          "oid": 26
+        },
+        {
+          "schema": "pg_catalog",
+          "name": "oid",
+          "oid": 26
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "bool",
+        "oid": 16
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    "origins": [
+      {
+        "statementId": "_TABLE",
+        "sourceOwner": "SDK fixed runtime",
+        "originalSqlSha256": "2c0f17ae15c2fba1c085d832dbffd8300e93fda505f38db36e70c1fe47eeb0d7"
+      },
+      {
+        "statementId": "_COLUMNS",
+        "sourceOwner": "SDK fixed runtime",
+        "originalSqlSha256": "f72756ea19e874a864df94d7fca92f5199a58aa8e2212240b0c2acddb779b33b"
+      },
+      {
+        "statementId": "_COLUMNS",
+        "sourceOwner": "SDK fixed runtime",
+        "originalSqlSha256": "f72756ea19e874a864df94d7fca92f5199a58aa8e2212240b0c2acddb779b33b"
+      },
+      {
+        "statementId": "_COLUMNS",
+        "sourceOwner": "SDK fixed runtime",
+        "originalSqlSha256": "f72756ea19e874a864df94d7fca92f5199a58aa8e2212240b0c2acddb779b33b"
+      },
+      {
+        "statementId": "_KEYS",
+        "sourceOwner": "SDK fixed runtime",
+        "originalSqlSha256": "4ab8f52c86d796021d053f5f5e6b7f726a3d5e9511d0564f2054c9da88c54c70"
+      },
+      {
+        "statementId": "_KEYS",
+        "sourceOwner": "SDK fixed runtime",
+        "originalSqlSha256": "4ab8f52c86d796021d053f5f5e6b7f726a3d5e9511d0564f2054c9da88c54c70"
+      },
+      {
+        "statementId": "_KEYS",
+        "sourceOwner": "SDK fixed runtime",
+        "originalSqlSha256": "4ab8f52c86d796021d053f5f5e6b7f726a3d5e9511d0564f2054c9da88c54c70"
+      },
+      {
+        "statementId": "_SHAPE",
+        "sourceOwner": "SDK fixed runtime",
+        "originalSqlSha256": "ec2166fbf89ba2e33f93756dc2ab135aea1dfbf6ebcfc4c91078a45c8c1fba54"
+      },
+      {
+        "statementId": "_SHAPE",
+        "sourceOwner": "SDK fixed runtime",
+        "originalSqlSha256": "ec2166fbf89ba2e33f93756dc2ab135aea1dfbf6ebcfc4c91078a45c8c1fba54"
+      },
+      {
+        "statementId": "_SHAPE",
+        "sourceOwner": "SDK fixed runtime",
+        "originalSqlSha256": "ec2166fbf89ba2e33f93756dc2ab135aea1dfbf6ebcfc4c91078a45c8c1fba54"
+      },
+      {
+        "statementId": "_RESOLUTION",
+        "sourceOwner": "SDK fixed runtime",
+        "originalSqlSha256": "8e4c47059c4ea8f811d19a13d65332b0e4129afb625db10a9ceb621b33b55d5c"
+      }
+    ]
+  },
+  "240": {
+    "function": {
+      "oid": 240,
+      "schema": "pg_catalog",
+      "name": "nameeqtext",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "name",
+          "oid": 19
+        },
+        {
+          "schema": "pg_catalog",
+          "name": "text",
+          "oid": 25
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "bool",
+        "oid": 16
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    "origins": [
+      {
+        "statementId": "_KEYS",
+        "sourceOwner": "SDK fixed runtime",
+        "originalSqlSha256": "4ab8f52c86d796021d053f5f5e6b7f726a3d5e9511d0564f2054c9da88c54c70"
+      },
+      {
+        "statementId": "_KEYS",
+        "sourceOwner": "SDK fixed runtime",
+        "originalSqlSha256": "4ab8f52c86d796021d053f5f5e6b7f726a3d5e9511d0564f2054c9da88c54c70"
+      },
+      {
+        "statementId": "_KEYS",
+        "sourceOwner": "SDK fixed runtime",
+        "originalSqlSha256": "4ab8f52c86d796021d053f5f5e6b7f726a3d5e9511d0564f2054c9da88c54c70"
+      }
+    ]
+  },
+  "313": {
+    "function": {
+      "oid": 313,
+      "schema": "pg_catalog",
+      "name": "int4",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "int2",
+          "oid": 21
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "int4",
+        "oid": 23
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    "origins": [
+      {
+        "statementId": "_COLUMNS",
+        "sourceOwner": "SDK fixed runtime",
+        "originalSqlSha256": "f72756ea19e874a864df94d7fca92f5199a58aa8e2212240b0c2acddb779b33b"
+      },
+      {
+        "statementId": "_KEYS",
+        "sourceOwner": "SDK fixed runtime",
+        "originalSqlSha256": "4ab8f52c86d796021d053f5f5e6b7f726a3d5e9511d0564f2054c9da88c54c70"
+      },
+      {
+        "statementId": "_SHAPE",
+        "sourceOwner": "SDK fixed runtime",
+        "originalSqlSha256": "ec2166fbf89ba2e33f93756dc2ab135aea1dfbf6ebcfc4c91078a45c8c1fba54"
+      }
+    ]
+  },
+  "406": {
+    "function": {
+      "oid": 406,
+      "schema": "pg_catalog",
+      "name": "text",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "name",
+          "oid": 19
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "text",
+        "oid": 25
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    "origins": [
+      {
+        "statementId": "_RESOLUTION",
+        "sourceOwner": "SDK fixed runtime",
+        "originalSqlSha256": "8e4c47059c4ea8f811d19a13d65332b0e4129afb625db10a9ceb621b33b55d5c"
+      }
+    ]
+  },
+  "480": {
+    "function": {
+      "oid": 480,
+      "schema": "pg_catalog",
+      "name": "int4",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "int8",
+          "oid": 20
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "int4",
+        "oid": 23
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    "origins": [
+      {
+        "statementId": "_KEYS",
+        "sourceOwner": "SDK fixed runtime",
+        "originalSqlSha256": "4ab8f52c86d796021d053f5f5e6b7f726a3d5e9511d0564f2054c9da88c54c70"
+      },
+      {
+        "statementId": "_KEYS",
+        "sourceOwner": "SDK fixed runtime",
+        "originalSqlSha256": "4ab8f52c86d796021d053f5f5e6b7f726a3d5e9511d0564f2054c9da88c54c70"
+      },
+      {
+        "statementId": "_KEYS",
+        "sourceOwner": "SDK fixed runtime",
+        "originalSqlSha256": "4ab8f52c86d796021d053f5f5e6b7f726a3d5e9511d0564f2054c9da88c54c70"
+      }
+    ]
+  },
+  "481": {
+    "function": {
+      "oid": 481,
+      "schema": "pg_catalog",
+      "name": "int8",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "int4",
+          "oid": 23
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "int8",
+        "oid": 20
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    "origins": [
+      {
+        "statementId": "owner-business-0",
+        "sourceOwner": "original Weft program",
+        "originalSqlSha256": "4bf99a2e6fbf7dee78b7b1c762556708dec109f37f8d42ea76022f3319df1110"
+      },
+      {
+        "statementId": "owner-var-0",
+        "sourceOwner": "exact original owner Var probe",
+        "originalSqlSha256": "4bf99a2e6fbf7dee78b7b1c762556708dec109f37f8d42ea76022f3319df1110"
+      },
+      {
+        "statementId": "owner-var-1",
+        "sourceOwner": "exact original owner Var probe",
+        "originalSqlSha256": "b1378f5141ae6bd2fce753ad7598344e160ec4b3ffaedd023d3c4bb5e35dccfa"
+      }
+    ]
+  },
+  "742": {
+    "function": {
+      "oid": 742,
+      "schema": "pg_catalog",
+      "name": "text_gt",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "text",
+          "oid": 25
+        },
+        {
+          "schema": "pg_catalog",
+          "name": "text",
+          "oid": 25
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "bool",
+        "oid": 16
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    "origins": [
+      {
+        "statementId": "owner-business-1",
+        "sourceOwner": "original Weft program",
+        "originalSqlSha256": "21e922fa5e31f242f25ad1f95f3c82eaf046d5f4377d9aaad35550b26cf97eba"
+      },
+      {
+        "statementId": "owner-var-1",
+        "sourceOwner": "exact original owner Var probe",
+        "originalSqlSha256": "b1378f5141ae6bd2fce753ad7598344e160ec4b3ffaedd023d3c4bb5e35dccfa"
+      },
+      {
+        "statementId": "owner-var-1",
+        "sourceOwner": "exact original owner Var probe",
+        "originalSqlSha256": "b1378f5141ae6bd2fce753ad7598344e160ec4b3ffaedd023d3c4bb5e35dccfa"
+      },
+      {
+        "statementId": "owner-var-1",
+        "sourceOwner": "exact original owner Var probe",
+        "originalSqlSha256": "b1378f5141ae6bd2fce753ad7598344e160ec4b3ffaedd023d3c4bb5e35dccfa"
+      },
+      {
+        "statementId": "owner-var-1",
+        "sourceOwner": "exact original owner Var probe",
+        "originalSqlSha256": "b1378f5141ae6bd2fce753ad7598344e160ec4b3ffaedd023d3c4bb5e35dccfa"
+      },
+      {
+        "statementId": "owner-var-1",
+        "sourceOwner": "exact original owner Var probe",
+        "originalSqlSha256": "b1378f5141ae6bd2fce753ad7598344e160ec4b3ffaedd023d3c4bb5e35dccfa"
+      }
+    ]
+  },
+  "754": {
+    "function": {
+      "oid": 754,
+      "schema": "pg_catalog",
+      "name": "int8",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "int2",
+          "oid": 21
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "int8",
+        "oid": 20
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    "origins": [
+      {
+        "statementId": "owner-business-1",
+        "sourceOwner": "original Weft program",
+        "originalSqlSha256": "21e922fa5e31f242f25ad1f95f3c82eaf046d5f4377d9aaad35550b26cf97eba"
+      },
+      {
+        "statementId": "owner-var-1",
+        "sourceOwner": "exact original owner Var probe",
+        "originalSqlSha256": "b1378f5141ae6bd2fce753ad7598344e160ec4b3ffaedd023d3c4bb5e35dccfa"
+      },
+      {
+        "statementId": "owner-var-1",
+        "sourceOwner": "exact original owner Var probe",
+        "originalSqlSha256": "b1378f5141ae6bd2fce753ad7598344e160ec4b3ffaedd023d3c4bb5e35dccfa"
+      }
+    ]
+  },
+  "861": {
+    "function": {
+      "oid": 861,
+      "schema": "pg_catalog",
+      "name": "current_database",
+      "arguments": [],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "name",
+        "oid": 19
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    "origins": [
+      {
+        "statementId": "_RESOLUTION",
+        "sourceOwner": "SDK fixed runtime",
+        "originalSqlSha256": "8e4c47059c4ea8f811d19a13d65332b0e4129afb625db10a9ceb621b33b55d5c"
+      }
+    ]
+  },
+  "1258": {
+    "function": {
+      "oid": 1258,
+      "schema": "pg_catalog",
+      "name": "textcat",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "text",
+          "oid": 25
+        },
+        {
+          "schema": "pg_catalog",
+          "name": "text",
+          "oid": 25
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "text",
+        "oid": 25
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    "origins": [
+      {
+        "statementId": "_RESOLUTION",
+        "sourceOwner": "SDK fixed runtime",
+        "originalSqlSha256": "8e4c47059c4ea8f811d19a13d65332b0e4129afb625db10a9ceb621b33b55d5c"
+      }
+    ]
+  },
+  "1275": {
+    "function": {
+      "oid": 1275,
+      "schema": "pg_catalog",
+      "name": "int84mi",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "int8",
+          "oid": 20
+        },
+        {
+          "schema": "pg_catalog",
+          "name": "int4",
+          "oid": 23
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "int8",
+        "oid": 20
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    "origins": [
+      {
+        "statementId": "_KEYS",
+        "sourceOwner": "SDK fixed runtime",
+        "originalSqlSha256": "4ab8f52c86d796021d053f5f5e6b7f726a3d5e9511d0564f2054c9da88c54c70"
+      },
+      {
+        "statementId": "_KEYS",
+        "sourceOwner": "SDK fixed runtime",
+        "originalSqlSha256": "4ab8f52c86d796021d053f5f5e6b7f726a3d5e9511d0564f2054c9da88c54c70"
+      },
+      {
+        "statementId": "_KEYS",
+        "sourceOwner": "SDK fixed runtime",
+        "originalSqlSha256": "4ab8f52c86d796021d053f5f5e6b7f726a3d5e9511d0564f2054c9da88c54c70"
+      }
+    ]
+  },
+  "1282": {
+    "function": {
+      "oid": 1282,
+      "schema": "pg_catalog",
+      "name": "quote_ident",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "text",
+          "oid": 25
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "text",
+        "oid": 25
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    "origins": [
+      {
+        "statementId": "_RESOLUTION",
+        "sourceOwner": "SDK fixed runtime",
+        "originalSqlSha256": "8e4c47059c4ea8f811d19a13d65332b0e4129afb625db10a9ceb621b33b55d5c"
+      }
+    ]
+  },
+  "1287": {
+    "function": {
+      "oid": 1287,
+      "schema": "pg_catalog",
+      "name": "oid",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "int8",
+          "oid": 20
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "oid",
+        "oid": 26
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    "origins": [
+      {
+        "statementId": "_COLUMNS",
+        "sourceOwner": "SDK fixed runtime",
+        "originalSqlSha256": "f72756ea19e874a864df94d7fca92f5199a58aa8e2212240b0c2acddb779b33b"
+      },
+      {
+        "statementId": "_KEYS",
+        "sourceOwner": "SDK fixed runtime",
+        "originalSqlSha256": "4ab8f52c86d796021d053f5f5e6b7f726a3d5e9511d0564f2054c9da88c54c70"
+      },
+      {
+        "statementId": "_SHAPE",
+        "sourceOwner": "SDK fixed runtime",
+        "originalSqlSha256": "ec2166fbf89ba2e33f93756dc2ab135aea1dfbf6ebcfc4c91078a45c8c1fba54"
+      }
+    ]
+  },
+  "1403": {
+    "function": {
+      "oid": 1403,
+      "schema": "pg_catalog",
+      "name": "current_schemas",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "bool",
+          "oid": 16
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "_name",
+        "oid": 1003
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    "origins": [
+      {
+        "statementId": "_RESOLUTION",
+        "sourceOwner": "SDK fixed runtime",
+        "originalSqlSha256": "8e4c47059c4ea8f811d19a13d65332b0e4129afb625db10a9ceb621b33b55d5c"
+      }
+    ]
+  },
+  "1860": {
+    "function": {
+      "oid": 1860,
+      "schema": "pg_catalog",
+      "name": "int82le",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "int8",
+          "oid": 20
+        },
+        {
+          "schema": "pg_catalog",
+          "name": "int2",
+          "oid": 21
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "bool",
+        "oid": 16
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    "origins": [
+      {
+        "statementId": "_KEYS",
+        "sourceOwner": "SDK fixed runtime",
+        "originalSqlSha256": "4ab8f52c86d796021d053f5f5e6b7f726a3d5e9511d0564f2054c9da88c54c70"
+      },
+      {
+        "statementId": "_KEYS",
+        "sourceOwner": "SDK fixed runtime",
+        "originalSqlSha256": "4ab8f52c86d796021d053f5f5e6b7f726a3d5e9511d0564f2054c9da88c54c70"
+      },
+      {
+        "statementId": "_KEYS",
+        "sourceOwner": "SDK fixed runtime",
+        "originalSqlSha256": "4ab8f52c86d796021d053f5f5e6b7f726a3d5e9511d0564f2054c9da88c54c70"
+      }
+    ]
+  },
+  "2078": {
+    "function": {
+      "oid": 2078,
+      "schema": "pg_catalog",
+      "name": "set_config",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "text",
+          "oid": 25
+        },
+        {
+          "schema": "pg_catalog",
+          "name": "text",
+          "oid": 25
+        },
+        {
+          "schema": "pg_catalog",
+          "name": "bool",
+          "oid": 16
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "text",
+        "oid": 25
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    "origins": [
+      {
+        "statementId": "inline-a24f29197f6a",
+        "sourceOwner": "SDK fixed runtime",
+        "originalSqlSha256": "a24f29197f6a349ae81e10693b97a062195fa5027ed2976e3758fb2e03392849"
+      },
+      {
+        "statementId": "inline-6f0a092bfd47",
+        "sourceOwner": "SDK fixed runtime",
+        "originalSqlSha256": "6f0a092bfd47e34756c8981defc3c5eb684025a0c60dfbe4ac5d3d6fb894c068"
+      },
+      {
+        "statementId": "inline-79424d69b495",
+        "sourceOwner": "SDK fixed runtime",
+        "originalSqlSha256": "79424d69b495c9e84fbf10c55e320e5ba12278a37887509b1515009832186e9e"
+      }
+    ]
+  },
+  "2331": {
+    "function": {
+      "oid": 2331,
+      "schema": "pg_catalog",
+      "name": "unnest",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "anyarray",
+          "oid": 2277
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "anyelement",
+        "oid": 2283
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 3996,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    "origins": [
+      {
+        "statementId": "_KEYS",
+        "sourceOwner": "SDK fixed runtime",
+        "originalSqlSha256": "4ab8f52c86d796021d053f5f5e6b7f726a3d5e9511d0564f2054c9da88c54c70"
+      },
+      {
+        "statementId": "_KEYS",
+        "sourceOwner": "SDK fixed runtime",
+        "originalSqlSha256": "4ab8f52c86d796021d053f5f5e6b7f726a3d5e9511d0564f2054c9da88c54c70"
+      },
+      {
+        "statementId": "_KEYS",
+        "sourceOwner": "SDK fixed runtime",
+        "originalSqlSha256": "4ab8f52c86d796021d053f5f5e6b7f726a3d5e9511d0564f2054c9da88c54c70"
+      },
+      {
+        "statementId": "_SHAPE",
+        "sourceOwner": "SDK fixed runtime",
+        "originalSqlSha256": "ec2166fbf89ba2e33f93756dc2ab135aea1dfbf6ebcfc4c91078a45c8c1fba54"
+      },
+      {
+        "statementId": "_SHAPE",
+        "sourceOwner": "SDK fixed runtime",
+        "originalSqlSha256": "ec2166fbf89ba2e33f93756dc2ab135aea1dfbf6ebcfc4c91078a45c8c1fba54"
+      },
+      {
+        "statementId": "_SHAPE",
+        "sourceOwner": "SDK fixed runtime",
+        "originalSqlSha256": "ec2166fbf89ba2e33f93756dc2ab135aea1dfbf6ebcfc4c91078a45c8c1fba54"
+      },
+      {
+        "statementId": "_RESOLUTION",
+        "sourceOwner": "SDK fixed runtime",
+        "originalSqlSha256": "8e4c47059c4ea8f811d19a13d65332b0e4129afb625db10a9ceb621b33b55d5c"
+      }
+    ]
+  },
+  "2706": {
+    "function": {
+      "oid": 2706,
+      "schema": "pg_catalog",
+      "name": "pg_has_role",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "name",
+          "oid": 19
+        },
+        {
+          "schema": "pg_catalog",
+          "name": "oid",
+          "oid": 26
+        },
+        {
+          "schema": "pg_catalog",
+          "name": "text",
+          "oid": 25
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "bool",
+        "oid": 16
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    "origins": [
+      {
+        "statementId": "_TABLE",
+        "sourceOwner": "SDK fixed runtime",
+        "originalSqlSha256": "2c0f17ae15c2fba1c085d832dbffd8300e93fda505f38db36e70c1fe47eeb0d7"
+      }
+    ]
+  },
+  "3267": {
+    "function": {
+      "oid": 3267,
+      "schema": "pg_catalog",
+      "name": "jsonb_agg",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "anyelement",
+          "oid": 2283
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "jsonb",
+        "oid": 3802
+      },
+      "kind": "a",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    "origins": [
+      {
+        "statementId": "_SHAPE",
+        "sourceOwner": "SDK fixed runtime",
+        "originalSqlSha256": "ec2166fbf89ba2e33f93756dc2ab135aea1dfbf6ebcfc4c91078a45c8c1fba54"
+      },
+      {
+        "statementId": "_SHAPE",
+        "sourceOwner": "SDK fixed runtime",
+        "originalSqlSha256": "ec2166fbf89ba2e33f93756dc2ab135aea1dfbf6ebcfc4c91078a45c8c1fba54"
+      },
+      {
+        "statementId": "_SHAPE",
+        "sourceOwner": "SDK fixed runtime",
+        "originalSqlSha256": "ec2166fbf89ba2e33f93756dc2ab135aea1dfbf6ebcfc4c91078a45c8c1fba54"
+      }
+    ]
+  },
+  "3271": {
+    "function": {
+      "oid": 3271,
+      "schema": "pg_catalog",
+      "name": "jsonb_build_array",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "any",
+          "oid": 2276
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "jsonb",
+        "oid": 3802
+      },
+      "kind": "f",
+      "variadicType": {
+        "schema": "pg_catalog",
+        "name": "any",
+        "oid": 2276
+      },
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    "origins": [
+      {
+        "statementId": "_SHAPE",
+        "sourceOwner": "SDK fixed runtime",
+        "originalSqlSha256": "ec2166fbf89ba2e33f93756dc2ab135aea1dfbf6ebcfc4c91078a45c8c1fba54"
+      },
+      {
+        "statementId": "_SHAPE",
+        "sourceOwner": "SDK fixed runtime",
+        "originalSqlSha256": "ec2166fbf89ba2e33f93756dc2ab135aea1dfbf6ebcfc4c91078a45c8c1fba54"
+      },
+      {
+        "statementId": "_SHAPE",
+        "sourceOwner": "SDK fixed runtime",
+        "originalSqlSha256": "ec2166fbf89ba2e33f93756dc2ab135aea1dfbf6ebcfc4c91078a45c8c1fba54"
+      }
+    ]
+  },
+  "3273": {
+    "function": {
+      "oid": 3273,
+      "schema": "pg_catalog",
+      "name": "jsonb_build_object",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "any",
+          "oid": 2276
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "jsonb",
+        "oid": 3802
+      },
+      "kind": "f",
+      "variadicType": {
+        "schema": "pg_catalog",
+        "name": "any",
+        "oid": 2276
+      },
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    "origins": [
+      {
+        "statementId": "_SHAPE",
+        "sourceOwner": "SDK fixed runtime",
+        "originalSqlSha256": "ec2166fbf89ba2e33f93756dc2ab135aea1dfbf6ebcfc4c91078a45c8c1fba54"
+      },
+      {
+        "statementId": "_SHAPE",
+        "sourceOwner": "SDK fixed runtime",
+        "originalSqlSha256": "ec2166fbf89ba2e33f93756dc2ab135aea1dfbf6ebcfc4c91078a45c8c1fba54"
+      },
+      {
+        "statementId": "_SHAPE",
+        "sourceOwner": "SDK fixed runtime",
+        "originalSqlSha256": "ec2166fbf89ba2e33f93756dc2ab135aea1dfbf6ebcfc4c91078a45c8c1fba54"
+      }
+    ]
+  },
+  "3441": {
+    "function": {
+      "oid": 3441,
+      "schema": "pg_catalog",
+      "name": "pg_control_system",
+      "arguments": [],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "record",
+        "oid": 2249
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    "origins": [
+      {
+        "statementId": "_RESOLUTION",
+        "sourceOwner": "SDK fixed runtime",
+        "originalSqlSha256": "8e4c47059c4ea8f811d19a13d65332b0e4129afb625db10a9ceb621b33b55d5c"
+      }
+    ]
+  },
+  "3495": {
+    "function": {
+      "oid": 3495,
+      "schema": "pg_catalog",
+      "name": "to_regclass",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "text",
+          "oid": 25
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "regclass",
+        "oid": 2205
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    "origins": [
+      {
+        "statementId": "_RESOLUTION",
+        "sourceOwner": "SDK fixed runtime",
+        "originalSqlSha256": "8e4c47059c4ea8f811d19a13d65332b0e4129afb625db10a9ceb621b33b55d5c"
+      },
+      {
+        "statementId": "inline-365ce44eecfd",
+        "sourceOwner": "SDK fixed runtime",
+        "originalSqlSha256": "365ce44eecfd313c769f71d7aeba48e43087273d4c1cb2d263b259b976d96241"
+      }
+    ]
+  },
+  "3787": {
+    "function": {
+      "oid": 3787,
+      "schema": "pg_catalog",
+      "name": "to_jsonb",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "anyelement",
+          "oid": 2283
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "jsonb",
+        "oid": 3802
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    "origins": [
+      {
+        "statementId": "_SHAPE",
+        "sourceOwner": "SDK fixed runtime",
+        "originalSqlSha256": "ec2166fbf89ba2e33f93756dc2ab135aea1dfbf6ebcfc4c91078a45c8c1fba54"
+      },
+      {
+        "statementId": "_SHAPE",
+        "sourceOwner": "SDK fixed runtime",
+        "originalSqlSha256": "ec2166fbf89ba2e33f93756dc2ab135aea1dfbf6ebcfc4c91078a45c8c1fba54"
+      },
+      {
+        "statementId": "_SHAPE",
+        "sourceOwner": "SDK fixed runtime",
+        "originalSqlSha256": "ec2166fbf89ba2e33f93756dc2ab135aea1dfbf6ebcfc4c91078a45c8c1fba54"
+      }
+    ]
+  }
+}

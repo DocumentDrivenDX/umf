@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 24077,
+        "line": 19,
+        "path": "src/projections/ddd-postgresql/index.ts",
+        "sha256": "61f7ac7b7a701e5071a50185f9660fa7e8441b48c75a07f71e0a8c020d8db3f2"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "DddPostgresqlPolicy",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface DddPostgresqlPolicy {profile:'ddd-postgresql-1';version:'1.0.0';targetVersion:'17.4';mode:'strict'|'report';objectCheckNaming:'ck-table-column-object-v1';tablePolicy:DddPostgresqlTablePolicy;layoutPolicy:PostgresqlRelationshipLayoutPolicy}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"DddPostgresqlPolicy\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 24077,
+      "line": 19,
+      "path": "src/projections/ddd-postgresql/index.ts",
+      "sha256": "61f7ac7b7a701e5071a50185f9660fa7e8441b48c75a07f71e0a8c020d8db3f2"
+    }
+  ],
+  "summary": "Type declaration · src/projections/ddd-postgresql/index.ts",
+  "title": "DddPostgresqlPolicy"
+}

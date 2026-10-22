@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 8446,
+        "line": 15,
+        "path": "src/core-ideals/nullability-postgresql-projection.ts",
+        "sha256": "333852a5764633d0f4c22d21c886a93c15ce82e25b5884779b3c69638e6253f2"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "NullabilityPostgresqlProjection",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface NullabilityPostgresqlProjection {\n operation:'project-nullability-postgresql';version:'1.0.0';status:'projected'|'blocked';source:Document;author:CoreNullabilityDeclaration;request:NullabilityPostgresqlRequest;target?:Document;nativeSql?:string;diagnostics:Diagnostic[];binding:typeof binding;\n mapping:{origin:'authored';nullability:'required'|'absent-allowed'|'unspecified';encoding:'not-null'|'null'|'omitted';scope:NullabilityPostgresqlRequest['scope'];carrier:NullabilityPostgresqlRequest['carrier'];idealPath:string;nativePath:'/stmts/0/stmt/CreateStmt/tableElts/0/ColumnDef';outcome:'exact'|'unknown'|'not-expressible'};\n residuals:{path:string;value:Json;reason:string;outcome:'unknown'|'not-expressible';recovery:'Recover source meaning with retained projection receipt; native-only import does not recover author intent'}[];\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"NullabilityPostgresqlProjection\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 8446,
+      "line": 15,
+      "path": "src/core-ideals/nullability-postgresql-projection.ts",
+      "sha256": "333852a5764633d0f4c22d21c886a93c15ce82e25b5884779b3c69638e6253f2"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/nullability-postgresql-projection.ts",
+  "title": "NullabilityPostgresqlProjection"
+}

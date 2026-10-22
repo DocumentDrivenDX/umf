@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 9572,
+        "line": 13,
+        "path": "src/core-ideals/relationship-sqlserver.ts",
+        "sha256": "37ad0b63418f428ef2841835f45874ad702d2436d7582d0ea765114533552708"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "SqlServerRelationshipClassification",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface SqlServerRelationshipClassification {operation:'classify-sqlserver-relationships';version:'1.0.0';status:'classified'|'blocked';source:Document;target?:Document;request:SqlServerRelationshipRequest;binding:typeof binding;observations:SqlServerRelationshipObservation[];residuals:{path:string;value:Json;reason:string;outcome:'unknown'|'not-expressible'|'approximated';recovery:string}[];diagnostics:Diagnostic[]}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"SqlServerRelationshipClassification\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 9572,
+      "line": 13,
+      "path": "src/core-ideals/relationship-sqlserver.ts",
+      "sha256": "37ad0b63418f428ef2841835f45874ad702d2436d7582d0ea765114533552708"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/relationship-sqlserver.ts",
+  "title": "SqlServerRelationshipClassification"
+}

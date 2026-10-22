@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 8449,
+        "line": 15,
+        "path": "src/core-ideals/key-tablespec.ts",
+        "sha256": "fb76be0e0e990e144326b4da446f65b0065d8da261247078d4e941b80fb17ccd"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "TableSpecKeyObservation",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface TableSpecKeyObservation {\n nativePath:string;kind:'primary'|'alternate';state:'absent'|'empty'|'declared'|'invalid';interpretation:'declared'|'unknown'|'unsupported';\n columns:string[];resolvedFields:{module:string;element:string}[];enforcement:'unknown';authorIntent:'unknown';basis:string;\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"TableSpecKeyObservation\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 8449,
+      "line": 15,
+      "path": "src/core-ideals/key-tablespec.ts",
+      "sha256": "fb76be0e0e990e144326b4da446f65b0065d8da261247078d4e941b80fb17ccd"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/key-tablespec.ts",
+  "title": "TableSpecKeyObservation"
+}

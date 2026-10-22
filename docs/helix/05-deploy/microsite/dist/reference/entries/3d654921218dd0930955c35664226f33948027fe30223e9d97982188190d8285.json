@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 4495,
+        "line": 18,
+        "path": "src/extensions/actions/types.ts",
+        "sha256": "4cd5eb6a0bab3a17bb6834efcf7724d5c981e67cc252e3ba8965aadd4ad67c68"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "ActionAuthorization",
+    "runtime": "type-only",
+    "signatureText": [
+      "export type ActionAuthorization = ({kind:'roles';profile:ActionProfileIdentity;roles:string[]}|{kind:'policy';profile:ActionProfileIdentity;resources:string[]}) & {[key:string]:unknown};"
+    ]
+  },
+  "id": "[\"api\",\".\",\"ActionAuthorization\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 4495,
+      "line": 18,
+      "path": "src/extensions/actions/types.ts",
+      "sha256": "4cd5eb6a0bab3a17bb6834efcf7724d5c981e67cc252e3ba8965aadd4ad67c68"
+    }
+  ],
+  "summary": "Type declaration · src/extensions/actions/types.ts",
+  "title": "ActionAuthorization"
+}

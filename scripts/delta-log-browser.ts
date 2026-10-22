@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
 const base='fixtures/delta/upstream/',actions=await Bun.file('fixtures/delta/upstream/action-results.json').json(),report=await Bun.file(base+'log-results.json').json(),cases=[];
 for(const c of report.results)cases.push({...c,actions:actions.results.find((r:any)=>r.path===c.path),text:await Bun.file(base+c.path).text()});

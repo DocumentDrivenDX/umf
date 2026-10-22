@@ -1,0 +1,33 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 4115,
+        "line": 1,
+        "path": "spec/projections/json-schema-protobuf.schema.json",
+        "sha256": "aa50ec243ca3c00259ae5eccfcd3755f35cf428afc48343eeb8201651f7af795"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "jsonSchemaProtobufProjectionSchema",
+    "runtime": "unassessed",
+    "signatureText": [
+      "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"$id\": \"urn:umf:projection:json-schema-protobuf:0.1.0\",\n  \"type\": \"object\",\n  \"required\": [\n    \"status\",\n    \"source\",\n    \"policy\",\n    \"issues\",\n    \"mappings\"\n  ],\n  \"properties\": {\n    \"status\": {\n      \"enum\": [\n        \"blocked\",\n        \"projected\"\n      ]\n    },\n    \"source\": {\n      \"$ref\": \"urn:umf:core:0.10.0\"\n    },\n    \"target\": {\n      \"$ref\": \"urn:umf:core:0.10.0\"\n    },\n    \"nativeSource\": {\n      \"type\": \"string\"\n    },\n    \"policy\": {\n      \"type\": \"object\",\n      \"required\": [\n        \"id\",\n        \"packageName\",\n        \"messageName\",\n        \"fields\",\n        \"integerType\",\n        \"lossPolicy\"\n      ],\n      \"properties\": {\n        \"id\": {\n          \"type\": \"string\",\n          \"minLength\": 1\n        },\n        \"packageName\": {\n          \"type\": \"string\"\n        },\n        \"messageName\": {\n          \"type\": \"string\"\n        },\n        \"integerType\": {\n          \"enum\": [\n            \"int64\",\n            \"uint64\",\n            \"sint64\",\n            \"int32\",\n            \"uint32\",\n            \"sint32\"\n          ]\n        },\n        \"lossPolicy\": {\n          \"enum\": [\n            \"strict\",\n            \"allow-reported-loss\"\n          ]\n        },\n        \"fields\": {\n          \"type\": \"object\",\n          \"additionalProperties\": {\n            \"type\": \"object\",\n            \"required\": [\n              \"number\"\n            ],\n            \"properties\": {\n              \"number\": {\n                \"type\": \"integer\",\n                \"minimum\": 1,\n                \"maximum\": 536870911\n              }\n            },\n            \"additionalProperties\": false\n          }\n        }\n      },\n      \"additionalProperties\": false\n    },\n    \"issues\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"required\": [\n          \"path\",\n          \"code\",\n          \"classification\",\n          \"detail\",\n          \"retainedInSource\"\n        ],\n        \"properties\": {\n          \"path\": {\n            \"type\": \"string\"\n          },\n          \"code\": {\n            \"type\": \"string\"\n          },\n          \"classification\": {\n            \"enum\": [\n              \"representation-change\",\n              \"not-enforced\",\n              \"unsupported\",\n              \"annotation-only\"\n            ]\n          },\n          \"detail\": {\n            \"type\": \"string\"\n          },\n          \"retainedInSource\": {\n            \"const\": true\n          }\n        },\n        \"additionalProperties\": false\n      }\n    },\n    \"mappings\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"required\": [\n          \"sourcePath\",\n          \"targetMessage\",\n          \"targetField\",\n          \"number\"\n        ],\n        \"properties\": {\n          \"sourcePath\": {\n            \"type\": \"string\"\n          },\n          \"targetMessage\": {\n            \"type\": \"string\"\n          },\n          \"targetField\": {\n            \"type\": \"string\"\n          },\n          \"number\": {\n            \"type\": \"integer\"\n          }\n        },\n        \"additionalProperties\": false\n      }\n    },\n    \"targetDiagnostics\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"required\": [\n          \"code\",\n          \"path\",\n          \"message\",\n          \"severity\"\n        ],\n        \"properties\": {\n          \"code\": {\n            \"type\": \"string\"\n          },\n          \"path\": {\n            \"type\": \"string\"\n          },\n          \"message\": {\n            \"type\": \"string\"\n          },\n          \"severity\": {\n            \"enum\": [\n              \"error\",\n              \"warning\"\n            ]\n          }\n        },\n        \"additionalProperties\": false\n      }\n    }\n  },\n  \"additionalProperties\": false,\n  \"allOf\": [\n    {\n      \"if\": {\n        \"properties\": {\n          \"status\": {\n            \"const\": \"projected\"\n          }\n        }\n      },\n      \"then\": {\n        \"required\": [\n          \"target\",\n          \"nativeSource\",\n          \"targetDiagnostics\"\n        ]\n      },\n      \"else\": {\n        \"not\": {\n          \"required\": [\n            \"target\"\n          ]\n        }\n      }\n    }\n  ]\n}\n"
+    ]
+  },
+  "id": "[\"api\",\".\",\"jsonSchemaProtobufProjectionSchema\"]",
+  "kind": "api",
+  "links": [
+    "[\"schema\",\"spec/projections/json-schema-protobuf.schema.json\",\"\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 4115,
+      "line": 1,
+      "path": "spec/projections/json-schema-protobuf.schema.json",
+      "sha256": "aa50ec243ca3c00259ae5eccfcd3755f35cf428afc48343eeb8201651f7af795"
+    }
+  ],
+  "summary": "Public export · spec/projections/json-schema-protobuf.schema.json",
+  "title": "jsonSchemaProtobufProjectionSchema"
+}

@@ -1,0 +1,23 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"registerActions\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Registry\"]"
+      ],
+      "name": "registry",
+      "optional": false,
+      "type": "Registry"
+    }
+  ],
+  "purpose": "Extends the caller's registry without discarding any installed callback.",
+  "related": [],
+  "returns": "Registry",
+  "task": "Extensions",
+  "type": "(registry: Registry) => Registry"
+}

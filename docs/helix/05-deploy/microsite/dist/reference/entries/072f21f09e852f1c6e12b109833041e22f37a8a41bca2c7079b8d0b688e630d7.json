@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 9689,
+        "line": 13,
+        "path": "src/core-ideals/record-parquet-projection.ts",
+        "sha256": "400d94d9370256a21128b49edaa37ad9ea86fbfee898182365dabb0e23dc8a24"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "RecordParquetProjection",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface RecordParquetProjection {operation:'project-record-parquet';version:'1.0.0';status:'projected'|'blocked';source:Document;author:CoreKindDeclaration;request:RecordParquetRequest;binding:typeof binding;target?:Document;mappings:{origin:'authored';kind:'record'|'field';idealPath:string;nativePath:string;outcome:'exact'|'unknown'|'not-expressible'}[];residuals:FieldParquetProjection['residuals'];diagnostics:Diagnostic[]}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"RecordParquetProjection\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 9689,
+      "line": 13,
+      "path": "src/core-ideals/record-parquet-projection.ts",
+      "sha256": "400d94d9370256a21128b49edaa37ad9ea86fbfee898182365dabb0e23dc8a24"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/record-parquet-projection.ts",
+  "title": "RecordParquetProjection"
+}

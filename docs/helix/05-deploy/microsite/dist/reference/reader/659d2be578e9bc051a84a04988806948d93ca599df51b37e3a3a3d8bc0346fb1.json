@@ -1,0 +1,41 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"renameParquetFieldWithArrowSchema\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ParquetArrowRenamePolicy\"]"
+      ],
+      "name": "options",
+      "optional": false,
+      "type": "ParquetArrowRenamePolicy"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ArrowFlatbufferEncodingBackend\"]"
+      ],
+      "name": "backend",
+      "optional": false,
+      "type": "ArrowFlatbufferEncodingBackend"
+    }
+  ],
+  "purpose": "Coordinated name edit using explicit native indexes and interpreted container roles.",
+  "related": [],
+  "returns": "ParquetArrowRenameResult",
+  "task": "Other APIs",
+  "type": "(input: Document, options: ParquetArrowRenamePolicy, backend: ArrowFlatbufferEncodingBackend) => ParquetArrowRenameResult"
+}

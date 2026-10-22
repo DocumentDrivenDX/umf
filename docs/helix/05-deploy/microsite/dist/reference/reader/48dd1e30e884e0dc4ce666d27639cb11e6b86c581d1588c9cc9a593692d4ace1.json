@@ -1,0 +1,28 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\"./loader-contract\",\"readJsonValue\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "text",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "Default: 'yaml'.",
+      "links": [],
+      "name": "format",
+      "optional": true,
+      "type": "\"json\" | \"yaml\""
+    }
+  ],
+  "purpose": "readJsonValue accepts text, format and returns Json.",
+  "related": [],
+  "returns": "Json",
+  "task": "Read and validate",
+  "type": "(text: string, format?: \"json\" | \"yaml\") => Json"
+}

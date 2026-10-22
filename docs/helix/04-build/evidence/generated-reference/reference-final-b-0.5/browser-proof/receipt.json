@@ -1,0 +1,56 @@
+{
+  "profile": "umf.final-b.browser-proof/1",
+  "siteBuildDigest": "ed847c6767527a3eaf5eeffa62e486cebae0257e1df9a3a6af12232567229d70",
+  "sourceFreeze": "8b4594 (as provided by final build owner)",
+  "runtime": {
+    "Bun": "1.4.2",
+    "Chromium": "153.0.8010.12"
+  },
+  "mode": "default installed-release-2 local site; no candidate mode or UMF_SITE_URL override",
+  "suites": {
+    "main": {
+      "receipt": "docs/helix/04-build/evidence/generated-reference/reference-final-b-0.5/browser-proof/main/receipt.json",
+      "receiptSha256": "b41367febbaa1853643f9ccd1f36fe98d3a991f28548883b8441ba0213d24f97",
+      "checks": 30,
+      "errors": 0,
+      "externalRequests": 0,
+      "log": "docs/helix/04-build/evidence/generated-reference/reference-final-b-0.5/browser-proof/main/browser-run.log",
+      "logSha256": "c2c2dd479a688f939ac3376093556f0a62548d2e8f36861ad70df8e651468e36",
+      "screenshots": 22,
+      "browser": "153.0.8010.12",
+      "manifestSha256": "c61a76c41459a3de3b6f11209cbc5c5e21ebcac042d0e732320332a925a6eb9e"
+    },
+    "reader": {
+      "receipt": "docs/helix/04-build/evidence/generated-reference/reference-final-b-0.5/browser-proof/reader/receipt.json",
+      "receiptSha256": "168089ce5b24c376de7c1ad61cd71d0c4c80e36065eaceca9a2ed0ad668f630e",
+      "checks": 14,
+      "errors": 0,
+      "externalRequests": 0,
+      "log": "docs/helix/04-build/evidence/generated-reference/reference-final-b-0.5/browser-proof/reader/reader-run.log",
+      "logSha256": "3e9e5068818e98bd2f5b192218871dff557c57a46eb8a90d6a789f9b1896ebcd",
+      "screenshots": 12,
+      "browser": "153.0.8010.12",
+      "manifestSha256": "c61a76c41459a3de3b6f11209cbc5c5e21ebcac042d0e732320332a925a6eb9e"
+    },
+    "ontology": {
+      "receipt": "docs/helix/04-build/evidence/generated-reference/reference-final-b-0.5/browser-proof/ontology/receipt.json",
+      "receiptSha256": "df0630ec45c17e8307dd6ec8d23c4d39d3304f3ff97f85decfb67e1abb319613",
+      "checks": 14,
+      "errors": 0,
+      "externalRequests": 0,
+      "log": "docs/helix/04-build/evidence/generated-reference/reference-final-b-0.5/browser-proof/ontology/ontology-run.log",
+      "logSha256": "568fa157c20ae08facaac1e64d7af2b0e96e35030d218cb8e39e094410eead05",
+      "screenshots": 6,
+      "browser": "153.0.8010.12",
+      "localTarget": "http://127.0.0.1:62514/umf/"
+    }
+  },
+  "totals": {
+    "checks": 58,
+    "errors": 0,
+    "externalRequests": 0,
+    "screenshots": 40
+  },
+  "result": "passed; local browser evidence only, no publication claim",
+  "protectedEvidencePaths": "ontology/live-release, ontology/live, and reader/live-current were not modified"
+}

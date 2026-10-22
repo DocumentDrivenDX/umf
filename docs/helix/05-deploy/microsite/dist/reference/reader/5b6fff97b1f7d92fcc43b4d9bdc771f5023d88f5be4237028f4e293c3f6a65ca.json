@@ -1,0 +1,117 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"RelationshipExtraProjection\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "operation",
+      "optional": false,
+      "type": "\"project-relationship-extra\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "status",
+      "optional": false,
+      "type": "\"blocked\" | \"projected\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreRelationshipDeclaration\"]"
+      ],
+      "name": "author",
+      "optional": false,
+      "type": "CoreRelationshipDeclaration"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"RelationshipExtraRequest\"]"
+      ],
+      "name": "request",
+      "optional": false,
+      "type": "RelationshipExtraRequest"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"RelationshipExtraArchive\"]"
+      ],
+      "name": "nativeArchive",
+      "optional": true,
+      "type": "RelationshipExtraArchive"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "mappings",
+      "optional": false,
+      "type": "{ idealPath: string; nativePath: string; outcome: \"approximated\"; provenance: \"explicit-author-declaration\"; }[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "version",
+      "optional": false,
+      "type": "\"1.0.0\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "source",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "target",
+      "optional": true,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "binding",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "outcome",
+      "optional": false,
+      "type": "\"unknown\" | \"approximated\" | \"not-expressible\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "residuals",
+      "optional": false,
+      "type": "Loss[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Diagnostic\"]"
+      ],
+      "name": "diagnostics",
+      "optional": false,
+      "type": "Diagnostic[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "RelationshipExtraProjection is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "RelationshipExtraProjection"
+}

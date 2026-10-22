@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 import io,json,avro,avro.schema,avro.io
 from pathlib import Path
 from datetime import date,time,datetime,timezone

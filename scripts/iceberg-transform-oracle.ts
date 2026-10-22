@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {inspectIcebergTransformType} from '../src';
 const base='fixtures/iceberg/transforms/';
 const build=Bun.spawn(['mvn','-q','-f','native/iceberg/oracle/pom.xml','compile','dependency:build-classpath','-Dmdep.outputFile='+process.cwd()+'/.cache/iceberg-java/classpath.txt'],{stdout:'inherit',stderr:'inherit'});if(await build.exited)throw Error('Oracle compile failed');

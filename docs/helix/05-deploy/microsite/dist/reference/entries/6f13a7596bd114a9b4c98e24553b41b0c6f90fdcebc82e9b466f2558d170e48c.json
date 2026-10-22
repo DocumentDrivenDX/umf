@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 7176,
+        "line": 24,
+        "path": "src/extensions/semantic-types/index.ts",
+        "sha256": "fed62c5627f8412d0e7d852932c8003d5c96acdb19b9ff74cf76eebefedae4ec"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "SemanticTypeRegistry",
+    "runtime": "unassessed",
+    "signatureText": [
+      "export class SemanticTypeRegistry {\n #entries=new Map<string,{definition:JsonObject;validator?:SemanticTypeValidator}>();\n register(reference:SemanticTypeReference,definition:JsonObject,validator?:SemanticTypeValidator):this {\n  const ref=referenceCopy(reference);\n  if(Object.keys(ref).some(k=>!['vocabulary','version','term'].includes(k)))throw new UmfError('SEMANTIC_TYPE_STRUCTURE','Registration identity cannot contain unknown qualifiers');\n  const copied=copyJson(definition);\n  if(!copied||typeof copied!=='object'||Array.isArray(copied))throw new UmfError('SEMANTIC_TYPE_STRUCTURE','Expected JSON object definition');\n  if(validator!==undefined&&typeof validator!=='function')throw new UmfError('SEMANTIC_TYPE_STRUCTURE','Expected explicit validator function');\n  const key=identity(ref);\n  if(this.#entries.has(key))throw new UmfError('SEMANTIC_TYPE_DUPLICATE','Exact semantic term already registered');\n  this.#entries.set(key,{definition:copied as JsonObject,...(validator?{validator}:{})});\n  return this;\n }\n lookup(reference:SemanticTypeReference):JsonObject|undefined {\n  const entry=this.#entries.get(identity(referenceCopy(reference)));\n  return entry?copyJson(entry.definition) as JsonObject:undefined;\n }\n check(reference:SemanticTypeReference,value:Json):SemanticTypeValueResult {\n  const ref=referenceCopy(reference);\n  const unknown=(issue:string):SemanticTypeValueResult=>({reference:ref,status:'unknown',complete:false,issues:[issue]});\n  if(Object.keys(ref).some(k=>!['vocabulary','version','term'].includes(k)))return unknown('Unknown semantic reference qualifiers retained without interpretation');\n  const entry=this.#entries.get(identity(ref));\n  if(!entry)return unknown('Exact semantic term is unavailable');\n  if(!entry.validator)return unknown('No value validator supplied for the exact semantic term');\n  try {\n   const result=copyJson(entry.validator(copyJson(value),copyJson(entry.definition) as JsonObject)) as unknown as SemanticTypeCheck;\n   if(!result||typeof result!=='object'||Array.isArray(result)||!['valid','invalid','unknown'].includes(result.status)||typeof result.complete!=='boolean'||!Array.isArray(result.issues)||result.issues.some(i=>typeof i!=='string')||Object.keys(result).some(k=>!['status','complete','issues'].includes(k))||(result.status==='unknown'&&result.complete))return unknown('Malformed validator result');\n   return {reference:ref,status:result.status,complete:result.complete,issues:result.issues};\n  } catch(error) {return unknown('Value validator failed; no validation conclusion available'+(error instanceof Error&&error.message?': '+error.message:''));}\n }\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"SemanticTypeRegistry\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 7176,
+      "line": 24,
+      "path": "src/extensions/semantic-types/index.ts",
+      "sha256": "fed62c5627f8412d0e7d852932c8003d5c96acdb19b9ff74cf76eebefedae4ec"
+    }
+  ],
+  "summary": "No remote lookup or code loading. Callers explicitly install trusted implementations.",
+  "title": "SemanticTypeRegistry"
+}

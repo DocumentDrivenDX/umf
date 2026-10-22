@@ -1,0 +1,82 @@
+{
+  "format": "umf-schema-browser-refresh/0.1",
+  "sourceBase": "a95c3ec18a8f904decde884a4fa252988d2a5b0f",
+  "bun": "1.4.2",
+  "browserVersion": "153.0.8010.12",
+  "assets": {
+    "index.html": {
+      "sha256": "30ac5a7324d74055476c73a4b5aac335ed076ae102776f1d0cbbef76d5c2e5d9",
+      "bytes": 1891
+    },
+    "host.css": {
+      "sha256": "4c3d274b076fa10e60877036006043b18e1191bbf19d946939a9e8b09f40246e",
+      "bytes": 1696
+    },
+    "schema-catalog.json": {
+      "sha256": "8abe93eb1b9012eecd4deaf318f8ca85fcbb69d920b20c7b80957f7dc44c4e3b",
+      "bytes": 144437
+    },
+    "explorer.js": {
+      "sha256": "1c7264d67a3822563bd0d3f95067e4554b98baf55f9a41b947332b4f8cc46258",
+      "bytes": 2863702
+    },
+    "explorer.css": {
+      "sha256": "479073250e24e40c180a37d4f55207cd7f672612acc61965c10156249d7cb6e0",
+      "bytes": 5116
+    }
+  },
+  "checks": [
+    {
+      "id": "ashlar-runtime-logical",
+      "sourceSha256": "3b09f2938e94a83c92369a9b1f3b682528db463978fd1ac708c7b376fca4ce57",
+      "notice": "Core structure valid · All supplied content checked. Inspection does not establish storage or runtime enforcement."
+    },
+    {
+      "id": "ashlar-delta:object_current",
+      "sourceSha256": "9f8f21ad8e41b7b42b8064588201f7f19bb39e9d4b0265f6fafe3f61c46a0884",
+      "notice": "Core structure valid · Some semantics are not interpreted. Inspection does not establish storage or runtime enforcement."
+    },
+    {
+      "id": "ashlar-delta:edge_current",
+      "sourceSha256": "cbca60228cbacfc80307712880f0320f453a674c8bacba16cea6878c84173302",
+      "notice": "Core structure valid · Some semantics are not interpreted. Inspection does not establish storage or runtime enforcement."
+    },
+    {
+      "id": "ashlar-delta:source_record",
+      "sourceSha256": "443cd1dde52f1618ba1b25c9f37199c68ef3efb9d0932fbc463971e159e33375",
+      "notice": "Core structure valid · Some semantics are not interpreted. Inspection does not establish storage or runtime enforcement."
+    },
+    {
+      "id": "ashlar-delta:property_journal",
+      "sourceSha256": "02c830b30cbe8552d9bc25839b1edcb1300c864171b96d2be2e6087fceefa0b5",
+      "notice": "Core structure valid · Some semantics are not interpreted. Inspection does not establish storage or runtime enforcement."
+    },
+    {
+      "id": "ashlar-delta:tombstone",
+      "sourceSha256": "0a652a6a7f0f678062aabef67e86d2ddfc466f6d65c18bfac9e2ace26702ef13",
+      "notice": "Core structure valid · Some semantics are not interpreted. Inspection does not establish storage or runtime enforcement."
+    },
+    {
+      "id": "ashlar-delta:publication_manifest",
+      "sourceSha256": "584ffbf53b553b4e338ffd613d72509a2a19df1b2c5e600c6b0f5e525638763d",
+      "notice": "Core structure valid · Some semantics are not interpreted. Inspection does not establish storage or runtime enforcement."
+    },
+    {
+      "id": "ashlar-delta:publication_attempt_phase",
+      "sourceSha256": "aef12a203ac5bd5eb8ba1ab702fa9b43d31711af1cfd98b14a01e8c5f6dd7d9c",
+      "notice": "Core structure valid · Some semantics are not interpreted. Inspection does not establish storage or runtime enforcement."
+    },
+    {
+      "id": "ashlar-delta:whole_source_history",
+      "sourceSha256": "e27bd5125590aa0ab33789b73b9f975238ac843ca8f73995e63cfdb5ccb85926",
+      "notice": "Core structure valid · Some semantics are not interpreted. Inspection does not establish storage or runtime enforcement."
+    }
+  ],
+  "record": "object_current",
+  "member": "object_current.source_system",
+  "routeBefore": "#schema=ashlar-runtime-logical&definition=%5B%22runtime%22%2C%22object_current%22%5D",
+  "routeAfter": "#schema=ashlar-runtime-logical&definition=%5B%22runtime%22%2C%22object_current.source_system%22%5D",
+  "errors": [],
+  "externalRequests": [],
+  "qualification": "Rebuilt public UMF renderer on nine exact supplied Ashlar source models, including original record/field routes. Read-only browser metadata inspection; no native validation or enforcement claim."
+}

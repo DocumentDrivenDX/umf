@@ -1,0 +1,83 @@
+warning: unused import: `Identity`
+ --> /private/tmp/weft-security-main-integration/crates/weft-core/src/application_scope.rs:8:18
+  |
+8 |     ir::{Family, Identity, LogicalType},
+  |                  ^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` on by default
+
+warning: unused imports: `Column`, `Descriptor`, `LiteralKind`, `Literal`, `Name`, `Record`, `Shape`, and `exact`
+ --> /private/tmp/weft-security-main-integration/crates/weft-core/src/application_resolve.rs:3:25
+  |
+3 |     application_model::{Descriptor, Shape},
+  |                         ^^^^^^^^^^  ^^^^^
+...
+6 |     exact,
+  |     ^^^^^
+7 |     ir::{Family, Identity, LogicalType},
+8 |     model::{Catalog, Record},
+  |                      ^^^^^^
+9 |     syntax::{Column, Literal, LiteralKind, Name},
+  |              ^^^^^^  ^^^^^^^  ^^^^^^^^^^^  ^^^^
+
+warning: struct `PlanSchema03` is never constructed
+   --> /private/tmp/weft-security-main-integration/crates/weft-core/src/arithmetic_application_resolve.rs:834:8
+    |
+834 | struct PlanSchema03;
+    |        ^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` on by default
+
+warning: method `finish` is never used
+   --> /private/tmp/weft-security-main-integration/crates/weft-core/src/syntax.rs:245:19
+    |
+208 | impl Parser {
+    | ----------- method in this implementation
+...
+245 |     pub(crate) fn finish(&mut self) -> Result<()> {
+    |                   ^^^^^^
+
+warning: methods `terminal_record` and `terminal_key` are never used
+   --> /private/tmp/weft-security-main-integration/crates/weft-core/src/path_ir.rs:119:12
+    |
+ 54 | impl PathRead {
+    | ------------- methods in this implementation
+...
+119 |     pub fn terminal_record(&self) -> &Identity {
+    |            ^^^^^^^^^^^^^^^
+...
+122 |     pub fn terminal_key(&self) -> &AuthoredKey {
+    |            ^^^^^^^^^^^^
+
+warning: associated function `new` is never used
+   --> /private/tmp/weft-security-main-integration/crates/weft-core/src/path_ir.rs:240:12
+    |
+239 | impl Plan {
+    | --------- associated function in this implementation
+240 |     pub fn new(p: PlanParts) -> Result<Self> {
+    |            ^^^
+
+warning: field `span` is never read
+  --> /private/tmp/weft-security-main-integration/crates/weft-core/src/path_query.rs:23:9
+   |
+21 |     CountDistinctPathTargets {
+   |     ------------------------ field in this variant
+22 |         alias: Name,
+23 |         span: Span,
+   |         ^^^^
+   |
+   = note: `Output` has derived impls for the traits `Clone` and `Debug`, but these are intentionally ignored during dead code analysis
+
+warning: field `field` is never read
+ --> /private/tmp/weft-security-main-integration/crates/weft-core/src/security_rule_occurrences.rs:8:103
+  |
+8 | pub(crate) enum RulePayload<'a>{Rule(&'a Rule),Condition(&'a Expression),Operand(&'a Term),Disclosure{field:&'a SecurityRef,disposition:&...
+  |                                                                                            ---------- ^^^^^
+  |                                                                                            |
+  |                                                                                            field in this variant
+  |
+  = note: `RulePayload` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+
+warning: `weft-core` (lib) generated 8 warnings (run `cargo fix --lib -p weft-core` to apply 2 suggestions)
+   Compiling umf-current-compiler-boundary v0.1.0 (/private/tmp/umf-current-compiler-boundary-20261012)
+    Finished `release` profile [optimized] target(s) in 9.20s

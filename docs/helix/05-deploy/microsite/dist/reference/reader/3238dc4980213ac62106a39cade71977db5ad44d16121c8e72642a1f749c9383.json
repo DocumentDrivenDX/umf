@@ -1,0 +1,23 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"assembleParquetRows\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "source",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "Reconstruct physical records by schema identity; logical LIST/MAP lowering is separate.",
+  "related": [],
+  "returns": "ParquetRows",
+  "task": "Other APIs",
+  "type": "(source: Document) => ParquetRows"
+}

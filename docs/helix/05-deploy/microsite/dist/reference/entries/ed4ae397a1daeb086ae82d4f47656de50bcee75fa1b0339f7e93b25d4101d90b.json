@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 7481,
+        "line": 52,
+        "path": "src/core-ideals/postgresql-composite.ts",
+        "sha256": "9331bc1b538e6c8d078264adf931a770c996c68eb8a4d377bc6f31d096960d9c"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "recoverPostgresqlCompositeCapture",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: PostgresqlCompositeClassification, current: Document): string"
+    ]
+  },
+  "id": "[\"api\",\".\",\"recoverPostgresqlCompositeCapture\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 7481,
+      "line": 52,
+      "path": "src/core-ideals/postgresql-composite.ts",
+      "sha256": "9331bc1b538e6c8d078264adf931a770c996c68eb8a4d377bc6f31d096960d9c"
+    }
+  ],
+  "summary": "Public export · src/core-ideals/postgresql-composite.ts",
+  "title": "recoverPostgresqlCompositeCapture"
+}

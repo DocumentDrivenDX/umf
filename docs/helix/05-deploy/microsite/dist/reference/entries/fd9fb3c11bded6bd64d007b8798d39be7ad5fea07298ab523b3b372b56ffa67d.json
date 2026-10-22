@@ -1,0 +1,33 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 2354,
+        "line": 1,
+        "path": "spec/core/nullability-operation-v5.schema.json",
+        "sha256": "442cc69c8998da361b775251b2e8842cece0d700fb1fa59dad4bd3de03f13c92"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "coreNullabilityOperationSchema",
+    "runtime": "unassessed",
+    "signatureText": [
+      "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"$id\": \"urn:umf:core:nullability-operation:5.0.0\",\n  \"title\": \"Core nullability inspection and explicit author declaration results (Key envelope) (Relationship envelope)\",\n  \"$defs\": {\n    \"nullability\": {\n      \"enum\": [\n        \"required\",\n        \"absent-allowed\",\n        \"unspecified\"\n      ]\n    },\n    \"identity\": {\n      \"type\": \"object\",\n      \"additionalProperties\": false,\n      \"required\": [\n        \"module\",\n        \"element\"\n      ],\n      \"properties\": {\n        \"module\": {\n          \"type\": \"string\",\n          \"minLength\": 1\n        },\n        \"element\": {\n          \"type\": \"string\",\n          \"minLength\": 1\n        }\n      }\n    },\n    \"source\": {\n      \"$ref\": \"urn:umf:core:0.10.0\"\n    },\n    \"declaration\": {\n      \"type\": \"object\",\n      \"additionalProperties\": false,\n      \"required\": [\n        \"operation\",\n        \"version\",\n        \"source\",\n        \"target\",\n        \"identity\",\n        \"provenance\"\n      ],\n      \"properties\": {\n        \"operation\": {\n          \"const\": \"declare-core-nullability\"\n        },\n        \"version\": {\n          \"const\": \"5.0.0\"\n        },\n        \"source\": {\n          \"$ref\": \"urn:umf:core:0.10.0\"\n        },\n        \"target\": {\n          \"$ref\": \"urn:umf:core:0.10.0\"\n        },\n        \"identity\": {\n          \"$ref\": \"#/$defs/identity\"\n        },\n        \"provenance\": {\n          \"type\": \"object\",\n          \"additionalProperties\": false,\n          \"required\": [\n            \"origin\",\n            \"idealPath\",\n            \"nullability\",\n            \"binding\",\n            \"basis\",\n            \"nativePath\"\n          ],\n          \"properties\": {\n            \"origin\": {\n              \"const\": \"authored\"\n            },\n            \"idealPath\": {\n              \"type\": \"string\"\n            },\n            \"nullability\": {\n              \"$ref\": \"#/$defs/nullability\"\n            },\n            \"binding\": {\n              \"const\": {\n                \"id\": \"umf.core.nullability.authoring\",\n                \"version\": \"5.0.0\"\n              }\n            },\n            \"basis\": {\n              \"const\": \"explicit-author-declaration\"\n            },\n            \"nativePath\": {\n              \"type\": \"null\"\n            }\n          }\n        }\n      }\n    }\n  },\n  \"oneOf\": [\n    {\n      \"$ref\": \"#/$defs/declaration\"\n    }\n  ]\n}\n"
+    ]
+  },
+  "id": "[\"api\",\".\",\"coreNullabilityOperationSchema\"]",
+  "kind": "api",
+  "links": [
+    "[\"schema\",\"spec/core/nullability-operation-v5.schema.json\",\"\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 2354,
+      "line": 1,
+      "path": "spec/core/nullability-operation-v5.schema.json",
+      "sha256": "442cc69c8998da361b775251b2e8842cece0d700fb1fa59dad4bd3de03f13c92"
+    }
+  ],
+  "summary": "Public export · spec/core/nullability-operation-v5.schema.json",
+  "title": "coreNullabilityOperationSchema"
+}

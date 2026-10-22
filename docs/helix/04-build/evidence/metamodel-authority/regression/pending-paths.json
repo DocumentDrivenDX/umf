@@ -1,0 +1,510 @@
+{
+  "profile": "umf.metamodel-authority.pending-tests/1",
+  "createdAt": "2026-10-18T20:22:14.222045+00:00",
+  "exactPendingFileCount": 94,
+  "pendingByOwner": {
+    "Luna producers": 91,
+    "Luna browser": 3
+  },
+  "paths": [
+    {
+      "path": "tests/core-ideals/cardinality-conformance.test.ts",
+      "owner": "Luna producers",
+      "sha256": "0553a81c45ebbd4e0ebd130114a7ffdbb9df94c623bffa2877cb8816291409c2"
+    },
+    {
+      "path": "tests/core-ideals/facets-postgresql-projection.test.ts",
+      "owner": "Luna producers",
+      "sha256": "71bd879db72ea6c4b509b4538e347c2e9d3faa725caca9882716f59630d3f7eb"
+    },
+    {
+      "path": "tests/core-ideals/facets-postgresql-resolved.test.ts",
+      "owner": "Luna producers",
+      "sha256": "ce31c5695d48520a0494715e1b55cd6c15b9f6d4268c8e15bf480351cbfb4950"
+    },
+    {
+      "path": "tests/core-ideals/facets-postgresql.test.ts",
+      "owner": "Luna producers",
+      "sha256": "356032ebfa437c752c37423105363e1d535343442e53d15467ba418c587a3b0a"
+    },
+    {
+      "path": "tests/core-ideals/facets-sqlserver-association.test.ts",
+      "owner": "Luna producers",
+      "sha256": "155abcd9528c26cc38b7ea65c34daef32e0b3bf2e2c9b37932e39322e3e1aa80"
+    },
+    {
+      "path": "tests/core-ideals/facets-sqlserver-composition.test.ts",
+      "owner": "Luna producers",
+      "sha256": "188ff0d918e33afacd85da942bfc43de407964800316b8b35ccd1cc6f311253b"
+    },
+    {
+      "path": "tests/core-ideals/facets-sqlserver-constraints.test.ts",
+      "owner": "Luna producers",
+      "sha256": "4479ca4c3ec6b2c83a1f63a6b7ff741c74bca965ec6ad2b7ba9b644dbe4230f6"
+    },
+    {
+      "path": "tests/core-ideals/facets-sqlserver-discovery.test.ts",
+      "owner": "Luna producers",
+      "sha256": "b31752ecfa553851a299ebd0e215efd00deee52d3edfd3daf08a7bdf950ea06a"
+    },
+    {
+      "path": "tests/core-ideals/facets-sqlserver-predicate.test.ts",
+      "owner": "Luna producers",
+      "sha256": "bc6d32828c650f7fefa6ff6078338fac6fe84c3878c1885b743f328d6a9f3245"
+    },
+    {
+      "path": "tests/core-ideals/facets-sqlserver-projection-native.test.ts",
+      "owner": "Luna producers",
+      "sha256": "26c8b0c7fbad1da819d8635e90cf554c8ebe4126375cd825c48e42c686ff53a3"
+    },
+    {
+      "path": "tests/core-ideals/facets-sqlserver-projection.test.ts",
+      "owner": "Luna producers",
+      "sha256": "96e3ec2dde7af525f1d13452de648180e159f50c07f34717aecd1cdb4cef0c9a"
+    },
+    {
+      "path": "tests/core-ideals/facets-sqlserver.test.ts",
+      "owner": "Luna producers",
+      "sha256": "c11c256c0129b504ac07f227435b41bf9a50cc54e39ab6599203ce1dc7eb8e27"
+    },
+    {
+      "path": "tests/core-ideals/facets-tablespec-discovery.test.ts",
+      "owner": "Luna producers",
+      "sha256": "6e17cb9d877bac3fc8deb0c337c43b9ddfcfbc2870f4063733bf824c26ccd5ac"
+    },
+    {
+      "path": "tests/core-ideals/facets-tablespec-projection.test.ts",
+      "owner": "Luna producers",
+      "sha256": "938c8d0050b9eb7735b4cd9ffac026a523ad897b9532eb2c2df9b3f9e8370d4a"
+    },
+    {
+      "path": "tests/core-ideals/facets-tablespec-suite.test.ts",
+      "owner": "Luna producers",
+      "sha256": "ad55601d8b95eaa6f6cf786ed7b229e80a2ba95c93cd5675dbfad0d49247bf65"
+    },
+    {
+      "path": "tests/core-ideals/facets-tablespec.test.ts",
+      "owner": "Luna producers",
+      "sha256": "47724425bf363cffc843b2d19ac8de46930eccf4811d82b219be0fbf53c7c415"
+    },
+    {
+      "path": "tests/core-ideals/field-avro-projection.test.ts",
+      "owner": "Luna producers",
+      "sha256": "e3d5ac556c3dea6042f312c9ad06775a3c82a1958190df90b03c79b664078817"
+    },
+    {
+      "path": "tests/core-ideals/field-avro.test.ts",
+      "owner": "Luna producers",
+      "sha256": "83d2ee1c67ef63968eee8ff8e86d038e5fc9bdad655906905c9f67753a19d181"
+    },
+    {
+      "path": "tests/core-ideals/field-conformance.test.ts",
+      "owner": "Luna producers",
+      "sha256": "60f94f0df9f64e41dc1bc15be10388224a7ac713fa358da8ef455d850a8caaca"
+    },
+    {
+      "path": "tests/core-ideals/field-parquet-projection.test.ts",
+      "owner": "Luna producers",
+      "sha256": "1fa813bc99bee5daf966fed21f6411e64d40947f2c6583a78a990e86182950d0"
+    },
+    {
+      "path": "tests/core-ideals/field-parquet.test.ts",
+      "owner": "Luna producers",
+      "sha256": "18c0b482deb085eece8ab3430853ee3b0a3043827e04a92d6e2e5096c433be99"
+    },
+    {
+      "path": "tests/core-ideals/field-postgresql-projection.test.ts",
+      "owner": "Luna producers",
+      "sha256": "049be950abc9b02983bc6646228268b94b105c61be225e2f2a2102aa7e96c6c6"
+    },
+    {
+      "path": "tests/core-ideals/field-postgresql.test.ts",
+      "owner": "Luna producers",
+      "sha256": "adbfd254cb906eff57da30a34c37f4e4c9c2bfe245e2dc7217d901404f61b977"
+    },
+    {
+      "path": "tests/core-ideals/field-report.test.ts",
+      "owner": "Luna producers",
+      "sha256": "13fda09b2cedcaa0410f3cdc2a2a37577ba978fa12bb40d4003ed5aa46768495"
+    },
+    {
+      "path": "tests/core-ideals/field-selection.test.ts",
+      "owner": "Luna producers",
+      "sha256": "ac788e4c3bd387b9171a965ddd5c955bee381ce9ae79357145889b3993b3bff8"
+    },
+    {
+      "path": "tests/core-ideals/field-sqlserver-projection.test.ts",
+      "owner": "Luna producers",
+      "sha256": "73ccc400ec804d02508f5c3ee202f5d7c03db7a8d798cbc724552f6195aeabfa"
+    },
+    {
+      "path": "tests/core-ideals/field-sqlserver.test.ts",
+      "owner": "Luna producers",
+      "sha256": "e42bdad482cda072903c7f7472bce314ac7d1636163e8c90ec4c53302fe4046f"
+    },
+    {
+      "path": "tests/core-ideals/field-tablespec-projection.test.ts",
+      "owner": "Luna producers",
+      "sha256": "4910302c855dc3ac03c94174fba98d2c8910f1fbc0ac0bdb339305f39ef02a6a"
+    },
+    {
+      "path": "tests/core-ideals/field-tablespec.test.ts",
+      "owner": "Luna producers",
+      "sha256": "cad506ec65adfcb8f387845a8a7d9b4e313a248cd4c78fe0b6c722512fc8d8b8"
+    },
+    {
+      "path": "tests/core-ideals/json-data-assert.test.ts",
+      "owner": "Luna producers",
+      "sha256": "82b86828d836de8cb9e48defb5ab80f2ad4b5c1f02dc20c4c370e0d430f5204b"
+    },
+    {
+      "path": "tests/core-ideals/key-authored-roundtrips.test.ts",
+      "owner": "Luna producers",
+      "sha256": "284cbc3514bc78b57ac59f6cc5325498e1259c4be1feb0713fafa5eb771356bc"
+    },
+    {
+      "path": "tests/core-ideals/key-avro-projection.test.ts",
+      "owner": "Luna producers",
+      "sha256": "40edd9581d334b1121993f4881255bf0fdf03d9589f2520dc957615b24d7041e"
+    },
+    {
+      "path": "tests/core-ideals/key-avro.test.ts",
+      "owner": "Luna producers",
+      "sha256": "892cab713c315d27f9dd7e5b3e2a2de1f1382a453882fc4c75d274c946727049"
+    },
+    {
+      "path": "tests/core-ideals/key-conformance.test.ts",
+      "owner": "Luna producers",
+      "sha256": "5bebfaa83af7f6f02bf843b3fe02c28a24c24bce6f3065b576994aa58fffc46f"
+    },
+    {
+      "path": "tests/core-ideals/key-evidence.test.ts",
+      "owner": "Luna producers",
+      "sha256": "4bcd562cd5269d29c425931eb6680a1d67c33c9490b21574176d03dc6efca0f7"
+    },
+    {
+      "path": "tests/core-ideals/key-native-roundtrips.test.ts",
+      "owner": "Luna producers",
+      "sha256": "1d292d7cd9f9f9716b12851b4bfaecd55bda0414350d5e57ed35fb858962499a"
+    },
+    {
+      "path": "tests/core-ideals/key-parquet-projection.test.ts",
+      "owner": "Luna producers",
+      "sha256": "b286e59dabd860101c6542ba26cc891a4ab5553ef961e5570ea871d69efef9f5"
+    },
+    {
+      "path": "tests/core-ideals/key-parquet.test.ts",
+      "owner": "Luna producers",
+      "sha256": "5540c3f304954a8c9d5dac25a023fa9c893a3d873e14dbd7fb72e0f317f18cad"
+    },
+    {
+      "path": "tests/core-ideals/key-postgresql-catalog.test.ts",
+      "owner": "Luna producers",
+      "sha256": "93909e7fec704d6e3e1d0aa264ee7dcc20e807ea04b65574bccd190a9b571cb2"
+    },
+    {
+      "path": "tests/core-ideals/key-postgresql-correlation.test.ts",
+      "owner": "Luna producers",
+      "sha256": "5e63f74c6912d5f736b92de6f63153dc10dbf32a203fb304f7b653f56d770d73"
+    },
+    {
+      "path": "tests/core-ideals/key-postgresql-projection.test.ts",
+      "owner": "Luna producers",
+      "sha256": "23102133ef4a35a1fcf5a56e17f8647b71e1ad5f56a2b910bb22411beca06021"
+    },
+    {
+      "path": "tests/core-ideals/key-postgresql.test.ts",
+      "owner": "Luna producers",
+      "sha256": "d93e30fff7e67236219c50139d47e539e9a22da209d01094fd80a9d10fd6b0d7"
+    },
+    {
+      "path": "tests/core-ideals/key-sqlserver-encoding.test.ts",
+      "owner": "Luna producers",
+      "sha256": "bf83e0306f94c362dfb9ea011128cb2e0deb2b102896256d262cd6f1941a823b"
+    },
+    {
+      "path": "tests/core-ideals/key-sqlserver-projection.test.ts",
+      "owner": "Luna producers",
+      "sha256": "fb8a85cd623938e76e0c163f7e9d95d247d1a4b67560e1f1db72906524879938"
+    },
+    {
+      "path": "tests/core-ideals/key-sqlserver.test.ts",
+      "owner": "Luna producers",
+      "sha256": "c9decfb8b9afb70c13dc4fb03f78c16dec9713b47bd9f49590c60c108e91caee"
+    },
+    {
+      "path": "tests/core-ideals/key-tablespec-projection.test.ts",
+      "owner": "Luna producers",
+      "sha256": "16d79ad1fb0c82b4a97dd7133d6be4da0b9402d11a0f8638d67db9139a2d0f40"
+    },
+    {
+      "path": "tests/core-ideals/key-tablespec.test.ts",
+      "owner": "Luna producers",
+      "sha256": "1be7888e8cca5dc6126a20df258e0adfb80c43252be536192d60aeb3ca14fa80"
+    },
+    {
+      "path": "tests/core-ideals/nullability-avro-projection.test.ts",
+      "owner": "Luna producers",
+      "sha256": "6afea0ef8138972e284dcafbf4d90d056af1a1f427c8469e1c0b0a08cf97faa4"
+    },
+    {
+      "path": "tests/core-ideals/nullability-avro.test.ts",
+      "owner": "Luna producers",
+      "sha256": "e6366f7f3fab7dccf9feb0a4582198463d85decea4e3b292af567fdbe2736207"
+    },
+    {
+      "path": "tests/core-ideals/nullability-conformance.test.ts",
+      "owner": "Luna producers",
+      "sha256": "5e4b55c6dca8b6eb7d88b753468d4b83129eb99a8785053feee94aa512dac1a2"
+    },
+    {
+      "path": "tests/core-ideals/nullability-parquet-projection.test.ts",
+      "owner": "Luna producers",
+      "sha256": "584af45844f78a91fb826f880a60bb747e7d99dc4e0095c368365e82f9690411"
+    },
+    {
+      "path": "tests/core-ideals/nullability-parquet.test.ts",
+      "owner": "Luna producers",
+      "sha256": "4c3e70ae3ed12e1ade19c944d6b3f127f53fcb805197fc212658bac1cd8a0628"
+    },
+    {
+      "path": "tests/core-ideals/nullability-postgresql-projection.test.ts",
+      "owner": "Luna producers",
+      "sha256": "b1b866eea4a93aa284bc289876f21c55219d9e8b78ab76573aff75c65baec88e"
+    },
+    {
+      "path": "tests/core-ideals/nullability-postgresql.test.ts",
+      "owner": "Luna producers",
+      "sha256": "50a1bd21be6bfeacc4b44e7addff15dc6e6104d78b339376607dccce707cc7d3"
+    },
+    {
+      "path": "tests/core-ideals/nullability-sqlserver-projection.test.ts",
+      "owner": "Luna producers",
+      "sha256": "9f9516b04bc09f5b14316ae6cc76b258bab7445f07c1692bd29dc5dcd397e01b"
+    },
+    {
+      "path": "tests/core-ideals/nullability-sqlserver.test.ts",
+      "owner": "Luna producers",
+      "sha256": "600002e182093d44302123d0b3ed1cb55f8a397dccd26bb5afda143d76f9b7b0"
+    },
+    {
+      "path": "tests/core-ideals/nullability-tablespec-projection.test.ts",
+      "owner": "Luna producers",
+      "sha256": "43e78e815637ba65861785f9640c0ff666415af2c24a7521d545c405ecf5f1a9"
+    },
+    {
+      "path": "tests/core-ideals/nullability-tablespec.test.ts",
+      "owner": "Luna producers",
+      "sha256": "b3795d87c7021da2aa5fb6029c7938b0f865c9b17f90785a6ecc0faf96d25417"
+    },
+    {
+      "path": "tests/core-ideals/parquet-cardinality-carrier.test.ts",
+      "owner": "Luna producers",
+      "sha256": "84cb02a384a17be848e784f004bbb6df62ef5566f1700887d9e0cdf7fc570138"
+    },
+    {
+      "path": "tests/core-ideals/parquet-cardinality-shape.test.ts",
+      "owner": "Luna producers",
+      "sha256": "2d5c4e563a2c3016167aeb56facf2f2b942805d41c8f736daa3f79195119dc03"
+    },
+    {
+      "path": "tests/core-ideals/parquet-facet-carrier.test.ts",
+      "owner": "Luna producers",
+      "sha256": "41d03d8705f06464213e99c62dabd0985df1bcb8ff1e7cc7d670dc6dd91cc39b"
+    },
+    {
+      "path": "tests/core-ideals/parquet-facet-type.test.ts",
+      "owner": "Luna producers",
+      "sha256": "0358ff2160a290426a7effbcecb328ce8a8fb2f697fe75d93cdecfd02fe011c2"
+    },
+    {
+      "path": "tests/core-ideals/parquet-record-type.test.ts",
+      "owner": "Luna producers",
+      "sha256": "c606a3a6c2b286c5784edb43f76cb801e2aa6b50386d8f34072caac6a1dbc191"
+    },
+    {
+      "path": "tests/core-ideals/postgresql-composite.test.ts",
+      "owner": "Luna producers",
+      "sha256": "1bee4a03253ea665a0a53a56152f25dfd104e3b561216723056a93893ace5bef"
+    },
+    {
+      "path": "tests/core-ideals/postgresql-ddl-kinds.test.ts",
+      "owner": "Luna producers",
+      "sha256": "6b05fe98ba2fd181171ef1b196db634f4d4081f576160052813659e078634313"
+    },
+    {
+      "path": "tests/core-ideals/projection-policy.test.ts",
+      "owner": "Luna producers",
+      "sha256": "680b90b462c063228e6262f590a983d0fa374568883e936c0d4f554890c23555"
+    },
+    {
+      "path": "tests/core-ideals/record-avro-projection.test.ts",
+      "owner": "Luna producers",
+      "sha256": "b7c6d618a9215ae4ad3b140283e1b60a0cf1077f62c86a1d801941ac417cc221"
+    },
+    {
+      "path": "tests/core-ideals/record-avro.test.ts",
+      "owner": "Luna producers",
+      "sha256": "e67cef00c9c25c1c62331bc9b6d58933cf74ef0668fa70abdbe288c32dc01c1c"
+    },
+    {
+      "path": "tests/core-ideals/record-parquet-projection.test.ts",
+      "owner": "Luna producers",
+      "sha256": "89f4214f3ebac1688c54aecaa3f8ce874e34e0a0f65838ca66c71c9f2509526f"
+    },
+    {
+      "path": "tests/core-ideals/record-parquet.test.ts",
+      "owner": "Luna producers",
+      "sha256": "d10a459b48d39007f5d72e96bf07e01713e79ee69570fa2ff9fdb677a6956307"
+    },
+    {
+      "path": "tests/core-ideals/record-postgresql-projection.test.ts",
+      "owner": "Luna producers",
+      "sha256": "f7def62578c5af35b261ba7dbbf36e6fbd1731e54d5aea1a0b8b69f98e066729"
+    },
+    {
+      "path": "tests/core-ideals/record-postgresql.test.ts",
+      "owner": "Luna producers",
+      "sha256": "7ffffb6b241fe4f989bb4c1db6a5acd14ed157081c55e08c86ce0748ed564449"
+    },
+    {
+      "path": "tests/core-ideals/record-report.test.ts",
+      "owner": "Luna producers",
+      "sha256": "ee7a9e64553db455d5097f7d63ab4173d03ca16b9afd5b79dc4f92bdce0525fd"
+    },
+    {
+      "path": "tests/core-ideals/record-sqlserver-projection.test.ts",
+      "owner": "Luna producers",
+      "sha256": "a0d69631198832efe83316b7e088d1b7e7ca1765c9fadd3f1047366c319ab39c"
+    },
+    {
+      "path": "tests/core-ideals/record-sqlserver.test.ts",
+      "owner": "Luna producers",
+      "sha256": "c1c5a155a7daa485b40cda9545af8770fc52df8d9067cd26d0e64ac552eff23d"
+    },
+    {
+      "path": "tests/core-ideals/record-tablespec-projection.test.ts",
+      "owner": "Luna producers",
+      "sha256": "602d0c0fde1f09382bc1ebaefb5d5f1c4a54d7ada4bb7bc06317fac7e7457643"
+    },
+    {
+      "path": "tests/core-ideals/record-tablespec.test.ts",
+      "owner": "Luna producers",
+      "sha256": "e9f79d6a4558ba0b787764222df96676482964df3e3c1ec081073fbb7819e7ca"
+    },
+    {
+      "path": "tests/core-ideals/relationship-avro-carrier.test.ts",
+      "owner": "Luna producers",
+      "sha256": "0d4e66c3bdb2d83ffe6ab8b756a66b387ab717fd84337f6d8573710b27bc5def"
+    },
+    {
+      "path": "tests/core-ideals/relationship-avro-discovery.test.ts",
+      "owner": "Luna producers",
+      "sha256": "fd08881d4d3a7996c231d2534d9afadd64cf6de5c30e1857561b84a1d5fc0be9"
+    },
+    {
+      "path": "tests/core-ideals/relationship-avro-projection.test.ts",
+      "owner": "Luna producers",
+      "sha256": "a58cb79ba58a17ea0ad2477442251a43fd69c9e9f37df9c35f9d869b822b6d0b"
+    },
+    {
+      "path": "tests/core-ideals/relationship-avro.test.ts",
+      "owner": "Luna producers",
+      "sha256": "5f8767074357a5bf680630bffc5338d2c54e4ddbb1cbe5c0db2204ad64429d89"
+    },
+    {
+      "path": "tests/core-ideals/relationship-conformance.test.ts",
+      "owner": "Luna producers",
+      "sha256": "b5c2275977150174fcd86dc0e729635db732921e4b4fa946e280fad175bbcf30"
+    },
+    {
+      "path": "tests/core-ideals/relationship-extras.test.ts",
+      "owner": "Luna producers",
+      "sha256": "9cf987f4ed7e65758dae632e36a76751fdf184e1d463339ea99d3d9b572f4667"
+    },
+    {
+      "path": "tests/core-ideals/relationship-parquet.test.ts",
+      "owner": "Luna producers",
+      "sha256": "1a3aa3ce3c3e5542e936f7cb9021b3acfc0af9dada0088d387db489a2e067ae0"
+    },
+    {
+      "path": "tests/core-ideals/relationship-postgresql.test.ts",
+      "owner": "Luna producers",
+      "sha256": "161d3bb921abad00379136b59054a6ece2030a1b402239facc4c08b50063ffd5"
+    },
+    {
+      "path": "tests/core-ideals/relationship-sqlserver.test.ts",
+      "owner": "Luna producers",
+      "sha256": "e994898b6327e202b63b3dd415149bc11fcbec0629cdf176efa8027cc7d876e2"
+    },
+    {
+      "path": "tests/core-ideals/relationship-tablespec-discovery.test.ts",
+      "owner": "Luna producers",
+      "sha256": "e7c9873fb6cbb298db5af2c6a4b0f8a6b52d61fd8ef604daeeb65dd0f6e8f44c"
+    },
+    {
+      "path": "tests/core-ideals/relationship-tablespec-projection.test.ts",
+      "owner": "Luna producers",
+      "sha256": "2762749af9a9dee743022622599e539abc567e4701981f711274626a48a38572"
+    },
+    {
+      "path": "tests/core-ideals/relationship-tablespec.test.ts",
+      "owner": "Luna producers",
+      "sha256": "4a8226749cf1038085304fa8ad4b8af29ea1c9eaede333dcd822ebecd29c72ea"
+    },
+    {
+      "path": "tests/core-ideals/sql-namespace.test.ts",
+      "owner": "Luna producers",
+      "sha256": "659e4774bea0c8d46db6baffd0c6d9a26f3b1d1b337ebc1c68f331bb13630576"
+    },
+    {
+      "path": "tests/core-ideals/structured-report.test.ts",
+      "owner": "Luna producers",
+      "sha256": "01dae12df2f75508590d8c1b941d9a46c914b230f4b2651b9f011b9542a210cf"
+    },
+    {
+      "path": "tests/reference/reader.test.ts",
+      "owner": "Luna browser",
+      "sha256": "15ae6fecb9fe506b198777b9ab467b8522c9c47cbbf8ff27718c6eccf0025cd9"
+    },
+    {
+      "path": "tests/reference/reference.test.ts",
+      "owner": "Luna browser",
+      "sha256": "e060d3a58e1ac364d8b029fd21606dd9650a1589975475e5ff6b4be7fb6fc976"
+    },
+    {
+      "path": "tests/reference/self-model.test.ts",
+      "owner": "Luna browser",
+      "sha256": "7b7ce38afac78d349bc8429dd9ca6970bbbc0cb8b052f93e90015a60c3f3989f"
+    }
+  ],
+  "additionalQualificationGates": [
+    {
+      "name": "M3 full suite",
+      "expectedFiles": 127,
+      "status": "pending",
+      "fileList": "not assigned in this exact 587-file inventory; do not infer per-file status from this gate total"
+    },
+    {
+      "name": "UUID composition and conformance qualification gates",
+      "expectedGates": 2,
+      "status": "pending",
+      "knownTestPaths": [
+        "tests/uuid-composition-gates.test.ts",
+        "tests/uuid-conformance.test.ts"
+      ],
+      "note": "Existing file observations remain failures until new exact JSON pass records arrive."
+    },
+    {
+      "name": "Fresh reference inventory after protobuf restore",
+      "expectedFiles": 3,
+      "status": "pending",
+      "paths": [
+        "tests/reference/reader.test.ts",
+        "tests/reference/reference.test.ts",
+        "tests/reference/self-model.test.ts"
+      ],
+      "missingBuildArtifact": "dist/protobuf/wasm_exec.js"
+    }
+  ]
+}

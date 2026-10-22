@@ -1,0 +1,28 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"importArrowFlatbufferModel\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "text",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "options",
+      "optional": false,
+      "type": "{ id: string; }"
+    }
+  ],
+  "purpose": "Imports the documented logical JSON profile, not native FlatBuffers bytes or flatc JSON.",
+  "related": [],
+  "returns": "Document",
+  "task": "Import and export",
+  "type": "(text: string, options: { id: string; }) => Document"
+}

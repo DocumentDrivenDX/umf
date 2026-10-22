@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
 const built=await Bun.build({entrypoints:['native/arrow/schema-probe.ts'],outdir:'.cache/arrow-browser',naming:'probe.js',target:'browser',format:'esm'});if(!built.success)throw Error(built.logs.join('\n'));
 const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(request){

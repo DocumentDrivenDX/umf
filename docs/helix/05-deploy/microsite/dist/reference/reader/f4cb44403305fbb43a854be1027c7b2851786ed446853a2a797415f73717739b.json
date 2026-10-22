@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"verifySqlServerCardinalityClassification\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SqlServerCardinalityClassification\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "SqlServerCardinalityClassification"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "current",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "verifySqlServerCardinalityClassification accepts input, current and returns SqlServerCardinalityClassification & { [x: string]: {}; }.",
+  "related": [],
+  "returns": "SqlServerCardinalityClassification & { [x: string]: {}; }",
+  "task": "Other APIs",
+  "type": "(input: SqlServerCardinalityClassification, current: Document) => SqlServerCardinalityClassification & { [x: string]: {}; }"
+}

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Independent reads and full-table comparisons for the complete pinned binary corpus."""
 import json
 from pathlib import Path

@@ -1,0 +1,193 @@
+{
+  "status": "passed",
+  "covers": [
+    "US-057-AC2",
+    "US-057-AC7"
+  ],
+  "versions": {
+    "bun": "1.4.2",
+    "chromium": "153.0.8010.12"
+  },
+  "sourceDigests": {
+    "tools/security/publication-custody-browser.ts": "302bbcaae2250df3f267591ba9542c5bd2c88bd6bb97c71e74bf1a8428beec9d",
+    "tests/security/publication-custody-corpus.ts": "3afda9c5ed58cd0feef28a7f845dd850180eec2348ef04bf210ccdf89e2d43e8",
+    "tests/security/publication-custody.test.ts": "0a2342a850e8aeed6fadfd2e7b51356ac8cc395e6ae745ef44114c270639a834",
+    "src/extensions/security/publication-custody.ts": "a0e9f93517a907021fcf22a44a13726a949bad84dfdc41fe737116631a9cfe55",
+    "src/model/json.ts": "b2c3f48bb779972af5beadfb22ec1db48c793dcdaf572293afa62904016465e7",
+    "src/model/types.ts": "54f4e6df10f7f358e81fbb637fe39869df077f82751aa6221b3532e3c9167785"
+  },
+  "observations": [
+    {
+      "id": "open-publisher-cannot-retire",
+      "expected": "SECURITY_PUBLICATION_REFUSED",
+      "observed": "SECURITY_PUBLICATION_REFUSED"
+    },
+    {
+      "id": "loss-and-replay-block-retirement",
+      "expected": "SECURITY_PUBLICATION_REFUSED",
+      "observed": "SECURITY_PUBLICATION_REFUSED"
+    },
+    {
+      "id": "no-premature-native-call",
+      "expected": 0,
+      "observed": 0
+    },
+    {
+      "id": "sealed-cannot-retain",
+      "expected": "SECURITY_PUBLICATION_REFUSED",
+      "observed": "SECURITY_PUBLICATION_REFUSED"
+    },
+    {
+      "id": "owned-copy-preserves-carriers",
+      "expected": {
+        "rows": [
+          {
+            "id": "9223372036854775807",
+            "value": null
+          }
+        ]
+      },
+      "observed": {
+        "rows": [
+          {
+            "id": "9223372036854775807",
+            "value": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "inflight-cannot-discard",
+      "expected": "SECURITY_PUBLICATION_REFUSED",
+      "observed": "SECURITY_PUBLICATION_REFUSED"
+    },
+    {
+      "id": "inflight-cannot-consume-twice",
+      "expected": "SECURITY_PUBLICATION_REFUSED",
+      "observed": "SECURITY_PUBLICATION_REFUSED"
+    },
+    {
+      "id": "inflight-blocks-retirement",
+      "expected": "SECURITY_PUBLICATION_REFUSED",
+      "observed": "SECURITY_PUBLICATION_REFUSED"
+    },
+    {
+      "id": "drained-handle-cannot-replay",
+      "expected": "SECURITY_PUBLICATION_REFUSED",
+      "observed": "SECURITY_PUBLICATION_REFUSED"
+    },
+    {
+      "id": "remaining-replay-blocks-retirement",
+      "expected": "SECURITY_PUBLICATION_REFUSED",
+      "observed": "SECURITY_PUBLICATION_REFUSED"
+    },
+    {
+      "id": "exact-one-native-retirement",
+      "expected": 1,
+      "observed": 1
+    },
+    {
+      "id": "terminal-cannot-retire",
+      "expected": "SECURITY_PUBLICATION_REFUSED",
+      "observed": "SECURITY_PUBLICATION_REFUSED"
+    },
+    {
+      "id": "terminal-cannot-retain",
+      "expected": "SECURITY_PUBLICATION_REFUSED",
+      "observed": "SECURITY_PUBLICATION_REFUSED"
+    },
+    {
+      "id": "cross-publisher-handle-refuses",
+      "expected": "SECURITY_PUBLICATION_REFUSED",
+      "observed": "SECURITY_PUBLICATION_REFUSED"
+    },
+    {
+      "id": "foreign-refusal-preserves-local-custody",
+      "expected": "SECURITY_PUBLICATION_REFUSED",
+      "observed": "SECURITY_PUBLICATION_REFUSED"
+    },
+    {
+      "id": "local-drain-allows-own-retirement",
+      "expected": "allowed",
+      "observed": "allowed"
+    },
+    {
+      "id": "forged-handle-refuses",
+      "expected": "SECURITY_PUBLICATION_REFUSED",
+      "observed": "SECURITY_PUBLICATION_REFUSED"
+    },
+    {
+      "id": "consumer-failure-quarantines",
+      "expected": "SECURITY_PUBLICATION_UNKNOWN",
+      "observed": "SECURITY_PUBLICATION_UNKNOWN"
+    },
+    {
+      "id": "quarantine-cannot-discard",
+      "expected": "SECURITY_PUBLICATION_REFUSED",
+      "observed": "SECURITY_PUBLICATION_REFUSED"
+    },
+    {
+      "id": "quarantine-cannot-retire",
+      "expected": "SECURITY_PUBLICATION_REFUSED",
+      "observed": "SECURITY_PUBLICATION_REFUSED"
+    },
+    {
+      "id": "failed-consumer-never-retires-native",
+      "expected": 0,
+      "observed": 0
+    },
+    {
+      "id": "native-failure-unknown",
+      "expected": "SECURITY_PUBLICATION_UNKNOWN",
+      "observed": "SECURITY_PUBLICATION_UNKNOWN"
+    },
+    {
+      "id": "native-unknown-no-retry",
+      "expected": "SECURITY_PUBLICATION_REFUSED",
+      "observed": "SECURITY_PUBLICATION_REFUSED"
+    },
+    {
+      "id": "accessor-refuses",
+      "expected": "NON_JSON",
+      "observed": "NON_JSON"
+    },
+    {
+      "id": "accessor-not-invoked",
+      "expected": 0,
+      "observed": 0
+    },
+    {
+      "id": "proxy-reentry-seal-refuses",
+      "expected": "SECURITY_PUBLICATION_REFUSED",
+      "observed": "SECURITY_PUBLICATION_REFUSED"
+    },
+    {
+      "id": "proxy-reentry-retirement-refuses",
+      "expected": "SECURITY_PUBLICATION_REFUSED",
+      "observed": "SECURITY_PUBLICATION_REFUSED"
+    },
+    {
+      "id": "proxy-reentry-native-not-called",
+      "expected": 0,
+      "observed": 0
+    },
+    {
+      "id": "proxy-retained-buffer-blocks-retirement",
+      "expected": "SECURITY_PUBLICATION_REFUSED",
+      "observed": "SECURITY_PUBLICATION_REFUSED"
+    },
+    {
+      "id": "proxy-retirement-after-drain",
+      "expected": 1,
+      "observed": 1
+    },
+    {
+      "id": "buffer-bound-refuses",
+      "expected": "SECURITY_PUBLICATION_REFUSED",
+      "observed": "SECURITY_PUBLICATION_REFUSED"
+    }
+  ],
+  "hostGlobals": [],
+  "externalRequests": 0,
+  "scope": "Browser and Bun host custody component over owned JSON copies, opaque local handles and callback-defined consumer final release. Not native integration, all arbitrary host copies, issuer authentication, process recovery or backend acceptance."
+}

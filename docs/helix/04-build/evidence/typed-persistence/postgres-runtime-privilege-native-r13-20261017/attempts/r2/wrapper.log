@@ -1,0 +1,25 @@
+PASS actual-runtime-and-original-business-native-analyzed-identities
+PASS independent-principal-cold-warm-verify-read-page-stream-with-only-inventory-grants
+PASS individual-function-revoke-controls
+PASS individual-runtime-metadata-relation-revoke-and-recovery
+PASS original-LOCK-requires-table-SELECT-column-only-refusal-and-recovery
+Traceback (most recent call last):
+  File "/private/tmp/pg_runtime_privilege_native.py", line 752, in <module>
+    main()
+    ~~~~^^
+  File "/private/tmp/pg_runtime_privilege_native.py", line 656, in main
+    asyncio.run(async_cases())
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.8_2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 205, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.8_2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 128, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.8_2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/base_events.py", line 720, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/private/tmp/pg_runtime_privilege_native.py", line 615, in async_cases
+    assert await queries.plain_async(target) == [("a",), ("b",), ("c",)]
+                 ^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'degree_shop.queries' has no attribute 'plain_async'

@@ -1,0 +1,56 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"FieldParquetRequest\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "id",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "recordName",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "repetition",
+      "optional": false,
+      "type": "\"required\" | \"optional\" | \"repeated\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "fieldName",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "nativeType",
+      "optional": false,
+      "type": "\"string\" | \"boolean\" | \"date\" | \"binary\" | \"time-millis\" | \"time-micros\" | \"int32\" | \"int64\" | \"float32\" | \"float64\" | \"timestamp-millis-utc\" | \"timestamp-micros-utc\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "mode",
+      "optional": false,
+      "type": "\"strict\" | \"report\""
+    }
+  ],
+  "parameters": [],
+  "purpose": "FieldParquetRequest is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "FieldParquetRequest"
+}

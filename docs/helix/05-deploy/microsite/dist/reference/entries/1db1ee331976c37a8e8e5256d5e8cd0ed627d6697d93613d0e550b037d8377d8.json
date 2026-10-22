@@ -1,0 +1,33 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 2481,
+        "line": 1,
+        "path": "spec/extensions/postgresql-catalog/schema.json",
+        "sha256": "686c850eb46b369285e02865c4d59567d541278df6946be93b44d952b1029137"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "postgresqlCatalogSchema",
+    "runtime": "unassessed",
+    "signatureText": [
+      "{\n  \"type\": \"object\",\n  \"required\": [\n    \"profile\",\n    \"state\",\n    \"root\"\n  ],\n  \"properties\": {\n    \"profile\": {\n      \"const\": \"postgresql-catalog-capture\"\n    },\n    \"state\": {\n      \"enum\": [\n        \"captured\",\n        \"modified\"\n      ]\n    },\n    \"root\": {\n      \"$ref\": \"#/$defs/node\"\n    }\n  },\n  \"additionalProperties\": true,\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"$id\": \"urn:umf:postgresql-catalog:0.1.0\",\n  \"$defs\": {\n    \"node\": {\n      \"oneOf\": [\n        {\n          \"type\": \"object\",\n          \"required\": [\n            \"kind\"\n          ],\n          \"properties\": {\n            \"kind\": {\n              \"const\": \"null\"\n            }\n          }\n        },\n        {\n          \"type\": \"object\",\n          \"required\": [\n            \"kind\",\n            \"value\"\n          ],\n          \"properties\": {\n            \"kind\": {\n              \"const\": \"boolean\"\n            },\n            \"value\": {\n              \"type\": \"boolean\"\n            }\n          }\n        },\n        {\n          \"type\": \"object\",\n          \"required\": [\n            \"kind\",\n            \"value\"\n          ],\n          \"properties\": {\n            \"kind\": {\n              \"const\": \"string\"\n            },\n            \"value\": {\n              \"type\": \"string\"\n            }\n          }\n        },\n        {\n          \"type\": \"object\",\n          \"required\": [\n            \"kind\",\n            \"value\"\n          ],\n          \"properties\": {\n            \"kind\": {\n              \"const\": \"number\"\n            },\n            \"value\": {\n              \"type\": \"string\",\n              \"pattern\": \"^-?(0|[1-9][0-9]*)(\\\\.[0-9]+)?([eE][+-]?[0-9]+)?$\"\n            }\n          }\n        },\n        {\n          \"type\": \"object\",\n          \"required\": [\n            \"kind\",\n            \"items\"\n          ],\n          \"properties\": {\n            \"kind\": {\n              \"const\": \"array\"\n            },\n            \"items\": {\n              \"type\": \"array\",\n              \"items\": {\n                \"$ref\": \"#/$defs/node\"\n              }\n            }\n          }\n        },\n        {\n          \"type\": \"object\",\n          \"required\": [\n            \"kind\",\n            \"members\"\n          ],\n          \"properties\": {\n            \"kind\": {\n              \"const\": \"object\"\n            },\n            \"members\": {\n              \"type\": \"object\",\n              \"additionalProperties\": {\n                \"$ref\": \"#/$defs/node\"\n              }\n            }\n          }\n        }\n      ]\n    }\n  }\n}\n"
+    ]
+  },
+  "id": "[\"api\",\".\",\"postgresqlCatalogSchema\"]",
+  "kind": "api",
+  "links": [
+    "[\"schema\",\"spec/extensions/postgresql-catalog/schema.json\",\"\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 2481,
+      "line": 1,
+      "path": "spec/extensions/postgresql-catalog/schema.json",
+      "sha256": "686c850eb46b369285e02865c4d59567d541278df6946be93b44d952b1029137"
+    }
+  ],
+  "summary": "Public export · spec/extensions/postgresql-catalog/schema.json",
+  "title": "postgresqlCatalogSchema"
+}

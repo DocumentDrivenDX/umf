@@ -1,0 +1,32 @@
+{
+  "compilerOptions": {
+    "noEmit": true,
+    "strict": true,
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "skipLibCheck": true,
+    "types": [
+      "node"
+    ],
+    "typeRoots": [
+      "/private/tmp/ashlar-truss-runtime/node_modules/.bun/@types+node@26.6.4/node_modules/@types"
+    ],
+    "paths": {
+      "pg": [
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/@types+pg@8.15.5/node_modules/@types/pg/index.d.ts"
+      ],
+      "@documentdrivendx/truss-postgresql": [
+        "/Users/erik/Projects/truss/packages/postgresql/src/index.ts"
+      ]
+    }
+  },
+  "files": [
+    "/Users/erik/Projects/truss/packages/pg-runtime/src/index.ts",
+    "/Users/erik/.codex/worktrees/1598/umf/tools/security/truss-principal-probe.ts",
+    "/Users/erik/.codex/worktrees/1598/umf/tools/security/truss-subject-probe.ts",
+    "/Users/erik/.codex/worktrees/1598/umf/tools/security/truss-private-principal-probe.ts",
+    "/Users/erik/.codex/worktrees/1598/umf/tools/security/pg-raw-scale-runtime.ts",
+    "/Users/erik/.codex/worktrees/1598/umf/tools/security/pg-raw-B16-runtime.ts"
+  ]
+}

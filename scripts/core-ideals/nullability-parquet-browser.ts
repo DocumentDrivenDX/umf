@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {parquetNullabilityCases} from './nullability-parquet-cases';
 import {chromium} from 'playwright';
 import {createHash} from 'node:crypto';

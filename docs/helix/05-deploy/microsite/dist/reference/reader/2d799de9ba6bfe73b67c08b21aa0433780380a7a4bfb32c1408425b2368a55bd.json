@@ -1,0 +1,41 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"recoverPostgresqlFacetSource\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"PostgresqlFacetClassification\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "PostgresqlFacetClassification"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "current",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"PostgresqlBackend\"]"
+      ],
+      "name": "backend",
+      "optional": false,
+      "type": "PostgresqlBackend"
+    }
+  ],
+  "purpose": "recoverPostgresqlFacetSource accepts input, current, backend and returns Promise<{ nativeSource: string; supplement: string; }>.",
+  "related": [],
+  "returns": "Promise<{ nativeSource: string; supplement: string; }>",
+  "task": "Import and export",
+  "type": "(input: PostgresqlFacetClassification, current: Document, backend: PostgresqlBackend) => Promise<{ nativeSource: string; supplement: string; }>"
+}

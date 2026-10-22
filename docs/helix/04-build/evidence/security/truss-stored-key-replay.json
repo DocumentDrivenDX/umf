@@ -1,0 +1,24 @@
+{
+  "status": "passed-retained-native-oracle-replay",
+  "freshNativeExecution": false,
+  "sourceDigests": {
+    "/Users/erik/.codex/worktrees/1598/umf/tools/security/truss-stored-key-replay.py": "c549db2a1926f0f2def54d92e0d6f78efcbeed826d98cd88bb663d49cf06012c",
+    "tools/security/truss-stored-key-replay.ts": "5aa8f794a6eb7d3264586376da47aeb3117b0dc461798fb8d90d47a4166350d8",
+    "docs/helix/04-build/evidence/security/truss-key-transport.json": "9e005b3c84aa59bbd1936b8a65d912fb962e1451c4d329b600703ef190b7a62f",
+    "/Users/erik/Projects/truss/packages/postgresql/src/security-stored-key.ts": "c7735d79e94a23884d07e820c22539205c4dd2b5743cb10b861067c0e5b6000a",
+    "/Users/erik/Projects/truss/packages/postgresql/src/security-key-namespace.ts": "97036be2d955336de8dccd08e8281269263e8c4d49e9b73cf36045a845bc6ce4",
+    "/Users/erik/Projects/truss/packages/postgresql/src/security-key-transport.ts": "720d4d471ca37e38da3c1949243f64e5ac7af787da9b38f7fea477400b54abce",
+    "/private/tmp/truss-umf-runtime-bG1IMG/producer.js": "0a5c81094f4cb153d8d847701e9f73dc96ddd3d03eeb6488251fc696a95ad775"
+  },
+  "checks": {
+    "original": true,
+    "foreignNamespaceRefused": true,
+    "copiedSelection": true,
+    "codecPinMismatchRefused": true,
+    "pendingProducerCaptured": true,
+    "pendingInvalidStoredRefused": true,
+    "pendingOriginalStoredCaptured": true,
+    "pendingInvalidValuesRefused": true
+  },
+  "scope": "Current namespace/transport assembly on actual registered UMF producer and retained original native 0.15 bucket/canonical bytes. No fresh native execution or native scope/producer/current authority/complete graph qualification."
+}

@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"projectNullabilityToTableSpec\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreNullabilityDeclaration\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "CoreNullabilityDeclaration"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"NullabilityTableSpecRequest\"]"
+      ],
+      "name": "options",
+      "optional": false,
+      "type": "NullabilityTableSpecRequest"
+    }
+  ],
+  "purpose": "projectNullabilityToTableSpec accepts input, options and returns NullabilityTableSpecProjection & { diagnostics: Diagnostic[]; }.",
+  "related": [],
+  "returns": "NullabilityTableSpecProjection & { diagnostics: Diagnostic[]; }",
+  "task": "Import and export",
+  "type": "(input: CoreNullabilityDeclaration, options: NullabilityTableSpecRequest) => NullabilityTableSpecProjection & { diagnostics: Diagnostic[]; }"
+}

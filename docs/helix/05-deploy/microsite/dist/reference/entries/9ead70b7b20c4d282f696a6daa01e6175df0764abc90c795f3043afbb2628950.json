@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 15485,
+        "line": 8,
+        "path": "src/projections/ddd-graphql/entities.ts",
+        "sha256": "7e511c56f33dc62a180428296c3fc6c7a253d2d84f11e7b655a2952b7209c79c"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "DddGraphqlFieldName",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface DddGraphqlFieldName {module:string;element:string;field:string;name:string;coreField?:{module:string;element:string}}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"DddGraphqlFieldName\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 15485,
+      "line": 8,
+      "path": "src/projections/ddd-graphql/entities.ts",
+      "sha256": "7e511c56f33dc62a180428296c3fc6c7a253d2d84f11e7b655a2952b7209c79c"
+    }
+  ],
+  "summary": "Type declaration · src/projections/ddd-graphql/entities.ts",
+  "title": "DddGraphqlFieldName"
+}

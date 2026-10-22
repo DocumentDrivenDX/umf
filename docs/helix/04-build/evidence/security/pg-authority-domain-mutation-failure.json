@@ -1,0 +1,14 @@
+{
+  "status": "failed",
+  "case": "pg-raw.B15",
+  "runId": "2c7bb342-0809-4409-bc48-0dbe70ac4bc8",
+  "stage": "native mutation setup",
+  "nativeDiagnostic": "cannot alter type of a column used by a view or rule; resource_project depends on active",
+  "sourceDigests": {
+    "tests/security/native/pg-raw-membership.py": "426939f241c9f314c609059da8a2507ce88f4799fcb8993ef3f9f6e43d519e17",
+    "tests/security/native/pg-raw-membership-oracle.json": "019497a566ef68d396f55593756b1e9e001f314fa7a297acde8f74fdb79a79c8",
+    "tests/security/native/pg-raw-membership.sql": "ac5640077786e81b80e536acc7c5d89d8f6747e1d8f425f17c4e3dfc3b37daf6",
+    "tools/security/pg-authority-cut.py": "a61bfc549e56dcbfe1ddbf1ee78652d55c7b9adf6051adab6b95e6acd25d74f3"
+  },
+  "scope": "PostgreSQL refused the proposed native type mutation before installation. Replace this control with a required-attribute NULL corruption that can be installed without dropping the secured view; no passing receipt."
+}

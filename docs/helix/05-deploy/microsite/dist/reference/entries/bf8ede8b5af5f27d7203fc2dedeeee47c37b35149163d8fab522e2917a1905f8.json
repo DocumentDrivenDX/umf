@@ -1,0 +1,50 @@
+{
+  "data": {
+    "conflicts": [],
+    "correspondence": "unassessed",
+    "declarations": [
+      {
+        "bytes": 5351,
+        "path": "spec/extensions/openapi/package.json",
+        "sha256": "ac12bc4a932ce0bb7210ef6ec925546d43dfa5119b4ca53f246c63819638aa83"
+      }
+    ],
+    "evidence": [],
+    "operation": {
+      "apiNames": [],
+      "coreProfiles": [],
+      "extensionVersions": [],
+      "fixturePaths": [],
+      "id": "umf.openapi@0.1.0:export",
+      "kind": "export",
+      "limitations": [
+        "Recorded scope only; native equivalence and production adoption are separate."
+      ],
+      "runtime": {
+        "availability": "host-only",
+        "profileId": "umf.openapi@0.1.0:export",
+        "requirements": [
+          "Native runtime / original qualification harness; not executed by this page."
+        ]
+      },
+      "sourceSystem": "OpenAPI · Swagger 2.0 schema 2017-08-27; OpenAPI 3.0 schema 2024-10-18; 3.1 schema 2026-08-03; 3.2 schema 2026-08-30",
+      "subset": "JSON-compatible JSON/YAML standalone descriptions; 2.0/3.0 check the Schema Object subset in their official schemas, known 3.1/3.2 embedded dialect keyword syntax is checked; unknown dialects are retained without reinterpretation; references and runtime rules remain incomplete; explicit URI-addressed resource archives and literal document-pointer lookup, without schema scope inference",
+      "targetSystem": "OpenAPI · Swagger 2.0 schema 2017-08-27; OpenAPI 3.0 schema 2024-10-18; 3.1 schema 2026-08-03; 3.2 schema 2026-08-30",
+      "title": "umf.openapi · export"
+    }
+  },
+  "id": "[\"integration\",\"umf.openapi@0.1.0:export\"]",
+  "kind": "integration",
+  "links": [
+    "[\"extension\",\"umf.openapi\",\"0.1.0\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 134795,
+      "path": "docs/helix/05-deploy/reference/operations.json",
+      "sha256": "793743bbca36e56e90e82df5ef0408b628c434e58cb68aea4d6486349be78e61"
+    }
+  ],
+  "summary": "JSON-compatible JSON/YAML standalone descriptions; 2.0/3.0 check the Schema Object subset in their official schemas, known 3.1/3.2 embedded dialect keyword syntax is checked; unknown dialects are retained without reinterpretation; references and runtime rules remain incomplete; explicit URI-addressed resource archives and literal document-pointer lookup, without schema scope inference",
+  "title": "umf.openapi · export"
+}

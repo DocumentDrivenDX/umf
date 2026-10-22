@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 3722,
+        "line": 14,
+        "path": "src/adapters/owl/list-axioms.ts",
+        "sha256": "d5b10df21db6e8186092480c7ed26e54f3110cb9f412ff27bda4457f64efabd1"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "getOwlListAxioms",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(document: Document): OwlListAxiomView"
+    ]
+  },
+  "id": "[\"api\",\".\",\"getOwlListAxioms\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 3722,
+      "line": 14,
+      "path": "src/adapters/owl/list-axioms.ts",
+      "sha256": "d5b10df21db6e8186092480c7ed26e54f3110cb9f412ff27bda4457f64efabd1"
+    }
+  ],
+  "summary": "Source-preserving local RDF list views; never an OWL consistency or inference result.",
+  "title": "getOwlListAxioms"
+}

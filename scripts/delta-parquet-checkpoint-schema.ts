@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 export {};
 const obj=(properties:any,required=Object.keys(properties))=>({type:'object',properties,required,additionalProperties:false}),array=(items:any)=>({type:'array',items}),recovery=await Bun.file('spec/extensions/delta-log/reconciliation.schema.json').json(),sidecar=await Bun.file('spec/extensions/delta-log/sidecar-reconciliation.schema.json').json(),projection=await Bun.file('spec/extensions/delta-log/parquet-actions.schema.json').json();
 // Embed reports, rebasing their local references to independent definition roots.

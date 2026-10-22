@@ -1,0 +1,239 @@
+{
+  "started_at": "2026-10-10T00:47:59.761032+00:00",
+  "python": "3.12.15",
+  "tablespec_package": "0.0.9",
+  "umf_core_package": "0.8.1",
+  "wheel_sha256": "8258bf0c129dc872e9ba4bd5aedaadd1ea909b34cb4746cfc879acd931a08a0b",
+  "umf_wheel_sha256": "b712eb6ea8cfd27694e37aaa7603c109063a3820bd11696e642300f2c26f7b84",
+  "pyspark": "4.0.1",
+  "collector_engine": "0.0.8",
+  "companion": "1.0.0",
+  "checks": {
+    "driver_acquisition": {
+      "operation": "umf.document-loader",
+      "version": "1.0.0",
+      "run_id": "111fcd41-f08d-459d-9143-259d4f84bdbd",
+      "pack_hash": "fd8a17de72e964b4ba49051544d034309120699374fdbc8689dd619750d7e043",
+      "inventory_hash": "d976dec3b2a9044d90310d872a9d1e6678d3567399063b7cbe4f506fc21393e6",
+      "mode": "backfill",
+      "rights": "local-use",
+      "started_at": "2026-10-10T00:48:03.694Z",
+      "finished_at": "2026-10-10T00:48:05.904Z",
+      "scope": [
+        "pdf-9cf29913b80bce5206b93f9bbae835f6b6ba3ada5145709e5581b4d84f51cd79",
+        "pdf-16408930c8a3a75021ca313965cdcfadcee1232389b37825f41355ae8c38bab2",
+        "pdf-e30357654732759aaefc21e6d5ddb23ba662a347fe5c2ed647e3ad89e01109cb"
+      ],
+      "status": "complete",
+      "items": [
+        {
+          "id": "pdf-9cf29913b80bce5206b93f9bbae835f6b6ba3ada5145709e5581b4d84f51cd79",
+          "status": "complete",
+          "sha256": "7ea0d68643381b57d4ac82db55965e69e422ec2643b0086c20f3327b2e2e793f",
+          "attempts": 1,
+          "new_revision": true
+        },
+        {
+          "id": "pdf-16408930c8a3a75021ca313965cdcfadcee1232389b37825f41355ae8c38bab2",
+          "status": "complete",
+          "sha256": "7c7ac15e62b571314297c4e0bf4024454c0a7aa8b2ff4549de6988351549612e",
+          "attempts": 1,
+          "new_revision": true
+        },
+        {
+          "id": "pdf-e30357654732759aaefc21e6d5ddb23ba662a347fe5c2ed647e3ad89e01109cb",
+          "status": "complete",
+          "sha256": "ed968da0ad8210f375f7bbac13a5f6c5b584eacb9421d2ff81738af1f999462c",
+          "attempts": 1,
+          "new_revision": true
+        }
+      ]
+    },
+    "original_hash_parity": true,
+    "unchanged_refresh": {
+      "operation": "umf.document-loader",
+      "version": "1.0.0",
+      "run_id": "42351556-995e-43fe-bde7-a62ef50b5844",
+      "pack_hash": "fd8a17de72e964b4ba49051544d034309120699374fdbc8689dd619750d7e043",
+      "inventory_hash": "d976dec3b2a9044d90310d872a9d1e6678d3567399063b7cbe4f506fc21393e6",
+      "mode": "refresh",
+      "rights": "local-use",
+      "started_at": "2026-10-10T00:48:05.961Z",
+      "finished_at": "2026-10-10T00:48:08.026Z",
+      "scope": [
+        "pdf-9cf29913b80bce5206b93f9bbae835f6b6ba3ada5145709e5581b4d84f51cd79",
+        "pdf-16408930c8a3a75021ca313965cdcfadcee1232389b37825f41355ae8c38bab2",
+        "pdf-e30357654732759aaefc21e6d5ddb23ba662a347fe5c2ed647e3ad89e01109cb"
+      ],
+      "status": "complete",
+      "items": [
+        {
+          "id": "pdf-9cf29913b80bce5206b93f9bbae835f6b6ba3ada5145709e5581b4d84f51cd79",
+          "status": "complete",
+          "sha256": "7ea0d68643381b57d4ac82db55965e69e422ec2643b0086c20f3327b2e2e793f",
+          "attempts": 1,
+          "new_revision": false
+        },
+        {
+          "id": "pdf-16408930c8a3a75021ca313965cdcfadcee1232389b37825f41355ae8c38bab2",
+          "status": "complete",
+          "sha256": "7c7ac15e62b571314297c4e0bf4024454c0a7aa8b2ff4549de6988351549612e",
+          "attempts": 1,
+          "new_revision": false
+        },
+        {
+          "id": "pdf-e30357654732759aaefc21e6d5ddb23ba662a347fe5c2ed647e3ad89e01109cb",
+          "status": "complete",
+          "sha256": "ed968da0ad8210f375f7bbac13a5f6c5b584eacb9421d2ff81738af1f999462c",
+          "attempts": 1,
+          "new_revision": false
+        }
+      ]
+    },
+    "replay": true,
+    "fixity_audit": {
+      "status": "complete",
+      "operation": "fixity-audit",
+      "algorithm": "sha256",
+      "objects": 3,
+      "pack": {
+        "id": "legal-supreme-court-source-mirror",
+        "version": "1.0.0",
+        "sha256": "fd8a17de72e964b4ba49051544d034309120699374fdbc8689dd619750d7e043"
+      }
+    },
+    "native_publish_readback": {
+      "status": "complete",
+      "operation": "publish",
+      "target": "spark_catalog.umf_collector_qualification.documents",
+      "mode": "replace",
+      "rows": 3,
+      "objects": 3,
+      "publication_hash": "cc6a112cc8a9342c8cd1c3b3fb49f2c93d7ea5717d159f0592b340af9886bdfd",
+      "pack_id": "legal-supreme-court-source-mirror",
+      "pack_version": "1.0.0",
+      "loader_version": "1.0.0",
+      "rights": "local-use",
+      "schema": {
+        "version": "1.0.0",
+        "pack_id": "legal-supreme-court-source-mirror",
+        "pack_version": "1.0.0",
+        "profile": "court-documents",
+        "columns": [
+          {
+            "name": "id",
+            "data_type": "STRING",
+            "nullable": false
+          },
+          {
+            "name": "url",
+            "data_type": "STRING",
+            "nullable": false
+          },
+          {
+            "name": "sha256",
+            "data_type": "STRING",
+            "nullable": false
+          },
+          {
+            "name": "revision",
+            "data_type": "STRING",
+            "nullable": false
+          },
+          {
+            "name": "media_type",
+            "data_type": "STRING",
+            "nullable": false
+          },
+          {
+            "name": "bytes",
+            "data_type": "BIGINT",
+            "nullable": false
+          },
+          {
+            "name": "metadata_json",
+            "data_type": "STRING",
+            "nullable": false
+          },
+          {
+            "name": "license_json",
+            "data_type": "STRING",
+            "nullable": false
+          },
+          {
+            "name": "pack_id",
+            "data_type": "STRING",
+            "nullable": false
+          },
+          {
+            "name": "pack_version",
+            "data_type": "STRING",
+            "nullable": false
+          },
+          {
+            "name": "loader_id",
+            "data_type": "STRING",
+            "nullable": false
+          },
+          {
+            "name": "loader_version",
+            "data_type": "STRING",
+            "nullable": false
+          },
+          {
+            "name": "profile",
+            "data_type": "STRING",
+            "nullable": false
+          },
+          {
+            "name": "inventory_hash",
+            "data_type": "STRING",
+            "nullable": false
+          },
+          {
+            "name": "publication_hash",
+            "data_type": "STRING",
+            "nullable": false
+          },
+          {
+            "name": "retrieved_at",
+            "data_type": "STRING",
+            "nullable": false
+          },
+          {
+            "name": "run_id",
+            "data_type": "STRING",
+            "nullable": false
+          },
+          {
+            "name": "object_path",
+            "data_type": "STRING",
+            "nullable": false
+          }
+        ],
+        "key": [
+          "pack_id",
+          "pack_version",
+          "id",
+          "revision"
+        ]
+      }
+    },
+    "merge_idempotence": true,
+    "publish_with_python_source_https_forbidden": true,
+    "schema_refusal": true,
+    "schema_refusal_preserves_valid_rows_and_objects": true,
+    "source_hashes": {
+      "pdf-9cf29913b80bce5206b93f9bbae835f6b6ba3ada5145709e5581b4d84f51cd79": "7ea0d68643381b57d4ac82db55965e69e422ec2643b0086c20f3327b2e2e793f",
+      "pdf-16408930c8a3a75021ca313965cdcfadcee1232389b37825f41355ae8c38bab2": "7c7ac15e62b571314297c4e0bf4024454c0a7aa8b2ff4549de6988351549612e",
+      "pdf-e30357654732759aaefc21e6d5ddb23ba662a347fe5c2ed647e3ad89e01109cb": "ed968da0ad8210f375f7bbac13a5f6c5b584eacb9421d2ff81738af1f999462c"
+    }
+  },
+  "scope": "local Spark driver acquisition + Delta metadata/local original-byte publication; not Databricks",
+  "spark_version": "4.0.1",
+  "java_version": "21.0.12.1",
+  "target": "spark_catalog.umf_collector_qualification.documents",
+  "object_root": "/tmp/umf-spark-collector-qualification-081/published-objects",
+  "status": "complete",
+  "finished_at": "2026-10-10T00:48:17.692267+00:00"
+}

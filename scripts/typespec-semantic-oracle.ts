@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {compile,NodeHost,getTypeName,walkPropertiesInherited} from '@typespec/compiler';
 import {resolve} from 'node:path';
 const program=await compile(NodeHost,resolve('fixtures/typespec/project/main.tsp'),{noEmit:true});

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 export {};
 const base=await Bun.file('spec/extensions/parquet/rename.schema.json').json();
 base.$id='urn:umf:parquet:arrow-rename:0.1.0';base.title='Coordinated Parquet and embedded Arrow field rename';

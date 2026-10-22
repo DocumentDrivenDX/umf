@@ -1,6 +1,7 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import * as u from '../../src';
-import {projectFacetsToSqlServer as project,recoverFacetsFromSqlServer as recover} from '../../src/core-ideals/facets-sqlserver-projection';
+import {projectFacetsToSqlServer as project, recoverFacetsFromSqlServer as recover} from '../../src/core-ideals/facets-sqlserver-projection';
 import {facetsSqlServerProjectionCases,sqlserverFacetIdeal} from '../../scripts/core-ideals/facets-sqlserver-projection-cases';
 const rows=facetsSqlServerProjectionCases();
 const row=(name:string,encoding='checked',mode='report')=>rows.find(r=>r.name===name&&r.request.encoding===encoding&&r.request.mode===mode)!;

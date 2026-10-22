@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 6310,
+        "line": 38,
+        "path": "src/extensions/security/protection/domains.ts",
+        "sha256": "3f378a1563145eadaec218bfc4c639caac29442ea5c0885564a4670ffbed372d"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "resolveSecurityProtectionDomains",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(policyInput: unknown, catalogInput: unknown, closureInput: unknown): SecurityProtectionDomainResolution"
+    ]
+  },
+  "id": "[\"api\",\".\",\"resolveSecurityProtectionDomains\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 6310,
+      "line": 38,
+      "path": "src/extensions/security/protection/domains.ts",
+      "sha256": "3f378a1563145eadaec218bfc4c639caac29442ea5c0885564a4670ffbed372d"
+    }
+  ],
+  "summary": "Exact pins qualify only the supplied immutable core definitions, not their provenance.",
+  "title": "resolveSecurityProtectionDomains"
+}

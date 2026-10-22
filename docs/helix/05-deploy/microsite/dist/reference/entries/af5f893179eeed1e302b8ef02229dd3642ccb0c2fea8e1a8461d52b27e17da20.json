@@ -1,0 +1,246 @@
+{
+  "data": {
+    "extensionId": "umf.avro.cardinality",
+    "manifest": {
+      "capabilities": {
+        "directions": [
+          "import"
+        ],
+        "evidence": [
+          "tests/core-ideals/cardinality-avro.test.ts",
+          "fixtures/validation/cardinality-avro-profile-native.json"
+        ],
+        "native": {
+          "subset": "Declared shape of present non-null values; native union branches, availability, logical refinements and codec behavior remain separate",
+          "system": "Avro",
+          "version": "1.12.0"
+        },
+        "validation": "structural"
+      },
+      "coreVersion": "0.10.0",
+      "description": "Avro declared container shape with retained native item schemas and union meaning",
+      "id": "umf.avro.cardinality",
+      "schema": {
+        "$defs": {
+          "node": {
+            "oneOf": [
+              {
+                "properties": {
+                  "kind": {
+                    "const": "null"
+                  }
+                },
+                "required": [
+                  "kind"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "kind": {
+                    "const": "boolean"
+                  },
+                  "value": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "kind": {
+                    "const": "string"
+                  },
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "kind": {
+                    "const": "number"
+                  },
+                  "value": {
+                    "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?([eE][+-]?[0-9]+)?$",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "items": {
+                    "items": {
+                      "$ref": "#/$defs/node"
+                    },
+                    "type": "array"
+                  },
+                  "kind": {
+                    "const": "array"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "items"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "kind": {
+                    "const": "object"
+                  },
+                  "members": {
+                    "additionalProperties": {
+                      "$ref": "#/$defs/node"
+                    },
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "members"
+                ],
+                "type": "object"
+              }
+            ]
+          }
+        },
+        "$id": "urn:umf:avro:cardinality-binding:1.0.0",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": true,
+        "properties": {
+          "basis": {
+            "const": "Declared shape of present non-null values; native union branches, availability, logical refinements and codec behavior remain separate"
+          },
+          "binding": {
+            "const": {
+              "id": "umf.avro.cardinality",
+              "version": "1.0.0"
+            }
+          },
+          "definitions": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "dependencyId": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "path": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "path"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "interpretation": {
+            "enum": [
+              "declared",
+              "unknown",
+              "unsupported"
+            ]
+          },
+          "location": {
+            "additionalProperties": false,
+            "properties": {
+              "dependencyId": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "path": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "path"
+            ],
+            "type": "object"
+          },
+          "nativeAllowsNull": {
+            "type": [
+              "boolean",
+              "null"
+            ]
+          },
+          "nativeColumn": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "nativeFragment": {
+            "$ref": "#/$defs/node"
+          },
+          "origin": {
+            "const": "classified"
+          },
+          "profile": {
+            "enum": [
+              "present-non-null-schema",
+              "unresolved"
+            ]
+          }
+        },
+        "required": [
+          "origin",
+          "nativeColumn",
+          "binding",
+          "profile",
+          "basis",
+          "location",
+          "nativeFragment",
+          "interpretation",
+          "nativeAllowsNull",
+          "definitions"
+        ],
+        "title": "Retained Avro Cardinality scope",
+        "type": "object"
+      },
+      "scopes": [
+        "element"
+      ],
+      "semantics": "CONTRACT-040 and TD-042; schema-level shape, not codec or native equivalence",
+      "version": "1.0.0"
+    },
+    "registration": {
+      "apiIds": [],
+      "coreProfiles": [],
+      "mode": "unmapped"
+    },
+    "schemaId": "[\"schema\",\"spec/extensions/avro-cardinality/schema.json\",\"\"]",
+    "version": "1.0.0"
+  },
+  "id": "[\"extension\",\"umf.avro.cardinality\",\"1.0.0\"]",
+  "kind": "extension",
+  "links": [
+    "[\"guide\",\"extensions\"]",
+    "[\"schema\",\"spec/extensions/avro-cardinality/schema.json\",\"\"]",
+    "[\"integration\",\"umf.avro.cardinality@1.0.0:import\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 5121,
+      "path": "spec/extensions/avro-cardinality/package.json",
+      "sha256": "c2ceda15755139a6d8761fdfeb637aeb05380c63e1d862e29f96bad77166315f"
+    }
+  ],
+  "summary": "Avro declared container shape with retained native item schemas and union meaning",
+  "title": "umf.avro.cardinality · 1.0.0"
+}

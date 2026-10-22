@@ -1,0 +1,46 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"InspectedAction\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "module",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "path",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Action\"]"
+      ],
+      "name": "action",
+      "optional": false,
+      "type": "Action"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ActionObligation\"]"
+      ],
+      "name": "obligations",
+      "optional": false,
+      "type": "ActionObligation[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "InspectedAction is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "InspectedAction"
+}

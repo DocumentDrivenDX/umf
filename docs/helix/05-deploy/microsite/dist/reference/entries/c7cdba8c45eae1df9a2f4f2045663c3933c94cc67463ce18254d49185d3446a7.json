@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 7481,
+        "line": 13,
+        "path": "src/core-ideals/postgresql-composite.ts",
+        "sha256": "9331bc1b538e6c8d078264adf931a770c996c68eb8a4d377bc6f31d096960d9c"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "PostgresqlCompositeClassification",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface PostgresqlCompositeClassification {\n operation:'classify-postgresql-composite';version:'1.0.0';status:'classified'|'blocked';source:Document;target?:Document;request:PostgresqlCompositeRequest;binding:typeof binding;\n mappings:{origin:'classified';kind:'field'|'record';idealPath:string;nativePath:string;nativeFragment:Json;basis:'checked-catalog-composite'|'checked-catalog-composite-attribute';outcome:'exact'|'unknown'}[];\n residuals:{path:string;value:Json;reason:string;recovery:'Source and native fragments retained; resolve conflict then recompute whole record classification'}[];diagnostics:Diagnostic[];\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"PostgresqlCompositeClassification\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 7481,
+      "line": 13,
+      "path": "src/core-ideals/postgresql-composite.ts",
+      "sha256": "9331bc1b538e6c8d078264adf931a770c996c68eb8a4d377bc6f31d096960d9c"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/postgresql-composite.ts",
+  "title": "PostgresqlCompositeClassification"
+}

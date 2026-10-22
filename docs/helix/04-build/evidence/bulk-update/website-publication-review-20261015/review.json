@@ -1,0 +1,130 @@
+{
+  "date": "2026-10-15",
+  "requestedReviewMode": "Astra Ultra",
+  "scope": "Read-only publication projection review of frozen browser-local UPDATE demo, with separate current-main guide and release-gate assessment. No source files modified by reviewer.",
+  "publicationRoot": "/Users/erik/.codex/worktrees/browser-update-publication/umf",
+  "reviewedCommit": "7886ce0e2c82a54b4ba2997184fe39284695470a",
+  "base": "0a893a79ba6596f6fa61a9543561af97524271e9",
+  "originalImplementation": "2bae7e07d913dcfa910420b8fe36c807a4127355",
+  "verdict": "No open implementation blockers in the reviewed frozen website projection and its corrected guide/filter changes. Publication remains blocked by twelve stale signatures and two observed CI release failures.",
+  "publicationReady": false,
+  "deployed": false,
+  "originalProducerRequalified": false,
+  "frozenBrowserProducer": "sha256:633f8ad623cc150fd3f6e2c5fe5324a0a128393036aa34d9929bfadf1142c6e4",
+  "resolvedFindings": [
+    {
+      "id": "PUB-01",
+      "priority": "P1",
+      "title": "Current-main guide generation rejected seven undocumented runtime exports",
+      "resolution": "Seven exact public signatures and pure/no-authority boundaries documented; generated type inventory and guide pages refreshed. Independent build --check and check.ts pass; source unchanged."
+    },
+    {
+      "id": "PUB-02",
+      "priority": "P2",
+      "title": "Standalone model fixture changes skipped browser qualification workflow",
+      "resolution": "Both workflow filters now match local-products-*.json."
+    }
+  ],
+  "independentVerification": {
+    "originalProjection": {
+      "exactOriginalFiles": 118,
+      "initialChangedFiles": 120,
+      "exceptions": [
+        "README cohort clarification",
+        "new publication receipt"
+      ]
+    },
+    "assetAudit": {
+      "originalAssets": 372,
+      "sourcePins": 80,
+      "ownerArtifactDigests": 23
+    },
+    "isolatedReproduction": {
+      "trussOutputs": 375,
+      "compilerOutputs": 6,
+      "packagingControls": 8
+    },
+    "browser": {
+      "version": "153.0.8010.12",
+      "receiptSha256": "440e1a6e68bec5ece25c80858473c6ce295cc7e7b3c7279911b00f46e82b3502",
+      "pins": 22,
+      "identicalToPriorIndependentAndPublicationReceipts": true,
+      "fullLocalUpdateRecoveryHistoryCancellation": true,
+      "compilerExternalRequests": 0,
+      "writeRequests": 0,
+      "homepageGoogleFontAttemptSeparatelyBlockedAndRetained": true
+    },
+    "strictWebsiteTypes": "passed",
+    "guideBuildCheck": "passed",
+    "guideAssetAndHistoricCertificateCheck": "passed",
+    "currentMainSrcSpecPackageLockRootTsconfig": "unchanged from0a893a79",
+    "signatures": {
+      "pinnedVerifier": "4185eb56beb7b52beaa4a00c2fc897f93d44b939",
+      "valid": 5,
+      "stale": 12
+    }
+  },
+  "ownerRunnerEvidence": {
+    "linuxGuideBrowser": "Original retained browser.json verified against exact driver/API/guide-manifest hashes; 10 routes x2 widths, Chromium153.0.8010.12, no guide external requests or page errors. Original pinned Playwright1.63.0-noble Linux arm64 image with read-only original dependency-cache mount. This runner was executed by parent, not reviewer.",
+    "docsBuildAndExamples": "Parent reports completed original sessions92509 and98660 with exit0; retained checks.json expressly summarizes output rather than presenting a complete disk log. Seven malformed source/output controls reportedly refused; reviewer separately executed build --check/check.ts."
+  },
+  "nonqualifyingHostResult": {
+    "currentAndBaseline": "Unmodified documentation browser-driver stopped on Layout zoom failed footer index.html in local macOS Chromium. Same failure reproduced on untouched0a893a79 assets. Retained both logs; not used to displace successful original pinned Linux qualification."
+  },
+  "openReleaseGates": [
+    {
+      "id": "PUB-CI-01",
+      "priority": "P1",
+      "file": "/Users/erik/.codex/worktrees/browser-update-publication/umf/scripts/schema-browser-reproducibility.ts",
+      "line": 9,
+      "run": "https://github.com/DocumentDrivenDX/umf/actions/runs/38792695874",
+      "observed": "Both current producer builds match; exact comparison with installed schema-browser1.1.2 fails under Bun1.3.14 Linuxx64.",
+      "provenance": "Installed release pins source00755f5d2b76696b14a4750214c66f1209560939. Existing recorded input src/model/serialization.ts differs in base0a893a79; added assertExactJsonNumber comes fromd7a640c9. Original source lock matches recorded2905b77b247fd271f43010349ac10ee43b13a9ff0cb43b227b92304e60475a32.",
+      "recommendation": "Verify installed1.1.2 against a real detached original-source checkout with its own frozen lock and Bun1.3.14, separately retain two-build current candidate reproducibility. Do not relabel current output as old release, restore one old file into hybrid source, change633, or use archive without original Git provenance."
+    },
+    {
+      "id": "PUB-CI-02",
+      "priority": "P1",
+      "file": "/Users/erik/.codex/worktrees/browser-update-publication/umf/tests/actions-reference/handler-executor.test.ts",
+      "line": 32,
+      "run": "https://github.com/DocumentDrivenDX/umf/actions/runs/38792700744",
+      "observed": "First isolated handler test returned failed instead of committed; original code absent from CI output. Remaining seven handler tests pass. Underlying executor/test/dependencies unchanged in initial projection.",
+      "recommendation": "Retain original noncommitted status/code before assertion and rerun original CI; do not widen deadlines or add retries without original cause. Diagnostic-only edit reviewed safe: noncommitted union exposes only status/code or status. Test file does not enter guide manifest inputs.",
+      "uncertainty": "First-use5s container deadline is a hypothesis, not established cause. Parent targeted local1pass/26assertions is not CI qualification."
+    },
+    {
+      "id": "PUB-SIGN-01",
+      "priority": "P1",
+      "file": "/Users/erik/.codex/worktrees/browser-update-publication/umf/.github/workflows/microsite.yml",
+      "line": 190,
+      "observed": "Homepage, action compiler, and ten regenerated action guide HTML signatures stale; five signatures valid.",
+      "recommendation": "Re-sign exact final generated HTML through original authorized custody, then rerun pinned verify --all before merge/deploy."
+    }
+  ],
+  "limits": [
+    "Entire GitHub workflow not green; publication/deployment not cleared.",
+    "No fresh current-main plan-model producer qualification under633.",
+    "No native person/SCRAM/full904/full905/liveness/feedACK or arbitrary restoration claim.",
+    "Original required-String rootless Products/browser-local proof remains exactly bounded by retained reviewed artifacts."
+  ],
+  "evidenceFiles": {
+    "initial-findings.json": "6caf0dcb7651dfe7e9faeb2d18f99ff27162369396583cacae6d4eac7b47c745",
+    "projection-correspondence.json": "3301fb5c00670520ecd46e91efdcec4ea71e0b476a2e1406288c4f75725e9fa7",
+    "bundle-correspondence.json": "f566032a53abf31d7d6fe170e4f95a92a2118531b30164e3cbead701d81f9c59",
+    "compiler-build.json": "47b210103d60ac958dcc263c53a5e99567707891f2947b5b83451bfe2f1b28da",
+    "packaging-controls.json": "56f29582ee9fec70db200b48389a5dd9276732e42c1409d5870f9181c30c7429",
+    "website-browser-results.json": "440e1a6e68bec5ece25c80858473c6ce295cc7e7b3c7279911b00f46e82b3502",
+    "website-correspondence.json": "424b77c966cc14d573a7c26372868ab34d0886fc9b7165faa488312ff72ed750",
+    "actions-docs-check.log": "178ca4f543f90a346ea6b9e8a05dbb605dc99b7fd6974192f164cee04e348875",
+    "actions-docs-check-after.log": "b2324c659f10f1388b9c8df839d034c3072b2fe9804f432fc8913bf7d1a122c0",
+    "actions-docs-links-after.log": "7a3f891422fd2ec7d16c99cd7f7e8d6d3e3b69df2611656a4ecddad0724ee79a",
+    "guide-browser.log": "a3b60675894e7a721d0cf79d4d6801f7f48e8199f1ba919cb8fcb68c82237d50",
+    "baseline-guide-browser.log": "a3b60675894e7a721d0cf79d4d6801f7f48e8199f1ba919cb8fcb68c82237d50",
+    "guide-browser-linux.json": "71a92e238dcc45c85319cb8df5cf9ff9cc93aef1d7312e238ee766317fe1f73e",
+    "checks.json": "c571bb16f8ebe30d661a9e97422f93364420adadd7d75cf6ffef023c08fd843d",
+    "signature-check-after.log": "3bd8bb088f2435d8bfcee058b1a449ca4bea00c7b9b211e18320209dfb751df9",
+    "ci-microsite-38792695874.log": "f7d85e7703fe031eb341391945cd77ce63b15fc8e06eeb24a541117d622c8cff",
+    "ci-actions-38792700744.log": "7708b3473eeb5aa9bf324e5a7d08f5fa731b0cfdc73632859c12de5e395c8c0b",
+    "publication-state.json": "61482fd24debcd62b37dc572d4df4ba1af5c8b2261307f11cc5653b2fdf2558c"
+  }
+}

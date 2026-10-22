@@ -1,0 +1,48 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"declareAction\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "sourceInput",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "moduleId",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Action\"]"
+      ],
+      "name": "actionInput",
+      "optional": false,
+      "type": "Action"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Registry\"]"
+      ],
+      "name": "registry",
+      "optional": false,
+      "type": "Registry"
+    }
+  ],
+  "purpose": "declareAction accepts sourceInput, moduleId, actionInput, registry and returns Document.",
+  "related": [],
+  "returns": "Document",
+  "task": "Other APIs",
+  "type": "(sourceInput: Document, moduleId: string, actionInput: Action, registry: Registry) => Document"
+}

@@ -1,10 +1,12 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
+import reference from '../../spec/core/semantic-type-reference.schema.json';
 import {test,expect} from 'bun:test';
 import Ajv2020 from 'ajv/dist/2020';
 import core from '../../spec/core/schema.json';
 import reportSchema from '../../spec/extensions/jsonld/to-rdf-schema.json';
 import reverseSchema from '../../spec/extensions/jsonld/from-generalized-schema.json';
 import {importGeneralizedRdfDataset,exportGeneralizedRdfDataset,getGeneralizedRdfQuads,proposeGeneralizedRdfQuadEdit,inspectGeneralizedRdfDocument,importJsonLdDocument,proposeJsonLdToRdf,proposeGeneralizedRdfToJsonLd,exportRdfNQuads,exportJsonLdDocument,readDocument,writeDocument} from '../../src';
-const ajv=new Ajv2020({strict:false,validateFormats:false}).addSchema(core),forward=ajv.compile(reportSchema),reverse=ajv.compile(reverseSchema);
+const ajv=new Ajv2020({strict:false,validateFormats:false}).addSchema(reference).addSchema(core),forward=ajv.compile(reportSchema),reverse=ajv.compile(reverseSchema);
 test('US-027-AC1–3: generalized official cases preserve predicate identity, round trips and edits',async()=>{
  const cases=(await Bun.file('fixtures/generalized-rdf/results.json').json()).cases,oracle=(await Bun.file('fixtures/generalized-rdf/oracle-results.json').json()).results;expect(cases.map((c:any)=>c.id)).toEqual(['t0118','te075']);expect(oracle).toHaveLength(2);
  for(const c of cases){const source=importJsonLdDocument(await Bun.file(c.path).text(),c.inputs),r=await proposeJsonLdToRdf(source,c.options);expect(forward(r)).toBe(true);expect(r.source).toEqual(source);expect(r.status).toBe('candidate');expect(r.produceGeneralizedRdf).toBe(true);expect(r.diagnostics).toEqual(c.diagnostics);const candidate=r.candidate!,quads=getGeneralizedRdfQuads(candidate);expect(quads).toHaveLength(c.quadCount);expect(quads.some(q=>q.predicate.termType==='BlankNode')).toBe(true);expect(()=>exportRdfNQuads(candidate)).toThrow();

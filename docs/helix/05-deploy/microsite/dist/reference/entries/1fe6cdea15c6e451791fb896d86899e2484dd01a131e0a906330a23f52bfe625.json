@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 4905,
+        "line": 7,
+        "path": "src/adapters/parquet/field-metadata.ts",
+        "sha256": "4ab6e9e2c566276dfc5cbcc7d96c667f2acd5bbc5efb08a611912342bfd3827e"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "ParquetFieldMetadata",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface ParquetFieldMetadata {index:number;path:string[];definitionLevel:number;repetitionLevel:number;element:Element;nativeField:Json;}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"ParquetFieldMetadata\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 4905,
+      "line": 7,
+      "path": "src/adapters/parquet/field-metadata.ts",
+      "sha256": "4ab6e9e2c566276dfc5cbcc7d96c667f2acd5bbc5efb08a611912342bfd3827e"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/parquet/field-metadata.ts",
+  "title": "ParquetFieldMetadata"
+}

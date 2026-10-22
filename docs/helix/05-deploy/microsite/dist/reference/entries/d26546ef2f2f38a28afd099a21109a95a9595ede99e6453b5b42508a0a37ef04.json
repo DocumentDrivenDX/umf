@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 24250,
+        "line": 18,
+        "path": "src/projections/binding-sqlserver/relationship-layout.ts",
+        "sha256": "e7a6fb7f47e9ada6e7023724c8c4cd463a5403dc6bf2fcf76a471e74da59640e"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "SqlServerRelationshipLayout",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface SqlServerRelationshipLayout {\n relationship:{module:string;id:string};storage:'foreign_key'|'junction'|'edge';carrierTable:string;\n targetKey:SqlServerLayoutKeyRef;targetConstraint:string;targetComponents:SqlServerLayoutEndpointComponent[];\n sourceKey?:SqlServerLayoutKeyRef;sourceConstraint?:string;sourceComponents?:SqlServerLayoutEndpointComponent[];\n associationRecord?:CoreKeyFieldReference;associationKey?:SqlServerLayoutKeyRef;\n discriminator?:SqlServerLayoutType&{column:string;value:string};\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"SqlServerRelationshipLayout\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 24250,
+      "line": 18,
+      "path": "src/projections/binding-sqlserver/relationship-layout.ts",
+      "sha256": "e7a6fb7f47e9ada6e7023724c8c4cd463a5403dc6bf2fcf76a471e74da59640e"
+    }
+  ],
+  "summary": "Type declaration · src/projections/binding-sqlserver/relationship-layout.ts",
+  "title": "SqlServerRelationshipLayout"
+}

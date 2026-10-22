@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 export {};
 const base=await Bun.file('spec/extensions/parquet/rename.schema.json').json();
 const schema={

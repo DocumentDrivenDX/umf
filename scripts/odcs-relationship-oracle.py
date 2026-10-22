@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Record official JSON Schema limits separately from specification-derived runtime checks."""
 import json,hashlib
 from pathlib import Path

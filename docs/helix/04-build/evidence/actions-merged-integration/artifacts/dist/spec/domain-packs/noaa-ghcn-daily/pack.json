@@ -1,0 +1,139 @@
+{
+  "id": "noaa-ghcn-daily",
+  "version": "1.0.0",
+  "description": "NOAA GHCN Daily stations and monthly observations",
+  "domain_types": {
+    "ghcn_station": {
+      "description": "11-character source station identifier."
+    },
+    "ghcn_element": {
+      "description": "Open element code; units belong to the element, never to VALUE alone.",
+      "core_units": {
+        "PRCP": "0.1 mm",
+        "SNOW": "mm",
+        "SNWD": "mm",
+        "TMAX": "0.1 Celsius",
+        "TMIN": "0.1 Celsius"
+      }
+    },
+    "ghcn_value": {
+      "description": "Unscaled source integer, including the -9999 missing sentinel."
+    }
+  },
+  "sources": {
+    "stations": {
+      "kind": "external",
+      "data_kind": "observed",
+      "reference": "https://www.ncei.noaa.gov/pub/data/ghcn/daily/ghcnd-stations.txt",
+      "format": "fixed-width",
+      "license": {
+        "redistribution": "unknown"
+      },
+      "provenance": {
+        "publisher": "NOAA NCEI"
+      }
+    },
+    "daily": {
+      "kind": "external",
+      "data_kind": "observed",
+      "reference": "https://www.ncei.noaa.gov/pub/data/ghcn/daily/ghcnd-all.tar.gz",
+      "format": "tar.gz/fixed-width",
+      "license": {
+        "redistribution": "unknown"
+      },
+      "provenance": {
+        "publisher": "NOAA NCEI"
+      }
+    },
+    "inventory": {
+      "kind": "external",
+      "data_kind": "observed",
+      "reference": "https://www.ncei.noaa.gov/pub/data/ghcn/daily/ghcnd-inventory.txt",
+      "format": "fixed-width",
+      "license": {
+        "redistribution": "unknown"
+      },
+      "provenance": {
+        "publisher": "NOAA NCEI"
+      }
+    },
+    "documentation": {
+      "kind": "external",
+      "data_kind": "unknown",
+      "reference": "https://www.ncei.noaa.gov/pub/data/ghcn/daily/readme.txt",
+      "format": "text",
+      "revision": "GHCN-Daily 3.35",
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "0e4e6f0e6947cf1add884c328a01760f31c56ef5fb86b85ed57dd5dc4c4aeaa6"
+      },
+      "license": {
+        "redistribution": "unknown"
+      },
+      "provenance": {
+        "publisher": "NOAA NCEI"
+      },
+      "description": "Fingerprint of documentation bytes inspected during authoring; not a checksum of dataset rows."
+    }
+  },
+  "schemas": [
+    {
+      "id": "stations",
+      "format": "tablespec",
+      "reference": "umf/stations.json"
+    },
+    {
+      "id": "daily_monthly",
+      "format": "tablespec",
+      "reference": "umf/daily_monthly.json"
+    },
+    {
+      "id": "inventory",
+      "format": "tablespec",
+      "reference": "umf/inventory.json"
+    }
+  ],
+  "source_bindings": [
+    {
+      "schema_id": "stations",
+      "source_id": "stations",
+      "role": "rows"
+    },
+    {
+      "schema_id": "stations",
+      "source_id": "documentation",
+      "role": "reference"
+    },
+    {
+      "schema_id": "daily_monthly",
+      "source_id": "daily",
+      "role": "rows"
+    },
+    {
+      "schema_id": "daily_monthly",
+      "source_id": "documentation",
+      "role": "reference"
+    },
+    {
+      "schema_id": "inventory",
+      "source_id": "inventory",
+      "role": "rows"
+    },
+    {
+      "schema_id": "inventory",
+      "source_id": "documentation",
+      "role": "reference"
+    }
+  ],
+  "profile": {
+    "subset": "GHCN-Daily 3.35 documented stations, inventory and monthly .dly fields.",
+    "missing": "Retain -9999 values, -999.9 elevation and blank flags; no null conversion.",
+    "layout": "Source fixed-width field positions are defined by the fingerprinted README. Parser and raw-line retention belong to consumers.",
+    "revision": "Documentation is pinned; live station/inventory/archive bytes are not a reproducible data snapshot.",
+    "documentation_revision": "GHCN-Daily 3.35",
+    "schema_format": "TableSpec 1.0 JSON",
+    "support": "Schema metadata and exact adapter recovery only; no source data ingestion or native equivalence.",
+    "data_snapshot": "No dataset bytes bundled or SHA-256-pinned. Consumers must select and pin local inputs before execution.",
+    "unknown_content": "Retain original source fields, files and bytes; unsupported content requires an explicit loss report."
+  }
+}

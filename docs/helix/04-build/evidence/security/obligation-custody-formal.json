@@ -1,0 +1,174 @@
+{
+  "status": "conditional-proof-passed",
+  "solverVersion": "4.15.4",
+  "sourceDigests": {
+    "/Users/erik/.codex/worktrees/1598/umf/tools/security/prove-obligation-custody.py": "72fc4ebc7d8b9d961a4ad07f2de346693ed1e24f6a6f6ccf30e908909335127e",
+    "/Users/erik/.codex/worktrees/1598/umf/docs/helix/02-design/spikes/SPIKE-010-security-result-coverage.md": "38106f38ed585201bcf7f47d017e887212e870efe48141b3bff7cd96f94a9d6f",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_backend.rs": "62d32617f85920fb4d8e858c79216c3673a384e613184d9b14af31d6e76033e8",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_obligation_custody.rs": "881ee322e3ba861c08ab2f96268f486fbb265c57872c02a5fdff6b9da13c8c12",
+    "/Users/erik/Projects/weft/docs/helix/02-design/contracts/CONTRACT-005-security-compilation.md": "bcacdc84de19ba38e32abd86413bbc067f98e017bde9baf054839c8794ddb4f2",
+    "/Users/erik/Projects/weft/Cargo.lock": "e1c15a0cda8494bd51aa6d199edb5b0c997a4c1c028b45cf9c72a3bfb7419e45",
+    "/Users/erik/Projects/weft/crates/weft-core/src/backend.rs": "45c63ae9ddcbcf435c5d30042574bf85124e0ee4793edc38301f5a0440b1bb4b",
+    "/Users/erik/Projects/weft/crates/weft-core/src/json.rs": "f29336c58ced205722e32f2ba18f535cf8e46c1638fc61bf40d9860a435d7e75",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_evaluation.rs": "04044dfca332b52a0753901d1b030000ea6c6944bbb6e27e19131e46a04de665",
+    "/Users/erik/Projects/weft/crates/weft-databricks/src/binding.rs": "111f726373592c7341f5cc2178c76c7483a1bc4ee873073a913d275b668a3016",
+    "/Users/erik/Projects/weft/tests/ashlar-databricks/compiler.rs": "d07f32ed32f1fac99714b787e452c30022cf4f095cf451f3bac666eb6fd4a5ef",
+    "/Users/erik/Projects/weft/tests/ashlar-databricks/binding.rs": "9b27a121bdc181729a1c1af82d0b660839af0923eada497dd65c0bed9dec9497"
+  },
+  "sourcesUnchanged": true,
+  "cases": [
+    {
+      "id": "exact-registration-reconstructs-original-parameters",
+      "covers": [
+        "US-056-AC7",
+        "US-056-AC10"
+      ],
+      "violation": {
+        "smt": "(declare-fun fixed_parser_parameter_tree (String String String) String)\n(declare-fun required_obligation () String)\n(declare-fun first_selected_capability () String)\n(declare-fun host_registered_bytes () String)\n(declare-fun registered_bytes () String)\n(declare-fun selected_target_id (String) String)\n(declare-fun registered_backend_version (String) String)\n(declare-fun registered_backend_id (String) String)\n(assert (and (= registered_bytes host_registered_bytes)\n     (= (registered_backend_id registered_bytes)\n        (registered_backend_id host_registered_bytes))\n     (= (registered_backend_version registered_bytes)\n        (registered_backend_version host_registered_bytes))\n     (= (selected_target_id registered_bytes)\n        (selected_target_id host_registered_bytes))\n     (distinct (fixed_parser_parameter_tree\n                 registered_bytes\n                 first_selected_capability\n                 required_obligation)\n               (fixed_parser_parameter_tree\n                 host_registered_bytes\n                 first_selected_capability\n                 required_obligation))))\n",
+        "result": "unsat",
+        "replayResult": "unsat",
+        "witness": null
+      },
+      "negativeControl": {
+        "smt": "(declare-fun fixed_parser_parameter_tree (String String String) String)\n(declare-fun required_obligation () String)\n(declare-fun first_selected_capability () String)\n(declare-fun host_registered_bytes () String)\n(declare-fun registered_bytes () String)\n(declare-fun selected_target_id (String) String)\n(declare-fun registered_backend_version (String) String)\n(declare-fun registered_backend_id (String) String)\n(assert (and (= (registered_backend_id registered_bytes)\n        (registered_backend_id host_registered_bytes))\n     (= (registered_backend_version registered_bytes)\n        (registered_backend_version host_registered_bytes))\n     (= (selected_target_id registered_bytes)\n        (selected_target_id host_registered_bytes))\n     (distinct registered_bytes host_registered_bytes)\n     (distinct (fixed_parser_parameter_tree\n                 registered_bytes\n                 first_selected_capability\n                 required_obligation)\n               (fixed_parser_parameter_tree\n                 host_registered_bytes\n                 first_selected_capability\n                 required_obligation))))\n",
+        "result": "sat",
+        "replayResult": "sat",
+        "witness": "[registered_bytes = \"!0!\",\n first_selected_capability = \"!7!\",\n host_registered_bytes = \"!1!\",\n required_obligation = \"!8!\",\n registered_backend_version = [else -> \"!5!\"],\n registered_backend_id = [else -> \"!4!\"],\n fixed_parser_parameter_tree = [(\"!1!\", \"!7!\", \"!8!\") ->\n                                \"!3!\",\n                                else -> \"!2!\"],\n selected_target_id = [else -> \"!6!\"]]"
+      },
+      "positivePopulation": {
+        "smt": "(declare-fun fixed_parser_parameter_tree (String String String) String)\n(declare-fun required_obligation () String)\n(declare-fun first_selected_capability () String)\n(declare-fun host_registered_bytes () String)\n(declare-fun registered_bytes () String)\n(declare-fun selected_target_id (String) String)\n(declare-fun registered_backend_version (String) String)\n(declare-fun registered_backend_id (String) String)\n(assert (and (= registered_bytes host_registered_bytes)\n     (= (registered_backend_id registered_bytes)\n        (registered_backend_id host_registered_bytes))\n     (= (registered_backend_version registered_bytes)\n        (registered_backend_version host_registered_bytes))\n     (= (selected_target_id registered_bytes)\n        (selected_target_id host_registered_bytes))\n     (= (fixed_parser_parameter_tree\n          registered_bytes\n          first_selected_capability\n          required_obligation)\n        (fixed_parser_parameter_tree\n          host_registered_bytes\n          first_selected_capability\n          required_obligation))))\n",
+        "result": "sat",
+        "replayResult": "sat",
+        "witness": "[host_registered_bytes = \"\", registered_bytes = \"\"]"
+      }
+    },
+    {
+      "id": "repeated-obligation-id-requires-complete-declaration-equality",
+      "covers": [
+        "US-056-AC7",
+        "US-056-AC10"
+      ],
+      "violation": {
+        "smt": "(declare-fun failure_b () String)\n(declare-fun failure_a () String)\n(declare-fun owner_b () String)\n(declare-fun owner_a () String)\n(declare-fun parameter_b () String)\n(declare-fun parameter_a () String)\n(assert (and (= parameter_a parameter_b)\n     (= owner_a owner_b)\n     (= failure_a failure_b)\n     (or (distinct parameter_a parameter_b)\n         (distinct owner_a owner_b)\n         (distinct failure_a failure_b))))\n",
+        "result": "unsat",
+        "replayResult": "unsat",
+        "witness": null
+      },
+      "negativeControl": {
+        "smt": "(declare-fun failure_b () String)\n(declare-fun failure_a () String)\n(declare-fun owner_b () String)\n(declare-fun owner_a () String)\n(declare-fun parameter_b () String)\n(declare-fun parameter_a () String)\n(assert (and (distinct parameter_a parameter_b)\n     (= owner_a owner_b)\n     (= failure_a failure_b)))\n",
+        "result": "sat",
+        "replayResult": "sat",
+        "witness": "[parameter_a = \"A\",\n parameter_b = \"\",\n failure_b = \"\",\n failure_a = \"\",\n owner_b = \"\",\n owner_a = \"\"]"
+      },
+      "positivePopulation": {
+        "smt": "(declare-fun failure_b () String)\n(declare-fun failure_a () String)\n(declare-fun owner_b () String)\n(declare-fun owner_a () String)\n(declare-fun parameter_b () String)\n(declare-fun parameter_a () String)\n(assert (and (= parameter_a parameter_b) (= owner_a owner_b) (= failure_a failure_b)))\n",
+        "result": "sat",
+        "replayResult": "sat",
+        "witness": "[parameter_b = \"\",\n parameter_a = \"\",\n failure_b = \"\",\n failure_a = \"\",\n owner_b = \"\",\n owner_a = \"\"]"
+      }
+    },
+    {
+      "id": "all-selected-origins-survive-deduplication",
+      "covers": [
+        "US-056-AC7",
+        "US-056-AC10"
+      ],
+      "violation": {
+        "smt": "(declare-fun retained_origin (String String) Bool)\n(declare-fun required_obligation () String)\n(declare-fun second_selected_capability () String)\n(declare-fun capability_declares_obligation (String String) Bool)\n(declare-fun first_selected_capability () String)\n(declare-fun capability_selected (String) Bool)\n(assert (let ((a!1 (forall ((capability String) (obligation_id String))\n             (= (retained_origin capability obligation_id)\n                (and (capability_selected capability)\n                     (capability_declares_obligation capability obligation_id))))))\n  (and a!1\n       (distinct first_selected_capability second_selected_capability)\n       (capability_selected first_selected_capability)\n       (capability_selected second_selected_capability)\n       (capability_declares_obligation\n         first_selected_capability\n         required_obligation)\n       (capability_declares_obligation\n         second_selected_capability\n         required_obligation)\n       (not (retained_origin second_selected_capability required_obligation)))))\n",
+        "result": "unsat",
+        "replayResult": "unsat",
+        "witness": null
+      },
+      "negativeControl": {
+        "smt": "(declare-fun retained_origin (String String) Bool)\n(declare-fun required_obligation () String)\n(declare-fun second_selected_capability () String)\n(declare-fun first_selected_capability () String)\n(declare-fun capability_declares_obligation (String String) Bool)\n(declare-fun capability_selected (String) Bool)\n(assert (and (distinct first_selected_capability second_selected_capability)\n     (capability_selected first_selected_capability)\n     (capability_selected second_selected_capability)\n     (capability_declares_obligation\n       first_selected_capability\n       required_obligation)\n     (capability_declares_obligation\n       second_selected_capability\n       required_obligation)\n     (retained_origin first_selected_capability required_obligation)\n     (not (retained_origin second_selected_capability required_obligation))))\n",
+        "result": "sat",
+        "replayResult": "sat",
+        "witness": "[second_selected_capability = \"A\",\n first_selected_capability = \"\",\n required_obligation = \"\",\n capability_declares_obligation = [else -> True],\n retained_origin = [(\"A\", \"\") -> False, else -> True],\n capability_selected = [else -> True]]"
+      },
+      "positivePopulation": {
+        "smt": "(declare-fun retained_origin (String String) Bool)\n(declare-fun required_obligation () String)\n(declare-fun second_selected_capability () String)\n(declare-fun first_selected_capability () String)\n(declare-fun capability_declares_obligation (String String) Bool)\n(declare-fun capability_selected (String) Bool)\n(assert (let ((a!1 (forall ((capability String) (obligation_id String))\n             (= (retained_origin capability obligation_id)\n                (and (capability_selected capability)\n                     (capability_declares_obligation capability obligation_id))))))\n  (and a!1\n       (distinct first_selected_capability second_selected_capability)\n       (capability_selected first_selected_capability)\n       (capability_selected second_selected_capability)\n       (capability_declares_obligation\n         first_selected_capability\n         required_obligation)\n       (capability_declares_obligation\n         second_selected_capability\n         required_obligation)\n       (retained_origin first_selected_capability required_obligation)\n       (retained_origin second_selected_capability required_obligation))))\n",
+        "result": "sat",
+        "replayResult": "sat",
+        "witness": "[second_selected_capability = \"A\",\n first_selected_capability = \"\",\n required_obligation = \"\",\n capability_declares_obligation = [else -> True],\n retained_origin = [(\"\", \"\") -> True,\n                    (\"A\", \"\") -> True,\n                    else ->\n                    Not(Or(Not(capability_selected(Var(0))),\n                           Not(capability_declares_obligation(Var(0),\n                                        Var(1)))))],\n capability_selected = [else -> True]]"
+      }
+    },
+    {
+      "id": "snapshot-custody-does-not-reread-callback",
+      "covers": [
+        "US-056-AC7",
+        "US-056-AC10"
+      ],
+      "violation": {
+        "smt": "(declare-fun fixed_parser_parameter_tree (String String String) String)\n(declare-fun required_obligation () String)\n(declare-fun first_selected_capability () String)\n(declare-fun registered_bytes () String)\n(declare-fun borrowed_original_parameter_tree () String)\n(assert (and (= borrowed_original_parameter_tree\n        (fixed_parser_parameter_tree\n          registered_bytes\n          first_selected_capability\n          required_obligation))\n     (distinct borrowed_original_parameter_tree\n               (fixed_parser_parameter_tree\n                 registered_bytes\n                 first_selected_capability\n                 required_obligation))))\n",
+        "result": "unsat",
+        "replayResult": "unsat",
+        "witness": null
+      },
+      "negativeControl": {
+        "smt": "(declare-fun fixed_parser_parameter_tree (String String String) String)\n(declare-fun required_obligation () String)\n(declare-fun first_selected_capability () String)\n(declare-fun registered_bytes () String)\n(declare-fun borrowed_original_parameter_tree () String)\n(declare-fun later_callback_bytes () String)\n(assert (and (distinct registered_bytes later_callback_bytes)\n     (= borrowed_original_parameter_tree\n        (fixed_parser_parameter_tree\n          later_callback_bytes\n          first_selected_capability\n          required_obligation))\n     (distinct borrowed_original_parameter_tree\n               (fixed_parser_parameter_tree\n                 registered_bytes\n                 first_selected_capability\n                 required_obligation))))\n",
+        "result": "sat",
+        "replayResult": "sat",
+        "witness": "[registered_bytes = \"A\",\n later_callback_bytes = \"\",\n first_selected_capability = \"A\",\n required_obligation = \"\",\n borrowed_original_parameter_tree = \"\",\n fixed_parser_parameter_tree = [(\"A\", \"A\", \"\") -> \"B\",\n                                else -> \"\"]]"
+      },
+      "positivePopulation": {
+        "smt": "(declare-fun fixed_parser_parameter_tree (String String String) String)\n(declare-fun required_obligation () String)\n(declare-fun first_selected_capability () String)\n(declare-fun later_callback_bytes () String)\n(declare-fun borrowed_original_parameter_tree () String)\n(declare-fun registered_bytes () String)\n(assert (and (= borrowed_original_parameter_tree\n        (fixed_parser_parameter_tree\n          registered_bytes\n          first_selected_capability\n          required_obligation))\n     (distinct registered_bytes later_callback_bytes)\n     (distinct borrowed_original_parameter_tree\n               (fixed_parser_parameter_tree\n                 later_callback_bytes\n                 first_selected_capability\n                 required_obligation))))\n",
+        "result": "sat",
+        "replayResult": "sat",
+        "witness": "[registered_bytes = \"A\",\n later_callback_bytes = \"\",\n first_selected_capability = \"A\",\n required_obligation = \"\",\n borrowed_original_parameter_tree = \"B\",\n fixed_parser_parameter_tree = [(\"\", \"A\", \"\") -> \"\",\n                                else -> \"B\"]]"
+      }
+    },
+    {
+      "id": "repeated-comparison-visits-share-resource-ledger",
+      "covers": [
+        "US-056-AC7",
+        "US-056-AC10"
+      ],
+      "violation": {
+        "smt": "(declare-fun total_budget () Int)\n(declare-fun comparison_visits () Int)\n(declare-fun source_visits () Int)\n(assert (and (>= source_visits 0)\n     (>= comparison_visits 0)\n     (>= total_budget 0)\n     (<= (+ source_visits comparison_visits) total_budget)\n     (> (+ source_visits comparison_visits) total_budget)))\n",
+        "result": "unsat",
+        "replayResult": "unsat",
+        "witness": null
+      },
+      "negativeControl": {
+        "smt": "(declare-fun total_budget () Int)\n(declare-fun comparison_visits () Int)\n(declare-fun source_visits () Int)\n(assert (and (>= source_visits 0)\n     (>= comparison_visits 0)\n     (>= total_budget 0)\n     (<= source_visits total_budget)\n     (> (+ source_visits comparison_visits) total_budget)))\n",
+        "result": "sat",
+        "replayResult": "sat",
+        "witness": "[source_visits = 0, total_budget = 0, comparison_visits = 1]"
+      },
+      "positivePopulation": {
+        "smt": "(declare-fun total_budget () Int)\n(declare-fun comparison_visits () Int)\n(declare-fun source_visits () Int)\n(assert (and (>= source_visits 0)\n     (>= comparison_visits 0)\n     (>= total_budget 0)\n     (<= (+ source_visits comparison_visits) total_budget)\n     (= source_visits 2)\n     (= comparison_visits 3)\n     (= total_budget 5)))\n",
+        "result": "sat",
+        "replayResult": "sat",
+        "witness": "[source_visits = 2, total_budget = 5, comparison_visits = 3]"
+      }
+    },
+    {
+      "id": "preservation-alone-cannot-discharge-unknown-meaning",
+      "covers": [
+        "US-056-AC7",
+        "US-056-AC10"
+      ],
+      "violation": {
+        "smt": "(declare-fun admitted () Bool)\n(declare-fun parameters_understood () Bool)\n(declare-fun parameters_preserved () Bool)\n(declare-fun native_obligations_verified () Bool)\n(assert (and (= admitted\n        (and parameters_preserved\n             parameters_understood\n             native_obligations_verified))\n     parameters_preserved\n     (not parameters_understood)\n     admitted))\n",
+        "result": "unsat",
+        "replayResult": "unsat",
+        "witness": null
+      },
+      "negativeControl": {
+        "smt": "(declare-fun admitted () Bool)\n(declare-fun parameters_understood () Bool)\n(declare-fun parameters_preserved () Bool)\n(assert (and parameters_preserved (not parameters_understood) admitted))\n",
+        "result": "sat",
+        "replayResult": "sat",
+        "witness": "[admitted = True,\n parameters_understood = False,\n parameters_preserved = True]"
+      },
+      "positivePopulation": {
+        "smt": "(declare-fun admitted () Bool)\n(declare-fun parameters_understood () Bool)\n(declare-fun parameters_preserved () Bool)\n(declare-fun native_obligations_verified () Bool)\n(assert (and (= admitted\n        (and parameters_preserved\n             parameters_understood\n             native_obligations_verified))\n     parameters_preserved\n     (not parameters_understood)\n     (not admitted)))\n",
+        "result": "sat",
+        "replayResult": "sat",
+        "witness": "[admitted = False,\n parameters_understood = False,\n native_obligations_verified = False,\n parameters_preserved = True]"
+      }
+    }
+  ],
+  "nativeImplementationQualified": false,
+  "acceptanceCasesPromoted": [],
+  "scope": "Six conditional laws over exact immutable registration bytes and a fixed deterministic parser, complete repeated declarations and unbounded selected-origin relations, snapshot selection, additive visit accounting and independent understanding/native-verification premises. Weakened controls witness same-label registration substitution, lost origins, changed callbacks, uncharged comparison visits and preservation without understanding. These modeled definitions do not establish Rust/parser refinement, source/action coverage, closed response transport/reconstruction, authenticated host registration, parameter semantic interpretation, native enforcement/current authority or release. No backend case promoted."
+}

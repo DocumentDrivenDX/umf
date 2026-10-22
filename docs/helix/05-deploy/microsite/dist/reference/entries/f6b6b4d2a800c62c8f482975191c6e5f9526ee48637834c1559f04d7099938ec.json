@@ -1,0 +1,675 @@
+{
+  "data": {
+    "pointer": "",
+    "profileVersions": [],
+    "references": [
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/delta-log/action-inspection.schema.json\",\"\"]",
+        "target": "#/$defs/node"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/delta-log/action-inspection.schema.json\",\"\"]",
+        "target": "#/$defs/node"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/delta-log/action-inspection.schema.json\",\"\"]",
+        "target": "#/$defs/node"
+      }
+    ],
+    "role": "extension-payload",
+    "schemaPath": "spec/extensions/delta-log/action-inspection.schema.json",
+    "sourceData": {
+      "kind": "object",
+      "members": {
+        "$defs": {
+          "kind": "object",
+          "members": {
+            "node": {
+              "kind": "object",
+              "members": {
+                "oneOf": {
+                  "items": [
+                    {
+                      "kind": "object",
+                      "members": {
+                        "properties": {
+                          "kind": "object",
+                          "members": {
+                            "kind": {
+                              "kind": "object",
+                              "members": {
+                                "const": {
+                                  "kind": "string",
+                                  "value": "null"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "required": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "kind"
+                            }
+                          ],
+                          "kind": "array"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "object"
+                        }
+                      }
+                    },
+                    {
+                      "kind": "object",
+                      "members": {
+                        "properties": {
+                          "kind": "object",
+                          "members": {
+                            "kind": {
+                              "kind": "object",
+                              "members": {
+                                "const": {
+                                  "kind": "string",
+                                  "value": "boolean"
+                                }
+                              }
+                            },
+                            "value": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "boolean"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "required": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "kind"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "value"
+                            }
+                          ],
+                          "kind": "array"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "object"
+                        }
+                      }
+                    },
+                    {
+                      "kind": "object",
+                      "members": {
+                        "properties": {
+                          "kind": "object",
+                          "members": {
+                            "kind": {
+                              "kind": "object",
+                              "members": {
+                                "const": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            },
+                            "value": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "required": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "kind"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "value"
+                            }
+                          ],
+                          "kind": "array"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "object"
+                        }
+                      }
+                    },
+                    {
+                      "kind": "object",
+                      "members": {
+                        "properties": {
+                          "kind": "object",
+                          "members": {
+                            "kind": {
+                              "kind": "object",
+                              "members": {
+                                "const": {
+                                  "kind": "string",
+                                  "value": "number"
+                                }
+                              }
+                            },
+                            "value": {
+                              "kind": "object",
+                              "members": {
+                                "pattern": {
+                                  "kind": "string",
+                                  "value": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?([eE][+-]?[0-9]+)?$"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "required": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "kind"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "value"
+                            }
+                          ],
+                          "kind": "array"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "object"
+                        }
+                      }
+                    },
+                    {
+                      "kind": "object",
+                      "members": {
+                        "properties": {
+                          "kind": "object",
+                          "members": {
+                            "items": {
+                              "kind": "object",
+                              "members": {
+                                "items": {
+                                  "kind": "object",
+                                  "members": {
+                                    "$ref": {
+                                      "kind": "string",
+                                      "value": "#/$defs/node"
+                                    }
+                                  }
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "array"
+                                }
+                              }
+                            },
+                            "kind": {
+                              "kind": "object",
+                              "members": {
+                                "const": {
+                                  "kind": "string",
+                                  "value": "array"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "required": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "kind"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "items"
+                            }
+                          ],
+                          "kind": "array"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "object"
+                        }
+                      }
+                    },
+                    {
+                      "kind": "object",
+                      "members": {
+                        "properties": {
+                          "kind": "object",
+                          "members": {
+                            "kind": {
+                              "kind": "object",
+                              "members": {
+                                "const": {
+                                  "kind": "string",
+                                  "value": "object"
+                                }
+                              }
+                            },
+                            "members": {
+                              "kind": "object",
+                              "members": {
+                                "additionalProperties": {
+                                  "kind": "object",
+                                  "members": {
+                                    "$ref": {
+                                      "kind": "string",
+                                      "value": "#/$defs/node"
+                                    }
+                                  }
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "object"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "required": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "kind"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "members"
+                            }
+                          ],
+                          "kind": "array"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "object"
+                        }
+                      }
+                    }
+                  ],
+                  "kind": "array"
+                }
+              }
+            }
+          }
+        },
+        "$id": {
+          "kind": "string",
+          "value": "urn:umf:delta-log:action-inspection:0.1.0"
+        },
+        "$schema": {
+          "kind": "string",
+          "value": "https://json-schema.org/draft/2020-12/schema"
+        },
+        "additionalProperties": {
+          "kind": "boolean",
+          "value": false
+        },
+        "properties": {
+          "kind": "object",
+          "members": {
+            "complete": {
+              "kind": "object",
+              "members": {
+                "const": {
+                  "kind": "boolean",
+                  "value": false
+                }
+              }
+            },
+            "diagnostics": {
+              "kind": "object",
+              "members": {
+                "items": {
+                  "kind": "object",
+                  "members": {
+                    "additionalProperties": {
+                      "kind": "boolean",
+                      "value": false
+                    },
+                    "properties": {
+                      "kind": "object",
+                      "members": {
+                        "code": {
+                          "kind": "object",
+                          "members": {
+                            "type": {
+                              "kind": "string",
+                              "value": "string"
+                            }
+                          }
+                        },
+                        "message": {
+                          "kind": "object",
+                          "members": {
+                            "type": {
+                              "kind": "string",
+                              "value": "string"
+                            }
+                          }
+                        },
+                        "path": {
+                          "kind": "object",
+                          "members": {
+                            "type": {
+                              "kind": "string",
+                              "value": "string"
+                            }
+                          }
+                        },
+                        "severity": {
+                          "kind": "object",
+                          "members": {
+                            "enum": {
+                              "items": [
+                                {
+                                  "kind": "string",
+                                  "value": "error"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "warning"
+                                }
+                              ],
+                              "kind": "array"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "required": {
+                      "items": [
+                        {
+                          "kind": "string",
+                          "value": "code"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "path"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "severity"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "message"
+                        }
+                      ],
+                      "kind": "array"
+                    },
+                    "type": {
+                      "kind": "string",
+                      "value": "object"
+                    }
+                  }
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "array"
+                }
+              }
+            },
+            "knownShapesValid": {
+              "kind": "object",
+              "members": {
+                "type": {
+                  "kind": "string",
+                  "value": "boolean"
+                }
+              }
+            },
+            "lines": {
+              "kind": "object",
+              "members": {
+                "items": {
+                  "kind": "object",
+                  "members": {
+                    "additionalProperties": {
+                      "kind": "boolean",
+                      "value": false
+                    },
+                    "properties": {
+                      "kind": "object",
+                      "members": {
+                        "action": {
+                          "kind": "object",
+                          "members": {
+                            "type": {
+                              "kind": "string",
+                              "value": "string"
+                            }
+                          }
+                        },
+                        "end": {
+                          "kind": "object",
+                          "members": {
+                            "minimum": {
+                              "kind": "number",
+                              "value": "0"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "integer"
+                            }
+                          }
+                        },
+                        "line": {
+                          "kind": "object",
+                          "members": {
+                            "minimum": {
+                              "kind": "number",
+                              "value": "1"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "integer"
+                            }
+                          }
+                        },
+                        "node": {
+                          "kind": "object",
+                          "members": {
+                            "$ref": {
+                              "kind": "string",
+                              "value": "#/$defs/node"
+                            }
+                          }
+                        },
+                        "start": {
+                          "kind": "object",
+                          "members": {
+                            "minimum": {
+                              "kind": "number",
+                              "value": "0"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "integer"
+                            }
+                          }
+                        },
+                        "status": {
+                          "kind": "object",
+                          "members": {
+                            "enum": {
+                              "items": [
+                                {
+                                  "kind": "string",
+                                  "value": "parsed"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "blank"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "invalid"
+                                }
+                              ],
+                              "kind": "array"
+                            }
+                          }
+                        },
+                        "terminator": {
+                          "kind": "object",
+                          "members": {
+                            "enum": {
+                              "items": [
+                                {
+                                  "kind": "string",
+                                  "value": ""
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "\n"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "\r\n"
+                                }
+                              ],
+                              "kind": "array"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "required": {
+                      "items": [
+                        {
+                          "kind": "string",
+                          "value": "line"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "start"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "end"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "terminator"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "status"
+                        }
+                      ],
+                      "kind": "array"
+                    },
+                    "type": {
+                      "kind": "string",
+                      "value": "object"
+                    }
+                  }
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "array"
+                }
+              }
+            },
+            "parsedAll": {
+              "kind": "object",
+              "members": {
+                "type": {
+                  "kind": "string",
+                  "value": "boolean"
+                }
+              }
+            },
+            "source": {
+              "kind": "object",
+              "members": {
+                "$ref": {
+                  "kind": "string",
+                  "value": "urn:umf:core:0.10.0"
+                }
+              }
+            }
+          }
+        },
+        "required": {
+          "items": [
+            {
+              "kind": "string",
+              "value": "source"
+            },
+            {
+              "kind": "string",
+              "value": "complete"
+            },
+            {
+              "kind": "string",
+              "value": "parsedAll"
+            },
+            {
+              "kind": "string",
+              "value": "lines"
+            },
+            {
+              "kind": "string",
+              "value": "diagnostics"
+            },
+            {
+              "kind": "string",
+              "value": "knownShapesValid"
+            }
+          ],
+          "kind": "array"
+        },
+        "type": {
+          "kind": "string",
+          "value": "object"
+        }
+      }
+    }
+  },
+  "id": "[\"schema\",\"spec/extensions/delta-log/action-inspection.schema.json\",\"\"]",
+  "kind": "schema",
+  "links": [
+    "[\"schema\",\"spec/core/schema.json\",\"\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 4130,
+      "path": "spec/extensions/delta-log/action-inspection.schema.json",
+      "sha256": "bb3395d2b865781509be84a0d9a7b744f5986b642d6c061540a49f257f6e2e1e"
+    }
+  ],
+  "summary": "spec/extensions/delta-log/action-inspection.schema.json",
+  "title": "action-inspection.schema.json"
+}

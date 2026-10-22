@@ -1,0 +1,41 @@
+# Security association storage binding proposal
+
+Governed by CONTRACT-062/063, US-056 and TD-056. This is a design proposal, not a registered Truss accepted-binding vocabulary or an authenticated artifact. The existing Truss catalog binding-source category is limited to storage keys; a carrier with `accepted_binding` provenance does not grant relationship interpretation.
+
+An ontology association is a logical Record with named endpoint roles and ordered endpoint Fields. A raw relational implementation may store it in an association table; a graph implementation may store it as an edge with an association Record property owner. Neither implementation needs a fabricated UMF core relationship. Preserve the original ontology and core archives exactly. Their separate owners, revisions, complete original bytes and interpretation profiles are binding dependencies.
+
+## Selected binary graph profile
+
+A candidate binding selects the complete association identity `(documentId, modelRevision, moduleId, elementId)`, ontology artifact revision/digest and exact association occurrence pointer, original Record/archive revision/digest/pointer, original selected key and ordered components, and complete Fields/property homes. Document ID and display name alone never resolve an association. All nine owned Fields in the retained Clients/Projects/Staff analogue remain catalog requirements, including Resource.salary outside the key-only read predicate.
+
+The physical binding explicitly names `sourceRole` and `targetRole`. They must be distinct and cover exactly the two authored roles. Ordering the ontology endpoint array does not choose native direction. Each role maps its complete ordered association Field tuple to the complete ordered selected target Record key, with exact qualified owner references and comparator/value/encoding profiles. Resolve native `(object_id,type_id)` using the complete admitted key namespace/bytes. A bare object ID, matching key text or matching property name cannot establish endpoint identity. Role arity need not match the other role; each must match its own target key. Preserve one association witness across both endpoints and all predicate attributes.
+
+The binding separately declares native source/target participation bounds, direction, lifecycle, composition and inverse handling. The current ontology provides none of these core relationship assertions; no defaults may be written into its archive. A compiler must check that physical restrictions preserve all instances admitted by the selected semantic profile. A restrictive maximum or deletion rule cannot be justified by an absent semantic assertion. If the backend requires a choice that the owner has not issued, admission refuses before effects. The unrestricted independent fixture layout is a selected storage behavior, not proof that the ontology asserted those semantics.
+
+The graph definition has accepted-binding provenance rooted in the original binding artifact, with independent accepted-document provenance for the association Record and both target Records. Bind exact source pointer/extracted bytes to the registered extraction profile and retained binding archive. No `doc_ord` referring to an unrelated document may stand in for relationship definition provenance. Provisional catalog allocation is not an accepted revision. Actual native IDs are independently observed after allocation; caller-supplied allocated IDs are not evidence.
+
+Alias mappings, more than two roles, polymorphic endpoint alternatives, optional/incomplete endpoint values and distinct logical association identities sharing one native relationship require separately specified profiles. The initial binary profile refuses them rather than silently dropping roles or deduplicating associations. Raw tables continue to support their selected independently qualified representation; graph restrictions do not narrow the shared ontology language.
+
+## Admission and compilation
+
+1. Capture the original owner-authorized binding, ontology, core, policy, installed catalog/layout and interpretation profiles under one authenticated current cut. Verify issuer/owner authority separately from byte custody and format validation.
+2. Enumerate complete selected associations and all dependencies in both directions. Refuse omitted, extra, duplicate, ambiguous or conflicting mappings. Every source pointer must resolve once in its original artifact. Reject a changed role, Field order, target key or dependency revision.
+3. Resolve the exact accepted/provisional catalog provenance category required by the selected operation. Staging must archive the original binding first and independently compare original binding bytes, ontology occurrence and Record/key/property observations before native effects. A staged result cannot self-authorize its own inputs.
+4. Compile the same logical predicate against either raw association rows or graph edges. Retain the binding packet and semantic obligations. Original Weft lowering remains the compiler owner; a Truss backend must not fork its logical policy engine.
+5. Before enforcement, qualify complete fact coverage, incidence, attributes, native callable/privilege closure, canonical key correspondence, mutation participation and current-authority serialization. Every association mutation and relevant attribute update participates. Candidate format acceptance alone cannot install a protected profile.
+6. Retain exact native definition, provenance, endpoint/property inventory, installed routines, before/after facts, guard participation and final publication/drain evidence. Unknown or unsupported obligations refuse; report mode cannot activate a weaker binding.
+
+## Acceptance-linked implementation tests
+
+| Obligation | Positive evidence | Independent controls | Link |
+|---|---|---|---|
+| Original sources and owner authority | Captured authorized artifact/cut and original bytes resolve exact pointers | Wrong owner, stale cut, altered digest/pointer/revision, reconstructed preparation | AC1/AC10 |
+| Complete association/dependency coverage | Both Ownership and Assignment, all targets, keys and predicate attributes mapped exactly | Omit association/role/Field, extra mapping, duplicate identity, unsupported third role | AC2/AC10 |
+| Physical definition provenance | Archived binding definition and independent association/target Record provenance | Forge accepted_document relationship, borrow doc_ord, substitute binding source kind | AC1/AC2 |
+| Endpoint identity | Complete ordered tuples and typed native locators; same edge witness | Reverse role/component order, reuse numeric ID on another type, wrong key namespace, split witnesses | AC2 |
+| Predicate attributes | Assignment.active uses the same association witness and full value/presence semantics | Attribute on another edge, missing/null/wrong-domain active, stale property metadata | AC2/AC5 |
+| Storage compatibility | Native bounds/lifecycle are explicitly owner-selected and preserve admitted instances | Infer missing bounds, tighten a maximum, infer composition or deletion behavior | AC2/AC10 |
+| Native stage/rollback | New definition agreeing request succeeds, exact native projection and original archive retained | Isolated new-prestate mutations refuse intended errors with zero effects; no existing-row confounding | AC1/AC2 |
+| Protected operation lifecycle | Actual ordinary caller, complete writer/read closure, revocation acknowledgment drains earlier disclosure | Uncoordinated writer/direct path, stale snapshots/cursors, rollback replay without host custody | AC5/AC10 |
+
+AC references are US-056 component links, not completed acceptance claims. The original132-case backend plan remains governing. The existing31-observation owner catalog spike proves Record/property/key projection only and intentionally creates zero relationships. Its synthetic installer admission cannot satisfy the first or last row. Native graph relationship-binding interpretation, accepted archive/report custody and authenticated issuer/current-cut production integration remain implementation gates.

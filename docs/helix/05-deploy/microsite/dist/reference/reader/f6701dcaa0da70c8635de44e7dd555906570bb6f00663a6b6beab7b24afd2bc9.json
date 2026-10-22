@@ -1,0 +1,39 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"SecurityEntity\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SecurityRef\"]"
+      ],
+      "name": "type",
+      "optional": false,
+      "type": "SecurityRef"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "keyId",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SecurityField\"]"
+      ],
+      "name": "fields",
+      "optional": false,
+      "type": "SecurityField[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "SecurityEntity is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "SecurityEntity"
+}

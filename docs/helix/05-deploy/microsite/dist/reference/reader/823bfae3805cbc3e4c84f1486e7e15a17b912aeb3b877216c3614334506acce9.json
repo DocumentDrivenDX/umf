@@ -1,0 +1,19 @@
+{
+  "alternatives": [
+    "{ op: \"literal\"; value: boolean; }",
+    "{ op: \"eq\"; left: SecurityTerm; right: SecurityTerm; }",
+    "{ op: \"and\" | \"or\"; args: SecurityExpr[]; }",
+    "{ op: \"not\"; arg: SecurityExpr; }",
+    "{ op: \"exists\"; association: SecurityRef; as: string; where: SecurityExpr; }"
+  ],
+  "authored": false,
+  "id": "[\"api\",\".\",\"SecurityExpr\"]",
+  "kind": "Type alias",
+  "members": [],
+  "parameters": [],
+  "purpose": "SecurityExpr is a type alias in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "SecurityExpr"
+}

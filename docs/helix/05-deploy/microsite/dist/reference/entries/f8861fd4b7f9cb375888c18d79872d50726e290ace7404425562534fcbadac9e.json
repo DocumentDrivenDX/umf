@@ -1,0 +1,107 @@
+{
+  "data": {
+    "extensionId": "umf.avro.nullability",
+    "manifest": {
+      "capabilities": {
+        "directions": [
+          "import"
+        ],
+        "evidence": [
+          "tests/core-ideals/nullability-avro.test.ts",
+          "fixtures/validation/nullability-avro-native.json"
+        ],
+        "native": {
+          "subset": "Underlying field-value null carrier in declared records; excludes writer omission, reader defaults and logical refinements",
+          "system": "Avro",
+          "version": "1.12.0"
+        },
+        "validation": "structural"
+      },
+      "coreVersion": "0.10.0",
+      "description": "Retained Avro underlying field-value availability scope; native content, defaults, logical and ancestor meanings remain separate",
+      "id": "umf.avro.nullability",
+      "schema": {
+        "$id": "urn:umf:avro:nullability-binding:1.0.0",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "properties": {
+          "binding": {
+            "const": {
+              "id": "umf.avro.nullability",
+              "version": "1.0.0"
+            }
+          },
+          "carrier": {
+            "enum": [
+              "avro-null",
+              "unresolved"
+            ]
+          },
+          "dependencyId": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "interpretation": {
+            "enum": [
+              "declared",
+              "unknown",
+              "unsupported"
+            ]
+          },
+          "nativePath": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "origin": {
+            "const": "classified"
+          },
+          "scope": {
+            "enum": [
+              "underlying-field-value",
+              "write-input",
+              "reader-resolution",
+              "unresolved"
+            ]
+          }
+        },
+        "required": [
+          "origin",
+          "binding",
+          "scope",
+          "carrier",
+          "interpretation",
+          "nativePath"
+        ],
+        "title": "Retained Avro availability scope",
+        "type": "object"
+      },
+      "scopes": [
+        "element"
+      ],
+      "semantics": "CONTRACT-040 and TD-041; operation requires core 0.3.0 and explicit Field kind. Scope is underlying declared field-value null permission, not semantic optionality or native equivalence.",
+      "version": "1.0.0"
+    },
+    "registration": {
+      "apiIds": [],
+      "coreProfiles": [],
+      "mode": "unmapped"
+    },
+    "schemaId": "[\"schema\",\"spec/extensions/avro-nullability/schema.json\",\"\"]",
+    "version": "1.0.0"
+  },
+  "id": "[\"extension\",\"umf.avro.nullability\",\"1.0.0\"]",
+  "kind": "extension",
+  "links": [
+    "[\"guide\",\"extensions\"]",
+    "[\"schema\",\"spec/extensions/avro-nullability/schema.json\",\"\"]",
+    "[\"integration\",\"umf.avro.nullability@1.0.0:import\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 2027,
+      "path": "spec/extensions/avro-nullability/package.json",
+      "sha256": "3c86822a05b1aab2d083d9258ccf0425bdb7f2fbcfa70fafd231805f5b7df587"
+    }
+  ],
+  "summary": "Retained Avro underlying field-value availability scope; native content, defaults, logical and ancestor meanings remain separate",
+  "title": "umf.avro.nullability · 1.0.0"
+}

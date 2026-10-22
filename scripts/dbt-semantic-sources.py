@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Derive serialized field shapes from pinned DSI; preserve its raw schema separately."""
 import json,hashlib,importlib.metadata as metadata
 from pathlib import Path

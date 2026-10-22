@@ -1,0 +1,33 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 2850,
+        "line": 1,
+        "path": "spec/core/csv-boolean-lexical-operation.schema.json",
+        "sha256": "6548b442849a2a1246ea860ca5be22eecd98596c571d9c0b74ce1eba7780b791"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "csvBooleanLexicalOperationSchema",
+    "runtime": "unassessed",
+    "signatureText": [
+      "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"$id\": \"urn:umf:csv-boolean-lexical-operation:1.0.0\",\n  \"title\": \"Explicit finite CSV Boolean lexical conversion receipt\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"operation\": {\n      \"const\": \"validate-csv-boolean-lexical\"\n    },\n    \"version\": {\n      \"const\": \"1.0.0\"\n    },\n    \"source\": {\n      \"$ref\": \"urn:umf:core:0.10.0\"\n    },\n    \"request\": {\n      \"$ref\": \"#/$defs/request\"\n    },\n    \"value\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"boolean\": {\n          \"type\": \"boolean\"\n        }\n      },\n      \"required\": [\n        \"boolean\"\n      ],\n      \"additionalProperties\": false\n    },\n    \"validation\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"valid\": {\n          \"type\": \"boolean\"\n        },\n        \"complete\": {\n          \"type\": \"boolean\"\n        },\n        \"diagnostics\": {\n          \"type\": \"array\",\n          \"items\": {\n            \"type\": \"object\",\n            \"properties\": {\n              \"code\": {\n                \"type\": \"string\"\n              },\n              \"path\": {\n                \"type\": \"string\"\n              },\n              \"message\": {\n                \"type\": \"string\"\n              },\n              \"severity\": {\n                \"enum\": [\n                  \"error\",\n                  \"warning\"\n                ]\n              }\n            },\n            \"required\": [\n              \"code\",\n              \"path\",\n              \"message\",\n              \"severity\"\n            ],\n            \"additionalProperties\": false\n          }\n        }\n      },\n      \"required\": [\n        \"valid\",\n        \"complete\",\n        \"diagnostics\"\n      ],\n      \"additionalProperties\": false\n    },\n    \"provenance\": {\n      \"const\": \"unverified\"\n    }\n  },\n  \"required\": [\n    \"operation\",\n    \"version\",\n    \"source\",\n    \"request\",\n    \"value\",\n    \"validation\",\n    \"provenance\"\n  ],\n  \"additionalProperties\": false,\n  \"$defs\": {\n    \"request\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"profile\": {\n          \"const\": \"umf.csv-boolean-lexical/1.0.0\"\n        },\n        \"field\": {\n          \"type\": \"object\",\n          \"properties\": {\n            \"module\": {\n              \"type\": \"string\",\n              \"minLength\": 1\n            },\n            \"element\": {\n              \"type\": \"string\",\n              \"minLength\": 1\n            }\n          },\n          \"required\": [\n            \"module\",\n            \"element\"\n          ],\n          \"additionalProperties\": false\n        },\n        \"token\": {\n          \"enum\": [\n            \"true\",\n            \"false\",\n            \"True\",\n            \"False\"\n          ]\n        },\n        \"sourceContext\": {}\n      },\n      \"required\": [\n        \"profile\",\n        \"field\",\n        \"token\",\n        \"sourceContext\"\n      ],\n      \"additionalProperties\": false\n    }\n  }\n}\n"
+    ]
+  },
+  "id": "[\"api\",\".\",\"csvBooleanLexicalOperationSchema\"]",
+  "kind": "api",
+  "links": [
+    "[\"schema\",\"spec/core/csv-boolean-lexical-operation.schema.json\",\"\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 2850,
+      "line": 1,
+      "path": "spec/core/csv-boolean-lexical-operation.schema.json",
+      "sha256": "6548b442849a2a1246ea860ca5be22eecd98596c571d9c0b74ce1eba7780b791"
+    }
+  ],
+  "summary": "Public export · spec/core/csv-boolean-lexical-operation.schema.json",
+  "title": "csvBooleanLexicalOperationSchema"
+}

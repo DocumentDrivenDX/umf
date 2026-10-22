@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Pinned Apache schema corpus: independent native parsing and binary probes."""
 import json, io, hashlib, datetime, warnings
 from pathlib import Path

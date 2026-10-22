@@ -1,0 +1,69 @@
+/Users/erik/.codex/worktrees/8155/umf/tests/compilation/python/static/joins/negative/aggregate_decimal_result.py
+  /Users/erik/.codex/worktrees/8155/umf/tests/compilation/python/static/joins/negative/aggregate_decimal_result.py:7:12 - error: Type "Decimal | None" is not assignable to return type "float"
+    Type "Decimal | None" is not assignable to type "float"
+      "Decimal" is not assignable to "float" (reportReturnType)
+/Users/erik/.codex/worktrees/8155/umf/tests/compilation/python/static/joins/negative/aggregate_float_parameter.py
+  /Users/erik/.codex/worktrees/8155/umf/tests/compilation/python/static/joins/negative/aggregate_float_parameter.py:5:25 - error: Argument of type "float" cannot be assigned to parameter "minimum" of type "Decimal" in function "__init__"
+    "float" is not assignable to "Decimal" (reportArgumentType)
+/Users/erik/.codex/worktrees/8155/umf/tests/compilation/python/static/joins/negative/foreign_column.py
+  /Users/erik/.codex/worktrees/8155/umf/tests/compilation/python/static/joins/negative/foreign_column.py:5:56 - error: Argument of type "Predicate[OrderLine]" cannot be assigned to parameter "preds" of type "Predicate[Order] | Predicate[Customer]" in function "filter"
+    Type "Predicate[OrderLine]" is not assignable to type "Predicate[Order] | Predicate[Customer]"
+      "Predicate[OrderLine]" is not assignable to "Predicate[Order]"
+        Type parameter "O@Predicate" is invariant, but "OrderLine" is not the same as "Order"
+      "Predicate[OrderLine]" is not assignable to "Predicate[Customer]"
+        Type parameter "O@Predicate" is invariant, but "OrderLine" is not the same as "Customer" (reportArgumentType)
+/Users/erik/.codex/worktrees/8155/umf/tests/compilation/python/static/joins/negative/foreign_projection.py
+  /Users/erik/.codex/worktrees/8155/umf/tests/compilation/python/static/joins/negative/foreign_projection.py:5:54 - error: Argument of type "JoinProjection[Customer, CustomerSummary]" cannot be assigned to parameter "projection" of type "JoinProjection[Order, ProjectionModel@into]" in function "into"
+    "JoinProjection[Customer, CustomerSummary]" is not assignable to "JoinProjection[Order, CustomerSummary]"
+      Type parameter "O@JoinProjection" is invariant, but "Customer" is not the same as "Order" (reportArgumentType)
+/Users/erik/.codex/worktrees/8155/umf/tests/compilation/python/static/joins/negative/foreign_relationship.py
+  /Users/erik/.codex/worktrees/8155/umf/tests/compilation/python/static/joins/negative/foreign_relationship.py:5:34 - error: Argument of type "Join[Order, Customer, CustomerKey]" cannot be assigned to parameter "relationship" of type "Join[Customer, J@join, Any]" in function "join"
+    "Join[Order, Customer, CustomerKey]" is not assignable to "Join[Customer, Customer, Any]"
+      Type parameter "O@Join" is invariant, but "Order" is not the same as "Customer" (reportArgumentType)
+/Users/erik/.codex/worktrees/8155/umf/tests/compilation/python/static/joins/negative/null_result.py
+  /Users/erik/.codex/worktrees/8155/umf/tests/compilation/python/static/joins/negative/null_result.py:4:12 - error: Type "str | None" is not assignable to return type "str"
+    Type "str | None" is not assignable to type "str"
+      "None" is not assignable to "str" (reportReturnType)
+/Users/erik/.codex/worktrees/8155/umf/tests/compilation/python/static/joins/negative/unknown_join_column.py
+  /Users/erik/.codex/worktrees/8155/umf/tests/compilation/python/static/joins/negative/unknown_join_column.py:5:67 - error: Cannot access attribute "misspelled" for class "CustomerColumns"
+    Attribute "misspelled" is unknown (reportAttributeAccessIssue)
+/Users/erik/.codex/worktrees/8155/umf/tests/compilation/python/static/queries/negative/foreign_column_filter.py
+  /Users/erik/.codex/worktrees/8155/umf/tests/compilation/python/static/queries/negative/foreign_column_filter.py:9:33 - error: Argument of type "Predicate[Customer]" cannot be assigned to parameter "preds" of type "Predicate[Order]" in function "filter"
+    "Predicate[Customer]" is not assignable to "Predicate[Order]"
+      Type parameter "O@Predicate" is invariant, but "Customer" is not the same as "Order" (reportArgumentType)
+/Users/erik/.codex/worktrees/8155/umf/tests/compilation/python/static/queries/negative/foreign_column_select.py
+  /Users/erik/.codex/worktrees/8155/umf/tests/compilation/python/static/queries/negative/foreign_column_select.py:9:33 - error: Argument of type "Column[Customer, str]" cannot be assigned to parameter "c1" of type "Column[Order, T1@select]" in function "select"
+    "Column[Customer, str]" is not assignable to "Column[Order, str]"
+      Type parameter "O@Column" is invariant, but "Customer" is not the same as "Order" (reportArgumentType)
+/Users/erik/.codex/worktrees/8155/umf/tests/compilation/python/static/queries/negative/foreign_projection.py
+  /Users/erik/.codex/worktrees/8155/umf/tests/compilation/python/static/queries/negative/foreign_projection.py:7:12 - error: No overloads for "into" match the provided arguments (reportCallIssue)
+  /Users/erik/.codex/worktrees/8155/umf/tests/compilation/python/static/queries/negative/foreign_projection.py:7:31 - error: Argument of type "type[CustomerSummary]" cannot be assigned to parameter "model" of type "type[OrderCustomer]" in function "into"
+    "type[CustomerSummary]" is not assignable to "type[OrderCustomer]"
+    Type "type[CustomerSummary]" is not assignable to type "type[OrderCustomer]" (reportArgumentType)
+/Users/erik/.codex/worktrees/8155/umf/tests/compilation/python/static/queries/negative/ninth_select_column.py
+  /Users/erik/.codex/worktrees/8155/umf/tests/compilation/python/static/queries/negative/ninth_select_column.py:9:12 - error: No overloads for "select" match the provided arguments
+    Argument types: (Column[Order, str], Column[Order, str], Column[Order, str], Column[Order, str], Column[Order, str], Column[Order, str], Column[Order, str], Column[Order, str], Column[Order, str]) (reportCallIssue)
+/Users/erik/.codex/worktrees/8155/umf/tests/compilation/python/static/queries/negative/null_optional_filter.py
+  /Users/erik/.codex/worktrees/8155/umf/tests/compilation/python/static/queries/negative/null_optional_filter.py:7:33 - error: Argument of type "InvalidOptionalFilter" cannot be assigned to parameter "preds" of type "Predicate[Order]" in function "filter"
+    "InvalidOptionalFilter" is not assignable to "Predicate[Order]" (reportArgumentType)
+/Users/erik/.codex/worktrees/8155/umf/tests/compilation/python/static/queries/negative/unknown_column.py
+  /Users/erik/.codex/worktrees/8155/umf/tests/compilation/python/static/queries/negative/unknown_column.py:9:41 - error: Cannot access attribute "ammount" for class "OrderColumns"
+    Attribute "ammount" is unknown (reportAttributeAccessIssue)
+/Users/erik/.codex/worktrees/8155/umf/tests/compilation/python/static/queries/negative/update_unknown_field.py
+  /Users/erik/.codex/worktrees/8155/umf/tests/compilation/python/static/queries/negative/update_unknown_field.py:9:72 - error: No parameter named "unknown" (reportCallIssue)
+/Users/erik/.codex/worktrees/8155/umf/tests/compilation/python/static/queries/negative/update_wrong_type.py
+  /Users/erik/.codex/worktrees/8155/umf/tests/compilation/python/static/queries/negative/update_wrong_type.py:9:79 - error: Argument of type "Literal['10']" cannot be assigned to parameter "amount" of type "Decimal | Param[Decimal]" in function "update"
+    Type "Literal['10']" is not assignable to type "Decimal | Param[Decimal]"
+      "Literal['10']" is not assignable to "Decimal"
+      "Literal['10']" is not assignable to "Param[Decimal]" (reportArgumentType)
+/Users/erik/.codex/worktrees/8155/umf/tests/compilation/python/static/queries/negative/wrong_eq_operand.py
+  /Users/erik/.codex/worktrees/8155/umf/tests/compilation/python/static/queries/negative/wrong_eq_operand.py:9:33 - error: Argument of type "bool" cannot be assigned to parameter "preds" of type "Predicate[Order]" in function "filter"
+    "bool" is not assignable to "Predicate[Order]" (reportArgumentType)
+/Users/erik/.codex/worktrees/8155/umf/tests/compilation/python/static/queries/negative/wrong_ne_operand.py
+  /Users/erik/.codex/worktrees/8155/umf/tests/compilation/python/static/queries/negative/wrong_ne_operand.py:9:33 - error: Argument of type "bool" cannot be assigned to parameter "preds" of type "Predicate[Order]" in function "filter"
+    "bool" is not assignable to "Predicate[Order]" (reportArgumentType)
+/Users/erik/.codex/worktrees/8155/umf/tests/compilation/python/static/queries/negative/wrong_operand.py
+  /Users/erik/.codex/worktrees/8155/umf/tests/compilation/python/static/queries/negative/wrong_operand.py:9:33 - error: Operator ">" not supported for types "Column[Order, Decimal]" and "Literal['10']" (reportOperatorIssue)
+/Users/erik/.codex/worktrees/8155/umf/tests/compilation/python/static/queries/negative/wrong_param.py
+  /Users/erik/.codex/worktrees/8155/umf/tests/compilation/python/static/queries/negative/wrong_param.py:9:33 - error: Operator ">=" not supported for types "Column[Order, datetime]" and "Param[str]" (reportOperatorIssue)
+20 errors, 0 warnings, 0 informations

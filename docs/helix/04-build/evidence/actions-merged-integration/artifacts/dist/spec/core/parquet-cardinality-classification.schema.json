@@ -1,0 +1,475 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:core:parquet-cardinality-classification:1.0.0",
+  "title": "Parquet logical Cardinality classification",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "operation",
+    "version",
+    "status",
+    "source",
+    "request",
+    "binding",
+    "mapping",
+    "residuals",
+    "diagnostics"
+  ],
+  "properties": {
+    "operation": {
+      "const": "classify-parquet-cardinality"
+    },
+    "version": {
+      "const": "1.0.0"
+    },
+    "status": {
+      "enum": [
+        "classified",
+        "blocked"
+      ]
+    },
+    "source": {
+      "$ref": "urn:umf:core:0.4.0"
+    },
+    "target": {
+      "$ref": "urn:umf:core:0.4.0"
+    },
+    "request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "index",
+        "identity",
+        "profile",
+        "mode"
+      ],
+      "properties": {
+        "index": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "identity": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "module",
+            "element"
+          ],
+          "properties": {
+            "module": {
+              "type": "string",
+              "minLength": 1
+            },
+            "element": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "profile": {
+          "enum": [
+            "present-value-schema",
+            "unresolved"
+          ]
+        },
+        "mode": {
+          "enum": [
+            "strict",
+            "report"
+          ]
+        }
+      }
+    },
+    "binding": {
+      "const": {
+        "id": "umf.parquet.cardinality",
+        "version": "1.0.0",
+        "nativeVersion": "parquet-format@219e3f12a62f9476e830c21e26d030d231f7c017",
+        "subset": "Checked present-value LIST/MAP and record roles; physical wrappers, key uniqueness, availability and Arrow refinements remain native"
+      }
+    },
+    "mapping": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "origin",
+        "cardinality",
+        "outcome",
+        "basis",
+        "nodes"
+      ],
+      "properties": {
+        "origin": {
+          "const": "classified"
+        },
+        "cardinality": {
+          "enum": [
+            "one",
+            "array",
+            "map",
+            "unspecified"
+          ]
+        },
+        "outcome": {
+          "enum": [
+            "exact",
+            "approximated",
+            "unknown"
+          ]
+        },
+        "basis": {
+          "const": "Checked present-value LIST/MAP and record roles; physical wrappers, key uniqueness, availability and Arrow refinements remain native"
+        },
+        "nodes": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "identity",
+              "index",
+              "path",
+              "nativeFragment",
+              "shape",
+              "role",
+              "nativeNullable",
+              "residuals"
+            ],
+            "properties": {
+              "identity": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "module",
+                  "element"
+                ],
+                "properties": {
+                  "module": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "element": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              },
+              "index": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "path": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "nativeFragment": {
+                "type": "object"
+              },
+              "shape": {
+                "enum": [
+                  "one",
+                  "array",
+                  "map",
+                  "unspecified"
+                ]
+              },
+              "role": {
+                "enum": [
+                  "scalar",
+                  "record",
+                  "array",
+                  "map",
+                  "unresolved"
+                ]
+              },
+              "nativeNullable": {
+                "type": [
+                  "boolean",
+                  "null"
+                ]
+              },
+              "scalarType": {
+                "enum": [
+                  "boolean",
+                  "integer",
+                  "decimal",
+                  "float",
+                  "string",
+                  "binary",
+                  "date",
+                  "time",
+                  "timestamp"
+                ]
+              },
+              "itemIndex": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "recordMembers": {
+                "type": "array",
+                "items": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              },
+              "container": {
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "index",
+                      "kind",
+                      "nullable",
+                      "repeatedIndex",
+                      "elementIndex",
+                      "elementNullable",
+                      "layout"
+                    ],
+                    "properties": {
+                      "index": {
+                        "type": "integer",
+                        "minimum": 1
+                      },
+                      "kind": {
+                        "const": "list"
+                      },
+                      "nullable": {
+                        "type": "boolean"
+                      },
+                      "repeatedIndex": {
+                        "type": "integer",
+                        "minimum": 1
+                      },
+                      "elementIndex": {
+                        "type": "integer",
+                        "minimum": 1
+                      },
+                      "elementNullable": {
+                        "type": "boolean"
+                      },
+                      "layout": {
+                        "enum": [
+                          "two-level",
+                          "three-level"
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "index",
+                      "kind",
+                      "nullable",
+                      "repeatedIndex",
+                      "keyIndex",
+                      "valueNullable",
+                      "duplicateKeys"
+                    ],
+                    "properties": {
+                      "index": {
+                        "type": "integer",
+                        "minimum": 1
+                      },
+                      "kind": {
+                        "const": "map"
+                      },
+                      "nullable": {
+                        "type": "boolean"
+                      },
+                      "repeatedIndex": {
+                        "type": "integer",
+                        "minimum": 1
+                      },
+                      "keyIndex": {
+                        "type": "integer",
+                        "minimum": 1
+                      },
+                      "valueIndex": {
+                        "type": "integer",
+                        "minimum": 1
+                      },
+                      "valueNullable": {
+                        "type": "boolean"
+                      },
+                      "duplicateKeys": {
+                        "const": "last-value"
+                      }
+                    }
+                  }
+                ]
+              },
+              "residuals": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "path",
+                    "reason"
+                  ],
+                  "properties": {
+                    "path": {
+                      "type": "string"
+                    },
+                    "reason": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "residuals": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "path",
+          "value",
+          "reason",
+          "recovery"
+        ],
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "value": {},
+          "reason": {
+            "type": "string",
+            "minLength": 1
+          },
+          "recovery": {
+            "const": "Retain original native archive and author assertions; classification does not replace native meaning"
+          }
+        }
+      }
+    },
+    "diagnostics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "code",
+          "path",
+          "message",
+          "severity"
+        ],
+        "properties": {
+          "code": {
+            "type": "string",
+            "minLength": 1
+          },
+          "path": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          },
+          "severity": {
+            "enum": [
+              "warning",
+              "error"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "classified"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "target"
+        ],
+        "properties": {
+          "target": true,
+          "diagnostics": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "severity": {
+                  "const": "warning"
+                }
+              }
+            }
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "target": false,
+          "residuals": {
+            "type": "array",
+            "minItems": 1
+          },
+          "diagnostics": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "properties": {
+                "severity": {
+                  "const": "error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "classified"
+          },
+          "request": {
+            "type": "object",
+            "properties": {
+              "mode": {
+                "const": "strict"
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "residuals": {
+            "type": "array",
+            "maxItems": 0
+          },
+          "mapping": {
+            "type": "object",
+            "properties": {
+              "outcome": {
+                "const": "exact"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

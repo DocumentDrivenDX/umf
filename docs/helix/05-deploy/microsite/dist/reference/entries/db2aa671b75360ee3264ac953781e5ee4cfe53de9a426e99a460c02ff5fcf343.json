@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 3356,
+        "line": 19,
+        "path": "src/projections/tablespec-via-avro.ts",
+        "sha256": "50431169c1b38692976dd9307b8ffc756485feaf05e87a5d098c6ff058fd2483"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "projectToTableSpecViaAvro",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: Document, options: TableSpecViaAvroPolicy): TableSpecViaAvroProjection"
+    ]
+  },
+  "id": "[\"api\",\".\",\"projectToTableSpecViaAvro\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 3356,
+      "line": 19,
+      "path": "src/projections/tablespec-via-avro.ts",
+      "sha256": "50431169c1b38692976dd9307b8ffc756485feaf05e87a5d098c6ff058fd2483"
+    }
+  ],
+  "summary": "Preserve every native source and stage-specific loss across the two explicit schema bindings.",
+  "title": "projectToTableSpecViaAvro"
+}

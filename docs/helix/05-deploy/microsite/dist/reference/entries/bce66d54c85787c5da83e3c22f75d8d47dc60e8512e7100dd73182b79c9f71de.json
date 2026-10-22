@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 6053,
+        "line": 14,
+        "path": "src/model/field-kind.ts",
+        "sha256": "b3ba0db55ec8ed5a466e8b116b9311035505457a060c59fa93512b9220e7b670"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "CoreKindInspection",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface CoreKindInspection {operation:'inspect-core-kind';version:'8.0.0';source:Document;identity:CoreKindIdentity;path:string;meaning:CoreKindMeaning;provenance:'unverified'}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"CoreKindInspection\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 6053,
+      "line": 14,
+      "path": "src/model/field-kind.ts",
+      "sha256": "b3ba0db55ec8ed5a466e8b116b9311035505457a060c59fa93512b9220e7b670"
+    }
+  ],
+  "summary": "Type declaration · src/model/field-kind.ts",
+  "title": "CoreKindInspection"
+}

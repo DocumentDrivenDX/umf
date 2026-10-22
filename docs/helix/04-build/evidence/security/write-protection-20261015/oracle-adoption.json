@@ -1,0 +1,15 @@
+{
+  "status": "mechanical-adoption",
+  "independentSourceDigests": {
+    "oracle.py": "71cbceb4fdca147f85bf1c5acd18e7c094f66f24282b04a6e581321df0295b97",
+    "fixtures.json": "24267f8c973f57d7e5df8ad23350ed9c7e810e837ef2a7900d974f09a31bb8af",
+    "oracle.ts": "50baa29af4aba5b35b4e894ac88d560183786e00cbdc4da040f0d161aeca0cf1"
+  },
+  "allowedAdjustments": [
+    "TS root import path",
+    "TS fixture filename"
+  ],
+  "pythonAndJsonByteExact": true,
+  "expectationsChanged": false,
+  "acceptanceCasesPromoted": []
+}

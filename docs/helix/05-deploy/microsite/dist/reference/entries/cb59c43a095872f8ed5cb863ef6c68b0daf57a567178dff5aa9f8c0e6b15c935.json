@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 7688,
+        "line": 6,
+        "path": "src/core-ideals/avro-record-type.ts",
+        "sha256": "4275155dfc97b7b649cdfca7b602a5307bfcb70e136e77d552a603c6b7e47cb8"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "AvroRecordTypeClassification",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface AvroRecordTypeClassification extends Omit<AvroRecordClassification,'operation'|'binding'|'request'|'mappings'>{operation:'classify-avro-record-type';binding:typeof binding;request:AvroRecordTypeRequest;mappings:(Omit<AvroRecordClassification['mappings'][number],'kind'|'basis'>&{kind:'field'|'record'|'record-type';basis:'checked-record-field-membership'|'checked-record-declaration'|'qualified-native-record-type'})[]}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"AvroRecordTypeClassification\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 7688,
+      "line": 6,
+      "path": "src/core-ideals/avro-record-type.ts",
+      "sha256": "4275155dfc97b7b649cdfca7b602a5307bfcb70e136e77d552a603c6b7e47cb8"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/avro-record-type.ts",
+  "title": "AvroRecordTypeClassification"
+}

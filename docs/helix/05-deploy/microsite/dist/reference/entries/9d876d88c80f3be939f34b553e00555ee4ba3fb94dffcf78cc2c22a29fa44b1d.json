@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 11899,
+        "line": 106,
+        "path": "src/core-ideals/facets-tablespec-projection.ts",
+        "sha256": "08157ca5b4e8e823cf787b519353965f20aea615adca206cba415a341b067e5c"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "recoverFacetsFromTableSpec",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: FacetsTableSpecProjection, nativeText: string): Document"
+    ]
+  },
+  "id": "[\"api\",\".\",\"recoverFacetsFromTableSpec\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 11899,
+      "line": 106,
+      "path": "src/core-ideals/facets-tablespec-projection.ts",
+      "sha256": "08157ca5b4e8e823cf787b519353965f20aea615adca206cba415a341b067e5c"
+    }
+  ],
+  "summary": "Verify the entire operation and exact native text before recovering retained ideal meaning.",
+  "title": "recoverFacetsFromTableSpec"
+}

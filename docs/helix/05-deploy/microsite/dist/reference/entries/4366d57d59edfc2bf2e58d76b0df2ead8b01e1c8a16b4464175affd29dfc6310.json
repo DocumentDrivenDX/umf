@@ -1,0 +1,50 @@
+{
+  "data": {
+    "conflicts": [],
+    "correspondence": "unassessed",
+    "declarations": [
+      {
+        "bytes": 25786,
+        "path": "spec/extensions/graphql/package.json",
+        "sha256": "f756079c7e8efa7cefb648e75664c0664006909850834f1b61ce21db10ff5dec"
+      }
+    ],
+    "evidence": [],
+    "operation": {
+      "apiNames": [],
+      "coreProfiles": [],
+      "extensionVersions": [],
+      "fixturePaths": [],
+      "id": "umf.graphql@0.1.0:export",
+      "kind": "export",
+      "limitations": [
+        "Recorded scope only; native equivalence and production adoption are separate."
+      ],
+      "runtime": {
+        "availability": "host-only",
+        "profileId": "umf.graphql@0.1.0:export",
+        "requirements": [
+          "Native runtime / original qualification harness; not executed by this page."
+        ]
+      },
+      "sourceSystem": "GraphQL SDL · GraphQL.js 17.0.2; September 2025 specification plus explicitly reported runtime grammar additions",
+      "subset": "Schema definitions/extensions and constant values; executable operations are outside this schema adapter",
+      "targetSystem": "GraphQL SDL · GraphQL.js 17.0.2; September 2025 specification plus explicitly reported runtime grammar additions",
+      "title": "umf.graphql · export"
+    }
+  },
+  "id": "[\"integration\",\"umf.graphql@0.1.0:export\"]",
+  "kind": "integration",
+  "links": [
+    "[\"extension\",\"umf.graphql\",\"0.1.0\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 134795,
+      "path": "docs/helix/05-deploy/reference/operations.json",
+      "sha256": "793743bbca36e56e90e82df5ef0408b628c434e58cb68aea4d6486349be78e61"
+    }
+  ],
+  "summary": "Schema definitions/extensions and constant values; executable operations are outside this schema adapter",
+  "title": "umf.graphql · export"
+}

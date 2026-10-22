@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {parseNativeJson} from '../src/model/native-json';
 import {ensureSmithyRuntime} from './smithy-runtime';
 import {importSmithySources,projectSmithyToJsonSchema,createSmithyJavaScriptJsonSchemaBackend,smithyJsonSchemaProjectionSchema,smithyAssemblyResultSchema,coreSchema,readDocument,writeDocument,exportJsonSchema} from '../src';

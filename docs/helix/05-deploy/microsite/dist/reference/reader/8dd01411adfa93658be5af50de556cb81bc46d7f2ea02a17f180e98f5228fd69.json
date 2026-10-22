@@ -1,0 +1,44 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"proposeSmithyNodeEdit\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "path",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "text",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "dependencyId",
+      "optional": true,
+      "type": "string | undefined"
+    }
+  ],
+  "purpose": "Candidate only: native semantic validation remains required.",
+  "related": [],
+  "returns": "{ document: Document; validation: Validation; }",
+  "task": "Author and edit",
+  "type": "(document: Document, path: string, text: string, dependencyId?: string) => { document: Document; validation: Validation; }"
+}

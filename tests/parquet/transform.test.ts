@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {captureParquet,exportParquetCapture,decodeParquetFooter,encodeParquetWire,appendParquetKeyValueMetadata,inspectParquetMetadata,parquetMetadataTransformSchema,coreSchema,type ParquetWireValue} from '../../src';
 import {createValidator} from '../../src/validation/schema';

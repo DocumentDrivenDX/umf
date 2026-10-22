@@ -1,0 +1,572 @@
+{
+  "data": {
+    "extensionId": "umf.ddd",
+    "manifest": {
+      "capabilities": {
+        "directions": [
+          "import",
+          "export"
+        ],
+        "evidence": [
+          "tests/ddd/profile.test.ts"
+        ],
+        "native": {
+          "subset": "Versioned semantic declarations in UMF JSON/YAML; opaque invariant languages are retained, not executed; no external DDD tool compatibility claimed",
+          "system": "UMF-authored DDD profile",
+          "version": "0.1.0"
+        },
+        "validation": "semantic"
+      },
+      "coreVersion": "0.10.0",
+      "description": "Context-scoped DDD declarations independent of physical representation",
+      "id": "umf.ddd",
+      "schema": {
+        "$defs": {
+          "context": {
+            "properties": {
+              "description": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "kind": {
+                "const": "bounded-context"
+              },
+              "terms": {
+                "items": {
+                  "$ref": "#/$defs/term"
+                },
+                "type": "array"
+              }
+            },
+            "required": [
+              "kind",
+              "terms"
+            ],
+            "type": "object"
+          },
+          "entity": {
+            "properties": {
+              "aggregate": {
+                "properties": {
+                  "members": {
+                    "items": {
+                      "$ref": "#/$defs/reference"
+                    },
+                    "type": "array",
+                    "uniqueItems": true
+                  }
+                },
+                "required": [
+                  "members"
+                ],
+                "type": "object"
+              },
+              "description": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "fields": {
+                "additionalProperties": {
+                  "$ref": "#/$defs/field"
+                },
+                "type": "object"
+              },
+              "identity": {
+                "properties": {
+                  "fields": {
+                    "items": {
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "minItems": 1,
+                    "type": "array",
+                    "uniqueItems": true
+                  },
+                  "scope": {
+                    "enum": [
+                      "context",
+                      "aggregate"
+                    ]
+                  }
+                },
+                "required": [
+                  "fields",
+                  "scope"
+                ],
+                "type": "object"
+              },
+              "invariants": {
+                "items": {
+                  "$ref": "#/$defs/invariant"
+                },
+                "type": "array"
+              },
+              "kind": {
+                "const": "entity"
+              }
+            },
+            "required": [
+              "kind",
+              "fields",
+              "identity"
+            ],
+            "type": "object"
+          },
+          "event": {
+            "properties": {
+              "description": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "emittedBy": {
+                "$ref": "#/$defs/reference"
+              },
+              "fields": {
+                "additionalProperties": {
+                  "$ref": "#/$defs/field"
+                },
+                "type": "object"
+              },
+              "immutable": {
+                "const": true
+              },
+              "invariants": {
+                "items": {
+                  "$ref": "#/$defs/invariant"
+                },
+                "type": "array"
+              },
+              "kind": {
+                "const": "domain-event"
+              }
+            },
+            "required": [
+              "kind",
+              "fields",
+              "emittedBy",
+              "immutable"
+            ],
+            "type": "object"
+          },
+          "field": {
+            "properties": {
+              "cardinality": {
+                "enum": [
+                  "one",
+                  "optional",
+                  "many"
+                ]
+              },
+              "description": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "type": {
+                "$ref": "#/$defs/type"
+              }
+            },
+            "required": [
+              "type",
+              "cardinality"
+            ],
+            "type": "object"
+          },
+          "invariant": {
+            "properties": {
+              "expression": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "id": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "language": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "references": {
+                "items": {
+                  "$ref": "#/$defs/reference"
+                },
+                "type": "array",
+                "uniqueItems": true
+              },
+              "scope": {
+                "enum": [
+                  "definition",
+                  "aggregate"
+                ]
+              },
+              "version": {
+                "minLength": 1,
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "scope",
+              "language",
+              "version",
+              "expression",
+              "references"
+            ],
+            "type": "object"
+          },
+          "map": {
+            "properties": {
+              "kind": {
+                "const": "context-map"
+              },
+              "mappings": {
+                "items": {
+                  "$ref": "#/$defs/mapping"
+                },
+                "type": "array"
+              }
+            },
+            "required": [
+              "kind",
+              "mappings"
+            ],
+            "type": "object"
+          },
+          "mapping": {
+            "properties": {
+              "antiCorruptionLayer": {
+                "properties": {
+                  "description": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "ownerModule": {
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "ownerModule",
+                  "description"
+                ],
+                "type": "object"
+              },
+              "description": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "direction": {
+                "enum": [
+                  "source-to-target",
+                  "target-to-source",
+                  "bidirectional"
+                ]
+              },
+              "equivalence": {
+                "enum": [
+                  "partial",
+                  "asserted-equivalent",
+                  "distinct"
+                ]
+              },
+              "id": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "limitations": {
+                "items": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              "source": {
+                "$ref": "#/$defs/reference"
+              },
+              "target": {
+                "$ref": "#/$defs/reference"
+              }
+            },
+            "required": [
+              "id",
+              "source",
+              "target",
+              "direction",
+              "equivalence",
+              "description",
+              "limitations"
+            ],
+            "type": "object"
+          },
+          "operation": {
+            "properties": {
+              "emits": {
+                "items": {
+                  "$ref": "#/$defs/reference"
+                },
+                "type": "array",
+                "uniqueItems": true
+              },
+              "input": {
+                "$ref": "#/$defs/reference"
+              },
+              "name": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "output": {
+                "$ref": "#/$defs/reference"
+              }
+            },
+            "required": [
+              "name"
+            ],
+            "type": "object"
+          },
+          "reference": {
+            "properties": {
+              "element": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "module": {
+                "minLength": 1,
+                "type": "string"
+              }
+            },
+            "required": [
+              "module",
+              "element"
+            ],
+            "type": "object"
+          },
+          "repository": {
+            "properties": {
+              "aggregate": {
+                "$ref": "#/$defs/reference"
+              },
+              "description": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "kind": {
+                "const": "repository"
+              },
+              "operations": {
+                "items": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "type": "array",
+                "uniqueItems": true
+              }
+            },
+            "required": [
+              "kind",
+              "aggregate",
+              "operations"
+            ],
+            "type": "object"
+          },
+          "service": {
+            "properties": {
+              "description": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "kind": {
+                "const": "domain-service"
+              },
+              "operations": {
+                "items": {
+                  "$ref": "#/$defs/operation"
+                },
+                "type": "array"
+              }
+            },
+            "required": [
+              "kind",
+              "operations"
+            ],
+            "type": "object"
+          },
+          "term": {
+            "properties": {
+              "aliases": {
+                "items": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "type": "array",
+                "uniqueItems": true
+              },
+              "concept": {
+                "$ref": "#/$defs/reference"
+              },
+              "definition": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "term": {
+                "minLength": 1,
+                "type": "string"
+              }
+            },
+            "required": [
+              "term",
+              "definition"
+            ],
+            "type": "object"
+          },
+          "type": {
+            "oneOf": [
+              {
+                "properties": {
+                  "kind": {
+                    "const": "scalar"
+                  },
+                  "name": {
+                    "enum": [
+                      "string",
+                      "boolean",
+                      "integer",
+                      "decimal",
+                      "date-time",
+                      "bytes"
+                    ]
+                  }
+                },
+                "required": [
+                  "kind",
+                  "name"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "kind": {
+                    "const": "concept"
+                  },
+                  "target": {
+                    "$ref": "#/$defs/reference"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "target"
+                ],
+                "type": "object"
+              }
+            ]
+          },
+          "value": {
+            "properties": {
+              "description": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "equality": {
+                "properties": {
+                  "fields": {
+                    "items": {
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "type": "array",
+                    "uniqueItems": true
+                  }
+                },
+                "required": [
+                  "fields"
+                ],
+                "type": "object"
+              },
+              "fields": {
+                "additionalProperties": {
+                  "$ref": "#/$defs/field"
+                },
+                "type": "object"
+              },
+              "invariants": {
+                "items": {
+                  "$ref": "#/$defs/invariant"
+                },
+                "type": "array"
+              },
+              "kind": {
+                "const": "value"
+              }
+            },
+            "required": [
+              "kind",
+              "fields",
+              "equality"
+            ],
+            "type": "object"
+          }
+        },
+        "$id": "urn:umf:ddd:0.1.0",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "oneOf": [
+          {
+            "$ref": "#/$defs/entity"
+          },
+          {
+            "$ref": "#/$defs/value"
+          },
+          {
+            "$ref": "#/$defs/event"
+          },
+          {
+            "$ref": "#/$defs/service"
+          },
+          {
+            "$ref": "#/$defs/repository"
+          },
+          {
+            "$ref": "#/$defs/context"
+          },
+          {
+            "$ref": "#/$defs/map"
+          }
+        ],
+        "title": "UMF-authored DDD semantic profile 0.1.0"
+      },
+      "scopes": [
+        "document",
+        "module",
+        "element"
+      ],
+      "semantics": "CONTRACT-005. Identity, value equality, aggregate ownership, domain events/services/repositories and context maps are declarations. Opaque invariants and asserted equivalence are preserved without execution or proof. Unknown fields remain incomplete interpretation. No native external DDD serialization is claimed.",
+      "version": "0.1.0"
+    },
+    "registration": {
+      "apiIds": [
+        "[\"api\",\".\",\"dddRegistry\"]"
+      ],
+      "coreProfiles": [
+        "0.10.0"
+      ],
+      "mode": "explicit"
+    },
+    "schemaId": "[\"schema\",\"spec/extensions/ddd/schema.json\",\"\"]",
+    "version": "0.1.0"
+  },
+  "id": "[\"extension\",\"umf.ddd\",\"0.1.0\"]",
+  "kind": "extension",
+  "links": [
+    "[\"api\",\".\",\"dddRegistry\"]",
+    "[\"guide\",\"ddd\"]",
+    "[\"schema\",\"spec/extensions/ddd/schema.json\",\"\"]",
+    "[\"integration\",\"umf.ddd@0.1.0:import\"]",
+    "[\"integration\",\"umf.ddd@0.1.0:export\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 12317,
+      "path": "spec/extensions/ddd/package.json",
+      "sha256": "aa36256b8c42551e9c484dd63f8049c37d4e690add24904d5fc5c91e079150f3"
+    }
+  ],
+  "summary": "Context-scoped DDD declarations independent of physical representation",
+  "title": "umf.ddd · 0.1.0"
+}

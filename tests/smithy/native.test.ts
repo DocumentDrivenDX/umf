@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {importSmithyJson,exportSmithyJson,inspectSmithy,getSmithyNode,proposeSmithyNodeEdit,writeDocument,readDocument,smithySchema,smithyPackage} from '../../src';
 const path='/shapes/sales#Order/members/id/target';

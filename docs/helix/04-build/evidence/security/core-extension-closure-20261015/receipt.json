@@ -1,0 +1,63 @@
+{
+  "status": "reviewed-private-source-custody-component",
+  "baseCommit": "a8f73415aef8052e2dedeb3bc644426824675d14",
+  "sourceDigests": {
+    "src/extensions/actions/structure.ts": "6f2e4d007d013ced701ba9517eb34178091237789386a182f12899390892ef90",
+    "src/extensions/security/core-extension-closure-candidate.ts": "849a5f7e5465f089b4e16c78ba1b569fd9441b447c0aee7f65a3275541842e35",
+    "src/extensions/security/core-source-candidate.ts": "e5429bde4b0fa155de6d1dc7fcd14e9b531f7b584eddad8fa63711746faf81e8",
+    "src/extensions/security/ontology-checks-candidate.ts": "b68d0f27a3b2394b4b086f50fc0299ce549f68fc7fd79c007d22992fe1d4a005",
+    "src/extensions/security/catalog-program-candidate.ts": "e8c2db84126e5ebf4dcf5bd33efe80c8a2235e7ab192d17105cda64ab8facc6d",
+    "tests/security/core-extension-closure-fixture.ts": "d7572f37b22bcd244dc51af6afaf8d152546db03401b8184c78ea18f5d7e3a99",
+    "tests/security/core-extension-closure.test.ts": "a42411634c656d727b950847e3c8f7bead608a44f1d362b960f1e446702b3c61",
+    "tests/security/original-products-action-packet.json": "b5ec19900e4355538395200f65e3f70a4edf2e6b9dd1753deac04a6d9ef41337",
+    "tools/security/protection-core-extension-controls.ts": "75ee464c7dc2320eea6bfe6ad292eb8e7b180d3748b1687afa7f448614cdeec9",
+    "tools/security/protection-core-extension-browser.ts": "6b42deb0674cfbbd87f5d29cee992e301e1530be0c103884bdeb5c4c30782424",
+    "docs/helix/02-design/contracts/CONTRACT-062-security-semantics.md": "755b2e91a87edda89657142e3785f51cf5bd210073fe3828254ec349c8378f32"
+  },
+  "verification": {
+    "securityDateTests": 283,
+    "securityDateAssertions": 3413,
+    "affectedActionsSuite": {
+      "tests": 52,
+      "assertions": 267
+    },
+    "typecheck": "passed",
+    "toolsTypecheck": "passed",
+    "chromium": "153.0.8010.12",
+    "browserControls": 14,
+    "externalRequests": 0,
+    "integratedSecurityDateTests": 283,
+    "integratedSecurityDateAssertions": 3413
+  },
+  "authority": false,
+  "nativeExecution": false,
+  "acceptanceCasesPromoted": [],
+  "scope": "Original unchanged products actions0.1 source through explicit owner-selected local original registry into actual canonical policy compiler, null-catalog subset. No metadata stripping.",
+  "limits": [
+    "No protection-catalog/domain registry propagation.",
+    "Companion Subject domain/policy fixture is authored, not a native identity mapping or grant.",
+    "Local lowering prototype is not a committed original-source/native obligation packet ABI.",
+    "Retained Weft fixture preparation/producer pins remain their original historical inputs; this source change does not relabel their producer.",
+    "No full158-case backend gate replay or native support claim from component tests."
+  ],
+  "artifactsSha256": {
+    "security-tests-post-review.log": "85e0eaff0faaba803a2fe9b49fd845131d2868c5c59846cf81f5821d1304dc34",
+    "failed-original-source.log": "d2ca96534b2bcb4779c0bfa6a3d2b2b76dd0c1a93d2fd07125671547de7bd466",
+    "result.json": "d3b6338aea94853f28bb60c223a1e58e7953475ae5a91294709b6f871c9b80fb",
+    "astra-review.json": "3a8c5263080bf50ce5401a06a07e01411be83d87c290290cc3caed51e61080d0",
+    "security-tests-integrated.log": "5462d05d3e10337743ef4025035f24054193d2c0241f857e18eb3aaa3737845b",
+    "security-tests-final.log": "2111ab03ee5830e71c087e217881f3edbe1ac93086f6e5313fbd757d256a870a",
+    "actions-regression.log": "75fbfa5256ed890c176f6ea21a4dcfd97ce6b515dace55647a21805c3b72c6d9",
+    "browser-result.json": "46dfb78d1fbf2cab82115daf1b1e008f50a2ad07a26c83e16ab4c89784367e17",
+    "authored-sources.json": "edabb034a6de72c5d4c729b4a4e7901d25923f9b3d3a813c08ba6d70d3b53f60",
+    "lowered-sources.json": "a5dbde003279f76ffd316a6e45fa42266f3fb01a0b65a17ab53f7c2fe86bfd75",
+    "blocker.json": "8c8a474c8274f98e2d76cd995f4b2faf72c24148c379e0e6077d27cbacc1dad6",
+    "actions-regression-final.log": "1faa0d9ed252682a635edf523aac3f2f5b5bf1c8b2cbf2975635eff5b38c8473"
+  },
+  "unqualifiedLocalPrototypeArtifacts": [
+    "authored-sources.json",
+    "lowered-sources.json",
+    "result.json"
+  ],
+  "integrationBase": "dd5b4ea91c61a14435fef801d99a46e2f167dbc3"
+}

@@ -1,6 +1,7 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {nullabilityTableSpecAuthor,nullabilityTableSpecProjectionCases} from '../../scripts/core-ideals/nullability-tablespec-projection-cases';
-import {projectNullabilityToTableSpec,recoverNullabilityFromTableSpec,exportTableSpec,readJsonValue,writeJsonValue,copyJson,declareCoreNullability,importTableSpec,upgradeFieldEnvelope,classifyTableSpecField,upgradeNullabilityEnvelope,classifyTableSpecNullability} from '../../src';
+import {projectNullabilityToTableSpec, recoverNullabilityFromTableSpec, exportTableSpec, readJsonValue, writeJsonValue, copyJson, declareCoreNullability, importTableSpec, classifyTableSpecField, classifyTableSpecNullability} from '../../src';
 import type {NullabilityTableSpecRequest} from '../../src';
 const request:NullabilityTableSpecRequest={id:'target',tableName:'Orders',columnName:'value',nativeType:'VARCHAR',mode:'strict',profile:'runtime-model',context:null,carrier:'null-value'};
 test('authored availability projects under explicit profiles with atomic strict/report loss and exact ideal recovery',()=>{
@@ -13,8 +14,8 @@ test('authored availability projects under explicit profiles with atomic strict/
   expect(r.profileNotes.length).toBe(c.encoding==='boolean'?1:0);
   if(c.variant==='loss'){expect(r.residuals.some(x=>x.path.endsWith('/namespace'))).toBe(true);expect(r.residuals.some(x=>x.path.endsWith('/extensions'))).toBe(true);}
   for(const format of ['json','yaml'] as const){const receipt=readJsonValue(writeJsonValue(copyJson(r),format),format) as unknown as typeof r;expect(recoverNullabilityFromTableSpec(receipt,text)).toEqual(c.author.target);}
-  const fields=classifyTableSpecField(upgradeFieldEnvelope(importTableSpec(text,{id:'reimported',format:'json'})).target,{column:0,mode:'strict'}).target!;
-  const observed=classifyTableSpecNullability(upgradeNullabilityEnvelope(fields).target,{column:0,mode:'report',profile:c.request.profile,context:c.request.context,carrier:c.request.carrier});
+  const fields=classifyTableSpecField(importTableSpec(text,{id:'reimported',format:'json'}),{column:0,mode:'strict'}).target!;
+  const observed=classifyTableSpecNullability(fields,{column:0,mode:'report',profile:c.request.profile,context:c.request.context,carrier:c.request.carrier});
   expect(observed.mapping.nullability).toBe(c.encoding==='omitted'?'unspecified':c.ideal);
  }
 },60000);

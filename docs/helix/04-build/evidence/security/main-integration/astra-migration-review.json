@@ -1,0 +1,22 @@
+{
+  "profile": "umf-security-main-migration-review/0.1",
+  "reviewer": "Astra ultra, existing user-authorized independent reviewer",
+  "sourceCommit": "449b488b",
+  "recordedAt": "2026-10-10T20:20:03.873133+00:00",
+  "status": "no-remaining-scoped-identity-migration-finding",
+  "verifiedScope": [
+    "50 migrated live/preimage hash pairs and524historical fingerprints",
+    "Original132cases under declared aliases;28securitycriteriaUNTESTED;medicalcriteria unchanged",
+    "Nine protected main medical/domain/cybersecurity documents unchanged",
+    "Eight retained command log hashes and focused191core+113security/traceability scope",
+    "376schema audit, browser build and realChromium security/Delta observations",
+    "Remaining three feature/design FR45 references corrected to FR46 and updated hashes independently verified"
+  ],
+  "qualification": "Read-only review; no new native execution, broad-regression pass, current132case acceptance or production enforcement claimed. Final integrated merge qualification remains open.",
+  "findingsResolved": [
+    "Four cybersecurity-domain documents inadvertently selected by initial migration classifier were restored exactly.",
+    "SecurityFR45 collided with main portable-domainFR45; security-onlyFR46 migration preserves domainFR45/NFR45.",
+    "Remaining two feature and one solution-design citations were corrected and independently verified."
+  ],
+  "rawFinalReview": "Confirmed: all three references now use FR-46, and both updated manifest hashes match. The final migration finding is resolved; broader draft PR gates remain open."
+}

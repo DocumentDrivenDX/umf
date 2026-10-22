@@ -1,105 +1,49 @@
-# Agent instructions: Innsigle publish + seal
+# Agent instructions: automated site signing
 
-You are wiring Innsigle into this repository. Innsigle stores all project state
-under `.innsigle/` and does **not** detect or modify framework-specific publish
-trees (`static/`, `public/`, `docs/`, `_site/`, etc.).
+All first-party site HTML is model-primary content. Use the existing registered
+build-role signer for every page in `.innsigle/generated-pages.json`. No human
+signature, interactive 1Password session or manual page re-sealing is required.
+This owner-directed policy supersedes earlier human/curated signing instructions.
 
-## Layout (source of truth)
+## Key custody
 
-```text
-.innsigle/
-  config.json          # issuer id, key_id, key_url, op:// private key ref
-  public/
-    keys.json          # public issuer document
-    claims/            # put *.attestation.json here when sealing pages
-  provenance/          # transcript-derived L2 session data — stays local (gitignored)
-  README.md
-  AGENTS.md            # this file
-```
+The build private key is supplied only through `INNSIGLE_BUILD_KEY` in the
+publication environment (the existing GitHub Actions repository secret).
+Never print it, commit it, store it in evidence or copy it into the site.
+Do not read a human key or introduce a 1Password reference/fallback. Do not
+rotate keys or run `innsigle init` unless explicitly requested.
 
-Private keys are **never** in the repo. Credentials come from 1Password via
-`config.json` → `onepassword.private_key_ref`.
+`.innsigle/config.json` names only the build signer. Public legacy keys and
+endorsements stay available to verify older publications; they are not a
+requirement for publishing new content. Do not rewrite Innsigle cryptography.
 
-## Required build step
+## Build and publish
 
-Before or as part of deploy, copy the public staging tree to the **site root**
-well-known path (adjust only the left side if your tool needs a different
-source path — the **destination path is fixed**):
+Use the pinned Innsigle CLI from `.github/workflows/microsite.yml`.
+After generating the exact final HTML:
 
 ```bash
-innsigle publish "$SITE_ROOT"
-# equivalent: cp -a .innsigle/public/. "$SITE_ROOT/.well-known/innsigle/"
+bun scripts/generated-page-seals.ts --inventory
+bun test tests/generated-page-seals.test.ts
+# Publication environment supplies INNSIGLE_BUILD_KEY:
+bun scripts/generated-page-seals.ts --seal
+bun scripts/generated-page-seals.ts --check
+node .tools/innsigle/src/cli.mjs verify --all
 ```
 
-Examples (illustrative only — pick what this repo uses):
+The sealing wrapper explicitly selects `--role build`, uses the model-primary
+colophon, signs every inventoried page, and copies public state to the site
+before verification. Missing environment credentials must fail without an
+interactive fallback. Inventory additions require corresponding policy updates;
+no configured page may escape signature verification.
 
-| Tool | Typical SITE_ROOT / hook |
-|------|---------------------------|
-| Quarto | Copy into `static/.well-known/innsigle/` so render includes it, **or** post-copy into `_site/.well-known/innsigle/` |
-| Hugo | `static/.well-known/innsigle/` |
-| plain static | project `public/` or deploy rsync source |
-| GitHub Pages (Actions) | step after build: copy into artifact root |
-
-**Do not** invent alternate URL paths. Signed claims use:
-
-- `key_url`: `https://documentdrivendx.github.io/umf/.well-known/innsigle/keys.json`
-- site path: `/.well-known/innsigle/keys.json`
-
-If the public host differs, update `.innsigle/config.json` `issuer.key_url`
-**before** signing new claims (old seals keep their frozen URL).
-
-## Seal a whole microsite (Helix pattern)
-
-Set `content_root` + `content_globs` in config (init `--content-root`), then:
-
-```bash
-innsigle seal --all          # skip up-to-date; composition from frontmatter
-innsigle publish SITE_ROOT   # copies .innsigle/public → SITE_ROOT/.well-known/innsigle
-innsigle verify --all        # CI gate
-```
-
-Hugo: mount `.innsigle/public` at `static/.well-known/innsigle` and use
-`integrations/hugo/layouts/_partials/innsigle-colophon.html`.
-
-## Seal one file
-
-Finalize the **exact bytes** you will publish, then:
-
-```bash
-innsigle seal path/to/page.html
-# optional: --kind model-primary|human-authored|mixed
-# or commit a default colophon at .innsigle/colo.json
-
-innsigle verify path/to/page.html
-# finds attestation + keys under .innsigle/ (or public/.well-known/)
-```
-
-Colophons MAY carry the optional `human_input` measure (integer percent,
-method hi1, declared from the operator's session journal — proposed
-automatically by `innsigle seal <file> --auto`). NEVER edit its component
-counts to reach a target percent: the CLI recomputes the headline from the
-counts and refuses mismatches (exit 5). No journal evidence → omit the object
-entirely. Shape reference: `innsigle colo example --kind model-primary --human-input`.
-
-Issuer metadata and the private key ref come from `.innsigle/config.json` +
-1Password. Attestation lands in `.innsigle/public/claims/` — include that tree
-in the publish copy step.
-
-## 1Password bridging (env)
-
-- `INNSIGLE_OP_BIN` may contain arguments, e.g. `INNSIGLE_OP_BIN="mac op"`
-  to bridge to the host CLI from a VM (OrbStack).
-- `OP_ACCOUNT=<account>` (or `innsigle seal --op-account <account>`) selects
-  the 1Password account; it is passed as `--account` to `op read`.
-
-## Identity (this repo)
+## Public paths
 
 - issuer_id: `documentdrivendx-umf`
-- key_id: `ed25519:47994639d3e328f8464e99c3f926b293`
+- build key_id: `ed25519:c63e7352e15127ee63b9ae2f071602bb`
 - key_url: `https://documentdrivendx.github.io/umf/.well-known/innsigle/keys.json`
 
-## Non-goals for agents
-
-- Do not commit PEM private keys or `op` session tokens.
-- Do not re-run `innsigle init` unless the operator asked (creates a new key).
-- Do not rewrite Innsigle crypto or move keys outside `.innsigle/` + 1Password.
+Always copy `.innsigle/public/` to the site root's
+`.well-known/innsigle/`. The wrapper runs Innsigle `publish` for this step.
+The local metadata and public state are safe to commit; private signing material
+is not. Colophons must not invent human review or human-input percentages.

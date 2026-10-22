@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 17873,
+        "line": 23,
+        "path": "src/core-ideals/relationship-sqlserver-projection.ts",
+        "sha256": "e39914f71aaef4806cacbcf64171fa152048b02cecc8320a4a2f6bf76357f39a"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "projectRelationshipToSqlServer",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: Document, authorInput: CoreRelationshipDeclaration, bindingInput: Document, options: RelationshipSqlServerRequest): RelationshipSqlServerProjection"
+    ]
+  },
+  "id": "[\"api\",\".\",\"projectRelationshipToSqlServer\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 17873,
+      "line": 23,
+      "path": "src/core-ideals/relationship-sqlserver-projection.ts",
+      "sha256": "e39914f71aaef4806cacbcf64171fa152048b02cecc8320a4a2f6bf76357f39a"
+    }
+  ],
+  "summary": "New endpoint-key tables plus declared FK/junction; never mutates existing tables.",
+  "title": "projectRelationshipToSqlServer"
+}

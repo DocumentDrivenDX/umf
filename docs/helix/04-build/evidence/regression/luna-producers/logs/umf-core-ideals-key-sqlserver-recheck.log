@@ -1,0 +1,47 @@
+bun test v1.4.2 (744846f84)
+
+tests/core-ideals/key-sqlserver-projection.test.ts:
+(pass) SQL Server authored keys: primary-strict [8.12ms]
+(pass) SQL Server authored keys: primary-report [30.73ms]
+(pass) SQL Server authored keys: no-primary-strict [3.12ms]
+(pass) SQL Server authored keys: no-primary-report [26.68ms]
+(pass) SQL Server authored keys: rename-and-reorder [20.68ms]
+(pass) SQL Server authored keys: boolean [16.00ms]
+(pass) SQL Server authored keys: decimal [17.73ms]
+(pass) SQL Server authored keys: binary [15.01ms]
+(pass) SQL Server authored keys: integer-width [19.42ms]
+(pass) SQL Server authored keys: unsigned [20.30ms]
+(pass) SQL Server authored keys: string-length [16.98ms]
+(pass) SQL Server authored keys: binary-length [16.97ms]
+(pass) SQL Server authored keys: compound-ordered [16.75ms]
+(pass) SQL Server authored keys: multiple-alternates [26.20ms]
+(pass) SQL Server authored keys: unknown-extension [16.70ms]
+(pass) SQL Server authored keys: unknown-key-qualifier [17.06ms]
+(pass) SQL Server authored keys: unknown-member-qualifier [16.23ms]
+(pass) SQL Server authored keys: unknown-facet-qualifier [17.29ms]
+(pass) SQL Server authored keys: family-conflict [3.44ms]
+(pass) SQL Server authored keys: quoted-identifiers [15.48ms]
+(pass) SQL Server authored keys: missing-encoding [2.92ms]
+(pass) SQL Server authored keys: alternate-byte-budget [3.49ms]
+(pass) SQL Server authored keys: primary-byte-budget [2.57ms]
+(pass) SQL Server authored keys: primary-byte-boundary [14.44ms]
+(pass) SQL Server authored keys: alternate-byte-boundary [15.50ms]
+(pass) SQL Server authored keys: alternate-byte-overflow [2.35ms]
+(pass) stable identity and ordered expanded physical components remain distinct [37.00ms]
+(pass) missing, duplicated and stale author declarations refuse [36.66ms]
+(pass) physical name collisions, malformed binding and getters refuse atomically [19.24ms]
+(pass) forged receipts, altered SQL, session settings and missing residuals refuse recovery [17.77ms]
+(pass) generated native evidence records actual enforcement and source fingerprints [5.43ms]
+(pass) expanded key column limit includes encoding helpers and preserves blocked source [57.42ms]
+(pass) missing and cross-record membership never establishes key ownership [5.88ms]
+(pass) unknown component qualifiers block an exact equality claim independently of other keys [11.60ms]
+
+tests/core-ideals/key-sqlserver-encoding.test.ts:
+(pass) native encoding evidence asserts actual values, failures and pinned source fingerprints [4.41ms]
+(pass) stored byte vectors preserve the distinct core tuple values in the qualified examples [7.89ms]
+(pass) computed native keys remain observations and all encoding metadata recovers [322.71ms]
+
+ 37 pass
+ 0 fail
+ 742 expect() calls
+Ran 37 tests across 2 files. [1156.00ms]

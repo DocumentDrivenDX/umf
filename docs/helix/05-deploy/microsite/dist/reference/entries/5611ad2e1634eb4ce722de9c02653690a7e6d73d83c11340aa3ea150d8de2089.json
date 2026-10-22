@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 5559,
+        "line": 26,
+        "path": "src/core-ideals/record-report.ts",
+        "sha256": "1c80851a00c3fdb8dd4e55b73e5ff5a18632b59341ca84d10db555c1531851f2"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "verifyRecordProjectionInspection",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: RecordProjectionInspection, backend?: PostgresqlBackend | undefined): Promise<RecordProjectionInspection>"
+    ]
+  },
+  "id": "[\"api\",\".\",\"verifyRecordProjectionInspection\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 5559,
+      "line": 26,
+      "path": "src/core-ideals/record-report.ts",
+      "sha256": "1c80851a00c3fdb8dd4e55b73e5ff5a18632b59341ca84d10db555c1531851f2"
+    }
+  ],
+  "summary": "Public export · src/core-ideals/record-report.ts",
+  "title": "verifyRecordProjectionInspection"
+}

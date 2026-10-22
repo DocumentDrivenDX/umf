@@ -1,0 +1,120 @@
+{
+  "data": {
+    "extensionId": "umf.typespec",
+    "manifest": {
+      "capabilities": {
+        "directions": [
+          "import",
+          "export"
+        ],
+        "evidence": [
+          "tests/typespec/native.test.ts",
+          "fixtures/typespec/compiler-oracle-results.json",
+          "spec/extensions/typespec/standard-manifest.json",
+          "tests/typespec/semantic.test.ts",
+          "fixtures/typespec/semantic-oracle-results.json",
+          "tests/typespec/corpus.test.ts",
+          "fixtures/typespec/upstream/manifest.json",
+          "fixtures/typespec/corpus-results.json",
+          "fixtures/typespec/corpus-oracle-results.json",
+          "tests/typespec/libraries.test.ts",
+          "spec/extensions/typespec/libraries-manifest.json",
+          "fixtures/typespec/library-corpus-results.json",
+          "fixtures/typespec/library-corpus-oracle-results.json",
+          "tests/typespec/all-libraries.test.ts",
+          "fixtures/typespec/all-library-corpus-results.json",
+          "fixtures/typespec/all-library-corpus-oracle-results.json",
+          "tests/typespec/emission.test.ts",
+          "fixtures/typespec/emission-oracle-results.json",
+          "fixtures/typespec/emission-json-oracle-results.json",
+          "fixtures/typespec/emission/numeric.tsp",
+          "fixtures/typespec/emission/numeric-oracle-results.json",
+          "tests/typespec/projection.test.ts",
+          "fixtures/typespec/emission/projection-oracle-results.json"
+        ],
+        "native": {
+          "subset": "Supplied .tsp sources with pinned compiler/standard library and eleven explicitly selected official library versions; library-owned configuration retained; separate pinned JSON Schema emission API; no arbitrary project JavaScript or lossless projection claim",
+          "system": "TypeSpec",
+          "version": "1.16.0"
+        },
+        "validation": "semantic"
+      },
+      "coreVersion": "0.10.0",
+      "description": "TypeSpec source bundles with pinned syntax and supplied-file compilation",
+      "id": "umf.typespec",
+      "schema": {
+        "$id": "urn:umf:typespec:0.1.0",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "properties": {
+          "entrypoint": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "files": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "minProperties": 1,
+            "propertyNames": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "type": "object"
+          },
+          "libraries": {
+            "additionalProperties": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "propertyNames": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "type": "object"
+          },
+          "profile": {
+            "const": "typespec-1.16.0-sources"
+          }
+        },
+        "required": [
+          "profile",
+          "entrypoint",
+          "files"
+        ],
+        "type": "object"
+      },
+      "scopes": [
+        "element"
+      ],
+      "semantics": "CONTRACT-013. Exact source files and explicit entrypoint; compiler validity and downstream projection fidelity are separate.",
+      "version": "0.1.0"
+    },
+    "registration": {
+      "apiIds": [
+        "[\"api\",\".\",\"typespecRegistry\"]"
+      ],
+      "coreProfiles": [],
+      "mode": "explicit"
+    },
+    "schemaId": "[\"schema\",\"spec/extensions/typespec/schema.json\",\"\"]",
+    "version": "0.1.0"
+  },
+  "id": "[\"extension\",\"umf.typespec\",\"0.1.0\"]",
+  "kind": "extension",
+  "links": [
+    "[\"api\",\".\",\"typespecRegistry\"]",
+    "[\"guide\",\"extensions\"]",
+    "[\"schema\",\"spec/extensions/typespec/schema.json\",\"\"]",
+    "[\"integration\",\"umf.typespec@0.1.0:import\"]",
+    "[\"integration\",\"umf.typespec@0.1.0:export\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 2922,
+      "path": "spec/extensions/typespec/package.json",
+      "sha256": "39829e7f145c6195ed2176aa937e6f1e60a371cc36d3877b2d0fcc6ec5362139"
+    }
+  ],
+  "summary": "TypeSpec source bundles with pinned syntax and supplied-file compilation",
+  "title": "umf.typespec · 0.1.0"
+}

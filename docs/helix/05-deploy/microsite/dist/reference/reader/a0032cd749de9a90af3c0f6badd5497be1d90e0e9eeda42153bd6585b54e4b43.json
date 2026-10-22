@@ -1,0 +1,44 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"SemanticTypeValueResult\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SemanticTypeReference\"]"
+      ],
+      "name": "reference",
+      "optional": false,
+      "type": "SemanticTypeReference"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "status",
+      "optional": false,
+      "type": "\"unknown\" | \"valid\" | \"invalid\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "complete",
+      "optional": false,
+      "type": "boolean"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "issues",
+      "optional": false,
+      "type": "string[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "SemanticTypeValueResult is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "SemanticTypeValueResult"
+}

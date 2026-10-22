@@ -1,0 +1,68 @@
+{
+  "profile": "local-wheel-mirror/1",
+  "networkUsed": false,
+  "wheels": [
+    {
+      "filename": "umf_access-0.1.0.dev5-py3-none-any.whl",
+      "distribution": "umf-access",
+      "version": "0.1.0.dev5",
+      "sha256": "b5406d25763dd835fc5bc2ded7bfd0c8506659c446b392e190b7860ab0b83dc0",
+      "licenseExpression": "MIT OR Apache-2.0",
+      "licenseFiles": [
+        "LICENSE-APACHE",
+        "LICENSE-MIT",
+        "LICENSE.md"
+      ],
+      "requiresDist": [
+        "pydantic<3,>=2.13",
+        "typing-extensions<5,>=4.16"
+      ]
+    },
+    {
+      "filename": "umf_codegen-0.1.0a2-py3-none-any.whl",
+      "distribution": "umf-codegen",
+      "version": "0.1.0a2",
+      "sha256": "e6a96018dba937e593fb9aeb6e68e9343f13ba7690fe89e9fea5a9759df21d94",
+      "licenseExpression": "MIT OR Apache-2.0",
+      "licenseFiles": [
+        "LICENSE-APACHE",
+        "LICENSE-MIT",
+        "LICENSE.md"
+      ],
+      "requiresDist": [
+        "mini-racer==0.14.1"
+      ]
+    },
+    {
+      "filename": "umf_core-0.10.0-py3-none-any.whl",
+      "distribution": "umf-core",
+      "version": "0.10.0",
+      "sha256": "63301b87c9fe78babfe28f2bf8fc0dcc3a8b4929e520ee219bc14b1b6cefdaf1",
+      "licenseExpression": "MIT OR Apache-2.0",
+      "licenseFiles": [
+        "LICENSE-APACHE",
+        "LICENSE-MIT",
+        "LICENSE.md"
+      ],
+      "requiresDist": [
+        "jsonschema<5,>=4.25",
+        "pydantic<3,>=2.11",
+        "ruamel-yaml<1,>=0.18"
+      ]
+    },
+    {
+      "filename": "weft_sql-0.4.49-cp39-abi3-macosx_11_0_arm64.whl",
+      "distribution": "weft-sql",
+      "version": "0.4.49",
+      "sha256": "695e12867dfcffedb0e4bde7fa571835ebd43fd1c06b0d775b1abecb45ffa117",
+      "licenseExpression": "MIT OR Apache-2.0",
+      "licenseFiles": [
+        "LICENSE.md",
+        "LICENSE-MIT",
+        "LICENSE-APACHE",
+        "THIRD-PARTY-LICENSES.txt"
+      ],
+      "requiresDist": []
+    }
+  ]
+}

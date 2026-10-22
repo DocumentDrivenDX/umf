@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {createHash} from 'node:crypto';
 import {importDbtSemanticManifest,exportDbtSemanticManifest,inspectDbtSemanticManifest,proposeDbtSemanticManifestNodeEdit,readDocument,writeDocument,DBT_SEMANTIC_MANIFEST_EXTENSION} from '../../src';

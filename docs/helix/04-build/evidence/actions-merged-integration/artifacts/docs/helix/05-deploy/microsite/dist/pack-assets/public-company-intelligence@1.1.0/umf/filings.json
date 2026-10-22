@@ -1,0 +1,96 @@
+{
+  "version": "1.0",
+  "table_name": "filings",
+  "description": "Public-company intelligence filings; source/context and interpretation qualifications apply.",
+  "columns": [
+    {
+      "name": "id",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "filings.id; exact source literal or explicitly authored research metadata."
+    },
+    {
+      "name": "company_id",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "filings.company_id; exact source literal or explicitly authored research metadata."
+    },
+    {
+      "name": "snapshot_id",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "filings.snapshot_id; exact source literal or explicitly authored research metadata."
+    },
+    {
+      "name": "accession",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "filings.accession; exact source literal or explicitly authored research metadata."
+    },
+    {
+      "name": "filing_date",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "filings.filing_date; exact source literal or explicitly authored research metadata."
+    },
+    {
+      "name": "report_date",
+      "data_type": "VARCHAR",
+      "nullable": true,
+      "description": "filings.report_date; exact source literal or explicitly authored research metadata."
+    },
+    {
+      "name": "form",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "filings.form; exact source literal or explicitly authored research metadata."
+    },
+    {
+      "name": "items",
+      "data_type": "VARCHAR",
+      "nullable": true,
+      "description": "filings.items; exact source literal or explicitly authored research metadata."
+    },
+    {
+      "name": "primary_document",
+      "data_type": "VARCHAR",
+      "nullable": true,
+      "description": "filings.primary_document; exact source literal or explicitly authored research metadata."
+    },
+    {
+      "name": "primary_url",
+      "data_type": "VARCHAR",
+      "nullable": true,
+      "description": "filings.primary_url; exact source literal or explicitly authored research metadata."
+    },
+    {
+      "name": "native_path",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "filings.native_path; exact source literal or explicitly authored research metadata."
+    },
+    {
+      "name": "native_json",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "filings.native_json; exact source literal or explicitly authored research metadata."
+    }
+  ],
+  "primary_key": [
+    "id"
+  ],
+  "relationships": {
+    "foreign_keys": [
+      {
+        "column": "company_id",
+        "references_table": "companies",
+        "references_column": "id"
+      },
+      {
+        "column": "snapshot_id",
+        "references_table": "source_snapshots",
+        "references_column": "id"
+      }
+    ]
+  }
+}

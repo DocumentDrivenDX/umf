@@ -1,0 +1,90 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"RdfMergeReport\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "sources",
+      "optional": false,
+      "type": "Document[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "id",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "graphPolicy",
+      "optional": false,
+      "type": "\"union-by-name\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "blankNodePolicy",
+      "optional": false,
+      "type": "\"disjoint-inputs\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "status",
+      "optional": false,
+      "type": "\"blocked\" | \"candidate\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "complete",
+      "optional": false,
+      "type": "false"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "candidate",
+      "optional": true,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "blankNodes",
+      "optional": false,
+      "type": "{ input: number; before: string; after: string; }[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "quadOrigins",
+      "optional": false,
+      "type": "{ input: number; sourceIndex: number; targetIndex: number; }[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Diagnostic\"]"
+      ],
+      "name": "diagnostics",
+      "optional": false,
+      "type": "Diagnostic[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "RdfMergeReport is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "RdfMergeReport"
+}

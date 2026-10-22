@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 9689,
+        "line": 11,
+        "path": "src/core-ideals/record-parquet-projection.ts",
+        "sha256": "400d94d9370256a21128b49edaa37ad9ea86fbfee898182365dabb0e23dc8a24"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "RecordParquetRequest",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface RecordParquetRequest {id:string;recordName:string;mode:'strict'|'report';fields:{author:CoreKindDeclaration;fieldName:string;nativeType:FieldParquetRequest['nativeType'];repetition:FieldParquetRequest['repetition']}[]}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"RecordParquetRequest\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 9689,
+      "line": 11,
+      "path": "src/core-ideals/record-parquet-projection.ts",
+      "sha256": "400d94d9370256a21128b49edaa37ad9ea86fbfee898182365dabb0e23dc8a24"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/record-parquet-projection.ts",
+  "title": "RecordParquetRequest"
+}

@@ -1,0 +1,56 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"FieldAvroRequest\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "id",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "recordName",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "namespace",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "fieldName",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "nativeType",
+      "optional": false,
+      "type": "\"string\" | \"boolean\" | \"date\" | \"null\" | \"float\" | \"int\" | \"long\" | \"double\" | \"bytes\" | \"decimal(38,9)\" | \"time-millis\" | \"time-micros\" | \"timestamp-millis\" | \"timestamp-micros\" | \"local-timestamp-micros\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "mode",
+      "optional": false,
+      "type": "\"strict\" | \"report\""
+    }
+  ],
+  "parameters": [],
+  "purpose": "FieldAvroRequest is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "FieldAvroRequest"
+}

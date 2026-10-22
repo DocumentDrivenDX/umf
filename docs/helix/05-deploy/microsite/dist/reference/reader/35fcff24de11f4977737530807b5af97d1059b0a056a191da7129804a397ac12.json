@@ -1,0 +1,23 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"getOwlListAxioms\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "Source-preserving local RDF list views; never an OWL consistency or inference result.",
+  "related": [],
+  "returns": "OwlListAxiomView",
+  "task": "Inspect and select",
+  "type": "(document: Document) => OwlListAxiomView"
+}

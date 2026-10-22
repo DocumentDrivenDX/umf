@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 19737,
+        "line": 13,
+        "path": "src/adapters/rdf/index.ts",
+        "sha256": "c6f7532ac7f4d89740b650b96773267ad104b76eaa9aebd6df4f0e47d5fe61f4"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "RdfQuad",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface RdfQuad {subject:RdfNode;predicate:{kind:'iri';value:string};object:RdfNode|RdfLiteral;graph:RdfNode|{kind:'default'}}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"RdfQuad\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 19737,
+      "line": 13,
+      "path": "src/adapters/rdf/index.ts",
+      "sha256": "c6f7532ac7f4d89740b650b96773267ad104b76eaa9aebd6df4f0e47d5fe61f4"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/rdf/index.ts",
+  "title": "RdfQuad"
+}

@@ -1,0 +1,39 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"declareCoreRelationship\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "input",
+      "optional": false,
+      "type": "Source"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"RelationshipModuleIdentity\"]"
+      ],
+      "name": "identity",
+      "optional": false,
+      "type": "RelationshipModuleIdentity"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreRelationshipRequest\"]"
+      ],
+      "name": "requestInput",
+      "optional": false,
+      "type": "CoreRelationshipRequest"
+    }
+  ],
+  "purpose": "declareCoreRelationship accepts input, identity, requestInput and returns CoreRelationshipDeclaration.",
+  "related": [],
+  "returns": "CoreRelationshipDeclaration",
+  "task": "Other APIs",
+  "type": "(input: Source, identity: RelationshipModuleIdentity, requestInput: CoreRelationshipRequest) => CoreRelationshipDeclaration"
+}

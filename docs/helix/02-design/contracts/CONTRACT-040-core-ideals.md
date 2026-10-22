@@ -39,7 +39,7 @@ concept (FR-28). Consumers read the ideal; adapters retain native representation
 
 The ordered implementation is field, nullability, cardinality, author-stated
 facets, then key. Every concept MUST support authored ideals and qualified native
-up-classification. scalarType remains the existing nine-family ideal, not proof
+up-classification. For the existing profiles, scalarType remains the nine-family ideal, not proof
 of equivalent widths, equality, coercion or execution. OWL, DDD lifecycle,
 physical encodings and default-as-execution remain extension-owned.
 
@@ -1028,3 +1028,13 @@ Fresh native/browser qualification, negative evidence checks, core tests,
 typechecking and schema/package audits pass. Native equivalence remains
 unclaimed; source payloads and unknown semantics remain attached. See the
 [Key gate admission record](../../04-build/evidence/key-gate-admission.md) for commands, versions, profiles and limits.
+
+
+### Proposed 128-bit/UUID ideal extension
+
+CONTRACT-067 defines the separately versioned 0.9.0 bits128/UUID ideal, literal
+and equality surface and `umf-key-tuple-v2`. Its integer128 domains reuse the
+existing integerWidth facet. This design extends the family set explicitly;
+prior profiles and `umf-key-tuple-v1` remain unchanged. Admission still requires
+useful two-system projection/up-classification evidence, with all five priority
+bindings and native equivalence tracked separately.

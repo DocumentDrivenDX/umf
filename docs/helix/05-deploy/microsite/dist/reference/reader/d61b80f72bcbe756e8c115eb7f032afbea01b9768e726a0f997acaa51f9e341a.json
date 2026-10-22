@@ -1,0 +1,44 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"DeltaActionOccurrence\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "version",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "line",
+      "optional": false,
+      "type": "number"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "action",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"NativeJson\"]"
+      ],
+      "name": "value",
+      "optional": false,
+      "type": "NativeJson"
+    }
+  ],
+  "parameters": [],
+  "purpose": "DeltaActionOccurrence is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "DeltaActionOccurrence"
+}

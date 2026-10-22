@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Host-only native carrier discovery, not relationship binding acceptance. */
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';

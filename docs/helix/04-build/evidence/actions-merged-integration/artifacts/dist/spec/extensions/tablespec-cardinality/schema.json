@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:tablespec:cardinality-binding:1.0.0",
+  "title": "Retained TableSpec Cardinality scope",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "origin",
+    "binding",
+    "profile",
+    "interpretation",
+    "nativePath",
+    "basis"
+  ],
+  "properties": {
+    "origin": {
+      "const": "classified"
+    },
+    "binding": {
+      "const": {
+        "id": "umf.tablespec.cardinality",
+        "version": "1.0.0"
+      }
+    },
+    "profile": {
+      "enum": [
+        "runtime-model",
+        "checked-schema",
+        "unresolved"
+      ]
+    },
+    "interpretation": {
+      "enum": [
+        "declared",
+        "unknown",
+        "unsupported"
+      ]
+    },
+    "nativePath": {
+      "type": "string",
+      "minLength": 1
+    },
+    "basis": {
+      "const": "Explicit native data_type and uncoerced dimension under selected metadata profile; item and execution semantics remain native"
+    }
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 11922,
+        "line": 28,
+        "path": "src/core-ideals/key-sqlserver.ts",
+        "sha256": "50b3eb2d072df4b15abe6de9bc222a1d4cdf441f7e2a5672b6a20fcddf62c18f"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "classifySqlServerKeys",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: Document, options: SqlServerKeyRequest): SqlServerKeyClassification"
+    ]
+  },
+  "id": "[\"api\",\".\",\"classifySqlServerKeys\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 11922,
+      "line": 28,
+      "path": "src/core-ideals/key-sqlserver.ts",
+      "sha256": "50b3eb2d072df4b15abe6de9bc222a1d4cdf441f7e2a5672b6a20fcddf62c18f"
+    }
+  ],
+  "summary": "Captured facts are observations, not authenticated state or authored identity.",
+  "title": "classifySqlServerKeys"
+}

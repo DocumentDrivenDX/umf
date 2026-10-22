@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 10546,
+        "line": 10,
+        "path": "src/adapters/delta/ddl.ts",
+        "sha256": "e1f3594cf3bed5590c10cf18a857e89b77e446dfe3794d9ad0c103f368a470d0"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "DeltaDefinition",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface DeltaDefinition {\n  profile:'databricks-managed-delta/0.1';\n  name:string[];\n  clusterBy:string[];\n  partitionBy:string[];\n  properties:Record<string,string>;\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"DeltaDefinition\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 10546,
+      "line": 10,
+      "path": "src/adapters/delta/ddl.ts",
+      "sha256": "e1f3594cf3bed5590c10cf18a857e89b77e446dfe3794d9ad0c103f368a470d0"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/delta/ddl.ts",
+  "title": "DeltaDefinition"
+}

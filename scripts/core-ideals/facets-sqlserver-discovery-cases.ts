@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Independent scalar/constraint probes; outputs are strings to avoid JS number loss. */
 export interface SqlServerFacetProbe {id:string;statement:string;expected:string|null;error:number}
 export function sqlServerFacetDiscoveryCases(){

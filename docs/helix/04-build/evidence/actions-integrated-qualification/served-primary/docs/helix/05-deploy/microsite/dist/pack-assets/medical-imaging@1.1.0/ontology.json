@@ -1,0 +1,369 @@
+{
+  "umf": "0.8.0",
+  "id": "urn:umf:domain:medical-imaging",
+  "title": "medical-imaging ontology",
+  "vocabularies": {},
+  "modules": [
+    {
+      "id": "domain",
+      "namespace": "urn:umf:domain:medical-imaging:",
+      "elements": [
+        {
+          "id": "instances",
+          "kind": "record",
+          "name": "instances",
+          "title": "instances",
+          "description": "Source-qualified selected view. Full original meaning remains in pinned sources. One authored 4x4 Secondary Capture instance with fixed synthetic study/series/SOP UIDs, private tags and nested private sequence; one unchanged public TCIA LIDC-IDRI CT slice with publisher-deidentified source identity.",
+          "members": [
+            {
+              "module": "domain",
+              "element": "instances.instance_key"
+            },
+            {
+              "module": "domain",
+              "element": "instances.source_id"
+            },
+            {
+              "module": "domain",
+              "element": "instances.study_uid"
+            },
+            {
+              "module": "domain",
+              "element": "instances.series_uid"
+            },
+            {
+              "module": "domain",
+              "element": "instances.sop_instance_uid"
+            },
+            {
+              "module": "domain",
+              "element": "instances.sop_class_uid"
+            },
+            {
+              "module": "domain",
+              "element": "instances.modality"
+            },
+            {
+              "module": "domain",
+              "element": "instances.metadata_json"
+            },
+            {
+              "module": "domain",
+              "element": "instances.binary_reference"
+            },
+            {
+              "module": "domain",
+              "element": "instances.binary_sha256"
+            },
+            {
+              "module": "domain",
+              "element": "instances.transfer_syntax"
+            }
+          ],
+          "keys": [
+            {
+              "id": "identity",
+              "name": "Identity",
+              "fields": [
+                {
+                  "module": "domain",
+                  "element": "instances.instance_key"
+                }
+              ],
+              "primary": true
+            }
+          ],
+          "extensions": {}
+        },
+        {
+          "id": "instances.instance_key",
+          "name": "instance_key",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "instance key",
+          "extensions": {}
+        },
+        {
+          "id": "instances.source_id",
+          "name": "source_id",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "source id",
+          "extensions": {}
+        },
+        {
+          "id": "instances.study_uid",
+          "name": "study_uid",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "study uid",
+          "extensions": {}
+        },
+        {
+          "id": "instances.series_uid",
+          "name": "series_uid",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "series uid",
+          "extensions": {}
+        },
+        {
+          "id": "instances.sop_instance_uid",
+          "name": "sop_instance_uid",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "sop instance uid",
+          "extensions": {}
+        },
+        {
+          "id": "instances.sop_class_uid",
+          "name": "sop_class_uid",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "sop class uid",
+          "extensions": {}
+        },
+        {
+          "id": "instances.modality",
+          "name": "modality",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "modality",
+          "extensions": {}
+        },
+        {
+          "id": "instances.metadata_json",
+          "name": "metadata_json",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "metadata json",
+          "extensions": {}
+        },
+        {
+          "id": "instances.binary_reference",
+          "name": "binary_reference",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "binary reference",
+          "extensions": {}
+        },
+        {
+          "id": "instances.binary_sha256",
+          "name": "binary_sha256",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "binary sha256",
+          "extensions": {}
+        },
+        {
+          "id": "instances.transfer_syntax",
+          "name": "transfer_syntax",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "transfer syntax",
+          "extensions": {}
+        },
+        {
+          "id": "attributes",
+          "kind": "record",
+          "name": "attributes",
+          "title": "attributes",
+          "description": "Source-qualified selected view. Full original meaning remains in pinned sources. One authored 4x4 Secondary Capture instance with fixed synthetic study/series/SOP UIDs, private tags and nested private sequence; one unchanged public TCIA LIDC-IDRI CT slice with publisher-deidentified source identity.",
+          "members": [
+            {
+              "module": "domain",
+              "element": "attributes.attribute_key"
+            },
+            {
+              "module": "domain",
+              "element": "attributes.source_id"
+            },
+            {
+              "module": "domain",
+              "element": "attributes.native_path"
+            },
+            {
+              "module": "domain",
+              "element": "attributes.tag"
+            },
+            {
+              "module": "domain",
+              "element": "attributes.vr"
+            },
+            {
+              "module": "domain",
+              "element": "attributes.value_json"
+            },
+            {
+              "module": "domain",
+              "element": "attributes.bulk_data_uri"
+            },
+            {
+              "module": "domain",
+              "element": "attributes.inline_binary"
+            },
+            {
+              "module": "domain",
+              "element": "attributes.native_json"
+            }
+          ],
+          "keys": [
+            {
+              "id": "identity",
+              "name": "Identity",
+              "fields": [
+                {
+                  "module": "domain",
+                  "element": "attributes.attribute_key"
+                }
+              ],
+              "primary": true
+            }
+          ],
+          "extensions": {}
+        },
+        {
+          "id": "attributes.attribute_key",
+          "name": "attribute_key",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "attribute key",
+          "extensions": {}
+        },
+        {
+          "id": "attributes.source_id",
+          "name": "source_id",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "source id",
+          "extensions": {}
+        },
+        {
+          "id": "attributes.native_path",
+          "name": "native_path",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "native path",
+          "extensions": {}
+        },
+        {
+          "id": "attributes.tag",
+          "name": "tag",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "tag",
+          "extensions": {}
+        },
+        {
+          "id": "attributes.vr",
+          "name": "vr",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "vr",
+          "extensions": {}
+        },
+        {
+          "id": "attributes.value_json",
+          "name": "value_json",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "absent-allowed",
+          "description": "value json",
+          "extensions": {}
+        },
+        {
+          "id": "attributes.bulk_data_uri",
+          "name": "bulk_data_uri",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "absent-allowed",
+          "description": "bulk data uri",
+          "extensions": {}
+        },
+        {
+          "id": "attributes.inline_binary",
+          "name": "inline_binary",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "absent-allowed",
+          "description": "inline binary",
+          "extensions": {}
+        },
+        {
+          "id": "attributes.native_json",
+          "name": "native_json",
+          "kind": "field",
+          "scalarType": "string",
+          "cardinality": "one",
+          "nullability": "required",
+          "description": "native json",
+          "extensions": {}
+        }
+      ],
+      "relationships": [
+        {
+          "id": "attributes.source_id",
+          "name": "attributes.source_id",
+          "source": [
+            {
+              "module": "domain",
+              "element": "attributes"
+            }
+          ],
+          "target": [
+            {
+              "module": "domain",
+              "element": "instances",
+              "key": "identity"
+            }
+          ],
+          "sourceMultiplicity": {
+            "min": 0,
+            "max": "*"
+          },
+          "targetMultiplicity": {
+            "min": 1,
+            "max": 1
+          },
+          "targetLifecycle": "independent",
+          "directed": true
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 10138,
+        "line": 15,
+        "path": "src/core-ideals/cardinality-sqlserver-projection.ts",
+        "sha256": "691c1443a7f2f2bd7a7e3ba513253aac651102332838b101d831ff14c4481d67"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "CardinalitySqlServerProjection",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface CardinalitySqlServerProjection {\n operation:'project-cardinality-sqlserver';version:'1.0.0';status:'projected'|'blocked';source:Document;author:CoreCardinalityDeclaration;request:CardinalitySqlServerRequest;target?:{format:'sqlserver-ddl';sql:string};nativeSql?:string;diagnostics:Diagnostic[];binding:typeof binding;\n mapping:{origin:'authored';cardinality:'one'|'array'|'map'|'unspecified';encoding:'scalar'|'json-array'|'json-object'|'carrier-only';basis:'Explicit author declaration and selected native carrier; residuals qualify unrepresented obligations';idealPath:string;nativePath:'/sql';outcome:'exact'|'approximated'|'unknown'|'not-expressible'};\n residuals:{path:string;value:Json;reason:string;outcome:'approximated'|'unknown'|'not-expressible';recovery:'Recover source meaning with retained projection receipt; native-only import does not recover author intent'}[];\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"CardinalitySqlServerProjection\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 10138,
+      "line": 15,
+      "path": "src/core-ideals/cardinality-sqlserver-projection.ts",
+      "sha256": "691c1443a7f2f2bd7a7e3ba513253aac651102332838b101d831ff14c4481d67"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/cardinality-sqlserver-projection.ts",
+  "title": "CardinalitySqlServerProjection"
+}

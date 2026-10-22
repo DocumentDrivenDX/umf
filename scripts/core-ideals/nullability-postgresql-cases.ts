@@ -1,15 +1,16 @@
-import {importPostgresqlCatalogCapture,getPostgresqlColumnMetadata} from '../../src/adapters/postgresql/catalog';
-import {upgradeFieldEnvelope} from '../../src/model/field-transition';
-import {upgradeNullabilityEnvelope} from '../../src/model/nullability-transition';
+// SPDX-License-Identifier: MIT OR Apache-2.0
+import {importPostgresqlCatalogCapture, getPostgresqlColumnMetadata} from '../../src/adapters/postgresql/catalog';
+
+
 import {classifyPostgresqlField} from '../../src/core-ideals/postgresql-field';
 import type {PostgresqlNullabilityRequest} from '../../src/core-ideals/nullability-postgresql';
 import type {Nullability} from '../../src/model/types';
 export function postgresqlAvailabilitySource(nativeSource:string,relation:string,column='value'){
- const fields=upgradeFieldEnvelope(importPostgresqlCatalogCapture(nativeSource,{id:'nullability-classification'})).target;
+ const fields=importPostgresqlCatalogCapture(nativeSource,{id:'nullability-classification'});
  const metadata=getPostgresqlColumnMetadata(fields).find(c=>c.relation.schema==='availability'&&c.relation.name===relation&&c.element.name===column);
  if(!metadata)throw Error('Missing column: '+relation+'.'+column);
  const field=classifyPostgresqlField(fields,{nativeSource,column:metadata.path,mode:'strict'});
- return {source:upgradeNullabilityEnvelope(field.target!).target,column:metadata.path};
+ return {source:field.target!,column:metadata.path};
 }
 export function postgresqlNullabilityCases(nativeSource:string){
  const declared:Record<string,Nullability>={plain:'absent-allowed',required:'required',identity_value:'required'};

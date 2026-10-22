@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 11705,
+        "line": 87,
+        "path": "src/core-ideals/key-postgresql.ts",
+        "sha256": "e186e5918f65b4406a31e1c384c97577b69c037d332cec57b8a1a5a64a7e2af6"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "verifyPostgresqlKeyClassification",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: PostgresqlKeyClassification, current: Document, backend: PostgresqlBackend): Promise<PostgresqlKeyClassification>"
+    ]
+  },
+  "id": "[\"api\",\".\",\"verifyPostgresqlKeyClassification\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 11705,
+      "line": 87,
+      "path": "src/core-ideals/key-postgresql.ts",
+      "sha256": "e186e5918f65b4406a31e1c384c97577b69c037d332cec57b8a1a5a64a7e2af6"
+    }
+  ],
+  "summary": "Public export · src/core-ideals/key-postgresql.ts",
+  "title": "verifyPostgresqlKeyClassification"
+}

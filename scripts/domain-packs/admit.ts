@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {readJsonValue} from '../../src/model/serialization';
 import {ontology} from './ontology';
 /** Host-only profile and ontology admission for the portable graph projector. */

@@ -1,0 +1,50 @@
+{
+  "data": {
+    "conflicts": [],
+    "correspondence": "unassessed",
+    "declarations": [
+      {
+        "bytes": 6377,
+        "path": "spec/extensions/avro-relationships/package.json",
+        "sha256": "d0a9b79209a06b57d283b3a0d6bb5efa92339b73de8b6d02f7b29a82937055a5"
+      }
+    ],
+    "evidence": [],
+    "operation": {
+      "apiNames": [],
+      "coreProfiles": [],
+      "extensionVersions": [],
+      "fixturePaths": [],
+      "id": "umf.avro.relationships@1.0.0:import",
+      "kind": "import",
+      "limitations": [
+        "Recorded scope only; native equivalence and production adoption are separate."
+      ],
+      "runtime": {
+        "availability": "host-only",
+        "profileId": "umf.avro.relationships@1.0.0:import",
+        "requirements": [
+          "Native runtime / original qualification harness; not executed by this page."
+        ]
+      },
+      "sourceSystem": "Apache Avro · 1.12.0",
+      "subset": "Structural observations informed by Apache Avro 1.12.0 and fastavro 1.12.2 discovery; no name resolution, native validity certification, authored association inference or native equivalence",
+      "targetSystem": "UMF",
+      "title": "umf.avro.relationships · import"
+    }
+  },
+  "id": "[\"integration\",\"umf.avro.relationships@1.0.0:import\"]",
+  "kind": "integration",
+  "links": [
+    "[\"extension\",\"umf.avro.relationships\",\"1.0.0\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 134795,
+      "path": "docs/helix/05-deploy/reference/operations.json",
+      "sha256": "793743bbca36e56e90e82df5ef0408b628c434e58cb68aea4d6486349be78e61"
+    }
+  ],
+  "summary": "Structural observations informed by Apache Avro 1.12.0 and fastavro 1.12.2 discovery; no name resolution, native validity certification, authored association inference or native equivalence",
+  "title": "umf.avro.relationships · import"
+}

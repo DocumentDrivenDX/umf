@@ -1,0 +1,2476 @@
+{
+  "profile": "umf-security-main-identity-migration/0.1",
+  "baseMain": "d2ef29e267eafcb6bae28efd3c7974754c1d0b23",
+  "legacySecuritySourceBase": "9e4bed3e",
+  "mappings": {
+    "US-055": "US-079",
+    "TD-055": "TD-079",
+    "STP-055": "STP-079",
+    "CONTRACT-052": "CONTRACT-062",
+    "CONTRACT-053": "CONTRACT-063",
+    "FR-45": "FR-46"
+  },
+  "qualification": "Aliases apply only to the legacy security artifact paths/preimage digests, never globally to main medical/domain IDs. Historical evidence bytes remain unchanged and do not qualify integrated source. Original132 case IDs and acceptance gate remain unchanged; live criterion citations migrate explicitly. Pre-existing main CONTRACT050/058 collisions are separate.",
+  "changes": [
+    {
+      "oldPath": "docs/helix/01-frame/features/FEAT-008-shared-security.md",
+      "newPath": "docs/helix/01-frame/features/FEAT-008-shared-security.md",
+      "beforeSha256": "a7b5c1d131d5f62e0e8d124934abb4f0d4c7afab255c664bcc95fdcb61aa3ae0",
+      "afterSha256": "059de646e52c764c5f52da056b421da6b92b6ec06a5f8eef30a2a7f3e3243a3b",
+      "preimage": "docs/helix/04-build/evidence/security/main-integration/identity-migration-preimages/docs/helix/01-frame/features/FEAT-008-shared-security.md.original.txt"
+    },
+    {
+      "oldPath": "docs/helix/01-frame/user-stories/US-055-security-semantics.md",
+      "newPath": "docs/helix/01-frame/user-stories/US-079-security-semantics.md",
+      "beforeSha256": "cab8a06e7f0aa0bd4051d8605b8e7135c1f6f4ec65729372e41f2be193e3f7f7",
+      "afterSha256": "22350481cca305282d837d2da6bc8a0bd6ff0d7d335e8fd2b754b79ad532a67f",
+      "preimage": "docs/helix/04-build/evidence/security/main-integration/identity-migration-preimages/docs/helix/01-frame/user-stories/US-055-security-semantics.md.original.txt"
+    },
+    {
+      "oldPath": "docs/helix/01-frame/user-stories/US-057-security-lifecycle.md",
+      "newPath": "docs/helix/01-frame/user-stories/US-057-security-lifecycle.md",
+      "beforeSha256": "dd386a619042ca2c69167651e7cf150f5a1785e5f884ece274ea579f4e54a5e6",
+      "afterSha256": "cb1cebdd91512a4d0bc3f6e0b50455f3de1b255583abad2ff09e57976f1204d4",
+      "preimage": "docs/helix/04-build/evidence/security/main-integration/identity-migration-preimages/docs/helix/01-frame/user-stories/US-057-security-lifecycle.md.original.txt"
+    },
+    {
+      "oldPath": "docs/helix/01-frame/user-stories/US-056-security-bindings.md",
+      "newPath": "docs/helix/01-frame/user-stories/US-056-security-bindings.md",
+      "beforeSha256": "308c3be4ebd0caf369900f3ed187a4f7f76434af1a93243a01689bb69147b574",
+      "afterSha256": "c11ecdec8e6b429e7bef2f60d2a9faa42ee0699bc5f0d1627f76d9b486f91171",
+      "preimage": "docs/helix/04-build/evidence/security/main-integration/identity-migration-preimages/docs/helix/01-frame/user-stories/US-056-security-bindings.md.original.txt"
+    },
+    {
+      "oldPath": "docs/helix/02-design/contracts/CONTRACT-052-security-semantics.md",
+      "newPath": "docs/helix/02-design/contracts/CONTRACT-062-security-semantics.md",
+      "beforeSha256": "f5fb7b8eaa9f993040e99efbda53b1159586debf5662866d62dee139148b31b1",
+      "afterSha256": "6308b06510766b162bfa6eb6e410784f98ed2959a736ca29c51a1ddb4f40193a",
+      "preimage": "docs/helix/04-build/evidence/security/main-integration/identity-migration-preimages/docs/helix/02-design/contracts/CONTRACT-052-security-semantics.md.original.txt"
+    },
+    {
+      "oldPath": "docs/helix/02-design/contracts/CONTRACT-053-security-enforcement.md",
+      "newPath": "docs/helix/02-design/contracts/CONTRACT-063-security-enforcement.md",
+      "beforeSha256": "0c63c0636d272324c22b2b35bae0806453fca3fde93b419eb89358450a9382c2",
+      "afterSha256": "634f3d1d456b81616f4e0f7ecab4d57424dec430de1d6882f8886a593145c341",
+      "preimage": "docs/helix/04-build/evidence/security/main-integration/identity-migration-preimages/docs/helix/02-design/contracts/CONTRACT-053-security-enforcement.md.original.txt"
+    },
+    {
+      "oldPath": "docs/helix/02-design/spikes/SPIKE-009-security-relationship-selectors.md",
+      "newPath": "docs/helix/02-design/spikes/SPIKE-009-security-relationship-selectors.md",
+      "beforeSha256": "65accc12b3e484d5a85291fbc654dbbb299da3ae45c37f44f697d9e6f91c65e7",
+      "afterSha256": "2e5355d849586a40a0e0a1f793024b6b8da59f2e154ed4bea067205c05964dad",
+      "preimage": "docs/helix/04-build/evidence/security/main-integration/identity-migration-preimages/docs/helix/02-design/spikes/SPIKE-009-security-relationship-selectors.md.original.txt"
+    },
+    {
+      "oldPath": "docs/helix/02-design/spikes/SPIKE-010-security-result-coverage.md",
+      "newPath": "docs/helix/02-design/spikes/SPIKE-010-security-result-coverage.md",
+      "beforeSha256": "f9d151f9e6518bc6c800198c9c507fc5163775df263498b4774fee867a670db1",
+      "afterSha256": "0cfc6cfa5ce4ac361f1253101a4aae9f555a6be3127acace959f865dc99651be",
+      "preimage": "docs/helix/04-build/evidence/security/main-integration/identity-migration-preimages/docs/helix/02-design/spikes/SPIKE-010-security-result-coverage.md.original.txt"
+    },
+    {
+      "oldPath": "docs/helix/02-design/spikes/security/pg-planner-observation-v0.1.md",
+      "newPath": "docs/helix/02-design/spikes/security/pg-planner-observation-v0.1.md",
+      "beforeSha256": "5a3249f85eb0fec2e161eb405af04e76e43a5c7363dadc8a3ca9950390c4592a",
+      "afterSha256": "3fba2cb59bdb876ca1ab414d62ab5aa1825836986f1f4e8a9ce716b889c87f60",
+      "preimage": "docs/helix/04-build/evidence/security/main-integration/identity-migration-preimages/docs/helix/02-design/spikes/security/pg-planner-observation-v0.1.md.original.txt"
+    },
+    {
+      "oldPath": "docs/helix/02-design/spikes/security/backend-requirement-issuer-v0.2.md",
+      "newPath": "docs/helix/02-design/spikes/security/backend-requirement-issuer-v0.2.md",
+      "beforeSha256": "b95cb76f7cdf746d5283e5df60c7befbc22055f96eece8c7896da966b9889e8e",
+      "afterSha256": "f971b57cbc8666312af7dd93a998b59150f743378096a13b6f4d5d4023aaa1bc",
+      "preimage": "docs/helix/04-build/evidence/security/main-integration/identity-migration-preimages/docs/helix/02-design/spikes/security/backend-requirement-issuer-v0.2.md.original.txt"
+    },
+    {
+      "oldPath": "docs/helix/02-design/spikes/security/native.py",
+      "newPath": "docs/helix/02-design/spikes/security/native.py",
+      "beforeSha256": "0a8521cab89117d0733b2531de45e031649db03eec8cf209c28b277f97f2d919",
+      "afterSha256": "89251ae7c9604f63f34d0656a52096cf351844e3df4d8024d54b763d0b44be37",
+      "preimage": "docs/helix/04-build/evidence/security/main-integration/identity-migration-preimages/docs/helix/02-design/spikes/security/native.py.original.txt"
+    },
+    {
+      "oldPath": "docs/helix/02-design/spikes/security/scoped-obligation-matching-v0.2.md",
+      "newPath": "docs/helix/02-design/spikes/security/scoped-obligation-matching-v0.2.md",
+      "beforeSha256": "a5de8840a02bb0d919a4fd3cb0c11cfd569c3c1e6ecf278c2bba6b040f039ecf",
+      "afterSha256": "1927f5688234af4ca5ca849208b7f21c87e7ce9221ac217ca06052e44967bd25",
+      "preimage": "docs/helix/04-build/evidence/security/main-integration/identity-migration-preimages/docs/helix/02-design/spikes/security/scoped-obligation-matching-v0.2.md.original.txt"
+    },
+    {
+      "oldPath": "docs/helix/02-design/spikes/security/browser.ts",
+      "newPath": "docs/helix/02-design/spikes/security/browser.ts",
+      "beforeSha256": "614267cd28a1f5bf85921b1d3ba6734e2d8ae4619d380ba51ffd9e223aa7cd71",
+      "afterSha256": "48d6c7fc0fa9e76c2f7b3dcc58475674143c35916430c6bfa606f6b20cc31263",
+      "preimage": "docs/helix/04-build/evidence/security/main-integration/identity-migration-preimages/docs/helix/02-design/spikes/security/browser.ts.original.txt"
+    },
+    {
+      "oldPath": "docs/helix/02-design/spikes/security/README.md",
+      "newPath": "docs/helix/02-design/spikes/security/README.md",
+      "beforeSha256": "606ba104b54b66805543d46a6ad83efafb9a2d61a5a86046cde082d4938fb0e6",
+      "afterSha256": "a2bd52028f2623ef014581f009dd49fcf245fac0896e830c92ada1761ad7baa2",
+      "preimage": "docs/helix/04-build/evidence/security/main-integration/identity-migration-preimages/docs/helix/02-design/spikes/security/README.md.original.txt"
+    },
+    {
+      "oldPath": "docs/helix/02-design/spikes/security/prove.py",
+      "newPath": "docs/helix/02-design/spikes/security/prove.py",
+      "beforeSha256": "6bd069c0d11dea43a3bad43be92523fcaa14ccac9beca92e1f18b03d572b2bd1",
+      "afterSha256": "2ec99fc12e5127a345350d522f4b86e1b0d16f8a687c3e897af55ca860519a03",
+      "preimage": "docs/helix/04-build/evidence/security/main-integration/identity-migration-preimages/docs/helix/02-design/spikes/security/prove.py.original.txt"
+    },
+    {
+      "oldPath": "docs/helix/02-design/spikes/security/semantic.test.ts",
+      "newPath": "docs/helix/02-design/spikes/security/semantic.test.ts",
+      "beforeSha256": "20533de67a752fca8c391b9b0339e35400ee48b6a693c3328b5cb8ef5942ee8c",
+      "afterSha256": "8aef96baa8dda2d75e673db2636c6fa44e41ec566292c9584bd30643747e1143",
+      "preimage": "docs/helix/04-build/evidence/security/main-integration/identity-migration-preimages/docs/helix/02-design/spikes/security/semantic.test.ts.original.txt"
+    },
+    {
+      "oldPath": "docs/helix/02-design/solution-designs/SD-008-shared-security.md",
+      "newPath": "docs/helix/02-design/solution-designs/SD-008-shared-security.md",
+      "beforeSha256": "0206eb22e285e34de046630c3656017442a0a02b735e3dbe64433e92c4a109fa",
+      "afterSha256": "5139c544713eb052c01fa549116b42f041dcbbf6f88123a5d3f573bee447441c",
+      "preimage": "docs/helix/04-build/evidence/security/main-integration/identity-migration-preimages/docs/helix/02-design/solution-designs/SD-008-shared-security.md.original.txt"
+    },
+    {
+      "oldPath": "docs/helix/02-design/technical-designs/TD-057-security-lifecycle.md",
+      "newPath": "docs/helix/02-design/technical-designs/TD-057-security-lifecycle.md",
+      "beforeSha256": "c091fa012c5872a3ee9503fea7402d5c37388976caab6a1e2410ae68fa23aba6",
+      "afterSha256": "ba691a89a147c40f832ece5fbc900334e4ca4c197386d7cd4d1cc67ece722f1b",
+      "preimage": "docs/helix/04-build/evidence/security/main-integration/identity-migration-preimages/docs/helix/02-design/technical-designs/TD-057-security-lifecycle.md.original.txt"
+    },
+    {
+      "oldPath": "docs/helix/02-design/technical-designs/TD-055-security-semantics.md",
+      "newPath": "docs/helix/02-design/technical-designs/TD-079-security-semantics.md",
+      "beforeSha256": "2843df0b2824e82179e3929afd40f086c21a2cc2ac84b69076d5b65f69a27522",
+      "afterSha256": "e3610e988d99c072f3efb3d2bab564d87a97a6be6cfe40ef43643ef069013d43",
+      "preimage": "docs/helix/04-build/evidence/security/main-integration/identity-migration-preimages/docs/helix/02-design/technical-designs/TD-055-security-semantics.md.original.txt"
+    },
+    {
+      "oldPath": "docs/helix/02-design/technical-designs/TD-056-security-bindings.md",
+      "newPath": "docs/helix/02-design/technical-designs/TD-056-security-bindings.md",
+      "beforeSha256": "83bdc11190765fe4d4a17ec9b540a30df05bed49964c4d54a3d5ee99b0344b75",
+      "afterSha256": "d238c7dda0cc46abfc31db6110253bd3ff66113c0c8f9628eabbf7b8059ed6c8",
+      "preimage": "docs/helix/04-build/evidence/security/main-integration/identity-migration-preimages/docs/helix/02-design/technical-designs/TD-056-security-bindings.md.original.txt"
+    },
+    {
+      "oldPath": "docs/helix/03-test/security/delta-raw.md",
+      "newPath": "docs/helix/03-test/security/delta-raw.md",
+      "beforeSha256": "cdcc9860fc0eb449b048e0cd37171f60a4c667744a41506ef1b34dc70bc2074c",
+      "afterSha256": "45028289869b66c41f6fe3982937c3c9e534818b41cde533b4a406ec2450867b",
+      "preimage": "docs/helix/04-build/evidence/security/main-integration/identity-migration-preimages/docs/helix/03-test/security/delta-raw.md.original.txt"
+    },
+    {
+      "oldPath": "docs/helix/03-test/security/pg-raw.md",
+      "newPath": "docs/helix/03-test/security/pg-raw.md",
+      "beforeSha256": "e94ea81d832a1ef36b263295b4a55eb9680d3b578f655dc0a3735220f2564551",
+      "afterSha256": "c54de7d2e4bdb4b2bd33645c96385878de01e8b78aec554234060339e0af2531",
+      "preimage": "docs/helix/04-build/evidence/security/main-integration/identity-migration-preimages/docs/helix/03-test/security/pg-raw.md.original.txt"
+    },
+    {
+      "oldPath": "docs/helix/03-test/security/ashlar.md",
+      "newPath": "docs/helix/03-test/security/ashlar.md",
+      "beforeSha256": "6e853f04930ff2464de5de0caeffd3fd296a4c5ffdf245108f7f3b3ff45d3149",
+      "afterSha256": "e9f307707f866f1a22a839bb06c0062976a7551bf6994b5fb34189b9975214fe",
+      "preimage": "docs/helix/04-build/evidence/security/main-integration/identity-migration-preimages/docs/helix/03-test/security/ashlar.md.original.txt"
+    },
+    {
+      "oldPath": "docs/helix/03-test/security/cases.json",
+      "newPath": "docs/helix/03-test/security/cases.json",
+      "beforeSha256": "71eb930c78ad5e63e35c2b343a276ee5d78e9a38fe3ce78b840f81384fe4d2aa",
+      "afterSha256": "37308740d5d8b57f6f4647c1a44feee71cbfde02d8f5bee1334299654a610ba9",
+      "preimage": "docs/helix/04-build/evidence/security/main-integration/identity-migration-preimages/docs/helix/03-test/security/cases.json.original.txt"
+    },
+    {
+      "oldPath": "docs/helix/03-test/security/truss.md",
+      "newPath": "docs/helix/03-test/security/truss.md",
+      "beforeSha256": "84d71b483736dc7558956f4a6b45d95df94cac0ab35be8deba75a62ec8f4a24d",
+      "afterSha256": "ed4109b99ed30d80f2c88c197dfa6138255a1be8b74bd0ff8a96c3e249488ecb",
+      "preimage": "docs/helix/04-build/evidence/security/main-integration/identity-migration-preimages/docs/helix/03-test/security/truss.md.original.txt"
+    },
+    {
+      "oldPath": "docs/helix/03-test/test-plans/STP-055-security-semantics.md",
+      "newPath": "docs/helix/03-test/test-plans/STP-079-security-semantics.md",
+      "beforeSha256": "7ccb25ab629d1a07d638317c7ea1f6acb0a93be5d9a74fd6cb35875972928a9d",
+      "afterSha256": "a21b9ed4cb323a96cab25bbcb37908c93cbdfed6cda799a2dd73af0974b0258b",
+      "preimage": "docs/helix/04-build/evidence/security/main-integration/identity-migration-preimages/docs/helix/03-test/test-plans/STP-055-security-semantics.md.original.txt"
+    },
+    {
+      "oldPath": "src/extensions/security/logic.ts",
+      "newPath": "src/extensions/security/logic.ts",
+      "beforeSha256": "66cd7c1c754698322422fd97f1a8ddd2babfa6095a96ea52a1485b86b457adf8",
+      "afterSha256": "a143cbc1090b7bc187f139e05cd0c181872f4da8a6ce2c510073c0a9d70b5300",
+      "preimage": "docs/helix/04-build/evidence/security/main-integration/identity-migration-preimages/src/extensions/security/logic.ts.original.txt"
+    },
+    {
+      "oldPath": "spec/extensions/security/package.json",
+      "newPath": "spec/extensions/security/package.json",
+      "beforeSha256": "6e47d79862a7b1b9d6cd83327bd00bf576d88285b443ac993b6f85bded9beff0",
+      "afterSha256": "8bb3020ef3597a087052765dad5ab8716c5490329fbce7d054d8f281837d286a",
+      "preimage": "docs/helix/04-build/evidence/security/main-integration/identity-migration-preimages/spec/extensions/security/package.json.original.txt"
+    },
+    {
+      "oldPath": "tests/security/formal-acceptance.py",
+      "newPath": "tests/security/formal-acceptance.py",
+      "beforeSha256": "0bf0cf8bf9df74be5eb2337b506b040729542dd5e0a9cca729f25f61dd85374d",
+      "afterSha256": "d93f56a9eceed8e9efbd8baedd7c6997328d03a37b93403acf99a1055b03b709",
+      "preimage": "docs/helix/04-build/evidence/security/main-integration/identity-migration-preimages/tests/security/formal-acceptance.py.original.txt"
+    },
+    {
+      "oldPath": "tests/security/registration.test.ts",
+      "newPath": "tests/security/registration.test.ts",
+      "beforeSha256": "cc6d313a5d9958345ec37a6841e19009920df23116e54ec648273722c891db51",
+      "afterSha256": "d06993686d6a6d9099c165b78995221894bf6b51844185f472fb90af36b26583",
+      "preimage": "docs/helix/04-build/evidence/security/main-integration/identity-migration-preimages/tests/security/registration.test.ts.original.txt"
+    },
+    {
+      "oldPath": "tests/security/policy.test.ts",
+      "newPath": "tests/security/policy.test.ts",
+      "beforeSha256": "0de64b8a95d9a314b7c6fd66b43cf545c5e933fe40489bfe9f170c013afe9da4",
+      "afterSha256": "dd4e9db4bd7da40b04b0353c3b19965b12f514604624dca5fcab0fe97d8a4f2f",
+      "preimage": "docs/helix/04-build/evidence/security/main-integration/identity-migration-preimages/tests/security/policy.test.ts.original.txt"
+    },
+    {
+      "oldPath": "tests/security/evaluate.test.ts",
+      "newPath": "tests/security/evaluate.test.ts",
+      "beforeSha256": "ca7481c5ef243178306f3b64d849668aa21f6c37baa8ffff573cc31b9550564e",
+      "afterSha256": "87be098c70e6d01cf09d26cf2ad33bf3a15e41aba5bed605563b11c803e33ca9",
+      "preimage": "docs/helix/04-build/evidence/security/main-integration/identity-migration-preimages/tests/security/evaluate.test.ts.original.txt"
+    },
+    {
+      "oldPath": "tests/security/logic.test.ts",
+      "newPath": "tests/security/logic.test.ts",
+      "beforeSha256": "b71dbadec94b91a7ea1e6e5654c79e819fb632bb5bc865587ebd8f81ad92da99",
+      "afterSha256": "736686af1e972b843fe3f4c0d81ecf0b8ac8790a00c046a1820aae119f0bb0f1",
+      "preimage": "docs/helix/04-build/evidence/security/main-integration/identity-migration-preimages/tests/security/logic.test.ts.original.txt"
+    },
+    {
+      "oldPath": "tests/security/acceptance-case.ts",
+      "newPath": "tests/security/acceptance-case.ts",
+      "beforeSha256": "e32ac60407a84d82d14ccf51e1bf9aacfaf1b99de1cd6c54d8ee0dea5b36716e",
+      "afterSha256": "7ae8484e6c60dc1aa6ca6383b4d2b08eefc262480358c1b4abef9b9f0d873af4",
+      "preimage": "docs/helix/04-build/evidence/security/main-integration/identity-migration-preimages/tests/security/acceptance-case.ts.original.txt"
+    },
+    {
+      "oldPath": "tests/security/dependencies.test.ts",
+      "newPath": "tests/security/dependencies.test.ts",
+      "beforeSha256": "127941e0545a19ae17457843eedbf0be1594b33ab370ef5cc6ff206628eeea7a",
+      "afterSha256": "b08296ac84861ddbd67bb72cabd0b1616729b8f0acc123513f22c9927c80fcbf",
+      "preimage": "docs/helix/04-build/evidence/security/main-integration/identity-migration-preimages/tests/security/dependencies.test.ts.original.txt"
+    },
+    {
+      "oldPath": "tools/security/prove-multipublisher-custody.py",
+      "newPath": "tools/security/prove-multipublisher-custody.py",
+      "beforeSha256": "995ec1119196f2ca103b6a695c5458fe4d6ead93bfe699c3c34cc4d3ce050d92",
+      "afterSha256": "941e505e91fee02e76df6e9d95638ae09c8a9e5f29042c166b57b91625a362a8",
+      "preimage": "docs/helix/04-build/evidence/security/main-integration/identity-migration-preimages/tools/security/prove-multipublisher-custody.py.original.txt"
+    },
+    {
+      "oldPath": "tools/security/prove-persistent-publication.py",
+      "newPath": "tools/security/prove-persistent-publication.py",
+      "beforeSha256": "1a68fea22a46ffcf7658ed7ee43bbab2e6b2c032731ec308b930c99a836dcba7",
+      "afterSha256": "da6d84ee69a4f92e12d3304f83a0cb04c9781dcb7bcd4bf7f76e99f4a4e79d7c",
+      "preimage": "docs/helix/04-build/evidence/security/main-integration/identity-migration-preimages/tools/security/prove-persistent-publication.py.original.txt"
+    },
+    {
+      "oldPath": "tools/security/browser.ts",
+      "newPath": "tools/security/browser.ts",
+      "beforeSha256": "eb4d7a2bc0c445ca567dd55baa3fa9aa27d5fe7b56b0b98c83f98fc082565a4b",
+      "afterSha256": "95d0c474bc1d493d0da0197c84a618a0755662144901e0e4b9340f27070d920b",
+      "preimage": "docs/helix/04-build/evidence/security/main-integration/identity-migration-preimages/tools/security/browser.ts.original.txt"
+    },
+    {
+      "oldPath": "tools/security/prove-publisher-state.py",
+      "newPath": "tools/security/prove-publisher-state.py",
+      "beforeSha256": "199d54ef794088cfd94eab613fa7679027d0dadd289faea4e040e6b168849052",
+      "afterSha256": "a9dda5976b90eddea48cc39cba6ac242d5785460f88a0d06039f754b3a441f2e",
+      "preimage": "docs/helix/04-build/evidence/security/main-integration/identity-migration-preimages/tools/security/prove-publisher-state.py.original.txt"
+    },
+    {
+      "oldPath": "tools/security/prove-graph-endpoints.py",
+      "newPath": "tools/security/prove-graph-endpoints.py",
+      "beforeSha256": "6484d8adc723763db8d179d0ef9e78985652e4a9e5b6cc8e48061e26c45c7a03",
+      "afterSha256": "2ba805d44935a29402904b9659314a9442f12948b6ebcf5aebbaf1d04c52ee3e",
+      "preimage": "docs/helix/04-build/evidence/security/main-integration/identity-migration-preimages/tools/security/prove-graph-endpoints.py.original.txt"
+    },
+    {
+      "oldPath": "tools/security/prove-result-envelope.py",
+      "newPath": "tools/security/prove-result-envelope.py",
+      "beforeSha256": "4b028ded6ea8feefb6d887f3413d30d4bbc159b0667979feea14d1a4b4ea7272",
+      "afterSha256": "bc804ee654c588603326868afc4b0d2c2c3202e2c523f137145f9a7668920448",
+      "preimage": "docs/helix/04-build/evidence/security/main-integration/identity-migration-preimages/tools/security/prove-result-envelope.py.original.txt"
+    },
+    {
+      "oldPath": "tools/security/prove-candidate-disclosure-fold.py",
+      "newPath": "tools/security/prove-candidate-disclosure-fold.py",
+      "beforeSha256": "e0e965a0bd09def11338170f3a737c7f7c05892883fc663a1d196d00fe57c172",
+      "afterSha256": "9ccef606a7e4a0a52fd6d8e33e397b3501ebbf7f0df9abdb6379a880fd1a9d66",
+      "preimage": "docs/helix/04-build/evidence/security/main-integration/identity-migration-preimages/tools/security/prove-candidate-disclosure-fold.py.original.txt"
+    },
+    {
+      "oldPath": "tools/security/prove-policy-activation.py",
+      "newPath": "tools/security/prove-policy-activation.py",
+      "beforeSha256": "3f0bce002bcc0cd01a215dd17f993be89b9e9e235ca279af877d4c10944da42e",
+      "afterSha256": "4e1f916793c8d58009474cc3d3f787013efc1b38691ceabc6559a09ce1b92660",
+      "preimage": "docs/helix/04-build/evidence/security/main-integration/identity-migration-preimages/tools/security/prove-policy-activation.py.original.txt"
+    },
+    {
+      "oldPath": "tools/security/prove-original-graph-ir.py",
+      "newPath": "tools/security/prove-original-graph-ir.py",
+      "beforeSha256": "c05ebd2bf01d9486ed44d8eadd55c4651680a5de9476756ebcce8fcdfecc8bb1",
+      "afterSha256": "2a61a99c3ce86f27052c3b7213e676d51324e56247ed4ac40a2179f548caf501",
+      "preimage": "docs/helix/04-build/evidence/security/main-integration/identity-migration-preimages/tools/security/prove-original-graph-ir.py.original.txt"
+    },
+    {
+      "oldPath": "tools/security/gate-receipt-regression.py",
+      "newPath": "tools/security/gate-receipt-regression.py",
+      "beforeSha256": "7feceb22adaf16e136d509fe7c9ceb224a970ab3d1a2f997e1016190e0fc7c5a",
+      "afterSha256": "a80bce9635e29aa2aae4664d51255e304665804cafab85f218ddfdbc5e43bec1",
+      "preimage": "docs/helix/04-build/evidence/security/main-integration/identity-migration-preimages/tools/security/gate-receipt-regression.py.original.txt"
+    },
+    {
+      "oldPath": "tests/traceability/acceptance-ledger.test.ts",
+      "newPath": "tests/traceability/acceptance-ledger.test.ts",
+      "beforeSha256": "3cb599e900fb46f3b906828bd678b913ac3173c124e0479f62facd243da0a207",
+      "afterSha256": "d5dc513a85f49da7bd504c925add41de6f98b89a5f4a065fb63c94bd7e05df50",
+      "preimage": "docs/helix/04-build/evidence/security/main-integration/identity-migration-preimages/tests/traceability/acceptance-ledger.test.ts.original.txt"
+    },
+    {
+      "oldPath": "docs/helix/01-frame/prd.md",
+      "newPath": "docs/helix/01-frame/prd.md",
+      "beforeSha256": "2e5d5854c1aef2292e70a324b3912ba59605db8692e8000c1c5fc1f52caf5571",
+      "afterSha256": "bb597e9931f3da9b9b0d816bdfd550e09de1d17861a2baadb639e531a9da0db4",
+      "preimage": "docs/helix/04-build/evidence/security/main-integration/identity-migration-preimages/docs/helix/01-frame/prd.md.original.txt"
+    },
+    {
+      "oldPath": "docs/helix/03-test/test-plan.md",
+      "newPath": "docs/helix/03-test/test-plan.md",
+      "beforeSha256": "9f0bcbff23125bb614b00a29896be92e06c1f28264ee3f56df5f0c91b9e526fe",
+      "afterSha256": "734fd740b70cd732b3b9bca262b734d1219c9312e919f414576852c94e4b4a5f",
+      "preimage": "docs/helix/04-build/evidence/security/main-integration/identity-migration-preimages/docs/helix/03-test/test-plan.md.original.txt"
+    },
+    {
+      "oldPath": "docs/helix/04-build/implementation-plan.md",
+      "newPath": "docs/helix/04-build/implementation-plan.md",
+      "beforeSha256": "80424405168ffb33b36478996625ad06ad3abaff6dbf8f29f37ea95f4da97b77",
+      "afterSha256": "dc3233aacb045dd6337762b00fb697bc2868b6b43544bed66bed2c2d76130d57",
+      "preimage": "docs/helix/04-build/evidence/security/main-integration/identity-migration-preimages/docs/helix/04-build/implementation-plan.md.original.txt"
+    },
+    {
+      "oldPath": "docs/helix/README.md",
+      "newPath": "docs/helix/README.md",
+      "beforeSha256": "09f688432d9645cb0390d2325cfd4adce08d78b81bdf21e5783681a799790c64",
+      "afterSha256": "1d918494ee0cab093391bdb63560306bb4ee5095dc9c0a2fbe66a2c4b5f6ed28",
+      "preimage": "docs/helix/04-build/evidence/security/main-integration/identity-migration-preimages/docs/helix/README.md.original.txt"
+    }
+  ],
+  "caseInvariant": {
+    "originalCases": 132,
+    "retainedCaseIds": true,
+    "retainedRequiredFlagsAndAssertions": true,
+    "changes": "Only mapped criterion IDs, renamed contract source paths and runner contract citation change."
+  },
+  "historicalEvidence": [
+    {
+      "path": "docs/helix/04-build/evidence/security/rule-occurrences-astra-review.json",
+      "sha256": "d65273ca90b032d661d6beeabf91e86370d6756ca1293b56988282f4f7aee92b"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/owner-obligation-custody-astra-review-prior-d1a387864c9474be.json",
+      "sha256": "d1a387864c9474be9464d8f88f8652f9f9a9c13918f038ae9b313b114c5b16e2"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-4ef75529-79bc-412d-afa7-e6eef9c304a7-umf_sec_alice-changed-private-population.log",
+      "sha256": "7e014e90ba5b853fffd5298f9c0d280659c966e3f993cfed4c1784749948bb68"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/stored-key-await-counterexample.json",
+      "sha256": "669d977aa29798d1ff028ce07d85de4ebaca437feac1de793b8ea7b6fd67ca52"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-bfd3c74b-2a73-488f-99b5-2f7594d64c63-umf_sec_bob-weakened-debug_print_parse.log",
+      "sha256": "1fa3a4467e33df5d189a0600f731c815dc67d477e30833c57c8b1af38ad1409b"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/scale-fixed-deadline-954aac6b-5143-42d0-8ad4-38d7fc8ec5a3.jsonl",
+      "sha256": "00b3a4b7f7b53fa7ca1ec542f098dc181cbb40c204ddeb8b5ca34c19c1edb3ae"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/truss-query-typed-readiness.json",
+      "sha256": "f3ef1aa6af8ea99ad725f81cc3398dc940acb9c168f012887480801f8688bf01"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-bfd3c74b-2a73-488f-99b5-2f7594d64c63-umf_sec_alice-weakened-debug_print_plan.log",
+      "sha256": "46d6e579c8b531fc20e4267664d1fd0fbb3ea9b52533b3e8e619abcafd499899"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/stored-key-await-vulnerable.ts.txt",
+      "sha256": "4174bd415bacf51bae86db90598e294f1f23178813675b84806c26440082e502"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/acceptance-epoch-timeout.json",
+      "sha256": "ea9ab74d4cfb45c5f73e5fcc659149f593d35dfcb8fc0daad727df9c727d152a"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/candidate-disclosure-fold-formal.json",
+      "sha256": "23befc28eb3635ec2cbbd7637d1059a4abb3b4457328ea0b136c08606479c54c"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/original-cell-bridge-astra-review-prior-e1aa8707302275ae.json",
+      "sha256": "e1aa8707302275ae6cc343cfa25cdf95f5fbcd313f5bc4ccdaac6e54a8aabd8e"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-d4d4d286-861a-4034-89ab-8622d543b097-umf_sec_alice-weakened-debug_print_parse.log",
+      "sha256": "1fa3a4467e33df5d189a0600f731c815dc67d477e30833c57c8b1af38ad1409b"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-diagnostics.json",
+      "sha256": "c9885086abafc628554ac1c3e0535f68a2aa67cf0f67f33d86ced53b2d5ffc45"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-dad9db8a-47ee-45bc-baa7-8d0e329a08ff-umf_sec_bob-caller.log",
+      "sha256": "7adeb2f0e52cab62ae09f6b8ee66cda2d586de02a4c4f03ff513710e0998dfef"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-dad9db8a-47ee-45bc-baa7-8d0e329a08ff-umf_sec_outsider-weakened-debug_print_rewritten.log",
+      "sha256": "50880ab46b99ba732746dc8c09ade5e6440a39685120cf78f06b51ca10b4e5a3"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/type-selection-formal.json",
+      "sha256": "a30235e35c06d6cff7af7c189ba220b7fed71431cc24c6e67db9efb043385901"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/graph-key-correspondence-formal.json",
+      "sha256": "988f8fbd8fbeabc22b0966ede314c947bfb5822db72cfb42d2cbd6445e2ead73"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/owner-obligation-projection-astra-review-prior-52bf7ca5d28d196b.json",
+      "sha256": "52bf7ca5d28d196be56cafb393c844bf67711b62a5fb038df03e08c6ce646f3c"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/truss-type-selection.json",
+      "sha256": "43585c2562cae0c626b8b5a225a9bffe469d9496d664e22c8b444a09bc340e7f"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/regression.json",
+      "sha256": "7a7a4d688d431d1f0b0a9cfbb9d9600dcf89593a32ea1d69bc6f7b690d95603d"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/relationship-selector-spike.json",
+      "sha256": "401e96d72b9301fca081b637ddfec818b0193206a3d8e3d236e3ef42ffa35169"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/source-disposition-closure-formal.json",
+      "sha256": "40ac2d642f37b00c93089b86cdc7b536f85463ca9b625bfff00726dd9ed21678"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/original-preparation-acquisition-review-prior-26ce56d67c2f453e.json",
+      "sha256": "26ce56d67c2f453eb3f42c929f2b486015dc811fd65a77044fe09c79b191e79e"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/original-cell-bridge-astra-review-prior-31109fc4a74f0da5.json",
+      "sha256": "31109fc4a74f0da5e3ce96d488db0ca5fee4061c0e1dce4f3f6e0b4cea8a7f5e"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/multipublisher-custody-formal.json",
+      "sha256": "eb800aa8157e0b18903a1881b906cdc0698421bfb814651c8bc9deaa4bb8d394"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/typed-source-completeness-formal.json",
+      "sha256": "feb507f1754aba152fdd2445586071c41fa0c44cf2d731badf990465a6f55f60"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/scoped-obligation-matching-core.log",
+      "sha256": "6c69200d62d0502e42872f968decd8b4ec2b080204d5feeaa85854abc781b989"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/obligation-evidence-gate-astra-review.json",
+      "sha256": "dcbf2ea648ca59f195249648dafc10909796fc35481a32d743547626a27ad25d"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/owner-obligation-projection-astra-review.json",
+      "sha256": "8bcedf63ab7bd7a613d8199a2914d78ebc1149bddc433bb1d1591a72e272b923"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/b13-registration-json-order-failure.json",
+      "sha256": "8755a99463492337cd89520df3a048d8497ce7e05dfddc8534a5d1db0f3c6a39"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/rule-occurrences-core.log",
+      "sha256": "829d5c1893c24052ad1ad92f085039fad05406990e864ec43b13e6ce745dd280"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-dad9db8a-47ee-45bc-baa7-8d0e329a08ff-umf_sec_outsider-weakened-debug_print_parse.log",
+      "sha256": "1fa3a4467e33df5d189a0600f731c815dc67d477e30833c57c8b1af38ad1409b"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/security-manifest-carrier-astra-review-prior-93e1b25466743127.json",
+      "sha256": "93e1b2546674312771df0f9fa6d7874f01ea178fbf493e0345e6f69562468f24"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/original-cell-bridge-astra-review-prior-3b9c683f702569ed.json",
+      "sha256": "3b9c683f702569ed621deea1394d4329232e43a59c794076c40a436eddc7071f"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/capability-bundle-coverage-astra-review-prior-8ac23c3e73508d54.json",
+      "sha256": "8ac23c3e73508d54b6bf9cb9e5ee3e9a72d8eb3e80a3ba4eb3d737b1cc81b4ce"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-4d650298-3283-4225-932f-85bf1b482ead-umf_sec_alice-guarded-changed-world.log",
+      "sha256": "44cb1312c700878c795d1329d427a729e39785767bed6c40f5b439c1a21d17cb"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/truss-native-key-raw-control-failure.json",
+      "sha256": "f03fc508eb11a13f123e30d70be8cfce9da203774911cd014111e84e522ddadc"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/record-home-shape-astra-review-prior-5f77fcff77a79370.json",
+      "sha256": "5f77fcff77a79370d31532aff9d259fa969586602cd2648f676c39ffea93951d"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-4d650298-3283-4225-932f-85bf1b482ead-umf_sec_alice-caller.log",
+      "sha256": "7adeb2f0e52cab62ae09f6b8ee66cda2d586de02a4c4f03ff513710e0998dfef"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/owner-semantic-coverage-astra-review-prior-c84cffb0e79bb9b1.json",
+      "sha256": "c84cffb0e79bb9b1e8b4406fe8bb01bc966888ef89e40d3b270acbf29a92571e"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-mask-query.json",
+      "sha256": "5c1a097c7aae87b89cb5e30d0f3a89f152654da52d95b3e239718a06926bbeae"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-bfd3c74b-2a73-488f-99b5-2f7594d64c63-umf_sec_bob-guarded.log",
+      "sha256": "44cb1312c700878c795d1329d427a729e39785767bed6c40f5b439c1a21d17cb"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/namespace-native-domain-formal.json",
+      "sha256": "0496534a7caa93f7e1958e9011800a1c5004b6522d22ad299e852bc1f1cbb1ce"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/owner-events-astra-review.json",
+      "sha256": "d4e05f98a3292a83393b9ebda1e9acfc3cd8cb18a0a05d553a7709dabd56b322"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/scale-fixed-deadline-ea821591-f5e5-4f89-af78-917fa5edeb17.jsonl",
+      "sha256": "53e5d5ac90227d38748a8fcfe2d03ef273b30d0a7de207115a4d8a25dc23b3ef"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/owner-semantic-coverage-astra-review-prior-251a5886a6852c70.json",
+      "sha256": "251a5886a6852c70849e957bcb4c3b29c696478b88ac75486be02a5a119db58a"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/owner-result-selection-astra-review.json",
+      "sha256": "f2ef020e85d7cf59b8b81eb02600f41dbe459d147f1a9158bb1a834d6c62df2c"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/owner-obligation-projection-astra-review-prior-3001a8597d8cc0b8.json",
+      "sha256": "3001a8597d8cc0b8368bad8e35e15e6361d45807965181bf8fd0f72aed4e1f12"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-policy-activation.json",
+      "sha256": "d71e10fd01460270da6948ba13d7791d3f42968b80230654e51b562660297f15"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-d4d4d286-861a-4034-89ab-8622d543b097-umf_sec_outsider-changed-private-population.log",
+      "sha256": "7e014e90ba5b853fffd5298f9c0d280659c966e3f993cfed4c1784749948bb68"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-raw-B01.json",
+      "sha256": "7a842da523c048e38716788616b01881f8e811139a1132f4ae3859f0c1a1fdbc"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/owner-semantic-coverage-astra-review-prior-9d691a74c4c51e1b.json",
+      "sha256": "9d691a74c4c51e1bade82b97b78e52d2e54bbca3bf2d89e14a874c60637ebe4b"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/original-preparation-acquisition-review-prior-0f35c270f881679f.json",
+      "sha256": "0f35c270f881679ff1f914aba6597f319612d5769602004eae912aefb6915f95"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/original-publication-stale-retirement-counterexample.json",
+      "sha256": "0a885bc578da2e5af6ab353ef4d6583f82c5bda7f8a17763f5ba6a12ebd31214"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-4d650298-3283-4225-932f-85bf1b482ead-umf_sec_bob-caller.log",
+      "sha256": "7adeb2f0e52cab62ae09f6b8ee66cda2d586de02a4c4f03ff513710e0998dfef"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/original-use-native-lease-loss-counterexample.json",
+      "sha256": "531416154874705e0cbf9eb0c0964e896de950e461bd5f7d2535e856fe8780f0"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-4d650298-3283-4225-932f-85bf1b482ead-umf_sec_alice-weakened-debug_print_rewritten.log",
+      "sha256": "50880ab46b99ba732746dc8c09ade5e6440a39685120cf78f06b51ca10b4e5a3"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-d4d4d286-861a-4034-89ab-8622d543b097-umf_sec_bob-weakened-debug_print_parse.log",
+      "sha256": "1fa3a4467e33df5d189a0600f731c815dc67d477e30833c57c8b1af38ad1409b"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/truss-graph-compiler-input.json",
+      "sha256": "c530c7c9a4f805019c3e7d5fc25b452a6782937a13f7753a53a5d7cc8da27c5f"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/obligation-evidence-gate-astra-review-prior-4eb5637929d5a898.json",
+      "sha256": "4eb5637929d5a8988261326cd9ac22e511ad6729632ac969c379a98faa2e6d75"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-dad9db8a-47ee-45bc-baa7-8d0e329a08ff-umf_sec_alice-guarded-changed-world.log",
+      "sha256": "44cb1312c700878c795d1329d427a729e39785767bed6c40f5b439c1a21d17cb"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/entity-terms-browser.json",
+      "sha256": "6b94e456f581cb45786d139b15a4def0868e64682833ab1f23b6e71a2f21442a"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-4ef75529-79bc-412d-afa7-e6eef9c304a7-umf_sec_bob-guarded.log",
+      "sha256": "44cb1312c700878c795d1329d427a729e39785767bed6c40f5b439c1a21d17cb"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-dad9db8a-47ee-45bc-baa7-8d0e329a08ff-umf_sec_bob-guarded.log",
+      "sha256": "44cb1312c700878c795d1329d427a729e39785767bed6c40f5b439c1a21d17cb"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/owner-obligation-source-correspondence-astra-review-prior-ab681644e051f7ce.json",
+      "sha256": "ab681644e051f7ced2f3122bb9d48848a528e3e8818f37aab175fb6394539b16"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-raw-B16.json",
+      "sha256": "fc389a844e88c6d18b342d4f928bd3ddf38618b11d0e789fdfc01b18177e081c"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/security-manifest-carrier-astra-review-prior-1c969024dc4bed39.json",
+      "sha256": "1c969024dc4bed39fa3214d70d24ae8276e578a7f18873c8fbf3bfc611fb5576"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/databricks-actors.json",
+      "sha256": "30e7f6fcf83dd02a94f2580de44e98783255e182246a27586c213bed98fbc4af"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/record-home-shape-astra-review-prior-1b8473fc4110e639.json",
+      "sha256": "1b8473fc4110e63938019c74c4b2fec66fbf722b143aa616d265455eec92c1db"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/owner-semantic-allocation-gate-astra-review.json",
+      "sha256": "ad889d2bf05cd65cb392dced728b5caf7cd9b1665b5e7d7c4156f4caa9af06f4"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-driver.json",
+      "sha256": "ae44dec18d240c15dd2a9aadc74e40e7c7a4d20d82b6341edc250be733d8bb67"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/truss-predicate-browser.json",
+      "sha256": "09ff9dce77cacb44013ebc237a822d1f0ae2084e2d5f26c521ee9588f5bfa335"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-4d650298-3283-4225-932f-85bf1b482ead-umf_sec_bob-guarded-changed-world.log",
+      "sha256": "44cb1312c700878c795d1329d427a729e39785767bed6c40f5b439c1a21d17cb"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/owner-record-homes-astra-review-prior-8e3040d7f34dae29.json",
+      "sha256": "8e3040d7f34dae29eaeda40ad982a2d66abcbe385cf07d2b0454520c5dc6e1da"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/owner-obligation-projection-astra-review-prior-016141d2f31bbdc1.json",
+      "sha256": "016141d2f31bbdc167c440c5383d961c56cbc83d2e59dae91e10590b86ae043e"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-d4d4d286-861a-4034-89ab-8622d543b097-umf_sec_alice-guarded.log",
+      "sha256": "44cb1312c700878c795d1329d427a729e39785767bed6c40f5b439c1a21d17cb"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-raw-identity-pending.json",
+      "sha256": "bad1fa4dee8196cb7711dbe69c43f5faf21d2f1ec0883a96ac6be848c95a1434"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-d4d4d286-861a-4034-89ab-8622d543b097-umf_sec_bob-caller.log",
+      "sha256": "7adeb2f0e52cab62ae09f6b8ee66cda2d586de02a4c4f03ff513710e0998dfef"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-bfd3c74b-2a73-488f-99b5-2f7594d64c63-umf_sec_outsider-weakened-debug_print_parse.log",
+      "sha256": "1fa3a4467e33df5d189a0600f731c815dc67d477e30833c57c8b1af38ad1409b"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-raw-L01.json",
+      "sha256": "8f7d658981b00a005581678d11a99d66aa499db3286d07c842ad549d49c8a7fc"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/record-home-correspondence-astra-review-prior-762a424a4f72b2c0.json",
+      "sha256": "762a424a4f72b2c00a7dade319a98e1d102aed8ac4b699aa819f4f456ac891b8"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-d4d4d286-861a-4034-89ab-8622d543b097-umf_sec_outsider-caller.log",
+      "sha256": "7adeb2f0e52cab62ae09f6b8ee66cda2d586de02a4c4f03ff513710e0998dfef"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-driver-startup-attempts.json",
+      "sha256": "a257f669e660298b54866b3d20ab6104dd8a20acf4798729e1a0edf443aa4502"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/truss-stored-key-replay.json",
+      "sha256": "c134edf3e2d52b0883aea24a67468cebdcda539a69a030a99118a4034f891350"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/owner-semantic-coverage-astra-review-prior-8656c8a6c786dc84.json",
+      "sha256": "8656c8a6c786dc841e3b513d67ab19ac87e44e3345490ddeb4a36ea81aa28f67"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/original-preparation-acquisition-review-prior-0f02919d8c017b38.json",
+      "sha256": "0f02919d8c017b3829d2ad353fccacb876455d59e2de0398785f841232a13a85"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-policy-activation-profile-context-failure-20261009.json",
+      "sha256": "4365510492c46fe6a8fbf5c785e1859ac5bda761b8b7bbb117f8cefc3231ec5d"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/record-home-shape-execution.json",
+      "sha256": "b63c838c0d720643ea12575259d202e97a9c1a6979c9ff9584fd21eae47a892e"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/publisher-state-formal.json",
+      "sha256": "a26dcbfc1782050b57ae43a72efafe2c6ee6881ea794ad8aed7215ac9bf77ec7"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-dad9db8a-47ee-45bc-baa7-8d0e329a08ff-umf_sec_outsider-guarded.log",
+      "sha256": "44cb1312c700878c795d1329d427a729e39785767bed6c40f5b439c1a21d17cb"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-owner-fact-selection.json",
+      "sha256": "53edcc9e0c4738098c7891a7cdbf0bc7b66f11bb5551f5f2ece20ef90c4fa24f"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/components-policy-activation-publisher-timeout-third-20261009.json",
+      "sha256": "9a6de6af96a02d8016e91040925a872407dea46c507be077175beb30fb6b4f5d"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/owner-result-cells-astra-review.json",
+      "sha256": "aab1b87c5c40d2ab1ca6fa171645bac2f7985e30cd6d492ae0e6176795e9a168"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/capability-bundle-coverage-astra-review-prior-282123e40221f8d7.json",
+      "sha256": "282123e40221f8d781fbf739b1785d0647579d4c1ceaa641db04a62bed9d1b28"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/b13-registration-json-order-failed-source.py.txt",
+      "sha256": "566aba1df936cb6a98bca1217fae86a598e2e6891473c651a1156d4a302955d4"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/weft-protocol-transport.json",
+      "sha256": "86cd9694e041060a48988e9a85de87380cee8de297386141d3ae2f500e8d854f"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/carrier-error-isolation-formal.json",
+      "sha256": "3ad4dcc3c53bd9e69284b8e328d16c3baf02553d8521e5068b5863e4af470bc1"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/truss-candidate-condition-native.json",
+      "sha256": "018b00f01ab54693af88a3b97f8e14c7378ac5487273e8b13812e2b987b6f070"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-4ef75529-79bc-412d-afa7-e6eef9c304a7-umf_sec_outsider-guarded.log",
+      "sha256": "44cb1312c700878c795d1329d427a729e39785767bed6c40f5b439c1a21d17cb"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/original-use-hidden-carrier-vulnerable.py.txt",
+      "sha256": "21d4419ac42e060a8f6daac3f2c131ca8011583735e217efe686545148d24e81"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/scoped-composition-formal.json",
+      "sha256": "d9a3fea1f76f91bf44a331639424bfd8f4b7d02326b911f0b7c67171788ea8aa"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-cca8fff4-b6ad-414c-96ed-57bbba59df09-umf_sec_bob-caller.log",
+      "sha256": "7adeb2f0e52cab62ae09f6b8ee66cda2d586de02a4c4f03ff513710e0998dfef"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/acceptance-query-browser-listen-failure.json",
+      "sha256": "6d413f091cfb25e081c95dd72f347a8cf2544f772aba7374cf202b897b75a50f"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/native-attempts.json",
+      "sha256": "eae4ba39f9dc55df1c86e3da03fc10688aed2a79233fcbbfefb66413ca1ab1fb"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/owner-fact-bridge-astra-review-prior-6294b49ce0a6bc06.json",
+      "sha256": "6294b49ce0a6bc06c2a224b2089595deff49a1b46ad088fe3e32d4b17fc785d1"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/scale-fixed-deadline-0fa7dfea-00e1-4569-99bb-602dc009817f.jsonl",
+      "sha256": "a1acbee8e59fbbc6c46c7cbbd6133ceab8b3d9186d2cdd840c2340ded72a24c5"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/relationship-candidate-browser.json",
+      "sha256": "d7cdda1244ca1bab3fe084e5089a2f9b77b84e5eea1eb3ca7c60835c947f39d1"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-4d650298-3283-4225-932f-85bf1b482ead-umf_sec_outsider-changed-private-population.log",
+      "sha256": "7e014e90ba5b853fffd5298f9c0d280659c966e3f993cfed4c1784749948bb68"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-cca8fff4-b6ad-414c-96ed-57bbba59df09-umf_sec_bob-guarded.log",
+      "sha256": "44cb1312c700878c795d1329d427a729e39785767bed6c40f5b439c1a21d17cb"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/owner-fact-bridge-astra-review-prior-d47714e7d02a3fe9.json",
+      "sha256": "d47714e7d02a3fe98060aa1a3216ad1fe7285f5468d1d7a0f717d6a8ddd67bc0"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/original-cell-bridge-astra-review-prior-fe9357617fdac2b6.json",
+      "sha256": "fe9357617fdac2b67061f69d8664e6f7248a46216e68e6dca85d9c16674c3f00"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/acceptance.json",
+      "sha256": "48554d6366bf59bdacc7d8fa46cd2a9bb76cff150e26b774efc321bf671d261d"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/owner-record-homes-astra-review-prior-bcc83566476db891.json",
+      "sha256": "bcc83566476db8918738421e462dac35d9d07e30ec18e83e88414b597bc11f0d"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/candidate-scalar-guard-formal.json",
+      "sha256": "dc3cb54775ae6c307652d017e2ed9bd2ba9d2258c35e6258f2ff1beaf8ac10d2"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/owner-semantic-allocation-gate-astra-review-prior-7d0b2545768f56da.json",
+      "sha256": "7d0b2545768f56daa2d70039b93aad14c269ab824a441558a3686b29980bf367"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-bfd3c74b-2a73-488f-99b5-2f7594d64c63-umf_sec_alice-guarded-changed-world.log",
+      "sha256": "44cb1312c700878c795d1329d427a729e39785767bed6c40f5b439c1a21d17cb"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/capability-bundle-coverage-astra-review-prior-c53ff7eb25b73524.json",
+      "sha256": "c53ff7eb25b73524c133ebc8c199535c6740ddbbf2b88d2890b58c0b2cada592"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/truss-candidate-condition.json",
+      "sha256": "e4d33ab864a069e3509e159e80b60a4e81a4cf887dd7c9843e9253aa8cd039f3"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/owner-requirements-astra-review.json",
+      "sha256": "abd52fae2bd76089b19560d4d6bc306a5c1a48ab248eba2edc683e3aebc782e8"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/original-preparation-acquisition-review-prior-474e6d0a73f7e9b7.json",
+      "sha256": "474e6d0a73f7e9b7e3cac9b45b3c28ccfec286d343604fa43950b1a570283c0a"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-dad9db8a-47ee-45bc-baa7-8d0e329a08ff-umf_sec_alice-caller.log",
+      "sha256": "7adeb2f0e52cab62ae09f6b8ee66cda2d586de02a4c4f03ff513710e0998dfef"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/kind-completeness-formal.json",
+      "sha256": "1cdb87df4d8efaf437f90e90b1e8420dc545f7dfe65a6e0a481c1f3b80d143fc"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/weft-admission.json",
+      "sha256": "4e9440a06940b56d3b290b44ec16bc0485851b2be0b4cf372a3996037f5dbb39"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-4d650298-3283-4225-932f-85bf1b482ead-umf_sec_outsider-prepared-mutation.log",
+      "sha256": "f249660e39fb3ea5ba87e2dcdefc93706cbedf1ddb7486dc2eeaca2a6b65e0df"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-raw-field-write-component.json",
+      "sha256": "3a7cb617da8c8dfaaa99aa79d537508843c004dffae8fec1fd6cc2e7955f395c"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-bfd3c74b-2a73-488f-99b5-2f7594d64c63-umf_sec_outsider-guarded-changed-world.log",
+      "sha256": "44cb1312c700878c795d1329d427a729e39785767bed6c40f5b439c1a21d17cb"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/security-manifest-carrier-astra-review-prior-1f73e9c96618b685.json",
+      "sha256": "1f73e9c96618b6851d6b1dda3a5fc75f2e5e30e5e8ea9ca20bee0123c99c1aeb"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/owner-semantic-allocation-astra-review.json",
+      "sha256": "48ab5097d75bd91471cb67bafbd4f27ad474c848596b38cb94ca79cd831e7ed8"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/kind-instance-matching-core.log",
+      "sha256": "9d64b054d207b895135b102e93614936572689d49cbb92eb7036902c625eb159"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/capability-bundle-coverage-astra-review-prior-b79bec871615651e.json",
+      "sha256": "b79bec871615651e18d271d59720f4955d2874b0c2cc01507305e04655039978"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/rule-event-astra-review.json",
+      "sha256": "c8dc1dfc2621d30418c1a40384ac4207666bc9df611d45f3fed78eb415154667"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/security-manifest-carrier-astra-review-prior-3243d0ae0bd83ab7.json",
+      "sha256": "3243d0ae0bd83ab7dd512b6f626cc9cbc759554073815cc7c0d237d7c51c4b6d"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-compiler-keys.json",
+      "sha256": "ec97c037526c9d0bf5bc51536fecf9316b60de9604664d4d7c2c8d4b8057add9"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/record-home-shape-astra-review-prior-7133e2ba90b06dc4.json",
+      "sha256": "7133e2ba90b06dc421c5b52264af2ae082a6e97c60ff5c52ecdb7c03cc8f8a79"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-raw-B11.json",
+      "sha256": "53b583c19eae2436f940b6d719b4f130cec6c04facfd91316ab678937964bbe7"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/original-publication-stale-retirement-native.json",
+      "sha256": "b9f664b335537b3687ec92126cabe5285570d244dc0b0cd250718118096de206"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/original-preparation-acquisition-review-prior-ac120e7be2a8f2b8.json",
+      "sha256": "ac120e7be2a8f2b87b5a00a318ab282db61a0670f5deae35cc005ba5a6fbca94"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-raw-B07.json",
+      "sha256": "f0b7abf5073fbbde026296adef8e2d4714f2a6280ab6e97dfdcaf3947951fb4a"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/weft-admission-query-profile-test-borrow-failure.json",
+      "sha256": "02e3d739a0ff283214af16b40a793c2e05f118aa73f008e95c7464c78dadd230"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/rule-occurrences.json",
+      "sha256": "20023be611ca8ebaafefa22ea41bfd29e2bffd47637f27b485ac0c6f1b2cba39"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/weft-security-registration-review.json",
+      "sha256": "6af4d7d011ffa7ea2eb0907ca2227d3ece2d74fbacd011493a5accc7effd4b5e"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/obligation-projection-formal.json",
+      "sha256": "ef44138dfadb5987ef87a5ddfd90aa83dfc63d38eb011c131b8384375d951b73"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-4d650298-3283-4225-932f-85bf1b482ead-umf_sec_outsider-caller.log",
+      "sha256": "7adeb2f0e52cab62ae09f6b8ee66cda2d586de02a4c4f03ff513710e0998dfef"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/original-publication-actor-cleanup-vulnerable.ts.txt",
+      "sha256": "5afb3134420dfa93b0034bc01ac971c1cf4903dd8c0c299eb9a05e3765bbbbf4"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/truss-policy-lowering-initial-domain-refusal.json",
+      "sha256": "fe9a49ae6c9a6d0fde863cd4138f9ecb18edd366f32af8d0a4150142846a4cf2"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/components-query-narrowing-failure.json",
+      "sha256": "fea9c42dd0cac105bd00274c346645a5c6ef7f2ccbb7a99d3f845e274d66cdd6"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-raw-persistent-drain-component.json",
+      "sha256": "27815c6ffd337853aca8fc15d90de378af16f7a1bb54163223600b69e3b4ffd4"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/scoped-obligations-formal.json",
+      "sha256": "d063094d6bc08d92d3581799b50768fdecaa0ed781b893b0bcef5b1ee37e9bfc"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/owner-obligation-custody-astra-review-prior-383bc9829245754e.json",
+      "sha256": "383bc9829245754e7a0313c875a7eb785e29d457785d94218ff69e5cd2287f0a"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/owner-record-homes-astra-review-prior-6366671588d16b3a.json",
+      "sha256": "6366671588d16b3a2898e95d8f90a471b55d24f274b018cfd36021895d875d7b"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/owner-bounded-json-astra-review.json",
+      "sha256": "d387d4d86ffd211da4a868a7df99ac2ce55465f63b4a208305ffb61ed59394c3"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/truss-key-transport-browser.json",
+      "sha256": "2bc254f7b1f34fa8cd1189c0330a4ac80c5eca0740a1afca9aa5685453637286"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-dad9db8a-47ee-45bc-baa7-8d0e329a08ff-umf_sec_bob-changed-private-population.log",
+      "sha256": "7e014e90ba5b853fffd5298f9c0d280659c966e3f993cfed4c1784749948bb68"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/capability-bundle-coverage-astra-review-prior-89d684ba6d7d49d2.json",
+      "sha256": "89d684ba6d7d49d2b8e765a70e8a4d372b4a9f167e42eeea3f18fe0b411936e0"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-4d650298-3283-4225-932f-85bf1b482ead-umf_sec_bob-changed-private-population.log",
+      "sha256": "7e014e90ba5b853fffd5298f9c0d280659c966e3f993cfed4c1784749948bb68"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/capability-bundle-coverage-astra-review-prior-ed80939dd9a0e09d.json",
+      "sha256": "ed80939dd9a0e09de9438c595c6770f453072dd9e92729b424a416f1f0b4876d"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/scoped-obligations-astra-review.json",
+      "sha256": "6f1859bde2418c9c6bf53c7e81669287f48305445ff0ac4511476e874462fd9f"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/capability-bundle-coverage-astra-review.json",
+      "sha256": "e3a1913bb661af0d91f7a9d9f9b3029a2bf052f8bfcd11902ebf2fd0373c1c22"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/record-home-correspondence-astra-review-prior-71e96fb3392c69e8.json",
+      "sha256": "71e96fb3392c69e8ad5fc879c20961c38967bd3726b0d4f2ddc2663ea49e7604"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/owner-obligation-projection-astra-review-prior-27c14208d4bbe545.json",
+      "sha256": "27c14208d4bbe545985ebe1fad2a7291958229da16e34be42c6b5c30cb68fa82"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/acceptance-pgraw-pool-order-failure.json",
+      "sha256": "a847cf878094739ea7139fd6d28f4b9616dceaece98d38810d8811032069a06e"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/field-write-fold-formal.json",
+      "sha256": "7feaaa02a61ceb77c3225137e9bbe6b49f033037f771f8f93c5b1449424f60b9"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/record-home-correspondence-formal.json",
+      "sha256": "0c3cccfeb7ab05aef38a0fc89542877f17bc42c13b076a355008abe747982240"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/gate-receipt-regression.json",
+      "sha256": "d58ce6afea7a074d39121e97422be9f251f7d0ab13f3cfa5d0aeef95211dbfd8"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/epoch-attempts.json",
+      "sha256": "fb03d0c9071a077629084caf46550c22b4fed35244abd58381e2e19620959175"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/source-demands-formal.json",
+      "sha256": "6bd93edfe29ef4cafc161fb3ce3ab070e61dc13c3ba5004991869af52091eb25"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/capability-bundle-coverage-astra-review-prior-1a7729f7add20ed3.json",
+      "sha256": "1a7729f7add20ed3a1c489236a8934e9edc77683b906aa9440bdf40c0d367dfd"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/record-home-correspondence-astra-review-prior-6603935ce6e00ca5.json",
+      "sha256": "6603935ce6e00ca5ac902f05123472bfcbe95fa3e64bdd4c5b3be6b4124ef478"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/owner-obligation-source-correspondence-astra-review.json",
+      "sha256": "cceed8df69980485104dc98a7dad71779cc899f1ff6d7ff1cacd702729cca9d3"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/weft-protocol-review.json",
+      "sha256": "cf9dfebf81e3b5b247eb3f02ed43fbe3ab56bfb651395ea1903ec113255da7c1"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/owner-semantic-coverage-astra-review-prior-e9b13ad6b15134ef.json",
+      "sha256": "e9b13ad6b15134eff6f10c810f444914102a314ede79b7fa9a96e8f38670ac58"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/typed-completeness-falsy-selector-counterexample.json",
+      "sha256": "08cbb110f3f4278fd58df40ce6626bcbe7d8a914eb299b1acbf00777f1423ab1"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/record-home-correspondence-astra-review-prior-377dcc44e81bc200.json",
+      "sha256": "377dcc44e81bc20082170464af73fe43dfd438440405b7cd44ff1162375de797"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/original-cell-bridge-astra-review-prior-56aa934150410100.json",
+      "sha256": "56aa9341504101001ac0e89c57a95a9c6384ea579b5199ab21514c1201d3b424"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/lifecycle.json",
+      "sha256": "7d77e3915ae685962871509823593c616faba05aac9b291af9c65eb6a475ff5d"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/publication-custody-browser.json",
+      "sha256": "5fe9012cbbea8127d53821ef708fd0b4fe06a59b6982e3ac4f0b0b0dea986fce"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/acceptance-pgraw-lookup-null-failure.json",
+      "sha256": "ef0423415d81d0c51f7b115222e336f2cf8f291b49f32edea5b29ecc704ece1c"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-d4d4d286-861a-4034-89ab-8622d543b097-umf_sec_bob-guarded.log",
+      "sha256": "44cb1312c700878c795d1329d427a729e39785767bed6c40f5b439c1a21d17cb"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/truss-visible-owner-inventory.json",
+      "sha256": "a2b871c34e900bef0a2ed35d08c134ef1d3f3bd85c7dc247b21ef21a70d96332"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-bfd3c74b-2a73-488f-99b5-2f7594d64c63-umf_sec_outsider-caller.log",
+      "sha256": "7adeb2f0e52cab62ae09f6b8ee66cda2d586de02a4c4f03ff513710e0998dfef"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-4d650298-3283-4225-932f-85bf1b482ead-umf_sec_alice-weakened-debug_print_parse.log",
+      "sha256": "1fa3a4467e33df5d189a0600f731c815dc67d477e30833c57c8b1af38ad1409b"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/scale-fixed-deadline-pg-raw-scale-runtime.ts.txt",
+      "sha256": "fcf665d38d3065faf1a73286974d88ed63dea404ea882658ee104cd53e526da7"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/truss-policy-lowering.json",
+      "sha256": "cefa252439ec7f11c160e36b3b0dbfcfcb6e40ecded457ce94223f9b953f2cc5"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-bfd3c74b-2a73-488f-99b5-2f7594d64c63-umf_sec_alice-caller.log",
+      "sha256": "7adeb2f0e52cab62ae09f6b8ee66cda2d586de02a4c4f03ff513710e0998dfef"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-4d650298-3283-4225-932f-85bf1b482ead-umf_sec_alice-guarded.log",
+      "sha256": "44cb1312c700878c795d1329d427a729e39785767bed6c40f5b439c1a21d17cb"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/scoped-obligations-astra-review-prior-91d9cae60be71ac9.json",
+      "sha256": "91d9cae60be71ac9a1751c6fdd9d91f8b2a5d4bba9b5d3fe74771d0cbcc1ff1f"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/owner-semantic-allocation-formal.json",
+      "sha256": "2a6af0a65ca2647cbcf8e4844595fceb9152232581edbe8e84e1875e121f190e"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-raw-drain-component.json",
+      "sha256": "7b3c3342375840199ec69f405c8aa863f6964b50013e580ba6b3b41f80057a0e"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/truss-native-key-browser.json",
+      "sha256": "b2d64fc023c9d92f93ec563c44850460bd99ee666528befc3fb8aa491ae90197"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-raw-write-component.json",
+      "sha256": "7dc9ee2bb1587eb67656cbd958c074a34c27d2480ae364132e2c41764e3a47ba"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-bfd3c74b-2a73-488f-99b5-2f7594d64c63-umf_sec_bob-guarded-changed-world.log",
+      "sha256": "44cb1312c700878c795d1329d427a729e39785767bed6c40f5b439c1a21d17cb"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/original-preparation-acquisition-review-prior-bbbbd0c240c9e606.json",
+      "sha256": "bbbbd0c240c9e606867e34c1f110cee17843f64dfaaab529d9596b6948f91f4b"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/b13-registration-path-failed-source.py.txt",
+      "sha256": "a8040e4d89cf2843ed4b4869acb7d2b7fb41e01d8d693ff44e1f366b842c0082"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-authority-endpoint-oracle-failure.json",
+      "sha256": "aac784b7bd1ebff2eb8a0400dc67ad9f58cf985f48926fbf30c44895e110a020"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-dad9db8a-47ee-45bc-baa7-8d0e329a08ff-umf_sec_alice-weakened-debug_print_parse.log",
+      "sha256": "1fa3a4467e33df5d189a0600f731c815dc67d477e30833c57c8b1af38ad1409b"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-4d650298-3283-4225-932f-85bf1b482ead-umf_sec_bob-guarded.log",
+      "sha256": "44cb1312c700878c795d1329d427a729e39785767bed6c40f5b439c1a21d17cb"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-4d650298-3283-4225-932f-85bf1b482ead-umf_sec_alice-prepared-mutation.log",
+      "sha256": "f249660e39fb3ea5ba87e2dcdefc93706cbedf1ddb7486dc2eeaca2a6b65e0df"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-4ef75529-79bc-412d-afa7-e6eef9c304a7-umf_sec_bob-caller.log",
+      "sha256": "7adeb2f0e52cab62ae09f6b8ee66cda2d586de02a4c4f03ff513710e0998dfef"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/original-use-native-lease-loss-evidence.json",
+      "sha256": "a8795eb8536189db036d692a8598c0bebb86351c1f21bcb1a88a11a6928f1259"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/obligation-custody-formal.json",
+      "sha256": "b6c1c9415f1adb94abcceeb23d376b66c405ea5c78087f482f9c863099420ac6"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/capability-bundle-coverage-formal.json",
+      "sha256": "294a209c30de81063161dde6128c68c0cb3568a3063febc4287cd3c6d10d05c8"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/truss-principal.json",
+      "sha256": "229f3f1babf9b35652b7d60d2ed3b4903b3f2f4f2941cbfc8a190cd3b844b7a3"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/persistent-publication-formal.json",
+      "sha256": "cb0349643d3d1249a6d4114ed6433c3369b3ef33a93d7547646916b414c6811a"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/record-home-correspondence-astra-review-prior-0683f3d9804f84a7.json",
+      "sha256": "0683f3d9804f84a7fdacba6e7a6f317c434eaead1a5807b814db738b24972e88"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/publication-drain-formal.json",
+      "sha256": "3984f04d62d66b953eb8064848e3a8221fe5e7cbe33eca0041f6bd352ed8d02e"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-raw-B06.json",
+      "sha256": "5c1be28f13395829b7adb93f369943269c58990357732f7f6814c710494e2aa9"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-cca8fff4-b6ad-414c-96ed-57bbba59df09-umf_sec_outsider-guarded.log",
+      "sha256": "44cb1312c700878c795d1329d427a729e39785767bed6c40f5b439c1a21d17cb"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/source-demands-validation.json",
+      "sha256": "bf224873b1b3b05dcc05691e68d9687fce21b08502b5620cb6e893548e0b8f67"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-4d650298-3283-4225-932f-85bf1b482ead-umf_sec_outsider-weakened-debug_print_plan.log",
+      "sha256": "46d6e579c8b531fc20e4267664d1fd0fbb3ea9b52533b3e8e619abcafd499899"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/b13-registration-path-failure.json",
+      "sha256": "fc8a5c258d00eb3fc6c31deeff04d61e5f11c523afefc801581ae6e96d56e004"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/owner-obligation-projection-astra-review-prior-47d240fcd1e38643.json",
+      "sha256": "47d240fcd1e386434baaa144a04c6aa0a531032129d0f806cd5c47437569d88c"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-d4d4d286-861a-4034-89ab-8622d543b097-umf_sec_alice-caller.log",
+      "sha256": "7adeb2f0e52cab62ae09f6b8ee66cda2d586de02a4c4f03ff513710e0998dfef"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/original-cell-bridge-astra-review-prior-16b82f4c08cbb3a7.json",
+      "sha256": "16b82f4c08cbb3a788570ca72da2ec494c7f30e0bf9f957d637a45aff19e4009"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/owner-semantic-allocation-gate-astra-review-prior-67499a2dd17df156.json",
+      "sha256": "67499a2dd17df156bc907876b079afbd7e01f4b72f374b7aab10c411e822df51"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/security-manifest-carrier-astra-review-prior-d3829b571f1d4b7e.json",
+      "sha256": "d3829b571f1d4b7ebe3f3eeefe08639a575749051f235b5482b337d218428dbd"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/truss-graph-source-browser.json",
+      "sha256": "627f0a5ae706629cc1ff166775c8e5be38844a089189dc3ed87667a261b3f28a"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/owner-result-checker-astra-review-prior-5d170abe0aebb99c.json",
+      "sha256": "5d170abe0aebb99c0752f45e15bd9c98d46da3b66ad8a70156ee69744f3c7f4c"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/truss-stored-key-browser.json",
+      "sha256": "509465ce1e7d8bccebb513ec6fcbc65f7ade63c4340cfdfed246cdbf9c1800e5"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-cca8fff4-b6ad-414c-96ed-57bbba59df09-umf_sec_alice-guarded.log",
+      "sha256": "44cb1312c700878c795d1329d427a729e39785767bed6c40f5b439c1a21d17cb"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/record-home-correspondence-astra-review-prior-27b42e2c31ae44c0.json",
+      "sha256": "27b42e2c31ae44c0b3ea319a26697c6825780e49efa93ce1da1993db2fed068d"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-bfd3c74b-2a73-488f-99b5-2f7594d64c63-umf_sec_alice-weakened-debug_print_parse.log",
+      "sha256": "1fa3a4467e33df5d189a0600f731c815dc67d477e30833c57c8b1af38ad1409b"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/truss-key-transport-initial-refusals.json",
+      "sha256": "a84ab20cab420885a28727392e251404505d49335292a85918f0710269186dcf"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/existence-truth-formal.json",
+      "sha256": "000b7ead929184d6e91c5e416744b3ecae0c1b9717da93dc0f3f6b0b9d11b31c"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/original-preparation-acquisition-review-prior-e9150229fa312eb1.json",
+      "sha256": "e9150229fa312eb1889c71ecfb0a74d5d2bfa18fa9e479af490f7eb0840e9f9c"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/weft-workspace-running.json",
+      "sha256": "70047b231e65c4c102f2622e319cbc2c2647279b80ea6fa2f394491349bbbdae"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/original-cell-bridge-astra-review-prior-ac11ff93376f439b.json",
+      "sha256": "ac11ff93376f439b9ecbe82623d8b7db03c8de0fc50f28faa7cf753dd8a2cc8e"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/truss-source-completeness-browser.json",
+      "sha256": "a9557f96b15285f809c4fba30bc31903780e907b5a1e676994510a9fa8f1b566"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/owner-fact-bridge-astra-review-prior-d6fba34706a7f31c.json",
+      "sha256": "d6fba34706a7f31c517eea8b7c6cfb3462d164de9569492ee0f657a6edc330c5"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-astra-review.json",
+      "sha256": "ea3430a24f7204ebebb84c7ec88c70975f08c329395c4000c3d246577f125636"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-4d650298-3283-4225-932f-85bf1b482ead-umf_sec_bob-weakened-debug_print_rewritten.log",
+      "sha256": "50880ab46b99ba732746dc8c09ade5e6440a39685120cf78f06b51ca10b4e5a3"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/original-use-hidden-carrier-counterexample.json",
+      "sha256": "4b66a4569734a6894cd382c583a7bfe42a58e6629f87221688f2bd1b334ecbf5"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/original-preparation-acquisition-review-prior-7bc6719438a6b6aa.json",
+      "sha256": "7bc6719438a6b6aa8e1dafd7d63a77388c988eaf3b7c624436a1c1d6b5c19691"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-driver-first-attempt.json",
+      "sha256": "8b33a0c0c1e6eea49e72a700ef5a494bd1d5bd83e843e7c3d7a94094cd8d4bc0"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/native.json",
+      "sha256": "ffd750dd68eeb25eaf3998adcf782b31382058eba15b1d4b656591324aabb410"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-bfd3c74b-2a73-488f-99b5-2f7594d64c63-umf_sec_alice-changed-private-population.log",
+      "sha256": "7e014e90ba5b853fffd5298f9c0d280659c966e3f993cfed4c1784749948bb68"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/activation-compiler-boundary.json",
+      "sha256": "01af4f7422b486b1708ce1f89b33164f3da7c1f82f352e084c1add6e075d984f"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/parallel-relationship-preservation-formal.json",
+      "sha256": "0cfe99b19047268dd63d8e8e66cbbb3d6111259d93f61408a6d77f53481cc013"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/truss-graph-correspondence-readiness.json",
+      "sha256": "37b33ac298c5b1926e9bc930604df1a051be1f44af964057955b0efde7a07604"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/weft-admission-ir-test-access-failure.json",
+      "sha256": "c2962233dd8a76591ea89ddad3e4c27984b236f86953848111c7e9d312c19b53"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/README.md",
+      "sha256": "fe580158556aedb9fc03128d7ac5dc1e4c2f419e5683cfee359711d7ae3e674e"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-raw-B05.json",
+      "sha256": "d3751311a5ace7eb1ada2026f7c996c2f97b1b7ac06fe66c5e1e267442a51841"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/truss-key-namespace-prior-native.json",
+      "sha256": "102f3cd43292c1057ff37641f4dea231992a361609866a3d17374af3ae71ca34"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/security-manifest-carrier-counterexample.json",
+      "sha256": "65c52ea8233a911d9ed3d5c0ebfe39c3166b0c36a1440b6c7070b20b330538a4"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/truss-private-principal.json",
+      "sha256": "63dd3184cbbed4924f10caae7ff6ba96f1cd582ecf45b8f756ddaf9fbcf0444e"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-4ef75529-79bc-412d-afa7-e6eef9c304a7-umf_sec_alice-guarded.log",
+      "sha256": "44cb1312c700878c795d1329d427a729e39785767bed6c40f5b439c1a21d17cb"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-raw-B13.json",
+      "sha256": "fb71b9808d64d8e8fbc76a344275070f9649e175162e3901d76b4b421bf7c227"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-bfd3c74b-2a73-488f-99b5-2f7594d64c63-umf_sec_bob-weakened-debug_print_rewritten.log",
+      "sha256": "50880ab46b99ba732746dc8c09ade5e6440a39685120cf78f06b51ca10b4e5a3"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/owner-obligation-custody-astra-review-prior-42b54a91f17e93d0.json",
+      "sha256": "42b54a91f17e93d022c6a823cbc32dc8b0221bc6c09c7bfa75574460759cdce0"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/main-integration/legacy-evidence/logic-browser.json.original.txt",
+      "sha256": "72a89374521c7a2d04241b0111b5a39cf7c47c61e938168e2a93fae4d87354f1",
+      "originalPath": "docs/helix/04-build/evidence/security/logic-browser.json"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-4d650298-3283-4225-932f-85bf1b482ead-umf_sec_alice-weakened-debug_print_plan.log",
+      "sha256": "46d6e579c8b531fc20e4267664d1fd0fbb3ea9b52533b3e8e619abcafd499899"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/obligation-source-correspondence-formal.json",
+      "sha256": "228b0cc149e8e6ddfdf4aff5a4de7f36ff59bfed9b80c665506705911b900dc5"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/owner-semantic-coverage-astra-review-prior-2a40ae253f6b2e7e.json",
+      "sha256": "2a40ae253f6b2e7e32c8846c0060a5e8db3fc66c4455175fba83cbc3f646e464"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/record-home-shape-astra-review-prior-2a9a180684b392fa.json",
+      "sha256": "2a9a180684b392fa7a4689c18c062985bf61766416f43883cf84124c07cc4999"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/custody-exact-selection.json",
+      "sha256": "46915b666597cdcf4df8cdf31d556e7b9c2ad3108e5ebbca08e67f42eff13167"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/graph-endpoints-formal.json",
+      "sha256": "192a12694e99e566904108b9ea4f06ae5df868e4451654a394160c4a53806ad4"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/formal-replay-audit.json",
+      "sha256": "5b9c0a4a2451531299bfbaa662667e914cd26f99f7bde277ddda0a4923e7d373"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-bfd3c74b-2a73-488f-99b5-2f7594d64c63-umf_sec_outsider-weakened-debug_print_plan.log",
+      "sha256": "46d6e579c8b531fc20e4267664d1fd0fbb3ea9b52533b3e8e619abcafd499899"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/candidate-numeric-rational-oracle.json",
+      "sha256": "842c1c541e20ea67d9cefc3a4a61769d5ec66aab0f2d361c870222db3f3e272a"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/owner-events-core.log",
+      "sha256": "1a40e8c17e1f022e998b77993926b6959a2d618b996d28685e443589528b83da"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-4ef75529-79bc-412d-afa7-e6eef9c304a7-umf_sec_outsider-changed-private-population.log",
+      "sha256": "7e014e90ba5b853fffd5298f9c0d280659c966e3f993cfed4c1784749948bb68"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/kind-instance-astra-review.json",
+      "sha256": "e68c57a216809971131ddd05cfdfdf22562f4b90e87d1f9fa20754cb630696db"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/original-publication-stale-retirement-vulnerable.ts.txt",
+      "sha256": "aee0521638f4655848e84cd5996a7e25808e8092b93c8cb90f613550ff8d867b"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-dad9db8a-47ee-45bc-baa7-8d0e329a08ff-umf_sec_bob-guarded-changed-world.log",
+      "sha256": "44cb1312c700878c795d1329d427a729e39785767bed6c40f5b439c1a21d17cb"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/owner-obligation-custody-astra-review.json",
+      "sha256": "7b6d62204cd8d56d8277eca87a3ab59e264e39524757cc674d9f48e27e885689"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/namespace-canonical-oracle.json",
+      "sha256": "ac5fd21aca1117055476836f6c8cb12588619db649f9b65af44b2426c3c0d496"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/scale-fixed-deadline-a901d6b7-edcf-405d-87f4-a52db8761cfc.jsonl",
+      "sha256": "39381cb55fc5e9969f32c4c094ccaf5df2e79b988c068f0433bd3d4d62962434"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/scale-fixed-deadline-pg-raw-scale.py.txt",
+      "sha256": "b2ce1c08a6e1ebbd25b1c79f62b0124d86ae19e3b78666addaec47be8edca179"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/record-home-shape-astra-review.json",
+      "sha256": "51a62ec50472fb2d8373671edb56af5a36e8123070046f6846729cf62f06c255"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-dad9db8a-47ee-45bc-baa7-8d0e329a08ff-umf_sec_alice-changed-private-population.log",
+      "sha256": "7e014e90ba5b853fffd5298f9c0d280659c966e3f993cfed4c1784749948bb68"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-4ef75529-79bc-412d-afa7-e6eef9c304a7-umf_sec_bob-changed-private-population.log",
+      "sha256": "7e014e90ba5b853fffd5298f9c0d280659c966e3f993cfed4c1784749948bb68"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/epoch.json",
+      "sha256": "cf85cfcfeac41066c5a769d532299416fbc0bc2ff8661d9d669240794f8c0c09"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/components-epoch-timeout.json",
+      "sha256": "5076a55a01332853a53cc9631f6893139dd380e13a79f8136bb1416305179b69"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/truss-graph-locator-browser.json",
+      "sha256": "55c42fcf64488a5305147f0129bc0addf880ee717486154dbf065f18776eb344"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/record-home-shape-astra-review-prior-f2ff190a07833ffc.json",
+      "sha256": "f2ff190a07833ffc5fe25c709d0f9b6f38034d96d125da35e45253dbc85f13bc"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/visible-owner-inventory-bound-formal.json",
+      "sha256": "960872bfd0252ed0d13105efab2e611d6e795b866396db324f1ff7e359754d8c"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/owner-fact-bridge-astra-review-prior-ef0bc0f2889d2a9e.json",
+      "sha256": "ef0bc0f2889d2a9eb39c6b5c9a8fe1acd2d612445aa0c5365b6366077e691256"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/original-preparation-acquisition-review.json",
+      "sha256": "8f73d8a4677ea5c2c00055f71804801ad79fde93f3aecd7e3662c9a6a9e276fe"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-4d650298-3283-4225-932f-85bf1b482ead-umf_sec_alice-changed-private-population.log",
+      "sha256": "7e014e90ba5b853fffd5298f9c0d280659c966e3f993cfed4c1784749948bb68"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-d4d4d286-861a-4034-89ab-8622d543b097-umf_sec_outsider-guarded.log",
+      "sha256": "44cb1312c700878c795d1329d427a729e39785767bed6c40f5b439c1a21d17cb"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/kind-completeness-astra-review.json",
+      "sha256": "100cc34bfdaf81f9a289f4582de82b586d7b3fc2f92e30e29b34170e84420db6"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/truss-policy-lowering-initial-null-transport.json",
+      "sha256": "b8f21faa62121b373a32a83cf653397b0c83db333e4017905bc61921c3a7dd31"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-dad9db8a-47ee-45bc-baa7-8d0e329a08ff-umf_sec_alice-weakened-debug_print_plan.log",
+      "sha256": "46d6e579c8b531fc20e4267664d1fd0fbb3ea9b52533b3e8e619abcafd499899"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/original-preparation-acquisition-review-prior-2c93286805aaf516.json",
+      "sha256": "2c93286805aaf51696eac7c196a3342d55051f7fc2c438de54127ff9c322693a"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/owner-record-homes-astra-review-prior-654ca63cb0ebde3a.json",
+      "sha256": "654ca63cb0ebde3a0ff417f3ab3cabea3f5d2aaeb3b4a2aa020885bbcfa60872"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-d4d4d286-861a-4034-89ab-8622d543b097-umf_sec_outsider-weakened-debug_print_plan.log",
+      "sha256": "ce85af7936346b74a68bd011ba9d9d6fc895120aabc6e6ca42e949f89869ca98"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-dad9db8a-47ee-45bc-baa7-8d0e329a08ff-umf_sec_alice-weakened-debug_print_rewritten.log",
+      "sha256": "50880ab46b99ba732746dc8c09ade5e6440a39685120cf78f06b51ca10b4e5a3"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/truss-candidate-condition-browser.json",
+      "sha256": "1be515774c0889870bd84b0739681947a79974495119fcb455823219803281a9"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/truss-original-use.json",
+      "sha256": "74459fe2e57c6310cba2f50957fd5533016c20227c02db5e60952c7cbe182a7f"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/owner-record-homes-astra-review.json",
+      "sha256": "4052d1101198eaca5f8e51dd52dcc6c1fe9fb8b8142ab80acb46bca0d2ee96e4"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/original-preparation-acquisition-review-prior-166b54bc1bd27b16.json",
+      "sha256": "166b54bc1bd27b163bdd9459aaba35ea95f2357f08851d2f3fa2ce53b223f158"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/scale-fixed-deadline-failure.json",
+      "sha256": "fce227024b7f770dcc1230e4fe9f17ebeee167bb27b559312808efc7d85d9596"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/truss-subject.json",
+      "sha256": "8ae9042ff931f10881a8989ba1f06b32769228cad78aa6ccf43675eb94a84ff9"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-bfd3c74b-2a73-488f-99b5-2f7594d64c63-umf_sec_outsider-weakened-debug_print_rewritten.log",
+      "sha256": "50880ab46b99ba732746dc8c09ade5e6440a39685120cf78f06b51ca10b4e5a3"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-4d650298-3283-4225-932f-85bf1b482ead-umf_sec_outsider-guarded.log",
+      "sha256": "44cb1312c700878c795d1329d427a729e39785767bed6c40f5b439c1a21d17cb"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/publication-retirement-formal.json",
+      "sha256": "10d6a78f187422c560b586af94591a0b26a281ea0d9c6f036e7854a7babdecc5"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-policy-activation-profile-assessor-baseline-failure-20261009.json",
+      "sha256": "fd5ca2cef981d048928eb7e24cf230f7be61dadb87f6d5491df274173758c837"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/mask-query-formal.json",
+      "sha256": "d76bba13543433ac6994bc918492cfd9ecdeaf7f33bfb90da1f236c1dc783cfa"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-d4d4d286-861a-4034-89ab-8622d543b097-umf_sec_bob-weakened-debug_print_plan.log",
+      "sha256": "ce85af7936346b74a68bd011ba9d9d6fc895120aabc6e6ca42e949f89869ca98"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/scale-fixed-deadline-9daee0d7-d66c-405a-8706-cf89657dcbcf.jsonl",
+      "sha256": "ef2302535fcb2a39213b63c090b990607acd6219f794a82ee85063f846421ae8"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-dad9db8a-47ee-45bc-baa7-8d0e329a08ff-umf_sec_bob-weakened-debug_print_parse.log",
+      "sha256": "1fa3a4467e33df5d189a0600f731c815dc67d477e30833c57c8b1af38ad1409b"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-d4d4d286-861a-4034-89ab-8622d543b097-umf_sec_bob-weakened-debug_print_rewritten.log",
+      "sha256": "50880ab46b99ba732746dc8c09ade5e6440a39685120cf78f06b51ca10b4e5a3"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/scale-fixed-deadline-fa4c345f-df61-4060-8a14-5701825ce2b0.jsonl",
+      "sha256": "5f3dffe8d774413146799d620506af3ded1a3b5854e9e7ec89a53107bbb6753e"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/original-preparation-acquisition-review-prior-3fc5f6e2d5dece34.json",
+      "sha256": "3fc5f6e2d5dece34bfcb6cf965271d149fecdc1e8f11fb0c7ca877fec5851174"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-4d650298-3283-4225-932f-85bf1b482ead-umf_sec_bob-weakened-debug_print_parse.log",
+      "sha256": "1fa3a4467e33df5d189a0600f731c815dc67d477e30833c57c8b1af38ad1409b"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/owner-fact-bridge-astra-review.json",
+      "sha256": "d1af2f40fbe43438756a2769bbb83d9107a89ac1c9b9675b76af5d1b0650cf91"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/obligation-evidence-gate-astra-review-prior-29548ac345f2bed0.json",
+      "sha256": "29548ac345f2bed0322fa035cd674c03e7b007040befa0abad4e1cc670a8c795"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/rule-occurrence-addresses-formal.json",
+      "sha256": "ce37b3f700909e539287ffd2ce1cd790468b642ba1a9412fa788d2c20c965fce"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/candidate-rule-decision-proof-input.json",
+      "sha256": "eeb76c9de686e0e3b3b028d62b4744abab3ed96b6488110e6712ba4778ea119a"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-cca8fff4-b6ad-414c-96ed-57bbba59df09-umf_sec_alice-caller.log",
+      "sha256": "7adeb2f0e52cab62ae09f6b8ee66cda2d586de02a4c4f03ff513710e0998dfef"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/owner-fact-bridge-astra-review-prior-b45381c8ad9aaed4.json",
+      "sha256": "b45381c8ad9aaed4a833386ac28597e01ff1872d9512ece1914941bc859e2402"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/security-manifest-carrier-astra-review-prior-6babddfd77e5f33d.json",
+      "sha256": "6babddfd77e5f33d1cd735d723fb3526339c33d6524ed21be803db325e788b97"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/original-cell-bridge-astra-review-prior-e2b9bb5a95bdcfa3.json",
+      "sha256": "e2b9bb5a95bdcfa337b3a0cb67ab2c8409d5c3360671a3a6a64e9690b75b830e"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/record-home-shape-astra-review-prior-e444b0dc90c9b2ea.json",
+      "sha256": "e444b0dc90c9b2ea3d5b8be9d36a8e6c6f60aebfd913ca66f65615d637d9a9e0"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/scale-fixed-deadline-54e98f60-136e-486d-bf43-d754dcfc40d4.jsonl",
+      "sha256": "6a95b32a5c5f5b906fc05bd24c4605da2d188730c65ea5d8f75cafe34a664a61"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/shared-origin-matching.json",
+      "sha256": "a63b5dcd7db3f5e85701f623806b5d00bd8abfb79abbc211af0897133069484f"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-dad9db8a-47ee-45bc-baa7-8d0e329a08ff-umf_sec_outsider-caller.log",
+      "sha256": "7adeb2f0e52cab62ae09f6b8ee66cda2d586de02a4c4f03ff513710e0998dfef"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/original-publication-actor-cleanup-counterexample.json",
+      "sha256": "447dd96ae9c7330f638a296c8690c52ac5560cefb68340d2f26553e4f6432554"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/write-fold-formal.json",
+      "sha256": "564364e44982b55d0d014cf88a35a54f9981403349c5fa1d5d41e2e0dd999e3e"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/semantic.json",
+      "sha256": "c21ba179cb14794dc69ee60132a395a5d4948536cb201a1767b6fb09a4471899"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-d4d4d286-861a-4034-89ab-8622d543b097-umf_sec_outsider-weakened-debug_print_rewritten.log",
+      "sha256": "50880ab46b99ba732746dc8c09ade5e6440a39685120cf78f06b51ca10b4e5a3"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/record-home-correspondence-astra-review.json",
+      "sha256": "7ae95e21b64dc86fc52638e73d5cc3fb0f738aaf66658c24f25e22bd4d0d2087"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/original-preparation-acquisition-review-prior-91392152b5fe9915.json",
+      "sha256": "91392152b5fe99159a9c1cf55d364e55668929bdb0ab7eebd0dc333c7ecc4b48"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-bfd3c74b-2a73-488f-99b5-2f7594d64c63-umf_sec_outsider-guarded.log",
+      "sha256": "44cb1312c700878c795d1329d427a729e39785767bed6c40f5b439c1a21d17cb"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/weft-source-demands.json",
+      "sha256": "00bf8397531460b3eee6677cc346c112a76be82b9926ae6d52d309b0e1a9feae"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/original-graph-ir-formal.json",
+      "sha256": "8ec2858927480588285e9fd7e0b8d045af64e0bf459ad08f5641286e44301b3f"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/shared-origin-matching-core.log",
+      "sha256": "ab4bf1ac78c2c7a0e1f74631b77e57fc0cdde82a44ba05d9d6b3b2ce7893adba"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/write-inventory-alias-failure.json",
+      "sha256": "04e0cc44591a432869d4231b8bb93d25b565982014e6a9219c33539abda5a4c4"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/original-preparation-acquisition-review-prior-2d0e7b79d269d68b.json",
+      "sha256": "2d0e7b79d269d68b4fa41331e1036f3b1ac8b4cd4ab38153489fb93ca2ccff87"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/native-dataset-collector-source-review.json",
+      "sha256": "e29978d65a0c67501a1cd93a7b5d7d3e4f6194da4cae9042bb396d2295cfe483"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/custody-exact-selection-core.log",
+      "sha256": "e3db7c87a55dd68586a715396ae5868d0f910467f5cbb8fafd4b194bacf87d5c"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/components-ledger-timeout.json",
+      "sha256": "0766e6c6266262eb3dc320313ed709fa76cf4c9110171f69fb7d736f2d9cdbbb"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/components.json",
+      "sha256": "0b4dca35497129fa0b50a919b90781ab85b6d1dbbc0544ac0a4ee99314fbdd89"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/weft-original-use.json",
+      "sha256": "a95e091a5d81b0b09c5dced2b0823485d9c5d3ee80f62cc16d4a55554d49dffa"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/capability-bundle-coverage-astra-review-prior-471c6e0ba3878823.json",
+      "sha256": "471c6e0ba3878823745bae8a31e8202b3c3e580ba3a3a5d737967aecb0d565fe"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-raw-B04.json",
+      "sha256": "7d335a441090b42cb4fb4f20e8b6e9f038a51e653dcde3584300a1dd3f8cea67"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/scoped-obligation-decoder.json",
+      "sha256": "d4732ecfbd9e9e204648416b339458d2eada3c8bb90b5b72f726184e8601acb6"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/original-cell-bridge-astra-review-prior-cd34b849c5f9917a.json",
+      "sha256": "cd34b849c5f9917a520cd5dc60e7aec3c34cb7c324f64df43507d2c1ce9e38e4"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/result-envelope-astra-review-prior-104f299c5ac17526.json",
+      "sha256": "104f299c5ac17526fb05e869fc478e14aee880dc3f0f5d390bd9112fe4125c60"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/original-use-epoch-initialization-vulnerable.py.txt",
+      "sha256": "66fc343e8f5ac8fd262b9cd0e61113de5e71905a108a1df5360ff0d068123b3c"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/formal.json",
+      "sha256": "b1bb7a977d4da85166b534a48d1f82e46814b02cb5c3277edafaf10970f1897a"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/owner-obligation-custody-astra-review-prior-cf416b48ba2d92a0.json",
+      "sha256": "cf416b48ba2d92a0786f4dcf25585621dd34859eba5b98558d66013a33ce5d79"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/predicate-scoped-unknown-probe.py.txt",
+      "sha256": "a0b9594ebe72d43a6969d2e252abf98155886b4bca2c3ca20c5c17d1435b4061"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/truss-existence-truth.json",
+      "sha256": "5fd36bfc90852d218aeb16bfd79fee604633a4dc94e363fc5e342962b7558a56"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/record-home-correspondence-astra-review-prior-f1e5bf034a0720ab.json",
+      "sha256": "f1e5bf034a0720ab197f17544bef634868cdd807c1061e7578daef276ab1300b"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/capability-bundle-coverage-astra-review-prior-93d813de92f05d65.json",
+      "sha256": "93d813de92f05d6593a76ea21988d06948c99a723caa42a59213712941e7882d"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-4d650298-3283-4225-932f-85bf1b482ead-umf_sec_bob-prepared-mutation.log",
+      "sha256": "f249660e39fb3ea5ba87e2dcdefc93706cbedf1ddb7486dc2eeaca2a6b65e0df"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/weft-protocol-evidence-controls.json",
+      "sha256": "d35b400bee84c5f0feb891174843c21754fb51a674ddc3405836400280993bfb"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/weft-obligation-projection.json",
+      "sha256": "154710d39e42e5eeb79db4d1506c22c77453470b45060667a04aa9f3dbca7f79"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-bfd3c74b-2a73-488f-99b5-2f7594d64c63-umf_sec_alice-weakened-debug_print_rewritten.log",
+      "sha256": "50880ab46b99ba732746dc8c09ade5e6440a39685120cf78f06b51ca10b4e5a3"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/original-source-completeness-formal.json",
+      "sha256": "2729f5cdf4ad8d46cf38386e1f19b469f9b0645ec9e4082b153dc4ac1f828512"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/truss-graph-native-stage.json",
+      "sha256": "076b83ab911098ec37dc1d42bbd5af6f4de552086e4b3f0c3ccee1b64afbe20d"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-4d650298-3283-4225-932f-85bf1b482ead-umf_sec_outsider-weakened-debug_print_parse.log",
+      "sha256": "1fa3a4467e33df5d189a0600f731c815dc67d477e30833c57c8b1af38ad1409b"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/components-write-first-attempt.json",
+      "sha256": "c76dbfac673f7fe66bc733abae420eb55f6a7b8b4d5d2fd967154801d93c79ab"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-cca8fff4-b6ad-414c-96ed-57bbba59df09-umf_sec_outsider-caller.log",
+      "sha256": "7adeb2f0e52cab62ae09f6b8ee66cda2d586de02a4c4f03ff513710e0998dfef"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-dad9db8a-47ee-45bc-baa7-8d0e329a08ff-umf_sec_alice-guarded.log",
+      "sha256": "44cb1312c700878c795d1329d427a729e39785767bed6c40f5b439c1a21d17cb"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/original-preparation-acquisition-review-prior-2dcad9beb8e73995.json",
+      "sha256": "2dcad9beb8e739958d06533910e42b393a0235adf0cf3169c879aff9dbaeaa4b"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/truss-candidate-endpoint-browser.json",
+      "sha256": "fc4be2b62fda66c9fe6ce31d89d30bd08100a095bbb365cb7f48ee242ff0c679"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/scale-fixed-deadline-0cde89e7-e9e3-4827-8876-dc68f0be4390.jsonl",
+      "sha256": "e6fc73a38ddd432aa986b097cf14bc50a33bc980c4b22e76a276bd362a0e7eb0"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/truss-graph-condition-input.json",
+      "sha256": "6fa46a28f26e801b6acc6273ee0d6005e882d9b81213e51f613b611a02e2a447"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-bfd3c74b-2a73-488f-99b5-2f7594d64c63-umf_sec_bob-weakened-debug_print_plan.log",
+      "sha256": "46d6e579c8b531fc20e4267664d1fd0fbb3ea9b52533b3e8e619abcafd499899"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/original-preparation-acquisition-review-prior-e6e9e82f66a3d420.json",
+      "sha256": "e6e9e82f66a3d420d8eea8d384db03f1ac128aa6e10c66b094d598197ca061f3"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/original-preparation-acquisition-review-prior-83c36ac1a816dd9c.json",
+      "sha256": "83c36ac1a816dd9c7b52be0f236a68fc63bf11f4ff13419617fc4e2cff2eeb0e"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/weft-admission-composition-test-wrapper-failure.json",
+      "sha256": "2028e9059ba35f9ec5bb8dd20f960aed92fbebc54c7e8408ed4636353a532447"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/security-manifest-carrier-astra-review.json",
+      "sha256": "f035c574317061d93ef3b363041b667ac4ebbc31474430137bcec6dddb8863de"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-dad9db8a-47ee-45bc-baa7-8d0e329a08ff-umf_sec_bob-weakened-debug_print_plan.log",
+      "sha256": "46d6e579c8b531fc20e4267664d1fd0fbb3ea9b52533b3e8e619abcafd499899"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/type-key-formal.json",
+      "sha256": "d5b7429eab0734b877d09e35ad4523dc1191bf33226109930f9a1322f48008a2"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-4ef75529-79bc-412d-afa7-e6eef9c304a7-umf_sec_outsider-caller.log",
+      "sha256": "7adeb2f0e52cab62ae09f6b8ee66cda2d586de02a4c4f03ff513710e0998dfef"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-bfd3c74b-2a73-488f-99b5-2f7594d64c63-umf_sec_outsider-changed-private-population.log",
+      "sha256": "7e014e90ba5b853fffd5298f9c0d280659c966e3f993cfed4c1784749948bb68"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-d4d4d286-861a-4034-89ab-8622d543b097-umf_sec_alice-weakened-debug_print_plan.log",
+      "sha256": "ce85af7936346b74a68bd011ba9d9d6fc895120aabc6e6ca42e949f89869ca98"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-raw-B03.json",
+      "sha256": "f8ab2f380790af54a880ca7709ed00cfdaf403d472970c423ca3cda8175fddbc"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/weft-handoff.json",
+      "sha256": "c1427f66eaba7726c5d4eaa0df09460f448db09c8e2188963d0271d2a313689b"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/predicate-scoped-unknown-counterexample.json",
+      "sha256": "ac706c53efd7f7a1d2321a8db5407dec5028199b735f4b976b2c6cbd6412e181"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/candidate-rule-decision-sql-formal.json",
+      "sha256": "f2069ae2dc62bef092c4ba52759b629636a40aa257e1138c9b1bc2c438343140"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-dad9db8a-47ee-45bc-baa7-8d0e329a08ff-umf_sec_outsider-weakened-debug_print_plan.log",
+      "sha256": "46d6e579c8b531fc20e4267664d1fd0fbb3ea9b52533b3e8e619abcafd499899"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/original-preparation-acquisition-review-prior-bc3ba42757f4c358.json",
+      "sha256": "bc3ba42757f4c358eea03a25464a613a96941091ea1b40d4ee3bc1861b511859"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/scoped-obligations-astra-review-prior-73c066700d994352.json",
+      "sha256": "73c066700d99435233dcd90248f44d228fc92849c7088d7c03cc553dcee81b4c"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-raw-B15.json",
+      "sha256": "af8a018ad5756b31358824e3164dd1e4cdedf59b3e49132f7a0bdc32c70f2876"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/components-policy-activation-publisher-timeout-second-20261009.json",
+      "sha256": "de9b993d44985fb53f7a9eb7d1f6200446074746fe2f6774c7f21612e06a45ae"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/weft-version.json",
+      "sha256": "57a6582d813e4a0796aceb40b3775519ba8773ddb6eb846468fc5f6faa4d846e"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/original-cell-bridge-astra-review.json",
+      "sha256": "7cba500c3130e051aa92a622a6e793b209f2ecbb6fb9f5be54ee46694cbbce64"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/scoped-obligation-matching.json",
+      "sha256": "7da71de2a1c4b538f14520b6f25c5be8638d120e103ea97b43289f38fe5566a7"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/owner-semantic-coverage-astra-review-prior-ebb32d25b1341ce0.json",
+      "sha256": "ebb32d25b1341ce09b579fee810f8803878a4e3cf16bb390af673525d49cf7df"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/result-envelope-astra-review.json",
+      "sha256": "fbf6e7591b61f993437ed7b4dae38476215b2d71884fa39a0081dcd803312c08"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-d4d4d286-861a-4034-89ab-8622d543b097-umf_sec_bob-changed-private-population.log",
+      "sha256": "7e014e90ba5b853fffd5298f9c0d280659c966e3f993cfed4c1784749948bb68"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/scale-fixed-deadline-22cbd32f-3250-402f-8343-87816f57e48e.jsonl",
+      "sha256": "633a02d3da34a850ec73a80db1ddcb4df81799b3f39f13af586d93055c03f77b"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/truss-key-transport.json",
+      "sha256": "9e005b3c84aa59bbd1936b8a65d912fb962e1451c4d329b600703ef190b7a62f"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/original-cell-bridge-astra-review-prior-8b5e1f84284f837b.json",
+      "sha256": "8b5e1f84284f837bb313fe66553289366b26911fe2b66de9267323eec8256142"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/existence-unbounded-formal.json",
+      "sha256": "9f11a78dc53766952e1fe670d18a8837501a96ccfca832bb6976cabfc9e5aee0"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-raw-identity-component.json",
+      "sha256": "1758fa733750eca676d284ba1f9e5a959d897dc50032df3e11e552d3ca9a9eea"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/rule-event-core.log",
+      "sha256": "f5832654533bed9a3fab27395f3337fac5fd3ea43ee9360b1fc4f3bc3acb594d"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/result-envelope-proof.json",
+      "sha256": "5e041b0d8eb0fad7bbb10c8d14c6e14e39d481ddeb14aa43ed642330354bcc7d"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-raw-L02.json",
+      "sha256": "d88a869c8216e7724602790528f59220e827c4bd71767d41c0c47740423c65df"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/hash-key-formal.json",
+      "sha256": "c4f505008c373867f0a16305cc0a2a09ff088274009143312eca555339a5a5e3"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-dad9db8a-47ee-45bc-baa7-8d0e329a08ff-umf_sec_bob-weakened-debug_print_rewritten.log",
+      "sha256": "50880ab46b99ba732746dc8c09ade5e6440a39685120cf78f06b51ca10b4e5a3"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/phase-validation.json",
+      "sha256": "80720f2a13838a7df89a13fbd42a54f6866842a9ae2bb2748d25a5247e5a4fb5"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/original-publication-stale-retirement-vulnerable.py.txt",
+      "sha256": "412e19686c9975a38331d1accea6225189fd1ea48703eeddd2fe7d4fa9565543"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/owner-fact-selection-astra-review.json",
+      "sha256": "b4aad27ca9c2c7133d374517c30253191b150219a074cf1f421b634b0e2cc298"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/owner-fact-bridge-astra-review-prior-5280a67abc576cf9.json",
+      "sha256": "5280a67abc576cf9c06a33425a0b2fa07580e6c83155a8a773ef2967e906a831"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/record-home-shape-astra-review-prior-81172b536a843275.json",
+      "sha256": "81172b536a84327502c8f3b34b09cb0290ae0f5b2f6a8897be7d56cde224f129"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/owner-events.json",
+      "sha256": "338544416d4d7a048ce18a94ea21f09635cb0de3b820be12c851eec5aa155943"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/original-cell-bridge-astra-review-prior-0877b9bb6db2921e.json",
+      "sha256": "0877b9bb6db2921ef49d1c366561d674d2b8fe0603df34605938ea4a03430881"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/owner-semantic-coverage-astra-review.json",
+      "sha256": "5336d6d90149e47df52f8d3873f0fcb077799abac3a62d7dbd4135ea2539bdac"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-d4d4d286-861a-4034-89ab-8622d543b097-umf_sec_outsider-weakened-debug_print_parse.log",
+      "sha256": "1fa3a4467e33df5d189a0600f731c815dc67d477e30833c57c8b1af38ad1409b"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-bfd3c74b-2a73-488f-99b5-2f7594d64c63-umf_sec_alice-guarded.log",
+      "sha256": "44cb1312c700878c795d1329d427a729e39785767bed6c40f5b439c1a21d17cb"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/obligation-evidence-gate-astra-review-prior-e21c0f03d6629ee1.json",
+      "sha256": "e21c0f03d6629ee1503544e5d3dd75b1158c4a2d357196b765b12b2faf092a2d"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/truss-key-namespace-browser.json",
+      "sha256": "6bb8088cb9385bcdfc6c3a390f54ac72e937df8bedf3f26218726f2d358df693"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/owner-result-checker-astra-review-prior-305bd17c1835ae90.json",
+      "sha256": "305bd17c1835ae90b1c232b6007927f76dc6c001f7b083959aa16d6e66db2fe1"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/owner-record-homes-astra-review-prior-76c9e4afc6fbc9e4.json",
+      "sha256": "76c9e4afc6fbc9e47562d53fb32b5b97b5fec9fd614938827358459bdea5a08a"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/typed-completeness-falsy-selector-counterexample-variant.ts.txt",
+      "sha256": "a4c50f2fb0c28f7488eab8baf01a529265c3e7a98ebca7457374ac79a09c0612"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/owner-obligation-source-correspondence-astra-review-prior-7949eba07fd3cd2a.json",
+      "sha256": "7949eba07fd3cd2aaa2103a53a36b059c313492e4b189dfd4cd04301e3ee4fe9"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-4d650298-3283-4225-932f-85bf1b482ead-umf_sec_bob-weakened-debug_print_plan.log",
+      "sha256": "46d6e579c8b531fc20e4267664d1fd0fbb3ea9b52533b3e8e619abcafd499899"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/truss-key-namespace-replay.json",
+      "sha256": "6e83061e2648f12be626514b457b3f9a0e5d38b953ac262dfd5833de581c5ac4"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/browser.json",
+      "sha256": "91620a9b22d625cb1f4ca00475b94311961b9d5e308c04144fc96bf3ed45d733"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/record-home-shape-astra-review-prior-82c887e4312dd0ed.json",
+      "sha256": "82c887e4312dd0ed0b38b96f84b6cca8e1b8bfadd062f8ab5d36174a3edf2cfc"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/truss-original-use-browser.json",
+      "sha256": "b9f9c988e4404919b08c0f44906b741d5d1a85464757cec1a6104736548de840"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-dad9db8a-47ee-45bc-baa7-8d0e329a08ff-umf_sec_outsider-guarded-changed-world.log",
+      "sha256": "44cb1312c700878c795d1329d427a729e39785767bed6c40f5b439c1a21d17cb"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-bfd3c74b-2a73-488f-99b5-2f7594d64c63-umf_sec_bob-caller.log",
+      "sha256": "7adeb2f0e52cab62ae09f6b8ee66cda2d586de02a4c4f03ff513710e0998dfef"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/kind-instance-matching.json",
+      "sha256": "67708e38320eeaf3b21edcdd650d8fff8344b9d516d0006f21c20ca31049ff7e"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/owner-obligation-source-correspondence-astra-review-prior-b69d41f7285d2f2a.json",
+      "sha256": "b69d41f7285d2f2a79ef9484b52f2e7ef5fedb2086a561bdba1fce4883558919"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/candidate-typed-fold-formal.json",
+      "sha256": "2bc613239586541bf1211a1ea544f4c4b84b69b1cdd15c26674bb3ced3165f17"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-raw-B14.json",
+      "sha256": "e5a2904bbce5e0f5a8df1520159878c247487fe2f6049866458be313302cd6f6"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/truss-native-key.json",
+      "sha256": "dfdb1ad8bf4fd4facb387ede93f1cb10cfffca6a272b0d917e19f47e4c9ff0e8"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-raw-B02.json",
+      "sha256": "c1309be8f2e9b29cfc796d416086e8c974716d584166dd854e11dbc4455116ae"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/association-transport-formal.json",
+      "sha256": "959ca8d0ad921c48f1064af4287678bfe51cf2d17e510868f379f4e1da9202b3"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/association-candidate-browser.json",
+      "sha256": "f60cbaf5cb0bead8009942c7251af388a66554d3c118a4257aef6a420e06e221"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-d4d4d286-861a-4034-89ab-8622d543b097-umf_sec_alice-weakened-debug_print_rewritten.log",
+      "sha256": "50880ab46b99ba732746dc8c09ade5e6440a39685120cf78f06b51ca10b4e5a3"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/inventory-wire-size-formal.json",
+      "sha256": "fbd758441dbf0dd98e4c1dc04a2e573336918b834eea47dfb5cf403de7396ed0"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-dad9db8a-47ee-45bc-baa7-8d0e329a08ff-umf_sec_outsider-changed-private-population.log",
+      "sha256": "7e014e90ba5b853fffd5298f9c0d280659c966e3f993cfed4c1784749948bb68"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/original-cell-bridge-astra-review-prior-728aeab45bee3729.json",
+      "sha256": "728aeab45bee37292a532943ea79e80a2af3e614ca0c04009476126753d76fd1"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/rule-event-custody.json",
+      "sha256": "44b4c5553bb9cf9ea224ed538b21a2fa4690efb6c59b65cfcbd813e8a7d51bf0"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/security-manifest-carrier-astra-review-prior-5e624820a7f3d91a.json",
+      "sha256": "5e624820a7f3d91a5bbdde7ecd1e54f4c276eb402806c3ff3640afc869cbb1ab"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-4d650298-3283-4225-932f-85bf1b482ead-umf_sec_outsider-weakened-debug_print_rewritten.log",
+      "sha256": "50880ab46b99ba732746dc8c09ade5e6440a39685120cf78f06b51ca10b4e5a3"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/owner-semantic-allocation-astra-review-prior-a7239c956cac9664.json",
+      "sha256": "a7239c956cac9664d4b8908894d04aa74ec31bdd8cc130681e50d1cf27e6cb14"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-4d650298-3283-4225-932f-85bf1b482ead-umf_sec_outsider-guarded-changed-world.log",
+      "sha256": "44cb1312c700878c795d1329d427a729e39785767bed6c40f5b439c1a21d17cb"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/weft-admission-query-extraction-width-failure.json",
+      "sha256": "b49a03f04216bdf5b9c1beac8574658f01b02936ef6d12d103be13f14c865ac8"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/policy-activation-formal.json",
+      "sha256": "fb9c8b39baa7d26b0ba78253e1b63108eb24b8e91c748684589da6be48e95d3e"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-raw-scale.json",
+      "sha256": "553dc58e2ee8d79e9075ff7555750359bbc1649eb849afbbbddff7ad348f55d7"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/owner-obligation-projection-astra-review-prior-e4327cb692ac9099.json",
+      "sha256": "e4327cb692ac9099cb524359d9483cfcfab8ef8466bffd1fc61e10eb5ed44c27"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/scale-fixed-deadline-native-query.ts.txt",
+      "sha256": "3ca0045cfc73b76577e5bb9b6d8811c97266335c203d203596d3ea88a49acc3b"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/components-policy-activation-publisher-timeout-20261009.json",
+      "sha256": "de9b993d44985fb53f7a9eb7d1f6200446074746fe2f6774c7f21612e06a45ae"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-mask-query-initial-error-format.json",
+      "sha256": "cc6435fa3f4da3f29a4de328b488aa8af24085bec7d828bbd36d8285d7a9286e"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/truss-key-namespace.json",
+      "sha256": "33f564dd7a7887baf263ccc1bb52f6ce6082165c11439092d9c36799c3698138"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/scale-fixed-deadline-97d0fc72-3225-4aa7-9eb6-c58acf91321f.jsonl",
+      "sha256": "0534c77d28a91cd0f2356399343d024ba45efe5b6349c1706d3029077203daa6"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-d4d4d286-861a-4034-89ab-8622d543b097-umf_sec_alice-changed-private-population.log",
+      "sha256": "7e014e90ba5b853fffd5298f9c0d280659c966e3f993cfed4c1784749948bb68"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/weft-semantic-allocation.json",
+      "sha256": "028be806dc3a98ec6d056ed7ad1b845708530f21eb97e31fcef8c9d1ddbb6b39"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/original-preparation-acquisition-review-prior-0760fab9c2d8f198.json",
+      "sha256": "0760fab9c2d8f198eb59146427006b1eb083ccac71cc1b17176a85fac2d2a6b5"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/scale-fixed-deadline-9c0c6518-d9dd-4114-b9a9-3269730a904e.jsonl",
+      "sha256": "0d6cc36fb4a167b86f82d4b9dae5d6852b35557d97eab9d5d6615176c973b915"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-authority-domain-mutation-failure.json",
+      "sha256": "d74f98eed3dd3cf869432f71e90dc0bc6dde156e9b415beb6a7b19e24b12263c"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/owner-fact-bridge-astra-review-prior-a853d1cb5f27ea45.json",
+      "sha256": "a853d1cb5f27ea456d42475f9628a1f6762965614b614510191721aaa7311575"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/acceptance-pgraw-privilege-boolean-failure.json",
+      "sha256": "bca4156b97a4755557cb9296e172e35dc925fb603d8d7fc9d53926805cc76b3f"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/predicate-scoped-unknown-vulnerable.ts.txt",
+      "sha256": "3979745e141513371945f0297c49de51aaf66efb2ca3f983b20bde0c1553b011"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-4ef75529-79bc-412d-afa7-e6eef9c304a7-umf_sec_alice-caller.log",
+      "sha256": "7adeb2f0e52cab62ae09f6b8ee66cda2d586de02a4c4f03ff513710e0998dfef"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/owner-fact-bridge-astra-review-prior-f3d4fbd264a54ee2.json",
+      "sha256": "f3d4fbd264a54ee2d376ce1d3054e11abbd7d5f827281620971dabaae7aa0193"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/owner-result-checker-astra-review.json",
+      "sha256": "1d43bc18ff1da083dd0c0ab3becdd9d0f30601442ad3103439c83206ba297111"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/scoped-obligation-decoder-core.log",
+      "sha256": "9e5a59cd3ef9d5a9c003467f1fe912656d65e1b902c4c424195852823755bdb1"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/kind-proof-receipt-routing-correction.json",
+      "sha256": "3ff600236fcbeb750c435da8af465900f0cf0c4b4bc6b5c4f0e33bfa228e35ed"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/pg-private-planner-bfd3c74b-2a73-488f-99b5-2f7594d64c63-umf_sec_bob-changed-private-population.log",
+      "sha256": "7e014e90ba5b853fffd5298f9c0d280659c966e3f993cfed4c1784749948bb68"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/original-preparation-acquisition-review-prior-ad85282e7be74381.json",
+      "sha256": "ad85282e7be74381587c218631ebab71fb413554e37490c9ee2de06cc05c8ba7"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/owner-semantic-allocation-astra-review-prior-388d47ecd7991cbf.json",
+      "sha256": "388d47ecd7991cbfe500158f2ef2da8ddcd1c1ed8135ab3164d9df73cb0332f0"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/archive/weft-obligation-projection-539f906c1fe7d9b628fe2daf60cd2524c8ed5ed2e4982b11732fb954192d8b30.json",
+      "sha256": "539f906c1fe7d9b628fe2daf60cd2524c8ed5ed2e4982b11732fb954192d8b30"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/archive/pg-private-diagnostics-57ec1259363c4f9003331e5c836de8b2500f7c074d174a250ab1afe1f47d3c44.json",
+      "sha256": "57ec1259363c4f9003331e5c836de8b2500f7c074d174a250ab1afe1f47d3c44"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/archive/phase-validation-8a770fa77a767a1717a6e6b96f84783714cad6a53b35a6a1cfefbb0b203f397d.json",
+      "sha256": "8a770fa77a767a1717a6e6b96f84783714cad6a53b35a6a1cfefbb0b203f397d"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/archive/pg-private-diagnostics-dbd883333322c5b259ff8885048ca36fb7fadf0ed9a870b218a9cf1bf98dd151.json",
+      "sha256": "dbd883333322c5b259ff8885048ca36fb7fadf0ed9a870b218a9cf1bf98dd151"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/archive/rule-occurrences-core-0b00e07bc55169fb8b2bf8f7d08ada853a7b9fc5ab99cde75ffb2c2dbc4ca1dd.log",
+      "sha256": "0b00e07bc55169fb8b2bf8f7d08ada853a7b9fc5ab99cde75ffb2c2dbc4ca1dd"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/archive/weft-obligation-projection-4995ca12e5d864f77d2ed699a619716ad0cedd62f878612bc65ba5bd76296c2a.json",
+      "sha256": "4995ca12e5d864f77d2ed699a619716ad0cedd62f878612bc65ba5bd76296c2a"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/archive/scoped-obligations-formal-31500f00522e1d310e955909d96f0ed7f86b8bd5996d5b3aa43da5344bd00831.json",
+      "sha256": "31500f00522e1d310e955909d96f0ed7f86b8bd5996d5b3aa43da5344bd00831"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/archive/source-demands-formal-3d4bbef641308a96b8691ceffa64cc23d168f923213cc6a1f7832122c624a590.json",
+      "sha256": "3d4bbef641308a96b8691ceffa64cc23d168f923213cc6a1f7832122c624a590"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/archive/weft-obligation-projection-28f4154db63363a91dfac93780a48aace96cee8d8eb9c0fe6d408bdb77682076.json",
+      "sha256": "28f4154db63363a91dfac93780a48aace96cee8d8eb9c0fe6d408bdb77682076"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/archive/weft-semantic-allocation-58656e0bfc1f240621f06c72f5911235b8151414f283371919f45d94645519e9.json",
+      "sha256": "58656e0bfc1f240621f06c72f5911235b8151414f283371919f45d94645519e9"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/archive/rule-event-core-691e4f0eb6d284d024eba84594a05894694ddc949367b73bd0529ea40eb0ee30.log",
+      "sha256": "691e4f0eb6d284d024eba84594a05894694ddc949367b73bd0529ea40eb0ee30"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/archive/weft-obligation-projection-03ceff997b63ded49646f99e7468c3ca11090d9cc710d5903615f950e0696d8d.json",
+      "sha256": "03ceff997b63ded49646f99e7468c3ca11090d9cc710d5903615f950e0696d8d"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/archive/pg-private-diagnostics-96dec96f6e5ea756368e5aba2455314d102b71d768590650f3a7a122f1cf3240.json",
+      "sha256": "96dec96f6e5ea756368e5aba2455314d102b71d768590650f3a7a122f1cf3240"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/archive/weft-obligation-projection-3f6d6caabd81f8c89fa3928054c9170094bdfaa022358f6abada108d5ebe82c1.json",
+      "sha256": "3f6d6caabd81f8c89fa3928054c9170094bdfaa022358f6abada108d5ebe82c1"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/archive/source-demands-formal-6dea51806d28a6dae35b429f0b910ee444c3d845b6306e519bf4636ee33f0617.json",
+      "sha256": "6dea51806d28a6dae35b429f0b910ee444c3d845b6306e519bf4636ee33f0617"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/archive/kind-completeness-formal-2248a1d2887bdc487e13544ac6b9d8ee785a32a55b0e8aab4c038d277285be34.json",
+      "sha256": "2248a1d2887bdc487e13544ac6b9d8ee785a32a55b0e8aab4c038d277285be34"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/archive/weft-source-demands-0b3398cbfa6a989a4a748a08e36295d3003c0584ab15e0ac119b10d48cdc7a53.json",
+      "sha256": "0b3398cbfa6a989a4a748a08e36295d3003c0584ab15e0ac119b10d48cdc7a53"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/archive/kind-completeness-formal-afd2ad4dfac5ecda25016bee210e322943b30e5c5d6b60060de05280c0f01501.json",
+      "sha256": "afd2ad4dfac5ecda25016bee210e322943b30e5c5d6b60060de05280c0f01501"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/archive/rule-occurrence-addresses-formal-cf458b68be70a3e9659c7dcc26785af735b56fcfc0b23aeab40a679f66cacf21.json",
+      "sha256": "cf458b68be70a3e9659c7dcc26785af735b56fcfc0b23aeab40a679f66cacf21"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/archive/source-demands-formal-9525605b8f453e5f2e0035d67505ddf35af22500a3f86fcf2e7c66da5ef9469b.json",
+      "sha256": "9525605b8f453e5f2e0035d67505ddf35af22500a3f86fcf2e7c66da5ef9469b"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/archive/source-demands-validation-bf224873b1b3b05dcc05691e68d9687fce21b08502b5620cb6e893548e0b8f67.json",
+      "sha256": "bf224873b1b3b05dcc05691e68d9687fce21b08502b5620cb6e893548e0b8f67"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/archive/weft-obligation-projection-3249538a6a9dff50a78c3719c4f68553e1f4735bb84af8741cb12e9352e00e1a.json",
+      "sha256": "3249538a6a9dff50a78c3719c4f68553e1f4735bb84af8741cb12e9352e00e1a"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/archive/kind-completeness-formal-d1d641b8c71c82aef28c787a519f7f6547700f052d535b747918d5cecfbd2715.json",
+      "sha256": "d1d641b8c71c82aef28c787a519f7f6547700f052d535b747918d5cecfbd2715"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/archive/scoped-obligations-formal-e89054c96cf1cdd5e71881bae40ef6fa31daff84275f9f98b49c08b574163d11.json",
+      "sha256": "e89054c96cf1cdd5e71881bae40ef6fa31daff84275f9f98b49c08b574163d11"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/archive/weft-source-demands-8038697147ba89d4c542096b44b0d88612cc4fb8f42f894bb98ae9374352d611.json",
+      "sha256": "8038697147ba89d4c542096b44b0d88612cc4fb8f42f894bb98ae9374352d611"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/archive/kind-completeness-formal-4043a60e458243d17f7781622ce09ef4f44bdcaa529f6f426644f9409615dda5.json",
+      "sha256": "4043a60e458243d17f7781622ce09ef4f44bdcaa529f6f426644f9409615dda5"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/archive/weft-source-demands-a8475dbc3a1344405dc2c56fba9c0e3b514534119809463534f90643e94f6a1b.json",
+      "sha256": "a8475dbc3a1344405dc2c56fba9c0e3b514534119809463534f90643e94f6a1b"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/archive/f3d24660cbe9b0a546a55cffd3678f98469693c4db3fce1428116df0ae8a8d3e-scoped-obligation-decoder.json",
+      "sha256": "f3d24660cbe9b0a546a55cffd3678f98469693c4db3fce1428116df0ae8a8d3e"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/archive/weft-source-demands-9f11171c9c949f6249a40686ae859af3b64a0103390bbbaa040a99957ecfa90d.json",
+      "sha256": "9f11171c9c949f6249a40686ae859af3b64a0103390bbbaa040a99957ecfa90d"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/archive/weft-semantic-allocation-e929adca43f3fd858f684bc7c766ad387a7c25d6761164afe57444d8af1e5e5e.json",
+      "sha256": "e929adca43f3fd858f684bc7c766ad387a7c25d6761164afe57444d8af1e5e5e"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/archive/source-demands-validation-bad868ad17f7076c3bbe4ab1779490684c33678b6eace5fdc46b2d6fbbe3ef02.json",
+      "sha256": "bad868ad17f7076c3bbe4ab1779490684c33678b6eace5fdc46b2d6fbbe3ef02"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/archive/rule-occurrences-7226462e7c44611f6c0133d9214798243eef6d5cf899b79f4221eb65cdd4d18a.json",
+      "sha256": "7226462e7c44611f6c0133d9214798243eef6d5cf899b79f4221eb65cdd4d18a"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/archive/weft-semantic-allocation-aa791827527ea4e92f793458cc408eb731384337672f74fdde89781b64887ea8.json",
+      "sha256": "aa791827527ea4e92f793458cc408eb731384337672f74fdde89781b64887ea8"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/archive/source-demands-formal-4443260052ef61fb54ee1217a8358bda46319d3e8af9d3d6ac39e439faf1f8fd.json",
+      "sha256": "4443260052ef61fb54ee1217a8358bda46319d3e8af9d3d6ac39e439faf1f8fd"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/archive/pg-private-diagnostics-db3b23df8ccba265c83726bdb051acd3fd420200b74afbcf82db034800ee80ad.json",
+      "sha256": "db3b23df8ccba265c83726bdb051acd3fd420200b74afbcf82db034800ee80ad"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/archive/weft-source-demands-59fb67bfb5727cb323c2a9a46e0105253346ffb23522c189a916617f78425acd.json",
+      "sha256": "59fb67bfb5727cb323c2a9a46e0105253346ffb23522c189a916617f78425acd"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/archive/9789f5b44db96f4c4c87c5d912a0c2d50abf0add13d652b0767114d92b42f593-scoped-obligation-decoder-core.log",
+      "sha256": "9789f5b44db96f4c4c87c5d912a0c2d50abf0add13d652b0767114d92b42f593"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/archive/weft-obligation-projection-131f1b6190508f131c61240e9bc9a7bc5f149a107df89bda91c957da659c8db5.json",
+      "sha256": "131f1b6190508f131c61240e9bc9a7bc5f149a107df89bda91c957da659c8db5"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/archive/kind-completeness-formal-c694999b1f5081cd97c68b3b6851019414cc7bd43c8fe608998e07641d806d56.json",
+      "sha256": "c694999b1f5081cd97c68b3b6851019414cc7bd43c8fe608998e07641d806d56"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/archive/pg-private-diagnostics-0f12e9e0db5539cb803d8586d29ba14364fd11415b938d1e1f5f30fea6fdff67.json",
+      "sha256": "0f12e9e0db5539cb803d8586d29ba14364fd11415b938d1e1f5f30fea6fdff67"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/archive/kind-completeness-formal-a7e3d174be33866b4f16506f2f29463a2c591297473b099026a94699aac2db08.json",
+      "sha256": "a7e3d174be33866b4f16506f2f29463a2c591297473b099026a94699aac2db08"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/archive/weft-semantic-allocation-e864181b19217cf96f58371fc22e6394fea074a26d91c08aea0460cc101144a9.json",
+      "sha256": "e864181b19217cf96f58371fc22e6394fea074a26d91c08aea0460cc101144a9"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/archive/weft-obligation-projection-a5178ee906277060fa9888b1cc4a0b6ce3c205dffb1a4ec501942493af833693.json",
+      "sha256": "a5178ee906277060fa9888b1cc4a0b6ce3c205dffb1a4ec501942493af833693"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/archive/source-demands-formal-3da2e165f8c4dd750d9094079fef298e88ba2c563c2a19cbe1e582307a19b499.json",
+      "sha256": "3da2e165f8c4dd750d9094079fef298e88ba2c563c2a19cbe1e582307a19b499"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/archive/kind-completeness-formal-ea977d00cf1da639ab6350d0aec19eb45db50ff2c8df30b82730b9105ca49589.json",
+      "sha256": "ea977d00cf1da639ab6350d0aec19eb45db50ff2c8df30b82730b9105ca49589"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/archive/weft-obligation-projection-02361fbed68348ea3bd83532eadc489f07993383f04bb181ce1f3afd8ad7e4af.json",
+      "sha256": "02361fbed68348ea3bd83532eadc489f07993383f04bb181ce1f3afd8ad7e4af"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/archive/scoped-obligations-formal-894adb874dbad6087d0615d8742f72db806966de725b8fe495debaf967fee3c1.json",
+      "sha256": "894adb874dbad6087d0615d8742f72db806966de725b8fe495debaf967fee3c1"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/archive/source-demands-validation-03bc616bf1d4342031a6b8e46f163ea276d77c166c6f5f75f2a8ce7876138c7f.json",
+      "sha256": "03bc616bf1d4342031a6b8e46f163ea276d77c166c6f5f75f2a8ce7876138c7f"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/archive/scoped-obligations-formal-8f3696ff3dc8841be2434ff8fdd977566b2077f105ed019267d7625f172b4a39.json",
+      "sha256": "8f3696ff3dc8841be2434ff8fdd977566b2077f105ed019267d7625f172b4a39"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/archive/weft-source-demands-2e5330eccf749d7f78ace074177fc9d8f0a2c9fa3432fbcc81598a9635d8c72b.json",
+      "sha256": "2e5330eccf749d7f78ace074177fc9d8f0a2c9fa3432fbcc81598a9635d8c72b"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/archive/weft-source-demands-39064b81e18dfdc6fb07dc6a9abcfd6434fb8d649c81f52a4ca75f2e51e26171.json",
+      "sha256": "39064b81e18dfdc6fb07dc6a9abcfd6434fb8d649c81f52a4ca75f2e51e26171"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/archive/kind-completeness-formal-ed6359036eaea77ab786c87079a18f44d5aaeb16b919618bf3ea553e8506c7e5.json",
+      "sha256": "ed6359036eaea77ab786c87079a18f44d5aaeb16b919618bf3ea553e8506c7e5"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/archive/source-demands-formal-afd2ad4dfac5ecda25016bee210e322943b30e5c5d6b60060de05280c0f01501.json",
+      "sha256": "afd2ad4dfac5ecda25016bee210e322943b30e5c5d6b60060de05280c0f01501"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/archive/source-demands-formal-4ce132d6b64cee60c61d49d3a9bc1ac664c409ea2bb57b6c57ee19faf6d64289.json",
+      "sha256": "4ce132d6b64cee60c61d49d3a9bc1ac664c409ea2bb57b6c57ee19faf6d64289"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/archive/weft-semantic-allocation-3fcff30b0bddc1ea1b51fa441d13ab206b524dc9656c6d5d6b7a85196d75676a.json",
+      "sha256": "3fcff30b0bddc1ea1b51fa441d13ab206b524dc9656c6d5d6b7a85196d75676a"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/archive/rule-event-custody-508d893949f1dc80b9acc6832f44d9f5e9f69b0545d83fbe9fb4566e6e00615e.json",
+      "sha256": "508d893949f1dc80b9acc6832f44d9f5e9f69b0545d83fbe9fb4566e6e00615e"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/archive/source-demands-formal-721681e9fcf5f879bbecde64fb7e04a6ff7a882c001273d489489c36ac061242.json",
+      "sha256": "721681e9fcf5f879bbecde64fb7e04a6ff7a882c001273d489489c36ac061242"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/archive/source-demands-validation-ca5c23bc4a3eb08ac387ca8a9b6c24ab9c7ab24a3fa2e596c39a69e8c81d1bd6.json",
+      "sha256": "ca5c23bc4a3eb08ac387ca8a9b6c24ab9c7ab24a3fa2e596c39a69e8c81d1bd6"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/archive/misrouted-kind-proof-3d4bbef641308a96b8691ceffa64cc23d168f923213cc6a1f7832122c624a590.json",
+      "sha256": "3d4bbef641308a96b8691ceffa64cc23d168f923213cc6a1f7832122c624a590"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/archive/scoped-obligations-formal-ec53d567985bc286ddbfdf0f91941d4913351f72f714bba0096f295a45e98861.json",
+      "sha256": "ec53d567985bc286ddbfdf0f91941d4913351f72f714bba0096f295a45e98861"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/archive/pg-private-diagnostics-97dd08e515108527ecf2e3190755e8123a9693cca95a19fef59a77858f474b78.json",
+      "sha256": "97dd08e515108527ecf2e3190755e8123a9693cca95a19fef59a77858f474b78"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/archive/source-demands-formal-72ab41e81671edf717f1a72392c82f68f4e40fd08980c1a261992b9fba89e653.json",
+      "sha256": "72ab41e81671edf717f1a72392c82f68f4e40fd08980c1a261992b9fba89e653"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/archive/weft-source-demands-542fda086b80afde42216380ba523bb0b124b59685e29ec1fd27c519cb792a06.json",
+      "sha256": "542fda086b80afde42216380ba523bb0b124b59685e29ec1fd27c519cb792a06"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/security/archive/phase-validation-8bfec9ea7f56ab203c7f024a0c2a82a953d2ca1e47ffd892d456ad9df3720778.json",
+      "sha256": "8bfec9ea7f56ab203c7f024a0c2a82a953d2ca1e47ffd892d456ad9df3720778"
+    }
+  ],
+  "correctedAttempts": [
+    "Initial scope classifier also selected four main cybersecurity domain documents. Restored exact preimages; excluded them from the migration.",
+    "Initial invariant expected only criterion aliases, so correctly failed on the separately declared contract path/citation aliases. Full declared mapping now reproduces the original132 plan exactly."
+  ],
+  "requirementAliasScope": "Only the legacy shared-security requirement defined by FEAT-008 and the appended security PRD paragraph migrates FR45\u2192FR46. Main portable-domain FR45 and every NFR45 remain unchanged."
+}

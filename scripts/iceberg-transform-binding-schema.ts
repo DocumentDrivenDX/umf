@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 export {};
 const assessment=await Bun.file('spec/extensions/iceberg/transform-type-schema.json').json();delete assessment.$id;delete assessment.$schema;
 const diagnostics=(await Bun.file('spec/extensions/iceberg-table/context-schema.json').json()).properties.diagnostics;

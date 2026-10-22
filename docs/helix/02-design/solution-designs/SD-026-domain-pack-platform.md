@@ -128,3 +128,14 @@ last-touch attribution and fixed medical external provenance, with no remaining
 material finding in that scope. The first-release evidence is
 [domain-pack-catalog.md](../../04-build/evidence/domain-pack-catalog.md). Broader
 feature acceptance remains qualified by the explicit AC5/AC7 boundaries.
+
+## Reusable acquisition companion
+
+Owner direction adds FEAT-009 PACK-07 and CONTRACT-057. Publish independently
+versioned, explicitly trusted Bun companions alongside portable pack metadata.
+The first finite-inventory runner retains original bytes, revision/context
+history and atomic local publications; the portable browser library only admits
+declarations. TableSpec retains tabular import/archive/database execution. Source
+discovery and analysis/email are separately implemented consumer adapters/stages.
+Real source packs may attach the same companion without publishing their local-use
+originals; catalog companion downloads must not trigger source-inclusive export.

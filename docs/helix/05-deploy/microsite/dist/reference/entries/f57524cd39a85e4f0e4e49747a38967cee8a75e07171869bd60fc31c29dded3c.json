@@ -1,0 +1,50 @@
+{
+  "data": {
+    "conflicts": [],
+    "correspondence": "unassessed",
+    "declarations": [
+      {
+        "bytes": 4008,
+        "path": "spec/extensions/odcs/package.json",
+        "sha256": "2f7d042189f0feca7132779d7d00e8b029dd0b715c4d9ee1fcd8bd9fc8f6146a"
+      }
+    ],
+    "evidence": [],
+    "operation": {
+      "apiNames": [],
+      "coreProfiles": [],
+      "extensionVersions": [],
+      "fixturePaths": [],
+      "id": "umf.odcs@0.1.0:export",
+      "kind": "export",
+      "limitations": [
+        "Recorded scope only; native equivalence and production adoption are separate."
+      ],
+      "runtime": {
+        "availability": "host-only",
+        "profileId": "umf.odcs@0.1.0:export",
+        "requirements": [
+          "Native runtime / original qualification harness; not executed by this page."
+        ]
+      },
+      "sourceSystem": "Open Data Contract Standard · 3.0.0/3.0.1/3.0.2/3.1.0/3.2.0 schemas at f0bdad95346905d500be5ef4b2c2d9b1d95223b7",
+      "subset": "JSON/YAML preservation and native shapes; local v3.2.0 reference/relationship checks and ID-selected rename candidates; no external resolution, quality/SLA execution or physical lowering",
+      "targetSystem": "Open Data Contract Standard · 3.0.0/3.0.1/3.0.2/3.1.0/3.2.0 schemas at f0bdad95346905d500be5ef4b2c2d9b1d95223b7",
+      "title": "umf.odcs · export"
+    }
+  },
+  "id": "[\"integration\",\"umf.odcs@0.1.0:export\"]",
+  "kind": "integration",
+  "links": [
+    "[\"extension\",\"umf.odcs\",\"0.1.0\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 134795,
+      "path": "docs/helix/05-deploy/reference/operations.json",
+      "sha256": "793743bbca36e56e90e82df5ef0408b628c434e58cb68aea4d6486349be78e61"
+    }
+  ],
+  "summary": "JSON/YAML preservation and native shapes; local v3.2.0 reference/relationship checks and ID-selected rename candidates; no external resolution, quality/SLA execution or physical lowering",
+  "title": "umf.odcs · export"
+}

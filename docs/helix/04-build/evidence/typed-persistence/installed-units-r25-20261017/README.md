@@ -1,0 +1,11 @@
+# Installed full unit cohorts R25 — 2026-10-17
+
+The final immutable SDK R25 / compiler R22 pair passes360 installed generic unit tests on both Python3.14.8 and3.11.17 with zero failures, errors or skips. This includes the new catalog-fence, mutation-index/early-driver, term-composition and search-parameter controls and the ordinary reviewed-read Compilation cases. True PostgreSQL Native/NativeKey classes and refactor regeneration are explicitly separate gates, rather than reported as skipped unit tests.
+
+SDK source `c042a13e88d51d52a810149f6e407da3eaef0cd2`, wheel `bf9cc2fccf3085b4327c473f5eade13600cbcead269167bfa98552e3a832dfef`; final compiler source `5605d358650468d651f69ff29c40e986a0359a5b`, wheel `f92e23d68afc6619e41e76f19e8760871eb86fe1ad1bf44de66c47c27ca48dc8`. All47 SDK payloads match Git/wheel/both installs; both compiler payloads match their owner wheel/both installs. Payload bytes and native binaries are not included.
+
+The R25/R21 predecessor also passed360 on both interpreters; its exact manifests/logs remain separately named. It is not relabeled as the final compiler. R1 on Python3.14 failed with four missing frozen-support-input errors; R2 adds exact Git `c042a13e88d51d52a810149f6e407da3eaef0cd2` conformance, recorded privilege inventories and temporal normalization fixture. No tests were dropped and no product code changed to repair the copy. The first attempt and both source manifests are retained.
+
+`all-3790-frozen-inputs.tar.gz` recreates every hashed source/support input consumed by the full unit runner. The initial and supplementary Git archives are also retained. The actual51 generated fixture files and their hashes are included. The runner records its installed runtime path and named exclusions. All3790 original input bytes remain unchanged after both final runs. Later two-file public schema support additions are outside this unit-input set and recorded in the separate schema packet.
+
+These unit and codec/mock checks do not establish native locks, live privilege closure, commit/rollback, managed authority or deployment qualification. Original source-produced candidate packets and deliberately synthetic transport controls retain their explicit scopes. Temporal qualification remains **HELD**.

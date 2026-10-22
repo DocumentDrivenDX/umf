@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 3373,
+        "line": 43,
+        "path": "src/model/csv-boolean-lexical.ts",
+        "sha256": "b1a40aaeba2c97bc181736bb87ef204240490b25614b3a643ad61b77bd1af2cc"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "verifyCsvBooleanLexical",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(receiptInput: CsvBooleanLexicalReceipt, sourceInput: Document, requestInput: CsvBooleanLexicalRequest): CsvBooleanLexicalReceipt"
+    ]
+  },
+  "id": "[\"api\",\".\",\"verifyCsvBooleanLexical\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 3373,
+      "line": 43,
+      "path": "src/model/csv-boolean-lexical.ts",
+      "sha256": "b1a40aaeba2c97bc181736bb87ef204240490b25614b3a643ad61b77bd1af2cc"
+    }
+  ],
+  "summary": "Independently expected original source/request are mandatory, never receipt-derived.",
+  "title": "verifyCsvBooleanLexical"
+}

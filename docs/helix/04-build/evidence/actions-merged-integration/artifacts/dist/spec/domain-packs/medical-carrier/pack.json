@@ -1,0 +1,3254 @@
+{
+  "id": "medical-carrier",
+  "version": "1.2.0",
+  "family": {
+    "id": "medical",
+    "version": "1.2.0",
+    "label": "Carrier: eligibility, claims and payments"
+  },
+  "execution_profile": {
+    "version": "1.0.0",
+    "targets": {
+      "tabular": [
+        "resources",
+        "coverage",
+        "eligibility",
+        "claims",
+        "claim_lines",
+        "adjudications",
+        "payments",
+        "plans",
+        "enrollments",
+        "resource_references",
+        "coded_values",
+        "workflow_events",
+        "cms_beneficiaries",
+        "cms_inpatient_claims",
+        "cms_carrier_claims"
+      ],
+      "graph": [
+        "ontology"
+      ]
+    },
+    "mode": "fixed",
+    "include_sources": [
+      "hl7-claim",
+      "hl7-claimresponse",
+      "hl7-coverage",
+      "hl7-eligibility-request",
+      "hl7-eligibility-response",
+      "hl7-enrollment",
+      "hl7-eob",
+      "hl7-insuranceplan",
+      "hl7-payment",
+      "supplement-claim-authorization-approved",
+      "supplement-claim-authorization-denied",
+      "supplement-claim-paid-denied",
+      "supplement-coverage-active",
+      "supplement-coverage-inactive",
+      "supplement-eligibility-negative-request",
+      "supplement-eligibility-negative-response",
+      "supplement-eligibility-positive-request",
+      "supplement-eligibility-positive-response",
+      "supplement-enrollment-request",
+      "supplement-enrollment-response",
+      "supplement-eob",
+      "supplement-patient",
+      "supplement-payer",
+      "supplement-payment",
+      "supplement-plan",
+      "supplement-response-authorization-approved",
+      "supplement-response-authorization-denied",
+      "supplement-response-paid-denied",
+      "workflow",
+      "cms_beneficiaries",
+      "cms_inpatient",
+      "cms_carrier",
+      "cms_selection",
+      "notices",
+      "csv_resources",
+      "csv_coverage",
+      "csv_eligibility",
+      "csv_claims",
+      "csv_claim_lines",
+      "csv_adjudications",
+      "csv_payments",
+      "csv_plans",
+      "csv_enrollments",
+      "csv_resource_references",
+      "csv_coded_values",
+      "csv_workflow_events",
+      "csv_cms_beneficiaries",
+      "csv_cms_inpatient_claims",
+      "csv_cms_carrier_claims"
+    ],
+    "qualification": "Fixed source-qualified sample rows and schema-only ontology. No data generation, clinical conformance or graph-storage execution claim."
+  },
+  "description": "Independently versioned medical-family subpack; no implicit retrieval, code execution or native equivalence.",
+  "domain_types": {
+    "source_qualified_identity": {
+      "description": "Source namespace and native identity; no inferred patient identity."
+    },
+    "exact_native_literal": {
+      "description": "Numeric and temporal source spelling retained as text."
+    }
+  },
+  "schemas": [
+    {
+      "id": "resources",
+      "format": "tablespec",
+      "reference": "umf/resources.json"
+    },
+    {
+      "id": "coverage",
+      "format": "tablespec",
+      "reference": "umf/coverage.json"
+    },
+    {
+      "id": "eligibility",
+      "format": "tablespec",
+      "reference": "umf/eligibility.json"
+    },
+    {
+      "id": "claims",
+      "format": "tablespec",
+      "reference": "umf/claims.json"
+    },
+    {
+      "id": "claim_lines",
+      "format": "tablespec",
+      "reference": "umf/claim_lines.json"
+    },
+    {
+      "id": "adjudications",
+      "format": "tablespec",
+      "reference": "umf/adjudications.json"
+    },
+    {
+      "id": "payments",
+      "format": "tablespec",
+      "reference": "umf/payments.json"
+    },
+    {
+      "id": "plans",
+      "format": "tablespec",
+      "reference": "umf/plans.json"
+    },
+    {
+      "id": "enrollments",
+      "format": "tablespec",
+      "reference": "umf/enrollments.json"
+    },
+    {
+      "id": "resource_references",
+      "format": "tablespec",
+      "reference": "umf/resource_references.json"
+    },
+    {
+      "id": "coded_values",
+      "format": "tablespec",
+      "reference": "umf/coded_values.json"
+    },
+    {
+      "id": "workflow_events",
+      "format": "tablespec",
+      "reference": "umf/workflow_events.json"
+    },
+    {
+      "id": "cms_beneficiaries",
+      "format": "tablespec",
+      "reference": "umf/cms_beneficiaries.json"
+    },
+    {
+      "id": "cms_inpatient_claims",
+      "format": "tablespec",
+      "reference": "umf/cms_inpatient_claims.json"
+    },
+    {
+      "id": "cms_carrier_claims",
+      "format": "tablespec",
+      "reference": "umf/cms_carrier_claims.json"
+    },
+    {
+      "id": "ontology",
+      "format": "umf",
+      "reference": "ontology.json"
+    }
+  ],
+  "sources": {
+    "hl7-claim": {
+      "kind": "external",
+      "data_kind": "fabricated",
+      "reference": "sources/hl7-claim.json",
+      "format": "fhir-r4-json",
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "9f5772b885ed9279361b761e5483a929ece57c2e1d32ac2315ce12caef186339"
+      },
+      "license": {
+        "id": "CC0-1.0",
+        "reference": "https://hl7.org/fhir/R4/license.html",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "HL7 International",
+        "retrieved_at": "2026-10-08",
+        "upstream_url": "https://hl7.org/fhir/R4/claim-example.json",
+        "transformations": []
+      },
+      "revision": "4.0.1"
+    },
+    "hl7-claimresponse": {
+      "kind": "external",
+      "data_kind": "fabricated",
+      "reference": "sources/hl7-claimresponse.json",
+      "format": "fhir-r4-json",
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "460c178f1c9248bbcb0677aa96aef9da5353be7e50f3fc84f144f03be227f3c4"
+      },
+      "license": {
+        "id": "CC0-1.0",
+        "reference": "https://hl7.org/fhir/R4/license.html",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "HL7 International",
+        "retrieved_at": "2026-10-08",
+        "upstream_url": "https://hl7.org/fhir/R4/claimresponse-example.json",
+        "transformations": []
+      },
+      "revision": "4.0.1"
+    },
+    "hl7-coverage": {
+      "kind": "external",
+      "data_kind": "fabricated",
+      "reference": "sources/hl7-coverage.json",
+      "format": "fhir-r4-json",
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "98fb4fcef07a290efb9e3733714f5e3f29d2943ca4367e7d3e3e59c4339bbf08"
+      },
+      "license": {
+        "id": "CC0-1.0",
+        "reference": "https://hl7.org/fhir/R4/license.html",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "HL7 International",
+        "retrieved_at": "2026-10-08",
+        "upstream_url": "https://hl7.org/fhir/R4/coverage-example.json",
+        "transformations": []
+      },
+      "revision": "4.0.1"
+    },
+    "hl7-eligibility-request": {
+      "kind": "external",
+      "data_kind": "fabricated",
+      "reference": "sources/hl7-eligibility-request.json",
+      "format": "fhir-r4-json",
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "9e5e4291bec5672542d37151206a3e6433c5c764e91d8c0f927405cd6dd99612"
+      },
+      "license": {
+        "id": "CC0-1.0",
+        "reference": "https://hl7.org/fhir/R4/license.html",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "HL7 International",
+        "retrieved_at": "2026-10-08",
+        "upstream_url": "https://hl7.org/fhir/R4/coverageeligibilityrequest-example.json",
+        "transformations": []
+      },
+      "revision": "4.0.1"
+    },
+    "hl7-eligibility-response": {
+      "kind": "external",
+      "data_kind": "fabricated",
+      "reference": "sources/hl7-eligibility-response.json",
+      "format": "fhir-r4-json",
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "c24cdf34a5b9609df131dd1968f7873dad451602a55f0b1185b024b14cfa7d4a"
+      },
+      "license": {
+        "id": "CC0-1.0",
+        "reference": "https://hl7.org/fhir/R4/license.html",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "HL7 International",
+        "retrieved_at": "2026-10-08",
+        "upstream_url": "https://hl7.org/fhir/R4/coverageeligibilityresponse-example.json",
+        "transformations": []
+      },
+      "revision": "4.0.1"
+    },
+    "hl7-enrollment": {
+      "kind": "external",
+      "data_kind": "fabricated",
+      "reference": "sources/hl7-enrollment.json",
+      "format": "fhir-r4-json",
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "8d625da8606e1f1c0d179401b31d45e53888213e1583c8049f95bd36bb909cd2"
+      },
+      "license": {
+        "id": "CC0-1.0",
+        "reference": "https://hl7.org/fhir/R4/license.html",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "HL7 International",
+        "retrieved_at": "2026-10-08",
+        "upstream_url": "https://hl7.org/fhir/R4/enrollmentrequest-example.json",
+        "transformations": []
+      },
+      "revision": "4.0.1"
+    },
+    "hl7-eob": {
+      "kind": "external",
+      "data_kind": "fabricated",
+      "reference": "sources/hl7-eob.json",
+      "format": "fhir-r4-json",
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "d73617364c6080c39083912e22bb76162e7594611dca360412d7010e74ff68c2"
+      },
+      "license": {
+        "id": "CC0-1.0",
+        "reference": "https://hl7.org/fhir/R4/license.html",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "HL7 International",
+        "retrieved_at": "2026-10-08",
+        "upstream_url": "https://hl7.org/fhir/R4/explanationofbenefit-example.json",
+        "transformations": []
+      },
+      "revision": "4.0.1"
+    },
+    "hl7-insuranceplan": {
+      "kind": "external",
+      "data_kind": "fabricated",
+      "reference": "sources/hl7-insuranceplan.json",
+      "format": "fhir-r4-json",
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "5dec5d14070a0ba3a3ad9217c305b35948502fc6e1e8ca2217215c25b022fd0e"
+      },
+      "license": {
+        "id": "CC0-1.0",
+        "reference": "https://hl7.org/fhir/R4/license.html",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "HL7 International",
+        "retrieved_at": "2026-10-08",
+        "upstream_url": "https://hl7.org/fhir/R4/insuranceplan-example.json",
+        "transformations": []
+      },
+      "revision": "4.0.1"
+    },
+    "hl7-payment": {
+      "kind": "external",
+      "data_kind": "fabricated",
+      "reference": "sources/hl7-payment.json",
+      "format": "fhir-r4-json",
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "ed5674fda256ae01788491e66078869cdaef41b52261a31af9d1368bebde5a20"
+      },
+      "license": {
+        "id": "CC0-1.0",
+        "reference": "https://hl7.org/fhir/R4/license.html",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "HL7 International",
+        "retrieved_at": "2026-10-08",
+        "upstream_url": "https://hl7.org/fhir/R4/paymentreconciliation-example.json",
+        "transformations": []
+      },
+      "revision": "4.0.1"
+    },
+    "supplement-claim-authorization-approved": {
+      "kind": "external",
+      "data_kind": "fabricated",
+      "reference": "sources/supplement-claim-authorization-approved.json",
+      "format": "fhir-r4-json",
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "526b7a991784f8a6cc35981eab28105195ef682755c5067cc45358f672b4b2ee"
+      },
+      "license": {
+        "redistribution": "allowed",
+        "reference": "licenses/NOTICE.txt"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "retrieved_at": "2026-10-08",
+        "transformations": []
+      },
+      "revision": "umf-scenario-1.0.0"
+    },
+    "supplement-claim-authorization-denied": {
+      "kind": "external",
+      "data_kind": "fabricated",
+      "reference": "sources/supplement-claim-authorization-denied.json",
+      "format": "fhir-r4-json",
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "ad9c085fb8d866d1bf201ba317064cec6de3a076bbe27b126688c487c1baf4dd"
+      },
+      "license": {
+        "redistribution": "allowed",
+        "reference": "licenses/NOTICE.txt"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "retrieved_at": "2026-10-08",
+        "transformations": []
+      },
+      "revision": "umf-scenario-1.0.0"
+    },
+    "supplement-claim-paid-denied": {
+      "kind": "external",
+      "data_kind": "fabricated",
+      "reference": "sources/supplement-claim-paid-denied.json",
+      "format": "fhir-r4-json",
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "d9fe4d6e41c17e28aedb9441267dd33df33f539869fdc056ae0ba302cfb71118"
+      },
+      "license": {
+        "redistribution": "allowed",
+        "reference": "licenses/NOTICE.txt"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "retrieved_at": "2026-10-08",
+        "transformations": []
+      },
+      "revision": "umf-scenario-1.0.0"
+    },
+    "supplement-coverage-active": {
+      "kind": "external",
+      "data_kind": "fabricated",
+      "reference": "sources/supplement-coverage-active.json",
+      "format": "fhir-r4-json",
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "bfe0d1b789d6b5af1ce3d69cdbec59b7a289c57a8e6b3fa7f704c461a5d59ae1"
+      },
+      "license": {
+        "redistribution": "allowed",
+        "reference": "licenses/NOTICE.txt"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "retrieved_at": "2026-10-08",
+        "transformations": []
+      },
+      "revision": "umf-scenario-1.0.0"
+    },
+    "supplement-coverage-inactive": {
+      "kind": "external",
+      "data_kind": "fabricated",
+      "reference": "sources/supplement-coverage-inactive.json",
+      "format": "fhir-r4-json",
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "6bac11dd3d84828012d41bcfe073ea909ee6bb92e45f695ef83b227e8dbdd171"
+      },
+      "license": {
+        "redistribution": "allowed",
+        "reference": "licenses/NOTICE.txt"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "retrieved_at": "2026-10-08",
+        "transformations": []
+      },
+      "revision": "umf-scenario-1.0.0"
+    },
+    "supplement-eligibility-negative-request": {
+      "kind": "external",
+      "data_kind": "fabricated",
+      "reference": "sources/supplement-eligibility-negative-request.json",
+      "format": "fhir-r4-json",
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "26e43d4fd5ebff41ccac60f264c2c68c618efbc04ec2d25814e68d9edf75f9d2"
+      },
+      "license": {
+        "redistribution": "allowed",
+        "reference": "licenses/NOTICE.txt"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "retrieved_at": "2026-10-08",
+        "transformations": []
+      },
+      "revision": "umf-scenario-1.0.0"
+    },
+    "supplement-eligibility-negative-response": {
+      "kind": "external",
+      "data_kind": "fabricated",
+      "reference": "sources/supplement-eligibility-negative-response.json",
+      "format": "fhir-r4-json",
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "facfed979d36ee6ae0cb4f94c718c720fa5227999aa8751bae286c0ef96405f3"
+      },
+      "license": {
+        "redistribution": "allowed",
+        "reference": "licenses/NOTICE.txt"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "retrieved_at": "2026-10-08",
+        "transformations": []
+      },
+      "revision": "umf-scenario-1.0.0"
+    },
+    "supplement-eligibility-positive-request": {
+      "kind": "external",
+      "data_kind": "fabricated",
+      "reference": "sources/supplement-eligibility-positive-request.json",
+      "format": "fhir-r4-json",
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "ac8d756638c079d9fe68d46e211331c575f101edf5ff28bbf1b9605885c57525"
+      },
+      "license": {
+        "redistribution": "allowed",
+        "reference": "licenses/NOTICE.txt"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "retrieved_at": "2026-10-08",
+        "transformations": []
+      },
+      "revision": "umf-scenario-1.0.0"
+    },
+    "supplement-eligibility-positive-response": {
+      "kind": "external",
+      "data_kind": "fabricated",
+      "reference": "sources/supplement-eligibility-positive-response.json",
+      "format": "fhir-r4-json",
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "d8e0e9a8f9025dfac07df8546e81de2e95cd12311bfa24585c6ac131c04f7e9d"
+      },
+      "license": {
+        "redistribution": "allowed",
+        "reference": "licenses/NOTICE.txt"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "retrieved_at": "2026-10-08",
+        "transformations": []
+      },
+      "revision": "umf-scenario-1.0.0"
+    },
+    "supplement-enrollment-request": {
+      "kind": "external",
+      "data_kind": "fabricated",
+      "reference": "sources/supplement-enrollment-request.json",
+      "format": "fhir-r4-json",
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "1bb28887e7ba29630b1726145813675fa9903af02fa5cd462c88ff93762f84dd"
+      },
+      "license": {
+        "redistribution": "allowed",
+        "reference": "licenses/NOTICE.txt"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "retrieved_at": "2026-10-08",
+        "transformations": []
+      },
+      "revision": "umf-scenario-1.0.0"
+    },
+    "supplement-enrollment-response": {
+      "kind": "external",
+      "data_kind": "fabricated",
+      "reference": "sources/supplement-enrollment-response.json",
+      "format": "fhir-r4-json",
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "f0591ee4edbfe089ad1f5c5478b536911ecdb8f17de01d5ae87ae6f0e05d6a2e"
+      },
+      "license": {
+        "redistribution": "allowed",
+        "reference": "licenses/NOTICE.txt"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "retrieved_at": "2026-10-08",
+        "transformations": []
+      },
+      "revision": "umf-scenario-1.0.0"
+    },
+    "supplement-eob": {
+      "kind": "external",
+      "data_kind": "fabricated",
+      "reference": "sources/supplement-eob.json",
+      "format": "fhir-r4-json",
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "e35a4194dab73e92de8a15613139506b7b52882f96284cf2226fe45d70f8da1a"
+      },
+      "license": {
+        "redistribution": "allowed",
+        "reference": "licenses/NOTICE.txt"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "retrieved_at": "2026-10-08",
+        "transformations": []
+      },
+      "revision": "umf-scenario-1.0.0"
+    },
+    "supplement-patient": {
+      "kind": "external",
+      "data_kind": "fabricated",
+      "reference": "sources/supplement-patient.json",
+      "format": "fhir-r4-json",
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "7289f945e6acf2ce66c83e3e8a37ebfa6a6556c599d2d12336cbd51396f66424"
+      },
+      "license": {
+        "redistribution": "allowed",
+        "reference": "licenses/NOTICE.txt"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "retrieved_at": "2026-10-08",
+        "transformations": []
+      },
+      "revision": "umf-scenario-1.0.0"
+    },
+    "supplement-payer": {
+      "kind": "external",
+      "data_kind": "fabricated",
+      "reference": "sources/supplement-payer.json",
+      "format": "fhir-r4-json",
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "4a43f964cbd30343e1280c92e3bb1ed37b7dfb9bf946f6bafd439a51b99a5661"
+      },
+      "license": {
+        "redistribution": "allowed",
+        "reference": "licenses/NOTICE.txt"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "retrieved_at": "2026-10-08",
+        "transformations": []
+      },
+      "revision": "umf-scenario-1.0.0"
+    },
+    "supplement-payment": {
+      "kind": "external",
+      "data_kind": "fabricated",
+      "reference": "sources/supplement-payment.json",
+      "format": "fhir-r4-json",
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "36284c9df3a93a5f86cbe054435730811fa5a62e2cb233be81da0a174db672b6"
+      },
+      "license": {
+        "redistribution": "allowed",
+        "reference": "licenses/NOTICE.txt"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "retrieved_at": "2026-10-08",
+        "transformations": []
+      },
+      "revision": "umf-scenario-1.0.0"
+    },
+    "supplement-plan": {
+      "kind": "external",
+      "data_kind": "fabricated",
+      "reference": "sources/supplement-plan.json",
+      "format": "fhir-r4-json",
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "d9886c0b4ce226972752ab72665824aa60c55a06c7fe6ca2ecf927326756c922"
+      },
+      "license": {
+        "redistribution": "allowed",
+        "reference": "licenses/NOTICE.txt"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "retrieved_at": "2026-10-08",
+        "transformations": []
+      },
+      "revision": "umf-scenario-1.0.0"
+    },
+    "supplement-response-authorization-approved": {
+      "kind": "external",
+      "data_kind": "fabricated",
+      "reference": "sources/supplement-response-authorization-approved.json",
+      "format": "fhir-r4-json",
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "bd267969ba418fc87baf385946c1422f64e913aa7c6a8cc15fa4f16363c8c848"
+      },
+      "license": {
+        "redistribution": "allowed",
+        "reference": "licenses/NOTICE.txt"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "retrieved_at": "2026-10-08",
+        "transformations": []
+      },
+      "revision": "umf-scenario-1.0.0"
+    },
+    "supplement-response-authorization-denied": {
+      "kind": "external",
+      "data_kind": "fabricated",
+      "reference": "sources/supplement-response-authorization-denied.json",
+      "format": "fhir-r4-json",
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "f709ce1bf67e2a05073a4720de39b1ec718a525cf64fbaff8f32716f33033ce5"
+      },
+      "license": {
+        "redistribution": "allowed",
+        "reference": "licenses/NOTICE.txt"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "retrieved_at": "2026-10-08",
+        "transformations": []
+      },
+      "revision": "umf-scenario-1.0.0"
+    },
+    "supplement-response-paid-denied": {
+      "kind": "external",
+      "data_kind": "fabricated",
+      "reference": "sources/supplement-response-paid-denied.json",
+      "format": "fhir-r4-json",
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "c7d4f37c7eec131f9b3474ca7e5ebabb1a8dd0be79bdaed37d9579ce3df3dae5"
+      },
+      "license": {
+        "redistribution": "allowed",
+        "reference": "licenses/NOTICE.txt"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "retrieved_at": "2026-10-08",
+        "transformations": []
+      },
+      "revision": "umf-scenario-1.0.0"
+    },
+    "workflow": {
+      "kind": "external",
+      "data_kind": "fabricated",
+      "reference": "sources/workflow-events.json",
+      "format": "json",
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "bb3fae1317c8c050a802b70895d362f263d3114cc65af12fbcb639b9063abaae"
+      },
+      "license": {
+        "redistribution": "allowed",
+        "reference": "licenses/NOTICE.txt"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "retrieved_at": "2026-10-08",
+        "transformations": []
+      }
+    },
+    "cms_rif": {
+      "kind": "external",
+      "data_kind": "fabricated",
+      "reference": "https://data.cms.gov/",
+      "format": "publisher-page",
+      "license": {
+        "redistribution": "unknown",
+        "notices": [
+          "Reference or consumer-local licensed input only; no bytes bundled or retrieval implied."
+        ]
+      },
+      "provenance": {
+        "publisher": "Centers for Medicare & Medicaid Services"
+      }
+    },
+    "cms_blue_button": {
+      "kind": "external",
+      "data_kind": "fabricated",
+      "reference": "https://bluebutton.cms.gov/data/understanding-the-data/",
+      "format": "publisher-page",
+      "license": {
+        "redistribution": "unknown",
+        "notices": [
+          "Reference or consumer-local licensed input only; no bytes bundled or retrieval implied."
+        ]
+      },
+      "provenance": {
+        "publisher": "Centers for Medicare & Medicaid Services"
+      }
+    },
+    "cms_beneficiaries": {
+      "kind": "external",
+      "data_kind": "fabricated",
+      "reference": "sources/cms-beneficiaries.csv",
+      "format": "csv",
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "500f5a2040cb17376c130884bfafa81bcc8d5acb0a44f89aa2af8701cc2d7349"
+      },
+      "license": {
+        "redistribution": "allowed",
+        "reference": "licenses/NOTICE.txt"
+      },
+      "provenance": {
+        "publisher": "CMS",
+        "retrieved_at": "2026-10-08",
+        "upstream_url": "https://www.cms.gov/research-statistics-data-and-systems/downloadable-public-use-files/synpufs/downloads/de1_0_2008_beneficiary_summary_file_sample_1.zip",
+        "transformations": [
+          "Exact native header and selected complete record bytes; see cms-selection.json."
+        ]
+      },
+      "revision": "DE-SynPUF 1.0 Sample 1; 2008 beneficiary and 2008–2010 claims"
+    },
+    "cms_inpatient": {
+      "kind": "external",
+      "data_kind": "fabricated",
+      "reference": "sources/cms-inpatient.csv",
+      "format": "csv",
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "064973be1b23e48c9df9f4163502282ffc01b1094710cba588beb6d581f6d8b4"
+      },
+      "license": {
+        "redistribution": "allowed",
+        "reference": "licenses/NOTICE.txt"
+      },
+      "provenance": {
+        "publisher": "CMS",
+        "retrieved_at": "2026-10-08",
+        "upstream_url": "https://www.cms.gov/research-statistics-data-and-systems/downloadable-public-use-files/synpufs/downloads/de1_0_2008_to_2010_inpatient_claims_sample_1.zip",
+        "transformations": [
+          "Exact native header and selected complete record bytes; see cms-selection.json."
+        ]
+      },
+      "revision": "DE-SynPUF 1.0 Sample 1; 2008 beneficiary and 2008–2010 claims"
+    },
+    "cms_carrier": {
+      "kind": "external",
+      "data_kind": "fabricated",
+      "reference": "sources/cms-carrier.csv",
+      "format": "csv",
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "91d44f48211ffe3a0176bcc3fc980672de5db48de1d79783935db703ed0f456d"
+      },
+      "license": {
+        "redistribution": "allowed",
+        "reference": "licenses/NOTICE.txt"
+      },
+      "provenance": {
+        "publisher": "CMS",
+        "retrieved_at": "2026-10-08",
+        "upstream_url": "https://downloads.cms.gov/files/DE1_0_2008_to_2010_Carrier_Claims_Sample_1A.zip",
+        "transformations": [
+          "Exact native header and selected complete record bytes; see cms-selection.json."
+        ]
+      },
+      "revision": "DE-SynPUF 1.0 Sample 1; 2008 beneficiary and 2008–2010 claims"
+    },
+    "cms_selection": {
+      "kind": "external",
+      "data_kind": "unknown",
+      "reference": "sources/cms-selection.json",
+      "format": "json",
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "ce80cfbfeaa4899356d1877d62bf2404ff53896de7acb69cb64aed94fe5da1c5"
+      },
+      "license": {
+        "redistribution": "allowed",
+        "reference": "licenses/NOTICE.txt"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "retrieved_at": "2026-10-08",
+        "transformations": []
+      }
+    },
+    "notices": {
+      "kind": "external",
+      "data_kind": "unknown",
+      "reference": "licenses/NOTICE.txt",
+      "format": "text",
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "1100d7e599a36762c7159a5fdc0ca81efd19185babaa2a8ec226f970d1e7340c"
+      },
+      "license": {
+        "redistribution": "allowed",
+        "reference": "licenses/NOTICE.txt"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "retrieved_at": "2026-10-08",
+        "transformations": []
+      }
+    },
+    "csv_resources": {
+      "kind": "external",
+      "data_kind": "fabricated",
+      "reference": "data/resources.csv",
+      "format": "csv",
+      "revision": "medical-carrier-1.2.0",
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "0f4a4537fc78a555ade4a8fe68709458c3b4c0f4a080b99692382dac0ef7f6e9"
+      },
+      "license": {
+        "redistribution": "allowed",
+        "reference": "licenses/NOTICE.txt"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "source_ids": [
+          "hl7-claim",
+          "hl7-claimresponse",
+          "hl7-coverage",
+          "hl7-eligibility-request",
+          "hl7-eligibility-response",
+          "hl7-enrollment",
+          "hl7-eob",
+          "hl7-insuranceplan",
+          "hl7-payment",
+          "supplement-claim-authorization-approved",
+          "supplement-claim-authorization-denied",
+          "supplement-claim-paid-denied",
+          "supplement-coverage-active",
+          "supplement-coverage-inactive",
+          "supplement-eligibility-negative-request",
+          "supplement-eligibility-negative-response",
+          "supplement-eligibility-positive-request",
+          "supplement-eligibility-positive-response",
+          "supplement-enrollment-request",
+          "supplement-enrollment-response",
+          "supplement-eob",
+          "supplement-patient",
+          "supplement-payer",
+          "supplement-payment",
+          "supplement-plan",
+          "supplement-response-authorization-approved",
+          "supplement-response-authorization-denied",
+          "supplement-response-paid-denied"
+        ],
+        "transformations": [
+          "Deterministic selected-column projection; original native sources retained separately."
+        ]
+      }
+    },
+    "csv_coverage": {
+      "kind": "external",
+      "data_kind": "fabricated",
+      "reference": "data/coverage.csv",
+      "format": "csv",
+      "revision": "medical-carrier-1.2.0",
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "5571b3a7a70a61dae1d771dc113c6a0a246e506f8a125de579094f3d87487eda"
+      },
+      "license": {
+        "redistribution": "allowed",
+        "reference": "licenses/NOTICE.txt"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "source_ids": [
+          "hl7-claim",
+          "hl7-claimresponse",
+          "hl7-coverage",
+          "hl7-eligibility-request",
+          "hl7-eligibility-response",
+          "hl7-enrollment",
+          "hl7-eob",
+          "hl7-insuranceplan",
+          "hl7-payment",
+          "supplement-claim-authorization-approved",
+          "supplement-claim-authorization-denied",
+          "supplement-claim-paid-denied",
+          "supplement-coverage-active",
+          "supplement-coverage-inactive",
+          "supplement-eligibility-negative-request",
+          "supplement-eligibility-negative-response",
+          "supplement-eligibility-positive-request",
+          "supplement-eligibility-positive-response",
+          "supplement-enrollment-request",
+          "supplement-enrollment-response",
+          "supplement-eob",
+          "supplement-patient",
+          "supplement-payer",
+          "supplement-payment",
+          "supplement-plan",
+          "supplement-response-authorization-approved",
+          "supplement-response-authorization-denied",
+          "supplement-response-paid-denied"
+        ],
+        "transformations": [
+          "Deterministic selected-column projection; original native sources retained separately."
+        ]
+      }
+    },
+    "csv_eligibility": {
+      "kind": "external",
+      "data_kind": "fabricated",
+      "reference": "data/eligibility.csv",
+      "format": "csv",
+      "revision": "medical-carrier-1.2.0",
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "68d560d188c7fa42ac85b331de51ca04c8dd8c64611d3663cf53f5ad0f18a08a"
+      },
+      "license": {
+        "redistribution": "allowed",
+        "reference": "licenses/NOTICE.txt"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "source_ids": [
+          "hl7-claim",
+          "hl7-claimresponse",
+          "hl7-coverage",
+          "hl7-eligibility-request",
+          "hl7-eligibility-response",
+          "hl7-enrollment",
+          "hl7-eob",
+          "hl7-insuranceplan",
+          "hl7-payment",
+          "supplement-claim-authorization-approved",
+          "supplement-claim-authorization-denied",
+          "supplement-claim-paid-denied",
+          "supplement-coverage-active",
+          "supplement-coverage-inactive",
+          "supplement-eligibility-negative-request",
+          "supplement-eligibility-negative-response",
+          "supplement-eligibility-positive-request",
+          "supplement-eligibility-positive-response",
+          "supplement-enrollment-request",
+          "supplement-enrollment-response",
+          "supplement-eob",
+          "supplement-patient",
+          "supplement-payer",
+          "supplement-payment",
+          "supplement-plan",
+          "supplement-response-authorization-approved",
+          "supplement-response-authorization-denied",
+          "supplement-response-paid-denied"
+        ],
+        "transformations": [
+          "Deterministic selected-column projection; original native sources retained separately."
+        ]
+      }
+    },
+    "csv_claims": {
+      "kind": "external",
+      "data_kind": "fabricated",
+      "reference": "data/claims.csv",
+      "format": "csv",
+      "revision": "medical-carrier-1.2.0",
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "a902b00758a4972f09f53e2e8b26f9997fdd2bea468e20a1cb7c04adebc8c703"
+      },
+      "license": {
+        "redistribution": "allowed",
+        "reference": "licenses/NOTICE.txt"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "source_ids": [
+          "hl7-claim",
+          "hl7-claimresponse",
+          "hl7-coverage",
+          "hl7-eligibility-request",
+          "hl7-eligibility-response",
+          "hl7-enrollment",
+          "hl7-eob",
+          "hl7-insuranceplan",
+          "hl7-payment",
+          "supplement-claim-authorization-approved",
+          "supplement-claim-authorization-denied",
+          "supplement-claim-paid-denied",
+          "supplement-coverage-active",
+          "supplement-coverage-inactive",
+          "supplement-eligibility-negative-request",
+          "supplement-eligibility-negative-response",
+          "supplement-eligibility-positive-request",
+          "supplement-eligibility-positive-response",
+          "supplement-enrollment-request",
+          "supplement-enrollment-response",
+          "supplement-eob",
+          "supplement-patient",
+          "supplement-payer",
+          "supplement-payment",
+          "supplement-plan",
+          "supplement-response-authorization-approved",
+          "supplement-response-authorization-denied",
+          "supplement-response-paid-denied"
+        ],
+        "transformations": [
+          "Deterministic selected-column projection; original native sources retained separately."
+        ]
+      }
+    },
+    "csv_claim_lines": {
+      "kind": "external",
+      "data_kind": "fabricated",
+      "reference": "data/claim_lines.csv",
+      "format": "csv",
+      "revision": "medical-carrier-1.2.0",
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "0bd9b58462d29869bcd8a00225f8b1b77b83c81bed04d5a8a44fe7232e94ce37"
+      },
+      "license": {
+        "redistribution": "allowed",
+        "reference": "licenses/NOTICE.txt"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "source_ids": [
+          "hl7-claim",
+          "hl7-claimresponse",
+          "hl7-coverage",
+          "hl7-eligibility-request",
+          "hl7-eligibility-response",
+          "hl7-enrollment",
+          "hl7-eob",
+          "hl7-insuranceplan",
+          "hl7-payment",
+          "supplement-claim-authorization-approved",
+          "supplement-claim-authorization-denied",
+          "supplement-claim-paid-denied",
+          "supplement-coverage-active",
+          "supplement-coverage-inactive",
+          "supplement-eligibility-negative-request",
+          "supplement-eligibility-negative-response",
+          "supplement-eligibility-positive-request",
+          "supplement-eligibility-positive-response",
+          "supplement-enrollment-request",
+          "supplement-enrollment-response",
+          "supplement-eob",
+          "supplement-patient",
+          "supplement-payer",
+          "supplement-payment",
+          "supplement-plan",
+          "supplement-response-authorization-approved",
+          "supplement-response-authorization-denied",
+          "supplement-response-paid-denied"
+        ],
+        "transformations": [
+          "Deterministic selected-column projection; original native sources retained separately."
+        ]
+      }
+    },
+    "csv_adjudications": {
+      "kind": "external",
+      "data_kind": "fabricated",
+      "reference": "data/adjudications.csv",
+      "format": "csv",
+      "revision": "medical-carrier-1.2.0",
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "fa035e3b2b0dfb201414d04b7dcfdf0a7e39fed806de024b6c0be2ac352fab7f"
+      },
+      "license": {
+        "redistribution": "allowed",
+        "reference": "licenses/NOTICE.txt"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "source_ids": [
+          "hl7-claim",
+          "hl7-claimresponse",
+          "hl7-coverage",
+          "hl7-eligibility-request",
+          "hl7-eligibility-response",
+          "hl7-enrollment",
+          "hl7-eob",
+          "hl7-insuranceplan",
+          "hl7-payment",
+          "supplement-claim-authorization-approved",
+          "supplement-claim-authorization-denied",
+          "supplement-claim-paid-denied",
+          "supplement-coverage-active",
+          "supplement-coverage-inactive",
+          "supplement-eligibility-negative-request",
+          "supplement-eligibility-negative-response",
+          "supplement-eligibility-positive-request",
+          "supplement-eligibility-positive-response",
+          "supplement-enrollment-request",
+          "supplement-enrollment-response",
+          "supplement-eob",
+          "supplement-patient",
+          "supplement-payer",
+          "supplement-payment",
+          "supplement-plan",
+          "supplement-response-authorization-approved",
+          "supplement-response-authorization-denied",
+          "supplement-response-paid-denied"
+        ],
+        "transformations": [
+          "Deterministic selected-column projection; original native sources retained separately."
+        ]
+      }
+    },
+    "csv_payments": {
+      "kind": "external",
+      "data_kind": "fabricated",
+      "reference": "data/payments.csv",
+      "format": "csv",
+      "revision": "medical-carrier-1.2.0",
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "1469a88558a7f262ef85c5fe9b4b6bda7eb7102ea92a992004f35a648ed707ec"
+      },
+      "license": {
+        "redistribution": "allowed",
+        "reference": "licenses/NOTICE.txt"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "source_ids": [
+          "hl7-claim",
+          "hl7-claimresponse",
+          "hl7-coverage",
+          "hl7-eligibility-request",
+          "hl7-eligibility-response",
+          "hl7-enrollment",
+          "hl7-eob",
+          "hl7-insuranceplan",
+          "hl7-payment",
+          "supplement-claim-authorization-approved",
+          "supplement-claim-authorization-denied",
+          "supplement-claim-paid-denied",
+          "supplement-coverage-active",
+          "supplement-coverage-inactive",
+          "supplement-eligibility-negative-request",
+          "supplement-eligibility-negative-response",
+          "supplement-eligibility-positive-request",
+          "supplement-eligibility-positive-response",
+          "supplement-enrollment-request",
+          "supplement-enrollment-response",
+          "supplement-eob",
+          "supplement-patient",
+          "supplement-payer",
+          "supplement-payment",
+          "supplement-plan",
+          "supplement-response-authorization-approved",
+          "supplement-response-authorization-denied",
+          "supplement-response-paid-denied"
+        ],
+        "transformations": [
+          "Deterministic selected-column projection; original native sources retained separately."
+        ]
+      }
+    },
+    "csv_plans": {
+      "kind": "external",
+      "data_kind": "fabricated",
+      "reference": "data/plans.csv",
+      "format": "csv",
+      "revision": "medical-carrier-1.2.0",
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "f27ca990c8476379a6cc992083451b684eb0a1e54957aa1e985bf216b7f64034"
+      },
+      "license": {
+        "redistribution": "allowed",
+        "reference": "licenses/NOTICE.txt"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "source_ids": [
+          "hl7-claim",
+          "hl7-claimresponse",
+          "hl7-coverage",
+          "hl7-eligibility-request",
+          "hl7-eligibility-response",
+          "hl7-enrollment",
+          "hl7-eob",
+          "hl7-insuranceplan",
+          "hl7-payment",
+          "supplement-claim-authorization-approved",
+          "supplement-claim-authorization-denied",
+          "supplement-claim-paid-denied",
+          "supplement-coverage-active",
+          "supplement-coverage-inactive",
+          "supplement-eligibility-negative-request",
+          "supplement-eligibility-negative-response",
+          "supplement-eligibility-positive-request",
+          "supplement-eligibility-positive-response",
+          "supplement-enrollment-request",
+          "supplement-enrollment-response",
+          "supplement-eob",
+          "supplement-patient",
+          "supplement-payer",
+          "supplement-payment",
+          "supplement-plan",
+          "supplement-response-authorization-approved",
+          "supplement-response-authorization-denied",
+          "supplement-response-paid-denied"
+        ],
+        "transformations": [
+          "Deterministic selected-column projection; original native sources retained separately."
+        ]
+      }
+    },
+    "csv_enrollments": {
+      "kind": "external",
+      "data_kind": "fabricated",
+      "reference": "data/enrollments.csv",
+      "format": "csv",
+      "revision": "medical-carrier-1.2.0",
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "5716b79011198e027a81163c62cd97c7c03af0b0b7e27308bd8d12b9c6625eb5"
+      },
+      "license": {
+        "redistribution": "allowed",
+        "reference": "licenses/NOTICE.txt"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "source_ids": [
+          "hl7-claim",
+          "hl7-claimresponse",
+          "hl7-coverage",
+          "hl7-eligibility-request",
+          "hl7-eligibility-response",
+          "hl7-enrollment",
+          "hl7-eob",
+          "hl7-insuranceplan",
+          "hl7-payment",
+          "supplement-claim-authorization-approved",
+          "supplement-claim-authorization-denied",
+          "supplement-claim-paid-denied",
+          "supplement-coverage-active",
+          "supplement-coverage-inactive",
+          "supplement-eligibility-negative-request",
+          "supplement-eligibility-negative-response",
+          "supplement-eligibility-positive-request",
+          "supplement-eligibility-positive-response",
+          "supplement-enrollment-request",
+          "supplement-enrollment-response",
+          "supplement-eob",
+          "supplement-patient",
+          "supplement-payer",
+          "supplement-payment",
+          "supplement-plan",
+          "supplement-response-authorization-approved",
+          "supplement-response-authorization-denied",
+          "supplement-response-paid-denied"
+        ],
+        "transformations": [
+          "Deterministic selected-column projection; original native sources retained separately."
+        ]
+      }
+    },
+    "csv_resource_references": {
+      "kind": "external",
+      "data_kind": "fabricated",
+      "reference": "data/resource_references.csv",
+      "format": "csv",
+      "revision": "medical-carrier-1.2.0",
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "1da6ebc223e723755b8476306fb5e8050aa3d0e384fa7048ecc6c26a7aae0aaf"
+      },
+      "license": {
+        "redistribution": "allowed",
+        "reference": "licenses/NOTICE.txt"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "source_ids": [
+          "hl7-claim",
+          "hl7-claimresponse",
+          "hl7-coverage",
+          "hl7-eligibility-request",
+          "hl7-eligibility-response",
+          "hl7-enrollment",
+          "hl7-eob",
+          "hl7-insuranceplan",
+          "hl7-payment",
+          "supplement-claim-authorization-approved",
+          "supplement-claim-authorization-denied",
+          "supplement-claim-paid-denied",
+          "supplement-coverage-active",
+          "supplement-coverage-inactive",
+          "supplement-eligibility-negative-request",
+          "supplement-eligibility-negative-response",
+          "supplement-eligibility-positive-request",
+          "supplement-eligibility-positive-response",
+          "supplement-enrollment-request",
+          "supplement-enrollment-response",
+          "supplement-eob",
+          "supplement-patient",
+          "supplement-payer",
+          "supplement-payment",
+          "supplement-plan",
+          "supplement-response-authorization-approved",
+          "supplement-response-authorization-denied",
+          "supplement-response-paid-denied"
+        ],
+        "transformations": [
+          "Deterministic selected-column projection; original native sources retained separately."
+        ]
+      }
+    },
+    "csv_coded_values": {
+      "kind": "external",
+      "data_kind": "fabricated",
+      "reference": "data/coded_values.csv",
+      "format": "csv",
+      "revision": "medical-carrier-1.2.0",
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "5eeeeb39af2f52c42959c071208ad18f9f8ba335865b5a3703d2df85677b0b48"
+      },
+      "license": {
+        "redistribution": "allowed",
+        "reference": "licenses/NOTICE.txt"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "source_ids": [
+          "hl7-claim",
+          "hl7-claimresponse",
+          "hl7-coverage",
+          "hl7-eligibility-request",
+          "hl7-eligibility-response",
+          "hl7-enrollment",
+          "hl7-eob",
+          "hl7-insuranceplan",
+          "hl7-payment",
+          "supplement-claim-authorization-approved",
+          "supplement-claim-authorization-denied",
+          "supplement-claim-paid-denied",
+          "supplement-coverage-active",
+          "supplement-coverage-inactive",
+          "supplement-eligibility-negative-request",
+          "supplement-eligibility-negative-response",
+          "supplement-eligibility-positive-request",
+          "supplement-eligibility-positive-response",
+          "supplement-enrollment-request",
+          "supplement-enrollment-response",
+          "supplement-eob",
+          "supplement-patient",
+          "supplement-payer",
+          "supplement-payment",
+          "supplement-plan",
+          "supplement-response-authorization-approved",
+          "supplement-response-authorization-denied",
+          "supplement-response-paid-denied"
+        ],
+        "transformations": [
+          "Deterministic selected-column projection; original native sources retained separately."
+        ]
+      }
+    },
+    "csv_workflow_events": {
+      "kind": "external",
+      "data_kind": "fabricated",
+      "reference": "data/workflow_events.csv",
+      "format": "csv",
+      "revision": "medical-carrier-1.2.0",
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "b27e0b1d336915c55ee950bb82b0cbf6f9cc86799ed6a0babd4ce3d6452f83cb"
+      },
+      "license": {
+        "redistribution": "allowed",
+        "reference": "licenses/NOTICE.txt"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "source_ids": [
+          "workflow"
+        ],
+        "transformations": [
+          "Deterministic selected-column projection; original native sources retained separately."
+        ]
+      }
+    },
+    "csv_cms_beneficiaries": {
+      "kind": "external",
+      "data_kind": "fabricated",
+      "reference": "data/cms_beneficiaries.csv",
+      "format": "csv",
+      "revision": "medical-carrier-1.2.0",
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "682d408b477eba199e96c853c7982c0157881768a5b8e7be896a75ca1a91e82e"
+      },
+      "license": {
+        "redistribution": "allowed",
+        "reference": "licenses/NOTICE.txt"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "source_ids": [
+          "cms_beneficiaries",
+          "cms_selection"
+        ],
+        "transformations": [
+          "Deterministic selected-column projection; original native sources retained separately."
+        ]
+      }
+    },
+    "csv_cms_inpatient_claims": {
+      "kind": "external",
+      "data_kind": "fabricated",
+      "reference": "data/cms_inpatient_claims.csv",
+      "format": "csv",
+      "revision": "medical-carrier-1.2.0",
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "281f8484b788cdfd0c3545740374675c9b69c350f25b64dd0f9aa26ce8ffdfa8"
+      },
+      "license": {
+        "redistribution": "allowed",
+        "reference": "licenses/NOTICE.txt"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "source_ids": [
+          "cms_inpatient",
+          "cms_selection"
+        ],
+        "transformations": [
+          "Deterministic selected-column projection; original native sources retained separately."
+        ]
+      }
+    },
+    "csv_cms_carrier_claims": {
+      "kind": "external",
+      "data_kind": "fabricated",
+      "reference": "data/cms_carrier_claims.csv",
+      "format": "csv",
+      "revision": "medical-carrier-1.2.0",
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "a3175dadf541162ed006f3b768cc95c3aad7c06e5ca90bd79b4edebef2138401"
+      },
+      "license": {
+        "redistribution": "allowed",
+        "reference": "licenses/NOTICE.txt"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "source_ids": [
+          "cms_carrier",
+          "cms_selection"
+        ],
+        "transformations": [
+          "Deterministic selected-column projection; original native sources retained separately."
+        ]
+      }
+    }
+  },
+  "source_bindings": [
+    {
+      "schema_id": "resources",
+      "source_id": "csv_resources",
+      "role": "rows"
+    },
+    {
+      "schema_id": "resources",
+      "source_id": "hl7-claim",
+      "role": "reference"
+    },
+    {
+      "schema_id": "resources",
+      "source_id": "hl7-claimresponse",
+      "role": "reference"
+    },
+    {
+      "schema_id": "resources",
+      "source_id": "hl7-coverage",
+      "role": "reference"
+    },
+    {
+      "schema_id": "resources",
+      "source_id": "hl7-eligibility-request",
+      "role": "reference"
+    },
+    {
+      "schema_id": "resources",
+      "source_id": "hl7-eligibility-response",
+      "role": "reference"
+    },
+    {
+      "schema_id": "resources",
+      "source_id": "hl7-enrollment",
+      "role": "reference"
+    },
+    {
+      "schema_id": "resources",
+      "source_id": "hl7-eob",
+      "role": "reference"
+    },
+    {
+      "schema_id": "resources",
+      "source_id": "hl7-insuranceplan",
+      "role": "reference"
+    },
+    {
+      "schema_id": "resources",
+      "source_id": "hl7-payment",
+      "role": "reference"
+    },
+    {
+      "schema_id": "resources",
+      "source_id": "supplement-claim-authorization-approved",
+      "role": "reference"
+    },
+    {
+      "schema_id": "resources",
+      "source_id": "supplement-claim-authorization-denied",
+      "role": "reference"
+    },
+    {
+      "schema_id": "resources",
+      "source_id": "supplement-claim-paid-denied",
+      "role": "reference"
+    },
+    {
+      "schema_id": "resources",
+      "source_id": "supplement-coverage-active",
+      "role": "reference"
+    },
+    {
+      "schema_id": "resources",
+      "source_id": "supplement-coverage-inactive",
+      "role": "reference"
+    },
+    {
+      "schema_id": "resources",
+      "source_id": "supplement-eligibility-negative-request",
+      "role": "reference"
+    },
+    {
+      "schema_id": "resources",
+      "source_id": "supplement-eligibility-negative-response",
+      "role": "reference"
+    },
+    {
+      "schema_id": "resources",
+      "source_id": "supplement-eligibility-positive-request",
+      "role": "reference"
+    },
+    {
+      "schema_id": "resources",
+      "source_id": "supplement-eligibility-positive-response",
+      "role": "reference"
+    },
+    {
+      "schema_id": "resources",
+      "source_id": "supplement-enrollment-request",
+      "role": "reference"
+    },
+    {
+      "schema_id": "resources",
+      "source_id": "supplement-enrollment-response",
+      "role": "reference"
+    },
+    {
+      "schema_id": "resources",
+      "source_id": "supplement-eob",
+      "role": "reference"
+    },
+    {
+      "schema_id": "resources",
+      "source_id": "supplement-patient",
+      "role": "reference"
+    },
+    {
+      "schema_id": "resources",
+      "source_id": "supplement-payer",
+      "role": "reference"
+    },
+    {
+      "schema_id": "resources",
+      "source_id": "supplement-payment",
+      "role": "reference"
+    },
+    {
+      "schema_id": "resources",
+      "source_id": "supplement-plan",
+      "role": "reference"
+    },
+    {
+      "schema_id": "resources",
+      "source_id": "supplement-response-authorization-approved",
+      "role": "reference"
+    },
+    {
+      "schema_id": "resources",
+      "source_id": "supplement-response-authorization-denied",
+      "role": "reference"
+    },
+    {
+      "schema_id": "resources",
+      "source_id": "supplement-response-paid-denied",
+      "role": "reference"
+    },
+    {
+      "schema_id": "coverage",
+      "source_id": "csv_coverage",
+      "role": "rows"
+    },
+    {
+      "schema_id": "coverage",
+      "source_id": "hl7-claim",
+      "role": "reference"
+    },
+    {
+      "schema_id": "coverage",
+      "source_id": "hl7-claimresponse",
+      "role": "reference"
+    },
+    {
+      "schema_id": "coverage",
+      "source_id": "hl7-coverage",
+      "role": "reference"
+    },
+    {
+      "schema_id": "coverage",
+      "source_id": "hl7-eligibility-request",
+      "role": "reference"
+    },
+    {
+      "schema_id": "coverage",
+      "source_id": "hl7-eligibility-response",
+      "role": "reference"
+    },
+    {
+      "schema_id": "coverage",
+      "source_id": "hl7-enrollment",
+      "role": "reference"
+    },
+    {
+      "schema_id": "coverage",
+      "source_id": "hl7-eob",
+      "role": "reference"
+    },
+    {
+      "schema_id": "coverage",
+      "source_id": "hl7-insuranceplan",
+      "role": "reference"
+    },
+    {
+      "schema_id": "coverage",
+      "source_id": "hl7-payment",
+      "role": "reference"
+    },
+    {
+      "schema_id": "coverage",
+      "source_id": "supplement-claim-authorization-approved",
+      "role": "reference"
+    },
+    {
+      "schema_id": "coverage",
+      "source_id": "supplement-claim-authorization-denied",
+      "role": "reference"
+    },
+    {
+      "schema_id": "coverage",
+      "source_id": "supplement-claim-paid-denied",
+      "role": "reference"
+    },
+    {
+      "schema_id": "coverage",
+      "source_id": "supplement-coverage-active",
+      "role": "reference"
+    },
+    {
+      "schema_id": "coverage",
+      "source_id": "supplement-coverage-inactive",
+      "role": "reference"
+    },
+    {
+      "schema_id": "coverage",
+      "source_id": "supplement-eligibility-negative-request",
+      "role": "reference"
+    },
+    {
+      "schema_id": "coverage",
+      "source_id": "supplement-eligibility-negative-response",
+      "role": "reference"
+    },
+    {
+      "schema_id": "coverage",
+      "source_id": "supplement-eligibility-positive-request",
+      "role": "reference"
+    },
+    {
+      "schema_id": "coverage",
+      "source_id": "supplement-eligibility-positive-response",
+      "role": "reference"
+    },
+    {
+      "schema_id": "coverage",
+      "source_id": "supplement-enrollment-request",
+      "role": "reference"
+    },
+    {
+      "schema_id": "coverage",
+      "source_id": "supplement-enrollment-response",
+      "role": "reference"
+    },
+    {
+      "schema_id": "coverage",
+      "source_id": "supplement-eob",
+      "role": "reference"
+    },
+    {
+      "schema_id": "coverage",
+      "source_id": "supplement-patient",
+      "role": "reference"
+    },
+    {
+      "schema_id": "coverage",
+      "source_id": "supplement-payer",
+      "role": "reference"
+    },
+    {
+      "schema_id": "coverage",
+      "source_id": "supplement-payment",
+      "role": "reference"
+    },
+    {
+      "schema_id": "coverage",
+      "source_id": "supplement-plan",
+      "role": "reference"
+    },
+    {
+      "schema_id": "coverage",
+      "source_id": "supplement-response-authorization-approved",
+      "role": "reference"
+    },
+    {
+      "schema_id": "coverage",
+      "source_id": "supplement-response-authorization-denied",
+      "role": "reference"
+    },
+    {
+      "schema_id": "coverage",
+      "source_id": "supplement-response-paid-denied",
+      "role": "reference"
+    },
+    {
+      "schema_id": "eligibility",
+      "source_id": "csv_eligibility",
+      "role": "rows"
+    },
+    {
+      "schema_id": "eligibility",
+      "source_id": "hl7-claim",
+      "role": "reference"
+    },
+    {
+      "schema_id": "eligibility",
+      "source_id": "hl7-claimresponse",
+      "role": "reference"
+    },
+    {
+      "schema_id": "eligibility",
+      "source_id": "hl7-coverage",
+      "role": "reference"
+    },
+    {
+      "schema_id": "eligibility",
+      "source_id": "hl7-eligibility-request",
+      "role": "reference"
+    },
+    {
+      "schema_id": "eligibility",
+      "source_id": "hl7-eligibility-response",
+      "role": "reference"
+    },
+    {
+      "schema_id": "eligibility",
+      "source_id": "hl7-enrollment",
+      "role": "reference"
+    },
+    {
+      "schema_id": "eligibility",
+      "source_id": "hl7-eob",
+      "role": "reference"
+    },
+    {
+      "schema_id": "eligibility",
+      "source_id": "hl7-insuranceplan",
+      "role": "reference"
+    },
+    {
+      "schema_id": "eligibility",
+      "source_id": "hl7-payment",
+      "role": "reference"
+    },
+    {
+      "schema_id": "eligibility",
+      "source_id": "supplement-claim-authorization-approved",
+      "role": "reference"
+    },
+    {
+      "schema_id": "eligibility",
+      "source_id": "supplement-claim-authorization-denied",
+      "role": "reference"
+    },
+    {
+      "schema_id": "eligibility",
+      "source_id": "supplement-claim-paid-denied",
+      "role": "reference"
+    },
+    {
+      "schema_id": "eligibility",
+      "source_id": "supplement-coverage-active",
+      "role": "reference"
+    },
+    {
+      "schema_id": "eligibility",
+      "source_id": "supplement-coverage-inactive",
+      "role": "reference"
+    },
+    {
+      "schema_id": "eligibility",
+      "source_id": "supplement-eligibility-negative-request",
+      "role": "reference"
+    },
+    {
+      "schema_id": "eligibility",
+      "source_id": "supplement-eligibility-negative-response",
+      "role": "reference"
+    },
+    {
+      "schema_id": "eligibility",
+      "source_id": "supplement-eligibility-positive-request",
+      "role": "reference"
+    },
+    {
+      "schema_id": "eligibility",
+      "source_id": "supplement-eligibility-positive-response",
+      "role": "reference"
+    },
+    {
+      "schema_id": "eligibility",
+      "source_id": "supplement-enrollment-request",
+      "role": "reference"
+    },
+    {
+      "schema_id": "eligibility",
+      "source_id": "supplement-enrollment-response",
+      "role": "reference"
+    },
+    {
+      "schema_id": "eligibility",
+      "source_id": "supplement-eob",
+      "role": "reference"
+    },
+    {
+      "schema_id": "eligibility",
+      "source_id": "supplement-patient",
+      "role": "reference"
+    },
+    {
+      "schema_id": "eligibility",
+      "source_id": "supplement-payer",
+      "role": "reference"
+    },
+    {
+      "schema_id": "eligibility",
+      "source_id": "supplement-payment",
+      "role": "reference"
+    },
+    {
+      "schema_id": "eligibility",
+      "source_id": "supplement-plan",
+      "role": "reference"
+    },
+    {
+      "schema_id": "eligibility",
+      "source_id": "supplement-response-authorization-approved",
+      "role": "reference"
+    },
+    {
+      "schema_id": "eligibility",
+      "source_id": "supplement-response-authorization-denied",
+      "role": "reference"
+    },
+    {
+      "schema_id": "eligibility",
+      "source_id": "supplement-response-paid-denied",
+      "role": "reference"
+    },
+    {
+      "schema_id": "claims",
+      "source_id": "csv_claims",
+      "role": "rows"
+    },
+    {
+      "schema_id": "claims",
+      "source_id": "hl7-claim",
+      "role": "reference"
+    },
+    {
+      "schema_id": "claims",
+      "source_id": "hl7-claimresponse",
+      "role": "reference"
+    },
+    {
+      "schema_id": "claims",
+      "source_id": "hl7-coverage",
+      "role": "reference"
+    },
+    {
+      "schema_id": "claims",
+      "source_id": "hl7-eligibility-request",
+      "role": "reference"
+    },
+    {
+      "schema_id": "claims",
+      "source_id": "hl7-eligibility-response",
+      "role": "reference"
+    },
+    {
+      "schema_id": "claims",
+      "source_id": "hl7-enrollment",
+      "role": "reference"
+    },
+    {
+      "schema_id": "claims",
+      "source_id": "hl7-eob",
+      "role": "reference"
+    },
+    {
+      "schema_id": "claims",
+      "source_id": "hl7-insuranceplan",
+      "role": "reference"
+    },
+    {
+      "schema_id": "claims",
+      "source_id": "hl7-payment",
+      "role": "reference"
+    },
+    {
+      "schema_id": "claims",
+      "source_id": "supplement-claim-authorization-approved",
+      "role": "reference"
+    },
+    {
+      "schema_id": "claims",
+      "source_id": "supplement-claim-authorization-denied",
+      "role": "reference"
+    },
+    {
+      "schema_id": "claims",
+      "source_id": "supplement-claim-paid-denied",
+      "role": "reference"
+    },
+    {
+      "schema_id": "claims",
+      "source_id": "supplement-coverage-active",
+      "role": "reference"
+    },
+    {
+      "schema_id": "claims",
+      "source_id": "supplement-coverage-inactive",
+      "role": "reference"
+    },
+    {
+      "schema_id": "claims",
+      "source_id": "supplement-eligibility-negative-request",
+      "role": "reference"
+    },
+    {
+      "schema_id": "claims",
+      "source_id": "supplement-eligibility-negative-response",
+      "role": "reference"
+    },
+    {
+      "schema_id": "claims",
+      "source_id": "supplement-eligibility-positive-request",
+      "role": "reference"
+    },
+    {
+      "schema_id": "claims",
+      "source_id": "supplement-eligibility-positive-response",
+      "role": "reference"
+    },
+    {
+      "schema_id": "claims",
+      "source_id": "supplement-enrollment-request",
+      "role": "reference"
+    },
+    {
+      "schema_id": "claims",
+      "source_id": "supplement-enrollment-response",
+      "role": "reference"
+    },
+    {
+      "schema_id": "claims",
+      "source_id": "supplement-eob",
+      "role": "reference"
+    },
+    {
+      "schema_id": "claims",
+      "source_id": "supplement-patient",
+      "role": "reference"
+    },
+    {
+      "schema_id": "claims",
+      "source_id": "supplement-payer",
+      "role": "reference"
+    },
+    {
+      "schema_id": "claims",
+      "source_id": "supplement-payment",
+      "role": "reference"
+    },
+    {
+      "schema_id": "claims",
+      "source_id": "supplement-plan",
+      "role": "reference"
+    },
+    {
+      "schema_id": "claims",
+      "source_id": "supplement-response-authorization-approved",
+      "role": "reference"
+    },
+    {
+      "schema_id": "claims",
+      "source_id": "supplement-response-authorization-denied",
+      "role": "reference"
+    },
+    {
+      "schema_id": "claims",
+      "source_id": "supplement-response-paid-denied",
+      "role": "reference"
+    },
+    {
+      "schema_id": "claim_lines",
+      "source_id": "csv_claim_lines",
+      "role": "rows"
+    },
+    {
+      "schema_id": "claim_lines",
+      "source_id": "hl7-claim",
+      "role": "reference"
+    },
+    {
+      "schema_id": "claim_lines",
+      "source_id": "hl7-claimresponse",
+      "role": "reference"
+    },
+    {
+      "schema_id": "claim_lines",
+      "source_id": "hl7-coverage",
+      "role": "reference"
+    },
+    {
+      "schema_id": "claim_lines",
+      "source_id": "hl7-eligibility-request",
+      "role": "reference"
+    },
+    {
+      "schema_id": "claim_lines",
+      "source_id": "hl7-eligibility-response",
+      "role": "reference"
+    },
+    {
+      "schema_id": "claim_lines",
+      "source_id": "hl7-enrollment",
+      "role": "reference"
+    },
+    {
+      "schema_id": "claim_lines",
+      "source_id": "hl7-eob",
+      "role": "reference"
+    },
+    {
+      "schema_id": "claim_lines",
+      "source_id": "hl7-insuranceplan",
+      "role": "reference"
+    },
+    {
+      "schema_id": "claim_lines",
+      "source_id": "hl7-payment",
+      "role": "reference"
+    },
+    {
+      "schema_id": "claim_lines",
+      "source_id": "supplement-claim-authorization-approved",
+      "role": "reference"
+    },
+    {
+      "schema_id": "claim_lines",
+      "source_id": "supplement-claim-authorization-denied",
+      "role": "reference"
+    },
+    {
+      "schema_id": "claim_lines",
+      "source_id": "supplement-claim-paid-denied",
+      "role": "reference"
+    },
+    {
+      "schema_id": "claim_lines",
+      "source_id": "supplement-coverage-active",
+      "role": "reference"
+    },
+    {
+      "schema_id": "claim_lines",
+      "source_id": "supplement-coverage-inactive",
+      "role": "reference"
+    },
+    {
+      "schema_id": "claim_lines",
+      "source_id": "supplement-eligibility-negative-request",
+      "role": "reference"
+    },
+    {
+      "schema_id": "claim_lines",
+      "source_id": "supplement-eligibility-negative-response",
+      "role": "reference"
+    },
+    {
+      "schema_id": "claim_lines",
+      "source_id": "supplement-eligibility-positive-request",
+      "role": "reference"
+    },
+    {
+      "schema_id": "claim_lines",
+      "source_id": "supplement-eligibility-positive-response",
+      "role": "reference"
+    },
+    {
+      "schema_id": "claim_lines",
+      "source_id": "supplement-enrollment-request",
+      "role": "reference"
+    },
+    {
+      "schema_id": "claim_lines",
+      "source_id": "supplement-enrollment-response",
+      "role": "reference"
+    },
+    {
+      "schema_id": "claim_lines",
+      "source_id": "supplement-eob",
+      "role": "reference"
+    },
+    {
+      "schema_id": "claim_lines",
+      "source_id": "supplement-patient",
+      "role": "reference"
+    },
+    {
+      "schema_id": "claim_lines",
+      "source_id": "supplement-payer",
+      "role": "reference"
+    },
+    {
+      "schema_id": "claim_lines",
+      "source_id": "supplement-payment",
+      "role": "reference"
+    },
+    {
+      "schema_id": "claim_lines",
+      "source_id": "supplement-plan",
+      "role": "reference"
+    },
+    {
+      "schema_id": "claim_lines",
+      "source_id": "supplement-response-authorization-approved",
+      "role": "reference"
+    },
+    {
+      "schema_id": "claim_lines",
+      "source_id": "supplement-response-authorization-denied",
+      "role": "reference"
+    },
+    {
+      "schema_id": "claim_lines",
+      "source_id": "supplement-response-paid-denied",
+      "role": "reference"
+    },
+    {
+      "schema_id": "adjudications",
+      "source_id": "csv_adjudications",
+      "role": "rows"
+    },
+    {
+      "schema_id": "adjudications",
+      "source_id": "hl7-claim",
+      "role": "reference"
+    },
+    {
+      "schema_id": "adjudications",
+      "source_id": "hl7-claimresponse",
+      "role": "reference"
+    },
+    {
+      "schema_id": "adjudications",
+      "source_id": "hl7-coverage",
+      "role": "reference"
+    },
+    {
+      "schema_id": "adjudications",
+      "source_id": "hl7-eligibility-request",
+      "role": "reference"
+    },
+    {
+      "schema_id": "adjudications",
+      "source_id": "hl7-eligibility-response",
+      "role": "reference"
+    },
+    {
+      "schema_id": "adjudications",
+      "source_id": "hl7-enrollment",
+      "role": "reference"
+    },
+    {
+      "schema_id": "adjudications",
+      "source_id": "hl7-eob",
+      "role": "reference"
+    },
+    {
+      "schema_id": "adjudications",
+      "source_id": "hl7-insuranceplan",
+      "role": "reference"
+    },
+    {
+      "schema_id": "adjudications",
+      "source_id": "hl7-payment",
+      "role": "reference"
+    },
+    {
+      "schema_id": "adjudications",
+      "source_id": "supplement-claim-authorization-approved",
+      "role": "reference"
+    },
+    {
+      "schema_id": "adjudications",
+      "source_id": "supplement-claim-authorization-denied",
+      "role": "reference"
+    },
+    {
+      "schema_id": "adjudications",
+      "source_id": "supplement-claim-paid-denied",
+      "role": "reference"
+    },
+    {
+      "schema_id": "adjudications",
+      "source_id": "supplement-coverage-active",
+      "role": "reference"
+    },
+    {
+      "schema_id": "adjudications",
+      "source_id": "supplement-coverage-inactive",
+      "role": "reference"
+    },
+    {
+      "schema_id": "adjudications",
+      "source_id": "supplement-eligibility-negative-request",
+      "role": "reference"
+    },
+    {
+      "schema_id": "adjudications",
+      "source_id": "supplement-eligibility-negative-response",
+      "role": "reference"
+    },
+    {
+      "schema_id": "adjudications",
+      "source_id": "supplement-eligibility-positive-request",
+      "role": "reference"
+    },
+    {
+      "schema_id": "adjudications",
+      "source_id": "supplement-eligibility-positive-response",
+      "role": "reference"
+    },
+    {
+      "schema_id": "adjudications",
+      "source_id": "supplement-enrollment-request",
+      "role": "reference"
+    },
+    {
+      "schema_id": "adjudications",
+      "source_id": "supplement-enrollment-response",
+      "role": "reference"
+    },
+    {
+      "schema_id": "adjudications",
+      "source_id": "supplement-eob",
+      "role": "reference"
+    },
+    {
+      "schema_id": "adjudications",
+      "source_id": "supplement-patient",
+      "role": "reference"
+    },
+    {
+      "schema_id": "adjudications",
+      "source_id": "supplement-payer",
+      "role": "reference"
+    },
+    {
+      "schema_id": "adjudications",
+      "source_id": "supplement-payment",
+      "role": "reference"
+    },
+    {
+      "schema_id": "adjudications",
+      "source_id": "supplement-plan",
+      "role": "reference"
+    },
+    {
+      "schema_id": "adjudications",
+      "source_id": "supplement-response-authorization-approved",
+      "role": "reference"
+    },
+    {
+      "schema_id": "adjudications",
+      "source_id": "supplement-response-authorization-denied",
+      "role": "reference"
+    },
+    {
+      "schema_id": "adjudications",
+      "source_id": "supplement-response-paid-denied",
+      "role": "reference"
+    },
+    {
+      "schema_id": "payments",
+      "source_id": "csv_payments",
+      "role": "rows"
+    },
+    {
+      "schema_id": "payments",
+      "source_id": "hl7-claim",
+      "role": "reference"
+    },
+    {
+      "schema_id": "payments",
+      "source_id": "hl7-claimresponse",
+      "role": "reference"
+    },
+    {
+      "schema_id": "payments",
+      "source_id": "hl7-coverage",
+      "role": "reference"
+    },
+    {
+      "schema_id": "payments",
+      "source_id": "hl7-eligibility-request",
+      "role": "reference"
+    },
+    {
+      "schema_id": "payments",
+      "source_id": "hl7-eligibility-response",
+      "role": "reference"
+    },
+    {
+      "schema_id": "payments",
+      "source_id": "hl7-enrollment",
+      "role": "reference"
+    },
+    {
+      "schema_id": "payments",
+      "source_id": "hl7-eob",
+      "role": "reference"
+    },
+    {
+      "schema_id": "payments",
+      "source_id": "hl7-insuranceplan",
+      "role": "reference"
+    },
+    {
+      "schema_id": "payments",
+      "source_id": "hl7-payment",
+      "role": "reference"
+    },
+    {
+      "schema_id": "payments",
+      "source_id": "supplement-claim-authorization-approved",
+      "role": "reference"
+    },
+    {
+      "schema_id": "payments",
+      "source_id": "supplement-claim-authorization-denied",
+      "role": "reference"
+    },
+    {
+      "schema_id": "payments",
+      "source_id": "supplement-claim-paid-denied",
+      "role": "reference"
+    },
+    {
+      "schema_id": "payments",
+      "source_id": "supplement-coverage-active",
+      "role": "reference"
+    },
+    {
+      "schema_id": "payments",
+      "source_id": "supplement-coverage-inactive",
+      "role": "reference"
+    },
+    {
+      "schema_id": "payments",
+      "source_id": "supplement-eligibility-negative-request",
+      "role": "reference"
+    },
+    {
+      "schema_id": "payments",
+      "source_id": "supplement-eligibility-negative-response",
+      "role": "reference"
+    },
+    {
+      "schema_id": "payments",
+      "source_id": "supplement-eligibility-positive-request",
+      "role": "reference"
+    },
+    {
+      "schema_id": "payments",
+      "source_id": "supplement-eligibility-positive-response",
+      "role": "reference"
+    },
+    {
+      "schema_id": "payments",
+      "source_id": "supplement-enrollment-request",
+      "role": "reference"
+    },
+    {
+      "schema_id": "payments",
+      "source_id": "supplement-enrollment-response",
+      "role": "reference"
+    },
+    {
+      "schema_id": "payments",
+      "source_id": "supplement-eob",
+      "role": "reference"
+    },
+    {
+      "schema_id": "payments",
+      "source_id": "supplement-patient",
+      "role": "reference"
+    },
+    {
+      "schema_id": "payments",
+      "source_id": "supplement-payer",
+      "role": "reference"
+    },
+    {
+      "schema_id": "payments",
+      "source_id": "supplement-payment",
+      "role": "reference"
+    },
+    {
+      "schema_id": "payments",
+      "source_id": "supplement-plan",
+      "role": "reference"
+    },
+    {
+      "schema_id": "payments",
+      "source_id": "supplement-response-authorization-approved",
+      "role": "reference"
+    },
+    {
+      "schema_id": "payments",
+      "source_id": "supplement-response-authorization-denied",
+      "role": "reference"
+    },
+    {
+      "schema_id": "payments",
+      "source_id": "supplement-response-paid-denied",
+      "role": "reference"
+    },
+    {
+      "schema_id": "plans",
+      "source_id": "csv_plans",
+      "role": "rows"
+    },
+    {
+      "schema_id": "plans",
+      "source_id": "hl7-claim",
+      "role": "reference"
+    },
+    {
+      "schema_id": "plans",
+      "source_id": "hl7-claimresponse",
+      "role": "reference"
+    },
+    {
+      "schema_id": "plans",
+      "source_id": "hl7-coverage",
+      "role": "reference"
+    },
+    {
+      "schema_id": "plans",
+      "source_id": "hl7-eligibility-request",
+      "role": "reference"
+    },
+    {
+      "schema_id": "plans",
+      "source_id": "hl7-eligibility-response",
+      "role": "reference"
+    },
+    {
+      "schema_id": "plans",
+      "source_id": "hl7-enrollment",
+      "role": "reference"
+    },
+    {
+      "schema_id": "plans",
+      "source_id": "hl7-eob",
+      "role": "reference"
+    },
+    {
+      "schema_id": "plans",
+      "source_id": "hl7-insuranceplan",
+      "role": "reference"
+    },
+    {
+      "schema_id": "plans",
+      "source_id": "hl7-payment",
+      "role": "reference"
+    },
+    {
+      "schema_id": "plans",
+      "source_id": "supplement-claim-authorization-approved",
+      "role": "reference"
+    },
+    {
+      "schema_id": "plans",
+      "source_id": "supplement-claim-authorization-denied",
+      "role": "reference"
+    },
+    {
+      "schema_id": "plans",
+      "source_id": "supplement-claim-paid-denied",
+      "role": "reference"
+    },
+    {
+      "schema_id": "plans",
+      "source_id": "supplement-coverage-active",
+      "role": "reference"
+    },
+    {
+      "schema_id": "plans",
+      "source_id": "supplement-coverage-inactive",
+      "role": "reference"
+    },
+    {
+      "schema_id": "plans",
+      "source_id": "supplement-eligibility-negative-request",
+      "role": "reference"
+    },
+    {
+      "schema_id": "plans",
+      "source_id": "supplement-eligibility-negative-response",
+      "role": "reference"
+    },
+    {
+      "schema_id": "plans",
+      "source_id": "supplement-eligibility-positive-request",
+      "role": "reference"
+    },
+    {
+      "schema_id": "plans",
+      "source_id": "supplement-eligibility-positive-response",
+      "role": "reference"
+    },
+    {
+      "schema_id": "plans",
+      "source_id": "supplement-enrollment-request",
+      "role": "reference"
+    },
+    {
+      "schema_id": "plans",
+      "source_id": "supplement-enrollment-response",
+      "role": "reference"
+    },
+    {
+      "schema_id": "plans",
+      "source_id": "supplement-eob",
+      "role": "reference"
+    },
+    {
+      "schema_id": "plans",
+      "source_id": "supplement-patient",
+      "role": "reference"
+    },
+    {
+      "schema_id": "plans",
+      "source_id": "supplement-payer",
+      "role": "reference"
+    },
+    {
+      "schema_id": "plans",
+      "source_id": "supplement-payment",
+      "role": "reference"
+    },
+    {
+      "schema_id": "plans",
+      "source_id": "supplement-plan",
+      "role": "reference"
+    },
+    {
+      "schema_id": "plans",
+      "source_id": "supplement-response-authorization-approved",
+      "role": "reference"
+    },
+    {
+      "schema_id": "plans",
+      "source_id": "supplement-response-authorization-denied",
+      "role": "reference"
+    },
+    {
+      "schema_id": "plans",
+      "source_id": "supplement-response-paid-denied",
+      "role": "reference"
+    },
+    {
+      "schema_id": "enrollments",
+      "source_id": "csv_enrollments",
+      "role": "rows"
+    },
+    {
+      "schema_id": "enrollments",
+      "source_id": "hl7-claim",
+      "role": "reference"
+    },
+    {
+      "schema_id": "enrollments",
+      "source_id": "hl7-claimresponse",
+      "role": "reference"
+    },
+    {
+      "schema_id": "enrollments",
+      "source_id": "hl7-coverage",
+      "role": "reference"
+    },
+    {
+      "schema_id": "enrollments",
+      "source_id": "hl7-eligibility-request",
+      "role": "reference"
+    },
+    {
+      "schema_id": "enrollments",
+      "source_id": "hl7-eligibility-response",
+      "role": "reference"
+    },
+    {
+      "schema_id": "enrollments",
+      "source_id": "hl7-enrollment",
+      "role": "reference"
+    },
+    {
+      "schema_id": "enrollments",
+      "source_id": "hl7-eob",
+      "role": "reference"
+    },
+    {
+      "schema_id": "enrollments",
+      "source_id": "hl7-insuranceplan",
+      "role": "reference"
+    },
+    {
+      "schema_id": "enrollments",
+      "source_id": "hl7-payment",
+      "role": "reference"
+    },
+    {
+      "schema_id": "enrollments",
+      "source_id": "supplement-claim-authorization-approved",
+      "role": "reference"
+    },
+    {
+      "schema_id": "enrollments",
+      "source_id": "supplement-claim-authorization-denied",
+      "role": "reference"
+    },
+    {
+      "schema_id": "enrollments",
+      "source_id": "supplement-claim-paid-denied",
+      "role": "reference"
+    },
+    {
+      "schema_id": "enrollments",
+      "source_id": "supplement-coverage-active",
+      "role": "reference"
+    },
+    {
+      "schema_id": "enrollments",
+      "source_id": "supplement-coverage-inactive",
+      "role": "reference"
+    },
+    {
+      "schema_id": "enrollments",
+      "source_id": "supplement-eligibility-negative-request",
+      "role": "reference"
+    },
+    {
+      "schema_id": "enrollments",
+      "source_id": "supplement-eligibility-negative-response",
+      "role": "reference"
+    },
+    {
+      "schema_id": "enrollments",
+      "source_id": "supplement-eligibility-positive-request",
+      "role": "reference"
+    },
+    {
+      "schema_id": "enrollments",
+      "source_id": "supplement-eligibility-positive-response",
+      "role": "reference"
+    },
+    {
+      "schema_id": "enrollments",
+      "source_id": "supplement-enrollment-request",
+      "role": "reference"
+    },
+    {
+      "schema_id": "enrollments",
+      "source_id": "supplement-enrollment-response",
+      "role": "reference"
+    },
+    {
+      "schema_id": "enrollments",
+      "source_id": "supplement-eob",
+      "role": "reference"
+    },
+    {
+      "schema_id": "enrollments",
+      "source_id": "supplement-patient",
+      "role": "reference"
+    },
+    {
+      "schema_id": "enrollments",
+      "source_id": "supplement-payer",
+      "role": "reference"
+    },
+    {
+      "schema_id": "enrollments",
+      "source_id": "supplement-payment",
+      "role": "reference"
+    },
+    {
+      "schema_id": "enrollments",
+      "source_id": "supplement-plan",
+      "role": "reference"
+    },
+    {
+      "schema_id": "enrollments",
+      "source_id": "supplement-response-authorization-approved",
+      "role": "reference"
+    },
+    {
+      "schema_id": "enrollments",
+      "source_id": "supplement-response-authorization-denied",
+      "role": "reference"
+    },
+    {
+      "schema_id": "enrollments",
+      "source_id": "supplement-response-paid-denied",
+      "role": "reference"
+    },
+    {
+      "schema_id": "resource_references",
+      "source_id": "csv_resource_references",
+      "role": "rows"
+    },
+    {
+      "schema_id": "resource_references",
+      "source_id": "hl7-claim",
+      "role": "reference"
+    },
+    {
+      "schema_id": "resource_references",
+      "source_id": "hl7-claimresponse",
+      "role": "reference"
+    },
+    {
+      "schema_id": "resource_references",
+      "source_id": "hl7-coverage",
+      "role": "reference"
+    },
+    {
+      "schema_id": "resource_references",
+      "source_id": "hl7-eligibility-request",
+      "role": "reference"
+    },
+    {
+      "schema_id": "resource_references",
+      "source_id": "hl7-eligibility-response",
+      "role": "reference"
+    },
+    {
+      "schema_id": "resource_references",
+      "source_id": "hl7-enrollment",
+      "role": "reference"
+    },
+    {
+      "schema_id": "resource_references",
+      "source_id": "hl7-eob",
+      "role": "reference"
+    },
+    {
+      "schema_id": "resource_references",
+      "source_id": "hl7-insuranceplan",
+      "role": "reference"
+    },
+    {
+      "schema_id": "resource_references",
+      "source_id": "hl7-payment",
+      "role": "reference"
+    },
+    {
+      "schema_id": "resource_references",
+      "source_id": "supplement-claim-authorization-approved",
+      "role": "reference"
+    },
+    {
+      "schema_id": "resource_references",
+      "source_id": "supplement-claim-authorization-denied",
+      "role": "reference"
+    },
+    {
+      "schema_id": "resource_references",
+      "source_id": "supplement-claim-paid-denied",
+      "role": "reference"
+    },
+    {
+      "schema_id": "resource_references",
+      "source_id": "supplement-coverage-active",
+      "role": "reference"
+    },
+    {
+      "schema_id": "resource_references",
+      "source_id": "supplement-coverage-inactive",
+      "role": "reference"
+    },
+    {
+      "schema_id": "resource_references",
+      "source_id": "supplement-eligibility-negative-request",
+      "role": "reference"
+    },
+    {
+      "schema_id": "resource_references",
+      "source_id": "supplement-eligibility-negative-response",
+      "role": "reference"
+    },
+    {
+      "schema_id": "resource_references",
+      "source_id": "supplement-eligibility-positive-request",
+      "role": "reference"
+    },
+    {
+      "schema_id": "resource_references",
+      "source_id": "supplement-eligibility-positive-response",
+      "role": "reference"
+    },
+    {
+      "schema_id": "resource_references",
+      "source_id": "supplement-enrollment-request",
+      "role": "reference"
+    },
+    {
+      "schema_id": "resource_references",
+      "source_id": "supplement-enrollment-response",
+      "role": "reference"
+    },
+    {
+      "schema_id": "resource_references",
+      "source_id": "supplement-eob",
+      "role": "reference"
+    },
+    {
+      "schema_id": "resource_references",
+      "source_id": "supplement-patient",
+      "role": "reference"
+    },
+    {
+      "schema_id": "resource_references",
+      "source_id": "supplement-payer",
+      "role": "reference"
+    },
+    {
+      "schema_id": "resource_references",
+      "source_id": "supplement-payment",
+      "role": "reference"
+    },
+    {
+      "schema_id": "resource_references",
+      "source_id": "supplement-plan",
+      "role": "reference"
+    },
+    {
+      "schema_id": "resource_references",
+      "source_id": "supplement-response-authorization-approved",
+      "role": "reference"
+    },
+    {
+      "schema_id": "resource_references",
+      "source_id": "supplement-response-authorization-denied",
+      "role": "reference"
+    },
+    {
+      "schema_id": "resource_references",
+      "source_id": "supplement-response-paid-denied",
+      "role": "reference"
+    },
+    {
+      "schema_id": "coded_values",
+      "source_id": "csv_coded_values",
+      "role": "rows"
+    },
+    {
+      "schema_id": "coded_values",
+      "source_id": "hl7-claim",
+      "role": "reference"
+    },
+    {
+      "schema_id": "coded_values",
+      "source_id": "hl7-claimresponse",
+      "role": "reference"
+    },
+    {
+      "schema_id": "coded_values",
+      "source_id": "hl7-coverage",
+      "role": "reference"
+    },
+    {
+      "schema_id": "coded_values",
+      "source_id": "hl7-eligibility-request",
+      "role": "reference"
+    },
+    {
+      "schema_id": "coded_values",
+      "source_id": "hl7-eligibility-response",
+      "role": "reference"
+    },
+    {
+      "schema_id": "coded_values",
+      "source_id": "hl7-enrollment",
+      "role": "reference"
+    },
+    {
+      "schema_id": "coded_values",
+      "source_id": "hl7-eob",
+      "role": "reference"
+    },
+    {
+      "schema_id": "coded_values",
+      "source_id": "hl7-insuranceplan",
+      "role": "reference"
+    },
+    {
+      "schema_id": "coded_values",
+      "source_id": "hl7-payment",
+      "role": "reference"
+    },
+    {
+      "schema_id": "coded_values",
+      "source_id": "supplement-claim-authorization-approved",
+      "role": "reference"
+    },
+    {
+      "schema_id": "coded_values",
+      "source_id": "supplement-claim-authorization-denied",
+      "role": "reference"
+    },
+    {
+      "schema_id": "coded_values",
+      "source_id": "supplement-claim-paid-denied",
+      "role": "reference"
+    },
+    {
+      "schema_id": "coded_values",
+      "source_id": "supplement-coverage-active",
+      "role": "reference"
+    },
+    {
+      "schema_id": "coded_values",
+      "source_id": "supplement-coverage-inactive",
+      "role": "reference"
+    },
+    {
+      "schema_id": "coded_values",
+      "source_id": "supplement-eligibility-negative-request",
+      "role": "reference"
+    },
+    {
+      "schema_id": "coded_values",
+      "source_id": "supplement-eligibility-negative-response",
+      "role": "reference"
+    },
+    {
+      "schema_id": "coded_values",
+      "source_id": "supplement-eligibility-positive-request",
+      "role": "reference"
+    },
+    {
+      "schema_id": "coded_values",
+      "source_id": "supplement-eligibility-positive-response",
+      "role": "reference"
+    },
+    {
+      "schema_id": "coded_values",
+      "source_id": "supplement-enrollment-request",
+      "role": "reference"
+    },
+    {
+      "schema_id": "coded_values",
+      "source_id": "supplement-enrollment-response",
+      "role": "reference"
+    },
+    {
+      "schema_id": "coded_values",
+      "source_id": "supplement-eob",
+      "role": "reference"
+    },
+    {
+      "schema_id": "coded_values",
+      "source_id": "supplement-patient",
+      "role": "reference"
+    },
+    {
+      "schema_id": "coded_values",
+      "source_id": "supplement-payer",
+      "role": "reference"
+    },
+    {
+      "schema_id": "coded_values",
+      "source_id": "supplement-payment",
+      "role": "reference"
+    },
+    {
+      "schema_id": "coded_values",
+      "source_id": "supplement-plan",
+      "role": "reference"
+    },
+    {
+      "schema_id": "coded_values",
+      "source_id": "supplement-response-authorization-approved",
+      "role": "reference"
+    },
+    {
+      "schema_id": "coded_values",
+      "source_id": "supplement-response-authorization-denied",
+      "role": "reference"
+    },
+    {
+      "schema_id": "coded_values",
+      "source_id": "supplement-response-paid-denied",
+      "role": "reference"
+    },
+    {
+      "schema_id": "workflow_events",
+      "source_id": "csv_workflow_events",
+      "role": "rows"
+    },
+    {
+      "schema_id": "workflow_events",
+      "source_id": "workflow",
+      "role": "reference"
+    },
+    {
+      "schema_id": "cms_beneficiaries",
+      "source_id": "csv_cms_beneficiaries",
+      "role": "rows"
+    },
+    {
+      "schema_id": "cms_beneficiaries",
+      "source_id": "cms_beneficiaries",
+      "role": "reference"
+    },
+    {
+      "schema_id": "cms_beneficiaries",
+      "source_id": "cms_selection",
+      "role": "reference"
+    },
+    {
+      "schema_id": "cms_inpatient_claims",
+      "source_id": "csv_cms_inpatient_claims",
+      "role": "rows"
+    },
+    {
+      "schema_id": "cms_inpatient_claims",
+      "source_id": "cms_inpatient",
+      "role": "reference"
+    },
+    {
+      "schema_id": "cms_inpatient_claims",
+      "source_id": "cms_selection",
+      "role": "reference"
+    },
+    {
+      "schema_id": "cms_carrier_claims",
+      "source_id": "csv_cms_carrier_claims",
+      "role": "rows"
+    },
+    {
+      "schema_id": "cms_carrier_claims",
+      "source_id": "cms_carrier",
+      "role": "reference"
+    },
+    {
+      "schema_id": "cms_carrier_claims",
+      "source_id": "cms_selection",
+      "role": "reference"
+    }
+  ],
+  "csv_conventions": {
+    "encoding": "UTF-8",
+    "null_value": "\\N",
+    "header": true,
+    "quote": "\""
+  },
+  "fixture_counts": {
+    "resources": 28,
+    "coverage": 3,
+    "eligibility": 6,
+    "claims": 10,
+    "claim_lines": 20,
+    "adjudications": 30,
+    "payments": 4,
+    "plans": 2,
+    "enrollments": 3,
+    "resource_references": 95,
+    "coded_values": 101,
+    "workflow_events": 4,
+    "cms_beneficiaries": 3,
+    "cms_inpatient_claims": 5,
+    "cms_carrier_claims": 5
+  },
+  "qualification": {
+    "native_format": "FHIR R4 4.0.1 selected views plus independent UMF scenario events",
+    "subset": "9 unchanged official HL7 carrier resources and 19 authored supplemental FHIR-shaped resources, plus four workflow events; 13 unchanged CMS DE-SynPUF native CSV records (three beneficiaries, five inpatient and five carrier claims).",
+    "limits": "Illustrative sources are not a validated FHIR Bundle or carrier simulation. Native official examples do not form a coherent history. CMS coverage is DE-SynPUF Sample 1, 2008 beneficiaries and 2008–2010 claims; ICD-9 remains native. Numeric CPT/Level I HCPCS carrier rows are excluded. These are synthetic public samples, not real beneficiaries. X12 services are not implemented. Reference resolution is namespace-local; no patient matching."
+  }
+}

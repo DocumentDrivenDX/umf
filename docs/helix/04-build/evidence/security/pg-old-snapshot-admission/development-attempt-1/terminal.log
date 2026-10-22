@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/Users/erik/.codex/worktrees/security-main-integration/umf/tools/security/pg-old-snapshot-admission-probe.py", line 85, in <module>
+    check(label+':committed-authority',False,json.loads(sql("SELECT bool_or(active) FROM security_raw.m2m_employee_project WHERE employee_id='Alice'")))
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/json/__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)

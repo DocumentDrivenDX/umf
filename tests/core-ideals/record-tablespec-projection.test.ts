@@ -1,10 +1,11 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {recordCase} from '../../scripts/core-ideals/record-tablespec-cases';
-import {projectRecordToTableSpec,recoverRecordFromTableSpec} from '../../src/core-ideals/record-tablespec-projection';
+import {projectRecordToTableSpec, recoverRecordFromTableSpec} from '../../src/core-ideals/record-tablespec-projection';
 import {classifyTableSpecRecord} from '../../src/core-ideals/tablespec-record';
-import {importTableSpec,exportTableSpec} from '../../src/adapters/tablespec';
-import {upgradeFieldEnvelope} from '../../src/model/field-transition';
-import {readJsonValue,writeJsonValue} from '../../src/model/serialization';
+import {importTableSpec, exportTableSpec} from '../../src/adapters/tablespec';
+
+import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
 import {copyJson} from '../../src/model/json';
 import {declareCoreElementKind} from '../../src/model/field-kind';
 import {type Document} from '../../src/model/types';
@@ -12,7 +13,7 @@ test('record projection orders columns by declared membership and recovers the c
  const {source,author,request}=recordCase();expect(projectRecordToTableSpec(author,request).status).toBe('blocked');const result=projectRecordToTableSpec(author,{...request,mode:'report'});expect(result.status).toBe('projected');expect(result.residuals.map(r=>r.path)).toEqual(['/modules/0/namespace','/modules/1/namespace']);
  const text=exportTableSpec(result.target!);expect(JSON.parse(text).columns.map((c:any)=>c.name)).toEqual(['id','label','active']);expect(JSON.parse(text).description).toBe('Order record');
  for(const format of ['json','yaml'] as const){const receipt=readJsonValue(writeJsonValue(copyJson(result),format),format) as unknown as typeof result;expect(recoverRecordFromTableSpec(receipt,text)).toEqual(source);}
- const nativeOnly=classifyTableSpecRecord(upgradeFieldEnvelope(importTableSpec(text,{id:'native',format:'json'})).target,{recordModule:'records',recordId:'Order',mode:'strict'});
+ const nativeOnly=classifyTableSpecRecord(importTableSpec(text,{id:'native',format:'json'}),{recordModule:'records',recordId:'Order',mode:'strict'});
  expect(nativeOnly.mappings.map(m=>m.kind)).toEqual(['field','field','field','record']);expect(nativeOnly.request.authors).toBeUndefined();
 });
 test('missing, duplicate, non-member and name-colliding bindings block atomically under either policy',()=>{

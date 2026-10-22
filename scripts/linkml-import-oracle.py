@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Compare supplied graph reachability; no native URI retrieval or merge assertion."""
 import json
 import sys

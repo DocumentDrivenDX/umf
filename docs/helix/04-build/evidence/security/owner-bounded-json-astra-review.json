@@ -1,0 +1,52 @@
+{
+  "id": "owner-bounded-json-astra-review",
+  "status": "clean-within-scope",
+  "reviewer": "/root/astra_security_review",
+  "generatedAt": "2026-10-10T04:59:09.228738+00:00",
+  "reviewMethod": "Read-only installed source/diff, regression and governing contract inspection; independent source-digest audit of the parent-executed owner admission receipt. No independent Rust execution claimed.",
+  "sourceDigests": {
+    "/Users/erik/Projects/weft/crates/weft-core/src/json.rs": "b359cd2ff4b53f8e79690e7edc1a724f5f4f06df3a3af18de8f3fc89d79fde1d",
+    "/Users/erik/Projects/weft/Cargo.toml": "c27253232c3d1d17536c2c1006546c20b09d6872f1a87c379dc9f0699eb44ca5",
+    "/Users/erik/Projects/weft/crates/weft-core/Cargo.toml": "1d7e0eb769344add1e9b21d3bdbe7ddb3148003eba9bc2b22d53c25f412b0786",
+    "/Users/erik/Projects/weft/docs/helix/02-design/contracts/CONTRACT-005-security-compilation.md": "8b6c2a34068f2f7d8af9904dd6745fb864571c0b8454da79525490b98a7f2965",
+    "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/weft-admission.json": "3a93f96feb048417289a25d01eb16bedbf7d204ba27fc05b179baccdf0f68ac4"
+  },
+  "sourcesUnchanged": true,
+  "reviewObservations": [
+    {
+      "id": "legacy-behavior",
+      "observation": "Ordinary checked_json uses the same traversal with unchanged initial depth zero, maximum depth128 and100000 node limits; byte limits are added only to the separate private bounded entry point."
+    },
+    {
+      "id": "bounded-counting",
+      "observation": "raw.len() counts UTF8 bytes including whitespace before parsing. Root begins at depth1; each object/array/scalar value increments once; object names do not increment node count. Zero depth/node capacity and exact/one-over boundaries are covered by the appended source regressions."
+    },
+    {
+      "id": "duplicate-and-malformed-refusal",
+      "observation": "RawObject retains entries until decoded keys are compared, including escaped aliases of the same member name. Nested duplicate examples assert WFT-JSON-DUPLICATE; malformed JSON asserts WFT-INPUT. Final Value construction occurs only after complete inspection."
+    },
+    {
+      "id": "number-custody",
+      "observation": "The actual owner serde_json dependency retains arbitrary_precision and raw_value features; the traversal never deliberately converts raw unknown numeric tokens through f64."
+    },
+    {
+      "id": "resource-and-authority-scope",
+      "observation": "Contract explicitly permits input-byte-bounded raw container allocations before recursive node admission and excludes constant-memory/instruction-bound claims. The private helper has no runtime cell caller and grants no domain, policy, authority or release admission."
+    }
+  ],
+  "parentExecutedEvidence": {
+    "path": "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/weft-admission.json",
+    "sha256": "3a93f96feb048417289a25d01eb16bedbf7d204ba27fc05b179baccdf0f68ac4",
+    "commands": 4,
+    "allExitCodesZero": true,
+    "libraryTests": 66,
+    "securityAdmissionTests": 56
+  },
+  "independentPinAudit": {
+    "auditedSourceCount": 408,
+    "stale": []
+  },
+  "scope": "Parameterized duplicate-preserving JSON transport inspection foundation only. No runtime cell format/domain/outcome checking, authenticated cut, streaming release, native qualification or backend acceptance is established.",
+  "nativeImplementationQualified": false,
+  "acceptanceCasesPromoted": []
+}

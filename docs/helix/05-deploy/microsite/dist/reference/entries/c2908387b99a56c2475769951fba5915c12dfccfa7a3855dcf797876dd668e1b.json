@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 30583,
+        "line": 72,
+        "path": "src/adapters/jsonld/index.ts",
+        "sha256": "df7e73156be5314a3b3118d9d3b21ba8c28f254fe5ea38c25036e0892b839eb7"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "proposeJsonLdCompaction",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(document: Document, options: { lossPolicy: \"report\" | \"reject\"; context: string; compactArrays?: boolean; compactToRelative?: boolean; }): Promise<JsonLdCompactionReport>"
+    ]
+  },
+  "id": "[\"api\",\".\",\"proposeJsonLdCompaction\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 30583,
+      "line": 72,
+      "path": "src/adapters/jsonld/index.ts",
+      "sha256": "df7e73156be5314a3b3118d9d3b21ba8c28f254fe5ea38c25036e0892b839eb7"
+    }
+  ],
+  "summary": "Public export · src/adapters/jsonld/index.ts",
+  "title": "proposeJsonLdCompaction"
+}

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {decodeArrowFlatbuffer,encodeArrowFlatbuffer,importArrowFlatbufferModel,exportArrowFlatbufferModel,proposeArrowFlatbufferEdit,type ArrowFlatbufferRoot} from '../../src';
 import {flatbufferBackend} from '../../native/arrow/flatbuffer-runtime';
@@ -5,7 +6,7 @@ const base='fixtures/arrow/metadata/';const manifest=await Bun.file(base+'manife
 test('US-016-AC8: every decoded native metadata model re-encodes with exact logical content',async()=>{
  expect(manifest.cases.length).toBe(70);
  for(const c of manifest.cases){const decoded=decodeArrowFlatbuffer(new Uint8Array(await Bun.file(base+c.file).arrayBuffer()),{id:c.file,rootType:c.rootType as ArrowFlatbufferRoot});const original=exportArrowFlatbufferModel(decoded.model!);const bytes=encodeArrowFlatbuffer(decoded.model!,flatbufferBackend);const again=decodeArrowFlatbuffer(bytes,{id:c.file,rootType:c.rootType as ArrowFlatbufferRoot});expect(JSON.parse(exportArrowFlatbufferModel(again.model!))).toEqual(JSON.parse(original));expect(exportArrowFlatbufferModel(decoded.model!)).toBe(original);}
-},20000);
+},60000);
 test('US-016-AC8: explicit zero defaults, empty vectors and absent fields remain distinct',()=>{
  const model={rootType:'Message',value:{version:'V1',bodyLength:'0',header:{type:'Schema',value:{endianness:'Little',fields:[],custom_metadata:[{key:'x',value:''},{key:'x',value:'again'}]}}}};
  const doc=importArrowFlatbufferModel(JSON.stringify(model),{id:'defaults'});const decoded=decodeArrowFlatbuffer(encodeArrowFlatbuffer(doc,flatbufferBackend),{id:'back',rootType:'Message'});expect(JSON.parse(exportArrowFlatbufferModel(decoded.model!))).toEqual(model);

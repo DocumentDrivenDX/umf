@@ -1,0 +1,30 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"recoverNullabilityFromParquet\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"NullabilityParquetProjection\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "NullabilityParquetProjection"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "nativeBytes",
+      "optional": false,
+      "type": "Uint8Array<ArrayBufferLike>"
+    }
+  ],
+  "purpose": "Recover retained author meaning only when the receipt and supplied native target still agree.",
+  "related": [],
+  "returns": "Document",
+  "task": "Import and export",
+  "type": "(input: NullabilityParquetProjection, nativeBytes: Uint8Array) => Document"
+}

@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"SqlServerPhysicalPolicy\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SqlServerRelationshipLayoutPolicy\"]"
+      ],
+      "name": "layout",
+      "optional": false,
+      "type": "SqlServerRelationshipLayoutPolicy"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SqlServerPartitionFamily\"]"
+      ],
+      "name": "partitionFamilies",
+      "optional": false,
+      "type": "SqlServerPartitionFamily[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "SqlServerPhysicalPolicy is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "SqlServerPhysicalPolicy"
+}

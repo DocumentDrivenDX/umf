@@ -1,0 +1,256 @@
+{
+  "solver": "4.15.3",
+  "scope": "stock 0..2, quantity -1..2; mathematical integers/booleans and synthetic identities, not full core admission",
+  "results": [
+    {
+      "name": "reserve success nonvacuous",
+      "answer": "sat",
+      "witness": {
+        "stock": "2",
+        "qty": "2",
+        "post_stock": "0",
+        "post_order_exists": "True"
+      }
+    },
+    {
+      "name": "reserve preserves nonnegative stock",
+      "answer": "unsat"
+    },
+    {
+      "name": "reserve insufficient stock cannot succeed",
+      "answer": "unsat"
+    },
+    {
+      "name": "reserve exact stock equation does not require reservation creation",
+      "answer": "sat",
+      "witness": {
+        "stock": "2",
+        "qty": "2",
+        "post_stock": "0",
+        "post_order_exists": "False"
+      }
+    },
+    {
+      "name": "reserve equation without positive quantity allows negative reservation",
+      "answer": "sat",
+      "witness": {
+        "stock": "0",
+        "qty": "-1",
+        "post_stock": "1"
+      }
+    },
+    {
+      "name": "reserve corrected intent excludes missing reservation",
+      "answer": "unsat"
+    },
+    {
+      "name": "reserve frame forbids unrelated mutation",
+      "answer": "unsat"
+    },
+    {
+      "name": "create-link success nonvacuous",
+      "answer": "sat",
+      "witness": {
+        "post_order_exists": "True",
+        "customer_link": "True",
+        "product_link": "True"
+      }
+    },
+    {
+      "name": "create-link existence-only contract permits missing links",
+      "answer": "sat",
+      "witness": {
+        "post_order_exists": "True",
+        "customer_link": "False"
+      }
+    },
+    {
+      "name": "create-link complete intent excludes missing endpoints",
+      "answer": "unsat"
+    },
+    {
+      "name": "approve pending reaches approved",
+      "answer": "sat",
+      "witness": {
+        "status": "0",
+        "newstatus": "1"
+      }
+    },
+    {
+      "name": "approve approved admits business no-op",
+      "answer": "sat",
+      "witness": {
+        "status": "1",
+        "newstatus": "1"
+      }
+    },
+    {
+      "name": "approve cannot leave status pending",
+      "answer": "unsat"
+    },
+    {
+      "name": "always-refuse relation has no success witness",
+      "answer": "unsat"
+    },
+    {
+      "name": "rules/1 association observational equivalence",
+      "answer": "counterexample",
+      "worlds": [
+        {
+          "fields": {
+            "order.id": "o1",
+            "order.status": "created"
+          },
+          "entities": [
+            "o1",
+            "c1",
+            "p1"
+          ],
+          "customerLink": false,
+          "productLink": false
+        },
+        {
+          "fields": {
+            "order.id": "o1",
+            "order.status": "created"
+          },
+          "entities": [
+            "o1",
+            "c1",
+            "p1"
+          ],
+          "customerLink": true,
+          "productLink": true
+        }
+      ],
+      "reason": "Every old state leaf observes only same fields/entity existence; operators preserve equality of observations. Relationship references annotate dependencies but do not observe links."
+    },
+    {
+      "name": "cross-Key alias",
+      "answer": "counterexample",
+      "keys": [
+        {
+          "key": "pk",
+          "tuple": [
+            7
+          ]
+        },
+        {
+          "key": "email",
+          "tuple": [
+            "a@b"
+          ]
+        }
+      ],
+      "sameNativeEntity": 7,
+      "withinKeyEquality": false,
+      "reason": "Different Key identities do not imply different native instances; deleting through pk then using email evades binding-identity-only checks."
+    },
+    {
+      "name": "disjoint write sets share relationship invariant",
+      "answer": "counterexample",
+      "initialIncomingEdges": 0,
+      "maxIncomingEdges": 1,
+      "schedule": [
+        "A reads incoming count 0",
+        "B reads incoming count 0",
+        "A adds o1->p1",
+        "B adds o2->p1"
+      ],
+      "finalIncomingEdges": 2
+    },
+    {
+      "name": "native identity may change across unprotected resolution",
+      "answer": "sat",
+      "witness": {
+        "before_uid": "1",
+        "after_uid": "2"
+      }
+    },
+    {
+      "name": "transaction-coupled canonical identity excludes rebinding",
+      "answer": "unsat"
+    },
+    {
+      "name": "corrected linked observation separates twins",
+      "answer": "checked",
+      "oldObservationEqual": true,
+      "newObservationEqual": false
+    },
+    {
+      "name": "canonical cross-Key delete/use check",
+      "answer": "checked",
+      "useAfterDeleteRefused": true
+    },
+    {
+      "name": "attempted access differs from final-state frame check",
+      "answer": "checked",
+      "rejectedTraces": [
+        [
+          [
+            "read",
+            "customer.secret"
+          ]
+        ],
+        [
+          [
+            "write",
+            "sentinel"
+          ],
+          [
+            "restore",
+            "sentinel"
+          ]
+        ]
+      ]
+    }
+  ],
+  "composition": [
+    {
+      "a": "reserve-p1",
+      "b": "reserve-p1",
+      "requiresConflictAnalysis": true
+    },
+    {
+      "a": "reserve-p1",
+      "b": "approve-o1",
+      "requiresConflictAnalysis": true
+    },
+    {
+      "a": "reserve-p1",
+      "b": "link-o1-p1",
+      "requiresConflictAnalysis": false
+    },
+    {
+      "a": "approve-o1",
+      "b": "reserve-p1",
+      "requiresConflictAnalysis": true
+    },
+    {
+      "a": "approve-o1",
+      "b": "approve-o1",
+      "requiresConflictAnalysis": true
+    },
+    {
+      "a": "approve-o1",
+      "b": "link-o1-p1",
+      "requiresConflictAnalysis": false
+    },
+    {
+      "a": "link-o1-p1",
+      "b": "reserve-p1",
+      "requiresConflictAnalysis": false
+    },
+    {
+      "a": "link-o1-p1",
+      "b": "approve-o1",
+      "requiresConflictAnalysis": false
+    },
+    {
+      "a": "link-o1-p1",
+      "b": "link-o1-p1",
+      "requiresConflictAnalysis": true
+    }
+  ],
+  "sourceSha256": "5d523ccdf5564838313ee1a5f727fcdac299b68862bc07f728abc33baf9f0ad0"
+}

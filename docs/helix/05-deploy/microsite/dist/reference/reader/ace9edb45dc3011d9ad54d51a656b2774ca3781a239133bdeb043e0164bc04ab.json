@@ -1,0 +1,50 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"projectDddToPostgresql\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "logicalInput",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "bindingInput",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"DddPostgresqlPolicy\"]"
+      ],
+      "name": "policyInput",
+      "optional": false,
+      "type": "DddPostgresqlPolicy"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"PostgresqlBackend\"]"
+      ],
+      "name": "backend",
+      "optional": false,
+      "type": "PostgresqlBackend"
+    }
+  ],
+  "purpose": "Whole authored graph projection; portable library never deploys or queries a database.",
+  "related": [],
+  "returns": "Promise<DddPostgresqlProjection>",
+  "task": "Import and export",
+  "type": "(logicalInput: Document, bindingInput: Document, policyInput: DddPostgresqlPolicy, backend: PostgresqlBackend) => Promise<DddPostgresqlProjection>"
+}

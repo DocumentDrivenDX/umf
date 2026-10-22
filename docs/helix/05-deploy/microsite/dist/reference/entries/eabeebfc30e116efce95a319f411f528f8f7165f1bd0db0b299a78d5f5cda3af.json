@@ -1,0 +1,67 @@
+{
+  "data": {
+    "conflicts": [],
+    "correspondence": "unknown",
+    "declarations": [],
+    "evidence": [
+      {
+        "closureComplete": false,
+        "commands": [],
+        "correspondence": "unknown",
+        "id": "field-gate-record",
+        "inputHashes": [],
+        "limitations": [
+          "Recorded scope only; native equivalence and production adoption are separate.",
+          "Source authoring and round trips do not establish current-core native equivalence",
+          "Historical native subsets remain bounded by their original acceptance records",
+          "Complete tested dependency closure is not recorded; current-source qualification is unknown."
+        ],
+        "outcome": "failed",
+        "readerId": "core-gate",
+        "scope": "Current Field authoring and receipt behavior is reported separately from partially revalidated historical native evidence; current-core native qualification is unavailable",
+        "selector": "",
+        "source": {
+          "bytes": 811170,
+          "path": "fixtures/validation/field-conformance.json",
+          "sha256": "8206fed43f56b5f368f97cef3336a294405aed1f0058c2689197a3ebd84937b7"
+        },
+        "supersedes": [],
+        "versions": {}
+      }
+    ],
+    "operation": {
+      "apiNames": [],
+      "coreProfiles": [],
+      "extensionVersions": [],
+      "fixturePaths": [],
+      "id": "field-gate",
+      "kind": "classification",
+      "limitations": [
+        "Recorded scope only; native equivalence and production adoption are separate."
+      ],
+      "runtime": {
+        "availability": "host-only",
+        "profileId": "field-gate",
+        "requirements": [
+          "Native runtime / original qualification harness; not executed by this page."
+        ]
+      },
+      "sourceSystem": "TableSpec / PostgreSQL / SQL Server / Avro / Parquet",
+      "subset": "Published field binding subsets; ideal admission and delivery are distinct.",
+      "targetSystem": "UMF",
+      "title": "Field · five-priority qualification"
+    }
+  },
+  "id": "[\"integration\",\"field-gate\"]",
+  "kind": "integration",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 134795,
+      "path": "docs/helix/05-deploy/reference/operations.json",
+      "sha256": "793743bbca36e56e90e82df5ef0408b628c434e58cb68aea4d6486349be78e61"
+    }
+  ],
+  "summary": "Published field binding subsets; ideal admission and delivery are distinct.",
+  "title": "Field · five-priority qualification"
+}

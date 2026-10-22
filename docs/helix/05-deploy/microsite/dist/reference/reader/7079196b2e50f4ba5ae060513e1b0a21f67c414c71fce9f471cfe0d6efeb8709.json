@@ -1,0 +1,74 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"DashboardEncoding\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"DashboardChannel\"]"
+      ],
+      "name": "channel",
+      "optional": false,
+      "type": "DashboardChannel"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "field",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "aggregation",
+      "optional": false,
+      "type": "\"min\" | \"max\" | \"none\" | \"count\" | \"measure\" | \"sum\" | \"avg\" | \"count-distinct\" | \"custom\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"DashboardExpression\"]"
+      ],
+      "name": "expression",
+      "optional": true,
+      "type": "DashboardExpression"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "title",
+      "optional": true,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "scale",
+      "optional": true,
+      "type": "\"quantitative\" | \"temporal\" | \"categorical\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "sort",
+      "optional": true,
+      "type": "{ by: \"value-ascending\" | \"value-descending\" | \"label-ascending\" | \"label-descending\" | \"custom\"; values?: string[]; }"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "format",
+      "optional": true,
+      "type": "{ kind: \"number\" | \"currency\" | \"percent\" | \"date\"; decimals?: number; abbreviation?: \"none\" | \"compact\"; currency?: string; }"
+    }
+  ],
+  "parameters": [],
+  "purpose": "DashboardEncoding is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "DashboardEncoding"
+}

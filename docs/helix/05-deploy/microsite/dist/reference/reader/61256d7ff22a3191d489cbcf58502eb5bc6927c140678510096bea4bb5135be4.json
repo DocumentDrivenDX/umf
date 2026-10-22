@@ -1,0 +1,83 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"CoreRecordValueCheck\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "operation",
+      "optional": false,
+      "type": "\"validate-core-record-values\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "version",
+      "optional": false,
+      "type": "\"1.0.0\" | \"2.0.0\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "source",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreRecordValueIdentity\"]"
+      ],
+      "name": "identity",
+      "optional": false,
+      "type": "CoreRecordValueIdentity"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreRecordFieldValue\"]"
+      ],
+      "name": "values",
+      "optional": false,
+      "type": "CoreRecordFieldValue[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Validation\"]"
+      ],
+      "name": "documentValidation",
+      "optional": false,
+      "type": "Validation"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Validation\"]"
+      ],
+      "name": "validation",
+      "optional": false,
+      "type": "Validation"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreRecordValueIdentity\"]",
+        "[\"api\",\".\",\"Validation\"]"
+      ],
+      "name": "fields",
+      "optional": false,
+      "type": "{ field: CoreRecordValueIdentity; state: \"absent\" | \"present\"; validation: Validation; }[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "CoreRecordValueCheck is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "CoreRecordValueCheck"
+}

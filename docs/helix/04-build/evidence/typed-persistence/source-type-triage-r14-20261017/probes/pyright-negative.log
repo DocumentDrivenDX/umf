@@ -1,0 +1,11 @@
+/private/tmp/sdk-r14-mypy-triage/probes/misuse_negative.py
+  /private/tmp/sdk-r14-mypy-triage/probes/misuse_negative.py:10:19 - error: Argument of type "RecordAlias[Foreign, Tag]" cannot be assigned to parameter "target" of type "RecordAlias[Row, AliasTag@to_alias]" in function "to_alias"
+    "RecordAlias[Foreign, Tag]" is not assignable to "RecordAlias[Row, Tag]"
+      Type parameter "OutputT@RecordAlias" is invariant, but "Foreign" is not the same as "Row" (reportArgumentType)
+  /private/tmp/sdk-r14-mypy-triage/probes/misuse_negative.py:11:5 - error: No overloads for "bucket_width" match the provided arguments (reportCallIssue)
+  /private/tmp/sdk-r14-mypy-triage/probes/misuse_negative.py:11:26 - error: Argument of type "Literal['1']" cannot be assigned to parameter "width" of type "Decimal" in function "bucket_width"
+    "Literal['1']" is not assignable to "Decimal" (reportArgumentType)
+  /private/tmp/sdk-r14-mypy-triage/probes/misuse_negative.py:12:5 - error: No overloads for "bucket_width" match the provided arguments (reportCallIssue)
+  /private/tmp/sdk-r14-mypy-triage/probes/misuse_negative.py:12:26 - error: Argument of type "float" cannot be assigned to parameter "width" of type "int" in function "bucket_width"
+    "float" is not assignable to "int" (reportArgumentType)
+5 errors, 0 warnings, 0 informations

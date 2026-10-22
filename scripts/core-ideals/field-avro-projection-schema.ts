@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {avroCarriers} from '../../src/core-ideals/avro-carriers';import {enforceProjectionPolicy} from './projection-policy-schema';
 const schema=await Bun.file('spec/core/field-tablespec-projection.schema.json').json();schema.$id='urn:umf:core:field-avro-projection:1.0.0';schema.title='Authored Field to explicit Avro record field';schema.properties.operation.const='project-field-avro';schema.required.push('diagnostics');
 const p=schema.properties.request.properties;delete p.tableName;delete p.columnName;p.recordName={type:'string',pattern:'^[A-Za-z_][A-Za-z0-9_]*(?![\\s\\S])'};p.fieldName={...p.recordName};p.namespace={type:'string',pattern:'^(?:[A-Za-z_][A-Za-z0-9_]*(?:\\.[A-Za-z_][A-Za-z0-9_]*)*)?(?![\\s\\S])'};p.nativeType.enum=Object.keys(avroCarriers);schema.properties.request.required=['id','recordName','namespace','fieldName','nativeType','mode'];

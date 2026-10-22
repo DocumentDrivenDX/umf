@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
 const cases=(await Bun.file('fixtures/rdf/rename/results.json').json()).cases;for(const c of cases){c.raw=await Bun.file(c.path).text();for(const e of c.exports)e.output=await Bun.file(e.path).text();}
 const built=await Bun.build({entrypoints:['src/index.ts'],outdir:'.cache/rdf-rename-browser',naming:'umf.js',target:'browser',format:'esm'});if(!built.success)throw Error(built.logs.join('\n'));

@@ -1,17 +1,18 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
 import {copyJson,inspectBinding,projectBindingIndexes,type Document} from '../../src';
 
 const logical:Document={
-  umf:'0.1.0',id:'order-model',vocabularies:{'umf.ddd':{version:'0.1.0'}},
+  umf:'0.10.0',id:'order-model',vocabularies:{'umf.ddd':{version:'0.1.0'}},
   modules:[{id:'sales',namespace:'sales',elements:[{id:'Order',extensions:{'umf.ddd':{
     kind:'entity',fields:{id:{type:{kind:'scalar',name:'integer'},cardinality:'one'},details:{type:{kind:'scalar',name:'string'},cardinality:'optional'},region:{type:{kind:'scalar',name:'string'},cardinality:'one'}},identity:{fields:['id'],scope:'context'}
   }}}]}]
 };
 const field=(name:string)=>({module:'sales',element:'Order',field:name});
 const binding:Document={
-  umf:'0.1.0',id:'order-pg',vocabularies:{'umf.binding':{version:'0.1.0'}},modules:[],
+  umf:'0.10.0',id:'order-pg',vocabularies:{'umf.binding':{version:'0.1.0'}},modules:[],
   extensions:{'umf.binding':{
-    profile:'umf-binding-1',logical:{documentId:'order-model',coreVersion:'0.1.0'},target:{system:'postgresql',version:'17.4',subset:'declared-indexes'},
+    profile:'umf-binding-1',logical:{documentId:'order-model',coreVersion:'0.10.0'},target:{system:'postgresql',version:'17.4',subset:'declared-indexes'},
     elements:[{module:'sales',element:'Order',table:'orders'}],
     fields:[{...field('id'),storage:'column',column:'id'},{...field('details'),storage:'embedded',documentColumn:'payload',path:['details']},{...field('region'),storage:'column',column:'region'}],
     relationships:[],indexes:[

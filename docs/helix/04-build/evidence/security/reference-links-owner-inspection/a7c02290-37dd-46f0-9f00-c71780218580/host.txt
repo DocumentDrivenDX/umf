@@ -1,0 +1,19 @@
+bun test v1.4.2 (43848b5a7)
+
+tests/security-reference-links-owner.test.ts:
+13 |  * CONTRACT-040 requires separate verified receipts for authored record-type assertions. */
+14 | export function inspectCoreReferenceLinks(input:Document,identityInput:CoreReferenceLinkIdentity):CoreReferenceLinksInspection {
+15 |  const source=copyJson(input) as unknown as Document,identity=copyJson(identityInput) as unknown as CoreReferenceLinkIdentity;
+16 |  if(!identity||typeof identity!=='object'||Array.isArray(identity)||Object.keys(identity).some(k=>k!=='module'&&k!=='element')||typeof identity.module!=='string'||!identity.module||typeof identity.element!=='string'||!identity.element)throw new UmfError('CORE_REFERENCE_LINKS_IDENTITY','Expected explicit qualified identity');
+17 |  if(source?.umf!=='0.7.0')throw new UmfError('CORE_REFERENCE_LINKS_VERSION','Only original 0.7 documents are admitted');
+18 |  const validation=validateDocument(source);if(!validation.valid)throw new UmfError('CORE_REFERENCE_LINKS_SOURCE',JSON.stringify(validation.diagnostics));
+                                                                                                                                                            ^
+UmfError: [{"code":"STRUCTURE","path":"/modules/0/elements/1/kind","message":"must pass \"const\" keyword validation","severity":"error"},{"code":"STRUCTURE","path":"/modules/0/elements/1","message":"must match \"then\" schema","severity":"error"}]
+      at inspectCoreReferenceLinks (/Users/erik/.codex/worktrees/security-main-integration/umf/src/model/reference-links.ts:18:152)
+      at runReferenceLinksOwnerCases (/Users/erik/.codex/worktrees/security-main-integration/umf/tools/security/reference-links-owner-cases.ts:30:238)
+      at <anonymous> (/Users/erik/.codex/worktrees/security-main-integration/umf/tests/security-reference-links-owner.test.ts:3:111)
+(fail) original reference links preserve qualified ordered occurrences without type promotion [6.29ms]
+
+ 0 pass
+ 1 fail
+Ran 1 test across 1 file. [156.00ms]

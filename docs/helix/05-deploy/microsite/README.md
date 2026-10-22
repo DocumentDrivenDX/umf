@@ -1,9 +1,25 @@
-# UMF microsite schema explorer
+# UMF microsite schema reference
 
-Owner direction (2026-10-08): build a browsable schema explorer for domain
-packs in the existing microsite. This delivers a read-only metadata consumer
-under PRD FR-39/FR-41. Domain-pack ownership and definitions remain with the
-parallel pack work; this slice introduces no pack generator or backend execution.
+## Current source boundary
+
+The microsite uses UMF core `0.10.0` only. The generic playground, generated
+reference, ontology and model catalog use the actual current validator and schema.
+Older core documents are refused; native adapter versions and domain-pack versions
+remain separate identifiers.
+
+The earlier browser-local SQL-to-actions demo is withdrawn from navigation and
+publication. Its original UMF, Weft WASM and Truss bundles only admitted core0.8;
+changing their document marker would not create a current owner implementation.
+The old build/worker/verifier entrypoints are retired, and CI removes their old
+generated pages and bundles before publishing. A new local mutation demo needs
+an actual current action/compiler/provider cohort and separate browser qualification.
+Historical captures and their qualifications remain in Git and governed evidence.
+
+The schema package remains reusable. The public site has one schema host at
+`reference/core.html`; its Ontology, Object reference and Model catalog views
+share one route. The catalog is mounted from the exact released package under
+`/schema-browser/assets/`; the site build does not patch its renderer or ship a
+second explorer page.
 
 ## Build and preview
 
@@ -11,13 +27,16 @@ From the UMF repository root:
 
 ```sh
 bun docs/helix/05-deploy/microsite/build-explorer.ts
+bun docs/helix/05-deploy/schema-browser/publish-site.ts
+bun run build:reference
 bun docs/helix/05-deploy/microsite/serve.ts
-bun docs/helix/05-deploy/microsite/verify-explorer.ts
+bun docs/helix/05-deploy/microsite/verify-schema-views.ts
 ```
 
-The preview opens at `http://127.0.0.1:4178/explorer.html`. The last command
-requires installed Playwright Chromium and the running preview. Override its
-origin with `UMF_EXPLORER_URL` and Chromium with `UMF_CHROMIUM_PATH` when needed.
+The preview opens at `http://127.0.0.1:4178/reference/core.html#view=ontology`.
+The last command requires installed Playwright Chromium and the running preview.
+Override its origin with `UMF_REFERENCE_URL` and Chromium with `UMF_CHROMIUM_PATH`
+when needed.
 
 Catalog generation scans `domain-packs/`, `packs/`, `spec/domain-packs/`,
 `examples/domain-packs/` and retained `catalog-sources/`. Explicit source
@@ -70,14 +89,14 @@ fetch the datasets or certify their schema profiles as instance validators.
 
 ## Acceptance and evidence
 
-`verify-explorer.ts` exercises pack links, native foreign keys, field details,
-search/empty states, exact decimals, unknown extension retention, inert source
-text, source download, invalid/unresolved input, deep links, mobile layout and
-navigation on existing routes. Scoped results live in
-`../schema-explorer-evidence.json`. These checks do not refresh library/native
+`verify-schema-views.ts` exercises the single-host ontology, object-reference,
+and embedded-catalog routes in Chromium under strict CSP. The package browser
+tests continue to cover pack links, field details, source preservation, search,
+downloads and deep links. These checks do not refresh library/native
 conformance, certify all possible packs, or qualify data generation.
 
-The publishing workflow rebuilds the explorer catalog from canonical pack files.
+The publishing workflow rebuilds the catalog from canonical pack files and
+installs the exact reusable package without rewriting its page or scripts.
 Page signatures must be renewed after published HTML changes; CI verifies them
 and copies the public attestations into the site artifact.
 
@@ -174,3 +193,13 @@ duplicate originals. 24 Chromium explorer checks pass, including actual public
 sample downloads/hash equality, all catalog entries, family navigation, ontology
 links, old bookmarks and mobile containment. Detailed reproduction and native
 checks are in `../../04-build/evidence/medical-subpacks.md`.
+
+## Schema browser workspace refinement — 2026-10-10
+
+Readable labels preserve technical IDs and native source downloads. The catalog
+uses a responsive drawer and desktop focus mode; fields have filtering, sticky
+identifiers and roomy description columns. Ontologies use record selection and
+wrapped graph labels; structured metadata uses full-width disclosures. Export
+panels remain inside the viewport. Browser entry-point typechecking is part of
+`bun run typecheck`. Visual evidence and limitations:
+[workspace qualification](../../04-build/evidence/schema-browser-ux.md).

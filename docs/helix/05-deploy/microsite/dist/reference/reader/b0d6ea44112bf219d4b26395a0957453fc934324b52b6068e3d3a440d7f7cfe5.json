@@ -1,0 +1,30 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"recoverBindingSqlServerSources\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SqlServerPhysicalProjection\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "SqlServerPhysicalProjection"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "current",
+      "optional": false,
+      "type": "string"
+    }
+  ],
+  "purpose": "recoverBindingSqlServerSources accepts input, current and returns { logical: Document; binding: Document; policy: SqlServerPhysicalPolicy; }.",
+  "related": [],
+  "returns": "{ logical: Document; binding: Document; policy: SqlServerPhysicalPolicy; }",
+  "task": "Import and export",
+  "type": "(input: SqlServerPhysicalProjection, current: string) => { logical: Document; binding: Document; policy: SqlServerPhysicalPolicy; }"
+}

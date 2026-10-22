@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
+import {CURRENT_CORE_VERSION} from '../../src/generated/core-model';
 import {expect,test} from 'bun:test';
 
 const base='fixtures/projections/ddd-authored-relationships/';
@@ -8,7 +10,7 @@ const delta=await Bun.file('fixtures/projections/ddd-postgresql-tables/delta-bin
 
 test('@covers US-045-AC2 @covers US-046-AC1 @covers US-048-AC1 @covers US-049-AC1: shared authored DDD graph gains explicit Key ownership without changing DDD meaning',()=>{
  const logical=prepared.logical;
- expect(logical.umf).toBe('0.6.0');expect(logical.id).toBe(source.logical.id);
+ expect(logical.umf).toBe(CURRENT_CORE_VERSION);expect(logical.id).toBe(source.logical.id);
  const before=source.logical.modules[0].elements,after=logical.modules[0].elements;
  expect(after.map((row:any)=>row.id)).toEqual(before.map((row:any)=>row.id));
  const records=after.filter((row:any)=>row.kind==='record');expect(records.map((row:any)=>row.id)).toEqual(['Order','Customer','Product','OrderProduct']);
@@ -25,8 +27,8 @@ test('@covers US-045-AC2 @covers US-046-AC1 @covers US-048-AC1 @covers US-049-AC
  }
  expect(owned.size).toBe(after.filter((row:any)=>row.kind==='field').length);
  expect(records.find((row:any)=>row.id==='OrderProduct').extensions['umf.ddd'].fields.quantity).toEqual(pg.logical.modules[0].elements.find((row:any)=>row.id==='OrderProduct').extensions['umf.ddd'].fields.quantity);
- expect(prepared.postgresqlBinding.extensions['umf.binding'].logical).toEqual({documentId:logical.id,coreVersion:'0.6.0'});
- expect(prepared.deltaBinding.extensions['umf.binding'].logical).toEqual({documentId:logical.id,coreVersion:'0.6.0'});
+ expect(prepared.postgresqlBinding.extensions['umf.binding'].logical).toEqual({documentId:logical.id,coreVersion:CURRENT_CORE_VERSION});
+ expect(prepared.deltaBinding.extensions['umf.binding'].logical).toEqual({documentId:logical.id,coreVersion:CURRENT_CORE_VERSION});
  expect(prepared.postgresqlBinding.extensions['umf.binding'].target.system).toBe('postgresql');
  expect(prepared.deltaBinding.extensions['umf.binding'].target.system).toBe('delta');
  expect(prepared.postgresqlBinding.extensions['umf.binding'].indexes).toEqual(pg.binding.extensions['umf.binding'].indexes);

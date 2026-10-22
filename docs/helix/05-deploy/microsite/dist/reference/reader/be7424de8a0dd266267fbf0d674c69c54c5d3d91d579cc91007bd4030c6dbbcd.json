@@ -1,0 +1,94 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"TableSpecRecordClassification\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "operation",
+      "optional": false,
+      "type": "\"classify-tablespec-record\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "version",
+      "optional": false,
+      "type": "\"1.0.0\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "status",
+      "optional": false,
+      "type": "\"blocked\" | \"classified\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "source",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "target",
+      "optional": true,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"TableSpecRecordRequest\"]"
+      ],
+      "name": "request",
+      "optional": false,
+      "type": "TableSpecRecordRequest"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "binding",
+      "optional": false,
+      "type": "{ readonly id: \"umf.tablespec.record\"; readonly version: \"1.0.0\"; readonly nativeVersion: \"647e8e566ad78b864282ec65c0b0b2237aa63084\"; readonly subset: \"Captured table defines named column members; contextual groups and execution remain native\"; }"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "mappings",
+      "optional": false,
+      "type": "Mapping[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Json\"]"
+      ],
+      "name": "residuals",
+      "optional": false,
+      "type": "{ path: string; value: Json; reason: string; recovery: \"Source and native fragments retained; resolve conflict then recompute whole record classification\"; }[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Diagnostic\"]"
+      ],
+      "name": "diagnostics",
+      "optional": false,
+      "type": "Diagnostic[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "TableSpecRecordClassification is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "TableSpecRecordClassification"
+}

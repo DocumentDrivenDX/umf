@@ -1,0 +1,165 @@
+{
+  "checks": [
+    {
+      "packet": "action-0.json",
+      "sourceDigest": {
+        "owner": "weft-postgresql-native-action",
+        "sha256": "c89586a5a7f86ea55863186eed4891f9aa53314c744b957a41641958740852eb",
+        "version": "0.1"
+      },
+      "probes": 20,
+      "rules": 3,
+      "businessRowsUnchanged": true
+    },
+    {
+      "packet": "action-1.json",
+      "sourceDigest": {
+        "owner": "weft-postgresql-native-action",
+        "sha256": "41e12ba70cffe7e7ac7bb9ae7caef115d3b68a0d16b177247b071750baf60e86",
+        "version": "0.1"
+      },
+      "probes": 27,
+      "rules": 3,
+      "businessRowsUnchanged": true
+    },
+    {
+      "packet": "action-2.json",
+      "sourceDigest": {
+        "owner": "weft-postgresql-native-action",
+        "sha256": "885f8df3b475778c664a5fea7b8331e2b0f123d9ad8d77a6eb75cf360807b2a1",
+        "version": "0.1"
+      },
+      "probes": 25,
+      "rules": 3,
+      "businessRowsUnchanged": true
+    },
+    {
+      "packet": "action-3.json",
+      "sourceDigest": {
+        "owner": "weft-postgresql-native-action",
+        "sha256": "1c83c8aafe15bfff6295523c3677647becaf1017380e5e1c2a26322826e37a99",
+        "version": "0.1"
+      },
+      "probes": 17,
+      "rules": 3,
+      "businessRowsUnchanged": true
+    },
+    {
+      "packet": "action-4.json",
+      "sourceDigest": {
+        "owner": "weft-postgresql-native-action",
+        "sha256": "64bd36667f7bff56604f4c6d0adf9df5fac38726b489b5f3b73d991deefeb978",
+        "version": "0.1"
+      },
+      "probes": 28,
+      "rules": 3,
+      "businessRowsUnchanged": true
+    },
+    {
+      "packet": "action-6.json",
+      "sourceDigest": {
+        "owner": "weft-postgresql-native-bulk",
+        "sha256": "fc0f17663cc494b6df5ee8410ed53547e43e80d380ac80819eda60342feb3cb7",
+        "version": "0.1"
+      },
+      "probes": 9,
+      "rules": 3,
+      "businessRowsUnchanged": true
+    },
+    {
+      "packet": "search-0.json",
+      "sourceDigest": {
+        "owner": "weft-postgresql-search",
+        "sha256": "6935d629e2ad0c39bcd09b92da5b8e9a788fdfa419eff4e74bb6c74eec33344f",
+        "version": "0.1"
+      },
+      "probes": 13,
+      "rules": 0,
+      "businessRowsUnchanged": true
+    },
+    {
+      "packet": "search-1.json",
+      "sourceDigest": {
+        "owner": "weft-postgresql-search",
+        "sha256": "3e862e951983f185c7a80ded55fef7a128cd3964cfbe3e5813400e6d03673fd1",
+        "version": "0.1"
+      },
+      "probes": 11,
+      "rules": 0,
+      "businessRowsUnchanged": true
+    },
+    {
+      "packet": "search-2.json",
+      "sourceDigest": {
+        "owner": "weft-postgresql-search",
+        "sha256": "3e862e951983f185c7a80ded55fef7a128cd3964cfbe3e5813400e6d03673fd1",
+        "version": "0.1"
+      },
+      "probes": 11,
+      "rules": 0,
+      "businessRowsUnchanged": true
+    },
+    {
+      "packet": "search-3.json",
+      "sourceDigest": {
+        "owner": "weft-postgresql-search",
+        "sha256": "f4ba1581d1d8e8234164ffd2bb5c7d76e43bba45f1f7caa5154b27ed54c26d00",
+        "version": "0.1"
+      },
+      "probes": 13,
+      "rules": 0,
+      "businessRowsUnchanged": true
+    },
+    {
+      "packet": "search-4.json",
+      "sourceDigest": {
+        "owner": "weft-postgresql-search",
+        "sha256": "d80c2347263763888b3582583f2fd4e9a8c36d619b7e7188e40845ca8d821729",
+        "version": "0.1"
+      },
+      "probes": 11,
+      "rules": 0,
+      "businessRowsUnchanged": true
+    },
+    {
+      "packet": "search-5.json",
+      "sourceDigest": {
+        "owner": "weft-postgresql-search",
+        "sha256": "a8ed827c3edae1c168c39c6971784fbc551aa08588c5bc0dc942b90d1349449b",
+        "version": "0.1"
+      },
+      "probes": 13,
+      "rules": 0,
+      "businessRowsUnchanged": true
+    },
+    {
+      "packet": "search-6.json",
+      "sourceDigest": {
+        "owner": "weft-postgresql-search",
+        "sha256": "73087d26f5853c5bdebefd14b9635cb60df34d1c1cf8ef7855da1b9d3da4ca86",
+        "version": "0.1"
+      },
+      "probes": 10,
+      "rules": 0,
+      "businessRowsUnchanged": true
+    },
+    {
+      "packet": "search-7.json",
+      "sourceDigest": {
+        "owner": "weft-postgresql-search",
+        "sha256": "a5243e609f22fa49a0cf4fb90b5776681b544bf914d7b40efca94cbc691e6aa6",
+        "version": "0.1"
+      },
+      "probes": 10,
+      "rules": 0,
+      "businessRowsUnchanged": true
+    }
+  ],
+  "complete": false,
+  "failure": {
+    "type": "AttributeError",
+    "message": "'list' object has no attribute 'get'"
+  },
+  "fixtureCleanupComplete": true,
+  "serverStopped": true
+}

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {importLakeviewDashboard,exportLakeviewDashboard,inspectLakeview,inspectDashboard,getLakeviewNative,readDocument,writeDocument,copyJson,type Document} from '../../src';
 import {parseNativeJson,renderTree} from '../../src/model/native-json';
@@ -10,7 +11,7 @@ const element=(doc:Document,module:string,id:string)=>doc.modules.find(m=>m.id==
 const neutral=(doc:Document,module:string,id:string)=>element(doc,module,id)?.extensions['umf.dashboard'] as any;
 const widget=(view:any,name:string)=>view.pages.flatMap((p:any)=>p.layout).find((l:any)=>l.widget.name===name).widget;
 const codes=(doc:Document)=>inspectLakeview(doc).diagnostics.filter(d=>d.severity==='error').map(d=>d.code);
-test('@covers US-078-AC1: the marketing-campaign dashboard is retained by identity and exports token-exactly through UMF JSON/YAML',()=>{
+test('@covers US-093-AC1: the marketing-campaign dashboard is retained by identity and exports token-exactly through UMF JSON/YAML',()=>{
  const {document}=load();
  expect(exportLakeviewDashboard(document)).toBe(compact(source));
  for(const format of ['json','yaml'] as const)expect(exportLakeviewDashboard(readDocument(writeDocument(document,format),format))).toBe(compact(source));
@@ -27,7 +28,7 @@ test('@covers US-078-AC1: the marketing-campaign dashboard is retained by identi
  expect(JSON.parse(getLakeviewNative(document,'data','ds_rank'))).toEqual(view.datasets[2]);
  const copy=JSON.parse(getLakeviewNative(document));copy.pages.pop();expect(exportLakeviewDashboard(document)).toBe(compact(source));
 });
-test('@covers US-078-AC2: the neutral projection validates and agrees with the authored US-077 declaration',()=>{
+test('@covers US-093-AC2: the neutral projection validates and agrees with the authored US-077 declaration',()=>{
  const {document}=load(),root=document.extensions!['umf.dashboard'] as any,fixtureRoot=authored.extensions!['umf.dashboard'] as any;
  expect(inspectDashboard(document).valid).toBe(true);
  expect(root.pages).toEqual(fixtureRoot.pages);expect(root.layout).toEqual(fixtureRoot.layout);
@@ -49,7 +50,7 @@ test('@covers US-078-AC2: the neutral projection validates and agrees with the a
  expect(neutral(document,'overview','w-101-impressions').encodings[0].format).toEqual({kind:'number',abbreviation:'compact',decimals:1});
  expect(neutral(document,'campaign_details','w-206-campaign-detail').rows).toBe('detail');
 });
-test('@covers US-078-AC3: constructs the neutral profile cannot express are reported with source pointers',()=>{
+test('@covers US-093-AC3: constructs the neutral profile cannot express are reported with source pointers',()=>{
  const view=native(),w=(name:string)=>widget(view,name);
  w('w-101-impressions').queries[0].query.filters=[{expression:"`channel` <> 'Email'"}];
  view.datasets[0].parameters=[{displayName:'Week',keyword:'week',dataType:'DATE',defaultSelection:{values:{dataType:'DATE',values:[{value:'2027-07-31'}]}}}];
@@ -74,7 +75,7 @@ test('@covers US-078-AC3: constructs the neutral profile cannot express are repo
  expect(neutral(document,'overview','w-101-impressions').kind).toBe('visual');
  for(const issue of issues){let node:any=view;for(const key of issue.path.split('/').slice(1).map(k=>k.replace(/~1/g,'/').replace(/~0/g,'~')))node=node[key];expect(node).toBeDefined();expect(issue.retainedInSource).toBe(true);}
 });
-test('@covers US-078-AC4: misplaced, inconsistent or unknown representation fails, legacy grids are doubled and rejected neutral items are omitted',()=>{
+test('@covers US-093-AC4: misplaced, inconsistent or unknown representation fails, legacy grids are doubled and rejected neutral items are omitted',()=>{
  const base=load().document;
  const mutate=(change:(doc:Document)=>void)=>{const doc=copyJson(base) as unknown as Document;change(doc);return doc;};
  const lv=(owner:any)=>owner.extensions['umf.lakeview'];

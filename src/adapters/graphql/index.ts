@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
+import {CURRENT_CORE_VERSION} from '../../generated/core-model';
 import {parse,print,buildASTSchema,validateSchema,type DocumentNode} from 'graphql';
 import manifest from '../../../spec/extensions/graphql/package.json';
 import {createValidator} from '../../validation/schema';
@@ -58,7 +60,7 @@ function payload(document:Document):GraphqlPayload {
 }
 export function importGraphqlSchema(text:string,options:{id:string;mode?:'schema'|'fragment'}):Document {
  const value:GraphqlPayload={profile:'graphql-js-17.0.2-sdl',ast:ast(text),originalSource:text,...(options.mode?{mode:options.mode}:{})};
- const doc:Document={umf:'0.1.0',id:options.id,vocabularies:{[GRAPHQL_EXTENSION]:{version:'0.1.0'}},modules:[{id:'schema',namespace:'',elements:[{id:'schema',extensions:{[GRAPHQL_EXTENSION]:value as unknown as Json}}]}]};payload(doc);return doc;
+ const doc:Document={umf:CURRENT_CORE_VERSION,id:options.id,vocabularies:{[GRAPHQL_EXTENSION]:{version:'0.1.0'}},modules:[{id:'schema',namespace:'',elements:[{id:'schema',extensions:{[GRAPHQL_EXTENSION]:value as unknown as Json}}]}]};payload(doc);return doc;
 }
 export function exportGraphqlSchema(document:Document):string {
  const p=payload(document);if(inspectGraphql(document).diagnostics.some(d=>['GRAPHQL_REPRESENTATION','GRAPHQL_PRINT_CHANGE'].includes(d.code)))throw new UmfError('GRAPHQL_REPRESENTATION','Native export would discard AST content');

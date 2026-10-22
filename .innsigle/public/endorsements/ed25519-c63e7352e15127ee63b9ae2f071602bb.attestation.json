@@ -1,0 +1,29 @@
+{
+  "payload": {
+    "innsigle": "1",
+    "type": "https://innsigle.dev/claim/key-endorsement/v1",
+    "issued_at": "2026-10-17T20:20:28Z",
+    "issuer": {
+      "id": "documentdrivendx-umf",
+      "name": "DocumentDrivenDX UMF",
+      "key_id": "ed25519:47994639d3e328f8464e99c3f926b293",
+      "key_url": "https://documentdrivendx.github.io/umf/.well-known/innsigle/keys.json"
+    },
+    "endorsement": {
+      "subject_key_id": "ed25519:c63e7352e15127ee63b9ae2f071602bb",
+      "subject_key_url": "https://documentdrivendx.github.io/umf/.well-known/innsigle/keys.json",
+      "subject_issuer_id": "documentdrivendx-umf",
+      "level": "full",
+      "purpose": "build-signing"
+    }
+  },
+  "payload_encoding": "json",
+  "signatures": [
+    {
+      "key_id": "ed25519:47994639d3e328f8464e99c3f926b293",
+      "alg": "ed25519",
+      "sig": "P6Qvr-avcBMjRDUQWDZendCqzRkXfccFphIxWgBug57WPg9SEH1gchudjTYFxzeV1ztL24oXwnKr0T4LUW4rCw",
+      "signed_at": "2026-10-17T20:20:36Z"
+    }
+  ]
+}

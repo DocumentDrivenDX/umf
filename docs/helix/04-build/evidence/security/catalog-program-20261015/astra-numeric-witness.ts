@@ -1,0 +1,3 @@
+import f from './numeric-witness.json';
+import{compileCandidateCatalogProgram as compile,readCandidateCatalogProgram as read}from '/Users/erik/.codex/worktrees/security-main-integration/umf/src/extensions/security/catalog-program-candidate';
+const start=performance.now();try{const p=read(compile(f.policy,f.catalog,f.closure,f.ontology));console.log(JSON.stringify({accepted:true,charged:p.charged,elapsedMs:performance.now()-start,scope:'Short literal normalization exceeds protection private100k normalized-text cap; compiler current charge is only source/descriptor text.'}));}catch(e){console.log(JSON.stringify({accepted:false,error:String(e),elapsedMs:performance.now()-start}));}

@@ -1,0 +1,79 @@
+{"testProcess":"tests/json-schema/native.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/json-schema/native.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/json-schema/native.test.ts:
+(pass) US-002-AC1: full native schema survives editable UMF tree and YAML serialization [102.79ms]
+(pass) US-002-AC1: exact numbers and unknown native metadata survive without false semantic validation [33.23ms]
+(pass) US-002-AC2: supplied retrieval URI and reference bundle remain separate and usable [85.18ms]
+(pass) US-002-AC3: only actual applicator locations are exposed as schemas [22.70ms]
+(pass) US-002-AC4: dialect uncertainty, invalid schemas and duplicate keys are distinct [60.49ms]
+(pass) US-002-AC4: unknown representation content cannot silently disappear into native output [20.25ms]
+(pass) US-002-AC4: invalid edits and number injection cannot corrupt source [37.44ms]
+(pass) full export bundle retains unrelated UMF semantics and reports target-only limits [28.52ms]
+
+ 8 pass
+ 0 fail
+ 39 expect() calls
+Ran 8 tests across 1 file. [3.80s]
+{"testProcess":"tests/json-schema/native.test.ts","exitCode":0,"pass":8,"fail":0,"assertions":39,"completeSummary":true,"logSha256":"58234bf9a5bfee57a72bd5b868d589be73c3c4b84ac13dc843ce58c2b9f56b6d"}
+{"testProcess":"tests/json-schema/upstream.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/json-schema/upstream.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/json-schema/upstream.test.ts:
+(pass) upstream 2020-12: additionalProperties.json [626.68ms]
+(pass) upstream 2020-12: allOf.json [800.47ms]
+(pass) upstream 2020-12: anchor.json [306.85ms]
+(pass) upstream 2020-12: anyOf.json [540.15ms]
+(pass) upstream 2020-12: boolean_schema.json [66.09ms]
+(pass) upstream 2020-12: const.json [1248.55ms]
+(pass) upstream 2020-12: contains.json [499.33ms]
+(pass) upstream 2020-12: content.json [297.25ms]
+(pass) upstream 2020-12: default.json [202.60ms]
+(pass) upstream 2020-12: defs.json [76.14ms]
+(pass) upstream 2020-12: dependentRequired.json [239.01ms]
+(pass) upstream 2020-12: dependentSchemas.json [234.14ms]
+(pass) upstream 2020-12: dynamicRef.json [1244.62ms]
+(pass) upstream 2020-12: enum.json [863.20ms]
+(pass) upstream 2020-12: exclusiveMaximum.json [56.72ms]
+(pass) upstream 2020-12: exclusiveMinimum.json [57.69ms]
+(pass) upstream 2020-12: format.json [1023.04ms]
+(pass) upstream 2020-12: if-then-else.json [654.88ms]
+(pass) upstream 2020-12: infinite-loop-detection.json [67.16ms]
+(pass) upstream 2020-12: items.json [535.39ms]
+(pass) upstream 2020-12: maxContains.json [265.36ms]
+(pass) upstream 2020-12: maxItems.json [125.17ms]
+(pass) upstream 2020-12: maxLength.json [108.61ms]
+(pass) upstream 2020-12: maxProperties.json [149.55ms]
+(pass) upstream 2020-12: maximum.json [108.60ms]
+(pass) upstream 2020-12: minContains.json [420.80ms]
+(pass) upstream 2020-12: minItems.json [99.96ms]
+(pass) upstream 2020-12: minLength.json [101.25ms]
+(pass) upstream 2020-12: minProperties.json [105.05ms]
+(pass) upstream 2020-12: minimum.json [108.40ms]
+(pass) upstream 2020-12: multipleOf.json [318.41ms]
+(pass) upstream 2020-12: not.json [571.29ms]
+(pass) upstream 2020-12: oneOf.json [646.88ms]
+(pass) upstream 2020-12: pattern.json [171.45ms]
+(pass) upstream 2020-12: patternProperties.json [314.27ms]
+(pass) upstream 2020-12: prefixItems.json [211.94ms]
+(pass) upstream 2020-12: properties.json [319.65ms]
+(pass) upstream 2020-12: propertyNames.json [339.24ms]
+(pass) upstream 2020-12: ref.json [3438.84ms]
+(pass) upstream 2020-12: refRemote.json [909.73ms]
+(pass) upstream 2020-12: required.json [278.25ms]
+(pass) upstream 2020-12: type.json [669.83ms]
+(pass) upstream 2020-12: unevaluatedItems.json [1792.89ms]
+(pass) upstream 2020-12: unevaluatedProperties.json [2443.84ms]
+(pass) upstream 2020-12: uniqueItems.json [301.24ms]
+(pass) upstream 2020-12: vocabulary.json [81.26ms]
+
+ 46 pass
+ 0 fail
+ 1152 expect() calls
+Ran 46 tests across 1 file. [28.35s]
+{"testProcess":"tests/json-schema/upstream.test.ts","exitCode":0,"pass":46,"fail":0,"assertions":1152,"completeSummary":true,"logSha256":"edc1da9bf2553ae1bfd864c91ca5fa7b3f3a68cf4cbc84b843c9bf7d278bb8f7"}
+
+ 54 pass
+ 0 fail
+ 1191 expect() calls
+Ran 54 tests across 2 files. [32.21s]

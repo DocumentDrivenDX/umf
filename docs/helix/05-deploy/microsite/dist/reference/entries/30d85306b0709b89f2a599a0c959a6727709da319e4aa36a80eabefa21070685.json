@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 8449,
+        "line": 97,
+        "path": "src/core-ideals/key-tablespec.ts",
+        "sha256": "fb76be0e0e990e144326b4da446f65b0065d8da261247078d4e941b80fb17ccd"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "verifyTableSpecKeyClassification",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: TableSpecKeyClassification, current: Document): TableSpecKeyClassification"
+    ]
+  },
+  "id": "[\"api\",\".\",\"verifyTableSpecKeyClassification\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 8449,
+      "line": 97,
+      "path": "src/core-ideals/key-tablespec.ts",
+      "sha256": "fb76be0e0e990e144326b4da446f65b0065d8da261247078d4e941b80fb17ccd"
+    }
+  ],
+  "summary": "Check retained input consistency, not authenticity or runtime enforcement.",
+  "title": "verifyTableSpecKeyClassification"
+}

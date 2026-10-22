@@ -30,20 +30,20 @@
       ]
     },
     "source": {
-      "$ref": "urn:umf:core:0.5.0"
+      "$ref": "urn:umf:core:0.10.0"
     },
     "author": {
       "anyOf": [
         {
-          "$ref": "urn:umf:core:facet-operation:1.0.0#/$defs/declaration"
+          "$ref": "urn:umf:core:facet-operation:3.0.0#/$defs/declaration"
         },
         {
-          "$ref": "urn:umf:core:kind-operation:4.0.0#/$defs/declaration"
+          "$ref": "urn:umf:core:kind-operation:6.0.0#/$defs/declaration"
         }
       ]
     },
     "target": {
-      "$ref": "urn:umf:core:0.1.0"
+      "$ref": "urn:umf:core:0.10.0"
     },
     "request": {
       "type": "object",
@@ -154,16 +154,20 @@
           ]
         },
         "facets": {
-          "type": "object",
           "description": "Missing members impose no bound. Unknown members and qualifiers are retained without interpretation.",
+          "type": "object",
           "properties": {
             "length": {
               "type": "object",
               "required": [
-                "max",
                 "unit"
               ],
               "properties": {
+                "min": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
                 "max": {
                   "type": "integer",
                   "minimum": 0,
@@ -176,21 +180,46 @@
                   ]
                 }
               },
-              "additionalProperties": false
+              "additionalProperties": false,
+              "allOf": [
+                {
+                  "anyOf": [
+                    {
+                      "type": "object",
+                      "required": [
+                        "min"
+                      ],
+                      "properties": {
+                        "min": {}
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "max"
+                      ],
+                      "properties": {
+                        "max": {}
+                      }
+                    }
+                  ]
+                }
+              ]
             },
             "precision": {
+              "description": "Decimal coefficient digit bound; requires scale. Absolute coefficient is less than 10^precision. No implicit rounding.",
               "type": "integer",
               "minimum": 1,
-              "maximum": 9007199254740991,
-              "description": "Decimal coefficient digit bound; requires scale. Absolute coefficient is less than 10^precision. No implicit rounding."
+              "maximum": 9007199254740991
             },
             "scale": {
+              "description": "Fixed fractional digit count; requires precision. Semantic validation requires scale <= precision. Value equals integer coefficient times 10^-scale.",
               "type": "integer",
               "minimum": 0,
-              "maximum": 9007199254740991,
-              "description": "Fixed fractional digit count; requires precision. Semantic validation requires scale <= precision. Value equals integer coefficient times 10^-scale."
+              "maximum": 9007199254740991
             },
             "integerWidth": {
+              "description": "Signed [-2^(bits-1),2^(bits-1)-1] or unsigned [0,2^bits-1]; mathematical domain, not a physical storage-width assertion.",
               "type": "object",
               "required": [
                 "bits",
@@ -206,8 +235,89 @@
                   "type": "boolean"
                 }
               },
-              "description": "Signed [-2^(bits-1),2^(bits-1)-1] or unsigned [0,2^bits-1]; mathematical domain, not a physical storage-width assertion.",
               "additionalProperties": false
+            },
+            "collectionSize": {
+              "type": "object",
+              "properties": {
+                "min": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "max": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                }
+              },
+              "additionalProperties": true,
+              "allOf": [
+                {
+                  "anyOf": [
+                    {
+                      "type": "object",
+                      "required": [
+                        "min"
+                      ],
+                      "properties": {
+                        "min": {}
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "max"
+                      ],
+                      "properties": {
+                        "max": {}
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            "range": {
+              "type": "object",
+              "properties": {
+                "min": {
+                  "$ref": "urn:umf:core:0.10.0#/$defs/literal"
+                },
+                "max": {
+                  "$ref": "urn:umf:core:0.10.0#/$defs/literal"
+                },
+                "minInclusive": {
+                  "type": "boolean"
+                },
+                "maxInclusive": {
+                  "type": "boolean"
+                }
+              },
+              "additionalProperties": true,
+              "allOf": [
+                {
+                  "anyOf": [
+                    {
+                      "type": "object",
+                      "required": [
+                        "min"
+                      ],
+                      "properties": {
+                        "min": {}
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "required": [
+                        "max"
+                      ],
+                      "properties": {
+                        "max": {}
+                      }
+                    }
+                  ]
+                }
+              ]
             }
           },
           "dependentRequired": {

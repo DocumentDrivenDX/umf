@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 7183,
+        "line": 10,
+        "path": "src/model/schema-properties.ts",
+        "sha256": "6d1e5b1e5ebcd56a176635e0c8677dca5593b2e41e9068a5d6b3414ae8e0be41"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "CoreSchemaPropertyIdentity",
+    "runtime": "type-only",
+    "signatureText": [
+      "export type CoreSchemaPropertyIdentity={scope:'document'}|{scope:'module';module:string}|{scope:'element';module:string;element:string};"
+    ]
+  },
+  "id": "[\"api\",\".\",\"CoreSchemaPropertyIdentity\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 7183,
+      "line": 10,
+      "path": "src/model/schema-properties.ts",
+      "sha256": "6d1e5b1e5ebcd56a176635e0c8677dca5593b2e41e9068a5d6b3414ae8e0be41"
+    }
+  ],
+  "summary": "Type declaration · src/model/schema-properties.ts",
+  "title": "CoreSchemaPropertyIdentity"
+}

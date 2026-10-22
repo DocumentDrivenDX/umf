@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"verifyAvroFacetClassification\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"AvroFacetClassification\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "AvroFacetClassification"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "current",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "Verify retained receipt consistency, not source authenticity.",
+  "related": [],
+  "returns": "AvroFacetClassification",
+  "task": "Other APIs",
+  "type": "(input: AvroFacetClassification, current: Document) => AvroFacetClassification"
+}

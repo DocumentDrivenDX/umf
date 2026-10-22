@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"queryPostgresqlCatalogDependencies\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"PostgresqlCatalogObjectIdentity\"]"
+      ],
+      "name": "filter",
+      "optional": true,
+      "type": "{ side: \"dependent\" | \"referenced\"; object: PostgresqlCatalogObjectIdentity; } | undefined"
+    }
+  ],
+  "purpose": "Observed pg_depend edges only. Missing coverage is distinct from no matches.\nNative dependency kinds and multiplicity are retained; this is not a DDL plan.",
+  "related": [],
+  "returns": "{ available: boolean; complete: false; state: \"captured\" | \"modified\"; edges: NativeJson[]; }",
+  "task": "Other APIs",
+  "type": "(document: Document, filter?: { side: \"dependent\" | \"referenced\"; object: PostgresqlCatalogObjectIdentity; }) => { available: boolean; complete: false; state: \"captured\" | \"modified\"; edges: NativeJson[]; }"
+}

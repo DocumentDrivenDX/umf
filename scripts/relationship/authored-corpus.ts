@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
+import {CURRENT_CORE_VERSION} from '../../src/generated/core-model';
 import assert from 'node:assert/strict';
 
 const moduleId='sales';
@@ -21,7 +23,7 @@ record('Employee','id');
 record('Student','id');
 record('Course','id');
 record('Enrollment','id',[{name:'grade',type:'string'}]);
-const base={umf:'0.6.0',id:'relationship-authored-shapes',vocabularies:{},modules:[{id:moduleId,namespace:'sales',elements:[
+const base={umf:CURRENT_CORE_VERSION,id:'relationship-authored-shapes',vocabularies:{},modules:[{id:moduleId,namespace:'sales',elements:[
  ...records,...fields.map(field=>({id:field.record+'.'+field.name,kind:'field',scalarType:field.type,nullability:'required',cardinality:'one',extensions:{}})),
 ]}]};
 const multiplicity=(min:number,max:number|'*')=>({min,max});

@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"verifyTableSpecFieldClassification\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"TableSpecFieldClassification\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "TableSpecFieldClassification"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "current",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "Recompute the native basis and reject classification receipts after any target edit.",
+  "related": [],
+  "returns": "TableSpecFieldClassification",
+  "task": "Other APIs",
+  "type": "(input: TableSpecFieldClassification, current: Document) => TableSpecFieldClassification"
+}

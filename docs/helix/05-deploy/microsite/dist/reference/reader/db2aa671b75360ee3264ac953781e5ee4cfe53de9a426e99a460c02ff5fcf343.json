@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"projectToTableSpecViaAvro\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"TableSpecViaAvroPolicy\"]"
+      ],
+      "name": "options",
+      "optional": false,
+      "type": "TableSpecViaAvroPolicy"
+    }
+  ],
+  "purpose": "Preserve every native source and stage-specific loss across the two explicit schema bindings.",
+  "related": [],
+  "returns": "TableSpecViaAvroProjection",
+  "task": "Import and export",
+  "type": "(input: Document, options: TableSpecViaAvroPolicy) => TableSpecViaAvroProjection"
+}

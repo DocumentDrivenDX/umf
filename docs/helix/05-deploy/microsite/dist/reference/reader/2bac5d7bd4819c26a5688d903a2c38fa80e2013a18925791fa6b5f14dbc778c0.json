@@ -1,0 +1,112 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"NullabilityTableSpecProjection\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "operation",
+      "optional": false,
+      "type": "\"project-nullability-tablespec\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "version",
+      "optional": false,
+      "type": "\"1.0.0\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "status",
+      "optional": false,
+      "type": "\"blocked\" | \"projected\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "source",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreNullabilityDeclaration\"]"
+      ],
+      "name": "author",
+      "optional": false,
+      "type": "CoreNullabilityDeclaration"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"NullabilityTableSpecRequest\"]"
+      ],
+      "name": "request",
+      "optional": false,
+      "type": "NullabilityTableSpecRequest"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "target",
+      "optional": true,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "binding",
+      "optional": false,
+      "type": "{ id: string; version: string; nativeVersion: string; subset: string; }"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Diagnostic\"]"
+      ],
+      "name": "diagnostics",
+      "optional": true,
+      "type": "Diagnostic[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"NullabilityTableSpecRequest\"]"
+      ],
+      "name": "mapping",
+      "optional": false,
+      "type": "{ origin: \"authored\"; idealPath: string; nativePath: string | null; nullability: \"required\" | \"absent-allowed\" | \"unspecified\"; encoding: \"boolean\" | \"context-map\" | \"omitted\"; context: string | null; carrier: NullabilityTableSpecRequest[\"carrier\"]; profile: NullabilityTableSpecRequest[\"profile\"]; outcome: \"exact\" | \"unknown\" | \"not-expressible\"; }"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "profileNotes",
+      "optional": false,
+      "type": "{ profile: \"checked-schema\"; code: \"SCALAR_BOOLEAN_REJECTED\"; message: string; }[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Json\"]"
+      ],
+      "name": "residuals",
+      "optional": false,
+      "type": "{ path: string; value: Json; reason: string; outcome: \"unknown\" | \"not-expressible\"; recovery: \"Recover source meaning with retained projection receipt; native-only import does not recover author intent\"; }[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "NullabilityTableSpecProjection is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "NullabilityTableSpecProjection"
+}

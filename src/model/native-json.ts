@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import { parseDocument, isMap, isSeq, isScalar } from 'yaml';
 import { LIMITS, copyJson } from './json';
 import { UmfError } from './types';

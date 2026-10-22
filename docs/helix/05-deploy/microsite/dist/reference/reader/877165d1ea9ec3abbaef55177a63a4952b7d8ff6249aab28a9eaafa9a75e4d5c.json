@@ -1,0 +1,58 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"TypeSpecSemanticNode\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "id",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "kind",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "label",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Json\"]"
+      ],
+      "name": "attributes",
+      "optional": false,
+      "type": "Record<string, Json>"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "edges",
+      "optional": false,
+      "type": "{ role: string; target: string; name?: string; index?: number; }[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "location",
+      "optional": true,
+      "type": "{ file: string; start: number; end: number; }"
+    }
+  ],
+  "parameters": [],
+  "purpose": "TypeSpecSemanticNode is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "TypeSpecSemanticNode"
+}

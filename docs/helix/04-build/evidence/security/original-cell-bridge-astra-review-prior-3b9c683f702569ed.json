@@ -1,0 +1,100 @@
+{
+  "id": "original-cell-bridge-astra-review",
+  "status": "clean-within-qualified-inspection-scope",
+  "reviewer": "/root/astra_security_review",
+  "generatedAt": "2026-10-10T05:21:21.142962+00:00",
+  "sourceDigests": {
+    "/private/tmp/original-cell-bridge-astra-review.py": "06e4fec818a639ce86fffc558c10c3fe497c549d4d2f6ea12434bc55327a2e3f",
+    "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/truss-original-use.json": "5b8fc4163d89a917ed0169252f376d000f74387f7f02cdb8df52f5c76e73ce88",
+    "/Users/erik/.codex/worktrees/1598/umf/tools/security/truss-original-use-probe.py": "6ad56928997bde76304f502147fb1b8181d9ecbe542c604a86d3d38094a5af86",
+    "/Users/erik/Projects/weft/crates/weft-core/examples/security_cell_inspection.rs": "f675c572cf4fb5b2bd08254a18645e0b9be72f2f95819570147fc29cb737a585",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_result_cells.rs": "ead96f775728e5788b214da5d9c9973ba23426bbea7b492583285df58296cd63",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_result_check.rs": "18453e38d31a7aea89f844dd6fff2f54a3c807c27521d394d0dc131c326a6ffd",
+    "/Users/erik/Projects/weft/crates/weft-core/src/json.rs": "b359cd2ff4b53f8e79690e7edc1a724f5f4f06df3a3af18de8f3fc89d79fde1d",
+    "/Users/erik/Projects/weft/crates/weft-core/src/compile.rs": "6f23265ac68dbbf5240d05285e3128c460ae50053140a880eb058d7272b72585"
+  },
+  "sourcesUnchanged": true,
+  "reviewCommand": {
+    "argv": [
+      "/Library/Developer/CommandLineTools/usr/bin/python3",
+      "/private/tmp/original-cell-bridge-astra-review.py"
+    ],
+    "sourceSha256": "06e4fec818a639ce86fffc558c10c3fe497c549d4d2f6ea12434bc55327a2e3f",
+    "source": "\"\"\"Retained native receipt audit and source review; never launches native processes.\"\"\"\nimport hashlib,json,pathlib,sys\nfrom datetime import datetime,timezone\nROOT=pathlib.Path('/Users/erik/.codex/worktrees/1598/umf')\nSELF=pathlib.Path('/private/tmp/original-cell-bridge-astra-review.py')\nassert pathlib.Path.cwd()==ROOT and pathlib.Path(__file__).resolve()==SELF and len(sys.argv)==1\nOWNER=pathlib.Path('/Users/erik/Projects/weft')\nTOOL=pathlib.Path('/private/tmp/weft-toolchain/rustup/toolchains/1.90.0-aarch64-apple-darwin/bin')\nRECEIPT=ROOT/'docs/helix/04-build/evidence/security/truss-original-use.json'\nPROBE=ROOT/'tools/security/truss-original-use-probe.py'\npaths=[SELF,RECEIPT,PROBE,OWNER/'crates/weft-core/examples/security_cell_inspection.rs',OWNER/'crates/weft-core/src/security_result_cells.rs',OWNER/'crates/weft-core/src/security_result_check.rs',OWNER/'crates/weft-core/src/json.rs',OWNER/'crates/weft-core/src/compile.rs']\nfrozen={str(p):p.read_bytes() for p in paths}\nsha=lambda b:hashlib.sha256(b).hexdigest()\ndef file_hash(path):\n h=hashlib.sha256()\n with pathlib.Path(path).open('rb') as f:\n  for chunk in iter(lambda:f.read(1024*1024),b''):h.update(chunk)\n return h.hexdigest()\nr=json.loads(frozen[str(RECEIPT)])\nassert r['status']=='passed' and r['engine']['number']=='170009'\nobservations=r['observations'];assert len(observations)==539\nobs={o['id']:o for o in observations};assert len(obs)==len(observations)\nassert all(o['expected']==o['observed'] for o in observations)\nstale=[p for p,h in r['sourceDigests'].items() if file_hash(p)!=h];assert not stale\nbuild=r['cellInspectionBuild']\ncommand=[str(TOOL/'cargo'),'build','--offline','--locked','-p','weft-core','--example','security_cell_inspection','--target-dir','/private/tmp/umf-security-weft-bridge-target']\nassert build['command']==command and build['exitCode']==0 and build['sourcesUnchanged'] is True\nconfigs=[OWNER/'.cargo/config',OWNER/'.cargo/config.toml',pathlib.Path('/private/tmp/weft-toolchain/cargo/config'),pathlib.Path('/private/tmp/weft-toolchain/cargo/config.toml')]\nselected=[OWNER/'Cargo.toml',OWNER/'Cargo.lock',PROBE]\nfor base in [OWNER/'crates',OWNER/'vendor',OWNER/'spec',OWNER/'docs/helix/03-test/fixtures']:\n selected.extend(p for p in base.rglob('*') if p.is_file() and 'target' not in p.parts)\nfor base in [TOOL,TOOL.parent/'lib']:\n selected.extend(p for p in base.rglob('*') if p.is_file())\nselected.extend(p for p in configs if p.is_file())\nassert set(build['sourceDigests'])=={str(p) for p in selected}\nassert build['configPresence']=={str(p):p.exists() for p in configs}\nassert all(r['sourceDigests'][p]==h for p,h in build['sourceDigests'].items())\nassert '/private/tmp/umf-security-weft-bridge-target/debug/examples/security_cell_inspection' not in build['sourceDigests']\nexpected={'predicate':[['RAB']],'predicate-empty':[],'order':[['RA'],['RAB']],'order-empty':[],'join':[['RA'],['RAB']],'join-empty':[]}\ncaptures=r['cellCorrespondence'];assert len(captures)==6 and {c['id'] for c in captures}==set(expected)\nprograms={p['id']:p for p in r['programs']}\nidentity={'documentId':'domain','revision':'schema-natural-1','module':'m','element':'resourceId'}\ncontract={'version':'weft.security.result-contract/0.1.0','encoding':'weft.security.cells/0.1.0','columns':[{'position':1,'outputName':'resourceId','sourceFields':[identity],'outcomes':[{'disposition':'original','id':'original','domain':{'kind':'model','field':identity}}]}]}\ncontract_hash=sha(json.dumps(contract,separators=(',',':')).encode())\nreviewed=[]\nfor c in captures:\n label=c['id'];raw=bytes.fromhex(c['nativeRowsHex']);assert raw.hex()==c['nativeRowsHex'] and raw.endswith(b'\\n')\n text=raw.decode('utf-8',errors='strict');assert json.loads(text)==expected[label]\n digest=sha(raw);assert digest==c['nativeRowsSha256']\n assert c['actor']=='umf_sec_alice' and c['nativeSql']=='SELECT security_raw.query_'+label.replace('-','_')+'()'\n observed=obs[label+':cell-native-capture-correspondence'];assert observed['expected']==expected[label] and observed['observed']==expected[label]\n p=programs[label]['artifact'];source=p['request']\n request={'interfaceVersion':'weft-compile/0.4.0','dialect':'weft-sql/0.2.0','sql':source['sql'],'modules':source['modules'],'parameters':source['parameters'],'security':{'version':'umf.security/0.1.0',**{k:source[k] for k in ['policyJson','ontologyJson','queryProfileJson']}},'target':{**{k:source[k] for k in ['backendId','backendVersion','targetProfile','bindingJson']},'bindingSha256':sha(source['bindingJson'].encode())}}\n if source['readProfile'] is not None:request['readProfile']=source['readProfile']\n assert c['compileRequest']==request\n assert p['handoff']['applicationPlan']['outputs']==[{'expression':{'identity':identity,'op':'field','scan':'s0'},'name':'resourceId'}]\n report={'status':'correspondence-only','rowCount':len(expected[label]),'columnCount':1,'nativeRowsSha256':digest,'resultContractSha256':contract_hash,'releasedRows':0}\n assert c['report']==report\n assert len(c['controls'])==2 and {x['id'] for x in c['controls']}=={'null','wrong-width'}\n for control in c['controls']:\n  assert control['exitCode']==1 and control['diagnostic']=={'code':'WFT-SECURITY-CELL-INSPECTION','severity':'error','message':'Cell inspection refused','phase':'input'}\n  o=obs[label+':cell-'+control['id']+'-refusal'];assert o['expected']=={'refused':True,'code':'WFT-SECURITY-CELL-INSPECTION','phase':'input'}\n reviewed.append({'id':label,'rows':len(expected[label]),'nativeBytesSha256':digest,'retainedTrailingLf':True,'originalRequestAndOutputMatched':True,'independentlyAuthoredContractSha256':contract_hash,'exactNullAndWidthRefusals':True})\nassert all(pathlib.Path(p).read_bytes()==b for p,b in frozen.items())\nassert all(file_hash(p)==h for p,h in r['sourceDigests'].items())\nresult={'id':'original-cell-bridge-astra-review','status':'clean-within-qualified-inspection-scope','reviewer':'/root/astra_security_review','generatedAt':datetime.now(timezone.utc).isoformat(),'sourceDigests':{p:sha(b) for p,b in frozen.items()},'sourcesUnchanged':True,'reviewCommand':{'argv':[sys.executable,str(SELF)],'sourceSha256':sha(frozen[str(SELF)]),'source':frozen[str(SELF)].decode()},'nativeExecution':'Parent-executed PostgreSQL fixture receipt; reviewer audited retained bytes/observations and did not duplicate native execution.','nativeReceiptAudit':{'observations':539,'uniqueIds':539,'allMatch':True,'sourcePins':len(r['sourceDigests']),'stale':stale,'selectedBuildInputPins':len(build['sourceDigests']),'configPresenceMatched':True},'captures':reviewed,'sourceReview':['Selected existing build-input hashes are frozen before Cargo, with exact path-set/config-presence and byte rechecks afterward, before native acquisition and before receipt publication; produced binary is captured as output.','Original psql stdout is retained as binary bytes including LF, decoded strictly once and transferred as an exact JSON string; the fresh owner executable reports the same hash.','The owner example accepts closed input, invokes the actual compiler factory only after admission, constructs direct Original string cells and calls the actual checker. It returns counts/hashes only and requires the public compiler to remain blocked with BACKEND-REQUIRED.','Null/wrong-width controls test the example string-row encoding boundary, not general runtime absence or physical codec support.'],'scope':'Six fixed raw-fixture predicate/order/join string-result captures, including empty variants, and their pure owner-context cell inspection. Cargo registry/dependency artifact cache, platform linker/SDK and process environment remain trusted premises; selected input pinning is not a hermetic-build or compiler-refinement proof. No runtime policy-selection, current-authority release, public activation or broader backend acceptance is established.','nativeImplementationQualified':False,'acceptanceCasesPromoted':[]}\nout=ROOT/'docs/helix/04-build/evidence/security/original-cell-bridge-astra-review.json'\nif out.exists():\n old=out.read_bytes();archive=out.with_name('original-cell-bridge-astra-review-prior-'+sha(old)[:16]+'.json')\n if archive.exists():assert archive.read_bytes()==old\n else:archive.write_bytes(old)\n result['previousReceipt']={'path':str(archive),'sha256':sha(old),'scope':'Historical only.'}\nout.write_text(json.dumps(result,indent=2)+'\\n')\nprint(json.dumps({'status':result['status'],'observations':539,'captures':len(reviewed),'pins':len(r['sourceDigests']),'buildPins':len(build['sourceDigests']),'output':str(out)}))\n"
+  },
+  "nativeExecution": "Parent-executed PostgreSQL fixture receipt; reviewer audited retained bytes/observations and did not duplicate native execution.",
+  "nativeReceiptAudit": {
+    "observations": 539,
+    "uniqueIds": 539,
+    "allMatch": true,
+    "sourcePins": 244,
+    "stale": [],
+    "selectedBuildInputPins": 206,
+    "configPresenceMatched": true
+  },
+  "captures": [
+    {
+      "id": "predicate",
+      "rows": 1,
+      "nativeBytesSha256": "1188eef6223391d9ac7ccdd996c6b225f457d16ec1ecefcd6b0db5e542d6859d",
+      "retainedTrailingLf": true,
+      "originalRequestAndOutputMatched": true,
+      "independentlyAuthoredContractSha256": "ba5f316509d10c765d3b9f2023905b96bb5beb2f3110cb6de010be2a5bc03bf5",
+      "exactNullAndWidthRefusals": true
+    },
+    {
+      "id": "predicate-empty",
+      "rows": 0,
+      "nativeBytesSha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "retainedTrailingLf": true,
+      "originalRequestAndOutputMatched": true,
+      "independentlyAuthoredContractSha256": "ba5f316509d10c765d3b9f2023905b96bb5beb2f3110cb6de010be2a5bc03bf5",
+      "exactNullAndWidthRefusals": true
+    },
+    {
+      "id": "order",
+      "rows": 2,
+      "nativeBytesSha256": "ddf082494ec9244cd23f09fd03598c28b595d8aabc8bf8b3fb47c0cc540273bb",
+      "retainedTrailingLf": true,
+      "originalRequestAndOutputMatched": true,
+      "independentlyAuthoredContractSha256": "ba5f316509d10c765d3b9f2023905b96bb5beb2f3110cb6de010be2a5bc03bf5",
+      "exactNullAndWidthRefusals": true
+    },
+    {
+      "id": "order-empty",
+      "rows": 0,
+      "nativeBytesSha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "retainedTrailingLf": true,
+      "originalRequestAndOutputMatched": true,
+      "independentlyAuthoredContractSha256": "ba5f316509d10c765d3b9f2023905b96bb5beb2f3110cb6de010be2a5bc03bf5",
+      "exactNullAndWidthRefusals": true
+    },
+    {
+      "id": "join",
+      "rows": 2,
+      "nativeBytesSha256": "ddf082494ec9244cd23f09fd03598c28b595d8aabc8bf8b3fb47c0cc540273bb",
+      "retainedTrailingLf": true,
+      "originalRequestAndOutputMatched": true,
+      "independentlyAuthoredContractSha256": "ba5f316509d10c765d3b9f2023905b96bb5beb2f3110cb6de010be2a5bc03bf5",
+      "exactNullAndWidthRefusals": true
+    },
+    {
+      "id": "join-empty",
+      "rows": 0,
+      "nativeBytesSha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "retainedTrailingLf": true,
+      "originalRequestAndOutputMatched": true,
+      "independentlyAuthoredContractSha256": "ba5f316509d10c765d3b9f2023905b96bb5beb2f3110cb6de010be2a5bc03bf5",
+      "exactNullAndWidthRefusals": true
+    }
+  ],
+  "sourceReview": [
+    "Selected existing build-input hashes are frozen before Cargo, with exact path-set/config-presence and byte rechecks afterward, before native acquisition and before receipt publication; produced binary is captured as output.",
+    "Original psql stdout is retained as binary bytes including LF, decoded strictly once and transferred as an exact JSON string; the fresh owner executable reports the same hash.",
+    "The owner example accepts closed input, invokes the actual compiler factory only after admission, constructs direct Original string cells and calls the actual checker. It returns counts/hashes only and requires the public compiler to remain blocked with BACKEND-REQUIRED.",
+    "Null/wrong-width controls test the example string-row encoding boundary, not general runtime absence or physical codec support."
+  ],
+  "scope": "Six fixed raw-fixture predicate/order/join string-result captures, including empty variants, and their pure owner-context cell inspection. Cargo registry/dependency artifact cache, platform linker/SDK and process environment remain trusted premises; selected input pinning is not a hermetic-build or compiler-refinement proof. No runtime policy-selection, current-authority release, public activation or broader backend acceptance is established.",
+  "nativeImplementationQualified": false,
+  "acceptanceCasesPromoted": []
+}

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
+import {CURRENT_CORE_VERSION} from '../../generated/core-model';
 import {copyJson} from '../../model/json';
 import {UmfError,type Document,type Element,type Json,type ScalarType,type Diagnostic} from '../../model/types';
 import {captureParquet,parquetRegistry,PARQUET_EXTENSION} from './index';
@@ -13,7 +15,7 @@ export function getParquetFieldMetadata(source:Document):ParquetFieldMetadataRes
  if(!validateDocument(source,parquetRegistry()).valid)throw new UmfError('PARQUET_CAPTURE','Invalid source envelope');
  const captured=source.modules.find(m=>m.id==='parquet')?.elements.find(e=>e.id==='source')?.extensions[PARQUET_EXTENSION];
  if(!captured||!source.vocabularies[PARQUET_EXTENSION])throw new UmfError('PARQUET_CAPTURE','Missing Parquet source');
- const raw:Document={umf:'0.1.0',id:source.id,vocabularies:{[PARQUET_EXTENSION]:{version:source.vocabularies[PARQUET_EXTENSION]!.version}},modules:[{id:'parquet',namespace:'',elements:[{id:'source',extensions:{[PARQUET_EXTENSION]:copyJson(captured)}}]}]};
+ const raw:Document={umf:CURRENT_CORE_VERSION,id:source.id,vocabularies:{[PARQUET_EXTENSION]:{version:source.vocabularies[PARQUET_EXTENSION]!.version}},modules:[{id:'parquet',namespace:'',elements:[{id:'source',extensions:{[PARQUET_EXTENSION]:copyJson(captured)}}]}]};
  const inspected=inspectParquetLogicalTypes(raw),result:ParquetFieldMetadataResult={status:inspected.status,complete:false,fields:[],diagnostics:inspected.diagnostics};
  if(inspected.status!=='checked')return result;
  const schema=(inspected.metadata as any).schema,annotations=new Map(inspected.annotations?.map(a=>[a.index,a]));

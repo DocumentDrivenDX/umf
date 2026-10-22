@@ -1,0 +1,4933 @@
+{
+  "data": {
+    "pointer": "",
+    "profileVersions": [],
+    "references": [
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/protobuf/schema.json\",\"\"]",
+        "target": "#/$defs/google.protobuf.FileDescriptorProto"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/protobuf/schema.json\",\"\"]",
+        "target": "#/$defs/unknown"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/protobuf/schema.json\",\"\"]",
+        "target": "#/$defs/google.protobuf.DescriptorProto"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/protobuf/schema.json\",\"\"]",
+        "target": "#/$defs/google.protobuf.EnumDescriptorProto"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/protobuf/schema.json\",\"\"]",
+        "target": "#/$defs/google.protobuf.ServiceDescriptorProto"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/protobuf/schema.json\",\"\"]",
+        "target": "#/$defs/google.protobuf.FieldDescriptorProto"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/protobuf/schema.json\",\"\"]",
+        "target": "#/$defs/google.protobuf.FileOptions"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/protobuf/schema.json\",\"\"]",
+        "target": "#/$defs/google.protobuf.SourceCodeInfo"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/protobuf/schema.json\",\"\"]",
+        "target": "#/$defs/unknown"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/protobuf/schema.json\",\"\"]",
+        "target": "#/$defs/google.protobuf.FieldDescriptorProto"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/protobuf/schema.json\",\"\"]",
+        "target": "#/$defs/google.protobuf.FieldDescriptorProto"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/protobuf/schema.json\",\"\"]",
+        "target": "#/$defs/google.protobuf.DescriptorProto"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/protobuf/schema.json\",\"\"]",
+        "target": "#/$defs/google.protobuf.EnumDescriptorProto"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/protobuf/schema.json\",\"\"]",
+        "target": "#/$defs/google.protobuf.DescriptorProto.ExtensionRange"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/protobuf/schema.json\",\"\"]",
+        "target": "#/$defs/google.protobuf.OneofDescriptorProto"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/protobuf/schema.json\",\"\"]",
+        "target": "#/$defs/google.protobuf.MessageOptions"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/protobuf/schema.json\",\"\"]",
+        "target": "#/$defs/google.protobuf.DescriptorProto.ReservedRange"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/protobuf/schema.json\",\"\"]",
+        "target": "#/$defs/unknown"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/protobuf/schema.json\",\"\"]",
+        "target": "#/$defs/google.protobuf.FieldOptions"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/protobuf/schema.json\",\"\"]",
+        "target": "#/$defs/unknown"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/protobuf/schema.json\",\"\"]",
+        "target": "#/$defs/google.protobuf.FieldOptions.EditionDefault"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/protobuf/schema.json\",\"\"]",
+        "target": "#/$defs/google.protobuf.FeatureSet"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/protobuf/schema.json\",\"\"]",
+        "target": "#/$defs/google.protobuf.FieldOptions.FeatureSupport"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/protobuf/schema.json\",\"\"]",
+        "target": "#/$defs/google.protobuf.UninterpretedOption"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/protobuf/schema.json\",\"\"]",
+        "target": "#/$defs/unknown"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/protobuf/schema.json\",\"\"]",
+        "target": "#/$defs/unknown"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/protobuf/schema.json\",\"\"]",
+        "target": "#/$defs/unknown"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/protobuf/schema.json\",\"\"]",
+        "target": "#/$defs/unknown"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/protobuf/schema.json\",\"\"]",
+        "target": "#/$defs/google.protobuf.UninterpretedOption.NamePart"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/protobuf/schema.json\",\"\"]",
+        "target": "#/$defs/unknown"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/protobuf/schema.json\",\"\"]",
+        "target": "#/$defs/unknown"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/protobuf/schema.json\",\"\"]",
+        "target": "#/$defs/google.protobuf.EnumValueDescriptorProto"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/protobuf/schema.json\",\"\"]",
+        "target": "#/$defs/google.protobuf.EnumOptions"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/protobuf/schema.json\",\"\"]",
+        "target": "#/$defs/google.protobuf.EnumDescriptorProto.EnumReservedRange"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/protobuf/schema.json\",\"\"]",
+        "target": "#/$defs/unknown"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/protobuf/schema.json\",\"\"]",
+        "target": "#/$defs/google.protobuf.EnumValueOptions"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/protobuf/schema.json\",\"\"]",
+        "target": "#/$defs/unknown"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/protobuf/schema.json\",\"\"]",
+        "target": "#/$defs/google.protobuf.FeatureSet"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/protobuf/schema.json\",\"\"]",
+        "target": "#/$defs/google.protobuf.FieldOptions.FeatureSupport"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/protobuf/schema.json\",\"\"]",
+        "target": "#/$defs/google.protobuf.UninterpretedOption"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/protobuf/schema.json\",\"\"]",
+        "target": "#/$defs/unknown"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/protobuf/schema.json\",\"\"]",
+        "target": "#/$defs/google.protobuf.FeatureSet"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/protobuf/schema.json\",\"\"]",
+        "target": "#/$defs/google.protobuf.UninterpretedOption"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/protobuf/schema.json\",\"\"]",
+        "target": "#/$defs/unknown"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/protobuf/schema.json\",\"\"]",
+        "target": "#/$defs/unknown"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/protobuf/schema.json\",\"\"]",
+        "target": "#/$defs/google.protobuf.ExtensionRangeOptions"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/protobuf/schema.json\",\"\"]",
+        "target": "#/$defs/unknown"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/protobuf/schema.json\",\"\"]",
+        "target": "#/$defs/google.protobuf.UninterpretedOption"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/protobuf/schema.json\",\"\"]",
+        "target": "#/$defs/google.protobuf.ExtensionRangeOptions.Declaration"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/protobuf/schema.json\",\"\"]",
+        "target": "#/$defs/google.protobuf.FeatureSet"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/protobuf/schema.json\",\"\"]",
+        "target": "#/$defs/unknown"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/protobuf/schema.json\",\"\"]",
+        "target": "#/$defs/unknown"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/protobuf/schema.json\",\"\"]",
+        "target": "#/$defs/google.protobuf.OneofOptions"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/protobuf/schema.json\",\"\"]",
+        "target": "#/$defs/unknown"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/protobuf/schema.json\",\"\"]",
+        "target": "#/$defs/google.protobuf.FeatureSet"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/protobuf/schema.json\",\"\"]",
+        "target": "#/$defs/google.protobuf.UninterpretedOption"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/protobuf/schema.json\",\"\"]",
+        "target": "#/$defs/unknown"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/protobuf/schema.json\",\"\"]",
+        "target": "#/$defs/google.protobuf.FeatureSet"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/protobuf/schema.json\",\"\"]",
+        "target": "#/$defs/google.protobuf.UninterpretedOption"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/protobuf/schema.json\",\"\"]",
+        "target": "#/$defs/unknown"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/protobuf/schema.json\",\"\"]",
+        "target": "#/$defs/unknown"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/protobuf/schema.json\",\"\"]",
+        "target": "#/$defs/google.protobuf.MethodDescriptorProto"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/protobuf/schema.json\",\"\"]",
+        "target": "#/$defs/google.protobuf.ServiceOptions"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/protobuf/schema.json\",\"\"]",
+        "target": "#/$defs/unknown"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/protobuf/schema.json\",\"\"]",
+        "target": "#/$defs/google.protobuf.MethodOptions"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/protobuf/schema.json\",\"\"]",
+        "target": "#/$defs/unknown"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/protobuf/schema.json\",\"\"]",
+        "target": "#/$defs/google.protobuf.FeatureSet"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/protobuf/schema.json\",\"\"]",
+        "target": "#/$defs/google.protobuf.UninterpretedOption"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/protobuf/schema.json\",\"\"]",
+        "target": "#/$defs/unknown"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/protobuf/schema.json\",\"\"]",
+        "target": "#/$defs/google.protobuf.FeatureSet"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/protobuf/schema.json\",\"\"]",
+        "target": "#/$defs/google.protobuf.UninterpretedOption"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/protobuf/schema.json\",\"\"]",
+        "target": "#/$defs/unknown"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/protobuf/schema.json\",\"\"]",
+        "target": "#/$defs/google.protobuf.FeatureSet"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/protobuf/schema.json\",\"\"]",
+        "target": "#/$defs/google.protobuf.UninterpretedOption"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/protobuf/schema.json\",\"\"]",
+        "target": "#/$defs/unknown"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/protobuf/schema.json\",\"\"]",
+        "target": "#/$defs/google.protobuf.SourceCodeInfo.Location"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/protobuf/schema.json\",\"\"]",
+        "target": "#/$defs/unknown"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/protobuf/schema.json\",\"\"]",
+        "target": "#/$defs/unknown"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/protobuf/schema.json\",\"\"]",
+        "target": "#/$defs/google.protobuf.FileDescriptorSet"
+      }
+    ],
+    "role": "extension-payload",
+    "schemaPath": "spec/extensions/protobuf/schema.json",
+    "sourceData": {
+      "kind": "object",
+      "members": {
+        "$defs": {
+          "kind": "object",
+          "members": {
+            "google.protobuf.DescriptorProto": {
+              "kind": "object",
+              "members": {
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "fields": {
+                      "kind": "object",
+                      "members": {
+                        "properties": {
+                          "kind": "object",
+                          "members": {
+                            "enum_type": {
+                              "kind": "object",
+                              "members": {
+                                "items": {
+                                  "kind": "object",
+                                  "members": {
+                                    "$ref": {
+                                      "kind": "string",
+                                      "value": "#/$defs/google.protobuf.EnumDescriptorProto"
+                                    }
+                                  }
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "array"
+                                }
+                              }
+                            },
+                            "extension": {
+                              "kind": "object",
+                              "members": {
+                                "items": {
+                                  "kind": "object",
+                                  "members": {
+                                    "$ref": {
+                                      "kind": "string",
+                                      "value": "#/$defs/google.protobuf.FieldDescriptorProto"
+                                    }
+                                  }
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "array"
+                                }
+                              }
+                            },
+                            "extension_range": {
+                              "kind": "object",
+                              "members": {
+                                "items": {
+                                  "kind": "object",
+                                  "members": {
+                                    "$ref": {
+                                      "kind": "string",
+                                      "value": "#/$defs/google.protobuf.DescriptorProto.ExtensionRange"
+                                    }
+                                  }
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "array"
+                                }
+                              }
+                            },
+                            "field": {
+                              "kind": "object",
+                              "members": {
+                                "items": {
+                                  "kind": "object",
+                                  "members": {
+                                    "$ref": {
+                                      "kind": "string",
+                                      "value": "#/$defs/google.protobuf.FieldDescriptorProto"
+                                    }
+                                  }
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "array"
+                                }
+                              }
+                            },
+                            "name": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            },
+                            "nested_type": {
+                              "kind": "object",
+                              "members": {
+                                "items": {
+                                  "kind": "object",
+                                  "members": {
+                                    "$ref": {
+                                      "kind": "string",
+                                      "value": "#/$defs/google.protobuf.DescriptorProto"
+                                    }
+                                  }
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "array"
+                                }
+                              }
+                            },
+                            "oneof_decl": {
+                              "kind": "object",
+                              "members": {
+                                "items": {
+                                  "kind": "object",
+                                  "members": {
+                                    "$ref": {
+                                      "kind": "string",
+                                      "value": "#/$defs/google.protobuf.OneofDescriptorProto"
+                                    }
+                                  }
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "array"
+                                }
+                              }
+                            },
+                            "options": {
+                              "kind": "object",
+                              "members": {
+                                "$ref": {
+                                  "kind": "string",
+                                  "value": "#/$defs/google.protobuf.MessageOptions"
+                                }
+                              }
+                            },
+                            "reserved_name": {
+                              "kind": "object",
+                              "members": {
+                                "items": {
+                                  "kind": "object",
+                                  "members": {
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "string"
+                                    }
+                                  }
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "array"
+                                }
+                              }
+                            },
+                            "reserved_range": {
+                              "kind": "object",
+                              "members": {
+                                "items": {
+                                  "kind": "object",
+                                  "members": {
+                                    "$ref": {
+                                      "kind": "string",
+                                      "value": "#/$defs/google.protobuf.DescriptorProto.ReservedRange"
+                                    }
+                                  }
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "array"
+                                }
+                              }
+                            },
+                            "visibility": {
+                              "kind": "object",
+                              "members": {
+                                "maximum": {
+                                  "kind": "number",
+                                  "value": "2147483647"
+                                },
+                                "minimum": {
+                                  "kind": "number",
+                                  "value": "-2147483648"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "integer"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "object"
+                        }
+                      }
+                    },
+                    "type": {
+                      "kind": "object",
+                      "members": {
+                        "const": {
+                          "kind": "string",
+                          "value": "google.protobuf.DescriptorProto"
+                        }
+                      }
+                    },
+                    "unknown": {
+                      "kind": "object",
+                      "members": {
+                        "items": {
+                          "kind": "object",
+                          "members": {
+                            "$ref": {
+                              "kind": "string",
+                              "value": "#/$defs/unknown"
+                            }
+                          }
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "array"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "type"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "fields"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "unknown"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "google.protobuf.DescriptorProto.ExtensionRange": {
+              "kind": "object",
+              "members": {
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "fields": {
+                      "kind": "object",
+                      "members": {
+                        "properties": {
+                          "kind": "object",
+                          "members": {
+                            "end": {
+                              "kind": "object",
+                              "members": {
+                                "maximum": {
+                                  "kind": "number",
+                                  "value": "2147483647"
+                                },
+                                "minimum": {
+                                  "kind": "number",
+                                  "value": "-2147483648"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "integer"
+                                }
+                              }
+                            },
+                            "options": {
+                              "kind": "object",
+                              "members": {
+                                "$ref": {
+                                  "kind": "string",
+                                  "value": "#/$defs/google.protobuf.ExtensionRangeOptions"
+                                }
+                              }
+                            },
+                            "start": {
+                              "kind": "object",
+                              "members": {
+                                "maximum": {
+                                  "kind": "number",
+                                  "value": "2147483647"
+                                },
+                                "minimum": {
+                                  "kind": "number",
+                                  "value": "-2147483648"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "integer"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "object"
+                        }
+                      }
+                    },
+                    "type": {
+                      "kind": "object",
+                      "members": {
+                        "const": {
+                          "kind": "string",
+                          "value": "google.protobuf.DescriptorProto.ExtensionRange"
+                        }
+                      }
+                    },
+                    "unknown": {
+                      "kind": "object",
+                      "members": {
+                        "items": {
+                          "kind": "object",
+                          "members": {
+                            "$ref": {
+                              "kind": "string",
+                              "value": "#/$defs/unknown"
+                            }
+                          }
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "array"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "type"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "fields"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "unknown"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "google.protobuf.DescriptorProto.ReservedRange": {
+              "kind": "object",
+              "members": {
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "fields": {
+                      "kind": "object",
+                      "members": {
+                        "properties": {
+                          "kind": "object",
+                          "members": {
+                            "end": {
+                              "kind": "object",
+                              "members": {
+                                "maximum": {
+                                  "kind": "number",
+                                  "value": "2147483647"
+                                },
+                                "minimum": {
+                                  "kind": "number",
+                                  "value": "-2147483648"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "integer"
+                                }
+                              }
+                            },
+                            "start": {
+                              "kind": "object",
+                              "members": {
+                                "maximum": {
+                                  "kind": "number",
+                                  "value": "2147483647"
+                                },
+                                "minimum": {
+                                  "kind": "number",
+                                  "value": "-2147483648"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "integer"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "object"
+                        }
+                      }
+                    },
+                    "type": {
+                      "kind": "object",
+                      "members": {
+                        "const": {
+                          "kind": "string",
+                          "value": "google.protobuf.DescriptorProto.ReservedRange"
+                        }
+                      }
+                    },
+                    "unknown": {
+                      "kind": "object",
+                      "members": {
+                        "items": {
+                          "kind": "object",
+                          "members": {
+                            "$ref": {
+                              "kind": "string",
+                              "value": "#/$defs/unknown"
+                            }
+                          }
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "array"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "type"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "fields"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "unknown"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "google.protobuf.EnumDescriptorProto": {
+              "kind": "object",
+              "members": {
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "fields": {
+                      "kind": "object",
+                      "members": {
+                        "properties": {
+                          "kind": "object",
+                          "members": {
+                            "name": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            },
+                            "options": {
+                              "kind": "object",
+                              "members": {
+                                "$ref": {
+                                  "kind": "string",
+                                  "value": "#/$defs/google.protobuf.EnumOptions"
+                                }
+                              }
+                            },
+                            "reserved_name": {
+                              "kind": "object",
+                              "members": {
+                                "items": {
+                                  "kind": "object",
+                                  "members": {
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "string"
+                                    }
+                                  }
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "array"
+                                }
+                              }
+                            },
+                            "reserved_range": {
+                              "kind": "object",
+                              "members": {
+                                "items": {
+                                  "kind": "object",
+                                  "members": {
+                                    "$ref": {
+                                      "kind": "string",
+                                      "value": "#/$defs/google.protobuf.EnumDescriptorProto.EnumReservedRange"
+                                    }
+                                  }
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "array"
+                                }
+                              }
+                            },
+                            "value": {
+                              "kind": "object",
+                              "members": {
+                                "items": {
+                                  "kind": "object",
+                                  "members": {
+                                    "$ref": {
+                                      "kind": "string",
+                                      "value": "#/$defs/google.protobuf.EnumValueDescriptorProto"
+                                    }
+                                  }
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "array"
+                                }
+                              }
+                            },
+                            "visibility": {
+                              "kind": "object",
+                              "members": {
+                                "maximum": {
+                                  "kind": "number",
+                                  "value": "2147483647"
+                                },
+                                "minimum": {
+                                  "kind": "number",
+                                  "value": "-2147483648"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "integer"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "object"
+                        }
+                      }
+                    },
+                    "type": {
+                      "kind": "object",
+                      "members": {
+                        "const": {
+                          "kind": "string",
+                          "value": "google.protobuf.EnumDescriptorProto"
+                        }
+                      }
+                    },
+                    "unknown": {
+                      "kind": "object",
+                      "members": {
+                        "items": {
+                          "kind": "object",
+                          "members": {
+                            "$ref": {
+                              "kind": "string",
+                              "value": "#/$defs/unknown"
+                            }
+                          }
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "array"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "type"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "fields"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "unknown"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "google.protobuf.EnumDescriptorProto.EnumReservedRange": {
+              "kind": "object",
+              "members": {
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "fields": {
+                      "kind": "object",
+                      "members": {
+                        "properties": {
+                          "kind": "object",
+                          "members": {
+                            "end": {
+                              "kind": "object",
+                              "members": {
+                                "maximum": {
+                                  "kind": "number",
+                                  "value": "2147483647"
+                                },
+                                "minimum": {
+                                  "kind": "number",
+                                  "value": "-2147483648"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "integer"
+                                }
+                              }
+                            },
+                            "start": {
+                              "kind": "object",
+                              "members": {
+                                "maximum": {
+                                  "kind": "number",
+                                  "value": "2147483647"
+                                },
+                                "minimum": {
+                                  "kind": "number",
+                                  "value": "-2147483648"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "integer"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "object"
+                        }
+                      }
+                    },
+                    "type": {
+                      "kind": "object",
+                      "members": {
+                        "const": {
+                          "kind": "string",
+                          "value": "google.protobuf.EnumDescriptorProto.EnumReservedRange"
+                        }
+                      }
+                    },
+                    "unknown": {
+                      "kind": "object",
+                      "members": {
+                        "items": {
+                          "kind": "object",
+                          "members": {
+                            "$ref": {
+                              "kind": "string",
+                              "value": "#/$defs/unknown"
+                            }
+                          }
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "array"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "type"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "fields"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "unknown"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "google.protobuf.EnumOptions": {
+              "kind": "object",
+              "members": {
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "fields": {
+                      "kind": "object",
+                      "members": {
+                        "properties": {
+                          "kind": "object",
+                          "members": {
+                            "allow_alias": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "boolean"
+                                }
+                              }
+                            },
+                            "deprecated": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "boolean"
+                                }
+                              }
+                            },
+                            "deprecated_legacy_json_field_conflicts": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "boolean"
+                                }
+                              }
+                            },
+                            "features": {
+                              "kind": "object",
+                              "members": {
+                                "$ref": {
+                                  "kind": "string",
+                                  "value": "#/$defs/google.protobuf.FeatureSet"
+                                }
+                              }
+                            },
+                            "uninterpreted_option": {
+                              "kind": "object",
+                              "members": {
+                                "items": {
+                                  "kind": "object",
+                                  "members": {
+                                    "$ref": {
+                                      "kind": "string",
+                                      "value": "#/$defs/google.protobuf.UninterpretedOption"
+                                    }
+                                  }
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "array"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "object"
+                        }
+                      }
+                    },
+                    "type": {
+                      "kind": "object",
+                      "members": {
+                        "const": {
+                          "kind": "string",
+                          "value": "google.protobuf.EnumOptions"
+                        }
+                      }
+                    },
+                    "unknown": {
+                      "kind": "object",
+                      "members": {
+                        "items": {
+                          "kind": "object",
+                          "members": {
+                            "$ref": {
+                              "kind": "string",
+                              "value": "#/$defs/unknown"
+                            }
+                          }
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "array"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "type"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "fields"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "unknown"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "google.protobuf.EnumValueDescriptorProto": {
+              "kind": "object",
+              "members": {
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "fields": {
+                      "kind": "object",
+                      "members": {
+                        "properties": {
+                          "kind": "object",
+                          "members": {
+                            "name": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            },
+                            "number": {
+                              "kind": "object",
+                              "members": {
+                                "maximum": {
+                                  "kind": "number",
+                                  "value": "2147483647"
+                                },
+                                "minimum": {
+                                  "kind": "number",
+                                  "value": "-2147483648"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "integer"
+                                }
+                              }
+                            },
+                            "options": {
+                              "kind": "object",
+                              "members": {
+                                "$ref": {
+                                  "kind": "string",
+                                  "value": "#/$defs/google.protobuf.EnumValueOptions"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "object"
+                        }
+                      }
+                    },
+                    "type": {
+                      "kind": "object",
+                      "members": {
+                        "const": {
+                          "kind": "string",
+                          "value": "google.protobuf.EnumValueDescriptorProto"
+                        }
+                      }
+                    },
+                    "unknown": {
+                      "kind": "object",
+                      "members": {
+                        "items": {
+                          "kind": "object",
+                          "members": {
+                            "$ref": {
+                              "kind": "string",
+                              "value": "#/$defs/unknown"
+                            }
+                          }
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "array"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "type"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "fields"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "unknown"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "google.protobuf.EnumValueOptions": {
+              "kind": "object",
+              "members": {
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "fields": {
+                      "kind": "object",
+                      "members": {
+                        "properties": {
+                          "kind": "object",
+                          "members": {
+                            "debug_redact": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "boolean"
+                                }
+                              }
+                            },
+                            "deprecated": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "boolean"
+                                }
+                              }
+                            },
+                            "feature_support": {
+                              "kind": "object",
+                              "members": {
+                                "$ref": {
+                                  "kind": "string",
+                                  "value": "#/$defs/google.protobuf.FieldOptions.FeatureSupport"
+                                }
+                              }
+                            },
+                            "features": {
+                              "kind": "object",
+                              "members": {
+                                "$ref": {
+                                  "kind": "string",
+                                  "value": "#/$defs/google.protobuf.FeatureSet"
+                                }
+                              }
+                            },
+                            "uninterpreted_option": {
+                              "kind": "object",
+                              "members": {
+                                "items": {
+                                  "kind": "object",
+                                  "members": {
+                                    "$ref": {
+                                      "kind": "string",
+                                      "value": "#/$defs/google.protobuf.UninterpretedOption"
+                                    }
+                                  }
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "array"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "object"
+                        }
+                      }
+                    },
+                    "type": {
+                      "kind": "object",
+                      "members": {
+                        "const": {
+                          "kind": "string",
+                          "value": "google.protobuf.EnumValueOptions"
+                        }
+                      }
+                    },
+                    "unknown": {
+                      "kind": "object",
+                      "members": {
+                        "items": {
+                          "kind": "object",
+                          "members": {
+                            "$ref": {
+                              "kind": "string",
+                              "value": "#/$defs/unknown"
+                            }
+                          }
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "array"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "type"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "fields"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "unknown"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "google.protobuf.ExtensionRangeOptions": {
+              "kind": "object",
+              "members": {
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "fields": {
+                      "kind": "object",
+                      "members": {
+                        "properties": {
+                          "kind": "object",
+                          "members": {
+                            "declaration": {
+                              "kind": "object",
+                              "members": {
+                                "items": {
+                                  "kind": "object",
+                                  "members": {
+                                    "$ref": {
+                                      "kind": "string",
+                                      "value": "#/$defs/google.protobuf.ExtensionRangeOptions.Declaration"
+                                    }
+                                  }
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "array"
+                                }
+                              }
+                            },
+                            "features": {
+                              "kind": "object",
+                              "members": {
+                                "$ref": {
+                                  "kind": "string",
+                                  "value": "#/$defs/google.protobuf.FeatureSet"
+                                }
+                              }
+                            },
+                            "uninterpreted_option": {
+                              "kind": "object",
+                              "members": {
+                                "items": {
+                                  "kind": "object",
+                                  "members": {
+                                    "$ref": {
+                                      "kind": "string",
+                                      "value": "#/$defs/google.protobuf.UninterpretedOption"
+                                    }
+                                  }
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "array"
+                                }
+                              }
+                            },
+                            "verification": {
+                              "kind": "object",
+                              "members": {
+                                "maximum": {
+                                  "kind": "number",
+                                  "value": "2147483647"
+                                },
+                                "minimum": {
+                                  "kind": "number",
+                                  "value": "-2147483648"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "integer"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "object"
+                        }
+                      }
+                    },
+                    "type": {
+                      "kind": "object",
+                      "members": {
+                        "const": {
+                          "kind": "string",
+                          "value": "google.protobuf.ExtensionRangeOptions"
+                        }
+                      }
+                    },
+                    "unknown": {
+                      "kind": "object",
+                      "members": {
+                        "items": {
+                          "kind": "object",
+                          "members": {
+                            "$ref": {
+                              "kind": "string",
+                              "value": "#/$defs/unknown"
+                            }
+                          }
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "array"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "type"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "fields"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "unknown"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "google.protobuf.ExtensionRangeOptions.Declaration": {
+              "kind": "object",
+              "members": {
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "fields": {
+                      "kind": "object",
+                      "members": {
+                        "properties": {
+                          "kind": "object",
+                          "members": {
+                            "full_name": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            },
+                            "number": {
+                              "kind": "object",
+                              "members": {
+                                "maximum": {
+                                  "kind": "number",
+                                  "value": "2147483647"
+                                },
+                                "minimum": {
+                                  "kind": "number",
+                                  "value": "-2147483648"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "integer"
+                                }
+                              }
+                            },
+                            "repeated": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "boolean"
+                                }
+                              }
+                            },
+                            "reserved": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "boolean"
+                                }
+                              }
+                            },
+                            "type": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "object"
+                        }
+                      }
+                    },
+                    "type": {
+                      "kind": "object",
+                      "members": {
+                        "const": {
+                          "kind": "string",
+                          "value": "google.protobuf.ExtensionRangeOptions.Declaration"
+                        }
+                      }
+                    },
+                    "unknown": {
+                      "kind": "object",
+                      "members": {
+                        "items": {
+                          "kind": "object",
+                          "members": {
+                            "$ref": {
+                              "kind": "string",
+                              "value": "#/$defs/unknown"
+                            }
+                          }
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "array"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "type"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "fields"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "unknown"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "google.protobuf.FeatureSet": {
+              "kind": "object",
+              "members": {
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "fields": {
+                      "kind": "object",
+                      "members": {
+                        "properties": {
+                          "kind": "object",
+                          "members": {
+                            "default_symbol_visibility": {
+                              "kind": "object",
+                              "members": {
+                                "maximum": {
+                                  "kind": "number",
+                                  "value": "2147483647"
+                                },
+                                "minimum": {
+                                  "kind": "number",
+                                  "value": "-2147483648"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "integer"
+                                }
+                              }
+                            },
+                            "enforce_naming_style": {
+                              "kind": "object",
+                              "members": {
+                                "maximum": {
+                                  "kind": "number",
+                                  "value": "2147483647"
+                                },
+                                "minimum": {
+                                  "kind": "number",
+                                  "value": "-2147483648"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "integer"
+                                }
+                              }
+                            },
+                            "enum_type": {
+                              "kind": "object",
+                              "members": {
+                                "maximum": {
+                                  "kind": "number",
+                                  "value": "2147483647"
+                                },
+                                "minimum": {
+                                  "kind": "number",
+                                  "value": "-2147483648"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "integer"
+                                }
+                              }
+                            },
+                            "field_presence": {
+                              "kind": "object",
+                              "members": {
+                                "maximum": {
+                                  "kind": "number",
+                                  "value": "2147483647"
+                                },
+                                "minimum": {
+                                  "kind": "number",
+                                  "value": "-2147483648"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "integer"
+                                }
+                              }
+                            },
+                            "json_format": {
+                              "kind": "object",
+                              "members": {
+                                "maximum": {
+                                  "kind": "number",
+                                  "value": "2147483647"
+                                },
+                                "minimum": {
+                                  "kind": "number",
+                                  "value": "-2147483648"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "integer"
+                                }
+                              }
+                            },
+                            "message_encoding": {
+                              "kind": "object",
+                              "members": {
+                                "maximum": {
+                                  "kind": "number",
+                                  "value": "2147483647"
+                                },
+                                "minimum": {
+                                  "kind": "number",
+                                  "value": "-2147483648"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "integer"
+                                }
+                              }
+                            },
+                            "repeated_field_encoding": {
+                              "kind": "object",
+                              "members": {
+                                "maximum": {
+                                  "kind": "number",
+                                  "value": "2147483647"
+                                },
+                                "minimum": {
+                                  "kind": "number",
+                                  "value": "-2147483648"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "integer"
+                                }
+                              }
+                            },
+                            "utf8_validation": {
+                              "kind": "object",
+                              "members": {
+                                "maximum": {
+                                  "kind": "number",
+                                  "value": "2147483647"
+                                },
+                                "minimum": {
+                                  "kind": "number",
+                                  "value": "-2147483648"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "integer"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "object"
+                        }
+                      }
+                    },
+                    "type": {
+                      "kind": "object",
+                      "members": {
+                        "const": {
+                          "kind": "string",
+                          "value": "google.protobuf.FeatureSet"
+                        }
+                      }
+                    },
+                    "unknown": {
+                      "kind": "object",
+                      "members": {
+                        "items": {
+                          "kind": "object",
+                          "members": {
+                            "$ref": {
+                              "kind": "string",
+                              "value": "#/$defs/unknown"
+                            }
+                          }
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "array"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "type"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "fields"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "unknown"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "google.protobuf.FieldDescriptorProto": {
+              "kind": "object",
+              "members": {
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "fields": {
+                      "kind": "object",
+                      "members": {
+                        "properties": {
+                          "kind": "object",
+                          "members": {
+                            "default_value": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            },
+                            "extendee": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            },
+                            "json_name": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            },
+                            "label": {
+                              "kind": "object",
+                              "members": {
+                                "maximum": {
+                                  "kind": "number",
+                                  "value": "2147483647"
+                                },
+                                "minimum": {
+                                  "kind": "number",
+                                  "value": "-2147483648"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "integer"
+                                }
+                              }
+                            },
+                            "name": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            },
+                            "number": {
+                              "kind": "object",
+                              "members": {
+                                "maximum": {
+                                  "kind": "number",
+                                  "value": "2147483647"
+                                },
+                                "minimum": {
+                                  "kind": "number",
+                                  "value": "-2147483648"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "integer"
+                                }
+                              }
+                            },
+                            "oneof_index": {
+                              "kind": "object",
+                              "members": {
+                                "maximum": {
+                                  "kind": "number",
+                                  "value": "2147483647"
+                                },
+                                "minimum": {
+                                  "kind": "number",
+                                  "value": "-2147483648"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "integer"
+                                }
+                              }
+                            },
+                            "options": {
+                              "kind": "object",
+                              "members": {
+                                "$ref": {
+                                  "kind": "string",
+                                  "value": "#/$defs/google.protobuf.FieldOptions"
+                                }
+                              }
+                            },
+                            "proto3_optional": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "boolean"
+                                }
+                              }
+                            },
+                            "type": {
+                              "kind": "object",
+                              "members": {
+                                "maximum": {
+                                  "kind": "number",
+                                  "value": "2147483647"
+                                },
+                                "minimum": {
+                                  "kind": "number",
+                                  "value": "-2147483648"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "integer"
+                                }
+                              }
+                            },
+                            "type_name": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "object"
+                        }
+                      }
+                    },
+                    "type": {
+                      "kind": "object",
+                      "members": {
+                        "const": {
+                          "kind": "string",
+                          "value": "google.protobuf.FieldDescriptorProto"
+                        }
+                      }
+                    },
+                    "unknown": {
+                      "kind": "object",
+                      "members": {
+                        "items": {
+                          "kind": "object",
+                          "members": {
+                            "$ref": {
+                              "kind": "string",
+                              "value": "#/$defs/unknown"
+                            }
+                          }
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "array"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "type"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "fields"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "unknown"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "google.protobuf.FieldOptions": {
+              "kind": "object",
+              "members": {
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "fields": {
+                      "kind": "object",
+                      "members": {
+                        "properties": {
+                          "kind": "object",
+                          "members": {
+                            "ctype": {
+                              "kind": "object",
+                              "members": {
+                                "maximum": {
+                                  "kind": "number",
+                                  "value": "2147483647"
+                                },
+                                "minimum": {
+                                  "kind": "number",
+                                  "value": "-2147483648"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "integer"
+                                }
+                              }
+                            },
+                            "debug_redact": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "boolean"
+                                }
+                              }
+                            },
+                            "deprecated": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "boolean"
+                                }
+                              }
+                            },
+                            "edition_defaults": {
+                              "kind": "object",
+                              "members": {
+                                "items": {
+                                  "kind": "object",
+                                  "members": {
+                                    "$ref": {
+                                      "kind": "string",
+                                      "value": "#/$defs/google.protobuf.FieldOptions.EditionDefault"
+                                    }
+                                  }
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "array"
+                                }
+                              }
+                            },
+                            "feature_support": {
+                              "kind": "object",
+                              "members": {
+                                "$ref": {
+                                  "kind": "string",
+                                  "value": "#/$defs/google.protobuf.FieldOptions.FeatureSupport"
+                                }
+                              }
+                            },
+                            "features": {
+                              "kind": "object",
+                              "members": {
+                                "$ref": {
+                                  "kind": "string",
+                                  "value": "#/$defs/google.protobuf.FeatureSet"
+                                }
+                              }
+                            },
+                            "jstype": {
+                              "kind": "object",
+                              "members": {
+                                "maximum": {
+                                  "kind": "number",
+                                  "value": "2147483647"
+                                },
+                                "minimum": {
+                                  "kind": "number",
+                                  "value": "-2147483648"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "integer"
+                                }
+                              }
+                            },
+                            "lazy": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "boolean"
+                                }
+                              }
+                            },
+                            "packed": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "boolean"
+                                }
+                              }
+                            },
+                            "retention": {
+                              "kind": "object",
+                              "members": {
+                                "maximum": {
+                                  "kind": "number",
+                                  "value": "2147483647"
+                                },
+                                "minimum": {
+                                  "kind": "number",
+                                  "value": "-2147483648"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "integer"
+                                }
+                              }
+                            },
+                            "targets": {
+                              "kind": "object",
+                              "members": {
+                                "items": {
+                                  "kind": "object",
+                                  "members": {
+                                    "maximum": {
+                                      "kind": "number",
+                                      "value": "2147483647"
+                                    },
+                                    "minimum": {
+                                      "kind": "number",
+                                      "value": "-2147483648"
+                                    },
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "integer"
+                                    }
+                                  }
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "array"
+                                }
+                              }
+                            },
+                            "uninterpreted_option": {
+                              "kind": "object",
+                              "members": {
+                                "items": {
+                                  "kind": "object",
+                                  "members": {
+                                    "$ref": {
+                                      "kind": "string",
+                                      "value": "#/$defs/google.protobuf.UninterpretedOption"
+                                    }
+                                  }
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "array"
+                                }
+                              }
+                            },
+                            "unverified_lazy": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "boolean"
+                                }
+                              }
+                            },
+                            "weak": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "boolean"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "object"
+                        }
+                      }
+                    },
+                    "type": {
+                      "kind": "object",
+                      "members": {
+                        "const": {
+                          "kind": "string",
+                          "value": "google.protobuf.FieldOptions"
+                        }
+                      }
+                    },
+                    "unknown": {
+                      "kind": "object",
+                      "members": {
+                        "items": {
+                          "kind": "object",
+                          "members": {
+                            "$ref": {
+                              "kind": "string",
+                              "value": "#/$defs/unknown"
+                            }
+                          }
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "array"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "type"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "fields"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "unknown"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "google.protobuf.FieldOptions.EditionDefault": {
+              "kind": "object",
+              "members": {
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "fields": {
+                      "kind": "object",
+                      "members": {
+                        "properties": {
+                          "kind": "object",
+                          "members": {
+                            "edition": {
+                              "kind": "object",
+                              "members": {
+                                "maximum": {
+                                  "kind": "number",
+                                  "value": "2147483647"
+                                },
+                                "minimum": {
+                                  "kind": "number",
+                                  "value": "-2147483648"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "integer"
+                                }
+                              }
+                            },
+                            "value": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "object"
+                        }
+                      }
+                    },
+                    "type": {
+                      "kind": "object",
+                      "members": {
+                        "const": {
+                          "kind": "string",
+                          "value": "google.protobuf.FieldOptions.EditionDefault"
+                        }
+                      }
+                    },
+                    "unknown": {
+                      "kind": "object",
+                      "members": {
+                        "items": {
+                          "kind": "object",
+                          "members": {
+                            "$ref": {
+                              "kind": "string",
+                              "value": "#/$defs/unknown"
+                            }
+                          }
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "array"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "type"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "fields"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "unknown"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "google.protobuf.FieldOptions.FeatureSupport": {
+              "kind": "object",
+              "members": {
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "fields": {
+                      "kind": "object",
+                      "members": {
+                        "properties": {
+                          "kind": "object",
+                          "members": {
+                            "deprecation_warning": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            },
+                            "edition_deprecated": {
+                              "kind": "object",
+                              "members": {
+                                "maximum": {
+                                  "kind": "number",
+                                  "value": "2147483647"
+                                },
+                                "minimum": {
+                                  "kind": "number",
+                                  "value": "-2147483648"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "integer"
+                                }
+                              }
+                            },
+                            "edition_introduced": {
+                              "kind": "object",
+                              "members": {
+                                "maximum": {
+                                  "kind": "number",
+                                  "value": "2147483647"
+                                },
+                                "minimum": {
+                                  "kind": "number",
+                                  "value": "-2147483648"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "integer"
+                                }
+                              }
+                            },
+                            "edition_removed": {
+                              "kind": "object",
+                              "members": {
+                                "maximum": {
+                                  "kind": "number",
+                                  "value": "2147483647"
+                                },
+                                "minimum": {
+                                  "kind": "number",
+                                  "value": "-2147483648"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "integer"
+                                }
+                              }
+                            },
+                            "removal_error": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "object"
+                        }
+                      }
+                    },
+                    "type": {
+                      "kind": "object",
+                      "members": {
+                        "const": {
+                          "kind": "string",
+                          "value": "google.protobuf.FieldOptions.FeatureSupport"
+                        }
+                      }
+                    },
+                    "unknown": {
+                      "kind": "object",
+                      "members": {
+                        "items": {
+                          "kind": "object",
+                          "members": {
+                            "$ref": {
+                              "kind": "string",
+                              "value": "#/$defs/unknown"
+                            }
+                          }
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "array"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "type"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "fields"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "unknown"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "google.protobuf.FileDescriptorProto": {
+              "kind": "object",
+              "members": {
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "fields": {
+                      "kind": "object",
+                      "members": {
+                        "properties": {
+                          "kind": "object",
+                          "members": {
+                            "dependency": {
+                              "kind": "object",
+                              "members": {
+                                "items": {
+                                  "kind": "object",
+                                  "members": {
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "string"
+                                    }
+                                  }
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "array"
+                                }
+                              }
+                            },
+                            "edition": {
+                              "kind": "object",
+                              "members": {
+                                "maximum": {
+                                  "kind": "number",
+                                  "value": "2147483647"
+                                },
+                                "minimum": {
+                                  "kind": "number",
+                                  "value": "-2147483648"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "integer"
+                                }
+                              }
+                            },
+                            "enum_type": {
+                              "kind": "object",
+                              "members": {
+                                "items": {
+                                  "kind": "object",
+                                  "members": {
+                                    "$ref": {
+                                      "kind": "string",
+                                      "value": "#/$defs/google.protobuf.EnumDescriptorProto"
+                                    }
+                                  }
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "array"
+                                }
+                              }
+                            },
+                            "extension": {
+                              "kind": "object",
+                              "members": {
+                                "items": {
+                                  "kind": "object",
+                                  "members": {
+                                    "$ref": {
+                                      "kind": "string",
+                                      "value": "#/$defs/google.protobuf.FieldDescriptorProto"
+                                    }
+                                  }
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "array"
+                                }
+                              }
+                            },
+                            "message_type": {
+                              "kind": "object",
+                              "members": {
+                                "items": {
+                                  "kind": "object",
+                                  "members": {
+                                    "$ref": {
+                                      "kind": "string",
+                                      "value": "#/$defs/google.protobuf.DescriptorProto"
+                                    }
+                                  }
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "array"
+                                }
+                              }
+                            },
+                            "name": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            },
+                            "option_dependency": {
+                              "kind": "object",
+                              "members": {
+                                "items": {
+                                  "kind": "object",
+                                  "members": {
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "string"
+                                    }
+                                  }
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "array"
+                                }
+                              }
+                            },
+                            "options": {
+                              "kind": "object",
+                              "members": {
+                                "$ref": {
+                                  "kind": "string",
+                                  "value": "#/$defs/google.protobuf.FileOptions"
+                                }
+                              }
+                            },
+                            "package": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            },
+                            "public_dependency": {
+                              "kind": "object",
+                              "members": {
+                                "items": {
+                                  "kind": "object",
+                                  "members": {
+                                    "maximum": {
+                                      "kind": "number",
+                                      "value": "2147483647"
+                                    },
+                                    "minimum": {
+                                      "kind": "number",
+                                      "value": "-2147483648"
+                                    },
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "integer"
+                                    }
+                                  }
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "array"
+                                }
+                              }
+                            },
+                            "service": {
+                              "kind": "object",
+                              "members": {
+                                "items": {
+                                  "kind": "object",
+                                  "members": {
+                                    "$ref": {
+                                      "kind": "string",
+                                      "value": "#/$defs/google.protobuf.ServiceDescriptorProto"
+                                    }
+                                  }
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "array"
+                                }
+                              }
+                            },
+                            "source_code_info": {
+                              "kind": "object",
+                              "members": {
+                                "$ref": {
+                                  "kind": "string",
+                                  "value": "#/$defs/google.protobuf.SourceCodeInfo"
+                                }
+                              }
+                            },
+                            "syntax": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            },
+                            "weak_dependency": {
+                              "kind": "object",
+                              "members": {
+                                "items": {
+                                  "kind": "object",
+                                  "members": {
+                                    "maximum": {
+                                      "kind": "number",
+                                      "value": "2147483647"
+                                    },
+                                    "minimum": {
+                                      "kind": "number",
+                                      "value": "-2147483648"
+                                    },
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "integer"
+                                    }
+                                  }
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "array"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "object"
+                        }
+                      }
+                    },
+                    "type": {
+                      "kind": "object",
+                      "members": {
+                        "const": {
+                          "kind": "string",
+                          "value": "google.protobuf.FileDescriptorProto"
+                        }
+                      }
+                    },
+                    "unknown": {
+                      "kind": "object",
+                      "members": {
+                        "items": {
+                          "kind": "object",
+                          "members": {
+                            "$ref": {
+                              "kind": "string",
+                              "value": "#/$defs/unknown"
+                            }
+                          }
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "array"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "type"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "fields"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "unknown"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "google.protobuf.FileDescriptorSet": {
+              "kind": "object",
+              "members": {
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "fields": {
+                      "kind": "object",
+                      "members": {
+                        "properties": {
+                          "kind": "object",
+                          "members": {
+                            "file": {
+                              "kind": "object",
+                              "members": {
+                                "items": {
+                                  "kind": "object",
+                                  "members": {
+                                    "$ref": {
+                                      "kind": "string",
+                                      "value": "#/$defs/google.protobuf.FileDescriptorProto"
+                                    }
+                                  }
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "array"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "object"
+                        }
+                      }
+                    },
+                    "type": {
+                      "kind": "object",
+                      "members": {
+                        "const": {
+                          "kind": "string",
+                          "value": "google.protobuf.FileDescriptorSet"
+                        }
+                      }
+                    },
+                    "unknown": {
+                      "kind": "object",
+                      "members": {
+                        "items": {
+                          "kind": "object",
+                          "members": {
+                            "$ref": {
+                              "kind": "string",
+                              "value": "#/$defs/unknown"
+                            }
+                          }
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "array"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "type"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "fields"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "unknown"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "google.protobuf.FileOptions": {
+              "kind": "object",
+              "members": {
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "fields": {
+                      "kind": "object",
+                      "members": {
+                        "properties": {
+                          "kind": "object",
+                          "members": {
+                            "cc_enable_arenas": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "boolean"
+                                }
+                              }
+                            },
+                            "cc_generic_services": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "boolean"
+                                }
+                              }
+                            },
+                            "csharp_namespace": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            },
+                            "deprecated": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "boolean"
+                                }
+                              }
+                            },
+                            "features": {
+                              "kind": "object",
+                              "members": {
+                                "$ref": {
+                                  "kind": "string",
+                                  "value": "#/$defs/google.protobuf.FeatureSet"
+                                }
+                              }
+                            },
+                            "go_package": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            },
+                            "java_generate_equals_and_hash": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "boolean"
+                                }
+                              }
+                            },
+                            "java_generic_services": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "boolean"
+                                }
+                              }
+                            },
+                            "java_multiple_files": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "boolean"
+                                }
+                              }
+                            },
+                            "java_outer_classname": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            },
+                            "java_package": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            },
+                            "java_string_check_utf8": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "boolean"
+                                }
+                              }
+                            },
+                            "objc_class_prefix": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            },
+                            "optimize_for": {
+                              "kind": "object",
+                              "members": {
+                                "maximum": {
+                                  "kind": "number",
+                                  "value": "2147483647"
+                                },
+                                "minimum": {
+                                  "kind": "number",
+                                  "value": "-2147483648"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "integer"
+                                }
+                              }
+                            },
+                            "php_class_prefix": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            },
+                            "php_metadata_namespace": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            },
+                            "php_namespace": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            },
+                            "py_generic_services": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "boolean"
+                                }
+                              }
+                            },
+                            "ruby_package": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            },
+                            "swift_prefix": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            },
+                            "uninterpreted_option": {
+                              "kind": "object",
+                              "members": {
+                                "items": {
+                                  "kind": "object",
+                                  "members": {
+                                    "$ref": {
+                                      "kind": "string",
+                                      "value": "#/$defs/google.protobuf.UninterpretedOption"
+                                    }
+                                  }
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "array"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "object"
+                        }
+                      }
+                    },
+                    "type": {
+                      "kind": "object",
+                      "members": {
+                        "const": {
+                          "kind": "string",
+                          "value": "google.protobuf.FileOptions"
+                        }
+                      }
+                    },
+                    "unknown": {
+                      "kind": "object",
+                      "members": {
+                        "items": {
+                          "kind": "object",
+                          "members": {
+                            "$ref": {
+                              "kind": "string",
+                              "value": "#/$defs/unknown"
+                            }
+                          }
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "array"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "type"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "fields"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "unknown"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "google.protobuf.MessageOptions": {
+              "kind": "object",
+              "members": {
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "fields": {
+                      "kind": "object",
+                      "members": {
+                        "properties": {
+                          "kind": "object",
+                          "members": {
+                            "deprecated": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "boolean"
+                                }
+                              }
+                            },
+                            "deprecated_legacy_json_field_conflicts": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "boolean"
+                                }
+                              }
+                            },
+                            "features": {
+                              "kind": "object",
+                              "members": {
+                                "$ref": {
+                                  "kind": "string",
+                                  "value": "#/$defs/google.protobuf.FeatureSet"
+                                }
+                              }
+                            },
+                            "map_entry": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "boolean"
+                                }
+                              }
+                            },
+                            "message_set_wire_format": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "boolean"
+                                }
+                              }
+                            },
+                            "no_standard_descriptor_accessor": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "boolean"
+                                }
+                              }
+                            },
+                            "uninterpreted_option": {
+                              "kind": "object",
+                              "members": {
+                                "items": {
+                                  "kind": "object",
+                                  "members": {
+                                    "$ref": {
+                                      "kind": "string",
+                                      "value": "#/$defs/google.protobuf.UninterpretedOption"
+                                    }
+                                  }
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "array"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "object"
+                        }
+                      }
+                    },
+                    "type": {
+                      "kind": "object",
+                      "members": {
+                        "const": {
+                          "kind": "string",
+                          "value": "google.protobuf.MessageOptions"
+                        }
+                      }
+                    },
+                    "unknown": {
+                      "kind": "object",
+                      "members": {
+                        "items": {
+                          "kind": "object",
+                          "members": {
+                            "$ref": {
+                              "kind": "string",
+                              "value": "#/$defs/unknown"
+                            }
+                          }
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "array"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "type"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "fields"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "unknown"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "google.protobuf.MethodDescriptorProto": {
+              "kind": "object",
+              "members": {
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "fields": {
+                      "kind": "object",
+                      "members": {
+                        "properties": {
+                          "kind": "object",
+                          "members": {
+                            "client_streaming": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "boolean"
+                                }
+                              }
+                            },
+                            "input_type": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            },
+                            "name": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            },
+                            "options": {
+                              "kind": "object",
+                              "members": {
+                                "$ref": {
+                                  "kind": "string",
+                                  "value": "#/$defs/google.protobuf.MethodOptions"
+                                }
+                              }
+                            },
+                            "output_type": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            },
+                            "server_streaming": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "boolean"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "object"
+                        }
+                      }
+                    },
+                    "type": {
+                      "kind": "object",
+                      "members": {
+                        "const": {
+                          "kind": "string",
+                          "value": "google.protobuf.MethodDescriptorProto"
+                        }
+                      }
+                    },
+                    "unknown": {
+                      "kind": "object",
+                      "members": {
+                        "items": {
+                          "kind": "object",
+                          "members": {
+                            "$ref": {
+                              "kind": "string",
+                              "value": "#/$defs/unknown"
+                            }
+                          }
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "array"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "type"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "fields"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "unknown"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "google.protobuf.MethodOptions": {
+              "kind": "object",
+              "members": {
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "fields": {
+                      "kind": "object",
+                      "members": {
+                        "properties": {
+                          "kind": "object",
+                          "members": {
+                            "deprecated": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "boolean"
+                                }
+                              }
+                            },
+                            "features": {
+                              "kind": "object",
+                              "members": {
+                                "$ref": {
+                                  "kind": "string",
+                                  "value": "#/$defs/google.protobuf.FeatureSet"
+                                }
+                              }
+                            },
+                            "idempotency_level": {
+                              "kind": "object",
+                              "members": {
+                                "maximum": {
+                                  "kind": "number",
+                                  "value": "2147483647"
+                                },
+                                "minimum": {
+                                  "kind": "number",
+                                  "value": "-2147483648"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "integer"
+                                }
+                              }
+                            },
+                            "uninterpreted_option": {
+                              "kind": "object",
+                              "members": {
+                                "items": {
+                                  "kind": "object",
+                                  "members": {
+                                    "$ref": {
+                                      "kind": "string",
+                                      "value": "#/$defs/google.protobuf.UninterpretedOption"
+                                    }
+                                  }
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "array"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "object"
+                        }
+                      }
+                    },
+                    "type": {
+                      "kind": "object",
+                      "members": {
+                        "const": {
+                          "kind": "string",
+                          "value": "google.protobuf.MethodOptions"
+                        }
+                      }
+                    },
+                    "unknown": {
+                      "kind": "object",
+                      "members": {
+                        "items": {
+                          "kind": "object",
+                          "members": {
+                            "$ref": {
+                              "kind": "string",
+                              "value": "#/$defs/unknown"
+                            }
+                          }
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "array"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "type"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "fields"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "unknown"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "google.protobuf.OneofDescriptorProto": {
+              "kind": "object",
+              "members": {
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "fields": {
+                      "kind": "object",
+                      "members": {
+                        "properties": {
+                          "kind": "object",
+                          "members": {
+                            "name": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            },
+                            "options": {
+                              "kind": "object",
+                              "members": {
+                                "$ref": {
+                                  "kind": "string",
+                                  "value": "#/$defs/google.protobuf.OneofOptions"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "object"
+                        }
+                      }
+                    },
+                    "type": {
+                      "kind": "object",
+                      "members": {
+                        "const": {
+                          "kind": "string",
+                          "value": "google.protobuf.OneofDescriptorProto"
+                        }
+                      }
+                    },
+                    "unknown": {
+                      "kind": "object",
+                      "members": {
+                        "items": {
+                          "kind": "object",
+                          "members": {
+                            "$ref": {
+                              "kind": "string",
+                              "value": "#/$defs/unknown"
+                            }
+                          }
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "array"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "type"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "fields"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "unknown"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "google.protobuf.OneofOptions": {
+              "kind": "object",
+              "members": {
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "fields": {
+                      "kind": "object",
+                      "members": {
+                        "properties": {
+                          "kind": "object",
+                          "members": {
+                            "features": {
+                              "kind": "object",
+                              "members": {
+                                "$ref": {
+                                  "kind": "string",
+                                  "value": "#/$defs/google.protobuf.FeatureSet"
+                                }
+                              }
+                            },
+                            "uninterpreted_option": {
+                              "kind": "object",
+                              "members": {
+                                "items": {
+                                  "kind": "object",
+                                  "members": {
+                                    "$ref": {
+                                      "kind": "string",
+                                      "value": "#/$defs/google.protobuf.UninterpretedOption"
+                                    }
+                                  }
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "array"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "object"
+                        }
+                      }
+                    },
+                    "type": {
+                      "kind": "object",
+                      "members": {
+                        "const": {
+                          "kind": "string",
+                          "value": "google.protobuf.OneofOptions"
+                        }
+                      }
+                    },
+                    "unknown": {
+                      "kind": "object",
+                      "members": {
+                        "items": {
+                          "kind": "object",
+                          "members": {
+                            "$ref": {
+                              "kind": "string",
+                              "value": "#/$defs/unknown"
+                            }
+                          }
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "array"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "type"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "fields"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "unknown"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "google.protobuf.ServiceDescriptorProto": {
+              "kind": "object",
+              "members": {
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "fields": {
+                      "kind": "object",
+                      "members": {
+                        "properties": {
+                          "kind": "object",
+                          "members": {
+                            "method": {
+                              "kind": "object",
+                              "members": {
+                                "items": {
+                                  "kind": "object",
+                                  "members": {
+                                    "$ref": {
+                                      "kind": "string",
+                                      "value": "#/$defs/google.protobuf.MethodDescriptorProto"
+                                    }
+                                  }
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "array"
+                                }
+                              }
+                            },
+                            "name": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            },
+                            "options": {
+                              "kind": "object",
+                              "members": {
+                                "$ref": {
+                                  "kind": "string",
+                                  "value": "#/$defs/google.protobuf.ServiceOptions"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "object"
+                        }
+                      }
+                    },
+                    "type": {
+                      "kind": "object",
+                      "members": {
+                        "const": {
+                          "kind": "string",
+                          "value": "google.protobuf.ServiceDescriptorProto"
+                        }
+                      }
+                    },
+                    "unknown": {
+                      "kind": "object",
+                      "members": {
+                        "items": {
+                          "kind": "object",
+                          "members": {
+                            "$ref": {
+                              "kind": "string",
+                              "value": "#/$defs/unknown"
+                            }
+                          }
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "array"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "type"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "fields"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "unknown"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "google.protobuf.ServiceOptions": {
+              "kind": "object",
+              "members": {
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "fields": {
+                      "kind": "object",
+                      "members": {
+                        "properties": {
+                          "kind": "object",
+                          "members": {
+                            "deprecated": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "boolean"
+                                }
+                              }
+                            },
+                            "features": {
+                              "kind": "object",
+                              "members": {
+                                "$ref": {
+                                  "kind": "string",
+                                  "value": "#/$defs/google.protobuf.FeatureSet"
+                                }
+                              }
+                            },
+                            "uninterpreted_option": {
+                              "kind": "object",
+                              "members": {
+                                "items": {
+                                  "kind": "object",
+                                  "members": {
+                                    "$ref": {
+                                      "kind": "string",
+                                      "value": "#/$defs/google.protobuf.UninterpretedOption"
+                                    }
+                                  }
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "array"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "object"
+                        }
+                      }
+                    },
+                    "type": {
+                      "kind": "object",
+                      "members": {
+                        "const": {
+                          "kind": "string",
+                          "value": "google.protobuf.ServiceOptions"
+                        }
+                      }
+                    },
+                    "unknown": {
+                      "kind": "object",
+                      "members": {
+                        "items": {
+                          "kind": "object",
+                          "members": {
+                            "$ref": {
+                              "kind": "string",
+                              "value": "#/$defs/unknown"
+                            }
+                          }
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "array"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "type"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "fields"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "unknown"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "google.protobuf.SourceCodeInfo": {
+              "kind": "object",
+              "members": {
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "fields": {
+                      "kind": "object",
+                      "members": {
+                        "properties": {
+                          "kind": "object",
+                          "members": {
+                            "location": {
+                              "kind": "object",
+                              "members": {
+                                "items": {
+                                  "kind": "object",
+                                  "members": {
+                                    "$ref": {
+                                      "kind": "string",
+                                      "value": "#/$defs/google.protobuf.SourceCodeInfo.Location"
+                                    }
+                                  }
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "array"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "object"
+                        }
+                      }
+                    },
+                    "type": {
+                      "kind": "object",
+                      "members": {
+                        "const": {
+                          "kind": "string",
+                          "value": "google.protobuf.SourceCodeInfo"
+                        }
+                      }
+                    },
+                    "unknown": {
+                      "kind": "object",
+                      "members": {
+                        "items": {
+                          "kind": "object",
+                          "members": {
+                            "$ref": {
+                              "kind": "string",
+                              "value": "#/$defs/unknown"
+                            }
+                          }
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "array"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "type"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "fields"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "unknown"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "google.protobuf.SourceCodeInfo.Location": {
+              "kind": "object",
+              "members": {
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "fields": {
+                      "kind": "object",
+                      "members": {
+                        "properties": {
+                          "kind": "object",
+                          "members": {
+                            "leading_comments": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            },
+                            "leading_detached_comments": {
+                              "kind": "object",
+                              "members": {
+                                "items": {
+                                  "kind": "object",
+                                  "members": {
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "string"
+                                    }
+                                  }
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "array"
+                                }
+                              }
+                            },
+                            "path": {
+                              "kind": "object",
+                              "members": {
+                                "items": {
+                                  "kind": "object",
+                                  "members": {
+                                    "maximum": {
+                                      "kind": "number",
+                                      "value": "2147483647"
+                                    },
+                                    "minimum": {
+                                      "kind": "number",
+                                      "value": "-2147483648"
+                                    },
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "integer"
+                                    }
+                                  }
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "array"
+                                }
+                              }
+                            },
+                            "span": {
+                              "kind": "object",
+                              "members": {
+                                "items": {
+                                  "kind": "object",
+                                  "members": {
+                                    "maximum": {
+                                      "kind": "number",
+                                      "value": "2147483647"
+                                    },
+                                    "minimum": {
+                                      "kind": "number",
+                                      "value": "-2147483648"
+                                    },
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "integer"
+                                    }
+                                  }
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "array"
+                                }
+                              }
+                            },
+                            "trailing_comments": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "object"
+                        }
+                      }
+                    },
+                    "type": {
+                      "kind": "object",
+                      "members": {
+                        "const": {
+                          "kind": "string",
+                          "value": "google.protobuf.SourceCodeInfo.Location"
+                        }
+                      }
+                    },
+                    "unknown": {
+                      "kind": "object",
+                      "members": {
+                        "items": {
+                          "kind": "object",
+                          "members": {
+                            "$ref": {
+                              "kind": "string",
+                              "value": "#/$defs/unknown"
+                            }
+                          }
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "array"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "type"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "fields"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "unknown"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "google.protobuf.UninterpretedOption": {
+              "kind": "object",
+              "members": {
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "fields": {
+                      "kind": "object",
+                      "members": {
+                        "properties": {
+                          "kind": "object",
+                          "members": {
+                            "aggregate_value": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            },
+                            "double_value": {
+                              "kind": "object",
+                              "members": {
+                                "anyOf": {
+                                  "items": [
+                                    {
+                                      "kind": "object",
+                                      "members": {
+                                        "type": {
+                                          "kind": "string",
+                                          "value": "number"
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "kind": "object",
+                                      "members": {
+                                        "enum": {
+                                          "items": [
+                                            {
+                                              "kind": "string",
+                                              "value": "NaN"
+                                            },
+                                            {
+                                              "kind": "string",
+                                              "value": "Infinity"
+                                            },
+                                            {
+                                              "kind": "string",
+                                              "value": "-Infinity"
+                                            },
+                                            {
+                                              "kind": "string",
+                                              "value": "-0"
+                                            }
+                                          ],
+                                          "kind": "array"
+                                        }
+                                      }
+                                    }
+                                  ],
+                                  "kind": "array"
+                                }
+                              }
+                            },
+                            "identifier_value": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            },
+                            "name": {
+                              "kind": "object",
+                              "members": {
+                                "items": {
+                                  "kind": "object",
+                                  "members": {
+                                    "$ref": {
+                                      "kind": "string",
+                                      "value": "#/$defs/google.protobuf.UninterpretedOption.NamePart"
+                                    }
+                                  }
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "array"
+                                }
+                              }
+                            },
+                            "negative_int_value": {
+                              "kind": "object",
+                              "members": {
+                                "pattern": {
+                                  "kind": "string",
+                                  "value": "^(?:0|-?[1-9][0-9]*)$"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            },
+                            "positive_int_value": {
+                              "kind": "object",
+                              "members": {
+                                "pattern": {
+                                  "kind": "string",
+                                  "value": "^(?:0|-?[1-9][0-9]*)$"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            },
+                            "string_value": {
+                              "kind": "object",
+                              "members": {
+                                "pattern": {
+                                  "kind": "string",
+                                  "value": "^(?:[0-9a-f]{2})*$"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "object"
+                        }
+                      }
+                    },
+                    "type": {
+                      "kind": "object",
+                      "members": {
+                        "const": {
+                          "kind": "string",
+                          "value": "google.protobuf.UninterpretedOption"
+                        }
+                      }
+                    },
+                    "unknown": {
+                      "kind": "object",
+                      "members": {
+                        "items": {
+                          "kind": "object",
+                          "members": {
+                            "$ref": {
+                              "kind": "string",
+                              "value": "#/$defs/unknown"
+                            }
+                          }
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "array"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "type"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "fields"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "unknown"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "google.protobuf.UninterpretedOption.NamePart": {
+              "kind": "object",
+              "members": {
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "fields": {
+                      "kind": "object",
+                      "members": {
+                        "properties": {
+                          "kind": "object",
+                          "members": {
+                            "is_extension": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "boolean"
+                                }
+                              }
+                            },
+                            "name_part": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "object"
+                        }
+                      }
+                    },
+                    "type": {
+                      "kind": "object",
+                      "members": {
+                        "const": {
+                          "kind": "string",
+                          "value": "google.protobuf.UninterpretedOption.NamePart"
+                        }
+                      }
+                    },
+                    "unknown": {
+                      "kind": "object",
+                      "members": {
+                        "items": {
+                          "kind": "object",
+                          "members": {
+                            "$ref": {
+                              "kind": "string",
+                              "value": "#/$defs/unknown"
+                            }
+                          }
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "array"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "type"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "fields"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "unknown"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "unknown": {
+              "kind": "object",
+              "members": {
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "data": {
+                      "kind": "object",
+                      "members": {
+                        "pattern": {
+                          "kind": "string",
+                          "value": "^(?:[0-9a-f]{2})*$"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "number": {
+                      "kind": "object",
+                      "members": {
+                        "maximum": {
+                          "kind": "number",
+                          "value": "536870911"
+                        },
+                        "minimum": {
+                          "kind": "number",
+                          "value": "1"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "integer"
+                        }
+                      }
+                    },
+                    "wireType": {
+                      "kind": "object",
+                      "members": {
+                        "enum": {
+                          "items": [
+                            {
+                              "kind": "number",
+                              "value": "0"
+                            },
+                            {
+                              "kind": "number",
+                              "value": "1"
+                            },
+                            {
+                              "kind": "number",
+                              "value": "2"
+                            },
+                            {
+                              "kind": "number",
+                              "value": "3"
+                            },
+                            {
+                              "kind": "number",
+                              "value": "5"
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "number"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "wireType"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "data"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            }
+          }
+        },
+        "$id": {
+          "kind": "string",
+          "value": "urn:umf:protobuf:0.1.0"
+        },
+        "$schema": {
+          "kind": "string",
+          "value": "https://json-schema.org/draft/2020-12/schema"
+        },
+        "properties": {
+          "kind": "object",
+          "members": {
+            "descriptorProfile": {
+              "kind": "object",
+              "members": {
+                "const": {
+                  "kind": "string",
+                  "value": "protobuf-es-2.15.0"
+                }
+              }
+            },
+            "descriptorSet": {
+              "kind": "object",
+              "members": {
+                "$ref": {
+                  "kind": "string",
+                  "value": "#/$defs/google.protobuf.FileDescriptorSet"
+                }
+              }
+            },
+            "sourceArchive": {
+              "kind": "object",
+              "members": {
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "compiler": {
+                      "kind": "object",
+                      "members": {
+                        "minLength": {
+                          "kind": "number",
+                          "value": "1"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "files": {
+                      "kind": "object",
+                      "members": {
+                        "additionalProperties": {
+                          "kind": "object",
+                          "members": {
+                            "type": {
+                              "kind": "string",
+                              "value": "string"
+                            }
+                          }
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "object"
+                        }
+                      }
+                    },
+                    "role": {
+                      "kind": "object",
+                      "members": {
+                        "const": {
+                          "kind": "string",
+                          "value": "original"
+                        }
+                      }
+                    },
+                    "roots": {
+                      "kind": "object",
+                      "members": {
+                        "items": {
+                          "kind": "object",
+                          "members": {
+                            "minLength": {
+                              "kind": "number",
+                              "value": "1"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "string"
+                            }
+                          }
+                        },
+                        "minItems": {
+                          "kind": "number",
+                          "value": "1"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "array"
+                        },
+                        "uniqueItems": {
+                          "kind": "boolean",
+                          "value": true
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "role"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "compiler"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "files"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "roots"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            }
+          }
+        },
+        "required": {
+          "items": [
+            {
+              "kind": "string",
+              "value": "descriptorProfile"
+            },
+            {
+              "kind": "string",
+              "value": "descriptorSet"
+            }
+          ],
+          "kind": "array"
+        },
+        "title": {
+          "kind": "string",
+          "value": "UMF Protobuf descriptor representation"
+        },
+        "type": {
+          "kind": "string",
+          "value": "object"
+        }
+      }
+    }
+  },
+  "id": "[\"schema\",\"spec/extensions/protobuf/schema.json\",\"\"]",
+  "kind": "schema",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 36497,
+      "path": "spec/extensions/protobuf/schema.json",
+      "sha256": "2c7034a9c8952180689e8e9c30b8dd736d2113e656cfc57267b40b66b7ab0cd9"
+    }
+  ],
+  "summary": "spec/extensions/protobuf/schema.json",
+  "title": "UMF Protobuf descriptor representation"
+}

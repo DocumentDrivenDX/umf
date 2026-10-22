@@ -1,0 +1,92 @@
+{
+  "id": "owner-result-checker-astra-review",
+  "status": "clean-within-scope",
+  "reviewer": "/root/astra_security_review",
+  "generatedAt": "2026-10-10T04:53:26.574315+00:00",
+  "reviewMethod": "Read-only inspection of the installed source, governing contract and actual regression bodies; independent byte audit of the parent-executed owner admission receipt. Reviewer did not duplicate Cargo execution.",
+  "sourceDigests": {
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_result_check.rs": "bdec925796e096040fb55c89251725d8631ac6813b89bd3f3853b7c9c5f09895",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_backend.rs": "ca5a76498807f3632493640203c5f74859b40736451b7b72b7e15cdae9a1c9eb",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_requirements.rs": "937f259ae5cdca5afbee653d89f7882e6f0bb2a454a6703256d14625e8fe2711",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_lowering.rs": "1921ba60fcd7d56cce6e510198f20b6e1eb887845db6f8b2ff3234c73bf51d72",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_literals.rs": "8bd7995326ab3c544800f59980e8a60b0b83d81ba5138bc42ffeb351f82c7cd4",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_ontology.rs": "a1e19a2605a2d247b6c58f252886d0ab45077cd2e3d53f0bffb995a2ae2a7d19",
+    "/Users/erik/Projects/weft/crates/weft-core/src/compile.rs": "6f23265ac68dbbf5240d05285e3128c460ae50053140a880eb058d7272b72585",
+    "/Users/erik/Projects/weft/crates/weft-core/src/lib.rs": "6ccd1c3768371c58ca77c7fc4303f3f89028389fd9be79255c39ed2badaab4a2",
+    "/Users/erik/Projects/weft/crates/weft-core/tests/security_admission.rs": "bb5fe1382c54e01b2509d4c97bc1fb5618e5a6ac350b7c3220ed5052368e40f6",
+    "/Users/erik/Projects/weft/docs/helix/02-design/contracts/CONTRACT-005-security-compilation.md": "d2c145ae62d40200450cc65c02b0e6584be653949c842ac6f1bf53812739735f",
+    "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/weft-admission.json": "7946c80b0ac0e6c39a42504b1d6a1dca6cedd26cc4c2cd6e8a5d954d887c8e07"
+  },
+  "sourcesUnchanged": true,
+  "reviewObservations": [
+    {
+      "id": "declaration-diagnostics",
+      "finding": "resolved",
+      "observation": "Caller transformed output lookup, domain and normalized-literal failures map to WFT-SECURITY-LOWERING-UNSUPPORTED. Initial require_sources diagnostic propagation is unchanged."
+    },
+    {
+      "id": "diagnostic-control-isolation",
+      "finding": "clean",
+      "observation": "A valid source-admitted transformed declaration passes first; wrong literal type changes only the literal, while unknown element and existing Record cases change both output reference and declared model domain to reach lookup/domain checks. All require the exact lowering diagnostic."
+    },
+    {
+      "id": "outcome-capacity",
+      "finding": "clean",
+      "observation": "255 distinct transforms plus conservative Original pass at 256. A source requiring 256 transforms plus Original refuses a backend declaration truncated to 256; source coverage is not inferred from caller cardinality."
+    },
+    {
+      "id": "aggregate-complete-refusal",
+      "finding": "clean",
+      "observation": "COUNT alone and after a valid grouped Field refuse the complete checker. These natural aggregate declarations exercise complete refusal, not independently isolated expression-discriminator branch coverage."
+    },
+    {
+      "id": "normalized-payload-budget",
+      "finding": "resolved",
+      "observation": "Both source and caller literal normalization charge normalized retained payload before class retention/comparison. Regression uses actual exponent expansion and exact BigInt magnitude-word accounting."
+    },
+    {
+      "id": "presence-and-transform-classes",
+      "finding": "clean",
+      "observation": "Original requires resolved required presence; optional Original and Absent refuse. Normalized equivalent literals retain every scoped source ID; unequal classes remain required even alongside Withheld."
+    },
+    {
+      "id": "scope-and-dispatch",
+      "finding": "clean",
+      "observation": "API returns Result<()> for pure declaration correspondence. CONTRACT-005 preserves runtime composition, result-cell validation, aggregate semantics, physical/capability coverage and native admission as separate requirements; compile.rs still unconditionally refuses lowering after registration."
+    },
+    {
+      "id": "null-transform-versus-absence",
+      "finding": "clean",
+      "observation": "Two actual source-admitted protected optional salary configurations refuse an invented Original declaration. With the explicit constant-null source disposition, Transformed(null) passes; replacing its tag with Absent or Withheld refuses exact WFT-SECURITY-LOWERING-UNSUPPORTED. Callback entry counters establish these checks occur after owner source admission; no runtime absence/value or release behavior is claimed."
+    }
+  ],
+  "parentExecutedEvidence": {
+    "path": "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/weft-admission.json",
+    "sha256": "7946c80b0ac0e6c39a42504b1d6a1dca6cedd26cc4c2cd6e8a5d954d887c8e07",
+    "commands": 4,
+    "allExitCodesZero": true,
+    "libraryTests": 63,
+    "securityAdmissionTests": 56,
+    "canonicalSchemaMatches": true
+  },
+  "independentPinAudit": {
+    "auditedSourceCount": 408,
+    "stale": []
+  },
+  "scope": "Selected pure owner-bound direct-field declaration correspondence and diagnostic contract only. This review is not a code-refinement theorem, runtime outcome selection, executable lowering, result codec or native/backend acceptance qualification.",
+  "nativeImplementationQualified": false,
+  "acceptanceCasesPromoted": [],
+  "lastReviewDelta": {
+    "changedReviewedSources": [
+      "/Users/erik/Projects/weft/crates/weft-core/tests/security_admission.rs",
+      "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/weft-admission.json"
+    ],
+    "implementationSourcesUnchanged": true,
+    "testExecution": "Parent-executed owner receipt; reviewer did not duplicate Rust tests."
+  },
+  "previousReceipt": {
+    "path": "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/owner-result-checker-astra-review-prior-305bd17c1835ae90.json",
+    "sha256": "305bd17c1835ae90b1c232b6007927f76dc6c001f7b083959aa16d6e66db2fe1",
+    "scope": "Historical source review only; freshness not carried forward."
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 10292,
+        "line": 16,
+        "path": "src/model/relationships.ts",
+        "sha256": "b83675753a170cc0477c45c6010e1c5c2b056a8902f55c5adb1dc9ecd42786ec"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "CoreRelationshipDeclaration",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface CoreRelationshipDeclaration extends OperationContext {operation:'declare-core-relationship';version:'1.0.0';source:Source;target:Source;identity:RelationshipModuleIdentity;request:CoreRelationshipRequest;provenance:{origin:'authored';idealPath:string;basis:'explicit-author-declaration';nativePath:null}}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"CoreRelationshipDeclaration\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 10292,
+      "line": 16,
+      "path": "src/model/relationships.ts",
+      "sha256": "b83675753a170cc0477c45c6010e1c5c2b056a8902f55c5adb1dc9ecd42786ec"
+    }
+  ],
+  "summary": "Type declaration · src/model/relationships.ts",
+  "title": "CoreRelationshipDeclaration"
+}

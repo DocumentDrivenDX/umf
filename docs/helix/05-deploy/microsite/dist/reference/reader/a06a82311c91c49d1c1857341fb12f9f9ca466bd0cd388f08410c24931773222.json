@@ -1,0 +1,50 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"validateCoreSemanticTypeValue\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreSemanticTypeIdentity\"]"
+      ],
+      "name": "identity",
+      "optional": false,
+      "type": "CoreSemanticTypeIdentity"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Json\"]"
+      ],
+      "name": "valueInput",
+      "optional": false,
+      "type": "Json"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SemanticTypeRegistry\"]"
+      ],
+      "name": "registry",
+      "optional": false,
+      "type": "SemanticTypeRegistry"
+    }
+  ],
+  "purpose": "Conjunction of exact external checks only; no other field/native constraints are evaluated.",
+  "related": [],
+  "returns": "CoreSemanticTypeValueResult",
+  "task": "Read and validate",
+  "type": "(input: Document, identity: CoreSemanticTypeIdentity, valueInput: Json, registry: SemanticTypeRegistry) => CoreSemanticTypeValueResult"
+}

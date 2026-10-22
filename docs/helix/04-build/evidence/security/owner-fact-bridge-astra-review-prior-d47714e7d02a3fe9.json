@@ -1,0 +1,243 @@
+{
+  "id": "owner-fact-bridge-astra-review",
+  "status": "clean-within-conditional-fact-inspection-scope",
+  "reviewer": "/root/astra_security_review",
+  "generatedAt": "2026-10-10T06:24:26.680482+00:00",
+  "sourceDigests": {
+    "/private/tmp/owner-fact-bridge-astra-review.py": "a0887d5f19a4ce55ec3ec73332473a804c19de84e2d27d2e554a4588d46e8a87",
+    "/Users/erik/.codex/worktrees/1598/umf/tools/security/pg-owner-fact-selection.py": "2d4fbd6cbc5ce27eed15f3882465627bb8aa4ea7b68cf4d2f1718dd80d8cb0a1",
+    "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/pg-owner-fact-selection.json": "3bf3eb4df619567f22dc2a3218c345d191a0cb19624a9593b4df4ab407c1ee2b",
+    "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/weft-original-use.json": "38f89975a507c5c3b5ba74dc2fe8fded960fcd9ab93357b09714e395da702c61",
+    "/Users/erik/.codex/worktrees/1598/umf/docs/helix/03-test/security/cases.json": "71eb930c78ad5e63e35c2b343a276ee5d78e9a38fe3ce78b840f81384fe4d2aa",
+    "/Users/erik/Projects/weft/crates/weft-core/examples/security_fact_inspection.rs": "f1fd8cd10244dd5724192fb87d5f8b3940c350d8f2b03c9deaef3356626caeeb",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_evaluation.rs": "92206b2bb19679a365be8030d1dd1e412a9ade3aa21ed10aa94801792e3a1005",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_result_selection.rs": "67ba1894fa681cca7b66779f799a0f6a75d5496b29a9f7238f257dff48e47cc8",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_result_cells.rs": "2d75f65f3831562574a43403597731b7bfef9f3e27eb99a579be06d07b697c23",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_result_check.rs": "168a09338fc736cc34b1e72c27ecc73f3dc8cdbb398e9f2e4140942ad39d264a",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_ontology.rs": "a1e19a2605a2d247b6c58f252886d0ab45077cd2e3d53f0bffb995a2ae2a7d19",
+    "/Users/erik/Projects/weft/docs/helix/02-design/contracts/CONTRACT-005-security-compilation.md": "a06ad9eb7899b97aecbfa4cd4b5f42f2e449e38b653f02ebb9894626fbee2897",
+    "tests/security/native/pg-raw-membership-oracle.json": "1b04b8a2fe0de4f72ca2926398ff2717909bdbdee9d53e4284e4f4bd2fc5acee",
+    "tests/security/native/pg-raw-membership.py": "19a062f5cb18532b9da3925d6444faa78f2a92c2bfe8bfaedfd78887ef9d29ab",
+    "tests/security/native/pg-raw-membership.sql": "ac5640077786e81b80e536acc7c5d89d8f6747e1d8f425f17c4e3dfc3b37daf6",
+    "/private/tmp/umf-security-weft-bridge-target/debug/examples/security_fact_inspection": "e2ab648d35dd9cebeb030167e16a5ae2e42722c04a32093668c9f08e7e717e26"
+  },
+  "sourcesUnchanged": true,
+  "reviewCommand": {
+    "argv": [
+      "/Library/Developer/CommandLineTools/usr/bin/python3",
+      "/private/tmp/owner-fact-bridge-astra-review.py"
+    ],
+    "sourceSha256": "a0887d5f19a4ce55ec3ec73332473a804c19de84e2d27d2e554a4588d46e8a87",
+    "source": "\"\"\"Independent retained native census audit plus actual owner executable replay. No database calls.\"\"\"\nimport copy,hashlib,json,pathlib,subprocess,sys\nfrom datetime import datetime,timezone\nROOT=pathlib.Path('/Users/erik/.codex/worktrees/1598/umf')\nSELF=pathlib.Path('/private/tmp/owner-fact-bridge-astra-review.py')\nassert pathlib.Path.cwd()==ROOT and pathlib.Path(__file__).resolve()==SELF and len(sys.argv)==1\nOWNER=pathlib.Path('/Users/erik/Projects/weft')\nTOOL=pathlib.Path('/private/tmp/weft-toolchain/rustup/toolchains/1.90.0-aarch64-apple-darwin/bin')\nPROBE=ROOT/'tools/security/pg-owner-fact-selection.py'\nRECEIPT=ROOT/'docs/helix/04-build/evidence/security/pg-owner-fact-selection.json'\nFOUNDATION=ROOT/'docs/helix/04-build/evidence/security/weft-original-use.json'\nBINARY=pathlib.Path('/private/tmp/umf-security-weft-bridge-target/debug/examples/security_fact_inspection')\nPLAN=ROOT/'docs/helix/03-test/security/cases.json'\nsha=lambda b:hashlib.sha256(b).hexdigest()\ndef hash_file(p):\n h=hashlib.sha256()\n with pathlib.Path(p).open('rb') as f:\n  for block in iter(lambda:f.read(1024*1024),b''):h.update(block)\n return h.hexdigest()\npaths=[SELF,PROBE,RECEIPT,FOUNDATION,PLAN,OWNER/'crates/weft-core/examples/security_fact_inspection.rs',OWNER/'crates/weft-core/src/security_evaluation.rs',OWNER/'crates/weft-core/src/security_result_selection.rs',OWNER/'crates/weft-core/src/security_result_cells.rs',OWNER/'crates/weft-core/src/security_result_check.rs',OWNER/'crates/weft-core/src/security_ontology.rs',OWNER/'docs/helix/02-design/contracts/CONTRACT-005-security-compilation.md']\nfrozen={str(p):p.read_bytes() for p in paths}\nr=json.loads(frozen[str(RECEIPT)]);f=json.loads(frozen[str(FOUNDATION)])\ncase=next(c for c in json.loads(frozen[str(PLAN)])['cases'] if c['id']=='pg-raw.B01')\nfor p in [case['oracleSource'],case['testSource'],*case['implementationSources']]:frozen[p]=pathlib.Path(p).read_bytes()\noracle=json.loads(frozen[case['oracleSource']])\nassert r['status']=='passed' and r['engine']['number']=='170009'\nassert len(r['observations'])==63\nobs={o['id']:o for o in r['observations']};assert len(obs)==63 and all(o['expected']==o['observed'] for o in obs.values())\nassert all(hash_file(p)==h for p,h in r['sourceDigests'].items())\nassert all(r['sourceDigests'][p]==h for p,h in f['sourceDigests'].items())\nassert all(r['sourceDigests'][p]==sha(frozen[p]) for p in [case['testSource'],case['oracleSource'],*case['implementationSources']])\nbinary_hash=hash_file(BINARY);assert r['sourceDigests'][str(BINARY)]==binary_hash\nbuild=r['build'];assert build['exitCode']==0 and build['sourcesUnchanged'] is True\nassert build['command']==[str(TOOL/'cargo'),'build','--offline','--locked','-p','weft-core','--example','security_fact_inspection','--target-dir','/private/tmp/umf-security-weft-bridge-target']\nconfigs=[OWNER/'.cargo/config',OWNER/'.cargo/config.toml',pathlib.Path('/private/tmp/weft-toolchain/cargo/config'),pathlib.Path('/private/tmp/weft-toolchain/cargo/config.toml')]\ndef selected_inputs():\n selected=[OWNER/'Cargo.toml',OWNER/'Cargo.lock',pathlib.Path('tools/security/pg-owner-fact-selection.py')]\n for base in [OWNER/'crates',OWNER/'vendor',OWNER/'spec',OWNER/'docs/helix/03-test/fixtures',TOOL,TOOL.parent/'lib']:\n  selected.extend(p for p in base.rglob('*') if p.is_file() and 'target' not in p.parts)\n selected.extend(p for p in configs if p.is_file())\n return {str(p) for p in selected}\nassert set(build['sourceDigests'])==selected_inputs()\nassert build['configPresence']=={str(p):p.exists() for p in configs}\nassert all(r['sourceDigests'][p]==h for p,h in build['sourceDigests'].items())\nbase=f['artifacts'][0]['request'];ontology=json.loads(base['ontologyJson']);policy=json.loads(base['policyJson']);model=json.loads(base['modules'][0]['documentJson'])\nref=lambda n:{'documentId':'domain','moduleId':'m','elementId':n}\nkeys={'Staff':['staffId'],'Project':['projectId'],'Resource':['resourceId'],'Ownership':['ownerResource','ownerProject'],'Assignment':['assignmentStaff','assignmentProject']}\nelements={e['id']:e for e in model['modules'][0]['elements']}\nfor t in ontology['entities']+ontology['associations']:\n name=t['type']['elementId'];key=next(k for k in elements[name]['keys'] if k['id']==t['keyId']);assert [x['element'] for x in key['fields']]==keys[name]\ndef fact(t,fields):return {'type':ref(t),'key':[fields[k] for k in keys[t]],'fields':[{'field':ref(k),'value':v} for k,v in fields.items()],'absent':[]}\ndef decode_hex(value):\n raw=bytes.fromhex(value);assert raw.hex()==value and raw.endswith(b'\\n');raw.decode('utf-8',errors='strict');return raw\nnative_raw=decode_hex(r['nativeFactHex']);native=json.loads(native_raw)\nexpected_native={'employees':oracle['facts']['employee'],'projects':[x[0] for x in oracle['facts']['project']],'ownership':oracle['facts']['m2m_resource_project'],'assignments':oracle['facts']['m2m_employee_project'],'resources':sorted([[i,'number',str(b['salary'])] for i,b,_ in oracle['facts']['resource_private_carrier']])}\nassert all(type(b['salary']) is int for _,b,_ in oracle['facts']['resource_private_carrier'])\nassert native==expected_native\nassert [x[0] for x in native['resources']]==[x[0] for x in oracle['facts']['resource']]\nmutated=copy.deepcopy(expected_native);next(x for x in mutated['resources'] if x[0]=='RA')[1:] = ['string','100']\nassert r['nativeKindControl']==mutated\nassert obs['native-string-salary-source-refusal']=={'id':'native-string-salary-source-refusal','expected':True,'observed':True}\nassert obs['unchanged-native-fact-bytes']=={'id':'unchanged-native-fact-bytes','expected':r['nativeFactHex'],'observed':r['nativeFactHex']}\nresources={i:fact('Resource',{'resourceId':{'string':i},'salary':{'integerToken':token}}) for i,kind,token in native['resources']}\npopulation=[fact('Ownership',{'ownerResource':{'string':a},'ownerProject':{'string':b}}) for a,b in native['ownership']]+[fact('Assignment',{'assignmentStaff':{'string':a},'assignmentProject':{'string':b},'active':{'boolean':active}}) for a,b,active in native['assignments']]+[fact('Staff',{'staffId':{'string':i}}) for i,login in native['employees']]+[fact('Project',{'projectId':{'string':i}}) for i in native['projects']]+list(resources.values())\ncoverage=[{'type':t['type'],'complete':True,'fields':[x['ref'] for x in t['fields']]} for t in ontology['entities']+ontology['associations']]\nassert len(r['captures'])==6\nexecutions=[];captured={}\ndef execute(label,packet):\n assert hash_file(BINARY)==binary_hash\n raw=json.dumps(packet).encode();result=subprocess.run([str(BINARY)],input=raw,capture_output=True,timeout=30)\n assert hash_file(BINARY)==binary_hash\n executions.append({'id':label,'command':[str(BINARY)],'inputSha256':sha(raw),'exitCode':result.returncode,'stdout':result.stdout.decode('utf-8',errors='strict'),'stderr':result.stderr.decode('utf-8',errors='strict')})\n return result\nfor c in r['captures']:\n label=c['id'];assert label not in captured;captured[label]=c\n actor=c['actor'];assert actor in ['umf_sec_alice','umf_sec_bob'];join=label==actor+'join';empty=label==actor+'single-empty';assert label in [actor+'single',actor+'single-empty',actor+'join']\n ids=oracle['actors'][actor]['ids'];expected_rows=[] if empty else [[a,b] for a in ids for b in ids] if join else [[a] for a in ids]\n raw=decode_hex(c['nativeRowsHex']);assert json.loads(raw)==expected_rows\n if join:assert any(a!=b for a,b in expected_rows)\n owner_sql='SELECT r.resourceId AS first,s.resourceId AS second FROM Resource r JOIN Resource s ON r.resourceId=r.resourceId ORDER BY r.resourceId,s.resourceId' if join else 'SELECT r.resourceId FROM Resource r'+(\" WHERE r.resourceId='missing'\" if empty else '')+' ORDER BY r.resourceId'\n native_query='SELECT r.id AS first,s.id AS second FROM security_raw.resource r JOIN security_raw.resource s ON r.id=r.id ORDER BY r.id,s.id' if join else 'SELECT r.id FROM security_raw.resource r'+(\" WHERE r.id='missing'\" if empty else '')+' ORDER BY r.id'\n native_sql=\"SELECT coalesce(json_agg(\"+('json_build_array(first,second)' if join else 'json_build_array(id)')+\"),'[]'::json) FROM (\"+native_query+\") q;\"\n assert c['ownerSql']==owner_sql and c['nativeSql']==native_sql\n request={'interfaceVersion':'weft-compile/0.4.0','dialect':'weft-sql/0.2.0','sql':owner_sql,'modules':base['modules'],'parameters':base['parameters'],'security':{'version':'umf.security/0.1.0',**{k:base[k] for k in ['policyJson','ontologyJson','queryProfileJson']}},'target':{**{k:base[k] for k in ['backendId','backendVersion','targetProfile','bindingJson']},'bindingSha256':sha(base['bindingJson'].encode())}}\n if base['readProfile'] is not None:request['readProfile']=base['readProfile']\n packet=c['packet'];assert set(packet)=={'version','compileRequestJson','nativeRowsJson','cutJson','scopedRowsJson'} and packet['version']=='weft.security.fact-inspection/0.1.0'\n assert json.loads(packet['compileRequestJson'])==request and packet['nativeRowsJson'].encode()==raw\n subject=[i for i,login in native['employees'] if login==actor];assert len(subject)==1\n cut={'trusted':True,'generation':'fixed-fixture-1','expectedGeneration':'fixed-fixture-1','policyId':policy['id'],'policyRevision':policy['revision'],'ontologyDocumentId':ontology['documentId'],'ontologyRevision':ontology['revision'],'subjects':[fact('Staff',{'staffId':{'string':subject[0]}})],'facts':population,'coverage':coverage,'context':[],'maxFacts':10000,'maxSteps':1000000}\n scoped={'version':'weft.security.scoped-facts/0.1.0','rows':[{f's{n}':resources[i] for n,i in enumerate(row)} for row in expected_rows]}\n assert json.loads(packet['cutJson'])==cut and json.loads(packet['scopedRowsJson'])==scoped\n identity={'documentId':'domain','revision':'schema-natural-1','module':'m','element':'resourceId'}\n columns=[{'position':n+1,'outputName':name,'sourceFields':[identity],'outcomes':[{'disposition':'original','id':'original','domain':{'kind':'model','field':identity}}]} for n,name in enumerate(['first','second'] if join else ['resourceId'])]\n contract={'version':'weft.security.result-contract/0.1.0','encoding':'weft.security.cells/0.1.0','columns':columns}\n report={'status':'conditional-fact-correspondence','rowCount':len(expected_rows),'columnCount':len(columns),'nativeRowsSha256':sha(raw),'resultContractSha256':sha(json.dumps(contract,separators=(',',':')).encode()),'cutSha256':sha(packet['cutJson'].encode()),'scopedRowsSha256':sha(packet['scopedRowsJson'].encode()),'scans':[{'scan':f's{n}','target':ref('Resource')} for n in range(len(columns))],'releasedRows':0}\n assert c['report']==report\n result=execute(label+':object-positive',packet);assert result.returncode==0 and not result.stderr and json.loads(result.stdout)==report\n controls={'incomplete','stale'}|({'inactive','substituted-value'} if not empty else set())|({'swapped-scopes'} if join else set())\n assert len(c['controls'])==len(controls) and {x['id'] for x in c['controls']}==controls\n for control in c['controls']:\n  code='WFT-SECURITY-RESULT-SELECTION' if control['id']=='inactive' else 'WFT-SECURITY-EVALUATION';phase='result' if control['id']=='inactive' else 'model'\n  assert control['exitCode']==1 and control['diagnostic']['code']==code and control['diagnostic']['phase']==phase and control['diagnostic']['severity']=='error'\n  assert obs[label+':'+control['id']]['expected']=={'refused':True,'code':code,'phase':phase}\nassert set(captured)=={a+b for a in ['umf_sec_alice','umf_sec_bob'] for b in ['single','join','single-empty']}\ncarriers=['outer','scoped-root','cut-root','scoped-fact','field-value','subject-fact','population-fact','coverage','coverage-type','fact-type','coverage-field','fact-field']\nassert len(r['carrierControls'])==12 and {x['id'] for x in r['carrierControls']}==set(carriers)\nbase_packet=captured['umf_sec_alicesingle']['packet']\ndef positional(v,names):return [v[n] for n in names]\nfor carrier in carriers:\n bad=copy.deepcopy(base_packet);cut=json.loads(bad['cutJson']);rows=json.loads(bad['scopedRowsJson'])\n if carrier=='outer':bad=positional(bad,['version','compileRequestJson','nativeRowsJson','cutJson','scopedRowsJson'])\n elif carrier=='scoped-root':rows=positional(rows,['version','rows'])\n elif carrier=='cut-root':cut=positional(cut,['trusted','generation','expectedGeneration','policyId','policyRevision','ontologyDocumentId','ontologyRevision','subjects','facts','coverage','context','maxFacts','maxSteps'])\n elif carrier in ['scoped-fact','subject-fact','population-fact']:\n  parent,key=(rows['rows'][0],'s0') if carrier=='scoped-fact' else (cut['subjects'],0) if carrier=='subject-fact' else (cut['facts'],0)\n  parent[key]=positional(parent[key],['type','key','fields','absent'])\n elif carrier=='field-value':rows['rows'][0]['s0']['fields'][0]=positional(rows['rows'][0]['s0']['fields'][0],['field','value'])\n elif carrier=='coverage':cut['coverage'][0]=positional(cut['coverage'][0],['type','complete','fields'])\n else:\n  if carrier=='coverage-type':parent,key=cut['coverage'][0],'type'\n  elif carrier=='fact-type':parent,key=rows['rows'][0]['s0'],'type'\n  elif carrier=='coverage-field':parent,key=cut['coverage'][0]['fields'],0\n  else:parent,key=rows['rows'][0]['s0']['fields'][0],'field'\n  parent[key]=positional(parent[key],['documentId','moduleId','elementId'])\n if carrier!='outer':bad['cutJson']=json.dumps(cut);bad['scopedRowsJson']=json.dumps(rows)\n result=execute('carrier:'+carrier,bad);assert result.returncode==1 and not result.stdout\n diagnostic=json.loads(result.stderr);code='WFT-SECURITY-FACT-INSPECTION' if carrier=='outer' else 'WFT-SECURITY-EVALUATION';phase='input' if carrier=='outer' else 'model'\n assert diagnostic['code']==code and diagnostic['phase']==phase and diagnostic['severity']=='error'\n retained=next(c for c in r['carrierControls'] if c['id']==carrier);assert retained['exitCode']==1 and retained['diagnostic']==diagnostic\n assert obs['array-carrier:'+carrier]['expected']=={'refused':True,'code':code,'phase':phase}\nassert all(pathlib.Path(p).read_bytes()==b for p,b in frozen.items())\nassert all(hash_file(p)==h for p,h in r['sourceDigests'].items()) and hash_file(BINARY)==binary_hash\nassert selected_inputs()==set(build['sourceDigests']) and build['configPresence']=={str(p):p.exists() for p in configs}\nresult={'id':'owner-fact-bridge-astra-review','status':'clean-within-conditional-fact-inspection-scope','reviewer':'/root/astra_security_review','generatedAt':datetime.now(timezone.utc).isoformat(),'sourceDigests':{**{p:sha(b) for p,b in frozen.items()},str(BINARY):binary_hash},'sourcesUnchanged':True,'reviewCommand':{'argv':[sys.executable,str(SELF)],'sourceSha256':sha(frozen[str(SELF)]),'source':frozen[str(SELF)].decode()},'nativeExecution':'Parent-executed native PostgreSQL receipt audited; reviewer did not acquire a database or rerun native SQL.','nativeReceiptAudit':{'observations':63,'uniqueIds':63,'allMatch':True,'sourcePins':len(r['sourceDigests']),'selectedBuildInputPins':len(build['sourceDigests']),'completeAuthoredCensusMatched':True,'exactTypedSalaryMatched':True,'exactNativeStringMutationMatched':True,'sixByteCapturesMatched':True,'contractHashesIndependentlyDerived':True,'distinctPairScopeSwapsRetained':True},'independentOwnerExecutions':executions,'sourceReview':['Both examples require object roots before Serde; the new fact entry additionally guards cut/scoped roots and every nested Fact, FieldValue, Coverage and qualified reference carrier before struct decoding. The legacy standalone simulator is unchanged.','Native helper execution uses frozen bytes and SQL with the exact declared helper closure checked before acquisition. Selected build inventory/config-presence and byte checks do not constitute a hermetic build.','Fixture Resource salary decoding preserves native JSON type and exact text; complete expected fixture rows and a real native string-valued mutation distinguish type before integer normalization.','Cartesian selfjoin rows contain distinct identities; retained swaps change scoped resources but not native cells, isolating output scan occurrence correspondence.'],'scope':'Six fixed native raw-fixture captures and twelve malformed-carrier actual owner executable replays. Caller trust, generation, coverage and native-to-model mappings are fixture premises; separate native connections do not establish an authenticated coherent cut. No query-compiler refinement, issuer/current-authority protocol, physical completeness in production, native release, or backend acceptance is established.','nativeImplementationQualified':False,'acceptanceCasesPromoted':[]}\nout=ROOT/'docs/helix/04-build/evidence/security/owner-fact-bridge-astra-review.json'\nif out.exists():\n old=out.read_bytes();archive=out.with_name('owner-fact-bridge-astra-review-prior-'+sha(old)[:16]+'.json')\n if archive.exists():assert archive.read_bytes()==old\n else:archive.write_bytes(old)\n result['previousReceipt']={'path':str(archive),'sha256':sha(old),'scope':'Historical only.'}\nout.write_text(json.dumps(result,indent=2)+'\\n')\nprint(json.dumps({'status':result['status'],'nativeObservations':63,'positiveReplays':6,'carrierRefusals':12,'pins':len(r['sourceDigests']),'buildPins':len(build['sourceDigests']),'output':str(out),'sha256':sha(out.read_bytes())}))\n"
+  },
+  "nativeExecution": "Parent-executed native PostgreSQL receipt audited; reviewer did not acquire a database or rerun native SQL.",
+  "nativeReceiptAudit": {
+    "observations": 63,
+    "uniqueIds": 63,
+    "allMatch": true,
+    "sourcePins": 236,
+    "selectedBuildInputPins": 208,
+    "completeAuthoredCensusMatched": true,
+    "exactTypedSalaryMatched": true,
+    "exactNativeStringMutationMatched": true,
+    "sixByteCapturesMatched": true,
+    "contractHashesIndependentlyDerived": true,
+    "distinctPairScopeSwapsRetained": true
+  },
+  "independentOwnerExecutions": [
+    {
+      "id": "umf_sec_alicesingle:object-positive",
+      "command": [
+        "/private/tmp/umf-security-weft-bridge-target/debug/examples/security_fact_inspection"
+      ],
+      "inputSha256": "e92139523a6fd0a1882283f7faa202d850064cdbe69857f4c97ecd5d113c0cd6",
+      "exitCode": 0,
+      "stdout": "{\"columnCount\":1,\"cutSha256\":\"b3f021c514fd18498db34b5a825aa22f0b8b8508caf13a8e2eae638fd837962c\",\"nativeRowsSha256\":\"ddf082494ec9244cd23f09fd03598c28b595d8aabc8bf8b3fb47c0cc540273bb\",\"releasedRows\":0,\"resultContractSha256\":\"ba5f316509d10c765d3b9f2023905b96bb5beb2f3110cb6de010be2a5bc03bf5\",\"rowCount\":2,\"scans\":[{\"scan\":\"s0\",\"target\":{\"documentId\":\"domain\",\"elementId\":\"Resource\",\"moduleId\":\"m\"}}],\"scopedRowsSha256\":\"1c6258631b6170273a9833e728d44238c1b8bf56c4bc5c38085b048ac0fcf5e8\",\"status\":\"conditional-fact-correspondence\"}\n",
+      "stderr": ""
+    },
+    {
+      "id": "umf_sec_alicejoin:object-positive",
+      "command": [
+        "/private/tmp/umf-security-weft-bridge-target/debug/examples/security_fact_inspection"
+      ],
+      "inputSha256": "dc63adbab59e689a37e3ddc320bfe6358936f73c70fc46fed63f5ee41a9c2199",
+      "exitCode": 0,
+      "stdout": "{\"columnCount\":2,\"cutSha256\":\"b3f021c514fd18498db34b5a825aa22f0b8b8508caf13a8e2eae638fd837962c\",\"nativeRowsSha256\":\"e2aa572dd7cc5ad032dd890b588d3422a840aa64d874f80bf35663a0dfb19f2a\",\"releasedRows\":0,\"resultContractSha256\":\"2c38cb8ace4f0f1709ee207c261f3431c3f1b9eed9112368c8a364a60896f704\",\"rowCount\":4,\"scans\":[{\"scan\":\"s0\",\"target\":{\"documentId\":\"domain\",\"elementId\":\"Resource\",\"moduleId\":\"m\"}},{\"scan\":\"s1\",\"target\":{\"documentId\":\"domain\",\"elementId\":\"Resource\",\"moduleId\":\"m\"}}],\"scopedRowsSha256\":\"1d64a68f43a1511c367a79a4cc41ed88410c48d5eb47af97a8ae8c38a2c2548d\",\"status\":\"conditional-fact-correspondence\"}\n",
+      "stderr": ""
+    },
+    {
+      "id": "umf_sec_alicesingle-empty:object-positive",
+      "command": [
+        "/private/tmp/umf-security-weft-bridge-target/debug/examples/security_fact_inspection"
+      ],
+      "inputSha256": "f2e835899872949ac151a22583845ae157c821d5f6d7bd5311689e39ee479a6f",
+      "exitCode": 0,
+      "stdout": "{\"columnCount\":1,\"cutSha256\":\"b3f021c514fd18498db34b5a825aa22f0b8b8508caf13a8e2eae638fd837962c\",\"nativeRowsSha256\":\"37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570\",\"releasedRows\":0,\"resultContractSha256\":\"ba5f316509d10c765d3b9f2023905b96bb5beb2f3110cb6de010be2a5bc03bf5\",\"rowCount\":0,\"scans\":[{\"scan\":\"s0\",\"target\":{\"documentId\":\"domain\",\"elementId\":\"Resource\",\"moduleId\":\"m\"}}],\"scopedRowsSha256\":\"18307e88b9ce35e7eb920b1d78f1ebf69a7bc37383c948a644795221e2565968\",\"status\":\"conditional-fact-correspondence\"}\n",
+      "stderr": ""
+    },
+    {
+      "id": "umf_sec_bobsingle:object-positive",
+      "command": [
+        "/private/tmp/umf-security-weft-bridge-target/debug/examples/security_fact_inspection"
+      ],
+      "inputSha256": "fd1e735a1f33db6de9c0ba608e63b5580c1a5f1f6cc1c4ea7fcd6acd2bde9d8e",
+      "exitCode": 0,
+      "stdout": "{\"columnCount\":1,\"cutSha256\":\"3836eaba999918e2971f7567d126097acf11c3394d061831f381c75103732649\",\"nativeRowsSha256\":\"68f58baa9a7ee79946a9432e3e556c112c0af7cfbacdc330825e71a763c1ea9b\",\"releasedRows\":0,\"resultContractSha256\":\"ba5f316509d10c765d3b9f2023905b96bb5beb2f3110cb6de010be2a5bc03bf5\",\"rowCount\":2,\"scans\":[{\"scan\":\"s0\",\"target\":{\"documentId\":\"domain\",\"elementId\":\"Resource\",\"moduleId\":\"m\"}}],\"scopedRowsSha256\":\"69d6e6fd6fa5bb3c5c9eb665b8dcc656f503635f0918255d249f75dbf14b4033\",\"status\":\"conditional-fact-correspondence\"}\n",
+      "stderr": ""
+    },
+    {
+      "id": "umf_sec_bobjoin:object-positive",
+      "command": [
+        "/private/tmp/umf-security-weft-bridge-target/debug/examples/security_fact_inspection"
+      ],
+      "inputSha256": "f0ea97014885a0ab859262edb1a3318e794c6308a76b7101d698ae7d2eb247a5",
+      "exitCode": 0,
+      "stdout": "{\"columnCount\":2,\"cutSha256\":\"3836eaba999918e2971f7567d126097acf11c3394d061831f381c75103732649\",\"nativeRowsSha256\":\"42a6d5caba39e5717f81a1ec6e52240736758b2316fa9479854615ab5879c965\",\"releasedRows\":0,\"resultContractSha256\":\"2c38cb8ace4f0f1709ee207c261f3431c3f1b9eed9112368c8a364a60896f704\",\"rowCount\":4,\"scans\":[{\"scan\":\"s0\",\"target\":{\"documentId\":\"domain\",\"elementId\":\"Resource\",\"moduleId\":\"m\"}},{\"scan\":\"s1\",\"target\":{\"documentId\":\"domain\",\"elementId\":\"Resource\",\"moduleId\":\"m\"}}],\"scopedRowsSha256\":\"217d6d7b837fdead55844f29d9dc7430283a60bb96c96c94e16342e534c855c6\",\"status\":\"conditional-fact-correspondence\"}\n",
+      "stderr": ""
+    },
+    {
+      "id": "umf_sec_bobsingle-empty:object-positive",
+      "command": [
+        "/private/tmp/umf-security-weft-bridge-target/debug/examples/security_fact_inspection"
+      ],
+      "inputSha256": "15b1dbeea0acefb9eca91b40ca2708fd69ed30d293076d30bf39c14612c4729b",
+      "exitCode": 0,
+      "stdout": "{\"columnCount\":1,\"cutSha256\":\"3836eaba999918e2971f7567d126097acf11c3394d061831f381c75103732649\",\"nativeRowsSha256\":\"37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570\",\"releasedRows\":0,\"resultContractSha256\":\"ba5f316509d10c765d3b9f2023905b96bb5beb2f3110cb6de010be2a5bc03bf5\",\"rowCount\":0,\"scans\":[{\"scan\":\"s0\",\"target\":{\"documentId\":\"domain\",\"elementId\":\"Resource\",\"moduleId\":\"m\"}}],\"scopedRowsSha256\":\"18307e88b9ce35e7eb920b1d78f1ebf69a7bc37383c948a644795221e2565968\",\"status\":\"conditional-fact-correspondence\"}\n",
+      "stderr": ""
+    },
+    {
+      "id": "carrier:outer",
+      "command": [
+        "/private/tmp/umf-security-weft-bridge-target/debug/examples/security_fact_inspection"
+      ],
+      "inputSha256": "38bf0d0f68c616945c4d980785f067b370b52a831665ab32941ca1f09b849df9",
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": "{\"code\":\"WFT-SECURITY-FACT-INSPECTION\",\"severity\":\"error\",\"message\":\"Fact inspection refused\",\"phase\":\"input\"}\n"
+    },
+    {
+      "id": "carrier:scoped-root",
+      "command": [
+        "/private/tmp/umf-security-weft-bridge-target/debug/examples/security_fact_inspection"
+      ],
+      "inputSha256": "e8ebdb43431b64343f0b5d33acc1ea0051ff9eaae1f68bb0908ce90edf2635a1",
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": "{\"code\":\"WFT-SECURITY-EVALUATION\",\"severity\":\"error\",\"message\":\"Security logical evaluation refused\",\"phase\":\"model\"}\n"
+    },
+    {
+      "id": "carrier:cut-root",
+      "command": [
+        "/private/tmp/umf-security-weft-bridge-target/debug/examples/security_fact_inspection"
+      ],
+      "inputSha256": "adeb38bf9e9478407a62ffabf3b51c20379562bd79b78514b41538b122710a29",
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": "{\"code\":\"WFT-SECURITY-EVALUATION\",\"severity\":\"error\",\"message\":\"Security logical evaluation refused\",\"phase\":\"model\"}\n"
+    },
+    {
+      "id": "carrier:scoped-fact",
+      "command": [
+        "/private/tmp/umf-security-weft-bridge-target/debug/examples/security_fact_inspection"
+      ],
+      "inputSha256": "eb2ccae4915b99f854ec24f79e92ed573ea9eb93e4e40070d2b4dd133edfa00d",
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": "{\"code\":\"WFT-SECURITY-EVALUATION\",\"severity\":\"error\",\"message\":\"Security logical evaluation refused\",\"phase\":\"model\"}\n"
+    },
+    {
+      "id": "carrier:field-value",
+      "command": [
+        "/private/tmp/umf-security-weft-bridge-target/debug/examples/security_fact_inspection"
+      ],
+      "inputSha256": "ec8ee230db4d04477314e4f913b131cad47bc620c5d45821dcb2028b05d0d413",
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": "{\"code\":\"WFT-SECURITY-EVALUATION\",\"severity\":\"error\",\"message\":\"Security logical evaluation refused\",\"phase\":\"model\"}\n"
+    },
+    {
+      "id": "carrier:subject-fact",
+      "command": [
+        "/private/tmp/umf-security-weft-bridge-target/debug/examples/security_fact_inspection"
+      ],
+      "inputSha256": "b1a07f62e2afbd3dc94cc4ed91c83eedc9b6c94fa0d9b521ff9d30fb38b4866e",
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": "{\"code\":\"WFT-SECURITY-EVALUATION\",\"severity\":\"error\",\"message\":\"Security logical evaluation refused\",\"phase\":\"model\"}\n"
+    },
+    {
+      "id": "carrier:population-fact",
+      "command": [
+        "/private/tmp/umf-security-weft-bridge-target/debug/examples/security_fact_inspection"
+      ],
+      "inputSha256": "c95054e902a14f641e9f6f79ced625ec39bb19892c9df3895d2774815a8cd783",
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": "{\"code\":\"WFT-SECURITY-EVALUATION\",\"severity\":\"error\",\"message\":\"Security logical evaluation refused\",\"phase\":\"model\"}\n"
+    },
+    {
+      "id": "carrier:coverage",
+      "command": [
+        "/private/tmp/umf-security-weft-bridge-target/debug/examples/security_fact_inspection"
+      ],
+      "inputSha256": "ddf88f0b9aba4f9ff4bd9c2e2525b65bf1faa7bbb1b5672123f4c49d6f73f003",
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": "{\"code\":\"WFT-SECURITY-EVALUATION\",\"severity\":\"error\",\"message\":\"Security logical evaluation refused\",\"phase\":\"model\"}\n"
+    },
+    {
+      "id": "carrier:coverage-type",
+      "command": [
+        "/private/tmp/umf-security-weft-bridge-target/debug/examples/security_fact_inspection"
+      ],
+      "inputSha256": "03615a5bc94035924db47ffd70924e8871a1f8abf37caad94f39e063b329493e",
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": "{\"code\":\"WFT-SECURITY-EVALUATION\",\"severity\":\"error\",\"message\":\"Security logical evaluation refused\",\"phase\":\"model\"}\n"
+    },
+    {
+      "id": "carrier:fact-type",
+      "command": [
+        "/private/tmp/umf-security-weft-bridge-target/debug/examples/security_fact_inspection"
+      ],
+      "inputSha256": "692d9e37a29053da5b4298c5612bf11e50f14cd750b0c495631e2faf30f0a8d4",
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": "{\"code\":\"WFT-SECURITY-EVALUATION\",\"severity\":\"error\",\"message\":\"Security logical evaluation refused\",\"phase\":\"model\"}\n"
+    },
+    {
+      "id": "carrier:coverage-field",
+      "command": [
+        "/private/tmp/umf-security-weft-bridge-target/debug/examples/security_fact_inspection"
+      ],
+      "inputSha256": "fe7cc118ada203889f8dac8548e5c538d5d430a80c2bd63a81a20117bf48ebd2",
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": "{\"code\":\"WFT-SECURITY-EVALUATION\",\"severity\":\"error\",\"message\":\"Security logical evaluation refused\",\"phase\":\"model\"}\n"
+    },
+    {
+      "id": "carrier:fact-field",
+      "command": [
+        "/private/tmp/umf-security-weft-bridge-target/debug/examples/security_fact_inspection"
+      ],
+      "inputSha256": "50c6f223a32c300ebe8cc12284c1e3e466b1fa7129e66fc50251a0cc08d28115",
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": "{\"code\":\"WFT-SECURITY-EVALUATION\",\"severity\":\"error\",\"message\":\"Security logical evaluation refused\",\"phase\":\"model\"}\n"
+    }
+  ],
+  "sourceReview": [
+    "Both examples require object roots before Serde; the new fact entry additionally guards cut/scoped roots and every nested Fact, FieldValue, Coverage and qualified reference carrier before struct decoding. The legacy standalone simulator is unchanged.",
+    "Native helper execution uses frozen bytes and SQL with the exact declared helper closure checked before acquisition. Selected build inventory/config-presence and byte checks do not constitute a hermetic build.",
+    "Fixture Resource salary decoding preserves native JSON type and exact text; complete expected fixture rows and a real native string-valued mutation distinguish type before integer normalization.",
+    "Cartesian selfjoin rows contain distinct identities; retained swaps change scoped resources but not native cells, isolating output scan occurrence correspondence."
+  ],
+  "scope": "Six fixed native raw-fixture captures and twelve malformed-carrier actual owner executable replays. Caller trust, generation, coverage and native-to-model mappings are fixture premises; separate native connections do not establish an authenticated coherent cut. No query-compiler refinement, issuer/current-authority protocol, physical completeness in production, native release, or backend acceptance is established.",
+  "nativeImplementationQualified": false,
+  "acceptanceCasesPromoted": [],
+  "previousReceipt": {
+    "path": "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/owner-fact-bridge-astra-review-prior-b45381c8ad9aaed4.json",
+    "sha256": "b45381c8ad9aaed4a833386ac28597e01ff1872d9512ece1914941bc859e2402",
+    "scope": "Historical only."
+  }
+}

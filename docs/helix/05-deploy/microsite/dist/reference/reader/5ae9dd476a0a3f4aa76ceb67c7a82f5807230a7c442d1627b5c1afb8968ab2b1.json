@@ -1,0 +1,23 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"uuidToBits128\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"UuidValue\"]"
+      ],
+      "name": "value",
+      "optional": false,
+      "type": "UuidValue"
+    }
+  ],
+  "purpose": "uuidToBits128 accepts value and returns Bit128Value.",
+  "related": [],
+  "returns": "Bit128Value",
+  "task": "Other APIs",
+  "type": "(value: UuidValue) => Bit128Value"
+}

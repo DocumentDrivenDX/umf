@@ -1,0 +1,30 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"proposeJsonLdCompaction\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "options",
+      "optional": false,
+      "type": "{ lossPolicy: \"report\" | \"reject\"; context: string; compactArrays?: boolean; compactToRelative?: boolean; }"
+    }
+  ],
+  "purpose": "proposeJsonLdCompaction accepts document, options and returns Promise<JsonLdCompactionReport>.",
+  "related": [],
+  "returns": "Promise<JsonLdCompactionReport>",
+  "task": "Author and edit",
+  "type": "(document: Document, options: { lossPolicy: \"report\" | \"reject\"; context: string; compactArrays?: boolean; compactToRelative?: boolean; }) => Promise<JsonLdCompactionReport>"
+}

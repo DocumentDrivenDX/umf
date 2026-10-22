@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"inspectCoreElementKind\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreKindIdentity\"]"
+      ],
+      "name": "identity",
+      "optional": false,
+      "type": "CoreKindIdentity"
+    }
+  ],
+  "purpose": "Read a role without inventing author/classifier provenance or interpreting legacy collisions.",
+  "related": [],
+  "returns": "CoreKindInspection",
+  "task": "Inspect and select",
+  "type": "(input: Document, identity: CoreKindIdentity) => CoreKindInspection"
+}

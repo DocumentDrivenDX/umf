@@ -1,0 +1,44 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"DashboardTheme\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "name",
+      "optional": true,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "fontFamily",
+      "optional": true,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "palette",
+      "optional": true,
+      "type": "string[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"DashboardModeColor\"]"
+      ],
+      "name": "roles",
+      "optional": true,
+      "type": "Partial<Record<\"selection\" | \"canvasBackground\" | \"widgetBackground\" | \"widgetBorder\" | \"font\", DashboardModeColor>>"
+    }
+  ],
+  "parameters": [],
+  "purpose": "DashboardTheme is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "DashboardTheme"
+}

@@ -1,0 +1,95 @@
+{"testProcess":"tests/owl/annotations.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/owl/annotations.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/owl/annotations.test.ts:
+(pass) US-029 nested axiom annotations preserve term identity and source edits [2405.24ms]
+(pass) US-029 nested annotations expose graph links in traversal order [190.62ms]
+(pass) US-029 annotation identity and malformed reifications agree with independent RDF parsing [8945.42ms]
+
+ 3 pass
+ 0 fail
+ 126 expect() calls
+Ran 3 tests across 1 file. [19.72s]
+{"testProcess":"tests/owl/annotations.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":126,"completeSummary":true,"logSha256":"7a04a6da85715583e3f42cd98ef73fcbd79e0d8f4341c8e4c8f68f37163e13df"}
+{"testProcess":"tests/owl/axioms.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/owl/axioms.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/owl/axioms.test.ts:
+(pass) US-029 special axioms preserve negative polarity, lists and source through recovery and edits [2244.30ms]
+(pass) US-029 malformed term roles reject; inverse object properties remain explicit [1181.95ms]
+
+ 2 pass
+ 0 fail
+ 34 expect() calls
+Ran 2 tests across 1 file. [11.19s]
+{"testProcess":"tests/owl/axioms.test.ts","exitCode":0,"pass":2,"fail":0,"assertions":34,"completeSummary":true,"logSha256":"c7f6c40747a3356090940b3ee44cce839f5c977130746a65b5250442819e321e"}
+{"testProcess":"tests/owl/declarations.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/owl/declarations.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/owl/declarations.test.ts:
+(pass) US-029 explicit declarations preserve roles, occurrences and unknown source through both formats [5351.57ms]
+(pass) US-029 declaration corpus agrees with independent explicit RDF roles after recovery and edits [6931.80ms]
+
+ 2 pass
+ 0 fail
+ 138 expect() calls
+Ran 2 tests across 1 file. [20.20s]
+{"testProcess":"tests/owl/declarations.test.ts","exitCode":0,"pass":2,"fail":0,"assertions":138,"completeSummary":true,"logSha256":"573b0c2c8a5862be1fd3ac1427445b14dd1c929cb010403ae898ad177c04339f"}
+{"testProcess":"tests/owl/expressions.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/owl/expressions.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/owl/expressions.test.ts:
+(pass) US-029 expression views retain constructor lists and exact restrictions [6934.47ms]
+(pass) US-029 ambiguous and malformed expression structure blocks without source mutation [1481.28ms]
+
+ 2 pass
+ 0 fail
+ 170 expect() calls
+Ran 2 tests across 1 file. [16.64s]
+{"testProcess":"tests/owl/expressions.test.ts","exitCode":0,"pass":2,"fail":0,"assertions":170,"completeSummary":true,"logSha256":"732977369fca2374584cf5133b8cdc24ae41761a4af36943f4cbe73a88b75a10"}
+{"testProcess":"tests/owl/list-axioms.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/owl/list-axioms.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/owl/list-axioms.test.ts:
+(pass) US-029 list axioms preserve ordering, duplicate occurrences, annotation anchors and malformed source [2264.08ms]
+17 | });
+18 | test('US-029 list axiom recovery and edits match independent local-structure comparisons',async()=>{
+19 |  const cases=(await Bun.file('fixtures/owl/list-axioms.json').json()).cases,oracle=(await Bun.file('fixtures/owl/list-axioms-oracle.json').json()).cases;expect(cases).toHaveLength(12);expect(oracle).toHaveLength(12);
+20 |  for(const [i,c] of cases.entries()){
+21 |   const original=importOwlTurtle(c.input,{id:c.file,baseIRI:'https://example.org/',blankNodeScope:'lists'}),qs=getOwlQuads(original),d=c.editIndex===null?original:proposeOwlQuadEdit(original,c.editIndex,{...qs[c.editIndex]!,object:{kind:'iri',value:'https://example.org/EditedMember'}}).document;
+22 |   const v=getOwlListAxioms(readDocument(writeDocument(d,c.format),c.format));expect(v).toEqual(c.view);expect(exportOwlTurtle(v.source)).toBe(c.text);expect(oracle[i].agrees).toBe(true);expect(oracle[i].editObserved).toBe(true);
+                                                                                            ^
+error: expect(received).toEqual(expected)
+
+@@ -1402,11 +1402,11 @@
+          ],
+          "id": "dataset",
+          "namespace": "",
+        },
+      ],
+-     "umf": "0.1.0",
++     "umf": "0.10.0",
+      "vocabularies": {
+        "umf.owl": {
+          "version": "0.1.0",
+        },
+      },
+
+- Expected  - 1
++ Received  + 1
+
+      at <anonymous> (/Users/erik/.codex/worktrees/d8be/umf/tests/owl/list-axioms.test.ts:22:88)
+(fail) US-029 list axiom recovery and edits match independent local-structure comparisons [258.37ms]
+(pass) US-029 damaged nil and literal list tails cannot expose partial axioms [533.45ms]
+
+ 2 pass
+ 1 fail
+ 107 expect() calls
+Ran 3 tests across 1 file. [10.01s]
+{"testProcess":"tests/owl/list-axioms.test.ts","exitCode":1,"pass":2,"fail":1,"assertions":107,"completeSummary":true,"logSha256":"f7cf013408e4f3e5b3f1b42317ab366aa850370374aea630c1a02376c932b877"}
+Complete test file failed or terminated: tests/owl/list-axioms.test.ts
+
+ 11 pass
+ 1 fail
+ 575 expect() calls
+Ran 12 tests across 5 files. [77.90s]

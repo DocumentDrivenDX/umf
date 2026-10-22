@@ -1,0 +1,254 @@
+{
+  "status": "pass",
+  "nativeAuthority": false,
+  "scope": "source-original SQL/native RR cache witness only",
+  "source": "76d5f56cf916438c78b744971f0a1b19b69a6586",
+  "packetSha256": "a4c7b1fc79741e305ea42aedf4f3b13b87d708ef3d71513679a4ba8fe7e8ab04",
+  "temporal": "HELD",
+  "readerPrivileges": [
+    true,
+    false,
+    false
+  ],
+  "beforeBeginXmin": [
+    null
+  ],
+  "afterBeginXmin": [
+    null
+  ],
+  "afterLockXmin": [
+    null
+  ],
+  "heldRelationLocks": [
+    [
+      16726,
+      "native_fence",
+      "ts_catalog_lock",
+      "ShareLock",
+      true
+    ],
+    [
+      2615,
+      "pg_catalog",
+      "pg_namespace",
+      "ShareLock",
+      true
+    ],
+    [
+      1255,
+      "pg_catalog",
+      "pg_proc",
+      "ShareLock",
+      true
+    ],
+    [
+      3602,
+      "pg_catalog",
+      "pg_ts_config",
+      "ShareLock",
+      true
+    ],
+    [
+      3603,
+      "pg_catalog",
+      "pg_ts_config_map",
+      "ShareLock",
+      true
+    ],
+    [
+      3600,
+      "pg_catalog",
+      "pg_ts_dict",
+      "ShareLock",
+      true
+    ],
+    [
+      3601,
+      "pg_catalog",
+      "pg_ts_parser",
+      "ShareLock",
+      true
+    ],
+    [
+      3764,
+      "pg_catalog",
+      "pg_ts_template",
+      "ShareLock",
+      true
+    ]
+  ],
+  "beforeBusiness": [
+    [
+      "a",
+      "running",
+      "[1,0,0]",
+      "a",
+      "0.10000000149011612"
+    ]
+  ],
+  "alterFence": {
+    "sqlstate": "57014",
+    "message": "canceling statement due to statement timeout"
+  },
+  "freshSnapshotGuardAfterDrift": true,
+  "mapBefore": [
+    [
+      13654,
+      "english",
+      1,
+      1,
+      "pg_catalog",
+      "english_stem"
+    ],
+    [
+      13654,
+      "english",
+      2,
+      1,
+      "pg_catalog",
+      "english_stem"
+    ],
+    [
+      13654,
+      "english",
+      3,
+      1,
+      "pg_catalog",
+      "simple"
+    ],
+    [
+      13654,
+      "english",
+      4,
+      1,
+      "pg_catalog",
+      "simple"
+    ],
+    [
+      13654,
+      "english",
+      5,
+      1,
+      "pg_catalog",
+      "simple"
+    ],
+    [
+      13654,
+      "english",
+      6,
+      1,
+      "pg_catalog",
+      "simple"
+    ],
+    [
+      13654,
+      "english",
+      7,
+      1,
+      "pg_catalog",
+      "simple"
+    ],
+    [
+      13654,
+      "english",
+      8,
+      1,
+      "pg_catalog",
+      "simple"
+    ],
+    [
+      13654,
+      "english",
+      9,
+      1,
+      "pg_catalog",
+      "simple"
+    ],
+    [
+      13654,
+      "english",
+      10,
+      1,
+      "pg_catalog",
+      "english_stem"
+    ],
+    [
+      13654,
+      "english",
+      11,
+      1,
+      "pg_catalog",
+      "english_stem"
+    ],
+    [
+      13654,
+      "english",
+      15,
+      1,
+      "pg_catalog",
+      "simple"
+    ],
+    [
+      13654,
+      "english",
+      16,
+      1,
+      "pg_catalog",
+      "english_stem"
+    ],
+    [
+      13654,
+      "english",
+      17,
+      1,
+      "pg_catalog",
+      "english_stem"
+    ],
+    [
+      13654,
+      "english",
+      18,
+      1,
+      "pg_catalog",
+      "simple"
+    ],
+    [
+      13654,
+      "english",
+      19,
+      1,
+      "pg_catalog",
+      "simple"
+    ],
+    [
+      13654,
+      "english",
+      20,
+      1,
+      "pg_catalog",
+      "simple"
+    ],
+    [
+      13654,
+      "english",
+      21,
+      1,
+      "pg_catalog",
+      "simple"
+    ],
+    [
+      13654,
+      "english",
+      22,
+      1,
+      "pg_catalog",
+      "simple"
+    ]
+  ],
+  "configurationOidAndNamePreserved": true,
+  "indexDefinitionUnchanged": true,
+  "restoredAndRecovered": true,
+  "ownedServerStopped": true,
+  "packetUnchanged": true,
+  "harnessSha256": "6a055d33098b692afd0a2bc78a23a08cee0a42b2aaf7d1a7ebdea3b9f32f059b"
+}

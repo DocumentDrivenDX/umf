@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"classifyTableSpecFacets\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"TableSpecFacetRequest\"]"
+      ],
+      "name": "options",
+      "optional": false,
+      "type": "TableSpecFacetRequest"
+    }
+  ],
+  "purpose": "Qualified interpretation, never native validation or execution. No implicit migration.",
+  "related": [],
+  "returns": "TableSpecFacetClassification",
+  "task": "Other APIs",
+  "type": "(input: Document, options: TableSpecFacetRequest) => TableSpecFacetClassification"
+}

@@ -1,7 +1,9 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
+import {assertJsonDataEqual} from './json-data-assert';
 /** Host-only native discovery and existing Avro tree retention, not facet acceptance. */
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
-import {importAvroSchema,exportAvroSchema,getAvroNode,readDocument,writeDocument} from '../../src';
+import {importAvroSchema, exportAvroSchema, getAvroNode, readDocument, writeDocument} from '../../src';
 const command=['.venv/bin/python','scripts/core-ideals/facets-avro-discovery-native.py'];
 const process=Bun.spawn(command,{stdout:'inherit',stderr:'inherit'});
 assert.equal(await process.exited,0,'Pinned native facet discovery failed');
@@ -15,7 +17,7 @@ for(const [index,text] of sources.entries()){
  const source=importAvroSchema(text,{id:`avro-facet-discovery-${index}`});
  for(const format of ['json','yaml'] as const){
   const restored=readDocument(writeDocument(source,format),format);
-  assert.deepEqual(getAvroNode(restored,''),getAvroNode(source,''));
+  assertJsonDataEqual(getAvroNode(restored,''),getAvroNode(source,''));
   assert.deepEqual(JSON.parse(exportAvroSchema(restored)),JSON.parse(text));recoveries++;
  }
 }

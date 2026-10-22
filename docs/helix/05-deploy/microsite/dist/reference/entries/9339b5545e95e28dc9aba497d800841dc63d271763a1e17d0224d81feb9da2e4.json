@@ -1,0 +1,179 @@
+{
+  "data": {
+    "extensionId": "umf.avro.keys",
+    "manifest": {
+      "capabilities": {
+        "directions": [
+          "import",
+          "export"
+        ],
+        "evidence": [
+          "tests/core-ideals/key-avro.test.ts",
+          "fixtures/validation/key-avro-discovery-native.json",
+          "fixtures/validation/key-avro-browser.json",
+          "tests/core-ideals/key-avro-projection.test.ts",
+          "fixtures/validation/key-avro-projection-native.json",
+          "fixtures/validation/key-avro-projection-browser.json"
+        ],
+        "native": {
+          "subset": "Schema declarations observed with Apache Avro 1.12.0 and fastavro 1.12.2; no collection uniqueness, authored identity inference or native equivalence",
+          "system": "Apache Avro",
+          "version": "1.12.0"
+        },
+        "validation": "structural"
+      },
+      "coreVersion": "0.10.0",
+      "description": "Avro Key observations with exact native archives and explicit enforcement losses",
+      "id": "umf.avro.keys",
+      "schema": {
+        "$id": "urn:umf:avro:key-binding:1.0.0",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": true,
+        "properties": {
+          "binding": {
+            "const": {
+              "id": "umf.avro.keys",
+              "nativeVersion": "1.12.0",
+              "subset": "Schema declarations observed with Apache Avro 1.12.0 and fastavro 1.12.2; no collection uniqueness, authored identity inference or native equivalence",
+              "version": "1.0.0"
+            }
+          },
+          "nativeSource": {
+            "additionalProperties": false,
+            "properties": {
+              "dependencies": {
+                "items": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "id": {
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "schema": {
+                      "minLength": 1,
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "schema"
+                  ],
+                  "type": "object"
+                },
+                "type": "array"
+              },
+              "schema": {
+                "minLength": 1,
+                "type": "string"
+              }
+            },
+            "required": [
+              "schema",
+              "dependencies"
+            ],
+            "type": "object"
+          },
+          "observations": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "authorIntent": {
+                  "const": "unknown"
+                },
+                "enforcement": {
+                  "const": "not-expressible"
+                },
+                "fields": {
+                  "items": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "name": {
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "nativePath": {
+                        "minLength": 1,
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "name",
+                      "nativePath"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "name": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "nativePath": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "provenance": {
+                  "const": "inferred"
+                },
+                "scope": {
+                  "const": "schema-declaration"
+                }
+              },
+              "required": [
+                "nativePath",
+                "name",
+                "fields",
+                "enforcement",
+                "authorIntent",
+                "provenance",
+                "scope"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "origin": {
+            "const": "classified"
+          }
+        },
+        "required": [
+          "origin",
+          "binding",
+          "nativeSource",
+          "observations"
+        ],
+        "title": "Avro record observations without authored identity",
+        "type": "object"
+      },
+      "scopes": [
+        "document"
+      ],
+      "semantics": "CONTRACT-040 and TD-044. Native classification and separate core 0.6.0 authored projection retain all key obligations as residuals; qualified binding acceptance is recorded in docs/helix/04-build/evidence/avro-key-acceptance.md; Key admission and all-five delivery remain separate.",
+      "version": "1.0.0"
+    },
+    "registration": {
+      "apiIds": [],
+      "coreProfiles": [],
+      "mode": "unmapped"
+    },
+    "schemaId": "[\"schema\",\"spec/extensions/avro-keys/schema.json\",\"\"]",
+    "version": "1.0.0"
+  },
+  "id": "[\"extension\",\"umf.avro.keys\",\"1.0.0\"]",
+  "kind": "extension",
+  "links": [
+    "[\"guide\",\"extensions\"]",
+    "[\"schema\",\"spec/extensions/avro-keys/schema.json\",\"\"]",
+    "[\"integration\",\"umf.avro.keys@1.0.0:import\"]",
+    "[\"integration\",\"umf.avro.keys@1.0.0:export\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 4364,
+      "path": "spec/extensions/avro-keys/package.json",
+      "sha256": "11e7606893740c5342823e05d9ee51480f7b2309c6b31e9ffe645e51467eadec"
+    }
+  ],
+  "summary": "Avro Key observations with exact native archives and explicit enforcement losses",
+  "title": "umf.avro.keys · 1.0.0"
+}

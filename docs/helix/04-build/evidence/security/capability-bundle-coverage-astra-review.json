@@ -1,0 +1,329 @@
+{
+  "id": "capability-bundle-coverage-astra-review",
+  "reviewer": "/root/astra_security_review",
+  "requestedModel": "Astra ultra",
+  "status": "clean-within-abstract-review-scope",
+  "generatedAt": "2026-10-10T10:43:34.771217+00:00",
+  "sources": {
+    "docs/helix/02-design/spikes/SPIKE-010-security-result-coverage.md": "38106f38ed585201bcf7f47d017e887212e870efe48141b3bff7cd96f94a9d6f",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_requirements.rs": "937f259ae5cdca5afbee653d89f7882e6f0bb2a454a6703256d14625e8fe2711",
+    "tools/security/prove-capability-bundle-coverage.py": "f34b203bdb0e62024a905e5e17a67e6798a89a3ca2e15ec29b37a504f59433e2",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_backend.rs": "62d32617f85920fb4d8e858c79216c3673a384e613184d9b14af31d6e76033e8",
+    "docs/helix/04-build/evidence/security/capability-bundle-coverage-formal.json": "294a209c30de81063161dde6128c68c0cb3568a3063febc4287cd3c6d10d05c8"
+  },
+  "proofSourceDigests": {
+    "tools/security/prove-capability-bundle-coverage.py": "f34b203bdb0e62024a905e5e17a67e6798a89a3ca2e15ec29b37a504f59433e2",
+    "docs/helix/02-design/spikes/SPIKE-010-security-result-coverage.md": "38106f38ed585201bcf7f47d017e887212e870efe48141b3bff7cd96f94a9d6f",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_requirements.rs": "937f259ae5cdca5afbee653d89f7882e6f0bb2a454a6703256d14625e8fe2711",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_backend.rs": "62d32617f85920fb4d8e858c79216c3673a384e613184d9b14af31d6e76033e8"
+  },
+  "sourcesUnchanged": true,
+  "sourceDigests": {
+    "docs/helix/02-design/spikes/SPIKE-010-security-result-coverage.md": "38106f38ed585201bcf7f47d017e887212e870efe48141b3bff7cd96f94a9d6f",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_requirements.rs": "937f259ae5cdca5afbee653d89f7882e6f0bb2a454a6703256d14625e8fe2711",
+    "tools/security/prove-capability-bundle-coverage.py": "f34b203bdb0e62024a905e5e17a67e6798a89a3ca2e15ec29b37a504f59433e2",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_backend.rs": "62d32617f85920fb4d8e858c79216c3673a384e613184d9b14af31d6e76033e8",
+    "docs/helix/04-build/evidence/security/capability-bundle-coverage-formal.json": "294a209c30de81063161dde6128c68c0cb3568a3063febc4287cd3c6d10d05c8",
+    "/private/tmp/capability-bundle-coverage-astra-review.py": "c37bd2ea5e3d849209b50eeaab2501bb6f8f59e0b8057caef00d153bfc7f1449",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/libz3.dylib": "80b90ad4090016b67ada7d64039ea0b76b8f5a6f2747ea0ca96f9a6709841b58",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_api.h": "972a61b3df5c76f06fbfa9e02d38442474841199281f068ae605ce3c17b1df92",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_polynomial.h": "e1894c40edb37115cf221a8ef2f7e5557c7360c3c0583f05582f849ebdd78c36",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/msvcp140_atomic_wait.dll": "640b2aefced484d0368eea5bdd06addd0658a3a70a49256e560d6923b404a479",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/z3rcf.py": "504e0339b1bb06075c19ca52e51457716671218a2f2191d0c9754e0b75bede87",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_macros.h": "9d92f8136abef10dd8429a28fd9068e9b3e4feb5696072763cd8d0edc1f00b24",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/msvcp140_2.dll": "3ea06f0ee098b4823cb79599df3780e7f23cce52c19aac31d2a0d47efe33a5e9",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_algebraic.h": "7659d6dec25e49e2dd6546a6ca6c05adb27437a989d857af0cbcc7191adb45a6",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_fpa.h": "f357754480a39788653f91063af53f2e054b2382a8486171a0a17a99e1354947",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_rcf.h": "5f2219157573043338df52808a2597f52cf9b179aa8b8006b4893571027632c7",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/vcruntime140.dll": "d5e4d9a3e835fa679450145d6a7d94e36573a509317111904d9b3712c30d9066",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_fixedpoint.h": "cc8a424163dd6a92a1bfe07dea68edb8fc8dabb58f612b1e85a033a21178dedc",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3.h": "60cc2bb3e1df2c0fc6105b6a73c032b9d4f47487471616994ba63df8d81898a8",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_version.h": "1e026257aeb2cad8bafd1d788e1ce4e1cddc1b0b67d01ea3d9b8d6c12ed3c608",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/z3num.py": "d7ad7cceb560867f55dcbd87c5866e1c365fddec92faa22321bf91b60c431dee",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/msvcp140_codecvt_ids.dll": "f2069a52880ec885ee7f0511186100eb7fada0411a2b4948fafea7735b878a18",
+    "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/bin/python3.9": "6e7ae61f68a3838094fc56590f84c52069a97d7816f6bb79e0e85995b340e464",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/vcruntime140_threads.dll": "219915cf20822f34d5e7c1fdd4e21ae7f3396881096c51036225fb8f84b47afa",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/vcomp140.dll": "55aba23cdcd6484fbb06f4155b8ca75adfce7a881f10afd0c49457165e677164",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_ast_containers.h": "6687f3ec9483f3774b8951be0f9944ab47f61bedbd42193d075dd88c612fb248",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/msvcp140_1.dll": "bfad5aef4c63a669e3c140655cdfdf395b6c979b400a447bd5dcb65ed8826c3d",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3++.h": "756177103b3cf81d2c1082762cbea399c5c0189d66b53c9a073ec43c2ce8b7a8",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_spacer.h": "dd23be86e4fc74cd0adf6ca944834d165b93f6a6f3af81923116db97a7ee1ddd",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/libz3.dll": "88b20513993816cf71e29969c5232a8eb03dda05deefce71879ecc1e3519b2aa",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/z3util.py": "7087f1bbb0119e0e8f545d70cba9a21446ff267cda1289e55b3c2e4e644effd9",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_v1.h": "30d1776dafddd426d06a4a737d51d37731b45790fc26573b361562e3758ebb04",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/z3printer.py": "714f9fa34a1da9281bdc1a98d8e89d650daca6e99cd1839d325c4d3605a99730",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/z3core.py": "801867d32d0eb6525c00a3dfeff2a877590c74fc0cb776d6cde1d4e7b8aa6d7f",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/msvcp140.dll": "0f885b509a685d2bbfa652fed26b5fb31d88fbdab0a978c641d1c7b8aa460aa9",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/vcruntime140_1.dll": "1f2d41c4aa5db0bc33ebf7b66d72943a817d7ce6cbe880502a9403823633093f",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/z3types.py": "ba728354b4a9ee40bcfbd899f405d904bc4bb023e41807044c06c318548c3080",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/z3.py": "928428b680721433616cd2ca6662c1ada979f4f322ccdd3825b09b5237dc7f26",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/z3consts.py": "59737a55612e9bddb33f7ec4a27db9fbc880a92053fa8a88919fcc934e1f7573",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_optimization.h": "d6b857c21186f0710d8729ad3b7d9b39baa07b5c81855e106d3619c6423f48cc",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/z3poly.py": "fd06029418e5899b300fe3b3a300d110c8e174e633cba8b751314f22a583394e",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/__init__.py": "53c4529a01f38e7c0d593b7548c79e0d7398aa09f7d7cbd1773470859ee2febd",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/libz3.4.15.dylib": "80b90ad4090016b67ada7d64039ea0b76b8f5a6f2747ea0ca96f9a6709841b58"
+  },
+  "reviewCommand": {
+    "argv": [
+      "/private/tmp/umf-security-proof-venv/bin/python",
+      "/private/tmp/capability-bundle-coverage-astra-review.py"
+    ],
+    "cwd": "/Users/erik/.codex/worktrees/1598/umf",
+    "sourceSha256": "c37bd2ea5e3d849209b50eeaab2501bb6f8f59e0b8057caef00d153bfc7f1449",
+    "source": "\"\"\"Independent retained-formula review; no producer, Cargo, or native execution.\"\"\"\nimport hashlib\nimport importlib.util\nimport json\nfrom pathlib import Path\nimport sys\nfrom datetime import datetime, timezone\n\nROOT = Path('/Users/erik/.codex/worktrees/1598/umf')\nSELF = Path('/private/tmp/capability-bundle-coverage-astra-review.py')\nif len(sys.argv) != 1 or Path.cwd().resolve() != ROOT or Path(__file__).resolve() != SELF:\n    raise RuntimeError('Unknown independent review invocation')\nsha = lambda raw: hashlib.sha256(raw).hexdigest()\nself_bytes = SELF.read_bytes()\nproof_path = 'docs/helix/04-build/evidence/security/capability-bundle-coverage-formal.json'\nproof_bytes = (ROOT / proof_path).read_bytes()\nproof = json.loads(proof_bytes)\nexpected_source_paths = {\n    'tools/security/prove-capability-bundle-coverage.py',\n    'docs/helix/02-design/spikes/SPIKE-010-security-result-coverage.md',\n    '/Users/erik/Projects/weft/crates/weft-core/src/security_requirements.rs',\n    '/Users/erik/Projects/weft/crates/weft-core/src/security_backend.rs',\n}\nif set(proof['sourceDigests']) != expected_source_paths:\n    raise RuntimeError('Unexpected proof source set')\ncaptured = {p: (ROOT / p).read_bytes() for p in expected_source_paths}\nif any(sha(raw) != proof['sourceDigests'][p] for p, raw in captured.items()):\n    raise RuntimeError('Stale proof source')\nif (proof['status'] != 'conditional-proof-passed' or proof['sourcesUnchanged'] is not True\n        or proof['nativeImplementationQualified'] is not False or proof['acceptanceCasesPromoted'] != []):\n    raise RuntimeError('Unexpected proof scope')\n# Pin this independent replay's actual Python and installed Z3 package before import.\n# This is replay runtime custody, not a retrospective producer runtime claim.\nspec = importlib.util.find_spec('z3')\nif spec is None or spec.origin is None:\n    raise RuntimeError('Missing replay solver')\nsolver_root = Path(spec.origin).resolve().parent\nruntime_paths = {Path(sys.executable).resolve()} | {\n    p for p in solver_root.rglob('*') if p.is_file() and '__pycache__' not in p.parts and p.suffix != '.pyc'\n}\nruntime = {str(p): p.read_bytes() for p in runtime_paths}\nimport z3\nif z3.get_version_string() != proof['solverVersion']:\n    raise RuntimeError('Replay solver version differs')\nexpected_ids = [\n    'unbounded-whole-bundle-coverage-equivalence',\n    'action-fold-cannot-union-incompatible-rule-features',\n    'distinct-required-occurrences-cannot-coalesce',\n    'false-branch-dependencies-cannot-be-pruned',\n    'candidate-requires-explicit-option',\n    'unsupported-status-never-upgrades',\n    'unknown-selected-constraints-refuse',\n    'exact-binding-not-implied-by-feature-coverage',\n    'cross-capability-semantic-profiles-must-agree',\n    'unknown-selected-capability-cannot-hide-behind-coverage',\n]\ncases = proof['cases']\nif len(cases) != len(expected_ids) or [c['id'] for c in cases] != expected_ids:\n    raise RuntimeError('Missing, duplicate, reordered, or unexpected case IDs')\nreplays = []\nfor case in cases:\n    if case['covers'] != ['US-056-AC6', 'US-056-AC7']:\n        raise RuntimeError('Unexpected traceability')\n    for kind, expected in [('violation', 'unsat'), ('negativeControl', 'sat'), ('positivePopulation', 'sat')]:\n        check = case[kind]\n        if check['result'] != expected or check['replayResult'] != expected:\n            raise RuntimeError('Unexpected retained result')\n        formula = check['smt']\n        if not isinstance(formula, str) or not formula or any(\n                command in formula for command in ['model-add', 'model-del', 'model-converter']):\n            raise RuntimeError('Invalid declarative formula')\n        context = z3.Context()\n        solver = z3.Solver(ctx=context)\n        solver.set(timeout=10000)\n        solver.from_string(formula)\n        actual = str(solver.check())\n        if actual != expected:\n            raise RuntimeError(f\"{case['id']}/{kind}: {actual}, expected {expected}\")\n        replays.append({'id': case['id'] + '/' + kind, 'expected': expected, 'observed': actual,\n                        'formulaSha256': sha(formula.encode('utf-8'))})\n        del solver, context\noutput = ROOT / 'docs/helix/04-build/evidence/security/capability-bundle-coverage-astra-review.json'\nprior = output.read_bytes() if output.exists() else None\nif any((ROOT / p).read_bytes() != raw for p, raw in captured.items()):\n    raise RuntimeError('Proof source changed during replay')\nif (ROOT / proof_path).read_bytes() != proof_bytes or SELF.read_bytes() != self_bytes:\n    raise RuntimeError('Proof or review generator changed during replay')\nif any(Path(p).read_bytes() != raw for p, raw in runtime.items()):\n    raise RuntimeError('Replay runtime changed during execution')\nfindings = []\nresolved_findings = [\n    'Occurrence law now says distinct required occurrences; neither code nor design claims to model equal target types.',\n    'Exact-binding law now explicitly names abstract binding versus feature coverage, without domain or ordered-Key refinement.',\n    'Candidate-option, status and constraint controls each assert an explicit guard-deleted admission matcher that retains the other predicates.',\n    'Compatible positive population requires two distinct bundles and two distinct capabilities, with exact disjoint mapping and feature ownership; the incompatible-profile case preserves this mapping.',\n    'Coherence population is removed by explicit Z3 AST .eq filtering.',\n    'Query-carrier design requires bidirectional complete selected-Key population equality, exactly one carrier row per authoritative Record, no extra or duplicate Keys, and normalized mapped-field coherence.',\n]\n\nreceipt = {\n    'id': 'capability-bundle-coverage-astra-review',\n    'reviewer': '/root/astra_security_review', 'requestedModel': 'Astra ultra',\n    'status': 'clean-within-abstract-review-scope', 'generatedAt': datetime.now(timezone.utc).isoformat(),\n    'sources': {**{p: sha(raw) for p, raw in captured.items()}, proof_path: sha(proof_bytes)},\n    'proofSourceDigests': proof['sourceDigests'], 'sourcesUnchanged': True,\n    'sourceDigests': {**{p: sha(raw) for p, raw in captured.items()}, proof_path: sha(proof_bytes), str(SELF): sha(self_bytes), **{p: sha(raw) for p, raw in runtime.items()}},\n    'reviewCommand': {'argv': [sys.executable, str(SELF)], 'cwd': str(ROOT),\n                     'sourceSha256': sha(self_bytes), 'source': self_bytes.decode('utf-8'),\n                     'pythonVersion': sys.version, 'solverVersion': z3.get_version_string()},\n    'reviewRuntimeDigests': {p: sha(raw) for p, raw in runtime.items()},\n    'observations': {'independentFreshContextReplays': len(replays),\n                     'unsat': sum(c['observed'] == 'unsat' for c in replays),\n                     'sat': sum(c['observed'] == 'sat' for c in replays),\n                     'currentProofSourcePins': len(captured), 'independentRuntimePins': len(runtime),\n                     'postSolveModelCommands': 0, 'producerExecutions': 0, 'ownerExecutions': 0,\n                     'nativeAcquisitions': 0},\n    'formulaReplays': replays, 'findings': findings, 'remainingFindings': findings, 'resolvedFindings': resolved_findings,\n    'scope': 'Current SPIKE-010 selected matching design and exact retained first-order formulas only. Quantified coverage equivalence is definitional quantifier duality; other laws rely on abstract complete owner bundles, interpreted features, exact mapping, eligibility, and compatible profile premises. Independent fresh-context solver replay and current source hashes do not establish formula generation refinement, Rust extraction/matching, binding codec/domain/ordered-Key semantics, native enforcement, authentication, or release. Producer runtime closure is not established by its four source pins; the independent replay runtime is separately captured here.',\n    'ownerImplementationQualified': False, 'nativeImplementationQualified': False,\n    'acceptanceCasesPromoted': [],\n    'next': 'Implement owner-private closed bundle/binding interpretation and independently test actual derivation/correspondence while retaining the unconditional lowering refusal.',\n}\nif prior is not None:\n    digest = sha(prior)\n    archive = output.with_name('capability-bundle-coverage-astra-review-prior-' + digest[:16] + '.json')\n    if archive.exists() and archive.read_bytes() != prior:\n        raise RuntimeError('Historical review archive collision')\n    if not archive.exists():\n        archive.write_bytes(prior)\n    receipt['previousReceipt'] = {'path': str(archive), 'sha256': digest, 'scope': 'Historical review only.'}\noutput.write_text(json.dumps(receipt, indent=2) + '\\n')\nprint(json.dumps({'status': receipt['status'], **receipt['observations'], 'findings': len(findings),\n                  'output': str(output), 'receiptSha256': sha(output.read_bytes())}))\n",
+    "pythonVersion": "3.9.6 (default, Aug 25 2026, 21:26:21) \n[Clang 21.0.0 (clang-2100.3.34.2)]",
+    "solverVersion": "4.15.4"
+  },
+  "reviewRuntimeDigests": {
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/libz3.dylib": "80b90ad4090016b67ada7d64039ea0b76b8f5a6f2747ea0ca96f9a6709841b58",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_api.h": "972a61b3df5c76f06fbfa9e02d38442474841199281f068ae605ce3c17b1df92",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_polynomial.h": "e1894c40edb37115cf221a8ef2f7e5557c7360c3c0583f05582f849ebdd78c36",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/msvcp140_atomic_wait.dll": "640b2aefced484d0368eea5bdd06addd0658a3a70a49256e560d6923b404a479",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/z3rcf.py": "504e0339b1bb06075c19ca52e51457716671218a2f2191d0c9754e0b75bede87",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_macros.h": "9d92f8136abef10dd8429a28fd9068e9b3e4feb5696072763cd8d0edc1f00b24",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/msvcp140_2.dll": "3ea06f0ee098b4823cb79599df3780e7f23cce52c19aac31d2a0d47efe33a5e9",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_algebraic.h": "7659d6dec25e49e2dd6546a6ca6c05adb27437a989d857af0cbcc7191adb45a6",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_fpa.h": "f357754480a39788653f91063af53f2e054b2382a8486171a0a17a99e1354947",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_rcf.h": "5f2219157573043338df52808a2597f52cf9b179aa8b8006b4893571027632c7",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/vcruntime140.dll": "d5e4d9a3e835fa679450145d6a7d94e36573a509317111904d9b3712c30d9066",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_fixedpoint.h": "cc8a424163dd6a92a1bfe07dea68edb8fc8dabb58f612b1e85a033a21178dedc",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3.h": "60cc2bb3e1df2c0fc6105b6a73c032b9d4f47487471616994ba63df8d81898a8",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_version.h": "1e026257aeb2cad8bafd1d788e1ce4e1cddc1b0b67d01ea3d9b8d6c12ed3c608",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/z3num.py": "d7ad7cceb560867f55dcbd87c5866e1c365fddec92faa22321bf91b60c431dee",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/msvcp140_codecvt_ids.dll": "f2069a52880ec885ee7f0511186100eb7fada0411a2b4948fafea7735b878a18",
+    "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/bin/python3.9": "6e7ae61f68a3838094fc56590f84c52069a97d7816f6bb79e0e85995b340e464",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/vcruntime140_threads.dll": "219915cf20822f34d5e7c1fdd4e21ae7f3396881096c51036225fb8f84b47afa",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/vcomp140.dll": "55aba23cdcd6484fbb06f4155b8ca75adfce7a881f10afd0c49457165e677164",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_ast_containers.h": "6687f3ec9483f3774b8951be0f9944ab47f61bedbd42193d075dd88c612fb248",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/msvcp140_1.dll": "bfad5aef4c63a669e3c140655cdfdf395b6c979b400a447bd5dcb65ed8826c3d",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3++.h": "756177103b3cf81d2c1082762cbea399c5c0189d66b53c9a073ec43c2ce8b7a8",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_spacer.h": "dd23be86e4fc74cd0adf6ca944834d165b93f6a6f3af81923116db97a7ee1ddd",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/libz3.dll": "88b20513993816cf71e29969c5232a8eb03dda05deefce71879ecc1e3519b2aa",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/z3util.py": "7087f1bbb0119e0e8f545d70cba9a21446ff267cda1289e55b3c2e4e644effd9",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_v1.h": "30d1776dafddd426d06a4a737d51d37731b45790fc26573b361562e3758ebb04",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/z3printer.py": "714f9fa34a1da9281bdc1a98d8e89d650daca6e99cd1839d325c4d3605a99730",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/z3core.py": "801867d32d0eb6525c00a3dfeff2a877590c74fc0cb776d6cde1d4e7b8aa6d7f",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/msvcp140.dll": "0f885b509a685d2bbfa652fed26b5fb31d88fbdab0a978c641d1c7b8aa460aa9",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/vcruntime140_1.dll": "1f2d41c4aa5db0bc33ebf7b66d72943a817d7ce6cbe880502a9403823633093f",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/z3types.py": "ba728354b4a9ee40bcfbd899f405d904bc4bb023e41807044c06c318548c3080",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/z3.py": "928428b680721433616cd2ca6662c1ada979f4f322ccdd3825b09b5237dc7f26",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/z3consts.py": "59737a55612e9bddb33f7ec4a27db9fbc880a92053fa8a88919fcc934e1f7573",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_optimization.h": "d6b857c21186f0710d8729ad3b7d9b39baa07b5c81855e106d3619c6423f48cc",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/z3poly.py": "fd06029418e5899b300fe3b3a300d110c8e174e633cba8b751314f22a583394e",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/__init__.py": "53c4529a01f38e7c0d593b7548c79e0d7398aa09f7d7cbd1773470859ee2febd",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/libz3.4.15.dylib": "80b90ad4090016b67ada7d64039ea0b76b8f5a6f2747ea0ca96f9a6709841b58"
+  },
+  "observations": {
+    "independentFreshContextReplays": 30,
+    "unsat": 10,
+    "sat": 20,
+    "currentProofSourcePins": 4,
+    "independentRuntimePins": 37,
+    "postSolveModelCommands": 0,
+    "producerExecutions": 0,
+    "ownerExecutions": 0,
+    "nativeAcquisitions": 0
+  },
+  "formulaReplays": [
+    {
+      "id": "unbounded-whole-bundle-coverage-equivalence/violation",
+      "expected": "unsat",
+      "observed": "unsat",
+      "formulaSha256": "8d24bb560559730eb3a68ffa83459062abbb221a163e261d6d055d93e7ffa0b1"
+    },
+    {
+      "id": "unbounded-whole-bundle-coverage-equivalence/negativeControl",
+      "expected": "sat",
+      "observed": "sat",
+      "formulaSha256": "3f3c4a638992263832d80d404908fb3416f8fa813dfdcdd79b82cac16b58de9f"
+    },
+    {
+      "id": "unbounded-whole-bundle-coverage-equivalence/positivePopulation",
+      "expected": "sat",
+      "observed": "sat",
+      "formulaSha256": "b6fe23f327919aea51909bb1e3613caef7ec2b55b37b003260d259b583b982aa"
+    },
+    {
+      "id": "action-fold-cannot-union-incompatible-rule-features/violation",
+      "expected": "unsat",
+      "observed": "unsat",
+      "formulaSha256": "95ef95b21eb0b419199e049fcacc7bfad305479331c5627da96cb9072a1a6b3b"
+    },
+    {
+      "id": "action-fold-cannot-union-incompatible-rule-features/negativeControl",
+      "expected": "sat",
+      "observed": "sat",
+      "formulaSha256": "3f3c4a638992263832d80d404908fb3416f8fa813dfdcdd79b82cac16b58de9f"
+    },
+    {
+      "id": "action-fold-cannot-union-incompatible-rule-features/positivePopulation",
+      "expected": "sat",
+      "observed": "sat",
+      "formulaSha256": "b6fe23f327919aea51909bb1e3613caef7ec2b55b37b003260d259b583b982aa"
+    },
+    {
+      "id": "distinct-required-occurrences-cannot-coalesce/violation",
+      "expected": "unsat",
+      "observed": "unsat",
+      "formulaSha256": "f5a2014bfa3e63a308c03563419e0e4fec0adffabc01f24a7048b370601aa971"
+    },
+    {
+      "id": "distinct-required-occurrences-cannot-coalesce/negativeControl",
+      "expected": "sat",
+      "observed": "sat",
+      "formulaSha256": "e259d11923f7332fb8aa1f4059b2285a5dbeb9b7a1b2ed0163430b61bdb12e79"
+    },
+    {
+      "id": "distinct-required-occurrences-cannot-coalesce/positivePopulation",
+      "expected": "sat",
+      "observed": "sat",
+      "formulaSha256": "b6fe23f327919aea51909bb1e3613caef7ec2b55b37b003260d259b583b982aa"
+    },
+    {
+      "id": "false-branch-dependencies-cannot-be-pruned/violation",
+      "expected": "unsat",
+      "observed": "unsat",
+      "formulaSha256": "c3c1dc988adcdad59cc0567cf8a4627128ad52bb8024b5d040f4596b61ca51b8"
+    },
+    {
+      "id": "false-branch-dependencies-cannot-be-pruned/negativeControl",
+      "expected": "sat",
+      "observed": "sat",
+      "formulaSha256": "1919c24c03bcedf3d3322b1974ce6f3b7c540644d5b23cf25430c99031d28a73"
+    },
+    {
+      "id": "false-branch-dependencies-cannot-be-pruned/positivePopulation",
+      "expected": "sat",
+      "observed": "sat",
+      "formulaSha256": "b6fe23f327919aea51909bb1e3613caef7ec2b55b37b003260d259b583b982aa"
+    },
+    {
+      "id": "candidate-requires-explicit-option/violation",
+      "expected": "unsat",
+      "observed": "unsat",
+      "formulaSha256": "b9ed0d33cb86fd34391e8344d4cce44b7564ec4726567debf62b4a41ceadc146"
+    },
+    {
+      "id": "candidate-requires-explicit-option/negativeControl",
+      "expected": "sat",
+      "observed": "sat",
+      "formulaSha256": "1826640da94e1e638e12f03485ce18823cf1f1ef863d279c9c7e55e31c7021c5"
+    },
+    {
+      "id": "candidate-requires-explicit-option/positivePopulation",
+      "expected": "sat",
+      "observed": "sat",
+      "formulaSha256": "e55103182354ba690785beae353dc8f08760d3e3044abc460c1096329b25db57"
+    },
+    {
+      "id": "unsupported-status-never-upgrades/violation",
+      "expected": "unsat",
+      "observed": "unsat",
+      "formulaSha256": "b29bcadba32e7d188b455b2fa4c8d1e6ae4607e2187abaab06305b289634048a"
+    },
+    {
+      "id": "unsupported-status-never-upgrades/negativeControl",
+      "expected": "sat",
+      "observed": "sat",
+      "formulaSha256": "38b79e983e57882f5c9df2c2ed704f7663f4089d030aa3f2515404072abc7ef5"
+    },
+    {
+      "id": "unsupported-status-never-upgrades/positivePopulation",
+      "expected": "sat",
+      "observed": "sat",
+      "formulaSha256": "b6fe23f327919aea51909bb1e3613caef7ec2b55b37b003260d259b583b982aa"
+    },
+    {
+      "id": "unknown-selected-constraints-refuse/violation",
+      "expected": "unsat",
+      "observed": "unsat",
+      "formulaSha256": "b70e628eb8fd90c4e135604a0a7ad93e3dd470e7902e0074a2fd8c1e68428c04"
+    },
+    {
+      "id": "unknown-selected-constraints-refuse/negativeControl",
+      "expected": "sat",
+      "observed": "sat",
+      "formulaSha256": "abd4b172a2d1a5546fd8550dfef9b6ae7be742723f9545e362ae88d26b9edf03"
+    },
+    {
+      "id": "unknown-selected-constraints-refuse/positivePopulation",
+      "expected": "sat",
+      "observed": "sat",
+      "formulaSha256": "b6fe23f327919aea51909bb1e3613caef7ec2b55b37b003260d259b583b982aa"
+    },
+    {
+      "id": "exact-binding-not-implied-by-feature-coverage/violation",
+      "expected": "unsat",
+      "observed": "unsat",
+      "formulaSha256": "6c2f7a28e91bf46dbb6a6a71522b493186d838a281e1710c0be1cf663c408f5d"
+    },
+    {
+      "id": "exact-binding-not-implied-by-feature-coverage/negativeControl",
+      "expected": "sat",
+      "observed": "sat",
+      "formulaSha256": "3ba8a3e46addbb477cd6d4170fed126c18aa917d9d5ea2e923b2bf73156c346a"
+    },
+    {
+      "id": "exact-binding-not-implied-by-feature-coverage/positivePopulation",
+      "expected": "sat",
+      "observed": "sat",
+      "formulaSha256": "b6fe23f327919aea51909bb1e3613caef7ec2b55b37b003260d259b583b982aa"
+    },
+    {
+      "id": "cross-capability-semantic-profiles-must-agree/violation",
+      "expected": "unsat",
+      "observed": "unsat",
+      "formulaSha256": "14611bffb0cdb034e29afbeee3e1eed5bed83110c04a3abd5c25ce4c2c38d6fb"
+    },
+    {
+      "id": "cross-capability-semantic-profiles-must-agree/negativeControl",
+      "expected": "sat",
+      "observed": "sat",
+      "formulaSha256": "87cf0450054264652b0a4629bddf65e7f32c1ab97cb809d790c04098e23492ae"
+    },
+    {
+      "id": "cross-capability-semantic-profiles-must-agree/positivePopulation",
+      "expected": "sat",
+      "observed": "sat",
+      "formulaSha256": "46490630d700a69029cbe6af491f4992cd07158fb333be0800fe5449a2e025c5"
+    },
+    {
+      "id": "unknown-selected-capability-cannot-hide-behind-coverage/violation",
+      "expected": "unsat",
+      "observed": "unsat",
+      "formulaSha256": "c566322031b86599dc2c680833b7759a3179267568d49281b4b986daf05c57ca"
+    },
+    {
+      "id": "unknown-selected-capability-cannot-hide-behind-coverage/negativeControl",
+      "expected": "sat",
+      "observed": "sat",
+      "formulaSha256": "a4c9ce906de77ec1e8ce499a0de0615bdb866e855e4cf71d4a02f736bb133cda"
+    },
+    {
+      "id": "unknown-selected-capability-cannot-hide-behind-coverage/positivePopulation",
+      "expected": "sat",
+      "observed": "sat",
+      "formulaSha256": "b6fe23f327919aea51909bb1e3613caef7ec2b55b37b003260d259b583b982aa"
+    }
+  ],
+  "findings": [],
+  "remainingFindings": [],
+  "resolvedFindings": [
+    "Occurrence law now says distinct required occurrences; neither code nor design claims to model equal target types.",
+    "Exact-binding law now explicitly names abstract binding versus feature coverage, without domain or ordered-Key refinement.",
+    "Candidate-option, status and constraint controls each assert an explicit guard-deleted admission matcher that retains the other predicates.",
+    "Compatible positive population requires two distinct bundles and two distinct capabilities, with exact disjoint mapping and feature ownership; the incompatible-profile case preserves this mapping.",
+    "Coherence population is removed by explicit Z3 AST .eq filtering.",
+    "Query-carrier design requires bidirectional complete selected-Key population equality, exactly one carrier row per authoritative Record, no extra or duplicate Keys, and normalized mapped-field coherence."
+  ],
+  "scope": "Current SPIKE-010 selected matching design and exact retained first-order formulas only. Quantified coverage equivalence is definitional quantifier duality; other laws rely on abstract complete owner bundles, interpreted features, exact mapping, eligibility, and compatible profile premises. Independent fresh-context solver replay and current source hashes do not establish formula generation refinement, Rust extraction/matching, binding codec/domain/ordered-Key semantics, native enforcement, authentication, or release. Producer runtime closure is not established by its four source pins; the independent replay runtime is separately captured here.",
+  "ownerImplementationQualified": false,
+  "nativeImplementationQualified": false,
+  "acceptanceCasesPromoted": [],
+  "next": "Implement owner-private closed bundle/binding interpretation and independently test actual derivation/correspondence while retaining the unconditional lowering refusal.",
+  "previousReceipt": {
+    "path": "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/capability-bundle-coverage-astra-review-prior-89d684ba6d7d49d2.json",
+    "sha256": "89d684ba6d7d49d2b8e765a70e8a4d372b4a9f167e42eeea3f18fe0b411936e0",
+    "scope": "Historical review only."
+  }
+}

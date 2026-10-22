@@ -1,0 +1,37 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"Bit128NativeTypeInput\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "system",
+      "optional": false,
+      "type": "\"avro\" | \"parquet\" | \"postgresql\" | \"sqlserver\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "version",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Json\"]"
+      ],
+      "name": "definition",
+      "optional": false,
+      "type": "Json"
+    }
+  ],
+  "parameters": [],
+  "purpose": "Bit128NativeTypeInput is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "Bit128NativeTypeInput"
+}

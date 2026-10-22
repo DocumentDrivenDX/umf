@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "urn:umf:core:record-type-operation:6.0.0",
-  "title": "Explicit authored Field to record-definition reference (Key envelope) (Relationship envelope)",
+  "title": "Core record type declaration receipt",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -22,10 +22,10 @@
       "const": "6.0.0"
     },
     "source": {
-      "$ref": "urn:umf:core:0.7.0"
+      "$ref": "urn:umf:core:0.10.0"
     },
     "target": {
-      "$ref": "urn:umf:core:0.7.0"
+      "$ref": "urn:umf:core:0.10.0"
     },
     "fieldAuthor": {
       "$ref": "urn:umf:core:kind-operation:6.0.0#/$defs/declaration"

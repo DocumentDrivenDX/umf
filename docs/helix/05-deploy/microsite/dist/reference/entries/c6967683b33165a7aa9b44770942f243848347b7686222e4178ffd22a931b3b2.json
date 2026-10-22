@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 6364,
+        "line": 20,
+        "path": "src/core-ideals/avro-field.ts",
+        "sha256": "5d800d963379b90463874cd94f69476880a68f80c4bdeaf7f5ebafc155ea98fc"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "classifyAvroField",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: Document, options: AvroFieldRequest): AvroFieldClassification"
+    ]
+  },
+  "id": "[\"api\",\".\",\"classifyAvroField\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 6364,
+      "line": 20,
+      "path": "src/core-ideals/avro-field.ts",
+      "sha256": "5d800d963379b90463874cd94f69476880a68f80c4bdeaf7f5ebafc155ea98fc"
+    }
+  ],
+  "summary": "Native paths are JSON pointers into the retained capture text, not pointers into the tagged UMF encoding.",
+  "title": "classifyAvroField"
+}

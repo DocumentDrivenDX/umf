@@ -1,0 +1,90 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"DeltaParquetCheckpointRecovery\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "status",
+      "optional": false,
+      "type": "\"blocked\" | \"reconciled\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "complete",
+      "optional": false,
+      "type": "false"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "spec",
+      "optional": false,
+      "type": "\"v1\" | \"v2\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"DeltaCommit\"]"
+      ],
+      "name": "checkpoint",
+      "optional": false,
+      "type": "DeltaCommit"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"DeltaCommit\"]"
+      ],
+      "name": "sources",
+      "optional": false,
+      "type": "DeltaCommit[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"DeltaSidecar\"]"
+      ],
+      "name": "sidecars",
+      "optional": false,
+      "type": "DeltaSidecar[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Diagnostic\"]"
+      ],
+      "name": "diagnostics",
+      "optional": false,
+      "type": "Diagnostic[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"DeltaParquetActions\"]"
+      ],
+      "name": "projection",
+      "optional": true,
+      "type": "DeltaParquetActions"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"DeltaReconciliation\"]",
+        "[\"api\",\".\",\"DeltaSidecarReconciliation\"]"
+      ],
+      "name": "recovery",
+      "optional": true,
+      "type": "DeltaReconciliation | DeltaSidecarReconciliation"
+    }
+  ],
+  "parameters": [],
+  "purpose": "DeltaParquetCheckpointRecovery is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "DeltaParquetCheckpointRecovery"
+}

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 export {};
 const schema=await Bun.file('spec/projections/sqlserver-avro.schema.json').json();
 schema.$id='urn:umf:projection:postgresql-avro:0.1.0';

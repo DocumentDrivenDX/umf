@@ -1,0 +1,170 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:jsonld:0.1.0",
+  "type": "object",
+  "properties": {
+    "profile": {
+      "const": "jsonld-source"
+    },
+    "processingMode": {
+      "enum": [
+        "json-ld-1.0",
+        "json-ld-1.1"
+      ]
+    },
+    "baseIRI": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 4096
+    },
+    "root": {
+      "$ref": "#/$defs/node"
+    },
+    "originalSource": {
+      "type": "string",
+      "maxLength": 4000000
+    },
+    "contexts": {
+      "type": "array",
+      "maxItems": 100,
+      "items": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string",
+            "minLength": 1
+          },
+          "documentUrl": {
+            "type": "string",
+            "minLength": 1
+          },
+          "root": {
+            "$ref": "#/$defs/node"
+          },
+          "originalSource": {
+            "type": "string",
+            "maxLength": 4000000
+          }
+        },
+        "required": [
+          "url",
+          "documentUrl",
+          "root",
+          "originalSource"
+        ],
+        "additionalProperties": true
+      }
+    },
+    "expandContext": {
+      "$ref": "#/$defs/node"
+    }
+  },
+  "required": [
+    "profile",
+    "processingMode",
+    "baseIRI",
+    "root",
+    "originalSource",
+    "contexts"
+  ],
+  "additionalProperties": true,
+  "$defs": {
+    "node": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": [
+            "kind"
+          ],
+          "properties": {
+            "kind": {
+              "const": "null"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "kind",
+            "value"
+          ],
+          "properties": {
+            "kind": {
+              "const": "boolean"
+            },
+            "value": {
+              "type": "boolean"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "kind",
+            "value"
+          ],
+          "properties": {
+            "kind": {
+              "const": "string"
+            },
+            "value": {
+              "type": "string"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "kind",
+            "value"
+          ],
+          "properties": {
+            "kind": {
+              "const": "number"
+            },
+            "value": {
+              "type": "string",
+              "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?([eE][+-]?[0-9]+)?$"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "kind",
+            "items"
+          ],
+          "properties": {
+            "kind": {
+              "const": "array"
+            },
+            "items": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/node"
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "kind",
+            "members"
+          ],
+          "properties": {
+            "kind": {
+              "const": "object"
+            },
+            "members": {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/$defs/node"
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

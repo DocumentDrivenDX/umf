@@ -1,0 +1,64 @@
+{
+  "status": "component-review-passed",
+  "reviewer": "Independent Astra Ultra review continuation",
+  "reviewedAt": "2026-10-16T05:51:52.347975+00:00",
+  "packet": {
+    "path": "/private/tmp/umf-queryable-presence-policy-r2-review-20261016.zip",
+    "sha256": "bf00ba51bb4f6335fc32353653dc913e1e540a80a956826c3e5dbd66ec2ad98f"
+  },
+  "pins": {
+    "frozen/tools/security/query-presence-policy-oracle.ts": "ca3f9e0ae716f0cb2be3e77c49d80a339ce942090bcd3000944463612947b8ca",
+    "frozen/docs/helix/03-test/test-plans/STP-056-security-bindings.md": "43e5ae2c8af019fd55f5e633b2d558ec1b56f87bc191311c90b000c74623fb86",
+    "frozen/docs/helix/04-build/implementation-plan.md": "341277c1a8398f032efe902acc765ab4aeaab482c12c079a50d360b051a0d544",
+    "frozen/docs/helix/04-build/evidence/security/queryable-presence-policy-20261016/README.md": "6350bae6652340acb6ed3f3d4a28de46282ab49ad422ecb11749893a06fe8721",
+    "frozen/docs/helix/04-build/evidence/security/queryable-presence-policy-20261016/receipt.json": "780d9da793ad789aa04da143256dfbf4da6b4a47f562c4ac7228d9e067f222d5",
+    "frozen/docs/helix/04-build/evidence/security/queryable-presence-policy-20261016/inputs.zip": "6c9dbf4e340d5e8b1cde1d2df59d019e1f8e337f18567e211d522b23b9ba728b",
+    "replay-execution.json": "e2174b1cdfa3864960edc868a15b2d9fda2b6cd564a292e7a1e1ad58379405b2",
+    "packet-audit.json": "adb30eefa46b0a4898572089cb850209680aec623c070a2516a0d98e7fee1b88",
+    "additional-controls.ts": "b2c3ba4746ebb5149a6884d826160933e1d6bc7f457c4988b979fc9d9bb2ccae",
+    "additional-controls.json": "1a418faf47b017f823d56fa58bd0d7a0cdf1de169e5591bc8e7b45b85068c355",
+    "external-executable-pins.json": "f93f255bd6a61a378d08543bd391b5cea1865df913234ae364c7f588b5a2c8a9"
+  },
+  "remainingFindings": [],
+  "independentChecks": [
+    {
+      "kind": "frozen-generator-and-evaluator-replay",
+      "status": "passed",
+      "scenarios": 44,
+      "controls": 188,
+      "details": "Reconstructed all100 selected relative source/fixture/manifest files from inputs.zip and verified every source digest and the uncompressed snapshot receipt hash. Actual Bun1.4.2 replay emits byte-identical inputs.json and receipt.json. All100 sources and770 independently copied external runtime files remain unchanged."
+    },
+    {
+      "kind": "packet-semantic-audit",
+      "status": "passed",
+      "packets": 44,
+      "details": "Independently derived nested Membership as Ownership.resource=currentResource AND Assignment.staff=currentSubject AND Assignment.project=Ownership.project AND active=true. Verified unchanged original requirement and exact policy/owner deltas; unique complete foreign identities and all association endpoints resolve to supplied facts. Complete missing-relation controls retain complete coverage. Original20-scenario R1 README/archive/receipt retained byte-identically."
+    },
+    {
+      "kind": "independently-authored-actual-evaluator-controls",
+      "status": "passed",
+      "count": 30,
+      "details": "For String/null/absent, restoring both sides of Staff/Project equality restores the same single permitted row. Distinct duplicate Ownership/Assignment witnesses do not duplicate results, and a second complete unowned Resource does not expand eligibility. Incomplete relation coverage, stale source/owner, untrusted cut, exhausted budgets, missing presence on a denied Resource, and a JSON-cloned forged program handle refuse. Every result remains complete=false/authority=false."
+    }
+  ],
+  "semanticAssessment": [
+    "The new policy is an explicit successor adding original Token disclosure while retaining the salary disclosure and exact nested membership requirement. The original undisclosed policy remains intact and refuses protected Token reads.",
+    "Original String, present null and absent are distinct logical outcomes; absence retains the eligible row. Unreported presence is malformed/incomplete evidence and refuses even in denied-population cases.",
+    "Inactive assignment and independently mismatched subject/staff/project links produce zero eligible rows for complete supplied states. Foreign identities are valid complete facts rather than dangling endpoints.",
+    "Membership is existential over declared complete relation populations; duplicate distinct witnesses preserve a single Resource row. Correctly restoring both equality sides demonstrates the negative controls are not merely rejecting foreign literals.",
+    "The compiled program is an actual issued in-process object; serializing/cloning it loses identity and refuses. Source cuts are supplied logical fixtures. Their trusted marker is not authenticated native authority."
+  ],
+  "scopeClaims": {
+    "result": "appropriately-qualified",
+    "observedResults": "24 rendered scenarios (3 one-row and21 zero-row) and20 refusals;188 control count comprises44 exact results,44 false-authority/complete checks and100 source-unchanged checks, not188 distinct scenarios.",
+    "storedToken": "Stored-transformed Token/vault metadata is retained; this observes stored logical Token values, with no tokenization, decryption or reversal execution.",
+    "governance": "README, test-plan addition and implementation log retain original158 cases/34 criteria,45 implemented passing and113 missing cases. No P03/B08/native/backend case promotion.",
+    "nonClaims": "No compiler .4 read-requirement composition, query operator permission, actual transformation, authenticated native actor/source/current cut, guarded release, database execution or full security acceptance."
+  },
+  "limitations": [
+    "The full external executable dependency closure of the supplied original run is explicitly non-hermetic. Its Bun/Ajv versions and manifest/lock/installed metadata are captured; our copied external file hashes support this independent replay only.",
+    "Finite empirical logical scenarios and a separate simple membership cross-check are not a formal implementation proof.",
+    "No owner repository, frozen packet or product code was modified by review."
+  ],
+  "originalFailureHistory": "Original exploratory source/results and earlier20-scenario R1 cohort remain retained; no retroactive evidence upgrade."
+}

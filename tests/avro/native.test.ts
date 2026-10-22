@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {importAvroSchema,exportAvroSchema,inspectAvro,getAvroNode,editAvroNode,exportAvroBundle,readDocument,writeDocument} from '../../src';
 const original=await Bun.file('fixtures/avro/order.avsc').text();

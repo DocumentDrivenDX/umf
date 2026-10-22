@@ -1,0 +1,58 @@
+{
+  "status": "passed",
+  "controls": [
+    {
+      "id": "original",
+      "expectedFailures": [],
+      "observedFailures": [],
+      "exit": 0,
+      "stdout": "bun test v1.4.2 (43848b5a7)\n",
+      "stderr": "\ntests/security/protection/policy-v2.test.ts:\n(pass) representation upgrade changes only version/revision and preserves exact legacy constant payload [118.37ms]\n(pass) new revision, source shape and source/target text budgets are enforced [1.92ms]\n(pass) unknown old members cannot be silently promoted into recognized new meaning [1.29ms]\n(pass) catalog references require an exact pin and cannot masquerade as inline constants [1.86ms]\n(pass) record/relationship prototype grammar is preserved but not downgraded or activated [0.15ms]\n(pass) exact source lookup retains both snapshots and returns bounded coordinates, never domain authority [2.01ms]\n(pass) known legacy roundtrip retains constant behavior but never refreshes a host fact attestation [33.22ms]\n(pass) forward0.2 legacy embedding evaluates the original revision and refuses unsupported meaning [34.45ms]\n\n 8 pass\n 0 fail\n 71 expect() calls\nRan 8 tests across 1 file. [1086.00ms]\n"
+    },
+    {
+      "id": "omit-classification-guard",
+      "expectedFailures": [
+        "unknown old members cannot be silently promoted into recognized new meaning"
+      ],
+      "observedFailures": [
+        "unknown old members cannot be silently promoted into recognized new meaning"
+      ],
+      "exit": 1,
+      "stdout": "bun test v1.4.2 (43848b5a7)\n",
+      "stderr": "\ntests/security/protection/policy-v2.test.ts:\n(pass) representation upgrade changes only version/revision and preserves exact legacy constant payload [103.96ms]\n(pass) new revision, source shape and source/target text budgets are enforced [1.98ms]\n25 |  expect(upgradeSecurityPolicySource({...source,native:{large:'x'.repeat(4_000_001)}},'new').status).toBe('refused');\n26 |  expect(upgradeSecurityPolicySource(source,'x'.repeat(4_000_001)).status).toBe('refused');\n27 |  let calls=0;const bad={get vocabulary(){calls++;return 'umf.security';}};expect(upgradeSecurityPolicySource(bad,'new').status).toBe('refused');expect(calls).toBe(0);\n28 | });\n29 | test('unknown old members cannot be silently promoted into recognized new meaning',()=>{\n30 |  const source:any=securityFixture().policy;source.protection={id:'catalog',revision:'c1'};const upgraded=upgradeSecurityPolicySource(source,'new');expect(upgraded.status).toBe('refused');expect(upgraded.target).toBeUndefined();expect(upgraded.source).toEqual(source);expect(upgraded.diagnostics.some(d=>d.code==='SECURITY_MIGRATION_MEANING')).toBe(true);\n                                                                                                                                                                                ^\nerror: expect(received).toBe(expected)\n\nExpected: \"refused\"\nReceived: \"migrated\"\n\n      at <anonymous> (/private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/security-v2-mutation-4gtpf9m4/tests/security/protection/policy-v2.test.ts:30:172)\n(fail) unknown old members cannot be silently promoted into recognized new meaning [1.55ms]\n(pass) catalog references require an exact pin and cannot masquerade as inline constants [3.04ms]\n(pass) record/relationship prototype grammar is preserved but not downgraded or activated [0.23ms]\n(pass) exact source lookup retains both snapshots and returns bounded coordinates, never domain authority [2.06ms]\n(pass) known legacy roundtrip retains constant behavior but never refreshes a host fact attestation [33.82ms]\n(pass) forward0.2 legacy embedding evaluates the original revision and refuses unsupported meaning [30.55ms]\n\n 7 pass\n 1 fail\n 68 expect() calls\nRan 8 tests across 1 file. [896.00ms]\n"
+    },
+    {
+      "id": "omit-text-ledger",
+      "expectedFailures": [
+        "new revision, source shape and source/target text budgets are enforced"
+      ],
+      "observedFailures": [
+        "new revision, source shape and source/target text budgets are enforced"
+      ],
+      "exit": 1,
+      "stdout": "bun test v1.4.2 (43848b5a7)\n",
+      "stderr": "\ntests/security/protection/policy-v2.test.ts:\n(pass) representation upgrade changes only version/revision and preserves exact legacy constant payload [100.87ms]\n20 | });\n21 | test('new revision, source shape and source/target text budgets are enforced',()=>{\n22 |  const source=securityFixture().policy;\n23 |  for(const revision of ['',source.revision,null,{},42])expect(upgradeSecurityPolicySource(source,revision).status).toBe('refused');\n24 |  expect(upgradeSecurityPolicySource({...source,version:'future'},'new').target).toBeUndefined();\n25 |  expect(upgradeSecurityPolicySource({...source,native:{large:'x'.repeat(4_000_001)}},'new').status).toBe('refused');\n                                                                                                         ^\nerror: expect(received).toBe(expected)\n\nExpected: \"refused\"\nReceived: \"migrated\"\n\n      at <anonymous> (/private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/security-v2-mutation-anja_jxe/tests/security/protection/policy-v2.test.ts:25:101)\n(fail) new revision, source shape and source/target text budgets are enforced [3.10ms]\n(pass) unknown old members cannot be silently promoted into recognized new meaning [3.75ms]\n(pass) catalog references require an exact pin and cannot masquerade as inline constants [2.83ms]\n(pass) record/relationship prototype grammar is preserved but not downgraded or activated [0.26ms]\n(pass) exact source lookup retains both snapshots and returns bounded coordinates, never domain authority [1.93ms]\n(pass) known legacy roundtrip retains constant behavior but never refreshes a host fact attestation [33.88ms]\n(pass) forward0.2 legacy embedding evaluates the original revision and refuses unsupported meaning [31.80ms]\n\n 7 pass\n 1 fail\n 68 expect() calls\nRan 8 tests across 1 file. [692.00ms]\n"
+    },
+    {
+      "id": "omit-semantic-embedding",
+      "expectedFailures": [
+        "forward0.2 legacy embedding evaluates the original revision and refuses unsupported meaning"
+      ],
+      "observedFailures": [
+        "forward0.2 legacy embedding evaluates the original revision and refuses unsupported meaning"
+      ],
+      "exit": 1,
+      "stdout": "bun test v1.4.2 (43848b5a7)\n",
+      "stderr": "\ntests/security/protection/policy-v2.test.ts:\n(pass) representation upgrade changes only version/revision and preserves exact legacy constant payload [101.63ms]\n(pass) new revision, source shape and source/target text budgets are enforced [3.54ms]\n(pass) unknown old members cannot be silently promoted into recognized new meaning [1.57ms]\n(pass) catalog references require an exact pin and cannot masquerade as inline constants [2.99ms]\n(pass) record/relationship prototype grammar is preserved but not downgraded or activated [0.21ms]\n(pass) exact source lookup retains both snapshots and returns bounded coordinates, never domain authority [2.01ms]\n(pass) known legacy roundtrip retains constant behavior but never refreshes a host fact attestation [31.17ms]\n66 |  const request={action:'read',output:[ref('salary')]};\n67 |  const expected:SecurityAccessResult={decision:'permit',output:[{field:ref('salary'),disposition:'transformed',outputType:ref('staffId'),value:{string:'redacted'}}]};\n68 |  const upgraded=upgradeSecurityPolicySource(f.policy,'p2');expect(upgraded.status).toBe('migrated');\n69 |  const freshCut={...f.cut,policyRevision:'p2'}; // separately authored fixture attestation\n70 |  const result=evaluateSecurityPolicyV2LegacyAccess(upgraded.target,f.resolution,freshCut,request,f.resource);\n71 |  expect(result.result).toEqual(expected);expect(result.authority).toBe(false);expect(result.source).toEqual(upgraded.target!);expect(Object.isFrozen(result.result.output)).toBe(true);\n                            ^\nerror: expect(received).toEqual(expected)\n\n  {\n-   \"decision\": \"permit\",\n-   \"output\": [\n-     {\n-       \"disposition\": \"transformed\",\n-       \"field\": {\n-         \"documentId\": \"domain\",\n-         \"elementId\": \"salary\",\n-         \"moduleId\": \"m\",\n-       },\n-       \"outputType\": {\n-         \"documentId\": \"domain\",\n-         \"elementId\": \"staffId\",\n-         \"moduleId\": \"m\",\n-       },\n-       \"value\": {\n-         \"string\": \"redacted\",\n-       },\n-     },\n-   ],\n+   \"decision\": \"indeterminate\",\n+   \"output\": [],\n  }\n\n- Expected  - 19\n+ Received  + 2\n\n      at <anonymous> (/private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/security-v2-mutation-n9wkvera/tests/security/protection/policy-v2.test.ts:71:24)\n(fail) forward0.2 legacy embedding evaluates the original revision and refuses unsupported meaning [3.71ms]\n\n 7 pass\n 1 fail\n 61 expect() calls\nRan 8 tests across 1 file. [702.00ms]\n"
+    }
+  ],
+  "sourceDigests": {
+    "src/extensions/security/policy-representation-v2.ts": "7c29c7c21ab95e3f288f26330b4f7e665216712db17cf949de3c41ecfe17a3e9",
+    "src/extensions/security/policy-v2-legacy-access.ts": "7bef6bf2445f79c88da7cd39a2d9a33a3294f245be925054a580a7eb557ef56f",
+    "src/extensions/security/protection/references.ts": "91b2997951f493e17097fb4cda982d92505ceae3d2902ce974455bec25f3cdd9",
+    "tests/security/protection/policy-v2.test.ts": "f6fe67c45709dcb13cc00e6fe0a73516597f3ba691f70704312244c5d0fc425c",
+    "tools/security/policy-v2-mutations.py": "35c36b8dd5aa37660427afdcf02186a9405e785f65f6cb3e88ae6479300f568e"
+  },
+  "scope": "Exact intended test failures under source mutations; src/spec isolated, node_modules/native shared read-only. Not a hermetic closure, formal refinement, native enforcement or acceptance promotion.",
+  "acceptanceCasesPromoted": []
+}

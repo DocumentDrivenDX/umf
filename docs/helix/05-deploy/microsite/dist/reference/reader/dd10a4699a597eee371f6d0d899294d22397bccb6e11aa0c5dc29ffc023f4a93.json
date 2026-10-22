@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"ActionAssignment\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ActionReference\"]"
+      ],
+      "name": "field",
+      "optional": false,
+      "type": "ActionReference"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ActionValueBinding\"]"
+      ],
+      "name": "value",
+      "optional": false,
+      "type": "ActionValueBinding"
+    }
+  ],
+  "parameters": [],
+  "purpose": "ActionAssignment is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "ActionAssignment"
+}

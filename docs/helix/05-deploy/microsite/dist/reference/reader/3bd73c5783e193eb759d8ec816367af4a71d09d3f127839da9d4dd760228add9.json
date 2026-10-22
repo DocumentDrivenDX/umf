@@ -1,0 +1,36 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"SecurityReadRegistration\"]",
+  "kind": "Class",
+  "members": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SecurityResolution\"]",
+        "[\"api\",\".\",\"SecurityReadHandle\"]"
+      ],
+      "name": "register",
+      "optional": false,
+      "type": "(policy: unknown, resolution: SecurityResolution) => SecurityReadHandle"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SecurityReadHandle\"]",
+        "[\"api\",\".\",\"SecurityFactCut\"]",
+        "[\"api\",\".\",\"SecurityEvaluationRequest\"]",
+        "[\"api\",\".\",\"SecurityCollectionResult\"]"
+      ],
+      "name": "evaluate",
+      "optional": false,
+      "type": "(handle: SecurityReadHandle, cut: SecurityFactCut, request: SecurityEvaluationRequest) => SecurityCollectionResult"
+    }
+  ],
+  "parameters": [],
+  "purpose": "Trusted host registration boundary. This class does not authenticate its caller or facts.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "SecurityReadRegistration"
+}

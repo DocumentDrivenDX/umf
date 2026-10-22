@@ -1,0 +1,426 @@
+# Generate and use one Python API
+
+Generate from the UMF schema you already have (UMF 0.10.0):
+
+```sh
+bun scripts/umf-client-generate.ts generate --schema tests/unified/commerce.json --package shop --output /private/tmp/my-shop-client
+bun scripts/umf-client-generate.ts check --schema tests/unified/commerce.json --package shop --output /private/tmp/my-shop-client
+```
+
+Put the output directory on Python's import path. The generated package needs
+Python 3.11+ and no installed dependencies. Application code is identical for
+a table binding and an ontology binding:
+
+```python
+from decimal import Decimal
+from shop import Actions, Client, Order, OrderKey
+
+async def ship(client: Client):
+    customer = await (
+        Order.objects.using(client)
+        .filter(Order.c.amount >= Decimal("24.50"))
+        .by_key(OrderKey(order_id="o-100"))
+        .related(Order.c.customer)
+        .first()
+    )
+    receipt = await Actions(client).ship_order(order=OrderKey(order_id="o-100"))
+    return customer, receipt
+```
+
+Use `.eq(value)` for equality, `.order_by(Order.c.amount.desc())` for ordering,
+`.page(size=50, after=cursor)` for paging and `.get_many(keys)` for bulk key reads.
+Relationships expose named forward/inverse attributes; `.inverse()` is also
+available. Rows, keys, query results and action signatures are typed.
+
+Construct `Client(your_transport)` at the application boundary. A transport
+implements the async execute method in [CONTRACT-079](../../02-design/contracts/CONTRACT-079-unified-python-access.md).
+For tables, use `umf_access.unified.WeftTableBinding` on the host; pass Weft,
+the native binding and your database execution/action callbacks. The runnable
+[test adapter](../../../../tests/unified/table_binding_e2e.py) shows the complete
+PostgreSQL setup. The [graph fixture](../../../../tests/unified/ontology_transport.py)
+shows an independent ontology transport. It is test support, not a production
+ontology integration.
+
+The compiler lives in Weft. Generated Python builds schema-referenced requests;
+the host authorizes and executes them. Backend limitations raise typed failures.
+The [execution evidence](../evidence/unified-python-access.md) records what is
+implemented and tested.
+
+## Synchronous calling mode
+
+The same generated package exposes SyncClient/SyncActions and explicit
+AsyncClient/AsyncActions aliases for the existing Client/Actions API:
+
+```python
+from shop import SyncClient, SyncActions, Order, OrderKey
+
+def ship(sync_transport):
+    client = SyncClient(sync_transport)
+    order = Order.objects.using(client).get(OrderKey(order_id="o-100"))
+    receipt = SyncActions(client).ship_order(order=OrderKey(order_id="o-100"))
+    return order, receipt
+```
+
+`SyncTransport.execute(request)` returns a mapping directly. Sync query terminals
+and actions return their values directly, including when called from within a
+running event loop. No generated code creates/runs an event loop or retries an
+uncertain write. Bind an unbound query to the desired mode; changing a query
+already bound to the other mode refuses. Keys, fields, relationship builders,
+wire documents and error codes are shared. Hosts still own resources and
+execution. The async WeftTableBinding retains its existing contract. Native sync/async
+session adapters now have scoped local PostgreSQL18.6 qualification. The
+remaining production compiler-obligation executor and lifecycle profile remain
+release gates; see the exact native receipt below.
+
+The host runtime's Pydantic requirement is >=2.13,<3. Its MISSING compatibility
+import uses the actual Pydantic sentinel, preserving absence/null across 2.13.5
+and 2.14.1. Generated stdlib-only clients do not require Pydantic. See
+[P1 evidence](../evidence/praxis-p1.md) for commands, tested subset and limits.
+
+Use `SyncSession` / `AsyncSession` with Psycopg3, `Psycopg2Session` with
+synchronous Psycopg2 2.9, or `SQLAlchemySession` / `AsyncSQLAlchemySession` with
+SQLAlchemy2 Core connections. SQLAlchemy sync supports PostgreSQL Psycopg2 and
+Psycopg3; async supports Psycopg3. Supply a lease factory per authenticated
+identity, such as `lambda identity: engine.connect()`. These adapters never
+create an engine or pool. `transaction_owner="adapter"` requires an idle
+connection; `"caller"` requires a healthy active native transaction and uses a
+savepoint. SQLAlchemy DBAPI-autocommit connections refuse; configure the engine
+for transactional use. `open` yields the original driver/Core connection.
+
+Construct `SessionPolicy(people, batches, schema)` from trusted configuration
+and `SessionIdentity("person", subject)` or `SessionIdentity("batch", run)`
+after authentication. Registries authorize role selection; native grants/RLS
+decide rows and commands. `SyncSessionTransport` / `AsyncSessionTransport`
+compose sessions with the generated client and trusted Weft artifact executors.
+The [native harness](../../../../tests/unified/session_native_e2e.py) currently
+uses a bounded fixture executor: Psycopg2/SQLAlchemy generated reads are
+parameter-free. Parameterized driver transport, complete artifact admission and
+Weft mutations are separate pending work. The
+[native receipt](../evidence/praxis-p1/session-native-postgresql.json) records
+versions, source hashes, transaction/pool/cancellation checks and these limits.
+
+
+## Python build entry point (local P1-05 candidate)
+
+The separate `umf-codegen`0.1.0a1 candidate embeds the same portable generator
+inside `mini-racer==0.14.1` / V8 14.4.258.23. After installing the candidate
+wheel and its pinned runtime dependency, generation needs no Bun, Node, external
+JavaScript process or SDK tarball:
+
+```sh
+python -m umf_codegen generate --schema plugin.json --package plugin_client --output generated
+python -m umf_codegen check --schema plugin.json --package plugin_client --output generated
+```
+
+`check` returns nonzero for drift without mutating output. Generation protects
+original inventory and refuses hand edits, extra files and symlinks. Use physical
+paths with ordinary directory ancestors. Generation uses a cooperating output
+lock; a lock retained after process death requires host recovery before retry.
+Installation failures restore the old directory; failed restoration retains a
+backup and reports its path. Neither command runs schema-selected code.
+
+Programmatic authoring exposes `generate_python_client` with record/action
+selections and complete file bytes/hashes. Generated runtime clients keep their
+stdlib-only imports. The embedded engine is a build-tool dependency; it is not
+required by generated application clients. The wheel and self-contained source
+distribution have local macOS arm64 Python3.11 evidence; Linux CI is configured
+but not executed, and no new package/index release has been published. See
+[P1 evidence](../evidence/praxis-p1.md) for the exact candidate and remaining gates.
+
+## Declared native reader candidate
+
+The unpublished SDK reader executes `umf.table-operation/0.1` read declarations
+through the checked Weft compiler and native per-call sessions. Host configuration
+supplies the approved original bundle, its committed installation reference and
+matching binding. Authentication supplies the identity separately from inputs:
+
+```python
+from umf_access.unified import SyncTableReader
+
+reader = SyncTableReader(session, approved_bundle, committed_reference, binding,
+                         cursor_secret=host_cursor_secret)
+first = reader.read(identity, "list_notes", {"owner": {"string": owner_value}}, size=25)
+next_page = reader.read(identity, "list_notes", {"owner": {"string": owner_value}},
+                        size=25, cursor=first["cursor"]) if first["cursor"] else None
+```
+
+Use `AsyncTableReader` with an async session and await `read`. Existing Psycopg3,
+Psycopg2 and supported SQLAlchemy Core session adapters supply all IO; no query
+callback or process-global pool is needed. Set `SessionPolicy.catalog_only=True`.
+Caller-owned read transactions must already be read-only. Pages use authenticated
+opaque continuation, and count/single/optional/many operations preserve their
+authored bounds. Returned integer and decimal wire values keep exact tokens.
+
+The same lease checks source-proved live correspondence before and after the
+native read. Rows exceeding the authored cardinality or the8MiB native/wire
+frame limit fail without partial results. Cursors expire on source/head,
+identity, role scope, inputs or size changes; they promise no cross-page snapshot.
+This reader is a native execution component. Generated lifecycle module methods,
+remaining codecs/evolution and full Praxis/Lakebase acceptance
+remain release gates. No complete Praxis prerelease has been published.
+
+## Declared native mutation and outcome candidate
+
+New installations add verified outcome storage and issue a version0.2
+installation reference. `SyncTableWriter`/`AsyncTableWriter` use the same
+source-approved binding and per-call sessions as the reader:
+
+```python
+from umf_access.unified import SyncTableWriter, WriteOutcomeUnknown
+
+writer = SyncTableWriter(session, approved_bundle, committed_reference, binding,
+                         outcome_secret=host_outcome_secret)
+params = {"id": {"string": note_id}, "owner": {"string": owner_role}}
+try:
+    result = writer.write(identity, "create_note", params, key=operation_key)
+except WriteOutcomeUnknown:
+    result = writer.observe(identity, "create_note", params, key=operation_key)
+```
+
+Choose a stable caller key when the declaration requires it. Optional-key
+declarations can mint a key for the current invocation; recovery after a fully
+lost response needs a key the caller retained. There are no automatic retries.
+`write_batch`/`observe_batch` take the ordered item list for one declared batch
+operation; batch shape does not select batch identity. Only an authenticated
+`SessionIdentity("batch", subject)` and its native source grant provide that
+authority.
+
+`status="applied"` includes fresh wire projections and a signed direct-effect
+receipt. `status="recovered"` includes the receipt without historical business
+rows. `status="not-observed"` records an observation, not a future guarantee
+that no attempt can commit. Inspect `durability`: caller-owned writes and
+recovered receipts stay `pending-caller-commit`. Cancellation propagates after cleanup
+and can occur after commit; observe the original key afresh. Effect counts
+exclude source-declared native FK cascade effects. Empty RETURNING lists produce
+an affected count and no invented business rows.
+
+Receipt authentication requires a host-owned secret of at least32 bytes. Keep
+the verifier available for retained receipts; a changed verifier refuses an
+occupied slot and cannot silently execute a second write. Native RLS isolates
+principal rows, with no ordinary UPDATE/DELETE grant. Source/head/role drift,
+changed inputs and forged receipts refuse. Each invocation and its receipt are
+atomic;8MiB native RETURNING and cumulative wire bounds fail before commit.
+Receipt retention has no implicit expiry. Existing outcome-free version0.1
+installations keep head reads and require an explicit storage upgrade for writes.
+The administrative upgrade operation for those earlier installations remains a
+separate pending lifecycle gate.
+These unpublished components still require generated module integration,
+remaining lifecycle/codec work and full private consumer/release acceptance.
+
+## Generated declared module clients
+
+The local unpublished JSON-native candidate connects generated module methods
+to the SDK-owned executor. Generate from the exact approved bundle source using
+`umf_codegen.generate_python_client` or the pinned portable API, then mount it:
+
+```python
+from umf_access.unified import SyncNativeTableBinding
+from my_plugin import SyncClient, Applied, WriteOutcomeUnknown
+
+host = SyncNativeTableBinding(
+    session, approved_bundle, committed_reference, binding,
+    cursor_secret=host_cursor_secret, outcome_secret=host_outcome_secret,
+)
+client = SyncClient(host.for_identity(authenticated_identity))
+notes = client.modules.demo.read_many(owner=owner_role)
+try:
+    outcome = client.modules.demo.create(
+        id=note_id, owner=owner_role, idempotency_key=operation_key,
+    )
+except WriteOutcomeUnknown:
+    outcome = client.modules.demo.create_observe(
+        id=note_id, owner=owner_role, idempotency_key=operation_key,
+    )
+if isinstance(outcome, Applied):
+    fresh_rows = outcome.items[0].rows
+```
+
+Names above follow the public synthetic `demo` declaration; use the generated
+names for your own module. With an optional key, retain the chosen key yourself
+when recovery must survive a fully lost response. Use `NativeTableBinding` and
+`Client` for async sessions and await methods. The transport acquires through
+the supplied per-call session factory. `for_identity` does not create a pool or
+accept identity from wire parameters. Batch input classes belong to their
+specific declared operation; bulk methods use the `_batch` suffix, while outcome
+observation uses `_observe`. A batch-capable operation literally named
+`create_batch` therefore exposes `create_batch_batch` for multiple items.
+
+Inspect `outcome.status` and `durability`. Recovered results contain effect
+receipts without historical business rows. An unobserved receipt is no guarantee
+against a still-running attempt. Cancellation can follow commit; use fresh
+observation with the same key. Generation currently requires original JSON for
+this native profile. The scoped native fixture covers text projections/counts;
+remaining exact native codecs, lifecycle evolution and private Praxis/Lakebase
+release acceptance remain open. These candidates have not been published.
+
+The local finite temporal candidate accepts `datetime.date` and generated
+`ExactTimestamp` values for explicitly authored native dates and UTC instants.
+For example, `ExactTimestamp("2026-01-01T00:30:00.123456+01:00")` returns the same
+instant as `2025-12-31T23:30:00.123456Z`. Fractions that would round at native
+microseconds refuse before acquiring a connection. Preserve the original inputs
+when observing an outcome with its original key. A timezone-free native timestamp
+is not converted by choosing a zone. Source-declared current timestamp defaults
+follow PostgreSQL transaction-time semantics.
+
+New finite-domain CHECKs reject native nonfinite numerics and out-of-profile
+dates/instants. Their witness0.2 stores native typed expression trees so an
+ambient timezone or date-format change cannot masquerade as schema drift. The
+six-driver fixture exercises non-default ambient settings and verifies that
+those caller settings remain unchanged. This support does not qualify arbitrary
+temporal refinements, seeds, legacy adoption or broader schema evolution.
+
+Logical scalar `allowedValues`, numeric `range`, `integerWidth` and typed `length`
+facets now produce native CHECKs and generated validation in the local candidate.
+String/boolean/small-integer enums become Python Literal types. Decimal and large
+integer memberships retain exact runtime comparisons, with no float conversion.
+Range endpoints retain authored inclusivity. Unsupported temporal/container
+qualifiers still refuse.
+
+To update a timestamp on the server, author an operation assignment such as
+`{"field":{"module":"demo","element":"updatedAt"},"value":{"kind":"currentTimestamp"}}`
+against explicit `timestamptz` storage. The generated method has no parameter for
+that assignment. PostgreSQL supplies transaction time; replay recovery returns
+the existing receipt rather than running the update again. Use a distinct
+operation input when the caller should supply a timestamp instead.
+
+Forward migration candidates can append ordinary transactional btree indexes or
+revise/retire declared commands. Command-only plans have no DDL steps but still
+require the exact approved digest, expected head, caller commit and a new ledger
+generation. Persist the new installation reference after commit and regenerate
+clients from the new source; old references refuse. Unique-index failure rolls
+back the plan. Existing column, constraint, policy and index replacement/removal
+remain outside this qualified subset; seed execution is still pending.
+
+Use a `related` row rule when row scope follows an association that has no foreign
+key. Author its same-module target Record, explicit `{source,target}` field pairs
+and nested rule. Matching is existential over rows visible through the target's
+own native SELECT policy; NULL does not equal NULL and duplicate matches do not
+duplicate results. This does not add an integrity constraint. The paired local
+qualification covers direct/nested associations through generated sync/async
+clients. Existing FK-backed `via` paths retain their explicit FK mapping.
+
+## Optional inputs, conditions, batches and validation
+
+Use a generator build containing this adoption amendment; the published 0.5.2
+assets retain their earlier bytes. Generate the canonical current-format example:
+
+```sh
+python -m umf_codegen generate --schema tests/unified/adoption.json --package adoption --output generated
+```
+
+A custom ontology host supplies the transport; the worker imports only the
+stdlib generated package. `umf_access` is unnecessary for that arrangement.
+Generated output may be build-time-only and included in the plugin digest.
+Legacy Hohfeld actions in `module.actions` must first be converted by their
+owner to `module.extensions["umf.actions"].actions`; merely changing the core
+version does not convert action semantics. Generation refuses legacy actions
+instead of silently emitting an incomplete client.
+
+```python
+from adoption import (
+    Actions, CustomerKey, OpenProjectInput, OpenProjectPrecondition,
+    PreconditionFailed, WriteOutcomeUnknown,
+)
+
+async def open_projects(client):
+    actions = Actions(client)
+    customer = CustomerKey(code="C1")
+    await actions.open_project_validate(code="P1", title="Project", client=customer)
+    try:
+        batch = await actions.open_project_batch(
+            (OpenProjectInput(code="P1", title="Project", client=customer),),
+            atomic=True,
+            idempotency_key="open-projects-1",
+        )
+    except WriteOutcomeUnknown as error:
+        # Ask the authoritative host to reconcile error.key; never retry blindly.
+        raise
+    for item in batch.items:
+        if item.status == "refused" and isinstance(item.error, PreconditionFailed):
+            if item.error.precondition == OpenProjectPrecondition.FRESH:
+                return "Project code already exists"
+        if item.status == "unknown":
+            return "Host reconciliation required"
+    return batch
+```
+
+The same methods are available on SyncActions with direct return values.
+Batches accept 1–100 input objects of one action; the generated description
+records the cap. Atomic and stop-on-error flags are explicit host obligations.
+Per-item statuses distinguish applied, refused, rolled_back, unknown and
+unattempted. Every applied receipt uses the batch's one consistency token.
+The client does not split, retry or execute batches as a series of single calls.
+Hosts without a supported mode must refuse before effects.
+
+With stop_on_error enabled, the first refusal (or unknown in a partial batch)
+must be followed only by unattempted outcomes. Unattempted outcomes are never
+valid before that point or when stop_on_error is disabled, including atomic
+batches. An atomic failure contains at least one refusal and no applied/unknown
+outcomes; rolled_back identifies work actually undone.
+
+For graph-write/2, omitting `note` (or passing MISSING) omits its assignment;
+`note=None` explicitly supplies null. A create leaves an omitted optional Field
+absent; a set leaves it unchanged. Graph-write/1 still requires required value
+parameters for assignments. Executor support for the new profile is separate
+from generation. The example's `fresh` rule checks key absence and `exists`
+checks a referenced entity using declared read frames. Validation runs through
+the host without committing or reserving anything; apply can subsequently refuse.
+
+Graph Receipt.status is `committed`. A successful graph envelope acknowledges
+commit, with optional explicit wire `status:"committed"` for original protocol
+compatibility. A pending token is insufficient. Pending, lost or
+malformed write responses raise WriteOutcomeUnknown retaining the invocation
+key. Native table caller-owned results retain their separate durability states.
+
+Host success envelopes must contain `created`, `changed`, `counts` and a nonempty
+`consistency_token`, even if the collections are empty. For example:
+
+```python
+return {"schema": request["schema"], "created": [], "changed": [],
+        "counts": {}, "consistency_token": "committed-cut"}
+```
+
+Omitting `created`, `changed` or `counts` creates uncertainty; the decoder does
+not invent empty results. A transport-raised AccessError also creates uncertainty
+after dispatch. To acknowledge a definite refusal before effects, the host must
+return a matching-schema known-code error envelope instead:
+
+```python
+return {"schema": request["schema"], "error": {"code": "DENIED"}}
+```
+
+Cancellation preserves the original CancelledError. Inspect the exception with
+the generated typed helper to recover the attempted write keys, then propagate
+cancellation. The helper also handles TimeoutError created by asyncio.timeout:
+
+```python
+import asyncio
+from adoption import write_outcomes_unknown
+
+try:
+    async with asyncio.timeout(5):
+        await actions.open_project(
+            code="P1", title="Project", client=customer,
+            idempotency_key="open-project-1",
+        )
+except (asyncio.CancelledError, TimeoutError) as error:
+    for uncertain in write_outcomes_unknown(error):
+        # Retain uncertain.key for authoritative reconciliation; never retry blindly.
+        pass
+    raise
+```
+
+The helper returns its generated package's uncertainty objects represented by the
+displayed exception chain, including distinct invocations sharing a key. Foreign
+package annotations remain intact; call each involved package's helper when
+inspecting a chain shared across generated packages. It respects explicit causes
+and hidden context and terminates cycles. It does not infer that a wrapper's own
+operation wrote anything. Capture the exception inside a TaskGroup child if its
+keys are needed: TaskGroup normally suppresses cancelled child exceptions.
+Likewise, gather with return_exceptions=True can replace the original cancellation
+object and discard its annotations; inspect or retain the original inside the
+child before re-raising.
+Pre-dispatch cancellation, reads and validation add no write annotation.
+See [CONTRACT-079](../../02-design/contracts/CONTRACT-079-unified-python-access.md#graph-client-adoption-contract--2026-10-20)
+for complete settlement and error shapes. Production host execution and the full
+Linux/interpreter matrix require separate qualification.

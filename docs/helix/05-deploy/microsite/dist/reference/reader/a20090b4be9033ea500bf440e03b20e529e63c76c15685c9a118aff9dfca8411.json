@@ -1,0 +1,21 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"inspectPostgresqlCardinalityCatalog\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "text",
+      "optional": false,
+      "type": "string"
+    }
+  ],
+  "purpose": "Validate the bounded supplement without interpreting unknown native content.\nThe original text and exact-token tree remain authoritative, not the host view.\nThis does not establish correspondence with a separately captured catalog.",
+  "related": [],
+  "returns": "{ nativeSource: string; root: NativeJson; serverVersion: number; qualifiedVersion: boolean; columns: { schema: string; relation: string; name: string; ordinal: number; declaredDimensions: number; type: PostgresqlTypeIdentity; }[]; types: { identity: PostgresqlTypeIdentity; kind: string; category: string; element: PostgresqlTypeIdentity | null; base: PostgresqlTypeIdentity | null; standardArray: boolean; }[]; }",
+  "task": "Inspect and select",
+  "type": "(text: string) => { nativeSource: string; root: NativeJson; serverVersion: number; qualifiedVersion: boolean; columns: { schema: string; relation: string; name: string; ordinal: number; declaredDimensions: number; type: PostgresqlTypeIdentity; }[]; types: { identity: PostgresqlTypeIdentity; kind: string; category: string; element: PostgresqlTypeIdentity | null; base: PostgresqlTypeIdentity | null; standardArray: boolean; }[]; }"
+}

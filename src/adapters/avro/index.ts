@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
+import {CURRENT_CORE_VERSION} from '../../generated/core-model';
 import {Type} from 'avsc/etc/browser/avsc-types';
 import {deriveAvroFields} from './metadata';
 export type {AvroFieldMetadata} from './metadata';
@@ -69,7 +71,7 @@ function payload(document:Document):AvroPayload{
  return copyJson(value) as unknown as AvroPayload;
 }
 export function importAvroSchema(text:string,options:{id:string;dependencies?:{id:string;schema:string}[]}):Document{
- const doc:Document={umf:'0.1.0',id:options.id,vocabularies:{[AVRO_EXTENSION]:{version:'0.1.0'}},modules:[{id:'schema',namespace:'',elements:[{id:'schema',extensions:{[AVRO_EXTENSION]:{version:'1.12.0',root:parseNativeJson(text),...(options.dependencies?{dependencies:options.dependencies.map(d=>({id:d.id,root:parseNativeJson(d.schema)}))}:{})} as unknown as Json}}]}]};const p=payload(doc);doc.modules.push({id:'avro.fields',namespace:'',elements:deriveAvroFields(p).map(f=>f.element)});return doc;
+ const doc:Document={umf:CURRENT_CORE_VERSION,id:options.id,vocabularies:{[AVRO_EXTENSION]:{version:'0.1.0'}},modules:[{id:'schema',namespace:'',elements:[{id:'schema',extensions:{[AVRO_EXTENSION]:{version:'1.12.0',root:parseNativeJson(text),...(options.dependencies?{dependencies:options.dependencies.map(d=>({id:d.id,root:parseNativeJson(d.schema)}))}:{})} as unknown as Json}}]}]};const p=payload(doc);doc.modules.push({id:'avro.fields',namespace:'',elements:deriveAvroFields(p).map(f=>f.element)});return doc;
 }
 export function getAvroFieldMetadata(document:Document){return deriveAvroFields(payload(document));}
 function checkFieldMetadata(document:Document){

@@ -1,0 +1,758 @@
+{
+  "server": "PostgreSQL 17.9 (Debian 17.9-1.pgdg13+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+  "container": "umf-security-spike-20261008",
+  "sourceDigests": {
+    "docs/helix/02-design/spikes/security/native.py": "0a8521cab89117d0733b2531de45e031649db03eec8cf209c28b277f97f2d919",
+    "docs/helix/02-design/spikes/security/postgresql.sql": "245b6ef1980a54c7d8a5a32e4c9175209eb1046773cb8417aaa38fcfd2971fa4"
+  },
+  "command": "python3 docs/helix/02-design/spikes/security/native.py",
+  "cases": [
+    {
+      "id": "raw-read-Alice",
+      "covers": [
+        "US-055-AC4",
+        "US-055-AC5",
+        "US-056-AC1"
+      ],
+      "backend": "postgresql-17.9-synthetic",
+      "layer": "native",
+      "role": "umf_security_alice",
+      "source": "BEGIN; SET LOCAL ROLE umf_security_alice;\nSELECT id FROM sec.resource ORDER BY id;\nROLLBACK;",
+      "expected": [
+        "RA"
+      ],
+      "observed": [
+        "RA"
+      ],
+      "stderr": "",
+      "status": "passed"
+    },
+    {
+      "id": "graph-read-Alice",
+      "covers": [
+        "US-056-AC2"
+      ],
+      "backend": "postgresql-17.9-synthetic",
+      "layer": "native",
+      "role": "umf_security_alice",
+      "source": "BEGIN; SET LOCAL ROLE umf_security_alice;\nSELECT id FROM sec.node ORDER BY id;\nROLLBACK;",
+      "expected": [
+        "RA"
+      ],
+      "observed": [
+        "RA"
+      ],
+      "stderr": "",
+      "status": "passed"
+    },
+    {
+      "id": "count-Alice",
+      "covers": [
+        "US-056-AC1"
+      ],
+      "backend": "postgresql-17.9-synthetic",
+      "layer": "native",
+      "role": "umf_security_alice",
+      "source": "BEGIN; SET LOCAL ROLE umf_security_alice;\nSELECT count(*) FROM sec.resource;\nROLLBACK;",
+      "expected": [
+        "1"
+      ],
+      "observed": [
+        "1"
+      ],
+      "stderr": "",
+      "status": "passed"
+    },
+    {
+      "id": "private-assignment-Alice",
+      "covers": [
+        "US-056-AC5",
+        "US-056-AC8"
+      ],
+      "backend": "postgresql-17.9-synthetic",
+      "layer": "native",
+      "role": "umf_security_alice",
+      "source": "BEGIN; SET LOCAL ROLE umf_security_alice;\nSELECT * FROM sec.assignment;\nROLLBACK;",
+      "expected": "permission denied",
+      "observed": [],
+      "stderr": "ERROR:  permission denied for table assignment\n",
+      "status": "passed"
+    },
+    {
+      "id": "private-staff-Alice",
+      "covers": [
+        "US-056-AC5",
+        "US-056-AC8"
+      ],
+      "backend": "postgresql-17.9-synthetic",
+      "layer": "native",
+      "role": "umf_security_alice",
+      "source": "BEGIN; SET LOCAL ROLE umf_security_alice;\nSELECT * FROM sec.staff;\nROLLBACK;",
+      "expected": "permission denied",
+      "observed": [],
+      "stderr": "ERROR:  permission denied for table staff\n",
+      "status": "passed"
+    },
+    {
+      "id": "private-edge-Alice",
+      "covers": [
+        "US-056-AC5",
+        "US-056-AC8"
+      ],
+      "backend": "postgresql-17.9-synthetic",
+      "layer": "native",
+      "role": "umf_security_alice",
+      "source": "BEGIN; SET LOCAL ROLE umf_security_alice;\nSELECT * FROM sec.edge;\nROLLBACK;",
+      "expected": "permission denied",
+      "observed": [],
+      "stderr": "ERROR:  permission denied for table edge\n",
+      "status": "passed"
+    },
+    {
+      "id": "private-secret_resource-Alice",
+      "covers": [
+        "US-056-AC5",
+        "US-056-AC8"
+      ],
+      "backend": "postgresql-17.9-synthetic",
+      "layer": "native",
+      "role": "umf_security_alice",
+      "source": "BEGIN; SET LOCAL ROLE umf_security_alice;\nSELECT * FROM sec.secret_resource;\nROLLBACK;",
+      "expected": "permission denied",
+      "observed": [],
+      "stderr": "ERROR:  permission denied for table secret_resource\n",
+      "status": "passed"
+    },
+    {
+      "id": "raw-read-Bob",
+      "covers": [
+        "US-055-AC4",
+        "US-055-AC5",
+        "US-056-AC1"
+      ],
+      "backend": "postgresql-17.9-synthetic",
+      "layer": "native",
+      "role": "umf_security_bob",
+      "source": "BEGIN; SET LOCAL ROLE umf_security_bob;\nSELECT id FROM sec.resource ORDER BY id;\nROLLBACK;",
+      "expected": [
+        "RB"
+      ],
+      "observed": [
+        "RB"
+      ],
+      "stderr": "",
+      "status": "passed"
+    },
+    {
+      "id": "graph-read-Bob",
+      "covers": [
+        "US-056-AC2"
+      ],
+      "backend": "postgresql-17.9-synthetic",
+      "layer": "native",
+      "role": "umf_security_bob",
+      "source": "BEGIN; SET LOCAL ROLE umf_security_bob;\nSELECT id FROM sec.node ORDER BY id;\nROLLBACK;",
+      "expected": [
+        "RB"
+      ],
+      "observed": [
+        "RB"
+      ],
+      "stderr": "",
+      "status": "passed"
+    },
+    {
+      "id": "count-Bob",
+      "covers": [
+        "US-056-AC1"
+      ],
+      "backend": "postgresql-17.9-synthetic",
+      "layer": "native",
+      "role": "umf_security_bob",
+      "source": "BEGIN; SET LOCAL ROLE umf_security_bob;\nSELECT count(*) FROM sec.resource;\nROLLBACK;",
+      "expected": [
+        "1"
+      ],
+      "observed": [
+        "1"
+      ],
+      "stderr": "",
+      "status": "passed"
+    },
+    {
+      "id": "private-assignment-Bob",
+      "covers": [
+        "US-056-AC5",
+        "US-056-AC8"
+      ],
+      "backend": "postgresql-17.9-synthetic",
+      "layer": "native",
+      "role": "umf_security_bob",
+      "source": "BEGIN; SET LOCAL ROLE umf_security_bob;\nSELECT * FROM sec.assignment;\nROLLBACK;",
+      "expected": "permission denied",
+      "observed": [],
+      "stderr": "ERROR:  permission denied for table assignment\n",
+      "status": "passed"
+    },
+    {
+      "id": "private-staff-Bob",
+      "covers": [
+        "US-056-AC5",
+        "US-056-AC8"
+      ],
+      "backend": "postgresql-17.9-synthetic",
+      "layer": "native",
+      "role": "umf_security_bob",
+      "source": "BEGIN; SET LOCAL ROLE umf_security_bob;\nSELECT * FROM sec.staff;\nROLLBACK;",
+      "expected": "permission denied",
+      "observed": [],
+      "stderr": "ERROR:  permission denied for table staff\n",
+      "status": "passed"
+    },
+    {
+      "id": "private-edge-Bob",
+      "covers": [
+        "US-056-AC5",
+        "US-056-AC8"
+      ],
+      "backend": "postgresql-17.9-synthetic",
+      "layer": "native",
+      "role": "umf_security_bob",
+      "source": "BEGIN; SET LOCAL ROLE umf_security_bob;\nSELECT * FROM sec.edge;\nROLLBACK;",
+      "expected": "permission denied",
+      "observed": [],
+      "stderr": "ERROR:  permission denied for table edge\n",
+      "status": "passed"
+    },
+    {
+      "id": "private-secret_resource-Bob",
+      "covers": [
+        "US-056-AC5",
+        "US-056-AC8"
+      ],
+      "backend": "postgresql-17.9-synthetic",
+      "layer": "native",
+      "role": "umf_security_bob",
+      "source": "BEGIN; SET LOCAL ROLE umf_security_bob;\nSELECT * FROM sec.secret_resource;\nROLLBACK;",
+      "expected": "permission denied",
+      "observed": [],
+      "stderr": "ERROR:  permission denied for table secret_resource\n",
+      "status": "passed"
+    },
+    {
+      "id": "raw-read-Outsider",
+      "covers": [
+        "US-055-AC4",
+        "US-055-AC5",
+        "US-056-AC1"
+      ],
+      "backend": "postgresql-17.9-synthetic",
+      "layer": "native",
+      "role": "umf_security_outsider",
+      "source": "BEGIN; SET LOCAL ROLE umf_security_outsider;\nSELECT id FROM sec.resource ORDER BY id;\nROLLBACK;",
+      "expected": [],
+      "observed": [],
+      "stderr": "",
+      "status": "passed"
+    },
+    {
+      "id": "graph-read-Outsider",
+      "covers": [
+        "US-056-AC2"
+      ],
+      "backend": "postgresql-17.9-synthetic",
+      "layer": "native",
+      "role": "umf_security_outsider",
+      "source": "BEGIN; SET LOCAL ROLE umf_security_outsider;\nSELECT id FROM sec.node ORDER BY id;\nROLLBACK;",
+      "expected": [],
+      "observed": [],
+      "stderr": "",
+      "status": "passed"
+    },
+    {
+      "id": "count-Outsider",
+      "covers": [
+        "US-056-AC1"
+      ],
+      "backend": "postgresql-17.9-synthetic",
+      "layer": "native",
+      "role": "umf_security_outsider",
+      "source": "BEGIN; SET LOCAL ROLE umf_security_outsider;\nSELECT count(*) FROM sec.resource;\nROLLBACK;",
+      "expected": [
+        "0"
+      ],
+      "observed": [
+        "0"
+      ],
+      "stderr": "",
+      "status": "passed"
+    },
+    {
+      "id": "private-assignment-Outsider",
+      "covers": [
+        "US-056-AC5",
+        "US-056-AC8"
+      ],
+      "backend": "postgresql-17.9-synthetic",
+      "layer": "native",
+      "role": "umf_security_outsider",
+      "source": "BEGIN; SET LOCAL ROLE umf_security_outsider;\nSELECT * FROM sec.assignment;\nROLLBACK;",
+      "expected": "permission denied",
+      "observed": [],
+      "stderr": "ERROR:  permission denied for table assignment\n",
+      "status": "passed"
+    },
+    {
+      "id": "private-staff-Outsider",
+      "covers": [
+        "US-056-AC5",
+        "US-056-AC8"
+      ],
+      "backend": "postgresql-17.9-synthetic",
+      "layer": "native",
+      "role": "umf_security_outsider",
+      "source": "BEGIN; SET LOCAL ROLE umf_security_outsider;\nSELECT * FROM sec.staff;\nROLLBACK;",
+      "expected": "permission denied",
+      "observed": [],
+      "stderr": "ERROR:  permission denied for table staff\n",
+      "status": "passed"
+    },
+    {
+      "id": "private-edge-Outsider",
+      "covers": [
+        "US-056-AC5",
+        "US-056-AC8"
+      ],
+      "backend": "postgresql-17.9-synthetic",
+      "layer": "native",
+      "role": "umf_security_outsider",
+      "source": "BEGIN; SET LOCAL ROLE umf_security_outsider;\nSELECT * FROM sec.edge;\nROLLBACK;",
+      "expected": "permission denied",
+      "observed": [],
+      "stderr": "ERROR:  permission denied for table edge\n",
+      "status": "passed"
+    },
+    {
+      "id": "private-secret_resource-Outsider",
+      "covers": [
+        "US-056-AC5",
+        "US-056-AC8"
+      ],
+      "backend": "postgresql-17.9-synthetic",
+      "layer": "native",
+      "role": "umf_security_outsider",
+      "source": "BEGIN; SET LOCAL ROLE umf_security_outsider;\nSELECT * FROM sec.secret_resource;\nROLLBACK;",
+      "expected": "permission denied",
+      "observed": [],
+      "stderr": "ERROR:  permission denied for table secret_resource\n",
+      "status": "passed"
+    },
+    {
+      "id": "mask-null",
+      "covers": [
+        "US-055-AC7",
+        "US-056-AC6"
+      ],
+      "backend": "postgresql-17.9-synthetic",
+      "layer": "native",
+      "role": "umf_security_alice",
+      "source": "BEGIN; SET LOCAL ROLE umf_security_alice;\nSELECT id,note::text,note_disposition,salary,salary_disposition FROM sec.safe_resource;\nROLLBACK;",
+      "expected": [
+        "SA|null|original||withheld"
+      ],
+      "observed": [
+        "SA|null|original||withheld"
+      ],
+      "stderr": "",
+      "status": "passed"
+    },
+    {
+      "id": "mask-absence",
+      "covers": [
+        "US-055-AC7",
+        "US-056-AC6"
+      ],
+      "backend": "postgresql-17.9-synthetic",
+      "layer": "native",
+      "role": "umf_security_bob",
+      "source": "BEGIN; SET LOCAL ROLE umf_security_bob;\nSELECT id,note::text,note_disposition,salary,salary_disposition FROM sec.safe_resource;\nROLLBACK;",
+      "expected": [
+        "SB||absent||withheld"
+      ],
+      "observed": [
+        "SB||absent||withheld"
+      ],
+      "stderr": "",
+      "status": "passed"
+    },
+    {
+      "id": "insert-owned",
+      "covers": [
+        "US-057-AC1"
+      ],
+      "backend": "postgresql-17.9-synthetic",
+      "layer": "native",
+      "role": "umf_security_alice",
+      "source": "BEGIN; SET LOCAL ROLE umf_security_alice;\nINSERT INTO sec.resource VALUES('NEW','A','new'); SELECT id FROM sec.resource ORDER BY id;\nROLLBACK;",
+      "expected": [
+        "NEW",
+        "RA"
+      ],
+      "observed": [
+        "NEW",
+        "RA"
+      ],
+      "stderr": "",
+      "status": "passed"
+    },
+    {
+      "id": "insert-foreign",
+      "covers": [
+        "US-057-AC1"
+      ],
+      "backend": "postgresql-17.9-synthetic",
+      "layer": "native",
+      "role": "umf_security_alice",
+      "source": "BEGIN; SET LOCAL ROLE umf_security_alice;\nINSERT INTO sec.resource VALUES('NEW','B','new');\nROLLBACK;",
+      "expected": "row-level security",
+      "observed": [],
+      "stderr": "ERROR:  new row violates row-level security policy for table \"resource\"\n",
+      "status": "passed"
+    },
+    {
+      "id": "update-original-hidden",
+      "covers": [
+        "US-057-AC1"
+      ],
+      "backend": "postgresql-17.9-synthetic",
+      "layer": "native",
+      "role": "umf_security_alice",
+      "source": "BEGIN; SET LOCAL ROLE umf_security_alice;\nUPDATE sec.resource SET value='changed' WHERE id='RB' RETURNING id;\nROLLBACK;",
+      "expected": [],
+      "observed": [],
+      "stderr": "",
+      "status": "passed"
+    },
+    {
+      "id": "update-proposed-foreign",
+      "covers": [
+        "US-057-AC1"
+      ],
+      "backend": "postgresql-17.9-synthetic",
+      "layer": "native",
+      "role": "umf_security_alice",
+      "source": "BEGIN; SET LOCAL ROLE umf_security_alice;\nUPDATE sec.resource SET project_id='B' WHERE id='RA';\nROLLBACK;",
+      "expected": "row-level security",
+      "observed": [],
+      "stderr": "ERROR:  new row violates row-level security policy for table \"resource\"\n",
+      "status": "passed"
+    },
+    {
+      "id": "delete-foreign",
+      "covers": [
+        "US-057-AC1"
+      ],
+      "backend": "postgresql-17.9-synthetic",
+      "layer": "native",
+      "role": "umf_security_alice",
+      "source": "BEGIN; SET LOCAL ROLE umf_security_alice;\nDELETE FROM sec.resource WHERE id='RB' RETURNING id;\nROLLBACK;",
+      "expected": [],
+      "observed": [],
+      "stderr": "",
+      "status": "passed"
+    },
+    {
+      "id": "delete-owned",
+      "covers": [
+        "US-057-AC1"
+      ],
+      "backend": "postgresql-17.9-synthetic",
+      "layer": "native",
+      "role": "umf_security_alice",
+      "source": "BEGIN; SET LOCAL ROLE umf_security_alice;\nDELETE FROM sec.resource WHERE id='RA' RETURNING id;\nROLLBACK;",
+      "expected": [
+        "RA"
+      ],
+      "observed": [
+        "RA"
+      ],
+      "stderr": "",
+      "status": "passed"
+    },
+    {
+      "id": "role-reset",
+      "covers": [
+        "US-056-AC5"
+      ],
+      "backend": "postgresql-17.9-synthetic",
+      "layer": "native",
+      "role": "excluded-administrator",
+      "source": "BEGIN; SET LOCAL ROLE umf_security_alice; COMMIT; SELECT current_setting('role');",
+      "expected": [
+        "none"
+      ],
+      "observed": [
+        "none"
+      ],
+      "stderr": "",
+      "status": "passed"
+    },
+    {
+      "id": "cannot-adopt-other-role",
+      "covers": [
+        "US-056-AC5"
+      ],
+      "backend": "postgresql-17.9-synthetic",
+      "layer": "native",
+      "role": "umf_security_alice",
+      "source": "BEGIN; SET LOCAL ROLE umf_security_alice;\nSET ROLE umf_security_bob;\nROLLBACK;",
+      "expected": "permission denied",
+      "observed": [],
+      "stderr": "ERROR:  permission denied to set role \"umf_security_bob\"\n",
+      "status": "passed"
+    },
+    {
+      "id": "delegated-role-original-actor",
+      "covers": [
+        "US-056-AC5"
+      ],
+      "backend": "postgresql-17.9-synthetic",
+      "layer": "native",
+      "role": "umf_security_alice",
+      "source": "BEGIN; SET LOCAL ROLE umf_security_alice;\nSET LOCAL ROLE umf_security_bob; SELECT current_user,session_user;\nROLLBACK;",
+      "expected": [
+        "umf_security_bob|umf_security_alice"
+      ],
+      "observed": [
+        "umf_security_bob|umf_security_alice"
+      ],
+      "stderr": "",
+      "status": "passed"
+    },
+    {
+      "id": "delegated-role-raw-identity",
+      "covers": [
+        "US-056-AC1",
+        "US-056-AC5"
+      ],
+      "backend": "postgresql-17.9-synthetic",
+      "layer": "native",
+      "role": "umf_security_alice",
+      "source": "BEGIN; SET LOCAL ROLE umf_security_alice;\nSET LOCAL ROLE umf_security_bob; SELECT id FROM sec.resource ORDER BY id;\nROLLBACK;",
+      "expected": [
+        "RA"
+      ],
+      "observed": [
+        "RA"
+      ],
+      "stderr": "",
+      "status": "passed"
+    },
+    {
+      "id": "delegated-role-graph-identity",
+      "covers": [
+        "US-056-AC2",
+        "US-056-AC5"
+      ],
+      "backend": "postgresql-17.9-synthetic",
+      "layer": "native",
+      "role": "umf_security_alice",
+      "source": "BEGIN; SET LOCAL ROLE umf_security_alice;\nSET LOCAL ROLE umf_security_bob; SELECT id FROM sec.node ORDER BY id;\nROLLBACK;",
+      "expected": [
+        "RA"
+      ],
+      "observed": [
+        "RA"
+      ],
+      "stderr": "",
+      "status": "passed"
+    },
+    {
+      "id": "delegated-role-mask-identity",
+      "covers": [
+        "US-056-AC5",
+        "US-056-AC6"
+      ],
+      "backend": "postgresql-17.9-synthetic",
+      "layer": "native",
+      "role": "umf_security_alice",
+      "source": "BEGIN; SET LOCAL ROLE umf_security_alice;\nSET LOCAL ROLE umf_security_bob; SELECT id FROM sec.safe_resource ORDER BY id;\nROLLBACK;",
+      "expected": [
+        "SA"
+      ],
+      "observed": [
+        "SA"
+      ],
+      "stderr": "",
+      "status": "passed"
+    },
+    {
+      "id": "weakened-role-impersonation-counterexample",
+      "covers": [
+        "US-056-AC5"
+      ],
+      "backend": "postgresql-17.9-synthetic",
+      "layer": "native",
+      "role": "umf_security_alice",
+      "source": "BEGIN; SET LOCAL ROLE umf_security_alice;\nSET LOCAL ROLE umf_security_bob; SELECT id FROM sec.resource ORDER BY id;\nROLLBACK;",
+      "expected": [
+        "RB"
+      ],
+      "observed": [
+        "RB"
+      ],
+      "stderr": "",
+      "status": "passed"
+    },
+    {
+      "id": "restored-ordinary-role-isolation",
+      "covers": [
+        "US-056-AC5"
+      ],
+      "backend": "postgresql-17.9-synthetic",
+      "layer": "native",
+      "role": "umf_security_alice",
+      "source": "BEGIN; SET LOCAL ROLE umf_security_alice;\nSET ROLE umf_security_bob;\nROLLBACK;",
+      "expected": "permission denied",
+      "observed": [],
+      "stderr": "ERROR:  permission denied to set role \"umf_security_bob\"\n",
+      "status": "passed"
+    },
+    {
+      "id": "restored-raw-identity",
+      "covers": [
+        "US-056-AC1",
+        "US-056-AC5"
+      ],
+      "backend": "postgresql-17.9-synthetic",
+      "layer": "native",
+      "role": "umf_security_alice",
+      "source": "BEGIN; SET LOCAL ROLE umf_security_alice;\nSELECT id FROM sec.resource ORDER BY id;\nROLLBACK;",
+      "expected": [
+        "RA"
+      ],
+      "observed": [
+        "RA"
+      ],
+      "stderr": "",
+      "status": "passed"
+    },
+    {
+      "id": "cannot-change-authenticated-actor",
+      "covers": [
+        "US-056-AC5"
+      ],
+      "backend": "postgresql-17.9-synthetic",
+      "layer": "native",
+      "role": "umf_security_alice",
+      "source": "BEGIN; SET LOCAL ROLE umf_security_alice;\nSET SESSION AUTHORIZATION umf_security_bob;\nROLLBACK;",
+      "expected": "permission denied",
+      "observed": [],
+      "stderr": "ERROR:  permission denied to set session authorization \"umf_security_bob\"\n",
+      "status": "passed"
+    },
+    {
+      "id": "caller-authored-subject-is-ignored",
+      "covers": [
+        "US-056-AC1",
+        "US-056-AC5"
+      ],
+      "backend": "postgresql-17.9-synthetic",
+      "layer": "native",
+      "role": "umf_security_alice",
+      "source": "BEGIN; SET LOCAL ROLE umf_security_alice;\nSET LOCAL umf.subject='Bob'; SELECT id FROM sec.resource ORDER BY id;\nROLLBACK;",
+      "expected": [
+        "RA"
+      ],
+      "observed": [
+        "RA"
+      ],
+      "stderr": "",
+      "status": "passed"
+    },
+    {
+      "id": "excluded-admin-bypass",
+      "covers": [
+        "US-056-AC5"
+      ],
+      "backend": "postgresql-17.9-synthetic",
+      "layer": "native",
+      "role": "excluded-administrator",
+      "source": "SELECT id FROM sec.resource ORDER BY id;",
+      "expected": [
+        "RA",
+        "RB",
+        "RO"
+      ],
+      "observed": [
+        "RA",
+        "RB",
+        "RO"
+      ],
+      "stderr": "",
+      "status": "passed"
+    },
+    {
+      "id": "ordinary-role-attributes",
+      "covers": [
+        "US-056-AC5"
+      ],
+      "backend": "postgresql-17.9-synthetic",
+      "layer": "native",
+      "role": "umf_security_alice",
+      "source": "BEGIN; SET LOCAL ROLE umf_security_alice;\nSELECT rolsuper,rolbypassrls,rolcreaterole FROM pg_roles WHERE rolname=current_user;\nROLLBACK;",
+      "expected": [
+        "f|f|f"
+      ],
+      "observed": [
+        "f|f|f"
+      ],
+      "stderr": "",
+      "status": "passed"
+    },
+    {
+      "id": "cannot-disable-rls",
+      "covers": [
+        "US-056-AC5",
+        "US-056-AC9"
+      ],
+      "backend": "postgresql-17.9-synthetic",
+      "layer": "native",
+      "role": "umf_security_alice",
+      "source": "BEGIN; SET LOCAL ROLE umf_security_alice;\nALTER TABLE sec.resource DISABLE ROW LEVEL SECURITY;\nROLLBACK;",
+      "expected": "must be owner",
+      "observed": [],
+      "stderr": "ERROR:  must be owner of table resource\n",
+      "status": "passed"
+    },
+    {
+      "id": "forced-native-inventory",
+      "covers": [
+        "US-056-AC9"
+      ],
+      "backend": "postgresql-17.9-synthetic",
+      "layer": "native",
+      "role": "excluded-administrator",
+      "source": "SELECT relrowsecurity,relforcerowsecurity FROM pg_class WHERE oid='sec.resource'::regclass;",
+      "expected": [
+        "t|t"
+      ],
+      "observed": [
+        "t|t"
+      ],
+      "stderr": "",
+      "status": "passed"
+    }
+  ],
+  "identityControl": {
+    "membershipDrift": "GRANT umf_security_bob TO umf_security_alice",
+    "originalHelper": "CREATE OR REPLACE FUNCTION sec.allowed(p text) RETURNS boolean\nLANGUAGE sql STABLE SECURITY DEFINER SET search_path=pg_catalog,sec AS $$\n SELECT EXISTS (SELECT 1 FROM sec.assignment a JOIN sec.staff s ON s.id=a.staff_id\n WHERE s.native_role=session_user::text AND a.project_id=p AND a.active)\n$$;",
+    "weakenedHelper": "CREATE OR REPLACE FUNCTION sec.allowed(p text) RETURNS boolean\nLANGUAGE sql STABLE SECURITY DEFINER SET search_path=pg_catalog,sec AS $$\n SELECT EXISTS (SELECT 1 FROM sec.assignment a JOIN sec.staff s ON s.id=a.staff_id\n WHERE s.native_role=current_setting('role') AND a.project_id=p AND a.active)\n$$;",
+    "restoration": "Restore original helper and REVOKE umf_security_bob FROM umf_security_alice",
+    "scope": "Original session identity versus adopted role; membership drift is deliberately unqualified"
+  },
+  "actualTrussQualified": false,
+  "actualAshlarQualified": false,
+  "authorityLifecycleQualified": false,
+  "scope": "Synthetic PostgreSQL raw/graph static RLS and field-projection feasibility only"
+}

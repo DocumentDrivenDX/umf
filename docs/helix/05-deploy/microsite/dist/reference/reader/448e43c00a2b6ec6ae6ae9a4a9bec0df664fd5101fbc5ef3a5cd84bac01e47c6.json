@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"verifyParquetKeyClassification\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ParquetKeyClassification\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "ParquetKeyClassification"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "current",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "verifyParquetKeyClassification accepts input, current and returns ParquetKeyClassification.",
+  "related": [],
+  "returns": "ParquetKeyClassification",
+  "task": "Other APIs",
+  "type": "(input: ParquetKeyClassification, current: Document) => ParquetKeyClassification"
+}

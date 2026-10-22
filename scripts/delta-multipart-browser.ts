@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
 const base='fixtures/delta/multipart/',cases=(await Bun.file(base+'results.json').json()).results,vectors=(await Bun.file(base+'hash-vectors.json').json()).vectors;
 const built=await Bun.build({entrypoints:['src/index.ts','src/adapters/delta/spark-hash.ts'],outdir:'.cache/delta-multipart-browser',target:'browser',format:'esm'});if(!built.success)throw Error(built.logs.join('\n'));

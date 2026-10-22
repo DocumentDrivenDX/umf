@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 3759,
+        "line": 33,
+        "path": "src/adapters/arrow/capture.ts",
+        "sha256": "6e8e973d07e8b3ad2f7796d68d9b08ccd637e10d2a52f08a4562b37e0aecb231"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "ArrowIpcObservationBackend",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface ArrowIpcObservationBackend {\n identity:'apache-arrow@21.2.0';\n observe(bytes:Uint8Array):unknown;\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"ArrowIpcObservationBackend\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 3759,
+      "line": 33,
+      "path": "src/adapters/arrow/capture.ts",
+      "sha256": "6e8e973d07e8b3ad2f7796d68d9b08ccd637e10d2a52f08a4562b37e0aecb231"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/arrow/capture.ts",
+  "title": "ArrowIpcObservationBackend"
+}

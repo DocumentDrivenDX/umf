@@ -1,10 +1,13 @@
-import {declareCoreCardinality,type CoreCardinalityDeclaration} from '../../src/model/cardinality';
-import type {Document,Json} from '../../src/model/types';
+// SPDX-License-Identifier: MIT OR Apache-2.0
+import {CURRENT_CORE_VERSION} from '../../src/model/types';
+// Synthetic current-core fixture for active operation/projection behavior.
+import {declareCoreCardinality, type CoreCardinalityDeclaration} from '../../src/model/cardinality';
+import type {Document, Json} from '../../src/model/types';
 import type {CardinalityAvroRequest} from '../../src/core-ideals/cardinality-avro-projection';
 export interface AvroCardinalityProjectionCase {id:string;author:CoreCardinalityDeclaration;request:CardinalityAvroRequest;sample:Json;expectedValue:Json;}
 export function avroCardinalityProjectionCases():AvroCardinalityProjectionCase[]{
  const rows:AvroCardinalityProjectionCase[]=[],base={recordName:'Example',namespace:'',fieldName:'value',dependencies:[],availability:'avro-null-value' as const,requireExactValues:false};
- const doc=():Document=>({umf:'0.4.0',id:'ideal',vocabularies:{},modules:[{id:'m',namespace:'',elements:[{id:'f',kind:'field',extensions:{}}]}]});
+ const doc=():Document=>({umf:CURRENT_CORE_VERSION,id:'ideal',vocabularies:{},modules:[{id:'m',namespace:'',elements:[{id:'f',kind:'field',extensions:{}}]}]});
  const add=(author:CoreCardinalityDeclaration,nativeType:unknown,sample:Json,extra:Partial<CardinalityAvroRequest>={},expectedValue=sample)=>{
   for(const mode of ['strict','report'] as const){const id='avro-cardinality-'+rows.length;rows.push({id,author,request:{...base,id,nativeType:JSON.stringify(nativeType),mode,...extra},sample,expectedValue});}
  };

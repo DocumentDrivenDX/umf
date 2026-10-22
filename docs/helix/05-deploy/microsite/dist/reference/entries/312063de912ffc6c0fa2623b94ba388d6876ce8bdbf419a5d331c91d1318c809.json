@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 14321,
+        "line": 88,
+        "path": "src/adapters/sqlserver/index.ts",
+        "sha256": "c3293b45da791d1566524ca4388107d8110776b7cb2ab8996d529e553b1594d4"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "getSqlServerIndexMetadata",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(document: Document): SqlServerIndexMetadata"
+    ]
+  },
+  "id": "[\"api\",\".\",\"getSqlServerIndexMetadata\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 14321,
+      "line": 88,
+      "path": "src/adapters/sqlserver/index.ts",
+      "sha256": "c3293b45da791d1566524ca4388107d8110776b7cb2ab8996d529e553b1594d4"
+    }
+  ],
+  "summary": "Preserve heap and all observed index rows; column ordinals do not imply portable keys.",
+  "title": "getSqlServerIndexMetadata"
+}

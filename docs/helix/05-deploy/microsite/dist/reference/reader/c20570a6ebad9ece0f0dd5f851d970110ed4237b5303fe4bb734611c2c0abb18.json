@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"classifyAvroFacets\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"AvroFacetRequest\"]"
+      ],
+      "name": "options",
+      "optional": false,
+      "type": "AvroFacetRequest"
+    }
+  ],
+  "purpose": "Add scoped facet observations to an explicit logical Field, preserving the\nnative bundle and source texts. Profiles never authenticate a writer or source.",
+  "related": [],
+  "returns": "AvroFacetClassification",
+  "task": "Other APIs",
+  "type": "(input: Document, options: AvroFacetRequest) => AvroFacetClassification"
+}

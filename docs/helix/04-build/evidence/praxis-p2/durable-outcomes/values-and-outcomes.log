@@ -1,0 +1,17 @@
+test_changed_invocation_or_authority_cannot_consume_a_valid_receipt (test_table_outcomes.TableOutcomes.test_changed_invocation_or_authority_cannot_consume_a_valid_receipt) ... ok
+test_even_authenticated_invalid_counts_and_item_inventory_refuse (test_table_outcomes.TableOutcomes.test_even_authenticated_invalid_counts_and_item_inventory_refuse) ... ok
+test_historical_input_fingerprint_requires_the_host_secret (test_table_outcomes.TableOutcomes.test_historical_input_fingerprint_requires_the_host_secret) ... ok
+test_signed_receipt_retains_effects_without_historical_business_rows (test_table_outcomes.TableOutcomes.test_signed_receipt_retains_effects_without_historical_business_rows) ... ok
+test_slot_is_stable_across_inputs_generations_and_verifier_rotation (test_table_outcomes.TableOutcomes.test_slot_is_stable_across_inputs_generations_and_verifier_rotation) ... ok
+test_tampering_or_different_principal_slot_or_verifier_refuses (test_table_outcomes.TableOutcomes.test_tampering_or_different_principal_slot_or_verifier_refuses) ... ok
+test_count_cardinality_and_whole_wire_frame_bound (test_table_read_values.TableReadValues.test_count_cardinality_and_whole_wire_frame_bound) ... ok
+test_duplicate_json_keys_and_nonfinite_json_never_enter_a_program (test_table_read_values.TableReadValues.test_duplicate_json_keys_and_nonfinite_json_never_enter_a_program) ... ok
+test_exact_scalar_values_never_pass_through_float (test_table_read_values.TableReadValues.test_exact_scalar_values_never_pass_through_float) ... ok
+test_native_values_cannot_lie_about_carriers_or_required_presence (test_table_read_values.TableReadValues.test_native_values_cannot_lie_about_carriers_or_required_presence) ... ok
+test_page_tokens_bind_host_identity_and_policy_without_accepting_raw_keys (test_table_read_values.TableReadValues.test_page_tokens_bind_host_identity_and_policy_without_accepting_raw_keys) ... ok
+test_wire_budget_includes_repeated_field_identities (test_table_read_values.TableReadValues.test_wire_budget_includes_repeated_field_identities) ... ok
+
+----------------------------------------------------------------------
+Ran 12 tests in 0.018s
+
+OK

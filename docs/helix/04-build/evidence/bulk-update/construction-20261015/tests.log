@@ -1,0 +1,75 @@
+bun test v1.4.2 (43848b5a7)
+
+tests/actions-plan.test.ts:
+(pass) @covers US-902-AC1 registered_action: owner preparation, exact binding and callback preservation [80.33ms]
+(pass) @covers US-902-AC2 retain_unknown: source retained and relevant unknown blocks, annotations remain inert [41.27ms]
+(pass) @covers US-902-AC3 capability_assessment: all claims and original action assessment, no execution attestation [81.75ms]
+(pass) @covers US-902-AC4 exact_values: incompatible/null/optional/key writes refuse [53.72ms]
+(pass) @covers US-902-AC6 strict_json_bounds: duplicate keys, surrogate, integrity, depth, hostile getter [17.59ms]
+(pass) @covers US-902-AC5 portable_boundary: API result copies cannot mutate caller input [20.78ms]
+(pass) @covers US-902-AC5 @covers US-902-AC6 independent expected corpus through public exports [1333.22ms]
+(pass) @covers US-902-AC1 schema resources and original schema byte pin [46.50ms]
+(pass) @covers US-902-AC6 SHA256 matches independent native crypto including block and UTF8 boundaries [23.53ms]
+(pass) @covers US-902-AC4 exact integer/string carriers retain original spelling and semantic bounds [113.66ms]
+(pass) @covers US-902-AC1 original unrelated semantic callbacks remain installed and enforced [21.98ms]
+(pass) @covers US-902-AC6 schema metadata bounds use UTF16, prepared artifact cannot replace original document [40.63ms]
+(pass) @covers US-902-AC5 new portable modules have no host-only import or global [2.73ms]
+(pass) @covers US-902-AC6 opaque artifact metadata remains bounded without invoking getters [41.14ms]
+(pass) @covers US-902-AC6 review regressions: context slots, metadata Unicode, diagnostic and evidence boundaries [158.87ms]
+(pass) @covers US-902-AC1 shared frame admission: identity and per-list boundaries [24912.01ms]
+(pass) @covers US-902-AC1 assignment bindings form a complete unique set while preserving source order [49.66ms]
+(pass) portable artifacts retain exact original numeric metadata meaning [0.17ms]
+(pass) small plan framing cannot silently round numeric metadata [0.08ms]
+
+tests/actions-manifest.test.ts:
+(pass) @covers US-903-AC1 complete_partition: original action inputs/frames and full-first partition [65.68ms]
+(pass) @covers US-903-AC2 artifact_integrity: retained bytes, source hash and scope [43.82ms]
+(pass) @covers US-903-AC3 empty_and_limits: empty work, wrong ordinals and bounds refuse [37.92ms]
+(pass) @covers US-903-AC4 no_false_attestation: current-source reassessment remains unverified [94.61ms]
+(pass) @covers US-903-AC1 identities, entity input and frame versions refuse divergent work [134.37ms]
+(pass) @covers US-903-AC2 relevant unknowns retained, annotations inert, original bytes are integral [42.55ms]
+(pass) @covers US-903-AC5 complete bulk result unions preserve failure/unknown/refusal distinctions [39.52ms]
+(pass) @covers US-903-AC6 independent expected manifest/bulk corpus through public API [1277.65ms]
+(pass) @covers US-903-AC3 exact10000-item carrier and first overflow [6131.15ms]
+(pass) @covers US-903-AC3 exact16MiB original artifact bytes and first-byte overflow [661.22ms]
+(pass) @covers US-903-AC4 malformed capabilities return an incompatible result [64.11ms]
+(pass) @covers US-903-AC5 handler output typed maps refuse unknown authority and oversized UTF16 IDs [19.43ms]
+(pass) @covers US-903-AC3 opaque metadata uses manifest framing, typed items retain core admission [100.80ms]
+(pass) @covers US-903-AC5 original output/effect carrier limits and output ID bounds [185.95ms]
+(pass) @covers US-903-AC5 original literal admission and embedded Artifact integrity [165.44ms]
+(pass) @covers US-903-AC5 complete recipe/condition/item vectors refuse portable contradictions [21.73ms]
+(pass) @covers US-903-AC6 portable modules contain no host-only imports or globals [1.51ms]
+(pass) manifest and bulk framing preserve original numeric metadata meaning [55.03ms]
+
+tests/actions-manifest-construction.test.ts:
+(pass) @covers US-903-AC7 pure construction preserves original plan, Key receipts and exact original invocation semantics [73.01ms]
+(pass) @covers US-903-AC7 empty work has no fabricated items, batches or receipts [46.05ms]
+(pass) @covers US-903-AC7 original numeric Key equality preserves distinct receipt and row spellings [79.87ms]
+(pass) @covers US-903-AC7 original source, tuple, identity, guard and complete intent substitutions refuse atomically [674.29ms]
+(pass) @covers US-903-AC7 finite item/byte bounds and accessors refuse without exposing partial work [89.83ms]
+(pass) @covers US-903-AC7 malformed guard versions return source-qualified errors [129.43ms]
+(pass) @covers US-903-AC7 repeated plan constants are charged before output serialization [31.83ms]
+
+tests/security/core-extension-closure.test.ts:
+(pass) original products action extension survives explicit source custody and real policy compilation [86.75ms]
+(pass) absent or forged closure cannot grant extension interpretation [2.06ms]
+(pass) only exact original selected extension version is admitted, not callback or hash claims [0.05ms]
+(pass) unregistered vocabulary and malformed actions retain fail-closed behavior [50.62ms]
+(pass) registry access cannot mutate subsequent captures or original source snapshots [46.46ms]
+(pass) selection accessors never execute and mutable public package cannot drift from retained closure [14.79ms]
+(pass) actions metadata cannot be widened before the closure module loads in a fresh process [635.64ms]
+
+tests/security/preparation-sources.test.ts:
+(pass) original enrolled products packet derives separate read/update/Field requirements from explicit owner designations [50.21ms]
+(pass) authored owner profile actually passes existing logical write consumer for original/proposed products [35.83ms]
+(pass) native Subject carrier uses original String Key codec with exact Unicode and explicit refusal domains [8.97ms]
+(pass) review controls refuse getter execution, profile drift, unknown selection meaning and refined Subject domains [390.64ms]
+(pass) exact selected interface, provenance, batch bounds and Subject Key are independently checked [206.98ms]
+(pass) selected predicate restrictions and unknown lowering obligations are never dropped [131.69ms]
+(pass) actual host CLI emits the typed packet and refuses replacement-decoded transport bytes [949.79ms]
+(pass) missing owner actions and unsupported obligations refuse before any native installation [459.02ms]
+
+ 59 pass
+ 0 fail
+ 364 expect() calls
+Ran 59 tests across 5 files. [43.78s]

@@ -1,0 +1,875 @@
+{
+  "data": {
+    "extensionId": "umf.security.protection",
+    "manifest": {
+      "capabilities": {
+        "directions": [
+          "import",
+          "export"
+        ],
+        "evidence": [
+          "tests/security/protection/catalog.test.ts"
+        ],
+        "native": {
+          "subset": "Catalog wire structure, exact identities and literal bounds only; no domain closure, function/query interpretation, verified custody or native enforcement",
+          "system": "UMF-authored protection catalog",
+          "version": "0.1.0"
+        },
+        "validation": "structural"
+      },
+      "coreVersion": "0.10.0",
+      "description": "Protection catalog wire structure; interpretation remains unimplemented",
+      "id": "umf.security.protection",
+      "schema": {
+        "$defs": {
+          "constant": {
+            "additionalProperties": true,
+            "properties": {
+              "field": {
+                "$ref": "#/$defs/ref"
+              },
+              "value": {
+                "$ref": "#/$defs/literal"
+              }
+            },
+            "required": [
+              "field",
+              "value"
+            ],
+            "type": "object"
+          },
+          "custody": {
+            "additionalProperties": true,
+            "anyOf": [
+              {
+                "properties": {
+                  "keyRef": {
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "keyRef"
+                ]
+              },
+              {
+                "properties": {
+                  "vaultRef": {
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "vaultRef"
+                ]
+              }
+            ],
+            "properties": {
+              "formatPreserving": {
+                "type": "boolean"
+              },
+              "keyRef": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "owner": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "propagation": {
+                "$ref": "#/$defs/propagation"
+              },
+              "storageEffect": {
+                "const": "stored-transformed"
+              },
+              "vaultRef": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "vaultWriteAction": {
+                "minLength": 1,
+                "type": "string"
+              }
+            },
+            "required": [
+              "owner",
+              "formatPreserving",
+              "storageEffect",
+              "propagation"
+            ],
+            "type": "object"
+          },
+          "literal": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "boolean": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "boolean"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "integerToken": {
+                    "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?([eE][+-]?[0-9]+)?$(?![\\s\\S])",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "integerToken"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "decimalToken": {
+                    "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?([eE][+-]?[0-9]+)?$(?![\\s\\S])",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "decimalToken"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "string": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "string"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "binaryHex": {
+                    "pattern": "^([0-9a-fA-F]{2})*$(?![\\s\\S])",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "binaryHex"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "floatToken": {
+                    "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?([eE][+-]?[0-9]+)?$(?![\\s\\S])",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "floatToken"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "date": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "date"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "time": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "time"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "timestamp": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "timestamp"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "array": {
+                    "items": {
+                      "$ref": "#/$defs/literal"
+                    },
+                    "type": "array"
+                  }
+                },
+                "required": [
+                  "array"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "map": {
+                    "additionalProperties": {
+                      "$ref": "#/$defs/literal"
+                    },
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "map"
+                ],
+                "type": "object"
+              }
+            ]
+          },
+          "parameter": {
+            "additionalProperties": true,
+            "properties": {
+              "field": {
+                "$ref": "#/$defs/ref"
+              },
+              "name": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "value": {
+                "$ref": "#/$defs/literal"
+              }
+            },
+            "required": [
+              "name",
+              "field",
+              "value"
+            ],
+            "type": "object"
+          },
+          "propagation": {
+            "additionalProperties": true,
+            "properties": {
+              "caches": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "exports": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "feeds": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "history": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "snapshots": {
+                "minLength": 1,
+                "type": "string"
+              }
+            },
+            "required": [
+              "history",
+              "snapshots",
+              "exports",
+              "feeds",
+              "caches"
+            ],
+            "type": "object"
+          },
+          "property": {
+            "oneOf": [
+              {
+                "enum": [
+                  "equality",
+                  "order",
+                  "length",
+                  "format",
+                  "nullity",
+                  "cardinality"
+                ]
+              },
+              {
+                "additionalProperties": true,
+                "properties": {
+                  "kind": {
+                    "enum": [
+                      "prefix",
+                      "suffix"
+                    ]
+                  },
+                  "length": {
+                    "maximum": 9007199254740991,
+                    "minimum": 1,
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "length"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": true,
+                "properties": {
+                  "bucket": {
+                    "$ref": "#/$defs/constant"
+                  },
+                  "kind": {
+                    "const": "range"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "bucket"
+                ],
+                "type": "object"
+              }
+            ]
+          },
+          "query": {
+            "additionalProperties": true,
+            "properties": {
+              "aggregate": {
+                "enum": [
+                  "disclosed",
+                  "original-authorized",
+                  "prohibited"
+                ]
+              },
+              "group": {
+                "enum": [
+                  "disclosed",
+                  "original-authorized",
+                  "prohibited"
+                ]
+              },
+              "join": {
+                "enum": [
+                  "disclosed",
+                  "original-authorized",
+                  "prohibited"
+                ]
+              },
+              "order": {
+                "enum": [
+                  "disclosed",
+                  "original-authorized",
+                  "prohibited"
+                ]
+              },
+              "predicate": {
+                "enum": [
+                  "disclosed",
+                  "original-authorized",
+                  "prohibited"
+                ]
+              }
+            },
+            "required": [],
+            "type": "object"
+          },
+          "ref": {
+            "additionalProperties": true,
+            "properties": {
+              "documentId": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "elementId": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "moduleId": {
+                "minLength": 1,
+                "type": "string"
+              }
+            },
+            "required": [
+              "documentId",
+              "moduleId",
+              "elementId"
+            ],
+            "type": "object"
+          },
+          "salt": {
+            "oneOf": [
+              {
+                "additionalProperties": true,
+                "properties": {
+                  "kind": {
+                    "const": "none"
+                  }
+                },
+                "required": [
+                  "kind"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": true,
+                "properties": {
+                  "keyRef": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "kind": {
+                    "const": "keyed"
+                  },
+                  "owner": {
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "owner",
+                  "keyRef"
+                ],
+                "type": "object"
+              }
+            ]
+          },
+          "transform": {
+            "additionalProperties": true,
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "kind": {
+                      "enum": [
+                        "hash",
+                        "tokenize",
+                        "encrypt"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "kind"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "function": false
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "kind": {
+                      "enum": [
+                        "mask",
+                        "generalize",
+                        "tokenize",
+                        "encrypt"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "kind"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "algorithm": false,
+                    "saltCustody": false
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "kind": {
+                      "enum": [
+                        "mask"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "kind"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "function": {
+                      "enum": [
+                        "constant",
+                        "partial",
+                        "fixed-length-redact",
+                        "regex-replace",
+                        "null-out"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "function"
+                  ]
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "kind": {
+                      "enum": [
+                        "generalize"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "kind"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "function": {
+                      "enum": [
+                        "range-bucket",
+                        "truncate-date",
+                        "prefix-only"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "function"
+                  ]
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "kind": {
+                      "enum": [
+                        "hash"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "kind"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "algorithm": {
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "saltCustody": {
+                      "$ref": "#/$defs/salt"
+                    }
+                  },
+                  "required": [
+                    "algorithm",
+                    "saltCustody"
+                  ]
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "kind": {
+                      "enum": [
+                        "tokenize",
+                        "encrypt"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "kind"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "custody": {
+                      "$ref": "#/$defs/custody"
+                    }
+                  },
+                  "required": [
+                    "custody"
+                  ]
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "reversibility": {
+                      "enum": [
+                        "keyed",
+                        "vault"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "reversibility"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "custody": {
+                      "$ref": "#/$defs/custody"
+                    },
+                    "reverseAction": {
+                      "minLength": 1,
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "custody",
+                    "reverseAction"
+                  ]
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "reversibility": {
+                      "enum": [
+                        "keyed"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "reversibility"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "custody": {
+                      "properties": {
+                        "keyRef": {
+                          "minLength": 1,
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "keyRef"
+                      ],
+                      "type": "object"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "reversibility": {
+                      "enum": [
+                        "vault"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "reversibility"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "custody": {
+                      "properties": {
+                        "vaultRef": {
+                          "minLength": 1,
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "vaultRef"
+                      ],
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            ],
+            "properties": {
+              "algorithm": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "custody": {
+                "$ref": "#/$defs/custody"
+              },
+              "determinism": {
+                "enum": [
+                  "deterministic",
+                  "random",
+                  "keyed-deterministic"
+                ]
+              },
+              "disclosureProfile": {
+                "items": {
+                  "$ref": "#/$defs/property"
+                },
+                "type": "array",
+                "uniqueItems": true
+              },
+              "function": {
+                "enum": [
+                  "constant",
+                  "partial",
+                  "fixed-length-redact",
+                  "regex-replace",
+                  "null-out",
+                  "range-bucket",
+                  "truncate-date",
+                  "prefix-only"
+                ]
+              },
+              "id": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "inputDomain": {
+                "$ref": "#/$defs/ref"
+              },
+              "kind": {
+                "enum": [
+                  "mask",
+                  "generalize",
+                  "hash",
+                  "tokenize",
+                  "encrypt"
+                ]
+              },
+              "outputDomain": {
+                "$ref": "#/$defs/ref"
+              },
+              "parameters": {
+                "items": {
+                  "$ref": "#/$defs/parameter"
+                },
+                "maxItems": 32,
+                "type": "array"
+              },
+              "queryUse": {
+                "$ref": "#/$defs/query"
+              },
+              "reverseAction": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "reversibility": {
+                "enum": [
+                  "none",
+                  "keyed",
+                  "vault"
+                ]
+              },
+              "saltCustody": {
+                "$ref": "#/$defs/salt"
+              },
+              "version": {
+                "minLength": 1,
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "version",
+              "kind",
+              "inputDomain",
+              "outputDomain",
+              "determinism",
+              "reversibility",
+              "disclosureProfile",
+              "queryUse",
+              "parameters"
+            ],
+            "type": "object"
+          }
+        },
+        "$id": "urn:umf:security-protection:0.1.0",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": true,
+        "description": "Wire structure only; core domain closure, function parameters, query dependencies, custody verification and execution are separate gates.",
+        "properties": {
+          "id": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "native": {},
+          "revision": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "transforms": {
+            "items": {
+              "$ref": "#/$defs/transform"
+            },
+            "maxItems": 256,
+            "type": "array"
+          },
+          "version": {
+            "const": "0.1.0"
+          },
+          "vocabulary": {
+            "const": "umf.security.protection"
+          }
+        },
+        "required": [
+          "vocabulary",
+          "version",
+          "id",
+          "revision",
+          "transforms"
+        ],
+        "title": "Protection catalog wire representation 0.1.0",
+        "type": "object"
+      },
+      "scopes": [
+        "document"
+      ],
+      "semantics": "CONTRACT-062 concrete catalog wire shapes; structural inspection only, unknown content retained, complete interpretation refused",
+      "version": "0.1.0"
+    },
+    "registration": {
+      "apiIds": [],
+      "coreProfiles": [],
+      "mode": "unmapped"
+    },
+    "schemaId": "[\"schema\",\"spec/extensions/security-protection/schema.json\",\"\"]",
+    "version": "0.1.0"
+  },
+  "id": "[\"extension\",\"umf.security.protection\",\"0.1.0\"]",
+  "kind": "extension",
+  "links": [
+    "[\"guide\",\"extensions\"]",
+    "[\"schema\",\"spec/extensions/security-protection/schema.json\",\"\"]",
+    "[\"integration\",\"umf.security.protection@0.1.0:import\"]",
+    "[\"integration\",\"umf.security.protection@0.1.0:export\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 20189,
+      "path": "spec/extensions/security-protection/package.json",
+      "sha256": "30ec4eed50b7e0113fbf64289df6a210f59477409409c52e9269e68d7708294a"
+    }
+  ],
+  "summary": "Protection catalog wire structure; interpretation remains unimplemented",
+  "title": "umf.security.protection · 0.1.0"
+}

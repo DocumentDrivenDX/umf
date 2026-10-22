@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
+import {CURRENT_CORE_VERSION} from '../generated/core-model';
 import {copyJson} from '../model/json';
 import {UmfError,type Document,type Json,type Diagnostic} from '../model/types';
 import {lookupCoreKey,verifyCoreKeyOperation,type CoreKeyDeclaration,type CoreRecordIdentity} from '../model/keys';
@@ -5,7 +7,7 @@ import type {CoreKeyDefinition,CoreKeyFieldReference} from '../validation/keys';
 import {validateDocument} from '../validation/document';
 import {importAvroSchema,inspectAvro} from '../adapters/avro';
 import {createValidator} from '../validation/schema';
-import legacy from '../../spec/core/schema.json';import fields from '../../spec/core/field-document.schema.json';import nullability from '../../spec/core/nullability-document.schema.json';import cardinality from '../../spec/core/cardinality-document.schema.json';import facets from '../../spec/core/facet-document.schema.json';import keys from '../../spec/core/key-document.schema.json';import keyOperation from '../../spec/core/key-operation.schema.json';
+import legacy from '../../spec/core/schema.json';import keyOperation from '../../spec/core/key-operation-v2.schema.json';
 import schema from '../../spec/core/key-avro-projection.schema.json';
 export {default as keyAvroProjectionSchema} from '../../spec/core/key-avro-projection.schema.json';
 export interface KeyAvroRequest {
@@ -19,7 +21,7 @@ export interface KeyAvroProjection {
  mappings:{keyId:string;keyName:string;idealPath:string;nativePaths:string[];columns:string[];primary:boolean;origin:'authored';enforcement:'not-expressible';outcome:'not-expressible'}[];
  residuals:{path:string;value:Json;reason:string;outcome:'unknown'|'not-expressible';recovery:typeof recovery}[];diagnostics:Diagnostic[];
 }
-const validator=createValidator(false);for(const s of [legacy,fields,nullability,cardinality,facets,keys,keyOperation])validator.addSchema(s);
+const validator=createValidator(false);for(const s of [legacy,keyOperation])validator.addSchema(s);
 const check=validator.compile(schema),requestCheck=validator.compile(schema.properties.request);
 const canonical=(v:Json):string=>Array.isArray(v)?'a['+v.map(canonical).join(',')+']':v!==null&&typeof v==='object'?'o{'+Object.keys(v).sort().map(k=>JSON.stringify(k)+':'+canonical(v[k]!)).join(',')+'}':JSON.stringify(v);
 const same=(a:unknown,b:unknown)=>canonical(copyJson(a))===canonical(copyJson(b));
@@ -29,7 +31,7 @@ function locate(source:Document,ref:CoreRecordIdentity){const mi=source.modules.
 export function projectKeysToAvro(input:Document,authorInput:CoreKeyDeclaration[],options:KeyAvroRequest):KeyAvroProjection {
  const source=copyJson(input) as unknown as Document,authors=copyJson(authorInput) as unknown as CoreKeyDeclaration[],request=copyJson(options) as unknown as KeyAvroRequest;
  if(!requestCheck(request))throw new UmfError('KEY_AVRO_REQUEST',JSON.stringify(requestCheck.errors));
- if(source.umf!=='0.6.0'||!validateDocument(source).valid)throw new UmfError('KEY_AVRO_SOURCE','Valid explicit core 0.6.0 required');
+ if(source.umf!==CURRENT_CORE_VERSION||!validateDocument(source).valid)throw new UmfError('KEY_AVRO_SOURCE','Valid explicit core 0.10.0 required');
  const record=locate(source,request.record),declared=record.element.keys as CoreKeyDefinition[]|undefined,members=record.element.members as CoreKeyFieldReference[]|undefined;
  if(record.element.kind!=='record'||!declared?.length||!members?.length)throw new UmfError('KEY_AVRO_RECORD','Selected Record must have authored keys and explicit membership');
  if(!Array.isArray(authors)||authors.length!==declared.length)throw new UmfError('KEY_AVRO_AUTHORS','Exactly one verified declaration for every current key is required');

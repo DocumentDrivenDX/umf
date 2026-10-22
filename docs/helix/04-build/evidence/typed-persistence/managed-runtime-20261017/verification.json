@@ -1,0 +1,29 @@
+{
+  "scope": "Shipped synchronous managed action/bulk adapter prerequisite and faulty owner-transport controls only; no native managed qualification",
+  "status": "local-controls-pass/native-managed-held",
+  "governing": [
+    "CONTRACT-072",
+    "CONTRACT-073"
+  ],
+  "temporal": "HELD",
+  "sourceFiles": {
+    "python/umf_access/src/umf_access/managed_actions.py": "c52b64ad2f8ee66de7db7550cc6e47fdcdfe4724c0ee416358fb9c3f18332378",
+    "python/umf_access/src/umf_access/managed_bulk.py": "1d8a55776f5b7cbb5b54ffdb49c2b5756eeaf27773f708f37d322a6001d240c2",
+    "python/umf_access/src/umf_access/managed_support.py": "f7c2213bbc9e43964eae9a13bf1c4748dc2cc9361315c238db1371cb3d88b987",
+    "python/umf_access/src/umf_access/managed_delta.py": "4d46234e1b1e64fc92dbac89981a1fd3e652a24c6e5fdabff1c87836d6cb8617",
+    "scripts/verify-managed-action-controls.py": "070f9b7760a8e4143402238aa8b307d1b38d5a2fdcc2da1e1fe19565f117fa3c",
+    "scripts/verify-managed-sdk-controls.py": "907e0566df3885f2328ed84d5eeb19368276d89f8110bc0e9b981c868f7f4e34",
+    "python/umf_access/tests/test_managed_receipt.py": "a05293124372e6fd78ac0a3832c056e60fb59b61341706f5da7c419072e44144"
+  },
+  "originalCompilerInputs": {
+    "original-managed-request.json": "b9b232428c300eb099320b188f9e8f14f7b03828dedee23eade88ef1b709a39b",
+    "original-managed-bulk-request.json": "8b17a40585dfc3870ee2943ae7568abd761fce9014efde3115c6a135b97bff2c"
+  },
+  "remainingNativeGates": [
+    "Warehouse owner native compute permission",
+    "Native lifecycle owner creation/independent constrained human identity and negative DDL/lease controls",
+    "Exact original COMMIT native table UUID and ordered version metadata; history/ledger correlation prohibited"
+  ],
+  "receipt": "Canonical sorted distinct UUID store; native ordered exact per-table versions; original epoch, scope, actor and recovery custody retained. Validation never manufactures native evidence.",
+  "nativeWorkloadsRun": 0
+}

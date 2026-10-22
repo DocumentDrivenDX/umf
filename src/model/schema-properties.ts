@@ -1,3 +1,7 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
+import {CURRENT_CORE_VERSION} from '../generated/core-model';
+import {schemaProperties} from './internal/inspection-meanings';
+import {evaluateFieldValue} from './internal/field-body';
 import {copyJson} from './json';
 import {type Document,type Json,type Element,UmfError,type Validation} from './types';
 import {validateDocument} from '../validation/document';
@@ -12,7 +16,7 @@ export interface CoreSchemaPropertyPatch {
 }
 function locate(input:Document,identityInput:CoreSchemaPropertyIdentity){
  const source=copyJson(input) as unknown as Document,identity=copyJson(identityInput) as unknown as CoreSchemaPropertyIdentity;
- const validation=validateDocument(source);if(source.umf!=='0.8.0'||!validation.valid)schemaError('Expected valid 0.8.0 envelope');
+ const validation=validateDocument(source);if(source.umf!==CURRENT_CORE_VERSION||!validation.valid)schemaError('Expected valid current 0.10.0 envelope');
  const keys=identity?.scope==='document'?['scope']:identity?.scope==='module'?['scope','module']:identity?.scope==='element'?['scope','module','element']:[];
  knownSchemaMembers(identity,keys,'/identity');if(!keys.length||Object.keys(identity).length!==keys.length)schemaError('Explicit identity required');
  if(identity.scope==='document')return {source,identity,node:source as unknown as Record<string,unknown>,path:'',validation};
@@ -24,19 +28,18 @@ function locate(input:Document,identityInput:CoreSchemaPropertyIdentity){
  return {source,identity,node:module.elements[ei]! as Record<string,unknown>,path:`/modules/${mi}/elements/${ei}`,validation};
 }
 export function inspectCoreSchemaProperties(input:Document,identity:CoreSchemaPropertyIdentity){
- const located=locate(input,identity),properties:Record<string,Json>=Object.create(null);
- for(const key of [...schemaPropertyNames,'facets'])if(Object.hasOwn(located.node,key))properties[key]=copyJson(located.node[key]);
- return {operation:'inspect-core-schema-properties' as const,version:'1.0.0' as const,source:located.source,identity:located.identity,path:located.path,properties,diagnostics:located.validation.diagnostics,provenance:'unverified' as const};
+ const located=locate(input,identity),properties=schemaProperties(located.node);
+ return {operation:'inspect-core-schema-properties' as const,version:'2.0.0' as const,source:located.source,identity:located.identity,path:located.path,properties,diagnostics:located.validation.diagnostics,provenance:'unverified' as const};
 }
 export function declareCoreSchemaProperties(input:Document,identity:CoreSchemaPropertyIdentity,patch:CoreSchemaPropertyPatch):Document {
  const request=copyJson(patch) as unknown as CoreSchemaPropertyPatch;
  knownSchemaMembers(request,[...schemaPropertyNames,'facets'],'/request');if(!Object.keys(request).length)schemaError('Empty declaration');
  const located=locate(input,identity),targetLocated=locate(located.source,located.identity),target=targetLocated.source,node=targetLocated.node;
- if(identity.scope!=='element'&&Object.keys(request).some(k=>!['title','aliases'].includes(k)))schemaError('Value properties apply only to Fields');
- if(identity.scope==='element'&&node.kind!=='field'&&Object.keys(request).some(k=>!['title','aliases'].includes(k)))schemaError('Value properties apply only to Fields');
+ if(located.identity.scope!=='element'&&Object.keys(request).some(k=>!['title','aliases'].includes(k)))schemaError('Value properties apply only to Fields');
+ if(located.identity.scope==='element'&&node.kind!=='field'&&Object.keys(request).some(k=>!['title','aliases'].includes(k)))schemaError('Value properties apply only to Fields');
  for(const key of schemaPropertyNames)if(Object.hasOwn(request,key)){
   if(key==='default'&&node.default)knownSchemaMembers(node.default,['value','on'],located.path+'/default');
-  node[key]=copyJson(request[key]);
+  (node as Record<string,unknown>)[key]=copyJson(request[key as keyof CoreSchemaPropertyPatch]);
  }
  if(Object.hasOwn(request,'facets')){
   knownSchemaMembers(request.facets,['length','collectionSize','range'],'/request/facets');
@@ -56,16 +59,9 @@ export function declareCoreSchemaProperties(input:Document,identity:CoreSchemaPr
  return copyJson(target) as unknown as Document;
 }
 export function validateCoreFieldValue(input:Document,fieldInput:{module:string;element:string},valueInput:CoreLiteral):Validation {
- const diagnostics:Validation['diagnostics']=[];
- try{
-  const field=copyJson(fieldInput) as unknown as {module:string;element:string};
-  const value=copyJson(valueInput) as unknown as CoreLiteral;
-  if(!checkCoreLiteral(value))schemaError('Invalid typed literal');
-  knownSchemaMembers(field,['module','element'],'/identity');
-  const located=locate(input,{scope:'element',...field});checkSchemaLiteral(located.source,located.node as unknown as Element,value);
- }catch(error){if(!(error instanceof UmfError))throw error;diagnostics.push({code:error.code,path:error.path,message:error.message,severity:'error'});}
- return {valid:diagnostics.length===0,complete:diagnostics.length===0,diagnostics};
+ return evaluateFieldValue(fieldInput,valueInput,field=>locate(input,{scope:'element',...field}));
 }
+
 export type CoreDefaultInput={state:'missing'}|{state:'present';value:CoreLiteral};
 export function resolveCoreDefault(input:Document,fieldInput:{module:string;element:string},stateInput:CoreDefaultInput){
  const field=copyJson(fieldInput) as unknown as {module:string;element:string};
@@ -79,5 +75,5 @@ export function resolveCoreDefault(input:Document,fieldInput:{module:string;elem
  const applied=!!declaration&&(state.state==='missing'?['missing','missing-or-null'].includes(declaration.on):state.value===null&&['null','missing-or-null'].includes(declaration.on));
  const result:CoreDefaultInput=applied?{state:'present',value:copyJson(declaration!.value) as unknown as CoreLiteral}:state;
  if(result.state==='present'){const validation=validateCoreFieldValue(located.source,field,result.value);if(!validation.valid)schemaError(JSON.stringify(validation.diagnostics));}
- return {operation:'resolve-core-default' as const,version:'1.0.0' as const,source:located.source,identity:copyJson(field),input:state,result,applied};
+ return {operation:'resolve-core-default' as const,version:'2.0.0' as const,source:located.source,identity:copyJson(field),input:state,result,applied};
 }

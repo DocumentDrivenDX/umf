@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {importSparkSchema,inspectSpark,exportSparkSchema} from '../../src';
 test('US-017-AC2: parameter diagnostics preserve source and distinguish configuration constraints',async()=>{

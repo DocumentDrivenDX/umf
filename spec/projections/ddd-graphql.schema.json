@@ -19,7 +19,7 @@
       ]
     },
     "logical": {
-      "$ref": "urn:umf:core:0.7.0"
+      "$ref": "urn:umf:core:0.10.0"
     },
     "policy": {
       "$ref": "#/$defs/policy"
@@ -38,7 +38,7 @@
       "additionalProperties": false,
       "properties": {
         "core": {
-          "const": "0.7.0"
+          "const": "0.10.0"
         },
         "ddd": {
           "const": "0.1.0"
@@ -119,7 +119,7 @@
       "maxLength": 4000000
     },
     "targetArchive": {
-      "$ref": "urn:umf:core:0.1.0"
+      "$ref": "urn:umf:core:0.10.0"
     },
     "diagnostics": {
       "type": "array",

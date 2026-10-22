@@ -1,10 +1,13 @@
-import {declareCoreKey,declareCoreRecordMembers,type CoreKeyDeclaration} from '../../src/model/keys';
+// SPDX-License-Identifier: MIT OR Apache-2.0
+import {CURRENT_CORE_VERSION} from '../../src/model/types';
+// Synthetic current-core fixture for active operation/projection behavior.
+import {declareCoreKey, declareCoreRecordMembers, type CoreKeyDeclaration} from '../../src/model/keys';
 import {copyJson} from '../../src/model/json';
 import type {Document} from '../../src/model/types';
 import type {KeyTableSpecRequest} from '../../src/core-ideals/key-tablespec-projection';
 export const keyRecord={module:'m',element:'record'},keyId={module:'m',element:'id'},keyCode={module:'m',element:'code'};
 export function tableSpecKeyAuthors(primary=true){
- const doc:Document={umf:'0.6.0',id:'author',vocabularies:{},modules:[{id:'m',namespace:'sales',elements:[{id:'record',kind:'record',extensions:{}},{id:'id',name:'id',kind:'field',scalarType:'integer',nullability:'required',cardinality:'one',extensions:{}},{id:'code',name:'code',kind:'field',scalarType:'string',nullability:'required',cardinality:'one',extensions:{}}]}]};
+ const doc:Document={umf:CURRENT_CORE_VERSION,id:'author',vocabularies:{},modules:[{id:'m',namespace:'sales',elements:[{id:'record',kind:'record',extensions:{}},{id:'id',name:'id',kind:'field',scalarType:'integer',nullability:'required',cardinality:'one',extensions:{}},{id:'code',name:'code',kind:'field',scalarType:'string',nullability:'required',cardinality:'one',extensions:{}}]}]};
  const members=declareCoreRecordMembers(doc,keyRecord,[keyId,keyCode]),first=declareCoreKey(members.target,keyRecord,{id:'stable-id',name:'Order identity',fields:[keyId],...(primary?{primary:true}:{})}),second=declareCoreKey(first.target,keyRecord,{id:'stable-code',name:'External code',fields:[keyCode]});
  const request:KeyTableSpecRequest={id:'native',record:keyRecord,tableName:'Orders',mode:'report',columns:[{field:keyId,name:'order_id',nativeType:'INTEGER'},{field:keyCode,name:'external_code',nativeType:'TEXT'}]};
  return {source:second.target,authors:[first,second],request};

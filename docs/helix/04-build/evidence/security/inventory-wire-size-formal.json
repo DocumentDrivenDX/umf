@@ -1,0 +1,91 @@
+{
+  "status": "conditional-proof-passed",
+  "solverVersion": "4.15.4",
+  "sourceDigests": {
+    "tools/security/prove-inventory-wire-size.py": "f8baff32650d3c55d701ba3d3b6f91f7bff940b8612e88d4af950348afb832a1",
+    "/Users/erik/Projects/truss/packages/umf-bun/src/catalog-complete-assertion-inventory.ts": "5b0ec9809cad7e1a9ed30847e1696c7218d06fc190bd4b18a11817c6913263a4"
+  },
+  "sourcesUnchanged": true,
+  "selectedImplementationFragments": [
+    "const limit=4194304;",
+    "retainedWireBytes+=Buffer.byteLength(JSON.stringify(value),'utf8');",
+    "for(const absence of reconciliation.absent)charge(absence);",
+    "const fixedBytes=skeletonBytes+retainedWireBytes+commas-1;",
+    "let serializedBytes=fixedBytes+1,previous=-1;",
+    "while(previous!==serializedBytes){previous=serializedBytes;serializedBytes=fixedBytes+String(serializedBytes).length;}",
+    "if(serializedBytes>limit)throw Error('Complete original inventory capacity exceeded');"
+  ],
+  "queries": [
+    {
+      "id": "monotone_recomputations",
+      "result": "unsat",
+      "replayResult": "unsat",
+      "smt": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun fixed_utf8_bytes_excluding_count_digits () Int)\n(assert\n (>= fixed_utf8_bytes_excluding_count_digits 1))\n(assert\n (<= fixed_utf8_bytes_excluding_count_digits 8388608))\n(assert\n (let ((?x27 (ite (< (+ fixed_utf8_bytes_excluding_count_digits 1) 10000000) 7 8)))\n(let ((?x29 (ite (< (+ fixed_utf8_bytes_excluding_count_digits 1) 1000000) 6 ?x27)))\n(let ((?x31 (ite (< (+ fixed_utf8_bytes_excluding_count_digits 1) 100000) 5 ?x29)))\n(let ((?x33 (ite (< (+ fixed_utf8_bytes_excluding_count_digits 1) 10000) 4 ?x31)))\n(let ((?x35 (ite (< (+ fixed_utf8_bytes_excluding_count_digits 1) 1000) 3 ?x33)))\n(let ((?x37 (ite (< (+ fixed_utf8_bytes_excluding_count_digits 1) 100) 2 ?x35)))\n(let ((?x38 (ite (< (+ fixed_utf8_bytes_excluding_count_digits 1) 10) 1 ?x37)))\n(let ((?x39 (+ fixed_utf8_bytes_excluding_count_digits ?x38)))\n(let ((?x49 (ite (< ?x39 100000) 5 (ite (< ?x39 1000000) 6 (ite (< ?x39 10000000) 7 8)))))\n(let ((?x52 (ite (< ?x39 100) 2 (ite (< ?x39 1000) 3 (ite (< ?x39 10000) 4 ?x49)))))\n(let ((?x54 (+ fixed_utf8_bytes_excluding_count_digits (ite (< ?x39 10) 1 ?x52))))\n(let ((?x64 (ite (< ?x54 100000) 5 (ite (< ?x54 1000000) 6 (ite (< ?x54 10000000) 7 8)))))\n(let ((?x67 (ite (< ?x54 100) 2 (ite (< ?x54 1000) 3 (ite (< ?x54 10000) 4 ?x64)))))\n(let ((?x69 (+ fixed_utf8_bytes_excluding_count_digits (ite (< ?x54 10) 1 ?x67))))\n(or (< ?x39 (+ fixed_utf8_bytes_excluding_count_digits 1)) (< ?x54 ?x39) (< ?x69 ?x54)))))))))))))))))\n(check-sat)\n",
+      "model": null
+    },
+    {
+      "id": "stabilizes_within_three_recomputations",
+      "result": "unsat",
+      "replayResult": "unsat",
+      "smt": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun fixed_utf8_bytes_excluding_count_digits () Int)\n(assert\n (>= fixed_utf8_bytes_excluding_count_digits 1))\n(assert\n (<= fixed_utf8_bytes_excluding_count_digits 8388608))\n(assert\n (let ((?x27 (ite (< (+ fixed_utf8_bytes_excluding_count_digits 1) 10000000) 7 8)))\n(let ((?x29 (ite (< (+ fixed_utf8_bytes_excluding_count_digits 1) 1000000) 6 ?x27)))\n(let ((?x31 (ite (< (+ fixed_utf8_bytes_excluding_count_digits 1) 100000) 5 ?x29)))\n(let ((?x33 (ite (< (+ fixed_utf8_bytes_excluding_count_digits 1) 10000) 4 ?x31)))\n(let ((?x35 (ite (< (+ fixed_utf8_bytes_excluding_count_digits 1) 1000) 3 ?x33)))\n(let ((?x37 (ite (< (+ fixed_utf8_bytes_excluding_count_digits 1) 100) 2 ?x35)))\n(let ((?x38 (ite (< (+ fixed_utf8_bytes_excluding_count_digits 1) 10) 1 ?x37)))\n(let ((?x39 (+ fixed_utf8_bytes_excluding_count_digits ?x38)))\n(let ((?x49 (ite (< ?x39 100000) 5 (ite (< ?x39 1000000) 6 (ite (< ?x39 10000000) 7 8)))))\n(let ((?x52 (ite (< ?x39 100) 2 (ite (< ?x39 1000) 3 (ite (< ?x39 10000) 4 ?x49)))))\n(let ((?x54 (+ fixed_utf8_bytes_excluding_count_digits (ite (< ?x39 10) 1 ?x52))))\n(let ((?x64 (ite (< ?x54 100000) 5 (ite (< ?x54 1000000) 6 (ite (< ?x54 10000000) 7 8)))))\n(let ((?x67 (ite (< ?x54 100) 2 (ite (< ?x54 1000) 3 (ite (< ?x54 10000) 4 ?x64)))))\n(let ((?x69 (+ fixed_utf8_bytes_excluding_count_digits (ite (< ?x54 10) 1 ?x67))))\n(and (distinct ?x69 ?x54) true))))))))))))))))\n(check-sat)\n",
+      "model": null
+    },
+    {
+      "id": "terminal_count_equals_actual_wire_size",
+      "result": "unsat",
+      "replayResult": "unsat",
+      "smt": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun fixed_utf8_bytes_excluding_count_digits () Int)\n(assert\n (>= fixed_utf8_bytes_excluding_count_digits 1))\n(assert\n (<= fixed_utf8_bytes_excluding_count_digits 8388608))\n(assert\n (let ((?x27 (ite (< (+ fixed_utf8_bytes_excluding_count_digits 1) 10000000) 7 8)))\n(let ((?x29 (ite (< (+ fixed_utf8_bytes_excluding_count_digits 1) 1000000) 6 ?x27)))\n(let ((?x31 (ite (< (+ fixed_utf8_bytes_excluding_count_digits 1) 100000) 5 ?x29)))\n(let ((?x33 (ite (< (+ fixed_utf8_bytes_excluding_count_digits 1) 10000) 4 ?x31)))\n(let ((?x35 (ite (< (+ fixed_utf8_bytes_excluding_count_digits 1) 1000) 3 ?x33)))\n(let ((?x37 (ite (< (+ fixed_utf8_bytes_excluding_count_digits 1) 100) 2 ?x35)))\n(let ((?x38 (ite (< (+ fixed_utf8_bytes_excluding_count_digits 1) 10) 1 ?x37)))\n(let ((?x39 (+ fixed_utf8_bytes_excluding_count_digits ?x38)))\n(let ((?x49 (ite (< ?x39 100000) 5 (ite (< ?x39 1000000) 6 (ite (< ?x39 10000000) 7 8)))))\n(let ((?x52 (ite (< ?x39 100) 2 (ite (< ?x39 1000) 3 (ite (< ?x39 10000) 4 ?x49)))))\n(let ((?x54 (+ fixed_utf8_bytes_excluding_count_digits (ite (< ?x39 10) 1 ?x52))))\n(let ((?x64 (ite (< ?x54 100000) 5 (ite (< ?x54 1000000) 6 (ite (< ?x54 10000000) 7 8)))))\n(let ((?x67 (ite (< ?x54 100) 2 (ite (< ?x54 1000) 3 (ite (< ?x54 10000) 4 ?x64)))))\n(let ((?x69 (+ fixed_utf8_bytes_excluding_count_digits (ite (< ?x54 10) 1 ?x67))))\n(and (distinct ?x54 ?x69) true))))))))))))))))\n(check-sat)\n",
+      "model": null
+    },
+    {
+      "id": "admitted_wire_cannot_exceed_limit",
+      "result": "unsat",
+      "replayResult": "unsat",
+      "smt": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun fixed_utf8_bytes_excluding_count_digits () Int)\n(assert\n (>= fixed_utf8_bytes_excluding_count_digits 1))\n(assert\n (<= fixed_utf8_bytes_excluding_count_digits 8388608))\n(assert\n (let ((?x27 (ite (< (+ fixed_utf8_bytes_excluding_count_digits 1) 10000000) 7 8)))\n(let ((?x29 (ite (< (+ fixed_utf8_bytes_excluding_count_digits 1) 1000000) 6 ?x27)))\n(let ((?x31 (ite (< (+ fixed_utf8_bytes_excluding_count_digits 1) 100000) 5 ?x29)))\n(let ((?x33 (ite (< (+ fixed_utf8_bytes_excluding_count_digits 1) 10000) 4 ?x31)))\n(let ((?x35 (ite (< (+ fixed_utf8_bytes_excluding_count_digits 1) 1000) 3 ?x33)))\n(let ((?x37 (ite (< (+ fixed_utf8_bytes_excluding_count_digits 1) 100) 2 ?x35)))\n(let ((?x38 (ite (< (+ fixed_utf8_bytes_excluding_count_digits 1) 10) 1 ?x37)))\n(let ((?x39 (+ fixed_utf8_bytes_excluding_count_digits ?x38)))\n(let ((?x49 (ite (< ?x39 100000) 5 (ite (< ?x39 1000000) 6 (ite (< ?x39 10000000) 7 8)))))\n(let ((?x52 (ite (< ?x39 100) 2 (ite (< ?x39 1000) 3 (ite (< ?x39 10000) 4 ?x49)))))\n(let ((?x54 (+ fixed_utf8_bytes_excluding_count_digits (ite (< ?x39 10) 1 ?x52))))\n(let ((?x64 (ite (< ?x54 100000) 5 (ite (< ?x54 1000000) 6 (ite (< ?x54 10000000) 7 8)))))\n(let ((?x67 (ite (< ?x54 100) 2 (ite (< ?x54 1000) 3 (ite (< ?x54 10000) 4 ?x64)))))\n(let ((?x69 (+ fixed_utf8_bytes_excluding_count_digits (ite (< ?x54 10) 1 ?x67))))\n(let (($x79 (> ?x69 4194304)))\n(let (($x71 (<= ?x54 4194304)))\n(and $x71 $x79))))))))))))))))))\n(check-sat)\n",
+      "model": null
+    },
+    {
+      "id": "oversized_wire_cannot_be_admitted",
+      "result": "unsat",
+      "replayResult": "unsat",
+      "smt": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun fixed_utf8_bytes_excluding_count_digits () Int)\n(assert\n (>= fixed_utf8_bytes_excluding_count_digits 1))\n(assert\n (<= fixed_utf8_bytes_excluding_count_digits 8388608))\n(assert\n (let ((?x27 (ite (< (+ fixed_utf8_bytes_excluding_count_digits 1) 10000000) 7 8)))\n(let ((?x29 (ite (< (+ fixed_utf8_bytes_excluding_count_digits 1) 1000000) 6 ?x27)))\n(let ((?x31 (ite (< (+ fixed_utf8_bytes_excluding_count_digits 1) 100000) 5 ?x29)))\n(let ((?x33 (ite (< (+ fixed_utf8_bytes_excluding_count_digits 1) 10000) 4 ?x31)))\n(let ((?x35 (ite (< (+ fixed_utf8_bytes_excluding_count_digits 1) 1000) 3 ?x33)))\n(let ((?x37 (ite (< (+ fixed_utf8_bytes_excluding_count_digits 1) 100) 2 ?x35)))\n(let ((?x38 (ite (< (+ fixed_utf8_bytes_excluding_count_digits 1) 10) 1 ?x37)))\n(let ((?x39 (+ fixed_utf8_bytes_excluding_count_digits ?x38)))\n(let ((?x49 (ite (< ?x39 100000) 5 (ite (< ?x39 1000000) 6 (ite (< ?x39 10000000) 7 8)))))\n(let ((?x52 (ite (< ?x39 100) 2 (ite (< ?x39 1000) 3 (ite (< ?x39 10000) 4 ?x49)))))\n(let ((?x54 (+ fixed_utf8_bytes_excluding_count_digits (ite (< ?x39 10) 1 ?x52))))\n(let (($x71 (<= ?x54 4194304)))\n(let ((?x64 (ite (< ?x54 100000) 5 (ite (< ?x54 1000000) 6 (ite (< ?x54 10000000) 7 8)))))\n(let ((?x67 (ite (< ?x54 100) 2 (ite (< ?x54 1000) 3 (ite (< ?x54 10000) 4 ?x64)))))\n(let ((?x69 (+ fixed_utf8_bytes_excluding_count_digits (ite (< ?x54 10) 1 ?x67))))\n(let (($x79 (> ?x69 4194304)))\n(and $x79 $x71))))))))))))))))))\n(check-sat)\n",
+      "model": null
+    },
+    {
+      "id": "exact_limit_is_reachable",
+      "result": "sat",
+      "replayResult": "sat",
+      "smt": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun fixed_utf8_bytes_excluding_count_digits () Int)\n(assert\n (>= fixed_utf8_bytes_excluding_count_digits 1))\n(assert\n (<= fixed_utf8_bytes_excluding_count_digits 8388608))\n(assert\n (let ((?x27 (ite (< (+ fixed_utf8_bytes_excluding_count_digits 1) 10000000) 7 8)))\n(let ((?x29 (ite (< (+ fixed_utf8_bytes_excluding_count_digits 1) 1000000) 6 ?x27)))\n(let ((?x31 (ite (< (+ fixed_utf8_bytes_excluding_count_digits 1) 100000) 5 ?x29)))\n(let ((?x33 (ite (< (+ fixed_utf8_bytes_excluding_count_digits 1) 10000) 4 ?x31)))\n(let ((?x35 (ite (< (+ fixed_utf8_bytes_excluding_count_digits 1) 1000) 3 ?x33)))\n(let ((?x37 (ite (< (+ fixed_utf8_bytes_excluding_count_digits 1) 100) 2 ?x35)))\n(let ((?x38 (ite (< (+ fixed_utf8_bytes_excluding_count_digits 1) 10) 1 ?x37)))\n(let ((?x39 (+ fixed_utf8_bytes_excluding_count_digits ?x38)))\n(let ((?x49 (ite (< ?x39 100000) 5 (ite (< ?x39 1000000) 6 (ite (< ?x39 10000000) 7 8)))))\n(let ((?x52 (ite (< ?x39 100) 2 (ite (< ?x39 1000) 3 (ite (< ?x39 10000) 4 ?x49)))))\n(let ((?x54 (+ fixed_utf8_bytes_excluding_count_digits (ite (< ?x39 10) 1 ?x52))))\n(let ((?x64 (ite (< ?x54 100000) 5 (ite (< ?x54 1000000) 6 (ite (< ?x54 10000000) 7 8)))))\n(let ((?x67 (ite (< ?x54 100) 2 (ite (< ?x54 1000) 3 (ite (< ?x54 10000) 4 ?x64)))))\n(let ((?x69 (+ fixed_utf8_bytes_excluding_count_digits (ite (< ?x54 10) 1 ?x67))))\n(let (($x71 (<= ?x54 4194304)))\n(and $x71 (= ?x69 4194304))))))))))))))))))\n(check-sat)\n",
+      "model": "[fixed_utf8_bytes_excluding_count_digits = 4194297]"
+    },
+    {
+      "id": "next_byte_is_refused",
+      "result": "unsat",
+      "replayResult": "unsat",
+      "smt": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun fixed_utf8_bytes_excluding_count_digits () Int)\n(assert\n (>= fixed_utf8_bytes_excluding_count_digits 1))\n(assert\n (<= fixed_utf8_bytes_excluding_count_digits 8388608))\n(assert\n (let ((?x27 (ite (< (+ fixed_utf8_bytes_excluding_count_digits 1) 10000000) 7 8)))\n(let ((?x29 (ite (< (+ fixed_utf8_bytes_excluding_count_digits 1) 1000000) 6 ?x27)))\n(let ((?x31 (ite (< (+ fixed_utf8_bytes_excluding_count_digits 1) 100000) 5 ?x29)))\n(let ((?x33 (ite (< (+ fixed_utf8_bytes_excluding_count_digits 1) 10000) 4 ?x31)))\n(let ((?x35 (ite (< (+ fixed_utf8_bytes_excluding_count_digits 1) 1000) 3 ?x33)))\n(let ((?x37 (ite (< (+ fixed_utf8_bytes_excluding_count_digits 1) 100) 2 ?x35)))\n(let ((?x38 (ite (< (+ fixed_utf8_bytes_excluding_count_digits 1) 10) 1 ?x37)))\n(let ((?x39 (+ fixed_utf8_bytes_excluding_count_digits ?x38)))\n(let ((?x49 (ite (< ?x39 100000) 5 (ite (< ?x39 1000000) 6 (ite (< ?x39 10000000) 7 8)))))\n(let ((?x52 (ite (< ?x39 100) 2 (ite (< ?x39 1000) 3 (ite (< ?x39 10000) 4 ?x49)))))\n(let ((?x54 (+ fixed_utf8_bytes_excluding_count_digits (ite (< ?x39 10) 1 ?x52))))\n(let (($x71 (<= ?x54 4194304)))\n(let ((?x64 (ite (< ?x54 100000) 5 (ite (< ?x54 1000000) 6 (ite (< ?x54 10000000) 7 8)))))\n(let ((?x67 (ite (< ?x54 100) 2 (ite (< ?x54 1000) 3 (ite (< ?x54 10000) 4 ?x64)))))\n(let ((?x69 (+ fixed_utf8_bytes_excluding_count_digits (ite (< ?x54 10) 1 ?x67))))\n(and (= ?x69 4194305) $x71)))))))))))))))))\n(check-sat)\n",
+      "model": null
+    },
+    {
+      "id": "mutant_missing_repeated_source_or_absence_charge",
+      "result": "sat",
+      "replayResult": "sat",
+      "smt": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun fixed_utf8_bytes_excluding_count_digits () Int)\n(declare-fun unbilled_source_or_absence_bytes () Int)\n(assert\n (>= fixed_utf8_bytes_excluding_count_digits 1))\n(assert\n (<= fixed_utf8_bytes_excluding_count_digits 8388608))\n(assert\n (let ((?x27 (ite (< (+ fixed_utf8_bytes_excluding_count_digits 1) 10000000) 7 8)))\n(let ((?x29 (ite (< (+ fixed_utf8_bytes_excluding_count_digits 1) 1000000) 6 ?x27)))\n(let ((?x31 (ite (< (+ fixed_utf8_bytes_excluding_count_digits 1) 100000) 5 ?x29)))\n(let ((?x33 (ite (< (+ fixed_utf8_bytes_excluding_count_digits 1) 10000) 4 ?x31)))\n(let ((?x35 (ite (< (+ fixed_utf8_bytes_excluding_count_digits 1) 1000) 3 ?x33)))\n(let ((?x37 (ite (< (+ fixed_utf8_bytes_excluding_count_digits 1) 100) 2 ?x35)))\n(let ((?x38 (ite (< (+ fixed_utf8_bytes_excluding_count_digits 1) 10) 1 ?x37)))\n(let ((?x39 (+ fixed_utf8_bytes_excluding_count_digits ?x38)))\n(let ((?x49 (ite (< ?x39 100000) 5 (ite (< ?x39 1000000) 6 (ite (< ?x39 10000000) 7 8)))))\n(let ((?x52 (ite (< ?x39 100) 2 (ite (< ?x39 1000) 3 (ite (< ?x39 10000) 4 ?x49)))))\n(let ((?x54 (+ fixed_utf8_bytes_excluding_count_digits (ite (< ?x39 10) 1 ?x52))))\n(let ((?x64 (ite (< ?x54 100000) 5 (ite (< ?x54 1000000) 6 (ite (< ?x54 10000000) 7 8)))))\n(let ((?x67 (ite (< ?x54 100) 2 (ite (< ?x54 1000) 3 (ite (< ?x54 10000) 4 ?x64)))))\n(let ((?x69 (+ fixed_utf8_bytes_excluding_count_digits (ite (< ?x54 10) 1 ?x67))))\n(let (($x89 (<= unbilled_source_or_absence_bytes 4194304)))\n(let (($x71 (<= ?x54 4194304)))\n(and $x71 (> unbilled_source_or_absence_bytes 0) $x89 (> (+ ?x69 unbilled_source_or_absence_bytes) 4194304)))))))))))))))))))\n(check-sat)\n",
+      "model": "[fixed_utf8_bytes_excluding_count_digits = 999998,\n unbilled_source_or_absence_bytes = 3194300]"
+    },
+    {
+      "id": "mutant_missing_count_field_digits",
+      "result": "sat",
+      "replayResult": "sat",
+      "smt": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun fixed_utf8_bytes_excluding_count_digits () Int)\n(assert\n (>= fixed_utf8_bytes_excluding_count_digits 1))\n(assert\n (<= fixed_utf8_bytes_excluding_count_digits 8388608))\n(assert\n (let ((?x27 (ite (< (+ fixed_utf8_bytes_excluding_count_digits 1) 10000000) 7 8)))\n(let ((?x29 (ite (< (+ fixed_utf8_bytes_excluding_count_digits 1) 1000000) 6 ?x27)))\n(let ((?x31 (ite (< (+ fixed_utf8_bytes_excluding_count_digits 1) 100000) 5 ?x29)))\n(let ((?x33 (ite (< (+ fixed_utf8_bytes_excluding_count_digits 1) 10000) 4 ?x31)))\n(let ((?x35 (ite (< (+ fixed_utf8_bytes_excluding_count_digits 1) 1000) 3 ?x33)))\n(let ((?x37 (ite (< (+ fixed_utf8_bytes_excluding_count_digits 1) 100) 2 ?x35)))\n(let ((?x38 (ite (< (+ fixed_utf8_bytes_excluding_count_digits 1) 10) 1 ?x37)))\n(let ((?x39 (+ fixed_utf8_bytes_excluding_count_digits ?x38)))\n(let ((?x49 (ite (< ?x39 100000) 5 (ite (< ?x39 1000000) 6 (ite (< ?x39 10000000) 7 8)))))\n(let ((?x52 (ite (< ?x39 100) 2 (ite (< ?x39 1000) 3 (ite (< ?x39 10000) 4 ?x49)))))\n(let ((?x54 (+ fixed_utf8_bytes_excluding_count_digits (ite (< ?x39 10) 1 ?x52))))\n(let ((?x64 (ite (< ?x54 100000) 5 (ite (< ?x54 1000000) 6 (ite (< ?x54 10000000) 7 8)))))\n(let ((?x67 (ite (< ?x54 100) 2 (ite (< ?x54 1000) 3 (ite (< ?x54 10000) 4 ?x64)))))\n(let ((?x69 (+ fixed_utf8_bytes_excluding_count_digits (ite (< ?x54 10) 1 ?x67))))\n(let (($x79 (> ?x69 4194304)))\n(let (($x93 (<= fixed_utf8_bytes_excluding_count_digits 4194304)))\n(and $x93 $x79))))))))))))))))))\n(check-sat)\n",
+      "model": "[fixed_utf8_bytes_excluding_count_digits = 4194304]"
+    }
+  ],
+  "premises": [
+    "Each serialized array constituent is charged exactly once in retainedWireBytes, including repeated source artifacts and each absence row",
+    "skeletonBytes contains all non-array payload fields, empty array brackets and a one-digit serializedBytes placeholder; commas counts every array separator exactly once",
+    "JSON encoding of each constituent is stable and agrees with its whole-payload encoding; no accessor, mutation, omission or alternate serializer behavior changes those bytes",
+    "The positive fixed byte total is at most 8MiB and all JavaScript metadata arithmetic is exact; this bound is a proof premise, not established for all inputs by this script"
+  ],
+  "scope": "Source-bound conditional proof of final exact integer size arithmetic, fixed-point termination and admission bound. Does not prove faithful charging/JSON encoding premises, complete process memory/work bounds, enclosing report pre-effect reservation, support meaning, native enforcement or publication.",
+  "nativeImplementationQualified": false
+}

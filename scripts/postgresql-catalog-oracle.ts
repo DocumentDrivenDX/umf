@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 // Runs only authored fixtures in a disposable, network-isolated local database.
 import {backend} from '../native/postgresql/runtime';
 import {importPostgresqlSql,exportPostgresqlSql,readDocument,writeDocument,importPostgresqlCatalogCapture,exportPostgresqlCatalogCapture,getPostgresqlCatalogReconstruction,queryPostgresqlCatalogDependencies,projectPostgresqlRowToJsonSchema} from '../src';

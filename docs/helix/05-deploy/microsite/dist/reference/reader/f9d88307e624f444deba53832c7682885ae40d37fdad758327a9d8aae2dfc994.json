@@ -1,0 +1,78 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"ParquetArrowRenameResult\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "source",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ParquetArrowRenamePolicy\"]"
+      ],
+      "name": "policy",
+      "optional": false,
+      "type": "ParquetArrowRenamePolicy"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "status",
+      "optional": false,
+      "type": "\"blocked\" | \"transformed\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "complete",
+      "optional": false,
+      "type": "false"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Diagnostic\"]"
+      ],
+      "name": "diagnostics",
+      "optional": false,
+      "type": "Diagnostic[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "output",
+      "optional": true,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "unchangedPrefixBytes",
+      "optional": true,
+      "type": "number"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "rename",
+      "optional": true,
+      "type": "{ from: string[]; to: string[]; parquetFrom?: string[]; parquetTo?: string[]; }"
+    }
+  ],
+  "parameters": [],
+  "purpose": "ParquetArrowRenameResult is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "ParquetArrowRenameResult"
+}

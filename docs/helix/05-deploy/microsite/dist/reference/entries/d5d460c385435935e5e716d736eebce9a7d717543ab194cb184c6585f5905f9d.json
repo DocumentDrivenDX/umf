@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 1962,
+        "line": 9,
+        "path": "src/model/record-values.ts",
+        "sha256": "8c26c0b32953d370b72a7aa7a0a089a35035c5cba0a54ebc9908da2537233be0"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "CoreRecordFieldValue",
+    "runtime": "type-only",
+    "signatureText": [
+      "export type CoreRecordFieldValue={field:CoreRecordValueIdentity;state:'absent'}|{field:CoreRecordValueIdentity;state:'present';value:CoreLiteral};"
+    ]
+  },
+  "id": "[\"api\",\".\",\"CoreRecordFieldValue\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 1962,
+      "line": 9,
+      "path": "src/model/record-values.ts",
+      "sha256": "8c26c0b32953d370b72a7aa7a0a089a35035c5cba0a54ebc9908da2537233be0"
+    }
+  ],
+  "summary": "Type declaration · src/model/record-values.ts",
+  "title": "CoreRecordFieldValue"
+}

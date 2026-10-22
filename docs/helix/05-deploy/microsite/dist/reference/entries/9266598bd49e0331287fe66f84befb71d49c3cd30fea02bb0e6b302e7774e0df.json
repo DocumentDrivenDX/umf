@@ -1,0 +1,50 @@
+{
+  "data": {
+    "conflicts": [],
+    "correspondence": "unassessed",
+    "declarations": [
+      {
+        "bytes": 2327,
+        "path": "spec/extensions/parquet-nullability/package.json",
+        "sha256": "d3d3757f0f1ec5473a2b8526bedaa79ea4a6f60cefe0b367d5c202eedc70e760"
+      }
+    ],
+    "evidence": [],
+    "operation": {
+      "apiNames": [],
+      "coreProfiles": [],
+      "extensionVersions": [],
+      "fixturePaths": [],
+      "id": "umf.parquet.nullability@1.0.0:import",
+      "kind": "import",
+      "limitations": [
+        "Recorded scope only; native equivalence and production adoption are separate."
+      ],
+      "runtime": {
+        "availability": "host-only",
+        "profileId": "umf.parquet.nullability@1.0.0:import",
+        "requirements": [
+          "Native runtime / original qualification harness; not executed by this page."
+        ]
+      },
+      "sourceSystem": "Parquet · parquet-format@219e3f12a62f9476e830c21e26d030d231f7c017",
+      "subset": "Checked physical leaf availability with row or repeated-element context; no writer-input, Arrow or logical-type equivalence",
+      "targetSystem": "UMF",
+      "title": "umf.parquet.nullability · import"
+    }
+  },
+  "id": "[\"integration\",\"umf.parquet.nullability@1.0.0:import\"]",
+  "kind": "integration",
+  "links": [
+    "[\"extension\",\"umf.parquet.nullability\",\"1.0.0\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 134795,
+      "path": "docs/helix/05-deploy/reference/operations.json",
+      "sha256": "793743bbca36e56e90e82df5ef0408b628c434e58cb68aea4d6486349be78e61"
+    }
+  ],
+  "summary": "Checked physical leaf availability with row or repeated-element context; no writer-input, Arrow or logical-type equivalence",
+  "title": "umf.parquet.nullability · import"
+}

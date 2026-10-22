@@ -1,0 +1,118 @@
+{
+  "status": "conditional-proof-passed",
+  "solver": "4.15.4",
+  "sourceSha256": {
+    "tools/security/prove-ontology-capture-membership.py": "394f8549949c20c0fe170d78a2da58a80b2cd5ac39718cbaaa8306fb146d80e4",
+    "docs/helix/04-build/evidence/security/truss-ontology-capture-candidate/a91be6ca-a0de-417d-bc51-aec34faaeb41/native.json": "d9eb022f5288b90bcae3a7a60e4e52b42ccebd0aff0a5e3eed8a271ad3638e18",
+    "docs/helix/04-build/evidence/security/truss-ontology-capture-candidate/a91be6ca-a0de-417d-bc51-aec34faaeb41/lowered-predicate.json": "de009242f670aaa8bf9bc12f3a0387ffd02766f90e8a5af316c848a2e181a14b",
+    "tools/security/truss-ontology-capture-candidate.py": "5e24263af79d1cc979f2ef17249cfafb441fd68c13ce9fdfe2f252c02f58120b",
+    "tools/security/truss-ontology-capture-candidate.sql": "ee14cadb3b33726efaaecc3b97fd01880deab26e4e7d863019174fd6eca3cf5b",
+    "docs/helix/02-design/contracts/CONTRACT-063-security-enforcement.md": "634f3d1d456b81616f4e0f7ecab4d57424dec430de1d6882f8886a593145c341",
+    "docs/helix/01-frame/user-stories/US-056-security-bindings.md": "c11ecdec8e6b429e7bef2f60d2a9faa42ee0699bc5f0d1627f76d9b486f91171",
+    "/private/tmp/truss-security-main-integration/packages/python/src/truss/_operation_admission.py": "f96462208c14230670370d0b12f9b5d38ef1c20861175bcab8777c2c687dbb30",
+    "/private/tmp/truss-security-main-integration/docs/helix/02-design/adr/ADR-008-trusted-embedding-host.md": "0ce6283047c287d6032b67bf2effbcb108a8321bf9523935d92f6ca598d7d335",
+    "tools/security/check-ontology-capture-safety.py": "4af3d6c7636044b9a37329aa7db22d93ffcc65333bb5dcd0a5057f57ffadfc29",
+    "tools/security/truss-ontology-capture-lowerer.ts": "811489173d35bf876dfd913b5b3445854bfb1e469f27ba73e7a9e133728a9bbe",
+    "docs/helix/04-build/evidence/security/weft-handoff.json": "c1427f66eaba7726c5d4eaa0df09460f448db09c8e2188963d0271d2a313689b",
+    "/Users/erik/Projects/truss/packages/postgresql/src/security-predicate.ts": "cd04f93e2b79da2767428a990262421612df1fe74187a75b57cd8b0e323b0207",
+    "/Users/erik/Projects/truss/packages/postgresql/src/security-graph-source.ts": "c5732745038b27d0f7c54adead5e5c090a9855053161f720c0f962a7095cdc27"
+  },
+  "nativeReceiptSha256": "d9eb022f5288b90bcae3a7a60e4e52b42ccebd0aff0a5e3eed8a271ad3638e18",
+  "exactIrSha256": "87e3409f80a100164933529c866697b7451fd08f3eac22f426330e26567115ca",
+  "queries": [
+    {
+      "id": "typed-natural-witness-join-equivalence",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smt2Sha256": "8b7ee7e3a8a41eedc45282c5bfdfdd4c4d3fb00fd891021d71290e05fac04667",
+      "model": null
+    },
+    {
+      "id": "no-active-assignment-refuses",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smt2Sha256": "c885f13c105a5b14ff4c40b34718bdc47cf9774b587890ca007d83b602099ac6",
+      "model": null
+    },
+    {
+      "id": "ownerless-refuses",
+      "expected": "unsat",
+      "observed": "unsat",
+      "smt2Sha256": "7d89098997e5c4702fc807d8d534b329827e8102979459c482d12aad349f0f67",
+      "model": null
+    },
+    {
+      "id": "qualified-membership-nonvacuity",
+      "expected": "sat",
+      "observed": "sat",
+      "smt2Sha256": "504d2975c609fe1787896a83012808a47c1cbab683604ae1562d42d04cfb6510",
+      "model": "[resource = Resource!val!0,\n subject = Staff!val!0,\n assignment = [else -> True],\n active = [else -> True],\n ownership = [else -> True]]"
+    },
+    {
+      "id": "erase-active-admits-inactive",
+      "expected": "sat",
+      "observed": "sat",
+      "smt2Sha256": "f24c7e475b73d0efe84428ea85555a57cee8be746dc75a6cd143358bd5bebca8",
+      "model": "[resource = Resource!val!0,\n subject = Staff!val!0,\n assignment = [else -> True],\n active = [else -> False],\n ownership = [else -> True]]"
+    },
+    {
+      "id": "erase-project-join-admits-other-project",
+      "expected": "sat",
+      "observed": "sat",
+      "smt2Sha256": "00e1c5368d31027a71880692c7f95406372ed7a727a6732b5e92a593211805bd",
+      "model": "[resource = Resource!val!0,\n project0 = Project!val!0,\n project1 = Project!val!1,\n subject = Staff!val!0,\n assignment = [else ->\n               And(Not(And(Var(0) == Staff!val!0,\n                           Var(1) == Project!val!2)),\n                   Not(And(Var(0) == Staff!val!0,\n                           Var(1) == Project!val!0,\n                           Not(Var(1) == Project!val!2))))],\n active = [else -> True],\n ownership = [else ->\n              And(Not(And(Var(0) == Resource!val!0,\n                          Not(Var(1) == Project!val!1),\n                          Not(Var(1) == Project!val!0),\n                          Not(Var(1) == Project!val!2))),\n                  Not(And(Var(0) == Resource!val!0,\n                          Var(1) == Project!val!1,\n                          Not(Var(1) == Project!val!0),\n                          Not(Var(1) == Project!val!2))))]]"
+    },
+    {
+      "id": "erase-mandatory-rule-admits-ownerless",
+      "expected": "sat",
+      "observed": "sat",
+      "smt2Sha256": "7469fc97d919b2fdd7637d23ca1d62948ca1de150ebf2fc38a4233aa9c85d058",
+      "model": "[resource = Resource!val!0, ownership = [else -> False]]"
+    }
+  ],
+  "completeNativePopulationReplay": [
+    {
+      "cut": "initial",
+      "subject": "Alice",
+      "expectedAllowed": [
+        "RA",
+        "RAB"
+      ],
+      "observedAllowed": [
+        "RA",
+        "RAB"
+      ]
+    },
+    {
+      "cut": "blocked-membership-revocation",
+      "subject": "Alice",
+      "expectedAllowed": [
+        "RA",
+        "RAB"
+      ],
+      "observedAllowed": [
+        "RA",
+        "RAB"
+      ]
+    },
+    {
+      "cut": "final-membership-revocation",
+      "subject": "Alice",
+      "expectedAllowed": [],
+      "observedAllowed": []
+    }
+  ],
+  "scope": "Unbounded typed Staff/Project/Resource relation model for the exact fingerprinted original normalized read membership requirement. Natural-key owner/assignment witness interpretation is explicit and human-reviewed; the model is not an automatic IR/SQL/Rust refinement.",
+  "premises": [
+    "Complete faithful typed ownership and assignment populations and nonnull Boolean active meaning",
+    "Original actor-to-Staff binding and exact native/key/type correspondence",
+    "Native current authority and participating membership changes remain serialized by the independently qualified row gate",
+    "No publication until independent final-release and pending-buffer obligations are satisfied"
+  ],
+  "limitations": [
+    "No general policy compiler/lowerer correctness, graph source qualification or production subject/authenticated issuer proof",
+    "No snapshot/lock/SQL execution, cross-process failure, disclosure or publication-drain theorem",
+    "Native resource corpus and relational population replay are separate finite witnesses"
+  ],
+  "acceptancePromoted": false
+}

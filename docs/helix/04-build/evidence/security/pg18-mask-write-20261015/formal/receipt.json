@@ -1,0 +1,70 @@
+{
+  "status": "conditional-command-intent-analysis-passed",
+  "solver": "4.15.4",
+  "command": [
+    "/private/tmp/umf-write-comparison-proof-env-20261013/bin/python",
+    "tools/security/prove-native-write-intent.py",
+    "/private/tmp/native-write-intent-formal-replay-20261015"
+  ],
+  "sourceSha256": "caf685473783261da10af45e861fc2a3438cd1e350e3b8254c0b883769bfebee",
+  "checks": [
+    {
+      "id": "changed-only-assignment-leaks-hidden-equality",
+      "expected": "sat",
+      "observed": "sat",
+      "scope": "Same public assignment and authority/mask, different hidden amount; status distinguishes worlds.",
+      "model": "[hidden_before_B = 1,\n public_assignment = 0,\n ordinary_update = True,\n blind_granted = False,\n hidden_before_A = 0,\n effective_original_read = False,\n ordinary_Field = True]",
+      "smt2Sha256": "1d389e286595d2bb9ba87dd1acc8589c49040013f8b5e7957bb8db8f3f557d3a"
+    },
+    {
+      "id": "intent-refusal-independent-of-hidden-equality",
+      "expected": "unsat",
+      "observed": "unsat",
+      "scope": "One uniform refusal for masked/withheld without an allowed blind route, before hidden lookup.",
+      "model": null,
+      "smt2Sha256": "4743dd0df9303e25190d475cd48eec902da4bcbe48ae49205a70afeb4bb2192a"
+    },
+    {
+      "id": "ack-requires-all-intent-permissions",
+      "expected": "unsat",
+      "observed": "unsat",
+      "scope": "Actual original read or both declared and granted blind, plus both ordinary permissions.",
+      "model": null,
+      "smt2Sha256": "27a6c2bd73df3e7876258ca1583eb9b28900f04c931f0f8f29a158dfd832c8f2"
+    },
+    {
+      "id": "blind-grant-without-designation-refuses",
+      "expected": "unsat",
+      "observed": "unsat",
+      "scope": "A grant cannot invent the Field-specific blind binding.",
+      "model": null,
+      "smt2Sha256": "8ed3312307ec0590ee6ea8abac1c4c3976da025e275d2f424e2a903f6a88871a"
+    },
+    {
+      "id": "blind-does-not-replace-ordinary-Field",
+      "expected": "unsat",
+      "observed": "unsat",
+      "scope": "Explicit blind permission remains additional to ordinary Field authority.",
+      "model": null,
+      "smt2Sha256": "4abece9d52c22fa067706b4d2614745256229c7dcd14c3e90f451a3145607aea"
+    },
+    {
+      "id": "authorized-ack-independent-of-actual-delta",
+      "expected": "unsat",
+      "observed": "unsat",
+      "scope": "Acknowledgment has no affected-row count or old/new data in this model.",
+      "model": null,
+      "smt2Sha256": "a03a05ec815fe1b12a387e4e47267ef56594bf248b29611f490325c7b31019bd"
+    },
+    {
+      "id": "logical-noop-remains-permitted-under-weakened-endpoint",
+      "expected": "sat",
+      "observed": "sat",
+      "scope": "Separates existing logical delta semantics from required native command-intent restriction.",
+      "model": "[ordinary_update = True,\n blind_granted = False,\n public_assignment = 0,\n hidden_before_A = 0,\n effective_original_read = False,\n ordinary_Field = True]",
+      "smt2Sha256": "45be6ea5bbf3b478739518c2cb0515ae0554bb4fadd460a1e55c70b6c6d369ee"
+    }
+  ],
+  "scope": "Unbounded mathematical integer amounts and fixed Boolean current authority/read class. Abstract acknowledgment/refusal only; no TypeScript/SQL refinement, SQLNULL/isolation/lock/role/source authenticity, timing, diagnostics, missing-object, crypto or lifecycle proof.",
+  "acceptanceCasesPromoted": []
+}

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {backend} from '../../native/arrow/runtime';
 import {importArrowSchema,exportArrowSchemaIpc,proposeArrowNodeEdit,exportArrowSchema} from '../../src';

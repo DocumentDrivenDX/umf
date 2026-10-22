@@ -1,0 +1,45 @@
+{
+  "status": "one_actionable_allocation_assertion_gap",
+  "reviewedAt": "2026-10-15T00:42:26.040888+00:00",
+  "head": "1cf249c8ebfab144cc4e7a21a66935a6768d125f",
+  "scope": "Read-only requirement/story/test-allocation and gate metadata review; no implementation or backend/native qualification.",
+  "sourcePins": "source-pins.json",
+  "findings": [
+    {
+      "priority": 2,
+      "file": "docs/helix/03-test/test-plans/STP-079-security-semantics.md",
+      "line": 58,
+      "machineFile": "docs/helix/03-test/security/cases.json",
+      "machineLine": 651,
+      "issue": "S16 covers join/group/order but omits predicate and aggregate transform-property dependency assertions required by CONTRACT-062 lines443-446.",
+      "consequence": "A future implementation omitting those two dependency checks could satisfy the currently stated S16/S17 assertions. Existing S08 covers query-use modes, not the newly introduced catalog-property relation.",
+      "recommendation": "Extend S16 with predicate/aggregate retained-property positives and missing-property refusals, and omitted queryUse=prohibited; preserve not-run/null bindings."
+    }
+  ],
+  "checks": {
+    "unchangedPriorRows": 145,
+    "newRequiredUnimplementedSemanticRows": 13,
+    "totalCases": 158,
+    "criteria": 34,
+    "ownerAllocationControlsIndependentlyReplayed": 9,
+    "additionalIsolatedNoNativeGateControls": 7,
+    "stpCasesCorrespondence": true
+  },
+  "parentEvidenceInspected": {
+    "required": 158,
+    "criteria": 34,
+    "executed": 26,
+    "accepted": 26,
+    "missingBindings": 132,
+    "otherGateErrors": 0,
+    "validatorChecks": 202,
+    "validatorFailures": 88,
+    "validatorFailedIdsMatchHead": true
+  },
+  "limits": [
+    "Criterion allocation and trusted reviewed runner metadata do not prove assertion strength or behavior.",
+    "New cases have no runner/oracle/implementation bindings; no new passing semantic/native support claim.",
+    "Existing full gate uses its retained original native profile; no PG18/protection qualification inferred.",
+    "Read-only control replay ran isolated copied gate plans, never the original native lifecycle or root gate."
+  ]
+}

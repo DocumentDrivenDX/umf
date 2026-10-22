@@ -1,0 +1,151 @@
+{
+  "server": "PostgreSQL 17.9 (Debian 17.9-1.pgdg13+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+  "command": "python3 docs/helix/02-design/spikes/security/epoch.py",
+  "cases": [
+    {
+      "id": "healthy-native-epoch",
+      "covers": [
+        "US-057-AC3",
+        "US-057-AC7"
+      ],
+      "actor": "umf_security_alice",
+      "source": "BEGIN;SELECT pg_advisory_xact_lock_shared(529053);SELECT sec.assert_current_epoch();SELECT id FROM sec.resource ORDER BY id;COMMIT;",
+      "expected": {
+        "rows": [
+          "t",
+          "RA"
+        ],
+        "error": null
+      },
+      "observed": {
+        "rows": [
+          "t",
+          "RA"
+        ],
+        "stderr": ""
+      },
+      "status": "passed"
+    },
+    {
+      "id": "private-epoch-table",
+      "covers": [
+        "US-057-AC3",
+        "US-057-AC7"
+      ],
+      "actor": "umf_security_alice",
+      "source": "SELECT * FROM sec.authority_epoch;",
+      "expected": {
+        "rows": [],
+        "error": "permission denied"
+      },
+      "observed": {
+        "rows": [],
+        "stderr": "ERROR:  permission denied for table authority_epoch\n"
+      },
+      "status": "passed"
+    },
+    {
+      "id": "private-native-clock",
+      "covers": [
+        "US-057-AC3",
+        "US-057-AC7"
+      ],
+      "actor": "umf_security_alice",
+      "source": "SELECT * FROM sec.authority_generation;",
+      "expected": {
+        "rows": [],
+        "error": "permission denied"
+      },
+      "observed": {
+        "rows": [],
+        "stderr": "ERROR:  permission denied for sequence authority_generation\n"
+      },
+      "status": "passed"
+    },
+    {
+      "id": "fresh-current-authority",
+      "covers": [
+        "US-057-AC3",
+        "US-057-AC7"
+      ],
+      "actor": "umf_security_alice",
+      "source": "BEGIN;SELECT pg_advisory_xact_lock_shared(529053);SELECT sec.assert_current_epoch();SELECT count(*) FROM sec.resource;COMMIT;",
+      "expected": {
+        "rows": [
+          "t",
+          "0"
+        ],
+        "error": null
+      },
+      "observed": {
+        "rows": [
+          "t",
+          "0"
+        ],
+        "stderr": ""
+      },
+      "status": "passed"
+    },
+    {
+      "id": "old-rr-first-protected-read-refuses",
+      "covers": [
+        "US-057-AC3",
+        "US-057-AC7"
+      ],
+      "actor": "umf_security_alice",
+      "expected": "Refusal before protected rows after authority acknowledgment",
+      "observed": {
+        "rows": [
+          "1",
+          "SNAPSHOT_OPEN",
+          ""
+        ],
+        "stderr": "ERROR:  Authority snapshot unavailable\nCONTEXT:  PL/pgSQL function assert_current_epoch() line 10 at RAISE\n",
+        "exitCode": 3
+      },
+      "status": "passed"
+    },
+    {
+      "id": "rolled-back-clock-advance-refuses",
+      "covers": [
+        "US-057-AC3",
+        "US-057-AC7"
+      ],
+      "actor": "umf_security_alice",
+      "source": "BEGIN;SELECT pg_advisory_xact_lock_shared(529053);SELECT sec.assert_current_epoch();SELECT id FROM sec.resource;",
+      "expected": {
+        "rows": [],
+        "error": "Authority snapshot unavailable"
+      },
+      "observed": {
+        "rows": [],
+        "stderr": "ERROR:  Authority snapshot unavailable\nCONTEXT:  PL/pgSQL function assert_current_epoch() line 10 at RAISE\n"
+      },
+      "status": "passed"
+    },
+    {
+      "id": "missing-epoch-refuses-empty-query",
+      "covers": [
+        "US-057-AC3",
+        "US-057-AC7"
+      ],
+      "actor": "umf_security_alice",
+      "source": "SELECT sec.assert_current_epoch();SELECT count(*) FROM sec.resource WHERE false;",
+      "expected": {
+        "rows": [],
+        "error": "Authority snapshot unavailable"
+      },
+      "observed": {
+        "rows": [],
+        "stderr": "ERROR:  Authority snapshot unavailable\nCONTEXT:  PL/pgSQL function assert_current_epoch() line 10 at RAISE\n"
+      },
+      "status": "passed"
+    }
+  ],
+  "sourceDigests": {
+    "docs/helix/02-design/spikes/security/epoch.py": "5c6a23a0cfd480ba7196d6520d5f8353fa08c1320f0d9c7d21244931425435d1",
+    "docs/helix/02-design/spikes/security/epoch.sql": "8603c22351662c977d4d400aede43521879f4c20e432b9e96d54469ddce8c093",
+    "docs/helix/02-design/spikes/security/postgresql.sql": "245b6ef1980a54c7d8a5a32e4c9175209eb1046773cb8417aaa38fcfd2971fa4"
+  },
+  "scope": "Participating native epoch/snapshot protocol only; direct-SQL closure, complete writers, recovery and full backend admission remain unqualified"
+}

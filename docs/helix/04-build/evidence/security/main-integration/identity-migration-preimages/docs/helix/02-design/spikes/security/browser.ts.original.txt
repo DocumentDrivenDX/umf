@@ -1,0 +1,40 @@
+// @covers US-055-AC10 -- scoped composition/ProjectRead spike only.
+import {chromium} from "playwright";
+import {corpus} from "./model";
+import {createHash} from "node:crypto";
+const path = "docs/helix/02-design/spikes/security/";
+const build = await Bun.build({entrypoints: [path + "model.ts"], target: "browser", format: "esm"});
+if (!build.success) throw new Error("Security spike browser build failed");
+const js = await build.outputs[0]!.text();
+const server = Bun.serve({hostname: "127.0.0.1", port: 0, fetch(req) {
+  return new URL(req.url).pathname === "/model.js" ? new Response(js, {headers: {"content-type": "text/javascript"}}) :
+    new Response("<!doctype html><title>Security spike</title>", {headers: {"content-type": "text/html"}});
+}});
+let browser;
+try {
+  browser = await chromium.launch({headless: true, ...(Bun.env.UMF_CHROMIUM_PATH ? {executablePath: Bun.env.UMF_CHROMIUM_PATH} : {})});
+  const page = await browser.newPage();
+  let external = 0;
+  await page.route("**/*", route => {
+    if (new URL(route.request().url()).hostname !== "127.0.0.1") {external++; return route.abort();}
+    return route.continue();
+  });
+  await page.goto(`http://127.0.0.1:${server.port}`);
+  const observed = await page.evaluate(async () => {
+    const path = "/model.js";
+    const m = await import(path);
+    return {corpus: m.corpus(), hostGlobals: ["Bun", "process", "Buffer"].filter(x => x in globalThis),
+      protectedDefault: m.compose([{effect: "permit", truth: "T"}], ["salary"]).decision,
+      privateField: m.inspectValue({salary: 100}, "salary", {kind: "withheld"})};
+  });
+  if (JSON.stringify(observed.corpus) !== JSON.stringify(corpus()) || observed.hostGlobals.length || external ||
+      observed.protectedDefault !== "indeterminate" || JSON.stringify(observed.privateField) !== '{"disposition":"withheld"}') {
+    throw new Error("Security spike browser parity failed");
+  }
+  const sourceDigests: Record<string, string> = {};
+  for (const file of ["model.ts", "browser.ts"]) sourceDigests[path + file] = createHash("sha256").update(await Bun.file(path + file).text()).digest("hex");
+  const receipt = {status: "passed", covers: ["US-055-AC10"], scope: "ProjectRead/composition spike, not full policy language",
+    browser: browser.version(), bun: Bun.version, externalRequests: external, observed, sourceDigests};
+  await Bun.write("docs/helix/04-build/evidence/security/browser.json", JSON.stringify(receipt, null, 2) + "\n");
+  console.log(JSON.stringify(receipt));
+} finally {await browser?.close(); server.stop(true);}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 12786,
+        "line": 16,
+        "path": "src/extensions/actions/index.ts",
+        "sha256": "a05e2cc23deb42edbda7cb28ec51e8bf22175b4ae39f587abf649f45e2538a5f"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "registerActions",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(registry: Registry): Registry"
+    ]
+  },
+  "id": "[\"api\",\".\",\"registerActions\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 12786,
+      "line": 16,
+      "path": "src/extensions/actions/index.ts",
+      "sha256": "a05e2cc23deb42edbda7cb28ec51e8bf22175b4ae39f587abf649f45e2538a5f"
+    }
+  ],
+  "summary": "Extends the caller's registry without discarding any installed callback.",
+  "title": "registerActions"
+}

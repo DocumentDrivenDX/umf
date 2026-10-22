@@ -1,7 +1,8 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 export {};
 const schema=await Bun.file('spec/extensions/delta-log/reconciliation.schema.json').json(),object=(properties:any,required=Object.keys(properties))=>({type:'object',properties,required,additionalProperties:false}),array=(items:any)=>({type:'array',items}),row={type:'integer',minimum:1},index={type:'integer',minimum:0};
 schema.$id='urn:umf:delta-log:sidecar-reconciliation:0.1.0';schema.required.push('checkpoint','sidecars');
-schema.properties.sidecars=array(object({path:{type:'string'},source:{$ref:'urn:umf:core:0.1.0'}}));schema.properties.derivedCheckpoint=schema.properties.checkpoint;
+schema.properties.sidecars=array(object({path:{type:'string'},source:{$ref:'urn:umf:core:0.10.0'}}));schema.properties.derivedCheckpoint=schema.properties.checkpoint;
 schema.properties.origins=array(object({line:row,checkpointLine:row,sidecar:index,row},['line','checkpointLine']));
 schema.properties.origins.items.dependentRequired={sidecar:['row'],row:['sidecar']};
 schema.properties.omittedNullFields=array(object({sidecar:index,row,path:{type:'string'}}));

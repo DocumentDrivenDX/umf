@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Independent native file check for the residual-only physical binding profile."""
 import hashlib
 import json

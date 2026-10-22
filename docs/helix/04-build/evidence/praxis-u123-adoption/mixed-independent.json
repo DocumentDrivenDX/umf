@@ -1,0 +1,113 @@
+{
+  "serverMajor": 18,
+  "scope": "PostgreSQL18 migration oracle plus fabricated mixed migration; no managed/private-consumer claim",
+  "assertions": [
+    "published-v053-initial-additive-history-verifies-after-upgrade",
+    "original-v01-history-verifies-and-replays",
+    "reidentified-unreviewed-v01-policy-refused-before-effects",
+    "malformed-digest-refuses-before-fence",
+    "tampered-phase-digest-refuses-before-backfill",
+    "tampered-prefix-witness-refuses-before-backfill",
+    "trigger-drift-refuses-before-backfill",
+    "private-schema-acl-drift-refuses-before-backfill",
+    "trusted-role-attribute-drift-refuses-before-backfill",
+    "external-role-authority-refuses-before-backfill",
+    "resumed-file-digest-binding",
+    "backfill-effect-committed-once-after-unknown-result",
+    "concurrent-index-success-observed-without-replay",
+    "failed-unique-index-requires-explicit-repair",
+    "source-shaped-invalid-index-repaired-explicitly",
+    "typed-seed-effect-committed-once-after-unknown-result",
+    "conflict-error-seed-not-replayed",
+    "publication-drops-progress-relation",
+    "applied-replay-enforces-file-and-head-bindings",
+    "ordinary-native-history-and-catalog-readers-pass",
+    "person-read-observes-final-generation-after-publication"
+  ],
+  "count": 21,
+  "planDigest": "61e4f65cda69b8af0d2b7abd27792a43d293cf0ef43ccae6098726c3e78030a7",
+  "phaseKinds": [
+    "transaction",
+    "backfill",
+    "transaction",
+    "constraint-add",
+    "constraint-validation",
+    "constraint-add",
+    "constraint-validation",
+    "concurrent-index",
+    "concurrent-index",
+    "transaction",
+    "seed"
+  ],
+  "publishedOracle": {
+    "releaseTag": "umf-v0.5.3",
+    "sha256sumsSha256": "bfbfb6ffbeb16629f2db62aacabe4a794d8ed7a6f9606ba6b53c142bc58e10f9",
+    "wheels": {
+      "umf_codegen-0.1.0a2-py3-none-any.whl": {
+        "sha256": "11da338987de1accd1eff626eed6d8395cb51c9e647e5c833fadae85f66d41c2",
+        "recordEntries": 25
+      },
+      "umf_access-0.1.0.dev5-py3-none-any.whl": {
+        "sha256": "e4c77075281f82c2d1b67eba432a718f847b186d1e0293b034dceb068d1a9a9d",
+        "recordEntries": 84
+      }
+    },
+    "runtime": {
+      "python": "3.11.17",
+      "access": "0.1.0.dev5",
+      "codegen": "0.1.0a2",
+      "codegenManifestSha256": "dbfa630dec39561fe0123896855dad0c88ced9445d6443b9c3ad9d6b1dab0a18",
+      "codegenBundleSha256": "a678b1ac2b281622138b2d52642e12a1bc47140dfb92bf03f9a73ef784247614"
+    },
+    "codegenManifestSha256": "dbfa630dec39561fe0123896855dad0c88ced9445d6443b9c3ad9d6b1dab0a18",
+    "codegenBundleSha256": "a678b1ac2b281622138b2d52642e12a1bc47140dfb92bf03f9a73ef784247614",
+    "history": "published initial and additive histories were recorded by published access and verified/replayed by current access",
+    "policy": "published compiler emitted a v0.1 policy-change plan; current fresh-effect admission refuses its unreviewed replay"
+  },
+  "independentDesignReview": true,
+  "serverVersion": 180006,
+  "isolatedDatabase": true,
+  "command": [
+    "/private/tmp/umf-u123-installed-venv/bin/python",
+    "-I",
+    "/Users/erik/.codex/worktrees/eb69/umf/tests/lifecycle/mixed-native.py",
+    "--dsn",
+    "dbname=umf_design_review_e467c1819865",
+    "--report",
+    "/private/tmp/umf-design-review-mixed.json",
+    "--legacy-python",
+    "/private/tmp/umf-legacy-v053-published/venv/bin/python",
+    "--legacy-provenance",
+    "/private/tmp/umf-legacy-v053-published.json"
+  ],
+  "sourceHashes": {
+    "src/table-migration/reviewed.ts": "b4891eb9def70ef2838c5a92cbcf2f92067d56758b2e6f4a88e9cf8add81d614",
+    "src/table-migration/phases.ts": "0762d9ddd0fc88f32d1dcb5a033fcee915d1c29cb605274338d406b3f00a8926",
+    "src/table-migration/index.ts": "c92588d55b4d59e9d6e93e3d5c709999a5f74d5ad9cef18dfc6a563de89e01f0",
+    "src/table-migration/phases-options.ts": "6f9fec7f489fb1a1716e3acf2788975a12c8671adc24f5a1676019bf2d5160c5",
+    "src/table-migration/options.ts": "b0da19ffee8179aa3fcffdb7e9c63711c1a6873b57ac00579422cf9d47aa94d7",
+    "python/umf_access/src/umf_access/lifecycle/catalog.py": "13340488820d85ae1568dee5af9bcb925a0ba4988fc2fefac94a58125fd00427",
+    "python/umf_access/src/umf_access/lifecycle/concurrent.py": "fa3ac5cd8e850b54d03459e5aaae7840867dfd500f1a97cd2c42738c2ca2d826",
+    "python/umf_access/src/umf_access/lifecycle/backfills.py": "2e022fba246c064665be8c6d2e704015d97171d2b9751323369e2e354fa2caaa",
+    "python/umf_access/src/umf_access/lifecycle/roles.py": "278afdf5cb715a56ca3676a0cdbb9e6e82942be73dcbaa755ba0a4908d674d53",
+    "python/umf_access/src/umf_access/lifecycle/ledger_schema.py": "aa84acbcff775748c7899ac529ee5bf4f3893f484e55d5d43be8830d8112c02b",
+    "python/umf_access/src/umf_access/lifecycle/head_view.py": "f0183dc8339d172a50fa2c8246133fc1ae366beda101303298841c87566710f5",
+    "python/umf_access/src/umf_access/lifecycle/witness.py": "8fa345e730df5a1ff6e0d5a21d2b814ff1b160a41da707b5f12ed7861dad9fbe",
+    "python/umf_access/src/umf_access/lifecycle/table_boundary.py": "e7031de620fa2b0608c3b0d4475ebef8e053ce1d42fd831aa3bdd56fda7928fa",
+    "python/umf_access/src/umf_access/lifecycle/ledger.py": "1d126c08aab44205ab7bd3c646a4482f5aabad340507e3276b9109155a8528c0",
+    "python/umf_access/src/umf_access/lifecycle/__init__.py": "15c5d37b054581dd709ca791610a9e84754c0361a9568abeffe7e0e116bd8057",
+    "python/umf_access/src/umf_access/lifecycle/mixed.py": "2241dc41e549c1940439341dccddbaf5c38f1a8b30ed196aaeb989973be856ff",
+    "python/umf_access/src/umf_access/lifecycle/phase_fence.py": "1ed3b51369b371b36614a03dfe4ddccd0c33b5880f8394b0df52f23e7973a4d6",
+    "python/umf_access/src/umf_access/lifecycle/cli.py": "be02c87d94a4d08d46a400996a6303a239c53fbf87a54e4431744472b639e438",
+    "python/umf_access/src/umf_access/lifecycle/probe.py": "0b9ae3424c06b8a98c37a1e2bf9d92236b4f6b82b7c9466279469cc5fbc792f1",
+    "python/umf_access/src/umf_access/lifecycle/correspondence.py": "5154826a8a73122175d797e3017a27da2ce9036ffb3fdacd46a93cb2dd323ae8",
+    "python/umf_access/src/umf_access/lifecycle/outcome_schema.py": "8b35182db7379c25addba58704a078f4e54bbd705a68c69ebd2677d469a0b182",
+    "python/umf_access/src/umf_access/lifecycle/head.py": "708fb060ba720c4b04b8fc677d81d035f2aef30967257533fc91c1e44db4b458",
+    "python/umf_access/src/umf_access/lifecycle/seeds.py": "5908aac50eb5b21406f14f80b35253ac6bff595d8f5d2c2f26eb31e341f434c2",
+    "python/umf_access/src/umf_access/lifecycle/privileges.py": "7d75bf298ac932ca20445d8f62217a6773c477f81b185e67e9fffef7f71d2506",
+    "python/umf_access/src/umf_access/lifecycle/progress.py": "dc7a4709b77ac77776b32b970c0016ee7ef556186bec2732b7eb1a7f9656544c",
+    "tests/lifecycle/mixed-native.py": "4c9c171329bb97e1afa3bb4ab7789c3ef7ec2badb5c81ecb81d7d87e73737b3a",
+    "python/umf_codegen/src/umf_codegen/_assets/manifest.json": "71b8164baf15394d6f89913773ca1e56953d9873e2d3ba9f0908867cb7790917",
+    "python/umf_codegen/src/umf_codegen/_assets/generator.js.gz": "fba0dcdc8b4ec5ed61a86c2168fd5f16479661c01917c94f527e48f5e88e0693"
+  }
+}

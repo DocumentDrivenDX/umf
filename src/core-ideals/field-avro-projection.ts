@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {avroCarriers} from './avro-carriers';
 import {copyJson} from '../model/json';
 import {UmfError,pointer,type Document,type Json,type Diagnostic} from '../model/types';
@@ -5,8 +6,8 @@ import {verifyCoreKindDeclaration,type CoreKindDeclaration} from '../model/field
 import {importAvroSchema,exportAvroSchema,getAvroFieldMetadata} from '../adapters/avro';
 import {createValidator} from '../validation/schema';
 import legacy from '../../spec/core/schema.json';
-import fields from '../../spec/core/field-document.schema.json';
-import kinds from '../../spec/core/kind-operation.schema.json';
+
+import kinds from '../../spec/core/kind-operation-v6.schema.json';
 import schema from '../../spec/core/field-avro-projection.schema.json';
 export {default as fieldAvroProjectionSchema} from '../../spec/core/field-avro-projection.schema.json';
 export interface FieldAvroRequest {id:string;recordName:string;namespace:string;fieldName:string;nativeType:keyof typeof avroCarriers;mode:'strict'|'report'}
@@ -16,7 +17,7 @@ export interface FieldAvroProjection {
  mapping:{origin:'authored';idealPath:string;nativePath:'/fields/0';outcome:'exact'|'unknown'|'not-expressible'};
  residuals:{path:string;value:Json;reason:string;outcome:'unknown'|'not-expressible';recovery:'Recover source meaning with retained projection receipt; native-only import does not recover author intent'}[];
 }
-const validator=createValidator();validator.addSchema(legacy);validator.addSchema(fields);validator.addSchema(kinds);const check=validator.compile(schema);
+const validator=createValidator();validator.addSchema(legacy);validator.addSchema(kinds);const check=validator.compile(schema);
 const checkRequest=validator.compile({...schema.properties.request});
 export function projectFieldToAvro(input:CoreKindDeclaration,options:FieldAvroRequest):FieldAvroProjection & {diagnostics:Diagnostic[]} {
  const copied=copyJson(input) as unknown as CoreKindDeclaration;

@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"classifyParquetRecord\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ParquetRecordRequest\"]"
+      ],
+      "name": "options",
+      "optional": false,
+      "type": "ParquetRecordRequest"
+    }
+  ],
+  "purpose": "classifyParquetRecord accepts input, options and returns ParquetRecordClassification.",
+  "related": [],
+  "returns": "ParquetRecordClassification",
+  "task": "Other APIs",
+  "type": "(input: Document, options: ParquetRecordRequest) => ParquetRecordClassification"
+}

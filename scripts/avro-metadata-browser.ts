@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
 const fixture=await Bun.file('fixtures/avro/field-metadata.json').json();
 const temporal=await Bun.file('fixtures/avro/temporal-metadata.json').json();

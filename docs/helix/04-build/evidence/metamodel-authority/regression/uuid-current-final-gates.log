@@ -1,0 +1,29 @@
+{"testProcess":"tests/uuid-composition-gates.test.ts","command":["/private/tmp/claude-501/-Users-erik-Projects-hohfeld--claude-worktrees-helix-bootstrap-setup-f77e53/2ceb1cef-019c-4f51-98fb-7d3b8a77c49e/scratchpad/bun142/bun-darwin-aarch64/bun","test","--timeout","30000","./tests/uuid-composition-gates.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/uuid-composition-gates.test.ts:
+(pass) source-bound composition qualification requires all five native targets and all stages [695.49ms]
+(pass) missing, falsified, stale and unsafe evidence cannot promote composition [1305.44ms]
+
+ 2 pass
+ 0 fail
+ 9 expect() calls
+Ran 2 tests across 1 file. [2.31s]
+{"testProcess":"tests/uuid-composition-gates.test.ts","exitCode":0,"pass":2,"fail":0,"assertions":9,"completeSummary":true,"logSha256":"d43238d2049009078b60df7d7c1c5da77b3d37d0e772370b481ba3a07c846caa"}
+{"testProcess":"tests/uuid-conformance.test.ts","command":["/private/tmp/claude-501/-Users-erik-Projects-hohfeld--claude-worktrees-helix-bootstrap-setup-f77e53/2ceb1cef-019c-4f51-98fb-7d3b8a77c49e/scratchpad/bun142/bun-darwin-aarch64/bun","test","--timeout","30000","./tests/uuid-conformance.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/uuid-conformance.test.ts:
+(pass) separate UUID ideal admission and five-target delivery require complete current native/source evidence [962.90ms]
+(pass) missing, stale, unsafe and falsified qualification cannot admit support [930.55ms]
+
+ 2 pass
+ 0 fail
+ 18 expect() calls
+Ran 2 tests across 1 file. [2.10s]
+{"testProcess":"tests/uuid-conformance.test.ts","exitCode":0,"pass":2,"fail":0,"assertions":18,"completeSummary":true,"logSha256":"b51a8c2e084e2bde5bc8e60335c6325e72b321f79c039b34086c55d8f890f9c6"}
+
+ 4 pass
+ 0 fail
+ 27 expect() calls
+Ran 4 tests across 2 files. [4.64s]

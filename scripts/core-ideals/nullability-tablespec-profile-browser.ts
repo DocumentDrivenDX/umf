@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
 const input=await Bun.file('fixtures/validation/nullability-tablespec-profile.json').json();
 const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(request){const path=new URL(request.url).pathname;if(path==='/umf.js')return new Response(Bun.file('dist/umf.js'),{headers:{'content-type':'text/javascript'}});if(path==='/cases')return Response.json(input.rows);return new Response('<!doctype html><html><body>TableSpec availability boundaries</body></html>',{headers:{'content-type':'text/html'}});}});
@@ -8,7 +9,7 @@ try{
  const checks=await page.evaluate(async()=>{
   const path='/umf.js',u=await import(path),rows=await(await fetch('/cases')).json();let recoveries=0;
   for(const row of rows){
-   const initial=u.importTableSpec(row.text,{id:row.case,format:row.nativeFormat}),field=u.classifyTableSpecField(u.upgradeFieldEnvelope(initial).target,{column:0,mode:'strict'}),model=u.upgradeNullabilityEnvelope(field.target).target;
+   const initial=u.importTableSpec(row.text,{id:row.case,format:row.nativeFormat}),field=u.classifyTableSpecField(initial,{column:0,mode:'strict'}),model=field.target;
    if(JSON.stringify(model)!==JSON.stringify(row.model))throw Error('Bun/browser parity');
    if(u.inspectCoreNullability(model,{module:'table',element:'column:0'}).meaning.state!=='missing')throw Error('Availability inferred');
    for(const format of ['json','yaml']){

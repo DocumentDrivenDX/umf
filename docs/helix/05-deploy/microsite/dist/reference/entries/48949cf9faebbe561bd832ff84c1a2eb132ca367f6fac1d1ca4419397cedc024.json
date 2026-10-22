@@ -1,0 +1,33 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 3022,
+        "line": 1,
+        "path": "spec/projections/openapi-json-schema.schema.json",
+        "sha256": "62fb50abfba6cccdc65698834caec4acd88b129595d52cca7ae10925521bee97"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "openapiJsonSchemaProjectionSchema",
+    "runtime": "unassessed",
+    "signatureText": [
+      "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"$id\": \"urn:umf:projection:openapi-json-schema:0.1.0\",\n  \"type\": \"object\",\n  \"required\": [\n    \"status\",\n    \"source\",\n    \"policy\",\n    \"issues\",\n    \"mappings\"\n  ],\n  \"properties\": {\n    \"status\": {\n      \"enum\": [\n        \"blocked\",\n        \"projected\"\n      ]\n    },\n    \"source\": {\n      \"$ref\": \"urn:umf:core:0.10.0\"\n    },\n    \"target\": {\n      \"$ref\": \"urn:umf:core:0.10.0\"\n    },\n    \"nativeSchema\": {\n      \"type\": \"string\"\n    },\n    \"policy\": {\n      \"type\": \"object\",\n      \"additionalProperties\": false,\n      \"required\": [\n        \"id\",\n        \"schemaId\",\n        \"pointer\",\n        \"usage\",\n        \"lossPolicy\"\n      ],\n      \"properties\": {\n        \"id\": {\n          \"type\": \"string\",\n          \"minLength\": 1\n        },\n        \"schemaId\": {\n          \"type\": \"string\",\n          \"minLength\": 1\n        },\n        \"pointer\": {\n          \"type\": \"string\"\n        },\n        \"resourceUri\": {\n          \"type\": \"string\"\n        },\n        \"schemaResources\": {\n          \"type\": \"array\",\n          \"items\": {\n            \"type\": \"string\"\n          }\n        },\n        \"usage\": {\n          \"const\": \"schema-only\"\n        },\n        \"lossPolicy\": {\n          \"enum\": [\n            \"strict\",\n            \"allow-reported-loss\"\n          ]\n        }\n      }\n    },\n    \"issues\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"required\": [\n          \"path\",\n          \"code\",\n          \"classification\",\n          \"detail\",\n          \"retainedInSource\"\n        ],\n        \"properties\": {\n          \"path\": {\n            \"type\": \"string\"\n          },\n          \"code\": {\n            \"type\": \"string\"\n          },\n          \"classification\": {\n            \"enum\": [\n              \"representation-change\",\n              \"not-enforced\",\n              \"unsupported\",\n              \"annotation-only\"\n            ]\n          },\n          \"detail\": {\n            \"type\": \"string\"\n          },\n          \"retainedInSource\": {\n            \"const\": true\n          }\n        },\n        \"additionalProperties\": false\n      }\n    },\n    \"mappings\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"additionalProperties\": false,\n        \"required\": [\n          \"retrievalUri\",\n          \"sourcePointer\",\n          \"targetPointer\"\n        ],\n        \"properties\": {\n          \"retrievalUri\": {\n            \"type\": \"string\"\n          },\n          \"sourcePointer\": {\n            \"type\": \"string\"\n          },\n          \"targetPointer\": {\n            \"type\": \"string\"\n          }\n        }\n      }\n    }\n  },\n  \"additionalProperties\": false,\n  \"allOf\": [\n    {\n      \"if\": {\n        \"properties\": {\n          \"status\": {\n            \"const\": \"projected\"\n          }\n        }\n      },\n      \"then\": {\n        \"required\": [\n          \"target\",\n          \"nativeSchema\"\n        ]\n      },\n      \"else\": {\n        \"not\": {\n          \"required\": [\n            \"target\"\n          ]\n        }\n      }\n    }\n  ]\n}\n"
+    ]
+  },
+  "id": "[\"api\",\".\",\"openapiJsonSchemaProjectionSchema\"]",
+  "kind": "api",
+  "links": [
+    "[\"schema\",\"spec/projections/openapi-json-schema.schema.json\",\"\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 3022,
+      "line": 1,
+      "path": "spec/projections/openapi-json-schema.schema.json",
+      "sha256": "62fb50abfba6cccdc65698834caec4acd88b129595d52cca7ae10925521bee97"
+    }
+  ],
+  "summary": "Public export · spec/projections/openapi-json-schema.schema.json",
+  "title": "openapiJsonSchemaProjectionSchema"
+}

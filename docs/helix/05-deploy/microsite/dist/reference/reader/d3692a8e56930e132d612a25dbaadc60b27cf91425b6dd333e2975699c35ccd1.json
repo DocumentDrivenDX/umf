@@ -1,0 +1,74 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"CoreCompactKeyTupleReceipt\"]",
+  "kind": "Type alias",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "version",
+      "optional": false,
+      "type": "\"4.0.0\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreKeyTupleValue\"]"
+      ],
+      "name": "values",
+      "optional": false,
+      "type": "CoreKeyTupleValue[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "keyPath",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "operation",
+      "optional": false,
+      "type": "\"encode-core-key-tuple\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreKeyIdentity\"]"
+      ],
+      "name": "identity",
+      "optional": false,
+      "type": "CoreKeyIdentity"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "profile",
+      "optional": false,
+      "type": "\"umf-key-tuple-v1\" | \"umf-key-tuple-v2\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "bytesHex",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "sourceRef",
+      "optional": false,
+      "type": "\"#/source\""
+    }
+  ],
+  "parameters": [],
+  "purpose": "CoreCompactKeyTupleReceipt is a type alias in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "CoreCompactKeyTupleReceipt"
+}

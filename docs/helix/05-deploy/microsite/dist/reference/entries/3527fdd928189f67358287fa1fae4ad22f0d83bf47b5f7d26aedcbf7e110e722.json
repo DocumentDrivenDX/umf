@@ -1,0 +1,986 @@
+{
+  "data": {
+    "pointer": "",
+    "profileVersions": [],
+    "references": [
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/delta-log/reconciliation.schema.json\",\"\"]",
+        "target": "#/$defs/node"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/delta-log/reconciliation.schema.json\",\"\"]",
+        "target": "#/$defs/node"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/delta-log/reconciliation.schema.json\",\"\"]",
+        "target": "#/$defs/node"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/delta-log/reconciliation.schema.json\",\"\"]",
+        "target": "#/$defs/node"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/delta-log/reconciliation.schema.json\",\"\"]",
+        "target": "#/$defs/node"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/delta-log/reconciliation.schema.json\",\"\"]",
+        "target": "#/$defs/node"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/delta-log/reconciliation.schema.json\",\"\"]",
+        "target": "#/$defs/node"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/delta-log/reconciliation.schema.json\",\"\"]",
+        "target": "#/$defs/node"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/delta-log/reconciliation.schema.json\",\"\"]",
+        "target": "#/$defs/node"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/delta-log/reconciliation.schema.json\",\"\"]",
+        "target": "#/$defs/node"
+      }
+    ],
+    "role": "extension-payload",
+    "schemaPath": "spec/extensions/delta-log/reconciliation.schema.json",
+    "sourceData": {
+      "kind": "object",
+      "members": {
+        "$defs": {
+          "kind": "object",
+          "members": {
+            "node": {
+              "kind": "object",
+              "members": {
+                "oneOf": {
+                  "items": [
+                    {
+                      "kind": "object",
+                      "members": {
+                        "properties": {
+                          "kind": "object",
+                          "members": {
+                            "kind": {
+                              "kind": "object",
+                              "members": {
+                                "const": {
+                                  "kind": "string",
+                                  "value": "null"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "required": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "kind"
+                            }
+                          ],
+                          "kind": "array"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "object"
+                        }
+                      }
+                    },
+                    {
+                      "kind": "object",
+                      "members": {
+                        "properties": {
+                          "kind": "object",
+                          "members": {
+                            "kind": {
+                              "kind": "object",
+                              "members": {
+                                "const": {
+                                  "kind": "string",
+                                  "value": "boolean"
+                                }
+                              }
+                            },
+                            "value": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "boolean"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "required": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "kind"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "value"
+                            }
+                          ],
+                          "kind": "array"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "object"
+                        }
+                      }
+                    },
+                    {
+                      "kind": "object",
+                      "members": {
+                        "properties": {
+                          "kind": "object",
+                          "members": {
+                            "kind": {
+                              "kind": "object",
+                              "members": {
+                                "const": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            },
+                            "value": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "required": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "kind"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "value"
+                            }
+                          ],
+                          "kind": "array"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "object"
+                        }
+                      }
+                    },
+                    {
+                      "kind": "object",
+                      "members": {
+                        "properties": {
+                          "kind": "object",
+                          "members": {
+                            "kind": {
+                              "kind": "object",
+                              "members": {
+                                "const": {
+                                  "kind": "string",
+                                  "value": "number"
+                                }
+                              }
+                            },
+                            "value": {
+                              "kind": "object",
+                              "members": {
+                                "pattern": {
+                                  "kind": "string",
+                                  "value": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?([eE][+-]?[0-9]+)?$"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "required": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "kind"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "value"
+                            }
+                          ],
+                          "kind": "array"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "object"
+                        }
+                      }
+                    },
+                    {
+                      "kind": "object",
+                      "members": {
+                        "properties": {
+                          "kind": "object",
+                          "members": {
+                            "items": {
+                              "kind": "object",
+                              "members": {
+                                "items": {
+                                  "kind": "object",
+                                  "members": {
+                                    "$ref": {
+                                      "kind": "string",
+                                      "value": "#/$defs/node"
+                                    }
+                                  }
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "array"
+                                }
+                              }
+                            },
+                            "kind": {
+                              "kind": "object",
+                              "members": {
+                                "const": {
+                                  "kind": "string",
+                                  "value": "array"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "required": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "kind"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "items"
+                            }
+                          ],
+                          "kind": "array"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "object"
+                        }
+                      }
+                    },
+                    {
+                      "kind": "object",
+                      "members": {
+                        "properties": {
+                          "kind": "object",
+                          "members": {
+                            "kind": {
+                              "kind": "object",
+                              "members": {
+                                "const": {
+                                  "kind": "string",
+                                  "value": "object"
+                                }
+                              }
+                            },
+                            "members": {
+                              "kind": "object",
+                              "members": {
+                                "additionalProperties": {
+                                  "kind": "object",
+                                  "members": {
+                                    "$ref": {
+                                      "kind": "string",
+                                      "value": "#/$defs/node"
+                                    }
+                                  }
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "object"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "required": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "kind"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "members"
+                            }
+                          ],
+                          "kind": "array"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "object"
+                        }
+                      }
+                    }
+                  ],
+                  "kind": "array"
+                }
+              }
+            }
+          }
+        },
+        "$id": {
+          "kind": "string",
+          "value": "urn:umf:delta-log:reconciliation:0.1.0"
+        },
+        "$schema": {
+          "kind": "string",
+          "value": "https://json-schema.org/draft/2020-12/schema"
+        },
+        "additionalProperties": {
+          "kind": "boolean",
+          "value": false
+        },
+        "allOf": {
+          "items": [
+            {
+              "kind": "object",
+              "members": {
+                "else": {
+                  "kind": "object",
+                  "members": {
+                    "not": {
+                      "kind": "object",
+                      "members": {
+                        "required": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "state"
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    }
+                  }
+                },
+                "if": {
+                  "kind": "object",
+                  "members": {
+                    "properties": {
+                      "kind": "object",
+                      "members": {
+                        "status": {
+                          "kind": "object",
+                          "members": {
+                            "const": {
+                              "kind": "string",
+                              "value": "reconciled"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "then": {
+                  "kind": "object",
+                  "members": {
+                    "required": {
+                      "items": [
+                        {
+                          "kind": "string",
+                          "value": "state"
+                        }
+                      ],
+                      "kind": "array"
+                    }
+                  }
+                }
+              }
+            }
+          ],
+          "kind": "array"
+        },
+        "properties": {
+          "kind": "object",
+          "members": {
+            "checkpoint": {
+              "kind": "object",
+              "members": {
+                "additionalProperties": {
+                  "kind": "boolean",
+                  "value": false
+                },
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "source": {
+                      "kind": "object",
+                      "members": {
+                        "$ref": {
+                          "kind": "string",
+                          "value": "urn:umf:core:0.10.0"
+                        }
+                      }
+                    },
+                    "version": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "version"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "source"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "complete": {
+              "kind": "object",
+              "members": {
+                "const": {
+                  "kind": "boolean",
+                  "value": false
+                }
+              }
+            },
+            "diagnostics": {
+              "kind": "object",
+              "members": {
+                "items": {
+                  "kind": "object",
+                  "members": {
+                    "additionalProperties": {
+                      "kind": "boolean",
+                      "value": false
+                    },
+                    "properties": {
+                      "kind": "object",
+                      "members": {
+                        "code": {
+                          "kind": "object",
+                          "members": {
+                            "type": {
+                              "kind": "string",
+                              "value": "string"
+                            }
+                          }
+                        },
+                        "message": {
+                          "kind": "object",
+                          "members": {
+                            "type": {
+                              "kind": "string",
+                              "value": "string"
+                            }
+                          }
+                        },
+                        "path": {
+                          "kind": "object",
+                          "members": {
+                            "type": {
+                              "kind": "string",
+                              "value": "string"
+                            }
+                          }
+                        },
+                        "severity": {
+                          "kind": "object",
+                          "members": {
+                            "enum": {
+                              "items": [
+                                {
+                                  "kind": "string",
+                                  "value": "error"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "warning"
+                                }
+                              ],
+                              "kind": "array"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "required": {
+                      "items": [
+                        {
+                          "kind": "string",
+                          "value": "code"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "path"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "severity"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "message"
+                        }
+                      ],
+                      "kind": "array"
+                    },
+                    "type": {
+                      "kind": "string",
+                      "value": "object"
+                    }
+                  }
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "array"
+                }
+              }
+            },
+            "sources": {
+              "kind": "object",
+              "members": {
+                "items": {
+                  "kind": "object",
+                  "members": {
+                    "additionalProperties": {
+                      "kind": "boolean",
+                      "value": false
+                    },
+                    "properties": {
+                      "kind": "object",
+                      "members": {
+                        "source": {
+                          "kind": "object",
+                          "members": {
+                            "$ref": {
+                              "kind": "string",
+                              "value": "urn:umf:core:0.10.0"
+                            }
+                          }
+                        },
+                        "version": {
+                          "kind": "object",
+                          "members": {
+                            "type": {
+                              "kind": "string",
+                              "value": "string"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "required": {
+                      "items": [
+                        {
+                          "kind": "string",
+                          "value": "version"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "source"
+                        }
+                      ],
+                      "kind": "array"
+                    },
+                    "type": {
+                      "kind": "string",
+                      "value": "object"
+                    }
+                  }
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "array"
+                }
+              }
+            },
+            "state": {
+              "kind": "object",
+              "members": {
+                "additionalProperties": {
+                  "kind": "boolean",
+                  "value": false
+                },
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "adds": {
+                      "kind": "object",
+                      "members": {
+                        "items": {
+                          "kind": "object",
+                          "members": {
+                            "$ref": {
+                              "kind": "string",
+                              "value": "#/$defs/node"
+                            }
+                          }
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "array"
+                        }
+                      }
+                    },
+                    "commitInfo": {
+                      "kind": "object",
+                      "members": {
+                        "items": {
+                          "kind": "object",
+                          "members": {
+                            "$ref": {
+                              "kind": "string",
+                              "value": "#/$defs/node"
+                            }
+                          }
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "array"
+                        }
+                      }
+                    },
+                    "deferred": {
+                      "kind": "object",
+                      "members": {
+                        "items": {
+                          "kind": "object",
+                          "members": {
+                            "additionalProperties": {
+                              "kind": "boolean",
+                              "value": false
+                            },
+                            "properties": {
+                              "kind": "object",
+                              "members": {
+                                "action": {
+                                  "kind": "object",
+                                  "members": {
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "string"
+                                    }
+                                  }
+                                },
+                                "line": {
+                                  "kind": "object",
+                                  "members": {
+                                    "minimum": {
+                                      "kind": "number",
+                                      "value": "1"
+                                    },
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "integer"
+                                    }
+                                  }
+                                },
+                                "value": {
+                                  "kind": "object",
+                                  "members": {
+                                    "$ref": {
+                                      "kind": "string",
+                                      "value": "#/$defs/node"
+                                    }
+                                  }
+                                },
+                                "version": {
+                                  "kind": "object",
+                                  "members": {
+                                    "pattern": {
+                                      "kind": "string",
+                                      "value": "^(0|[1-9][0-9]*)$"
+                                    },
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "string"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "required": {
+                              "items": [
+                                {
+                                  "kind": "string",
+                                  "value": "version"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "line"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "action"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "value"
+                                }
+                              ],
+                              "kind": "array"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "object"
+                            }
+                          }
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "array"
+                        }
+                      }
+                    },
+                    "domains": {
+                      "kind": "object",
+                      "members": {
+                        "items": {
+                          "kind": "object",
+                          "members": {
+                            "$ref": {
+                              "kind": "string",
+                              "value": "#/$defs/node"
+                            }
+                          }
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "array"
+                        }
+                      }
+                    },
+                    "metaData": {
+                      "kind": "object",
+                      "members": {
+                        "$ref": {
+                          "kind": "string",
+                          "value": "#/$defs/node"
+                        }
+                      }
+                    },
+                    "protocol": {
+                      "kind": "object",
+                      "members": {
+                        "$ref": {
+                          "kind": "string",
+                          "value": "#/$defs/node"
+                        }
+                      }
+                    },
+                    "removes": {
+                      "kind": "object",
+                      "members": {
+                        "items": {
+                          "kind": "object",
+                          "members": {
+                            "$ref": {
+                              "kind": "string",
+                              "value": "#/$defs/node"
+                            }
+                          }
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "array"
+                        }
+                      }
+                    },
+                    "transactions": {
+                      "kind": "object",
+                      "members": {
+                        "items": {
+                          "kind": "object",
+                          "members": {
+                            "$ref": {
+                              "kind": "string",
+                              "value": "#/$defs/node"
+                            }
+                          }
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "array"
+                        }
+                      }
+                    },
+                    "version": {
+                      "kind": "object",
+                      "members": {
+                        "pattern": {
+                          "kind": "string",
+                          "value": "^(0|[1-9][0-9]*)$"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "version"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "protocol"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "metaData"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "adds"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "removes"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "transactions"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "domains"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "commitInfo"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "deferred"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "status": {
+              "kind": "object",
+              "members": {
+                "enum": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "blocked"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "reconciled"
+                    }
+                  ],
+                  "kind": "array"
+                }
+              }
+            }
+          }
+        },
+        "required": {
+          "items": [
+            {
+              "kind": "string",
+              "value": "status"
+            },
+            {
+              "kind": "string",
+              "value": "complete"
+            },
+            {
+              "kind": "string",
+              "value": "sources"
+            },
+            {
+              "kind": "string",
+              "value": "diagnostics"
+            }
+          ],
+          "kind": "array"
+        },
+        "type": {
+          "kind": "string",
+          "value": "object"
+        }
+      }
+    }
+  },
+  "id": "[\"schema\",\"spec/extensions/delta-log/reconciliation.schema.json\",\"\"]",
+  "kind": "schema",
+  "links": [
+    "[\"schema\",\"spec/core/schema.json\",\"\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 5990,
+      "path": "spec/extensions/delta-log/reconciliation.schema.json",
+      "sha256": "15313e9aefe2f78501f97f37bdfe51effb34ef008ffcb34858e77a104cdc726e"
+    }
+  ],
+  "summary": "spec/extensions/delta-log/reconciliation.schema.json",
+  "title": "reconciliation.schema.json"
+}

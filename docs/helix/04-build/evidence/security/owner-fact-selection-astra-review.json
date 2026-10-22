@@ -1,0 +1,91 @@
+{
+  "id": "owner-fact-selection-astra-review",
+  "status": "clean-within-conditional-scope",
+  "reviewer": "/root/astra_security_review",
+  "generatedAt": "2026-10-10T05:49:56.107456+00:00",
+  "reviewMethod": "Read-only installed implementation, contract and regression inspection plus independent complete source-pin audit. Rust execution below is parent-attributed; this review performs no Rust or PostgreSQL execution and no formal refinement proof.",
+  "sourceDigests": {
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_evaluation.rs": "ee00c44c07874064eef7bd4e833088c87a37c7349324395a7613eae5f7c2b0a7",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_backend.rs": "10316659dc527ac9f9fe859447d600c61fc093cf4770b63eafde8e8b4240e77b",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_result_selection.rs": "67ba1894fa681cca7b66779f799a0f6a75d5496b29a9f7238f257dff48e47cc8",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_result_cells.rs": "2d75f65f3831562574a43403597731b7bfef9f3e27eb99a579be06d07b697c23",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_result_check.rs": "168a09338fc736cc34b1e72c27ecc73f3dc8cdbb398e9f2e4140942ad39d264a",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_requirements.rs": "937f259ae5cdca5afbee653d89f7882e6f0bb2a454a6703256d14625e8fe2711",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_scan_obligations.rs": "4d9bf60f49ab0d16be173573f6d36349110d45b0a73e2513e70dfed21ca2b113",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_composition.rs": "6fa62658499a4d60308235d010bea0e9bfc0caf03fcbf61cca932be9f441674d",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_literals.rs": "8bd7995326ab3c544800f59980e8a60b0b83d81ba5138bc42ffeb351f82c7cd4",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_ontology.rs": "a1e19a2605a2d247b6c58f252886d0ab45077cd2e3d53f0bffb995a2ae2a7d19",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_ir.rs": "422e4b2641a276fefc8d2dc97a4414cdb8db960ed42c6fd5d28bd52671cf4e9f",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_source.rs": "d7d98da8b12ed8897100c71c242bcbbabb7c18637f9668b9776085a0caa2634e",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_lowering.rs": "1921ba60fcd7d56cce6e510198f20b6e1eb887845db6f8b2ff3234c73bf51d72",
+    "/Users/erik/Projects/weft/crates/weft-core/src/json.rs": "b359cd2ff4b53f8e79690e7edc1a724f5f4f06df3a3af18de8f3fc89d79fde1d",
+    "/Users/erik/Projects/weft/crates/weft-core/src/compile.rs": "6f23265ac68dbbf5240d05285e3128c460ae50053140a880eb058d7272b72585",
+    "/Users/erik/Projects/weft/crates/weft-core/src/lib.rs": "17ad58d674dacb00f75120a6cd3a55c45d9bf30f19ff9a5cd2233628f165e5cb",
+    "/Users/erik/Projects/weft/crates/weft-core/tests/security_admission.rs": "521cd975383f951daa09f6c51a80fecdc70d2b2a50f8f24ffe377b21bb75e4c7",
+    "/Users/erik/Projects/weft/crates/weft-core/tests/security-evaluation-oracle.json": "900cc8d2fbc4d637908d9223a0aaa823951e9a1875759ac3efb26c1d1e05274b",
+    "/Users/erik/Projects/weft/docs/helix/02-design/contracts/CONTRACT-005-security-compilation.md": "a06ad9eb7899b97aecbfa4cd4b5f42f2e449e38b653f02ebb9894626fbee2897",
+    "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/weft-admission.json": "23a2bbf100ee34d66a0bcd82e35787401275df35253f81d72f7e1a1e744a47e0",
+    "/private/tmp/owner-fact-selection-astra-review.py": "e2070bce8dda52a33088489271e758ba87faa4528ebd4739e14aaf0569ab4958"
+  },
+  "sourcesUnchanged": true,
+  "reviewObservations": [
+    {
+      "id": "actual-owner-scope",
+      "observation": "The new API accepts no caller rule/action/output inventory. Each nonempty scoped row has exactly the actual owner scans and each Fact target matches its scan; actual requirements drive eager rule preflight and all evaluated truth maps."
+    },
+    {
+      "id": "conditional-source-evaluation",
+      "observation": "The existing finite Record interpreter normalizes the supplied subject, association facts, context and scoped resources against the same immutable source/catalog. Complete coverage, generation agreement and trusted status remain caller assertions. Unsupported graph namespace paths refuse."
+    },
+    {
+      "id": "selection-and-original-correspondence",
+      "observation": "Complete declaration/cell checking precedes evaluation. Only evaluated truths enter the existing selection fold; Original cells additionally require the actual scan Fact field, declared coverage and exact normalized equality. Identity keys do not substitute for missing field values."
+    },
+    {
+      "id": "cross-occurrence-coherence",
+      "observation": "Every occurrence across subject, supplied population and scoped rows is compared by nominal identity and complete normalized field/absence assignments. Repeated coherent bag/self-join occurrences are allowed; conflicting assignments refuse before evaluation."
+    },
+    {
+      "id": "isolated-original-controls",
+      "observation": "Parent-executed unmasked controls remove only the projected resourceId field or only its coverage, retaining valid identity keys and otherwise valid membership. Both require exact EVALUATION refusal; domain-valid substituted Original values also refuse."
+    },
+    {
+      "id": "isolated-population-controls",
+      "observation": "Identical same-identity Resource population/scoped values pass, including salary integerToken 1e2 versus 100. Changed non-policy salary refuses in unmasked mode. An identical subject population copy passes; its individually valid missing field inventory refuses. Later scoped-row conflict and scope swaps also refuse."
+    },
+    {
+      "id": "metadata-expansion-finding-resolved",
+      "observation": "Generated rule/action/scan identifier text is charged before each clone against a separate aggregate 1M-visit/16M-byte metadata ledger. Parent-executed 129-rule fixture uses 128-byte IDs: 512 rows pass; 1024 rows with valid cells and combined input below4M refuse EVALUATION/model before downstream selection. This addresses truth-map byte amplification; it is not an all-allocation or CPU bound."
+    },
+    {
+      "id": "resource-and-diagnostic-qualification",
+      "observation": "Combined cut/scoped-row UTF-8 text is bounded4M. Each text has its own depth64/1M-node parser bound. Existing maxFacts/maxSteps, normalized and copied scalar payload ledgers remain; malformed typed literals may retain WFT-SECURITY-LITERAL. Scope/coherence/metadata refusal uses EVALUATION, with prior declaration/cell/selection boundaries preserved."
+    },
+    {
+      "id": "empty-and-public-boundaries",
+      "observation": "Even empty result batches preflight actual rule dependencies and refuse incomplete relevant association coverage. No unit success grants query permission. Query predicates, actual join provenance, complete result enumeration, authenticated/current authority and release remain unproved; public lowering stays blocked and no release artifact is issued."
+    }
+  ],
+  "parentExecutedEvidence": {
+    "path": "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/weft-admission.json",
+    "sha256": "23a2bbf100ee34d66a0bcd82e35787401275df35253f81d72f7e1a1e744a47e0",
+    "commands": 4,
+    "allExitCodesZero": true,
+    "libraryTests": 66,
+    "securityAdmissionTests": 60
+  },
+  "independentPinAudit": {
+    "auditedSourceCount": 410,
+    "stale": []
+  },
+  "resolvedFindings": [
+    "Generated truth metadata is now charged before cloning, with isolated actual API coverage.",
+    "Missing Original field/coverage and cross-population/subject coherence controls added.",
+    "Self-join fixture now allows distinct resource rows; actual query provenance remains excluded.",
+    "Contract distinguishes combined bytes, per-text parser nodes and retained literal diagnostics."
+  ],
+  "scope": "Conditional owner source-expression evaluation and direct-field selected-cell/value correspondence over unauthenticated caller-supplied finite Record facts. No native cut, actual query/join result correspondence, general runtime/compiler refinement, public lowering, guarded release or backend acceptance is established.",
+  "nativeImplementationQualified": false,
+  "acceptanceCasesPromoted": [],
+  "historicalReviewHandling": "Existing owner-result-selection-astra-review.json is left untouched as historical evidence; this current fact-selection review does not silently refresh that earlier receipt."
+}

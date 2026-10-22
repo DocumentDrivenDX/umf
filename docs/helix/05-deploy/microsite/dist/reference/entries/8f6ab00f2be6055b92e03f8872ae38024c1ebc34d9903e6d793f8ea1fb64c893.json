@@ -1,0 +1,738 @@
+{
+  "data": {
+    "pointer": "",
+    "profileVersions": [],
+    "references": [
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/cardinality-operation-v6.schema.json\",\"\"]",
+        "target": "#/$defs/lookup"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/cardinality-operation-v6.schema.json\",\"\"]",
+        "target": "#/$defs/source"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/cardinality-operation-v6.schema.json\",\"\"]",
+        "target": "#/$defs/identity"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/cardinality-operation-v6.schema.json\",\"\"]",
+        "target": "#/$defs/cardinality"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/cardinality-operation-v6.schema.json\",\"\"]",
+        "target": "#/$defs/itemType"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/cardinality-operation-v6.schema.json\",\"\"]",
+        "target": "#/$defs/cardinality"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/cardinality-operation-v6.schema.json\",\"\"]",
+        "target": "#/$defs/cardinality"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/cardinality-operation-v6.schema.json\",\"\"]",
+        "target": "#/$defs/itemType"
+      }
+    ],
+    "role": "operation",
+    "schemaPath": "spec/core/cardinality-operation-v6.schema.json",
+    "sourceData": {
+      "kind": "object",
+      "members": {
+        "$defs": {
+          "kind": "object",
+          "members": {
+            "cardinality": {
+              "kind": "object",
+              "members": {
+                "enum": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "one"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "array"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "map"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "unspecified"
+                    }
+                  ],
+                  "kind": "array"
+                }
+              }
+            },
+            "identity": {
+              "kind": "object",
+              "members": {
+                "additionalProperties": {
+                  "kind": "boolean",
+                  "value": false
+                },
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "element": {
+                      "kind": "object",
+                      "members": {
+                        "minLength": {
+                          "kind": "number",
+                          "value": "1"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "module": {
+                      "kind": "object",
+                      "members": {
+                        "minLength": {
+                          "kind": "number",
+                          "value": "1"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "module"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "element"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "itemType": {
+              "kind": "object",
+              "members": {
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "element": {
+                      "kind": "object",
+                      "members": {
+                        "minLength": {
+                          "kind": "number",
+                          "value": "1"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "module": {
+                      "kind": "object",
+                      "members": {
+                        "minLength": {
+                          "kind": "number",
+                          "value": "1"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "module"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "element"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "lookup": {
+              "kind": "object",
+              "members": {
+                "additionalProperties": {
+                  "kind": "boolean",
+                  "value": false
+                },
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "identity": {
+                      "kind": "object",
+                      "members": {
+                        "$ref": {
+                          "kind": "string",
+                          "value": "#/$defs/identity"
+                        }
+                      }
+                    },
+                    "meaning": {
+                      "kind": "object",
+                      "members": {
+                        "oneOf": {
+                          "items": [
+                            {
+                              "kind": "object",
+                              "members": {
+                                "additionalProperties": {
+                                  "kind": "boolean",
+                                  "value": false
+                                },
+                                "allOf": {
+                                  "items": [
+                                    {
+                                      "kind": "object",
+                                      "members": {
+                                        "if": {
+                                          "kind": "object",
+                                          "members": {
+                                            "properties": {
+                                              "kind": "object",
+                                              "members": {
+                                                "itemType": {
+                                                  "kind": "object",
+                                                  "members": {}
+                                                }
+                                              }
+                                            },
+                                            "required": {
+                                              "items": [
+                                                {
+                                                  "kind": "string",
+                                                  "value": "itemType"
+                                                }
+                                              ],
+                                              "kind": "array"
+                                            }
+                                          }
+                                        },
+                                        "then": {
+                                          "kind": "object",
+                                          "members": {
+                                            "properties": {
+                                              "kind": "object",
+                                              "members": {
+                                                "cardinality": {
+                                                  "kind": "object",
+                                                  "members": {
+                                                    "enum": {
+                                                      "items": [
+                                                        {
+                                                          "kind": "string",
+                                                          "value": "array"
+                                                        },
+                                                        {
+                                                          "kind": "string",
+                                                          "value": "map"
+                                                        }
+                                                      ],
+                                                      "kind": "array"
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  ],
+                                  "kind": "array"
+                                },
+                                "properties": {
+                                  "kind": "object",
+                                  "members": {
+                                    "cardinality": {
+                                      "kind": "object",
+                                      "members": {
+                                        "$ref": {
+                                          "kind": "string",
+                                          "value": "#/$defs/cardinality"
+                                        }
+                                      }
+                                    },
+                                    "itemType": {
+                                      "kind": "object",
+                                      "members": {
+                                        "$ref": {
+                                          "kind": "string",
+                                          "value": "#/$defs/itemType"
+                                        }
+                                      }
+                                    },
+                                    "state": {
+                                      "kind": "object",
+                                      "members": {
+                                        "const": {
+                                          "kind": "string",
+                                          "value": "known"
+                                        }
+                                      }
+                                    }
+                                  }
+                                },
+                                "required": {
+                                  "items": [
+                                    {
+                                      "kind": "string",
+                                      "value": "state"
+                                    },
+                                    {
+                                      "kind": "string",
+                                      "value": "cardinality"
+                                    }
+                                  ],
+                                  "kind": "array"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "object"
+                                }
+                              }
+                            },
+                            {
+                              "kind": "object",
+                              "members": {
+                                "additionalProperties": {
+                                  "kind": "boolean",
+                                  "value": false
+                                },
+                                "properties": {
+                                  "kind": "object",
+                                  "members": {
+                                    "state": {
+                                      "kind": "object",
+                                      "members": {
+                                        "const": {
+                                          "kind": "string",
+                                          "value": "missing"
+                                        }
+                                      }
+                                    }
+                                  }
+                                },
+                                "required": {
+                                  "items": [
+                                    {
+                                      "kind": "string",
+                                      "value": "state"
+                                    }
+                                  ],
+                                  "kind": "array"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "object"
+                                }
+                              }
+                            },
+                            {
+                              "kind": "object",
+                              "members": {
+                                "additionalProperties": {
+                                  "kind": "boolean",
+                                  "value": false
+                                },
+                                "properties": {
+                                  "kind": "object",
+                                  "members": {
+                                    "state": {
+                                      "kind": "object",
+                                      "members": {
+                                        "const": {
+                                          "kind": "string",
+                                          "value": "unknown"
+                                        }
+                                      }
+                                    },
+                                    "value": {
+                                      "kind": "object",
+                                      "members": {
+                                        "minLength": {
+                                          "kind": "number",
+                                          "value": "1"
+                                        },
+                                        "not": {
+                                          "kind": "object",
+                                          "members": {
+                                            "$ref": {
+                                              "kind": "string",
+                                              "value": "#/$defs/cardinality"
+                                            }
+                                          }
+                                        },
+                                        "type": {
+                                          "kind": "string",
+                                          "value": "string"
+                                        }
+                                      }
+                                    }
+                                  }
+                                },
+                                "required": {
+                                  "items": [
+                                    {
+                                      "kind": "string",
+                                      "value": "state"
+                                    },
+                                    {
+                                      "kind": "string",
+                                      "value": "value"
+                                    }
+                                  ],
+                                  "kind": "array"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "object"
+                                }
+                              }
+                            },
+                            {
+                              "kind": "object",
+                              "members": {
+                                "additionalProperties": {
+                                  "kind": "boolean",
+                                  "value": false
+                                },
+                                "properties": {
+                                  "kind": "object",
+                                  "members": {
+                                    "state": {
+                                      "kind": "object",
+                                      "members": {
+                                        "const": {
+                                          "kind": "string",
+                                          "value": "inapplicable"
+                                        }
+                                      }
+                                    }
+                                  }
+                                },
+                                "required": {
+                                  "items": [
+                                    {
+                                      "kind": "string",
+                                      "value": "state"
+                                    }
+                                  ],
+                                  "kind": "array"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "object"
+                                }
+                              }
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    },
+                    "operation": {
+                      "kind": "object",
+                      "members": {
+                        "const": {
+                          "kind": "string",
+                          "value": "inspect-core-cardinality"
+                        }
+                      }
+                    },
+                    "path": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "provenance": {
+                      "kind": "object",
+                      "members": {
+                        "const": {
+                          "kind": "string",
+                          "value": "unverified"
+                        }
+                      }
+                    },
+                    "source": {
+                      "kind": "object",
+                      "members": {
+                        "$ref": {
+                          "kind": "string",
+                          "value": "#/$defs/source"
+                        }
+                      }
+                    },
+                    "version": {
+                      "kind": "object",
+                      "members": {
+                        "const": {
+                          "kind": "string",
+                          "value": "6.0.0"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "operation"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "version"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "source"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "identity"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "path"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "meaning"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "provenance"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "request": {
+              "kind": "object",
+              "members": {
+                "additionalProperties": {
+                  "kind": "boolean",
+                  "value": false
+                },
+                "allOf": {
+                  "items": [
+                    {
+                      "kind": "object",
+                      "members": {
+                        "if": {
+                          "kind": "object",
+                          "members": {
+                            "properties": {
+                              "kind": "object",
+                              "members": {
+                                "itemType": {
+                                  "kind": "object",
+                                  "members": {
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "object"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "required": {
+                              "items": [
+                                {
+                                  "kind": "string",
+                                  "value": "itemType"
+                                }
+                              ],
+                              "kind": "array"
+                            }
+                          }
+                        },
+                        "then": {
+                          "kind": "object",
+                          "members": {
+                            "properties": {
+                              "kind": "object",
+                              "members": {
+                                "cardinality": {
+                                  "kind": "object",
+                                  "members": {
+                                    "enum": {
+                                      "items": [
+                                        {
+                                          "kind": "string",
+                                          "value": "array"
+                                        },
+                                        {
+                                          "kind": "string",
+                                          "value": "map"
+                                        }
+                                      ],
+                                      "kind": "array"
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "cardinality": {
+                      "kind": "object",
+                      "members": {
+                        "$ref": {
+                          "kind": "string",
+                          "value": "#/$defs/cardinality"
+                        }
+                      }
+                    },
+                    "itemType": {
+                      "kind": "object",
+                      "members": {
+                        "oneOf": {
+                          "items": [
+                            {
+                              "kind": "object",
+                              "members": {
+                                "$ref": {
+                                  "kind": "string",
+                                  "value": "#/$defs/itemType"
+                                }
+                              }
+                            },
+                            {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "null"
+                                }
+                              }
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "cardinality"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "source": {
+              "kind": "object",
+              "members": {
+                "$ref": {
+                  "kind": "string",
+                  "value": "urn:umf:core:0.10.0"
+                }
+              }
+            }
+          }
+        },
+        "$id": {
+          "kind": "string",
+          "value": "urn:umf:core:cardinality-operation:6.0.0"
+        },
+        "$ref": {
+          "kind": "string",
+          "value": "#/$defs/lookup"
+        },
+        "$schema": {
+          "kind": "string",
+          "value": "https://json-schema.org/draft/2020-12/schema"
+        },
+        "title": {
+          "kind": "string",
+          "value": "Core 0.9.0 cardinality-operation-v6"
+        }
+      }
+    }
+  },
+  "id": "[\"schema\",\"spec/core/cardinality-operation-v6.schema.json\",\"\"]",
+  "kind": "schema",
+  "links": [
+    "[\"schema\",\"spec/core/schema.json\",\"\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 4987,
+      "path": "spec/core/cardinality-operation-v6.schema.json",
+      "sha256": "c606cf71b5fe0b2afb15f0ffd3fcce20c449857b954852e63d944040dacf6595"
+    }
+  ],
+  "summary": "spec/core/cardinality-operation-v6.schema.json",
+  "title": "Core 0.9.0 cardinality-operation-v6"
+}

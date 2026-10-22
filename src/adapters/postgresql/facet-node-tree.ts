@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Bounded reader for the analyzed PostgreSQL 17.4 node subset used by CHECKs.
  * This is not a general pg_node_tree codec. Unknown fields are retained here
  * and must be refused by the semantic interpreter. */

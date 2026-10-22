@@ -1,0 +1,50 @@
+{
+  "data": {
+    "conflicts": [],
+    "correspondence": "unassessed",
+    "declarations": [
+      {
+        "bytes": 1951,
+        "path": "spec/extensions/postgresql-cardinality/package.json",
+        "sha256": "9fbc522b4eee9427eebb12436b577aac4d2d205ea3aa8e82ef1d4c51472d68cd"
+      }
+    ],
+    "evidence": [],
+    "operation": {
+      "apiNames": [],
+      "coreProfiles": [],
+      "extensionVersions": [],
+      "fixturePaths": [],
+      "id": "umf.postgresql.cardinality@1.0.0:import",
+      "kind": "import",
+      "limitations": [
+        "Recorded scope only; native equivalence and production adoption are separate."
+      ],
+      "runtime": {
+        "availability": "host-only",
+        "profileId": "umf.postgresql.cardinality@1.0.0:import",
+        "requirements": [
+          "Native runtime / original qualification harness; not executed by this page."
+        ]
+      },
+      "sourceSystem": "PostgreSQL · 17.4",
+      "subset": "Declared column shape under selected metadata profile; not whole-model validation, item typing or execution equivalence",
+      "targetSystem": "UMF",
+      "title": "umf.postgresql.cardinality · import"
+    }
+  },
+  "id": "[\"integration\",\"umf.postgresql.cardinality@1.0.0:import\"]",
+  "kind": "integration",
+  "links": [
+    "[\"extension\",\"umf.postgresql.cardinality\",\"1.0.0\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 134795,
+      "path": "docs/helix/05-deploy/reference/operations.json",
+      "sha256": "793743bbca36e56e90e82df5ef0408b628c434e58cb68aea4d6486349be78e61"
+    }
+  ],
+  "summary": "Declared column shape under selected metadata profile; not whole-model validation, item typing or execution equivalence",
+  "title": "umf.postgresql.cardinality · import"
+}

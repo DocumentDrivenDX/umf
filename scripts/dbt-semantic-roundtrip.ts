@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {createHash} from 'node:crypto';
 import {importDbtSemanticManifest,exportDbtSemanticManifest,inspectDbtSemanticManifest,proposeDbtSemanticManifestNodeEdit,writeDocument,readDocument} from '../src';
 const base='fixtures/dbt/semantic/',raw=await Bun.file(base+'semantic-manifest.json').text(),d=importDbtSemanticManifest(raw,{id:'semantic'}),results=[];

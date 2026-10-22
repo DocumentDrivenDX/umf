@@ -1,0 +1,11 @@
+# Concrete managed AI Search transport/lifecycle source candidate
+
+Native/resource/auth execution remains **HELD**. This packet preserves concrete exact-host HTTPS, native SQLAPI original namedbindings, strict rawresponse/manifest handling, createdresource lifecycle and fresh actual publicCLI compilation code. It supersedes only the earlier injected transport preparation, not any native qualification. [Review](REVIEW.md), [API authority](API_AUTHORITY.md), [revised proposed bounds](native-plan.json), and [executed-read identity research](QUERY_PROFILE_RESEARCH.md) distinguish source implementation from native capabilities.
+
+Twenty-five pure adversarial controls PASS; RuffPASS. No auth, warehouse, endpoint, index, table, principal, queryhistory or SQL operation occurred during this source work. Mocks cover rawresponse/Connectionclose/deadline, no retries/redirects, bounded independent cleanup/stop budgets, empty ACK framing, submittedCREATE uncertainty and incompletecleanup. These tests do not prove native identity/fence/permissions.
+
+Both native entrypoint holds remain true. Clearing them alone would still hit UC_CURRENT_IDENTITY_FENCE_UNQUALIFIED before hydrationSQL or expensive creation. Weft owner confirms the pinned R22 originalprofile has no proven atomic current-UC identitybinding/DDL-fence seam; no host bool or SQLrewrite substitutes for it. Same-token Me/current_user correspondence and UC index table_id lookup are implemented candidates requiring actual native observations. Namebound conditionaldelete ABA remains explicitly unproved. The revised442request phase budget is a proposal requiring review, not a resource approval.
+
+A separate two-GET historical metadata plan is preserved for exact prior owned009/015 statements only. It starts no compute and runs no SQL, but has not been executed or approved by this packet. Public QueryHistory schemas expose provenance/cache/planavailability, not resolvedtableUUIDs; documented lineage is incomplete/name/pathbased. No undocumented API is guessed.
+
+Prior [offline source/publicCLI packet](../managed-ai-search-offline-20261017/README.md) and [Delta startup refusal](../delta-receipt-discovery-startup-20261017/README.md) remain unchanged. R5 parser humanapproval remains pending/unapplied; temporal remains HELD.

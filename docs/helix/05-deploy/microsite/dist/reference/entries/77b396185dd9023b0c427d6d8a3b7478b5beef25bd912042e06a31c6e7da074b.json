@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 3862,
+        "line": 8,
+        "path": "src/extensions/security/disclosure.ts",
+        "sha256": "019d3a02c69dcf29cceaf4a3ff7db1a2eb34192dfc4bbd01f001c5ef93ddadec"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "SecurityDisclosureBatch",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface SecurityDisclosureBatch {\n  version:'umf.security.disclosure/0.1.0';\n  target:SecurityRef;fields:SecurityRef[];rows:SecurityOutput[][];\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"SecurityDisclosureBatch\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 3862,
+      "line": 8,
+      "path": "src/extensions/security/disclosure.ts",
+      "sha256": "019d3a02c69dcf29cceaf4a3ff7db1a2eb34192dfc4bbd01f001c5ef93ddadec"
+    }
+  ],
+  "summary": "Type declaration · src/extensions/security/disclosure.ts",
+  "title": "SecurityDisclosureBatch"
+}

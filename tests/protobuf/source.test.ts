@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 // @covers US-003-AC7
 import {test,expect} from 'bun:test';
 import {mkdtemp,rm} from 'node:fs/promises';

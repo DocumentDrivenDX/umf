@@ -1,0 +1,92 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"PreparedActionPlanModel\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "protocol",
+      "optional": false,
+      "type": "\"umf.actions.plan-model/1\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ActionPlanModelPin\"]"
+      ],
+      "name": "model",
+      "optional": false,
+      "type": "ActionPlanModelPin"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"PortableActionPin\"]"
+      ],
+      "name": "action",
+      "optional": false,
+      "type": "PortableActionPin"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "entityParameter",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ActionKeyReference\"]"
+      ],
+      "name": "target",
+      "optional": false,
+      "type": "ActionKeyReference"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ActionReference\"]"
+      ],
+      "name": "assignments",
+      "optional": false,
+      "type": "{ input: string; field: ActionReference; }[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "frames",
+      "optional": false,
+      "type": "string[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "producer",
+      "optional": false,
+      "type": "{ id: \"umf.actions.plan-model\"; version: \"1\"; build: string; }"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "schema",
+      "optional": false,
+      "type": "{ id: \"urn:umf:actions:plan-model:1\"; sha256: string; }"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "obligations",
+      "optional": false,
+      "type": "{ id: string; status: \"checked\"; }[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "PreparedActionPlanModel is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "PreparedActionPlanModel"
+}

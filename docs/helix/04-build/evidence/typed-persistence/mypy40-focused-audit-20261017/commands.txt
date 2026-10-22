@@ -1,0 +1,6 @@
+Original focused audit commands (already executed; retained logs):
+MYPYPATH=python/umf_access/src:/private/tmp/sdk-r26-r22-installed-static/generated /private/tmp/sdk-r26-r22-314-env/bin/mypy --follow-imports silent --python-version 3.11 --check-untyped-defs --cache-dir /private/tmp/sdk-mypy40-focused-audit-20261017/cache /private/tmp/sdk-mypy40-focused-audit-20261017/positive.py
+Same command with negative.py (expected nonzero; 5 errors).
+PYTHONPATH=python/umf_access/src:/private/tmp/sdk-r26-r22-installed-static/generated /private/tmp/sdk-r26-r22-314-env/bin/python -B /private/tmp/sdk-mypy40-focused-audit-20261017/runtime_probe.py
+Working directory: /Users/erik/.codex/worktrees/typed-sdk-recovery/umf
+No native server, browser, API, or network was used. These are current-source probes using pinned installed dependencies, not an installed-wheel release requalification.

@@ -1,10 +1,11 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {backend} from '../../native/postgresql/runtime';
 import evidence from '../../fixtures/validation/facets-postgresql-constraints-native.json';
-import {inspectPostgresqlFacetCatalog,correlatePostgresqlFacetCatalog} from '../../src/adapters/postgresql/facet-catalog';
-import {importPostgresqlCatalogCapture,proposePostgresqlCatalogEdit} from '../../src/adapters/postgresql/catalog';
+import {inspectPostgresqlFacetCatalog, correlatePostgresqlFacetCatalog} from '../../src/adapters/postgresql/facet-catalog';
+import {importPostgresqlCatalogCapture, proposePostgresqlCatalogEdit} from '../../src/adapters/postgresql/catalog';
 import {renderTree} from '../../src/model/native-json';
-import {readJsonValue,writeJsonValue} from '../../src/model/serialization';
+import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
 import {copyJson} from '../../src/model/json';
 import type {Document} from '../../src/model/types';
 const source=()=>importPostgresqlCatalogCapture(evidence.sourceText,{id:'facet-catalog'});

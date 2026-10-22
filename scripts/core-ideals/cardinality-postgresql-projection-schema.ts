@@ -1,8 +1,9 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import base from '../../spec/core/field-postgresql-projection.schema.json';
 const schema:any=structuredClone(base);
 schema.$id='urn:umf:core:cardinality-postgresql-projection:1.0.0';schema.title='Authored Cardinality projection to PostgreSQL stored columns';
-schema.properties.operation.const='project-cardinality-postgresql';schema.properties.source.$ref='urn:umf:core:0.4.0';
-schema.properties.author.$ref='urn:umf:core:cardinality-operation:1.0.0#/$defs/declaration';
+schema.properties.operation.const='project-cardinality-postgresql';schema.properties.source.$ref='urn:umf:core:0.10.0';
+schema.properties.author.$ref='urn:umf:core:cardinality-operation:4.0.0#/$defs/declaration';
 schema.properties.binding.const={id:'umf.core.cardinality.postgresql',version:'1.0.0',nativeVersion:'17.4',subset:'Single authored Field Cardinality with explicit pg_catalog carrier and stored-relation SQL-NULL policy; excludes input omission, query guarantees and native equivalence'};
 const req=schema.properties.request;
 req.properties.nativeType.enum.push('jsonb');

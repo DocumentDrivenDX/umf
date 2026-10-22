@@ -1,6 +1,7 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {parquetFacetFile,type ParquetFacetFileRequest} from '../../src/core-ideals/parquet-facet-carrier';
-import {importParquetSchema,getParquetFieldMetadata,inspectParquetMetadata} from '../../src';
+import {parquetFacetFile, type ParquetFacetFileRequest} from '../../src/core-ideals/parquet-facet-carrier';
+import {importParquetSchema, getParquetFieldMetadata, inspectParquetMetadata} from '../../src';
 import corpus from '../../fixtures/validation/facets-parquet-carrier-corpus.json';
 const base:ParquetFacetFileRequest={recordName:'R',fieldName:'v',nullable:false,carrier:{kind:'integer',bits:8,signed:false}};
 test('emitted native corpus is deterministic and retains field identity and opaque metadata',async()=>{

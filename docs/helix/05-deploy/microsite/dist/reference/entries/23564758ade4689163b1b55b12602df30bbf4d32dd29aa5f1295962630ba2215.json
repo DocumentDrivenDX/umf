@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 16995,
+        "line": 126,
+        "path": "src/core-ideals/key-sqlserver-projection.ts",
+        "sha256": "704dc3248d8af0d98a9a67180bcf880fa35b19e331cc22c4b3abfc93b42ed194"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "verifyKeysSqlServerProjection",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: KeySqlServerProjection, current: { format: \"sqlserver-ddl\"; sql: string; }): KeySqlServerProjection"
+    ]
+  },
+  "id": "[\"api\",\".\",\"verifyKeysSqlServerProjection\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 16995,
+      "line": 126,
+      "path": "src/core-ideals/key-sqlserver-projection.ts",
+      "sha256": "704dc3248d8af0d98a9a67180bcf880fa35b19e331cc22c4b3abfc93b42ed194"
+    }
+  ],
+  "summary": "Recompute projection and match current native representation; not source authentication.",
+  "title": "verifyKeysSqlServerProjection"
+}

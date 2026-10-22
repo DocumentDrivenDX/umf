@@ -1,4 +1,6 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import assert from 'node:assert/strict';
+import {assertJsonDataEqual,assertNativeRepresentationEqual} from './json-data-assert';
 import {createHash} from 'node:crypto';
 import {relative,resolve,isAbsolute,sep} from 'node:path';
 import {recordedRepositoryPath} from '../../tests/helpers/recorded-repository-path';
@@ -9,25 +11,43 @@ import {postgresqlAvailabilitySource} from './nullability-postgresql-cases';
 import {sqlserverAvailabilitySource} from './nullability-sqlserver-cases';
 import {avroAvailabilitySource} from './nullability-avro-cases';
 import {parquetAvailabilitySource} from './nullability-parquet-cases';
-import type {Document,CoreNullabilityDeclaration,Nullability} from '../../src';
+import type {Document, CoreNullabilityDeclaration, Nullability} from '../../src';
 export const nullabilitySystems=['tablespec','postgresql','sqlserver','avro','parquet'] as const;
 type System=typeof nullabilitySystems[number];
 type Reader=(path:string)=>Promise<Uint8Array>;
 const read:Reader=async p=>new Uint8Array(await Bun.file(p).arrayBuffer());
 const digest=(bytes:Uint8Array)=>createHash('sha256').update(bytes).digest('hex');
+const historicalObjects=new Map<string,string|null>();
+function locateHistoricalFile(path:string,expected:string):string|null{
+ const key=`${path}:${expected}`;if(historicalObjects.has(key))return historicalObjects.get(key)!;
+ const commits=Bun.spawnSync(['git','log','--all','--format=%H','--',path],{stdout:'pipe',stderr:'pipe'}).stdout.toString().trim().split('\n').filter(Boolean);
+ for(const commit of commits){const bytes=Bun.spawnSync(['git','show',`${commit}:${path}`],{stdout:'pipe',stderr:'ignore'});if(bytes.exitCode===0&&digest(bytes.stdout)===expected){historicalObjects.set(key,commit);return commit;}}
+ historicalObjects.set(key,null);return null;
+}
 /** Check retained evidence consistency; this neither authenticates it nor reruns engines. */
-export async function verifyNullabilityEvidence(reader:Reader=read){
- const hashes=new Map<string,string>(),json=new Map<string,any>();let fingerprints=0;
+export async function verifyNullabilityEvidence(reader:Reader=read,options:{allowUnqualifiedHistorical?:boolean}={}){
+ const hashes=new Map<string,string>(),json=new Map<string,any>();let fingerprints=0;const unqualified:{path:string;expected:string;reason:string}[]=[],historicalSources:{path:string;sha256:string;commit:string}[]=[];
  async function load(path:string){if(!json.has(path))json.set(path,JSON.parse(new TextDecoder().decode(await reader(path))));return json.get(path);}
  async function hash(path:string){if(!hashes.has(path))hashes.set(path,digest(await reader(path)));return hashes.get(path)!;}
+ const history=await load('docs/helix/04-build/evidence/metamodel-authority/history/manifest.json');
+ const recovery=await load('docs/helix/04-build/evidence/metamodel-authority/historical-field-artifact-recovery/comparison.json');
  async function verify(record:any,label:string){
   assert.ok(Object.keys(record.sha256??{}).length>0,`${label}: missing fingerprints`);
-  for(const [path,expected] of Object.entries(record.sha256)){
+  for(const [path,rawExpected] of Object.entries(record.sha256)){
+   const expected=String(rawExpected);
    // Earlier native records contain __file__ absolute paths; permit only this repository.
    const rel=recordedRepositoryPath(path),local=relative(process.cwd(),resolve(rel)).split(sep).join('/');
    assert.ok(!isAbsolute(local)&&!local.split('/').includes('..')&&!rel.split('/').includes('..'),`${label}: unsafe evidence path`);
    assert.match(String(expected),/^[0-9a-f]{64}$/);
-   assert.equal(await hash(rel),expected,`${label}: stale ${path}`);fingerprints++;
+   let current:string|undefined;try{current=await hash(rel);}catch{/* retired historical files are checked through their exact archives below */}
+   if(current===expected){fingerprints++;continue;}
+   const archived=history.entries.find((entry:any)=>entry.path===rel&&entry.sha256===expected);
+   if(archived){assert.equal(await hash(archived.archive),expected,`${label}: archived historical bytes differ for ${path}`);fingerprints++;continue;}
+   const missing=recovery.comparisons.find((entry:any)=>entry.path===rel&&entry.expected===expected&&!entry.matches);
+   if(missing&&options.allowUnqualifiedHistorical){unqualified.push({path:rel,expected,reason:'No exact original pinned native artifact was recovered from the bounded immutable SDK lookup; no current artifact is substituted.'});continue;}
+   if(missing){unqualified.push({path:rel,expected,reason:'No exact original pinned native artifact was recovered from the bounded immutable SDK lookup; no current artifact is substituted.'});continue;}
+   const commit=locateHistoricalFile(rel,expected);if(commit){historicalSources.push({path:rel,sha256:expected,commit});fingerprints++;continue;}
+   unqualified.push({path:rel,expected,reason:'The original pinned file is neither current, archived byte-exactly, nor recoverable from local Git history.'});
   }
  }
  const records=[];
@@ -53,13 +73,15 @@ export async function verifyNullabilityEvidence(reader:Reader=read){
   for(const suffix of system==='tablespec'?['classification-browser','projection-browser']:['browser','projection-browser']){
    const file=`fixtures/validation/nullability-${system}-${suffix}.json`;
    assert.ok(Object.hasOwn(refresh.sha256,file),`Missing browser proof ${file}`);
-   const browser=await load(file);assert.equal(browser.browser,refresh.browser??'148.0.7778.0');assert.deepEqual(browser.externalRequests,[]);assert.ok(Object.keys(browser.checks).length>0);
+   const browser=await load(file);assert.equal(browser.browser,refresh.browser??'148.0.7778.0');assertJsonDataEqual(browser.externalRequests,[]);assert.ok(Object.keys(browser.checks).length>0);
   }
  }
  for(const script of ['nullability-tablespec-classification-oracle.py','nullability-tablespec-projection-oracle.py','nullability-tablespec-execution-oracle.py'])assert.ok(refresh.runs.some((r:any)=>r.command.includes('scripts/core-ideals/'+script)),`Missing native command ${script}`);
  await verify(refresh,'refresh');
- return {records,fingerprints,systems:[...nullabilitySystems],refreshSha256:await hash('fixtures/validation/field-gate-refresh-evidence.json')};
+ if(unqualified.length&&!options.allowUnqualifiedHistorical)throw new Error(`Historical evidence contains ${unqualified.length} unrecoverable pins; current qualification is UNQUALIFIED`);
+ return {records,fingerprints,systems:[...nullabilitySystems],refreshSha256:await hash('fixtures/validation/field-gate-refresh-evidence.json'),historicalQualification:unqualified.length?'PARTIALLY_REVALIDATED':'REVALIDATED',currentCoreQualification:unqualified.length?'UNQUALIFIED':'QUALIFIED',unqualified,historicalSources,artifactRecovery:{path:'docs/helix/04-build/evidence/metamodel-authority/historical-field-artifact-recovery/comparison.json',outcome:recovery.outcome}};
 }
+export function requireCurrentCoreNullabilityQualification(evidence:Awaited<ReturnType<typeof verifyNullabilityEvidence>>){assert.equal(evidence.currentCoreQualification,'QUALIFIED','Current-core native Nullability qualification is UNQUALIFIED while pinned historical artifacts are unrecoverable');}
 // Test orchestration uses the adapters' individually schema-checked receipt types.
 interface NativeCase {source:Document;classify:(source:Document,mode:'strict'|'report',unresolved:boolean)=>any;recover:(receipt:any)=>unknown;expected:unknown;label:Nullability}
 interface Binding {namespace:string;project:(author:CoreNullabilityDeclaration,mode:'strict'|'report')=>any;recover:(receipt:any)=>any;natives:NativeCase[]}
@@ -92,38 +114,38 @@ async function bindings():Promise<Record<System,Binding>>{
  };
 }
 function retainPayloads(before:Document,after:Document){
- for(const [key,value] of Object.entries(before.extensions??{}))assert.deepEqual(after.extensions?.[key],value);
- for(const m of before.modules)for(const e of m.elements){const target=after.modules.find(x=>x.id===m.id)?.elements.find(x=>x.id===e.id);assert.ok(target);for(const [key,value] of Object.entries(e.extensions))assert.deepEqual(target.extensions[key],value);}
+ for(const [key,value] of Object.entries(before.extensions??{}))assertJsonDataEqual(after.extensions?.[key],value);
+ for(const m of before.modules)for(const e of m.elements){const target=after.modules.find(x=>x.id===m.id)?.elements.find(x=>x.id===e.id);assert.ok(target);for(const [key,value] of Object.entries(e.extensions))assertJsonDataEqual(target.extensions[key],value);}
 }
 export async function verifyNullabilityRoundTrips(){
  const all=await bindings(),coverage:Partial<Record<System,Record<string,number>>>={};
  for(const system of nullabilitySystems){
   const binding=all[system],counts={authoredCases:0,strictBlocks:0,reportResiduals:0,idealRecoveries:0,nativeCases:0,nativeBlocks:0,nativeRecoveries:0};coverage[system]=counts;
   for(const label of ['required','absent-allowed','unspecified'] as const)for(const loss of [false,true])for(const mode of ['strict','report'] as const){
-   const source:Document={umf:'0.3.0',id:'ideal',vocabularies:{},modules:[{id:'m',namespace:binding.namespace,elements:[{id:'e',name:'value',kind:'field',scalarType:'integer',extensions:{},...(loss?{future:{uninterpreted:['9007199254740993',null]}}:{})}]}]};
+   const source:Document={umf:'0.10.0',id:'ideal',vocabularies:{},modules:[{id:'m',namespace:binding.namespace,elements:[{id:'e',name:'value',kind:'field',scalarType:'integer',extensions:{},...(loss?{future:{uninterpreted:['9007199254740993',null]}}:{})}]}]};
    const author=u.declareCoreNullability(source,{module:'m',element:'e'},label),before=u.copyJson(author),result=await binding.project(author,mode);counts.authoredCases++;
-   assert.deepEqual(author,before);assert.equal(result.mapping.origin,'authored');assert.equal(result.mapping.nullability,label);
+   assertJsonDataEqual(author,before);assert.equal(result.mapping.origin,'authored');assert.equal(result.mapping.nullability,label);
    if(loss&&mode==='strict'){assert.equal(result.status,'blocked');assert.equal(result.target,undefined);assert.ok(result.residuals.length);counts.strictBlocks++;continue;}
    assert.equal(result.status,'projected');assert.ok(result.target);
    if(loss){assert.ok(result.residuals.some((r:any)=>r.path.endsWith('/future')));counts.reportResiduals++;}else assert.equal(result.residuals.length,0);
-   for(const format of ['json','yaml'] as const){const receipt=u.readJsonValue(u.writeJsonValue(u.copyJson(result),format),format);assert.deepEqual(await binding.recover(receipt),author.target);counts.idealRecoveries++;}
+   for(const format of ['json','yaml'] as const){const receipt=u.readJsonValue(u.writeJsonValue(u.copyJson(result),format),format);assertJsonDataEqual(await binding.recover(receipt),author.target);counts.idealRecoveries++;}
   }
   for(const c of binding.natives)for(const unresolved of [false,true])for(const mode of ['strict','report'] as const){
    const source=u.copyJson(c.source) as unknown as Document;source.vocabularies.future={version:'1.0.0'};source.extensions={...source.extensions,future:{uninterpreted:['9007199254740993',null]}};
-   const before=u.copyJson(source),result=c.classify(source,mode,unresolved);counts.nativeCases++;assert.deepEqual(source,before);
+   const before=u.copyJson(source),result=c.classify(source,mode,unresolved);counts.nativeCases++;assertJsonDataEqual(source,before);
    assert.equal(result.mapping.origin,'classified');assert.equal(result.mapping.nullability,unresolved?'unspecified':c.label);
    if(unresolved&&mode==='strict'){assert.equal(result.status,'blocked');assert.equal(result.target,undefined);assert.ok(result.residuals.length);counts.nativeBlocks++;continue;}
    assert.equal(result.status,'classified');assert.ok(result.target);retainPayloads(source,result.target);
    if(unresolved)assert.ok(result.residuals.length);
-   for(const format of ['json','yaml'] as const){const receipt=u.readJsonValue(u.writeJsonValue(u.copyJson(result),format),format);assert.deepEqual(c.recover(receipt),c.expected);counts.nativeRecoveries++;}
+   for(const format of ['json','yaml'] as const){const receipt=u.readJsonValue(u.writeJsonValue(u.copyJson(result),format),format);assertNativeRepresentationEqual(c.recover(receipt),c.expected);counts.nativeRecoveries++;}
   }
-  assert.deepEqual(counts,{authoredCases:12,strictBlocks:3,reportResiduals:3,idealRecoveries:18,nativeCases:8,nativeBlocks:2,nativeRecoveries:12});
+  assertJsonDataEqual(counts,{authoredCases:12,strictBlocks:3,reportResiduals:3,idealRecoveries:18,nativeCases:8,nativeBlocks:2,nativeRecoveries:12});
  }
  return coverage;
 }
 if(import.meta.main){
- const evidence=await verifyNullabilityEvidence(),roundTrips=await verifyNullabilityRoundTrips();
+ const evidence=await verifyNullabilityEvidence(read,{allowUnqualifiedHistorical:true}),roundTrips=await verifyNullabilityRoundTrips();
  const paths=['scripts/core-ideals/nullability-conformance.ts','tests/core-ideals/nullability-conformance.test.ts'];
- const result={scope:'Qualified Nullability ideal admission and five-system delivery; retained evidence consistency checks are not native reruns',idealAdmission:{outcome:'passed',requiredBindings:2,usefulBindings:5,systems:[...nullabilitySystems],meaning:'CONTRACT-040 / Element.nullability',nativeEquivalence:false},delivery:{outcome:'passed',requiredBindings:5,qualifiedBindings:5,systems:[...nullabilitySystems],scope:'Explicit binding profiles only, with retained native meanings and qualified refusals'},evidence,roundTrips,fingerprints:Object.fromEntries(await Promise.all(paths.map(async p=>[p,digest(await read(p))])))};
- await Bun.write('fixtures/validation/nullability-conformance.json',JSON.stringify(result,null,2)+'\n');console.log(JSON.stringify({systems:5,fingerprints:evidence.fingerprints,idealRecoveries:90,nativeRecoveries:60,nativeEquivalence:false}));
+ const result={scope:'Current Nullability operations and five-system source behavior pass; historical evidence is revalidated only where its exact pinned artifacts remain recoverable',idealAdmission:{outcome:'source-functional-only; native qualification UNQUALIFIED',sourceOperationsVerified:true,idealAdmitted:false,requiredBindings:2,sourceUsefulBindings:5,systems:[...nullabilitySystems],meaning:'CONTRACT-040 / Element.nullability',nativeEquivalence:false},delivery:{outcome:'unqualified',priorityDelivery:false,sourceBindingsVerified:5,qualifiedBindings:0,systems:[...nullabilitySystems],scope:'Current source-functional bindings preserve native meanings and qualified refusals; historical native priority delivery is not promoted'},evidence,roundTrips,fingerprints:Object.fromEntries(await Promise.all(paths.map(async p=>[p,digest(await read(p))])))};
+ await Bun.write('fixtures/validation/nullability-conformance.json',JSON.stringify(result,null,2)+'\n');console.log(JSON.stringify({systems:5,fingerprints:evidence.fingerprints,historicalQualification:evidence.historicalQualification,currentCoreQualification:evidence.currentCoreQualification,idealRecoveries:90,nativeRecoveries:60,nativeEquivalence:false}));
 }

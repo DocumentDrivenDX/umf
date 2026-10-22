@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 17985,
+        "line": 147,
+        "path": "src/core-ideals/facets-postgresql.ts",
+        "sha256": "f5f7c509c676445e6f2c064551316096747ecae9be2147959f78cf395c9379b1"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "verifyPostgresqlFacetClassification",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: PostgresqlFacetClassification, current: Document, backend: PostgresqlBackend): Promise<PostgresqlFacetClassification>"
+    ]
+  },
+  "id": "[\"api\",\".\",\"verifyPostgresqlFacetClassification\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 17985,
+      "line": 147,
+      "path": "src/core-ideals/facets-postgresql.ts",
+      "sha256": "f5f7c509c676445e6f2c064551316096747ecae9be2147959f78cf395c9379b1"
+    }
+  ],
+  "summary": "Receipt consistency with retained input and current target, not source authentication.",
+  "title": "verifyPostgresqlFacetClassification"
+}

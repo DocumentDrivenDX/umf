@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Independent official dialect meta-schema checks for fully known authored cases."""
 import json,hashlib
 from pathlib import Path

@@ -1,5 +1,7 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Compose authored projection with an independently captured PostgreSQL catalog. */
 import assert from 'node:assert/strict';
+import {assertJsonDataEqual} from './json-data-assert';
 import {createHash} from 'node:crypto';
 import * as u from '../../src';
 import {backend} from '../../native/postgresql/runtime';
@@ -9,7 +11,7 @@ for(const [path,sha] of Object.entries(proof.sha256))assert.equal(createHash('sh
 assert.equal(proof.serverVersion,170004);
 const nativeSource=JSON.stringify(proof.capture),supplement=JSON.stringify(proof.supplement);
 let source=u.importPostgresqlCatalogCapture(nativeSource,{id:'postgresql-facet-composition'});
-source=u.upgradeFacetEnvelope(u.upgradeCardinalityEnvelope(u.upgradeNullabilityEnvelope(u.upgradeFieldEnvelope(source).target).target).target).target;
+
 for(const element of source.modules.find(m=>m.id==='postgresql.columns')!.elements)element.kind='field';
 const columns=u.getPostgresqlColumnMetadata(source),results=[];
 let idealRecoveries=0,nativeRecoveries=0,exactFacetRecoveries=0,explicitResiduals=0;
@@ -25,7 +27,7 @@ for(const [index,row] of facetsPostgresqlProjectionCases().entries()){
  assert.equal(classification.status,'classified');assert.ok(classification.target);
  const recovered=await u.recoverPostgresqlFacetSource(classification,classification.target,backend);
  assert.equal(recovered.nativeSource,nativeSource);assert.equal(recovered.supplement,supplement);nativeRecoveries++;
- assert.deepEqual(await u.recoverFacetsFromPostgresql(projection,projection.nativeSql!,backend),projection.source);idealRecoveries++;
+ assertJsonDataEqual(await u.recoverFacetsFromPostgresql(projection,projection.nativeSql!,backend),projection.source);idealRecoveries++;
  const authored=row.author.operation==='declare-core-facets'?row.author.request:{};
  const same=Object.entries(authored).every(([key,value])=>JSON.stringify((classification.mapping.facets as Record<string,unknown>)[key])===JSON.stringify(value));
  const nativeRefinements=Object.fromEntries(Object.entries(classification.mapping.facets).filter(([key])=>!Object.hasOwn(authored,key)));

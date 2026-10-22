@@ -1,6 +1,7 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {inspectAvroFacetType} from '../../src/adapters/avro/facet-type';
-import {parseNativeJson,renderTree} from '../../src/model/native-json';
+import {parseNativeJson, renderTree} from '../../src/model/native-json';
 import fixture from '../../fixtures/avro/facet-discovery-cases.json';
 const inspect=(s:string)=>inspectAvroFacetType(parseNativeJson(s));
 

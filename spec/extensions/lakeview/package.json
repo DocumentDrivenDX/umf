@@ -1,7 +1,7 @@
 {
   "id": "umf.lakeview",
   "version": "0.1.0",
-  "coreVersion": "0.1.0",
+  "coreVersion": "0.10.0",
   "description": "Databricks AI/BI (Lakeview) dashboard JSON retained exactly by document, page, dataset and layout item, with a reported projection to umf.dashboard",
   "schema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -215,7 +215,7 @@
       }
     }
   },
-  "semantics": "CONTRACT-056. The native .lvdash.json is held as an exact-token, order-preserving tagged tree split by identity: top-level members on the document, pages on page modules, datasets on elements of one data module and layout items on page elements. Export reassembles compact JSON equal to the source. Widget specs, queries and expressions are not executed or validated against Databricks, so interpretation is never complete. Projection into umf.dashboard returns a loss report with a JSON Pointer for every native construct it does not express.",
+  "semantics": "CONTRACT-082. The native .lvdash.json is held as an exact-token, order-preserving tagged tree split by identity: top-level members on the document, pages on page modules, datasets on elements of one data module and layout items on page elements. Export reassembles compact JSON equal to the source. Widget specs, queries and expressions are not executed or validated against Databricks, so interpretation is never complete. Projection into umf.dashboard returns a loss report with a JSON Pointer for every native construct it does not express.",
   "scopes": [
     "document",
     "module",

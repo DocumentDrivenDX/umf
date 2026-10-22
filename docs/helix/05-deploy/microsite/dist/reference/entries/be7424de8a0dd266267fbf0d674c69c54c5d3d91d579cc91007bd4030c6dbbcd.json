@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 6938,
+        "line": 17,
+        "path": "src/core-ideals/tablespec-record.ts",
+        "sha256": "a35f2b4388568de12b7f41323c7ee6132860aef09430beb5c30321794c7f0c5b"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "TableSpecRecordClassification",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface TableSpecRecordClassification {\n operation:'classify-tablespec-record';version:'1.0.0';status:'classified'|'blocked';source:Document;target?:Document;request:TableSpecRecordRequest;binding:typeof binding;mappings:Mapping[];\n residuals:{path:string;value:Json;reason:string;recovery:'Source and native fragments retained; resolve conflict then recompute whole record classification'}[];diagnostics:Diagnostic[];\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"TableSpecRecordClassification\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 6938,
+      "line": 17,
+      "path": "src/core-ideals/tablespec-record.ts",
+      "sha256": "a35f2b4388568de12b7f41323c7ee6132860aef09430beb5c30321794c7f0c5b"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/tablespec-record.ts",
+  "title": "TableSpecRecordClassification"
+}

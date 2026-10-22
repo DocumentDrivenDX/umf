@@ -1,16 +1,17 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {classifyPostgresqlRecord,recoverPostgresqlRecordCapture} from '../../src/core-ideals/postgresql-record';
-import {importPostgresqlCatalogCapture,getPostgresqlColumnMetadata} from '../../src/adapters/postgresql/catalog';
-import {upgradeFieldEnvelope} from '../../src/model/field-transition';
+import {classifyPostgresqlRecord, recoverPostgresqlRecordCapture} from '../../src/core-ideals/postgresql-record';
+import {importPostgresqlCatalogCapture, getPostgresqlColumnMetadata} from '../../src/adapters/postgresql/catalog';
+
 import {declareCoreElementKind} from '../../src/model/field-kind';
 import {copyJson} from '../../src/model/json';
-import {readJsonValue,writeJsonValue} from '../../src/model/serialization';
+import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
 const fixture=await Bun.file('fixtures/validation/field-postgresql-native.json').json();
 function sample(kind='r',duplicate=false){
  const capture=JSON.parse(fixture.nativeSource),table=capture.snapshot.relations.find((r:any)=>r.schema==='sales'&&r.name==='scalar_types');capture.state='modified';
  const relation={...table,name:'Customer',kind,columns:[table.columns[0],table.columns.find((c:any)=>c.name==='items')]};
  capture.snapshot.relations=[relation,{...relation,schema:duplicate?'sales':'support'}];
- const nativeSource=' \n'+JSON.stringify(capture)+'\n',source=upgradeFieldEnvelope(importPostgresqlCatalogCapture(nativeSource,{id:'context-fixture'})).target;
+ const nativeSource=' \n'+JSON.stringify(capture)+'\n',source=importPostgresqlCatalogCapture(nativeSource,{id:'context-fixture'});
  return {source,request:{recordModule:'records',recordId:'customer',mode:'strict' as const,nativeSource,relation:{schema:'sales',name:'Customer'}}};
 }
 test('qualified relations remain distinct records and only selected members receive kinds',()=>{
@@ -35,7 +36,7 @@ test('ambiguous relations, unsupported kinds, collisions and stale receipts cann
 test('duplicate native member names and inconsistent ordinal order block whole-record publication',()=>{
  for(const change of ['name','position']){
   const original=sample(),capture=JSON.parse(original.request.nativeSource),columns=capture.snapshot.relations[0].columns;
-  columns[1][change]=columns[0][change];const nativeSource=JSON.stringify(capture),source=upgradeFieldEnvelope(importPostgresqlCatalogCapture(nativeSource,{id:'bad-members'})).target;
+  columns[1][change]=columns[0][change];const nativeSource=JSON.stringify(capture),source=importPostgresqlCatalogCapture(nativeSource,{id:'bad-members'});
   for(const mode of ['strict','report'] as const){const result=classifyPostgresqlRecord(source,{...original.request,nativeSource,mode});expect(result.status).toBe('blocked');expect(Object.hasOwn(result,'target')).toBe(false);expect(result.diagnostics.some(d=>d.code===(change==='name'?'POSTGRESQL_MEMBER_IDENTITY':'POSTGRESQL_MEMBER_ORDER'))).toBe(true);}
  }
 });

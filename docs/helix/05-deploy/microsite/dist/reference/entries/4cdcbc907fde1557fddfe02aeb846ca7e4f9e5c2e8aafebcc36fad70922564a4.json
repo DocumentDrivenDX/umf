@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 5416,
+        "line": 3,
+        "path": "src/adapters/parquet/schema.ts",
+        "sha256": "1c9fb95a5c01e76928cff994e3d9da7e64423af08375959af46c12af222828d8"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "ParquetSchemaNode",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface ParquetSchemaNode {index:number;name:string;path:string[];definitionLevel:number;repetitionLevel:number;children:ParquetSchemaNode[]}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"ParquetSchemaNode\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 5416,
+      "line": 3,
+      "path": "src/adapters/parquet/schema.ts",
+      "sha256": "1c9fb95a5c01e76928cff994e3d9da7e64423af08375959af46c12af222828d8"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/parquet/schema.ts",
+  "title": "ParquetSchemaNode"
+}

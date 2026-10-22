@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 22939,
+        "line": 26,
+        "path": "src/projections/ddd-postgresql/relationship-layout.ts",
+        "sha256": "b8bc072daaa0fa2b7d97adebc163faae18cd5e1c8c2e8cc0eec65fc8d999f7ce"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "PostgresqlRelationshipLayoutResult",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface PostgresqlRelationshipLayoutResult {\n operation:'validate-postgresql-relationship-layout';version:'1.0.0';status:'validated'|'reported'|'blocked';lossPolicy:'strict'|'report';\n logical:Document;binding:Document;policy:Json;diagnostics:Diagnostic[];\n residuals:{source:'logical'|'binding'|'policy';path:string;reason:string;value:Json}[];\n candidate?:PostgresqlRelationshipLayoutPolicy;\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"PostgresqlRelationshipLayoutResult\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 22939,
+      "line": 26,
+      "path": "src/projections/ddd-postgresql/relationship-layout.ts",
+      "sha256": "b8bc072daaa0fa2b7d97adebc163faae18cd5e1c8c2e8cc0eec65fc8d999f7ce"
+    }
+  ],
+  "summary": "Type declaration · src/projections/ddd-postgresql/relationship-layout.ts",
+  "title": "PostgresqlRelationshipLayoutResult"
+}

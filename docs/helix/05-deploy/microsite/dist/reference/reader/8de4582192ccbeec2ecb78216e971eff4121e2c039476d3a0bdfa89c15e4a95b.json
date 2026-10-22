@@ -1,0 +1,62 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"editExtension\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Registry\"]"
+      ],
+      "name": "registry",
+      "optional": false,
+      "type": "Registry"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "moduleId",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "elementId",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "extensionId",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Json\"]"
+      ],
+      "name": "update",
+      "optional": false,
+      "type": "(payload: Json) => Json"
+    }
+  ],
+  "purpose": "Atomic update; unknown dependencies conservatively block edits until interpreted.",
+  "related": [],
+  "returns": "Document",
+  "task": "Author and edit",
+  "type": "(input: Document, registry: Registry, moduleId: string, elementId: string, extensionId: string, update: (payload: Json) => Json) => Document"
+}

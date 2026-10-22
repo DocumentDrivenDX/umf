@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {chromium} from 'playwright';
@@ -9,7 +10,7 @@ const associationProof=await Bun.file('fixtures/validation/facets-sqlserver-asso
 for(const [path,hash] of Object.entries(associationProof.sha256))assert.equal(createHash('sha256').update(new Uint8Array(await Bun.file(path).arrayBuffer())).digest('hex'),hash);
 const capture=JSON.parse(proof.sourceText);
 function sourceFor(nativeSource:string,columnTable:string,columnName?:string){
- let source=u.importSqlServerCatalog(nativeSource,{id:'sqlserver-composition-browser'});source=u.upgradeFacetEnvelope(u.upgradeCardinalityEnvelope(u.upgradeNullabilityEnvelope(u.upgradeFieldEnvelope(source).target).target).target).target;
+ let source=u.importSqlServerCatalog(nativeSource,{id:'sqlserver-composition-browser'});
  const column=u.getSqlServerColumnMetadata(source).find(c=>c.table.name===columnTable&&(columnName===undefined||c.element.name===columnName))!;
  source.modules.push({id:'logical',namespace:'',elements:[{id:'value',kind:'field',name:'value',cardinality:'one',...(column.element.scalarType?{scalarType:column.element.scalarType}:{}),extensions:{}}]});
  return {source,request:{column:column.path,nativeSource,identity:{module:'logical',element:'value'},mode:'report' as const,profile:'stored-value' as const,obligation:'value-domain' as const}};

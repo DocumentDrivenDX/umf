@@ -1,0 +1,103 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"TableSpecKeyClassification\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "operation",
+      "optional": false,
+      "type": "\"classify-tablespec-keys\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "version",
+      "optional": false,
+      "type": "\"1.0.0\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "status",
+      "optional": false,
+      "type": "\"blocked\" | \"classified\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "outcome",
+      "optional": false,
+      "type": "\"unknown\" | \"exact\" | \"not-expressible\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "source",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "target",
+      "optional": true,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"TableSpecKeyRequest\"]"
+      ],
+      "name": "request",
+      "optional": false,
+      "type": "TableSpecKeyRequest"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "binding",
+      "optional": false,
+      "type": "{ id: string; version: string; nativeVersion: string; subset: string; }"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"TableSpecKeyObservation\"]"
+      ],
+      "name": "observations",
+      "optional": false,
+      "type": "TableSpecKeyObservation[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Json\"]"
+      ],
+      "name": "residuals",
+      "optional": false,
+      "type": "{ path: string; value: Json; outcome: \"unknown\" | \"not-expressible\"; reason: string; recovery: typeof recovery; }[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Diagnostic\"]"
+      ],
+      "name": "diagnostics",
+      "optional": false,
+      "type": "Diagnostic[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "TableSpecKeyClassification is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "TableSpecKeyClassification"
+}

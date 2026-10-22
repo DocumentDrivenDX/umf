@@ -1,7 +1,7 @@
 {
   "image": "postgres@sha256:304ab813518754228f9f792f79d6da36359b82d8ecf418096c636725f8c930ad",
   "serverVersion": 170004,
-  "inputSha256": "7001db9e415c3125d05d97f92e1dc735f026a0a156e91e082d1a1d8bcbbf7c3e",
+  "inputSha256": "f0a04d43f33b5536a212018f3d39e9e22091026b96fe5973d05ac2d9eaaa6048",
   "snapshotQuerySha256": "90d558bdf04ecaf9799c76ce904c791eaa9f3eb7c2a951b9da46d5121fa87f77",
   "candidateSqlSha256": "422695b1bd2449731a9191fc801108fee5c01d50c5c486eac7baf15c17107b98",
   "catalogsEqual": [
@@ -13,7 +13,7 @@
     {
       "database": "source",
       "document": {
-        "umf": "0.1.0",
+        "umf": "0.10.0",
         "id": "source-fresh-capture",
         "vocabularies": {
           "umf.postgresql.catalog": {
@@ -2213,7 +2213,7 @@
     {
       "database": "expected",
       "document": {
-        "umf": "0.1.0",
+        "umf": "0.10.0",
         "id": "expected-fresh-capture",
         "vocabularies": {
           "umf.postgresql.catalog": {
@@ -4413,7 +4413,7 @@
     {
       "database": "candidate",
       "document": {
-        "umf": "0.1.0",
+        "umf": "0.10.0",
         "id": "candidate-fresh-capture",
         "vocabularies": {
           "umf.postgresql.catalog": {
@@ -6613,7 +6613,7 @@
     {
       "database": "restored",
       "document": {
-        "umf": "0.1.0",
+        "umf": "0.10.0",
         "id": "restored-fresh-capture",
         "vocabularies": {
           "umf.postgresql.catalog": {

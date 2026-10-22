@@ -8,26 +8,47 @@ const supplied=process.argv.slice(2),roots=supplied.length?supplied.map(p=>resol
 async function files(root:string):Promise<string[]>{try{const items=await readdir(root,{withFileTypes:true});return (await Promise.all(items.filter(i=>!i.name.startsWith('.')&&i.name!=='node_modules').map(i=>i.isDirectory()?files(join(root,i.name)):Promise.resolve(/\.(json|ya?ml)$/i.test(i.name)?[join(root,i.name)]:[])))).flat().sort();}catch(error:any){if(error.code==='ENOENT'&&!supplied.length)return [];throw error;}}
 await rm(join(dist,'pack-assets'),{recursive:true,force:true});
 const entries:Entry[]=[],seen=new Set<string>(),owned=new Map<string,Entry>();
-for(const root of roots){const paths=await files(root);
+for(const root of roots){const allPaths=await files(root);const paths=root===join(import.meta.dir,'catalog-sources')?allPaths.filter(p=>!entries.some(e=>e.id.startsWith('pack:')&&relative(root,p).split('/')[0]===e.pack)):allPaths;
  const manifestPaths:string[]=[];for(const candidate of paths.filter(p=>p.endsWith('.json'))){const data=JSON.parse(await Bun.file(candidate).text());if(data&&typeof data.id==='string'&&data.domain_types)manifestPaths.push(candidate);}
  for(const path of manifestPaths){
   const text=await Bun.file(path).text(),pack=JSON.parse(text);requireDomainPackProfile(pack);parseEntry({id:path,title:pack.id,category:'domain',path,text,format:'json'});
   if(typeof pack.version!=='string'||!pack.domain_types)throw new Error(`Incomplete pack manifest: ${path}`);
   const identity=`${pack.id}@${pack.version}`;if(seen.has(identity)){if(root===join(import.meta.dir,'catalog-sources'))continue;throw new Error(`Duplicate pack identity: ${identity}`);}seen.add(identity);
   const packEntry:Entry={id:`pack:${identity}`,title:pack.id,category:'domain',path:'domain-pack.json',pack:pack.id,packVersion:pack.version,text,format:'json',description:pack.description};
-  if(pack.family?.id==='medical'){
+  if(pack.family?.id==='medical'||['legal-appellate','public-company-intelligence'].includes(pack.id)){
    const child=Bun.spawn(['bun',join(repo,'scripts/export-domain-pack.ts'),'--pack',path,'--output',join(dist,'pack-assets',identity),'--include-sources'],{stdout:'pipe',stderr:'pipe'});
    const [code,stderr]=await Promise.all([child.exited,new Response(child.stderr).text(),new Response(child.stdout).text()]);if(code)throw Error(stderr);
    packEntry.assets=Object.entries(pack.sources??{}).flatMap(([id,source]:[string,any])=>!source.reference?.includes(':')&&source.license?.redistribution==='allowed'?[{id,reference:source.reference,url:'pack-assets/'+encodeURIComponent(identity)+'/'+source.reference.split('/').map(encodeURIComponent).join('/'),format:source.format??'unknown',dataKind:source.data_kind,sha256:source.checksum.value,...(source.revision?{revision:source.revision}:{})}]:[]);
-   packEntry.aliases=[`pack:${pack.id}@1.0.0`];
+   if(pack.family?.id==='medical')packEntry.aliases=['1.0.0','1.1.0'].map(v=>`pack:${pack.id}@${v}`);
   }
+  if(pack.loader){
+   const {exportPack}=await import('../../../../scripts/loaders/export');
+   const demo=['court-documents-loader-demo','sec-filings-loader-demo'].includes(pack.id);
+   if(pack.family?.id!=='medical'&&!['legal-appellate','public-company-intelligence'].includes(pack.id))await exportPack(path,join(dist,'pack-assets',identity),{includeSources:demo});
+   packEntry.assets=[...(packEntry.assets??[]),...pack.loader.artifacts.map((a:any)=>({id:'loader:'+a.reference,reference:a.reference,url:'pack-assets/'+encodeURIComponent(identity)+'/'+a.reference,format:a.reference.endsWith('.ts')?'bun-source':a.reference.endsWith('.md')?'markdown':'json-schema',dataKind:'authored companion',sha256:a.sha256}))];
+   if(demo)packEntry.assets.push({id:'inventory',reference:'inventory.json',url:'pack-assets/'+encodeURIComponent(identity)+'/inventory.json',format:'json',dataKind:'empty authored selection',sha256:pack.sources.inventory.checksum.value});
+  }
+  if(['legal-appellate','public-company-intelligence'].includes(pack.id)){
+   const research=join(dist,'research/release.json');
+   if(await Bun.file(research).exists()){
+    const release=await Bun.file(research).json();
+    for(const artifact of release.artifacts.filter((a:any)=>a.reference.endsWith('.py'))){
+     const source=join(dist,'research',artifact.reference);
+     if(new Bun.CryptoHasher('sha256').update(await Bun.file(source).arrayBuffer()).digest('hex')!==artifact.sha256)throw Error('Research tool hash mismatch');
+     packEntry.assets=[...(packEntry.assets??[]),{id:'research:'+artifact.reference,reference:artifact.reference,url:'research/'+artifact.reference,format:'python',dataKind:'consumer discovery/qualification tool',sha256:artifact.sha256}];
+    }
+   }
+  }
+  packEntry.aliases=[...(packEntry.aliases??[]),...(['legal-appellate','public-company-intelligence'].includes(pack.id)?[`pack:${pack.id}@1.0.0`]:[]),...(['court-documents-loader-demo','sec-filings-loader-demo'].includes(pack.id)?['1.0.0','1.0.1'].map(v=>`pack:${pack.id}@${v}`):[])];
+  if(pack.id==='legal')packEntry.aliases=['pack:legal@1.1.0'];
   entries.push(packEntry);
+  for(const collection of pack.artifact_collections??[])entries.push({id:`artifact:${identity}:${collection.id}`,title:collection.title,category:'domain',path:'artifact_collections/'+collection.id,pack:pack.id,packVersion:pack.version,schemaFormat:'artifact-collection',text:JSON.stringify(collection,null,2),format:'json'});
   const schemaIds=new Set<string>();for(const declaration of pack.schemas??[]){if(schemaIds.has(declaration.id))throw new Error(`Duplicate schema ID in ${identity}: ${declaration.id}`);schemaIds.add(declaration.id);
    if(typeof declaration.reference!=='string'||isAbsolute(declaration.reference))throw new Error(`Invalid local reference: ${declaration.reference}`);
    const source=resolve(dirname(path),declaration.reference),rel=relative(dirname(path),source);if(rel.startsWith('..')||isAbsolute(rel))throw new Error(`Pack reference escapes its directory: ${declaration.reference}`);
    const actual=await realpath(source),actualRoot=await realpath(dirname(path)),inside=relative(actualRoot,actual);if(inside==='..'||inside.startsWith('../')||isAbsolute(inside))throw new Error('Schema symlink escapes pack');
    const format=/\.ya?ml$/i.test(source)?'yaml':'json',entry:Entry={id:`schema:${identity}:${declaration.id}`,title:declaration.id,category:'domain',path:declaration.reference,pack:pack.id,packVersion:pack.version,schemaFormat:declaration.format,text:await Bun.file(source).text(),format};
-   const parsed=parseEntry(entry);if(parsed.document)entry.title=String(parsed.document.title??parsed.document.id);entry.aliases=[relative(repo,source),...(pack.family?.id==='medical'?[`schema:${pack.id}@1.0.0:${declaration.id}`]:[])];owned.set(actual,entry);entries.push(entry);
+   const parsed=parseEntry(entry);if(parsed.document)entry.title=String(parsed.document.title??parsed.document.id);entry.aliases=[relative(repo,source),...((pack.family?.id==='medical'?['1.0.0','1.1.0']:pack.id==='legal'?['1.1.0']:['legal-appellate','public-company-intelligence'].includes(pack.id)?['1.0.0']:[]).map(v=>`schema:${pack.id}@${v}:${declaration.id}`))];owned.set(actual,entry);entries.push(entry);
   }
  }
  for(const path of paths.filter(p=>!manifestPaths.includes(p))){if(owned.has(await realpath(path)))continue;const text=await Bun.file(path).text(),format=/\.ya?ml$/i.test(path)?'yaml':'json';if(format==='json'){const value=JSON.parse(text);if(!value||typeof value.umf!=='string'||!Array.isArray(value.modules))continue;}else if(!/^umf\s*:/m.test(text))continue;
@@ -36,7 +57,7 @@ for(const root of roots){const paths=await files(root);
 }
 // Family closure and hashes must resolve before publishing a catalog.
 for(const root of roots){for(const path of (await files(root)).filter(p=>p.endsWith('pack.json'))){const pack=await Bun.file(path).json();if(!pack.composition)continue;const members=await resolveDomainFamily(path);for(const member of members)if(!entries.some(e=>e.id===`pack:${member.pack.id}@${member.pack.version}`))throw Error('Family component missing from catalog');}}
-const path='fixtures/core/schema-properties.json',text=await Bun.file(join(repo,path)).text();entries.push({id:path,title:'Orders · core schema properties',category:'example',path,text,format:'json'});
+const path='docs/helix/05-deploy/reference/examples/orders.json',text=await Bun.file(join(repo,path)).text();const currentExample:Entry={id:path,title:'Orders · current core 0.10',category:'example',path,text,format:'json'};parseEntry(currentExample);entries.push(currentExample);
+const selfPath='spec/metamodel/umf.yaml';entries.push({id:selfPath,title:'UMF for UMF',category:'example',path:selfPath,text:await Bun.file(join(repo,selfPath)).text(),format:'yaml',description:'The authored current UMF metamodel generates core schemas and validators. Use the Ontology view for conceptual connections.'});
 await Bun.write(join(dist,'schema-catalog.json'),JSON.stringify({version:1,entries},null,2)+'\n');
-const build=await Bun.build({entrypoints:[join(import.meta.dir,'explorer.ts')],outdir:dist,target:'browser',minify:true});if(!build.success)throw new Error(build.logs.join('\n'));
-console.log(`Explorer built: ${entries.filter(e=>e.id.startsWith('pack:')).length} packs, ${entries.length} catalog entries.`);
+console.log(`Catalog built: ${entries.filter(e=>e.id.startsWith('pack:')).length} packs, ${entries.length} catalog entries.`);

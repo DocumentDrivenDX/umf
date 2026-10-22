@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 10346,
+        "line": 14,
+        "path": "src/core-ideals/cardinality-postgresql-projection.ts",
+        "sha256": "27b310cfd7c47e81bc6417fcf9cdfade198a88b711d47425ee78fbc5df26bb83"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "CardinalityPostgresqlRequest",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface CardinalityPostgresqlRequest {id:string;namespace:string;tableName:string;columnName:string;nativeType:keyof typeof carriers|'jsonb';mode:'strict'|'report';storage:'scalar'|'array'|'jsonb-object';requireExactValues:boolean}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"CardinalityPostgresqlRequest\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 10346,
+      "line": 14,
+      "path": "src/core-ideals/cardinality-postgresql-projection.ts",
+      "sha256": "27b310cfd7c47e81bc6417fcf9cdfade198a88b711d47425ee78fbc5df26bb83"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/cardinality-postgresql-projection.ts",
+  "title": "CardinalityPostgresqlRequest"
+}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 18737,
+        "line": 19,
+        "path": "src/model/dataset-values.ts",
+        "sha256": "29f8dfe12f7e57d59320c0d31c78d1439355eac1c809924c80990a805e25478f"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "CoreDatasetRelationship",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface CoreDatasetRelationship {instanceId:string;identity:{module:string;id:string};sourceInstanceId:string;target:{identity:CoreKeyIdentity;values:CoreKeyTupleValue[]}}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"CoreDatasetRelationship\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 18737,
+      "line": 19,
+      "path": "src/model/dataset-values.ts",
+      "sha256": "29f8dfe12f7e57d59320c0d31c78d1439355eac1c809924c80990a805e25478f"
+    }
+  ],
+  "summary": "Type declaration · src/model/dataset-values.ts",
+  "title": "CoreDatasetRelationship"
+}

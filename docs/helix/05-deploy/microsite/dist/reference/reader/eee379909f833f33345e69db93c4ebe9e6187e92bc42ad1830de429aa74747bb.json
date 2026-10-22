@@ -1,0 +1,41 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"recoverPostgresqlKeySource\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"PostgresqlKeyClassification\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "PostgresqlKeyClassification"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "current",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"PostgresqlBackend\"]"
+      ],
+      "name": "backend",
+      "optional": false,
+      "type": "PostgresqlBackend"
+    }
+  ],
+  "purpose": "recoverPostgresqlKeySource accepts input, current, backend and returns Promise<{ nativeSource: string; supplement: string; }>.",
+  "related": [],
+  "returns": "Promise<{ nativeSource: string; supplement: string; }>",
+  "task": "Import and export",
+  "type": "(input: PostgresqlKeyClassification, current: Document, backend: PostgresqlBackend) => Promise<{ nativeSource: string; supplement: string; }>"
+}

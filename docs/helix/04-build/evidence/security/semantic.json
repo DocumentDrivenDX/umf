@@ -1,0 +1,44 @@
+{
+  "scope": "Bounded semantic spike; not full US-055 acceptance",
+  "bun": "1.4.2",
+  "typescript": "7.0.2",
+  "cases": [
+    {
+      "command": [
+        "bun",
+        "test",
+        "./docs/helix/02-design/spikes/security/semantic.test.ts"
+      ],
+      "exitCode": 0,
+      "stdout": "bun test v1.4.2 (43848b5a7)\n",
+      "stderr": "\ndocs/helix/02-design/spikes/security/semantic.test.ts:\n(pass) qualified identities do not collapse labels @covers US-055-AC2 [0.05ms]\n(pass) active assignment authorizes only owning Project @covers US-055-AC5 [0.21ms]\n(pass) mandatory restriction survives broad grant @covers US-055-AC4 [0.04ms]\n(pass) incomplete and untrusted facts refuse @covers US-055-AC6 [0.01ms]\n(pass) unknown condition cannot be omitted @covers US-055-AC6\n(pass) false permits impose no masks @covers US-055-AC7 [0.07ms]\n(pass) protected field has no implicit original @covers US-055-AC7 [0.01ms]\n(pass) withholding dominates and conflicting transforms refuse @covers US-055-AC7 [0.06ms]\n(pass) null absence and withholding remain distinct @covers US-055-AC7 [0.02ms]\n(pass) query use needs explicit authorization @covers US-055-AC8 [0.01ms]\n(pass) removing assignment removes permission @covers US-057-AC3 [0.01ms]\n(pass) finite exhaustive oracle agreement @covers US-055-AC4 @covers US-055-AC5 [3.21ms]\n(pass) three permit masks are permutation invariant @covers US-055-AC7 [0.12ms]\n(pass) untyped Boolean inputs cannot grant @covers US-055-AC6 [0.01ms]\n\n 14 pass\n 0 fail\n 36 expect() calls\nRan 14 tests across 1 file. [12.00ms]\n",
+      "status": "passed"
+    },
+    {
+      "command": [
+        "bun",
+        "/Users/erik/Projects/umf/node_modules/typescript/bin/tsc",
+        "--ignoreConfig",
+        "--noEmit",
+        "--strict",
+        "--noUncheckedIndexedAccess",
+        "--exactOptionalPropertyTypes",
+        "--target",
+        "ES2022",
+        "--module",
+        "ESNext",
+        "--moduleResolution",
+        "Bundler",
+        "docs/helix/02-design/spikes/security/model.ts"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": "",
+      "status": "passed"
+    }
+  ],
+  "sourceDigests": {
+    "docs/helix/02-design/spikes/security/model.ts": "bdb9f362402744ce08b67142271ede4a996db20f7de48682ddfa5eba1895faaf",
+    "docs/helix/02-design/spikes/security/semantic.test.ts": "20533de67a752fca8c391b9b0339e35400ee48b6a693c3328b5cb8ef5942ee8c"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"resolveOpenapiObjectReference\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"OpenapiReferenceRequest\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "OpenapiReferenceRequest"
+    }
+  ],
+  "purpose": "Resolve a caller-declared Reference Object role, without inferring Schema Object scope.",
+  "related": [],
+  "returns": "OpenapiReferenceResolution",
+  "task": "Inspect and select",
+  "type": "(document: Document, input: OpenapiReferenceRequest) => OpenapiReferenceResolution"
+}

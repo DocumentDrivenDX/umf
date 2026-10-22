@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 6026,
+        "line": 23,
+        "path": "src/model/bit128.ts",
+        "sha256": "df4da4c1259dde3babb562a1b03b9d8e73d731ac90bc6424f31ab01e05615e91"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "bits128FromBytes",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(bytes: Uint8Array<ArrayBufferLike>): Bit128Value"
+    ]
+  },
+  "id": "[\"api\",\".\",\"bits128FromBytes\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 6026,
+      "line": 23,
+      "path": "src/model/bit128.ts",
+      "sha256": "df4da4c1259dde3babb562a1b03b9d8e73d731ac90bc6424f31ab01e05615e91"
+    }
+  ],
+  "summary": "Public export · src/model/bit128.ts",
+  "title": "bits128FromBytes"
+}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 12168,
+        "line": 19,
+        "path": "src/adapters/openapi/index.ts",
+        "sha256": "ed159dd79e74b077144ebcbfd16276e61a13c3406c490ad9cf2fbe7adb80ca2e"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "OpenapiResource",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface OpenapiResource {uri:string;root:NativeJson;originalSource:string;originalFormat:'json'|'yaml';}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"OpenapiResource\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 12168,
+      "line": 19,
+      "path": "src/adapters/openapi/index.ts",
+      "sha256": "ed159dd79e74b077144ebcbfd16276e61a13c3406c490ad9cf2fbe7adb80ca2e"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/openapi/index.ts",
+  "title": "OpenapiResource"
+}

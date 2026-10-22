@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 13360,
+        "line": 28,
+        "path": "src/core-ideals/facets-postgresql-projection.ts",
+        "sha256": "6ce38a1459c90d94fcf25a9f4008d10771d7fc0566950c8c163c68ef434354db"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "projectFacetsToPostgresql",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: Author, options: FacetsPostgresqlRequest, backend: PostgresqlBackend): Promise<FacetsPostgresqlProjection>"
+    ]
+  },
+  "id": "[\"api\",\".\",\"projectFacetsToPostgresql\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 13360,
+      "line": 28,
+      "path": "src/core-ideals/facets-postgresql-projection.ts",
+      "sha256": "6ce38a1459c90d94fcf25a9f4008d10771d7fc0566950c8c163c68ef434354db"
+    }
+  ],
+  "summary": "Project verified author intent. Native carrier defaults never become author assertions.",
+  "title": "projectFacetsToPostgresql"
+}

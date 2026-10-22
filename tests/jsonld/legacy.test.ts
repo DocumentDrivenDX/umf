@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {importJsonLdDocument,exportJsonLdDocument,proposeJsonLdExpansion,proposeJsonLdNodeEdit,readDocument,writeDocument} from '../../src';
 test('US-026-AC6: legacy IRI mapping and prefixes respect the selected processing mode',async()=>{

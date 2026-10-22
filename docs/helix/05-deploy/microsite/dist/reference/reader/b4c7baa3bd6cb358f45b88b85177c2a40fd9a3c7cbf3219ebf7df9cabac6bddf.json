@@ -1,0 +1,39 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"proposeShaclEngineValidation\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "shapes",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "data",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "options",
+      "optional": false,
+      "type": "{ id: string; blankNodePolicy: \"disjoint-inputs\" | \"shared-scope\"; }"
+    }
+  ],
+  "purpose": "Engine evidence, NOT a UMF conformance verdict. All input meaning remains recoverable.",
+  "related": [],
+  "returns": "Promise<ShaclEngineReport>",
+  "task": "Author and edit",
+  "type": "(shapes: Document, data: Document, options: { id: string; blankNodePolicy: \"disjoint-inputs\" | \"shared-scope\"; }) => Promise<ShaclEngineReport>"
+}

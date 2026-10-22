@@ -1,0 +1,36 @@
+{
+  "data": {
+    "apiIds": [],
+    "expected": {
+      "bytes": 103,
+      "path": "docs/helix/05-deploy/reference/examples/expected.json",
+      "sha256": "7ea4708756f2ab539e0acf22175e625e65cd5ccd25c8fdbc1579b79472d1d821"
+    },
+    "guideIds": [
+      "[\"guide\",\"concepts\"]"
+    ],
+    "inputs": [
+      {
+        "bytes": 894,
+        "path": "docs/helix/05-deploy/reference/examples/unknown.json",
+        "sha256": "133529dd082daf4e9ac80440966636f1f593b8a4718cc5af66987cf58593b142"
+      }
+    ],
+    "operationId": "core-write"
+  },
+  "id": "[\"example\",\"unknown-preservation\"]",
+  "kind": "example",
+  "links": [
+    "[\"guide\",\"concepts\"]",
+    "[\"integration\",\"core-write\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 894,
+      "path": "docs/helix/05-deploy/reference/examples/unknown.json",
+      "sha256": "133529dd082daf4e9ac80440966636f1f593b8a4718cc5af66987cf58593b142"
+    }
+  ],
+  "summary": "Serialize JSON / YAML",
+  "title": "unknown preservation"
+}

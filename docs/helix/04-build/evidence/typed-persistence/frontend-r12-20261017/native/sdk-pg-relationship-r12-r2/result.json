@@ -1,0 +1,60 @@
+{
+  "checks": [
+    {
+      "name": "init",
+      "command": [
+        "/opt/homebrew/opt/postgresql@18/bin/initdb",
+        "-D",
+        "/private/tmp/sdk-pg-relationship-r12-r2/data",
+        "-A",
+        "trust",
+        "-U",
+        "sdk_admin",
+        "--no-sync"
+      ],
+      "exitCode": 0
+    },
+    {
+      "name": "start",
+      "command": [
+        "/opt/homebrew/opt/postgresql@18/bin/pg_ctl",
+        "-D",
+        "/private/tmp/sdk-pg-relationship-r12-r2/data",
+        "-l",
+        "/private/tmp/sdk-pg-relationship-r12-r2/server.log",
+        "-o",
+        "-F -k /private/tmp/sdk-pg-relationship-r12-r2/socket -c listen_addresses='' -p 55497",
+        "-w",
+        "start"
+      ],
+      "exitCode": 0
+    },
+    {
+      "name": "campaign",
+      "command": [
+        "/private/tmp/sdk-r12-314-env/bin/python",
+        "-I",
+        "-B",
+        "/private/tmp/sdk-pg-relationship-r12-r2/python/umf_access/tests/relationship_native_e2e.py",
+        "/private/tmp/sdk-pg-relationship-r12-r2/fixture"
+      ],
+      "exitCode": 1
+    },
+    {
+      "name": "stop",
+      "command": [
+        "/opt/homebrew/opt/postgresql@18/bin/pg_ctl",
+        "-D",
+        "/private/tmp/sdk-pg-relationship-r12-r2/data",
+        "-m",
+        "fast",
+        "-w",
+        "stop"
+      ],
+      "exitCode": 0
+    }
+  ],
+  "serverStopped": true,
+  "frozenHarnessSha256": "8474c00470c2d1fa8942442e11867ae7fa462a26d4e65bc79c7dd75b848ccbc8",
+  "temporal": "HELD"
+}

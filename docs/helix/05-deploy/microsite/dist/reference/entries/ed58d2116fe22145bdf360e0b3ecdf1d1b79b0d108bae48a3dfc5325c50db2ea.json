@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 3852,
+        "line": 57,
+        "path": "src/model/serialization.ts",
+        "sha256": "75130d42b471d5f420020a8cb15c9628dee25f3dc2700772c8cb9f6748936fad"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "writeJsonValue",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(value: unknown, format?: \"json\" | \"yaml\"): string"
+    ]
+  },
+  "id": "[\"api\",\".\",\"writeJsonValue\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 3852,
+      "line": 57,
+      "path": "src/model/serialization.ts",
+      "sha256": "75130d42b471d5f420020a8cb15c9628dee25f3dc2700772c8cb9f6748936fad"
+    }
+  ],
+  "summary": "Public export · src/model/serialization.ts",
+  "title": "writeJsonValue"
+}

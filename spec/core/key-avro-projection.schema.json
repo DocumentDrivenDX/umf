@@ -30,13 +30,13 @@
       ]
     },
     "source": {
-      "$ref": "urn:umf:core:0.6.0"
+      "$ref": "urn:umf:core:0.10.0"
     },
     "authors": {
       "type": "array",
       "minItems": 1,
       "items": {
-        "$ref": "urn:umf:core:key-operation:1.0.0#/$defs/declaration"
+        "$ref": "urn:umf:core:key-operation:2.0.0#/$defs/declaration"
       }
     },
     "request": {
@@ -146,7 +146,7 @@
       }
     },
     "target": {
-      "$ref": "urn:umf:core:0.1.0"
+      "$ref": "urn:umf:core:0.10.0"
     },
     "mappings": {
       "type": "array",

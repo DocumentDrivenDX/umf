@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {encodeParquetWire} from '../adapters/parquet/encode';
 import type {ParquetWireValue} from '../adapters/parquet/footer';
 import {UmfError} from '../model/types';

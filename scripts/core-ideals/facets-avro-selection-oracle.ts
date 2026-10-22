@@ -1,6 +1,8 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
+import {assertJsonDataEqual} from './json-data-assert';
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
-import {importAvroSchema,getAvroNode,readDocument,writeDocument} from '../../src';
+import {importAvroSchema, getAvroNode, readDocument, writeDocument} from '../../src';
 import {parseNativeJson} from '../../src/model/native-json';
 import {inspectAvroFacetSelection} from '../../src/core-ideals/avro-facet-selection';
 const child=Bun.spawn(['.venv/bin/python','scripts/core-ideals/facets-avro-selection-native.py'],{stdout:'inherit',stderr:'inherit'});assert.equal(await child.exited,0);
@@ -15,7 +17,7 @@ for(const row of (await Bun.file(fixture).json()).cases){
  const source=importAvroSchema(row.schema,{id:row.id,dependencies:row.dependencies});
  for(const format of ['json','yaml'] as const){
   const restored=readDocument(writeDocument(source,format),format);
-  for(const root of roots)assert.deepEqual(getAvroNode(restored,'',root.dependencyId),root.root);
+  for(const root of roots)assertJsonDataEqual(getAvroNode(restored,'',root.dependencyId),root.root);
   schemaRecoveries++;
  }
 }

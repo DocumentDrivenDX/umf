@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/private/tmp/umf-audit-merged-actions-execution.py", line 79, in <module>
+    selection=ast.literal_eval(assignments['selection']);assert [(r['path'],r['testName']) for r in a['originalSelectedTests']]==selection and len(set(selection))==5
+AssertionError

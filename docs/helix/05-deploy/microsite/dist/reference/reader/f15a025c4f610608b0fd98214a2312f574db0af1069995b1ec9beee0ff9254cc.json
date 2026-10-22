@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"ActionEntityInput\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ActionKeyReference\"]"
+      ],
+      "name": "key",
+      "optional": false,
+      "type": "ActionKeyReference"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreLiteral\"]"
+      ],
+      "name": "components",
+      "optional": false,
+      "type": "CoreLiteral[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "ActionEntityInput is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "ActionEntityInput"
+}

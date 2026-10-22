@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 6575,
+        "line": 14,
+        "path": "src/adapters/generalized-rdf/index.ts",
+        "sha256": "e4947b63b589282b0d207bfa04c601a5ddbb4c655529aff71588605a9098d526"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "GeneralizedRdfLiteral",
+    "runtime": "type-only",
+    "signatureText": [
+      "export type GeneralizedRdfLiteral={termType:'Literal';value:string;datatype:{termType:'NamedNode';value:string};language?:string};"
+    ]
+  },
+  "id": "[\"api\",\".\",\"GeneralizedRdfLiteral\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 6575,
+      "line": 14,
+      "path": "src/adapters/generalized-rdf/index.ts",
+      "sha256": "e4947b63b589282b0d207bfa04c601a5ddbb4c655529aff71588605a9098d526"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/generalized-rdf/index.ts",
+  "title": "GeneralizedRdfLiteral"
+}

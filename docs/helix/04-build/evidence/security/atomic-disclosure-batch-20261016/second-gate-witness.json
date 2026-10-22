@@ -1,0 +1,115 @@
+{
+  "baseCommit": "109c77529aa9e32b355ccb06eb9731f1d145aad9",
+  "sourceDigests": {
+    "src/extensions/security/catalog-runtime-candidate.ts": "ba171ea423b9205f2e8c7d35addef22f311b2076503cbd4b559e2abaa46c9b78",
+    "tests/security/catalog-disclosure-batch-corpus.ts": "506da3a387c04f123bd910652345dae42da9698283b096c63b007b158ea0a408",
+    "tests/security/catalog-disclosure-batch.test.ts": "1ff389ff073b1c689c9604d8635ac94918f0d29a192281fbc75dfe1c95d2827e",
+    "tools/security/catalog-disclosure-batch-browser.ts": "5594ebdc9d71f34859e81d9e5f915811f8550a539d6aadd5e99636c42ddd3a6d",
+    "docs/helix/02-design/contracts/CONTRACT-062-security-semantics.md": "43da7da034f554fccb500f5bc8e4fd4ec7061ff09a10447f7146455de6e274e5",
+    "docs/helix/03-test/security/cases.json": "2808e1b9ab5c615002061883376bed500b8f43eb0bde567ef0c16dfc78956a13"
+  },
+  "requiredCases": 158,
+  "allocatedCriteria": 34,
+  "implementedPassingFresh": 45,
+  "missingRequiredImplementations": 113,
+  "gateExitCode": 1,
+  "planDigest": "2808e1b9ab5c615002061883376bed500b8f43eb0bde567ef0c16dfc78956a13",
+  "planUnchangedDuringReplay": true,
+  "gateToolingUnchanged": true,
+  "uniqueSourcePins": 570,
+  "fingerprintOccurrences": 2184,
+  "allFingerprintsCurrentAtEndpoint": true,
+  "originalTrackedReceiptReplacements": {
+    "docs/helix/04-build/evidence/security/acceptance.json": {
+      "oldSha256": "f957114604520352d05adbb804ec5d873ce18cd70d666636206cd02753aba4d7",
+      "newSha256": "fcf8af870d8effd6b6858b1716b4a6cf9853ebc193accf08530148a4bd0951c0"
+    },
+    "docs/helix/04-build/evidence/security/pg18-catalog-projection-20261015/case.json": {
+      "oldSha256": "43ea074b0951c2b149874355adebfa3e801b52445b4706a78347cd5102a6c16a",
+      "newSha256": "d40b37c1e2d1c77a965cb5c85a30d594ac6c52d22bda02297da34d50e23a5a5a"
+    },
+    "docs/helix/04-build/evidence/security/pg18-column-withhold-P01.json": {
+      "oldSha256": "f790507e33b565b336c9f327f0163e18d02989daba4a4ed1c2f79744e659be07",
+      "newSha256": "f267519fb1854c0811fe986cd0dc482d83abfcae4b537bfc0613f434e966bb99"
+    },
+    "docs/helix/04-build/evidence/security/pg18-generated-carrier-20261015/case.json": {
+      "oldSha256": "64b9136ec0dfdcd2a879a4943b4962a465a0e201327c310bd92100309e7c5069",
+      "newSha256": "fac90104bbc8ae6bbcde726ee118c23c0a5ce859053b6650fd957612aabcf8ff"
+    },
+    "docs/helix/04-build/evidence/security/pg18-mask-write-20261015/case.json": {
+      "oldSha256": "5ee06716fae9b238340a34e1a220ed96856e4bac358d62298c727da7e96291b5",
+      "newSha256": "8cafec4cdb4a39a44db07d6ce71daf43b77ea0d0e90e8c9672e021c82b5c60c0"
+    },
+    "docs/helix/04-build/evidence/security/pg18-native-archive-20261015/case.json": {
+      "oldSha256": "ea3b1ff2de569255e9bf58f4f747ef072b001223c6454c380d8d16b74d97d7de",
+      "newSha256": "a03a469c988703ed8d5be25660b4710efcac00494ff3a631b5c3740ea76d6d10"
+    },
+    "docs/helix/04-build/evidence/security/pg18-replay-20261015/cases/pg-raw-B01.json": {
+      "oldSha256": "1d088f68aeedf7c95ab30483e74561bf50680ce023541f16fe198e8fd41d4333",
+      "newSha256": "58ed29f1ba0cc6b4aec03e5d86ab010750a62ec6793817763dd52fedac33ab42"
+    },
+    "docs/helix/04-build/evidence/security/pg18-replay-20261015/cases/pg-raw-B02.json": {
+      "oldSha256": "d1bb338ee18bd9f393da6c092853ae7d97ea22acac350e14478e40660dd2afd8",
+      "newSha256": "dfd4f838268d2797a677bf9a9ae150e87ffd5f2302cd061c974517e79b8b4b4c"
+    },
+    "docs/helix/04-build/evidence/security/pg18-replay-20261015/cases/pg-raw-B03.json": {
+      "oldSha256": "897efafa4df095c2d0fa6c766ea442b1d6b672ef9038b80ea638731437bd2719",
+      "newSha256": "ec52502bf1594ab59bbd1a08786857bcb898abe4e600540298b99437e29895c3"
+    },
+    "docs/helix/04-build/evidence/security/pg18-replay-20261015/cases/pg-raw-B04.json": {
+      "oldSha256": "7f32ff80e11697ee08ed550afc1b3ab4c17ce8fd9be5d71e86aecf0f82fb6467",
+      "newSha256": "bd78f9a2924ed5b9b1e0754916c9a2eeb9c38ef56b377d1d6fb00508af9363bd"
+    },
+    "docs/helix/04-build/evidence/security/pg18-replay-20261015/cases/pg-raw-B05.json": {
+      "oldSha256": "9a49f72009dbcf1ab71ab005110ede9ebc74f794d3eeb08e8687f61f83f3a8ed",
+      "newSha256": "6623cd9c583094b18173e08747489cce2178061097e1e53d6f23a5e691917771"
+    },
+    "docs/helix/04-build/evidence/security/pg18-replay-20261015/cases/pg-raw-B06.json": {
+      "oldSha256": "ee1c59e8e4aa7df08f8d05e32696243079dacccd670ed28c32db7a05b760b60b",
+      "newSha256": "9e0fe452b94837fe6cabb61775453c34a4116ad5f2c7f2aa561f0078e2abb72a"
+    },
+    "docs/helix/04-build/evidence/security/pg18-replay-20261015/cases/pg-raw-B07.json": {
+      "oldSha256": "7727c0a557d1b2aecff282b558f53d46cb8cf1994746ec81517cdf7a9fbebea7",
+      "newSha256": "9d528c3cb6944021f37d93cc2fc7a96da6567be866123e2cfb4f2751a2743223"
+    },
+    "docs/helix/04-build/evidence/security/pg18-replay-20261015/cases/pg-raw-B11.json": {
+      "oldSha256": "9cba257b02ac9807216afe15a5e421650649bd52b2800da432d454ad1270cac7",
+      "newSha256": "74d59e2a0739428738bc867a199716edfe6266a2fc9e5e829f8dfbfaff30323c"
+    },
+    "docs/helix/04-build/evidence/security/pg18-replay-20261015/cases/pg-raw-B13.json": {
+      "oldSha256": "b939f07f2d4a4d12c3c1e888704babac658383345ecd6ffa322c98f859ac5302",
+      "newSha256": "ff6248488d248bf9a6f9ddf21608e8103f2550fda5fce51c0755fb264c61fb02"
+    },
+    "docs/helix/04-build/evidence/security/pg18-replay-20261015/cases/pg-raw-B14.json": {
+      "oldSha256": "301644b2a74f129975d0c8ab854ef624ef25ec79002fc6d68ac4a77c50cff8f2",
+      "newSha256": "a58bec1f79e1338e5685c184f13b8e1f711810611841cfdc213677b5fc20d5a0"
+    },
+    "docs/helix/04-build/evidence/security/pg18-replay-20261015/cases/pg-raw-B15.json": {
+      "oldSha256": "b86e20f334a00f6cc806d9d3c25310a5c1f392ef458272fcba02d80d71a2c90e",
+      "newSha256": "654ae3cc210098a294c1eaa06afedcbbe25b0163781915ce95a372ac0c2d2fea"
+    },
+    "docs/helix/04-build/evidence/security/pg18-replay-20261015/cases/pg-raw-B16.json": {
+      "oldSha256": "9910f4a79bd54994f38fdd52c609f90aad37506136addd1b90f4857963601929",
+      "newSha256": "70e14b6da00a003392e191bc4477a5bdfbd0d34a7988d0f458c827f64951ece2"
+    },
+    "docs/helix/04-build/evidence/security/pg18-replay-20261015/cases/pg-raw-L01.json": {
+      "oldSha256": "0a4b9c7e7fdaa3b37c375876f468ca8a81a0927baeb0ee59b60f47cdf7ae9750",
+      "newSha256": "4f511039126bec503c66743da489dfe5124cbeb55759818fb4941c59005ebd5d"
+    },
+    "docs/helix/04-build/evidence/security/pg18-replay-20261015/cases/pg-raw-L02.json": {
+      "oldSha256": "3b52fd2dfbaea5e193d36bebbdbd9cb41de5c524f5fbfcd9933e4d53e8bded70",
+      "newSha256": "dbcfaac21967ee860a15e00f16f85deea076615ff81be2f3dde153176e3daaac"
+    },
+    "docs/helix/04-build/evidence/security/pg18-stored-token-20261015/case.json": {
+      "oldSha256": "505400ca272f102d498591aa188ae2a5fa42eec384ac52ab62b14706d241dcb0",
+      "newSha256": "775dd9915b176caeea479cf35456fc6e4b7a0b38ceb325f725101a305dc608d4"
+    },
+    "docs/helix/04-build/evidence/security/phase-validation.json": {
+      "oldSha256": "4d967c56b221b4a8c91dbf9a9d8bef392788e6764365bbd3e7a41d6cc1005673",
+      "newSha256": "4d967c56b221b4a8c91dbf9a9d8bef392788e6764365bbd3e7a41d6cc1005673"
+    }
+  },
+  "scope": "Full existing reviewed runners freshly executed; no new case admitted. Six additive source inventory entries retain unchanged IDs/allocations/assertions/commands/deadlines. End-point custody is not runtime/held-file/ABA provenance or qualification of the new private producer as native authority.",
+  "auditChecks": 221,
+  "auditFailed": 87
+}

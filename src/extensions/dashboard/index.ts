@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import manifest from '../../../spec/extensions/dashboard/package.json';
 import {Registry} from '../../registry/registry';
 import {validateDocument} from '../../validation/document';

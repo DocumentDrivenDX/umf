@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 489,
+        "line": 6,
+        "path": "src/extensions/security/protection/source.ts",
+        "sha256": "43cff8c0f539879b5b5c9f2d17aa17da57af24f806303251ed42c4664d6341bb"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "readProtectionSource",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(text: string, format?: \"json\" | \"yaml\"): Json"
+    ]
+  },
+  "id": "[\"api\",\".\",\"readProtectionSource\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 489,
+      "line": 6,
+      "path": "src/extensions/security/protection/source.ts",
+      "sha256": "43cff8c0f539879b5b5c9f2d17aa17da57af24f806303251ed42c4664d6341bb"
+    }
+  ],
+  "summary": "Public export · src/extensions/security/protection/source.ts",
+  "title": "readProtectionSource"
+}

@@ -1,0 +1,33 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 500,
+        "line": 1,
+        "path": "spec/extensions/smithy/native-selection.schema.json",
+        "sha256": "3309db13703066e0ca21a2ded143d51fc70213660e1f433ad56064a84124ea4d"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "smithyNativeSelectionSchema",
+    "runtime": "unassessed",
+    "signatureText": [
+      "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"$id\": \"urn:umf:smithy:native-selection:0.1.0\",\n  \"type\": \"object\",\n  \"additionalProperties\": false,\n  \"required\": [\n    \"shapeIds\"\n  ],\n  \"properties\": {\n    \"shapeIds\": {\n      \"type\": \"array\",\n      \"uniqueItems\": true,\n      \"items\": {\n        \"type\": \"string\",\n        \"minLength\": 1,\n        \"pattern\": \"^[A-Za-z_][A-Za-z_0-9]*(\\\\.[A-Za-z_][A-Za-z_0-9]*)*#[A-Za-z_][A-Za-z_0-9]*(\\\\$[A-Za-z_][A-Za-z_0-9]*)?$\"\n      }\n    }\n  }\n}\n"
+    ]
+  },
+  "id": "[\"api\",\".\",\"smithyNativeSelectionSchema\"]",
+  "kind": "api",
+  "links": [
+    "[\"schema\",\"spec/extensions/smithy/native-selection.schema.json\",\"\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 500,
+      "line": 1,
+      "path": "spec/extensions/smithy/native-selection.schema.json",
+      "sha256": "3309db13703066e0ca21a2ded143d51fc70213660e1f433ad56064a84124ea4d"
+    }
+  ],
+  "summary": "Public export · spec/extensions/smithy/native-selection.schema.json",
+  "title": "smithyNativeSelectionSchema"
+}

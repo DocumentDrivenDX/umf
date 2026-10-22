@@ -1,14 +1,15 @@
-import {importSqlServerCatalog,getSqlServerColumnMetadata} from '../../src/adapters/sqlserver';
-import {upgradeFieldEnvelope} from '../../src/model/field-transition';
-import {upgradeNullabilityEnvelope} from '../../src/model/nullability-transition';
+// SPDX-License-Identifier: MIT OR Apache-2.0
+import {importSqlServerCatalog, getSqlServerColumnMetadata} from '../../src/adapters/sqlserver';
+
+
 import {classifySqlServerField} from '../../src/core-ideals/sqlserver-field';
 import type {SqlServerNullabilityRequest} from '../../src/core-ideals/nullability-sqlserver';
 import type {Nullability} from '../../src/model/types';
 export function sqlserverAvailabilitySource(nativeSource:string,table:string,column='value'){
- const fields=upgradeFieldEnvelope(importSqlServerCatalog(nativeSource,{id:'nullability-classification'})).target;
+ const fields=importSqlServerCatalog(nativeSource,{id:'nullability-classification'});
  const metadata=getSqlServerColumnMetadata(fields).find(c=>c.table.schema==='availability'&&c.table.name===table&&c.element.name===column);
  if(!metadata)throw Error('Missing column');
- return {source:upgradeNullabilityEnvelope(classifySqlServerField(fields,{nativeSource,column:metadata.path,mode:'strict'}).target!).target,column:metadata.path};
+ return {source:classifySqlServerField(fields,{nativeSource,column:metadata.path,mode:'strict'}).target!,column:metadata.path};
 }
 export function sqlserverNullabilityCases(nativeSource:string){
  const columns=getSqlServerColumnMetadata(importSqlServerCatalog(nativeSource,{id:'case-discovery'})),cases=[];

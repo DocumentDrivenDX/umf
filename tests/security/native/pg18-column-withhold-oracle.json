@@ -1,0 +1,35 @@
+{
+ "version":"independent-pg18-column-withhold/1",
+ "image":"postgres@sha256:74935e72241653ca55e0414067e6d8763aceb8a810eb51b452253ec3dcfc4336",
+ "serverVersionNum":"180006",
+ "permitted":["id","label","public_note"],
+ "withheld":["secret","private_audit"],
+ "actors":{
+  "umf_sec_alice":[["RA","A label",null],["RAB","Shared label","visible é"]],
+  "umf_sec_bob":[["RAB","Shared label","visible é"],["RB","B label","visible B"]],
+  "umf_sec_outsider":[]
+ },
+ "allRows":[["RA","A label",null,"private-A",{"staff":"Alice"}],["RAB","Shared label","visible é","private-AB",{"staff":"Alice and Bob"}],["RB","B label","visible B","private-B",{"staff":"Bob"}],["RD","Unassigned label",null,"private-D",{"staff":"nobody"}],["RO","Ownerless label",null,"private-O",{"staff":"nobody"}]],
+ "denied":{
+  "direct":"SELECT secret FROM security_columns.resource ORDER BY id;",
+  "other-field":"SELECT private_audit FROM security_columns.resource;",
+  "star":"SELECT * FROM security_columns.resource;",
+  "whole-row":"SELECT row_to_json(r) FROM security_columns.resource r;",
+  "mixed":"SELECT id,secret FROM security_columns.resource ORDER BY id;",
+  "empty":"SELECT secret FROM security_columns.resource WHERE false;",
+  "limit-zero":"SELECT secret FROM security_columns.resource LIMIT 0;",
+  "expression":"SELECT md5(secret) FROM security_columns.resource;",
+  "predicate":"SELECT id FROM security_columns.resource WHERE secret='private-A';",
+  "ordering":"SELECT id FROM security_columns.resource ORDER BY secret;",
+  "grouping":"SELECT count(*) FROM security_columns.resource GROUP BY secret;",
+  "aggregate":"SELECT min(secret) FROM security_columns.resource;",
+  "join":"SELECT r.id FROM security_columns.resource r JOIN security_columns.resource s ON r.secret=s.secret;",
+  "copy":"COPY (SELECT secret FROM security_columns.resource) TO STDOUT;",
+  "copy-table":"COPY security_columns.resource TO STDOUT;",
+  "prepared":"PREPARE hidden AS SELECT secret FROM security_columns.resource; EXECUTE hidden;",
+  "invoker-view":"SELECT * FROM security_columns.invoker_probe;",
+  "owner-view":"SELECT * FROM security_columns.owner_probe;",
+  "caller-wrapper":"CREATE FUNCTION security_columns.caller_probe() RETURNS SETOF text LANGUAGE sql AS 'SELECT secret FROM security_columns.resource';"
+ },
+ "scope":"Fixed PostgreSQL18.6 native column SELECT refusal over membership-filtered raw relational carrier; independent authored rows and attacks. No general compiler/native backend qualification."
+}

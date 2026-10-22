@@ -1,9 +1,10 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import base from '../../spec/core/field-postgresql-projection.schema.json';
 import classification from '../../spec/core/postgresql-facet-classification.schema.json';
 const schema:any=structuredClone(base);
 schema.$id='urn:umf:core:facets-postgresql-projection:1.0.0';schema.title='Authored scalar facets to PostgreSQL carriers and CHECKs';
-schema.properties.operation.const='project-facets-postgresql';schema.properties.source.$ref='urn:umf:core:0.5.0';
-schema.properties.author={anyOf:[{$ref:'urn:umf:core:facet-operation:1.0.0#/$defs/declaration'},{$ref:'urn:umf:core:kind-operation:4.0.0#/$defs/declaration'}]};
+schema.properties.operation.const='project-facets-postgresql';schema.properties.source.$ref='urn:umf:core:0.10.0';
+schema.properties.author={anyOf:[{$ref:'urn:umf:core:facet-operation:3.0.0#/$defs/declaration'},{$ref:'urn:umf:core:kind-operation:6.0.0#/$defs/declaration'}]};
 schema.properties.binding.const={id:'umf.core.facets.postgresql',version:'1.0.0',nativeVersion:'17.4',subset:'Single authored scalar Field; explicit carrier and checked/type-modifier/carrier-only policy; non-null facet domains, retained losses and ideal recovery; no general SQL expression conversion or native equivalence'};
 const request=schema.properties.request;
 request.properties.nativeType.enum.push('varchar','char');

@@ -1,0 +1,104 @@
+{"testProcess":"tests/core-ideals/cardinality-field-operations.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/core-ideals/cardinality-field-operations.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/core-ideals/cardinality-field-operations.test.ts:
+(pass) current kind and record receipts retain cardinality, nullability and native content [880.12ms]
+(pass) current nullability authoring covers containers without changing item meaning [51.78ms]
+(pass) container record meaning belongs on its item Field and dependent kind edits refuse [27.87ms]
+(pass) cross-version, stale and forged receipts refuse without changing original profiles [15.36ms]
+
+ 4 pass
+ 0 fail
+ 569 expect() calls
+Ran 4 tests across 1 file. [1367.00ms]
+{"testProcess":"tests/core-ideals/cardinality-field-operations.test.ts","exitCode":0,"pass":4,"fail":0,"assertions":569,"completeSummary":true,"logSha256":"dd8d9b928ca2040eb51d38279e0c8d85ea0194de370538b3be288555ab517673"}
+{"testProcess":"tests/core-ideals/cardinality-selection.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/core-ideals/cardinality-selection.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/core-ideals/cardinality-selection.test.ts:
+(pass) selection keeps shape and item identity distinct through mixed cycles, boundaries and filters [133.62ms]
+(pass) retired core markers are refused by current selection operations [0.47ms]
+(pass) malformed filters, unresolved item targets and getters refuse before traversal [0.93ms]
+
+ 3 pass
+ 0 fail
+ 134 expect() calls
+Ran 3 tests across 1 file. [371.00ms]
+{"testProcess":"tests/core-ideals/cardinality-selection.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":134,"completeSummary":true,"logSha256":"d9d89f3d5110015638b4d4dc7698e13ced0eac7051abf162718813dbac93f891"}
+{"testProcess":"tests/core-ideals/classification-policy.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/core-ideals/classification-policy.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/core-ideals/classification-policy.test.ts:
+(pass) tablespec-field-classification rejects inconsistent success and blocked metadata [1.18ms]
+(pass) tablespec-record-classification rejects inconsistent success and blocked metadata [1.16ms]
+(pass) postgresql-field-classification rejects inconsistent success and blocked metadata [6.89ms]
+(pass) postgresql-record-classification rejects inconsistent success and blocked metadata [6.00ms]
+(pass) postgresql-composite-classification rejects inconsistent success and blocked metadata [3.56ms]
+(pass) postgresql-ddl-kinds rejects inconsistent success and blocked metadata [2.23ms]
+
+ 6 pass
+ 0 fail
+ 44 expect() calls
+Ran 6 tests across 1 file. [5.88s]
+{"testProcess":"tests/core-ideals/classification-policy.test.ts","exitCode":0,"pass":6,"fail":0,"assertions":44,"completeSummary":true,"logSha256":"538c0ac58b1a32c93c70d6ce13ff640f60a1bfcebbf2d49f2a1ed99241ff266d"}
+{"testProcess":"tests/core-ideals/nullability-field-operations.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/core-ideals/nullability-field-operations.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/core-ideals/nullability-field-operations.test.ts:
+(pass) current kind and record type receipts preserve availability, recursion and native content [297.58ms]
+(pass) availability prevents role erasure and receipts refuse changed versions, sources and provenance [214.55ms]
+(pass) new roles allow availability authoring, with whole-document receipt freshness [7.46ms]
+
+ 3 pass
+ 0 fail
+ 216 expect() calls
+Ran 3 tests across 1 file. [1218.00ms]
+{"testProcess":"tests/core-ideals/nullability-field-operations.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":216,"completeSummary":true,"logSha256":"675807f54b3efe3c8c3f634b31a0f48d239b967d3b6f03947d7b8df2accbfaad"}
+{"testProcess":"tests/core-ideals/nullability-selection.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/core-ideals/nullability-selection.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/core-ideals/nullability-selection.test.ts:
+(pass) current selection reports retain availability distinctions, namespaces, recursive boundaries and native refinements [82.39ms]
+(pass) selection schema rejects inapplicable known availability [0.93ms]
+(pass) retired core marker and old nullability lookalikes are refused [0.41ms]
+
+ 3 pass
+ 0 fail
+ 43 expect() calls
+Ran 3 tests across 1 file. [936.00ms]
+{"testProcess":"tests/core-ideals/nullability-selection.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":43,"completeSummary":true,"logSha256":"6ad53c4b312191a75b322765d2b7c80e5b92b8845aff2a038583019513f6b651"}
+{"testProcess":"tests/core-ideals/record-type.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/core-ideals/record-type.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/core-ideals/record-type.test.ts:
+(pass) record-valued slots preserve qualified identity, cycles and unknown native meaning [132.23ms]
+(pass) scalar/record conflicts, legacy roles and stale or forged receipt paths refuse [38.11ms]
+
+ 2 pass
+ 0 fail
+ 27 expect() calls
+Ran 2 tests across 1 file. [820.00ms]
+{"testProcess":"tests/core-ideals/record-type.test.ts","exitCode":0,"pass":2,"fail":0,"assertions":27,"completeSummary":true,"logSha256":"a3ca68bed85c69b6cd27c868a0cfe2677f77b952ad0ff4bb6b8d50d3310bc7c2"}
+{"testProcess":"tests/core/key-tuple.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/core/key-tuple.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/core/key-tuple.test.ts:
+(pass) key tuple vectors and domain boundaries produce exact frames or atomic refusals [197.72ms]
+(pass) stable key ID survives name/list changes while retained receipts detect stale context [1.75ms]
+(pass) tuple verification rejects forged and nonminimal frames and altered retained inputs [2.22ms]
+(pass) unknown relevant qualifiers block and unrelated native extension content survives [1.05ms]
+(pass) shortest length/count framing and no getter evaluation [14.90ms]
+(pass) resource bounds and a bad later component refuse the whole tuple [4.99ms]
+(pass) current document context and result schema reject prior versions without downgrading [1.74ms]
+(pass) prepared scope verifies current UUID v2 receipts with their retained codec profile [1.69ms]
+
+ 8 pass
+ 0 fail
+ 249 expect() calls
+Ran 8 tests across 1 file. [803.00ms]
+{"testProcess":"tests/core/key-tuple.test.ts","exitCode":0,"pass":8,"fail":0,"assertions":249,"completeSummary":true,"logSha256":"cc0cc8d4155872ac7de29064a8b4d20ae85a0a764c4f9152479bc94b0b7da8be"}
+
+ 29 pass
+ 0 fail
+ 1282 expect() calls
+Ran 29 tests across 7 files. [11.53s]

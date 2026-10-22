@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"projectParquetToAvro\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "source",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ParquetAvroPolicy\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "ParquetAvroPolicy"
+    }
+  ],
+  "purpose": "Schema lowering only; never decodes or silently coerces stored page values.",
+  "related": [],
+  "returns": "ParquetAvroProjection",
+  "task": "Import and export",
+  "type": "(source: Document, input: ParquetAvroPolicy) => ParquetAvroProjection"
+}

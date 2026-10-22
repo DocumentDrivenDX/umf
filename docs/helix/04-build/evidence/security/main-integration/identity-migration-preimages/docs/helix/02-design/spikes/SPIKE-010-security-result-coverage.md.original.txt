@@ -1,0 +1,718 @@
+---
+ddx:
+  id: SPIKE-010
+  type: spike
+  activity: design
+  status: draft
+  authoring:
+    home: repo
+  links:
+    - id: CONTRACT-052
+      kind: informed_by
+    - id: CONTRACT-053
+      kind: informed_by
+    - id: TD-056
+      kind: informed_by
+---
+
+# SPIKE-010: Owner-derived security result coverage
+
+## Objective
+
+**Technical question:** Can the compiler derive a conservative result envelope
+without enumerating every rule-truth vector, while retaining complete runtime
+composition and every query dependency?
+
+**Lead:** current implementation task. **Time budget:** one continuation turn,
+at most two hours. **Status:** executed conditional analysis; draft design,
+no runtime admission change.
+Success requires a bounded symbolic check, counterexample controls and an
+implementable owner boundary. This spike does not qualify native enforcement.
+
+## Hypothesis
+
+The union of scoped permit disclosures, plus the unprotected original default,
+contains every permitted composition result. This is an overapproximation of
+possible outcomes, not permission to choose any member. Complete runtime rule
+evaluation must still select exactly one result or refuse the operation.
+
+Assumptions: admitted source domains; exact normalized transform equality;
+complete scope matching; one complete authority cut; current CONTRACT-052
+composition. The proof abstracts literal/domain equality into class identities.
+It does not establish that a Rust or SQL implementation computes those classes.
+
+## Approach
+
+Inspect the actual immutable Weft query, profile, scan inventory and composition
+objects. Model the envelope and composition independently in a symbolic solver.
+Check bounded universal properties by searching for counterexamples. Deliberately
+weaken the model to ensure the solver can find missing-coverage and unsafe-release
+counterexamples. Retain exact sources and solver version.
+
+### Proposed owner derivation
+
+This is a design proposal under existing draft contracts, not a new admitted
+manifest vocabulary or transport version.
+
+1. Construct a private `SecurityRequirements` from the actual owner context.
+   No public constructor, deserializer or caller-provided requirement set.
+   Recheck exact source/profile/binding correspondence before construction.
+2. Retain the explicit primary action from the admitted profile. Add an immutable
+   owner accessor; never infer it from sorted scan actions. Each separately
+   admitted original-value action remains independently required.
+3. For every scan occurrence and action, join the scan inventory's rule IDs to
+   the actual logical rules by exact target and action. Retain effects, complete
+   conditions, disclosure fields and normalized transform classes. Include false
+   branches, require/forbid rules, empty association inventories, complete ordered
+   keys, context fields and all classified association members.
+4. Retain every resolved operator use: predicate, order, group, join and aggregate.
+   Use identity includes scan occurrence, qualified target/field, operator and
+   explicit profile mode: Disclosed or OriginalAuthorized(action). A missing
+   original-action value means disclosed-mode evaluation, never raw-value
+   permission or an omitted obligation. One operator or action cannot discharge
+   another. Field-free COUNT retains every
+   scan/action obligation, even with no projected field.
+5. Derive ordered output requirements from `application_plan().outputs`.
+   Projection sets deduplicate fields and omit aggregates; they cannot establish
+   column count, alias order or repeated-column identity. Preserve every output
+   occurrence with one-based position and exact authored output name. Charge
+   scan/rule/output expansion and identifier bytes before allocating or cloning;
+   refusal must precede budget exhaustion, not follow a partially built inventory.
+
+### Result envelope and runtime selection
+
+For a projected field, collect every scoped permit disclosure for that exact
+target, primary action and field. Include Original when any such disclosure is
+original, or the field is unprotected and has a default original interpretation.
+Include Withheld when any such disclosure is withheld. Include each normalized
+constant transform class, retaining all exact `(ruleId,target,field)` sources
+belonging to that class. These choices are conservative even for rules with
+conditions that can never be true. No source rule may disappear by choosing one
+convenient transform. Class identity includes transform/version, qualified output
+field, exact admitted output domain and normalized literal meaning.
+
+An empty envelope for a protected field is unsupported for this initial result
+validator. Conservative refusal may reject a field that is never disclosed;
+it must not invent an original outcome to make the contract nonempty.
+
+Absence is a separate result-presence case admitted only by the selected field
+or computed-result meaning. It is never inferred from a missing output column,
+JSON property or native NULL. The envelope proof below excludes presence and
+does not certify absence/null encoding. Original and transformed value domains
+must be checked independently against actual source/output fields. Direct field
+outputs initially require the exact revision-qualified model-field domain;
+replacing it with a scalar family cannot erase source facets, allowed values or
+nullability/presence distinctions.
+
+The runtime evaluates **all** scoped rules against the same complete cut. Any
+unknown scoped truth refuses the entire operation. Otherwise the decision needs
+a true permit, all requirements true and no forbid true. Only true permits
+contribute disclosure. Withheld dominates conflicting transforms; otherwise
+different active transform classes cause conflict and no disclosure. An empty
+active disclosure is original only for unprotected fields. The declared envelope
+does not discharge any of these checks.
+
+COUNT and SUM outputs have owner-computed scalar domains and exact ordered output
+identity. SUM retains its argument's qualified lineage and aggregate-use action;
+COUNT has no source field but retains every scan's row authorization. Neither
+computed original outcome grants original access to the contributing fields.
+Transforming aggregate results requires separate explicit semantics. The first
+owner checker may validate direct Field declarations only; COUNT/SUM remain
+explicit unresolved requirements and refuse full result admission until their
+relational and disclosed-mode semantics are validated. They cannot be skipped
+or inherit an input mask.
+
+### Capability and obligation matching boundary
+
+The current registration accepts opaque logical/result-domain objects only as
+declarations. They remain insufficient for semantic admission. Define a closed,
+versioned matching grammar in Weft CONTRACT-005 and its schemas before dispatch.
+Do not silently give existing arbitrary objects new meanings.
+
+Matching must compare the owner-derived requirement against an interpreted
+capability for the exact selected source and target tuple. It must interpret
+every selected constraint, binding profile and target session setting. Unknown,
+unsupported, omitted or conflicting selections refuse. Union of selected
+capabilities may cover separate requirements; unrelated IDs and evidence labels
+cannot. Candidate status requires the existing explicit candidate option and
+never relaxes semantic coverage or native admission.
+
+Keep native obligations separate from compiler coverage. Native host verification
+must independently derive/check inventory correspondence, authority freshness,
+private-fact completeness, bypass closure, codecs, final release and atomic
+activation. A backend-provided obligation ID or semantic-source label is not an
+independent proof. The initial Rust gate stays closed until all these boundaries
+have actual implementations and evidence.
+
+## Findings
+
+**FINDING 1**: Actual Weft outputs and dependency sets serve different purposes.
+`security_query_uses` deduplicates projection dependencies; application outputs
+retain aliases and aggregates. `security_scan_obligations` retains dependencies
+and rule IDs but not the effects/disclosures needed for result composition.
+The next validator must consume all three actual owner views.
+
+**FINDING 2**: A conservative envelope can avoid truth-vector enumeration.
+Z3 4.15.4 executed twelve UNSAT counterexample searches for envelope coverage,
+global-unknown refusal and withheld precedence at 1, 4, 16 and 254 permit rules,
+plus one require and one forbid rule. Five SAT controls demonstrate four
+composition/envelope weakenings and one abstract two-coordinate inventory
+omission. The first-permit control demonstrates lost envelope coverage, not an
+unauthorized release. The inventory control does not test actual COUNT,
+self-join or action extraction. Twelve additional SAT witnesses establish that
+original, withheld and transformed permitted outputs are nonvacuous at each
+selected bound. These selected bounded checks do not cover every intermediate
+rule population or constitute an unbounded proof. Global-unknown refusal and
+withheld precedence are model-definition sanity checks, not implementation
+correspondence. Results and
+counterexamples are retained in the accompanying receipt, with 47 unchanged
+source/runtime pins. Every retained SMT formula is captured before solving and
+parsed/replayed in a fresh solver context. This is a conditional model check,
+not compiler refinement.
+
+## Analysis
+
+The hypothesis is **partially confirmed**, conditional on complete source
+extraction and exact class
+normalization. Conservative union trades precision for bounded derivation. It
+may advertise unreachable outcomes, which remain unusable unless the complete
+runtime composition actually selects them. Static domain membership alone is
+insufficient for release.
+
+Risks remaining: caller-controlled coverage, omitted self-join occurrences,
+aggregate/input confusion, equal IDs across namespaces/revisions, incomplete
+transform classes, and absence/null conflation. Rust tests must exercise actual
+owner construction and public compiler refusal, not merely synthetic maps.
+
+## Conclusions
+
+Use owner-derived conservative envelopes plus exact runtime composition.
+No finite envelope grants authority. Neither this spike nor its proof lifts
+the compiler's unconditional LOWERING-UNSUPPORTED guard.
+
+## Recommendations
+
+**RECOMMENDATION**: Implement private owner requirements and ordered result
+validation first. Test repeated aliases, self-joins, field-free COUNT, SUM
+lineage, every operator/action, false-branch dependencies, all permit sources,
+equivalent exact numeric transforms, unequal transforms, withheld dominance,
+protected defaults and wrong revisions. Then define/admit the closed capability
+grammar and binding/session semantics before physical lowering.
+
+These checks support US-056-AC6/AC7 and their B07/B08/B09 cases but do not accept
+those native cases. Full acceptance remains 26/132. Concern adoption is unchanged.
+
+## Artifacts
+
+- `tools/security/prove-result-envelope.py`: bounded symbolic model and mutants.
+- `docs/helix/04-build/evidence/security/result-envelope-proof.json`: execution
+  receipt, solver version, exact sources and explicitly conditional proof scope.
+- Owning implementation: Weft `security_query_profile`, `security_query_uses`,
+  `security_scan_obligations`, `security_composition` and `security_lowering`.
+
+### Selected capability matching design — 2026-10-10
+
+This continuation investigates the next public-compiler boundary. The existing
+opaque manifest objects remain declarations. The following is a proposed new
+matching profile, not an interpretation of legacy objects or permission to call
+`SecurityBackend::lower`. The first implementation must remain private Rust in
+Weft and consume actual owner context objects, not a rehydrated handoff packet.
+
+#### Matching units and compatibility
+
+A rule feature list is insufficient. Derive a complete **scan/action composition
+bundle** containing every scoped permit/require/forbid rule, each complete typed
+condition, every disclosure and normalized transform class, including dependencies
+in false branches. The bundle includes the required three-valued fold, Withheld
+precedence and conflict behavior. One coherent capability must cover this whole
+bundle unless a separately versioned composition operator is implemented and
+qualified. Independently supporting each rule does not support their fold.
+
+Derive separate operator and ordered-output bundles from actual application IR.
+They retain scan occurrences, operand lineage, original-action/disposition
+requirements and relational semantics: join multiplicity, filters, ordering,
+keyset comparisons, grouping and aggregation. A field-free COUNT still retains
+all scan/action bundles. Output order and aliases are not deduplicated. Different
+capabilities may cover distinct bundles only when their interpreted binding,
+equality, truth, composition and result-encoding profiles agree. Every selected
+capability must itself be eligible; one valid capability cannot hide an unknown
+constraint on another selected capability. Supported/candidate/unsupported keep
+their existing meaning; candidate still requires the explicit option.
+
+Use versioned **semantic interpretation profiles**, not independent primitive
+feature tokens. A profile must define equality inside correlated existential
+scopes, complete ordered identity, exact source-domain normalization, field
+presence and nested scope bounds. Primitive feature coverage alone cannot infer
+these combinations. The owner derives bundles without consulting a runtime
+truth vector or number of application result rows. Empty results cannot erase a
+query-wide original-action requirement or its source dependencies.
+
+#### First concrete binding profile
+
+Introduce a new version rather than upgrading
+`truss.security.raw-query-home/0.2.0`. The proposed binding profile is
+`weft.security.record-homes/0.1.0`; its first physical interpreter is explicitly
+PostgreSQL Record relations. Graph sources, history, computed results and other
+engines require their own implemented interpretation and qualification. This
+first profile is a dependency slice, not a reduction of the132 required cases.
+
+The closed root has `version`, `selection`, `modelPins`, `subject`, `types`,
+`queryCarriers` and `context`. `version` equals the new binding profile.
+`selection` contains exact `backendId`, `backendVersion` and `targetProfile`.
+No query-profile hash is embedded: the query profile already pins binding bytes;
+embedding its hash would create a circular source commitment. Exact retained
+model pins resolve every reference. References are revision-qualified
+`{documentId,revision,module,element}`; local IDs alone are never equality.
+
+Each `types` entry contains `type`, `source`, `key`, `fields` and `endpoints`.
+`type` resolves to the actual Record. `source` is a closed relation descriptor
+`{schema,name,kind,discriminator}`: kind is table/view, discriminator is null or
+a typed column/literal descriptor. No caller SQL is accepted. Named view bodies
+and their dependencies require independent native source correspondence; merely
+naming a view does not establish its provenance. PostgreSQL identifiers are
+quoted and bounded by UTF-8 bytes, not character count. A shared relation needs
+explicit mutually disjoint, nonnull typed discriminator meanings; overlapping
+or unrecognized selections refuse.
+
+`key` is `{id,fields}`: the selected actual Record Key ID and its complete ordered
+qualified member references. Key columns are resolved through `fields`; there
+is no second editable key-column map. Each field entry has `field`, `column`,
+`codec` and `sourceDomain`. sourceDomain must equal the owner's complete normalized
+field domain, including cardinality, presence, facets and allowed values. This
+comparison cannot establish the native column's actual domain. The closed codec
+interpreter must separately validate representability/equality and leave native
+catalog/value correspondence as mandatory admission work. Initial text, Boolean
+and signed-int64 codec profiles must retain exact lexical values. PostgreSQL
+text's unrepresentable NUL must cause an explicit unsupported-value refusal;
+no removal, replacement or assertion of complete Unicode support is permitted.
+Unknown domain, extension, codec or presence semantics refuse selected admission.
+
+Each endpoint entry has `role`, `target`, `targetKeyId` and `fields`. Resolve the
+exact declared role and selected target Record Key; fields are the association's
+ordered members corresponding to the target's ordered Key components. Their
+owner-derived domains must match pairwise. Association identity remains its
+own selected Key, separate from either endpoint. Same-typed component reversal,
+role substitution and same-local-ID foreign references must refuse.
+
+Each query carrier has `type`, `source` and `fields`. It links to the authoritative
+Record through that type's complete selected Key, whose components are resolved
+from the carrier field map in the owner-declared order. All required projected /
+operator fields must be mapped. The native host must prove bidirectional equality
+of the complete selected-Key populations: exactly one carrier row for every
+authoritative Record, no extra carrier rows, no duplicate Keys, and normalized
+value coherence for every required mapped field, before the
+application query; matching schema labels or application-selected rows cannot
+substitute for that proof. Preserve the current distinction between authoritative
+fact source and Original query carrier rather than merging them by convenience.
+
+`subject` names the exact subject Record source and a closed original-caller
+mechanism plus login-column/codec descriptor. The first PostgreSQL mechanism
+uses the authenticated original `session_user`, not a caller subject ID or the
+current definer role. The login column is explicit authentication metadata;
+it is not silently invented as a logical policy field. Uniqueness, complete
+subject resolution, native privileges and source authenticity remain host
+obligations. Context providers must likewise be interpreted and authenticated;
+a caller-settable session parameter cannot become trusted context. A profile
+without an implemented provider must refuse every required context dependency,
+including one under a false branch.
+
+#### Manifest and native obligations
+
+logicalDomain and resultDomain need distinct closed versioned interpretation
+profiles. Selected target settings, bounds, constraints and obligation parameters
+must have implemented meanings; no arbitrary JSON object or unknown constraint
+can pass by shape. Native obligations include complete/private fact sources,
+source/domain/key correspondence, original-caller resolution, ordinary bypass
+closure, query-carrier coherence, compatible current authority, typed codecs,
+guarded final release and atomic activation. They remain unresolved native
+obligations after pure owner matching, never backend success flags.
+
+The private admission result borrows the exact immutable registered manifest,
+selected target, original interpreted obligation parameters, complete binding
+and owner requirements. Before transport emission, every parameter meaning must
+have a lossless representation/reconstruction through the closed protocol and
+same exact native-host registration. The current response has no generic
+parameter member on admission obligations. That custody projection needs explicit
+validation; dropping opaque parameters or encoding them as unexplained labels
+is forbidden. Public lowering remains closed until physical/result/obligation
+coverage and this custody boundary are implemented. No new protocol field or
+successful response is introduced by this proposal.
+
+#### Conditional proof and implementation verification
+
+`prove-capability-bundle-coverage.py` models complete owner-derived bundles,
+interpreted whole-capability support, exact mappings, eligibility and common
+semantic profiles as abstract predicates. Ten admission laws have 30 retained
+SAT/UNSAT queries with separate satisfiable populations and weakened controls.
+The quantified coverage/anti-existence equivalence is over arbitrary populations;
+the counterexamples isolate two features and two distinct required occurrences,
+without modeling their logical target types. A compatible two-capability,
+two-bundle positive population assigns each capability only its own complete
+bundle; deleting candidate, status or constraint guards admits explicit negative
+controls. Exact binding remains an abstract predicate, not modeled domain or
+ordered-Key correspondence. The proof does
+not establish those predicates, the proposed grammar, Rust derivation, physical
+mapping, source authentication or native enforcement. These remain implementation
+and independent-oracle obligations, not assumptions hidden inside a support claim.
+
+The actual public-entrypoint verification must independently substitute/remove:
+a selfjoin occurrence; one action-fold rule or mask class; false-branch field /
+association/context dependencies; same-typed Key components; endpoint roles;
+source domains, codecs, collation or target settings; subject-login uniqueness;
+query-carrier keys/values; and obligation parameters. Include incompatible
+capability combinations, candidate/status cases, unknown constraints, aggregate
+requirements and exact budgets. Coherent pure matching must be observable inside
+the owner test boundary while all refusal paths remain atomic with zero backend
+lower calls and no executable response. Only then proceed to complete lowering
+validation and the actual registered compiler-to-installer B08/B09 milestone.
+
+#### Closed semantic-domain grammar for the owner component
+
+The first private semantic coverage component interprets these exact JSON
+objects; it issues no physical binding or native admission token. `logicalDomain`
+has exactly `version`, `policyProfile`, `applicationProfile`, `targets`, and
+`limits`. Their first values are `weft.security.logical-domain/0.1.0`,
+`weft.security.owner-record-semantics/0.1.0`, and
+`weft.security.owner-relational-plan/0.1.0`. Targets are distinct, nonempty
+revision-qualified Record references (`documentId`, `revision`, `moduleId`,
+`elementId`) resolving in the actual owner catalog. Every reference member is
+required; foreign revisions and positional carriers refuse.
+
+The Record semantics profile means the entire already owner-admitted condition
+language (literal, equality, And/Or/Not and correlated Record Exists), complete
+Permit/Require/Forbid action composition and complete Original/Withheld/constant
+mask composition. It does not independently establish fact authentication,
+context providers, native scalar images or graph relationship semantics. The
+application profile means the entire actual owner relational plan and its
+admitted operator dispositions, with no pruning based on current branch truth,
+application row count or whether an operator has deduplicated field uses.
+Neither profile is a feature list permitting unsupported combinations.
+
+`limits` has exactly six positive integer members: `maxScans` (at most256),
+`maxRulesPerAction` (4096), `maxConditionNodes` (1000000),
+`maxConditionDepth` (64), `maxExistsDepth` (64), and `maxOutputs` (4096).
+Condition nodes count each expression and each term across all Rules in the
+complete action bundle. Root expression depth is one; Exists depth increments
+only at Exists, including those nested under false branches. Zero, floating
+point or out-of-range limits refuse. Limits are checked against actual owner
+objects, never a caller-supplied feature inventory.
+
+`resultDomain` has exactly `version`, `profile`, and `cellEncoding`, respectively
+`weft.security.result-domain/0.1.0`,
+`weft.security.required-direct-cells/0.1.0`, and
+`weft.security.cells/0.1.0`. Its first coverage component requires every actual
+ordered output to be a direct required field. It preserves duplicate output
+positions and consults the actual normalized owner domain. Computed results,
+optional/absent values and graph projections refuse this profile; their required
+backend tests remain in the original132-case plan. Actual result declarations,
+mask outcome envelopes and cell/domain correspondence are separate existing
+checks, not proved merely by this domain declaration.
+
+The selected set is an explicit internal input for this component, later to be
+rechecked against the actual lowering's capability IDs. Every selected ID must
+be distinct, registered, exact-source/target applicable and eligible; unknown
+selected domain members or constraints refuse. The first component understands
+no additional constraint strings; an empty constraint list is required. It
+checks every scan/action bundle against one complete capability. A separate
+whole-application bundle retains all scans and outputs and must be covered by
+one capability; the first profile does not fragment a relational plan into
+independent field-use claims. Distinct action bundles may use distinct compatible
+capabilities. All selected profile tuples must agree. This semantic component
+must remain private and return only declaration correspondence, never permission
+to invoke lowering or execute/release data. Binding, target session settings and
+obligation-parameter interpretation remain independent gates before dispatch.
+
+In this component, `targets` restricts action and application root types. It
+never substitutes for the required dependency Record/field/ordered-Key/endpoint
+or provider binding inventory. The exact interface/source tuple is rechecked at
+this boundary rather than inferred from a mutable manifest's prior validation.
+A single work/text ledger covers selected domain traversal, capability lookup,
+owner catalog indexing, target resolution, condition traversal, output-domain
+copies and matching. Source/copy text is limited to16000000 UTF8 bytes, work to
+1000000 charged visits; selected metadata traversal depth is64. Catalog indexing
+includes only the actual selected modules. Unknown selected target lookup and
+resource exhaustion return the component's capability-phase
+`WFT-SECURITY-LOWERING-UNSUPPORTED` refusal, with no partial result.
+
+#### Executable Record-home shape proposal
+
+`security/record-homes-v0.1.schema.json` closes the first PostgreSQL declaration
+shape. It is a spike schema, not a UMF core extension, public backend contract
+upgrade or executable physical admission. Shared policy/type/Key meaning stays
+in UMF; this owner interpretation belongs to Weft's backend boundary. The
+profile's first engine qualifier is PostgreSQL17.9 / UTF8. Other engines and
+graph-native interpretations must implement and qualify their own mappings;
+the original132-case acceptance plan remains unchanged.
+
+The three closed codec names are `weft.security.pg-text-c-utf8/0.1.0`,
+`weft.security.pg-bool/0.1.0`, and
+`weft.security.pg-int8-lexical/0.1.0`. They denote required singular native
+text under exact C collation with UTF8 encoding, Boolean, and signed64 bigint
+respectively. C semantics apply to every emitted text comparison, order,
+grouping and keyset operation; equality alone is insufficient.
+Source domains carry exactly scalarType, cardinality, nullability, normalized
+facets and allowedValues. Text supports unicode-scalar length refinements;
+integer requires signed64 integerWidth and retains range/allowedValues; Boolean
+retains allowedValues. Metadata equality is necessary but cannot prove actual
+column type, nullability, refinement membership or value/source authenticity.
+Unknown mapped field/Record extension semantics must refuse this interpreter;
+unselected model content is retained. Computed/optional/binary/decimal mappings
+need additional interpreters, rather than an implicit coercion through these
+codecs. Every known policy/query/disclosure literal must be checked for the
+selected native image, even under a false branch or an empty application result.
+
+Text's native image excludes NUL; the logical string domain is not silently
+rewritten to exclude it. NUL must cause explicit unsupported-value refusal in
+known literals and complete supplied source/carrier values. This profile makes
+no claim to represent every value in an unrestricted logical string domain.
+Integer value normalization preserves exact mathematical integers; native
+integer inputs/outputs use canonical signed decimal, including zero as `0`.
+No JS Number or PostgreSQL float conversion is permitted. A discriminator's
+integerToken is canonical already and must additionally fit signed64; its shape
+regex alone cannot enforce the numerical range.
+
+A nonnull discriminator has exactly column, codec and literal. Metadata text
+literals are NUL-free; metadata integers are canonical signed decimal; Boolean
+literals use the shared core Boolean carrier. Source-population reuse and distinct-type partitioning are separate checks.
+The same fully qualified type may reuse an identical source selection across
+authoritative-home and query-carrier roles, including a null discriminator.
+Query carriers are unique by fully qualified type; one declaration serves every
+actual scan occurrence without coalescing scans or dropping multiplicity.
+Distinct qualified types sharing schema/name must have the same relation kind
+and mutually distinct native discriminator images under one matching
+discriminator column/codec. Raw JSON inequality is not a proof of native
+disjointness. This is a conservative restriction of this PostgreSQL profile,
+not a UMF semantic invariant; overlapping and multiply typed populations
+remain work for additional interpretations in the unchanged acceptance plan. This first profile refuses discriminator columns
+that alias mapped logical columns; a future alias profile needs an explicit
+field/domain/value constraint. Each provided type/field/source/carrier entry is
+validated, including otherwise unused entries; required owner dependencies may
+not be replaced by extra well-formed entries.
+
+Subject has exactly type, mechanism and login. Its revision-qualified type must
+match the owner's ontology subject and authoritative type home. The first
+mechanism is `weft.security.pg-session-user/0.1.0`; login has column and the text
+codec. If login aliases a mapped logical column, the codec must agree. This is
+explicit authentication metadata, not a fabricated logical field. Complete,
+unique authenticated subject resolution and ordinary-role privilege closure
+remain native obligations. Context is exactly an empty array for this profile;
+any actual owner context dependency refuses, including one under a false branch.
+No caller-settable GUC or supplied subject label is treated as an authenticated
+provider. A later context profile must provide that implementation and evidence.
+
+The schema's63-character identifier bound is necessary, not sufficient:
+PostgreSQL's63-byte UTF8 bound is an additional owner check. Schema-valid quoted,
+semicolon or whitespace characters remain literal identifier content. The
+renderer must quote each identifier component with doubled embedded quotes;
+no descriptor string is interpolated as caller SQL. Native source identity,
+installed view body/dependencies, original source population and mapped-field
+meaning require independent native/host correspondence to the exact registered
+binding. Table/catalog shape alone cannot establish those meanings.
+
+Owner validation must independently require: exact selection/model pins and
+selected modules; unique full type/field/role identities and columns; exact
+ordered selected Keys; exact endpoint role/target/targetKeyId/ordered fields;
+pairwise complete endpoint/key domain equality; all action Key/field/association
+and query projection/operator dependencies; and complete carrier Key/field
+coverage. Carrier/source selected-Key populations must be bidirectionally equal,
+with no extra/duplicate carrier rows and normalized field-value coherence.
+Those population/authenticity/current-authority claims remain native obligations,
+never conclusions of JSON Schema or matching declaration hashes.
+
+
+The selected registration must declare bindingProfile exactly
+`weft.security.record-homes/0.1.0`. Its selected target must declare engine
+`postgresql` and engineVersion `17.9`; the binding additionally declares
+nativeSemantics exactly `{encoding: "UTF8", textCollation: "C"}`. A target ID
+alone cannot substitute for these declarations. Actual server encoding,
+version, column image and emitted operation collation remain independent native
+checks. A different target is explicitly unsupported by this first interpreter.
+
+Known-literal traversal is independent of live-field dependencies: it includes
+policy Constant terms, all disclosure transforms, application literals and
+parameters in filters/joins/keysets, and interpreted range/allowedValues
+literals. Dead branches and empty result sets do not waive these checks. A
+metadata-only constant or output uses the codec selected from its actual owner
+scalar/domain, never an invented stored field mapping. This first profile
+refuses null, optional or unsupported transformed output domains; source-column
+codecs are not result-cell codecs. The separate direct-result profile still owns
+result-cell admission. No opaque parameter receives a guessed value or codec.
+
+Before parsing binding input, the owner enforces a four-MiB UTF8 input bound;
+before recursion/copying it enforces depth64 and one million charged work visits.
+A single ledger also limits retained/copy/normalized image text to16000000 UTF8
+bytes across binding traversal, selected-module lookup, domain comparison,
+literal normalization and matching. Normalization charges its output before
+retention, and exact decimal input length is bounded before mathematical
+conversion. Per-array schema maxima do not establish aggregate safety. Exhaustion
+refuses before any draft physical mapping is returned. These are interpreter
+requirements, not claims that JSON Schema enforces runtime work or byte budgets.
+
+#### Private Rust Record-home declaration correspondence
+
+Weft's private `security_record_homes` module implements declaration matching
+for this first profile against actual owner catalog/requirements. It embeds the
+exact spike schema with source correspondence metadata, rather than loading a
+model-supplied interpreter. Selected registration sessionSettings must be an
+empty object in this first interpreter; other setting meanings need explicit
+interpretation. Required signed64 integer images normalize exactly without
+floating point, with a4096-byte token bound before mathematical processing.
+Record-backed associations and ordinary relational predicates/keysets are in
+this component's mapping subset; HasRelated requires an additional physical
+interpretation. Computed COUNT retains physical scan/Key dependencies but still
+needs a separately qualified computed-result contract.
+
+The shared bounded JSON reader now offers a private charged variant that consumes
+raw value visits from the caller's same work ledger before final parsed-value
+construction. Subsequent metadata traversal, selected-module indexing, reference
+copies, domain/value normalization and correspondence use that ledger. Raw
+inspection temporary allocations remain bounded separately by input bytes,
+depth and value count; the16-million text ledger is not a process-memory or
+instruction-time bound. Unknown selected field/Record extension meaning refuses;
+unknown unmapped model content is preserved. A metadata-only transform selects
+its native image from its actual owner output domain and creates no stored field
+mapping. Optional/null transformed domains refuse even under false conditions.
+
+This check returns only declaration correspondence. Native table/view meaning,
+column images/refinements, complete selected-Key populations and coherent values,
+authenticated subject resolution, privilege closure, installed enforcement,
+current authority and release remain independent obligations. No public dispatch
+or native SQL generation is enabled. The original132-case plan remains required.
+
+#### Immutable registration and obligation-parameter custody
+
+The security registry currently retains a parsed manifest but discards its
+original JSON bytes. Before future lowering admission, retain one bounded copy
+of the exact declaration returned at registration, alongside that parsed value.
+Do not call the backend's declaration method again to reconstruct custody: a
+trusted callback can change its returned text after registration. A private
+borrowed selection view must expose the registered bytes, parsed manifest and
+exact selected target from the same immutable registry entry. This is internal
+custody; it adds no response field and authorizes no execution.
+
+A private obligation inventory resolves every selected capability and borrows
+its original typed obligations, including the complete parameter JSON. Repeated
+IDs across capabilities are allowed only with identical parameter trees, owner
+and failure code; conflicts, duplicate selected IDs, missing/inapplicable
+capabilities and resource exhaustion refuse atomically. No selected declaration
+may disappear through deduplication; provenance retains each selected capability
+occurrence. Index construction, repeated comparison and parameter traversal
+must use a single bounded work/text ledger before retaining copies. The original
+registration bytes preserve lexical spellings and unknown parameter content;
+the borrowed tree is for conservative declaration comparison, not normalization
+of unknown meanings.
+
+A host-side reconstruction experiment requires byte-for-byte equality with the
+same independently selected immutable registration before resolving the complete
+selected inventory. Backend ID/version and target labels alone cannot establish
+this equality. The closed 0.4 response still lacks a generic parameter member:
+this private reconstruction is a prerequisite, not proof that existing response
+transport establishes registration custody. Source/action lineage, prerequisites,
+independent native case coverage and semantic parameter interpretation remain
+separate required checks. Unknown parameters remain uninterpreted and cannot
+pass an admission gate because their bytes were preserved.
+
+Verify callback drift after registration, exact whitespace/number-token custody,
+opaque nested content, conflicting repeated IDs (parameter/owner/failure-code),
+missing/duplicate/inapplicable selection, complete multi-capability provenance,
+exact versus substituted host registration and isolated resource exhaustion.
+Conditional logical analysis must distinguish exact registration custody from
+same-label substitution and parameter preservation from enforcement. No public
+lowering or backend acceptance promotion follows from this component.
+
+Astra's initial review identified a concrete parser hazard: serde_json's
+arbitrary-precision/raw-value visitor can interpret ordinary object keys named
+`$serde_json::private::Number` or `$serde_json::private::RawValue` as internal
+carriers. Keeping source bytes while changing the parameter tree is insufficient.
+The shared checked reader now builds object/array Values directly from inspected
+raw members; only scalar leaves use serde's scalar parser. Manifest extraction
+moves all four opaque channels (sessionSettings, logicalDomain, resultDomain and
+obligation parameters) aside before typed deserialization and restores them by
+checked position. Nested/sibling/order and non-string payload controls must prove
+these keys remain ordinary data. Other typed-deserialization boundaries need
+separate auditing; this fix does not establish arbitrary serde conversion fidelity.
+
+The inventory tests also exercise repeated-ID comparison charges with two
+selected capabilities and an independently counted visit/payload delta. Formal
+controls use two distinct selected origins to expose first-only deduplication,
+and equal backend-ID/version/target projections to expose same-label byte
+substitution. The fixed-parser premise remains explicit; these laws do not prove
+faithful parsing or parameter semantic interpretation by themselves.
+
+The targeted audit also found two related production readers. Ordinary manifest
+JSON uses the same move/restore helper for all four opaque channels. Both
+manifest readers require status/owner string tokens, refusing serde's alternative
+object enum carriers. Simulated Cut/Request/ScopedRows extraction now preserves
+raw Key components, stored/context values and per-scan resources before typed
+container deserialization. Actual simulation regressions wrap seven valid
+subject/fact/resource Key/field/context literals and require refusal, with an
+unwrapped positive. These facts remain caller-declared simulation inputs.
+
+Databricks candidate binding extraction likewise retains original relationship
+logical identities and accepted definitions before typed deserialization. Actual
+compiler controls exercise valid canonical and projection relationships, then
+wrap each identity/definition in a raw-value object and require blocked output
+without SQL/parameters. This is mapping/compiler fidelity, not Databricks native
+execution or security profile qualification. The audit covers these identified
+production Value boundaries; arbitrary external serde consumers remain outside
+this claim. The full132-case backend plan is unchanged.
+
+Final review also caught a malformed-root panic in the ordinary manifest helper;
+object-root guards and array/Boolean/number/string/null controls now require
+Diagnostic refusal. Databricks mapping roots receive the same refusal control.
+Record/relationship kind values must be their declared string tokens; serde's
+object enum alternatives refuse in canonical and projection compiler fixtures.
+These corrections preserve the closed selected carrier grammar and do not add
+native authorization meaning.
+
+#### Closed admission-obligation parameter projection
+
+The [draft parameter annex](security/admission-obligation-v0.1.md) and sibling
+JSON Schema capture a first private semantic reconstruction profile. The owner
+projects the exact selected original inventory and checks owner/site compatibility,
+closed parameter meanings and prerequisite closure/acyclicity across all selected
+components. It refuses unknown meanings rather than guessing response fields.
+This is independent of source/evidence existence and native enforcement; those
+remain mandatory before lowering. The formal experiment is exhaustive only for
+a four-node symbolic directed graph and modeled projection/admission predicates,
+not an arbitrary-size Kahn theorem or compiler/native refinement. The previous
+broad evidence checkpoint predates this Rust extension and must be refreshed
+before claiming current consolidated freshness. Original acceptance stays26/132.
+
+#### Compiler-owned obligation source correspondence
+
+The [source correspondence annex](security/obligation-source-correspondence-v0.1.md)
+defines canonical string-array IDs from the actual original security0.1 context.
+Complete declared union equality retains self-join occurrences, scan/action/rule
+dependencies, ordered keys and stored/context channels rather than trusting
+backend-supplied lineage labels. It remains a necessary declaration check, not
+proof of physical meaning, required native-case coverage or enforcement. The
+previous187-check consolidated checkpoint predates this owner extension.
+
+
+### Owner-issued semantic capability allocation
+
+The draft [allocation annex](security/owner-semantic-allocation-v0.1.md)
+retains every complete selected capability for each actual scan/action and the
+whole application, with exact original registration/context/selection custody.
+The [assignment design](security/obligation-assignment-v0.1.md) requires original
+obligation identity, failure semantics, required prerequisite edges and a full
+origin/source/site/case relation. Deployment-specific case/site/kind requirements
+still need an independent trusted profile issuer; current allocation is not
+native evidence or public lowering admission. Original132-case scope remains.
+
+### Paired subjects and exact selected custody
+
+The [private scoped-obligation0.2 annex](security/scoped-obligation-matching-v0.2.md)
+resolves semantic source/scope pairs separately from selected-wide deployment
+subjects. Existing0.1 projection remains unchanged; the new matcher must refuse
+unscoped0.1. Immutable original custody now retains every selected capability,
+including zero-obligation selections, independently of obligation origins.
+The new regression and full119-test core suite pass; matcher/profile issuer,
+new formal receipts and dependent integrated evidence refresh remain open.
+No native enforcement or original backend acceptance case is promoted.
+
+The [planner observation annex](security/pg-planner-observation-v0.1.md) adds
+actual PostgreSQL17.9 client diagnostic counterexamples and scoped routine-local
+mitigation controls for originalB10/US-056-AC8. It preserves all132 required
+cases and excludes complete diagnostic closure and production qualification.

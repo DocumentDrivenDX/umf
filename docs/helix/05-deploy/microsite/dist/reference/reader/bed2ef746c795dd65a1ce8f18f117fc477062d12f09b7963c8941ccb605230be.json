@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"verifyCoreFacetDeclaration\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreFacetDeclaration\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "CoreFacetDeclaration"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "current",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "Receipt consistency and current-document check, not source authentication.",
+  "related": [],
+  "returns": "CoreFacetDeclaration",
+  "task": "Other APIs",
+  "type": "(input: CoreFacetDeclaration, current: Document) => CoreFacetDeclaration"
+}

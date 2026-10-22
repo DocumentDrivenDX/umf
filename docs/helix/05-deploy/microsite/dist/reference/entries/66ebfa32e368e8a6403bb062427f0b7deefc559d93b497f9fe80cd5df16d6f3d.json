@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 9079,
+        "line": 22,
+        "path": "src/extensions/actions/manifests.ts",
+        "sha256": "c5d703d046d80de1d1396fd424e8d0119b0727e9e594ddcb8260192342b581d4"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "inspectActionManifest",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: ActionPlanArtifact, context: ActionPlanInspectionContext): ActionManifestInspection"
+    ]
+  },
+  "id": "[\"api\",\".\",\"inspectActionManifest\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 9079,
+      "line": 22,
+      "path": "src/extensions/actions/manifests.ts",
+      "sha256": "c5d703d046d80de1d1396fd424e8d0119b0727e9e594ddcb8260192342b581d4"
+    }
+  ],
+  "summary": "Portable consistency checks; never issues a guard, snapshot, seal or revision.",
+  "title": "inspectActionManifest"
+}

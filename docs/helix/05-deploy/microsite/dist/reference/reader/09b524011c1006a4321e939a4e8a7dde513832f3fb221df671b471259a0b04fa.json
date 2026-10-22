@@ -1,0 +1,39 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"proposeGeneralizedRdfQuadEdit\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "index",
+      "optional": false,
+      "type": "number"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"GeneralizedRdfQuad\"]"
+      ],
+      "name": "replacement",
+      "optional": false,
+      "type": "GeneralizedRdfQuad"
+    }
+  ],
+  "purpose": "proposeGeneralizedRdfQuadEdit accepts document, index, replacement and returns { document: Document; validation: Validation; }.",
+  "related": [],
+  "returns": "{ document: Document; validation: Validation; }",
+  "task": "Author and edit",
+  "type": "(document: Document, index: number, replacement: GeneralizedRdfQuad) => { document: Document; validation: Validation; }"
+}

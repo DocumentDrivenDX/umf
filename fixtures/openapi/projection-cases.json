@@ -68,7 +68,7 @@
   "result": {
     "status": "projected",
     "source": {
-      "umf": "0.1.0",
+      "umf": "0.10.0",
       "id": "source",
       "vocabularies": {
         "umf.openapi": {
@@ -436,7 +436,7 @@
     ],
     "nativeSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"$id\":\"https://example.test/projected\",\"$ref\":\"#/$defs/schema_0\",\"$defs\":{\"schema_1\":{\"type\":\"string\",\"minLength\":1},\"schema_3\":{\"$ref\":\"#/$defs/schema_0\"},\"schema_2\":{\"type\":\"array\",\"items\":{\"$ref\":\"#/$defs/schema_3\"}},\"schema_5\":{\"enum\":[\"open\",\"closed\"]},\"schema_4\":{\"$ref\":\"#/$defs/schema_5\"},\"schema_6\":{\"enum\":[\"leaf\",\"branch\"]},\"schema_9\":{\"const\":\"branch\"},\"schema_8\":{\"properties\":{\"kind\":{\"$ref\":\"#/$defs/schema_9\"}},\"required\":[\"kind\"]},\"schema_10\":{\"required\":[\"children\"]},\"schema_7\":{\"if\":{\"$ref\":\"#/$defs/schema_8\"},\"then\":{\"$ref\":\"#/$defs/schema_10\"}},\"schema_11\":false,\"schema_0\":{\"type\":\"object\",\"properties\":{\"name\":{\"$ref\":\"#/$defs/schema_1\"},\"children\":{\"$ref\":\"#/$defs/schema_2\"},\"status\":{\"$ref\":\"#/$defs/schema_4\"},\"kind\":{\"$ref\":\"#/$defs/schema_6\"}},\"required\":[\"name\"],\"allOf\":[{\"$ref\":\"#/$defs/schema_7\"}],\"unevaluatedProperties\":{\"$ref\":\"#/$defs/schema_11\"},\"description\":\"A tree\",\"examples\":[{\"$ref\":\"literal-not-a-reference\"}]}}}",
     "target": {
-      "umf": "0.1.0",
+      "umf": "0.10.0",
       "id": "projected",
       "vocabularies": {
         "umf.json-schema": {

@@ -1,0 +1,30 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"Bit128DatasetRecord\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "record",
+      "optional": false,
+      "type": "Bit128Ref"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Bit128RecordValue\"]"
+      ],
+      "name": "rows",
+      "optional": false,
+      "type": "Bit128RecordValue[][]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "Bit128DatasetRecord is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "Bit128DatasetRecord"
+}

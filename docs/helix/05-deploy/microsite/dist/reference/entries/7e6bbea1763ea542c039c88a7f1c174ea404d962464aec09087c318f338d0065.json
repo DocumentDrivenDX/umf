@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 2651,
+        "line": 7,
+        "path": "src/projections/binding-parquet/index.ts",
+        "sha256": "8df3c4b8405105eba7563713a0fff733cd35334ba216d770ec3f068447242a5a"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "ParquetBindingReport",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface ParquetBindingReport {\n  status:'blocked'|'reported'|'preserved';\n  logical:Document;\n  binding:Document;\n  target:BindingPayload['target'];\n  residuals:ParquetBindingResidual[];\n  nativeArchive?:Document;\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"ParquetBindingReport\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 2651,
+      "line": 7,
+      "path": "src/projections/binding-parquet/index.ts",
+      "sha256": "8df3c4b8405105eba7563713a0fff733cd35334ba216d770ec3f068447242a5a"
+    }
+  ],
+  "summary": "Type declaration · src/projections/binding-parquet/index.ts",
+  "title": "ParquetBindingReport"
+}

@@ -1,0 +1,84 @@
+{
+  "status": "no-blocking-finding-within-reviewed-scope",
+  "acceptanceReceipt": false,
+  "scope": "Selected Field availability refusal in actual source-only Weft application-lineage/0.1-candidate and legacy security_query_properties reports. No native execution, policy permission, general optional-value support, or backend acceptance.",
+  "reviewedWeftCommit": "84bc26c1f38f989e492abd5fbed07122eb1668bb",
+  "baselineWeftCommit": "05b68633ee082509f956fb67b8b3e012692048b5",
+  "binaries": {
+    "application_lineage": "6069d58a2009ca2d5f5d65557e5a7d71900c1343ad3ef792f4e3f375e6a3fc65",
+    "security_query_properties": "5e20086e913f59ab4fe77ba55113567df2f0e76e8773cd08c0a98d249111d593",
+    "old_application_lineage": "8d2ff86173efe81aafd17cb14cad06d880c55802fc39fc361802d520307487a1"
+  },
+  "independentExecution": {
+    "originalEightCaseRegression": {
+      "passed": 2,
+      "failed": 6,
+      "expectedPreFixFailure": true,
+      "file": "independent-before.json"
+    },
+    "finalTwelveCaseRegression": {
+      "passed": 12,
+      "failed": 0,
+      "file": "final-12-replay.json",
+      "oracleAuthor": "parent; independently executed"
+    },
+    "additionalControls": {
+      "passed": 20,
+      "failed": 0,
+      "file": "independent-fixed.json",
+      "oracleAuthor": "reviewer"
+    },
+    "oldBinarySensitivity": {
+      "passed": 9,
+      "failed": 11,
+      "expectedPreFixFailure": true,
+      "file": "independent-old-sensitivity.json",
+      "meaning": "All 11 required refusal cases were actually admitted by the old producer; all are refused by the fixed producer."
+    },
+    "ownerCurrentAndLegacyReplay": {
+      "passed": 10,
+      "failed": 0,
+      "file": "owner-check.stdout.json",
+      "oracleAuthor": "Weft owner; independently executed, includes genuine legacy prior acceptance witness and fixed refusal"
+    },
+    "requiredReportByteCompatibility": {
+      "passed": 5,
+      "failed": 0,
+      "file": "required-byte-replay.json",
+      "meaning": "Actual old/new binaries emitted identical bytes for five original required-field requests."
+    },
+    "committedBlobCorrespondence": {
+      "passed": 11,
+      "file": "committed-source-checks.json",
+      "meaning": "Eight changed source/witness paths plus three reviewed resolver/model/IR dependencies match actual committed git blobs."
+    }
+  },
+  "sourceReview": [
+    "The guard resolves each dependency through its original scan owner and original exact member identity, then checks the selected descriptor availability is exactly required. It does not infer availability from logicalType.nullable.",
+    "The shared dependency traversal covers both sides of equality, every lexicographic column and Field value, every join/filter/group/order dependency, SUM arguments, and HasRelated terminal authored Key fields. Plain Field outputs receive a separate pass.",
+    "Same-named Fields in different Records resolve by owner and qualified identity. The independent controls include required Other.token alongside optional Resource.token and both accepted/refused owner-sensitive queries.",
+    "HasRelated Field-valued key operands already refuse in application_scope; original authored_key uses scalar_type, which requires required availability. Terminal-key handling was source-reviewed, not a newly executed terminal-key test.",
+    "Field-free COUNT retains the original scan without selecting unrelated members. Unselected optional Fields do not cause blanket refusal. Required SUM still retains unsupported property semantics.",
+    "Both current application_lineage and legacy security_query_properties call the common guard before returning their report. Refusals produce the intended WFT-APPLICATION-LINEAGE-AVAILABILITY prefix and no partial stdout in the executed cases."
+  ],
+  "resolvedDefect": {
+    "description": "The old selected report profile admitted absent-allowed Fields with ideal nullable:false property uses and no separate use availability. The full retained applicationPlanJson could still contain descriptor availability; this is not a claim that every retained source archive erased it. The fix refuses that unrepresented selected meaning.",
+    "status": "reproduced-before-and-fixed-after"
+  },
+  "limits": [
+    "Finite source/report correspondence evidence, not a universal implementation refinement proof or native data-leak demonstration.",
+    "No P03/B08/native/backend case promotion, security activation, current authority, authentication, read permission or stored-token custody claim.",
+    "Optional selected Fields are refused, not newly supported or converted to explicit null.",
+    "Binaries were hashed and executed; the reviewer did not independently rebuild them. Committed source correspondence was independently verified separately.",
+    "Owner-reported 292 Rust tests, 16 boundary controls and broader harness results are attributed receipts, not independently rerun here.",
+    "The existing fact-fold formal model assumes faithful source classification and does not prove this Rust traversal. Its applicability note was inspected; no additional SMT qualification is claimed.",
+    "Historical eight-case and preliminary source captures remain separate from final twelve-case and committed-source evidence. No shared source was modified."
+  ],
+  "remainingBlockers": [],
+  "sourcePinCount": 21,
+  "sourcePins": "final-source-pins.json",
+  "artifactNotes": [
+    "A preliminary tool invocation failed because the private review directory did not yet exist; it executed no source/test.",
+    "Old binary regression nonzero exits are expected negative evidence, not passing repair qualification."
+  ]
+}

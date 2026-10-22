@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Replay retained check commands without fabricating or publishing successful results."""
 import argparse, hashlib, json, os, subprocess, shutil, concurrent.futures
 from pathlib import Path
@@ -6,7 +7,8 @@ OUT = Path('fixtures/validation/core-check-refresh')
 BASE = 'cc1446fdf919107ec2782d6eaa85cc8bf38fffa6'
 def digest(p): return hashlib.sha256(Path(p).read_bytes()).hexdigest()
 def source_inputs():
-    paths=subprocess.check_output(['git','ls-files','src','scripts','spec','tests','native','package.json','bun.lock'],text=True).splitlines()
+    paths=subprocess.check_output(['git','ls-files','--cached','--others','--exclude-standard','-z','--','src','scripts','spec','tests','native','package.json','bun.lock','bunfig.toml']).decode().split('\0')
+    paths=sorted(set(p for p in paths if p))
     return {p:digest(p) for p in paths}
 def inventory(name):
     return json.loads(subprocess.check_output(['git','show',f'{BASE}:fixtures/validation/{name}.json']))
@@ -21,7 +23,7 @@ def commands():
     seen=set();result=[]
     for c in rows:
         c=list(c)
-        if len(c)>1 and c[1]=='test': continue  # counted regression is a separate execution
+        if c[:2] in [['bun','test'],['bun','scripts/run-tests.ts']]: continue  # counted regression is a separate execution
         if c[0].endswith('/python'): c[0]='.venv/bin/python'
         key=tuple(c)
         if key not in seen: seen.add(key);result.append(c)
@@ -77,7 +79,7 @@ def counted_regression(resume=False):
         groups[index].append(path)
     previous=json.loads((OUT/'regression.json').read_text()) if resume and (OUT/'regression.json').exists() else {'runs':[],'failedAttempts':[]}
     def execute(item):
-        i,group=item;command=['bun','test',*group];log=OUT/f'regression-{i+1}.log'
+        i,group=item;command=['bun','scripts/run-tests.ts',*group];log=OUT/f'regression-{i+1}.log'
         old=next((r for r in previous['runs'] if r['command']==command),None)
         if old and old['exitCode']==0:
             assert digest(old['log'])==old['logSha256'];return old
@@ -87,12 +89,14 @@ def counted_regression(resume=False):
             shutil.copyfile(log,kept);previous.setdefault('failedAttempts',[]).append({**prior,'log':str(kept)})
         with log.open('wb') as f: child=subprocess.run(command,stdout=f,stderr=subprocess.STDOUT,env=os.environ)
         return {'command':command,'exitCode':child.returncode,'log':str(log),'logSha256':digest(log)}
-    with concurrent.futures.ThreadPoolExecutor(max_workers=4) as pool: rows=list(pool.map(execute,enumerate(groups)))
+    # Corpus shards share the test machine; run sequentially to preserve their
+    # bounded per-case budgets instead of turning CPU contention into failures.
+    with concurrent.futures.ThreadPoolExecutor(max_workers=1) as pool: rows=list(pool.map(execute,enumerate(groups)))
     (OUT/'regression.json').write_text(json.dumps({'runs':rows,'failedAttempts':previous.get('failedAttempts',[]),'scope':'Disjoint explicit live-test file shards; eight admission/evidence files are checked separately'},indent=2)+'\n')
     if any(r['exitCode'] for r in rows):raise SystemExit('Live regression failed; inspect shard logs')
 def auxiliary():
     relationship=json.loads((OUT/'relationship-commands.json').read_text())
-    plan=[c for c in relationship if c[:2]==['bun','test']]+[
+    plan=[c for c in relationship if c[:2] in [['bun','test'],['bun','scripts/run-tests.ts']]]+[
         ['.venv/bin/python','scripts/core-ideals/field-tablespec-oracle.py'],
         ['.venv/bin/python','scripts/core-ideals/field-tablespec-projection-oracle.py'],
         ['bun','scripts/core-schema-properties-browser.ts'],['bun','run','typecheck'],['bun','run','test:schemas']]

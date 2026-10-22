@@ -1,0 +1,62 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"OwlSpecialAxiomView\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "profile",
+      "optional": false,
+      "type": "\"owl-special-axioms-1\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "complete",
+      "optional": false,
+      "type": "false"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "source",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "blankNodeScope",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"OwlSpecialAxiom\"]"
+      ],
+      "name": "axioms",
+      "optional": false,
+      "type": "OwlSpecialAxiom[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"RdfNode\"]"
+      ],
+      "name": "malformed",
+      "optional": false,
+      "type": "RdfNode[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "OwlSpecialAxiomView is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "OwlSpecialAxiomView"
+}

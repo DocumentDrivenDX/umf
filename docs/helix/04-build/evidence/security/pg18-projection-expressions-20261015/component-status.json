@@ -1,0 +1,51 @@
+{
+  "status": "passed-component-only",
+  "complete": false,
+  "authority": false,
+  "supports": [
+    "B-SFP-008",
+    "US-056-AC6"
+  ],
+  "requiredCase": "pg-raw.P02",
+  "requiredCaseStatus": "not-run",
+  "caseBindingsChanged": false,
+  "requiredGate": {
+    "accepted": 40,
+    "unbound": 118,
+    "total": 158
+  },
+  "nativeVectors": 210,
+  "bunTests": 2,
+  "bunAssertions": 129,
+  "independentCompilerControls": 101,
+  "independentReceiptCleanupControls": 24,
+  "sourceMutationsDetected": 4,
+  "conditionalProofs": {
+    "unsat": 3,
+    "sat": 1
+  },
+  "strictCoreTypesExit": 0,
+  "strictToolsTypesExit": 0,
+  "freshness": {
+    "checks": 216,
+    "failedIds": 88,
+    "baselineUnchanged": true
+  },
+  "reviewScope": "expression prerequisite only; no independent native/browser rerun",
+  "files": {
+    "README.md": "ae2b6b6cfd0b222f456663ed4e6b0ba532490aa13d5edfe6155177671f19d3ae",
+    "astra-design-review.json": "2dd56ac6ec7ee120469745c5ae54b1511ffe88666a9d1fc9cf16e9f25e3c8bd3",
+    "astra-review.json": "ecbc3c43dc7fa44ca661e984089e579a1863089cd4339c5c4c0697ebf22a56fc",
+    "astra-review.zip": "caeee399efdd6346b4147bbc31e1b4a6167b392765670dc58927877b8158abf1",
+    "conditional-proof.json": "8c378da97f52eee0c67346c47e80598db70a0ef071542346ec94fc45042e3a48",
+    "core-types.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "failed-operator-precedence.ts.txt": "bbb3db0bae1a9cf52379eabd8f97b62a836a86a3b51416b3bdaf137ec70e915f",
+    "failures.json": "166849374ea98fff6377060ee9379294cf9891ad974d8dd407444b1db490d016",
+    "helix-validation.json": "6d8351b566f72c39dc7ba26d141438a16d9cc33bb4120d4108eb98c5b4c7b65c",
+    "native-receipt.json": "dcc92928c70bd0ca175d8ef144481f638efd1fc305306a84805cd59d70d4cb51",
+    "phase-validation.json": "d6b0a386aba4bee714209bdd183c4502b70348dd3f7690cffa4550d4362846c5",
+    "types.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "unit.log": "47a55919e3cc7bc2fcd0de7c351fb22f660bf5ec6772a560e9fcaaf74d76aa46",
+    "validation-summary.json": "f8bda3d1723c171daa1ca6c52a0b878a8fa78cf50524e2636e0d0cb1431a6d6e"
+  }
+}

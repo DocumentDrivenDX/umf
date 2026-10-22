@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {enforceProjectionPolicy} from './projection-policy-schema';
 export {};
 const schema=await Bun.file('spec/core/record-tablespec-projection.schema.json').json(),field=await Bun.file('spec/core/field-postgresql-projection.schema.json').json();

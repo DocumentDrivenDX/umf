@@ -1,0 +1,30 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"exactDecimal\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "token",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"JavascriptNumericContext\"]"
+      ],
+      "name": "context",
+      "optional": true,
+      "type": "JavascriptNumericContext | undefined"
+    }
+  ],
+  "purpose": "Exact text constructor. Spelling is retained; optional Field constraints are checked.",
+  "related": [],
+  "returns": "{ decimalToken: string; }",
+  "task": "Other APIs",
+  "type": "(token: string, context?: JavascriptNumericContext) => { decimalToken: string; }"
+}

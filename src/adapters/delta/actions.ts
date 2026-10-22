@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import grammar from '../../../spec/extensions/delta-log/action-schema.json';
 import {createValidator} from '../../validation/schema';
 import {renderTree,type NativeJson} from '../../model/native-json';

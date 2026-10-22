@@ -1,0 +1,28 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"importDbtManifest\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "text",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "options",
+      "optional": false,
+      "type": "{ id: string; }"
+    }
+  ],
+  "purpose": "importDbtManifest accepts text, options and returns Document.",
+  "related": [],
+  "returns": "Document",
+  "task": "Import and export",
+  "type": "(text: string, options: { id: string; }) => Document"
+}

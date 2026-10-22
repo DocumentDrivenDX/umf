@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {inspectParquetSchema} from './schema';
 import {decodeParquetFooter} from './footer';
 import {rewriteParquetFooter,unsafeParquetMetadata} from './rewrite';

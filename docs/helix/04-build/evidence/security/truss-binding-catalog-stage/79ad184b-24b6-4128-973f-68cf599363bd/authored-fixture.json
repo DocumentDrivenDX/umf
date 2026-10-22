@@ -1,0 +1,858 @@
+{
+  "artifact": {
+    "id": "natural-count-self-join",
+    "request": {
+      "version": "weft.security.mapping-input/0.1.0",
+      "modules": [
+        {
+          "documentJson": "{\"umf\":\"0.8.0\",\"id\":\"domain\",\"vocabularies\":{},\"modules\":[{\"id\":\"m\",\"namespace\":\"\",\"elements\":[{\"id\":\"Staff\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"staffId\"}],\"keys\":[{\"id\":\"pk\",\"name\":\"Key\",\"fields\":[{\"module\":\"m\",\"element\":\"staffId\"}]}],\"extensions\":{},\"name\":\"Staff\"},{\"id\":\"staffId\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"name\":\"staffId\"},{\"id\":\"Project\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"projectId\"}],\"keys\":[{\"id\":\"pk\",\"name\":\"Key\",\"fields\":[{\"module\":\"m\",\"element\":\"projectId\"}]}],\"extensions\":{},\"name\":\"Project\"},{\"id\":\"projectId\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"name\":\"projectId\"},{\"id\":\"Resource\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"resourceId\"},{\"module\":\"m\",\"element\":\"salary\"}],\"keys\":[{\"id\":\"pk\",\"name\":\"Key\",\"fields\":[{\"module\":\"m\",\"element\":\"resourceId\"}]}],\"extensions\":{},\"name\":\"Resource\"},{\"id\":\"resourceId\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"name\":\"resourceId\"},{\"id\":\"salary\",\"kind\":\"field\",\"scalarType\":\"integer\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"name\":\"salary\",\"facets\":{\"integerWidth\":{\"bits\":64,\"signed\":true}}},{\"id\":\"Ownership\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"ownerResource\"},{\"module\":\"m\",\"element\":\"ownerProject\"}],\"keys\":[{\"id\":\"pk\",\"name\":\"Key\",\"fields\":[{\"module\":\"m\",\"element\":\"ownerResource\"},{\"module\":\"m\",\"element\":\"ownerProject\"}]}],\"extensions\":{},\"name\":\"Ownership\"},{\"id\":\"ownerId\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"name\":\"ownerId\"},{\"id\":\"ownerResource\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"name\":\"ownerResource\"},{\"id\":\"ownerProject\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"name\":\"ownerProject\"},{\"id\":\"Assignment\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"assignmentStaff\"},{\"module\":\"m\",\"element\":\"assignmentProject\"},{\"module\":\"m\",\"element\":\"active\"}],\"keys\":[{\"id\":\"pk\",\"name\":\"Key\",\"fields\":[{\"module\":\"m\",\"element\":\"assignmentStaff\"},{\"module\":\"m\",\"element\":\"assignmentProject\"}]}],\"extensions\":{},\"name\":\"Assignment\"},{\"id\":\"assignmentId\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"name\":\"assignmentId\"},{\"id\":\"assignmentStaff\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"name\":\"assignmentStaff\"},{\"id\":\"assignmentProject\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"name\":\"assignmentProject\"},{\"id\":\"active\",\"kind\":\"field\",\"scalarType\":\"boolean\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"name\":\"active\"}],\"relationships\":[{\"id\":\"WorksWith\",\"name\":\"Works with\",\"source\":[{\"module\":\"m\",\"element\":\"Staff\"}],\"target\":[{\"module\":\"m\",\"element\":\"Project\",\"key\":\"pk\"}],\"sourceMultiplicity\":{\"min\":0,\"max\":\"*\"},\"targetMultiplicity\":{\"min\":0,\"max\":\"*\"},\"targetLifecycle\":\"independent\",\"directed\":true}]}]}",
+          "pin": {
+            "documentId": "domain",
+            "revision": "schema-natural-1",
+            "umfVersion": "0.8.0",
+            "sha256": "9501bb410842b72fa66e0b20e43c58dd599ab4a1123190087717da2c7c775f0c"
+          },
+          "selectedModuleIds": [
+            "m"
+          ]
+        }
+      ],
+      "policyJson": "{\"vocabulary\":\"umf.security\",\"version\":\"0.1.0\",\"id\":\"project-access\",\"revision\":\"policy-natural-1\",\"ontology\":{\"documentId\":\"domain\",\"revision\":\"ontology-natural-1\"},\"rules\":[{\"id\":\"reader\",\"effect\":\"permit\",\"actions\":[\"read\"],\"target\":[{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Resource\"}],\"condition\":{\"op\":\"literal\",\"value\":true},\"disclosure\":[{\"field\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"salary\"},\"disposition\":{\"kind\":\"withheld\"}}]},{\"id\":\"membership\",\"effect\":\"require\",\"actions\":[\"read\"],\"target\":[{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Resource\"}],\"condition\":{\"op\":\"exists\",\"association\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Ownership\"},\"as\":\"o\",\"where\":{\"op\":\"and\",\"args\":[{\"op\":\"eq\",\"left\":{\"kind\":\"variable\",\"name\":\"o\",\"endpoint\":\"resource\"},\"right\":{\"kind\":\"resource\",\"identity\":true}},{\"op\":\"exists\",\"association\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Assignment\"},\"as\":\"a\",\"where\":{\"op\":\"and\",\"args\":[{\"op\":\"eq\",\"left\":{\"kind\":\"variable\",\"name\":\"a\",\"endpoint\":\"staff\"},\"right\":{\"kind\":\"subject\",\"identity\":true}},{\"op\":\"eq\",\"left\":{\"kind\":\"variable\",\"name\":\"a\",\"endpoint\":\"project\"},\"right\":{\"kind\":\"variable\",\"name\":\"o\",\"endpoint\":\"project\"}},{\"op\":\"eq\",\"left\":{\"kind\":\"variable\",\"name\":\"a\",\"field\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"active\"}},\"right\":{\"kind\":\"constant\",\"field\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"active\"},\"value\":{\"boolean\":true}}}]}}]}}}]}",
+      "ontologyJson": "{\"version\":\"0.1.0\",\"documentId\":\"domain\",\"revision\":\"ontology-natural-1\",\"documents\":[{\"documentId\":\"domain\",\"revision\":\"schema-natural-1\"}],\"subject\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Staff\"},\"entities\":[{\"type\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Staff\"},\"keyId\":\"pk\",\"fields\":[{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"staffId\"},\"protection\":\"unprotected\"}]},{\"type\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Project\"},\"keyId\":\"pk\",\"fields\":[{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"projectId\"},\"protection\":\"unprotected\"}]},{\"type\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Resource\"},\"keyId\":\"pk\",\"fields\":[{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"resourceId\"},\"protection\":\"unprotected\"},{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"salary\"},\"protection\":\"protected\"}]}],\"associations\":[{\"type\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Ownership\"},\"keyId\":\"pk\",\"fields\":[{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"ownerResource\"},\"protection\":\"unprotected\"},{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"ownerProject\"},\"protection\":\"unprotected\"}],\"endpoints\":[{\"role\":\"resource\",\"target\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Resource\"},\"fields\":[{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"ownerResource\"}]},{\"role\":\"project\",\"target\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Project\"},\"fields\":[{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"ownerProject\"}]}]},{\"type\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Assignment\"},\"keyId\":\"pk\",\"fields\":[{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"assignmentStaff\"},\"protection\":\"unprotected\"},{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"assignmentProject\"},\"protection\":\"unprotected\"},{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"active\"},\"protection\":\"unprotected\"}],\"endpoints\":[{\"role\":\"staff\",\"target\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Staff\"},\"fields\":[{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"assignmentStaff\"}]},{\"role\":\"project\",\"target\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Project\"},\"fields\":[{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"assignmentProject\"}]}]}],\"context\":[],\"actions\":[\"read\",\"update\"]}",
+      "queryProfileJson": "{\"version\":\"weft.security.query-profile/0.1.0\",\"id\":\"natural-key-inspection-profile\",\"revision\":\"1\",\"action\":\"read\",\"modelPins\":[{\"documentId\":\"domain\",\"revision\":\"schema-natural-1\",\"umfVersion\":\"0.8.0\",\"sha256\":\"bb6a609480975f782bea1a8d6cae9e0623218a8711a7cba1669353ea8ef3962a\"}],\"policySha256\":\"4c1dc6cdfff13dade077fb718d2f40ec96e764dd1154f46652d9f5246d495493\",\"ontologySha256\":\"0bb78119241c490c7a588805306536632f353ed6fead463564992fa67fc6a120\",\"binding\":{\"backendId\":\"fixture\",\"backendVersion\":\"unqualified\",\"targetProfile\":\"inspection-only\",\"sha256\":\"fec33cb671c2ec0e5dece7a7ca35fe7216115a0ac9317684bb320ed31272d63d\"},\"targets\":[{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Resource\"}],\"bindings\":[]}",
+      "bindingJson": "{\"version\":\"unqualified-mapping-fixture/0.1.0\"}",
+      "backendId": "fixture",
+      "backendVersion": "unqualified",
+      "targetProfile": "inspection-only",
+      "sql": "SELECT COUNT(*) FROM Resource r JOIN Resource s ON r.resourceId=s.resourceId",
+      "parameters": {},
+      "readProfile": null
+    },
+    "handoff": {
+      "applicationPlan": {
+        "aggregate": true,
+        "filters": [],
+        "groups": [],
+        "irVersion": "weft-ir/0.2.0",
+        "joins": [
+          {
+            "on": [
+              {
+                "left": {
+                  "identity": {
+                    "documentId": "domain",
+                    "element": "resourceId",
+                    "module": "m",
+                    "revision": "schema-natural-1"
+                  },
+                  "scan": "s0",
+                  "span": {
+                    "end": 63,
+                    "start": 51
+                  },
+                  "type": {
+                    "facets": {},
+                    "family": "string",
+                    "nullable": false
+                  }
+                },
+                "op": "equal",
+                "right": {
+                  "field": {
+                    "identity": {
+                      "documentId": "domain",
+                      "element": "resourceId",
+                      "module": "m",
+                      "revision": "schema-natural-1"
+                    },
+                    "scan": "s1",
+                    "span": {
+                      "end": 76,
+                      "start": 64
+                    },
+                    "type": {
+                      "facets": {},
+                      "family": "string",
+                      "nullable": false
+                    }
+                  },
+                  "kind": "field"
+                }
+              }
+            ],
+            "right": {
+              "occurrence": "s1",
+              "pin": {
+                "documentId": "domain",
+                "revision": "schema-natural-1",
+                "sha256": "bb6a609480975f782bea1a8d6cae9e0623218a8711a7cba1669353ea8ef3962a",
+                "umfVersion": "0.8.0"
+              },
+              "record": {
+                "documentId": "domain",
+                "element": "Resource",
+                "module": "m",
+                "revision": "schema-natural-1"
+              }
+            }
+          }
+        ],
+        "limit": null,
+        "modulePins": [
+          {
+            "documentId": "domain",
+            "revision": "schema-natural-1",
+            "sha256": "bb6a609480975f782bea1a8d6cae9e0623218a8711a7cba1669353ea8ef3962a",
+            "umfVersion": "0.8.0"
+          }
+        ],
+        "order": [],
+        "outputs": [
+          {
+            "expression": {
+              "op": "count",
+              "type": {
+                "facets": {},
+                "family": "integer",
+                "nullable": false
+              }
+            },
+            "name": "count"
+          }
+        ],
+        "pageKey": null,
+        "readProfile": null,
+        "requiredCapabilities": [
+          "aggregate",
+          "aggregate.count",
+          "equal",
+          "innerJoin",
+          "project",
+          "scan",
+          "type.string"
+        ],
+        "source": {
+          "occurrence": "s0",
+          "pin": {
+            "documentId": "domain",
+            "revision": "schema-natural-1",
+            "sha256": "bb6a609480975f782bea1a8d6cae9e0623218a8711a7cba1669353ea8ef3962a",
+            "umfVersion": "0.8.0"
+          },
+          "record": {
+            "documentId": "domain",
+            "element": "Resource",
+            "module": "m",
+            "revision": "schema-natural-1"
+          }
+        },
+        "typeGraph": []
+      },
+      "binding": {
+        "backendId": "fixture",
+        "backendVersion": "unqualified",
+        "sha256": "fec33cb671c2ec0e5dece7a7ca35fe7216115a0ac9317684bb320ed31272d63d",
+        "targetProfile": "inspection-only"
+      },
+      "modelPins": [
+        {
+          "documentId": "domain",
+          "revision": "schema-natural-1",
+          "sha256": "bb6a609480975f782bea1a8d6cae9e0623218a8711a7cba1669353ea8ef3962a",
+          "umfVersion": "0.8.0"
+        }
+      ],
+      "ontologySha256": "0bb78119241c490c7a588805306536632f353ed6fead463564992fa67fc6a120",
+      "policySha256": "4c1dc6cdfff13dade077fb718d2f40ec96e764dd1154f46652d9f5246d495493",
+      "profile": {
+        "id": "natural-key-inspection-profile",
+        "revision": "1",
+        "sha256": "bd4bd7d76233208a1db6e3cf3874c5c4d4860b481accfd0d7da55d691ad96a17"
+      },
+      "scans": [
+        {
+          "actions": [
+            {
+              "action": "read",
+              "associations": [
+                {
+                  "documentId": "domain",
+                  "elementId": "Assignment",
+                  "moduleId": "m"
+                },
+                {
+                  "documentId": "domain",
+                  "elementId": "Ownership",
+                  "moduleId": "m"
+                }
+              ],
+              "context": [],
+              "fields": [
+                {
+                  "fields": [
+                    {
+                      "documentId": "domain",
+                      "elementId": "active",
+                      "moduleId": "m"
+                    },
+                    {
+                      "documentId": "domain",
+                      "elementId": "assignmentProject",
+                      "moduleId": "m"
+                    },
+                    {
+                      "documentId": "domain",
+                      "elementId": "assignmentStaff",
+                      "moduleId": "m"
+                    }
+                  ],
+                  "target": {
+                    "documentId": "domain",
+                    "elementId": "Assignment",
+                    "moduleId": "m"
+                  }
+                },
+                {
+                  "fields": [
+                    {
+                      "documentId": "domain",
+                      "elementId": "ownerProject",
+                      "moduleId": "m"
+                    },
+                    {
+                      "documentId": "domain",
+                      "elementId": "ownerResource",
+                      "moduleId": "m"
+                    }
+                  ],
+                  "target": {
+                    "documentId": "domain",
+                    "elementId": "Ownership",
+                    "moduleId": "m"
+                  }
+                },
+                {
+                  "fields": [
+                    {
+                      "documentId": "domain",
+                      "elementId": "projectId",
+                      "moduleId": "m"
+                    }
+                  ],
+                  "target": {
+                    "documentId": "domain",
+                    "elementId": "Project",
+                    "moduleId": "m"
+                  }
+                },
+                {
+                  "fields": [
+                    {
+                      "documentId": "domain",
+                      "elementId": "resourceId",
+                      "moduleId": "m"
+                    }
+                  ],
+                  "target": {
+                    "documentId": "domain",
+                    "elementId": "Resource",
+                    "moduleId": "m"
+                  }
+                },
+                {
+                  "fields": [
+                    {
+                      "documentId": "domain",
+                      "elementId": "staffId",
+                      "moduleId": "m"
+                    }
+                  ],
+                  "target": {
+                    "documentId": "domain",
+                    "elementId": "Staff",
+                    "moduleId": "m"
+                  }
+                }
+              ],
+              "keys": [
+                {
+                  "fields": [
+                    {
+                      "documentId": "domain",
+                      "elementId": "assignmentStaff",
+                      "moduleId": "m"
+                    },
+                    {
+                      "documentId": "domain",
+                      "elementId": "assignmentProject",
+                      "moduleId": "m"
+                    }
+                  ],
+                  "keyId": "pk",
+                  "target": {
+                    "documentId": "domain",
+                    "elementId": "Assignment",
+                    "moduleId": "m"
+                  }
+                },
+                {
+                  "fields": [
+                    {
+                      "documentId": "domain",
+                      "elementId": "ownerResource",
+                      "moduleId": "m"
+                    },
+                    {
+                      "documentId": "domain",
+                      "elementId": "ownerProject",
+                      "moduleId": "m"
+                    }
+                  ],
+                  "keyId": "pk",
+                  "target": {
+                    "documentId": "domain",
+                    "elementId": "Ownership",
+                    "moduleId": "m"
+                  }
+                },
+                {
+                  "fields": [
+                    {
+                      "documentId": "domain",
+                      "elementId": "projectId",
+                      "moduleId": "m"
+                    }
+                  ],
+                  "keyId": "pk",
+                  "target": {
+                    "documentId": "domain",
+                    "elementId": "Project",
+                    "moduleId": "m"
+                  }
+                },
+                {
+                  "fields": [
+                    {
+                      "documentId": "domain",
+                      "elementId": "resourceId",
+                      "moduleId": "m"
+                    }
+                  ],
+                  "keyId": "pk",
+                  "target": {
+                    "documentId": "domain",
+                    "elementId": "Resource",
+                    "moduleId": "m"
+                  }
+                },
+                {
+                  "fields": [
+                    {
+                      "documentId": "domain",
+                      "elementId": "staffId",
+                      "moduleId": "m"
+                    }
+                  ],
+                  "keyId": "pk",
+                  "target": {
+                    "documentId": "domain",
+                    "elementId": "Staff",
+                    "moduleId": "m"
+                  }
+                }
+              ],
+              "ruleIds": [
+                "membership",
+                "reader"
+              ]
+            }
+          ],
+          "projectionFields": [],
+          "queryFields": [
+            {
+              "documentId": "domain",
+              "elementId": "resourceId",
+              "moduleId": "m"
+            }
+          ],
+          "scan": "s0",
+          "target": {
+            "documentId": "domain",
+            "elementId": "Resource",
+            "moduleId": "m"
+          }
+        },
+        {
+          "actions": [
+            {
+              "action": "read",
+              "associations": [
+                {
+                  "documentId": "domain",
+                  "elementId": "Assignment",
+                  "moduleId": "m"
+                },
+                {
+                  "documentId": "domain",
+                  "elementId": "Ownership",
+                  "moduleId": "m"
+                }
+              ],
+              "context": [],
+              "fields": [
+                {
+                  "fields": [
+                    {
+                      "documentId": "domain",
+                      "elementId": "active",
+                      "moduleId": "m"
+                    },
+                    {
+                      "documentId": "domain",
+                      "elementId": "assignmentProject",
+                      "moduleId": "m"
+                    },
+                    {
+                      "documentId": "domain",
+                      "elementId": "assignmentStaff",
+                      "moduleId": "m"
+                    }
+                  ],
+                  "target": {
+                    "documentId": "domain",
+                    "elementId": "Assignment",
+                    "moduleId": "m"
+                  }
+                },
+                {
+                  "fields": [
+                    {
+                      "documentId": "domain",
+                      "elementId": "ownerProject",
+                      "moduleId": "m"
+                    },
+                    {
+                      "documentId": "domain",
+                      "elementId": "ownerResource",
+                      "moduleId": "m"
+                    }
+                  ],
+                  "target": {
+                    "documentId": "domain",
+                    "elementId": "Ownership",
+                    "moduleId": "m"
+                  }
+                },
+                {
+                  "fields": [
+                    {
+                      "documentId": "domain",
+                      "elementId": "projectId",
+                      "moduleId": "m"
+                    }
+                  ],
+                  "target": {
+                    "documentId": "domain",
+                    "elementId": "Project",
+                    "moduleId": "m"
+                  }
+                },
+                {
+                  "fields": [
+                    {
+                      "documentId": "domain",
+                      "elementId": "resourceId",
+                      "moduleId": "m"
+                    }
+                  ],
+                  "target": {
+                    "documentId": "domain",
+                    "elementId": "Resource",
+                    "moduleId": "m"
+                  }
+                },
+                {
+                  "fields": [
+                    {
+                      "documentId": "domain",
+                      "elementId": "staffId",
+                      "moduleId": "m"
+                    }
+                  ],
+                  "target": {
+                    "documentId": "domain",
+                    "elementId": "Staff",
+                    "moduleId": "m"
+                  }
+                }
+              ],
+              "keys": [
+                {
+                  "fields": [
+                    {
+                      "documentId": "domain",
+                      "elementId": "assignmentStaff",
+                      "moduleId": "m"
+                    },
+                    {
+                      "documentId": "domain",
+                      "elementId": "assignmentProject",
+                      "moduleId": "m"
+                    }
+                  ],
+                  "keyId": "pk",
+                  "target": {
+                    "documentId": "domain",
+                    "elementId": "Assignment",
+                    "moduleId": "m"
+                  }
+                },
+                {
+                  "fields": [
+                    {
+                      "documentId": "domain",
+                      "elementId": "ownerResource",
+                      "moduleId": "m"
+                    },
+                    {
+                      "documentId": "domain",
+                      "elementId": "ownerProject",
+                      "moduleId": "m"
+                    }
+                  ],
+                  "keyId": "pk",
+                  "target": {
+                    "documentId": "domain",
+                    "elementId": "Ownership",
+                    "moduleId": "m"
+                  }
+                },
+                {
+                  "fields": [
+                    {
+                      "documentId": "domain",
+                      "elementId": "projectId",
+                      "moduleId": "m"
+                    }
+                  ],
+                  "keyId": "pk",
+                  "target": {
+                    "documentId": "domain",
+                    "elementId": "Project",
+                    "moduleId": "m"
+                  }
+                },
+                {
+                  "fields": [
+                    {
+                      "documentId": "domain",
+                      "elementId": "resourceId",
+                      "moduleId": "m"
+                    }
+                  ],
+                  "keyId": "pk",
+                  "target": {
+                    "documentId": "domain",
+                    "elementId": "Resource",
+                    "moduleId": "m"
+                  }
+                },
+                {
+                  "fields": [
+                    {
+                      "documentId": "domain",
+                      "elementId": "staffId",
+                      "moduleId": "m"
+                    }
+                  ],
+                  "keyId": "pk",
+                  "target": {
+                    "documentId": "domain",
+                    "elementId": "Staff",
+                    "moduleId": "m"
+                  }
+                }
+              ],
+              "ruleIds": [
+                "membership",
+                "reader"
+              ]
+            }
+          ],
+          "projectionFields": [],
+          "queryFields": [
+            {
+              "documentId": "domain",
+              "elementId": "resourceId",
+              "moduleId": "m"
+            }
+          ],
+          "scan": "s1",
+          "target": {
+            "documentId": "domain",
+            "elementId": "Resource",
+            "moduleId": "m"
+          }
+        }
+      ],
+      "securityLogicalPlan": {
+        "rules": [
+          {
+            "actions": [
+              "read"
+            ],
+            "condition": {
+              "literal": true
+            },
+            "disclosure": [
+              [
+                {
+                  "documentId": "domain",
+                  "elementId": "salary",
+                  "moduleId": "m"
+                },
+                "withheld"
+              ]
+            ],
+            "effect": "permit",
+            "id": "reader",
+            "target": {
+              "documentId": "domain",
+              "elementId": "Resource",
+              "moduleId": "m"
+            }
+          },
+          {
+            "actions": [
+              "read"
+            ],
+            "condition": {
+              "exists": {
+                "association": {
+                  "documentId": "domain",
+                  "elementId": "Ownership",
+                  "moduleId": "m"
+                },
+                "condition": {
+                  "and": [
+                    {
+                      "equal": [
+                        {
+                          "endpoint": {
+                            "association": {
+                              "documentId": "domain",
+                              "elementId": "Ownership",
+                              "moduleId": "m"
+                            },
+                            "binding": {
+                              "variable": 0
+                            },
+                            "keyId": "pk",
+                            "role": "resource",
+                            "target": {
+                              "documentId": "domain",
+                              "elementId": "Resource",
+                              "moduleId": "m"
+                            }
+                          }
+                        },
+                        {
+                          "identity": {
+                            "binding": "resource",
+                            "keyId": "pk",
+                            "target": {
+                              "documentId": "domain",
+                              "elementId": "Resource",
+                              "moduleId": "m"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "exists": {
+                        "association": {
+                          "documentId": "domain",
+                          "elementId": "Assignment",
+                          "moduleId": "m"
+                        },
+                        "condition": {
+                          "and": [
+                            {
+                              "equal": [
+                                {
+                                  "endpoint": {
+                                    "association": {
+                                      "documentId": "domain",
+                                      "elementId": "Assignment",
+                                      "moduleId": "m"
+                                    },
+                                    "binding": {
+                                      "variable": 1
+                                    },
+                                    "keyId": "pk",
+                                    "role": "staff",
+                                    "target": {
+                                      "documentId": "domain",
+                                      "elementId": "Staff",
+                                      "moduleId": "m"
+                                    }
+                                  }
+                                },
+                                {
+                                  "identity": {
+                                    "binding": "subject",
+                                    "keyId": "pk",
+                                    "target": {
+                                      "documentId": "domain",
+                                      "elementId": "Staff",
+                                      "moduleId": "m"
+                                    }
+                                  }
+                                }
+                              ]
+                            },
+                            {
+                              "equal": [
+                                {
+                                  "endpoint": {
+                                    "association": {
+                                      "documentId": "domain",
+                                      "elementId": "Assignment",
+                                      "moduleId": "m"
+                                    },
+                                    "binding": {
+                                      "variable": 1
+                                    },
+                                    "keyId": "pk",
+                                    "role": "project",
+                                    "target": {
+                                      "documentId": "domain",
+                                      "elementId": "Project",
+                                      "moduleId": "m"
+                                    }
+                                  }
+                                },
+                                {
+                                  "endpoint": {
+                                    "association": {
+                                      "documentId": "domain",
+                                      "elementId": "Ownership",
+                                      "moduleId": "m"
+                                    },
+                                    "binding": {
+                                      "variable": 0
+                                    },
+                                    "keyId": "pk",
+                                    "role": "project",
+                                    "target": {
+                                      "documentId": "domain",
+                                      "elementId": "Project",
+                                      "moduleId": "m"
+                                    }
+                                  }
+                                }
+                              ]
+                            },
+                            {
+                              "equal": [
+                                {
+                                  "field": {
+                                    "binding": {
+                                      "variable": 1
+                                    },
+                                    "domain": {
+                                      "allowedValues": null,
+                                      "cardinality": "one",
+                                      "facets": {},
+                                      "nullability": "required",
+                                      "scalarType": "boolean"
+                                    },
+                                    "field": {
+                                      "documentId": "domain",
+                                      "elementId": "active",
+                                      "moduleId": "m"
+                                    }
+                                  }
+                                },
+                                {
+                                  "constant": {
+                                    "domain": {
+                                      "allowedValues": null,
+                                      "cardinality": "one",
+                                      "facets": {},
+                                      "nullability": "required",
+                                      "scalarType": "boolean"
+                                    },
+                                    "field": {
+                                      "documentId": "domain",
+                                      "elementId": "active",
+                                      "moduleId": "m"
+                                    },
+                                    "literal": {
+                                      "boolean": true
+                                    }
+                                  }
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        "slot": 1
+                      }
+                    }
+                  ]
+                },
+                "slot": 0
+              }
+            },
+            "disclosure": [],
+            "effect": "require",
+            "id": "membership",
+            "target": {
+              "documentId": "domain",
+              "elementId": "Resource",
+              "moduleId": "m"
+            }
+          }
+        ],
+        "version": "weft.security.logical-ir/0.1.0"
+      },
+      "sqlSha256": "0dbb841bdede841d4cc7fa6cb15b57e264e23213c262e90716931938adfacc01",
+      "uses": [
+        {
+          "field": {
+            "documentId": "domain",
+            "elementId": "resourceId",
+            "moduleId": "m"
+          },
+          "operator": "join",
+          "originalAction": null,
+          "scan": "s0",
+          "target": {
+            "documentId": "domain",
+            "elementId": "Resource",
+            "moduleId": "m"
+          }
+        },
+        {
+          "field": {
+            "documentId": "domain",
+            "elementId": "resourceId",
+            "moduleId": "m"
+          },
+          "operator": "join",
+          "originalAction": null,
+          "scan": "s1",
+          "target": {
+            "documentId": "domain",
+            "elementId": "Resource",
+            "moduleId": "m"
+          }
+        }
+      ],
+      "version": "weft.security.mapping-handoff/0.2.0"
+    }
+  },
+  "bindingHex": "7b2270726f66696c65223a2274727573732d62696e6172792d6173736f63696174696f6e2d63616e6469646174652f302e322e30222c22636f7265536861323536223a2239353031626234313038343262373266613636653062323065343363353864643539396162346131313233313930303837373137646132633763373735663063222c226f6e746f6c6f6779536861323536223a2230626237383131393234316334393063376135383838303533303635333636333266333533656436666561643436333536343939326661363766633661313230222c226d6f64656c5265766973696f6e223a22736368656d612d6e61747572616c2d31222c226f6e746f6c6f67795265766973696f6e223a226f6e746f6c6f67792d6e61747572616c2d31222c226d617070696e6773223a5b7b226173736f63696174696f6e223a7b22646f63756d656e744964223a22646f6d61696e222c226d6f64756c654964223a226d222c22656c656d656e744964223a224f776e657273686970227d2c22696e7374616e63654b65794964223a22706b222c22736f75726365526f6c65223a227265736f75726365222c22746172676574526f6c65223a2270726f6a656374222c22726f6c6573223a5b7b22726f6c65223a227265736f75726365222c226173736f63696174696f6e4669656c6473223a5b7b22646f63756d656e744964223a22646f6d61696e222c226d6f64756c654964223a226d222c22656c656d656e744964223a226f776e65725265736f75726365227d5d2c22746172676574223a7b22646f63756d656e744964223a22646f6d61696e222c226d6f64756c654964223a226d222c22656c656d656e744964223a225265736f75726365227d2c227461726765744b65794964223a22706b222c227461726765744669656c6473223a5b7b22646f63756d656e744964223a22646f6d61696e222c226d6f64756c654964223a226d222c22656c656d656e744964223a227265736f757263654964227d5d7d2c7b22726f6c65223a2270726f6a656374222c226173736f63696174696f6e4669656c6473223a5b7b22646f63756d656e744964223a22646f6d61696e222c226d6f64756c654964223a226d222c22656c656d656e744964223a226f776e657250726f6a656374227d5d2c22746172676574223a7b22646f63756d656e744964223a22646f6d61696e222c226d6f64756c654964223a226d222c22656c656d656e744964223a2250726f6a656374227d2c227461726765744b65794964223a22706b222c227461726765744669656c6473223a5b7b22646f63756d656e744964223a22646f6d61696e222c226d6f64756c654964223a226d222c22656c656d656e744964223a2270726f6a6563744964227d5d7d5d2c2273746f72616765223a7b22736f757263654d696e223a2230222c22736f757263654d6178223a222a222c227461726765744d696e223a2230222c227461726765744d6178223a222a222c226469726563746564223a747275652c226c6966656379636c65223a22696e646570656e64656e74222c22636f6d706f736974696f6e223a66616c73652c22696e7665727365223a6e756c6c7d7d2c7b226173736f63696174696f6e223a7b22646f63756d656e744964223a22646f6d61696e222c226d6f64756c654964223a226d222c22656c656d656e744964223a2241737369676e6d656e74227d2c22696e7374616e63654b65794964223a22706b222c22736f75726365526f6c65223a227374616666222c22746172676574526f6c65223a2270726f6a656374222c22726f6c6573223a5b7b22726f6c65223a227374616666222c226173736f63696174696f6e4669656c6473223a5b7b22646f63756d656e744964223a22646f6d61696e222c226d6f64756c654964223a226d222c22656c656d656e744964223a2261737369676e6d656e745374616666227d5d2c22746172676574223a7b22646f63756d656e744964223a22646f6d61696e222c226d6f64756c654964223a226d222c22656c656d656e744964223a225374616666227d2c227461726765744b65794964223a22706b222c227461726765744669656c6473223a5b7b22646f63756d656e744964223a22646f6d61696e222c226d6f64756c654964223a226d222c22656c656d656e744964223a2273746166664964227d5d7d2c7b22726f6c65223a2270726f6a656374222c226173736f63696174696f6e4669656c6473223a5b7b22646f63756d656e744964223a22646f6d61696e222c226d6f64756c654964223a226d222c22656c656d656e744964223a2261737369676e6d656e7450726f6a656374227d5d2c22746172676574223a7b22646f63756d656e744964223a22646f6d61696e222c226d6f64756c654964223a226d222c22656c656d656e744964223a2250726f6a656374227d2c227461726765744b65794964223a22706b222c227461726765744669656c6473223a5b7b22646f63756d656e744964223a22646f6d61696e222c226d6f64756c654964223a226d222c22656c656d656e744964223a2270726f6a6563744964227d5d7d5d2c2273746f72616765223a7b22736f757263654d696e223a2230222c22736f757263654d6178223a222a222c227461726765744d696e223a2230222c227461726765744d6178223a222a222c226469726563746564223a747275652c226c6966656379636c65223a22696e646570656e64656e74222c22636f6d706f736974696f6e223a66616c73652c22696e7665727365223a6e756c6c7d7d5d2c226f6e746f6c6f67794172746966616374223a7b226964656e74697479223a226f726967696e616c2d6f6e746f6c6f6779222c226279746573426173653634223a2265794a325a584a7a61573975496a6f694d4334784c6a41694c434a6b62324e316257567564456c6b496a6f695a47397459576c7549697769636d563261584e70623234694f694a76626e52766247396e6553317559585231636d46734c5445694c434a6b62324e316257567564484d694f6c7437496d5276593356745a573530535751694f694a6b62323168615734694c434a795a585a7063326c7662694936496e4e6a614756745953317559585231636d46734c54456966563073496e4e31596d706c593351694f6e73695a47396a6457316c626e524a5a434936496d52766257467062694973496d31765a4856735a556c6b496a6f6962534973496d56735a57316c626e524a5a434936496c4e3059575a6d496e3073496d567564476c306157567a496a706265794a306558426c496a7037496d5276593356745a573530535751694f694a6b62323168615734694c434a74623252316247564a5a434936496d30694c434a6c624756745a573530535751694f694a546447466d5a694a394c434a725a586c4a5a434936496e4272496977695a6d6c6c6247527a496a706265794a795a5759694f6e73695a47396a6457316c626e524a5a434936496d52766257467062694973496d31765a4856735a556c6b496a6f6962534973496d56735a57316c626e524a5a434936496e4e3059575a6d535751696653776963484a766447566a64476c7662694936496e567563484a766447566a6447566b496e316466537837496e5235634755694f6e73695a47396a6457316c626e524a5a434936496d52766257467062694973496d31765a4856735a556c6b496a6f6962534973496d56735a57316c626e524a5a434936496c42796232706c593351696653776961325635535751694f694a7761794973496d5a705a57786b6379493657337369636d566d496a7037496d5276593356745a573530535751694f694a6b62323168615734694c434a74623252316247564a5a434936496d30694c434a6c624756745a573530535751694f694a77636d39715a574e30535751696653776963484a766447566a64476c7662694936496e567563484a766447566a6447566b496e316466537837496e5235634755694f6e73695a47396a6457316c626e524a5a434936496d52766257467062694973496d31765a4856735a556c6b496a6f6962534973496d56735a57316c626e524a5a434936496c4a6c63323931636d4e6c496e3073496d746c65556c6b496a6f69634773694c434a6d615756735a484d694f6c7437496e4a6c5a69493665794a6b62324e316257567564456c6b496a6f695a47397459576c75496977696257396b6457786c535751694f694a74496977695a57786c6257567564456c6b496a6f69636d567a623356795932564a5a434a394c434a77636d39305a574e3061573975496a6f6964573577636d39305a574e305a57516966537837496e4a6c5a69493665794a6b62324e316257567564456c6b496a6f695a47397459576c75496977696257396b6457786c535751694f694a74496977695a57786c6257567564456c6b496a6f696332467359584a35496e3073496e42796233526c59335270623234694f694a77636d39305a574e305a575169665631395853776959584e7a62324e70595852706232357a496a706265794a306558426c496a7037496d5276593356745a573530535751694f694a6b62323168615734694c434a74623252316247564a5a434936496d30694c434a6c624756745a573530535751694f694a506432356c636e4e6f615841696653776961325635535751694f694a7761794973496d5a705a57786b6379493657337369636d566d496a7037496d5276593356745a573530535751694f694a6b62323168615734694c434a74623252316247564a5a434936496d30694c434a6c624756745a573530535751694f694a766432356c636c4a6c63323931636d4e6c496e3073496e42796233526c59335270623234694f694a31626e42796233526c5933526c5a434a394c487369636d566d496a7037496d5276593356745a573530535751694f694a6b62323168615734694c434a74623252316247564a5a434936496d30694c434a6c624756745a573530535751694f694a766432356c636c42796232706c593351696653776963484a766447566a64476c7662694936496e567563484a766447566a6447566b496e31644c434a6c626d527762326c7564484d694f6c7437496e4a76624755694f694a795a584e7664584a6a5a534973496e5268636d646c6443493665794a6b62324e316257567564456c6b496a6f695a47397459576c75496977696257396b6457786c535751694f694a74496977695a57786c6257567564456c6b496a6f69556d567a6233567959325569665377695a6d6c6c6247527a496a706265794a6b62324e316257567564456c6b496a6f695a47397459576c75496977696257396b6457786c535751694f694a74496977695a57786c6257567564456c6b496a6f69623364755a584a535a584e7664584a6a5a534a395858307365794a796232786c496a6f6963484a76616d566a64434973496e5268636d646c6443493665794a6b62324e316257567564456c6b496a6f695a47397459576c75496977696257396b6457786c535751694f694a74496977695a57786c6257567564456c6b496a6f6955484a76616d566a64434a394c434a6d615756735a484d694f6c7437496d5276593356745a573530535751694f694a6b62323168615734694c434a74623252316247564a5a434936496d30694c434a6c624756745a573530535751694f694a766432356c636c42796232706c59335169665631395858307365794a306558426c496a7037496d5276593356745a573530535751694f694a6b62323168615734694c434a74623252316247564a5a434936496d30694c434a6c624756745a573530535751694f694a4263334e705a3235745a573530496e3073496d746c65556c6b496a6f69634773694c434a6d615756735a484d694f6c7437496e4a6c5a69493665794a6b62324e316257567564456c6b496a6f695a47397459576c75496977696257396b6457786c535751694f694a74496977695a57786c6257567564456c6b496a6f6959584e7a615764756257567564464e3059575a6d496e3073496e42796233526c59335270623234694f694a31626e42796233526c5933526c5a434a394c487369636d566d496a7037496d5276593356745a573530535751694f694a6b62323168615734694c434a74623252316247564a5a434936496d30694c434a6c624756745a573530535751694f694a6863334e705a3235745a57353055484a76616d566a64434a394c434a77636d39305a574e3061573975496a6f6964573577636d39305a574e305a57516966537837496e4a6c5a69493665794a6b62324e316257567564456c6b496a6f695a47397459576c75496977696257396b6457786c535751694f694a74496977695a57786c6257567564456c6b496a6f6959574e3061585a6c496e3073496e42796233526c59335270623234694f694a31626e42796233526c5933526c5a434a39585377695a57356b63473970626e527a496a706265794a796232786c496a6f69633352685a6d59694c434a3059584a6e5a5851694f6e73695a47396a6457316c626e524a5a434936496d52766257467062694973496d31765a4856735a556c6b496a6f6962534973496d56735a57316c626e524a5a434936496c4e3059575a6d496e3073496d5a705a57786b63794936573373695a47396a6457316c626e524a5a434936496d52766257467062694973496d31765a4856735a556c6b496a6f6962534973496d56735a57316c626e524a5a434936496d467a63326c6e626d316c626e52546447466d5a694a395858307365794a796232786c496a6f6963484a76616d566a64434973496e5268636d646c6443493665794a6b62324e316257567564456c6b496a6f695a47397459576c75496977696257396b6457786c535751694f694a74496977695a57786c6257567564456c6b496a6f6955484a76616d566a64434a394c434a6d615756735a484d694f6c7437496d5276593356745a573530535751694f694a6b62323168615734694c434a74623252316247564a5a434936496d30694c434a6c624756745a573530535751694f694a6863334e705a3235745a57353055484a76616d566a64434a395858316466563073496d4e76626e526c654851694f6c74644c434a68593352706232357a496a7062496e4a6c595751694c434a3163475268644755695858303d222c22736861323536223a2230626237383131393234316334393063376135383838303533303635333636333266333533656436666561643436333536343939326661363766633661313230227d7d"
+}

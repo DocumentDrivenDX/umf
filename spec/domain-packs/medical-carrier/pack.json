@@ -1,9 +1,9 @@
 {
   "id": "medical-carrier",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "family": {
     "id": "medical",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "label": "Carrier: eligibility, claims and payments"
   },
   "execution_profile": {
@@ -915,7 +915,7 @@
       "data_kind": "fabricated",
       "reference": "data/resources.csv",
       "format": "csv",
-      "revision": "medical-carrier-1.1.0",
+      "revision": "medical-carrier-1.2.0",
       "checksum": {
         "algorithm": "sha256",
         "value": "0f4a4537fc78a555ade4a8fe68709458c3b4c0f4a080b99692382dac0ef7f6e9"
@@ -966,7 +966,7 @@
       "data_kind": "fabricated",
       "reference": "data/coverage.csv",
       "format": "csv",
-      "revision": "medical-carrier-1.1.0",
+      "revision": "medical-carrier-1.2.0",
       "checksum": {
         "algorithm": "sha256",
         "value": "5571b3a7a70a61dae1d771dc113c6a0a246e506f8a125de579094f3d87487eda"
@@ -1017,7 +1017,7 @@
       "data_kind": "fabricated",
       "reference": "data/eligibility.csv",
       "format": "csv",
-      "revision": "medical-carrier-1.1.0",
+      "revision": "medical-carrier-1.2.0",
       "checksum": {
         "algorithm": "sha256",
         "value": "68d560d188c7fa42ac85b331de51ca04c8dd8c64611d3663cf53f5ad0f18a08a"
@@ -1068,7 +1068,7 @@
       "data_kind": "fabricated",
       "reference": "data/claims.csv",
       "format": "csv",
-      "revision": "medical-carrier-1.1.0",
+      "revision": "medical-carrier-1.2.0",
       "checksum": {
         "algorithm": "sha256",
         "value": "a902b00758a4972f09f53e2e8b26f9997fdd2bea468e20a1cb7c04adebc8c703"
@@ -1119,7 +1119,7 @@
       "data_kind": "fabricated",
       "reference": "data/claim_lines.csv",
       "format": "csv",
-      "revision": "medical-carrier-1.1.0",
+      "revision": "medical-carrier-1.2.0",
       "checksum": {
         "algorithm": "sha256",
         "value": "0bd9b58462d29869bcd8a00225f8b1b77b83c81bed04d5a8a44fe7232e94ce37"
@@ -1170,7 +1170,7 @@
       "data_kind": "fabricated",
       "reference": "data/adjudications.csv",
       "format": "csv",
-      "revision": "medical-carrier-1.1.0",
+      "revision": "medical-carrier-1.2.0",
       "checksum": {
         "algorithm": "sha256",
         "value": "fa035e3b2b0dfb201414d04b7dcfdf0a7e39fed806de024b6c0be2ac352fab7f"
@@ -1221,7 +1221,7 @@
       "data_kind": "fabricated",
       "reference": "data/payments.csv",
       "format": "csv",
-      "revision": "medical-carrier-1.1.0",
+      "revision": "medical-carrier-1.2.0",
       "checksum": {
         "algorithm": "sha256",
         "value": "1469a88558a7f262ef85c5fe9b4b6bda7eb7102ea92a992004f35a648ed707ec"
@@ -1272,7 +1272,7 @@
       "data_kind": "fabricated",
       "reference": "data/plans.csv",
       "format": "csv",
-      "revision": "medical-carrier-1.1.0",
+      "revision": "medical-carrier-1.2.0",
       "checksum": {
         "algorithm": "sha256",
         "value": "f27ca990c8476379a6cc992083451b684eb0a1e54957aa1e985bf216b7f64034"
@@ -1323,7 +1323,7 @@
       "data_kind": "fabricated",
       "reference": "data/enrollments.csv",
       "format": "csv",
-      "revision": "medical-carrier-1.1.0",
+      "revision": "medical-carrier-1.2.0",
       "checksum": {
         "algorithm": "sha256",
         "value": "5716b79011198e027a81163c62cd97c7c03af0b0b7e27308bd8d12b9c6625eb5"
@@ -1374,7 +1374,7 @@
       "data_kind": "fabricated",
       "reference": "data/resource_references.csv",
       "format": "csv",
-      "revision": "medical-carrier-1.1.0",
+      "revision": "medical-carrier-1.2.0",
       "checksum": {
         "algorithm": "sha256",
         "value": "1da6ebc223e723755b8476306fb5e8050aa3d0e384fa7048ecc6c26a7aae0aaf"
@@ -1425,7 +1425,7 @@
       "data_kind": "fabricated",
       "reference": "data/coded_values.csv",
       "format": "csv",
-      "revision": "medical-carrier-1.1.0",
+      "revision": "medical-carrier-1.2.0",
       "checksum": {
         "algorithm": "sha256",
         "value": "5eeeeb39af2f52c42959c071208ad18f9f8ba335865b5a3703d2df85677b0b48"
@@ -1476,7 +1476,7 @@
       "data_kind": "fabricated",
       "reference": "data/workflow_events.csv",
       "format": "csv",
-      "revision": "medical-carrier-1.1.0",
+      "revision": "medical-carrier-1.2.0",
       "checksum": {
         "algorithm": "sha256",
         "value": "b27e0b1d336915c55ee950bb82b0cbf6f9cc86799ed6a0babd4ce3d6452f83cb"
@@ -1500,7 +1500,7 @@
       "data_kind": "fabricated",
       "reference": "data/cms_beneficiaries.csv",
       "format": "csv",
-      "revision": "medical-carrier-1.1.0",
+      "revision": "medical-carrier-1.2.0",
       "checksum": {
         "algorithm": "sha256",
         "value": "682d408b477eba199e96c853c7982c0157881768a5b8e7be896a75ca1a91e82e"
@@ -1525,7 +1525,7 @@
       "data_kind": "fabricated",
       "reference": "data/cms_inpatient_claims.csv",
       "format": "csv",
-      "revision": "medical-carrier-1.1.0",
+      "revision": "medical-carrier-1.2.0",
       "checksum": {
         "algorithm": "sha256",
         "value": "281f8484b788cdfd0c3545740374675c9b69c350f25b64dd0f9aa26ce8ffdfa8"
@@ -1550,7 +1550,7 @@
       "data_kind": "fabricated",
       "reference": "data/cms_carrier_claims.csv",
       "format": "csv",
-      "revision": "medical-carrier-1.1.0",
+      "revision": "medical-carrier-1.2.0",
       "checksum": {
         "algorithm": "sha256",
         "value": "a3175dadf541162ed006f3b768cc95c3aad7c06e5ca90bd79b4edebef2138401"

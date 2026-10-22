@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 5271,
+        "line": 35,
+        "path": "src/adapters/dbt/index.ts",
+        "sha256": "a0fe33d4fda2539f2adaf598b73ceef63eb422e4beb6549a9d937c78fc3d8276"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "getDbtManifestNode",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(document: Document, path: string): NativeJson"
+    ]
+  },
+  "id": "[\"api\",\".\",\"getDbtManifestNode\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 5271,
+      "line": 35,
+      "path": "src/adapters/dbt/index.ts",
+      "sha256": "a0fe33d4fda2539f2adaf598b73ceef63eb422e4beb6549a9d937c78fc3d8276"
+    }
+  ],
+  "summary": "Public export · src/adapters/dbt/index.ts",
+  "title": "getDbtManifestNode"
+}

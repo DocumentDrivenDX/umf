@@ -4,3 +4,13 @@
 .sites-checkout-*/
 
 /dist/pack-assets/
+
+/dist/loaders/
+
+/dist/packs/
+
+# Reusable software assets are generated during the site build.
+/dist/schema-browser/
+
+# Exact original Truss assets are restored from the checked archive during build.
+/dist/truss-browser/

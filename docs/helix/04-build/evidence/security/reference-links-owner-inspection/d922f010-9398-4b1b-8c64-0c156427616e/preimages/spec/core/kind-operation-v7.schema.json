@@ -1,0 +1,121 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:core:kind-operation:7.0.0",
+  "title": "Read-only core kind inspection for schema-properties envelope",
+  "$defs": {
+    "kind": {
+      "enum": [
+        "field",
+        "record",
+        "group"
+      ]
+    },
+    "identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "module",
+        "element"
+      ],
+      "properties": {
+        "module": {
+          "type": "string",
+          "minLength": 1
+        },
+        "element": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "source": {
+      "$ref": "urn:umf:core:0.8.0"
+    },
+    "lookup": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation",
+        "version",
+        "source",
+        "identity",
+        "path",
+        "meaning",
+        "provenance"
+      ],
+      "properties": {
+        "operation": {
+          "const": "inspect-core-kind"
+        },
+        "version": {
+          "const": "7.0.0"
+        },
+        "source": {
+          "$ref": "#/$defs/source"
+        },
+        "identity": {
+          "$ref": "#/$defs/identity"
+        },
+        "path": {
+          "type": "string"
+        },
+        "provenance": {
+          "const": "unverified"
+        },
+        "meaning": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "state",
+                "kind"
+              ],
+              "properties": {
+                "state": {
+                  "const": "known"
+                },
+                "kind": {
+                  "$ref": "#/$defs/kind"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "state"
+              ],
+              "properties": {
+                "state": {
+                  "const": "unspecified"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "state",
+                "value"
+              ],
+              "properties": {
+                "state": {
+                  "const": "unknown"
+                },
+                "value": {
+                  "type": "string",
+                  "minLength": 1,
+                  "not": {
+                    "$ref": "#/$defs/kind"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  "$ref": "#/$defs/lookup"
+}

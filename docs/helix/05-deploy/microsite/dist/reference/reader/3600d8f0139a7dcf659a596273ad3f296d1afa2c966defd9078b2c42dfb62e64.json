@@ -1,0 +1,135 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"PostgresqlRelationshipObservation\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "nativePath",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"NativeJson\"]"
+      ],
+      "name": "nativeNode",
+      "optional": false,
+      "type": "NativeJson"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "origin",
+      "optional": false,
+      "type": "\"ddl\" | \"catalog\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "name",
+      "optional": false,
+      "type": "string | null"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "sourceTable",
+      "optional": false,
+      "type": "string | null"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "targetTable",
+      "optional": false,
+      "type": "string | null"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "sourceColumns",
+      "optional": false,
+      "type": "string[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "targetColumns",
+      "optional": false,
+      "type": "string[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "targetKeyCandidates",
+      "optional": false,
+      "type": "string[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "match",
+      "optional": false,
+      "type": "\"unknown\" | \"simple\" | \"full\" | \"partial\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "onUpdate",
+      "optional": false,
+      "type": "\"unknown\" | \"no-action\" | \"restrict\" | \"cascade\" | \"set-null\" | \"set-default\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "onDelete",
+      "optional": false,
+      "type": "\"unknown\" | \"no-action\" | \"restrict\" | \"cascade\" | \"set-null\" | \"set-default\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "validated",
+      "optional": false,
+      "type": "boolean | null"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "deferrable",
+      "optional": false,
+      "type": "boolean"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "initiallyDeferred",
+      "optional": false,
+      "type": "boolean"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "authorIntent",
+      "optional": false,
+      "type": "\"unknown\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "enforcement",
+      "optional": false,
+      "type": "\"unverified-native-observation\""
+    }
+  ],
+  "parameters": [],
+  "purpose": "PostgresqlRelationshipObservation is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "PostgresqlRelationshipObservation"
+}

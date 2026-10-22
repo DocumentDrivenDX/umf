@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {importLinkmlDocument,getLinkmlDocumentNode,proposeLinkmlImportMerge,exportLinkmlDocument,readDocument,writeDocument,type Document} from '../src';
 const manifest=await Bun.file('native/linkml/sources/manifest.json').json(),sources:{key:string;path:string;literal:string;document:Document}[]=[];
 for(const f of manifest.files.filter((f:any)=>f.upstreamPath.startsWith('linkml_model/model/schema/')&&f.path.endsWith('.yaml'))){const raw=await Bun.file(f.path).text(),document=importLinkmlDocument(raw,{id:f.path,format:'yaml'}),name=getLinkmlDocumentNode(document,'/name');if(name.kind!=='string')throw Error('Native name absent');sources.push({key:name.value,path:f.path,literal:'linkml:'+f.path.split('/').at(-1)!.replace(/\.yaml$/,''),document});}

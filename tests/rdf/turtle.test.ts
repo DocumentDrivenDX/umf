@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {createHash} from 'node:crypto';
 import {importRdfTurtle,exportRdfTurtle,exportRdfNQuads,importRdfNQuads,getRdfQuads,proposeRdfQuadEdit,proposeRdfIriRename,readDocument,writeDocument} from '../../src';

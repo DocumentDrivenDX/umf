@@ -1,0 +1,50 @@
+{
+  "data": {
+    "conflicts": [],
+    "correspondence": "unassessed",
+    "declarations": [
+      {
+        "bytes": 4950,
+        "path": "spec/extensions/smithy/package.json",
+        "sha256": "657272b11798c7e6f69252412014b784851845cdb2987183235cf88c60a7c5ae"
+      }
+    ],
+    "evidence": [],
+    "operation": {
+      "apiNames": [],
+      "coreProfiles": [],
+      "extensionVersions": [],
+      "fixturePaths": [],
+      "id": "umf.smithy@0.1.0:export",
+      "kind": "export",
+      "limitations": [
+        "Recorded scope only; native equivalence and production adoption are separate."
+      ],
+      "runtime": {
+        "availability": "host-only",
+        "profileId": "umf.smithy@0.1.0:export",
+        "requirements": [
+          "Native runtime / original qualification harness; not executed by this page."
+        ]
+      },
+      "sourceSystem": "Smithy JSON AST · 2.0; external smithy-model 1.73.0",
+      "subset": "Exact JSON AST roots/dependencies and supplied IDL/JSON source files. Browser checks AST structure or source archive shape only; parsing, assembly, selectors, trait semantics and projections remain separately qualified. Optional pinned JavaScript assembly is explicit through a trusted backend; known reflection limitations and source normalization are reported.",
+      "targetSystem": "Smithy JSON AST · 2.0; external smithy-model 1.73.0",
+      "title": "umf.smithy · export"
+    }
+  },
+  "id": "[\"integration\",\"umf.smithy@0.1.0:export\"]",
+  "kind": "integration",
+  "links": [
+    "[\"extension\",\"umf.smithy\",\"0.1.0\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 134795,
+      "path": "docs/helix/05-deploy/reference/operations.json",
+      "sha256": "793743bbca36e56e90e82df5ef0408b628c434e58cb68aea4d6486349be78e61"
+    }
+  ],
+  "summary": "Exact JSON AST roots/dependencies and supplied IDL/JSON source files. Browser checks AST structure or source archive shape only; parsing, assembly, selectors, trait semantics and projections remain separately qualified. Optional pinned JavaScript assembly is explicit through a trusted backend; known reflection limitations and source normalization are reported.",
+  "title": "umf.smithy · export"
+}

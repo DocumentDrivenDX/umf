@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {mkdir} from 'node:fs/promises';
 export async function ensureSmithyRuntime(){
 const jars=[['jsonschema','47584feccfe5879ba438d6ab11a646f890bd606ff39c82849c75be1f642fb493'],['model','816e2cbbf8a62895d484e481e1d7beb1e4e929dec0cfbdda8c160d69402f750b'],['utils','1d89fa0624ebf8e0f3032cc6b8283ee58335d3ee43e1826b24b1e951b3bdf8d2']];

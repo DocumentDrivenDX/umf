@@ -1,0 +1,832 @@
+{
+  "date": "2026-10-16",
+  "scope": "Experimental core0.9 and initial128-bit/UUID carrier APIs. Latest passing per-file union across explicitly separated cuts; not one full-repository replay or native admission gate.",
+  "coreVersion": "0.9.0",
+  "codecProfile": "umf-128/1",
+  "bindingProfile": "umf-binding-3",
+  "cohorts": [
+    {
+      "name": "broad-initial",
+      "log": "fixtures/validation/uuid/runs/broad-initial.log",
+      "sha256": "ffadc34716234772b26e23078ed81b1ccc78c564a38b8bede2820fd9739569eb",
+      "files": 60,
+      "passed": 344,
+      "failed": 3,
+      "allFilesPassed": false
+    },
+    {
+      "name": "repaired-projections",
+      "log": "fixtures/validation/uuid/runs/repaired-projections.log",
+      "sha256": "802c69feb98dd44a178e865e221a548eb271afaf667d50c9ca52ee9d2f7ec1bf",
+      "files": 4,
+      "passed": 21,
+      "failed": 0,
+      "allFilesPassed": true
+    },
+    {
+      "name": "current-core",
+      "log": "fixtures/validation/uuid/runs/current-core.log",
+      "sha256": "f0cd74d339115bc9b60ff9078e8f433c1b8c7922d3914f17a3a1cce4fa2bb858",
+      "files": 39,
+      "passed": 216,
+      "failed": 0,
+      "allFilesPassed": true
+    },
+    {
+      "name": "current-focused",
+      "log": "fixtures/validation/uuid/runs/current-focused.log",
+      "sha256": "57c5dac0786dc035a99241c5f2a618b887079010b8e801f799e4e5b02ee734ad",
+      "files": 7,
+      "passed": 27,
+      "failed": 0,
+      "allFilesPassed": true
+    }
+  ],
+  "latestPassingFiles": 63,
+  "latestPassingTests": 371,
+  "latestPassingAssertions": 19396,
+  "latestFiles": [
+    {
+      "testProcess": "tests/binding-uuid.test.ts",
+      "exitCode": 0,
+      "pass": 5,
+      "fail": 0,
+      "assertions": 62,
+      "completeSummary": true,
+      "logSha256": "8b0f2f3351f4d973d231ffbd06d798793b2bdd8987a03a4174e6e92dde6032a7",
+      "cohort": "current-focused"
+    },
+    {
+      "testProcess": "tests/binding/consumer-migration.test.ts",
+      "exitCode": 0,
+      "pass": 2,
+      "fail": 0,
+      "assertions": 51,
+      "completeSummary": true,
+      "logSha256": "5fb2c6af04d12b40f41abd38c2f70b19f23b427728a5ac2e56cf6e48f66d7a79",
+      "cohort": "broad-initial"
+    },
+    {
+      "testProcess": "tests/binding/delta.test.ts",
+      "exitCode": 0,
+      "pass": 3,
+      "fail": 0,
+      "assertions": 13,
+      "completeSummary": true,
+      "logSha256": "d267a00341c3054e203c1ddf15e410185c0c521fef490be80db306fc3420b3e6",
+      "cohort": "broad-initial"
+    },
+    {
+      "testProcess": "tests/binding/iceberg.test.ts",
+      "exitCode": 0,
+      "pass": 2,
+      "fail": 0,
+      "assertions": 11,
+      "completeSummary": true,
+      "logSha256": "53797e801ea14fc368a254e58e0c103bae10afd67fb7065d0a7063749d45a574",
+      "cohort": "broad-initial"
+    },
+    {
+      "testProcess": "tests/binding/indexes.test.ts",
+      "exitCode": 0,
+      "pass": 6,
+      "fail": 0,
+      "assertions": 28,
+      "completeSummary": true,
+      "logSha256": "7b837c49ac52c5ef39d5a7da0587419caaa593ed30f55670ae790ff0f79916ad",
+      "cohort": "broad-initial"
+    },
+    {
+      "testProcess": "tests/binding/multi-target.test.ts",
+      "exitCode": 0,
+      "pass": 2,
+      "fail": 0,
+      "assertions": 30,
+      "completeSummary": true,
+      "logSha256": "174e0c80182ec2e0c4830d9129ef232c313ea877c2d826e06d95586c5fbb2509",
+      "cohort": "broad-initial"
+    },
+    {
+      "testProcess": "tests/binding/package.test.ts",
+      "exitCode": 0,
+      "pass": 5,
+      "fail": 0,
+      "assertions": 18,
+      "completeSummary": true,
+      "logSha256": "7eaeee4caf900d2536422fc6246d7f0e30786b9949761065f87c2c8833264b86",
+      "cohort": "broad-initial"
+    },
+    {
+      "testProcess": "tests/binding/parquet.test.ts",
+      "exitCode": 0,
+      "pass": 5,
+      "fail": 0,
+      "assertions": 19,
+      "completeSummary": true,
+      "logSha256": "625fa58abb7c316c73ed522f637f437c60851b9b8c6bacd8b42ba2b901c7dd6b",
+      "cohort": "broad-initial"
+    },
+    {
+      "testProcess": "tests/binding/postgresql-indexes.test.ts",
+      "exitCode": 0,
+      "pass": 3,
+      "fail": 0,
+      "assertions": 13,
+      "completeSummary": true,
+      "logSha256": "50d63d306b1dfe94cbcfafc2c1403fa3967871979d4130ef7fabd949b88ebe77",
+      "cohort": "broad-initial"
+    },
+    {
+      "testProcess": "tests/binding/raw-profiles.test.ts",
+      "exitCode": 0,
+      "pass": 6,
+      "fail": 0,
+      "assertions": 73,
+      "completeSummary": true,
+      "logSha256": "fbfd1687cdf46b62959f2e3ec41089dd53ec300a09eaefd9ccf13e1a5ab9b74c",
+      "cohort": "broad-initial"
+    },
+    {
+      "testProcess": "tests/binding/sqlserver-indexes.test.ts",
+      "exitCode": 0,
+      "pass": 3,
+      "fail": 0,
+      "assertions": 14,
+      "completeSummary": true,
+      "logSha256": "4e7b81dc1ed1bcea559a66a6102d95c8227d46fc8fedf130d2c27b2f935bbda0",
+      "cohort": "broad-initial"
+    },
+    {
+      "testProcess": "tests/binding/sqlserver-tables-indexes.test.ts",
+      "exitCode": 0,
+      "pass": 4,
+      "fail": 0,
+      "assertions": 29,
+      "completeSummary": true,
+      "logSha256": "70c7b9d743c37ce87c778f70eb0ee212e7b429a597f9d0e5bff5d758be356d3a",
+      "cohort": "broad-initial"
+    },
+    {
+      "testProcess": "tests/binding/sqlserver-tables.test.ts",
+      "exitCode": 0,
+      "pass": 6,
+      "fail": 0,
+      "assertions": 33,
+      "completeSummary": true,
+      "logSha256": "eddb3f9e96462561b6e728be5ef7a27b6ddcb8f97f297969c9afa293bbd3dca7",
+      "cohort": "broad-initial"
+    },
+    {
+      "testProcess": "tests/binding/sqlserver.test.ts",
+      "exitCode": 0,
+      "pass": 11,
+      "fail": 0,
+      "assertions": 4455,
+      "completeSummary": true,
+      "logSha256": "9bd731740365ffddb041ae700033c0e47c185c031d097b9bb28b9fb9909cd005",
+      "cohort": "broad-initial"
+    },
+    {
+      "testProcess": "tests/binding/stable-ids.test.ts",
+      "exitCode": 0,
+      "pass": 7,
+      "fail": 0,
+      "assertions": 45,
+      "completeSummary": true,
+      "logSha256": "5da4958ac04a4080743919a62530ae3dae41ba1bc31fbaaa176f677cdd4fa3eb",
+      "cohort": "broad-initial"
+    },
+    {
+      "testProcess": "tests/bit128.test.ts",
+      "exitCode": 0,
+      "pass": 3,
+      "fail": 0,
+      "assertions": 4702,
+      "completeSummary": true,
+      "logSha256": "49a68b0f384135686afbacc23fad18d0c2ac5949625fd6b58a36a1a2f5594e5d",
+      "cohort": "current-focused"
+    },
+    {
+      "testProcess": "tests/core-uuid-key.test.ts",
+      "exitCode": 0,
+      "pass": 1,
+      "fail": 0,
+      "assertions": 397,
+      "completeSummary": true,
+      "logSha256": "5514b56000a3a0726d45302bc4848fbdfa317f32784938ac8aa2fc10bbdc3483",
+      "cohort": "current-focused"
+    },
+    {
+      "testProcess": "tests/core-uuid-transition.test.ts",
+      "exitCode": 0,
+      "pass": 2,
+      "fail": 0,
+      "assertions": 11,
+      "completeSummary": true,
+      "logSha256": "59014c964bc2f61fd9d55e610c8e2bb624d18ac3175f8de5ba7880a9ae6dce56",
+      "cohort": "current-focused"
+    },
+    {
+      "testProcess": "tests/core-uuid.test.ts",
+      "exitCode": 0,
+      "pass": 6,
+      "fail": 0,
+      "assertions": 52,
+      "completeSummary": true,
+      "logSha256": "dde5f3fe639cd014b61f598cbe319819d3c25a2d9ae6418a7022a3fa8e8cc891",
+      "cohort": "current-focused"
+    },
+    {
+      "testProcess": "tests/core/cardinality-ideals.test.ts",
+      "exitCode": 0,
+      "pass": 5,
+      "fail": 0,
+      "assertions": 377,
+      "completeSummary": true,
+      "logSha256": "f8969b9f5baf8a72574485b8f085ef34572ba61e70e310c92a97399a5f311c35",
+      "cohort": "current-core"
+    },
+    {
+      "testProcess": "tests/core/cardinality-operations.test.ts",
+      "exitCode": 0,
+      "pass": 6,
+      "fail": 0,
+      "assertions": 159,
+      "completeSummary": true,
+      "logSha256": "6044321ea609e2095c41f1a9f72db54521048510d5008acd735cbea3ec49d745",
+      "cohort": "current-core"
+    },
+    {
+      "testProcess": "tests/core/core.test.ts",
+      "exitCode": 0,
+      "pass": 17,
+      "fail": 0,
+      "assertions": 183,
+      "completeSummary": true,
+      "logSha256": "625f4cd354e061d958bd21e80d757895c0bab6f81c9917fc69aa7e776d68fe59",
+      "cohort": "current-core"
+    },
+    {
+      "testProcess": "tests/core/deep-json-equality.test.ts",
+      "exitCode": 0,
+      "pass": 3,
+      "fail": 0,
+      "assertions": 10,
+      "completeSummary": true,
+      "logSha256": "d0ee2f9438e5e42a651aa6aab1c14178c55f05a6efddb97c25fb093e569e3b0a",
+      "cohort": "current-core"
+    },
+    {
+      "testProcess": "tests/core/facet-authoring.test.ts",
+      "exitCode": 0,
+      "pass": 4,
+      "fail": 0,
+      "assertions": 94,
+      "completeSummary": true,
+      "logSha256": "a7d19a35123eda23b95f3970851361114dff1567f8e3a1c7bb49fadfdbdc2fc6",
+      "cohort": "current-core"
+    },
+    {
+      "testProcess": "tests/core/facet-ideals.test.ts",
+      "exitCode": 0,
+      "pass": 3,
+      "fail": 0,
+      "assertions": 887,
+      "completeSummary": true,
+      "logSha256": "952e3e2ddf00fb36417d74e2af17aec5d95e7bf89fd342ab9332277acc406d32",
+      "cohort": "current-core"
+    },
+    {
+      "testProcess": "tests/core/facet-schema-properties.test.ts",
+      "exitCode": 0,
+      "pass": 3,
+      "fail": 0,
+      "assertions": 61,
+      "completeSummary": true,
+      "logSha256": "2c695e0a08032d78194ea2bc5138c94e0f1846572a1aa10b8a916f62b494c51b",
+      "cohort": "current-core"
+    },
+    {
+      "testProcess": "tests/core/facet-transition.test.ts",
+      "exitCode": 0,
+      "pass": 3,
+      "fail": 0,
+      "assertions": 135,
+      "completeSummary": true,
+      "logSha256": "637612b0fe3658b15f766e8397a3c2d9ed631d495b6d17987f8df34269479f36",
+      "cohort": "current-core"
+    },
+    {
+      "testProcess": "tests/core/field-ideals.test.ts",
+      "exitCode": 0,
+      "pass": 5,
+      "fail": 0,
+      "assertions": 136,
+      "completeSummary": true,
+      "logSha256": "df7406fce4dfc35d8e408a239d76fb50dddb0f8feea5185c37479147c56cf909",
+      "cohort": "current-core"
+    },
+    {
+      "testProcess": "tests/core/field-kind.test.ts",
+      "exitCode": 0,
+      "pass": 5,
+      "fail": 0,
+      "assertions": 138,
+      "completeSummary": true,
+      "logSha256": "ced38a19f035dfa8fe48c81cf9732407c453a98fd0c2893cdd2166ba1f7571dc",
+      "cohort": "current-core"
+    },
+    {
+      "testProcess": "tests/core/field-transition.test.ts",
+      "exitCode": 0,
+      "pass": 4,
+      "fail": 0,
+      "assertions": 51,
+      "completeSummary": true,
+      "logSha256": "76b6c9dbfad7f1531cf30467baeb53163b47744beaff9368fea77e86a02d2604",
+      "cohort": "current-core"
+    },
+    {
+      "testProcess": "tests/core/javascript-numeric.test.ts",
+      "exitCode": 0,
+      "pass": 4,
+      "fail": 0,
+      "assertions": 77,
+      "completeSummary": true,
+      "logSha256": "0efa307d68c72bd0fb1184ff4e93de7df0d42dc71b12577cc1420c235af9349a",
+      "cohort": "current-core"
+    },
+    {
+      "testProcess": "tests/core/json-array-carriers.test.ts",
+      "exitCode": 0,
+      "pass": 3,
+      "fail": 0,
+      "assertions": 19,
+      "completeSummary": true,
+      "logSha256": "f54500e773acad89b8b4dc818862979423febac7d03fc6cf9641a7ddcaa1e3ea",
+      "cohort": "current-core"
+    },
+    {
+      "testProcess": "tests/core/key-ideals.test.ts",
+      "exitCode": 0,
+      "pass": 3,
+      "fail": 0,
+      "assertions": 375,
+      "completeSummary": true,
+      "logSha256": "70cdd292b5e0b0d71ba6c0bd8ac6e15cb3ad055508761a77ae8beb53c4c67e9e",
+      "cohort": "current-core"
+    },
+    {
+      "testProcess": "tests/core/key-operations.test.ts",
+      "exitCode": 0,
+      "pass": 8,
+      "fail": 0,
+      "assertions": 97,
+      "completeSummary": true,
+      "logSha256": "db612c7f19b56c0d3c6f48fa8ddb2b7086fff92c0b9f0d5f5aff8a72a8ae9c9a",
+      "cohort": "current-core"
+    },
+    {
+      "testProcess": "tests/core/key-transition.test.ts",
+      "exitCode": 0,
+      "pass": 4,
+      "fail": 0,
+      "assertions": 269,
+      "completeSummary": true,
+      "logSha256": "66d294e6f7a9820e520e2e5622e69d81653af5189c895d026f03eabb99248a4c",
+      "cohort": "current-core"
+    },
+    {
+      "testProcess": "tests/core/key-tuple.test.ts",
+      "exitCode": 0,
+      "pass": 7,
+      "fail": 0,
+      "assertions": 247,
+      "completeSummary": true,
+      "logSha256": "16d238f68767eec7ddf3593db5d40db440c1e5bea5fded235fdbf769aab2b7d4",
+      "cohort": "current-core"
+    },
+    {
+      "testProcess": "tests/core/native-json.test.ts",
+      "exitCode": 0,
+      "pass": 4,
+      "fail": 0,
+      "assertions": 16,
+      "completeSummary": true,
+      "logSha256": "a0d65e6a7116db7db778580b885a08e6a730fd36ae5661cb07d8d7be60bdbf37",
+      "cohort": "current-core"
+    },
+    {
+      "testProcess": "tests/core/nullability-authoring.test.ts",
+      "exitCode": 0,
+      "pass": 4,
+      "fail": 0,
+      "assertions": 49,
+      "completeSummary": true,
+      "logSha256": "5a69059e208ac1605d3328463bce7af15229f5afd230483bde9d98f27f0c2268",
+      "cohort": "current-core"
+    },
+    {
+      "testProcess": "tests/core/nullability-ideals.test.ts",
+      "exitCode": 0,
+      "pass": 5,
+      "fail": 0,
+      "assertions": 140,
+      "completeSummary": true,
+      "logSha256": "189e67ee14d578a877c7737f3e4f9c81f7f27a91d573f8247c3aa9e32daec3eb",
+      "cohort": "current-core"
+    },
+    {
+      "testProcess": "tests/core/nullability-schema-properties.test.ts",
+      "exitCode": 0,
+      "pass": 1,
+      "fail": 0,
+      "assertions": 20,
+      "completeSummary": true,
+      "logSha256": "58e2f33a27f21c3c26f7b387a41e2ddc1e2f3e386f0731dae1e60dab84f733ea",
+      "cohort": "current-core"
+    },
+    {
+      "testProcess": "tests/core/nullability-transition.test.ts",
+      "exitCode": 0,
+      "pass": 6,
+      "fail": 0,
+      "assertions": 61,
+      "completeSummary": true,
+      "logSha256": "eadaf36dbacabb38a510797d21521d5d65335ecb21323d38b1be58b2f63d177b",
+      "cohort": "current-core"
+    },
+    {
+      "testProcess": "tests/core/read-only-result-schemas.test.ts",
+      "exitCode": 0,
+      "pass": 1,
+      "fail": 0,
+      "assertions": 4,
+      "completeSummary": true,
+      "logSha256": "e07bd0c06f4f7905ed163e9fc70318adef5acfcd325438e2c1d473a38ed0bcf3",
+      "cohort": "current-core"
+    },
+    {
+      "testProcess": "tests/core/relationship-ideal.test.ts",
+      "exitCode": 0,
+      "pass": 3,
+      "fail": 0,
+      "assertions": 255,
+      "completeSummary": true,
+      "logSha256": "df68bb1430ee1379faf29be29d365461efcfe43715dfcdee4f9df06ab660f8b8",
+      "cohort": "current-core"
+    },
+    {
+      "testProcess": "tests/core/relationship-operations.test.ts",
+      "exitCode": 0,
+      "pass": 6,
+      "fail": 0,
+      "assertions": 177,
+      "completeSummary": true,
+      "logSha256": "59529c845a98566b07b535f425d79661c57e875dd35b4e087acd39ef4e8b5162",
+      "cohort": "current-core"
+    },
+    {
+      "testProcess": "tests/core/relationship-public.test.ts",
+      "exitCode": 0,
+      "pass": 4,
+      "fail": 0,
+      "assertions": 36,
+      "completeSummary": true,
+      "logSha256": "b58ae8154e7e570bba868e8311ac742f1dc5348d1ea7379ef73fb7e9682beeb1",
+      "cohort": "current-core"
+    },
+    {
+      "testProcess": "tests/core/relationship-selection.test.ts",
+      "exitCode": 0,
+      "pass": 4,
+      "fail": 0,
+      "assertions": 149,
+      "completeSummary": true,
+      "logSha256": "530ca3c15d7366fc39cee044c50dbcb3c15af091e3e045fcfb0ab5343de82de9",
+      "cohort": "current-core"
+    },
+    {
+      "testProcess": "tests/core/relationship-transition.test.ts",
+      "exitCode": 0,
+      "pass": 4,
+      "fail": 0,
+      "assertions": 107,
+      "completeSummary": true,
+      "logSha256": "59441bf160448fab48acf903a3cd891336731b4e8dc9a4c7de01b98c45e67c02",
+      "cohort": "current-core"
+    },
+    {
+      "testProcess": "tests/core/scalar.test.ts",
+      "exitCode": 0,
+      "pass": 2,
+      "fail": 0,
+      "assertions": 13,
+      "completeSummary": true,
+      "logSha256": "1187f089b0d4e6a3ce3861cdd52948bb9f1b4350c53ceb3b3208ebc1649283ac",
+      "cohort": "current-core"
+    },
+    {
+      "testProcess": "tests/core/schema-properties-review.test.ts",
+      "exitCode": 0,
+      "pass": 9,
+      "fail": 0,
+      "assertions": 356,
+      "completeSummary": true,
+      "logSha256": "0f6108ec2a42e26415070cc1cab4a6041304934860c417457ecba117fd20fb50",
+      "cohort": "current-core"
+    },
+    {
+      "testProcess": "tests/core/schema-properties.test.ts",
+      "exitCode": 0,
+      "pass": 50,
+      "fail": 0,
+      "assertions": 89,
+      "completeSummary": true,
+      "logSha256": "1d4c7bbdf03fec44e47b943798814bd4779abcadf7b7fb590b6d532b011ff28d",
+      "cohort": "current-core"
+    },
+    {
+      "testProcess": "tests/core/selection.test.ts",
+      "exitCode": 0,
+      "pass": 4,
+      "fail": 0,
+      "assertions": 63,
+      "completeSummary": true,
+      "logSha256": "a00b97d3f2af3af5282c8d8cc60fcc8bf914ebd52ad3d919daa2056a2cae0098",
+      "cohort": "current-core"
+    },
+    {
+      "testProcess": "tests/projections/ddd-authored-graph-fixture.test.ts",
+      "exitCode": 0,
+      "pass": 1,
+      "fail": 0,
+      "assertions": 6,
+      "completeSummary": true,
+      "logSha256": "00074b61ca34c47a0ca1da3d3789fadd49a9e3deb30c43a0afcb3e5535895db0",
+      "cohort": "broad-initial"
+    },
+    {
+      "testProcess": "tests/projections/ddd-graphql-core-fields.test.ts",
+      "exitCode": 0,
+      "pass": 5,
+      "fail": 0,
+      "assertions": 26,
+      "completeSummary": true,
+      "logSha256": "fbd6d9be7c0b71cd57ba1a5373076e27324d439f766a0f604a16bb314808df78",
+      "cohort": "broad-initial"
+    },
+    {
+      "testProcess": "tests/projections/ddd-graphql-entities.test.ts",
+      "exitCode": 0,
+      "pass": 5,
+      "fail": 0,
+      "assertions": 29,
+      "completeSummary": true,
+      "logSha256": "a44761241ccd68d48493a7e57bf822b6cdbe3b640d9734a2a84cc8284ca62df4",
+      "cohort": "broad-initial"
+    },
+    {
+      "testProcess": "tests/projections/ddd-graphql.test.ts",
+      "exitCode": 0,
+      "pass": 9,
+      "fail": 0,
+      "assertions": 208,
+      "completeSummary": true,
+      "logSha256": "10ed033b4c32d9ef63ba89616eb4aac49869d07a74a9d3ebb957c750f99522fe",
+      "cohort": "broad-initial"
+    },
+    {
+      "testProcess": "tests/projections/ddd-json-schema.test.ts",
+      "exitCode": 0,
+      "pass": 4,
+      "fail": 0,
+      "assertions": 36,
+      "completeSummary": true,
+      "logSha256": "11678863a71fff2de93e5c70c2efeab0ef92a70383940b6df4cbc436da0e0c32",
+      "cohort": "broad-initial"
+    },
+    {
+      "testProcess": "tests/projections/ddd-postgresql-tables-indexes.test.ts",
+      "exitCode": 0,
+      "pass": 2,
+      "fail": 0,
+      "assertions": 13,
+      "completeSummary": true,
+      "logSha256": "159ae4698fc0e88ac1111f3b351812253d855fa2a013549cabc7b27bc6a919fb",
+      "cohort": "broad-initial"
+    },
+    {
+      "testProcess": "tests/projections/ddd-postgresql-tables.test.ts",
+      "exitCode": 0,
+      "pass": 4,
+      "fail": 0,
+      "assertions": 27,
+      "completeSummary": true,
+      "logSha256": "923150b89873b3c9adec4e35c44eed0c615ebc28a617930edba9616283fd3ffe",
+      "cohort": "broad-initial"
+    },
+    {
+      "testProcess": "tests/projections/ddd-postgresql.test.ts",
+      "exitCode": 0,
+      "pass": 41,
+      "fail": 0,
+      "assertions": 2160,
+      "completeSummary": true,
+      "logSha256": "3d277fd19bd558b77cface5b54453ca2b6df789416050715c85c72214b87fafa",
+      "cohort": "broad-initial"
+    },
+    {
+      "testProcess": "tests/projections/json-schema-protobuf.test.ts",
+      "exitCode": 0,
+      "pass": 5,
+      "fail": 0,
+      "assertions": 43,
+      "completeSummary": true,
+      "logSha256": "88178e4b20f170fdb88a6f8d25024ff9a782c5026bb60adb1c107ac604b05839",
+      "cohort": "repaired-projections"
+    },
+    {
+      "testProcess": "tests/projections/postgresql-relationship-layout.test.ts",
+      "exitCode": 0,
+      "pass": 9,
+      "fail": 0,
+      "assertions": 317,
+      "completeSummary": true,
+      "logSha256": "953cccf1592359e83bce635763f3edf86e04d73c2eeb9a22e9ea7b98544fe399",
+      "cohort": "repaired-projections"
+    },
+    {
+      "testProcess": "tests/uuid-native-projection.test.ts",
+      "exitCode": 0,
+      "pass": 8,
+      "fail": 0,
+      "assertions": 61,
+      "completeSummary": true,
+      "logSha256": "d39e932ef60ed53081e7b1b7ce63f0608ae23baaec0ceafeafb84302f5b434cf",
+      "cohort": "current-focused"
+    },
+    {
+      "testProcess": "tests/uuid.test.ts",
+      "exitCode": 0,
+      "pass": 2,
+      "fail": 0,
+      "assertions": 1564,
+      "completeSummary": true,
+      "logSha256": "e133de5dd4813bb0c8fd95d2028679f27571ecb56f008307abcd7d2470b2b4ba",
+      "cohort": "current-focused"
+    }
+  ],
+  "checks": {
+    "typecheck": true,
+    "browserEsmAndDeclarations": true,
+    "jsonSchemas": 420,
+    "extensionPackages": 69,
+    "browser": {
+      "vectors": 389,
+      "codecChecks": 2334,
+      "keyChecks": 389,
+      "recoveries": 3,
+      "refusals": 9,
+      "nodeGlobalsAbsent": true
+    },
+    "browserHostImportNegativeControl": true,
+    "browserLayerImportNegativeControl": true,
+    "browserSelectedSourceAndBundleHashesCurrent": true
+  },
+  "nativeDdlCorrespondence": [
+    {
+      "system": "postgresql",
+      "carrier": "native-uuid",
+      "nativeDdlMatchesCurrentCandidate": true,
+      "sha256": "edcc072ab1c2f251899a83d2689d66530567ea896a90884f9892b76bf7813f47"
+    },
+    {
+      "system": "postgresql",
+      "carrier": "bytes16",
+      "nativeDdlMatchesCurrentCandidate": true,
+      "sha256": "b1607f5bedc5eeef337deef3644a65d42297ae529cda4402401ffbe16acd9f4b"
+    },
+    {
+      "system": "postgresql",
+      "carrier": "uuid-text",
+      "nativeDdlMatchesCurrentCandidate": true,
+      "sha256": "ef375736898637c93298b6c7268bf887158301c519b06c4178967181b5e02202"
+    },
+    {
+      "system": "postgresql",
+      "carrier": "words64",
+      "nativeDdlMatchesCurrentCandidate": true,
+      "sha256": "78b7064cf57f2b39174dd45871b921c47c71f797b6552413dedc8f663a714d26"
+    },
+    {
+      "system": "sqlserver",
+      "carrier": "native-uuid",
+      "nativeDdlMatchesCurrentCandidate": true,
+      "sha256": "8ffc9c01dbad4dbfedc01d0e5cc8981edbaf8a8f58b39c4f3f98aa26e749f96e"
+    },
+    {
+      "system": "sqlserver",
+      "carrier": "bytes16",
+      "nativeDdlMatchesCurrentCandidate": true,
+      "sha256": "8f1a54a587a8dc68b575e528a913a9cf1306faa8a293c195a9eda308fb504333"
+    },
+    {
+      "system": "sqlserver",
+      "carrier": "uuid-text",
+      "nativeDdlMatchesCurrentCandidate": true,
+      "sha256": "58a96cea17d0b8801353b80000197b90e3889968b91978d7efedd55291baef29"
+    },
+    {
+      "system": "sqlserver",
+      "carrier": "words64",
+      "nativeDdlMatchesCurrentCandidate": true,
+      "sha256": "36065e02698f2634625fb04d96533e1e34f15bc5de754c8212d36aa88a85ef93"
+    }
+  ],
+  "changedSourceSha256": {
+    "scripts/bit128-oracle.py": "bbc9028ff2ede5f9cd433fac393346de2780c81f6caa28e61908d224b8eb6a38",
+    "scripts/uuid-browser.ts": "aa7d4029091c08d205bd545aa6051cea9d8094d90e631b96fcff27f9fb3c6c3f",
+    "scripts/uuid-native-artifacts.ts": "ab39feca0336a49ae05ef9b6954360986146d084861c6102859e3064ef299474",
+    "scripts/uuid-native-oracle.py": "94d6fafa9cab059547c4d5d9998321ef65697ba78c84d73daf7fff2e454abf47",
+    "scripts/uuid-postgresql.ts": "d00fa01acc3e8d743d01c0e5bdeeec2a2f4aa5f28dba9ae059a534993e283fd2",
+    "scripts/uuid-sqlserver.ts": "7319eac340c8b72497e918dd81c3587af564e48f748230d3ca21a0b51074e37b",
+    "scripts/uuid-tablespec-oracle.py": "a4a6761083d632f815096dca5ca57e547d7bacf939da6485aa9400c0b6ed0d48",
+    "spec/core/bit128-document.schema.json": "d10476a91845c430df0852d8da9fa7b53a1700410109fec15e0c9954eec11c2b",
+    "spec/core/bit128-selection.schema.json": "db9ae63d0d647f544caed064fe80b68d208246c3a77fafc9be9f00ed59652c5f",
+    "spec/core/bit128-transition.schema.json": "60e1ad76e41ca2f3b3bb42a07057ddfcc7c72cc1cfb750395c2f04a180d485a8",
+    "spec/core/cardinality-operation-v6.schema.json": "ad379c477298cffc32e72c8722a3d06f3dc81694ac9d1cb0d5b1d23e942f2bf5",
+    "spec/core/facet-operation-v5.schema.json": "f70a0cf3ee39ee725d5a33def64ed6c8557e7fbef4d3d0ca89afd53a8b6820e3",
+    "spec/core/key-operation-v4.schema.json": "dd087b5e26a92dd6ee5366ded216a006ed4ef5e7b31e851890fd81d978606ba1",
+    "spec/core/key-tuple-operation-v4.schema.json": "90691e12c3edd982009124ea3d7a170d0f109bca76d388d5388bd2578ffaee0c",
+    "spec/core/kind-operation-v8.schema.json": "b0ea478865567f2ee6c3b060df5eda10723cb4bdeaa4ff26eb7e0bba6d7b063e",
+    "spec/core/nullability-operation-v7.schema.json": "18bc5717486dd78997ba8b52ff9a24a5fa50166decdf6fe3226443f499030b17",
+    "spec/core/record-members-inspection-v0.3.schema.json": "74ae6d494207469f8e62ed4b1d72f69ac947f2dc559806221d2c7187f4781fe3",
+    "spec/core/reference-links-inspection-v0.3.schema.json": "214ab8aec70c8e05e24900c0e91356e3a255c148afca6ed88e0be7b081730995",
+    "spec/core/relationship-metadata-selection-v2.schema.json": "991f845a1b8a7517c1ad6a43826b31cb83ae03d597b8cbc8b7dcea8e933c29b8",
+    "spec/core/relationship-operation-v3.schema.json": "58c3d8a0ba0a0261ef3954f2952df62830c28b2570f523e11eab612206e67603",
+    "spec/core/scalar-type-inspection-v0.3.schema.json": "8256cc5af8a8932d46b5d37ed92cffd37ae8725df675be96dda84fde8d2db324",
+    "spec/extensions/binding-128/package.json": "ed5184276860ab41d45f8a1f64f31da680eb7725d878af565d1edff67203508b",
+    "spec/extensions/binding-128/schema.json": "97cff0729815c2ec0830182908ca191fbb1fc6c02828a26e987e548779597fcf",
+    "src/core-ideals/parquet-cardinality-shape.ts": "6dc1b184fcc604e5a2f208ef6dbdf1f6e1df0c18296e0ee0f19699ef2254c2dc",
+    "src/extensions/actions/plan-identity.ts": "11f445af1f8003dc35ae7ec3682cdc7dcc608e6bd0b82e4159a640de64184bda",
+    "src/extensions/binding/bit128.ts": "01ab2a3ca7789a64fe4ccc2acaf75a0fd66a82b642e7e7ac3f102bdf47849896",
+    "src/extensions/binding/index.ts": "a23c1e441a9da97d23c3aac10048689dce0e2a004c00dbca8e718a554dc2635b",
+    "src/index.ts": "b04f491ed7bc868fa77bb9f22c1edf10167159292f4d04c17438df6a41f515fb",
+    "src/model/bit128-field.ts": "075943b6f23dc1bd5484d7dc60aeb73b1e386a2cdbb89c2561a076e56692ac27",
+    "src/model/bit128-transition.ts": "ce8a9b031dbc88db077b43c05a2d4afd097ce502d02a622a0bfcc7e2f79252a7",
+    "src/model/bit128.ts": "df4da4c1259dde3babb562a1b03b9d8e73d731ac90bc6424f31ab01e05615e91",
+    "src/model/cardinality.ts": "7a41518dc60ef32b2f7279a5eb2d88f6ce1e287d6709ac2f2feb024434ae5651",
+    "src/model/facets.ts": "10b2851af59d0245b93e42ef25220154f0d4b764dda6287ab230ac99bca8d555",
+    "src/model/field-kind.ts": "3da0633a6417dec5367245c9ef11532a00062789540408f982c703935eebf292",
+    "src/model/internal/field-body.ts": "0ffc3dcb0ccab4eb7df2ce19002cd5bf2dee200270971cba38adb4a96b8f2a50",
+    "src/model/key-tuple.ts": "3b711a44c277e8ae2d2985356337b0a38efc3777fd47f2b0c41236b9d175826e",
+    "src/model/keys.ts": "3e66238372065d9f3caca88fba5188ba7668405582c7a0fcda8782b81460c40c",
+    "src/model/nullability.ts": "7ca45e5d918be351578a41c5bea68f9b0e1777b328258cdf584cecb1eab40442",
+    "src/model/record-members.ts": "6b80acfc01ac70d3c01479b86a5a421a6eb82f071e208e153a14b5163b3e9a0d",
+    "src/model/record-values.ts": "4d8dd932350b1727e5298676595d2062d57ab336408d9044f7e42362e6868841",
+    "src/model/reference-links.ts": "67a027ede736136c266716aef67c9ee5e04c5abcadec5babf9e91751b765009f",
+    "src/model/relationship-selection.ts": "824f26bdaea89c21cb4f1547dfd8520f5b5b8899cdadda5d8f2009e36c4ebe5b",
+    "src/model/relationships.ts": "8929351add3903d0ab1deec8e060541c2bb4a6ce5ade9b936f7af71619263b90",
+    "src/model/scalar-type.ts": "d94163e137ef35289e34e7a965b4c8f4a37fc58607bdb99dfad43c8f605a355d",
+    "src/model/schema-literals.ts": "f44cf08ed2b4b9e349ef534af79a58b6ea6c560f41e146fc680959c7accdf6a4",
+    "src/model/schema-properties.ts": "779f994c669e6ccd9ce2e19b7c77a69bd8d38771ea358fd37da61f46ffee9d4c",
+    "src/model/selection.ts": "033ce3acb63999c61f172bcd821e12e2a76b25f4df1c8d60652492b97bc3b077",
+    "src/model/types.ts": "8964f35f85188cecebbcb49a558bad023a357150eb2d7130b884383ba40b4af9",
+    "src/model/uuid.ts": "f2abc6139f958decad18156b1ac3d8e6b62cc6083a8efd78a3a760f7883dc503",
+    "src/projections/bit128-output-budget.ts": "fbcd4465efdec6ccc6ab907af7588975e398a300ff1cfeb74db5dab17da99c79",
+    "src/projections/bit128.ts": "6d0d33aba20872e1038c5946d8fc3bb1902cbde7d78cd3a1a66d7b7f1d953709",
+    "src/validation/document.ts": "77ba00368196b748f13b24c2f097427810cf93c5e458017517784f544c2b14d9",
+    "src/validation/schema-properties.ts": "2cc0fd6a1e0d32a053027ac07450fb23af1d0d78053e3b1d18f3ea95d8a8119e",
+    "tests/binding-uuid.test.ts": "b2d9f5966d91e39ab54d77a806e48329533f4a12a335fa3333d1ec911353b162",
+    "tests/bit128.test.ts": "f0e6e58ac75221d1a3cc3496f9e7bb3897c0e862ce0902efa3fce82dd64c5797",
+    "tests/core-uuid-key.test.ts": "11610904aefca74db5e11cb272b5901e87afee347909494c4399ba5601408aca",
+    "tests/core-uuid-transition.test.ts": "60a558597bb24265266d922337bf5149ab6ce6c061a80b6987e2582ea8d90abc",
+    "tests/core-uuid.test.ts": "c03685ac40985a011e1fe0174f140856036e25acae8ef1e9bdfceb4435ca47e8",
+    "tests/core/cardinality-ideals.test.ts": "e94c9ab4d1282c33acb6314a4a8f427e4f81a349e9f80f02ea92437bc34c8dbe",
+    "tests/core/field-ideals.test.ts": "10ae0fb8d4973a5b2ab50252a76d1f28ddc87f9a474d8d1cd22d00d3bd09461c",
+    "tests/core/nullability-ideals.test.ts": "c11a9f59abad3fafe475c25290f33222c794ae23c136be5b3701c05e912cfd2f",
+    "tests/helpers/uuid-fixtures.ts": "3cece8273759303930cbbc7e743112461c75e626c7d9f53f622422f8db53aed3",
+    "tests/uuid-native-projection.test.ts": "2439865f02c7c5a465355004643871158edb699e8da5999d73bbc8a90455a8bb",
+    "tests/uuid.test.ts": "d4c7bcff8f98b68cea56837d7130b441cd9ff06ef04221b196a7b2da86db4301"
+  },
+  "evidenceSha256": {
+    "fixtures/validation/uuid/bit128-oracle.json": "52cab3fc2217144a0d1f2780b2a3102b09a66d04f6689ed7e918b13e2c4c3a47",
+    "fixtures/validation/uuid/browser.json": "ce5cd4bb3fc05971dbe2f3745adf8ef7c4696afbcd7a2e95b3153595e1bdb116",
+    "fixtures/validation/uuid/native-artifacts.json": "13f8ec202630e8414c3a0be6a98c13bbe974743af33862cb34a302f41c02a39f",
+    "fixtures/validation/uuid/native-oracle.json": "7512644e587551e4c162334eef7731ac7178446b10a4db7795d65d5f0a28ec9d",
+    "fixtures/validation/uuid/postgresql.json": "b31673ff35026c77276d34d4710d925241a357904e2e90b743c53b9d6e1203ae",
+    "fixtures/validation/uuid/sqlserver.json": "3e20bd3812b836e63953ee4f8d3baa0eac08b00a329fb4aaa42c9f749ce69139",
+    "fixtures/validation/uuid/tablespec.json": "9fd829754a6b90164c8570c42067b98080d391ffd39554af12318639fa7138d3"
+  },
+  "notClaimed": [
+    "full-repository regression",
+    "native equivalence",
+    "formal ideal/all-five binding admission",
+    "native index/relationship generation",
+    "general nullable-pair and mutation/read atomicity",
+    "TableSpec Spark execution",
+    "consumer runtime adoption",
+    "storage performance optimality"
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"smithyJsonSchemaProjectionSchema\"]",
+  "kind": "Schema",
+  "members": [],
+  "parameters": [],
+  "purpose": "JSON Schema exported as smithyJsonSchemaProjectionSchema. Follow the related schema definition for object keys, value constraints and conditions.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "{ $schema: string; $id: string; type: string; additionalProperties: boolean; required: string[]; properties: { status: { enum: string[]; }; source: { $ref: string; }; assembly: { $ref: string; }; policy: { type: string; additionalProperties: boolean; required: string[]; properties: { id: { type: string; minLength: number; }; rootShape: { type: string; minLength: number; }; profile: { enum: string[]; }; usage: { const: string; }; lossPolicy: { enum: string[]; }; baseUri: { type: string; minLength: number; }; serviceContext: { type: string; minLength: number; }; }; allOf: { if: { properties: { profile: { const: string; }; }; }; then: { required: string[]; }; else: { not: { required: string[]; }; }; }[]; }; complete: { const: boolean; }; issues: { type: string; items: { type: string; required: string[]; properties: { path: { type: string; }; code: { type: string; }; classification: { enum: string[]; }; detail: { type: string; }; retainedInSource: { const: boolean; }; }; additionalProperties: boolean; }; }; nativeSchema: { type: string; }; target: { $ref: string; }; converter: { type: string; minLength: number; }; adaptedSchema: { type: string; }; }; allOf: ({ if: { properties: { status: { const: string; }; policy?: never; }; required?: never; }; then: { required: string[]; properties: { policy: { properties: { lossPolicy: { const: string; }; profile?: never; }; }; assembly: { properties: { status: { const: string; }; }; }; }; }; else: { not: { required: string[]; }; }; } | { if: { properties: { status: { const: string; }; policy: { properties: { profile: { enum: string[]; }; }; }; }; required?: never; }; then: { required: string[]; properties?: never; }; else?: never; } | { if: { required: string[]; properties?: never; }; then: { properties: { policy: { properties: { profile: { enum: string[]; }; lossPolicy?: never; }; }; assembly?: never; }; required?: never; }; else?: never; })[]; }"
+}

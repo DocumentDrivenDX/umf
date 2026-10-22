@@ -1,0 +1,214 @@
+{
+  "version": "1.0",
+  "table_name": "cms_beneficiaries",
+  "description": "Source-qualified selected view. Full original meaning remains in pinned sources. 9 unchanged official HL7 carrier resources and 19 authored supplemental FHIR-shaped resources, plus four workflow events; 13 unchanged CMS DE-SynPUF native CSV records (three beneficiaries, five inpatient and five carrier claims).",
+  "columns": [
+    {
+      "name": "DESYNPUF_ID",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "DESYNPUF ID"
+    },
+    {
+      "name": "BENE_BIRTH_DT",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "BENE BIRTH DT"
+    },
+    {
+      "name": "BENE_DEATH_DT",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "BENE DEATH DT"
+    },
+    {
+      "name": "BENE_SEX_IDENT_CD",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "BENE SEX IDENT CD"
+    },
+    {
+      "name": "BENE_RACE_CD",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "BENE RACE CD"
+    },
+    {
+      "name": "BENE_ESRD_IND",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "BENE ESRD IND"
+    },
+    {
+      "name": "SP_STATE_CODE",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "SP STATE CODE"
+    },
+    {
+      "name": "BENE_COUNTY_CD",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "BENE COUNTY CD"
+    },
+    {
+      "name": "BENE_HI_CVRAGE_TOT_MONS",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "BENE HI CVRAGE TOT MONS"
+    },
+    {
+      "name": "BENE_SMI_CVRAGE_TOT_MONS",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "BENE SMI CVRAGE TOT MONS"
+    },
+    {
+      "name": "BENE_HMO_CVRAGE_TOT_MONS",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "BENE HMO CVRAGE TOT MONS"
+    },
+    {
+      "name": "PLAN_CVRG_MOS_NUM",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "PLAN CVRG MOS NUM"
+    },
+    {
+      "name": "SP_ALZHDMTA",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "SP ALZHDMTA"
+    },
+    {
+      "name": "SP_CHF",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "SP CHF"
+    },
+    {
+      "name": "SP_CHRNKIDN",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "SP CHRNKIDN"
+    },
+    {
+      "name": "SP_CNCR",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "SP CNCR"
+    },
+    {
+      "name": "SP_COPD",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "SP COPD"
+    },
+    {
+      "name": "SP_DEPRESSN",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "SP DEPRESSN"
+    },
+    {
+      "name": "SP_DIABETES",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "SP DIABETES"
+    },
+    {
+      "name": "SP_ISCHMCHT",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "SP ISCHMCHT"
+    },
+    {
+      "name": "SP_OSTEOPRS",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "SP OSTEOPRS"
+    },
+    {
+      "name": "SP_RA_OA",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "SP RA OA"
+    },
+    {
+      "name": "SP_STRKETIA",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "SP STRKETIA"
+    },
+    {
+      "name": "MEDREIMB_IP",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "MEDREIMB IP"
+    },
+    {
+      "name": "BENRES_IP",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "BENRES IP"
+    },
+    {
+      "name": "PPPYMT_IP",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "PPPYMT IP"
+    },
+    {
+      "name": "MEDREIMB_OP",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "MEDREIMB OP"
+    },
+    {
+      "name": "BENRES_OP",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "BENRES OP"
+    },
+    {
+      "name": "PPPYMT_OP",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "PPPYMT OP"
+    },
+    {
+      "name": "MEDREIMB_CAR",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "MEDREIMB CAR"
+    },
+    {
+      "name": "BENRES_CAR",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "BENRES CAR"
+    },
+    {
+      "name": "PPPYMT_CAR",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "PPPYMT CAR"
+    },
+    {
+      "name": "native_record_number",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "native record number"
+    },
+    {
+      "name": "native_csv_record",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "native csv record"
+    }
+  ],
+  "primary_key": [
+    "DESYNPUF_ID"
+  ]
+}

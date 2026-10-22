@@ -1,0 +1,23 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"exportDeltaLog\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "doc",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "exportDeltaLog accepts doc and returns string.",
+  "related": [],
+  "returns": "string",
+  "task": "Import and export",
+  "type": "(doc: Document) => string"
+}

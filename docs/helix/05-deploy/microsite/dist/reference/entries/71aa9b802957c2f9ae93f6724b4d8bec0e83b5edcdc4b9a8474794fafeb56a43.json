@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 6284,
+        "line": 11,
+        "path": "src/core-ideals/postgresql-field.ts",
+        "sha256": "a754bd7f4b76833bd9f658da92f5dcf84f54e2d0c9f103695249467b8b362dfb"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "PostgresqlFieldRequest",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface PostgresqlFieldRequest {column:string;nativeSource:string;mode:'strict'|'report';author?:CoreKindDeclaration}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"PostgresqlFieldRequest\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 6284,
+      "line": 11,
+      "path": "src/core-ideals/postgresql-field.ts",
+      "sha256": "a754bd7f4b76833bd9f658da92f5dcf84f54e2d0c9f103695249467b8b362dfb"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/postgresql-field.ts",
+  "title": "PostgresqlFieldRequest"
+}

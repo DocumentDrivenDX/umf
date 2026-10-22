@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
 const fixture=await Bun.file('fixtures/parquet/avro/projection.json').json();
 const embedded=await Bun.file('fixtures/parquet/arrow-schema/avro-losses.json').json(),boundaries=await Bun.file('fixtures/parquet/arrow-schema/boundaries.json').json();

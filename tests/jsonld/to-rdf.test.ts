@@ -1,10 +1,12 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
+import semanticTypeReferenceSchema from '../../spec/core/semantic-type-reference.schema.json';
 import {test,expect} from 'bun:test';
 import Ajv2020 from 'ajv/dist/2020';
 import core from '../../spec/core/schema.json';
 import schema from '../../spec/extensions/jsonld/to-rdf-schema.json';
 import {importJsonLdDocument,proposeJsonLdToRdf,proposeRdfToJsonLd,proposeJsonLdNodeEdit,exportJsonLdDocument,exportRdfNQuads,getRdfQuads,readDocument,writeDocument} from '../../src';
 import {equalJsonLdText} from '../../scripts/jsonld-compare';
-const check=new Ajv2020({strict:false,validateFormats:false}).addSchema(core).compile(schema);
+const check=new Ajv2020({strict:false,validateFormats:false}).addSchema(semanticTypeReferenceSchema).addSchema(core).compile(schema);
 test('US-026-AC13: complete toRDF corpus retains sources, candidates and every gap',async()=>{
  const cases=(await Bun.file('fixtures/jsonld/to-rdf/results.json').json()).cases,manifest=await Bun.file('native/jsonld/sources/toRdf-manifest.jsonld').json();expect(cases.map((c:any)=>c.id)).toEqual(manifest.sequence.map((c:any)=>c['@id'].slice(1)));expect(cases).toHaveLength(467);
  expect(cases.filter((c:any)=>c.positive&&c.status==='blocked').map((c:any)=>c.id)).toEqual([]);expect(cases.filter((c:any)=>!c.positive&&c.status==='candidate')).toHaveLength(0);

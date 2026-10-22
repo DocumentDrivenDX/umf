@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Authored IPC fixtures with actual arrays; independently verify native re-emission."""
 import hashlib,json,sys
 from pathlib import Path

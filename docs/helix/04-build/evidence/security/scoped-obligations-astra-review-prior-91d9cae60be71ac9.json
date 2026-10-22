@@ -1,0 +1,334 @@
+{
+  "id": "scoped-obligations-astra-review",
+  "status": "qualified-conditional-formal-review-passed",
+  "reviewer": "/root/astra_security_review",
+  "generatedAt": "2026-10-10T11:19:09.080965+00:00",
+  "sourceDigests": {
+    "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/bin/python3.9": "6e7ae61f68a3838094fc56590f84c52069a97d7816f6bb79e0e85995b340e464",
+    "/Users/erik/.codex/worktrees/1598/umf/docs/helix/02-design/spikes/security/scoped-obligation-matching-v0.2.md": "9f3013d611042bd0557ea0b1774f619ac12e171993926875e59029ad6f59ecea",
+    "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/scoped-obligations-formal.json": "e89054c96cf1cdd5e71881bae40ef6fa31daff84275f9f98b49c08b574163d11",
+    "/Users/erik/.codex/worktrees/1598/umf/tools/security/prove-scoped-obligations.py": "8940268407468e225e2b8ac9a7c0b28b0ee1456af259a049d4ac58128bc1a4f2",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_obligation_custody.rs": "c1a9e09f3d4f83751c1011b90b67953f105c6423a50274aaa0489908114afe1b",
+    "/private/tmp/scoped-obligations-astra-review.py": "1bc47a22b20d90945b963227bf8405d1684a6663fd1bae0a8571eb6d38bcd57e",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/__init__.py": "53c4529a01f38e7c0d593b7548c79e0d7398aa09f7d7cbd1773470859ee2febd",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3++.h": "756177103b3cf81d2c1082762cbea399c5c0189d66b53c9a073ec43c2ce8b7a8",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3.h": "60cc2bb3e1df2c0fc6105b6a73c032b9d4f47487471616994ba63df8d81898a8",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_algebraic.h": "7659d6dec25e49e2dd6546a6ca6c05adb27437a989d857af0cbcc7191adb45a6",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_api.h": "972a61b3df5c76f06fbfa9e02d38442474841199281f068ae605ce3c17b1df92",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_ast_containers.h": "6687f3ec9483f3774b8951be0f9944ab47f61bedbd42193d075dd88c612fb248",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_fixedpoint.h": "cc8a424163dd6a92a1bfe07dea68edb8fc8dabb58f612b1e85a033a21178dedc",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_fpa.h": "f357754480a39788653f91063af53f2e054b2382a8486171a0a17a99e1354947",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_macros.h": "9d92f8136abef10dd8429a28fd9068e9b3e4feb5696072763cd8d0edc1f00b24",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_optimization.h": "d6b857c21186f0710d8729ad3b7d9b39baa07b5c81855e106d3619c6423f48cc",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_polynomial.h": "e1894c40edb37115cf221a8ef2f7e5557c7360c3c0583f05582f849ebdd78c36",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_rcf.h": "5f2219157573043338df52808a2597f52cf9b179aa8b8006b4893571027632c7",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_spacer.h": "dd23be86e4fc74cd0adf6ca944834d165b93f6a6f3af81923116db97a7ee1ddd",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_v1.h": "30d1776dafddd426d06a4a737d51d37731b45790fc26573b361562e3758ebb04",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/include/z3_version.h": "1e026257aeb2cad8bafd1d788e1ce4e1cddc1b0b67d01ea3d9b8d6c12ed3c608",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/libz3.4.15.dylib": "80b90ad4090016b67ada7d64039ea0b76b8f5a6f2747ea0ca96f9a6709841b58",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/libz3.dll": "88b20513993816cf71e29969c5232a8eb03dda05deefce71879ecc1e3519b2aa",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/libz3.dylib": "80b90ad4090016b67ada7d64039ea0b76b8f5a6f2747ea0ca96f9a6709841b58",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/msvcp140.dll": "0f885b509a685d2bbfa652fed26b5fb31d88fbdab0a978c641d1c7b8aa460aa9",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/msvcp140_1.dll": "bfad5aef4c63a669e3c140655cdfdf395b6c979b400a447bd5dcb65ed8826c3d",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/msvcp140_2.dll": "3ea06f0ee098b4823cb79599df3780e7f23cce52c19aac31d2a0d47efe33a5e9",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/msvcp140_atomic_wait.dll": "640b2aefced484d0368eea5bdd06addd0658a3a70a49256e560d6923b404a479",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/msvcp140_codecvt_ids.dll": "f2069a52880ec885ee7f0511186100eb7fada0411a2b4948fafea7735b878a18",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/vcomp140.dll": "55aba23cdcd6484fbb06f4155b8ca75adfce7a881f10afd0c49457165e677164",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/vcruntime140.dll": "d5e4d9a3e835fa679450145d6a7d94e36573a509317111904d9b3712c30d9066",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/vcruntime140_1.dll": "1f2d41c4aa5db0bc33ebf7b66d72943a817d7ce6cbe880502a9403823633093f",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/lib/vcruntime140_threads.dll": "219915cf20822f34d5e7c1fdd4e21ae7f3396881096c51036225fb8f84b47afa",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/z3.py": "928428b680721433616cd2ca6662c1ada979f4f322ccdd3825b09b5237dc7f26",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/z3consts.py": "59737a55612e9bddb33f7ec4a27db9fbc880a92053fa8a88919fcc934e1f7573",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/z3core.py": "801867d32d0eb6525c00a3dfeff2a877590c74fc0cb776d6cde1d4e7b8aa6d7f",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/z3num.py": "d7ad7cceb560867f55dcbd87c5866e1c365fddec92faa22321bf91b60c431dee",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/z3poly.py": "fd06029418e5899b300fe3b3a300d110c8e174e633cba8b751314f22a583394e",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/z3printer.py": "714f9fa34a1da9281bdc1a98d8e89d650daca6e99cd1839d325c4d3605a99730",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/z3rcf.py": "504e0339b1bb06075c19ca52e51457716671218a2f2191d0c9754e0b75bede87",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/z3types.py": "ba728354b4a9ee40bcfbd899f405d904bc4bb023e41807044c06c318548c3080",
+    "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/z3util.py": "7087f1bbb0119e0e8f545d70cba9a21446ff267cda1289e55b3c2e4e644effd9"
+  },
+  "sourcesUnchanged": true,
+  "reviewCommand": {
+    "argv": [
+      "/private/tmp/umf-security-proof-venv/bin/python",
+      "/private/tmp/scoped-obligations-astra-review.py"
+    ],
+    "cwd": "/Users/erik/.codex/worktrees/1598/umf",
+    "sourceSha256": "1bc47a22b20d90945b963227bf8405d1684a6663fd1bae0a8571eb6d38bcd57e",
+    "source": "\"\"\"Independent saved-formula replay of the explicitly conditional scoped model.\"\"\"\nimport hashlib,importlib.util,json,sys\nfrom pathlib import Path\nfrom datetime import datetime,timezone\nROOT=Path('/Users/erik/.codex/worktrees/1598/umf');SELF=Path('/private/tmp/scoped-obligations-astra-review.py')\nif Path.cwd().resolve()!=ROOT or Path(__file__).resolve()!=SELF or len(sys.argv)!=1:raise RuntimeError('Unknown exact review invocation')\nPROOF=ROOT/'docs/helix/04-build/evidence/security/scoped-obligations-formal.json'\nSCRIPT=ROOT/'tools/security/prove-scoped-obligations.py'\nANNEX=ROOT/'docs/helix/02-design/spikes/security/scoped-obligation-matching-v0.2.md'\nRUST=Path('/Users/erik/Projects/weft/crates/weft-core/src/security_obligation_custody.rs')\nOUT=ROOT/'docs/helix/04-build/evidence/security/scoped-obligations-astra-review.json'\nsha=lambda b:hashlib.sha256(b).hexdigest()\nspec=importlib.util.find_spec('z3');assert spec and spec.origin\nsolver_root=Path(spec.origin).resolve().parent\npaths={SELF,PROOF,SCRIPT,ANNEX,RUST,Path(sys.executable).resolve()}\npaths.update(p for p in solver_root.rglob('*') if p.is_file() and '__pycache__' not in p.parts and p.suffix!='.pyc')\nfrozen={str(p):p.read_bytes() for p in sorted(paths)}\nprior=OUT.read_bytes() if OUT.exists() else None\nproof=json.loads(frozen[str(PROOF)])\nassert proof['sourceDigests']=={str(p):sha(frozen[str(p)]) for p in [SCRIPT,ANNEX,RUST]}\nassert proof['status']=='conditional-proof-passed' and proof['sourcesUnchanged'] is True\nassert proof['nativeImplementationQualified'] is False and proof['acceptanceCasesPromoted']==[]\nlaws=['paired-subjects-cannot-collapse-to-marginals','zero-edge-selection-keeps-independent-deployment-duty','unchosen-selected-origin-remains-mandatory','exact-atoms-do-not-substitute-full-contract','original-prerequisite-edges-cannot-be-removed','subject-variant-is-an-identity-coordinate','one-complete-capability-per-scope','correspondence-does-not-establish-release','zero-edge-profile-entry-is-independently-required','zero-edge-deployment-match-is-independently-required','unbounded-exact-relation-cannot-omit-required-atom','unbounded-exact-relation-cannot-add-surplus-atom']\nassert [c['id'] for c in proof['cases']]==laws\nimport z3\nrows=[]\nfor case in proof['cases']:\n for kind,expected in [('violation','unsat'),('negativeControl','sat'),('positivePopulation','sat')]:\n  q=case[kind];assert q['result']==expected and q['replayResult']==expected\n  ctx=z3.Context();solver=z3.Solver(ctx=ctx);solver.set(timeout=30000);solver.from_string(q['smt']);actual=str(solver.check())\n  if actual!=expected:raise RuntimeError(case['id']+'/'+kind+': '+actual)\n  rows.append({'id':case['id']+'/'+kind,'expected':expected,'observed':actual,'smtSha256':sha(q['smt'].encode()),'freshContext':True})\n  del solver,ctx\nif any(Path(p).read_bytes()!=b for p,b in frozen.items()):raise RuntimeError('Captured source/runtime changed')\nif (OUT.read_bytes() if OUT.exists() else None)!=prior:raise RuntimeError('Previous review changed')\nr={'id':'scoped-obligations-astra-review','status':'qualified-conditional-formal-review-passed','reviewer':'/root/astra_security_review','generatedAt':datetime.now(timezone.utc).isoformat(),'sourceDigests':{p:sha(b) for p,b in frozen.items()},'sourcesUnchanged':True,'reviewCommand':{'argv':[sys.executable,str(SELF)],'cwd':str(ROOT),'sourceSha256':sha(frozen[str(SELF)]),'source':frozen[str(SELF)].decode()},'formalReplay':{'receipt':str(PROOF),'sha256':sha(frozen[str(PROOF)]),'solverVersion':z3.get_version_string(),'formulaCount':len(rows),'observations':rows},'remainingFindings':[],'recommendedCoverage':[],'scope':'Independent replay of all thirty-six retained formulas in separate fresh Z3 contexts, plus read-only inspection of the actual producer and governing draft. Ten finite Boolean laws are conditional relation/guard sanity checks; positive cases force success and negative controls replace a specified guard/matcher. Two quantified laws establish the immediate no-omission/no-surplus consequences of assumed pointwise extensional equality on a typed atom relation. Their alternatives instantiate closed finite-support relations with two distinct origins and cases, preserve all five coordinate projections bidirectionally, and demonstrate required omission or surplus after the origin/case swap. The two new profile/deployment controls independently remove one conjunct with the other true; they apply to any selected capability, including zero-edge selections, without modeling the edge relation in those formulas. Required relation correctness, profile inventory completeness, arbitrary-size capability assignment, Rust/parser/matcher refinement, DAG correctness, physical enforcement and native qualification are not established. The producer was not rerun and no Rust tests, Cargo, or native acquisition occurred. Solver package and Python executable bytes are retained; system libraries and platform remain trusted execution premises. No theorem asserts independent profile completeness or backend admission.','nativeImplementationQualified':False,'acceptanceCasesPromoted':[],'acceptanceCriteria':['US-056-AC7','US-056-AC10']}\nif prior is not None:\n h=sha(prior);archive=OUT.with_name(OUT.stem+'-prior-'+h[:16]+'.json')\n if archive.exists() and archive.read_bytes()!=prior:raise RuntimeError('Archive collision')\n if not archive.exists():archive.write_bytes(prior)\n r['previousReceipt']={'path':str(archive),'sha256':h,'scope':'Historical only.'}\nOUT.write_text(json.dumps(r,indent=2)+'\\n')\nprint(json.dumps({'status':r['status'],'formulas':len(rows),'unsat':sum(x['observed']=='unsat' for x in rows),'sat':sum(x['observed']=='sat' for x in rows),'sourcePins':len(frozen),'sourcesUnchanged':True,'output':str(OUT),'sha256':sha(OUT.read_bytes())}))\n"
+  },
+  "formalReplay": {
+    "receipt": "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/scoped-obligations-formal.json",
+    "sha256": "e89054c96cf1cdd5e71881bae40ef6fa31daff84275f9f98b49c08b574163d11",
+    "solverVersion": "4.15.4",
+    "formulaCount": 36,
+    "observations": [
+      {
+        "id": "paired-subjects-cannot-collapse-to-marginals/violation",
+        "expected": "unsat",
+        "observed": "unsat",
+        "smtSha256": "416abba0def123e5907f53fb791695740fda5fc26c48befa0ae69a0196353c42",
+        "freshContext": true
+      },
+      {
+        "id": "paired-subjects-cannot-collapse-to-marginals/negativeControl",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "02a7d8fda2863f057926acdf93e0fc5cf11e061b53721bcea8812e6903186b30",
+        "freshContext": true
+      },
+      {
+        "id": "paired-subjects-cannot-collapse-to-marginals/positivePopulation",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "e6a2fe2f555f2b9cd49ed2f9a3b1ac9814a5d48baa4cb4f853c30ce4e53cb1a4",
+        "freshContext": true
+      },
+      {
+        "id": "zero-edge-selection-keeps-independent-deployment-duty/violation",
+        "expected": "unsat",
+        "observed": "unsat",
+        "smtSha256": "283b8869bf24d35d994e69662c060e01b124ab45fa8d6f635508c8cf9475e5eb",
+        "freshContext": true
+      },
+      {
+        "id": "zero-edge-selection-keeps-independent-deployment-duty/negativeControl",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "c30d8b0fde9d0d1b48eb3499ac08e4546f805ae74634519ff92eefd001e70190",
+        "freshContext": true
+      },
+      {
+        "id": "zero-edge-selection-keeps-independent-deployment-duty/positivePopulation",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "78e57b59e36527b6a4523a88c827e1e318b36f99daae75959ff60edfff1eb42d",
+        "freshContext": true
+      },
+      {
+        "id": "unchosen-selected-origin-remains-mandatory/violation",
+        "expected": "unsat",
+        "observed": "unsat",
+        "smtSha256": "82e267b50e53e7c265b161e0947fdb9e7936ab9f735dd055df74b696560c9d39",
+        "freshContext": true
+      },
+      {
+        "id": "unchosen-selected-origin-remains-mandatory/negativeControl",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "27b722373429ffba3445d4a6c1ae4efb930028ac75f674e3dc874ae1448ca77d",
+        "freshContext": true
+      },
+      {
+        "id": "unchosen-selected-origin-remains-mandatory/positivePopulation",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "f4fc68ee831221153545dc717a6f3d70095ebc8a656e4b06b38ccf43803c4211",
+        "freshContext": true
+      },
+      {
+        "id": "exact-atoms-do-not-substitute-full-contract/violation",
+        "expected": "unsat",
+        "observed": "unsat",
+        "smtSha256": "d5ddb00f01ba624156cef0feb6bd6976ec295c932398da79c8821f1c337432e1",
+        "freshContext": true
+      },
+      {
+        "id": "exact-atoms-do-not-substitute-full-contract/negativeControl",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "13e10db37afb1bf7910ad3816d4dae76fbc66c97cc044cbfb798704e4622da9b",
+        "freshContext": true
+      },
+      {
+        "id": "exact-atoms-do-not-substitute-full-contract/positivePopulation",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "7c444de36d09541bd58cb1ad43e34bc8cd9e5fe77cc6c4ffc7a21552e6258321",
+        "freshContext": true
+      },
+      {
+        "id": "original-prerequisite-edges-cannot-be-removed/violation",
+        "expected": "unsat",
+        "observed": "unsat",
+        "smtSha256": "dd32fd6a481905d11134f6aba54c2183b96cbb5cd1d9d43f0df41b4140d3a9b6",
+        "freshContext": true
+      },
+      {
+        "id": "original-prerequisite-edges-cannot-be-removed/negativeControl",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "6f7cb2ce82563724961f80da852d3e61db295e8ee557430c0159ff16b11220f6",
+        "freshContext": true
+      },
+      {
+        "id": "original-prerequisite-edges-cannot-be-removed/positivePopulation",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "7c444de36d09541bd58cb1ad43e34bc8cd9e5fe77cc6c4ffc7a21552e6258321",
+        "freshContext": true
+      },
+      {
+        "id": "subject-variant-is-an-identity-coordinate/violation",
+        "expected": "unsat",
+        "observed": "unsat",
+        "smtSha256": "274245579d0f68e8ce1ddcc79b356a4bdb984c89dd128797b9152253f5243b23",
+        "freshContext": true
+      },
+      {
+        "id": "subject-variant-is-an-identity-coordinate/negativeControl",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "7a129b6f89be82d157733a67a1ff281de7c8529ee700bc0d42b6c7a7ed0b6ca4",
+        "freshContext": true
+      },
+      {
+        "id": "subject-variant-is-an-identity-coordinate/positivePopulation",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "fd6b0dabe9f6ca7f791aed262fa0d564d5f4fcf624a74f7518172de64b23626a",
+        "freshContext": true
+      },
+      {
+        "id": "one-complete-capability-per-scope/violation",
+        "expected": "unsat",
+        "observed": "unsat",
+        "smtSha256": "2961fc23dea54e8f30f1f428527b9dccfd0df8943c9876e6e29a0483d4237281",
+        "freshContext": true
+      },
+      {
+        "id": "one-complete-capability-per-scope/negativeControl",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "27b878779c5b50dd997b182742bd9b51a01981a88e7fd1ea97e0e25493824304",
+        "freshContext": true
+      },
+      {
+        "id": "one-complete-capability-per-scope/positivePopulation",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "7b177d5febe03a98c1ece9699c1e594033fb9ef8c2068dc699ef5a8bb5d7ecc4",
+        "freshContext": true
+      },
+      {
+        "id": "correspondence-does-not-establish-release/violation",
+        "expected": "unsat",
+        "observed": "unsat",
+        "smtSha256": "8bf66dd51188ab931afa15e8c192aea65df3729a875a9a0965efab070fa3b788",
+        "freshContext": true
+      },
+      {
+        "id": "correspondence-does-not-establish-release/negativeControl",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "3eaab63729c6d64bb326b5ca23b093b91362b97d166f981f90fb0ed7eb887a18",
+        "freshContext": true
+      },
+      {
+        "id": "correspondence-does-not-establish-release/positivePopulation",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "a8a80dc84ea03ba73de88f99369d4da9ce8bed1b3b2c6c1c22cf4414fa22f2d8",
+        "freshContext": true
+      },
+      {
+        "id": "zero-edge-profile-entry-is-independently-required/violation",
+        "expected": "unsat",
+        "observed": "unsat",
+        "smtSha256": "bff388294afd4f607b3b0e84a06fc0a51c9feab71e38a204e5b13e3ea8e9a725",
+        "freshContext": true
+      },
+      {
+        "id": "zero-edge-profile-entry-is-independently-required/negativeControl",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "0dc79e384cdc63744856d74f615bbfdd3fd6318289bd9d5c4ea3b929768716fb",
+        "freshContext": true
+      },
+      {
+        "id": "zero-edge-profile-entry-is-independently-required/positivePopulation",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "15bfc1068e04d0f039e7243e1a3ae5bf7fd760d7af6d29d62d9ebc571c756136",
+        "freshContext": true
+      },
+      {
+        "id": "zero-edge-deployment-match-is-independently-required/violation",
+        "expected": "unsat",
+        "observed": "unsat",
+        "smtSha256": "23e8f3cf4a6fc64808cc94ebacf7ac557fdde2895bc2e221414c9ffd0b9c8049",
+        "freshContext": true
+      },
+      {
+        "id": "zero-edge-deployment-match-is-independently-required/negativeControl",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "3eb8735d112792de18ac8394b8c4eb292a67174395064aa1726f820d818ed924",
+        "freshContext": true
+      },
+      {
+        "id": "zero-edge-deployment-match-is-independently-required/positivePopulation",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "15bfc1068e04d0f039e7243e1a3ae5bf7fd760d7af6d29d62d9ebc571c756136",
+        "freshContext": true
+      },
+      {
+        "id": "unbounded-exact-relation-cannot-omit-required-atom/violation",
+        "expected": "unsat",
+        "observed": "unsat",
+        "smtSha256": "a957da0a12e27a5642af2499432c2c7803c6656ff77a060de75b03457e6cbeb3",
+        "freshContext": true
+      },
+      {
+        "id": "unbounded-exact-relation-cannot-omit-required-atom/negativeControl",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "ae04fd778c91d3bde711d3b5429329ac145e8c3856c053a188fe949c02fa583f",
+        "freshContext": true
+      },
+      {
+        "id": "unbounded-exact-relation-cannot-omit-required-atom/positivePopulation",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "01f39abd071f20245ba9968c5c4470336d88ae248f54a6fae33b26f024eec6a3",
+        "freshContext": true
+      },
+      {
+        "id": "unbounded-exact-relation-cannot-add-surplus-atom/violation",
+        "expected": "unsat",
+        "observed": "unsat",
+        "smtSha256": "cfba9d3f04a7b18bd12d099dbe0976ac6912033dfefdea2917dc52a38bc47891",
+        "freshContext": true
+      },
+      {
+        "id": "unbounded-exact-relation-cannot-add-surplus-atom/negativeControl",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "f0d4e506b9842bb23f69aa946cd8a2a39109593f1bfb9a01d1bc9b02035ff058",
+        "freshContext": true
+      },
+      {
+        "id": "unbounded-exact-relation-cannot-add-surplus-atom/positivePopulation",
+        "expected": "sat",
+        "observed": "sat",
+        "smtSha256": "01f39abd071f20245ba9968c5c4470336d88ae248f54a6fae33b26f024eec6a3",
+        "freshContext": true
+      }
+    ]
+  },
+  "remainingFindings": [],
+  "recommendedCoverage": [],
+  "scope": "Independent replay of all thirty-six retained formulas in separate fresh Z3 contexts, plus read-only inspection of the actual producer and governing draft. Ten finite Boolean laws are conditional relation/guard sanity checks; positive cases force success and negative controls replace a specified guard/matcher. Two quantified laws establish the immediate no-omission/no-surplus consequences of assumed pointwise extensional equality on a typed atom relation. Their alternatives instantiate closed finite-support relations with two distinct origins and cases, preserve all five coordinate projections bidirectionally, and demonstrate required omission or surplus after the origin/case swap. The two new profile/deployment controls independently remove one conjunct with the other true; they apply to any selected capability, including zero-edge selections, without modeling the edge relation in those formulas. Required relation correctness, profile inventory completeness, arbitrary-size capability assignment, Rust/parser/matcher refinement, DAG correctness, physical enforcement and native qualification are not established. The producer was not rerun and no Rust tests, Cargo, or native acquisition occurred. Solver package and Python executable bytes are retained; system libraries and platform remain trusted execution premises. No theorem asserts independent profile completeness or backend admission.",
+  "nativeImplementationQualified": false,
+  "acceptanceCasesPromoted": [],
+  "acceptanceCriteria": [
+    "US-056-AC7",
+    "US-056-AC10"
+  ],
+  "previousReceipt": {
+    "path": "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/scoped-obligations-astra-review-prior-73c066700d994352.json",
+    "sha256": "73c066700d99435233dcd90248f44d228fc92849c7088d7c03cc553dcee81b4c",
+    "scope": "Historical only."
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "data": {
+    "conflicts": [],
+    "correspondence": "unassessed",
+    "declarations": [
+      {
+        "bytes": 3622,
+        "path": "spec/extensions/iceberg/package.json",
+        "sha256": "7f1ac595e29c157d9c40f4549777acd8d2b180011d2daead6983ecdb699849d3"
+      }
+    ],
+    "evidence": [],
+    "operation": {
+      "apiNames": [],
+      "coreProfiles": [],
+      "extensionVersions": [],
+      "fixturePaths": [],
+      "id": "umf.iceberg@0.1.0:import",
+      "kind": "import",
+      "limitations": [
+        "Recorded scope only; native equivalence and production adoption are separate."
+      ],
+      "runtime": {
+        "availability": "host-only",
+        "profileId": "umf.iceberg@0.1.0:import",
+        "requirements": [
+          "Native runtime / original qualification harness; not executed by this page."
+        ]
+      },
+      "sourceSystem": "Apache Iceberg schema JSON · 1.11.0 spec 6976e020b894f6a6777704df2b8c4458cb291ae9; PyIceberg 0.11.0 oracle",
+      "subset": "Standalone recursive schema preservation, field-ID and identifier checks, pointer access and candidate edits; no table compatibility or data-reader claim",
+      "targetSystem": "UMF",
+      "title": "umf.iceberg · import"
+    }
+  },
+  "id": "[\"integration\",\"umf.iceberg@0.1.0:import\"]",
+  "kind": "integration",
+  "links": [
+    "[\"extension\",\"umf.iceberg\",\"0.1.0\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 134795,
+      "path": "docs/helix/05-deploy/reference/operations.json",
+      "sha256": "793743bbca36e56e90e82df5ef0408b628c434e58cb68aea4d6486349be78e61"
+    }
+  ],
+  "summary": "Standalone recursive schema preservation, field-ID and identifier checks, pointer access and candidate edits; no table compatibility or data-reader claim",
+  "title": "umf.iceberg · import"
+}

@@ -1,0 +1,309 @@
+{
+  "id": "medical-terminology",
+  "version": "1.2.0",
+  "family": {
+    "id": "medical",
+    "version": "1.2.0",
+    "label": "Terminology"
+  },
+  "execution_profile": {
+    "version": "1.0.0",
+    "targets": {
+      "tabular": [
+        "systems",
+        "concepts"
+      ],
+      "graph": [
+        "ontology"
+      ]
+    },
+    "mode": "fixed",
+    "include_sources": [
+      "icd10cm",
+      "selection",
+      "notices",
+      "csv_systems",
+      "csv_concepts"
+    ],
+    "qualification": "Fixed source-qualified sample rows and schema-only ontology. No data generation, clinical conformance or graph-storage execution claim."
+  },
+  "description": "Independently versioned medical-family subpack; no implicit retrieval, code execution or native equivalence.",
+  "domain_types": {
+    "source_qualified_identity": {
+      "description": "Source namespace and native identity; no inferred patient identity."
+    },
+    "exact_native_literal": {
+      "description": "Numeric and temporal source spelling retained as text."
+    }
+  },
+  "schemas": [
+    {
+      "id": "systems",
+      "format": "tablespec",
+      "reference": "umf/systems.json"
+    },
+    {
+      "id": "concepts",
+      "format": "tablespec",
+      "reference": "umf/concepts.json"
+    },
+    {
+      "id": "ontology",
+      "format": "umf",
+      "reference": "ontology.json"
+    }
+  ],
+  "sources": {
+    "icd10cm": {
+      "kind": "external",
+      "data_kind": "unknown",
+      "reference": "sources/icd10cm-order-2026-subset.txt",
+      "format": "icd10cm-order-text",
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "183f8332624cd37f64240f46b6233b3950892bbe710caec13184fb2afbd2f9b1"
+      },
+      "license": {
+        "redistribution": "allowed",
+        "reference": "licenses/NOTICE.txt"
+      },
+      "provenance": {
+        "publisher": "CDC/NCHS",
+        "retrieved_at": "2026-10-08",
+        "source_ids": [
+          "icd10cm_archive"
+        ],
+        "transformations": [
+          "First 12 complete lines, including non-billable category records; native line bytes unchanged."
+        ]
+      },
+      "revision": "FY2026-2025-10-01"
+    },
+    "selection": {
+      "kind": "external",
+      "data_kind": "unknown",
+      "reference": "sources/selection.json",
+      "format": "json",
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "7a328013f33d3fcdfb67adda62a5dd70d174af9179418da8883689258f163c12"
+      },
+      "license": {
+        "redistribution": "allowed",
+        "reference": "licenses/NOTICE.txt"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "retrieved_at": "2026-10-08",
+        "transformations": []
+      }
+    },
+    "icd10cm_archive": {
+      "kind": "external",
+      "data_kind": "unknown",
+      "reference": "https://ftp.cdc.gov/pub/Health_Statistics/NCHS/Publications/ICD10CM/2026/icd10cm-Code%20Descriptions-2026.zip",
+      "format": "zip",
+      "revision": "FY2026-2025-10-01",
+      "license": {
+        "redistribution": "unknown",
+        "notices": [
+          "Reference or consumer-local licensed input only; no bytes bundled or retrieval implied."
+        ]
+      },
+      "provenance": {
+        "publisher": "CDC/NCHS"
+      },
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "a852eb91b3344ae38476e63816976ee1eeb94dcced7151118324f060e8499f88"
+      }
+    },
+    "icd10pcs": {
+      "kind": "external",
+      "data_kind": "unknown",
+      "reference": "https://www.cms.gov/medicare/coding-billing/icd-10-codes",
+      "format": "publisher-page",
+      "license": {
+        "redistribution": "unknown",
+        "notices": [
+          "Reference or consumer-local licensed input only; no bytes bundled or retrieval implied."
+        ]
+      },
+      "provenance": {
+        "publisher": "CMS"
+      }
+    },
+    "hcpcs2": {
+      "kind": "external",
+      "data_kind": "unknown",
+      "reference": "https://www.cms.gov/medicare/coding-billing/healthcare-common-procedure-system/quarterly-update",
+      "format": "publisher-page",
+      "license": {
+        "redistribution": "unknown",
+        "notices": [
+          "Reference or consumer-local licensed input only; no bytes bundled or retrieval implied."
+        ]
+      },
+      "provenance": {
+        "publisher": "CMS"
+      }
+    },
+    "snomed": {
+      "kind": "external",
+      "data_kind": "unknown",
+      "reference": "https://www.nlm.nih.gov/healthit/snomedct/us_edition.html",
+      "format": "publisher-page",
+      "license": {
+        "redistribution": "unknown",
+        "notices": [
+          "Reference or consumer-local licensed input only; no bytes bundled or retrieval implied."
+        ]
+      },
+      "provenance": {
+        "publisher": "NLM / SNOMED International"
+      }
+    },
+    "cpt": {
+      "kind": "external",
+      "data_kind": "unknown",
+      "reference": "https://www.ama-assn.org/about/cpt-editorial-panel/faq-editorial-panel-cpt-overview",
+      "format": "publisher-page",
+      "license": {
+        "redistribution": "unknown",
+        "notices": [
+          "Reference or consumer-local licensed input only; no bytes bundled or retrieval implied."
+        ]
+      },
+      "provenance": {
+        "publisher": "American Medical Association"
+      }
+    },
+    "notices": {
+      "kind": "external",
+      "data_kind": "unknown",
+      "reference": "licenses/NOTICE.txt",
+      "format": "text",
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "ad61121d0fb07b2f879541a883454296f688fa6dd9a5a0b26dee97d3943ffb90"
+      },
+      "license": {
+        "redistribution": "allowed",
+        "reference": "licenses/NOTICE.txt"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "retrieved_at": "2026-10-08",
+        "transformations": []
+      }
+    },
+    "csv_systems": {
+      "kind": "external",
+      "data_kind": "unknown",
+      "reference": "data/systems.csv",
+      "format": "csv",
+      "revision": "medical-terminology-1.2.0",
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "a5a2fa063a954b57253b9afb34e10605f19e20b565eb037acf9f6483b533f002"
+      },
+      "license": {
+        "redistribution": "allowed",
+        "reference": "licenses/NOTICE.txt"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "source_ids": [
+          "icd10pcs",
+          "hcpcs2",
+          "snomed",
+          "cpt"
+        ],
+        "transformations": [
+          "Deterministic selected-column projection; original native sources retained separately."
+        ]
+      }
+    },
+    "csv_concepts": {
+      "kind": "external",
+      "data_kind": "unknown",
+      "reference": "data/concepts.csv",
+      "format": "csv",
+      "revision": "medical-terminology-1.2.0",
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "4c9d331a8e2ef23faf1c2eb0f54c7e96b90ffea6c8ee9490e62b33c515daf954"
+      },
+      "license": {
+        "redistribution": "allowed",
+        "reference": "licenses/NOTICE.txt"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "source_ids": [
+          "icd10cm",
+          "selection"
+        ],
+        "transformations": [
+          "Deterministic selected-column projection; original native sources retained separately."
+        ]
+      }
+    }
+  },
+  "source_bindings": [
+    {
+      "schema_id": "systems",
+      "source_id": "csv_systems",
+      "role": "rows"
+    },
+    {
+      "schema_id": "systems",
+      "source_id": "icd10pcs",
+      "role": "terminology"
+    },
+    {
+      "schema_id": "systems",
+      "source_id": "hcpcs2",
+      "role": "terminology"
+    },
+    {
+      "schema_id": "systems",
+      "source_id": "snomed",
+      "role": "terminology"
+    },
+    {
+      "schema_id": "systems",
+      "source_id": "cpt",
+      "role": "terminology"
+    },
+    {
+      "schema_id": "concepts",
+      "source_id": "csv_concepts",
+      "role": "rows"
+    },
+    {
+      "schema_id": "concepts",
+      "source_id": "icd10cm",
+      "role": "terminology"
+    },
+    {
+      "schema_id": "concepts",
+      "source_id": "selection",
+      "role": "terminology"
+    }
+  ],
+  "csv_conventions": {
+    "encoding": "UTF-8",
+    "null_value": "\\N",
+    "header": true,
+    "quote": "\""
+  },
+  "fixture_counts": {
+    "systems": 6,
+    "concepts": 12
+  },
+  "qualification": {
+    "subset": "12 native ICD-10-CM FY2026 October 2025 order-file records; six separately identified system/access descriptors.",
+    "limits": "Historical subset only, not current or exhaustive codes. SNOMED CT/CPT have no bundled dictionary or mappings. Exact consumer-local release lookup makes no clinical/billing equivalence claim. An unmatched code means not in this subset, never invalid."
+  }
+}

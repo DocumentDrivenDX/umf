@@ -1,0 +1,313 @@
+---
+ddx:
+  id: SD-007
+  type: solution-design
+  activity: design
+  status: draft
+  authoring:
+    home: repo
+  links:
+    - id: FEAT-007
+      kind: informed_by
+    - id: US-051
+      kind: informed_by
+    - id: umf.architecture
+      kind: references
+    - id: CONTRACT-046
+      kind: references
+    - id: CONTRACT-049
+      kind: references
+    - id: CONTRACT-081
+      kind: references
+---
+
+# SD-007: Schema migration planning and backend execution
+
+## Scope
+
+**Feature:** FEAT-007 COMP-06–11; FR-18/19; US-051-AC11–16.
+**Status:** solution design for the owner's 2026-10-21 field migration request;
+exact profile/API contracts and native qualification remain separate gates.
+Support covers adding Fields, making them required with defaults or backfills,
+dropping Fields and changing their types. Full support means each operation has
+defined semantics, executable qualified backend profiles and explicit refusal
+elsewhere; it does not imply every backend can perform every operation online.
+
+Governing boundaries are NFR-50, ADR-002, CONTRACT-040/049, the read-only
+CONTRACT-046 comparison, and CONTRACT-081 table lifecycle. Core version migration
+is separate from evolving a user's schema. CONTRACT-058 retains its historical
+bounded profile; new work must not relabel it as general migration support.
+
+## Requirements Mapping
+
+| Requirement | Capability and owner | Verification |
+| --- | --- | --- |
+| COMP-06 / AC11 | Portable identity-based diff and explicit add intent; adapter absence mapping | Exact-source optional date addition; unrelated/unknown content retained |
+| COMP-07 / AC12 | Separate default/backfill intent; host validation and write protection | Existing and concurrent data satisfy required target |
+| COMP-08 / AC14 | Portable conversion obligations; backend-specific lowering | Valid, invalid, boundary and lossy conversion cases |
+| COMP-09 / AC13 | Dependency inventory and explicit retirement/purge decision | Dangling key, policy and client dependency rejection |
+| COMP-10 / AC16 | Versioned intent, capability negotiation, source-bound plans and receipts | Same intent across distinct backend capabilities |
+| COMP-11 / AC15 | Host execution states, resumability and recovery | Faults, races, drift and uncertain commit outcomes |
+
+NFR-1/2/3 require retained before/after meaning and explicit loss. NFR-11/12
+require deterministic offline planning. NFR-15–19 require bounded metadata work
+and untrusted-input admission. NFR-20/21 require version/subset evidence.
+NFR-50 separates the portable library from storage execution.
+
+## Solution Approaches
+
+**Selected proposal: portable declarative intent with backend compilation and
+host execution.** One logical change can produce transactional table alterations,
+a staged rewrite, a graph-engine transition or a new immutable publication.
+Shared obligations stay inspectable and independently implementable. The cost is
+an explicit capability protocol and backend-specific conformance work.
+
+**Alternative: portable SQL migrations.** Convenient for one relational target,
+but SQL cannot define graph publication, file rewrites or absence semantics across
+targets. It also conflates native casts with meaning-preserving conversions.
+
+**Alternative: backend-owned opaque migration scripts only.** Flexible execution,
+but UMF cannot inspect dependencies, compare losses or verify that the result
+discharges the authored change. Explicit native steps remain an escape hatch
+with pinned artifacts, declared effects and postconditions; they cannot receive
+portable semantic-preservation claims.
+
+Architecture impact: the portable library describes and compiles plans; optional
+UMF-distributed host components execute under independently supplied authority.
+This follows the existing CONTRACT-081 split and preserves NFR-50.
+
+## Domain Model
+
+| Concept | Meaning |
+| --- | --- |
+| Source pair | Independently retained exact old/new sources, logical IDs and dependency closure |
+| Change intent | Authored operation, target IDs, historical fill/conversion, future-write behavior and loss policy |
+| Capability profile | Exact backend/version/subset, atomic/staged/publication support, limits and evidence |
+| Plan | Ordered dependency graph of steps, input/output states, checks, write policy, recovery and artifact digests |
+| Approval | Host authorization bound to the concrete plan, target and permitted destructive effects |
+| Outcome | Authenticated execution state and validation evidence bound to source, plan and target generation |
+
+Stable IDs identify lineage, not compatibility. A newly added ID cannot inherit
+an old Field's values through name similarity. Removed IDs cannot be reused to
+reinterpret retained data. Rename and identity remapping need separate explicit
+operations. Unknown extension content survives; unknown dependencies affecting a
+change block a complete plan. External dependencies require a host inventory and
+declared coverage, because UMF cannot discover all consumers of a schema.
+
+## System Decomposition
+
+| Responsibility | UMF portable library | Backend adapter/compiler | Execution host and storage backend |
+| --- | --- | --- | --- |
+| Describe meaning | Diff known assertions; validate intent and exact literals; expose unknowns | Interpret declared native binding and capabilities | Supply actual installation and dependency inventory |
+| Build a plan | Order obligations; retain sources; explain losses and recovery | Lower to native schema/data operations; identify locks, scans and rewrites | Select operational limits, rollout and credentials; approve target-bound plan |
+| Backfill/conversion | Define input/output types, versioned transform reference and failure policy | Compile supported expressions or require explicit native/host step | Read/transform/write rows or files; checkpoint, retry and enforce limits |
+| Validate | Supply portable target value rules and evidence requirements | Specify native constraints and complete checks | Validate actual data; prevent races; retain evidence |
+| Activate/recover | Verify receipt structure and correspondence to retained inputs | Define qualified transition and recovery mechanisms | Fence writers, commit/publish, update history, resolve unknown outcomes |
+
+The portable library never opens connections, scans user datasets, runs embedded
+SQL or evaluates arbitrary callbacks from schema metadata. A host transform is a
+separately trusted, versioned implementation. Its code/artifact identity, required
+inputs and declared determinism enter the approved plan. External side effects
+are outside the first backfill profile. Weft remains the lowering owner where
+the table profile uses it; do not create a competing general query engine.
+
+```mermaid
+flowchart LR
+  A[Exact sources and authored intent] --> B[UMF diff and obligations]
+  B --> C[Backend capability check and compilation]
+  C --> D[Reviewable plan and host approval]
+  D --> E[Host execution with native guards]
+  E --> F[Target validation and cutover]
+  F --> G[Retained outcome and source history]
+```
+
+### Add and require
+
+An optional birthday addition declares how old absence is represented: an absent
+property, a native null, or an explicitly approved read-time interpretation.
+Adding the definition alone does not assert that data was physically rewritten.
+
+A required addition and an optional-to-required change both require a plan for
+existing missing/null values. Choose fail-if-any, an explicit typed literal, or
+a versioned transformation from identified source fields. The default target
+set is missing/null values under the selected binding; overwriting present values
+requires a separate explicit choice. A backfill must satisfy the complete target
+type, facets, keys, references and applicable policies, not only presence.
+
+Logical default resolution, native defaults on future writes, and one-time
+historical backfill are independent. A future insert default does not cover
+explicit null, later updates or old rows unless the native profile proves it.
+Changing/removing a future default does not retroactively change filled rows.
+A birthday sentinel is an author decision; UMF must not invent a date.
+
+Protect concurrent writes before the backfill starts. The backend can use a
+qualified atomic operation, constrained writes, coordinated dual writes or a
+fenced maintenance window. An online staged plan must specify how inserts,
+updates and deletes are reconciled and how old clients behave. Backfill chunks
+use stable key/version checks or an equivalent backend mechanism, not offsets
+or unconditional updates that overwrite concurrent edits. Final complete
+validation and constraint activation/cutover have no unprotected gap. A sample
+or preliminary scan cannot discharge the activation check.
+
+### Drop
+
+Separate removal from the current logical view, retirement of writer/client
+capabilities, physical column/property deletion, and purge from retained history.
+Dependencies include keys, relationships, defaults, computed values, indexes,
+checks, partitions, policies, actions, query catalogs and generated clients.
+Each relevant dependent change is ordered in the plan or causes refusal.
+Unknown dependent semantics cannot be silently dropped with a native cascade.
+
+Default proposal: retire access, retain values for an explicitly selected recovery
+window, then physically purge under a separate approved step. No retention period
+is assumed. A host may approve immediate purge with explicit irreversible loss.
+Backups, archives and immutable publications have separate retention/deletion
+policy; dropping a current Field does not claim erasure of historical copies.
+Record-schema archives preserve metadata, not deleted instance values.
+
+### Change type
+
+Require either a version-qualified rule proving preservation for the actual
+source domain and binding, or an explicit conversion with defined failure/loss
+policy. Distinguish target validity from semantic equivalence and reversibility.
+Logical integer widening can still require a physical rewrite or lock. A date
+to timestamp conversion needs an authored time and timezone rule; string to date
+needs an authored format and invalid-value policy. Do not infer either from host
+locale, timezone or permissive native cast behavior.
+
+Default failure policy is to reject and leave the current schema active.
+Explicit reject/quarantine or lossy conversion must state row disposition,
+access control and counts; retained invalid rows cannot silently vanish from a
+claimed complete migration. Round-trip proof or retained original values is
+needed for reversible conversion; an inverse cast is insufficient.
+Use an in-place native operation only when qualified. Otherwise create a shadow
+representation, copy/convert, reconcile concurrent changes, validate and switch
+the binding/client generation together. Retire the old representation later.
+
+### Lifecycle and recovery
+
+The plan covers prepare, protect writes, populate/convert, validate, activate and
+retire/purge phases; a backend may combine phases when its evidence permits.
+Preparation is not activation. Plans bind exact source, binding, capabilities,
+transform artifacts and predecessor generation; hosts recheck drift and approval
+at execution. Schema/content digests establish correspondence, not authorization. Plan and
+outcome verifiers require independently retained expected sources and target
+identity; accepting a receipt's self-reported hashes is insufficient. Host evidence
+records the protected data scope/generation and validation coverage. Portable
+verification checks provenance and correspondence, not unseen row correctness.
+
+Atomic execution rolls back only effects the backend actually makes atomic.
+Staged execution records durable checkpoints, step idempotency and forward
+recovery. Commit-response loss triggers outcome lookup before retry. Validation
+failure never publishes the target generation. Atomic failure restores the old
+state; committed staged effects may require forward repair while ordinary clients
+remain fenced. Retaining the old generation identifier does not prove that its
+physical schema is still usable. Partially staged state is inaccessible to
+ordinary clients. The host prevents competing migrators and coordinates
+active transactions, old generated clients, prepared catalogs and cursors.
+
+After cutover, application writes can make reversal unsafe. Recovery must state
+whether it uses retained values, a verified backup, reverse transformation or a
+forward repair. Never claim that restoring old schema metadata restores data.
+Cross-store changes use explicit coordination and recovery; no distributed
+transaction or single atomic publication is assumed.
+
+## Traceability
+
+### First native release acceptance
+
+The U1/U2 implementation may deliver a bounded PostgreSQL profile with explicit
+maintenance/fencing semantics. Online chunked backfills, arbitrary transformations,
+retirement windows, shadow type rewrites and additional backends remain later
+capabilities. This does not weaken the full field-lifecycle requirements.
+The accepted inventory must mark each requirement as qualified, explicitly refused,
+or remaining work; a bounded release must not be called full migration support.
+
+The first native release must satisfy these design checks for every claimed
+supported operation:
+
+- An appended required Field is populated explicitly before native requiredness
+  and future default activation. For an existing optional Field, fail-if-null
+  tightening and historical-fill-then-tighten are distinct cases. A profile that
+  can only fill appended columns must refuse the latter and retain that gap.
+- Native presence checks and activation occur under qualified protection from
+  writes; direct authorized SQL and old clients cannot race a naked preflight
+  scan. Maintenance-mode blocking is valid and must be documented honestly.
+- A drop's review surface names the deleted logical/native object and stored
+  value loss. Approval explicitly covers immediate irreversibility or a supplied
+  recovery policy. PostgreSQL's dependency restriction alone does not establish
+  that local indexes/constraints are preserved; typed dependency analysis and
+  explicit companion changes are required.
+- Known dependencies resolve by stable typed identities. SQL name matching can
+  supplement diagnostics but cannot prove complete dependencies. Include inbound
+  cross-table references, declared operations and policy predicates. Unknown or
+  external dependency coverage is declared; unresolved relevant meaning refuses.
+- Finite physical widening rules also check logical type, facets, defaults,
+  allowed values and unknown extensions. A reviewed marker for physical widening
+  cannot authorize an unrelated semantic narrowing. Combined operations either
+  have a proved dependency/name order or refuse explicitly.
+- Every committed phase binds effect completion and progress atomically where
+  supported. Nontransactional effects have exact reconciliation rules. Native
+  generation admission stays fenced through final verified publication; schema
+  history alone never constitutes data rollback evidence.
+- Immutable historical plans verify under their original version's rules.
+  Stricter successor review requirements must not invalidate recorded history.
+  Verification of an old artifact is separate from permission to execute new
+  effects; current host admission still selects its accepted execution profile
+  and requires fresh applicable authorization.
+
+Code and native acceptance remain owned by **Plan UMF and Weft Praxis asks**.
+This design review checks these obligations against its actual contract, diff and
+evidence before treating an operation as supported.
+
+Native reference: [PostgreSQL 18 ALTER TABLE](https://www.postgresql.org/docs/18/sql-altertable.html)
+defines automatic removal of local indexes/constraints on column drop, native
+requiredness validation, default changes and type conversion. These native rules
+inform adapter obligations; they do not establish portable semantic preservation.
+
+The requirements table allocates every new criterion to components and tests.
+CONTRACT-046 remains the read-only comparator. CONTRACT-081 owns the first native
+table execution profile. The [build plan](../../04-build/schema-migration-plan.md)
+requires a migration-intent/plan/outcome contract, story technical design and
+AC-level test allocation before implementation. Existing U1/U2 work in the chat
+**Plan UMF and Weft Praxis asks** owns the native CONTRACT-081/TD-085/STP-085
+implementation. Reuse its interfaces and evidence, assess them against this design,
+and create additional contracts/technical designs only for uncovered requirements.
+The owner assigns that chat code ownership and this chat design review.
+Exact public shapes, capability
+limits and diagnostic codes are intentionally not frozen by this design.
+
+## Concern Alignment
+
+ADR-002 keeps planning browser-compatible TypeScript, tested in Bun and Chromium.
+Fidelity, stable identity, bounded processing, reproducibility and qualified
+conformance apply to all components. Existing Python host boundary controls apply
+to execution. Birthdays and backfill rejects may be personal data: schemas and
+default literals are inspectable metadata; row values/reject samples require host
+access controls and must not enter portable receipts or ordinary diagnostics.
+
+## Constraints & Assumptions
+
+Proposed rollout: current-core single-document PostgreSQL first, using retained
+source bytes and existing deployment generations. US-050/CONTRACT-045 remain
+prerequisites for cross-document migration; no implicit core members are added.
+Truss owns mutable graph admission/journals; Ashlar owns new immutable publications
+and their source revision custody; table/file formats own metadata commits and
+rewrites. They qualify independently against the shared intent requirements.
+
+Open decisions before the relevant implementation slice: exact capability and
+conversion grammar; trusted transform packaging; scan/chunk resource bounds;
+retention duration and purge authority; managed target restrictions; backend
+rollout after PostgreSQL. General key/relationship migrations beyond dependencies
+of these four field operations require later scope. Required dependency changes
+must be explicit supported companion steps or block the field migration.
+
+## Risks
+
+| Risk | Impact | Mitigation |
+| --- | --- | --- |
+| Unknown consumers or extension dependencies | Broken readers/security | State inventory coverage; refuse relevant unresolved meaning; explicit client cutover |
+| Concurrent writes invalidate checks | Invalid active target | Protect writes throughout populate/validate/activate; race tests |
+| Native cast changes meaning | Silent loss | Exact conversion semantics, target checks, approved loss and retained originals |
+| Staged interruption or response loss | Duplicate effects or inconsistent activation | Durable checkpoints, outcome lookup, fault injection |
+| Drop or post-cutover writes defeat reversal | Irrecoverable values | Explicit retention/backup and honest irreversible steps |

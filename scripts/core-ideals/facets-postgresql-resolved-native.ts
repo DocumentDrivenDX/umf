@@ -1,6 +1,7 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import assert from 'node:assert/strict';
 import {createHash,randomUUID} from 'node:crypto';
-import {readFacetNodeTree,decodeFacetConstant,type PgFacetNode} from '../../src/adapters/postgresql/facet-node-tree';
+import {readFacetNodeTree, decodeFacetConstant, type PgFacetNode} from '../../src/adapters/postgresql/facet-node-tree';
 const paths=['native/postgresql/catalog/image.json','scripts/core-ideals/facets-postgresql-resolved-native.ts','src/adapters/postgresql/facet-node-tree.ts'];
 const manifest=await Bun.file(paths[0]!).json(),name='umf-facet-datums-'+randomUUID();let created=false;
 async function run(args:string[],input?:string){const p=Bun.spawn(args,{stdin:input===undefined?'ignore':new Blob([input]),stdout:'pipe',stderr:'pipe'});const [out,err,code]=await Promise.all([new Response(p.stdout).text(),new Response(p.stderr).text(),p.exited]);assert.equal(code,0,err||out);return out;}

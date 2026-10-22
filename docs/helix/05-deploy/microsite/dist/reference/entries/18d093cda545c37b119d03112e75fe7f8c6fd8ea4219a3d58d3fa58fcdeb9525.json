@@ -1,0 +1,188 @@
+{
+  "data": {
+    "extensionId": "umf.json-schema",
+    "manifest": {
+      "capabilities": {
+        "directions": [
+          "import",
+          "export"
+        ],
+        "evidence": [
+          "tests/json-schema/native.test.ts",
+          "tests/json-schema/upstream.test.ts"
+        ],
+        "native": {
+          "subset": "Native JSON tree preservation; semantic validation limited to known dialect/keywords and JavaScript-compatible numerics, format annotation-only; see CONTRACT-002 and evidence.",
+          "system": "JSON Schema",
+          "version": "2020-12"
+        },
+        "validation": "semantic"
+      },
+      "coreVersion": "0.10.0",
+      "description": "JSON Schema Draft 2020-12 syntax, scoped validation, and lossless-number native interchange",
+      "id": "umf.json-schema",
+      "schema": {
+        "$defs": {
+          "node": {
+            "oneOf": [
+              {
+                "properties": {
+                  "kind": {
+                    "const": "null"
+                  }
+                },
+                "required": [
+                  "kind"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "kind": {
+                    "const": "boolean"
+                  },
+                  "value": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "kind": {
+                    "const": "string"
+                  },
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "kind": {
+                    "const": "number"
+                  },
+                  "value": {
+                    "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?([eE][+-]?[0-9]+)?$",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "items": {
+                    "items": {
+                      "$ref": "#/$defs/node"
+                    },
+                    "type": "array"
+                  },
+                  "kind": {
+                    "const": "array"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "items"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "kind": {
+                    "const": "object"
+                  },
+                  "members": {
+                    "additionalProperties": {
+                      "$ref": "#/$defs/node"
+                    },
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "members"
+                ],
+                "type": "object"
+              }
+            ]
+          }
+        },
+        "$id": "urn:umf:json-schema:0.1.0",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "properties": {
+          "baseUri": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "dialect": {
+            "const": "https://json-schema.org/draft/2020-12/schema"
+          },
+          "resources": {
+            "additionalProperties": {
+              "$ref": "#/$defs/node"
+            },
+            "type": "object"
+          },
+          "root": {
+            "$ref": "#/$defs/node"
+          }
+        },
+        "required": [
+          "dialect",
+          "baseUri",
+          "root",
+          "resources"
+        ],
+        "type": "object"
+      },
+      "scopes": [
+        "element"
+      ],
+      "semantics": "docs/helix/02-design/contracts/CONTRACT-002-json-schema.md",
+      "version": "0.1.0"
+    },
+    "registration": {
+      "apiIds": [
+        "[\"api\",\".\",\"jsonSchemaRegistry\"]"
+      ],
+      "coreProfiles": [
+        "0.10.0"
+      ],
+      "mode": "explicit"
+    },
+    "schemaId": "[\"schema\",\"spec/extensions/json-schema/schema.json\",\"\"]",
+    "version": "0.1.0"
+  },
+  "id": "[\"extension\",\"umf.json-schema\",\"0.1.0\"]",
+  "kind": "extension",
+  "links": [
+    "[\"api\",\".\",\"jsonSchemaRegistry\"]",
+    "[\"guide\",\"extensions\"]",
+    "[\"schema\",\"spec/extensions/json-schema/schema.json\",\"\"]",
+    "[\"integration\",\"umf.json-schema@0.1.0:import\"]",
+    "[\"integration\",\"umf.json-schema@0.1.0:export\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 3650,
+      "path": "spec/extensions/json-schema/package.json",
+      "sha256": "32bac6cf2a6fcb6d0f4367084f7e358887e263969f0b1697145abb0b413c4582"
+    }
+  ],
+  "summary": "JSON Schema Draft 2020-12 syntax, scoped validation, and lossless-number native interchange",
+  "title": "umf.json-schema · 0.1.0"
+}

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
 const base='fixtures/parquet/schema/',m=await Bun.file(base+'manifest.json').json(),report=await Bun.file(base+'results.json').json(),negative=await Bun.file(base+'negative/manifest.json').json(),cases=[];
 for(const c of m.results){const expected=report.results.find((r:any)=>r.id===c.id);cases.push({id:c.id,status:'checked',bytes:Array.from(new Uint8Array(await Bun.file(c.path).arrayBuffer())),tree:expected.tree,leaves:expected.leaves});}for(const c of negative.cases)cases.push({id:c.id,status:c.expected,bytes:Array.from(new Uint8Array(await Bun.file(c.path).arrayBuffer()))});

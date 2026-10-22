@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 8852,
+        "line": 8,
+        "path": "src/projections/postgresql-avro.ts",
+        "sha256": "b40356065df7a6a09111a70b78433622d33d526ed8e8dc501152c8145df80842"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "PostgresqlAvroPolicy",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface PostgresqlAvroPolicy {id:string;recordName:string;namespace:string;table:{schema:string;name:string};fields:Record<string,{name:string;representation:PostgresqlAvroRepresentation}>;lossPolicy:'strict'|'allow-reported-loss';}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"PostgresqlAvroPolicy\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 8852,
+      "line": 8,
+      "path": "src/projections/postgresql-avro.ts",
+      "sha256": "b40356065df7a6a09111a70b78433622d33d526ed8e8dc501152c8145df80842"
+    }
+  ],
+  "summary": "Type declaration · src/projections/postgresql-avro.ts",
+  "title": "PostgresqlAvroPolicy"
+}

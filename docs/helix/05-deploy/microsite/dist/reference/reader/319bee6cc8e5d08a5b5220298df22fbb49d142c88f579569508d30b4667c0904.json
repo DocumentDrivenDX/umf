@@ -1,0 +1,30 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"AvroKeyArchive\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "schema",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "dependencies",
+      "optional": false,
+      "type": "{ id: string; schema: string; }[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "The original Avro schema text and its explicitly supplied named dependency schemas.",
+  "related": [
+    "[\"api\",\".\",\"AvroKeyRequest\"]"
+  ],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "AvroKeyArchive"
+}

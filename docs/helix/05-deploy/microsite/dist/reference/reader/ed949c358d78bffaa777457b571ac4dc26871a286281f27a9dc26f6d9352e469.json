@@ -1,0 +1,60 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"OpenapiPayload\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "baseUri",
+      "optional": true,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"OpenapiResource\"]"
+      ],
+      "name": "resources",
+      "optional": true,
+      "type": "OpenapiResource[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "profile",
+      "optional": false,
+      "type": "\"openapi-json-yaml-0.1\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"NativeJson\"]"
+      ],
+      "name": "root",
+      "optional": false,
+      "type": "NativeJson"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "originalSource",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "originalFormat",
+      "optional": false,
+      "type": "\"json\" | \"yaml\""
+    }
+  ],
+  "parameters": [],
+  "purpose": "OpenapiPayload is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "OpenapiPayload"
+}

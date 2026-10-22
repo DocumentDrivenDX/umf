@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 15824,
+        "line": 155,
+        "path": "src/model/key-tuple.ts",
+        "sha256": "94703a6988b001fdf2209ad2864199f7cd399c3c92bafb81e086e2aaadebf70c"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "PreparedCoreKeyTuples",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface PreparedCoreKeyTuples {\n readonly profile:'umf.core.key-tuples.prepared/1';\n /** Immutable, private-copy source; this is not a current-store assertion. */\n readonly source:Json;\n encode(identity:CoreKeyIdentity,values:CoreKeyTupleValue[]):CoreKeyTupleReceipt;\n verify(receipt:CoreKeyTupleReceipt):CoreKeyTupleReceipt;\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"PreparedCoreKeyTuples\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 15824,
+      "line": 155,
+      "path": "src/model/key-tuple.ts",
+      "sha256": "94703a6988b001fdf2209ad2864199f7cd399c3c92bafb81e086e2aaadebf70c"
+    }
+  ],
+  "summary": "Type declaration · src/model/key-tuple.ts",
+  "title": "PreparedCoreKeyTuples"
+}

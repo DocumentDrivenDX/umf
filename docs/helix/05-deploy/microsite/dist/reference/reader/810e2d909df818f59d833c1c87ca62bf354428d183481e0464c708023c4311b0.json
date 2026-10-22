@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"recoverParquetFacetSource\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ParquetFacetClassification\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "ParquetFacetClassification"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "current",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "recoverParquetFacetSource accepts input, current and returns Uint8Array<ArrayBufferLike>.",
+  "related": [],
+  "returns": "Uint8Array<ArrayBufferLike>",
+  "task": "Import and export",
+  "type": "(input: ParquetFacetClassification, current: Document) => Uint8Array"
+}

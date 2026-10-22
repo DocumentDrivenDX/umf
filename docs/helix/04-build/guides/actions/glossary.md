@@ -1,0 +1,32 @@
+# Words used in this guide
+
+- Action: a versioned declaration describing a requested change and its obligations.
+- Command: a request for a decision that may change business state.
+- Query: a request to read information without performing a business change.
+- Event or fact: a statement that something committed; delivery may repeat.
+- Extension: separately versioned meaning attached to the core model.
+- Registry: explicitly installed vocabulary packages and their semantic checking callbacks.
+- Field: definition of an admitted value and its constraints.
+- Record: definition grouping Fields into an entity shape.
+- Key: an ordered tuple identifying an entity under exact declared equality rules.
+- Frame: frozen selected identities and explicitly permitted reads or writes.
+- Recipe: an ordered list of required primitive effects.
+- Handler: separately registered implementation operating through bounded capabilities.
+- Precondition: a rule over admitted pre-write state; false invocation conditions yield business rejection.
+- Postcondition: a rule checked before commit against candidate post-state and retained pre-state; failure rolls back.
+- Replay token: caller key within a trusted scope used to recognize the original request and outcome.
+- Revision: immutable identity of the exact retained declaration snapshot.
+- Version: adapter-owned opaque identity used for commit or resource checks; not a universal clock.
+- Receipt: store/epoch/version binding used to request qualified read freshness.
+- Epoch: identity separating store visibility histories, such as after restore.
+- Outbox: publication facts retained atomically with the business transaction.
+- Projection: read model built from committed facts, with defined content semantics.
+- Contiguous prefix: every commit position through a point has been applied, without holes.
+- CQRS: separation of command and query responsibilities; event sourcing is optional.
+- Invariant: property required to hold in every accepted state.
+- Counterexample: specific case violating a claimed property.
+- Refinement: checking that an implementation's steps agree with an independently stated model.
+- Mutation test: deliberately faulty implementation used to check that verification detects its fault.
+- SMT: Satisfiability Modulo Theories, solving encoded logical constraints under stated domains.
+- TLA+ / TLC: specification language and finite model checker for states and transitions.
+- Native witness: observed behavior from the actual named store/runtime, not a simulation.

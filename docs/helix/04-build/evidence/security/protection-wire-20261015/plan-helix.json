@@ -1,0 +1,18 @@
+{
+  "instance": "docs/helix/04-build/security-field-protection-plan.md",
+  "type": "implementation-plan",
+  "catalog": "/Users/erik/.codex/plugins/cache/helix/helix/0.17.0/workflows/activities",
+  "findings": [
+    {
+      "severity": "warning",
+      "check": "placeholder.bracket_token",
+      "message": "possible template token '[Transform]'",
+      "line": 186
+    }
+  ],
+  "summary": {
+    "blocking": 0,
+    "warning": 1,
+    "info": 0
+  }
+}

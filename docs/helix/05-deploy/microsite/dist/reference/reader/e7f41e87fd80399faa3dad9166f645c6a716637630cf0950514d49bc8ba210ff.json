@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"projectRecordToTableSpec\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreKindDeclaration\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "CoreKindDeclaration"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"RecordTableSpecRequest\"]"
+      ],
+      "name": "options",
+      "optional": false,
+      "type": "RecordTableSpecRequest"
+    }
+  ],
+  "purpose": "projectRecordToTableSpec accepts input, options and returns RecordTableSpecProjection.",
+  "related": [],
+  "returns": "RecordTableSpecProjection",
+  "task": "Import and export",
+  "type": "(input: CoreKindDeclaration, options: RecordTableSpecRequest) => RecordTableSpecProjection"
+}

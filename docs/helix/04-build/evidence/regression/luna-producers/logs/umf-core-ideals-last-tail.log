@@ -1,0 +1,286 @@
+{"testProcess":"tests/core-ideals/field-parquet.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/core-ideals/field-parquet.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/core-ideals/field-parquet.test.ts:
+(pass) Parquet leaves retain repetition and exact native bytes; groups cannot become primitive Fields [20157.37ms]
+(pass) Parquet rejects unknown indices, invalid topology, conflicts and stale recovery [1349.49ms]
+
+ 2 pass
+ 0 fail
+ 649 expect() calls
+Ran 2 tests across 1 file. [21.79s]
+{"testProcess":"tests/core-ideals/field-parquet.test.ts","exitCode":0,"pass":2,"fail":0,"assertions":649,"completeSummary":true,"logSha256":"8eed0b69084aa379969e0158557e9f68e7108b2e6fbe00e887b663a1aacfc0ae"}
+{"testProcess":"tests/core-ideals/field-postgresql-projection.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/core-ideals/field-postgresql-projection.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/core-ideals/field-postgresql-projection.test.ts:
+(pass) explicit pg_catalog carriers compile and preserve authored meaning through both receipt formats [930.39ms]
+(pass) unsafe or truncating identifiers are rejected before parser invocation [10.04ms]
+(pass) strict refuses unprojected constraints, while report retains them with explicit diagnostics [21.55ms]
+(pass) edited SQL or tampered receipt cannot claim recovery; record/group cannot become a column [20.84ms]
+
+ 4 pass
+ 0 fail
+ 134 expect() calls
+Ran 4 tests across 1 file. [1324.00ms]
+{"testProcess":"tests/core-ideals/field-postgresql-projection.test.ts","exitCode":0,"pass":4,"fail":0,"assertions":134,"completeSummary":true,"logSha256":"9624bd8c6c7eb35cf6c674afe82b7021c477b714be3395c48cd3f45f83fe93e2"}
+{"testProcess":"tests/core-ideals/field-postgresql.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/core-ideals/field-postgresql.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/core-ideals/field-postgresql.test.ts:
+(pass) catalog fields include native domains, arrays and unknown scalar refinements without erasure [6054.42ms]
+(pass) native text formatting and unknown numeric metadata survive both receipt formats [752.88ms]
+(pass) verified authored conflict blocks both modes without a partial target [416.07ms]
+(pass) stale core metadata, mismatched archives, future servers and edited receipts fail [585.09ms]
+
+ 4 pass
+ 0 fail
+ 113 expect() calls
+Ran 4 tests across 1 file. [8.01s]
+{"testProcess":"tests/core-ideals/field-postgresql.test.ts","exitCode":0,"pass":4,"fail":0,"assertions":113,"completeSummary":true,"logSha256":"e514ce9722f06bd4bb2fb4aef91874b3ddf4aba0bfeab5abc63ee106b32e7c81"}
+{"testProcess":"tests/core-ideals/field-report.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/core-ideals/field-report.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/core-ideals/field-report.test.ts:
+(pass) five-system common metadata retains checked receipts, versioned basis and recoverable residuals [724.84ms]
+(pass) tampered summaries, original receipts and missing PostgreSQL backend are refused [162.21ms]
+
+ 2 pass
+ 0 fail
+ 174 expect() calls
+Ran 2 tests across 1 file. [1380.00ms]
+{"testProcess":"tests/core-ideals/field-report.test.ts","exitCode":0,"pass":2,"fail":0,"assertions":174,"completeSummary":true,"logSha256":"6bc92fd107fbf298622887b226d9b8ab79e17ba0bffdb76dc8a82e03dffbd79b"}
+{"testProcess":"tests/core-ideals/field-selection.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/core-ideals/field-selection.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/core-ideals/field-selection.test.ts:
+(pass) current selection schema and serialization cover qualified cycles and reference boundaries [49.22ms]
+(pass) selection structure preserves exact current meaning and rejects retired markers [4.49ms]
+(pass) selection computes validation with the caller registry [12.04ms]
+
+ 3 pass
+ 0 fail
+ 28 expect() calls
+Ran 3 tests across 1 file. [316.00ms]
+{"testProcess":"tests/core-ideals/field-selection.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":28,"completeSummary":true,"logSha256":"4ccf1ef1e46bdfa776a7d444761d9a5cb8e2d8a5e5d68c82db6f58a85212c4e3"}
+{"testProcess":"tests/core-ideals/field-sqlserver-projection.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/core-ideals/field-sqlserver-projection.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/core-ideals/field-sqlserver-projection.test.ts:
+(pass) explicit carriers emit complete SQL artifacts and retained receipts recover authored fields [62.28ms]
+(pass) strict/report loss, structured-kind refusal, Unicode guards and stale artifacts remain explicit [6.80ms]
+
+ 2 pass
+ 0 fail
+ 102 expect() calls
+Ran 2 tests across 1 file. [271.00ms]
+{"testProcess":"tests/core-ideals/field-sqlserver-projection.test.ts","exitCode":0,"pass":2,"fail":0,"assertions":102,"completeSummary":true,"logSha256":"d4978a82b88c58195e881a33f883ce6fef66e55d5c1e088a3ec5bc1906f93e34"}
+{"testProcess":"tests/core-ideals/field-sqlserver.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/core-ideals/field-sqlserver.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/core-ideals/field-sqlserver.test.ts:
+(pass) SQL Server captured members classify independently of scalar/alias/index semantics [7195.71ms]
+(pass) authored conflicts block both policies, while matching authored fields remain explicit [463.08ms]
+(pass) capture formatting, unknown numeric detail and index constraints survive without identity promotion [131.11ms]
+(pass) stale metadata, archives, author receipts and unsupported versions cannot claim recovery [344.62ms]
+
+ 4 pass
+ 0 fail
+ 215 expect() calls
+Ran 4 tests across 1 file. [8.36s]
+{"testProcess":"tests/core-ideals/field-sqlserver.test.ts","exitCode":0,"pass":4,"fail":0,"assertions":215,"completeSummary":true,"logSha256":"803acbae346e8dc4171ccebbda75969c61a7bbb8883a390e7b1508567179b49b"}
+{"testProcess":"tests/core-ideals/field-tablespec-projection.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/core-ideals/field-tablespec-projection.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/core-ideals/field-tablespec-projection.test.ts:
+(pass) authored field projects to a complete native table and recovers author meaning with retained receipt [778.55ms]
+(pass) strict blocks omitted meaning while report retains every residual and source assertion [37.48ms]
+(pass) record/group cannot lower to a single column and name changes are explicit loss [38.34ms]
+(pass) receipt tampering, stale native text, malformed policy and metadata omission cannot pass silently [43.87ms]
+(pass) diagnostics mirror disclosed loss and legacy receipts still recover without weakening checks [79.61ms]
+(pass) empty namespace permits strict projection but discarded namespace receipts cannot claim exactness [30.93ms]
+
+ 6 pass
+ 0 fail
+ 110 expect() calls
+Ran 6 tests across 1 file. [1335.00ms]
+{"testProcess":"tests/core-ideals/field-tablespec-projection.test.ts","exitCode":0,"pass":6,"fail":0,"assertions":110,"completeSummary":true,"logSha256":"4e8894bc56b458ab738c4bd8b2dddc51133a4a20a63b776b7fbf16f2b239e53b"}
+{"testProcess":"tests/core-ideals/field-tablespec.test.ts","command":["/opt/homebrew/Cellar/bun/1.4.3/bin/bun","test","--timeout","30000","./tests/core-ideals/field-tablespec.test.ts"]}
+bun test v1.4.3 (26aa4e1a9)
+
+tests/core-ideals/field-tablespec.test.ts:
+(pass) classifies an unknown native column type without inventing scalar family and recovers exact text [121.09ms]
+(pass) verified authored field agrees; authored record/group and unknown or unverified labels block atomically [208.49ms]
+29 | test('stale author receipts and metadata cannot be used as a native classification basis',()=>{
+30 |  const author=declareCoreElementKind(source(),identity,'field');const edited=copyJson(author.target) as unknown as typeof author.target;edited.future='changed';
+31 |  const result=classifyTableSpecField(edited,{column:0,mode:'report',author});expect(result.status).toBe('blocked');expect(result.residuals[0]!.reason).toContain('STALE');
+32 |  const doc=source();doc.modules[0]!.elements[0]!.name='wrong';expect(()=>classifyTableSpecField(doc,{column:0,mode:'strict'})).toThrow();
+33 |  expect(()=>classifyTableSpecField(source(),{column:4,mode:'strict'})).toThrow();
+34 |  expect(()=>classifyTableSpecField(importTableSpec(text,{id:'old',format:'json'}),{column:0,mode:'strict'})).toThrow();
+                                                                                                                  ^
+error: expect(received).toThrow()
+
+Received function did not throw
+Received value: [Object: null prototype] {
+  operation: "classify-tablespec-field",
+  version: "1.0.0",
+  status: "classified",
+  source: [Object: null prototype] {
+    umf: "0.10.0",
+    id: "old",
+    vocabularies: [Object: null prototype] {
+      "umf.tablespec": [Object: null prototype] {
+        version: "0.1.0",
+      },
+    },
+    extensions: [Object: null prototype] {
+      "umf.tablespec": [Object: null prototype] {
+        profile: "tablespec-table-1",
+        root: [Object: null prototype] {
+          kind: "object",
+          members: [Object: null prototype] {
+            version: [Object: null prototype] {
+              kind: "string",
+              value: "1.0",
+            },
+            table_name: [Object: null prototype] {
+              kind: "string",
+              value: "T",
+            },
+            columns: [Object: null prototype] {
+              kind: "array",
+              items: [
+                [Object: null prototype] {
+                  kind: "object",
+                  members: [Object ...],
+                }
+              ],
+            },
+          },
+        },
+        originalSource: " {\"version\":\"1.0\",\"table_name\":\"T\",\"columns\":[{\"name\":\"x\",\"data_type\":\"FUTURE\",\"opaque\":9007199254740993}]}\n",
+        originalFormat: "json",
+      },
+    },
+    modules: [
+      [Object: null prototype] {
+        id: "table",
+        namespace: "T",
+        elements: [
+          [Object: null prototype] {
+            id: "column:0",
+            name: "x",
+            extensions: [Object: null prototype] {},
+          }
+        ],
+      }
+    ],
+  },
+  request: [Object: null prototype] {
+    column: 0,
+    mode: "strict",
+  },
+  binding: [Object: null prototype] {
+    id: "umf.tablespec.field",
+    version: "1.0.0",
+    nativeVersion: "647e8e566ad78b864282ec65c0b0b2237aa63084",
+    subset: "Table version 1.0 captured column member role; no scalar/container/native validation claim",
+  },
+  mapping: [Object: null prototype] {
+    origin: "classified",
+    kind: "field",
+    idealPath: "/modules/0/elements/0/kind",
+    nativePath: "/extensions/umf.tablespec/root/members/columns/items/0",
+    nativeFragment: [Object: null prototype] {
+      kind: "object",
+      members: [Object: null prototype] {
+        name: [Object: null prototype] {
+          kind: "string",
+          value: "x",
+        },
+        data_type: [Object: null prototype] {
+          kind: "string",
+          value: "FUTURE",
+        },
+        opaque: [Object: null prototype] {
+          kind: "number",
+          value: "9007199254740993",
+        },
+      },
+    },
+    basis: "checked-native-column-membership",
+    outcome: "exact",
+  },
+  residuals: [],
+  diagnostics: [],
+  target: [Object: null prototype] {
+    umf: "0.10.0",
+    id: "old",
+    vocabularies: [Object: null prototype] {
+      "umf.tablespec": [Object: null prototype] {
+        version: "0.1.0",
+      },
+    },
+    extensions: [Object: null prototype] {
+      "umf.tablespec": [Object: null prototype] {
+        profile: "tablespec-table-1",
+        root: [Object: null prototype] {
+          kind: "object",
+          members: [Object: null prototype] {
+            version: [Object: null prototype] {
+              kind: "string",
+              value: "1.0",
+            },
+            table_name: [Object: null prototype] {
+              kind: "string",
+              value: "T",
+            },
+            columns: [Object: null prototype] {
+              kind: "array",
+              items: [
+                [Object: null prototype] {
+                  kind: "object",
+                  members: [Object ...],
+                }
+              ],
+            },
+          },
+        },
+        originalSource: " {\"version\":\"1.0\",\"table_name\":\"T\",\"columns\":[{\"name\":\"x\",\"data_type\":\"FUTURE\",\"opaque\":9007199254740993}]}\n",
+        originalFormat: "json",
+      },
+    },
+    modules: [
+      [Object: null prototype] {
+        id: "table",
+        namespace: "T",
+        elements: [
+          [Object: null prototype] {
+            id: "column:0",
+            name: "x",
+            extensions: [Object: null prototype] {},
+            kind: "field",
+          }
+        ],
+      }
+    ],
+  },
+}
+
+      at <anonymous> (/Users/erik/.codex/worktrees/d8be/umf/tests/core-ideals/field-tablespec.test.ts:34:110)
+(fail) stale author receipts and metadata cannot be used as a native classification basis [80.49ms]
+(pass) split sources retain sidecars and shadowed metadata after classification [50.25ms]
+(pass) native classification receipts reject tampering and subsequent native changes [69.57ms]
+(pass) new results always diagnose conflicts while historical receipts remain verifiable [99.17ms]
+
+ 5 pass
+ 1 fail
+ 71 expect() calls
+Ran 6 tests across 1 file. [918.00ms]
+{"testProcess":"tests/core-ideals/field-tablespec.test.ts","exitCode":1,"pass":5,"fail":1,"assertions":71,"completeSummary":true,"logSha256":"c96bbbe4174a95ee1d8769fab9040426faf88f0b045aec020869078cc0b26c2e"}
+Complete test file failed or terminated: tests/core-ideals/field-tablespec.test.ts
+
+ 32 pass
+ 1 fail
+ 1596 expect() calls
+Ran 33 tests across 9 files. [43.81s]

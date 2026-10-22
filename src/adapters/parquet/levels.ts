@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {decodeParquetPageBodies} from './bodies';
 import {inspectParquetSchema} from './schema';
 import {decodeParquetHybrid} from './hybrid';

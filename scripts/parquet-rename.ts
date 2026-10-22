@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {captureParquet,exportParquetCapture,inspectParquetContainers,renameParquetField,readDocument,writeDocument} from '../src';
 const base='fixtures/parquet/rename/',m=await Bun.file(base+'manifest.json').json(),results=[];
 for(const c of m.cases){const bytes=new Uint8Array(await Bun.file(c.path).arrayBuffer()),source=captureParquet(bytes,{id:c.id}),before=inspectParquetContainers(source),schema=(before.metadata as any).schema;

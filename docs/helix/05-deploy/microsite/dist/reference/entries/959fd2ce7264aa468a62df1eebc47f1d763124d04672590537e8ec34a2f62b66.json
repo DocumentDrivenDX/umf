@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 6434,
+        "line": 7,
+        "path": "src/adapters/parquet/logical.ts",
+        "sha256": "fc5d114b8b0843cc649e8f7c4b5b8252bde30d69c6e2d3f3b1b3bfa380d7ab42"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "inspectParquetLogicalTypes",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(source: Document): ParquetLogicalInspection"
+    ]
+  },
+  "id": "[\"api\",\".\",\"inspectParquetLogicalTypes\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 6434,
+      "line": 7,
+      "path": "src/adapters/parquet/logical.ts",
+      "sha256": "fc5d114b8b0843cc649e8f7c4b5b8252bde30d69c6e2d3f3b1b3bfa380d7ab42"
+    }
+  ],
+  "summary": "Logical schema rules only: never inspects or coerces stored values.",
+  "title": "inspectParquetLogicalTypes"
+}

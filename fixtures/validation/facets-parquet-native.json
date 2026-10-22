@@ -35,10 +35,10 @@
     }
   ],
   "sha256": {
-    "/home/erik/Projects/umf/scripts/core-ideals/facets-parquet-carrier-native.py": "23f53528ff6c8dc0b02e660a6515a3536d786635623f4097b37d2480fc5311c0",
-    "/home/erik/Projects/umf/scripts/core-ideals/facets-parquet-discovery-native.py": "8efbb98bf73588bd8e38918bf066c2e61bb26f4855e354cb2d20be53d6a44c2a",
-    "/home/erik/Projects/umf/scripts/core-ideals/facets-parquet-projection-native.py": "504c3350db1e63441805401fd85bb6cef2d4e16495165aae80fce941a48d546c",
-    "bun.lock": "98a99f7d306f7269db103bdbfafe5f9ad9ed34b02024276ad0cce45df27f5cc3",
+    "scripts/core-ideals/facets-parquet-carrier-native.py": "23f53528ff6c8dc0b02e660a6515a3536d786635623f4097b37d2480fc5311c0",
+    "scripts/core-ideals/facets-parquet-discovery-native.py": "8efbb98bf73588bd8e38918bf066c2e61bb26f4855e354cb2d20be53d6a44c2a",
+    "scripts/core-ideals/facets-parquet-projection-native.py": "504c3350db1e63441805401fd85bb6cef2d4e16495165aae80fce941a48d546c",
+    "bun.lock": "35d4053486465fc2d59a5fb6b91084968ebf3a4b9697ec01a053be55aa03df04",
     "fixtures/parquet/facets/bytes-max1-0-embedded.parquet": "023586481a6dda093ed32b66d8c8ebd089e07d895754059284ee9bb81240ffc9",
     "fixtures/parquet/facets/bytes-max1-0-plain.parquet": "2f51627b7030e833895a6a18ad45c6cebbf004e583dbc33831ef41eda2622b1f",
     "fixtures/parquet/facets/bytes-max1-1-embedded.parquet": "94c2060375c9b9ce1038093141d882f5bc36a07ea4eea1b8c5b14f5b3e9e00de",
@@ -352,12 +352,12 @@
     "fixtures/parquet/facets/uint8-min-embedded.parquet": "48bc5fdc8c5bcf6ce1a89d21ea000128744e351a1aa2b100a3b001eb1b4b4742",
     "fixtures/parquet/facets/uint8-min-plain.parquet": "bb2944bfcdfc5ee9d6924e6ce1bfabaa5866fdeb952c5f1ef9c04d31bc7b823f",
     "fixtures/validation/facets-parquet-carrier-corpus.json": "4ec421cbbc5f0fd77e9dc5282972d7c70866d28fbcf5c9e4c80a474f1e1eab41",
-    "fixtures/validation/facets-parquet-carrier-native.json": "2d3f998d5d09ab27374a409ccbcdf66e64a81a23a9f4eb48398712ab95ae1ac7",
-    "fixtures/validation/facets-parquet-composition.json": "09c791a1661896673ecb60938cb3bc6eca06ce9fc66c5eeccde405adecff2edd",
-    "fixtures/validation/facets-parquet-discovery-native.json": "c394004c2d37ecf8fa64e1e599914e14bb72c2c2928803d118492f4b2ede9e55",
-    "fixtures/validation/facets-parquet-discovery.json": "4756187491f07f797d3b6fc98d064ed71b2164912a9e5224efcf83f0158f5119",
+    "fixtures/validation/facets-parquet-carrier-native.json": "ac497f117daaa142dbee8156db4e8ef77d619334d264b8fb73579dc9149dfea2",
+    "fixtures/validation/facets-parquet-composition.json": "b3871b336abcfa100c66ab2f9464e7f19d6152075d2354ec56faf25d1a74bbc0",
+    "fixtures/validation/facets-parquet-discovery-native.json": "1bbbea2637b72ead3b762a161e4cec7f9f5e6f4373be078d58bf96e23635173a",
+    "fixtures/validation/facets-parquet-discovery.json": "8dac062cf467cd86575dc28069f8ae829a251f8ce36a09b5c0b827a9d2e75ef9",
     "fixtures/validation/facets-parquet-projection-corpus.json": "aeab87ea63915fbd0e302a37ec3f126224b8276127914fb8f6fdbf030dd6421a",
-    "fixtures/validation/facets-parquet-projection-native.json": "bbaafa99a6fa5ec8bb206dc04cd9efd9035157c21d80c0e94d0b4e2687c1e155",
+    "fixtures/validation/facets-parquet-projection-native.json": "fea9b3c1fdd9b6424bdc83e0bec4f50a787359d66e74087cf21a204724476ebb",
     "native/parquet/sources/Encodings.md": "b6b980c67acc14d3e9e4b592c582523b5dc2cc09ad9f90bc2b1912df461e5c88",
     "native/parquet/sources/Encryption.md": "acba860c24ea5049b1123890b6e6e81fb44ed258a84fe042f808d32d1f642764",
     "native/parquet/sources/LICENSE": "8c6db340475136df3c1201d458fa5755698eace76e510471ecc9d857d6083dac",
@@ -365,13 +365,13 @@
     "native/parquet/sources/NOTICE": "28768ced5daf23a48a7fa7da0a16846c8c254e0a065cf29d5b17ef7fbad2e5fd",
     "native/parquet/sources/manifest.json": "ff7b49a02e8ec39a048fb5cdd151784ab7cc8c603165fa72d729c4391d4303d9",
     "native/parquet/sources/parquet.thrift": "e77109d446f5c436cc272d38be2f34238529abf9a8bd0361bb684387bb8e8736",
-    "package.json": "692f5d5c8537d04ac4bf7b079199e28a83edeacfc8291c8dcb6bb1395f7759de",
+    "package.json": "07b85a0ac92031b4a00e8dc5c0527c502d021268fdad694dca358ffe8aa04823",
     "scripts/core-ideals/facets-parquet-carrier-oracle.ts": "cbed543c4dc15efaafa6ac13627b1e4a94fdd33ca75bc5d7b29f0059f806c86a",
-    "scripts/core-ideals/facets-parquet-composition.ts": "22c6c956fe460f26191c100468b935fae0684b980289ab3a24950202b9b1fa0b",
+    "scripts/core-ideals/facets-parquet-composition.ts": "fe7802c0a2fab09404d6df91d0c9ffd949f92b1af1c30e194aece19b330ba5ff",
     "scripts/core-ideals/facets-parquet-discovery.ts": "cfa003f682268eba18470598d22793ad4d71c9d350ee56245a81989388dad78d",
     "scripts/core-ideals/facets-parquet-oracle.ts": "bae25751bf31aa8d3d49f986a1d4120244fea708cdfb9c9adc0cba36d3514153",
     "scripts/core-ideals/facets-parquet-projection-cases.ts": "646ac95a1b937dc3952b81ae66f8fe0dd47476f361d7a8d9f3f4e9ef931d3c6e",
-    "scripts/core-ideals/facets-parquet-projection-oracle.ts": "276135fa623bdd2ef3242dd66ce27397ab6fe3e4a9d4574e8d98506764233673",
+    "scripts/core-ideals/facets-parquet-projection-oracle.ts": "992d8ff7c254bd163a595add98031e116807112a5fc0863cdb3cdc83b7ad1666",
     "spec/core/facets-parquet-projection.schema.json": "cb9d3321098e35aef006a9c84735f2f7cf335ecaa3103711c35a2ff3010c9601",
     "src/adapters/parquet/encode.ts": "f9cd14a3386bbc7c8d4de8e7440e3960714b39812bfc8e9436a5e732b5440383",
     "src/adapters/parquet/field-metadata.ts": "fcc4301f5862fd6d12f215f1514d18c09918805d94402959bc52ffe2652028af",
@@ -380,13 +380,24 @@
     "src/adapters/parquet/logical.ts": "fc5d114b8b0843cc649e8f7c4b5b8252bde30d69c6e2d3f3b1b3bfa380d7ab42",
     "src/adapters/parquet/metadata.ts": "c95606641b23b62956f34fd71b29cd3d045677c3cc3e4243a03212880e83777a",
     "src/adapters/parquet/schema.ts": "1c9fb95a5c01e76928cff994e3d9da7e64423af08375959af46c12af222828d8",
-    "src/core-ideals/facets-parquet-projection.ts": "22b8a129ddb2df7d5bba0e331e7ad43ba1a9eba6e8dbbf06f0dcc24fb2ad2033",
+    "src/core-ideals/facets-parquet-projection.ts": "d4b23d70f185b5c4fc8fe7b63dda59267ba54a8e3edd8ea34d874bedfdf2a718",
     "src/core-ideals/facets-parquet.ts": "68b0538bf077d339024f1cb10eb8a739643afdbbff44bf899bd95fdb21d35dcb",
     "src/core-ideals/parquet-carriers.ts": "3e9450439bbe649f1902e7a8d2ec3e8fa479385986d3b9f7b3cf3b48927b7aca",
     "src/core-ideals/parquet-facet-carrier.ts": "c152e4490ab96c26e14ead9ebb041af0f03581322983394c2cf0a18d789503d1",
-    "src/index.ts": "bd27bbfc78fe9b2af2170c5d0d7993825b2ac9f13b227e6c9a1104a0f09d9d7d",
-    "src/model/json.ts": "b2c3f48bb779972af5beadfb22ec1db48c793dcdaf572293afa62904016465e7",
+    "src/index.ts": "fddaff9cf1f0ea06850c3308c91ad54921709a60672d4f3152f891fc4b248e15",
+    "src/model/json.ts": "c58fac512cbbea7746f4a6cb0119ac13c8bad4ebf769c7bfc48c30b1b80d5cf5",
     "src/model/serialization.ts": "235407a33795c78badb334f66c6131f64d3364503e3c871723d0dd518bc2e28c",
-    "src/validation/document.ts": "2f734ff8f2ed60a5e5054a1b11678b07908398a9f078c3182b2cd25a4af9a4f0"
+    "src/validation/document.ts": "f7f35d07c0246f4548b4bda6926cdaea7d651a3a5f2d91d389a50f8a4fe6b454"
+  },
+  "normalizedFingerprintAliases": {
+    "scripts/core-ideals/facets-parquet-carrier-native.py": [
+      "/var/lib/docker/volumes/umf-final-qualification-40c2590a/_data/scripts/core-ideals/facets-parquet-carrier-native.py"
+    ],
+    "scripts/core-ideals/facets-parquet-discovery-native.py": [
+      "/var/lib/docker/volumes/umf-final-qualification-40c2590a/_data/scripts/core-ideals/facets-parquet-discovery-native.py"
+    ],
+    "scripts/core-ideals/facets-parquet-projection-native.py": [
+      "/var/lib/docker/volumes/umf-final-qualification-40c2590a/_data/scripts/core-ideals/facets-parquet-projection-native.py"
+    ]
   }
 }

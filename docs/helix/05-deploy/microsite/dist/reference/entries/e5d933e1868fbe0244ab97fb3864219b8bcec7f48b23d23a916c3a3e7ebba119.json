@@ -1,0 +1,177 @@
+{
+  "data": {
+    "extensionId": "umf.postgresql",
+    "manifest": {
+      "capabilities": {
+        "directions": [
+          "import",
+          "export"
+        ],
+        "evidence": [
+          "tests/postgresql/native.test.ts"
+        ],
+        "native": {
+          "subset": "Supplied SQL source and complete raw parse-tree retention. Parse/deparse AST agreement checks exclude source offsets only; no catalog resolution or database execution claim.",
+          "system": "PostgreSQL raw SQL syntax",
+          "version": "PostgreSQL 17.4 (170004), @libpg-query/parser 17.6.10"
+        },
+        "validation": "semantic"
+      },
+      "coreVersion": "0.10.0",
+      "description": "PostgreSQL raw parse trees with original SQL source and explicit parser-only limits",
+      "id": "umf.postgresql",
+      "schema": {
+        "$defs": {
+          "node": {
+            "oneOf": [
+              {
+                "properties": {
+                  "kind": {
+                    "const": "null"
+                  }
+                },
+                "required": [
+                  "kind"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "kind": {
+                    "const": "boolean"
+                  },
+                  "value": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "kind": {
+                    "const": "string"
+                  },
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "kind": {
+                    "const": "number"
+                  },
+                  "value": {
+                    "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?([eE][+-]?[0-9]+)?$",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "items": {
+                    "items": {
+                      "$ref": "#/$defs/node"
+                    },
+                    "type": "array"
+                  },
+                  "kind": {
+                    "const": "array"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "items"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "kind": {
+                    "const": "object"
+                  },
+                  "members": {
+                    "additionalProperties": {
+                      "$ref": "#/$defs/node"
+                    },
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "members"
+                ],
+                "type": "object"
+              }
+            ]
+          }
+        },
+        "$id": "urn:umf:postgresql:0.1.0",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "properties": {
+          "profile": {
+            "const": "postgresql-raw-parse-tree"
+          },
+          "root": {
+            "$ref": "#/$defs/node"
+          },
+          "source": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "profile",
+          "source",
+          "root"
+        ],
+        "type": "object"
+      },
+      "scopes": [
+        "element"
+      ],
+      "semantics": "CONTRACT-015. Native raw syntax trees are not resolved catalog models or evidence that SQL can execute.",
+      "version": "0.1.0"
+    },
+    "registration": {
+      "apiIds": [
+        "[\"api\",\".\",\"postgresqlRegistry\"]"
+      ],
+      "coreProfiles": [],
+      "mode": "explicit"
+    },
+    "schemaId": "[\"schema\",\"spec/extensions/postgresql/schema.json\",\"\"]",
+    "version": "0.1.0"
+  },
+  "id": "[\"extension\",\"umf.postgresql\",\"0.1.0\"]",
+  "kind": "extension",
+  "links": [
+    "[\"api\",\".\",\"postgresqlRegistry\"]",
+    "[\"guide\",\"extensions\"]",
+    "[\"schema\",\"spec/extensions/postgresql/schema.json\",\"\"]",
+    "[\"integration\",\"umf.postgresql@0.1.0:import\"]",
+    "[\"integration\",\"umf.postgresql@0.1.0:export\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 3501,
+      "path": "spec/extensions/postgresql/package.json",
+      "sha256": "171307a0d6253b1e56716aabb40b8109c1fac10d9eb8b3bc260c02f8adafce7f"
+    }
+  ],
+  "summary": "PostgreSQL raw parse trees with original SQL source and explicit parser-only limits",
+  "title": "umf.postgresql · 0.1.0"
+}

@@ -1,0 +1,50 @@
+{
+  "data": {
+    "conflicts": [],
+    "correspondence": "unassessed",
+    "declarations": [
+      {
+        "bytes": 5048,
+        "path": "spec/extensions/linkml/package.json",
+        "sha256": "13b6e94487175a0c64960c6cb104d537e60c8b55bbb9eae6c4434bab64618bfd"
+      }
+    ],
+    "evidence": [],
+    "operation": {
+      "apiNames": [],
+      "coreProfiles": [],
+      "extensionVersions": [],
+      "fixturePaths": [],
+      "id": "umf.linkml@0.1.0:export",
+      "kind": "export",
+      "limitations": [
+        "Recorded scope only; native equivalence and production adoption are separate."
+      ],
+      "runtime": {
+        "availability": "host-only",
+        "profileId": "umf.linkml@0.1.0:export",
+        "requirements": [
+          "Native runtime / original qualification harness; not executed by this page."
+        ]
+      },
+      "sourceSystem": "LinkML · linkml-model 1.11.0 commit 051e945bb8d64ffd60639c666615ace88d561e2f; native loader runtime 1.11.0rc2",
+      "subset": "JSON/YAML schema source, complete pinned metamodel JSON Schema, copied metadata edits, explicit supplied import graph, document-local class-slot membership and 29-field scalar induction; explicit import merge modes; no native retrieval, induced model, instance validation or generators",
+      "targetSystem": "LinkML · linkml-model 1.11.0 commit 051e945bb8d64ffd60639c666615ace88d561e2f; native loader runtime 1.11.0rc2",
+      "title": "umf.linkml · export"
+    }
+  },
+  "id": "[\"integration\",\"umf.linkml@0.1.0:export\"]",
+  "kind": "integration",
+  "links": [
+    "[\"extension\",\"umf.linkml\",\"0.1.0\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 134795,
+      "path": "docs/helix/05-deploy/reference/operations.json",
+      "sha256": "793743bbca36e56e90e82df5ef0408b628c434e58cb68aea4d6486349be78e61"
+    }
+  ],
+  "summary": "JSON/YAML schema source, complete pinned metamodel JSON Schema, copied metadata edits, explicit supplied import graph, document-local class-slot membership and 29-field scalar induction; explicit import merge modes; no native retrieval, induced model, instance validation or generators",
+  "title": "umf.linkml · export"
+}

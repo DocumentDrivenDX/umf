@@ -1,0 +1,101 @@
+FFFFFF
+======================================================================
+FAIL: test_early_close_preserves_original_stream_cleanup (test_related_projection_stream.AsyncRelatedProjectionStreamTests.test_early_close_preserves_original_stream_cleanup)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.14/3.14.8_2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 128, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.8_2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/base_events.py", line 720, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/python/umf_access/tests/test_related_projection_stream.py", line 98, in test_early_close_preserves_original_stream_cleanup
+    self.assertIsInstance(await anext(stream), WithKeys)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: namespace(order_id='x', parent_keys=RelatedKeys(items=(OrderKey(order_id='a'), OrderKey(order_id='a')), truncated=True)) is not an instance of <class 'umf_access.dsl._query.WithKeys'>
+
+======================================================================
+FAIL: test_invalid_projected_row_refuses_and_closes_original_stream (test_related_projection_stream.AsyncRelatedProjectionStreamTests.test_invalid_projected_row_refuses_and_closes_original_stream)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.14/3.14.8_2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 128, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.8_2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/base_events.py", line 720, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/python/umf_access/tests/test_related_projection_stream.py", line 108, in test_invalid_projected_row_refuses_and_closes_original_stream
+    with self.assertRaises(CodecError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: CodecError not raised
+
+======================================================================
+FAIL: test_natural_stream_matches_generated_row_and_key_shape (test_related_projection_stream.AsyncRelatedProjectionStreamTests.test_natural_stream_matches_generated_row_and_key_shape)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.14/3.14.8_2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/runners.py", line 128, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.8_2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/base_events.py", line 720, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/python/umf_access/tests/test_related_projection_stream.py", line 87, in test_natural_stream_matches_generated_row_and_key_shape
+    self.assertEqual(
+    ~~~~~~~~~~~~~~~~^
+        answer,
+        ^^^^^^^
+        [WithKeys(OrderKey(order_id=row.order_id), row.parent_keys) for row in original],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+AssertionError: Lists differ: [namespace(order_id='x', parent_keys=Relat[152 chars]se))] != [WithKeys(row=OrderKey(order_id='x'), keys[164 chars]se))]
+
+First differing element 0:
+namespace(order_id='x', parent_keys=Relat[74 chars]rue))
+WithKeys(row=OrderKey(order_id='x'), keys[80 chars]rue))
+
+Diff is 651 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_early_close_preserves_original_stream_cleanup (test_related_projection_stream.RelatedProjectionStreamTests.test_early_close_preserves_original_stream_cleanup)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/python/umf_access/tests/test_related_projection_stream.py", line 55, in test_early_close_preserves_original_stream_cleanup
+    self.assertIsInstance(next(stream), WithKeys)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: namespace(order_id='x', parent_keys=RelatedKeys(items=(OrderKey(order_id='a'), OrderKey(order_id='a')), truncated=True)) is not an instance of <class 'umf_access.dsl._query.WithKeys'>
+
+======================================================================
+FAIL: test_invalid_projected_row_refuses_and_closes_original_stream (test_related_projection_stream.RelatedProjectionStreamTests.test_invalid_projected_row_refuses_and_closes_original_stream)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/python/umf_access/tests/test_related_projection_stream.py", line 65, in test_invalid_projected_row_refuses_and_closes_original_stream
+    with self.assertRaises(CodecError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: CodecError not raised
+
+======================================================================
+FAIL: test_natural_stream_matches_generated_row_and_key_shape (test_related_projection_stream.RelatedProjectionStreamTests.test_natural_stream_matches_generated_row_and_key_shape)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/python/umf_access/tests/test_related_projection_stream.py", line 44, in test_natural_stream_matches_generated_row_and_key_shape
+    self.assertEqual(
+    ~~~~~~~~~~~~~~~~^
+        answer,
+        ^^^^^^^
+        [WithKeys(OrderKey(order_id=row.order_id), row.parent_keys) for row in original],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+AssertionError: Lists differ: [namespace(order_id='x', parent_keys=Relat[152 chars]se))] != [WithKeys(row=OrderKey(order_id='x'), keys[164 chars]se))]
+
+First differing element 0:
+namespace(order_id='x', parent_keys=Relat[74 chars]rue))
+WithKeys(row=OrderKey(order_id='x'), keys[80 chars]rue))
+
+Diff is 651 characters long. Set self.maxDiff to None to see it.
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.027s
+
+FAILED (failures=6)

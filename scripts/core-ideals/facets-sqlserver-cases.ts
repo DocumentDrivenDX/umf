@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import * as u from '../../src';
 import type {SqlServerFacetRequest} from '../../src/core-ideals/facets-sqlserver';
 import proof from '../../fixtures/validation/facets-sqlserver-discovery-native.json';
@@ -9,7 +10,7 @@ export function sqlserverFacetCase(table:string,column='value',options:Partial<S
  root.tables=[selected];delete root.facetDiscovery;
  const nativeSource=JSON.stringify(root,null,2)+'\n',identity={module:'logical',element:'value'};
  let document=u.importSqlServerCatalog(nativeSource,{id:'sqlserver-facets-'+table});
- document=u.upgradeFieldEnvelope(document).target;document=u.upgradeNullabilityEnvelope(document).target;document=u.upgradeCardinalityEnvelope(document).target;document=u.upgradeFacetEnvelope(document).target;
+
  const row=u.getSqlServerColumnMetadata(document).find(c=>c.element.name===column)!;
  document.modules.push({id:identity.module,namespace:'',elements:[{id:identity.element,kind:'field',name:column,cardinality:'one',...(row.element.scalarType?{scalarType:row.element.scalarType}:{}),extensions:{}}]});
  const request:SqlServerFacetRequest={column:row.path,nativeSource,identity,mode:'report',profile:'stored-value',obligation:'value-domain',...options};

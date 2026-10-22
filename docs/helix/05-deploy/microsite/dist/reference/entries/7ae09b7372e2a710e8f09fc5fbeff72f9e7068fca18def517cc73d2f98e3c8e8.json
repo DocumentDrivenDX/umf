@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 17891,
+        "line": 141,
+        "path": "src/core-ideals/facets-tablespec.ts",
+        "sha256": "845cea8250367aa3230ca488b8dde26c4523ac233eade2a7ebb55646b3e4082f"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "verifyTableSpecFacetClassification",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: TableSpecFacetClassification, current: Document): TableSpecFacetClassification"
+    ]
+  },
+  "id": "[\"api\",\".\",\"verifyTableSpecFacetClassification\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 17891,
+      "line": 141,
+      "path": "src/core-ideals/facets-tablespec.ts",
+      "sha256": "845cea8250367aa3230ca488b8dde26c4523ac233eade2a7ebb55646b3e4082f"
+    }
+  ],
+  "summary": "Receipt consistency with retained input and current target, not source authentication.",
+  "title": "verifyTableSpecFacetClassification"
+}

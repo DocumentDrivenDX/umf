@@ -1,0 +1,30 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"proposeRdfToJsonLd\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "options",
+      "optional": false,
+      "type": "{ id: string; baseIRI: string; processingMode?: \"json-ld-1.0\" | \"json-ld-1.1\"; lossPolicy: \"report\" | \"reject\"; useNativeTypes?: boolean; useRdfType?: boolean; rdfDirection?: null | \"i18n-datatype\" | \"compound-literal\"; }"
+    }
+  ],
+  "purpose": "proposeRdfToJsonLd accepts document, options and returns Promise<RdfToJsonLdReport>.",
+  "related": [],
+  "returns": "Promise<RdfToJsonLdReport>",
+  "task": "Author and edit",
+  "type": "(document: Document, options: { id: string; baseIRI: string; processingMode?: \"json-ld-1.0\" | \"json-ld-1.1\"; lossPolicy: \"report\" | \"reject\"; useNativeTypes?: boolean; useRdfType?: boolean; rdfDirection?: null | \"i18n-datatype\" | \"compound-literal\"; }) => Promise<RdfToJsonLdReport>"
+}

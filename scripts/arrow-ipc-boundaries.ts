@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {probeIpc} from '../native/arrow/ipc-probe';
 const base='fixtures/arrow/ipc-inputs/';const original=new Uint8Array(await Bun.file(base+'int64.stream.arrow').arrayBuffer());
 const joined=new Uint8Array(original.length*2);joined.set(original);joined.set(original,original.length);

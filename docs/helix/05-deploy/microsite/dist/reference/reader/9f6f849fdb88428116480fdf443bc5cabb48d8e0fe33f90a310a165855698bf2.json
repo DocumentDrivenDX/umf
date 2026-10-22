@@ -1,0 +1,37 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"getSmithyNode\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "path",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "dependencyId",
+      "optional": true,
+      "type": "string | undefined"
+    }
+  ],
+  "purpose": "getSmithyNode accepts document, path, dependencyId and returns NativeJson.",
+  "related": [],
+  "returns": "NativeJson",
+  "task": "Inspect and select",
+  "type": "(document: Document, path: string, dependencyId?: string) => NativeJson"
+}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 10583,
+        "line": 23,
+        "path": "src/core-ideals/nullability-tablespec.ts",
+        "sha256": "28ab733e3f40d8894194be2b636c3fceb2d98e7525034445f08632cff07392f8"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "TableSpecNullabilityClassification",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface TableSpecNullabilityClassification {\n operation:'classify-tablespec-nullability';version:'1.0.0';status:'classified'|'blocked';source:Document;target?:Document;request:TableSpecNullabilityRequest;binding:typeof binding;\n mapping:{origin:'classified';idealPath:string;nativePath:string;nativeFragment:NativeJson;nullability:Nullability;interpretation:'declared'|'unknown'|'unsupported';outcome:'exact'|'unknown'|'not-expressible';context:string|null;carrier:TableSpecNullabilityRequest['carrier'];basis:'Native declaration under selected profile and context; not runtime coercion or row validation'};\n residuals:{path:string;value:Json;reason:string;recovery:typeof recovery}[];diagnostics:Diagnostic[];\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"TableSpecNullabilityClassification\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 10583,
+      "line": 23,
+      "path": "src/core-ideals/nullability-tablespec.ts",
+      "sha256": "28ab733e3f40d8894194be2b636c3fceb2d98e7525034445f08632cff07392f8"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/nullability-tablespec.ts",
+  "title": "TableSpecNullabilityClassification"
+}

@@ -1,6 +1,7 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import assert from 'node:assert/strict';
 import {createHash,randomUUID} from 'node:crypto';
-import {projectFacetsToPostgresql,importPostgresqlCatalogCapture,exportPostgresqlCatalogCapture,copyJson,readJsonValue,writeJsonValue,type Document} from '../../src';
+import {projectFacetsToPostgresql, importPostgresqlCatalogCapture, exportPostgresqlCatalogCapture, copyJson, readJsonValue, writeJsonValue, type Document} from '../../src';
 import {backend} from '../../native/postgresql/runtime';
 import {facetsPostgresqlProjectionCases} from './facets-postgresql-projection-cases';
 const paths=['native/postgresql/catalog/image.json','native/postgresql/catalog/snapshot.sql','native/postgresql/catalog/facet-constraints.sql','src/core-ideals/facets-postgresql-projection.ts','spec/core/facets-postgresql-projection.schema.json','scripts/core-ideals/facets-postgresql-projection-cases.ts','scripts/core-ideals/facets-postgresql-projection-native.ts'];

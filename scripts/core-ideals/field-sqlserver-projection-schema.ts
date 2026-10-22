@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {sqlServerCarriers} from '../../src/core-ideals/sqlserver-syntax';
 import {enforceProjectionPolicy} from './projection-policy-schema';
 const schema=await Bun.file('spec/core/field-postgresql-projection.schema.json').json();

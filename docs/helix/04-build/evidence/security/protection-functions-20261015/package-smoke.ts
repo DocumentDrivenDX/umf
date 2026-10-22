@@ -1,0 +1,10 @@
+import {createHash} from 'node:crypto';
+import packet from '/Users/erik/.codex/worktrees/security-main-integration/umf/tests/security/protection/functions-fixtures.json';
+import {makeFixture} from '/Users/erik/.codex/worktrees/security-main-integration/umf/tests/security/protection/functions-oracle';
+const root='/Users/erik/.codex/worktrees/security-main-integration/umf',api=await import(root+'/dist/umf.js'),seen=new Set<string>(),rows=[];
+for(const candidate of packet.cases){const c=candidate as any;if(c.expected.status!=='evaluated'||seen.has(c.function))continue;seen.add(c.function);const f=makeFixture(c),r=api.evaluateProtectionValue(f.policy,f.catalog,f.closure,f.selection),ready=api.inspectProtectionFunction(f.policy,f.catalog,f.closure,{ruleIndex:0,disclosureIndex:0});if(r.status!=='transformed'||JSON.stringify(r.value)!==JSON.stringify(c.expected.value)||r.authority!==false||ready.status!=='reference-ready')throw Error(c.id);rows.push({function:c.function,value:r.value});}
+if(seen.size!==7||api.truncateGregorianDate('2000-02-29','year')!=='2000-01-01')throw Error('Missing actual built exports/functions');
+const c=packet.cases[0] as any,f=makeFixture(c);(f.closure.documents[0]!.document.modules[0]!.elements[0] as any).scalarType='decimal';if(api.inspectProtectionFunction(f.policy,f.catalog,f.closure,{ruleIndex:0,disclosureIndex:0}).status!=='refused')throw Error('Built decimal readiness guard missing');
+const declarations=await Bun.file(root+'/dist/src/index.d.ts').text();for(const name of ['gregorian-date','inspectProtectionFunction','evaluateProtectionValue'])if(!declarations.includes(name))throw Error('Missing emitted declaration '+name);
+const hash=async(path:string)=>createHash('sha256').update(new Uint8Array(await Bun.file(root+'/'+path).arrayBuffer())).digest('hex');
+console.log(JSON.stringify({status:'passed',bun:Bun.version,entry:'dist/umf.js',functions:rows,decimalReadinessRefuses:true,authority:false,bundleSha256:await hash('dist/umf.js'),declarationSha256:await hash('dist/src/index.d.ts'),scope:'Actual standard built ESM/declaration export smoke, not native or general interpreter qualification.'}));

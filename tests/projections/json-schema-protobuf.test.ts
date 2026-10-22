@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
+import reference from '../../spec/core/semantic-type-reference.schema.json';
 // @covers US-004-AC1 US-004-AC2 US-004-AC3 US-004-AC4
 import {test,expect} from 'bun:test';
 import Ajv2020 from 'ajv/dist/2020';
@@ -15,7 +17,7 @@ const compiler:ProtobufSourceCompiler={async compile(request){
 }};
 const options:ProtobufProjectionOptions={id:'projected',packageName:'umf.projection',messageName:'Record',integerType:'int64',lossPolicy:'allow-reported-loss',fields:Object.fromEntries(['id','count','note','tags','choice','ratio'].map((name,index)=>['/properties/'+name,{number:index+1}]))};
 const schemaDocument=(value:unknown)=>importJsonSchema(JSON.stringify(value),{id:'source',baseUri:'https://example.test/source'});
-const validateReport=new Ajv2020({strict:false}).addSchema(coreSchema).compile(reportSchema);
+const validateReport=new Ajv2020({strict:false}).addSchema(reference).addSchema(coreSchema).compile(reportSchema);
 
 test('US-004-AC1: explicit mapping reports every unsupported constraint and retains exact source',async()=>{
  const source=schemaDocument(constraints);const result=await projectJsonSchemaToProtobuf(source,options,compiler);
@@ -29,7 +31,8 @@ test('US-004-AC1: explicit mapping reports every unsupported constraint and reta
  expect(()=>exportJsonSchema(targetOnly)).toThrow();
  expect(result.targetDiagnostics!.some(d=>d.code==='PROTOBUF_COMPILER_REQUIRED')).toBe(true);
  await Bun.write('fixtures/projections/constraints-result.json',JSON.stringify(result,null,2)+'\n');
-});
+// The first projection invokes Go with a cold compiler cache.
+},60_000);
 
 test('US-004-AC2: strict policy, missing/conflicting bindings and ambiguous shapes block explicitly',async()=>{
  const strict=await projectJsonSchemaToProtobuf(schemaDocument(constraints),{...options,lossPolicy:'strict'},compiler);

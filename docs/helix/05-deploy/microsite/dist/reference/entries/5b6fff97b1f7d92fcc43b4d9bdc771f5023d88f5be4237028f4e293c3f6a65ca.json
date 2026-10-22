@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 22247,
+        "line": 29,
+        "path": "src/core-ideals/relationship-extras.ts",
+        "sha256": "c5ea928abc0d9636c63a56a11f96400d74ac5b67b0c9b6b13c1747699e923c7c"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "RelationshipExtraProjection",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface RelationshipExtraProjection extends BaseReceipt {operation:'project-relationship-extra';status:'projected'|'blocked';author:CoreRelationshipDeclaration;request:RelationshipExtraRequest;nativeArchive?:RelationshipExtraArchive;mappings:{idealPath:string;nativePath:string;outcome:'approximated';provenance:'explicit-author-declaration'}[]}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"RelationshipExtraProjection\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 22247,
+      "line": 29,
+      "path": "src/core-ideals/relationship-extras.ts",
+      "sha256": "c5ea928abc0d9636c63a56a11f96400d74ac5b67b0c9b6b13c1747699e923c7c"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/relationship-extras.ts",
+  "title": "RelationshipExtraProjection"
+}

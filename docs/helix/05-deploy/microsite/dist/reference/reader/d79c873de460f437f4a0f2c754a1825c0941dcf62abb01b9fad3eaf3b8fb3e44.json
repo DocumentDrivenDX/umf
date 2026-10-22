@@ -1,0 +1,42 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"AccessDate\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "kind",
+      "optional": false,
+      "type": "\"date\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "profile",
+      "optional": false,
+      "type": "\"umf-access-temporal/0.1.0\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "originalText",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "canonicalText",
+      "optional": false,
+      "type": "string"
+    }
+  ],
+  "parameters": [],
+  "purpose": "AccessDate is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "AccessDate"
+}

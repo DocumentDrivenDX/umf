@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 import ctypes,json,math,platform,locale
 from pathlib import Path
 locale.setlocale(locale.LC_NUMERIC,'C')

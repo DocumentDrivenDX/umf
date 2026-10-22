@@ -1,0 +1,49 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"decodeSecurityDisclosureV2\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "text",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "policy",
+      "optional": false,
+      "type": "unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "catalog",
+      "optional": false,
+      "type": "unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "closure",
+      "optional": false,
+      "type": "unknown"
+    },
+    {
+      "description": "Default: 'json'.",
+      "links": [],
+      "name": "format",
+      "optional": true,
+      "type": "\"json\" | \"yaml\""
+    }
+  ],
+  "purpose": "decodeSecurityDisclosureV2 accepts text, policy, catalog, closure, format and returns SecurityDisclosureBatchV2.",
+  "related": [],
+  "returns": "SecurityDisclosureBatchV2",
+  "task": "Serialize",
+  "type": "(text: string, policy: unknown, catalog: unknown, closure: unknown, format?: \"json\" | \"yaml\") => SecurityDisclosureBatchV2"
+}

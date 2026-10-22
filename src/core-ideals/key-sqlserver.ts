@@ -1,10 +1,11 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {copyJson} from '../model/json';
 import {UmfError,type Document,type Json,type Diagnostic,type ExtensionPackage} from '../model/types';
 import {parseNativeJson,renderTree} from '../model/native-json';
 import {exportSqlServerCatalog,getSqlServerIndexMetadata,getSqlServerColumnMetadata} from '../adapters/sqlserver';
 import {validateDocument} from '../validation/document';
 import {createValidator} from '../validation/schema';
-import legacy from '../../spec/core/schema.json';import fields from '../../spec/core/field-document.schema.json';import nullability from '../../spec/core/nullability-document.schema.json';import cardinality from '../../spec/core/cardinality-document.schema.json';import facets from '../../spec/core/facet-document.schema.json';import keys from '../../spec/core/key-document.schema.json';
+import legacy from '../../spec/core/schema.json';
 import schema from '../../spec/core/sqlserver-key-classification.schema.json';
 import manifest from '../../spec/extensions/sqlserver-keys/package.json';
 export const SQLSERVER_KEYS_EXTENSION='umf.sqlserver.keys';
@@ -20,7 +21,7 @@ export interface SqlServerKeyClassification {
  operation:'classify-sqlserver-keys';version:'1.0.0';status:'classified'|'blocked';outcome:'exact'|'unknown'|'not-expressible';source:Document;target?:Document;request:SqlServerKeyRequest;binding:typeof binding;observations:SqlServerKeyObservation[];
  residuals:{path:string;value:Json;outcome:'unknown'|'not-expressible';reason:string;recovery:typeof recovery}[];diagnostics:Diagnostic[];
 }
-const validator=createValidator(false);for(const s of [legacy,fields,nullability,cardinality,facets,keys])validator.addSchema(s);
+const validator=createValidator(false);for(const s of [legacy])validator.addSchema(s);
 const check=validator.compile(schema),requestCheck=validator.compile(schema.properties.request);
 const canonical=(v:Json):string=>Array.isArray(v)?'['+v.map(canonical).join(',')+']':v!==null&&typeof v==='object'?'{'+Object.keys(v).sort().map(k=>JSON.stringify(k)+':'+canonical(v[k]!)).join(',')+'}':JSON.stringify(v);
 const fail=(message:string):never=>{throw new UmfError('SQLSERVER_KEY_CORRELATION',message);};

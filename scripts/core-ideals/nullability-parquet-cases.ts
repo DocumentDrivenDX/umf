@@ -1,13 +1,14 @@
-import {importParquetSchema,getParquetFieldMetadata} from '../../src/adapters/parquet/field-metadata';
-import {upgradeFieldEnvelope} from '../../src/model/field-transition';
-import {upgradeNullabilityEnvelope} from '../../src/model/nullability-transition';
+// SPDX-License-Identifier: MIT OR Apache-2.0
+import {importParquetSchema, getParquetFieldMetadata} from '../../src/adapters/parquet/field-metadata';
+
+
 import {classifyParquetField} from '../../src/core-ideals/parquet-field';
 import type {Nullability} from '../../src/model/types';
 import type {ParquetNullabilityRequest} from '../../src/core-ideals/nullability-parquet';
 export function parquetAvailabilitySource(bytes:Uint8Array,index:number){
- const initial=upgradeFieldEnvelope(importParquetSchema(bytes,{id:'availability'})).target;
+ const initial=importParquetSchema(bytes,{id:'availability'});
  const field=classifyParquetField(initial,{index,mode:'strict'});if(!field.target)throw Error('Field blocked');
- return upgradeNullabilityEnvelope(field.target).target;
+ return field.target;
 }
 export interface ParquetAvailabilityFixture {id:string;outcome:string;path?:string;physicalSchema?:string;storeSchema:boolean;leafAvailability?:{row:Nullability;element:Nullability}[]}
 export async function parquetNullabilityCases(rows:ParquetAvailabilityFixture[]){

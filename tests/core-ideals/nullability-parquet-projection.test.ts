@@ -1,9 +1,10 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {parquetNullabilityProjectionCases} from '../../scripts/core-ideals/nullability-parquet-projection-cases';
-import {projectNullabilityToParquet,recoverNullabilityFromParquet} from '../../src/core-ideals/nullability-parquet-projection';
+import {projectNullabilityToParquet, recoverNullabilityFromParquet} from '../../src/core-ideals/nullability-parquet-projection';
 import {exportParquetCapture} from '../../src/adapters/parquet';
 import {getParquetFieldMetadata} from '../../src/adapters/parquet/field-metadata';
-import {readJsonValue,writeJsonValue} from '../../src/model/serialization';
+import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
 import {copyJson} from '../../src/model/json';
 test('authored Parquet availability emits explicit leaf repetition and recovers all ideals/residuals',()=>{
  for(const c of parquetNullabilityProjectionCases()){

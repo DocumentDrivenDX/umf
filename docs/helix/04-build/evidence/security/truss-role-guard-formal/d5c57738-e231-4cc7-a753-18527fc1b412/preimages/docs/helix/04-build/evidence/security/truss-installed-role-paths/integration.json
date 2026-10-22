@@ -1,0 +1,46 @@
+{
+  "scope": "Actual Truss private installed-inventory component; no full-profile acceptance promotion",
+  "ownerRepository": "https://github.com/DocumentDrivenDX/truss",
+  "ownerMainCommit": "11f14e23a0fa747e6fca4fa61250fa41c78dcfef",
+  "criteria": [
+    "US-056-AC5",
+    "US-056-AC9",
+    "US-056-AC10"
+  ],
+  "ownerWorkItems": [
+    "PA01",
+    "PA02"
+  ],
+  "tests": 305,
+  "nativeObservations": 63,
+  "inventories": 29,
+  "nativeTuple": {
+    "postgresql": "16.15",
+    "pg8000": "1.31.5",
+    "pgserver": "0.1.4+truss.pg16.15"
+  },
+  "sourcePinsVerified": 20,
+  "originalRequiredCases": 132,
+  "historicalAcceptedCases": 26,
+  "acceptancePromoted": false,
+  "installerReady": false,
+  "files": {
+    "installed-role-paths-merged-native.json": "e372d0ad477b10908be158895f2f5640eb3fbba4714d1834e6849370c9e0e1b2",
+    "installed-role-paths-merged-native.start.json": "a0c84ddf2003bf58c7f8f52a07e40def83ba2e7ff781a5941eca51a992d33f7a",
+    "role-paths-astra-review.md": "52b0455a1492a1e3cdd484756e10cefeb340136a5a51bc679f292390f843ad49",
+    "role-paths-merged-boundary.json": "c2f027cab553ebde8b089576e97cbf00165d73f895f81212eaf8a369c6dcf14a",
+    "role-paths-merged-suite.json": "8aa79176471f6e7a9e6499603005cd00f40a2efab40f1cdc691d2a6dafd1a964",
+    "role-paths-merged-suite.log": "f1acf346b2eef03e218a17a01a82c5f8c49ceb8a77ebc66140148a49cbb4d9cd",
+    "role-paths-merged-wheel.json": "fdfd5dd6adf412ce4d2849648564c357d355a96023d274ac62c232d9c8afacfb",
+    "source/docs/helix/04-build/evidence/design-audit/check_installed_admission_role_paths_native.py": "d4d1b6d8a8f0056dc2b30521e158018c0af7b216a7c91f67c3774bbf697029e6",
+    "source/packages/python/src/truss/_installed_admission_inventory.py": "7d925a5bc7c70a66f86e47f5bf75025be263189d9799bdf4e2f065495faa1f67",
+    "source/packages/python/tests/test_installed_admission_inventory.py": "fc3e1522cc8e61a82049f72dae5091e417ae36b914843fdc8fc055aefbb23cce"
+  },
+  "limitations": [
+    "Local socket fixture is not production authentication qualification",
+    "Controlled single administrator, not coherent protected cut or arbitrary mutator closure",
+    "Seven native helper routines are not seven missing semantic operation bodies",
+    "Full original backend acceptance remains required"
+  ],
+  "ownerPreimages": "https://github.com/DocumentDrivenDX/truss/tree/11f14e23a0fa747e6fca4fa61250fa41c78dcfef/docs/helix/04-build/evidence/design-audit/installed-role-paths-merged-native.preimages"
+}

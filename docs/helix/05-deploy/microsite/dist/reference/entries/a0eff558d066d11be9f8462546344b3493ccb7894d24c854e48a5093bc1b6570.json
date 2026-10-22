@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 3175,
+        "line": 10,
+        "path": "src/extensions/actions/plan-types.ts",
+        "sha256": "94cd1d2105c503b66eadb99b4fd45013c57c93b3235cbe5d6dbd512cd0a35c68"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "PortableActionPlan",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface PortableActionPlan {\n protocol:'umf.actions.plan/1';model:ActionPlanModelPin;source:ActionPlanArtifact;\n selection:{profile:ActionProfileIdentity;artifact:ActionPlanArtifact;dependencies:ActionReference[];[key:string]:unknown};\n action:PortableActionPin;target:ActionKeyReference;\n inputs:{entityParameter:string;assignments:{input:string;field:ActionReference;value:CoreLiteral;[key:string]:unknown}[];[key:string]:unknown};\n execution:{selection:'frozen';atomicity:'batch';conflict:'stop';partition:'manifest-order';batchSize:number;[key:string]:unknown};\n limits:{maxItems:number;maxManifestBytes:number;[key:string]:unknown};annotations?:Record<string,unknown>;[key:string]:unknown;\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"PortableActionPlan\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 3175,
+      "line": 10,
+      "path": "src/extensions/actions/plan-types.ts",
+      "sha256": "94cd1d2105c503b66eadb99b4fd45013c57c93b3235cbe5d6dbd512cd0a35c68"
+    }
+  ],
+  "summary": "Type declaration · src/extensions/actions/plan-types.ts",
+  "title": "PortableActionPlan"
+}

@@ -1,8 +1,26 @@
 {
   "scope": "Manifest validation, joint registry registration, standalone schema equality and local evidence existence only; no native conformance or inventory completeness claim",
-  "packages": 63,
-  "passed": 63,
+  "packages": 72,
+  "passed": 72,
   "results": [
+    {
+      "path": "spec/extensions/access/package.json",
+      "id": "umf.access",
+      "version": "0.1.0",
+      "native": null,
+      "evidenceCount": 2,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/actions/package.json",
+      "id": "umf.actions",
+      "version": "0.1.0",
+      "native": null,
+      "evidenceCount": 8,
+      "passed": true,
+      "failures": []
+    },
     {
       "path": "spec/extensions/arrow-flatbuffer/package.json",
       "id": "umf.arrow.flatbuffer",
@@ -121,6 +139,15 @@
       "failures": []
     },
     {
+      "path": "spec/extensions/binding-128/package.json",
+      "id": "umf.binding",
+      "version": "0.3.0",
+      "native": null,
+      "evidenceCount": 1,
+      "passed": true,
+      "failures": []
+    },
+    {
       "path": "spec/extensions/binding-stable/package.json",
       "id": "umf.binding",
       "version": "0.2.0",
@@ -209,6 +236,19 @@
         "subset": "Versioned semantic declarations in UMF JSON/YAML; opaque invariant languages are retained, not executed; no external DDD tool compatibility claimed"
       },
       "evidenceCount": 1,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/delta-definition/package.json",
+      "id": "umf.delta.definition",
+      "version": "0.1.0",
+      "native": {
+        "system": "Azure Databricks SQL",
+        "version": "Documentation inspected 2026-10-08; native execution not yet verified",
+        "subset": "Managed CREATE and complete ordered proposal bundles; atomic/decimal/timestamp_ntz and qualified recursive STRUCT/ARRAY/MAP types, explicit nullability, column comments, clustering or partitioning, five selected properties; no execution, migration, keys, other column metadata, unknown types or arbitrary properties"
+      },
+      "evidenceCount": 2,
       "passed": true,
       "failures": []
     },
@@ -599,6 +639,54 @@
       "failures": []
     },
     {
+      "path": "spec/extensions/security-protection/package.json",
+      "id": "umf.security.protection",
+      "version": "0.1.0",
+      "native": {
+        "system": "UMF-authored protection catalog",
+        "version": "0.1.0",
+        "subset": "Catalog wire structure, exact identities and literal bounds only; no domain closure, function/query interpretation, verified custody or native enforcement"
+      },
+      "evidenceCount": 1,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/security-v0.2/package.json",
+      "id": "umf.security",
+      "version": "0.2.0",
+      "native": {
+        "system": "UMF-authored security representation",
+        "version": "0.2.0",
+        "subset": "Wire grammar, immutable representation migration and exact catalog source lookup only; no typed domain/function/query closure or native enforcement"
+      },
+      "evidenceCount": 1,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/security/package.json",
+      "id": "umf.security",
+      "version": "0.1.0",
+      "native": {
+        "system": "UMF-authored security",
+        "version": "0.1.0",
+        "subset": "Policy representation, preservation and bounded syntax inspection; external typed closure and enforcement are separate gates"
+      },
+      "evidenceCount": 1,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/semantic-types/package.json",
+      "id": "umf.semantic-types",
+      "version": "0.1.0",
+      "native": null,
+      "evidenceCount": 2,
+      "passed": true,
+      "failures": []
+    },
+    {
       "path": "spec/extensions/shacl/package.json",
       "id": "umf.shacl",
       "version": "0.1.0",
@@ -712,6 +800,15 @@
         "subset": "Table/column, key/foreign-key/check and index observations; exact recovery and metadata views. Permission-limited, not complete catalog or DDL reconstruction."
       },
       "evidenceCount": 8,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/tables/package.json",
+      "id": "umf.tables",
+      "version": "0.1.0",
+      "native": null,
+      "evidenceCount": 1,
       "passed": true,
       "failures": []
     },

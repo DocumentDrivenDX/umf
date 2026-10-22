@@ -1,0 +1,28 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"importSmithySources\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "input",
+      "optional": false,
+      "type": "{ files: Record<string, string>; }"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "options",
+      "optional": false,
+      "type": "{ id: string; }"
+    }
+  ],
+  "purpose": "Preserve supplied IDL/JSON text. No browser syntax or semantic validity claim.",
+  "related": [],
+  "returns": "Document",
+  "task": "Import and export",
+  "type": "(input: { files: Record<string, string>; }, options: { id: string; }) => Document"
+}

@@ -1,0 +1,13 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"parquetLevelsSchema\"]",
+  "kind": "Schema",
+  "members": [],
+  "parameters": [],
+  "purpose": "JSON Schema exported as parquetLevelsSchema. Follow the related schema definition for object keys, value constraints and conditions.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "{ $schema: string; $id: string; type: string; required: string[]; properties: { source: { $ref: string; }; status: { enum: string[]; }; complete: { const: boolean; }; diagnostics: { type: string; items: { type: string; properties: { code: { type: string; }; path: { type: string; }; severity: { enum: string[]; }; message: { type: string; }; }; required: string[]; additionalProperties: boolean; }; }; pages: { type: string; maxItems: number; items: { type: string; required: string[]; properties: { rowGroup: { type: string; minimum: number; }; column: { type: string; minimum: number; }; offset: { type: string; minimum: number; }; repetition: { type: string; maxItems: number; items: { type: string; minimum: number; maximum: number; }; }; definition: { type: string; maxItems: number; items: { type: string; minimum: number; maximum: number; }; }; repetitionPadding: { type: string; maxItems: number; items: { type: string; minimum: number; maximum: number; }; }; definitionPadding: { type: string; maxItems: number; items: { type: string; minimum: number; maximum: number; }; }; valuesOffset: { type: string; minimum: number; maximum: number; }; nonNullValues: { type: string; minimum: number; maximum: number; }; rowStarts: { type: string; minimum: number; maximum: number; }; }; additionalProperties: boolean; }; }; }; additionalProperties: boolean; }"
+}

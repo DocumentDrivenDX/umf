@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {importDeltaSchema,exportDeltaSchema,importDeltaTable,exportDeltaTable,readDocument,writeDocument} from '../../src';
 test('US-018-AC8: pinned upstream schema/context corpus preserves source and known rejection',async()=>{

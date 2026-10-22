@@ -1,8 +1,21 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {relationshipCandidate} from '../../scripts/core-relationship-cases';
 import {relationshipOperationCases,relationshipRequest} from '../../scripts/core-relationship-operation-cases';
 import {declareCoreRelationship,inspectCoreRelationships,lookupCoreRelationship,verifyCoreRelationshipOperation} from '../../src/model/relationships';
 import {readJsonValue,writeJsonValue} from '../../src/model/serialization';
+test('current relationship inspection and lookup retain unknown lifecycle and endpoint qualifiers',()=>{
+ const source:any=relationshipCandidate();
+ const relationship=source.modules[0].relationships[0];relationship.targetLifecycle='future-lifecycle';relationship.target[0].future={opaque:true};
+ const inspection=inspectCoreRelationships(source,{module:'m'}),lookup=lookupCoreRelationship(source,{module:'m',id:relationship.id});
+ expect(inspection.version).toBe('3.0.0');expect(lookup.version).toBe('3.0.0');expect(inspection.source).toEqual(source);
+ expect(inspection.meaning.state).toBe('partial');expect(lookup.relationship).toEqual(relationship);
+ expect(lookup.uninterpretedPaths).toContain('/modules/0/relationships/0/targetLifecycle');
+ expect(lookup.uninterpretedPaths).toContain('/modules/0/relationships/0/target/0/future');
+ expect(verifyCoreRelationshipOperation(lookup,source)).toEqual(lookup);
+ const validRequest=relationshipRequest({...relationship,id:'new-link',name:'products',source:[{module:'m',element:'Order'}],target:[{module:'m',element:'Product',key:'identity'}],targetLifecycle:'independent',inverse:null});
+ expect(declareCoreRelationship(source,{module:'m'},validRequest).target.modules[0]!.relationships!.some(r=>r.id==='new-link')).toBe(true);
+});
 
 // @covers US-045-AC1
 test('candidate authoring and stable lookup expose all authored shapes with verified serialized receipts',()=>{
@@ -30,10 +43,10 @@ test('existing IDs cannot move to different endpoint keys, directions or associa
  const bad=relationshipRequest(r);bad.targetMultiplicity={min:3,max:2};expect(()=>declareCoreRelationship(d,{module:'m'},bad)).toThrow();
 });
 // @covers US-045-AC3 (legacy interpretation, not migration)
-test('legacy values remain inspectable without authoring and future lifecycle stays uninterpreted',()=>{
- const d=relationshipCandidate(),request=relationshipRequest(d.modules[0].relationships[0]);d.umf='0.6.0';d.modules[0].relationships={opaque:true};
- expect(inspectCoreRelationships(d,{module:'m'}).meaning).toEqual({state:'legacy',value:{opaque:true}});
- expect(()=>declareCoreRelationship(d,{module:'m'},request)).toThrow('migration');expect(()=>lookupCoreRelationship(d,{module:'m',id:request.id})).toThrow();
+test('retired markers refuse and future lifecycle stays uninterpreted',()=>{
+ const d={...relationshipCandidate(),umf:'0.6.0'} as any,request=relationshipRequest(d.modules[0].relationships[0]);d.modules[0].relationships={opaque:true};
+ expect(()=>inspectCoreRelationships(d,{module:'m'})).toThrow();
+ expect(()=>declareCoreRelationship(d,{module:'m'},request)).toThrow();expect(()=>lookupCoreRelationship(d,{module:'m',id:request.id})).toThrow();
  const future=relationshipCandidate();future.modules[0].relationships[0].targetLifecycle='future';expect(inspectCoreRelationships(future,{module:'m'}).meaning.state).toBe('partial');expect(()=>declareCoreRelationship(future,{module:'m'},request)).toThrow('Future lifecycle');
 });
 test('receipt recomputation, current context and input copying reject forgeries and getters',()=>{

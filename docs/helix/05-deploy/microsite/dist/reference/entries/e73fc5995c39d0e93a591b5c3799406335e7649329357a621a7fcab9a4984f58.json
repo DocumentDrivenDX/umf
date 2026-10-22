@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 1361,
+        "line": 8,
+        "path": "src/validation/document.ts",
+        "sha256": "27f5aafb2bc53eb7bcf8d2d18c8da17c909ab6e8c2a6743ff9d208b9b24bc9fe"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "validateSchemaPropertiesDocument",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: unknown, registry?: Registry, meter?: ConstraintMeter | undefined): Validation"
+    ]
+  },
+  "id": "[\"api\",\".\",\"validateSchemaPropertiesDocument\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 1361,
+      "line": 8,
+      "path": "src/validation/document.ts",
+      "sha256": "27f5aafb2bc53eb7bcf8d2d18c8da17c909ab6e8c2a6743ff9d208b9b24bc9fe"
+    }
+  ],
+  "summary": "Current structural admission followed by the authored ordered rule program.",
+  "title": "validateSchemaPropertiesDocument"
+}

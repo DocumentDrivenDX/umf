@@ -1,0 +1,48 @@
+{
+  "scope": "Installed genericunitcohort; nativeclasses andrefactor separategates, no nativequalification",
+  "sdkSHA256": "bf9cc2fccf3085b4327c473f5eade13600cbcead269167bfa98552e3a832dfef",
+  "compilerSHA256": "96d0dc43074bf0159c3a7058b394827850f8f1a0bfb098d6ad41da914904c2d7",
+  "inputCommit": "c042a13e88d51d52a810149f6e407da3eaef0cd2",
+  "sourceFileCount": 3790,
+  "sourcesUnchanged": true,
+  "runs": [
+    {
+      "interpreter": "314",
+      "log": "/private/tmp/sdk-r25-installed-units-314-r2.log",
+      "logSHA256": "85b774635a3d2072969355eb2cbdf847d832b605214839076c6f722384161f35",
+      "summary": {
+        "count": 360,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "runtime": "/private/tmp/sdk-r25-314-env/lib/python3.14/site-packages/umf_access/__init__.py",
+        "omittedNativeOrSeparateGate": [
+          "test_native_key_admission.py",
+          "test_refactor_regeneration.py",
+          "test_reviewed_reads.Native"
+        ],
+        "inputCommit": "c042a13e88d51d52a810149f6e407da3eaef0cd2"
+      }
+    },
+    {
+      "interpreter": "311",
+      "log": "/private/tmp/sdk-r25-installed-units-311-r2.log",
+      "logSHA256": "fcfb839674ccebb3558de1b0219a0a03b100460186b931d87d0e576117c2b2ef",
+      "summary": {
+        "count": 360,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "runtime": "/private/tmp/sdk-source-exact-r25-env/lib/python3.11/site-packages/umf_access/__init__.py",
+        "omittedNativeOrSeparateGate": [
+          "test_native_key_admission.py",
+          "test_refactor_regeneration.py",
+          "test_reviewed_reads.Native"
+        ],
+        "inputCommit": "c042a13e88d51d52a810149f6e407da3eaef0cd2"
+      }
+    }
+  ],
+  "retainedFirstAttempt": "sdk-r25-installed-units-314-r1.log: 4missingfrozeninputs, no SUTfailure",
+  "temporal": "HELD"
+}

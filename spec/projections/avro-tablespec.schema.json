@@ -10,7 +10,7 @@
       ]
     },
     "source": {
-      "$ref": "urn:umf:core:0.1.0"
+      "$ref": "urn:umf:core:0.10.0"
     },
     "policy": {
       "type": "object",
@@ -149,7 +149,7 @@
       }
     },
     "target": {
-      "$ref": "urn:umf:core:0.1.0"
+      "$ref": "urn:umf:core:0.10.0"
     },
     "nativeSchema": {
       "type": "string"
@@ -175,7 +175,7 @@
       "then": {
         "properties": {
           "target": {
-            "$ref": "urn:umf:core:0.1.0"
+            "$ref": "urn:umf:core:0.10.0"
           },
           "nativeSchema": {
             "type": "string"
@@ -192,7 +192,7 @@
             {
               "properties": {
                 "target": {
-                  "$ref": "urn:umf:core:0.1.0"
+                  "$ref": "urn:umf:core:0.10.0"
                 }
               },
               "required": [

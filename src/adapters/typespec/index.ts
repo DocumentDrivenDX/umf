@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
+import {CURRENT_CORE_VERSION} from '../../generated/core-model';
 import {typeSpecLibraries} from './libraries';
 import {parse,visitChildren,SyntaxKind,type Node} from '@typespec/compiler/ast';
 import manifest from '../../../spec/extensions/typespec/package.json';
@@ -34,7 +36,7 @@ function payload(document:Document):TypeSpecPayload {
 export function importTypeSpecSources(input:{entrypoint:string;files:Record<string,string>;libraries?:Record<string,string>},options:{id:string}):Document {
  const supplied=copyJson(input) as unknown as typeof input;if(Object.keys(supplied).some(k=>!['entrypoint','files','libraries'].includes(k)))throw new UmfError('TYPESPEC_INPUT','Unknown source-bundle option');
  const value:TypeSpecPayload={profile:'typespec-1.16.0-sources',...supplied};
- const doc:Document={umf:'0.1.0',id:options.id,vocabularies:{[TYPESPEC_EXTENSION]:{version:'0.1.0'}},modules:[{id:'schema',namespace:'',elements:[{id:'schema',extensions:{[TYPESPEC_EXTENSION]:value as unknown as Json}}]}]};payload(doc);return doc;
+ const doc:Document={umf:CURRENT_CORE_VERSION,id:options.id,vocabularies:{[TYPESPEC_EXTENSION]:{version:'0.1.0'}},modules:[{id:'schema',namespace:'',elements:[{id:'schema',extensions:{[TYPESPEC_EXTENSION]:value as unknown as Json}}]}]};payload(doc);return doc;
 }
 export function exportTypeSpecSources(document:Document){const p=payload(document);if(inspectTypeSpec(document).diagnostics.some(d=>d.code==='TYPESPEC_REPRESENTATION'))throw new UmfError('TYPESPEC_REPRESENTATION','Native export would discard unknown content');return {entrypoint:p.entrypoint,files:p.files,...(p.libraries?{libraries:p.libraries}:{})};}
 export function compileTypeSpecDocument(document:Document){const p=exportTypeSpecSources(document);return checkTypeSpecSources(p.files,p.entrypoint,p.libraries);}

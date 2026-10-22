@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 7183,
+        "line": 65,
+        "path": "src/model/schema-properties.ts",
+        "sha256": "6d1e5b1e5ebcd56a176635e0c8677dca5593b2e41e9068a5d6b3414ae8e0be41"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "resolveCoreDefault",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: Document, fieldInput: { module: string; element: string; }, stateInput: CoreDefaultInput): { operation: \"resolve-core-default\"; version: \"2.0.0\"; source: Document; identity: Json; input: CoreDefaultInput; result: CoreDefaultInput; applied: boolean; }"
+    ]
+  },
+  "id": "[\"api\",\".\",\"resolveCoreDefault\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 7183,
+      "line": 65,
+      "path": "src/model/schema-properties.ts",
+      "sha256": "6d1e5b1e5ebcd56a176635e0c8677dca5593b2e41e9068a5d6b3414ae8e0be41"
+    }
+  ],
+  "summary": "Public export · src/model/schema-properties.ts",
+  "title": "resolveCoreDefault"
+}

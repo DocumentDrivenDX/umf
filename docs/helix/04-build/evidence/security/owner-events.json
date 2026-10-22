@@ -1,0 +1,28 @@
+{
+  "status": "private-owner-event-lineage-tests-passed",
+  "command": [
+    "cargo",
+    "test",
+    "--offline",
+    "--locked",
+    "-p",
+    "weft-core",
+    "--lib",
+    "--",
+    "--nocapture"
+  ],
+  "cwd": "/Users/erik/Projects/weft",
+  "exitCode": 0,
+  "summary": {
+    "passed": 126,
+    "failed": 0
+  },
+  "selectedPostRunSourcePins": {
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_obligation_sources.rs": "036f67cf41a657bcea2bc4f56213efac0500ec84f62eaca7c8d60563dc41cbae",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_semantic_coverage.rs": "df61c451a8c8f725d6a5a958962299cbcb33643047b900a92360589493b446b3"
+  },
+  "rawOutputSha256": "1a40e8c17e1f022e998b77993926b6959a2d618b996d28685e443589528b83da",
+  "scope": "Explicit owner event categories, not completed enforcement kind/applicability issuer. Selected post-run pins are not complete frozen build custody or Rust refinement.",
+  "promotedAcceptanceCases": [],
+  "freshNativeExecution": false
+}

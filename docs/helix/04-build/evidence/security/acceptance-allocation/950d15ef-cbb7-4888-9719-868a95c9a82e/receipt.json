@@ -1,0 +1,202 @@
+{
+  "status": "passed",
+  "sourceDigests": {
+    "tools/security/check-acceptance-allocation.py": "521d0a02d6e904438b9528bffce8cabc2a4b39e3520d6e9e3b1e50243b97e8e1",
+    "docs/helix/02-design/spikes/security/acceptance.ts": "290bcfb7fa9afa8ffabbdcbe5939edc9d0150f4141925926ebeffa94f849d71b",
+    "tools/security/run-command.ts": "a467d18160b9f05a459ef69b47179d4c2221f33f71ac6169b59946a6760e7dce",
+    "docs/helix/03-test/security/cases.json": "bab1e629e13e918d3b0f9b2b8fa3b3ba1ffa2b48ec8516543a662a3ececb12bd",
+    "docs/helix/01-frame/user-stories/US-079-security-semantics.md": "9f1576776c4bea360fce98d8ab745ae8561fa792d0a83679b74bd6d1fbb9c7b9",
+    "docs/helix/01-frame/user-stories/US-056-security-bindings.md": "c11ecdec8e6b429e7bef2f60d2a9faa42ee0699bc5f0d1627f76d9b486f91171",
+    "docs/helix/01-frame/user-stories/US-057-security-lifecycle.md": "cb1cebdd91512a4d0bc3f6e0b50455f3de1b255583abad2ff09e57976f1204d4"
+  },
+  "requiredCriteria": [
+    "US-079-AC1",
+    "US-079-AC2",
+    "US-079-AC3",
+    "US-079-AC4",
+    "US-079-AC5",
+    "US-079-AC6",
+    "US-079-AC7",
+    "US-079-AC8",
+    "US-079-AC9",
+    "US-079-AC10",
+    "US-079-AC11",
+    "US-079-AC12",
+    "US-079-AC13",
+    "US-079-AC14",
+    "US-079-AC15",
+    "US-079-AC16",
+    "US-056-AC1",
+    "US-056-AC2",
+    "US-056-AC3",
+    "US-056-AC4",
+    "US-056-AC5",
+    "US-056-AC6",
+    "US-056-AC7",
+    "US-056-AC8",
+    "US-056-AC9",
+    "US-056-AC10",
+    "US-057-AC1",
+    "US-057-AC2",
+    "US-057-AC3",
+    "US-057-AC4",
+    "US-057-AC5",
+    "US-057-AC6",
+    "US-057-AC7",
+    "US-057-AC8"
+  ],
+  "observations": [
+    {
+      "id": "complete",
+      "expectedErrors": [
+        "allocation-control: required reviewed runner/oracle/implementation binding not implemented"
+      ],
+      "observedErrors": [
+        "allocation-control: required reviewed runner/oracle/implementation binding not implemented"
+      ],
+      "allocated": 34,
+      "gateStatus": "failed",
+      "gateExit": 1
+    },
+    {
+      "id": "missing-semantic",
+      "expectedErrors": [
+        "allocation-control: required reviewed runner/oracle/implementation binding not implemented",
+        "unallocated US-079-AC8"
+      ],
+      "observedErrors": [
+        "allocation-control: required reviewed runner/oracle/implementation binding not implemented",
+        "unallocated US-079-AC8"
+      ],
+      "allocated": 33,
+      "gateStatus": "failed",
+      "gateExit": 1
+    },
+    {
+      "id": "retired-semantic",
+      "expectedErrors": [
+        "allocation-control: required reviewed runner/oracle/implementation binding not implemented",
+        "allocation-control: unrelated or unknown acceptance criterion US-055-AC1",
+        "allocation-control: unrelated or unknown acceptance criterion US-055-AC2",
+        "allocation-control: unrelated or unknown acceptance criterion US-055-AC3",
+        "allocation-control: unrelated or unknown acceptance criterion US-055-AC4",
+        "allocation-control: unrelated or unknown acceptance criterion US-055-AC5",
+        "allocation-control: unrelated or unknown acceptance criterion US-055-AC6",
+        "allocation-control: unrelated or unknown acceptance criterion US-055-AC7",
+        "allocation-control: unrelated or unknown acceptance criterion US-055-AC8",
+        "allocation-control: unrelated or unknown acceptance criterion US-055-AC9",
+        "allocation-control: unrelated or unknown acceptance criterion US-055-AC10",
+        "allocation-control: unrelated or unknown acceptance criterion US-055-AC11",
+        "allocation-control: unrelated or unknown acceptance criterion US-055-AC12",
+        "allocation-control: unrelated or unknown acceptance criterion US-055-AC13",
+        "allocation-control: unrelated or unknown acceptance criterion US-055-AC14",
+        "allocation-control: unrelated or unknown acceptance criterion US-055-AC15",
+        "allocation-control: unrelated or unknown acceptance criterion US-055-AC16",
+        "unallocated US-079-AC1",
+        "unallocated US-079-AC2",
+        "unallocated US-079-AC3",
+        "unallocated US-079-AC4",
+        "unallocated US-079-AC5",
+        "unallocated US-079-AC6",
+        "unallocated US-079-AC7",
+        "unallocated US-079-AC8",
+        "unallocated US-079-AC9",
+        "unallocated US-079-AC10",
+        "unallocated US-079-AC11",
+        "unallocated US-079-AC12",
+        "unallocated US-079-AC13",
+        "unallocated US-079-AC14",
+        "unallocated US-079-AC15",
+        "unallocated US-079-AC16"
+      ],
+      "observedErrors": [
+        "allocation-control: unrelated or unknown acceptance criterion US-055-AC1",
+        "allocation-control: unrelated or unknown acceptance criterion US-055-AC2",
+        "allocation-control: unrelated or unknown acceptance criterion US-055-AC3",
+        "allocation-control: unrelated or unknown acceptance criterion US-055-AC4",
+        "allocation-control: unrelated or unknown acceptance criterion US-055-AC5",
+        "allocation-control: unrelated or unknown acceptance criterion US-055-AC6",
+        "allocation-control: unrelated or unknown acceptance criterion US-055-AC7",
+        "allocation-control: unrelated or unknown acceptance criterion US-055-AC8",
+        "allocation-control: unrelated or unknown acceptance criterion US-055-AC9",
+        "allocation-control: unrelated or unknown acceptance criterion US-055-AC10",
+        "allocation-control: unrelated or unknown acceptance criterion US-055-AC11",
+        "allocation-control: unrelated or unknown acceptance criterion US-055-AC12",
+        "allocation-control: unrelated or unknown acceptance criterion US-055-AC13",
+        "allocation-control: unrelated or unknown acceptance criterion US-055-AC14",
+        "allocation-control: unrelated or unknown acceptance criterion US-055-AC15",
+        "allocation-control: unrelated or unknown acceptance criterion US-055-AC16",
+        "allocation-control: required reviewed runner/oracle/implementation binding not implemented",
+        "unallocated US-079-AC1",
+        "unallocated US-079-AC2",
+        "unallocated US-079-AC3",
+        "unallocated US-079-AC4",
+        "unallocated US-079-AC5",
+        "unallocated US-079-AC6",
+        "unallocated US-079-AC7",
+        "unallocated US-079-AC8",
+        "unallocated US-079-AC9",
+        "unallocated US-079-AC10",
+        "unallocated US-079-AC11",
+        "unallocated US-079-AC12",
+        "unallocated US-079-AC13",
+        "unallocated US-079-AC14",
+        "unallocated US-079-AC15",
+        "unallocated US-079-AC16"
+      ],
+      "allocated": 18,
+      "gateStatus": "failed",
+      "gateExit": 1
+    },
+    {
+      "id": "unrelated",
+      "expectedErrors": [
+        "allocation-control: required reviewed runner/oracle/implementation binding not implemented",
+        "allocation-control: unrelated or unknown acceptance criterion US-055-AC1"
+      ],
+      "observedErrors": [
+        "allocation-control: unrelated or unknown acceptance criterion US-055-AC1",
+        "allocation-control: required reviewed runner/oracle/implementation binding not implemented"
+      ],
+      "allocated": 34,
+      "gateStatus": "failed",
+      "gateExit": 1
+    },
+    {
+      "id": "unknown",
+      "expectedErrors": [
+        "allocation-control: required reviewed runner/oracle/implementation binding not implemented",
+        "allocation-control: unrelated or unknown acceptance criterion US-079-AC17"
+      ],
+      "observedErrors": [
+        "allocation-control: unrelated or unknown acceptance criterion US-079-AC17",
+        "allocation-control: required reviewed runner/oracle/implementation binding not implemented"
+      ],
+      "allocated": 34,
+      "gateStatus": "failed",
+      "gateExit": 1
+    },
+    {
+      "id": "unknown-execution",
+      "expectedAccepted": false,
+      "observedAccepted": false,
+      "runnerExit": 0,
+      "runId": "0f5c3d6c-92ea-46f8-893d-fb5a25636d25"
+    },
+    {
+      "id": "valid-after-error",
+      "expectedAccepted": true,
+      "observedAccepted": true,
+      "runnerExit": 0,
+      "runId": "4782f3e7-d08e-430c-87c2-e88b8867753a"
+    },
+    {
+      "id": "duplicate-execution",
+      "expectedAccepted": false,
+      "observedAccepted": false,
+      "runnerExit": 0,
+      "runId": "7aad400f-7435-4718-893d-76ab06cb2ebf"
+    }
+  ],
+  "scope": "Exact original gate on isolated nonexecuting plans; authoritative story criterion extraction and actual plan equality. Allocation metadata only, not exercising behavior or backend qualification."
+}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 13857,
+        "line": 11,
+        "path": "src/extensions/security/write.ts",
+        "sha256": "bd7475dd43d42407e8900136c9dc5647195c9e02cdaa0d1d5b65bd83d196dee0"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "SecurityWriteProfile",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface SecurityWriteProfile {\n  readProtection:{version:'umf.security.write-read/0.1.0';readAction:string;blindWriteActions:{field:SecurityRef;action:string}[]};\n  type:SecurityRef;createAction:string;updateAction:string;deleteAction:string;\n  fieldActions:{field:SecurityRef;action:string}[];\n  policyAction:string;policyFields:SecurityRef[];\n  ownershipAction:string;ownershipFields:SecurityRef[];ownershipAssociations:SecurityRef[];\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"SecurityWriteProfile\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 13857,
+      "line": 11,
+      "path": "src/extensions/security/write.ts",
+      "sha256": "bd7475dd43d42407e8900136c9dc5647195c9e02cdaa0d1d5b65bd83d196dee0"
+    }
+  ],
+  "summary": "Trusted host binding; field and ownership actions never come from client policy archives.",
+  "title": "SecurityWriteProfile"
+}

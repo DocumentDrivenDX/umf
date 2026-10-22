@@ -1,0 +1,11 @@
+bun test v1.4.2 (43848b5a7)
+
+tests/core/json-array-carriers.test.ts:
+(pass) sparse arrays cannot substitute a digit-only ordinary property for an indexed value [0.53ms]
+(pass) dense ordered JSON arrays preserve null, exact token strings and unknown object keys [0.10ms]
+(pass) JSON conformance ignores builtin prototype choice but detects every represented-value mutation [11.88ms]
+
+ 3 pass
+ 0 fail
+ 19 expect() calls
+Ran 3 tests across 1 file. [70.00ms]

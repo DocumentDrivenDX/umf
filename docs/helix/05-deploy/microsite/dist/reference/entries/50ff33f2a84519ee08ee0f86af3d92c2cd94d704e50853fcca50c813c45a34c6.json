@@ -1,0 +1,591 @@
+{
+  "data": {
+    "pointer": "",
+    "profileVersions": [],
+    "references": [
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0"
+      }
+    ],
+    "role": "extension-payload",
+    "schemaPath": "spec/extensions/arrow-ipc/layout-result.schema.json",
+    "sourceData": {
+      "kind": "object",
+      "members": {
+        "$id": {
+          "kind": "string",
+          "value": "urn:umf:arrow-ipc-layout:0.1.0"
+        },
+        "$schema": {
+          "kind": "string",
+          "value": "https://json-schema.org/draft/2020-12/schema"
+        },
+        "additionalProperties": {
+          "kind": "boolean",
+          "value": false
+        },
+        "description": {
+          "kind": "string",
+          "value": "IPC boundary inspection. Accounted bytes are not a native semantic validity assertion. Core document references resolve against spec/core/schema.json."
+        },
+        "properties": {
+          "kind": "object",
+          "members": {
+            "bytesAccountedFor": {
+              "kind": "object",
+              "members": {
+                "type": {
+                  "kind": "string",
+                  "value": "boolean"
+                }
+              }
+            },
+            "complete": {
+              "kind": "object",
+              "members": {
+                "const": {
+                  "kind": "boolean",
+                  "value": false
+                }
+              }
+            },
+            "consumed": {
+              "kind": "object",
+              "members": {
+                "maximum": {
+                  "kind": "number",
+                  "value": "1000000"
+                },
+                "minimum": {
+                  "kind": "number",
+                  "value": "0"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "integer"
+                }
+              }
+            },
+            "diagnostics": {
+              "kind": "object",
+              "members": {
+                "items": {
+                  "kind": "object",
+                  "members": {
+                    "additionalProperties": {
+                      "kind": "boolean",
+                      "value": false
+                    },
+                    "properties": {
+                      "kind": "object",
+                      "members": {
+                        "code": {
+                          "kind": "object",
+                          "members": {
+                            "type": {
+                              "kind": "string",
+                              "value": "string"
+                            }
+                          }
+                        },
+                        "message": {
+                          "kind": "object",
+                          "members": {
+                            "type": {
+                              "kind": "string",
+                              "value": "string"
+                            }
+                          }
+                        },
+                        "path": {
+                          "kind": "object",
+                          "members": {
+                            "type": {
+                              "kind": "string",
+                              "value": "string"
+                            }
+                          }
+                        },
+                        "severity": {
+                          "kind": "object",
+                          "members": {
+                            "enum": {
+                              "items": [
+                                {
+                                  "kind": "string",
+                                  "value": "error"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "warning"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "info"
+                                }
+                              ],
+                              "kind": "array"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "required": {
+                      "items": [
+                        {
+                          "kind": "string",
+                          "value": "code"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "path"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "severity"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "message"
+                        }
+                      ],
+                      "kind": "array"
+                    },
+                    "type": {
+                      "kind": "string",
+                      "value": "object"
+                    }
+                  }
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "array"
+                }
+              }
+            },
+            "eosOffset": {
+              "kind": "object",
+              "members": {
+                "maximum": {
+                  "kind": "number",
+                  "value": "1000000"
+                },
+                "minimum": {
+                  "kind": "number",
+                  "value": "0"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "integer"
+                }
+              }
+            },
+            "footer": {
+              "kind": "object",
+              "members": {
+                "additionalProperties": {
+                  "kind": "boolean",
+                  "value": false
+                },
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "length": {
+                      "kind": "object",
+                      "members": {
+                        "maximum": {
+                          "kind": "number",
+                          "value": "1000000"
+                        },
+                        "minimum": {
+                          "kind": "number",
+                          "value": "0"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "integer"
+                        }
+                      }
+                    },
+                    "metadata": {
+                      "kind": "object",
+                      "members": {
+                        "$ref": {
+                          "kind": "string",
+                          "value": "urn:umf:core:0.10.0"
+                        }
+                      }
+                    },
+                    "offset": {
+                      "kind": "object",
+                      "members": {
+                        "maximum": {
+                          "kind": "number",
+                          "value": "1000000"
+                        },
+                        "minimum": {
+                          "kind": "number",
+                          "value": "0"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "integer"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "offset"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "length"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "metadata"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "format": {
+              "kind": "object",
+              "members": {
+                "enum": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "stream"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "file"
+                    }
+                  ],
+                  "kind": "array"
+                }
+              }
+            },
+            "frames": {
+              "kind": "object",
+              "members": {
+                "items": {
+                  "kind": "object",
+                  "members": {
+                    "additionalProperties": {
+                      "kind": "boolean",
+                      "value": false
+                    },
+                    "properties": {
+                      "kind": "object",
+                      "members": {
+                        "bodyLength": {
+                          "kind": "object",
+                          "members": {
+                            "maximum": {
+                              "kind": "number",
+                              "value": "1000000"
+                            },
+                            "minimum": {
+                              "kind": "number",
+                              "value": "0"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "integer"
+                            }
+                          }
+                        },
+                        "bodyOffset": {
+                          "kind": "object",
+                          "members": {
+                            "maximum": {
+                              "kind": "number",
+                              "value": "1000000"
+                            },
+                            "minimum": {
+                              "kind": "number",
+                              "value": "0"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "integer"
+                            }
+                          }
+                        },
+                        "kind": {
+                          "kind": "object",
+                          "members": {
+                            "enum": {
+                              "items": [
+                                {
+                                  "kind": "string",
+                                  "value": "NONE"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "Schema"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "DictionaryBatch"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "RecordBatch"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "Tensor"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "SparseTensor"
+                                }
+                              ],
+                              "kind": "array"
+                            }
+                          }
+                        },
+                        "metadata": {
+                          "kind": "object",
+                          "members": {
+                            "$ref": {
+                              "kind": "string",
+                              "value": "urn:umf:core:0.10.0"
+                            }
+                          }
+                        },
+                        "metadataLength": {
+                          "kind": "object",
+                          "members": {
+                            "maximum": {
+                              "kind": "number",
+                              "value": "1000000"
+                            },
+                            "minimum": {
+                              "kind": "number",
+                              "value": "0"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "integer"
+                            }
+                          }
+                        },
+                        "metadataOffset": {
+                          "kind": "object",
+                          "members": {
+                            "maximum": {
+                              "kind": "number",
+                              "value": "1000000"
+                            },
+                            "minimum": {
+                              "kind": "number",
+                              "value": "0"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "integer"
+                            }
+                          }
+                        },
+                        "offset": {
+                          "kind": "object",
+                          "members": {
+                            "maximum": {
+                              "kind": "number",
+                              "value": "1000000"
+                            },
+                            "minimum": {
+                              "kind": "number",
+                              "value": "0"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "integer"
+                            }
+                          }
+                        },
+                        "prefixLength": {
+                          "kind": "object",
+                          "members": {
+                            "enum": {
+                              "items": [
+                                {
+                                  "kind": "number",
+                                  "value": "4"
+                                },
+                                {
+                                  "kind": "number",
+                                  "value": "8"
+                                }
+                              ],
+                              "kind": "array"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "required": {
+                      "items": [
+                        {
+                          "kind": "string",
+                          "value": "offset"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "prefixLength"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "metadataOffset"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "metadataLength"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "bodyOffset"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "bodyLength"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "kind"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "metadata"
+                        }
+                      ],
+                      "kind": "array"
+                    },
+                    "type": {
+                      "kind": "string",
+                      "value": "object"
+                    }
+                  }
+                },
+                "maxItems": {
+                  "kind": "number",
+                  "value": "1024"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "array"
+                }
+              }
+            },
+            "source": {
+              "kind": "object",
+              "members": {
+                "$ref": {
+                  "kind": "string",
+                  "value": "urn:umf:core:0.10.0"
+                }
+              }
+            },
+            "trailingBytes": {
+              "kind": "object",
+              "members": {
+                "maximum": {
+                  "kind": "number",
+                  "value": "1000000"
+                },
+                "minimum": {
+                  "kind": "number",
+                  "value": "0"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "integer"
+                }
+              }
+            }
+          }
+        },
+        "required": {
+          "items": [
+            {
+              "kind": "string",
+              "value": "source"
+            },
+            {
+              "kind": "string",
+              "value": "format"
+            },
+            {
+              "kind": "string",
+              "value": "complete"
+            },
+            {
+              "kind": "string",
+              "value": "bytesAccountedFor"
+            },
+            {
+              "kind": "string",
+              "value": "frames"
+            },
+            {
+              "kind": "string",
+              "value": "consumed"
+            },
+            {
+              "kind": "string",
+              "value": "trailingBytes"
+            },
+            {
+              "kind": "string",
+              "value": "diagnostics"
+            }
+          ],
+          "kind": "array"
+        },
+        "type": {
+          "kind": "string",
+          "value": "object"
+        }
+      }
+    }
+  },
+  "id": "[\"schema\",\"spec/extensions/arrow-ipc/layout-result.schema.json\",\"\"]",
+  "kind": "schema",
+  "links": [
+    "[\"schema\",\"spec/core/schema.json\",\"\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 3631,
+      "path": "spec/extensions/arrow-ipc/layout-result.schema.json",
+      "sha256": "10bcaf62f6cdf55ac6b55348c279a0b3b4ad77747b22dbb9708c01071ff7b63d"
+    }
+  ],
+  "summary": "IPC boundary inspection. Accounted bytes are not a native semantic validity assertion. Core document references resolve against spec/core/schema.json.",
+  "title": "layout-result.schema.json"
+}

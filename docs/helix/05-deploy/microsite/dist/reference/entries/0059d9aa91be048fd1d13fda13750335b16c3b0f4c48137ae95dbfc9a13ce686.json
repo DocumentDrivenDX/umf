@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 3811,
+        "line": 4,
+        "path": "src/adapters/dbt/selection.ts",
+        "sha256": "a14f558e8c215cbca3e7d78f7c22f2450368a9eaab3b232fd8655e1aad6b6a83"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "DbtDependencySelection",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface DbtDependencySelection {\n source:Document;\n selection:{status:'selected'|'blocked';complete:false;roots:string[];includeMacros:boolean;maxDepth:number;maxNodes:number;\n nodes:(DbtManifestGraph['nodes'][number]&{depth:number})[];\n edges:DbtManifestGraph['edges'];\n boundary:{edge:DbtManifestGraph['edges'][number];reason:'macro-excluded'|'depth-limit'|'node-limit'}[];\n diagnostics:Diagnostic[];};\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"DbtDependencySelection\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 3811,
+      "line": 4,
+      "path": "src/adapters/dbt/selection.ts",
+      "sha256": "a14f558e8c215cbca3e7d78f7c22f2450368a9eaab3b232fd8655e1aad6b6a83"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/dbt/selection.ts",
+  "title": "DbtDependencySelection"
+}

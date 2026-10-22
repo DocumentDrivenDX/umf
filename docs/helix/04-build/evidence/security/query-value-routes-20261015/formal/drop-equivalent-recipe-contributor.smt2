@@ -1,0 +1,17 @@
+; benchmark generated from python API
+(set-info :status unknown)
+(declare-fun rule2 () Bool)
+(declare-fun rule1 () Bool)
+(declare-fun rule0 () Bool)
+(declare-fun rule4 () Bool)
+(declare-fun rule5 () Bool)
+(declare-fun rule3 () Bool)
+(assert
+ (let (($x19 (not rule2)))
+(let (($x12 (or rule0 rule1)))
+(let (($x18 (not rule4)))
+(let (($x11 (or rule0 rule1 rule2 rule3 rule4 rule5)))
+(let (($x20 (and $x11 $x18 $x12 $x19)))
+(let (($x57 (and $x11 rule0 $x18 $x19)))
+(xor $x57 $x20))))))))
+(check-sat)

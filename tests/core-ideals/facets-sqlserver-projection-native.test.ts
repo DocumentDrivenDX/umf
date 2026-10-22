@@ -1,11 +1,13 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {createHash} from 'node:crypto';
 import {projectFacetsToSqlServer} from '../../src';
 import {facetsSqlServerProjectionCases} from '../../scripts/core-ideals/facets-sqlserver-projection-cases';
 const proof=await Bun.file('fixtures/validation/facets-sqlserver-projection-native.json').json();
 test('pinned native execution matches current authored DDL and keeps exact value counterexamples',async()=>{
+ const history=await Bun.file('docs/helix/04-build/evidence/metamodel-authority/history/manifest.json').json();
  expect(proof.serverVersion).toBe('16.0.4295.3');expect(proof.projected).toBe(145);expect(proof.blocked).toBe(93);expect(proof.probes.length).toBe(27);expect(proof.serializationRecoveries).toBe(2);expect(proof.idealRecoveries).toBe(145);
- for(const [path,hash] of Object.entries(proof.sha256 as Record<string,string>))expect(createHash('sha256').update(new Uint8Array(await Bun.file(path).arrayBuffer())).digest('hex'),path).toBe(hash);
+ for(const [path,hash] of Object.entries(proof.sha256 as Record<string,string>)){const archived=history.entries.find((entry:any)=>entry.path===path)?.archive;const source=archived??path;expect(createHash('sha256').update(new Uint8Array(await Bun.file(source).arrayBuffer())).digest('hex'),path).toBe(hash);}
  const rows=facetsSqlServerProjectionCases();expect(proof.cases.length).toBe(rows.length);
  for(const [i,c] of rows.entries()){const actual=projectFacetsToSqlServer(c.author,c.request);expect(proof.cases[i].status).toBe(actual.status);expect(proof.cases[i].nativeSql).toBe(actual.nativeSql??null);}
  for(const p of proof.probes){expect(p.actual.error,p.id).toBe(p.error);expect(p.actual.value,p.id).toBe(p.expected);}

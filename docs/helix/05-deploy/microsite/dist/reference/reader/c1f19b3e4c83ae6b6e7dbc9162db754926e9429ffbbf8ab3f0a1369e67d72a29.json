@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"recoverAvroRelationshipSource\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"AvroRelationshipClassification\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "AvroRelationshipClassification"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "current",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "recoverAvroRelationshipSource accepts input, current and returns AvroRelationshipArchive.",
+  "related": [],
+  "returns": "AvroRelationshipArchive",
+  "task": "Import and export",
+  "type": "(input: AvroRelationshipClassification, current: Document) => AvroRelationshipArchive"
+}

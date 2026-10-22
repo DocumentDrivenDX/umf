@@ -1,0 +1,33 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 3464,
+        "line": 1,
+        "path": "spec/extensions/openapi/schema-reference.schema.json",
+        "sha256": "c3f676ff83942f70660103557bf58d4f0770aa18b7b3a720c5194b533fbfeabf"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "openapiSchemaReferenceSchema",
+    "runtime": "unassessed",
+    "signatureText": [
+      "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"$id\": \"urn:umf:openapi-schema-reference:0.1.0\",\n  \"type\": \"object\",\n  \"additionalProperties\": false,\n  \"required\": [\n    \"source\",\n    \"target\",\n    \"node\",\n    \"complete\",\n    \"limitations\"\n  ],\n  \"properties\": {\n    \"source\": {\n      \"type\": \"object\",\n      \"additionalProperties\": false,\n      \"required\": [\n        \"retrievalUri\",\n        \"pointer\",\n        \"baseUri\",\n        \"dialect\"\n      ],\n      \"properties\": {\n        \"retrievalUri\": {\n          \"type\": \"string\"\n        },\n        \"pointer\": {\n          \"type\": \"string\"\n        },\n        \"baseUri\": {\n          \"type\": \"string\"\n        },\n        \"dialect\": {\n          \"type\": \"string\"\n        }\n      }\n    },\n    \"target\": {\n      \"type\": \"object\",\n      \"additionalProperties\": false,\n      \"required\": [\n        \"retrievalUri\",\n        \"pointer\",\n        \"baseUri\",\n        \"dialect\"\n      ],\n      \"properties\": {\n        \"retrievalUri\": {\n          \"type\": \"string\"\n        },\n        \"pointer\": {\n          \"type\": \"string\"\n        },\n        \"baseUri\": {\n          \"type\": \"string\"\n        },\n        \"dialect\": {\n          \"type\": \"string\"\n        }\n      }\n    },\n    \"node\": {\n      \"$ref\": \"#/$defs/node\"\n    },\n    \"complete\": {\n      \"const\": false\n    },\n    \"limitations\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"string\"\n      },\n      \"minItems\": 1\n    }\n  },\n  \"$defs\": {\n    \"node\": {\n      \"oneOf\": [\n        {\n          \"type\": \"object\",\n          \"required\": [\n            \"kind\"\n          ],\n          \"properties\": {\n            \"kind\": {\n              \"const\": \"null\"\n            }\n          }\n        },\n        {\n          \"type\": \"object\",\n          \"required\": [\n            \"kind\",\n            \"value\"\n          ],\n          \"properties\": {\n            \"kind\": {\n              \"const\": \"boolean\"\n            },\n            \"value\": {\n              \"type\": \"boolean\"\n            }\n          }\n        },\n        {\n          \"type\": \"object\",\n          \"required\": [\n            \"kind\",\n            \"value\"\n          ],\n          \"properties\": {\n            \"kind\": {\n              \"const\": \"string\"\n            },\n            \"value\": {\n              \"type\": \"string\"\n            }\n          }\n        },\n        {\n          \"type\": \"object\",\n          \"required\": [\n            \"kind\",\n            \"value\"\n          ],\n          \"properties\": {\n            \"kind\": {\n              \"const\": \"number\"\n            },\n            \"value\": {\n              \"type\": \"string\",\n              \"pattern\": \"^-?(0|[1-9][0-9]*)(\\\\.[0-9]+)?([eE][+-]?[0-9]+)?$\"\n            }\n          }\n        },\n        {\n          \"type\": \"object\",\n          \"required\": [\n            \"kind\",\n            \"items\"\n          ],\n          \"properties\": {\n            \"kind\": {\n              \"const\": \"array\"\n            },\n            \"items\": {\n              \"type\": \"array\",\n              \"items\": {\n                \"$ref\": \"#/$defs/node\"\n              }\n            }\n          }\n        },\n        {\n          \"type\": \"object\",\n          \"required\": [\n            \"kind\",\n            \"members\"\n          ],\n          \"properties\": {\n            \"kind\": {\n              \"const\": \"object\"\n            },\n            \"members\": {\n              \"type\": \"object\",\n              \"additionalProperties\": {\n                \"$ref\": \"#/$defs/node\"\n              }\n            }\n          }\n        }\n      ]\n    }\n  }\n}\n"
+    ]
+  },
+  "id": "[\"api\",\".\",\"openapiSchemaReferenceSchema\"]",
+  "kind": "api",
+  "links": [
+    "[\"schema\",\"spec/extensions/openapi/schema-reference.schema.json\",\"\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 3464,
+      "line": 1,
+      "path": "spec/extensions/openapi/schema-reference.schema.json",
+      "sha256": "c3f676ff83942f70660103557bf58d4f0770aa18b7b3a720c5194b533fbfeabf"
+    }
+  ],
+  "summary": "Public export · spec/extensions/openapi/schema-reference.schema.json",
+  "title": "openapiSchemaReferenceSchema"
+}

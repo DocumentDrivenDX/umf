@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
+import {CURRENT_CORE_VERSION} from '../../generated/core-model';
 import Ajv2020 from 'ajv/dist/2020';
 import schema from '../../../spec/extensions/json-schema/schema.json';
 import packageData from '../../../spec/extensions/json-schema/package.json';
@@ -109,7 +111,7 @@ export function importJsonSchema(text:string,options:{id:string;baseUri:string;r
  const resources:Record<string,NativeJson>=Object.create(null);
  for(const[uri,source]of Object.entries(options.resources||{})){ensureUri(uri);resources[uri]=parseNativeJson(source);}
  const payload:JsonSchemaPayload={dialect:JSON_SCHEMA_DIALECT,baseUri:options.baseUri,root:parseNativeJson(text),resources};
- const doc:Document={umf:'0.1.0',id:options.id,vocabularies:{[JSON_SCHEMA_EXTENSION]:{version:'0.1.0'}},modules:[{id:'schema',namespace:options.baseUri,elements:[{id:'schema',extensions:{[JSON_SCHEMA_EXTENSION]:payload as unknown as Json}}]}]};
+ const doc:Document={umf:CURRENT_CORE_VERSION,id:options.id,vocabularies:{[JSON_SCHEMA_EXTENSION]:{version:'0.1.0'}},modules:[{id:'schema',namespace:options.baseUri,elements:[{id:'schema',extensions:{[JSON_SCHEMA_EXTENSION]:payload as unknown as Json}}]}]};
  const checked=inspectJsonSchema(doc);
  if(!checked.valid)throw new UmfError('JSON_SCHEMA_INVALID',JSON.stringify(checked.diagnostics));
  return doc;

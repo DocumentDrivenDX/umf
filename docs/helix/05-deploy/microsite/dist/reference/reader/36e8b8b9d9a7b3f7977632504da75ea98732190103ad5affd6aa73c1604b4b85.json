@@ -1,0 +1,23 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"getPostgresqlSource\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "Original source archive; it deliberately remains the pre-edit source.",
+  "related": [],
+  "returns": "string",
+  "task": "Inspect and select",
+  "type": "(document: Document) => string"
+}

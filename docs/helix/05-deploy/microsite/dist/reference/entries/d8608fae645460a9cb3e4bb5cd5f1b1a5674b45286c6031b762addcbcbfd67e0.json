@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 14668,
+        "line": 13,
+        "path": "src/core-ideals/facets-sqlserver-projection.ts",
+        "sha256": "636acf528c880835e7d64dc7e56f7029afca20f5e8530a66c4005046ad5d8bf3"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "FacetsSqlServerRequest",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface FacetsSqlServerRequest {id:string;namespace:string;tableName:string;columnName:string;nativeType:keyof typeof nativeCarriers;mode:'strict'|'report';encoding:'checked'|'type-modifier'|'carrier-only';obligation:'value-domain'|'exact-input'}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"FacetsSqlServerRequest\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 14668,
+      "line": 13,
+      "path": "src/core-ideals/facets-sqlserver-projection.ts",
+      "sha256": "636acf528c880835e7d64dc7e56f7029afca20f5e8530a66c4005046ad5d8bf3"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/facets-sqlserver-projection.ts",
+  "title": "FacetsSqlServerRequest"
+}

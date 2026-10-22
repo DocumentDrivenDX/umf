@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {UmfError} from '../../model/types';
 import type {RdfQuad,RdfNode,RdfLiteral} from '../rdf';
 const RDF='http://www.w3.org/1999/02/22-rdf-syntax-ns#',SH='http://www.w3.org/ns/shacl#';

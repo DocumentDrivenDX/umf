@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 8267,
+        "line": 16,
+        "path": "src/core-ideals/nullability-parquet-projection.ts",
+        "sha256": "1764b89974dce6f552ccfa8f9bc8dd34f90c98cfb33a534e4574b51c2296deda"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "NullabilityParquetProjection",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface NullabilityParquetProjection {\n operation:'project-nullability-parquet';version:'1.0.0';status:'projected'|'blocked';source:Document;author:CoreNullabilityDeclaration;request:NullabilityParquetRequest;target?:Document;binding:typeof binding;diagnostics:Diagnostic[];\n mapping:{origin:'authored';nullability:'required'|'absent-allowed'|'unspecified';encoding:'required'|'optional';basis:'authored-requirement'|'no-authored-requirement'|'unprojected-requirement';scope:NullabilityParquetRequest['scope'];carrier:NullabilityParquetRequest['carrier'];idealPath:string;nativePath:'/schema/1/repetition_type';outcome:'exact'|'unknown'|'not-expressible'};\n residuals:{path:string;value:Json;reason:string;outcome:'unknown'|'not-expressible';recovery:'Recover source meaning with retained projection receipt; native-only import does not recover author intent'}[];\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"NullabilityParquetProjection\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 8267,
+      "line": 16,
+      "path": "src/core-ideals/nullability-parquet-projection.ts",
+      "sha256": "1764b89974dce6f552ccfa8f9bc8dd34f90c98cfb33a534e4574b51c2296deda"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/nullability-parquet-projection.ts",
+  "title": "NullabilityParquetProjection"
+}

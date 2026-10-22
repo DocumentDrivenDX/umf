@@ -1,0 +1,60 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"BindingIndex\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "name",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "kind",
+      "optional": false,
+      "type": "\"unique\" | \"partial\" | \"expression\" | \"hash\" | \"btree\" | \"gin\" | \"gist\" | \"clustering\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"BindingIndexTarget\"]"
+      ],
+      "name": "on",
+      "optional": false,
+      "type": "BindingIndexTarget[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "predicate",
+      "optional": true,
+      "type": "{ language: string; version: string; expression: string; }"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "unique",
+      "optional": false,
+      "type": "boolean"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"BindingFieldRef\"]"
+      ],
+      "name": "include",
+      "optional": true,
+      "type": "BindingFieldRef[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "BindingIndex is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "BindingIndex"
+}

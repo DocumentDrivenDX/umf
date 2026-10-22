@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {chromium} from 'playwright';
@@ -9,7 +10,7 @@ try{
  await page.route('**/*',route=>{if(!route.request().url().startsWith(`http://127.0.0.1:${server.port}/`)){external.push(route.request().url());return route.abort();}return route.continue();});await page.goto(`http://127.0.0.1:${server.port}/`);
  const checks=await page.evaluate(async(nativeSource:string)=>{
   const path='/umf.js',u=await import(path);
-  const source=u.upgradeCardinalityEnvelope(u.upgradeNullabilityEnvelope(u.upgradeFieldEnvelope(u.importSqlServerCatalog(nativeSource,{id:'browser-logical'})).target).target).target;
+  const source=u.importSqlServerCatalog(nativeSource,{id:'browser-logical'});
   const native=u.exportSqlServerCatalog(source);let classified=0,blocked=0,recoveries=0,forgedRefusals=0;
   for(const column of u.getSqlServerColumnMetadata(source))for(const profile of ['native-scalar','json-array','json-object','unresolved'])for(const mode of ['strict','report']){
    const c=u.getSqlServerConstraintMetadata(source).tables.find((t:any)=>t.table.name===column.table.name).checks[0];

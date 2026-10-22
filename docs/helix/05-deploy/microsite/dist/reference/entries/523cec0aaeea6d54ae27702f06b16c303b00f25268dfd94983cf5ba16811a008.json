@@ -1,0 +1,33 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 453,
+        "line": 1,
+        "path": "spec/extensions/typespec/syntax-locations.schema.json",
+        "sha256": "6fe557725bf4c9a57c1cf29399319b140f77ac026224c2e72932a2c7160e087a"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "typespecSyntaxLocationsSchema",
+    "runtime": "unassessed",
+    "signatureText": [
+      "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"$id\": \"urn:umf:typespec:syntax-locations:0.1.0\",\n  \"type\": \"array\",\n  \"items\": {\n    \"type\": \"object\",\n    \"additionalProperties\": false,\n    \"required\": [\n      \"kind\",\n      \"start\",\n      \"end\"\n    ],\n    \"properties\": {\n      \"kind\": {\n        \"type\": \"string\"\n      },\n      \"start\": {\n        \"type\": \"integer\"\n      },\n      \"end\": {\n        \"type\": \"integer\"\n      }\n    }\n  }\n}\n"
+    ]
+  },
+  "id": "[\"api\",\".\",\"typespecSyntaxLocationsSchema\"]",
+  "kind": "api",
+  "links": [
+    "[\"schema\",\"spec/extensions/typespec/syntax-locations.schema.json\",\"\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 453,
+      "line": 1,
+      "path": "spec/extensions/typespec/syntax-locations.schema.json",
+      "sha256": "6fe557725bf4c9a57c1cf29399319b140f77ac026224c2e72932a2c7160e087a"
+    }
+  ],
+  "summary": "Public export · spec/extensions/typespec/syntax-locations.schema.json",
+  "title": "typespecSyntaxLocationsSchema"
+}

@@ -42,6 +42,7 @@ from the later brief. FR-39–FR-41 record subsequent browser, DDD, and metamode
 FR-42–FR-44 record authored relationships, physical bindings and directed
 generation requested by a model-authoring consumer. FR-45 records portable
 domain-pack ownership and consumer execution boundaries.
+FR-51 records declarative action requirements/design selected on 2026-10-08 from consumer discovery input.
 All requirements remain product obligations; this draft does
 not assert that every ecosystem must ship in the first release.
 
@@ -72,9 +73,10 @@ preserving only opaque native envelopes is insufficient.
 through FEAT-007 and US-050 as an offline, revision-pinned cross-document
 reference slice. CONTRACT-045 must first settle the public package API, bounds,
 and permitted crossing members; TD-050 and AC-level test allocation must then
-precede implementation. FR-18/FR-19 through US-051 are deferred until US-050
-passes its governed gates because schema comparison depends on verified revision
-identity and package resolution. All other undelivered FR/NFR obligations remain
+precede implementation. Cross-document FR-18/FR-19 comparison through US-051
+retains its US-050 gates for verified revision identity and package resolution.
+The 2026-10-21 field-migration amendment separately permits current-source,
+single-document planning under SD-007 and CONTRACT-081. Other undelivered FR/NFR obligations remain
 in product scope and are deferred to the product owner for later release
 selection; absence from this slice does not demote or waive them.
 
@@ -96,7 +98,9 @@ semantic coverage, migration/recovery, stable API, Python consumption and native
 pipeline acceptance needs. That framing must identify which US-050 capabilities
 are prerequisites and which can remain separate. The dependency decision remains
 open; neither the native port nor US-050 gains implementation authorization from
-this sequencing clarification. US-051 retains its dependency on US-050.
+this sequencing clarification. US-051's cross-document comparison retains its
+dependency on US-050; its current-source field-migration amendment has the
+separate design and qualification gates in SD-007.
 
 1. Users retain native meaning when moving supported schemas through UMF.
 2. Users translate where mappings exist and can inspect every semantic limit.
@@ -169,7 +173,7 @@ seven mandatory product capabilities without demoting any to optional status:
 | Capability | Functional Requirements |
 | --- | --- |
 | Semantic representation and core | FR-2, FR-3, FR-20, FR-21, FR-28, FR-35 |
-| Extensions and partial participation | FR-4, FR-5, FR-22, FR-27, FR-31, FR-34, FR-40 |
+| Extensions and partial participation | FR-4, FR-5, FR-22, FR-27, FR-31, FR-34, FR-40, FR-45, FR-51 |
 | Native interchange and durable use | FR-1, FR-6, FR-26, FR-29, FR-30, FR-33, FR-36, FR-38, FR-39, FR-41 |
 | Translation and fidelity | FR-7, FR-8, FR-9, FR-10, FR-24, FR-25 |
 | Portable domain packs | FR-45 |
@@ -229,10 +233,13 @@ None assigned. Future conveniences must not weaken fidelity or support claims.
   and zero native/unknown-content regressions. A core label alone never deletes
   an extension payload. Any removal requires an explicitly authorized, versioned
   migration after the equivalence gate; preservation remains the default.
-- **FR-35** — **Self-description.** UMF must eventually be able to represent its
-  own metamodel and vocabularies, exercising the same extension and composition
-  mechanisms as external schemas. Bootstrap validation may remain authoritative
-  while self-description is introduced; this is beyond the first slice.
+- **FR-35** — **Self-description.** UMF must represent its own metamodel and
+  vocabularies using the same extension and composition mechanisms as external
+  schemas. Owner direction, 2026-10-18, replaces bootstrap projection authority:
+  one authored current UMF metamodel must generate the core JSON Schema, public
+  shapes, semantic validation program and reference/ontology views. Remove
+  duplicate rule definitions and historical runtime paths after migrating active
+  consumers. Unknown/native meanings and dated evidence retain their identity.
 
 ### Subsystem: Extensions and Partial Participation
 
@@ -266,6 +273,23 @@ None assigned. Future conveniences must not weaken fidelity or support claims.
   DDD intent must survive independently of storage, API, and execution choices;
   target bindings must not redefine source meaning. Candidate common concepts
   graduate only under FR-28's evidence and compatibility requirements.
+
+- **FR-51** — **Discoverable action contracts.** Model authors must be able to
+  describe typed inputs/output/failures, preconditions and postconditions, permitted
+  read/write boundaries, result identities/version/freshness obligations, caller-key
+  idempotency, attribution, authorization profiles and inert execution bindings.
+  The first graph consumer requires human attribution, invocation roles and
+  ordered primitive recipes or a qualified named handler in an independently
+  versioned extension. Consumers must distinguish declared effects from verified
+  behavior and refuse unsupported relevant semantics. Initial atomicity is scoped
+  to one executor-selected store; execution remains outside UMF under NFR-50.
+  DDD/native/API operations must not implicitly become actions. FEAT-900/US-900
+  define the local-document declaration slice. Executable profiles must state
+  rule/selector semantics, authorization timing, revision/replay protocol,
+  concurrency and enforced handler access; these remain consumer-owned. Preview
+  is advisory and audit must preserve attribution without leaking protected data.
+  Owner direction on 2026-10-08
+  selects requirements/design, not release order or downstream execution.
 
 ### Subsystem: Native Interchange and Durable Use
 
@@ -316,6 +340,10 @@ None assigned. Future conveniences must not weaken fidelity or support claims.
   semantics when shapes are incomplete. New vocabularies must coexist with earlier
   consumers without losing uninterpreted content. Generated consumer artifacts
   must expose unsupported semantics rather than imply validation or enforcement.
+  Owner direction on 2026-10-18 requires the current core metamodel itself to
+  drive structural schemas and portable validation, with generated TS/Python
+  shapes and a single schema-browser route. Independent native and extension
+  versions remain exact; core history must not be an active compatibility layer.
   Owner direction on 2026-10-07 adds shared JavaScript numeric admission and
   explicit lossless value conversion for Truss, Ashlar and TableSpec consumers.
   Consumers must be able to retain exact decimal spelling, use bigint for large
@@ -361,13 +389,29 @@ None assigned. Future conveniences must not weaken fidelity or support claims.
   synthetic/external source provenance without authorizing code
   execution or network fetching. TableSpec owns fabricated tabular data
   generation, CSV pack export, explicit ingestion of pinned local source rows,
-  and data testing. Published medical examples must retain original meaning,
+  and data testing. Packs must support independently versioned loader companions
+  explicitly invoked by consumers for public-corpus creation, backfill and scheduled
+  refresh. Preserve source revisions, replayable originals, restartable state and
+  visible coverage gaps; inspecting metadata never starts acquisition. Published medical examples must retain original meaning,
   source identity, unresolved references and source-specific redistribution
   conditions; generated supplements must remain distinguishable. The legal pack must
   combine explicitly fabricated firm operations with observed public filings and
   discovery evidence, retaining original documents, case/source identities,
   extraction limits and source-specific rights. Real litigants must not acquire
-  invented client or matter relationships. Ontological sample
+  invented client or matter relationships. A historical appellate-monitoring
+  subpack must support split-screening development with opinions, designated
+  orders, comparison evidence, counsel provenance and labeled replay/failure
+  records. Attorney judgments and synthetic workflow events remain distinct
+  from observed judicial facts. Live retrieval and notifications are consumer-owned.
+  Supreme Court docket monitoring is separate.
+  Public-company intelligence packs must
+  retain source-qualified issuer identities, dated research-universe selection,
+  filing and financial context, exact values and evidence lineage. Observed
+  company disclosures, deterministic signals and authored opportunity hypotheses
+  must remain distinct. A selected issuer universe must not imply authoritative
+  S&P index membership; source-specific rights and coverage limits remain explicit.
+  Live collection, model routing, admin applications, scheduling and email belong
+  to explicit consumers rather than pack metadata. Ontological sample
   data belongs to Truss and Ashlar. Unknown metadata must remain recoverable.
   The medical pack must cover the carrier lifecycle: payer/plan and member
   enrollment, coverage and benefits, eligibility requests and responses, prior
@@ -446,6 +490,12 @@ None assigned. Future conveniences must not weaken fidelity or support claims.
 - **FR-18** — **Schema evolution.** UMF must represent and compare additions,
   removals, type, constraint, identity, relationship, and extension-specific
   changes, enabling integrations to apply native compatibility rules.
+  For field additions, requiredness changes, removals and type changes, UMF must
+  describe explicit migration intent, dependencies, data-check obligations,
+  defaults/backfills, conversion and loss decisions, and recovery requirements.
+  Defaults for future writes and repair of existing data are separate choices.
+  Consumers must receive verifiable plans and outcomes qualified by backend
+  capabilities; storage hosts own physical execution and data acceptance.
 - **FR-19** — **Semantic comparison.** Comparison must distinguish textual and
   representational differences from equivalent or materially different semantics
   for round-trip validation and schema evolution.
@@ -476,6 +526,78 @@ None assigned. Future conveniences must not weaken fidelity or support claims.
   and representative native corpora, plus JSON Schema-to-Protobuf translation
   with an explicit fidelity report. Exclusions must remain visible and must not
   be reported as full-format conformance.
+
+### Subsystem: Physical Bindings and Authored Generation — typed data access SDK
+
+Owner-directed design extension; release sequencing remains separately selected.
+This subsystem adds an **Application Developer** persona: a Python developer who
+reads, searches and changes data described by UMF without writing SQL. The
+Schema Integration Maintainer remains responsible for authored models, bindings
+and target qualification.
+
+- **FR-52 — Generated typed models.** A maintainer must be able to author
+  instance-view, native-column and search choices in the `umf.access` extension
+  and generate, deterministically and offline, statically inspectable Python
+  models, Key DTOs, typed column and index expressions and action types from
+  pinned UMF documents. Presence uses Pydantic `MISSING`; exact values are never
+  rounded; unknown content and a complete assertion report are retained; output
+  is checked in and drift-checked. Generated code is a thin typed layer over the
+  `umf_access` runtime and type-checks cleanly on Python 3.11 under pyright, mypy
+  and ty. FEAT-028, US-080 and US-081 govern this.
+- **FR-53 — Precompiled typed queries and search.** An application developer
+  must be able to declare reads, ranked semantic/keyword/hybrid searches and bulk
+  commands in a schema-first, expression-first Python DSL with no string column
+  references, have a pinned type checker reject type, column, record and argument
+  errors, and have every declaration compiled at build time through Weft for each
+  selected target into a checked-in catalog. At runtime only catalog entries
+  execute, with validated values bound as parameters. The DSL also covers exact
+  aggregates and buckets, prefix and term filters, null-safe distinctness and
+  to-one joins; reads offer snapshot pages where the platform supports them,
+  bounded streams, per-call timeouts and async calls; catalogs can be
+  schema-neutral, and the build writes a least-privilege report per target.
+  FEAT-029 and US-082 to US-084 govern this.
+- **FR-54 — Typed actions and native execution targets.** An application developer
+  must be able to invoke UMF actions through generated typed clients with typed
+  outcomes, and run catalog entries on raw Postgres, Lakebase, Unity Catalog and
+  local Spark/Delta tables through the host's native SQL connection. The native
+  SQL action profile states which action guarantees hold per platform and refuses
+  the rest. Actions can be validated without effect, return the Keys they created
+  and changed, take per-call timeouts (a timeout before commit commits nothing),
+  run async on Postgres and Lakebase, and compose related changes as one
+  multi-effect action. FEAT-030, US-085 and US-086 govern this.
+- **FR-55 — Engine target adapters.** Truss and Ashlar must be able to adopt the
+  SDK by implementing its target protocols over their own protected paths: Truss
+  for reads, actions and bulk commands; Ashlar for publication-pinned reads.
+  Generated code never reaches engine storage directly. FEAT-031, US-087 and
+  US-088 govern this.
+
+Acceptance for FR-52 requires deterministic generation, static positive/negative
+corpora and exact-value/presence counterexamples. FR-53 requires static corpora
+on pinned pyright and mypy, catalog refusals for Weft-unsupported forms, and
+native read and search witnesses per target. FR-54 requires native action and
+bulk witnesses per target and the shared conformance suite. FR-55 requires
+engine-local adoption designs and engine witnesses. Specifications and
+local-only tests establish none of those native support claims.
+
+#### Praxis reporting amendment — 2026-10-15
+
+Owner direction (2026-10-15), following the [Praxis request](../00-discover/vision-input.md#praxis-request-typed-sdk-joins-and-aggregates-2026-10-15): replace the one-table/count-only restriction with bounded typed joins and read-only reporting. Deliver reviewed SQL aggregates before the native aggregate DSL; joins remain in the first PostgreSQL 18 / Lakebase target milestone.
+
+- **READ-JOIN — Typed joins:** Support inner and left joins across UMF-declared relationships, with typed projections spanning joined records, joined-column filtering and ordering, and deterministic keyset paging. Permit at most three relationship edges in a query, including repeated/self joins; reject excess joins at catalog build. Validate all resolved table bindings remain in the app's own schema. Retain the existing page-size cap.
+- **READ-AGG — Read-only aggregates:** Support count, sum, avg, min and max with grouping on one or more declared columns and typed results that preserve exact Decimal values. First provide fixed, reviewed SQL compiled through Weft into the checked-in catalog, with typed bound parameters and results. Admit only read-only shapes supported by the selected target at build time; do not defer unsupported-shape discovery to execution. Native aggregate DSL follows. Having-style filters remain optional pending cost assessment.
+- **READ-ROLE — Caller identity and execution bounds:** Execute joins, aggregates and reviewed SQL on the caller's own connection and role from per-user pools, preserving row-level security on every participating table. Require read-only transactions, per-call timeout, typed `TimedOut` and capped returned rows. Require no app-schema functions, views or triggers. Qualify PostgreSQL 18 and Lakebase separately; older PostgreSQL evidence does not qualify either target.
+- **READ-TYPE — Static typing:** Check the full generated package, including join and aggregate APIs, under ty. Extend the existing negative typing suite under ty, pyright and mypy to reject wrong columns, incompatible projections and invalid aggregate inputs, including left-join nullability and grouping misuse. Positive cases must pass all three checkers. A generated-package check alone does not satisfy misuse-rejection acceptance.
+
+Acceptance sketches:
+
+| Requirement | Input / scenario | Required outcome |
+| --- | --- | --- |
+| READ-JOIN | Orders/customers inner and left joins, joined filters/order, repeated sort values, unmatched customer, fan-out; three and four declared edges; cross-schema binding | Correct typed rows and nullable left side; no missing/duplicated rows across stable pages; three edges admitted, four and cross-schema binding refused at build |
+| READ-AGG | Grouped totals over exact decimal amounts, null inputs and empty sets; reviewed statement with bound inputs; unsupported target shape | Exact typed totals and declared null/empty behavior; catalog contains compiled statement; unsupported shape produces no executable catalog entry |
+| READ-ROLE | Two caller roles with different visible orders/customers; joins and grouped totals; query exceeding timeout or row cap | Each sees only role-visible data; same caller connection/role throughout; typed timeout; capped results; no required app-schema stored code |
+| READ-TYPE | Full generated package and positive/negative join/aggregate examples | ty accepts package; all three checkers accept valid uses and reject each intended misuse |
+
+Delivery references: WR-B7 (schema-neutral binding) and WR-A14 (relationship join lowering) are in the typed SDK's Weft requirements in checkout `20bc/umf`. US-081-AC9 checks the whole generated commerce package on Python 3.11 under ty, pyright and mypy; generated joins are included. The first implementation and its qualified limits are recorded in [reporting execution evidence](../04-build/evidence/typed-reporting/README.md). This is a refinement of FR-53, with FR-52 typing and FR-54 execution obligations. The owner-selected three-edge limit supersedes the earlier four-edge proposal for this slice.
 
 ## Acceptance Test Sketches
 
@@ -518,7 +640,7 @@ are not completed tests or substitutes for downstream feature and story coverage
 | FR-32 | Generate a support matrix from known passing and failing compatibility cases | Claims identify versions, tested features, fidelity, and evidence gaps |
 | FR-33 | Reopen a retained artifact after the original conversion ends | A later consumer can recover its native meaning from the durable representation |
 | FR-34 | Register a versioned extension and inspect its validation and interchange declarations | Identity, rules, scope, available directions, and evidence are discoverable without executing artifact-supplied code |
-| FR-35 | Represent a versioned UMF vocabulary in UMF and compare against the bootstrap definition | Meaning and validation expectations agree; differences are explicit |
+| FR-35 | Compile current schemas and portable validators from the authored UMF metamodel | Self-validation, deterministic fixed point, independent behavioral parity and retired duplicate authority |
 | FR-36 | Validate or migrate the inspected TableSpec baseline | Existing meaning survives; migrations reproduce deterministically |
 | FR-37 | Run the two native corpora and the cross-system projection | Native fidelity passes within scope; every known projection mismatch is reported |
 | FR-38 | Exercise independently scoped interchanges and consumer workflows | Ecosystems retain native meaning without becoming UMF's mandatory worldview |
@@ -528,6 +650,7 @@ are not completed tests or substitutes for downstream feature and story coverage
 | FR-42 | Author one-to-one, many-to-one, many-to-many, self and heterogeneous associations; classify an undeclared native FK | Authored endpoint meaning is inspectable; native observations retain refinements without inventing intent; two-priority admission and five-priority delivery remain distinct |
 | FR-43 | Bind one logical order model separately to PostgreSQL and Delta with different storage/index choices | Logical IDs and meaning agree; index availability comes only from the selected binding; unsupported choices report residuals and remain recoverable |
 | FR-44 | Generate DDL and SDL from an authored order/customer/product model with an association carrying fields | Outputs pass native adapters and versioned oracles; aggregate/invariant, endpoint and storage losses are reported; retained source and original native archives recover |
+| FR-51 | Author a create-and-link action, retain unknown content and assess an executor profile | Typed targets and obligations survive; unchecked/unsupported meaning blocks eligibility; no metadata check implies execution |
 | FR-45 | Inspect a pinned legal or ecology pack, generate its schemas and hand declarative references to TableSpec | UMF executes no artifact-supplied code; TableSpec resolves trusted generators; originals, unknown metadata, schemas and dataset provenance remain attributable |
 
 ## Technical Context
@@ -606,9 +729,10 @@ be inspected.
   spike findings? Owner: product owner; blocks release commitments. All 45
   requirements remain product obligations until explicitly changed.
 - Which slice follows the completed relationship and binding queue? Resolved for
-  planning on 2026-10-02: US-050 is next. US-051 and every other residual
-  obligation remain deferred to the product owner pending US-050 evidence and a
-  later release-boundary decision; their product priority is unchanged.
+  planning on 2026-10-02: US-050 is next for cross-document composition.
+  The 2026-10-21 amendment selects single-document field-migration planning;
+  cross-document US-051 and other residual obligations retain their independent
+  owner selection and qualification gates.
 
 ## Success Criteria
 
@@ -645,3 +769,165 @@ Consumer-specific extension models and execution semantics remain in their
 consumer repositories. Python MUST preserve unknown content and distinguish
 structural validity from semantic completeness. TableSpec MUST derive its
 compiler view from the shared document and refuse unsupported execution meaning.
+
+## Shared security slice (owner direction, 2026-10-08)
+
+### Subsystem: Extensions and Partial Participation
+
+- **FR-46** — Authors must express shared role-, attribute- and ontology-relationship-based security independently of flat relational or typed graph storage. Preserve native/unknown policies and qualify logical decisions, field disclosure, writes, history and revocation through explicit backend bindings and acceptance evidence. FEAT-008 and US-079, US-056 and US-057 govern the slice. Native execution remains consumer-owned; security core admission remains separate.
+
+## Portable action plans and frozen-manifest UPDATE — owner direction, 2026-10-13
+
+The owner selects SQL compilation to portable action plans, built against the existing `umf.actions` extension. The first implementation slice is a queued bulk UPDATE over one logical Record type with literal or typed parameter assignments and a frozen work manifest. This is a new governed slice; existing read/compiler or transactional-action evidence does not qualify it.
+
+UMF owns action declarations and reusable plan/manifest semantics; Weft owns SQL meaning, model resolution and compilation; Truss owns qualified mutation execution; the host owns durable queue storage, scheduling and workers. Ashlar may consume committed Truss changes through its existing publication path. A future Ashlar or other action executor requires separate capability and native qualification; multi-backend atomicity is excluded.
+
+- PAP-UMF-01: Portable plans must reference immutable, registered `umf.actions` declarations and typed invocations. No parallel mutation vocabulary or core action primitive is introduced.
+- PAP-UMF-02: Plan/manifest inspection must retain exact model/action/profile pins, selection basis, ordered unique target identities, typed proposed values and conflict assertions. Relevant unknown semantics block execution eligibility while unknown content remains preserved.
+- PAP-UMF-03: Capability assessment must distinguish declaration validity, executable action support, selection support, batch/replay support and independently qualified execution. Plan metadata never grants authority.
+- PAP-UMF-04: Frozen manifests define exact queued work; batch atomicity and whole-job partial completion must be explicit. The existing transactional profile is not widened silently.
+
+## Bulk UPDATE contract and story allocation — 2026-10-13
+
+Contracted first slice: `umf.actions.plan/1`, `umf.actions.manifest/1`, `umf.actions.bulk/1`, built against core0.8.0/actions0.1.0 and the existing tx/1 invocation. The first executable subset is required one-valued boolean/integer/string Fields; null/nullable, decimal and other scalar mutation domains are explicit refusals for this proof, not losses of preserved UMF meaning.
+
+| Story | Owned output | Design/test allocation |
+| --- | --- | --- |
+| [US-902](user-stories/US-902-portable-action-plans.md) | 6 planned criteria: bulk-update-portable-action-plans | [TD-902](../02-design/technical-designs/TD-902-portable-action-plans.md) / [STP-902](../03-test/test-plans/STP-902-portable-action-plans.md) |
+| [US-903](user-stories/US-903-frozen-action-manifests.md) | 6 planned criteria: bulk-update-frozen-action-manifests | [TD-903](../02-design/technical-designs/TD-903-frozen-action-manifests.md) / [STP-903](../03-test/test-plans/STP-903-frozen-action-manifests.md) |
+
+The [machine-readable bulk allocation](../03-test/bulk-update-story-allocation.json) is a separate new-slice inventory; planned rows are not passed coverage. Every story/criterion has one primary test allocation and retains its original canonical citation.
+
+## Browser-local action demo — owner clarification, 2026-10-15
+
+Keep GitHub Pages. Compilation runs in the browser with original Weft WASM; Bun builds static assets. The first no-service executable demo uses actual Truss browser-local sample storage through a separately qualified local-owner actor/policy/invocation profile. Do not simulate native authenticated people/services or weaken the unchanged person-required cohort. CONTRACT-905 defines the explicit additive branch; native protected sealing/execution remains separately required.
+### Subsystem: Physical Bindings and Authored Generation — typed data access SDK
+
+Owner-directed design extension; release sequencing remains separately selected.
+This subsystem adds an **Application Developer** persona: a Python developer who
+reads, searches and changes data described by UMF without writing SQL. The
+Schema Integration Maintainer remains responsible for authored models, bindings
+and target qualification.
+
+- **FR-52 — Generated typed models.** A maintainer must be able to author
+  instance-view, native-column and search choices in the `umf.access` extension
+  and generate, deterministically and offline, statically inspectable Python
+  models, Key DTOs, typed column and index expressions and action types from
+  pinned UMF documents. Presence uses Pydantic `MISSING`; exact values are never
+  rounded; unknown content and a complete assertion report are retained; output
+  is checked in and drift-checked. Generated code is a thin typed layer over the
+  `umf_access` runtime and type-checks cleanly on Python 3.11 under pyright, mypy
+  and ty. FEAT-028, US-080 and US-081 govern this.
+- **FR-53 — Precompiled typed queries and search.** An application developer
+  must be able to declare reads, ranked semantic/keyword/hybrid searches and bulk
+  commands in a schema-first, expression-first Python DSL with no string column
+  references, have a pinned type checker reject type, column, record and argument
+  errors, and have every declaration compiled at build time through Weft for each
+  selected target into a checked-in catalog. At runtime only catalog entries
+  execute, with validated values bound as parameters. The DSL also covers exact
+  aggregates and buckets, prefix and term filters, null-safe distinctness and
+  to-one joins; reads offer snapshot pages where the platform supports them,
+  bounded streams, per-call timeouts and async calls; catalogs can be
+  schema-neutral, and the build writes a least-privilege report per target.
+  FEAT-029 and US-082 to US-084 govern this.
+- **FR-54 — Typed actions and native execution targets.** An application developer
+  must be able to invoke UMF actions through generated typed clients with typed
+  outcomes, and run catalog entries on raw Postgres, Lakebase, Unity Catalog and
+  local Spark/Delta tables through the host's native SQL connection. The native
+  SQL action profile states which action guarantees hold per platform and refuses
+  the rest. Actions can be validated without effect, return the Keys they created
+  and changed, take per-call timeouts (a timeout before commit commits nothing),
+  run async on Postgres and Lakebase, and compose related changes as one
+  multi-effect action. FEAT-030, US-085 and US-086 govern this.
+- **FR-55 — Engine target adapters.** Truss and Ashlar must be able to adopt the
+  SDK by implementing its target protocols over their own protected paths: Truss
+  for reads, actions and bulk commands; Ashlar for publication-pinned reads.
+  Generated code never reaches engine storage directly. FEAT-031, US-087 and
+  US-088 govern this.
+
+Acceptance for FR-52 requires deterministic generation, static positive/negative
+corpora and exact-value/presence counterexamples. FR-53 requires static corpora
+on pinned pyright and mypy, catalog refusals for Weft-unsupported forms, and
+native read and search witnesses per target. FR-54 requires native action and
+bulk witnesses per target and the shared conformance suite. FR-55 requires
+engine-local adoption designs and engine witnesses. Specifications and
+local-only tests establish none of those native support claims.
+
+## Native 128-bit values and UUIDs — owner direction, 2026-10-15
+
+Under FR-3/8/20/21/28/39/41, UMF must expose first-class exact 128-bit values
+and Universally Unique Identifiers (UUIDs), independently of physical storage.
+Consumers must retain all bits, distinguish UUID identity from integer arithmetic,
+and use exact equality and keys. Signed/unsigned 128-bit integers reuse integer
+width facets. Adapters must support useful lossless representations including
+native UUID, sixteen bytes, canonical string and paired 64-bit integers where
+supported. Carrier choice must preserve logical identity and make enforcement,
+comparison, ordering and interoperability differences explicit. Paired integers
+may be optimal for a particular workload; no universal layout or performance
+claim follows. Native refinements and original representations remain recoverable.
+[FEAT-005 IDEAL-09](features/FEAT-005-core-ideals.md),
+[SD-005](../02-design/solution-designs/SD-005-128-bit-uuid.md) and
+[CONTRACT-076](../02-design/contracts/CONTRACT-076-128-bit-uuid.md) define the design.
+
+## Owner integration amendment — semantic references, 2026-10-17
+
+The owner selects restoring the accepted semantic-type pointing feature on a new
+core version during consolidation. Core0.9.0 remains the UUID/128-bit profile.
+Core0.10.0 adds explicit publisher/version/term references over that existing
+model, without changing native or unknown meaning. FEAT-005 SEM-01 through SEM-06,
+US-090 and CONTRACT-078 own the bounded restoration. Catalog discovery, implicit
+validation and native projection/admission remain separate.
+
+## Generated ontology access — owner direction, 2026-10-18
+
+### Subsystem: Physical Bindings and Authored Generation — typed data access SDK
+
+- **FR-56 — Generated ontology access.** Developers must be able to generate
+  typed access code directly from schemas using the latest UMF, with useful
+  defaults and no additional access-view or compatibility selection. Alongside
+  table access, ontology access must provide typed entities, keys, links, bounded
+  reads and declared actions. Python 3.11+ clients use only the standard library;
+  TypeScript uses the same machine-readable API description. Clients work across
+  host/worker placement through a shared transport contract. Exact values and
+  absence/null distinctions are preserved; unsupported meanings are diagnosed.
+  Output supports checked-in use, drift checking and compatibility comparison.
+  UMF supplies generation, a test fake and shared binding assertions; consumers
+  own production transport, execution, authorization, storage, audit and plugins.
+
+[FEAT-033](features/FEAT-033-generated-ontology-access.md),
+[US-091](user-stories/US-091-ontology-access-description.md) and
+[US-092](user-stories/US-092-portable-ontology-client.md) define the capability.
+The current UMF model remains the target as UMF evolves. This owner direction
+supersedes the original Praxis request's old-version scope. FR-52–FR-55 retain
+their existing table/native SDK requirements.
+
+## One generated access API — owner clarification, 2026-10-18
+
+Tables and ontologies must expose the same generated Python API for typed reads,
+relationship traversal and actions. Developers compose model expressions directly;
+query-wrapper functions, decorators, separate parameter declarations and query
+catalog generation must not be prerequisites for ordinary reads. The host binding
+owns storage-specific compilation/execution and may prepare or cache requests.
+The generated client remains stdlib-only and sends typed request data.
+
+This clarification governs FR-52–FR-56 and supersedes their earlier mandatory
+Pydantic/client-runtime and build-only catalog requirements where they constrain
+the public API. Existing backend implementations may reuse those mechanisms
+internally. Exact values, bounded results, schema-derived typing, bound SQL
+parameters, authorization and explicit unsupported-capability failures remain.
+ADR-004 and FEAT-033 record the common API direction. FR-56 now covers generated
+table and ontology access together; changing storage changes the binding, not
+application query or action code.
+
+
+### FR-56 adoption requirements — 2026-10-20
+
+Generated ontology clients must diagnose unsupported legacy action declarations,
+preserve optional action-input omission through optional-field creation, expose
+stable precondition identities, and provide bounded same-action batches and
+advisory validation. A successful graph receipt acknowledges committed execution;
+pending, lost or malformed write outcomes must preserve uncertainty without
+retry. Consumers may build generated code into their package digest without
+checking it into source control. The shared wire contract and effective limits
+must be inspectable by transport implementers. Platform availability and byte
+reproducibility require separately identified installation/parity evidence.

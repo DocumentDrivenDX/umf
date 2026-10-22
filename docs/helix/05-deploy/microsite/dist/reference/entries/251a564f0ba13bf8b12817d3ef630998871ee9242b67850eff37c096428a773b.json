@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 4966,
+        "line": 31,
+        "path": "src/generated/core-model.ts",
+        "sha256": "180733ad73a139e0eeff9a2357e3ec9d36194c863284a87df7a716d590c92b6a"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "ExtensionPackage",
+    "runtime": "type-only",
+    "signatureText": [
+      "export type ExtensionPackage = {\"id\":string;\"version\":string;\"coreVersion\":\"0.10.0\";\"description\":string;\"schema\":{[key:string]:unknown;} | boolean;\"semantics\":string;\"scopes\":(\"document\" | \"module\" | \"element\")[];\"capabilities\":{\"validation\":\"structural\" | \"semantic\";\"directions\":(\"import\" | \"export\")[];\"evidence\":(string)[];\"native\"?:{\"system\":string;\"version\":string;\"subset\":string;[key:string]:unknown;};[key:string]:unknown;};[key:string]:unknown;};"
+    ]
+  },
+  "id": "[\"api\",\".\",\"ExtensionPackage\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 4966,
+      "line": 31,
+      "path": "src/generated/core-model.ts",
+      "sha256": "180733ad73a139e0eeff9a2357e3ec9d36194c863284a87df7a716d590c92b6a"
+    }
+  ],
+  "summary": "Type declaration · src/generated/core-model.ts",
+  "title": "ExtensionPackage"
+}

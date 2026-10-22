@@ -1,0 +1,35 @@
+/** Original compiler inspection over the graph cohort's reversible UMF source.
+ * No admitted graph binding, native execution or original endpoint projection. */
+import {createCatalogInputPreparation} from '/Users/erik/Projects/truss/packages/umf-bun/src/catalog-input';
+const foundationPath='docs/helix/04-build/evidence/security/truss-graph-native-stage.json';
+const compilerPath='docs/helix/04-build/evidence/security/weft-handoff.json';
+const foundation=await Bun.file(foundationPath).json(),compiler=await Bun.file(compilerPath).json();
+const sha=(bytes:Uint8Array|string)=>new Bun.CryptoHasher('sha256').update(bytes).digest('hex');
+const binary='/private/tmp/umf-security-weft-bridge-target/debug/examples/security_mapping_handoff';
+const paths=[foundationPath,compilerPath,'tools/security/truss-graph-compiler-input.ts',binary,'/Users/erik/Projects/weft/spec/upstream/umf-security-ontology-0.1.0-selected.schema.json','/Users/erik/Projects/weft/crates/weft-core/src/security_source.rs','/Users/erik/Projects/weft/crates/weft-core/src/security_ontology.rs'];
+const pins:Record<string,string>={...foundation.sourceDigests};
+for(const [path,digest] of Object.entries(pins))if(sha(new Uint8Array(await Bun.file(path).arrayBuffer()))!==digest)throw Error('Stale graph foundation');
+for(const path of paths)pins[path]=sha(new Uint8Array(await Bun.file(path).arrayBuffer()));
+if(pins[binary]!==compiler.binarySha256)throw Error('Original compiler binary changed');
+const preparation=await createCatalogInputPreparation('/private/tmp/truss-umf-runtime-LmpSsH','/Users/erik/.codex/worktrees/1598/umf/package.json');
+const base=(await Bun.file('/Users/erik/Projects/truss/docs/helix/02-design/contracts/bindings/acceptance-input-capacity-v0.1.fixture.json').json()).input;
+const model=foundation.originalModel,originalBytes=new TextEncoder().encode(JSON.stringify(model));
+base.binding={state:'absent'};base.transforms=[];base.documents=[{documentId:model.id,documentRevision:'candidate-1',artifact:{identity:'original-security-graph',bytesBase64:Buffer.from(originalBytes).toString('base64'),sha256:sha(originalBytes)},umfProfile:preparation.umfProfile,ingress:{kind:'native'}}];
+const interpretation=preparation.prepare(new TextEncoder().encode(JSON.stringify(base))).documents[0]!.interpretation;
+if(interpretation.transition.residuals.length||JSON.stringify(interpretation.transition.source)!==JSON.stringify(model))throw Error('Graph source transition differs');
+const document=interpretation.target,ref=(elementId:string)=>({documentId:model.id,moduleId:'m',elementId});
+const record=(elementId:string)=>{const e=document.modules[0]!.elements.find((e:any)=>e.id===elementId)!;return {type:ref(elementId),keyId:'code-key',fields:(e as any).members.map((m:any)=>({ref:ref(m.element),protection:'unprotected'}))};};
+const ontology={version:'0.1.0',documentId:model.id,revision:'ontology-1',documents:[{documentId:model.id,revision:'candidate-1'}],subject:ref('Employee'),entities:[record('Employee'),record('Project')],associations:[{...record('Assignment'),endpoints:[]}],context:[],actions:['read']};
+const policy={vocabulary:'umf.security',version:'0.1.0',id:'active-assignment-inspection',revision:'1',ontology:{documentId:model.id,revision:'ontology-1'},rules:[{id:'active',effect:'permit',actions:['read'],target:[ref('Project')],condition:{op:'exists',association:ref('Assignment'),as:'a',where:{op:'eq',left:{kind:'variable',name:'a',field:ref('Assignment-active')},right:{kind:'constant',field:ref('Assignment-active'),value:{boolean:true}}}},disclosure:[]}]};
+const request=structuredClone(compiler.artifacts[0].request),documentJson=JSON.stringify(document);
+request.modules=[{documentJson,pin:{documentId:model.id,revision:'candidate-1',umfVersion:document.umf,sha256:sha(documentJson)},selectedModuleIds:['m']}];
+request.policyJson=JSON.stringify(policy);request.ontologyJson=JSON.stringify(ontology);
+const profile=JSON.parse(request.queryProfileJson);profile.modelPins=request.modules.map((m:any)=>m.pin);profile.policySha256=sha(request.policyJson);profile.ontologySha256=sha(request.ontologyJson);profile.targets=[ref('Project')];request.queryProfileJson=JSON.stringify(profile);
+request.sql='SELECT p."Project-code" FROM Project p';
+const result=Bun.spawn([binary],{stdin:new TextEncoder().encode(JSON.stringify(request)),stdout:'pipe',stderr:'pipe'});
+const [stdout,stderr,exitCode]=await Promise.all([new Response(result.stdout).text(),new Response(result.stderr).text(),result.exited]);
+const diagnostic=JSON.parse(stderr);
+if(exitCode===0||stdout||diagnostic.code!=='WFT-SECURITY-SOURCE'||diagnostic.phase!=='model')throw Error('Unexpected graph compiler admission outcome');
+for(const [path,digest] of Object.entries(pins))if(sha(new Uint8Array(await Bun.file(path).arrayBuffer()))!==digest)throw Error('Compiler source changed');
+await Bun.write('docs/helix/04-build/evidence/security/truss-graph-compiler-input.json',JSON.stringify({status:'qualified-original-compiler-refusal',nativeImplementationQualified:false,sourceDigests:pins,request,diagnostic,exitCode,transition:interpretation.transition,scope:'Fresh original compiler source-admission refusal for an endpoint-free association over the exact reversibly migrated graph cohort. Ontology 0.1 requires at least one member-field endpoint; this graph Record has no member fields representing its core Relationship endpoints. No invented correspondence is substituted. No correlated endpoints, admitted graph binding, native lowered execution, authenticated subject or backend acceptance.'},null,2)+'\n');
+console.log(JSON.stringify({status:'qualified-original-compiler-refusal'}));

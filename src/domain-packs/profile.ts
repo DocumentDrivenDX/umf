@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
+import {inspectArtifactReferences} from './artifacts';
+import {inspectDomainPackLoader} from './loader';
 import {generateDomainPackSchema} from './schema';
 import {createValidator} from '../validation/schema';
 import {copyJson} from '../model/json';
@@ -8,6 +11,7 @@ function inspectDomainPackInternal(input:unknown):{valid:boolean;complete:boolea
  let pack:any;try{pack=copyJson(input);}catch(error){return {valid:false,complete:false,diagnostics:[String(error)]};}
  const diagnostics:string[]=[];
  if(!validate(copyJson(pack)))return {valid:false,complete:false,diagnostics:['Invalid canonical domain-pack metadata']};
+ diagnostics.push(...inspectArtifactReferences(pack));
  const schemas=pack.schemas??[],ids=schemas.map((s:any)=>s.id),sources=pack.sources??{};
  if(new Set(ids).size!==ids.length)diagnostics.push('Duplicate schema identity');
  for(const b of pack.source_bindings??[])if(!ids.includes(b.schema_id)||!Object.hasOwn(sources,b.source_id))diagnostics.push('Unresolved source binding');
@@ -17,6 +21,8 @@ function inspectDomainPackInternal(input:unknown):{valid:boolean;complete:boolea
   if(new Set(identities).size!==identities.length||new Set(components.map((c:any)=>c.id)).size!==components.length)diagnostics.push('Duplicate component identity');
   if(components.some((c:any)=>c.id===pack.id))diagnostics.push('Self composition is not supported');
  }
+ if(Object.hasOwn(pack,'loader'))diagnostics.push(...inspectDomainPackLoader(pack.loader).diagnostics);
+ if(pack.preservation?.derivations?.some((d:any)=>!ids.includes(d.schema_id)))diagnostics.push('Unresolved preservation derivation schema');
  const profile=pack.execution_profile;
  if(Object.hasOwn(pack,'execution_profile')){
   if(!profile||typeof profile!=='object'||Array.isArray(profile))return {valid:false,complete:false,diagnostics:['Malformed execution profile']};

@@ -1,0 +1,50 @@
+{
+  "status": "information-gap-reproduced",
+  "baseline": "64a6b519",
+  "rows": [
+    {
+      "declaredReverseAction": "read",
+      "wireValid": true,
+      "domainsResolved": true,
+      "interpreterRefuses": true,
+      "authority": false,
+      "meaning": "Wire/domain checks have no action-purpose designation and do not establish distinctness or a permission."
+    },
+    {
+      "declaredReverseAction": "field-access",
+      "wireValid": true,
+      "domainsResolved": true,
+      "interpreterRefuses": true,
+      "authority": false,
+      "meaning": "Wire/domain checks have no action-purpose designation and do not establish distinctness or a permission."
+    },
+    {
+      "declaredReverseAction": "query-original",
+      "wireValid": true,
+      "domainsResolved": true,
+      "interpreterRefuses": true,
+      "authority": false,
+      "meaning": "Wire/domain checks have no action-purpose designation and do not establish distinctness or a permission."
+    },
+    {
+      "declaredReverseAction": "reverse-opaque",
+      "wireValid": true,
+      "domainsResolved": true,
+      "interpreterRefuses": true,
+      "authority": false,
+      "meaning": "Wire/domain checks have no action-purpose designation and do not establish distinctness or a permission."
+    }
+  ],
+  "sourceDigests": {
+    "tools/security/protection-action-purpose-spike.ts": "26d64689fa2856fd17d0d73f17777517f4b1dca091d0f13757daa53df11d9a6f",
+    "tests/security/protection/domain-fixture.ts": "3fa31f3894c155dcb53816ba89d54351e7c6c758520bc9c7fadedf2288fca18e",
+    "src/extensions/security/protection/catalog.ts": "92804f3d6a91b91dc95b6e1b42e5d7de5f9850cc19449d4c7700d62595c829d3",
+    "src/extensions/security/protection/domains.ts": "b8dc68f55221aa7e666aae0a9e9b26f874e9ba27fccbdcc8139084f4fbc7a7d9",
+    "src/extensions/security/protection/references.ts": "91b2997951f493e17097fb4cda982d92505ceae3d2902ce974455bec25f3cdd9",
+    "src/extensions/security/policy-representation-v2.ts": "7c29c7c21ab95e3f288f26330b4f7e665216712db17cf949de3c41ecfe17a3e9",
+    "docs/helix/02-design/contracts/CONTRACT-062-security-semantics.md": "737a5dbbf13aed686b1f6eddf04f09c2ff576b0ba3a5d23d17ae029d1b944d56",
+    "docs/helix/03-test/security/cases.json": "55c8f095287955cf1d04cfc04462479f035b0764a6580bcc3e0c7083300e58cf"
+  },
+  "scope": "S21/S22 design prerequisite: no action purposes are encoded by current ontology.actions strings. Current interpreter remains closed. Neither a production authorization bypass nor a new acceptance promotion.",
+  "acceptanceCasesPromoted": []
+}

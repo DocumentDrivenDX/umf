@@ -1,5 +1,79 @@
 # Product direction supplied by the founder
 
+## Owner direction: reusable domain-pack loaders (2026-10-09)
+
+Standardize a loader mechanism that can ship with a domain pack. Use the same
+loader to build public dataset releases and let end users extend or refresh
+their own datasets through cron or another scheduler. This is owner direction
+for subsequent framing and design; no loader interface or runtime is delivered
+by this note.
+
+The source discussions are the Codex chats
+[Find appellate opinion sources](codex://threads/01a122db-05c6-7e43-9404-71089e027eae)
+and [Research public-data S&P 500 pack](codex://threads/01a122e0-a9aa-7a91-bae1-1655f10de1b4).
+The appellate use case collects newly posted opinions and designated orders
+from selected courts, retains PDFs and counsel provenance, and exposes collection
+and processing failures. Screening, review emails, duplicate notification
+suppression and optional PACER counsel lookup are downstream workflow needs.
+Supreme Court docket monitoring remains separately undefined. The company
+research use case collects selected SEC filings and financial observations
+against a dated company universe, then performs evidence-linked analysis and
+digest delivery. Source availability, rights and source-specific access policies
+need their own qualification; the chats do not establish a released loader.
+
+### Proposed shared boundary
+
+A pack should distribute or reference an independently versioned loader
+companion with its supported source profile, configuration schema, invocation
+instructions and runtime dependencies. Preserve FEAT-009 and FR-45's explicit
+execution boundary: inspecting/importing pack metadata never executes code or
+fetches sources. A consumer explicitly selects and invokes a trusted loader.
+UMF owns portable declarations and schema tooling; source acquisition and target
+loading remain consumer runtime responsibilities. TableSpec owns its tabular
+loading and data tests. The executable packaging and shared runner owner require
+design; shipping a companion does not move network execution into the browser
+library.
+
+Recommended design scope:
+
+- One finite invocation suitable for local use, cron or managed jobs, with
+  explicit source scope, time window, output location and external state location.
+  Provide initial backfill, incremental refresh and offline replay of retained
+  inputs through the same source profile.
+- Separate acquisition of original bytes, deterministic projection into pack
+  schemas and publication to a selected target. Retain originals, checksums,
+  source/retrieval dates, rights and transformation versions. Emit datasets and
+  manifests usable independently of a particular storage backend.
+- Stable source identities and explicit document revisions. Retries and repeated
+  runs must avoid duplicate records; amendments, corrected postings and changed
+  source bytes must remain attributable. Define checkpoint advancement and
+  recovery after partial failure before claiming reliable incremental delivery.
+- Machine-readable run receipts and scheduler-visible exit status, including
+  attempted coverage, completed coverage, failures, retries and unresolved gaps.
+  A successful empty poll must remain distinguishable from failed collection.
+- Configurable source-policy limits and bounded retries, with coordination across
+  workers where required. Credentials are supplied by the invoking environment;
+  source profiles declare requirements without distributing secrets.
+- Separate ingestion state from extraction/model state and notification state.
+  New prompt/model versions can reprocess retained evidence without downloading
+  it again; notification receipts support downstream duplicate suppression.
+  Email, attorney screening, opportunity scoring and optional paid enrichment
+  remain independently invoked workflow stages.
+
+Qualification should demonstrate backfill followed by refresh, unchanged rerun,
+amendment, interrupted-run recovery, failed-source coverage and deterministic
+offline replay for both appellate and company-filing profiles. Verify exact
+original-byte retention and lineage into projected rows. Each support claim must
+name loader/runtime/source-profile versions, supported subset and evidence.
+
+Next framing targets are FR-45, FEAT-009 and US-060, followed by a versioned
+loader companion contract alongside CONTRACT-052/053 and consumer designs.
+Unknowns include executable distribution format, runner ownership, checkpoint
+store and concurrency protocol, publication atomicity, first court/source scope,
+company universe and rights-cleared release membership. Existing domain-pack
+1.0.0 metadata does not acquire executable-loader semantics from this direction;
+extension/version compatibility must be decided explicitly.
+
 Source: the project owner's UMF vision supplied on 2026-09-20. This note
 preserves framing inputs that sit below the concise [product vision](product-vision.md).
 It is source material for subsequent artifacts, not an approved requirements
@@ -432,3 +506,85 @@ URLs must resolve to pack-owned entries without losing selected definitions.
 Show only declared UMF meaning; inheritance, equivalence and native ontology
 reasoning are not inferred. Table/record links use CONTRACT-053's explicit
 record-to-table identity convention within the same pack/version.
+
+
+## Praxis request: typed SDK joins and aggregates (2026-10-15)
+
+Source: owner-supplied Praxis feature request in this chat. Capture status:
+accepted capability; the first implementation has [scoped execution evidence](../04-build/evidence/typed-reporting/README.md). Praxis hosts first-party apps in a Databricks App,
+with each app owning tables declared in UMF in its own PostgreSQL 18 schema.
+Prebill needs report reads and totals; named statements are the current stopgap.
+The SDK was located in checkout `39bf/umf`, subsequently archived as source snapshot `8c9d0fb6`; its implementation foundation is restored here.
+
+### Required outcome
+
+- Typed relationship walks, such as `Order.objects.join(Order.c.customer)`,
+  with inner and left joins and typed `into(Projection)` results spanning records.
+  Support joined-column filters, ordering and keyset paging, retaining the
+  existing page-size cap (numeric cap requires the governing SDK artifact).
+  Declare a maximum join depth and enforce it during catalog build.
+- Follow only UMF-declared relationships within the app's own schema. Declared
+  relationships alone do not prove schema confinement: validate every resolved
+  endpoint and physical binding against the app schema during catalog build.
+- Typed count, sum, avg, min and max, grouping on one or more declared columns,
+  preserving exact Decimal results. Having-style aggregate filters are requested
+  if inexpensive; supported operators and cost remain a design decision.
+- Permit declared, reviewed SQL for shapes beyond the DSL: fixed at build time,
+  compiled through Weft into the checked-in catalog, bound parameters only,
+  read-only transaction, per-call timeout and row cap. Unsupported target shapes
+  must refuse during build, with no runtime fallback. Read-only SQL admission
+  must address callable side effects; read-only transaction mode alone does
+  not establish that arbitrary SQL is safe.
+- Every read uses the caller's own connection from the per-user pool and the
+  caller's role, including all joined scans and aggregate inputs. Preserve
+  Praxis-generated row-level security (RLS) policies from UMF row scope; require
+  no principal switching, privileged execution or bypass. Acceptance must prove
+  role isolation on all participating tables, including left joins and totals.
+- Qualify PostgreSQL 18 and Lakebase separately; older PostgreSQL versions do
+  not satisfy this request. Pin the Lakebase service/version profile during
+  qualification. Require no functions, views or triggers in the app schema.
+- Extend the reported 12-error typing prototype for ty, pyright and mypy:
+  wrong joined column, incompatible projection, left-join nullable value misuse,
+  invalid aggregate input and invalid grouping. Include positive cases, exact
+  Decimal decoding, null/empty-set results and full generated-package checks.
+- Per-call timeout and typed `TimedOut` cover joins, aggregates and reviewed SQL.
+  Row caps bound returned rows, while timeout also bounds aggregate execution.
+
+### Proposed choices and unresolved delivery dependencies
+
+Owner-selected bound (2026-10-15): at most **three relationship edges per query** (also
+bounding each root-to-record path to three), rejected during catalog build.
+Include row-multiplying joins in projection/paging tests; stable keyset ordering
+must identify joined result rows, rather than assume the root key is unique.
+The owner accepted this limit and reviewed-SQL-first sequencing on 2026-10-15.
+[FR-53 reporting amendment](../01-frame/prd.md#praxis-reporting-amendment--2026-10-15) requires them; qualification remains scoped to the linked evidence.
+
+Prefer reviewed-SQL aggregate support first to unblock Prebill's existing named
+statement shapes; native aggregate DSL follows. Typed relationship joins remain
+part of the requested first target milestone. The escape hatch still requires
+compiler admission, typed parameter/result declarations and target qualification.
+
+The latest requirements were located in checkout `20bc/umf`: WR-B7 owns schema-neutral search-path binding and WR-A14 owns relationship joins. Its US-081-AC9 requires the full generated commerce package, including actions, to pass ty, pyright and mypy on Python 3.11. Joins added to that package are covered; negative misuse tests remain a separate obligation.
+
+The 2026-10-15 implementation milestone delivers the first scoped PostgreSQL 18 read path: generated to-one joins, reviewed aggregate SQL, caller-role RLS, nullable joined keyset paging and typed timeouts. The full generated package and 19 misuse cases pass all three checkers on Python 3.11. Lakebase 18 compilation is checked, but no Lakebase service endpoint was available for native execution. No service delivery date or broader native compatibility is asserted. See the execution evidence for remaining subsets and exact versions.
+
+## Owner direction: generated typed persistence substrate
+
+The owner requested design-time UMF-to-Python generation for typed persistence on
+PostgreSQL and Spark SQL / Unity Catalog, owned in the UMF repository, with Truss
+and Ashlar as adopters. After an independent review the owner directed a broader
+schema-first data access SDK:
+
+- typed models;
+- a precompiled, expression-first query and search DSL with no string column
+  references;
+- typed action clients;
+- execution on raw tables through the host platform's native SQL interface
+  (Postgres, Lakebase, Unity Catalog/Spark SQL) and on Truss and Ashlar through
+  their own protocols.
+
+This direction authorizes specification work, not implementation, migrations or
+production adoption.
+
+[FEAT-028](../01-frame/features/FEAT-028-typed-model-generation.md) to FEAT-031
+frame the proposal. It does not displace the TableSpec-first integration priority.

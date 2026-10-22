@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"classifyAvroCardinality\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"AvroCardinalityRequest\"]"
+      ],
+      "name": "options",
+      "optional": false,
+      "type": "AvroCardinalityRequest"
+    }
+  ],
+  "purpose": "Schema classification creates logical identities; native metadata and codec semantics remain intact.",
+  "related": [],
+  "returns": "AvroCardinalityClassification",
+  "task": "Other APIs",
+  "type": "(input: Document, options: AvroCardinalityRequest) => AvroCardinalityClassification"
+}

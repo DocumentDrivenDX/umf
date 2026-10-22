@@ -1,0 +1,125 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"ProtectionQueryPropertyInspection\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "status",
+      "optional": false,
+      "type": "\"prohibited\" | \"refused\" | \"compatible-properties\" | \"requires-original-action\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Json\"]"
+      ],
+      "name": "use",
+      "optional": false,
+      "type": "Json"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Json\"]"
+      ],
+      "name": "authoredProperties",
+      "optional": false,
+      "type": "readonly Json[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Json\"]"
+      ],
+      "name": "impliedProperties",
+      "optional": false,
+      "type": "readonly Json[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Json\"]"
+      ],
+      "name": "effectiveProperties",
+      "optional": false,
+      "type": "readonly Json[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Json\"]"
+      ],
+      "name": "requiredProperties",
+      "optional": false,
+      "type": "readonly Json[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Json\"]"
+      ],
+      "name": "missingProperties",
+      "optional": false,
+      "type": "readonly Json[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Json\"]"
+      ],
+      "name": "policy",
+      "optional": false,
+      "type": "Json"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Diagnostic\"]"
+      ],
+      "name": "diagnostics",
+      "optional": false,
+      "type": "readonly Diagnostic[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "complete",
+      "optional": false,
+      "type": "false"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Json\"]"
+      ],
+      "name": "catalog",
+      "optional": false,
+      "type": "Json"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Json\"]"
+      ],
+      "name": "closure",
+      "optional": false,
+      "type": "Json"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "authority",
+      "optional": false,
+      "type": "false"
+    }
+  ],
+  "parameters": [],
+  "purpose": "ProtectionQueryPropertyInspection is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "ProtectionQueryPropertyInspection"
+}

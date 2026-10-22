@@ -1,6 +1,6 @@
 {
   "id": "medical",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Official HL7 FHIR R4 example corpus and loss-preserving tabular projections. External rows only; no synthetic fallback or clinical simulation claim.",
   "domain_types": {
     "fhir_resource_key": {
@@ -1135,7 +1135,7 @@
   },
   "family": {
     "id": "medical",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "label": "Clinical"
   },
   "composition": {
@@ -1143,38 +1143,38 @@
     "components": [
       {
         "id": "medical-carrier",
-        "version": "1.1.0",
+        "version": "1.2.0",
         "label": "Carrier: eligibility, claims and payments",
         "checksum": {
           "algorithm": "sha256",
-          "value": "3b59727ac3f98690084c703c6f0c2c444e1e00ef0b562bb97131edaec880568c"
+          "value": "a0983d727a976211448ef1e7790ed48bce451f548786ab10778ba010e6b85303"
         }
       },
       {
         "id": "medical-epidemiology",
-        "version": "1.1.0",
+        "version": "1.2.0",
         "label": "Epidemiology",
         "checksum": {
           "algorithm": "sha256",
-          "value": "fa073eeaa754042b9015913a1eba7546bf18d8623279135856856424d4fdfdd5"
+          "value": "4112439485f1659216b876f12abc14de5ca527e296eb9180d9445321cca12e1d"
         }
       },
       {
         "id": "medical-imaging",
-        "version": "1.1.0",
+        "version": "1.2.0",
         "label": "Imaging: DICOM and PACS metadata",
         "checksum": {
           "algorithm": "sha256",
-          "value": "6fac6b9ced73a3aa8022508353c30727ea80e3ad51050a1db9a0f15da750c283"
+          "value": "28c236c049a66317dfdde5619452e1c088d2801cd46681b5b6f62de0a68c86d4"
         }
       },
       {
         "id": "medical-terminology",
-        "version": "1.1.0",
+        "version": "1.2.0",
         "label": "Terminology",
         "checksum": {
           "algorithm": "sha256",
-          "value": "d67785efcacaea51de46d2e12737d9a69d84428d9380d34dda819a5c54bdd926"
+          "value": "308aedfb3c8346c113efde9b17380dd2857c51fd956b2a3e6889900a981ab642"
         }
       }
     ]

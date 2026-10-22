@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Explicit consumer registration; document content never loads executable code."""
 
 from collections.abc import Callable

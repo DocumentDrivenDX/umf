@@ -1,0 +1,884 @@
+bun test v1.4.2 (43848b5a7)
+
+tests/compilation/access-diff.test.ts:
+(pass) manifest diff classifies rename/retype as breaking and optional Create additions as source-compatible [396.03ms]
+(pass) alternate Key compatibility compares its actual fields [109.50ms]
+
+tests/compilation/access-naming.test.ts:
+(pass) unsafe_names_and_limits_refuse [459.28ms]
+(pass) metadata cannot choose a profile or template and must remain inert [27.57ms]
+(pass) hostile authored identities emit only inert Python literals [57.71ms]
+(pass) selected element and action count bounds refuse before resolving [34.19ms]
+(pass) malformed and ambiguous profile pins refuse as PROFILE [0.91ms]
+(pass) joined projection descriptor names cannot shadow another projection model [26.11ms]
+(pass) action endpoint keyword and case-fold collisions refuse before emission [113.93ms]
+
+tests/compilation/access-context.test.ts:
+(pass) contextual coverage and conflict diagnostics retain pointers and sources [39.70ms]
+(pass) contextual validation checks every reachable item Field in declared order [24.18ms]
+(pass) temporal Key components refuse at original core admission before any access profile [0.62ms]
+(pass) selected bound Record requires native column facts for every member [101.61ms]
+
+tests/compilation/access-writer.test.ts:
+(pass) writer_refuses_changed_output: edited, added and removed inventory [54.04ms]
+(pass) writer refuses symlinks without reading outside output [9.12ms]
+(pass) writer fault injection preserves pre-swap tree and reports post-swap state [13.52ms]
+(pass) stage-two files survive regeneration and are excluded exactly [28.14ms]
+(pass) ci_drift_check names each differing path [7.91ms]
+(pass) unsafe candidate paths and digests refuse before writing [6.90ms]
+(pass) check reports missing and extra bytes without modifying output [9.29ms]
+(pass) rename boundary failures restore the original package [27.72ms]
+(pass) reserved symlinks and destination symlinks refuse [6.35ms]
+(pass) empty existing output refuses after complete inventory removal [4.00ms]
+(pass) explicit CLI uses real generator, checks byte drift and refuses without writes [22541.80ms]
+(pass) stage-two privilege bytes survive regeneration and are excluded from drift [34.59ms]
+
+tests/compilation/access-joins.test.ts:
+(pass) declared selected to-one target emits typed Join and nullable joined projection [61.10ms]
+(pass) projection outside declared reachability refuses at generation [45.32ms]
+
+tests/compilation/access-generator.test.ts:
+(pass) generation_is_deterministic; exact source and profile identity affect digest [207.45ms]
+(pass) access_views_validated: missing view, coverage gap and conflict retain pointers [53.96ms]
+(pass) census_unknown_and_modes: unknown selected meaning refuses in both modes [62.28ms]
+(pass) unselected unknown content is retained without claiming enforcement [31.10ms]
+(pass) unknown document extension and malformed profile digest refuse [29.13ms]
+(pass) multiple projections generate typed overloads and honor explicit names [29.20ms]
+(pass) relationship closure emits dependency Key only and retains relationship identity [36.69ms]
+(pass) selected action emits typed references, inputs, outputs and declared failures [59.33ms]
+(pass) generated DSL metadata keeps IDs, authored names and Python names separate [35.35ms]
+(pass) keyless Records refuse and multiple Keys retain explicit selected identity [59.69ms]
+(pass) refused missing view retains selected census and unknown fidelity is explicit [39.02ms]
+(pass) nested item Fields validate containers without becoming row attributes [53.83ms]
+(pass) generated column attributes document the exact source pointer [32.77ms]
+(pass) mutable Update declarations admit typed Params without admitting MISSING or immutable fields [31.96ms]
+(pass) entity action parameters reach an unselected Record Key without generating its row [69.08ms]
+(pass) per-source core resource limit returns a LIMIT report with no files [95.65ms]
+(pass) source maps have deterministic document/pointer order without changing Key order [57.30ms]
+(pass) generated codecs delegate to the runtime and update has explicit keywords [33.73ms]
+(pass) both initial modes refuse unsupported selected carriers without partial code [55.33ms]
+(pass) selectedKey is explicit, resolved and independent of declaration order [120.03ms]
+
+tests/compilation/access-matrix.test.ts:
+(pass) document allow matrix 0; bound=false; row=00; create=00 [8.10ms]
+(pass) document allow matrix 0; bound=false; row=00; create=01 [5.38ms]
+(pass) document allow matrix 0; bound=false; row=00; create=10 [4.87ms]
+(pass) document allow matrix 0; bound=false; row=00; create=11 [4.61ms]
+(pass) document allow matrix 0; bound=false; row=01; create=00 [4.79ms]
+(pass) document allow matrix 0; bound=false; row=01; create=01 [4.87ms]
+(pass) document allow matrix 0; bound=false; row=01; create=10 [4.77ms]
+(pass) document allow matrix 0; bound=false; row=01; create=11 [4.67ms]
+(pass) document allow matrix 0; bound=false; row=10; create=00 [4.61ms]
+(pass) document allow matrix 0; bound=false; row=10; create=01 [5.04ms]
+(pass) document allow matrix 0; bound=false; row=10; create=10 [4.68ms]
+(pass) document allow matrix 0; bound=false; row=10; create=11 [4.71ms]
+(pass) document allow matrix 0; bound=false; row=11; create=00 [4.95ms]
+(pass) document allow matrix 0; bound=false; row=11; create=01 [4.54ms]
+(pass) document allow matrix 0; bound=false; row=11; create=10 [4.17ms]
+(pass) document allow matrix 0; bound=false; row=11; create=11 [3.94ms]
+(pass) document allow matrix 0; bound=true; row=00; create=00 [31.85ms]
+(pass) document allow matrix 0; bound=true; row=00; create=01 [27.19ms]
+(pass) document allow matrix 0; bound=true; row=00; create=10 [27.82ms]
+(pass) document allow matrix 0; bound=true; row=00; create=11 [27.61ms]
+(pass) document allow matrix 0; bound=true; row=01; create=00 [32.87ms]
+(pass) document allow matrix 0; bound=true; row=01; create=01 [30.40ms]
+(pass) document allow matrix 0; bound=true; row=01; create=10 [30.47ms]
+(pass) document allow matrix 0; bound=true; row=01; create=11 [30.05ms]
+(pass) document allow matrix 0; bound=true; row=10; create=00 [29.84ms]
+(pass) document allow matrix 0; bound=true; row=10; create=01 [27.85ms]
+(pass) document allow matrix 0; bound=true; row=10; create=10 [29.68ms]
+(pass) document allow matrix 0; bound=true; row=10; create=11 [28.20ms]
+(pass) document allow matrix 0; bound=true; row=11; create=00 [26.90ms]
+(pass) document allow matrix 0; bound=true; row=11; create=01 [34.22ms]
+(pass) document allow matrix 0; bound=true; row=11; create=10 [31.05ms]
+(pass) document allow matrix 0; bound=true; row=11; create=11 [27.43ms]
+(pass) document allow matrix 1; bound=false; row=00; create=00 [7.98ms]
+(pass) document allow matrix 1; bound=false; row=00; create=01 [5.56ms]
+(pass) document allow matrix 1; bound=false; row=00; create=10 [5.72ms]
+(pass) document allow matrix 1; bound=false; row=00; create=11 [4.81ms]
+(pass) document allow matrix 1; bound=false; row=01; create=00 [5.01ms]
+(pass) document allow matrix 1; bound=false; row=01; create=01 [4.62ms]
+(pass) document allow matrix 1; bound=false; row=01; create=10 [4.48ms]
+(pass) document allow matrix 1; bound=false; row=01; create=11 [4.54ms]
+(pass) document allow matrix 1; bound=false; row=10; create=00 [4.91ms]
+(pass) document allow matrix 1; bound=false; row=10; create=01 [4.32ms]
+(pass) document allow matrix 1; bound=false; row=10; create=10 [4.43ms]
+(pass) document allow matrix 1; bound=false; row=10; create=11 [4.45ms]
+(pass) document allow matrix 1; bound=false; row=11; create=00 [4.42ms]
+(pass) document allow matrix 1; bound=false; row=11; create=01 [4.37ms]
+(pass) document allow matrix 1; bound=false; row=11; create=10 [4.43ms]
+(pass) document allow matrix 1; bound=false; row=11; create=11 [6.14ms]
+(pass) document allow matrix 1; bound=true; row=00; create=00 [31.55ms]
+(pass) document allow matrix 1; bound=true; row=00; create=01 [35.93ms]
+(pass) document allow matrix 1; bound=true; row=00; create=10 [32.03ms]
+(pass) document allow matrix 1; bound=true; row=00; create=11 [28.40ms]
+(pass) document allow matrix 1; bound=true; row=01; create=00 [29.94ms]
+(pass) document allow matrix 1; bound=true; row=01; create=01 [30.00ms]
+(pass) document allow matrix 1; bound=true; row=01; create=10 [29.27ms]
+(pass) document allow matrix 1; bound=true; row=01; create=11 [28.33ms]
+(pass) document allow matrix 1; bound=true; row=10; create=00 [28.60ms]
+(pass) document allow matrix 1; bound=true; row=10; create=01 [33.71ms]
+(pass) document allow matrix 1; bound=true; row=10; create=10 [31.23ms]
+(pass) document allow matrix 1; bound=true; row=10; create=11 [28.49ms]
+(pass) document allow matrix 1; bound=true; row=11; create=00 [28.44ms]
+(pass) document allow matrix 1; bound=true; row=11; create=01 [28.17ms]
+(pass) document allow matrix 1; bound=true; row=11; create=10 [27.39ms]
+(pass) document allow matrix 1; bound=true; row=11; create=11 [27.11ms]
+(pass) document allow matrix 2; bound=false; row=00; create=00 [5.88ms]
+(pass) document allow matrix 2; bound=false; row=00; create=01 [4.30ms]
+(pass) document allow matrix 2; bound=false; row=00; create=10 [4.23ms]
+(pass) document allow matrix 2; bound=false; row=00; create=11 [4.23ms]
+(pass) document allow matrix 2; bound=false; row=01; create=00 [4.05ms]
+(pass) document allow matrix 2; bound=false; row=01; create=01 [4.00ms]
+(pass) document allow matrix 2; bound=false; row=01; create=10 [3.78ms]
+(pass) document allow matrix 2; bound=false; row=01; create=11 [4.05ms]
+(pass) document allow matrix 2; bound=false; row=10; create=00 [7.70ms]
+(pass) document allow matrix 2; bound=false; row=10; create=01 [4.53ms]
+(pass) document allow matrix 2; bound=false; row=10; create=10 [4.22ms]
+(pass) document allow matrix 2; bound=false; row=10; create=11 [4.67ms]
+(pass) document allow matrix 2; bound=false; row=11; create=00 [4.22ms]
+(pass) document allow matrix 2; bound=false; row=11; create=01 [3.95ms]
+(pass) document allow matrix 2; bound=false; row=11; create=10 [4.25ms]
+(pass) document allow matrix 2; bound=false; row=11; create=11 [4.41ms]
+(pass) document allow matrix 2; bound=true; row=00; create=00 [30.68ms]
+(pass) document allow matrix 2; bound=true; row=00; create=01 [25.57ms]
+(pass) document allow matrix 2; bound=true; row=00; create=10 [25.48ms]
+(pass) document allow matrix 2; bound=true; row=00; create=11 [25.99ms]
+(pass) document allow matrix 2; bound=true; row=01; create=00 [27.74ms]
+(pass) document allow matrix 2; bound=true; row=01; create=01 [26.16ms]
+(pass) document allow matrix 2; bound=true; row=01; create=10 [30.83ms]
+(pass) document allow matrix 2; bound=true; row=01; create=11 [29.69ms]
+(pass) document allow matrix 2; bound=true; row=10; create=00 [27.30ms]
+(pass) document allow matrix 2; bound=true; row=10; create=01 [25.37ms]
+(pass) document allow matrix 2; bound=true; row=10; create=10 [25.55ms]
+(pass) document allow matrix 2; bound=true; row=10; create=11 [25.75ms]
+(pass) document allow matrix 2; bound=true; row=11; create=00 [26.20ms]
+(pass) document allow matrix 2; bound=true; row=11; create=01 [26.52ms]
+(pass) document allow matrix 2; bound=true; row=11; create=10 [31.70ms]
+(pass) document allow matrix 2; bound=true; row=11; create=11 [31.09ms]
+(pass) document allow matrix 3; bound=false; row=00; create=00 [6.35ms]
+(pass) document allow matrix 3; bound=false; row=00; create=01 [4.95ms]
+(pass) document allow matrix 3; bound=false; row=00; create=10 [5.26ms]
+(pass) document allow matrix 3; bound=false; row=00; create=11 [5.01ms]
+(pass) document allow matrix 3; bound=false; row=01; create=00 [4.92ms]
+(pass) document allow matrix 3; bound=false; row=01; create=01 [5.48ms]
+(pass) document allow matrix 3; bound=false; row=01; create=10 [5.83ms]
+(pass) document allow matrix 3; bound=false; row=01; create=11 [5.09ms]
+(pass) document allow matrix 3; bound=false; row=10; create=00 [4.83ms]
+(pass) document allow matrix 3; bound=false; row=10; create=01 [4.86ms]
+(pass) document allow matrix 3; bound=false; row=10; create=10 [4.59ms]
+(pass) document allow matrix 3; bound=false; row=10; create=11 [5.11ms]
+(pass) document allow matrix 3; bound=false; row=11; create=00 [5.50ms]
+(pass) document allow matrix 3; bound=false; row=11; create=01 [5.42ms]
+(pass) document allow matrix 3; bound=false; row=11; create=10 [4.67ms]
+(pass) document allow matrix 3; bound=false; row=11; create=11 [5.17ms]
+(pass) document allow matrix 3; bound=true; row=00; create=00 [29.14ms]
+(pass) document allow matrix 3; bound=true; row=00; create=01 [27.77ms]
+(pass) document allow matrix 3; bound=true; row=00; create=10 [26.45ms]
+(pass) document allow matrix 3; bound=true; row=00; create=11 [34.48ms]
+(pass) document allow matrix 3; bound=true; row=01; create=00 [27.24ms]
+(pass) document allow matrix 3; bound=true; row=01; create=01 [27.52ms]
+(pass) document allow matrix 3; bound=true; row=01; create=10 [27.79ms]
+(pass) document allow matrix 3; bound=true; row=01; create=11 [26.41ms]
+(pass) document allow matrix 3; bound=true; row=10; create=00 [25.88ms]
+(pass) document allow matrix 3; bound=true; row=10; create=01 [25.90ms]
+(pass) document allow matrix 3; bound=true; row=10; create=10 [26.32ms]
+(pass) document allow matrix 3; bound=true; row=10; create=11 [33.74ms]
+(pass) document allow matrix 3; bound=true; row=11; create=00 [29.08ms]
+(pass) document allow matrix 3; bound=true; row=11; create=01 [27.20ms]
+(pass) document allow matrix 3; bound=true; row=11; create=10 [28.18ms]
+(pass) document allow matrix 3; bound=true; row=11; create=11 [26.62ms]
+(pass) document allow matrix 4; bound=false; row=00; create=00 [5.83ms]
+(pass) document allow matrix 4; bound=false; row=00; create=01 [4.66ms]
+(pass) document allow matrix 4; bound=false; row=00; create=10 [5.22ms]
+(pass) document allow matrix 4; bound=false; row=00; create=11 [4.95ms]
+(pass) document allow matrix 4; bound=false; row=01; create=00 [4.46ms]
+(pass) document allow matrix 4; bound=false; row=01; create=01 [4.43ms]
+(pass) document allow matrix 4; bound=false; row=01; create=10 [4.76ms]
+(pass) document allow matrix 4; bound=false; row=01; create=11 [4.57ms]
+(pass) document allow matrix 4; bound=false; row=10; create=00 [4.73ms]
+(pass) document allow matrix 4; bound=false; row=10; create=01 [4.70ms]
+(pass) document allow matrix 4; bound=false; row=10; create=10 [4.65ms]
+(pass) document allow matrix 4; bound=false; row=10; create=11 [4.64ms]
+(pass) document allow matrix 4; bound=false; row=11; create=00 [4.57ms]
+(pass) document allow matrix 4; bound=false; row=11; create=01 [4.74ms]
+(pass) document allow matrix 4; bound=false; row=11; create=10 [4.88ms]
+(pass) document allow matrix 4; bound=false; row=11; create=11 [4.79ms]
+(pass) document allow matrix 4; bound=true; row=00; create=00 [39.75ms]
+(pass) document allow matrix 4; bound=true; row=00; create=01 [28.93ms]
+(pass) document allow matrix 4; bound=true; row=00; create=10 [28.78ms]
+(pass) document allow matrix 4; bound=true; row=00; create=11 [31.82ms]
+(pass) document allow matrix 4; bound=true; row=01; create=00 [30.22ms]
+(pass) document allow matrix 4; bound=true; row=01; create=01 [29.63ms]
+(pass) document allow matrix 4; bound=true; row=01; create=10 [29.28ms]
+(pass) document allow matrix 4; bound=true; row=01; create=11 [31.92ms]
+(pass) document allow matrix 4; bound=true; row=10; create=00 [37.48ms]
+(pass) document allow matrix 4; bound=true; row=10; create=01 [31.14ms]
+(pass) document allow matrix 4; bound=true; row=10; create=10 [30.79ms]
+(pass) document allow matrix 4; bound=true; row=10; create=11 [27.85ms]
+(pass) document allow matrix 4; bound=true; row=11; create=00 [28.37ms]
+(pass) document allow matrix 4; bound=true; row=11; create=01 [27.92ms]
+(pass) document allow matrix 4; bound=true; row=11; create=10 [28.53ms]
+(pass) document allow matrix 4; bound=true; row=11; create=11 [29.85ms]
+(pass) document allow matrix 5; bound=false; row=00; create=00 [6.55ms]
+(pass) document allow matrix 5; bound=false; row=00; create=01 [4.78ms]
+(pass) document allow matrix 5; bound=false; row=00; create=10 [11.45ms]
+(pass) document allow matrix 5; bound=false; row=00; create=11 [5.81ms]
+(pass) document allow matrix 5; bound=false; row=01; create=00 [5.04ms]
+(pass) document allow matrix 5; bound=false; row=01; create=01 [4.92ms]
+(pass) document allow matrix 5; bound=false; row=01; create=10 [4.48ms]
+(pass) document allow matrix 5; bound=false; row=01; create=11 [4.51ms]
+(pass) document allow matrix 5; bound=false; row=10; create=00 [5.07ms]
+(pass) document allow matrix 5; bound=false; row=10; create=01 [4.75ms]
+(pass) document allow matrix 5; bound=false; row=10; create=10 [4.73ms]
+(pass) document allow matrix 5; bound=false; row=10; create=11 [4.86ms]
+(pass) document allow matrix 5; bound=false; row=11; create=00 [4.84ms]
+(pass) document allow matrix 5; bound=false; row=11; create=01 [4.88ms]
+(pass) document allow matrix 5; bound=false; row=11; create=10 [4.82ms]
+(pass) document allow matrix 5; bound=false; row=11; create=11 [4.53ms]
+(pass) document allow matrix 5; bound=true; row=00; create=00 [30.66ms]
+(pass) document allow matrix 5; bound=true; row=00; create=01 [27.77ms]
+(pass) document allow matrix 5; bound=true; row=00; create=10 [29.73ms]
+(pass) document allow matrix 5; bound=true; row=00; create=11 [28.84ms]
+(pass) document allow matrix 5; bound=true; row=01; create=00 [28.25ms]
+(pass) document allow matrix 5; bound=true; row=01; create=01 [38.16ms]
+(pass) document allow matrix 5; bound=true; row=01; create=10 [30.28ms]
+(pass) document allow matrix 5; bound=true; row=01; create=11 [29.87ms]
+(pass) document allow matrix 5; bound=true; row=10; create=00 [29.89ms]
+(pass) document allow matrix 5; bound=true; row=10; create=01 [28.91ms]
+(pass) document allow matrix 5; bound=true; row=10; create=10 [25.93ms]
+(pass) document allow matrix 5; bound=true; row=10; create=11 [29.80ms]
+(pass) document allow matrix 5; bound=true; row=11; create=00 [28.14ms]
+(pass) document allow matrix 5; bound=true; row=11; create=01 [37.75ms]
+(pass) document allow matrix 5; bound=true; row=11; create=10 [30.19ms]
+(pass) document allow matrix 5; bound=true; row=11; create=11 [28.13ms]
+(pass) document allow matrix 6; bound=false; row=00; create=00 [4.68ms]
+(pass) document allow matrix 6; bound=false; row=00; create=01 [4.35ms]
+(pass) document allow matrix 6; bound=false; row=00; create=10 [5.24ms]
+(pass) document allow matrix 6; bound=false; row=00; create=11 [4.67ms]
+(pass) document allow matrix 6; bound=false; row=01; create=00 [4.04ms]
+(pass) document allow matrix 6; bound=false; row=01; create=01 [4.05ms]
+(pass) document allow matrix 6; bound=false; row=01; create=10 [3.94ms]
+(pass) document allow matrix 6; bound=false; row=01; create=11 [3.90ms]
+(pass) document allow matrix 6; bound=false; row=10; create=00 [4.91ms]
+(pass) document allow matrix 6; bound=false; row=10; create=01 [4.46ms]
+(pass) document allow matrix 6; bound=false; row=10; create=10 [4.39ms]
+(pass) document allow matrix 6; bound=false; row=10; create=11 [4.13ms]
+(pass) document allow matrix 6; bound=false; row=11; create=00 [4.09ms]
+(pass) document allow matrix 6; bound=false; row=11; create=01 [4.32ms]
+(pass) document allow matrix 6; bound=false; row=11; create=10 [4.42ms]
+(pass) document allow matrix 6; bound=false; row=11; create=11 [4.37ms]
+(pass) document allow matrix 6; bound=true; row=00; create=00 [28.79ms]
+(pass) document allow matrix 6; bound=true; row=00; create=01 [30.66ms]
+(pass) document allow matrix 6; bound=true; row=00; create=10 [33.89ms]
+(pass) document allow matrix 6; bound=true; row=00; create=11 [30.36ms]
+(pass) document allow matrix 6; bound=true; row=01; create=00 [27.11ms]
+(pass) document allow matrix 6; bound=true; row=01; create=01 [27.96ms]
+(pass) document allow matrix 6; bound=true; row=01; create=10 [28.82ms]
+(pass) document allow matrix 6; bound=true; row=01; create=11 [30.47ms]
+(pass) document allow matrix 6; bound=true; row=10; create=00 [28.72ms]
+(pass) document allow matrix 6; bound=true; row=10; create=01 [26.51ms]
+(pass) document allow matrix 6; bound=true; row=10; create=10 [36.68ms]
+(pass) document allow matrix 6; bound=true; row=10; create=11 [29.69ms]
+(pass) document allow matrix 6; bound=true; row=11; create=00 [26.69ms]
+(pass) document allow matrix 6; bound=true; row=11; create=01 [31.75ms]
+(pass) document allow matrix 6; bound=true; row=11; create=10 [28.06ms]
+(pass) document allow matrix 6; bound=true; row=11; create=11 [26.57ms]
+(pass) document allow matrix 7; bound=false; row=00; create=00 [4.32ms]
+(pass) document allow matrix 7; bound=false; row=00; create=01 [4.14ms]
+(pass) document allow matrix 7; bound=false; row=00; create=10 [4.59ms]
+(pass) document allow matrix 7; bound=false; row=00; create=11 [4.26ms]
+(pass) document allow matrix 7; bound=false; row=01; create=00 [4.32ms]
+(pass) document allow matrix 7; bound=false; row=01; create=01 [4.51ms]
+(pass) document allow matrix 7; bound=false; row=01; create=10 [4.42ms]
+(pass) document allow matrix 7; bound=false; row=01; create=11 [4.52ms]
+(pass) document allow matrix 7; bound=false; row=10; create=00 [5.21ms]
+(pass) document allow matrix 7; bound=false; row=10; create=01 [4.35ms]
+(pass) document allow matrix 7; bound=false; row=10; create=10 [4.26ms]
+(pass) document allow matrix 7; bound=false; row=10; create=11 [8.56ms]
+(pass) document allow matrix 7; bound=false; row=11; create=00 [5.98ms]
+(pass) document allow matrix 7; bound=false; row=11; create=01 [5.95ms]
+(pass) document allow matrix 7; bound=false; row=11; create=10 [6.23ms]
+(pass) document allow matrix 7; bound=false; row=11; create=11 [6.13ms]
+(pass) document allow matrix 7; bound=true; row=00; create=00 [33.23ms]
+(pass) document allow matrix 7; bound=true; row=00; create=01 [28.28ms]
+(pass) document allow matrix 7; bound=true; row=00; create=10 [27.59ms]
+(pass) document allow matrix 7; bound=true; row=00; create=11 [30.54ms]
+(pass) document allow matrix 7; bound=true; row=01; create=00 [29.23ms]
+(pass) document allow matrix 7; bound=true; row=01; create=01 [29.97ms]
+(pass) document allow matrix 7; bound=true; row=01; create=10 [30.43ms]
+(pass) document allow matrix 7; bound=true; row=01; create=11 [40.55ms]
+(pass) document allow matrix 7; bound=true; row=10; create=00 [27.86ms]
+(pass) document allow matrix 7; bound=true; row=10; create=01 [28.38ms]
+(pass) document allow matrix 7; bound=true; row=10; create=10 [26.93ms]
+(pass) document allow matrix 7; bound=true; row=10; create=11 [29.67ms]
+(pass) document allow matrix 7; bound=true; row=11; create=00 [28.29ms]
+(pass) document allow matrix 7; bound=true; row=11; create=01 [29.57ms]
+(pass) document allow matrix 7; bound=true; row=11; create=10 [27.87ms]
+(pass) document allow matrix 7; bound=true; row=11; create=11 [35.35ms]
+(pass) document allow matrix 8; bound=false; row=00; create=00 [5.92ms]
+(pass) document allow matrix 8; bound=false; row=00; create=01 [4.94ms]
+(pass) document allow matrix 8; bound=false; row=00; create=10 [5.46ms]
+(pass) document allow matrix 8; bound=false; row=00; create=11 [5.16ms]
+(pass) document allow matrix 8; bound=false; row=01; create=00 [5.29ms]
+(pass) document allow matrix 8; bound=false; row=01; create=01 [4.88ms]
+(pass) document allow matrix 8; bound=false; row=01; create=10 [5.18ms]
+(pass) document allow matrix 8; bound=false; row=01; create=11 [6.39ms]
+(pass) document allow matrix 8; bound=false; row=10; create=00 [7.87ms]
+(pass) document allow matrix 8; bound=false; row=10; create=01 [5.20ms]
+(pass) document allow matrix 8; bound=false; row=10; create=10 [8.18ms]
+(pass) document allow matrix 8; bound=false; row=10; create=11 [7.36ms]
+(pass) document allow matrix 8; bound=false; row=11; create=00 [8.04ms]
+(pass) document allow matrix 8; bound=false; row=11; create=01 [8.88ms]
+(pass) document allow matrix 8; bound=false; row=11; create=10 [9.61ms]
+(pass) document allow matrix 8; bound=false; row=11; create=11 [8.27ms]
+(pass) document allow matrix 8; bound=true; row=00; create=00 [31.94ms]
+(pass) document allow matrix 8; bound=true; row=00; create=01 [31.46ms]
+(pass) document allow matrix 8; bound=true; row=00; create=10 [31.81ms]
+(pass) document allow matrix 8; bound=true; row=00; create=11 [37.88ms]
+(pass) document allow matrix 8; bound=true; row=01; create=00 [33.44ms]
+(pass) document allow matrix 8; bound=true; row=01; create=01 [43.88ms]
+(pass) document allow matrix 8; bound=true; row=01; create=10 [46.25ms]
+(pass) document allow matrix 8; bound=true; row=01; create=11 [46.73ms]
+(pass) document allow matrix 8; bound=true; row=10; create=00 [44.50ms]
+(pass) document allow matrix 8; bound=true; row=10; create=01 [28.95ms]
+(pass) document allow matrix 8; bound=true; row=10; create=10 [28.00ms]
+(pass) document allow matrix 8; bound=true; row=10; create=11 [34.10ms]
+(pass) document allow matrix 8; bound=true; row=11; create=00 [33.41ms]
+(pass) document allow matrix 8; bound=true; row=11; create=01 [29.78ms]
+(pass) document allow matrix 8; bound=true; row=11; create=10 [28.27ms]
+(pass) document allow matrix 8; bound=true; row=11; create=11 [28.41ms]
+(pass) document allow matrix 9; bound=false; row=00; create=00 [5.39ms]
+(pass) document allow matrix 9; bound=false; row=00; create=01 [4.57ms]
+(pass) document allow matrix 9; bound=false; row=00; create=10 [5.73ms]
+(pass) document allow matrix 9; bound=false; row=00; create=11 [5.32ms]
+(pass) document allow matrix 9; bound=false; row=01; create=00 [4.78ms]
+(pass) document allow matrix 9; bound=false; row=01; create=01 [4.41ms]
+(pass) document allow matrix 9; bound=false; row=01; create=10 [4.92ms]
+(pass) document allow matrix 9; bound=false; row=01; create=11 [4.54ms]
+(pass) document allow matrix 9; bound=false; row=10; create=00 [4.79ms]
+(pass) document allow matrix 9; bound=false; row=10; create=01 [4.87ms]
+(pass) document allow matrix 9; bound=false; row=10; create=10 [5.91ms]
+(pass) document allow matrix 9; bound=false; row=10; create=11 [4.82ms]
+(pass) document allow matrix 9; bound=false; row=11; create=00 [4.58ms]
+(pass) document allow matrix 9; bound=false; row=11; create=01 [4.78ms]
+(pass) document allow matrix 9; bound=false; row=11; create=10 [4.80ms]
+(pass) document allow matrix 9; bound=false; row=11; create=11 [4.56ms]
+(pass) document allow matrix 9; bound=true; row=00; create=00 [38.03ms]
+(pass) document allow matrix 9; bound=true; row=00; create=01 [30.11ms]
+(pass) document allow matrix 9; bound=true; row=00; create=10 [30.72ms]
+(pass) document allow matrix 9; bound=true; row=00; create=11 [29.82ms]
+(pass) document allow matrix 9; bound=true; row=01; create=00 [28.00ms]
+(pass) document allow matrix 9; bound=true; row=01; create=01 [28.10ms]
+(pass) document allow matrix 9; bound=true; row=01; create=10 [29.61ms]
+(pass) document allow matrix 9; bound=true; row=01; create=11 [27.67ms]
+(pass) document allow matrix 9; bound=true; row=10; create=00 [34.17ms]
+(pass) document allow matrix 9; bound=true; row=10; create=01 [30.84ms]
+(pass) document allow matrix 9; bound=true; row=10; create=10 [29.64ms]
+(pass) document allow matrix 9; bound=true; row=10; create=11 [29.11ms]
+(pass) document allow matrix 9; bound=true; row=11; create=00 [30.40ms]
+(pass) document allow matrix 9; bound=true; row=11; create=01 [30.12ms]
+(pass) document allow matrix 9; bound=true; row=11; create=10 [30.32ms]
+(pass) document allow matrix 9; bound=true; row=11; create=11 [28.61ms]
+(pass) document allow matrix 10; bound=false; row=00; create=00 [4.41ms]
+(pass) document allow matrix 10; bound=false; row=00; create=01 [4.86ms]
+(pass) document allow matrix 10; bound=false; row=00; create=10 [5.37ms]
+(pass) document allow matrix 10; bound=false; row=00; create=11 [8.50ms]
+(pass) document allow matrix 10; bound=false; row=01; create=00 [4.77ms]
+(pass) document allow matrix 10; bound=false; row=01; create=01 [4.44ms]
+(pass) document allow matrix 10; bound=false; row=01; create=10 [4.69ms]
+(pass) document allow matrix 10; bound=false; row=01; create=11 [5.22ms]
+(pass) document allow matrix 10; bound=false; row=10; create=00 [4.37ms]
+(pass) document allow matrix 10; bound=false; row=10; create=01 [4.71ms]
+(pass) document allow matrix 10; bound=false; row=10; create=10 [5.01ms]
+(pass) document allow matrix 10; bound=false; row=10; create=11 [5.39ms]
+(pass) document allow matrix 10; bound=false; row=11; create=00 [4.83ms]
+(pass) document allow matrix 10; bound=false; row=11; create=01 [4.82ms]
+(pass) document allow matrix 10; bound=false; row=11; create=10 [5.07ms]
+(pass) document allow matrix 10; bound=false; row=11; create=11 [4.44ms]
+(pass) document allow matrix 10; bound=true; row=00; create=00 [33.18ms]
+(pass) document allow matrix 10; bound=true; row=00; create=01 [31.20ms]
+(pass) document allow matrix 10; bound=true; row=00; create=10 [29.02ms]
+(pass) document allow matrix 10; bound=true; row=00; create=11 [28.84ms]
+(pass) document allow matrix 10; bound=true; row=01; create=00 [30.08ms]
+(pass) document allow matrix 10; bound=true; row=01; create=01 [34.92ms]
+(pass) document allow matrix 10; bound=true; row=01; create=10 [31.74ms]
+(pass) document allow matrix 10; bound=true; row=01; create=11 [30.05ms]
+(pass) document allow matrix 10; bound=true; row=10; create=00 [30.59ms]
+(pass) document allow matrix 10; bound=true; row=10; create=01 [31.29ms]
+(pass) document allow matrix 10; bound=true; row=10; create=10 [29.03ms]
+(pass) document allow matrix 10; bound=true; row=10; create=11 [30.14ms]
+(pass) document allow matrix 10; bound=true; row=11; create=00 [27.70ms]
+(pass) document allow matrix 10; bound=true; row=11; create=01 [30.29ms]
+(pass) document allow matrix 10; bound=true; row=11; create=10 [31.81ms]
+(pass) document allow matrix 10; bound=true; row=11; create=11 [28.50ms]
+
+tests/compilation/access-golden-vectors.test.ts:
+(pass) core 0.8 golden oracle: field and record APIs > decimal-short [1.53ms]
+(pass) core 0.8 golden oracle: field and record APIs > decimal-scale1 [0.42ms]
+(pass) core 0.8 golden oracle: field and record APIs > decimal-scale2 [0.35ms]
+(pass) core 0.8 golden oracle: field and record APIs > decimal-scale3zero [0.35ms]
+(pass) core 0.8 golden oracle: field and record APIs > decimal-zero [0.32ms]
+(pass) core 0.8 golden oracle: field and record APIs > decimal-negative-zero [0.32ms]
+(pass) core 0.8 golden oracle: field and record APIs > decimal-exponent [0.30ms]
+(pass) core 0.8 golden oracle: field and record APIs > decimal-max [0.33ms]
+(pass) core 0.8 golden oracle: field and record APIs > decimal-overflow [0.33ms]
+(pass) core 0.8 golden oracle: field and record APIs > decimal-rounding [0.32ms]
+(pass) core 0.8 golden oracle: field and record APIs > decimal-tiny [0.31ms]
+(pass) core 0.8 golden oracle: field and record APIs > decimal-nan [0.35ms]
+(pass) core 0.8 golden oracle: field and record APIs > int8--129 [0.41ms]
+(pass) core 0.8 golden oracle: field and record APIs > int8--128 [0.33ms]
+(pass) core 0.8 golden oracle: field and record APIs > int8--1 [0.31ms]
+(pass) core 0.8 golden oracle: field and record APIs > int8-0 [0.33ms]
+(pass) core 0.8 golden oracle: field and record APIs > int8-127 [0.33ms]
+(pass) core 0.8 golden oracle: field and record APIs > int8-128 [0.33ms]
+(pass) core 0.8 golden oracle: field and record APIs > uint8--1 [0.32ms]
+(pass) core 0.8 golden oracle: field and record APIs > uint8-0 [0.31ms]
+(pass) core 0.8 golden oracle: field and record APIs > uint8-255 [0.28ms]
+(pass) core 0.8 golden oracle: field and record APIs > uint8-256 [0.29ms]
+(pass) core 0.8 golden oracle: field and record APIs > unicode-empty [0.83ms]
+(pass) core 0.8 golden oracle: field and record APIs > unicode-astral [0.40ms]
+(pass) core 0.8 golden oracle: field and record APIs > unicode-combining [0.39ms]
+(pass) core 0.8 golden oracle: field and record APIs > unicode-long [0.40ms]
+(pass) core 0.8 golden oracle: field and record APIs > unicode-surrogate [0.39ms]
+(pass) core 0.8 golden oracle: field and record APIs > allowed-yes [0.36ms]
+(pass) core 0.8 golden oracle: field and record APIs > allowed-no [0.28ms]
+(pass) core 0.8 golden oracle: field and record APIs > range-0 [0.72ms]
+(pass) core 0.8 golden oracle: field and record APIs > range-1 [0.36ms]
+(pass) core 0.8 golden oracle: field and record APIs > range-2 [0.35ms]
+(pass) core 0.8 golden oracle: field and record APIs > range-3 [0.62ms]
+(pass) core 0.8 golden oracle: field and record APIs > binary-upper [0.68ms]
+(pass) core 0.8 golden oracle: field and record APIs > binary-empty [0.45ms]
+(pass) core 0.8 golden oracle: field and record APIs > binary-odd [0.44ms]
+(pass) core 0.8 golden oracle: field and record APIs > binary-long [0.39ms]
+(pass) core 0.8 golden oracle: field and record APIs > bool-true [0.31ms]
+(pass) core 0.8 golden oracle: field and record APIs > bool-integer [0.24ms]
+(pass) core 0.8 golden oracle: field and record APIs > temporal-gap-date [0.28ms]
+(pass) core 0.8 golden oracle: field and record APIs > temporal-gap-instant [0.28ms]
+(pass) core 0.8 golden oracle: field and record APIs > temporal-gap-local [0.26ms]
+(pass) core 0.8 golden oracle: field and record APIs > int64--9223372036854775809 [0.36ms]
+(pass) core 0.8 golden oracle: field and record APIs > int64--9223372036854775808 [0.29ms]
+(pass) core 0.8 golden oracle: field and record APIs > int64-9223372036854775807 [0.29ms]
+(pass) core 0.8 golden oracle: field and record APIs > int64-9223372036854775808 [0.30ms]
+(pass) core 0.8 golden oracle: field and record APIs > decimal-extra-1e1000000000 [0.30ms]
+(pass) core 0.8 golden oracle: field and record APIs > decimal-extra-0e1000000000 [0.28ms]
+(pass) core 0.8 golden oracle: field and record APIs > decimal-extra-1e-1000000000 [0.29ms]
+(pass) core 0.8 golden oracle: field and record APIs > decimal-extra-0e-1000000000 [0.27ms]
+(pass) core 0.8 golden oracle: field and record APIs > decimal-extra--9999999999.99 [0.35ms]
+(pass) core 0.8 golden oracle: field and record APIs > decimal-extra-1.2300 [0.30ms]
+(pass) core 0.8 golden oracle: field and record APIs > null-required [0.27ms]
+(pass) core 0.8 golden oracle: field and record APIs > null-absent-allowed [0.24ms]
+(pass) core 0.8 golden oracle: field and record APIs > array-empty [0.76ms]
+(pass) core 0.8 golden oracle: field and record APIs > array-one [0.48ms]
+(pass) core 0.8 golden oracle: field and record APIs > array-two [0.45ms]
+(pass) core 0.8 golden oracle: field and record APIs > array-long [0.43ms]
+(pass) core 0.8 golden oracle: field and record APIs > array-overflow [0.47ms]
+(pass) core 0.8 golden oracle: field and record APIs > array-null [0.42ms]
+(pass) core 0.8 golden oracle: field and record APIs > array-wrong [0.45ms]
+(pass) core 0.8 golden oracle: field and record APIs > map-empty [0.47ms]
+(pass) core 0.8 golden oracle: field and record APIs > map-one [0.48ms]
+(pass) core 0.8 golden oracle: field and record APIs > map-two [0.44ms]
+(pass) core 0.8 golden oracle: field and record APIs > map-long [0.44ms]
+(pass) core 0.8 golden oracle: field and record APIs > map-overflow [0.45ms]
+(pass) core 0.8 golden oracle: field and record APIs > map-null [0.45ms]
+(pass) core 0.8 golden oracle: field and record APIs > map-wrong [0.43ms]
+(pass) core 0.8 golden oracle: field and record APIs > nested-valid [0.61ms]
+(pass) core 0.8 golden oracle: field and record APIs > nested-inner-empty [0.55ms]
+(pass) core 0.8 golden oracle: field and record APIs > nested-deep-overflow [0.52ms]
+(pass) core 0.8 golden oracle: field and record APIs > nested-wrong-shape [0.53ms]
+
+tests/compilation/access-schemas.test.ts:
+(pass) request, candidate/refusal and manifest have closed structural schemas [57.75ms]
+
+tests/compilation/boundaries.test.ts:
+(pass) actual compilation boundary checker > allows public IR dependency [92.50ms]
+(pass) actual compilation boundary checker > rejects forbidden direction and private reach-through [174.62ms]
+(pass) actual compilation boundary checker > rejects host imports, globals, dynamic loading and unresolved imports [522.39ms]
+(pass) actual compilation boundary checker > rejects cycles including re-exports [89.08ms]
+(pass) actual compilation boundary checker > IR external dependencies are type-only, including relative imports [172.46ms]
+(pass) actual compilation boundary checker > rejects network and runtime code execution in portable modules [430.27ms]
+(pass) actual Python boundary checker > stdlib extensions pass and third-party imports refuse under python3 [87.44ms]
+(pass) actual Python boundary checker > stdlib extensions pass and third-party imports refuse under python3.14 [103.73ms]
+(pass) actual Python boundary checker > allows runtime to DSL public boundary [41.66ms]
+(pass) actual Python boundary checker > rejects drivers and Weft outside owned integrations [124.43ms]
+(pass) actual Python boundary checker > rejects private access and relative-import cycles [84.85ms]
+(pass) actual Python boundary checker > bulk exception is narrow; target cannot import generated packages or engines [213.12ms]
+(pass) actual Python boundary checker > rejects dynamic imports and malformed syntax [87.16ms]
+(pass) actual Python boundary checker > discovers src layout and rejects host I/O and dynamic import APIs [348.60ms]
+(pass) actual Python boundary checker > rejects empty scans and scans both source layouts [81.81ms]
+(pass) actual Python boundary checker > named runtime foundations have explicit ownership; arbitrary helpers refuse [133.71ms]
+(pass) local command and installed pre-commit hook reject real violations [1188.33ms]
+
+tests/compilation/access-digest.test.ts:
+(pass) portable SHA-256 matches independent native crypto over UTF-8 vectors [26.83ms]
+(pass) streamed JCS hashing agrees with whole canonical hashing across chunk boundaries [1.24ms]
+(pass) aggregate file bound refuses with complete report rather than a hash exception [0.72ms]
+
+tests/compilation/access-extension.test.ts:
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 0; bound=false; row=00; create=00 [0.07ms]
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 0; bound=false; row=00; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 0; bound=false; row=00; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 0; bound=false; row=00; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 0; bound=false; row=01; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 0; bound=false; row=01; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 0; bound=false; row=01; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 0; bound=false; row=01; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 0; bound=false; row=10; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 0; bound=false; row=10; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 0; bound=false; row=10; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 0; bound=false; row=10; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 0; bound=false; row=11; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 0; bound=false; row=11; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 0; bound=false; row=11; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 0; bound=false; row=11; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 0; bound=true; row=00; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 0; bound=true; row=00; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 0; bound=true; row=00; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 0; bound=true; row=00; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 0; bound=true; row=01; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 0; bound=true; row=01; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 0; bound=true; row=01; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 0; bound=true; row=01; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 0; bound=true; row=10; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 0; bound=true; row=10; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 0; bound=true; row=10; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 0; bound=true; row=10; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 0; bound=true; row=11; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 0; bound=true; row=11; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 0; bound=true; row=11; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 0; bound=true; row=11; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 1; bound=false; row=00; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 1; bound=false; row=00; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 1; bound=false; row=00; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 1; bound=false; row=00; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 1; bound=false; row=01; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 1; bound=false; row=01; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 1; bound=false; row=01; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 1; bound=false; row=01; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 1; bound=false; row=10; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 1; bound=false; row=10; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 1; bound=false; row=10; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 1; bound=false; row=10; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 1; bound=false; row=11; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 1; bound=false; row=11; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 1; bound=false; row=11; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 1; bound=false; row=11; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 1; bound=true; row=00; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 1; bound=true; row=00; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 1; bound=true; row=00; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 1; bound=true; row=00; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 1; bound=true; row=01; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 1; bound=true; row=01; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 1; bound=true; row=01; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 1; bound=true; row=01; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 1; bound=true; row=10; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 1; bound=true; row=10; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 1; bound=true; row=10; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 1; bound=true; row=10; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 1; bound=true; row=11; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 1; bound=true; row=11; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 1; bound=true; row=11; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 1; bound=true; row=11; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 2; bound=false; row=00; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 2; bound=false; row=00; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 2; bound=false; row=00; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 2; bound=false; row=00; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 2; bound=false; row=01; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 2; bound=false; row=01; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 2; bound=false; row=01; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 2; bound=false; row=01; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 2; bound=false; row=10; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 2; bound=false; row=10; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 2; bound=false; row=10; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 2; bound=false; row=10; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 2; bound=false; row=11; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 2; bound=false; row=11; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 2; bound=false; row=11; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 2; bound=false; row=11; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 2; bound=true; row=00; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 2; bound=true; row=00; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 2; bound=true; row=00; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 2; bound=true; row=00; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 2; bound=true; row=01; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 2; bound=true; row=01; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 2; bound=true; row=01; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 2; bound=true; row=01; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 2; bound=true; row=10; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 2; bound=true; row=10; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 2; bound=true; row=10; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 2; bound=true; row=10; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 2; bound=true; row=11; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 2; bound=true; row=11; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 2; bound=true; row=11; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 2; bound=true; row=11; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 3; bound=false; row=00; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 3; bound=false; row=00; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 3; bound=false; row=00; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 3; bound=false; row=00; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 3; bound=false; row=01; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 3; bound=false; row=01; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 3; bound=false; row=01; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 3; bound=false; row=01; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 3; bound=false; row=10; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 3; bound=false; row=10; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 3; bound=false; row=10; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 3; bound=false; row=10; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 3; bound=false; row=11; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 3; bound=false; row=11; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 3; bound=false; row=11; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 3; bound=false; row=11; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 3; bound=true; row=00; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 3; bound=true; row=00; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 3; bound=true; row=00; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 3; bound=true; row=00; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 3; bound=true; row=01; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 3; bound=true; row=01; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 3; bound=true; row=01; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 3; bound=true; row=01; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 3; bound=true; row=10; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 3; bound=true; row=10; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 3; bound=true; row=10; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 3; bound=true; row=10; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 3; bound=true; row=11; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 3; bound=true; row=11; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 3; bound=true; row=11; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 3; bound=true; row=11; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 4; bound=false; row=00; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 4; bound=false; row=00; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 4; bound=false; row=00; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 4; bound=false; row=00; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 4; bound=false; row=01; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 4; bound=false; row=01; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 4; bound=false; row=01; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 4; bound=false; row=01; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 4; bound=false; row=10; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 4; bound=false; row=10; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 4; bound=false; row=10; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 4; bound=false; row=10; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 4; bound=false; row=11; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 4; bound=false; row=11; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 4; bound=false; row=11; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 4; bound=false; row=11; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 4; bound=true; row=00; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 4; bound=true; row=00; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 4; bound=true; row=00; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 4; bound=true; row=00; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 4; bound=true; row=01; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 4; bound=true; row=01; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 4; bound=true; row=01; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 4; bound=true; row=01; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 4; bound=true; row=10; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 4; bound=true; row=10; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 4; bound=true; row=10; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 4; bound=true; row=10; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 4; bound=true; row=11; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 4; bound=true; row=11; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 4; bound=true; row=11; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 4; bound=true; row=11; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 5; bound=false; row=00; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 5; bound=false; row=00; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 5; bound=false; row=00; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 5; bound=false; row=00; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 5; bound=false; row=01; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 5; bound=false; row=01; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 5; bound=false; row=01; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 5; bound=false; row=01; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 5; bound=false; row=10; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 5; bound=false; row=10; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 5; bound=false; row=10; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 5; bound=false; row=10; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 5; bound=false; row=11; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 5; bound=false; row=11; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 5; bound=false; row=11; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 5; bound=false; row=11; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 5; bound=true; row=00; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 5; bound=true; row=00; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 5; bound=true; row=00; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 5; bound=true; row=00; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 5; bound=true; row=01; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 5; bound=true; row=01; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 5; bound=true; row=01; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 5; bound=true; row=01; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 5; bound=true; row=10; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 5; bound=true; row=10; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 5; bound=true; row=10; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 5; bound=true; row=10; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 5; bound=true; row=11; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 5; bound=true; row=11; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 5; bound=true; row=11; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 5; bound=true; row=11; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 6; bound=false; row=00; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 6; bound=false; row=00; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 6; bound=false; row=00; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 6; bound=false; row=00; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 6; bound=false; row=01; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 6; bound=false; row=01; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 6; bound=false; row=01; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 6; bound=false; row=01; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 6; bound=false; row=10; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 6; bound=false; row=10; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 6; bound=false; row=10; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 6; bound=false; row=10; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 6; bound=false; row=11; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 6; bound=false; row=11; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 6; bound=false; row=11; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 6; bound=false; row=11; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 6; bound=true; row=00; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 6; bound=true; row=00; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 6; bound=true; row=00; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 6; bound=true; row=00; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 6; bound=true; row=01; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 6; bound=true; row=01; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 6; bound=true; row=01; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 6; bound=true; row=01; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 6; bound=true; row=10; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 6; bound=true; row=10; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 6; bound=true; row=10; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 6; bound=true; row=10; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 6; bound=true; row=11; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 6; bound=true; row=11; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 6; bound=true; row=11; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 6; bound=true; row=11; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 7; bound=false; row=00; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 7; bound=false; row=00; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 7; bound=false; row=00; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 7; bound=false; row=00; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 7; bound=false; row=01; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 7; bound=false; row=01; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 7; bound=false; row=01; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 7; bound=false; row=01; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 7; bound=false; row=10; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 7; bound=false; row=10; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 7; bound=false; row=10; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 7; bound=false; row=10; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 7; bound=false; row=11; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 7; bound=false; row=11; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 7; bound=false; row=11; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 7; bound=false; row=11; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 7; bound=true; row=00; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 7; bound=true; row=00; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 7; bound=true; row=00; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 7; bound=true; row=00; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 7; bound=true; row=01; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 7; bound=true; row=01; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 7; bound=true; row=01; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 7; bound=true; row=01; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 7; bound=true; row=10; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 7; bound=true; row=10; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 7; bound=true; row=10; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 7; bound=true; row=10; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 7; bound=true; row=11; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 7; bound=true; row=11; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 7; bound=true; row=11; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 7; bound=true; row=11; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 8; bound=false; row=00; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 8; bound=false; row=00; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 8; bound=false; row=00; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 8; bound=false; row=00; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 8; bound=false; row=01; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 8; bound=false; row=01; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 8; bound=false; row=01; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 8; bound=false; row=01; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 8; bound=false; row=10; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 8; bound=false; row=10; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 8; bound=false; row=10; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 8; bound=false; row=10; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 8; bound=false; row=11; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 8; bound=false; row=11; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 8; bound=false; row=11; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 8; bound=false; row=11; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 8; bound=true; row=00; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 8; bound=true; row=00; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 8; bound=true; row=00; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 8; bound=true; row=00; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 8; bound=true; row=01; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 8; bound=true; row=01; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 8; bound=true; row=01; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 8; bound=true; row=01; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 8; bound=true; row=10; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 8; bound=true; row=10; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 8; bound=true; row=10; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 8; bound=true; row=10; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 8; bound=true; row=11; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 8; bound=true; row=11; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 8; bound=true; row=11; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 8; bound=true; row=11; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 9; bound=false; row=00; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 9; bound=false; row=00; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 9; bound=false; row=00; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 9; bound=false; row=00; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 9; bound=false; row=01; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 9; bound=false; row=01; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 9; bound=false; row=01; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 9; bound=false; row=01; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 9; bound=false; row=10; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 9; bound=false; row=10; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 9; bound=false; row=10; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 9; bound=false; row=10; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 9; bound=false; row=11; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 9; bound=false; row=11; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 9; bound=false; row=11; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 9; bound=false; row=11; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 9; bound=true; row=00; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 9; bound=true; row=00; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 9; bound=true; row=00; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 9; bound=true; row=00; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 9; bound=true; row=01; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 9; bound=true; row=01; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 9; bound=true; row=01; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 9; bound=true; row=01; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 9; bound=true; row=10; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 9; bound=true; row=10; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 9; bound=true; row=10; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 9; bound=true; row=10; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 9; bound=true; row=11; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 9; bound=true; row=11; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 9; bound=true; row=11; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 9; bound=true; row=11; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 10; bound=false; row=00; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 10; bound=false; row=00; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 10; bound=false; row=00; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 10; bound=false; row=00; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 10; bound=false; row=01; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 10; bound=false; row=01; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 10; bound=false; row=01; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 10; bound=false; row=01; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 10; bound=false; row=10; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 10; bound=false; row=10; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 10; bound=false; row=10; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 10; bound=false; row=10; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 10; bound=false; row=11; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 10; bound=false; row=11; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 10; bound=false; row=11; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 10; bound=false; row=11; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 10; bound=true; row=00; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 10; bound=true; row=00; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 10; bound=true; row=00; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 10; bound=true; row=00; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 10; bound=true; row=01; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 10; bound=true; row=01; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 10; bound=true; row=01; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 10; bound=true; row=01; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 10; bound=true; row=10; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 10; bound=true; row=10; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 10; bound=true; row=10; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 10; bound=true; row=10; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 10; bound=true; row=11; create=00
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 10; bound=true; row=11; create=01
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 10; bound=true; row=11; create=10
+(pass) access_views_validated: CONTRACT-070 complete allow table > row 10; bound=true; row=11; create=11
+(pass) access_views_validated: CONTRACT-070 complete allow table > optional nullable bound column may declare NOT NULL [0.03ms]
+(pass) access_views_validated: CONTRACT-070 complete allow table > unspecified and nullable Key refuse [0.03ms]
+(pass) access_views_validated: CONTRACT-070 complete allow table > nested values never carry missing or generated values [0.02ms]
+(pass) commerce source and extension schema fixtures admit structurally [30.51ms]
+
+tests/compilation/access-search.test.ts:
+(pass) source-bound keyword/vector namespaces retain exact authored data and vector carrier [40.17ms]
+(pass) unknown selected search meaning refuses in strict and report modes [52.92ms]
+(pass) vector dimensions, source family, duplicate identity and native binding meaning are not guessed [64.94ms]
+(pass) ordinary float fields cannot inherit an indexed nested float carrier [14.76ms]
+
+ 852 pass
+ 0 fail
+ 2664 expect() calls
+Ran 852 tests across 13 files. [39.58s]

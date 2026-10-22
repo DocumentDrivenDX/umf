@@ -1,0 +1,701 @@
+{
+  "profileVersion": "umf.security.query-read-fixture/0.1",
+  "baseFixtureSha256": "bfa42f12b9b070f3236d9a437b2f94bb3492d8dcbf5239897aa5b304db701d33",
+  "policy": {
+    "vocabulary": "umf.security",
+    "version": "0.2.0",
+    "id": "project-access",
+    "revision": "named-query-token-read-r2",
+    "ontology": {
+      "documentId": "domain",
+      "revision": "named-query-ontology-r1"
+    },
+    "rules": [
+      {
+        "id": "reader",
+        "effect": "permit",
+        "actions": [
+          "read"
+        ],
+        "target": [
+          {
+            "documentId": "domain",
+            "moduleId": "m",
+            "elementId": "Resource"
+          }
+        ],
+        "condition": {
+          "op": "literal",
+          "value": true
+        },
+        "disclosure": [
+          {
+            "field": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "salary"
+            },
+            "disposition": {
+              "kind": "original"
+            }
+          },
+          {
+            "field": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "token"
+            },
+            "disposition": {
+              "kind": "original"
+            }
+          }
+        ]
+      },
+      {
+        "id": "membership",
+        "effect": "require",
+        "actions": [
+          "read"
+        ],
+        "target": [
+          {
+            "documentId": "domain",
+            "moduleId": "m",
+            "elementId": "Resource"
+          }
+        ],
+        "condition": {
+          "op": "exists",
+          "association": {
+            "documentId": "domain",
+            "moduleId": "m",
+            "elementId": "Ownership"
+          },
+          "as": "o",
+          "where": {
+            "op": "and",
+            "args": [
+              {
+                "op": "eq",
+                "left": {
+                  "kind": "variable",
+                  "name": "o",
+                  "endpoint": "resource"
+                },
+                "right": {
+                  "kind": "resource",
+                  "identity": true
+                }
+              },
+              {
+                "op": "exists",
+                "association": {
+                  "documentId": "domain",
+                  "moduleId": "m",
+                  "elementId": "Assignment"
+                },
+                "as": "a",
+                "where": {
+                  "op": "and",
+                  "args": [
+                    {
+                      "op": "eq",
+                      "left": {
+                        "kind": "variable",
+                        "name": "a",
+                        "endpoint": "staff"
+                      },
+                      "right": {
+                        "kind": "subject",
+                        "identity": true
+                      }
+                    },
+                    {
+                      "op": "eq",
+                      "left": {
+                        "kind": "variable",
+                        "name": "a",
+                        "endpoint": "project"
+                      },
+                      "right": {
+                        "kind": "variable",
+                        "name": "o",
+                        "endpoint": "project"
+                      }
+                    },
+                    {
+                      "op": "eq",
+                      "left": {
+                        "kind": "variable",
+                        "name": "a",
+                        "field": {
+                          "documentId": "domain",
+                          "moduleId": "m",
+                          "elementId": "active"
+                        }
+                      },
+                      "right": {
+                        "kind": "constant",
+                        "field": {
+                          "documentId": "domain",
+                          "moduleId": "m",
+                          "elementId": "active"
+                        },
+                        "value": {
+                          "boolean": true
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "writer",
+        "effect": "permit",
+        "actions": [
+          "create",
+          "update",
+          "delete",
+          "write-fields",
+          "change-owner",
+          "change-policy",
+          "blind-fields"
+        ],
+        "target": [
+          {
+            "documentId": "domain",
+            "moduleId": "m",
+            "elementId": "Staff"
+          },
+          {
+            "documentId": "domain",
+            "moduleId": "m",
+            "elementId": "Project"
+          },
+          {
+            "documentId": "domain",
+            "moduleId": "m",
+            "elementId": "Resource"
+          },
+          {
+            "documentId": "domain",
+            "moduleId": "m",
+            "elementId": "Ownership"
+          },
+          {
+            "documentId": "domain",
+            "moduleId": "m",
+            "elementId": "Assignment"
+          }
+        ],
+        "condition": {
+          "op": "literal",
+          "value": true
+        }
+      },
+      {
+        "id": "write-membership",
+        "effect": "require",
+        "actions": [
+          "create",
+          "update",
+          "delete",
+          "write-fields",
+          "change-owner",
+          "change-policy",
+          "blind-fields"
+        ],
+        "target": [
+          {
+            "documentId": "domain",
+            "moduleId": "m",
+            "elementId": "Resource"
+          }
+        ],
+        "condition": {
+          "op": "exists",
+          "association": {
+            "documentId": "domain",
+            "moduleId": "m",
+            "elementId": "Ownership"
+          },
+          "as": "o",
+          "where": {
+            "op": "and",
+            "args": [
+              {
+                "op": "eq",
+                "left": {
+                  "kind": "variable",
+                  "name": "o",
+                  "endpoint": "resource"
+                },
+                "right": {
+                  "kind": "resource",
+                  "identity": true
+                }
+              },
+              {
+                "op": "exists",
+                "association": {
+                  "documentId": "domain",
+                  "moduleId": "m",
+                  "elementId": "Assignment"
+                },
+                "as": "a",
+                "where": {
+                  "op": "and",
+                  "args": [
+                    {
+                      "op": "eq",
+                      "left": {
+                        "kind": "variable",
+                        "name": "a",
+                        "endpoint": "staff"
+                      },
+                      "right": {
+                        "kind": "subject",
+                        "identity": true
+                      }
+                    },
+                    {
+                      "op": "eq",
+                      "left": {
+                        "kind": "variable",
+                        "name": "a",
+                        "endpoint": "project"
+                      },
+                      "right": {
+                        "kind": "variable",
+                        "name": "o",
+                        "endpoint": "project"
+                      }
+                    },
+                    {
+                      "op": "eq",
+                      "left": {
+                        "kind": "variable",
+                        "name": "a",
+                        "field": {
+                          "documentId": "domain",
+                          "moduleId": "m",
+                          "elementId": "active"
+                        }
+                      },
+                      "right": {
+                        "kind": "constant",
+                        "field": {
+                          "documentId": "domain",
+                          "moduleId": "m",
+                          "elementId": "active"
+                        },
+                        "value": {
+                          "boolean": true
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "protection": {
+      "id": "stored",
+      "revision": "named-query-catalog-r1"
+    }
+  },
+  "cut": {
+    "version": "umf.security.logical-facts/0.1",
+    "trusted": true,
+    "generation": "named-logical-cut-r1",
+    "expectedGeneration": "named-logical-cut-r1",
+    "policy": {
+      "id": "project-access",
+      "revision": "named-query-token-read-r2"
+    },
+    "ontology": {
+      "documentId": "domain",
+      "revision": "named-query-ontology-r1"
+    },
+    "protection": {
+      "id": "stored",
+      "revision": "named-query-catalog-r1"
+    },
+    "domains": [
+      {
+        "documentId": "domain",
+        "revision": "named-query-core-r1"
+      }
+    ],
+    "owner": {
+      "id": "owner",
+      "revision": "named-query-owner-r1"
+    },
+    "subject": {
+      "type": {
+        "documentId": "domain",
+        "moduleId": "m",
+        "elementId": "Staff"
+      },
+      "key": [
+        {
+          "string": "alice"
+        }
+      ]
+    },
+    "facts": [
+      {
+        "type": {
+          "documentId": "domain",
+          "moduleId": "m",
+          "elementId": "Staff"
+        },
+        "key": [
+          {
+            "string": "alice"
+          }
+        ],
+        "fields": [
+          {
+            "field": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "staffId"
+            },
+            "value": {
+              "string": "alice"
+            }
+          }
+        ],
+        "absent": []
+      },
+      {
+        "type": {
+          "documentId": "domain",
+          "moduleId": "m",
+          "elementId": "Project"
+        },
+        "key": [
+          {
+            "string": "p1"
+          }
+        ],
+        "fields": [
+          {
+            "field": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "projectId"
+            },
+            "value": {
+              "string": "p1"
+            }
+          }
+        ],
+        "absent": []
+      },
+      {
+        "type": {
+          "documentId": "domain",
+          "moduleId": "m",
+          "elementId": "Resource"
+        },
+        "key": [
+          {
+            "string": "r1"
+          }
+        ],
+        "fields": [
+          {
+            "field": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "resourceId"
+            },
+            "value": {
+              "string": "r1"
+            }
+          },
+          {
+            "field": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "salary"
+            },
+            "value": {
+              "integerToken": "100"
+            }
+          },
+          {
+            "field": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "token"
+            },
+            "value": {
+              "string": "opaque-token"
+            }
+          }
+        ],
+        "absent": []
+      },
+      {
+        "type": {
+          "documentId": "domain",
+          "moduleId": "m",
+          "elementId": "Ownership"
+        },
+        "key": [
+          {
+            "string": "o1"
+          }
+        ],
+        "fields": [
+          {
+            "field": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "ownerId"
+            },
+            "value": {
+              "string": "o1"
+            }
+          },
+          {
+            "field": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "ownerResource"
+            },
+            "value": {
+              "string": "r1"
+            }
+          },
+          {
+            "field": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "ownerProject"
+            },
+            "value": {
+              "string": "p1"
+            }
+          }
+        ],
+        "absent": []
+      },
+      {
+        "type": {
+          "documentId": "domain",
+          "moduleId": "m",
+          "elementId": "Assignment"
+        },
+        "key": [
+          {
+            "string": "a1"
+          }
+        ],
+        "fields": [
+          {
+            "field": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "assignmentId"
+            },
+            "value": {
+              "string": "a1"
+            }
+          },
+          {
+            "field": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "assignmentStaff"
+            },
+            "value": {
+              "string": "alice"
+            }
+          },
+          {
+            "field": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "assignmentProject"
+            },
+            "value": {
+              "string": "p1"
+            }
+          },
+          {
+            "field": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "active"
+            },
+            "value": {
+              "boolean": true
+            }
+          }
+        ],
+        "absent": []
+      }
+    ],
+    "graphs": [],
+    "coverage": [
+      {
+        "type": {
+          "documentId": "domain",
+          "moduleId": "m",
+          "elementId": "Staff"
+        },
+        "complete": true,
+        "fields": [
+          {
+            "documentId": "domain",
+            "moduleId": "m",
+            "elementId": "staffId"
+          }
+        ]
+      },
+      {
+        "type": {
+          "documentId": "domain",
+          "moduleId": "m",
+          "elementId": "Project"
+        },
+        "complete": true,
+        "fields": [
+          {
+            "documentId": "domain",
+            "moduleId": "m",
+            "elementId": "projectId"
+          }
+        ]
+      },
+      {
+        "type": {
+          "documentId": "domain",
+          "moduleId": "m",
+          "elementId": "Resource"
+        },
+        "complete": true,
+        "fields": [
+          {
+            "documentId": "domain",
+            "moduleId": "m",
+            "elementId": "resourceId"
+          },
+          {
+            "documentId": "domain",
+            "moduleId": "m",
+            "elementId": "salary"
+          },
+          {
+            "documentId": "domain",
+            "moduleId": "m",
+            "elementId": "token"
+          }
+        ]
+      },
+      {
+        "type": {
+          "documentId": "domain",
+          "moduleId": "m",
+          "elementId": "Ownership"
+        },
+        "complete": true,
+        "fields": [
+          {
+            "documentId": "domain",
+            "moduleId": "m",
+            "elementId": "ownerId"
+          },
+          {
+            "documentId": "domain",
+            "moduleId": "m",
+            "elementId": "ownerResource"
+          },
+          {
+            "documentId": "domain",
+            "moduleId": "m",
+            "elementId": "ownerProject"
+          }
+        ]
+      },
+      {
+        "type": {
+          "documentId": "domain",
+          "moduleId": "m",
+          "elementId": "Assignment"
+        },
+        "complete": true,
+        "fields": [
+          {
+            "documentId": "domain",
+            "moduleId": "m",
+            "elementId": "assignmentId"
+          },
+          {
+            "documentId": "domain",
+            "moduleId": "m",
+            "elementId": "assignmentStaff"
+          },
+          {
+            "documentId": "domain",
+            "moduleId": "m",
+            "elementId": "assignmentProject"
+          },
+          {
+            "documentId": "domain",
+            "moduleId": "m",
+            "elementId": "active"
+          }
+        ]
+      }
+    ],
+    "graphCoverage": [],
+    "context": [],
+    "valueProfiles": [],
+    "maxFacts": 100,
+    "maxSteps": 100000
+  },
+  "request": {
+    "action": "read",
+    "resources": [
+      {
+        "type": {
+          "documentId": "domain",
+          "moduleId": "m",
+          "elementId": "Resource"
+        },
+        "key": [
+          {
+            "string": "r1"
+          }
+        ]
+      }
+    ],
+    "targets": [
+      {
+        "documentId": "domain",
+        "moduleId": "m",
+        "elementId": "Resource"
+      }
+    ],
+    "fields": [
+      {
+        "documentId": "domain",
+        "moduleId": "m",
+        "elementId": "token"
+      }
+    ]
+  },
+  "scope": "Separately revised explicit token-original read disclosure, retaining base core/ontology/catalog/owner. Logical supplied trusted facts only; stored token remains opaque and no native fact custody, key scope, action execution or dispatch qualification is claimed."
+}

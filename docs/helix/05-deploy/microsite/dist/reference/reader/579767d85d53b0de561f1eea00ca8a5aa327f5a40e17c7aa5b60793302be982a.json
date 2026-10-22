@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"projectGraphqlInputToJsonSchema\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "source",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"GraphqlInputBindings\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "GraphqlInputBindings"
+    }
+  ],
+  "purpose": "projectGraphqlInputToJsonSchema accepts source, input and returns GraphqlInputProjection.",
+  "related": [],
+  "returns": "GraphqlInputProjection",
+  "task": "Import and export",
+  "type": "(source: Document, input: GraphqlInputBindings) => GraphqlInputProjection"
+}

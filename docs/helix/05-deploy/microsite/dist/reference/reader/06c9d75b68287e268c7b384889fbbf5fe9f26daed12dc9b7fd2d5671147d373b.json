@@ -1,0 +1,67 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"SecurityPolicy\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "vocabulary",
+      "optional": false,
+      "type": "\"umf.security\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "version",
+      "optional": false,
+      "type": "\"0.1.0\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "id",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "revision",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "ontology",
+      "optional": false,
+      "type": "{ documentId: string; revision: string; }"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SecurityRule\"]"
+      ],
+      "name": "rules",
+      "optional": false,
+      "type": "SecurityRule[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Json\"]"
+      ],
+      "name": "native",
+      "optional": true,
+      "type": "Json"
+    }
+  ],
+  "parameters": [],
+  "purpose": "SecurityPolicy is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "SecurityPolicy"
+}

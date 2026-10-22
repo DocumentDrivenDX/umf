@@ -1,0 +1,23 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"inspectFieldClassification\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"NativeFieldClassification\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "NativeFieldClassification"
+    }
+  ],
+  "purpose": "inspectFieldClassification accepts input and returns FieldClassificationInspection.",
+  "related": [],
+  "returns": "FieldClassificationInspection",
+  "task": "Inspect and select",
+  "type": "(input: NativeFieldClassification) => FieldClassificationInspection"
+}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 12741,
+        "line": 27,
+        "path": "src/core-ideals/facets-avro-projection.ts",
+        "sha256": "abac2c8eb870231cd1ed192e5a4b3800f05af5f0a4955d9ed69d7218f4576dba"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "projectFacetsToAvro",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: Author, options: FacetsAvroRequest): FacetsAvroProjection"
+    ]
+  },
+  "id": "[\"api\",\".\",\"projectFacetsToAvro\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 12741,
+      "line": 27,
+      "path": "src/core-ideals/facets-avro-projection.ts",
+      "sha256": "abac2c8eb870231cd1ed192e5a4b3800f05af5f0a4955d9ed69d7218f4576dba"
+    }
+  ],
+  "summary": "Project verified ideal assertions; custom metadata never becomes an implicit validator.",
+  "title": "projectFacetsToAvro"
+}

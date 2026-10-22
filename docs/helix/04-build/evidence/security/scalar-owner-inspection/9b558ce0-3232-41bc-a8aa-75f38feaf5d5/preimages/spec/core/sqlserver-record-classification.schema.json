@@ -1,0 +1,363 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:core:sqlserver-record-classification:1.0.0",
+  "title": "Atomic SQL Server captured table/member classification",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "operation",
+    "version",
+    "status",
+    "source",
+    "request",
+    "binding",
+    "mappings",
+    "residuals",
+    "diagnostics"
+  ],
+  "properties": {
+    "operation": {
+      "const": "classify-sqlserver-record"
+    },
+    "version": {
+      "const": "1.0.0"
+    },
+    "status": {
+      "enum": [
+        "classified",
+        "blocked"
+      ]
+    },
+    "source": {
+      "$ref": "urn:umf:core:0.2.0"
+    },
+    "target": {
+      "$ref": "urn:umf:core:0.2.0"
+    },
+    "request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "recordModule",
+        "recordId",
+        "mode",
+        "nativeSource",
+        "relation"
+      ],
+      "properties": {
+        "recordModule": {
+          "type": "string",
+          "minLength": 1
+        },
+        "recordId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "mode": {
+          "enum": [
+            "strict",
+            "report"
+          ]
+        },
+        "authors": {
+          "type": "array",
+          "items": {
+            "$ref": "urn:umf:core:kind-operation:1.0.0#/$defs/declaration"
+          }
+        },
+        "nativeSource": {
+          "type": "string",
+          "maxLength": 4000000
+        },
+        "relation": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "schema",
+            "name"
+          ],
+          "properties": {
+            "schema": {
+              "type": "string",
+              "minLength": 1
+            },
+            "name": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      }
+    },
+    "binding": {
+      "const": {
+        "id": "umf.sqlserver.catalog.record",
+        "version": "1.0.0",
+        "nativeVersion": "16.0.4295.3",
+        "subset": "Captured table member roles only; permission-limited observations, no native identity/constraint equivalence"
+      }
+    },
+    "mappings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "origin",
+          "kind",
+          "idealPath",
+          "nativePath",
+          "nativeFragment",
+          "basis",
+          "outcome"
+        ],
+        "properties": {
+          "origin": {
+            "const": "classified"
+          },
+          "kind": {
+            "enum": [
+              "field",
+              "record"
+            ]
+          },
+          "idealPath": {
+            "type": "string"
+          },
+          "nativePath": {
+            "type": "string"
+          },
+          "nativeFragment": {},
+          "basis": {
+            "enum": [
+              "checked-catalog-column-membership",
+              "checked-catalog-table-members"
+            ]
+          },
+          "outcome": {
+            "enum": [
+              "exact",
+              "unknown"
+            ]
+          }
+        }
+      }
+    },
+    "residuals": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "path",
+          "value",
+          "reason",
+          "recovery"
+        ],
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "value": {},
+          "reason": {
+            "type": "string",
+            "minLength": 1
+          },
+          "recovery": {
+            "const": "Source and native fragments retained; resolve conflict then recompute whole record classification"
+          }
+        }
+      }
+    },
+    "diagnostics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "code",
+          "path",
+          "message",
+          "severity"
+        ],
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "severity": {
+            "const": "error"
+          }
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "classified"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "target"
+        ],
+        "properties": {
+          "target": true,
+          "residuals": {
+            "type": "array",
+            "maxItems": 0
+          },
+          "diagnostics": {
+            "type": "array",
+            "maxItems": 0
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "target": false,
+          "residuals": {
+            "type": "array",
+            "minItems": 1
+          },
+          "diagnostics": {
+            "type": "array",
+            "minItems": 1
+          }
+        }
+      }
+    },
+    {
+      "$comment": "UMF projection policy",
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "classified"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "diagnostics": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "severity": {
+                      "const": "warning"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "residuals": {
+                "type": "array",
+                "minItems": 1
+              },
+              "diagnostics": {
+                "type": "array",
+                "minItems": 1,
+                "contains": {
+                  "type": "object",
+                  "properties": {
+                    "severity": {
+                      "const": "error"
+                    }
+                  },
+                  "required": [
+                    "severity"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "classified"
+              },
+              "request": {
+                "type": "object",
+                "properties": {
+                  "mode": {
+                    "const": "strict"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "residuals": {
+                "type": "array",
+                "maxItems": 0
+              },
+              "mappings": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "outcome": {
+                      "const": "exact"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "classified"
+              },
+              "mappings": {
+                "type": "array",
+                "contains": {
+                  "type": "object",
+                  "properties": {
+                    "outcome": {
+                      "enum": [
+                        "unknown",
+                        "approximated",
+                        "not-expressible"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "outcome"
+                  ]
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "residuals": {
+                "type": "array",
+                "minItems": 1
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+negative.py:5: error: Argument "client" to "OpenProjectInput" has incompatible type "ProjectKey"; expected "CustomerKey"  [arg-type]
+negative.py:6: error: Argument "note" to "open_project_validate" of "Actions" has incompatible type "int"; expected "str | Missing | None"  [arg-type]
+negative.py:7: error: Argument 1 to "open_project_batch" of "Actions" has incompatible type "tuple[CustomerKey]"; expected "Sequence[OpenProjectInput]"  [arg-type]
+negative.py:8: error: Incompatible types in "await" (actual type "BatchReceipt[ProjectKey, None]", expected type "Awaitable[Any]")  [misc]
+Found 4 errors in 1 file (checked 1 source file)

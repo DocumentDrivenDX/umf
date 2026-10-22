@@ -1,0 +1,21 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"createSmithyJavaScriptBackend\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "module",
+      "optional": false,
+      "type": "{ assemble(sourcesJson: string): string; }"
+    }
+  ],
+  "purpose": "Explicit opt-in adapter for the pinned generated JavaScript module, not arbitrary native code discovery.",
+  "related": [],
+  "returns": "SmithyAssemblyBackend",
+  "task": "Author and edit",
+  "type": "(module: { assemble(sourcesJson: string): string; }) => SmithyAssemblyBackend"
+}

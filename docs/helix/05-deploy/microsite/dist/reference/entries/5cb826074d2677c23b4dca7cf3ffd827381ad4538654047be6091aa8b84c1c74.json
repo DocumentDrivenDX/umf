@@ -1,0 +1,44 @@
+{
+  "data": {
+    "conflicts": [],
+    "correspondence": "unassessed",
+    "declarations": [],
+    "evidence": [],
+    "operation": {
+      "apiNames": [
+        "selectCoreElements"
+      ],
+      "coreProfiles": [],
+      "extensionVersions": [],
+      "fixturePaths": [],
+      "id": "core-select",
+      "kind": "selection",
+      "limitations": [
+        "Recorded scope only; native equivalence and production adoption are separate."
+      ],
+      "runtime": {
+        "availability": "browser",
+        "profileId": "core-select",
+        "requirements": []
+      },
+      "sourceSystem": "UMF",
+      "subset": "Explicit local workbench profile; diagnostics and original inputs retained.",
+      "targetSystem": "UMF",
+      "title": "Select copied metadata"
+    }
+  },
+  "id": "[\"integration\",\"core-select\"]",
+  "kind": "integration",
+  "links": [
+    "[\"api\",\".\",\"selectCoreElements\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 134795,
+      "path": "docs/helix/05-deploy/reference/operations.json",
+      "sha256": "793743bbca36e56e90e82df5ef0408b628c434e58cb68aea4d6486349be78e61"
+    }
+  ],
+  "summary": "Explicit local workbench profile; diagnostics and original inputs retained.",
+  "title": "Select copied metadata"
+}

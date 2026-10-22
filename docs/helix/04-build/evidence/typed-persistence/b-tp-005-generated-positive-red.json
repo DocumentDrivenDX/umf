@@ -1,0 +1,24 @@
+{
+  "scope": "Observed real-emitter symbolic update ABI mismatch before fix; not reuse of earlier positive pass",
+  "source": "tests/compilation/python/static/queries/positive/forms.py",
+  "sourceSha256": "3c030141c7fae25b07604d98ee05ec94e7f6468b7c2206048748f9d3e1192905",
+  "generatedManifest": "/private/tmp/umf-b005-generated/base/commerce/_umf/manifest.json",
+  "generatedManifestSha256": "1525c3e380fbbc0c7e450a6e2edec941f6ae4f914d174a7eca5f525851673dbf",
+  "pyright": {
+    "version": "1.1.414",
+    "exitCode": 1,
+    "file": "forms.py",
+    "line": 65,
+    "rule": "reportArgumentType",
+    "reason": "Param[str] cannot be assigned to generated OrderUpdate.memo str|None"
+  },
+  "mypy": {
+    "version": "2.4.0",
+    "exitCode": 1,
+    "file": "forms.py",
+    "line": 65,
+    "rule": "arg-type",
+    "reason": "Param[str] incompatible with generated OrderUpdate.memo str|None"
+  },
+  "disposition": "Targeted emitter Param[T] update-union fix requested through parent; fresh generation/checker replay pending"
+}

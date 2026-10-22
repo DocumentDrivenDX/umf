@@ -1,0 +1,24 @@
+{
+  "cases": 139,
+  "skippedStructural": [
+    "schema-properties/unknown-default-behavior",
+    "keys/empty-keys",
+    "keys/empty-components",
+    "keys/missing-id",
+    "keys/missing-name",
+    "keys/empty-name",
+    "keys/string-primary",
+    "keys/non-record-keys",
+    "keys/non-record-members",
+    "keys/missing-members",
+    "relationships/missing-target-key",
+    "relationships/invalid-max--1",
+    "relationships/invalid-max-0",
+    "relationships/invalid-max-1.5",
+    "relationships/invalid-max-many",
+    "relationships/empty-source",
+    "structure/current-missing-vocabularies"
+  ],
+  "compared": 122,
+  "differences": []
+}

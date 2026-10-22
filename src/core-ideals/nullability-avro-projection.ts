@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {avroCarriers} from './avro-carriers';
 import {copyJson} from '../model/json';
 import {UmfError,pointer,type Document,type Json,type Diagnostic} from '../model/types';
@@ -5,9 +6,9 @@ import {verifyCoreNullabilityDeclaration,type CoreNullabilityDeclaration} from '
 import {importAvroSchema,exportAvroSchema,getAvroFieldMetadata} from '../adapters/avro';
 import {createValidator} from '../validation/schema';
 import legacy from '../../spec/core/schema.json';
-import fields from '../../spec/core/field-document.schema.json';
-import kinds from '../../spec/core/nullability-operation.schema.json';
-import availability from '../../spec/core/nullability-document.schema.json';
+
+import kinds from '../../spec/core/nullability-operation-v5.schema.json';
+
 import schema from '../../spec/core/nullability-avro-projection.schema.json';
 export {default as nullabilityAvroProjectionSchema} from '../../spec/core/nullability-avro-projection.schema.json';
 export interface NullabilityAvroRequest {id:string;recordName:string;namespace:string;fieldName:string;nativeType:keyof typeof avroCarriers;mode:'strict'|'report';scope:'underlying-field-value'|'write-input'|'reader-resolution'|'unresolved';carrier:'avro-null'|'unresolved'}
@@ -17,7 +18,7 @@ export interface NullabilityAvroProjection {
  mapping:{origin:'authored';nullability:'required'|'absent-allowed'|'unspecified';encoding:'non-null'|'null-union'|'null-only';basis:'authored-requirement'|'no-authored-requirement'|'unprojected-requirement';scope:NullabilityAvroRequest['scope'];carrier:NullabilityAvroRequest['carrier'];idealPath:string;nativePath:'/fields/0/type';outcome:'exact'|'unknown'|'not-expressible'};
  residuals:{path:string;value:Json;reason:string;outcome:'unknown'|'not-expressible';recovery:'Recover source meaning with retained projection receipt; native-only import does not recover author intent'}[];
 }
-const validator=createValidator();validator.addSchema(legacy);validator.addSchema(fields);validator.addSchema(kinds);validator.addSchema(availability);const check=validator.compile(schema);
+const validator=createValidator();validator.addSchema(legacy);validator.addSchema(kinds);const check=validator.compile(schema);
 const checkRequest=validator.compile({...schema.properties.request});
 export function projectNullabilityToAvro(input:CoreNullabilityDeclaration,options:NullabilityAvroRequest):NullabilityAvroProjection & {diagnostics:Diagnostic[]} {
  const copied=copyJson(input) as unknown as CoreNullabilityDeclaration;

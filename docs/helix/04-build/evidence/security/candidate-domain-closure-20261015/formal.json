@@ -1,0 +1,72 @@
+{
+  "scope": "Conditional Boolean judgment model only; no implementation refinement, resource bound, native authorization or full policy proof. Concrete tests and independent review separately bind implementation.",
+  "z3": "4.15.4",
+  "queries": [
+    {
+      "name": "domain-only does not imply live ownership",
+      "result": "unsat",
+      "formula": "And(field, Not(member), And(field, member))",
+      "model": null
+    },
+    {
+      "name": "domain-only does not imply context allowance",
+      "result": "unsat",
+      "formula": "And(field, Not(allow), And(field, allow))",
+      "model": null
+    },
+    {
+      "name": "nullable scalar domain is inhabitable by null",
+      "result": "sat",
+      "formula": "And(field, Not(required), typednull)",
+      "model": "[field = True, required = False, typednull = True]"
+    },
+    {
+      "name": "identity key excludes nullable declaration",
+      "result": "unsat",
+      "formula": "And(And(field, required, Not(typednull)), Not(required))",
+      "model": null
+    },
+    {
+      "name": "identity key excludes original null",
+      "result": "unsat",
+      "formula": "And(And(field, required, Not(typednull)), typednull)",
+      "model": null
+    },
+    {
+      "name": "weak all-fields-live rule admits DTO ownership",
+      "result": "sat",
+      "formula": "And(field, Not(member), field)",
+      "model": "[field = True, member = False]"
+    },
+    {
+      "name": "compact refuses reordered",
+      "result": "unsat",
+      "formula": "And(And(same_handle, same_order, same_scope, Not(copied)),\n    Not(same_order))",
+      "model": null
+    },
+    {
+      "name": "compact refuses copied",
+      "result": "unsat",
+      "formula": "And(And(same_handle, same_order, same_scope, Not(copied)),\n    copied)",
+      "model": null
+    },
+    {
+      "name": "compact refuses foreign-scope",
+      "result": "unsat",
+      "formula": "And(And(same_handle, same_order, same_scope, Not(copied)),\n    Not(same_scope))",
+      "model": null
+    },
+    {
+      "name": "compact refuses unissued",
+      "result": "unsat",
+      "formula": "And(And(same_handle, same_order, same_scope, Not(copied)),\n    Not(same_handle))",
+      "model": null
+    },
+    {
+      "name": "weak issuance alone admits reordered table",
+      "result": "sat",
+      "formula": "And(same_handle, Not(same_order))",
+      "model": "[same_order = False, same_handle = True]"
+    }
+  ]
+}

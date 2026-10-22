@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {importDeltaTable,exportDeltaTable,renameDeltaMappedField,readDocument,writeDocument} from '../../src';
 test('US-018-AC7: array and map-value field renames preserve mapping across both protocol families',async()=>{

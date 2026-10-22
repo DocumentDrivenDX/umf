@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Compare mandatory top-level report fields and path structure; record exclusions explicitly."""
 import json,logging,warnings
 from pathlib import Path

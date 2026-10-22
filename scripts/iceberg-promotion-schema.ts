@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 export {};
 const schema=await Bun.file('spec/extensions/iceberg-table/rename-report-schema.json').json();schema.$id='urn:umf:iceberg:promotion-report:0.1.0';
 delete schema.properties.oldName;delete schema.properties.newName;

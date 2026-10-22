@@ -1,0 +1,11 @@
+{
+  "reviewer": "/root/astra_security_review",
+  "requestedModel": "Astra ultra",
+  "mode": "read-only-source-native-evidence-and-fresh-context-formula-replay",
+  "nativeRunId": "61a4b228-9f59-48a1-8ba4-b34cd82720e0",
+  "formalRunId": "c3f36651-19b6-4c93-8072-6d9b1b3171a7",
+  "nativeReceiptSha256": "6dae335ca5f276c71254a888529428f051c8cb2325599bf15bc0ce380c06af63",
+  "formalReceiptSha256": "3800954c6cb3c006ec3bed71d45e54b9fe1f5c1825a5bd1a0590eeace4cc528e",
+  "report": "Final review passed; both findings are resolved. Native61a4b228:217 matching observations,97 transcripts,all6 pins current. The min-only mutant now preserves the JSON string guard. Formalc3f36651: independently replayed12/12 queries in fresh Z3 4.15.4 contexts\u20144 UNSAT,8 SAT. All3 pins current;scope correctly excludes publication/order proof. Earlier receipts remain byte-identical. Reviewed inputs stayed unchanged. Native receiptSHA6dae335ca5f276c71254a888529428f051c8cb2325599bf15bc0ce380c06af63;formal receiptSHA3800954c6cb3c006ec3bed71d45e54b9fe1f5c1825a5bd1a0590eeace4cc528e. No remaining findings within this scope. No native execution, edits, refinement claim, or acceptance promotion by this review.",
+  "disposition": "JSON string guard retained in isolated cardinality mutant; count/preflight formulas explicitly qualified as guard-definition checks, not publication or ordering proof."
+}

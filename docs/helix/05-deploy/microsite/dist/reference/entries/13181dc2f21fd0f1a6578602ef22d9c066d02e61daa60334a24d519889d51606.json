@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 11856,
+        "line": 124,
+        "path": "src/adapters/avro/index.ts",
+        "sha256": "cefde9ea1d5afd42bae3c695d2d91bd4eff1f2939cd4231bc6a8b1be524f0430"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "proposeAvroNodeEdit",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: Document, path: string, text: string, dependencyId?: string | undefined): AvroNodeEditProposal"
+    ]
+  },
+  "id": "[\"api\",\".\",\"proposeAvroNodeEdit\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 11856,
+      "line": 124,
+      "path": "src/adapters/avro/index.ts",
+      "sha256": "cefde9ea1d5afd42bae3c695d2d91bd4eff1f2939cd4231bc6a8b1be524f0430"
+    }
+  ],
+  "summary": "Explicit authoring proposal, not a semantic-validity or compatibility certificate.",
+  "title": "proposeAvroNodeEdit"
+}

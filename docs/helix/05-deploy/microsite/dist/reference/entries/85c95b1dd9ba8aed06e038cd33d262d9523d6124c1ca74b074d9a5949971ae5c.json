@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 4632,
+        "line": 6,
+        "path": "src/adapters/iceberg/table-transforms.ts",
+        "sha256": "a9bad2b48778d1eb07b973a3e3b25e6277f465f6b9fa6ff0e4ecc27a01bb4a95"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "IcebergTableTransforms",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface IcebergTableTransforms {\n status:'checked'|'blocked';complete:false;\n bindings:{fieldPath:string;sourcePath:string;assessment:IcebergTransformType}[];\n diagnostics:Diagnostic[];\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"IcebergTableTransforms\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 4632,
+      "line": 6,
+      "path": "src/adapters/iceberg/table-transforms.ts",
+      "sha256": "a9bad2b48778d1eb07b973a3e3b25e6277f465f6b9fa6ff0e4ecc27a01bb4a95"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/iceberg/table-transforms.ts",
+  "title": "IcebergTableTransforms"
+}

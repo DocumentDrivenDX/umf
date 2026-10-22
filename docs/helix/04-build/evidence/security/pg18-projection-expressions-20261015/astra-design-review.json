@@ -1,0 +1,113 @@
+{
+  "scope": "Read-only preimplementation design review; no compiler/native execution qualification",
+  "head": "7a74b77a284940e08756384f3a7c1f30e40effd7",
+  "case": {
+    "id": "pg-raw.P02",
+    "backend": "pg-raw",
+    "covers": [
+      "US-056-AC6"
+    ],
+    "name": "protection-transform-correspondence",
+    "assertion": "Owner-held security_barrier views project each catalog transform (mask function classes, generalize buckets/date truncation, hash) for the authored Resource fields; per-actor disclosed values match the independent Python oracle byte-exact, with storageEffect and output-domain metadata on the disclosure transport; the base table grants no ordinary SELECT.",
+    "required": true,
+    "layer": "native",
+    "status": "not-run",
+    "command": null,
+    "evidence": null,
+    "testSource": null,
+    "oracleSource": null,
+    "implementationSources": [],
+    "timeoutMs": 60000,
+    "assertionIds": [
+      "pg-raw.P02"
+    ]
+  },
+  "sources": {
+    "docs/helix/03-test/security/cases.json": "b057a4a17291a7f761759b1f7f0d65237407930e409d0e07fdc2607b75fa6137",
+    "docs/helix/03-test/test-plans/STP-056-security-bindings.md": "1d672c626307b03c982781db5112ef07ddab38992b855f05fa22a0c2fb9e41ef",
+    "docs/helix/01-frame/user-stories/US-056-security-bindings.md": "c11ecdec8e6b429e7bef2f60d2a9faa42ee0699bc5f0d1627f76d9b486f91171",
+    "docs/helix/02-design/contracts/CONTRACT-062-security-semantics.md": "56595530f73fbbaa7a5967c55e68b31abf75c94d781e36aef80c9a8d743bfe1f",
+    "docs/helix/02-design/contracts/CONTRACT-063-security-enforcement.md": "a2ef9ce52ce65db723ae89a10b7c1d207a278b2ea6e9e3bb903713abb3e988b3",
+    "docs/helix/02-design/contracts/CONTRACT-066-gregorian-date-operations.md": "d20814589fa55f87fbc2aba2db150739b9df154d47e0067645b1fe411e58adf4",
+    "docs/helix/04-build/security-field-protection-plan.md": "19c5ab81da0da49a7ca92fde72fac9d265c31941e7846ccd96cea285e5b0cb00",
+    "src/extensions/security/protection/functions.ts": "b20bfd2016e15cf0f0590282b9284ff716251a88043514ed9052a7695ddb57db",
+    "src/extensions/security/protection/disclosure.ts": "a8aec1e8fb596efb925b017127a8dff0b5c64c4cd3303194a9d123bfb443f238",
+    "src/extensions/security/protection/parameters.ts": "d5920790eba3c62904645d98a06f61f54c68483b8276cfe1d455268cde20d0e4",
+    "src/extensions/security/protection/domains.ts": "b8dc68f55221aa7e666aae0a9e9b26f874e9ba27fccbdcc8139084f4fbc7a7d9"
+  },
+  "conclusion": "Fixed versioned native provider is a viable prerequisite. P02 remains required/not-run until every original assertion conjunct has actual integrated evidence. Expression-only component cannot qualify P02.",
+  "required_conjuncts": [
+    "Source-derived exact catalog transform/domain/parameter binding, not an independently fabricated recipe standing in for source",
+    "All five named mask classes, prefix, exact integer/decimal buckets, explicit Gregorian truncation and actual SHA256 for authored Resource fields",
+    "Actual owner-held security_barrier view, qualified owner/RLS/session identity and dependency/definition inventory",
+    "Each ordinary actor executes native query; independent Python expected eligibility and exact output bytes",
+    "Source-pinned disclosure transport with exact outputDomain and storageEffect, no claim codec verifies transformation",
+    "Effective ordinary base/column SELECT absence; excluded privileged routes explicit",
+    "Original 60000ms, pinned PostgreSQL18.6 image/client, source stability and owned cleanup before accepted receipt"
+  ],
+  "design_requirements": {
+    "regex": [
+      "Versioned exact language: nonempty literals or exactly [0-9]+; explicit all-occurrence versus first replacement",
+      "Literal replacement handling must prevent PostgreSQL replacement backreferences; reject all unsupported pattern/flag constructs",
+      "C collation/UTF8 and scalar/null/size rules; no normalization or fallback to constant",
+      "Unknown provider/recipe fails before SQL installation; no native/JS authored code execution"
+    ],
+    "numeric": [
+      "Use exact numeric coefficient div/mod with negative-remainder floor correction",
+      "No JS Number/binary float, quotient rounding, integer overflow or precision-cast rounding",
+      "Explicit exact scale/precision/output refinements and finite bounds; reject NaN/Infinity"
+    ],
+    "strings": [
+      "Unicode scalar counts, no grapheme/NFC inference; short prefix/suffix never overlap",
+      "Constant/null-out still require valid present input; nullable input does not suppress constant or null-out",
+      "Other recipes propagate null only if both selected domains permit it",
+      "PostgreSQL text cannot represent NUL/invalid UTF8; explicit carrier refusal required rather than silent loss"
+    ],
+    "date": [
+      "Explicit CONTRACT066 profile; strict ASCII date/calendar validity/year0001..9999",
+      "Year/quarter/month/day, no timezone or host Date inference; no broad native date-cast admission",
+      "Native output matches exact profile text and transport valueProfile"
+    ],
+    "hash": [
+      "Explicit SHA256 over exact UTF8 bytes; exact lower-hex or binary output domain chosen, never inferred",
+      "Unsalted effective equality and mandatory dictionary warning retained",
+      "Native provider execution does not activate pure .2 hash API or qualify keyed/vault custody"
+    ],
+    "source_and_transport": [
+      "Exact qualified Field/policy/catalog/core pins, all typed parameters and output refinements",
+      "No inference of permission from transform classification; eligibility remains separately declared fixed membership profile",
+      "Read-time transform BindingReceipt storageEffect=disclosed-only maps to transport column storageEffect=canonical; retain both exact vocabularies",
+      "Stored token/decryption/crypto custody not qualified; no native renderer accepting substituted same-family Fields"
+    ],
+    "native_profile": [
+      "Owner/view definition/options/dependency and effective role/base/column grants retained",
+      "View owner RLS context requires explicitly qualified non-bypass owner/FORCE RLS and original SESSION_USER membership",
+      "Pin builtin schemas/types/operators; quote or encode all source values and identifiers",
+      "Security barrier alone is not a whole-query leakage/effect/authority theorem; P03 and other unbound cases remain separate"
+    ]
+  },
+  "independent_vectors": [
+    "Supplementary scalars, combining sequences, empty strings, overlap and exact counts",
+    "Quotes/backslashes/metacharacters in literal patterns and replacements; ASCII versus non-ASCII digits",
+    "Integer and decimal positive/negative boundary, >2^53, large width-1, nonzero origin, output overflow",
+    "Leap years1900/2000, all quarter boundaries, invalid/expanded dates, null input/output",
+    "SHA256 empty/ASCII/Unicode bytes and exact output casing/width",
+    "Domain/ref/pin/unknown/parameter-order/duplicate/refinement mutation refusals; catalog null/absence distinction",
+    "Actual wrong-expression and base-grant weakening, no case promotion from inventory alone"
+  ],
+  "references": [
+    "https://www.postgresql.org/docs/18/sql-createview.html",
+    "https://www.postgresql.org/docs/18/rules-privileges.html",
+    "https://www.postgresql.org/docs/18/functions-string.html",
+    "https://www.postgresql.org/docs/18/functions-matching.html",
+    "https://www.postgresql.org/docs/18/functions-binarystring.html",
+    "https://www.postgresql.org/docs/18/functions-math.html",
+    "https://www.postgresql.org/docs/18/datatype-numeric.html"
+  ],
+  "limits": [
+    "No native commands executed for this design review",
+    "No production compiler/source changes or native authority/admission issued",
+    "No P02/P03/other acceptance promotion",
+    "Design checklist is not a complete transitive privilege/DDL/role lifetime or CPU/heap theorem"
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "status": "passed-retained-native-oracle-replay",
+  "freshNativeExecution": false,
+  "sourceDigests": {
+    "docs/helix/04-build/evidence/security/truss-key-transport.json": "9e005b3c84aa59bbd1936b8a65d912fb962e1451c4d329b600703ef190b7a62f",
+    "/Users/erik/Projects/truss/packages/postgresql/src/security-stored-key.ts": "c7735d79e94a23884d07e820c22539205c4dd2b5743cb10b861067c0e5b6000a",
+    "/Users/erik/Projects/truss/packages/postgresql/src/security-graph-locator.ts": "337f48ea85dcb4c1a4359a0dee8cb0e8bbc0a4a873c3f8e96130ae8e80c28d04",
+    "/Users/erik/Projects/truss/packages/postgresql/src/security-key-namespace.ts": "97036be2d955336de8dccd08e8281269263e8c4d49e9b73cf36045a845bc6ce4",
+    "/Users/erik/Projects/truss/packages/postgresql/src/security-key-transport.ts": "720d4d471ca37e38da3c1949243f64e5ac7af787da9b38f7fea477400b54abce",
+    "/private/tmp/truss-umf-runtime-bG1IMG/producer.js": "0a5c81094f4cb153d8d847701e9f73dc96ddd3d03eeb6488251fc696a95ad775",
+    "tools/security/truss-stored-key-browser.ts": "16e5c156e8f29937bdcf24b92eece6d8646f32738862bee11bc1b00f5bbc7096"
+  },
+  "browser": "153.0.8010.12",
+  "observed": {
+    "graphTypedOwner": {
+      "id": "9007199254740993",
+      "typeId": "1"
+    },
+    "graphChangedBytesRefused": true,
+    "pendingInvalidStoredRefused": true,
+    "pendingOriginalStoredCaptured": true,
+    "pendingInvalidValuesRefused": true,
+    "encoded": {
+      "namespaceHex": "5b2274727573732d6b65792d6275636b65742f302e312e30222c22666978747572652d6f6e6c792d65706f6368222c2232383434333233622d383861362d346434622d383533352d656530333738393238643136222c2231222c2231222c22756d662d6b65792d7475706c652d7631222c22332e302e30222c2230613563383130393466346362313533643864383437373031653966373364633936646464336430336565623634383832353166633639366139356164373735225d",
+      "keyHex": "756d662d6b65792d7475706c652d76313a6865783a35353464343634623331303330333036303333313332333333343330303430376539396261616630396639393832303231303339333033303337333133393339333233353334333733343330333933393333"
+    },
+    "nativeOriginal": true,
+    "foreignNamespaceRefused": true,
+    "changedPayloadRefused": true,
+    "hostGlobals": []
+  },
+  "externalRequests": 0,
+  "scope": "Retained native oracle replay only; no fresh database execution. Actual registered UMF owner v3 tuple and portable Truss exact transport in real Chromium, compared with native 0.15 bytea bucket roundtrip. Candidate typed graph lookup composes those original bytes with explicitly constructed locator/owner rows; these rows are not retained native owner observations. Exact decimal/Unicode/large-integer tokens retained; foreign namespace and changed payload refuse. Native installation/catalog namespace authority, complete graph/source/guard/role/custody profile remain unqualified."
+}

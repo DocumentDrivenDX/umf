@@ -1,0 +1,1538 @@
+{
+  "data": {
+    "extensionId": "umf.arrow.flatbuffer",
+    "manifest": {
+      "capabilities": {
+        "directions": [
+          "import",
+          "export"
+        ],
+        "evidence": [
+          "tests/arrow/flatbuffer-schema.test.ts",
+          "fixtures/arrow/flatbuffer-inventory-oracle.json",
+          "tests/arrow/flatbuffer-decode.test.ts",
+          "fixtures/arrow/metadata/oracle-results.json",
+          "tests/arrow/flatbuffer-encode.test.ts",
+          "fixtures/arrow/metadata/encoded-oracle-results.json"
+        ],
+        "native": {
+          "subset": "All 59 metadata declarations, 85 fields and 64 explicit enum/union members. Raw metadata decoding and guarded encoding preserve known values and physical field presence; unknown wire slots stay in source. No complete IPC dataset rewriting, full semantic validation or unknown enum interpretation.",
+          "system": "UMF logical Arrow FlatBuffer JSON profile",
+          "version": "0.1.0, Arrow apache-arrow-21.0.0 definitions"
+        },
+        "validation": "structural"
+      },
+      "coreVersion": "0.10.0",
+      "description": "Logical JSON model of pinned Arrow FlatBuffer metadata declarations",
+      "id": "umf.arrow.flatbuffer",
+      "schema": {
+        "$defs": {
+          "Binary": {
+            "additionalProperties": true,
+            "properties": {},
+            "type": "object"
+          },
+          "BinaryView": {
+            "additionalProperties": true,
+            "properties": {},
+            "type": "object"
+          },
+          "Block": {
+            "additionalProperties": true,
+            "properties": {
+              "bodyLength": {
+                "$ref": "#/$defs/Int64"
+              },
+              "metaDataLength": {
+                "maximum": 2147483647,
+                "minimum": -2147483648,
+                "type": "integer"
+              },
+              "offset": {
+                "$ref": "#/$defs/Int64"
+              }
+            },
+            "required": [
+              "offset",
+              "metaDataLength",
+              "bodyLength"
+            ],
+            "type": "object"
+          },
+          "BodyCompression": {
+            "additionalProperties": true,
+            "properties": {
+              "codec": {
+                "$ref": "#/$defs/CompressionType",
+                "default": "LZ4_FRAME"
+              },
+              "method": {
+                "$ref": "#/$defs/BodyCompressionMethod",
+                "default": "BUFFER"
+              }
+            },
+            "type": "object"
+          },
+          "BodyCompressionMethod": {
+            "enum": [
+              "BUFFER"
+            ],
+            "type": "string"
+          },
+          "Bool": {
+            "additionalProperties": true,
+            "properties": {},
+            "type": "object"
+          },
+          "Buffer": {
+            "additionalProperties": true,
+            "properties": {
+              "length": {
+                "$ref": "#/$defs/Int64"
+              },
+              "offset": {
+                "$ref": "#/$defs/Int64"
+              }
+            },
+            "required": [
+              "offset",
+              "length"
+            ],
+            "type": "object"
+          },
+          "CompressionType": {
+            "enum": [
+              "LZ4_FRAME",
+              "ZSTD"
+            ],
+            "type": "string"
+          },
+          "Date": {
+            "additionalProperties": true,
+            "properties": {
+              "unit": {
+                "$ref": "#/$defs/DateUnit",
+                "default": "MILLISECOND"
+              }
+            },
+            "type": "object"
+          },
+          "DateUnit": {
+            "enum": [
+              "DAY",
+              "MILLISECOND"
+            ],
+            "type": "string"
+          },
+          "Decimal": {
+            "additionalProperties": true,
+            "properties": {
+              "bitWidth": {
+                "default": 128,
+                "maximum": 2147483647,
+                "minimum": -2147483648,
+                "type": "integer"
+              },
+              "precision": {
+                "maximum": 2147483647,
+                "minimum": -2147483648,
+                "type": "integer"
+              },
+              "scale": {
+                "maximum": 2147483647,
+                "minimum": -2147483648,
+                "type": "integer"
+              }
+            },
+            "type": "object"
+          },
+          "DictionaryBatch": {
+            "additionalProperties": true,
+            "properties": {
+              "data": {
+                "$ref": "#/$defs/RecordBatch"
+              },
+              "id": {
+                "$ref": "#/$defs/Int64"
+              },
+              "isDelta": {
+                "default": false,
+                "type": "boolean"
+              }
+            },
+            "type": "object"
+          },
+          "DictionaryEncoding": {
+            "additionalProperties": true,
+            "properties": {
+              "dictionaryKind": {
+                "$ref": "#/$defs/DictionaryKind"
+              },
+              "id": {
+                "$ref": "#/$defs/Int64"
+              },
+              "indexType": {
+                "$ref": "#/$defs/Int"
+              },
+              "isOrdered": {
+                "type": "boolean"
+              }
+            },
+            "type": "object"
+          },
+          "DictionaryKind": {
+            "enum": [
+              "DenseArray"
+            ],
+            "type": "string"
+          },
+          "Duration": {
+            "additionalProperties": true,
+            "properties": {
+              "unit": {
+                "$ref": "#/$defs/TimeUnit",
+                "default": "MILLISECOND"
+              }
+            },
+            "type": "object"
+          },
+          "Endianness": {
+            "enum": [
+              "Little",
+              "Big"
+            ],
+            "type": "string"
+          },
+          "Feature": {
+            "enum": [
+              "UNUSED",
+              "DICTIONARY_REPLACEMENT",
+              "COMPRESSED_BODY"
+            ],
+            "type": "string"
+          },
+          "Field": {
+            "additionalProperties": true,
+            "properties": {
+              "children": {
+                "items": {
+                  "$ref": "#/$defs/Field"
+                },
+                "type": "array"
+              },
+              "custom_metadata": {
+                "items": {
+                  "$ref": "#/$defs/KeyValue"
+                },
+                "type": "array"
+              },
+              "dictionary": {
+                "$ref": "#/$defs/DictionaryEncoding"
+              },
+              "name": {
+                "type": "string"
+              },
+              "nullable": {
+                "type": "boolean"
+              },
+              "type": {
+                "$ref": "#/$defs/Type"
+              }
+            },
+            "type": "object"
+          },
+          "FieldNode": {
+            "additionalProperties": true,
+            "properties": {
+              "length": {
+                "$ref": "#/$defs/Int64"
+              },
+              "null_count": {
+                "$ref": "#/$defs/Int64"
+              }
+            },
+            "required": [
+              "length",
+              "null_count"
+            ],
+            "type": "object"
+          },
+          "FixedSizeBinary": {
+            "additionalProperties": true,
+            "properties": {
+              "byteWidth": {
+                "maximum": 2147483647,
+                "minimum": -2147483648,
+                "type": "integer"
+              }
+            },
+            "type": "object"
+          },
+          "FixedSizeList": {
+            "additionalProperties": true,
+            "properties": {
+              "listSize": {
+                "maximum": 2147483647,
+                "minimum": -2147483648,
+                "type": "integer"
+              }
+            },
+            "type": "object"
+          },
+          "FloatingPoint": {
+            "additionalProperties": true,
+            "properties": {
+              "precision": {
+                "$ref": "#/$defs/Precision"
+              }
+            },
+            "type": "object"
+          },
+          "Footer": {
+            "additionalProperties": true,
+            "properties": {
+              "custom_metadata": {
+                "items": {
+                  "$ref": "#/$defs/KeyValue"
+                },
+                "type": "array"
+              },
+              "dictionaries": {
+                "items": {
+                  "$ref": "#/$defs/Block"
+                },
+                "type": "array"
+              },
+              "recordBatches": {
+                "items": {
+                  "$ref": "#/$defs/Block"
+                },
+                "type": "array"
+              },
+              "schema": {
+                "$ref": "#/$defs/Schema"
+              },
+              "version": {
+                "$ref": "#/$defs/MetadataVersion"
+              }
+            },
+            "type": "object"
+          },
+          "Int": {
+            "additionalProperties": true,
+            "properties": {
+              "bitWidth": {
+                "maximum": 2147483647,
+                "minimum": -2147483648,
+                "type": "integer"
+              },
+              "is_signed": {
+                "type": "boolean"
+              }
+            },
+            "type": "object"
+          },
+          "Int64": {
+            "description": "Canonical decimal spelling of an exact signed 64-bit value; not a JS number.",
+            "pattern": "^(?:0|[1-9][0-9]{0,17}|(?:[1-8][0-9]{18}|9[0-1][0-9]{17}|92[0-1][0-9]{16}|922[0-2][0-9]{15}|9223[0-2][0-9]{14}|92233[0-6][0-9]{13}|922337[0-1][0-9]{12}|92233720[0-2][0-9]{10}|922337203[0-5][0-9]{9}|9223372036[0-7][0-9]{8}|92233720368[0-4][0-9]{7}|922337203685[0-3][0-9]{6}|9223372036854[0-6][0-9]{5}|92233720368547[0-6][0-9]{4}|922337203685477[0-4][0-9]{3}|9223372036854775[0-7][0-9]{2}|922337203685477580[0-6]|9223372036854775807)|-(?:[1-9][0-9]{0,17}|[1-8][0-9]{18}|9[0-1][0-9]{17}|92[0-1][0-9]{16}|922[0-2][0-9]{15}|9223[0-2][0-9]{14}|92233[0-6][0-9]{13}|922337[0-1][0-9]{12}|92233720[0-2][0-9]{10}|922337203[0-5][0-9]{9}|9223372036[0-7][0-9]{8}|92233720368[0-4][0-9]{7}|922337203685[0-3][0-9]{6}|9223372036854[0-6][0-9]{5}|92233720368547[0-6][0-9]{4}|922337203685477[0-4][0-9]{3}|9223372036854775[0-7][0-9]{2}|922337203685477580[0-7]|9223372036854775808))$",
+            "type": "string"
+          },
+          "Interval": {
+            "additionalProperties": true,
+            "properties": {
+              "unit": {
+                "$ref": "#/$defs/IntervalUnit"
+              }
+            },
+            "type": "object"
+          },
+          "IntervalUnit": {
+            "enum": [
+              "YEAR_MONTH",
+              "DAY_TIME",
+              "MONTH_DAY_NANO"
+            ],
+            "type": "string"
+          },
+          "KeyValue": {
+            "additionalProperties": true,
+            "properties": {
+              "key": {
+                "type": "string"
+              },
+              "value": {
+                "type": "string"
+              }
+            },
+            "type": "object"
+          },
+          "LargeBinary": {
+            "additionalProperties": true,
+            "properties": {},
+            "type": "object"
+          },
+          "LargeList": {
+            "additionalProperties": true,
+            "properties": {},
+            "type": "object"
+          },
+          "LargeListView": {
+            "additionalProperties": true,
+            "properties": {},
+            "type": "object"
+          },
+          "LargeUtf8": {
+            "additionalProperties": true,
+            "properties": {},
+            "type": "object"
+          },
+          "List": {
+            "additionalProperties": true,
+            "properties": {},
+            "type": "object"
+          },
+          "ListView": {
+            "additionalProperties": true,
+            "properties": {},
+            "type": "object"
+          },
+          "Map": {
+            "additionalProperties": true,
+            "properties": {
+              "keysSorted": {
+                "type": "boolean"
+              }
+            },
+            "type": "object"
+          },
+          "Message": {
+            "additionalProperties": true,
+            "properties": {
+              "bodyLength": {
+                "$ref": "#/$defs/Int64"
+              },
+              "custom_metadata": {
+                "items": {
+                  "$ref": "#/$defs/KeyValue"
+                },
+                "type": "array"
+              },
+              "header": {
+                "$ref": "#/$defs/MessageHeader"
+              },
+              "version": {
+                "$ref": "#/$defs/MetadataVersion"
+              }
+            },
+            "type": "object"
+          },
+          "MessageHeader": {
+            "oneOf": [
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "type": {
+                    "const": "NONE"
+                  }
+                },
+                "required": [
+                  "type"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "type": {
+                    "const": "Schema"
+                  },
+                  "value": {
+                    "$ref": "#/$defs/Schema"
+                  }
+                },
+                "required": [
+                  "type",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "type": {
+                    "const": "DictionaryBatch"
+                  },
+                  "value": {
+                    "$ref": "#/$defs/DictionaryBatch"
+                  }
+                },
+                "required": [
+                  "type",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "type": {
+                    "const": "RecordBatch"
+                  },
+                  "value": {
+                    "$ref": "#/$defs/RecordBatch"
+                  }
+                },
+                "required": [
+                  "type",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "type": {
+                    "const": "Tensor"
+                  },
+                  "value": {
+                    "$ref": "#/$defs/Tensor"
+                  }
+                },
+                "required": [
+                  "type",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "type": {
+                    "const": "SparseTensor"
+                  },
+                  "value": {
+                    "$ref": "#/$defs/SparseTensor"
+                  }
+                },
+                "required": [
+                  "type",
+                  "value"
+                ],
+                "type": "object"
+              }
+            ]
+          },
+          "MetadataVersion": {
+            "enum": [
+              "V1",
+              "V2",
+              "V3",
+              "V4",
+              "V5"
+            ],
+            "type": "string"
+          },
+          "Null": {
+            "additionalProperties": true,
+            "properties": {},
+            "type": "object"
+          },
+          "Precision": {
+            "enum": [
+              "HALF",
+              "SINGLE",
+              "DOUBLE"
+            ],
+            "type": "string"
+          },
+          "RecordBatch": {
+            "additionalProperties": true,
+            "properties": {
+              "buffers": {
+                "items": {
+                  "$ref": "#/$defs/Buffer"
+                },
+                "type": "array"
+              },
+              "compression": {
+                "$ref": "#/$defs/BodyCompression"
+              },
+              "length": {
+                "$ref": "#/$defs/Int64"
+              },
+              "nodes": {
+                "items": {
+                  "$ref": "#/$defs/FieldNode"
+                },
+                "type": "array"
+              },
+              "variadicBufferCounts": {
+                "items": {
+                  "$ref": "#/$defs/Int64"
+                },
+                "type": "array"
+              }
+            },
+            "type": "object"
+          },
+          "RunEndEncoded": {
+            "additionalProperties": true,
+            "properties": {},
+            "type": "object"
+          },
+          "Schema": {
+            "additionalProperties": true,
+            "properties": {
+              "custom_metadata": {
+                "items": {
+                  "$ref": "#/$defs/KeyValue"
+                },
+                "type": "array"
+              },
+              "endianness": {
+                "$ref": "#/$defs/Endianness",
+                "default": "Little"
+              },
+              "features": {
+                "items": {
+                  "$ref": "#/$defs/Feature"
+                },
+                "type": "array"
+              },
+              "fields": {
+                "items": {
+                  "$ref": "#/$defs/Field"
+                },
+                "type": "array"
+              }
+            },
+            "type": "object"
+          },
+          "SparseMatrixCompressedAxis": {
+            "enum": [
+              "Row",
+              "Column"
+            ],
+            "type": "string"
+          },
+          "SparseMatrixIndexCSX": {
+            "additionalProperties": true,
+            "properties": {
+              "compressedAxis": {
+                "$ref": "#/$defs/SparseMatrixCompressedAxis"
+              },
+              "indicesBuffer": {
+                "$ref": "#/$defs/Buffer"
+              },
+              "indicesType": {
+                "$ref": "#/$defs/Int"
+              },
+              "indptrBuffer": {
+                "$ref": "#/$defs/Buffer"
+              },
+              "indptrType": {
+                "$ref": "#/$defs/Int"
+              }
+            },
+            "required": [
+              "indptrType",
+              "indptrBuffer",
+              "indicesType",
+              "indicesBuffer"
+            ],
+            "type": "object"
+          },
+          "SparseTensor": {
+            "additionalProperties": true,
+            "properties": {
+              "data": {
+                "$ref": "#/$defs/Buffer"
+              },
+              "non_zero_length": {
+                "$ref": "#/$defs/Int64"
+              },
+              "shape": {
+                "items": {
+                  "$ref": "#/$defs/TensorDim"
+                },
+                "type": "array"
+              },
+              "sparseIndex": {
+                "$ref": "#/$defs/SparseTensorIndex",
+                "not": {
+                  "properties": {
+                    "type": {
+                      "const": "NONE"
+                    }
+                  },
+                  "required": [
+                    "type"
+                  ],
+                  "type": "object"
+                }
+              },
+              "type": {
+                "$ref": "#/$defs/Type",
+                "not": {
+                  "properties": {
+                    "type": {
+                      "const": "NONE"
+                    }
+                  },
+                  "required": [
+                    "type"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "required": [
+              "type",
+              "shape",
+              "sparseIndex",
+              "data"
+            ],
+            "type": "object"
+          },
+          "SparseTensorIndex": {
+            "oneOf": [
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "type": {
+                    "const": "NONE"
+                  }
+                },
+                "required": [
+                  "type"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "type": {
+                    "const": "SparseTensorIndexCOO"
+                  },
+                  "value": {
+                    "$ref": "#/$defs/SparseTensorIndexCOO"
+                  }
+                },
+                "required": [
+                  "type",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "type": {
+                    "const": "SparseMatrixIndexCSX"
+                  },
+                  "value": {
+                    "$ref": "#/$defs/SparseMatrixIndexCSX"
+                  }
+                },
+                "required": [
+                  "type",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "type": {
+                    "const": "SparseTensorIndexCSF"
+                  },
+                  "value": {
+                    "$ref": "#/$defs/SparseTensorIndexCSF"
+                  }
+                },
+                "required": [
+                  "type",
+                  "value"
+                ],
+                "type": "object"
+              }
+            ]
+          },
+          "SparseTensorIndexCOO": {
+            "additionalProperties": true,
+            "properties": {
+              "indicesBuffer": {
+                "$ref": "#/$defs/Buffer"
+              },
+              "indicesStrides": {
+                "items": {
+                  "$ref": "#/$defs/Int64"
+                },
+                "type": "array"
+              },
+              "indicesType": {
+                "$ref": "#/$defs/Int"
+              },
+              "isCanonical": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "indicesType",
+              "indicesBuffer"
+            ],
+            "type": "object"
+          },
+          "SparseTensorIndexCSF": {
+            "additionalProperties": true,
+            "properties": {
+              "axisOrder": {
+                "items": {
+                  "maximum": 2147483647,
+                  "minimum": -2147483648,
+                  "type": "integer"
+                },
+                "type": "array"
+              },
+              "indicesBuffers": {
+                "items": {
+                  "$ref": "#/$defs/Buffer"
+                },
+                "type": "array"
+              },
+              "indicesType": {
+                "$ref": "#/$defs/Int"
+              },
+              "indptrBuffers": {
+                "items": {
+                  "$ref": "#/$defs/Buffer"
+                },
+                "type": "array"
+              },
+              "indptrType": {
+                "$ref": "#/$defs/Int"
+              }
+            },
+            "required": [
+              "indptrType",
+              "indptrBuffers",
+              "indicesType",
+              "indicesBuffers",
+              "axisOrder"
+            ],
+            "type": "object"
+          },
+          "Struct_": {
+            "additionalProperties": true,
+            "properties": {},
+            "type": "object"
+          },
+          "Tensor": {
+            "additionalProperties": true,
+            "properties": {
+              "data": {
+                "$ref": "#/$defs/Buffer"
+              },
+              "shape": {
+                "items": {
+                  "$ref": "#/$defs/TensorDim"
+                },
+                "type": "array"
+              },
+              "strides": {
+                "items": {
+                  "$ref": "#/$defs/Int64"
+                },
+                "type": "array"
+              },
+              "type": {
+                "$ref": "#/$defs/Type",
+                "not": {
+                  "properties": {
+                    "type": {
+                      "const": "NONE"
+                    }
+                  },
+                  "required": [
+                    "type"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            "required": [
+              "type",
+              "shape",
+              "data"
+            ],
+            "type": "object"
+          },
+          "TensorDim": {
+            "additionalProperties": true,
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "size": {
+                "$ref": "#/$defs/Int64"
+              }
+            },
+            "type": "object"
+          },
+          "Time": {
+            "additionalProperties": true,
+            "properties": {
+              "bitWidth": {
+                "default": 32,
+                "maximum": 2147483647,
+                "minimum": -2147483648,
+                "type": "integer"
+              },
+              "unit": {
+                "$ref": "#/$defs/TimeUnit",
+                "default": "MILLISECOND"
+              }
+            },
+            "type": "object"
+          },
+          "TimeUnit": {
+            "enum": [
+              "SECOND",
+              "MILLISECOND",
+              "MICROSECOND",
+              "NANOSECOND"
+            ],
+            "type": "string"
+          },
+          "Timestamp": {
+            "additionalProperties": true,
+            "properties": {
+              "timezone": {
+                "type": "string"
+              },
+              "unit": {
+                "$ref": "#/$defs/TimeUnit"
+              }
+            },
+            "type": "object"
+          },
+          "Type": {
+            "oneOf": [
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "type": {
+                    "const": "NONE"
+                  }
+                },
+                "required": [
+                  "type"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "type": {
+                    "const": "Null"
+                  },
+                  "value": {
+                    "$ref": "#/$defs/Null"
+                  }
+                },
+                "required": [
+                  "type",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "type": {
+                    "const": "Int"
+                  },
+                  "value": {
+                    "$ref": "#/$defs/Int"
+                  }
+                },
+                "required": [
+                  "type",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "type": {
+                    "const": "FloatingPoint"
+                  },
+                  "value": {
+                    "$ref": "#/$defs/FloatingPoint"
+                  }
+                },
+                "required": [
+                  "type",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "type": {
+                    "const": "Binary"
+                  },
+                  "value": {
+                    "$ref": "#/$defs/Binary"
+                  }
+                },
+                "required": [
+                  "type",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "type": {
+                    "const": "Utf8"
+                  },
+                  "value": {
+                    "$ref": "#/$defs/Utf8"
+                  }
+                },
+                "required": [
+                  "type",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "type": {
+                    "const": "Bool"
+                  },
+                  "value": {
+                    "$ref": "#/$defs/Bool"
+                  }
+                },
+                "required": [
+                  "type",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "type": {
+                    "const": "Decimal"
+                  },
+                  "value": {
+                    "$ref": "#/$defs/Decimal"
+                  }
+                },
+                "required": [
+                  "type",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "type": {
+                    "const": "Date"
+                  },
+                  "value": {
+                    "$ref": "#/$defs/Date"
+                  }
+                },
+                "required": [
+                  "type",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "type": {
+                    "const": "Time"
+                  },
+                  "value": {
+                    "$ref": "#/$defs/Time"
+                  }
+                },
+                "required": [
+                  "type",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "type": {
+                    "const": "Timestamp"
+                  },
+                  "value": {
+                    "$ref": "#/$defs/Timestamp"
+                  }
+                },
+                "required": [
+                  "type",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "type": {
+                    "const": "Interval"
+                  },
+                  "value": {
+                    "$ref": "#/$defs/Interval"
+                  }
+                },
+                "required": [
+                  "type",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "type": {
+                    "const": "List"
+                  },
+                  "value": {
+                    "$ref": "#/$defs/List"
+                  }
+                },
+                "required": [
+                  "type",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "type": {
+                    "const": "Struct_"
+                  },
+                  "value": {
+                    "$ref": "#/$defs/Struct_"
+                  }
+                },
+                "required": [
+                  "type",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "type": {
+                    "const": "Union"
+                  },
+                  "value": {
+                    "$ref": "#/$defs/Union"
+                  }
+                },
+                "required": [
+                  "type",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "type": {
+                    "const": "FixedSizeBinary"
+                  },
+                  "value": {
+                    "$ref": "#/$defs/FixedSizeBinary"
+                  }
+                },
+                "required": [
+                  "type",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "type": {
+                    "const": "FixedSizeList"
+                  },
+                  "value": {
+                    "$ref": "#/$defs/FixedSizeList"
+                  }
+                },
+                "required": [
+                  "type",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "type": {
+                    "const": "Map"
+                  },
+                  "value": {
+                    "$ref": "#/$defs/Map"
+                  }
+                },
+                "required": [
+                  "type",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "type": {
+                    "const": "Duration"
+                  },
+                  "value": {
+                    "$ref": "#/$defs/Duration"
+                  }
+                },
+                "required": [
+                  "type",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "type": {
+                    "const": "LargeBinary"
+                  },
+                  "value": {
+                    "$ref": "#/$defs/LargeBinary"
+                  }
+                },
+                "required": [
+                  "type",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "type": {
+                    "const": "LargeUtf8"
+                  },
+                  "value": {
+                    "$ref": "#/$defs/LargeUtf8"
+                  }
+                },
+                "required": [
+                  "type",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "type": {
+                    "const": "LargeList"
+                  },
+                  "value": {
+                    "$ref": "#/$defs/LargeList"
+                  }
+                },
+                "required": [
+                  "type",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "type": {
+                    "const": "RunEndEncoded"
+                  },
+                  "value": {
+                    "$ref": "#/$defs/RunEndEncoded"
+                  }
+                },
+                "required": [
+                  "type",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "type": {
+                    "const": "BinaryView"
+                  },
+                  "value": {
+                    "$ref": "#/$defs/BinaryView"
+                  }
+                },
+                "required": [
+                  "type",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "type": {
+                    "const": "Utf8View"
+                  },
+                  "value": {
+                    "$ref": "#/$defs/Utf8View"
+                  }
+                },
+                "required": [
+                  "type",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "type": {
+                    "const": "ListView"
+                  },
+                  "value": {
+                    "$ref": "#/$defs/ListView"
+                  }
+                },
+                "required": [
+                  "type",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "type": {
+                    "const": "LargeListView"
+                  },
+                  "value": {
+                    "$ref": "#/$defs/LargeListView"
+                  }
+                },
+                "required": [
+                  "type",
+                  "value"
+                ],
+                "type": "object"
+              }
+            ]
+          },
+          "Union": {
+            "additionalProperties": true,
+            "properties": {
+              "mode": {
+                "$ref": "#/$defs/UnionMode"
+              },
+              "typeIds": {
+                "items": {
+                  "maximum": 2147483647,
+                  "minimum": -2147483648,
+                  "type": "integer"
+                },
+                "type": "array"
+              }
+            },
+            "type": "object"
+          },
+          "UnionMode": {
+            "enum": [
+              "Sparse",
+              "Dense"
+            ],
+            "type": "string"
+          },
+          "Utf8": {
+            "additionalProperties": true,
+            "properties": {},
+            "type": "object"
+          },
+          "Utf8View": {
+            "additionalProperties": true,
+            "properties": {},
+            "type": "object"
+          }
+        },
+        "$id": "urn:umf:arrow-flatbuffer:0.1.0",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": true,
+        "properties": {
+          "model": {
+            "oneOf": [
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "rootType": {
+                    "const": "Schema"
+                  },
+                  "value": {
+                    "$ref": "#/$defs/Schema"
+                  }
+                },
+                "required": [
+                  "rootType",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "rootType": {
+                    "const": "Message"
+                  },
+                  "value": {
+                    "$ref": "#/$defs/Message"
+                  }
+                },
+                "required": [
+                  "rootType",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "rootType": {
+                    "const": "Footer"
+                  },
+                  "value": {
+                    "$ref": "#/$defs/Footer"
+                  }
+                },
+                "required": [
+                  "rootType",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "rootType": {
+                    "const": "Tensor"
+                  },
+                  "value": {
+                    "$ref": "#/$defs/Tensor"
+                  }
+                },
+                "required": [
+                  "rootType",
+                  "value"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "rootType": {
+                    "const": "SparseTensor"
+                  },
+                  "value": {
+                    "$ref": "#/$defs/SparseTensor"
+                  }
+                },
+                "required": [
+                  "rootType",
+                  "value"
+                ],
+                "type": "object"
+              }
+            ]
+          },
+          "profile": {
+            "const": "arrow-flatbuffer-model"
+          },
+          "wireOmissions": {
+            "items": {
+              "additionalProperties": true,
+              "properties": {
+                "message": {
+                  "type": "string"
+                },
+                "path": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "path",
+                "message"
+              ],
+              "type": "object"
+            },
+            "minItems": 1,
+            "type": "array"
+          }
+        },
+        "required": [
+          "profile",
+          "model"
+        ],
+        "type": "object"
+      },
+      "scopes": [
+        "element"
+      ],
+      "semantics": "CONTRACT-016. This is the UMF logical metadata representation, not flatc JSON or a binary codec. Exact int64 strings and tagged unions preserve distinctions; structural validation does not establish Arrow semantics.",
+      "version": "0.1.0"
+    },
+    "registration": {
+      "apiIds": [
+        "[\"api\",\".\",\"arrowFlatbufferRegistry\"]"
+      ],
+      "coreProfiles": [],
+      "mode": "explicit"
+    },
+    "schemaId": "[\"schema\",\"spec/extensions/arrow-flatbuffer/schema.json\",\"\"]",
+    "version": "0.1.0"
+  },
+  "id": "[\"extension\",\"umf.arrow.flatbuffer\",\"0.1.0\"]",
+  "kind": "extension",
+  "links": [
+    "[\"api\",\".\",\"arrowFlatbufferRegistry\"]",
+    "[\"guide\",\"extensions\"]",
+    "[\"schema\",\"spec/extensions/arrow-flatbuffer/schema.json\",\"\"]",
+    "[\"integration\",\"umf.arrow.flatbuffer@0.1.0:import\"]",
+    "[\"integration\",\"umf.arrow.flatbuffer@0.1.0:export\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 36822,
+      "path": "spec/extensions/arrow-flatbuffer/package.json",
+      "sha256": "6e7736e05a257d61d0f68a186257d81021be2df41dfcea5130fc7ab32263cd59"
+    }
+  ],
+  "summary": "Logical JSON model of pinned Arrow FlatBuffer metadata declarations",
+  "title": "umf.arrow.flatbuffer · 0.1.0"
+}

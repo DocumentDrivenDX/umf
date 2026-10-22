@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 12555,
+        "line": 23,
+        "path": "src/core-ideals/nullability-postgresql.ts",
+        "sha256": "63d02480f83901ad06ea80156ce732e0d2d23fea20066b9cafb7040e848d4c49"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "PostgresqlNullabilityClassification",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface PostgresqlNullabilityClassification {\n operation:'classify-postgresql-nullability';version:'1.0.0';status:'classified'|'blocked';source:Document;target?:Document;request:PostgresqlNullabilityRequest;binding:typeof binding;\n mapping:{origin:'classified';idealPath:string;nativePath:string;nativeFragment:NativeJson;nullability:Nullability;interpretation:'declared'|'unknown'|'unsupported';outcome:'exact'|'unknown'|'not-expressible';scope:PostgresqlNullabilityRequest['scope'];carrier:PostgresqlNullabilityRequest['carrier'];basis:'Captured declarations for stored relation values; not query results, omitted inputs or live enforcement verification'};\n residuals:{path:string;value:Json;reason:string;recovery:typeof recovery}[];diagnostics:Diagnostic[];\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"PostgresqlNullabilityClassification\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 12555,
+      "line": 23,
+      "path": "src/core-ideals/nullability-postgresql.ts",
+      "sha256": "63d02480f83901ad06ea80156ce732e0d2d23fea20066b9cafb7040e848d4c49"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/nullability-postgresql.ts",
+  "title": "PostgresqlNullabilityClassification"
+}

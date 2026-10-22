@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 7183,
+        "line": 64,
+        "path": "src/model/schema-properties.ts",
+        "sha256": "6d1e5b1e5ebcd56a176635e0c8677dca5593b2e41e9068a5d6b3414ae8e0be41"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "CoreDefaultInput",
+    "runtime": "type-only",
+    "signatureText": [
+      "export type CoreDefaultInput={state:'missing'}|{state:'present';value:CoreLiteral};"
+    ]
+  },
+  "id": "[\"api\",\".\",\"CoreDefaultInput\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 7183,
+      "line": 64,
+      "path": "src/model/schema-properties.ts",
+      "sha256": "6d1e5b1e5ebcd56a176635e0c8677dca5593b2e41e9068a5d6b3414ae8e0be41"
+    }
+  ],
+  "summary": "Type declaration · src/model/schema-properties.ts",
+  "title": "CoreDefaultInput"
+}

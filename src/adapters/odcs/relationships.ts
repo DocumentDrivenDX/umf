@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {getOdcsDocumentNode,inspectOdcsDocument} from './index';
 import {resolveOdcsReference} from './references';
 import {copyJson} from '../../model/json';

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {importIcebergSchema,exportIcebergSchema,inspectIceberg,writeDocument,readDocument,proposeIcebergNodeEdit} from '../src';
 import {parseNativeJson,nativePointer,treeChild,renderTree} from '../src/model/native-json';
 const base='fixtures/iceberg/upstream/',m=await Bun.file(base+'manifest.json').json(),trees=new Map();

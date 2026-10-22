@@ -1,0 +1,21 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"parseUuid\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "text",
+      "optional": false,
+      "type": "string"
+    }
+  ],
+  "purpose": "parseUuid accepts text and returns UuidValue.",
+  "related": [],
+  "returns": "UuidValue",
+  "task": "Read and validate",
+  "type": "(text: string) => UuidValue"
+}

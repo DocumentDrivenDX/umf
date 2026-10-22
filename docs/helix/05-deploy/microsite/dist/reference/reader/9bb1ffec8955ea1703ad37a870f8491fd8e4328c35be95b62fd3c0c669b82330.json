@@ -1,0 +1,30 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"proposeGeneralizedRdfToJsonLd\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "options",
+      "optional": false,
+      "type": "{ id: string; baseIRI: string; processingMode: \"json-ld-1.0\" | \"json-ld-1.1\"; lossPolicy: \"report\" | \"reject\"; }"
+    }
+  ],
+  "purpose": "proposeGeneralizedRdfToJsonLd accepts document, options and returns Promise<GeneralizedRdfToJsonLdReport>.",
+  "related": [],
+  "returns": "Promise<GeneralizedRdfToJsonLdReport>",
+  "task": "Author and edit",
+  "type": "(document: Document, options: { id: string; baseIRI: string; processingMode: \"json-ld-1.0\" | \"json-ld-1.1\"; lossPolicy: \"report\" | \"reject\"; }) => Promise<GeneralizedRdfToJsonLdReport>"
+}

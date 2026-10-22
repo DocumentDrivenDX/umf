@@ -1,0 +1,178 @@
+{
+  "status": "pass",
+  "nativeTuple": {
+    "postgresql": "16.15",
+    "pgserver": "0.1.4+truss.pg16.15",
+    "pg8000": "1.31.5"
+  },
+  "columns": [
+    "before_actor",
+    "person",
+    "effective",
+    "role_setting",
+    "database_name",
+    "backend_pid",
+    "xid",
+    "session_oid",
+    "writer_oid",
+    "entry_oid"
+  ],
+  "direct": [
+    [
+      "capture_ordinary",
+      "capture_ordinary",
+      "capture_writer",
+      "none",
+      "postgres",
+      "1522",
+      "731",
+      "16385",
+      "16387",
+      "16388"
+    ]
+  ],
+  "nested": [
+    [
+      "capture_wrapper",
+      "capture_ordinary",
+      "capture_writer",
+      "none",
+      "postgres",
+      "1522",
+      "731",
+      "16385",
+      "16387",
+      "16388"
+    ]
+  ],
+  "installedRoutines": [
+    [
+      "16389",
+      "capture_observability",
+      "unregistered_wrapper",
+      "capture_wrapper",
+      true,
+      "{\"search_path=pg_catalog, pg_temp\"}",
+      " SELECT current_user::text,w.* FROM capture_observability.writer_entry() w "
+    ],
+    [
+      "16388",
+      "capture_observability",
+      "writer_entry",
+      "capture_writer",
+      true,
+      "{\"search_path=pg_catalog, pg_temp\"}",
+      " SELECT session_user::text,current_user::text,current_setting('role'),current_database(),pg_backend_pid()::text,pg_current_xact_id()::text,\n(SELECT oid::text FROM pg_roles WHERE rolname=session_user),\n(SELECT oid::text FROM pg_roles WHERE rolname=current_user),\n'capture_observability.writer_entry()'::regprocedure::oid::text "
+    ]
+  ],
+  "observations": [
+    {
+      "id": "fixed-server-version",
+      "expected": [
+        [
+          "160015"
+        ]
+      ],
+      "observed": [
+        [
+          "160015"
+        ]
+      ]
+    },
+    {
+      "id": "direct-original-before-actor",
+      "expected": "capture_ordinary",
+      "observed": "capture_ordinary"
+    },
+    {
+      "id": "wrapper-original-before-actor",
+      "expected": "capture_wrapper",
+      "observed": "capture_wrapper"
+    },
+    {
+      "id": "same-post-elevation-tuple",
+      "expected": [
+        "capture_ordinary",
+        "capture_writer",
+        "none",
+        "postgres",
+        "1522",
+        "731",
+        "16385",
+        "16387",
+        "16388"
+      ],
+      "observed": [
+        "capture_ordinary",
+        "capture_writer",
+        "none",
+        "postgres",
+        "1522",
+        "731",
+        "16385",
+        "16387",
+        "16388"
+      ]
+    },
+    {
+      "id": "writer-effective-owner",
+      "expected": "capture_writer",
+      "observed": "capture_writer"
+    },
+    {
+      "id": "native-person-remains-ordinary",
+      "expected": "capture_ordinary",
+      "observed": "capture_ordinary"
+    },
+    {
+      "id": "native-role-setting-identical-none",
+      "expected": "none",
+      "observed": "none"
+    },
+    {
+      "id": "actual-session-oid",
+      "expected": [
+        "16385"
+      ],
+      "observed": [
+        "16385"
+      ]
+    },
+    {
+      "id": "actual-writer-oid",
+      "expected": [
+        "16387"
+      ],
+      "observed": [
+        "16387"
+      ]
+    },
+    {
+      "id": "ordinary-has-no-create-schema",
+      "expected": [
+        [
+          false
+        ]
+      ],
+      "observed": [
+        [
+          false
+        ]
+      ]
+    }
+  ],
+  "sourceSha256": {
+    "tools/security/truss-capture-observability.py": "fd25f97768df194973a419e6c063b6325a73c2e8a90e5e3dd89e359c347402a6",
+    "tools/security/truss-capture-observability.sql": "b4336a66cc7db944764b39963547582a3ed82f119d2b0088c3a5bc9c980bf55f",
+    "docs/helix/02-design/contracts/CONTRACT-063-security-enforcement.md": "634f3d1d456b81616f4e0f7ecab4d57424dec430de1d6882f8886a593145c341",
+    "docs/helix/01-frame/user-stories/US-056-security-bindings.md": "c11ecdec8e6b429e7bef2f60d2a9faa42ee0699bc5f0d1627f76d9b486f91171"
+  },
+  "scope": "Two fixed native call paths in one physical connection and transaction; nine post-elevation fields collide while the pre-entry effective actor differs",
+  "limitations": [
+    "Local trust-authenticated synthetic actor fixture; no SCRAM/TLS/person mapping claim",
+    "No registry/business writes, signed capsules, native capture or protected writer implemented",
+    "No impossibility claim for all SQL: call-stack, trusted host/native capture and extra provenance are outside this selected tuple"
+  ],
+  "PA02Complete": false,
+  "acceptancePromoted": false
+}

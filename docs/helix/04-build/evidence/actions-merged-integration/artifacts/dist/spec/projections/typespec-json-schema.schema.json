@@ -1,0 +1,328 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:projection:typespec-json-schema:0.1.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "status",
+    "source",
+    "policy",
+    "complete",
+    "emission",
+    "issues",
+    "resources"
+  ],
+  "properties": {
+    "status": {
+      "enum": [
+        "blocked",
+        "projected"
+      ]
+    },
+    "source": {
+      "$ref": "urn:umf:core:0.1.0"
+    },
+    "target": {
+      "$ref": "urn:umf:core:0.1.0"
+    },
+    "complete": {
+      "const": false
+    },
+    "emission": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "source",
+        "emitter",
+        "policy",
+        "compilation",
+        "files",
+        "complete",
+        "limitations"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "emitted",
+            "empty",
+            "blocked"
+          ]
+        },
+        "source": {
+          "$ref": "urn:umf:core:0.1.0"
+        },
+        "emitter": {
+          "const": "@typespec/json-schema@1.16.0"
+        },
+        "policy": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "options"
+          ],
+          "properties": {
+            "options": {
+              "type": "object",
+              "required": [
+                "int64-strategy"
+              ],
+              "properties": {
+                "int64-strategy": {
+                  "enum": [
+                    "string",
+                    "number"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "compilation": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "$id": "urn:umf:typespec:compiler-report:0.1.0",
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "compiler",
+            "valid",
+            "complete",
+            "diagnostics",
+            "limitations",
+            "libraries"
+          ],
+          "properties": {
+            "compiler": {
+              "const": "@typespec/compiler@1.16.0"
+            },
+            "valid": {
+              "type": "boolean"
+            },
+            "complete": {
+              "const": false
+            },
+            "diagnostics": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "code",
+                  "severity",
+                  "message"
+                ],
+                "properties": {
+                  "code": {
+                    "type": "string"
+                  },
+                  "severity": {
+                    "enum": [
+                      "error",
+                      "warning"
+                    ]
+                  },
+                  "message": {
+                    "type": "string"
+                  },
+                  "file": {
+                    "type": "string"
+                  },
+                  "start": {
+                    "type": "integer"
+                  },
+                  "end": {
+                    "type": "integer"
+                  }
+                }
+              }
+            },
+            "limitations": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "minItems": 1
+            },
+            "libraries": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "files": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "complete": {
+          "const": false
+        },
+        "limitations": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "emitted"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "files": {
+                "minProperties": 1
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "files": {
+                "maxProperties": 0
+              }
+            }
+          }
+        }
+      ]
+    },
+    "issues": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "path",
+          "code",
+          "classification",
+          "detail",
+          "retainedInSource"
+        ],
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "code": {
+            "type": "string"
+          },
+          "classification": {
+            "enum": [
+              "representation-change",
+              "not-enforced",
+              "unsupported",
+              "annotation-only"
+            ]
+          },
+          "detail": {
+            "type": "string"
+          },
+          "retainedInSource": {
+            "const": true
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "rootFile",
+        "retrievalBase",
+        "options",
+        "usage",
+        "lossPolicy"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "rootFile": {
+          "type": "string",
+          "minLength": 1
+        },
+        "retrievalBase": {
+          "type": "string"
+        },
+        "options": {
+          "type": "object",
+          "required": [
+            "file-type",
+            "int64-strategy"
+          ],
+          "properties": {
+            "file-type": {
+              "const": "json"
+            },
+            "int64-strategy": {
+              "enum": [
+                "string",
+                "number"
+              ]
+            }
+          }
+        },
+        "usage": {
+          "const": "native-emission"
+        },
+        "lossPolicy": {
+          "enum": [
+            "strict",
+            "allow-reported-loss"
+          ]
+        }
+      }
+    },
+    "resources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "file",
+          "retrievalUri"
+        ],
+        "properties": {
+          "file": {
+            "type": "string"
+          },
+          "retrievalUri": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "projected"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "target"
+        ]
+      },
+      "else": {
+        "not": {
+          "required": [
+            "target"
+          ]
+        }
+      }
+    }
+  ]
+}

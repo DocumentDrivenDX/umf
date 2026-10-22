@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {importDeltaSchema,exportDeltaSchema,inspectDelta,getDeltaNode,proposeDeltaNodeEdit,readDocument,writeDocument} from '../../src';
 test('US-018-AC1: Delta source cases preserve exact schema through JSON/YAML',async()=>{

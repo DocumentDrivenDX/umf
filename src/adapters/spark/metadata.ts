@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {pointer,type Diagnostic} from '../../model/types';
 import type {NativeJson} from '../../model/native-json';
 /** Pinned Spark 4.0.1 JVM metadata boundaries; source retention is unaffected. */

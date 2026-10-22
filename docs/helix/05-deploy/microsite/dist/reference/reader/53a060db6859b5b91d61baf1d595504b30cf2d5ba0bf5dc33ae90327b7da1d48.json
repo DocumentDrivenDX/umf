@@ -1,0 +1,51 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"DashboardField\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "role",
+      "optional": false,
+      "type": "\"column\" | \"measure\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "type",
+      "optional": true,
+      "type": "\"string\" | \"boolean\" | \"date\" | \"integer\" | \"decimal\" | \"date-time\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "title",
+      "optional": true,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "description",
+      "optional": true,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"DashboardExpression\"]"
+      ],
+      "name": "expression",
+      "optional": true,
+      "type": "DashboardExpression"
+    }
+  ],
+  "parameters": [],
+  "purpose": "DashboardField is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "DashboardField"
+}

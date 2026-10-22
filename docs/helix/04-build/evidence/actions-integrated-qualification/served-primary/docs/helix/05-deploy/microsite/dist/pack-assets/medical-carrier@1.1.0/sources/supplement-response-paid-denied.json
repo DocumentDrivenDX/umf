@@ -1,0 +1,144 @@
+{
+  "resourceType": "ClaimResponse",
+  "id": "paid-denied",
+  "status": "active",
+  "type": {
+    "coding": [
+      {
+        "system": "urn:umf:medical:synthetic-codes",
+        "code": "professional"
+      }
+    ]
+  },
+  "use": "claim",
+  "patient": {
+    "reference": "Patient/member"
+  },
+  "created": "2026-01-02",
+  "request": {
+    "reference": "Claim/paid-denied"
+  },
+  "outcome": "complete",
+  "insurer": {
+    "reference": "Organization/payer"
+  },
+  "item": [
+    {
+      "itemSequence": 1,
+      "adjudication": [
+        {
+          "category": {
+            "coding": [
+              {
+                "system": "urn:umf:medical:synthetic-codes",
+                "code": "submitted"
+              }
+            ]
+          },
+          "amount": {
+            "value": 100,
+            "currency": "USD"
+          }
+        },
+        {
+          "category": {
+            "coding": [
+              {
+                "system": "urn:umf:medical:synthetic-codes",
+                "code": "benefit"
+              }
+            ]
+          },
+          "amount": {
+            "value": 80,
+            "currency": "USD"
+          },
+          "reason": {
+            "coding": [
+              {
+                "system": "urn:umf:medical:synthetic-codes",
+                "code": "approved"
+              }
+            ]
+          }
+        },
+        {
+          "category": {
+            "coding": [
+              {
+                "system": "urn:umf:medical:synthetic-codes",
+                "code": "member-liability"
+              }
+            ]
+          },
+          "amount": {
+            "value": 20,
+            "currency": "USD"
+          }
+        }
+      ]
+    },
+    {
+      "itemSequence": 2,
+      "adjudication": [
+        {
+          "category": {
+            "coding": [
+              {
+                "system": "urn:umf:medical:synthetic-codes",
+                "code": "submitted"
+              }
+            ]
+          },
+          "amount": {
+            "value": 100,
+            "currency": "USD"
+          }
+        },
+        {
+          "category": {
+            "coding": [
+              {
+                "system": "urn:umf:medical:synthetic-codes",
+                "code": "benefit"
+              }
+            ]
+          },
+          "amount": {
+            "value": 0,
+            "currency": "USD"
+          },
+          "reason": {
+            "coding": [
+              {
+                "system": "urn:umf:medical:synthetic-codes",
+                "code": "denied"
+              }
+            ]
+          }
+        },
+        {
+          "category": {
+            "coding": [
+              {
+                "system": "urn:umf:medical:synthetic-codes",
+                "code": "member-liability"
+              }
+            ]
+          },
+          "amount": {
+            "value": 100,
+            "currency": "USD"
+          }
+        }
+      ]
+    }
+  ],
+  "payment": {
+    "date": "2026-01-04",
+    "amount": {
+      "value": 80,
+      "currency": "USD"
+    }
+  }
+}

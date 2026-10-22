@@ -1,0 +1,24 @@
+{
+  "browser": "153.0.8010.12",
+  "summary": {
+    "states": 13122,
+    "permutations": 2,
+    "truthVectors": 6561,
+    "unknown": 12610,
+    "deny": 386,
+    "permit": 126,
+    "selections": {
+      "read-denied": 386,
+      "read-indeterminate": 12610,
+      "selected": 102,
+      "disclosure-conflict": 24
+    }
+  },
+  "globals": {
+    "Bun": "undefined",
+    "process": "undefined"
+  },
+  "pageErrors": [],
+  "externalRequests": [],
+  "bundleSha256": "5dcbee5b6c97977dab4584710845545d4914603b982989484e684b35dc244cf6"
+}

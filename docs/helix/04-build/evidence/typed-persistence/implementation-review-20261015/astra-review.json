@@ -1,0 +1,160 @@
+{
+  "kind": "recovered-implementation-review",
+  "date": "2026-10-15",
+  "reviewer": {
+    "model": "gpt-6-astra",
+    "task": "/root/astra_design_review"
+  },
+  "reviewedBaseline": "5bcfaec09075bb02586f7e04f9aa349208582d35",
+  "baselineIdentitySource": "Parent supplied exact clean origin/main baseline before fixes. Findings describe pre-fix files read in this review.",
+  "status": "review and fixes in progress",
+  "findings": [
+    {
+      "id": "AI01",
+      "severity": "P1",
+      "title": "Action source identity is erased",
+      "path": "python/umf_access/src/umf_access/types.py",
+      "section": "ActionRef",
+      "counterexample": "ActionRef carries only module/action and model classes; capture stores only (module,action). Same-named actions with different declaration bytes become indistinguishable compilation identities.",
+      "governing": "CONTRACT-068 Actions; CONTRACT-071 command provenance",
+      "repair": "Carry immutable full source descriptor from exact retained document through generated ActionRef and CapturedDeclaration, preserving invocation profile; no issued revision claim.",
+      "disposition": "confirmed; correction pending"
+    },
+    {
+      "id": "AI02",
+      "severity": "P1",
+      "title": "Action Python aliases silently erase parameters",
+      "path": "src/compilation/admission/index.ts",
+      "section": "parameters(group)",
+      "counterexample": "Two shipOrder input name overrides set to same: candidate with no diagnostics emits two same assignments, allowing optional memo to overwrite required entity Key. Outputs use the same unguarded path.",
+      "governing": "CONTRACT-067 Naming and ordering",
+      "repair": "Reject duplicate resolved Python names separately in each action input/output namespace before emission.",
+      "disposition": "fixed; targeted tests pass; final integrated rereview pending"
+    },
+    {
+      "id": "AI03",
+      "severity": "P2",
+      "title": "Required selectedKey is rejected while omission is accepted",
+      "path": "src/compilation/admission/access/index.ts",
+      "section": "View shape and unknown-member check",
+      "counterexample": "A valid explicit Order selectedKey produces UNKNOWN_RELEVANT; omission returns candidate and emitter chooses keys[0].",
+      "governing": "CONTRACT-067 selected closure; CONTRACT-070 RecordView",
+      "repair": "Require and resolve selectedKey exactly. Keep unsupported multiple/alternate Keys refused rather than infer a first Key; update current schemas/fixtures without rewriting historical evidence.",
+      "disposition": "fixed; targeted tests pass; final integrated rereview pending"
+    },
+    {
+      "id": "AI04",
+      "severity": "P2",
+      "title": "Generated update signature retains known ty unknown-key escape",
+      "path": "src/compilation/targets/python/index.ts",
+      "section": "RecordQuery.update",
+      "counterexample": "Generated **values: Unpack[RecordUpdate] is explicitly superseded because ty does not reject unknown keyword names. Recovery static evidence only runs mypy and pyright.",
+      "governing": "CONTRACT-068 Field expressions; TD-082",
+      "repair": "Emit explicit keyword-only mutable fields with MISSING defaults; add ty and positive/negative corpus checks.",
+      "disposition": "confirmed; correction pending"
+    },
+    {
+      "id": "AI05",
+      "severity": "P2",
+      "title": "Column RHS erases owning Record in static comparisons",
+      "path": "python/umf_access/src/umf_access/dsl/_expressions.py",
+      "section": "Column comparison signatures",
+      "counterexample": "Column[Any,T] admits foreign-owner RHS for a comparison whose result is typed as the left Record predicate. Runtime capture later refuses but static rejection promised by the current contract is missing.",
+      "governing": "CONTRACT-068 Field expressions; CONTRACT-071 owner-set restriction",
+      "repair": "Use Column[O,T] and add foreign-owner RHS negatives across all supported comparison operators/checkers.",
+      "disposition": "confirmed; correction pending"
+    },
+    {
+      "id": "AI06",
+      "severity": "P2",
+      "title": "Generated rejection type cannot represent reserved missing entity",
+      "path": "src/compilation/targets/python/index.ts",
+      "section": "action rejection codeType",
+      "counterexample": "ShipOrderRejected literal is only NOT_READY; ENTITY_MISSING is omitted, and construction with that reserved result raises KeyError instead of a typed rejection. Existing test enshrines the omission.",
+      "governing": "CONTRACT-068 Actions; US-081-AC4",
+      "repair": "Include reserved ENTITY_MISSING; preserve retryable classification from original results rather than indexing only declared failures.",
+      "disposition": "confirmed; correction pending"
+    },
+    {
+      "id": "AI07",
+      "severity": "P1",
+      "title": "Grouped count has no result bound",
+      "path": "python/umf_access/src/umf_access/dsl/render.py",
+      "section": "count/group_count rendering",
+      "counterexample": "group_by(value).count() renders SELECT value, COUNT(*) ... GROUP BY value without LIMIT. Every distinct value may become a returned row; count renderer rejects a limit and Grouped offers no bound.",
+      "governing": "CONTRACT-071 Grouped counts must remain bounded by an admitted limit/page",
+      "repair": "Expose explicit group-result limit and enforce it for group_count; preserve unbounded-input single-row global count.",
+      "disposition": "fixed; targeted tests pass; final integrated rereview pending"
+    },
+    {
+      "id": "AI08",
+      "severity": "P2",
+      "title": "Decode error text leaks input map keys",
+      "path": "src/compilation/targets/python/index.ts",
+      "section": "emitted decode model_validate calls; equivalent new codec_support.decode_model path",
+      "counterexample": "Invalid dict value under key private-customer@example.invalid appears in str(ValidationError) as data.private-customer@example.invalid despite hide_input_in_errors=True. Encode revalidation already strips untrusted location components, but decode calls model_validate directly.",
+      "governing": "CONTRACT-068 Codecs and errors: messages name field/rule without input values",
+      "repair": "Use one sanitized validation boundary for decoded data, retaining trusted declared field names only, with nested-map and extra-key leak regressions.",
+      "disposition": "confirmed; parent fixing"
+    },
+    {
+      "id": "AI09",
+      "severity": "P1",
+      "title": "Reused item Fields skip nested presence and mutation rules",
+      "path": "src/compilation/admission/access/index.ts",
+      "section": "collect and checkAccessPresence call",
+      "counterexample": "Reuse owned nullable/mutable memo as itemType of new memos array. collect ignores the already-seen nested occurrence; generation returns candidate although item Fields must be immutable and cannot carry missing. Nested-only nullable Fields also permit false null flags despite the complete nested F/T rule.",
+      "governing": "CONTRACT-070 FieldView item/value rules and shared occurrence Conflict rules",
+      "repair": "Track every nested occurrence even when Field already owned; require both owned and nested rules, with exact nullable/nonnullable nested presence.",
+      "disposition": "fixed; nested compatible/incompatible reuse and exact nested presence controls pass"
+    },
+    {
+      "id": "AI10",
+      "severity": "P2",
+      "title": "Host writer omitted the fourth stage-two path",
+      "path": "scripts/umf-access-generate.ts",
+      "section": "candidate reserved paths",
+      "counterexample": "Existing _umf/privileges.json is treated as an unexpected stage-one file and causes OUTPUT_CHANGED instead of preservation during regeneration.",
+      "governing": "CONTRACT-067 stage ownership; CONTRACT-071 privilege artifact",
+      "repair": "Reserve and preserve all four stage-two paths; add drift-check and regeneration regression with privileges.json present.",
+      "discoverer": "parent implementation reviewer; independently inspected corrected writer",
+      "disposition": "fixed by parent; focused rereview confirms all four reserved paths"
+    }
+  ],
+  "scopeLimits": [
+    "Recovery receipts expressly limit claims to experimental components, not full slices or native targets; no false full-qualification claim is attributed to them.",
+    "The recovered implementation initially copied validator/codec algorithms into generated source; repairs move these to shared runtime metadata helpers. Full Python 3.11/ty profile, stage-two provenance/runtime load checks, generated action clients/results and target adapters remain absent or partial. These are recorded qualification/implementation gaps, not all new source correctness defects.",
+    "Current CONTRACT-068 Key identity explicitly excludes build digest; existing no-digest KEY_IDENTITY is not a finding."
+  ],
+  "probes": [
+    {
+      "path": "docs/helix/04-build/evidence/typed-persistence/implementation-review-20261015/generator-probes.ts",
+      "sha256": "44cc84c79ed039b1d899eea240a8f83be1e2ee2a1fc4219c9254eee153cd507b"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/typed-persistence/implementation-review-20261015/generator-probes.json",
+      "sha256": "0bbe1bb0681d0fa39ee53c0d44a39cb4346540271c9a0dbcddf9af9a9f85564e"
+    }
+  ],
+  "checks": [
+    {
+      "name": "admission/schema/naming/allow-matrix",
+      "result": "735 pass, 0 fail, 2235 assertions",
+      "command": "bun test tests/compilation/access-generator.test.ts tests/compilation/access-naming.test.ts tests/compilation/access-extension.test.ts tests/compilation/access-matrix.test.ts",
+      "log": "admission-tests-final2.log"
+    },
+    {
+      "name": "logical renderer",
+      "result": "23 tests pass",
+      "command": "PYTHONPATH=python/umf_access/src /private/tmp/umf-access-runtime-9189ac065cbe51b4/bin/python -m unittest discover -s python/umf_access/tests -p test_dsl_render.py",
+      "log": "group-tests.log",
+      "qualification": "Source runtime loaded explicitly; this is not installed-wheel or Weft/native qualification."
+    },
+    {
+      "name": "fresh generated current models/action types/projections and renderer",
+      "result": "30 tests pass",
+      "log": "review-python-final.log",
+      "qualification": "Fresh generated package with explicitly selected source runtime; not installed-wheel or full-profile evidence."
+    }
+  ]
+}

@@ -1,0 +1,148 @@
+{
+  "data": {
+    "extensionId": "umf.parquet.keys",
+    "manifest": {
+      "capabilities": {
+        "directions": [
+          "import",
+          "export"
+        ],
+        "evidence": [
+          "tests/core-ideals/key-parquet.test.ts",
+          "fixtures/validation/key-parquet-discovery-native.json",
+          "fixtures/validation/key-parquet-browser.json",
+          "tests/core-ideals/key-parquet-projection.test.ts",
+          "fixtures/validation/key-parquet-projection-native.json",
+          "fixtures/validation/key-parquet-projection-browser.json"
+        ],
+        "native": {
+          "subset": "Physical schema observations with original file bytes; no collection uniqueness, authored identity inference, page validation or native equivalence",
+          "system": "Apache Parquet / PyArrow",
+          "version": "PyArrow 21.0.0 / parquet-format 219e3f12a62f9476e830c21e26d030d231f7c017"
+        },
+        "validation": "structural"
+      },
+      "coreVersion": "0.10.0",
+      "description": "Parquet Key observations with exact native archives and explicit enforcement losses",
+      "id": "umf.parquet.keys",
+      "schema": {
+        "$id": "urn:umf:parquet:key-binding:1.0.0",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": true,
+        "properties": {
+          "binding": {
+            "const": {
+              "id": "umf.parquet.keys",
+              "nativeVersion": "PyArrow 21.0.0 / parquet-format 219e3f12a62f9476e830c21e26d030d231f7c017",
+              "subset": "Physical schema observations with original file bytes; no collection uniqueness, authored identity inference, page validation or native equivalence",
+              "version": "1.0.0"
+            }
+          },
+          "observations": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "authorIntent": {
+                  "const": "unknown"
+                },
+                "definitionLevel": {
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "enforcement": {
+                  "const": "not-expressible"
+                },
+                "index": {
+                  "minimum": 1,
+                  "type": "integer"
+                },
+                "kind": {
+                  "enum": [
+                    "physical-leaf",
+                    "physical-group"
+                  ]
+                },
+                "nativeField": {},
+                "nativePath": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "path": {
+                  "items": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                "provenance": {
+                  "const": "inferred"
+                },
+                "repetitionLevel": {
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "scope": {
+                  "const": "file-schema"
+                }
+              },
+              "required": [
+                "nativePath",
+                "index",
+                "path",
+                "kind",
+                "definitionLevel",
+                "repetitionLevel",
+                "nativeField",
+                "enforcement",
+                "authorIntent",
+                "provenance",
+                "scope"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "origin": {
+            "const": "classified"
+          }
+        },
+        "required": [
+          "origin",
+          "binding",
+          "observations"
+        ],
+        "title": "Parquet schema observations without authored identity",
+        "type": "object"
+      },
+      "scopes": [
+        "document"
+      ],
+      "semantics": "CONTRACT-040 and TD-044. Native classification and separate core 0.6.0 authored scalar projection retain per-key identity residuals. Qualified binding acceptance is recorded in docs/helix/04-build/evidence/parquet-key-acceptance.md; Key admission and all-five delivery remain separate.",
+      "version": "1.0.0"
+    },
+    "registration": {
+      "apiIds": [],
+      "coreProfiles": [],
+      "mode": "unmapped"
+    },
+    "schemaId": "[\"schema\",\"spec/extensions/parquet-keys/schema.json\",\"\"]",
+    "version": "1.0.0"
+  },
+  "id": "[\"extension\",\"umf.parquet.keys\",\"1.0.0\"]",
+  "kind": "extension",
+  "links": [
+    "[\"guide\",\"extensions\"]",
+    "[\"schema\",\"spec/extensions/parquet-keys/schema.json\",\"\"]",
+    "[\"integration\",\"umf.parquet.keys@1.0.0:import\"]",
+    "[\"integration\",\"umf.parquet.keys@1.0.0:export\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 3738,
+      "path": "spec/extensions/parquet-keys/package.json",
+      "sha256": "07ded1b736567f80875a44756ef1d7172b804d088d94da622deaed6f8fed619b"
+    }
+  ],
+  "summary": "Parquet Key observations with exact native archives and explicit enforcement losses",
+  "title": "umf.parquet.keys · 1.0.0"
+}

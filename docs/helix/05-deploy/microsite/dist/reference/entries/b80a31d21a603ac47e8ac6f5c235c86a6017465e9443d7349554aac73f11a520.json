@@ -1,0 +1,33 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 1993,
+        "line": 1,
+        "path": "spec/core/record-type-operation-v6.schema.json",
+        "sha256": "2b40d2be0562794f918738d96ee8f974f7133f26ee8476583b944c9f676a255d"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "coreRecordTypeOperationV6Schema",
+    "runtime": "unassessed",
+    "signatureText": [
+      "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"$id\": \"urn:umf:core:record-type-operation:6.0.0\",\n  \"title\": \"Core record type declaration receipt\",\n  \"type\": \"object\",\n  \"additionalProperties\": false,\n  \"required\": [\n    \"operation\",\n    \"version\",\n    \"source\",\n    \"target\",\n    \"fieldAuthor\",\n    \"recordAuthor\",\n    \"reference\",\n    \"provenance\"\n  ],\n  \"properties\": {\n    \"operation\": {\n      \"const\": \"declare-core-record-type\"\n    },\n    \"version\": {\n      \"const\": \"6.0.0\"\n    },\n    \"source\": {\n      \"$ref\": \"urn:umf:core:0.10.0\"\n    },\n    \"target\": {\n      \"$ref\": \"urn:umf:core:0.10.0\"\n    },\n    \"fieldAuthor\": {\n      \"$ref\": \"urn:umf:core:kind-operation:6.0.0#/$defs/declaration\"\n    },\n    \"recordAuthor\": {\n      \"$ref\": \"urn:umf:core:kind-operation:6.0.0#/$defs/declaration\"\n    },\n    \"reference\": {\n      \"type\": \"object\",\n      \"additionalProperties\": false,\n      \"required\": [\n        \"role\",\n        \"module\",\n        \"element\"\n      ],\n      \"properties\": {\n        \"role\": {\n          \"const\": \"record-type\"\n        },\n        \"module\": {\n          \"type\": \"string\",\n          \"minLength\": 1\n        },\n        \"element\": {\n          \"type\": \"string\",\n          \"minLength\": 1\n        }\n      }\n    },\n    \"provenance\": {\n      \"type\": \"object\",\n      \"additionalProperties\": false,\n      \"required\": [\n        \"origin\",\n        \"idealPath\",\n        \"recordPath\",\n        \"nativePath\",\n        \"basis\",\n        \"binding\"\n      ],\n      \"properties\": {\n        \"origin\": {\n          \"const\": \"authored\"\n        },\n        \"idealPath\": {\n          \"type\": \"string\"\n        },\n        \"recordPath\": {\n          \"type\": \"string\"\n        },\n        \"nativePath\": {\n          \"type\": \"null\"\n        },\n        \"basis\": {\n          \"const\": \"explicit-record-type-declaration\"\n        },\n        \"binding\": {\n          \"const\": {\n            \"id\": \"umf.core.record-type.authoring\",\n            \"version\": \"6.0.0\"\n          }\n        }\n      }\n    }\n  }\n}\n"
+    ]
+  },
+  "id": "[\"api\",\".\",\"coreRecordTypeOperationV6Schema\"]",
+  "kind": "api",
+  "links": [
+    "[\"schema\",\"spec/core/record-type-operation-v6.schema.json\",\"\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 1993,
+      "line": 1,
+      "path": "spec/core/record-type-operation-v6.schema.json",
+      "sha256": "2b40d2be0562794f918738d96ee8f974f7133f26ee8476583b944c9f676a255d"
+    }
+  ],
+  "summary": "Public export · spec/core/record-type-operation-v6.schema.json",
+  "title": "coreRecordTypeOperationV6Schema"
+}

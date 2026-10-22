@@ -1,0 +1,63 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"NullabilityParquetRequest\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "id",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "recordName",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "fieldName",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "nativeType",
+      "optional": false,
+      "type": "\"string\" | \"boolean\" | \"date\" | \"binary\" | \"time-millis\" | \"time-micros\" | \"int32\" | \"int64\" | \"float32\" | \"float64\" | \"timestamp-millis-utc\" | \"timestamp-micros-utc\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "mode",
+      "optional": false,
+      "type": "\"strict\" | \"report\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "scope",
+      "optional": false,
+      "type": "\"unresolved\" | \"write-input\" | \"row-leaf-value\" | \"repeated-element-value\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "carrier",
+      "optional": false,
+      "type": "\"unresolved\" | \"definition-level\""
+    }
+  ],
+  "parameters": [],
+  "purpose": "NullabilityParquetRequest is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "NullabilityParquetRequest"
+}

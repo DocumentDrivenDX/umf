@@ -1,0 +1,33 @@
+{
+  "scope": "Portable current-core UUID/carrier codec and authoring qualification; retired core markers refuse; no native execution or full core acceptance",
+  "browser": "153.0.8010.12",
+  "result": {
+    "vectors": 389,
+    "codecChecks": 2334,
+    "keyChecks": 389,
+    "recoveries": 2,
+    "refusals": 9,
+    "nodeGlobalsAbsent": true
+  },
+  "externalRequests": [],
+  "negativeRejected": true,
+  "layerRejected": true,
+  "bundleSha256": "64fe6880b2e68ba9e4ec58505999681b008b213d12759997001082205f77f3b6",
+  "sha256": {
+    "src/model/types.ts": "74d776d2837c2476b1721eab933002b8526049cbae7368eb339022bef8306c71",
+    "src/model/bit128-field.ts": "52da5a775232db094dea1d476c9124c16d0749aaf9e774f7b69a5c99eceecdd8",
+    "src/projections/bit128-output-budget.ts": "fbcd4465efdec6ccc6ab907af7588975e398a300ff1cfeb74db5dab17da99c79",
+    "src/model/schema-properties.ts": "6d1e5b1e5ebcd56a176635e0c8677dca5593b2e41e9068a5d6b3414ae8e0be41",
+    "src/model/relationship-selection.ts": "ff2eb21664a68d63a4765d488c94d84a41b395b0adb21f3e3d7ae4fc98b8e562",
+    "spec/extensions/binding-128/schema.json": "82f830b76284688e3fe99e4ce3b49c8c3eec40e0fab0ffd59ffe80b9dbec60ef",
+    "src/model/bit128.ts": "df4da4c1259dde3babb562a1b03b9d8e73d731ac90bc6424f31ab01e05615e91",
+    "src/model/uuid.ts": "f2abc6139f958decad18156b1ac3d8e6b62cc6083a8efd78a3a760f7883dc503",
+    "src/model/key-tuple.ts": "94703a6988b001fdf2209ad2864199f7cd399c3c92bafb81e086e2aaadebf70c",
+    "src/model/schema-literals.ts": "fefe6634e8b81d5bc8a51af2e6f03215a6a39d7f168b2b5c319eed7fe55703e9",
+    "src/validation/schema-properties.ts": "6d2ab83d0753d201f9f13e112d3ef247dbc54905c705b619ad9a8b072b36fd94",
+    "src/extensions/binding/bit128.ts": "b335e8db71b682abb6098b776d5b3985e18a5acb504da267ee063aa7cddac7de",
+    "src/projections/bit128.ts": "6d0d33aba20872e1038c5946d8fc3bb1902cbde7d78cd3a1a66d7b7f1d953709",
+    "spec/core/schema.json": "ccf21e92c9f9593bd98fb7ec12badee5865000d63a04a8506cfcbcc27ca4bd70",
+    "scripts/uuid-browser.ts": "94e3a393397b20912c4bb13dea19ae082e97aff8cce0be2ebd3fa76cbe75ef0c"
+  }
+}

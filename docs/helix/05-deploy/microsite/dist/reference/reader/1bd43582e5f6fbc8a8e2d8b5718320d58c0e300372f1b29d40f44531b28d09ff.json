@@ -1,0 +1,56 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"Rfc3339ExactInstant\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "profile",
+      "optional": false,
+      "type": "\"umf-rfc3339-exact-instant/1.0.0\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "originalText",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "Whole seconds since 1970-01-01T00:00:00Z, rounded toward negative infinity.",
+      "links": [],
+      "name": "utcSeconds",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "Nonnegative fractional second digits, with trailing zeros removed.",
+      "links": [],
+      "name": "fractionalDigits",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "originalOffset",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "localOffsetKnown",
+      "optional": false,
+      "type": "boolean"
+    }
+  ],
+  "parameters": [],
+  "purpose": "Rfc3339ExactInstant is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "Rfc3339ExactInstant"
+}

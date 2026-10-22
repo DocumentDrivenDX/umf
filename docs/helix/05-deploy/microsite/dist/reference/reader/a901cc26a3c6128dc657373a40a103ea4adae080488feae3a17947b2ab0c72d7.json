@@ -1,0 +1,13 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"sqlserverNullabilityEvidenceSchema\"]",
+  "kind": "Schema",
+  "members": [],
+  "parameters": [],
+  "purpose": "JSON Schema exported as sqlserverNullabilityEvidenceSchema. Follow the related schema definition for object keys, value constraints and conditions.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "{ $schema: string; $id: string; title: string; type: string; required: string[]; properties: { profile: { const: string; }; query: { type: string; minLength: number; }; sourceSql: { type: string; }; database_view_definition: { type: string[]; }; triggers: { type: string; items: { type: string; required: string[]; properties: { schema: { type: string; }; table: { type: string; }; name: { type: string; }; is_disabled: { type: string; }; is_instead_of_trigger: { type: string; }; definition: { type: string[]; }; }; additionalProperties: boolean; }; }; alias_types: { type: string; items: { type: string; required: string[]; properties: { schema: { type: string; }; name: { type: string; }; is_nullable: { type: string; }; default_object_id: { type: string; minimum: number; maximum: number; }; rule_object_id: { type: string; minimum: number; maximum: number; }; }; additionalProperties: boolean; }; }; column_refinements: { type: string; items: { type: string; required: string[]; properties: { schema: { type: string; }; table: { type: string; }; name: { type: string; }; is_sparse: { type: string; }; generated_always_type: { type: string; minimum: number; maximum: number; }; is_hidden: { type: string; }; rule_object_id: { type: string; minimum: number; maximum: number; }; }; additionalProperties: boolean; }; }; }; additionalProperties: boolean; }"
+}

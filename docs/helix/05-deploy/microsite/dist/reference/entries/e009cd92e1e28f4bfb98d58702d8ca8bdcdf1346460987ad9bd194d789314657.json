@@ -1,0 +1,33 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 2435,
+        "line": 1,
+        "path": "spec/projections/ddd-postgresql-policy.schema.json",
+        "sha256": "fbeb063dc058f181067631bf0a99512fd7b56d2dac97bb0117c1082790f407da"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "dddPostgresqlPolicySchema",
+    "runtime": "unassessed",
+    "signatureText": [
+      "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"$id\": \"urn:umf:ddd-postgresql-policy:1.0.0\",\n  \"title\": \"Complete DDD PostgreSQL 17.4 generation policy\",\n  \"type\": \"object\",\n  \"additionalProperties\": false,\n  \"required\": [\n    \"profile\",\n    \"version\",\n    \"targetVersion\",\n    \"mode\",\n    \"objectCheckNaming\",\n    \"tablePolicy\",\n    \"layoutPolicy\"\n  ],\n  \"properties\": {\n    \"profile\": {\n      \"const\": \"ddd-postgresql-1\"\n    },\n    \"version\": {\n      \"const\": \"1.0.0\"\n    },\n    \"targetVersion\": {\n      \"const\": \"17.4\"\n    },\n    \"mode\": {\n      \"enum\": [\n        \"strict\",\n        \"report\"\n      ]\n    },\n    \"objectCheckNaming\": {\n      \"const\": \"ck-table-column-object-v1\"\n    },\n    \"tablePolicy\": {\n      \"type\": \"object\",\n      \"additionalProperties\": false,\n      \"required\": [\n        \"fieldTypes\",\n        \"partitionFamilies\"\n      ],\n      \"properties\": {\n        \"fieldTypes\": {\n          \"type\": \"array\",\n          \"items\": {\n            \"type\": \"object\",\n            \"additionalProperties\": false,\n            \"required\": [\n              \"module\",\n              \"element\",\n              \"field\",\n              \"sqlType\"\n            ],\n            \"properties\": {\n              \"module\": {\n                \"type\": \"string\",\n                \"minLength\": 1\n              },\n              \"element\": {\n                \"type\": \"string\",\n                \"minLength\": 1\n              },\n              \"field\": {\n                \"type\": \"string\",\n                \"minLength\": 1\n              },\n              \"sqlType\": {\n                \"type\": \"string\",\n                \"minLength\": 1\n              }\n            }\n          }\n        },\n        \"partitionFamilies\": {\n          \"type\": \"array\",\n          \"items\": {\n            \"type\": \"object\",\n            \"additionalProperties\": false,\n            \"required\": [\n              \"name\",\n              \"column\",\n              \"defaultTable\"\n            ],\n            \"properties\": {\n              \"name\": {\n                \"type\": \"string\",\n                \"minLength\": 1\n              },\n              \"column\": {\n                \"type\": \"string\",\n                \"minLength\": 1\n              },\n              \"defaultTable\": {\n                \"type\": \"string\",\n                \"minLength\": 1\n              }\n            }\n          }\n        }\n      }\n    },\n    \"layoutPolicy\": {\n      \"$ref\": \"urn:umf:postgresql:relationship-layout:1.0.0\"\n    }\n  }\n}\n"
+    ]
+  },
+  "id": "[\"api\",\".\",\"dddPostgresqlPolicySchema\"]",
+  "kind": "api",
+  "links": [
+    "[\"schema\",\"spec/projections/ddd-postgresql-policy.schema.json\",\"\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 2435,
+      "line": 1,
+      "path": "spec/projections/ddd-postgresql-policy.schema.json",
+      "sha256": "fbeb063dc058f181067631bf0a99512fd7b56d2dac97bb0117c1082790f407da"
+    }
+  ],
+  "summary": "Public export · spec/projections/ddd-postgresql-policy.schema.json",
+  "title": "dddPostgresqlPolicySchema"
+}

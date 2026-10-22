@@ -1,0 +1,21 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"parseGregorianDate\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "token",
+      "optional": false,
+      "type": "string"
+    }
+  ],
+  "purpose": "parseGregorianDate accepts token and returns GregorianDate.",
+  "related": [],
+  "returns": "GregorianDate",
+  "task": "Read and validate",
+  "type": "(token: string) => GregorianDate"
+}

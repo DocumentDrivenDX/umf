@@ -1,0 +1,7 @@
+{
+  "status": "failed-harness-attempt",
+  "producerSha256": "1ef8c4d614359e517fa943cdd8696c381e7f49b9f9bd91ba9d904f94f5df42fc",
+  "error": "ERROR: permission denied for view original_salary_source",
+  "cause": "Diagnostic attempted collection SQL directly as Alice, who correctly lacks direct view SELECT. The actual admitted function uses the excluded fixed guardian boundary.",
+  "scope": "Failure provenance only; no passing counterexample or complete per-run evidence receipt. Producer finally cleanup executed without error."
+}

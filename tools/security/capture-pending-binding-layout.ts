@@ -1,0 +1,20 @@
+/** Original native source capture only; no pending source admission authority. */
+import {backend} from '../../native/postgresql/runtime';
+import {importPostgresqlSql,exportPostgresqlSql} from '../../src/adapters/postgresql';
+import {readDocument} from '../../src/model/document';
+const root='/private/tmp/truss-security-main-integration';
+const sourcePath=root+'/docs/helix/02-design/contracts/catalog-pending-binding-source-v0.1.proposal.sql';
+const source=await Bun.file(sourcePath).text();
+const model=await importPostgresqlSql(source,backend,{id:'truss-pending-binding-source-candidate'});
+const serialized=JSON.stringify(model)+'\n';
+const ddl=await exportPostgresqlSql(model,backend);
+const modelPath=root+'/docs/helix/02-design/contracts/catalog-pending-binding-source-v0.1.proposal.umf.json';
+const ddlPath=root+'/docs/helix/04-build/evidence/catalog-pending-binding-source.owner-export.sql';
+await Bun.write(modelPath,serialized);await Bun.write(ddlPath,ddl);
+const reloaded=readDocument(await Bun.file(modelPath).text(),'json');
+if(await exportPostgresqlSql(reloaded,backend)!==ddl)throw Error('Saved pending source export correspondence');
+const hash=(bytes:string)=>new Bun.CryptoHasher('sha256').update(bytes).digest('hex');
+const pins=Object.fromEntries(await Promise.all(['tools/security/capture-pending-binding-layout.ts','native/postgresql/runtime.ts','src/adapters/postgresql/index.ts','src/model/document.ts','src/model/native-json.ts'].map(async path=>[path,hash(await Bun.file(path).text())])));
+const receipt={sourcePath,sourceSha256:hash(source),modelPath,modelSha256:hash(serialized),ddlPath,ddlSha256:hash(ddl),ownerSourcePins:pins,bunVersion:Bun.version,savedReloadExportExact:true,qualified:false,scope:'Original native SQL archive through actual UMF owner import, saved reload and stable export; selected entry source pins only, not complete toolchain/dependency custody or portable semantics extraction; fresh empty layout adjunct, no populated migration, registration, protected installation or publication'};
+await Bun.write(root+'/docs/helix/04-build/evidence/design-audit/catalog-pending-binding-source.json',JSON.stringify(receipt,null,2)+'\n');
+console.log(JSON.stringify(receipt));

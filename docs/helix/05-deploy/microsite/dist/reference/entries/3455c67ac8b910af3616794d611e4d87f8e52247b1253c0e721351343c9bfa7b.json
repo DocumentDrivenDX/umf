@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 10689,
+        "line": 87,
+        "path": "src/core-ideals/cardinality-tablespec.ts",
+        "sha256": "02179b61cbcde1fe5d820c9143241bf28f8a2561d3ff43145380265bb5fd1c20"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "verifyTableSpecCardinalityClassification",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: TableSpecCardinalityClassification, current: Document): TableSpecCardinalityClassification"
+    ]
+  },
+  "id": "[\"api\",\".\",\"verifyTableSpecCardinalityClassification\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 10689,
+      "line": 87,
+      "path": "src/core-ideals/cardinality-tablespec.ts",
+      "sha256": "02179b61cbcde1fe5d820c9143241bf28f8a2561d3ff43145380265bb5fd1c20"
+    }
+  ],
+  "summary": "Receipt consistency is not authentication; any model edit requires reclassification.",
+  "title": "verifyTableSpecCardinalityClassification"
+}

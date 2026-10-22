@@ -1,0 +1,73 @@
+{
+  "version": "1.0",
+  "table_name": "calendar",
+  "description": "Weekly service calendar; optional when dates alone define service.",
+  "columns": [
+    {
+      "name": "service_id",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "Feed-local service identifier.",
+      "domain_type": "gtfs_id"
+    },
+    {
+      "name": "monday",
+      "data_type": "INTEGER",
+      "nullable": false,
+      "description": "0/1 weekday service code."
+    },
+    {
+      "name": "tuesday",
+      "data_type": "INTEGER",
+      "nullable": false,
+      "description": "0/1 weekday service code."
+    },
+    {
+      "name": "wednesday",
+      "data_type": "INTEGER",
+      "nullable": false,
+      "description": "0/1 weekday service code."
+    },
+    {
+      "name": "thursday",
+      "data_type": "INTEGER",
+      "nullable": false,
+      "description": "0/1 weekday service code."
+    },
+    {
+      "name": "friday",
+      "data_type": "INTEGER",
+      "nullable": false,
+      "description": "0/1 weekday service code."
+    },
+    {
+      "name": "saturday",
+      "data_type": "INTEGER",
+      "nullable": false,
+      "description": "0/1 weekday service code."
+    },
+    {
+      "name": "sunday",
+      "data_type": "INTEGER",
+      "nullable": false,
+      "description": "0/1 weekday service code."
+    },
+    {
+      "name": "start_date",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "Inclusive YYYYMMDD date spelling.",
+      "domain_type": "gtfs_date"
+    },
+    {
+      "name": "end_date",
+      "data_type": "VARCHAR",
+      "nullable": false,
+      "description": "Inclusive YYYYMMDD date spelling.",
+      "domain_type": "gtfs_date"
+    }
+  ],
+  "primary_key": [
+    "service_id"
+  ]
+}

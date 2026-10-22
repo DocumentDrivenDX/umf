@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 8449,
+        "line": 21,
+        "path": "src/core-ideals/key-tablespec.ts",
+        "sha256": "fb76be0e0e990e144326b4da446f65b0065d8da261247078d4e941b80fb17ccd"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "TableSpecKeyClassification",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface TableSpecKeyClassification {\n operation:'classify-tablespec-keys';version:'1.0.0';status:'classified'|'blocked';outcome:'exact'|'unknown'|'not-expressible';\n source:Document;target?:Document;request:TableSpecKeyRequest;binding:typeof binding;observations:TableSpecKeyObservation[];\n residuals:{path:string;value:Json;outcome:'unknown'|'not-expressible';reason:string;recovery:typeof recovery}[];diagnostics:Diagnostic[];\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"TableSpecKeyClassification\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 8449,
+      "line": 21,
+      "path": "src/core-ideals/key-tablespec.ts",
+      "sha256": "fb76be0e0e990e144326b4da446f65b0065d8da261247078d4e941b80fb17ccd"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/key-tablespec.ts",
+  "title": "TableSpecKeyClassification"
+}

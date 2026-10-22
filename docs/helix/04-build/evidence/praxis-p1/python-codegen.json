@@ -1,0 +1,155 @@
+{
+  "python": "3.11.17",
+  "generator": "0.1.0a1",
+  "engine": "0.14.1",
+  "cases": [
+    {
+      "name": "original-json",
+      "accepted": true,
+      "completeBytesAndRefusalEqual": true
+    },
+    {
+      "name": "crlf-source",
+      "accepted": true,
+      "completeBytesAndRefusalEqual": true
+    },
+    {
+      "name": "yaml",
+      "accepted": true,
+      "completeBytesAndRefusalEqual": true
+    },
+    {
+      "name": "customer-selection",
+      "accepted": true,
+      "completeBytesAndRefusalEqual": true
+    },
+    {
+      "name": "action-selection",
+      "accepted": true,
+      "completeBytesAndRefusalEqual": true
+    },
+    {
+      "name": "unicode",
+      "accepted": true,
+      "completeBytesAndRefusalEqual": true
+    },
+    {
+      "name": "optional-value",
+      "accepted": true,
+      "completeBytesAndRefusalEqual": true
+    },
+    {
+      "name": "array-value",
+      "accepted": true,
+      "completeBytesAndRefusalEqual": true
+    },
+    {
+      "name": "foreign-field-extension-refuses",
+      "accepted": false,
+      "completeBytesAndRefusalEqual": true
+    },
+    {
+      "name": "nullable-key-refuses",
+      "accepted": false,
+      "completeBytesAndRefusalEqual": true
+    },
+    {
+      "name": "reserved-name-refuses",
+      "accepted": false,
+      "completeBytesAndRefusalEqual": true
+    },
+    {
+      "name": "unknown-facet-refuses",
+      "accepted": false,
+      "completeBytesAndRefusalEqual": true
+    },
+    {
+      "name": "table-lifecycle-refuses-unqualified-client",
+      "accepted": false,
+      "completeBytesAndRefusalEqual": true
+    },
+    {
+      "name": "source-core-refuses",
+      "accepted": false,
+      "completeBytesAndRefusalEqual": true
+    },
+    {
+      "name": "invalid-package-refuses",
+      "accepted": false,
+      "completeBytesAndRefusalEqual": true
+    },
+    {
+      "name": "invalid-json-refuses",
+      "accepted": false,
+      "completeBytesAndRefusalEqual": true
+    }
+  ],
+  "writerAndIntegrityControls": "passed",
+  "externalJavascriptProcesses": "forbidden",
+  "platform": "macOS-27.0.1-arm64-arm-64bit",
+  "status": "local-candidate-not-published",
+  "baseCommit": "5f19927eb",
+  "nativeDatabaseQualification": false,
+  "wheel": {
+    "name": "umf_codegen-0.1.0a1-py3-none-any.whl",
+    "sha256": "cc0a9af5fa6acffbe88eb5a969da489e83cbb6744c235127886ad7892fb9193d"
+  },
+  "sdist": {
+    "name": "umf_codegen-0.1.0a1.tar.gz",
+    "sha256": "3ae178af000b79c234213e3fa68335d98bc563d14f2293a90f92eee2a19293cd"
+  },
+  "reproducibility": {
+    "sourceAndSdistWheelIdentical": true,
+    "sdistBuildExternalProcesses": "forbidden",
+    "installedPayloadFilesVerified": 18
+  },
+  "typing": {
+    "tool": "mypy 2.4.0",
+    "mode": "strict",
+    "sourceFiles": 5,
+    "result": "pass"
+  },
+  "boundaries": {
+    "sourceCheck": "pass",
+    "testMethods": 3,
+    "negativeImportAndExecutionControls": 8
+  },
+  "packagingControls": [
+    "current-source-passes",
+    "stale-source-refuses",
+    "damaged-payload-refuses"
+  ],
+  "sourceHashes": {
+    "python/umf_codegen/src/umf_codegen/__init__.py": "e7054b0d00c4178a1b13753e92165b8ca36131ab763f1d3c1e578e5d43432a50",
+    "python/umf_codegen/src/umf_codegen/__main__.py": "a839c18cc28fbce5498e88a10057c6422e4c293eb719f39a17ffa039769e33a6",
+    "python/umf_codegen/src/umf_codegen/_embedded.py": "787c32a8a3a4af118c1b00e0a52921bf228df5a92760056fc45561d5a6eaf69a",
+    "python/umf_codegen/src/umf_codegen/_release.py": "dd78d866d1d63e1a7ff32c612abe539ce9fe7b37bc8e9135fe946f9fa7399004",
+    "python/umf_codegen/src/umf_codegen/_writer.py": "61a30ef49ba532fdff09f4f86de985b527dcb7e0f6c777bc3f386d545c792082"
+  },
+  "corpusSha256": "34780dbadf9310ae35c75addfb67916f6065c75f2613c73b1742654962ffb22c",
+  "limits": [
+    "index/release publication pending"
+  ],
+  "references": {
+    "embeddedRuntimeApi": "https://bpcreech.com/PyMiniRacer/api/",
+    "sharedGenerator": "src/access/index.ts",
+    "corpus": "scripts/codegen-corpus.ts",
+    "probe": "tests/codegen/installed_probe.py"
+  },
+  "builderFraming": "RFC1952 fixed metadata, RFC1951 stored blocks; wheel owns compression",
+  "platformFramingTest": {
+    "cases": 6,
+    "assertions": 18,
+    "result": "pass"
+  },
+  "hostedQualification": {
+    "commit": "5e5ece1a6",
+    "run": "https://github.com/DocumentDrivenDX/umf/actions/runs/39264420028",
+    "platforms": [
+      "ubuntu-latest",
+      "macos-14"
+    ],
+    "result": "passed",
+    "scope": "historical client-generator cohort; installed deployment compiler successor hosted gates pending"
+  }
+}

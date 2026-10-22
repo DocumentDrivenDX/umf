@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 7026,
+        "line": 12,
+        "path": "src/projections/postgresql-json-schema.ts",
+        "sha256": "43d1141cd6969d16e42164288069515cc6f63e422f3af890337085d98517cbca"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "PostgresqlRowProjection",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface PostgresqlRowProjection {\n status:'blocked'|'projected';complete:false;source:Document;policy:PostgresqlRowPolicy;\n issues:ProjectionIssue[];mappings:{column:string;nativeType:string;encoding:string;targetPointer:string}[];\n target?:Document;nativeSchema?:string;sql?:string;\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"PostgresqlRowProjection\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 7026,
+      "line": 12,
+      "path": "src/projections/postgresql-json-schema.ts",
+      "sha256": "43d1141cd6969d16e42164288069515cc6f63e422f3af890337085d98517cbca"
+    }
+  ],
+  "summary": "Type declaration · src/projections/postgresql-json-schema.ts",
+  "title": "PostgresqlRowProjection"
+}

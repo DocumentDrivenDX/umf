@@ -1,0 +1,41 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"projectKeysToSqlServer\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreKeyDeclaration\"]"
+      ],
+      "name": "authorInput",
+      "optional": false,
+      "type": "CoreKeyDeclaration[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"KeySqlServerRequest\"]"
+      ],
+      "name": "options",
+      "optional": false,
+      "type": "KeySqlServerRequest"
+    }
+  ],
+  "purpose": "Consume verified declarations by stable ID. Native names never supply authored identity.",
+  "related": [],
+  "returns": "KeySqlServerProjection",
+  "task": "Import and export",
+  "type": "(input: Document, authorInput: CoreKeyDeclaration[], options: KeySqlServerRequest) => KeySqlServerProjection"
+}

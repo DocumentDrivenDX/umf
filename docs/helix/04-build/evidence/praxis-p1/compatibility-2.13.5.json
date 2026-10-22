@@ -1,0 +1,82 @@
+{
+  "scope": "Installed Python/Pydantic compatibility; non-temporal model subset; no native engine qualification",
+  "command": [
+    "/private/tmp/umf-p1-pydantic-2135/bin/python",
+    "-I",
+    "/Users/erik/.codex/worktrees/a0fd/umf/tests/unified/dependency_probe.py",
+    "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-p1-dependencies-UFa5hO",
+    "2.13.5",
+    "/private/tmp/umf-p1-wheels/umf_access-0.1.0.dev2-py3-none-any.whl",
+    "/Users/erik/.codex/worktrees/a0fd/umf/python/umf_access/tests"
+  ],
+  "exit": 0,
+  "stdout": "{\"runtimeTests\": 57, \"pydantic\": \"2.13.5\", \"pydanticCore\": \"2.46.5\", \"runtime\": \"0.1.0.dev2\", \"installedPayloadVerified\": true, \"exactDecimal\": true, \"absenceAndNull\": true, \"refusals\": [\"string-coercion\", \"float-coercion\", \"rounding\", \"nonfinite\", \"null-required\", \"generated-write\", \"key-write\", \"unknown-field\", \"model-construct-bypass\", \"model-copy-bypass\", \"sealed-subclass\", \"frozen-assignment\", \"unhashable-key\", \"decode-invalid\"]}\n",
+  "stderr": ".........................................................\n----------------------------------------------------------------------\nRan 57 tests in 0.042s\n\nOK\n",
+  "wheelSha256": "3c812aa9bd053c8efe384fed5f48067c17baf89fc3e211573dd803ec8962e188",
+  "generated": [
+    {
+      "path": "compat_shop/__init__.py",
+      "sha256": "88dbc62582988d4cbb8a4eeb36070d7813269b7f84662cd5adbb9a7393ca0021"
+    },
+    {
+      "path": "compat_shop/_umf/manifest.json",
+      "sha256": "1357cc69b3c477492114ee5899bbd10d2bfc0527b6fa40ce7a92a93ed1511c74"
+    },
+    {
+      "path": "compat_shop/_umf/sources.json",
+      "sha256": "2ed30ca710892230271bc1a1639a8d87321f62748e6be20d4149c230d2f61cbc"
+    },
+    {
+      "path": "compat_shop/codecs.py",
+      "sha256": "6a5b6be7f3946cab3aa9de693097f8fb46edadd6342471ab626cff3ddcfad7ce"
+    },
+    {
+      "path": "compat_shop/fields.py",
+      "sha256": "68054ca6b2230cdb024c37c134dadb401bc2c2d2f6492d571cb30299e9a3417a"
+    },
+    {
+      "path": "compat_shop/keys.py",
+      "sha256": "2238b82111fdab54188c318df47bd8b956ea3e16778754ebd4161badbb8631e2"
+    },
+    {
+      "path": "compat_shop/models.py",
+      "sha256": "bf842173f4eb370063b550f8ed780df8780d069d4234e15985c579008a47d7f6"
+    },
+    {
+      "path": "compat_shop/py.typed",
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "path": "commerce/__init__.py",
+      "sha256": "88dbc62582988d4cbb8a4eeb36070d7813269b7f84662cd5adbb9a7393ca0021"
+    },
+    {
+      "path": "commerce/_umf/manifest.json",
+      "sha256": "3810f81e94c18db04415bdb8fa69ee1095ced51db477b3f8250274bde8d84e0e"
+    },
+    {
+      "path": "commerce/_umf/sources.json",
+      "sha256": "28490b6430ba1dcfc714fd8d39ca1c8319bf0da899dac8912b61f7c20500947d"
+    },
+    {
+      "path": "commerce/codecs.py",
+      "sha256": "25eaeb2eaf6e7f8d2defbfce9f40beaf890e49e525bba7a45c8648e5e8e2ad1d"
+    },
+    {
+      "path": "commerce/fields.py",
+      "sha256": "466e7b2d5db648035d3d1007bd59c88d0ec17963e1a9c3f9332b2a9238c91b5d"
+    },
+    {
+      "path": "commerce/keys.py",
+      "sha256": "ccba312d113d12cd692123a706f3704a2dd6f9b8e428d8b5ab5fcb4a1067c98b"
+    },
+    {
+      "path": "commerce/models.py",
+      "sha256": "83c897865cb357e2c94f2cb17e6513a612b33a54b24c761f817364ae5be10cc6"
+    },
+    {
+      "path": "commerce/py.typed",
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    }
+  ]
+}

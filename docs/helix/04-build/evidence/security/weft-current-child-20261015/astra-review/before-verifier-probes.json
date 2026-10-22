@@ -1,0 +1,37 @@
+{
+  "sourceSha256": "00e4b43fb341b7c92837095630be3f6fb285548cacc922b5bc7a91dbe92e105a",
+  "recordSha256": "4f9d3d84e3d82139f9489521aebc4d11616ba0e5846c5ab12c50761cda906a01",
+  "scope": "Exact original validation AST applied to retained actual mixed-case response; synthetic mutations, no rerun of wheel, Bun or native services.",
+  "controls": [
+    {
+      "mode": "baseline",
+      "acceptedByOriginalVerifier": true,
+      "error": null
+    },
+    {
+      "mode": "omit-batch-operations",
+      "acceptedByOriginalVerifier": true,
+      "error": null
+    },
+    {
+      "mode": "omit-route-results",
+      "acceptedByOriginalVerifier": true,
+      "error": null
+    },
+    {
+      "mode": "publish-plaintext-as-mask",
+      "acceptedByOriginalVerifier": true,
+      "error": null
+    },
+    {
+      "mode": "wrong-resource-key",
+      "acceptedByOriginalVerifier": true,
+      "error": null
+    },
+    {
+      "mode": "reverse-operation-order",
+      "acceptedByOriginalVerifier": true,
+      "error": null
+    }
+  ]
+}

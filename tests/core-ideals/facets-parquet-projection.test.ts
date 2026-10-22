@@ -1,8 +1,9 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import * as u from '../../src';
-import {projectFacetsToParquet as project,recoverFacetsFromParquet as recover,type FacetsParquetRequest} from '../../src';
+import {projectFacetsToParquet as project, recoverFacetsFromParquet as recover, type FacetsParquetRequest} from '../../src';
 const identity={module:'m',element:'value'};
-function ideal(scalarType:string):u.Document{return {umf:'0.5.0',id:'ideal',vocabularies:{},modules:[{id:'m',namespace:'',elements:[{id:'value',name:'value',kind:'field',cardinality:'one',scalarType,extensions:{}}]}]};}
+function ideal(scalarType:string):u.Document{return {umf:'0.10.0',id:'ideal',vocabularies:{},modules:[{id:'m',namespace:'',elements:[{id:'value',name:'value',kind:'field',cardinality:'one',scalarType,extensions:{}}]}]};}
 const request:FacetsParquetRequest={id:'native',recordName:'Record',fieldName:'value',nullable:false,carrier:{kind:'integer',bits:8,signed:false},mode:'strict',encoding:'native-type',profile:'declared-schema',obligation:'value-domain'};
 const author=(family:string,facets:u.CoreFacetPatch)=>u.declareCoreFacets(ideal(family),identity,facets);
 test('integer widths and decimal carriers project only matched declared domains',()=>{

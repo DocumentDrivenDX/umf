@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 14668,
+        "line": 18,
+        "path": "src/core-ideals/facets-sqlserver-projection.ts",
+        "sha256": "636acf528c880835e7d64dc7e56f7029afca20f5e8530a66c4005046ad5d8bf3"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "FacetsSqlServerProjection",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface FacetsSqlServerProjection {\n operation:'project-facets-sqlserver';version:'1.0.0';status:'projected'|'blocked';source:Document;author:Author;request:FacetsSqlServerRequest;target?:{format:'sqlserver-ddl';sql:string};nativeSql?:string;binding:typeof binding;diagnostics:Diagnostic[];\n mapping:{origin:'authored';idealPath:string;nativePath:'/sql';facets:CoreFacetPatch;encoding:FacetsSqlServerRequest['encoding'];outcome:Outcome};\n residuals:{path:string;value:Json;reason:string;outcome:Exclude<Outcome,'exact'>;recovery:typeof recovery}[];\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"FacetsSqlServerProjection\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 14668,
+      "line": 18,
+      "path": "src/core-ideals/facets-sqlserver-projection.ts",
+      "sha256": "636acf528c880835e7d64dc7e56f7029afca20f5e8530a66c4005046ad5d8bf3"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/facets-sqlserver-projection.ts",
+  "title": "FacetsSqlServerProjection"
+}

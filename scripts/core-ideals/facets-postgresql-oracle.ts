@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Run native facet qualification in dependency order; prior concept gates remain separate. */
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 7183,
+        "line": 60,
+        "path": "src/model/schema-properties.ts",
+        "sha256": "6d1e5b1e5ebcd56a176635e0c8677dca5593b2e41e9068a5d6b3414ae8e0be41"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "validateCoreFieldValue",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: Document, fieldInput: { module: string; element: string; }, valueInput: Literal): Validation"
+    ]
+  },
+  "id": "[\"api\",\".\",\"validateCoreFieldValue\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 7183,
+      "line": 60,
+      "path": "src/model/schema-properties.ts",
+      "sha256": "6d1e5b1e5ebcd56a176635e0c8677dca5593b2e41e9068a5d6b3414ae8e0be41"
+    }
+  ],
+  "summary": "Public export · src/model/schema-properties.ts",
+  "title": "validateCoreFieldValue"
+}

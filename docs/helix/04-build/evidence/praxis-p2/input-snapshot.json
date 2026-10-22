@@ -1,0 +1,32 @@
+{
+  "capturedAt": "2026-10-20T00:37:11.503733+00:00",
+  "scope": "single owned native-operation input snapshot; no broad performance readiness or new native campaign",
+  "parentUmfCommit": "d89f0759f",
+  "publicEntryPoints": [
+    "sync/async read",
+    "sync/async single/batch write and observe"
+  ],
+  "change": "one caller-tree deepcopy before preparation or thread offload, reused for digest and canonical compiler input; compatible private snapshot wrappers retained",
+  "snapshotTests": {
+    "installedOptionalDependencies": 4,
+    "minimalWithoutOptionalCompilerOrDrivers": 4
+  },
+  "existingValueAndOutcomeTests": 12,
+  "existingNativeBindingTests": 4,
+  "packageRuff": "passed",
+  "pythonBoundaryModules": 80,
+  "pythonBoundaryViolations": 0,
+  "sourceFiles": {
+    "python/umf_access/src/umf_access/unified/table_reads.py": "7e44502a8c2bae700260ed1672d616fd72e7d9f67e2bf4f5d1865d8337e49e30",
+    "python/umf_access/src/umf_access/unified/table_writes.py": "3673deb9513f8a68bc4349bc8e593f1904540f1edb8d6c077347973c2b4fc07f",
+    "python/umf_access/tests/test_operation_input_snapshot.py": "b013ce8b6837caae577412426caf51b84fd76659f5c14e2e12f3d15a589982e9"
+  },
+  "nativeRerunForCopyOnlyDelta": false,
+  "remainingResourceWork": [
+    "cache immutable source preparation and declarations",
+    "consolidate redundant live catalog checks within trusted-host boundary",
+    "compiler-owned ordered batch transport"
+  ],
+  "fullPraxisAcceptance": false,
+  "published": false
+}

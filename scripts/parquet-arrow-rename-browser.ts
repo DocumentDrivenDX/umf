@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
 const base=(process.argv[2]??'fixtures/parquet/arrow-rename').replace(/\/$/,'')+'/',fixture=await Bun.file(base+'results.json').json();
 const built=await Bun.build({entrypoints:['src/index.ts','native/arrow/flatbuffer-runtime.ts'],outdir:'.cache/parquet-arrow-rename-browser',naming:'[name].js',target:'browser',format:'esm'});if(!built.success)throw Error(String(built.logs));

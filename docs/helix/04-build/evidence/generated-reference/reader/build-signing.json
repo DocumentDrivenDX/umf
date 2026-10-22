@@ -1,0 +1,16 @@
+{
+  "profile": "umf.site.build-signing-evidence/1",
+  "outcome": "passed",
+  "cliRevision": "4185eb56beb7b52beaa4a00c2fc897f93d44b939",
+  "inventoryPages": 24,
+  "policyTests": 5,
+  "cryptographicFixturePages": 3,
+  "onePasswordInvocations": 0,
+  "fixtureKey": "Ephemeral Ed25519 test key; no production signing material accessed",
+  "checks": [
+    "Root, Actions and Reference pages use build-role model-primary signatures",
+    "Public claims synchronized before cryptographic verification",
+    "Missing environment key refuses without interactive fallback",
+    "Human or 1Password configuration rejected"
+  ]
+}

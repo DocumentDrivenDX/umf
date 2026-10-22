@@ -1,0 +1,24 @@
+........................................................................ [ 43%]
+...................................................................F.... [ 86%]
+......................                                                   [100%]
+=================================== FAILURES ===================================
+______________ test_only_generated_current_core_schema_is_active _______________
+
+    def test_only_generated_current_core_schema_is_active():
+        assert current_core_version() == "0.10.0"
+        schema = core_schema()
+        assert schema["properties"]["umf"]["const"] == "0.10.0"
+>       assert schema == json.loads(
+            (ROOT.parent / "spec/core/schema.json").read_text()
+        )
+E       AssertionError: assert {'$schema': '...velope.', ...} == {'$schema': '...velope.', ...}
+E
+E         Omitting 8 identical items, use -vv to show
+E         Differing items:
+E         {'$comment': 'Generated from spec/metamodel/umf.yaml; model 1e406ee49b0c4c08b8eb996bb1fcb6e96fa8d6f4673f0877aa1800986b2dbbce; compiler 0da0764f2e55f91f223c6bcbcc15edff98cd350658465642040bfbc093cb0517'} != {'$comment': 'Generated from spec/metamodel/umf.yaml; model 1e406ee49b0c4c08b8eb996bb1fcb6e96fa8d6f4673f0877aa1800986b2dbbce; compiler aab9cbfe21482c4e7a64e1104178b16078953e02ac93a5f0f3900abce245e327'}
+E         Use -v to get more diff
+
+python/tests/test_core.py:72: AssertionError
+=========================== short test summary info ============================
+FAILED python/tests/test_core.py::test_only_generated_current_core_schema_is_active
+1 failed, 165 passed in 4.41s

@@ -1,0 +1,105 @@
+{
+  "profile": "umf.unified-installed-host-native/1",
+  "status": "passed; local installed host dev2 candidate only",
+  "candidate": {
+    "package": "umf-access",
+    "version": "0.1.0.dev2",
+    "wheel": "/private/tmp/umf-access-wheel-dev2/final-run-success/build/umf_access-0.1.0.dev2-py3-none-any.whl",
+    "wheelSha256": "2a70552bfebcdf1035fc60d8ac190ba80dc63f48aa22fd6648acf23ee105a7a7",
+    "wheelMembers": 54,
+    "installedImport": "/private/tmp/umf-access-wheel-dev2/final-run-success/venv/lib/python3.11/site-packages/umf_access/__init__.py"
+  },
+  "runtime": {
+    "python": "3.11.17",
+    "weft": "0.4.44",
+    "weftWheel": "/private/tmp/weft44wheels/weft_sql-0.4.44-cp39-abi3-macosx_11_0_arm64.whl",
+    "weftWheelSha256": "9f46bc4503d04982614609607da587ec55b2e73c8a0b57abc59b1d1e73cd5c93",
+    "weftImport": "/private/tmp/umf-unified-access-dev2-current-20261018/weft/weft/__init__.py",
+    "psycopg": "3.3.6",
+    "psycopgImport": "/private/tmp/truss-bunfree-venv/lib/python3.11/site-packages/psycopg/__init__.py",
+    "bun": "1.4.2"
+  },
+  "nativePostgreSQL": {
+    "version": "18.6",
+    "port": 55483,
+    "pid": 63332,
+    "dataDirectory": "/private/tmp/umf-unified-access-dev2-current-20261018/pgdata",
+    "cleanup": "server stopped cleanly after test; disposable cluster retained under /private/tmp for evidence"
+  },
+  "tests": {
+    "file": "tests/access-unified.test.ts",
+    "cases": 2,
+    "passed": 2,
+    "failed": 0,
+    "skipped": 0,
+    "expectCalls": 19,
+    "includes": "isolated generated stdlib application plus installed umf-access dev2 Weft SQL execution against PostgreSQL 18",
+    "rawRun": "bun-test.log"
+  },
+  "sourceClosure": {
+    "tests/access-unified.test.ts": {
+      "sha256": "1314480c2ba669ec147fc3660521e64e5d99d53081b1f1c9598ab98660d65084"
+    },
+    "tests/unified/table_binding_e2e.py": {
+      "sha256": "157ab9020b2e66b1009fcba4ab20b5daf1c3015f0a6c9df6d694420d5b776898"
+    },
+    "tests/unified/commerce.json": {
+      "sha256": "19c018888066d391599d4bc8079ec8f3479266e6ecc55237c57825bc33c3003d"
+    },
+    "python/umf_access/pyproject.toml": {
+      "sha256": "53cb6e5c9ea50bca3e67866cb93ba693f37c70acfc41084a924d28a73638442c"
+    },
+    "python/umf_access/src/umf_access/unified/__init__.py": {
+      "sha256": "a1791f3add87cdc159a6aa0404b218fe8be8e357c02f0484523eb6009579d946"
+    },
+    "python/umf_access/src/umf_access/generated_core.py": {
+      "sha256": "c6d51fd6a1899c6009ccd632079f915a464fc7eeeac2ba9807d5deaad5d52497"
+    },
+    "python/umf_access/tests/test_unified_binding_identity.py": {
+      "sha256": "94e89deb25a2705c86867fd5f8bdd82da849e7dcedaca1d242aebe8fe1cb9362"
+    }
+  },
+  "sourceUnchanged": true,
+  "scope": {
+    "doesNotClaim": [
+      "publication",
+      "SDK inclusion",
+      "broader Weft release qualification",
+      "unified host features beyond the test assertions"
+    ]
+  },
+  "logs": {
+    "bun-test.log": {
+      "sha256": "ba80ff7a5423a3ece7cc485aedf66dfa42f7cd2e286a0a283ca74b429506accb",
+      "bytes": 397
+    },
+    "runtime.log": {
+      "sha256": "e18b87e016323dd728a95f7ee23553cf26b8d7964af6d49972a26e8fa13a28a8",
+      "bytes": 370
+    },
+    "initdb.log": {
+      "sha256": "efc7e39d030072ba21e43a5da2359f3cfe52f3b171b828ab9d51e59d592e7c5d",
+      "bytes": 922
+    },
+    "postgres.log": {
+      "sha256": "c464ff248b3eea5010ab05f3a4b2e2630a9ef01b04f029f1d7479cd65943fdf4",
+      "bytes": 1344
+    },
+    "source-before.sha256": {
+      "sha256": "b281d8e8278f2eff710fd5bfd6423495160a1f6ff0052448b950057bc8b93bf7",
+      "bytes": 748
+    },
+    "source-after.sha256": {
+      "sha256": "b281d8e8278f2eff710fd5bfd6423495160a1f6ff0052448b950057bc8b93bf7",
+      "bytes": 748
+    },
+    "wheels.sha256": {
+      "sha256": "1a2ec12da7d31932b3300cfe729c06d7a43632d68ff974855d6ebf19d365cbbd",
+      "bytes": 304
+    },
+    "postgres-version.txt": {
+      "sha256": "7ee29791fc17e986b97128845622b077fb45e349fdb80523fac9dba879b4ad60",
+      "bytes": 3
+    }
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 1761,
+        "line": 5,
+        "path": "src/registry/registry.ts",
+        "sha256": "5903ba9f257957b90ada07fbff43b58d54eabe8c8f7400ddd9ce83b4237d50e6"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "SemanticValidator",
+    "runtime": "type-only",
+    "signatureText": [
+      "export type SemanticValidator = (payload: Json, context: {document: Document; path: string; scope: Scope}) => Diagnostic[];"
+    ]
+  },
+  "id": "[\"api\",\".\",\"SemanticValidator\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 1761,
+      "line": 5,
+      "path": "src/registry/registry.ts",
+      "sha256": "5903ba9f257957b90ada07fbff43b58d54eabe8c8f7400ddd9ce83b4237d50e6"
+    }
+  ],
+  "summary": "Type declaration · src/registry/registry.ts",
+  "title": "SemanticValidator"
+}

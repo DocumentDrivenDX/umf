@@ -1,0 +1,67 @@
+{
+  "data": {
+    "conflicts": [],
+    "correspondence": "unknown",
+    "declarations": [],
+    "evidence": [
+      {
+        "closureComplete": false,
+        "commands": [],
+        "correspondence": "unknown",
+        "id": "protobuf-source-compiler-record",
+        "inputHashes": [],
+        "limitations": [
+          "Recorded scope only; native equivalence and production adoption are separate.",
+          "Complete tested dependency closure is not recorded; current-source qualification is unknown."
+        ],
+        "outcome": "passed",
+        "readerId": "protobuf-corpus",
+        "scope": "Original bounded compiler/behavior record.",
+        "selector": "",
+        "source": {
+          "bytes": 554,
+          "path": "fixtures/protobuf/source-compiler-results.json",
+          "sha256": "0ad6e8be2831d95a7867e10610e7cb813b8f0b64c1282fb5021bc6ea0a3287c0"
+        },
+        "supersedes": [],
+        "versions": {
+          "compiler": "protocompile 0.14.1"
+        }
+      }
+    ],
+    "operation": {
+      "apiNames": [],
+      "coreProfiles": [],
+      "extensionVersions": [],
+      "fixturePaths": [],
+      "id": "protobuf-source-compiler",
+      "kind": "round-trip",
+      "limitations": [
+        "Recorded scope only; native equivalence and production adoption are separate."
+      ],
+      "runtime": {
+        "availability": "host-only",
+        "profileId": "protobuf-source-compiler",
+        "requirements": [
+          "Native runtime / original qualification harness; not executed by this page."
+        ]
+      },
+      "sourceSystem": "Protobuf",
+      "subset": "Original bounded compiler/behavior record.",
+      "targetSystem": "Protobuf",
+      "title": "Protobuf · source compiler"
+    }
+  },
+  "id": "[\"integration\",\"protobuf-source-compiler\"]",
+  "kind": "integration",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 134795,
+      "path": "docs/helix/05-deploy/reference/operations.json",
+      "sha256": "793743bbca36e56e90e82df5ef0408b628c434e58cb68aea4d6486349be78e61"
+    }
+  ],
+  "summary": "Original bounded compiler/behavior record.",
+  "title": "Protobuf · source compiler"
+}

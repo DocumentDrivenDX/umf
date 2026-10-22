@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 6206,
+        "line": 7,
+        "path": "src/adapters/parquet/pages.ts",
+        "sha256": "d9389c85de0bfc672e83dc3905bdad754339f8fc1c4e059a72f6e573719d1072"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "PARQUET_PAGE_LIMITS",
+    "runtime": "unassessed",
+    "signatureText": [
+      "PARQUET_PAGE_LIMITS={headerBytes:65536,pages:10000,pageBytes:8*1024*1024,totalBytes:64*1024*1024,pageValues:100000,totalValues:1000000,rows:10000} as const"
+    ]
+  },
+  "id": "[\"api\",\".\",\"PARQUET_PAGE_LIMITS\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 6206,
+      "line": 7,
+      "path": "src/adapters/parquet/pages.ts",
+      "sha256": "d9389c85de0bfc672e83dc3905bdad754339f8fc1c4e059a72f6e573719d1072"
+    }
+  ],
+  "summary": "Public export · src/adapters/parquet/pages.ts",
+  "title": "PARQUET_PAGE_LIMITS"
+}

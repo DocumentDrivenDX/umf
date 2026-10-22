@@ -1,0 +1,42 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"UuidValue\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "canonicalText",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "originalText",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "profile",
+      "optional": false,
+      "type": "\"umf-128/1\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "hex",
+      "optional": false,
+      "type": "string"
+    }
+  ],
+  "parameters": [],
+  "purpose": "UuidValue is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "UuidValue"
+}

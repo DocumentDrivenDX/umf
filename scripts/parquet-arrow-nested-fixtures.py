@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 from pathlib import Path
 import pyarrow as pa,pyarrow.parquet as pq
 assert pa.__version__=='21.0.0'

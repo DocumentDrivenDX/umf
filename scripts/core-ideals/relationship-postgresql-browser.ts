@@ -1,7 +1,8 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
 import {backend} from '../../native/postgresql/runtime';
 import {postgresqlRelationshipCases} from './relationship-postgresql-cases';
-import {classifyPostgresqlRelationships,importPostgresqlCatalogCapture,projectRelationshipsToPostgresql} from '../../src';
+import {classifyPostgresqlRelationships, importPostgresqlCatalogCapture, projectRelationshipsToPostgresql} from '../../src';
 const rows:any[]=[];for(const c of postgresqlRelationshipCases())rows.push({...c,expected:await projectRelationshipsToPostgresql(c.source,c.binding,c.authors,c.request,backend)});
 const catalogs:any[]=[];for(const id of [...rows.filter(c=>c.expected.status==='projected').map(c=>c.id),'native-counterexamples']){const nativeSource=await Bun.file(`fixtures/postgresql/relationships/${id}.catalog.json`).text(),source=importPostgresqlCatalogCapture(nativeSource,{id:'catalog-'+id}),request={profile:'captured-catalog' as const,mode:'report' as const,nativeSource};catalogs.push({id,source,request,expected:await classifyPostgresqlRelationships(source,request,backend)});}
 const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(request){const path=new URL(request.url).pathname;

@@ -1,0 +1,23 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"exportProtobufBundle\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "exportProtobufBundle accepts document and returns { descriptorSet: Uint8Array<ArrayBufferLike>; source: Document; diagnostics: Diagnostic[]; }.",
+  "related": [],
+  "returns": "{ descriptorSet: Uint8Array<ArrayBufferLike>; source: Document; diagnostics: Diagnostic[]; }",
+  "task": "Import and export",
+  "type": "(document: Document) => { descriptorSet: Uint8Array<ArrayBufferLike>; source: Document; diagnostics: Diagnostic[]; }"
+}

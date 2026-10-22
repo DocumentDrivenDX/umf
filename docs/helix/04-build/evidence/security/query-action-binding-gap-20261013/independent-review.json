@@ -1,0 +1,25 @@
+{
+  "status": "read-only-review-no-remaining-actionable-findings",
+  "sourceDigests": {
+    "/Users/erik/.codex/worktrees/security-main-integration/umf/tools/security/query-action-binding-gap.ts": "719eaa4d86362946bc473abbe390d8d67917fbdfd03db9b2d32f432b0305fcdd",
+    "/Users/erik/.codex/worktrees/security-main-integration/umf/tools/security/prove-query-action-binding.py": "4892a8e30a821b169c7a4e7ce50f6f66ee9ba39c848d0e6ee5de6a6762061db7",
+    "/Users/erik/.codex/worktrees/security-main-integration/umf/src/extensions/security/evaluate.ts": "e64385876ad398b677b73c2718584fcbbd36fca69bd1d69803c24ec82df532ee",
+    "/Users/erik/.codex/worktrees/security-main-integration/umf/src/extensions/security/types.ts": "eca63268da13b8ba7aabe9383da415f36a0e3beadca132ffbb356948886818b8",
+    "/Users/erik/.codex/worktrees/security-main-integration/umf/tests/security/evaluation-fixture.ts": "ecb9bbae23a4b26232fda959c59aa4dbe79a111699c670f1356dd0c7d251d8ad",
+    "/Users/erik/.codex/worktrees/security-main-integration/umf/tests/security/fixture.ts": "572f914713ea24d3e06b85a953cc9176fd98adf2e585e1cd6d838f27c1b694c6",
+    "/Users/erik/.codex/worktrees/security-main-integration/umf/docs/helix/02-design/contracts/CONTRACT-062-security-semantics.md": "f599067c99a35a29b6c3ce050beefcef208b262c891cc06b4567fc071caa4b6f",
+    "/Users/erik/.codex/worktrees/security-main-integration/umf/docs/helix/02-design/contracts/CONTRACT-063-security-enforcement.md": "39856c3ed99114a2467ff4a5789bf68b5d779229eb3e28dc66f2a3a79661d2b9",
+    "/Users/erik/.codex/worktrees/security-main-integration/umf/docs/helix/03-test/security/cases.json": "37308740d5d8b57f6f4647c1a44feee71cbfde02d8f5bee1334299654a610ba9",
+    "/private/tmp/weft-security-main-integration/crates/weft-core/src/security_query_profile.rs": "6c360bf2c83c61d06245c07ad771f7de580b801f81f058cff7b6ff179d21f569",
+    "/private/tmp/weft-security-main-integration/docs/helix/02-design/contracts/security-query-profile-v0.1.schema.json": "8fcd179fb2582525776902d8e550fbae4591655a33c93767f1ca883042e98fc9",
+    "/private/tmp/weft-security-main-integration/docs/helix/02-design/contracts/CONTRACT-007-security-compilation.md": "c603b4866597e1fc456e56aa7377eac35f5a5550e740633be97d001f097e869f"
+  },
+  "diagnosticObservations": 15,
+  "formal": {
+    "sat": 2,
+    "unsat": 1,
+    "solverVersion": "4.15.4"
+  },
+  "scope": "Unprofiled semantic evaluator consumes trusted originalAction assertions. External intended designation is deliberately not represented by current field classification; no native query or data release is executed. Existing Weft query-profile/0.1.0 already supplies exact source-bound target/field/operator/action designation and caller mismatch refusal. Compose original admitted profile and compiler-derived query lineage into backend; profile authenticity, installed native mapping, complete query-use extraction and guarded execution remain separate. No ontology redesign or backend case promotion.",
+  "proofScope": "Conditional selector equality with one congruent granted(Int)->Bool function; not policy evaluation, empty-set/dependency, authentication, source refinement or native theorem."
+}

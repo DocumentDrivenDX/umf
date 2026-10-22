@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 4087,
+        "line": 7,
+        "path": "src/adapters/parquet/transform.ts",
+        "sha256": "292afc996a29cd4b35304b20a2cf1170c8dc5d6d150dab17f94c00bfdc62af9b"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "ParquetKeyValue",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface ParquetKeyValue {key:string;value?:string}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"ParquetKeyValue\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 4087,
+      "line": 7,
+      "path": "src/adapters/parquet/transform.ts",
+      "sha256": "292afc996a29cd4b35304b20a2cf1170c8dc5d6d150dab17f94c00bfdc62af9b"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/parquet/transform.ts",
+  "title": "ParquetKeyValue"
+}

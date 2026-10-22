@@ -1,12 +1,12 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {copyJson} from '../model/json';
 import {UmfError,pointer,type Document,type Json,type Diagnostic} from '../model/types';
 import {verifyCoreNullabilityDeclaration,type CoreNullabilityDeclaration} from '../model/nullability';
 import {importTableSpec,exportTableSpec} from '../adapters/tablespec';
 import {createValidator} from '../validation/schema';
 import legacy from '../../spec/core/schema.json';
-import fields from '../../spec/core/field-document.schema.json';
-import availability from '../../spec/core/nullability-document.schema.json';
-import authorSchema from '../../spec/core/nullability-operation.schema.json';
+
+import authorSchema from '../../spec/core/nullability-operation-v5.schema.json';
 import schema from '../../spec/core/nullability-tablespec-projection.schema.json';
 export {default as nullabilityTableSpecProjectionSchema} from '../../spec/core/nullability-tablespec-projection.schema.json';
 export interface NullabilityTableSpecRequest {id:string;tableName:string;columnName:string;nativeType:'BOOLEAN'|'INTEGER'|'DECIMAL'|'FLOAT'|'TEXT'|'VARCHAR'|'CHAR'|'DATE'|'DATETIME'|'TIMESTAMP';mode:'strict'|'report';profile:'runtime-model'|'checked-schema'|'unresolved';context:string|null;carrier:'null-value'|'unresolved'}
@@ -17,7 +17,7 @@ export interface NullabilityTableSpecProjection {
  profileNotes:{profile:'checked-schema';code:'SCALAR_BOOLEAN_REJECTED';message:string}[];
  residuals:{path:string;value:Json;reason:string;outcome:'unknown'|'not-expressible';recovery:'Recover source meaning with retained projection receipt; native-only import does not recover author intent'}[];
 }
-const validator=createValidator();validator.addSchema(legacy);validator.addSchema(fields);validator.addSchema(availability);validator.addSchema(authorSchema);const check=validator.compile(schema);
+const validator=createValidator();validator.addSchema(legacy);validator.addSchema(authorSchema);const check=validator.compile(schema);
 const checkRequest=validator.compile({...schema.properties.request});
 export function projectNullabilityToTableSpec(input:CoreNullabilityDeclaration,options:NullabilityTableSpecRequest):NullabilityTableSpecProjection & {diagnostics:Diagnostic[]} {
  const copied=copyJson(input) as unknown as CoreNullabilityDeclaration;

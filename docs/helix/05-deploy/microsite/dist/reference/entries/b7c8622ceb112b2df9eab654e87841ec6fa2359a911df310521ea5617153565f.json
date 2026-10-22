@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 4634,
+        "line": 7,
+        "path": "src/adapters/linkml/imports.ts",
+        "sha256": "a299280cb72967eb70909665854566bc7b92664edba1b528cb8b3be1faf4d411"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "LinkmlImportReport",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface LinkmlImportReport {\n context:LinkmlImportContext;status:'resolved'|'blocked';complete:false;nodes:string[];\n edges:{from:string;import:string;path:string;target?:string}[];diagnostics:Diagnostic[];\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"LinkmlImportReport\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 4634,
+      "line": 7,
+      "path": "src/adapters/linkml/imports.ts",
+      "sha256": "a299280cb72967eb70909665854566bc7b92664edba1b528cb8b3be1faf4d411"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/linkml/imports.ts",
+  "title": "LinkmlImportReport"
+}

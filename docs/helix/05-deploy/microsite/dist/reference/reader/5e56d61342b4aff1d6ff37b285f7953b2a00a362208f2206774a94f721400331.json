@@ -1,0 +1,48 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"encodeBit128Record\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "bindingInput",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "sourceInput",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "identity",
+      "optional": false,
+      "type": "Bit128Ref"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Bit128RecordValue\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "Bit128RecordValue[]"
+    }
+  ],
+  "purpose": "Full rows only: every Field explicitly supplied, all paired slots decoded together. No mutation execution.",
+  "related": [],
+  "returns": "Record<string, string | null>",
+  "task": "Serialize",
+  "type": "(bindingInput: Document, sourceInput: Document, identity: Bit128Ref, input: Bit128RecordValue[]) => Record<string, string | null>"
+}

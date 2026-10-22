@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 11037,
+        "line": 30,
+        "path": "src/core-ideals/relationship-avro-projection.ts",
+        "sha256": "697e300741ea2cd80f1e8f14fc45d618f678161ce3a88fc6e388bbbaa8887148"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "projectRelationshipToAvro",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: Document, authorInput: CoreRelationshipDeclaration, options: RelationshipAvroRequest): RelationshipAvroProjection"
+    ]
+  },
+  "id": "[\"api\",\".\",\"projectRelationshipToAvro\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 11037,
+      "line": 30,
+      "path": "src/core-ideals/relationship-avro-projection.ts",
+      "sha256": "697e300741ea2cd80f1e8f14fc45d618f678161ce3a88fc6e388bbbaa8887148"
+    }
+  ],
+  "summary": "Explicit reference-value lowering with retained authored meaning; no native identity inference.",
+  "title": "projectRelationshipToAvro"
+}

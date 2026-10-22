@@ -1,0 +1,32 @@
+{
+  "scope": "Complete selected inputs include version, principals, configuration, all sources/options/markers and negativeCases. Original receipts remain unchanged. Only shard C selected inputs changed and require replay.",
+  "entries": [
+    {
+      "shard": "a",
+      "oldReportSha256": "91259e12fe8ef75cf54ca8d73b79979bcfb8bc90b9aa4329cba8b90e2beb4348",
+      "oldBuilderSha256": "954e120b55263fa64099051947b88a0fe26459c734e58283782e73ee58b45d31",
+      "finalBuilderSha256": "679b9181eeb15e744e0c2d03bf0c7d0562dae859c6c42563d0f8659134572ef1",
+      "oldAndFinalSelectedFixtureSha256": "9e5cd14c02f95f5e60e8922c8c7bf0898893bdee959124e60d3a0bf37c123a28",
+      "completeSelectedFixtureBytesEqual": true,
+      "runtimeAndCodegenWheelsUnchanged": true
+    },
+    {
+      "shard": "b",
+      "oldReportSha256": "cb09b3b0a1991a2041961557721bb9a574afbcc41a26a016d003f294fd9dc426",
+      "oldBuilderSha256": "954e120b55263fa64099051947b88a0fe26459c734e58283782e73ee58b45d31",
+      "finalBuilderSha256": "679b9181eeb15e744e0c2d03bf0c7d0562dae859c6c42563d0f8659134572ef1",
+      "oldAndFinalSelectedFixtureSha256": "6c2354ce3759c72c291c3f46ccd321758673ab072d5d7b7ccffa716a6ec18353",
+      "completeSelectedFixtureBytesEqual": true,
+      "runtimeAndCodegenWheelsUnchanged": true
+    },
+    {
+      "shard": "d",
+      "oldReportSha256": "ed5f137e2ee9f58290018a3c61344bffd5bb3a980877d0217c279946ba68186c",
+      "oldBuilderSha256": "954e120b55263fa64099051947b88a0fe26459c734e58283782e73ee58b45d31",
+      "finalBuilderSha256": "679b9181eeb15e744e0c2d03bf0c7d0562dae859c6c42563d0f8659134572ef1",
+      "oldAndFinalSelectedFixtureSha256": "14b1cf0bc02ccda8713d63679798d39e0cecffdbd66a78d718436a722c944b9f",
+      "completeSelectedFixtureBytesEqual": true,
+      "runtimeAndCodegenWheelsUnchanged": true
+    }
+  ]
+}

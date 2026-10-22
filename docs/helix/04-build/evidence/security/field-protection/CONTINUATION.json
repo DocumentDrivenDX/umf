@@ -1,0 +1,115 @@
+{
+  "plan": "docs/helix/04-build/security-field-protection-plan.md",
+  "planRevision": "2026-10-14 owner-directed amendment (slice B-SFP-000)",
+  "ownerDirection": "2026-10-14: build out the plan; apply upstream amendments P-A..P-G; treat Q10 as accepted",
+  "completedSlices": [
+    {
+      "id": "B-SFP-000",
+      "scope": "Upstream amendments P-A..P-G applied to FEAT-008, CONTRACT-062, CONTRACT-063, SD-008, STP-056, STP-057, 03-test/security/{pg-raw,delta-raw}.md and cases.json; plan marked",
+      "receipts": [
+        "docs/helix/04-build/evidence/security/acceptance-allocation/adbd3f28-55df-4a5f-b315-9d54b64e0ef4/receipt.json"
+      ],
+      "evidenceProduced": "none; documentation and plan amendment only"
+    },
+    {
+      "id": "B-SFP-001",
+      "scope": "Wire/boundary scaffold only; interpretation always refuses; no acceptance cases promoted",
+      "receipts": [
+        "docs/helix/04-build/evidence/security/protection-wire-20261015/receipt.json"
+      ]
+    },
+    {
+      "id": "B-SFP-002",
+      "scope": "Declared exact reference/migration/preservation exit met; S01-S12 and S13-S15 accepted. Core definitions only; no function/native admission.",
+      "receipts": [
+        "docs/helix/04-build/evidence/security/protection-domains-20261015/receipt.json"
+      ]
+    }
+  ],
+  "remainingSlices": [
+    "B-SFP-003",
+    "B-SFP-004",
+    "B-SFP-005",
+    "B-SFP-006",
+    "B-SFP-007",
+    "B-SFP-008",
+    "B-SFP-009",
+    "B-SFP-010",
+    "B-SFP-011",
+    "B-SFP-012",
+    "B-SFP-012a",
+    "B-SFP-013",
+    "B-SFP-014",
+    "B-SFP-017",
+    "B-SFP-015",
+    "B-SFP-016"
+  ],
+  "decisions": {
+    "P-A": "applied: FEAT-008 SEC-13",
+    "P-B": "applied: FEAT-008 SEC-14",
+    "P-C": "applied: FEAT-008 SEC-15",
+    "P-D": "applied: CONTRACT-062 qualified source/domain/pure-reference/transport subsets; general interpreter/compiler/native protection remain unfinished",
+    "P-E": "applied: CONTRACT-063 section 'Field protection receipt members'; PG 18 and UC citations with 2026-10-13 inspection date",
+    "P-F": "Native protection13 and semantic S13-S25 allocated. S13-S20 accepted in qualified semantic scopes; remaining18 added cases not-run.",
+    "P-G": "applied: SD-008 section 'Field protection decisions'",
+    "Q10": "accepted 2026-10-14: B-SFP-017 in scope, unqualified until evidence",
+    "Q13": "Enlarged single required gate158 cases,34 criteria."
+  },
+  "gate": {
+    "requiredCases": 158,
+    "originalRequiredCases": 132,
+    "addedNotRunCases": 18,
+    "acceptedCases": 34,
+    "openCases": 124,
+    "acceptanceReceiptCurrent": true,
+    "note": "Fresh full158-case gate:34 accepted,124 missing bindings. S20 data/source/domain transport accepted; no row authorization, compiler or native authority promotion.",
+    "addedRequiredCases": 26
+  },
+  "blockers": [
+    "Unity Catalog: zero distinct non-installer identities (databricks-actors.json); blocks B-SFP-011 and later",
+    "PostgreSQL 18.x minor/image and Anonymizer install decision (Q3) not yet selected"
+  ],
+  "tokenUsage": {
+    "ceiling": "unknown",
+    "basis": "unknown",
+    "perSlice": {
+      "B-SFP-000": "not measured",
+      "B-SFP-002": "not measured; goal has no token ceiling"
+    }
+  },
+  "nextAction": "Finish B-SFP-003 actual property/compiler admission and S21-S25. Continue current Subject/action/owner/source authorization and guarded permit/selector/seal composition tied to original issued store, immutable anchor, nonce, registered program and actual D full xid. Repair/recreate missing temporary native Git metadata before edits; verified Truss remote mainb77cf1f0 and Weft mainc0c6449. Preserve primary dirty work and coordinate both owner chats.",
+  "validation": {
+    "validate-evidence.py": "210 checks,88 failures; same failing IDs as prior baseline; overall gate remains failed/open.",
+    "check-acceptance-allocation.py": "passed,9 controls",
+    "helix validate-instance.py": "FEAT-008, CONTRACT-062/063, pg-raw, delta-raw and the plan pass; SD-008 and STP-056/057 report pattern-check findings that pre-exist on origin/main (see PR description)"
+  },
+  "integration": {
+    "baseline": "7bc3465224cd5e4952ff504a422f8396c25aa5c4",
+    "receipt": "docs/helix/04-build/evidence/security/pr19-integration-20261014/receipt.json",
+    "existingUnitTests": "131 passed",
+    "conditionalProofs": "20 passed; no new protection theorem",
+    "nativeTruss": "1 passed in36.457s; fixed fixture only",
+    "validatorIdentity": "US-079 aligns with governing cases and acceptance.ts",
+    "gateFormalEnvironment": "Resolved by fresh full-gate execution with explicit UMF_Z3_PYTHON; historical failure retained.",
+    "freshGate": {
+      "requiredCases": 158,
+      "executed": 34,
+      "accepted": 34,
+      "missingBindings": 124,
+      "receipt": "docs/helix/04-build/evidence/security/protection-disclosure-20261015/acceptance.json"
+    }
+  },
+  "inProgressSlices": [
+    {
+      "id": "B-SFP-003",
+      "scope": "Typed declarations, conditional query properties and pure signature/domain applicability implemented; authored property facts and actual compiler dependency admission remain open.",
+      "receipt": "docs/helix/04-build/evidence/security/protection-functions-20261015/receipt.json"
+    },
+    {
+      "id": "B-SFP-004",
+      "scope": "S19 six pure classes and S20 exact data/source/domain transport accepted; declared implementation exits met, but complete upstream B-SFP-003 property/compiler dependency and downstream integration remain open.",
+      "receipt": "docs/helix/04-build/evidence/security/protection-disclosure-20261015/receipt.json"
+    }
+  ],
+  "ownerIntegrationInventory": "docs/helix/04-build/evidence/security/protection-disclosure-20261015/owner-integration-inventory.json"
+}

@@ -1,10 +1,12 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
+import semanticTypeReferenceSchema from '../../spec/core/semantic-type-reference.schema.json';
 import {test,expect} from 'bun:test';
 import {createHash} from 'node:crypto';
 import Ajv2020 from 'ajv/dist/2020';
 import core from '../../spec/core/schema.json';
 import reportSchema from '../../spec/extensions/jsonld/expansion-schema.json';
 import {importJsonLdDocument,exportJsonLdDocument,getJsonLdNode,proposeJsonLdNodeEdit,proposeJsonLdExpansion,readDocument,writeDocument} from '../../src';
-const check=new Ajv2020({strict:false,validateFormats:false}).addSchema(core).compile(reportSchema);
+const check=new Ajv2020({strict:false,validateFormats:false}).addSchema(semanticTypeReferenceSchema).addSchema(core).compile(reportSchema);
 test('US-026-AC1–3: complete pinned expansion corpus source preservation and qualified native comparisons',async()=>{
  const manifest=await Bun.file('native/jsonld/sources/manifest.json').json(),fixture=await Bun.file('fixtures/jsonld/expansion/results.json').json(),oracle=await Bun.file('fixtures/jsonld/expansion/oracle-results.json').json();expect(fixture.cases.map((c:any)=>c.id)).toEqual(manifest.cases.map((c:any)=>c['@id'].slice(1)));expect(fixture.cases).toHaveLength(385);let candidates=0;
  for(const c of fixture.cases){const raw=await Bun.file(c.path).text();expect(createHash('sha256').update(raw).digest('hex')).toBe(manifest.files.find((f:any)=>f.path===c.path).sha256);const d=importJsonLdDocument(raw,c.inputs),r=await proposeJsonLdExpansion(d,{lossPolicy:'report'});expect(check(r)).toBe(true);expect(r.source).toEqual(d);expect(r.status).toBe(c.status);expect(r.diagnostics).toEqual(c.diagnostics);expect(r.resourcesUsed).toEqual(c.resourcesUsed);

@@ -1,0 +1,47 @@
+{
+  "protocol": "astra-manifest-construction-scoped-review/1",
+  "reviewedAtUTC": "2026-10-15T14:10:00.685817+00:00",
+  "reviewer": "Astra Ultra subagent /root/astra_review",
+  "verdict": "no-open-implementation-blocker-in-reviewed-pure-scope",
+  "source": "/Users/erik/.codex/worktrees/security-action-source-custody/umf/src/extensions/actions/manifest-construction.ts",
+  "sourceSha256": "f47c9dda4ce59638b981ada2b026329bda63ca4087560ffda5dc47bde9fe207c",
+  "findings": [],
+  "resolvedFindings": [
+    "Original Key tuple bytes now compare semantic equality while retaining distinct receipt/row spellings",
+    "Expanded manifest bytes are charged before canonical serialization",
+    "Malformed guard versions refuse with source-qualified PAP_INVALID UmfError before generating expectedVersions"
+  ],
+  "scope": "Pure unsealed manifest construction plus restored portable plan/preparation/manifest/bulk validators. Original full-source Key receipts, original Registry/model/action pins, exact plan bytes, native supplied row order, complete inputs/frames and full-first partition are preserved.",
+  "verification": {
+    "independentBunControls": 28,
+    "getterCalls": 0,
+    "focusedBunTests": 7,
+    "focusedBunAssertions": 54,
+    "restoredFilesCompared": 17,
+    "producerIdentityCheck": "passed",
+    "browserEvidence": "Three retained Chromium153.0.8010.12 receipts match the same current built ESM; construction controls include all three fixes, getters and receipt isolation"
+  },
+  "executionScope": {
+    "reviewerBunExecution": true,
+    "reviewerBrowserExecution": false,
+    "retainedActualBrowserEvidenceReviewed": true,
+    "nativeExecution": false
+  },
+  "remainingGates": [
+    "No native selection completeness or immutable identity ordering is established",
+    "No snapshot/guard authenticity, current authorization or durable seal is established",
+    "No submit/queue/recovery/transaction effects or whole live demonstration is qualified",
+    "10,000 rows may be refused by independent input framing/receipt limits; no universal maximum-row transport-fit promise",
+    "Current producer identity does not requalify historical native enrollment"
+  ],
+  "probeNotes": [
+    "Initial independent probe compared Artifact wrapper member order; corrected the probe to compare exact mediaType/utf8/sha256 values, since canonical outer manifest member ordering is not source-byte rewriting. This was a probe assertion error, not an implementation defect."
+  ],
+  "evidenceFiles": {
+    "browser-correspondence.json": "a78db292e7290d9300d2e77de160754b2966880712386a6a52f0eeea97726234",
+    "focused-tests.log": "6925f202229fa5a582baa8f5bd064b7b026442e177133e9308b2e14a8ff5d097",
+    "independent-controls.ts": "941d20cb05cc2ad7d88f1698f4d89c39679dfadf830c7039233d5a463586913e",
+    "independent-results.json": "ab756d735a105f0269132c61d06710011a13557496d030dab165ac28d343ec36",
+    "restored-correspondence.json": "3c34f9a0dd60cb4b8df3b3963f214446bd011b8a02477cae77a68eb9467095bc"
+  }
+}

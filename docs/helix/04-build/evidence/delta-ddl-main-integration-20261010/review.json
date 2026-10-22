@@ -1,0 +1,13 @@
+{
+  "verdict": "approved-integration",
+  "reviewer": "root independent of integration author",
+  "freeze_sha256": "bbebec33a8d45d54c9ca07fbff665ab5a20808cfde9e3484d211f407db39e79f",
+  "checks": [
+    "Ten current frozen files match exact hashes",
+    "Seven implementation/spec/test/browser files byte-identical to previously authored branch",
+    "README and implementation history preserve all current main bytes as prefix",
+    "Index adds only intended export",
+    "Actual focused/regression/typecheck/Chromium logs inspected"
+  ],
+  "limits": "Integration and scoped DDL generation only; no native SQL execution"
+}

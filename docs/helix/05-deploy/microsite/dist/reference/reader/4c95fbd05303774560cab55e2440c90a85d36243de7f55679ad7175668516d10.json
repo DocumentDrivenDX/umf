@@ -1,0 +1,91 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"SqlServerKeyObservation\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "identity",
+      "optional": false,
+      "type": "{ schema: string; table: string; indexId: number; name: string | null; }"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "nativePath",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "fields",
+      "optional": false,
+      "type": "{ module: string; element: string; }[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "primary",
+      "optional": false,
+      "type": "boolean"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "enforcement",
+      "optional": false,
+      "type": "\"unknown\" | \"nullable\" | \"immediate-unique-nonnull\" | \"conditional\" | \"not-unique\" | \"unavailable\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "equality",
+      "optional": false,
+      "type": "\"unknown\" | \"exact-on-representable-values\" | \"incompatible\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "ignoreDuplicateKey",
+      "optional": false,
+      "type": "boolean"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "authorIntent",
+      "optional": false,
+      "type": "\"unknown\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "provenance",
+      "optional": false,
+      "type": "\"inferred\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "scope",
+      "optional": false,
+      "type": "\"captured-table-stored-values\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "reasons",
+      "optional": false,
+      "type": "string[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "SqlServerKeyObservation is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "SqlServerKeyObservation"
+}

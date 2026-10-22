@@ -1,0 +1,22 @@
+Give an independent adversarial review of the UMF typed access SDK specifications, without implementing or editing them.
+
+Review the exact published commit containing this prompt on codex/typed-persistence-specs (the requester will provide its full SHA). Record git rev-parse HEAD and confirm a clean checkout; do not silently review a newer branch tip. Baseline expansion dd7b81f6 and Praxis update6950b663 are historical inputs, not the final reviewed tree.
+
+Start with AGENTS.md, .helix.yml, docs/helix/README.md and the installed HELIX review workflow. Entry point: docs/helix/04-build/typed-persistence-design.md, especially the coordinated SQL-to-actions ledger and First Consumer Feedback. Read FEAT-028–031, ADR-004, CONTRACT-067–074, SD-028–031, US/TD/STP-080–088 and weft-requirements-typed-access.md. Read research-palantir-osdk.md and the scoped typing-spike README and fresh consumer-reconciliation evidence. Do not treat a prototype type check as SDK/native qualification.
+
+Check governing CONTRACT-040/041/042/049/051/064/065 and CONTRACT-900–904. CONTRACT-905 belongs to the separately qualified browser-local workstream; resolve its pinned owner source from the ledger rather than assuming it exists in this checkout. Truss and Ashlar sibling sources are contextual and separately pinned; record exact versions if read. Weft owns all SQL lowering and the structural digest/program interfaces. Truss owns original registration, admission, selection, seals, control recovery, workers, journal/feed and ACK; Ashlar owns publication/pin/retention and ACK. Generated persistence must preserve those protocols.
+
+Challenge concrete implementability and contradictions:
+1. Thin generated Python3.11+/Pydantic2.14+ classes/metadata over pinned umf_access runtime; explicit keyword-only update fields; pyright/mypy/ty and uncovered typing forms. No hidden generated validators or checker suppressions.
+2. Complete full-document action pins and trusted issued-revision correspondence; original result preservation, exact per-Key DTO identities, reserved rejection codes, no-op/verification and returned created/changed Keys.
+3. Complete bulk control unions, host-issued attempt custody, stable submission keys and protected original recovery, including ACK loss before a job reference. Distinguish raw atomic native programs from frozen/batch manifests and browser-local authority.
+4. Presence/null/default/Key semantics, nested items/map values, exact values and codec parity. SQL NULL is present; MISSING alone omits a filter.
+5. Full cursors with mixed ordering/null placement, hidden authorized sort outputs, filter/catalog/runtime binding context and snapshot vectors. Live mutations may repeat/miss rows. Joined snapshots and bounded streams must retain their original qualified view.
+6. Schema-neutral Postgres18/Lakebase resolution, pg_catalog qualification, per-user pools, host expected schemas, temporary shadowing, DDL invalidation and cache safety. Authentication/role authorization is never a cached host label.
+7. Native side-effect dependency closure and unchanged-closure fences; human roles versus service sessions; atomic role/precondition/maxItems/result checks; concurrent Delta creates; original store/incarnation reconciliation. TimedOut requires positive noncommit proof, including async cancellation and self-committing statement dispatch boundaries.
+8. Search execution programs, signed score semantics, original-filter recheck during asynchronous hydration, partial-result opt-in and no false current top-k claim.
+9. One coherent dependency ledger: current browser String proof continues independently; first-consumer Lakebase reads run parallel with Truss; broader forms and adoption qualify separately. New annotations/producer sources require fresh cohorts, never relabeled old pins.
+
+Form your own findings before reading astra-expanded-review.json and sql-to-actions-overlap-review.json, then assess the correction dispositions and any focused rereview record. Historical verdicts cover their named sources only.
+
+Return a clear draft-design verdict, severity-ranked actionable findings with exact file/section, counterexample and smallest correction; strongest credible alternative; at most five genuinely unresolved owner decisions; and the smallest falsifiable end-to-end proof. Distinguish specified future gates from missing semantics. Use current primary sources for external facts. Do not install dependencies, contact agents, run migrations or claim support without executable evidence.

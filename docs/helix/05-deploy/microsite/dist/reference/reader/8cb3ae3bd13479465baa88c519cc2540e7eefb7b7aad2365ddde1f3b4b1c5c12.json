@@ -1,0 +1,28 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"bits128FromInteger\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "literal",
+      "optional": false,
+      "type": "{ integerToken: string; }"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "signed",
+      "optional": false,
+      "type": "boolean"
+    }
+  ],
+  "purpose": "Bounded exact integral JSON token parser; deliberately independent of Field validation.",
+  "related": [],
+  "returns": "Bit128Value",
+  "task": "Other APIs",
+  "type": "(literal: { integerToken: string; }, signed: boolean) => Bit128Value"
+}

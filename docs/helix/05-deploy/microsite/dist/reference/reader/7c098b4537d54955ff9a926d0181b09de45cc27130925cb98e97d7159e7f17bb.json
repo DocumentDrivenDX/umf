@@ -1,0 +1,23 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"exportTypeSpecSources\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "exportTypeSpecSources accepts document and returns { libraries?: Record<string, string>; entrypoint: string; files: Record<string, string>; }.",
+  "related": [],
+  "returns": "{ libraries?: Record<string, string>; entrypoint: string; files: Record<string, string>; }",
+  "task": "Import and export",
+  "type": "(document: Document) => { libraries?: Record<string, string>; entrypoint: string; files: Record<string, string>; }"
+}

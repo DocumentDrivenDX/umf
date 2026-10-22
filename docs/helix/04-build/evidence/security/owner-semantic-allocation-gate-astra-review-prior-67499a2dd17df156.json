@@ -1,0 +1,831 @@
+{
+  "id": "owner-semantic-allocation-gate-astra-review",
+  "status": "qualified-semantic-allocation-gate-review-passed",
+  "reviewer": "/root/astra_security_review",
+  "generatedAt": "2026-10-10T10:11:15.672018+00:00",
+  "sourceDigests": {
+    "/private/tmp/owner-semantic-allocation-gate-astra-review.py": "4953a5f50027aec61e6991a60fc72d74354588a7a0b04f1855fd40212ca605a0",
+    "/Users/erik/.codex/worktrees/1598/umf/tools/security/validate-evidence.py": "c08cb3f19988a86ef423adb8c265355409fe0167876b95d702df7d6759e7c824",
+    "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/owner-semantic-allocation-formal.json": "e177a9b1fd8111b5d0244a8bbe9fb61295802890c9b31bdd1f51925f85ada178",
+    "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/owner-semantic-allocation-astra-review.json": "388d47ecd7991cbfe500158f2ef2da8ddcd1c1ed8135ab3164d9df73cb0332f0",
+    "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/weft-semantic-allocation.json": "e929adca43f3fd858f684bc7c766ad387a7c25d6761164afe57444d8af1e5e5e",
+    "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/bin/python3.9": "6e7ae61f68a3838094fc56590f84c52069a97d7816f6bb79e0e85995b340e464"
+  },
+  "sourcesUnchanged": true,
+  "reviewCommand": {
+    "argv": [
+      "/Library/Developer/CommandLineTools/usr/bin/python3",
+      "/private/tmp/owner-semantic-allocation-gate-astra-review.py"
+    ],
+    "cwd": "/Users/erik/.codex/worktrees/1598/umf",
+    "sourceSha256": "4953a5f50027aec61e6991a60fc72d74354588a7a0b04f1855fd40212ca605a0",
+    "source": "\"\"\"Frozen AST controls for the three semantic allocation evidence gates.\"\"\"\nimport ast,copy,hashlib,json,re,sys\nfrom pathlib import Path\nfrom datetime import datetime,timezone\nROOT=Path('/Users/erik/.codex/worktrees/1598/umf');SELF=Path('/private/tmp/owner-semantic-allocation-gate-astra-review.py')\nif Path.cwd().resolve()!=ROOT or Path(__file__).resolve()!=SELF or len(sys.argv)!=1:raise RuntimeError('Unknown exact gate review invocation')\np=ROOT/'tools/security/validate-evidence.py';root=ROOT/'docs/helix/04-build/evidence/security'\npp=root/'owner-semantic-allocation-formal.json';rp=root/'owner-semantic-allocation-astra-review.json';ep=root/'weft-semantic-allocation.json'\nout=root/'owner-semantic-allocation-gate-astra-review.json';prior=out.read_bytes() if out.exists() else None\nfrozen={str(q):q.read_bytes() for q in [SELF,p,pp,rp,ep,Path(sys.executable).resolve()]};sha=lambda b:hashlib.sha256(b).hexdigest()\nraw=frozen[str(p)];tree=ast.parse(raw);proof=json.loads(frozen[str(pp)]);review=json.loads(frozen[str(rp)]);execution=json.loads(frozen[str(ep)])\ndefs={n.name:n for n in tree.body if isinstance(n,ast.FunctionDef)}\nneeded={'exact_libtest_counts','allocation_review_controls_valid'}\nwhile True:\n following=needed|{n.id for name in needed for n in ast.walk(defs[name]) if isinstance(n,ast.Name) and n.id in defs}\n if following==needed:break\n needed=following\nsupport=[n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name in needed or isinstance(n,ast.Assign) and any(isinstance(t,ast.Name) and t.id in ['allocation_test_names','allocation_laws'] for t in n.targets)]\nchecks={}\nfor n in tree.body:\n if isinstance(n,ast.Expr) and isinstance(n.value,ast.Call) and isinstance(n.value.func,ast.Attribute) and isinstance(n.value.func.value,ast.Name) and n.value.func.value.id=='checks' and n.value.func.attr=='append':\n  d=n.value.args[0]\n  if isinstance(d,ast.Dict):\n   for k,v in zip(d.keys,d.values):\n    if isinstance(k,ast.Constant) and k.value=='id' and isinstance(v,ast.Constant) and v.value in ['conditional-owner-semantic-allocation-laws','private-owner-semantic-allocation-regressions','independent-owner-semantic-allocation-review']:checks[v.value]=d\nif len(checks)!=3:raise RuntimeError('Unexpected gate inventory')\ndef evaluate(a,b,c):\n env={'re':re,'json':json,'hashlib':hashlib,'Path':Path,'root':root,'digest':lambda path:sha(frozen[str(path)])}\n exec(compile(ast.Module(body=support,type_ignores=[]),str(p),'exec'),env)\n env.update(allocation_proof=a,allocation_cases=a['cases'],allocation_execution=c,allocation_review=b,allocation_runs=b['independentExecutions'],allocation_replay=b['formalReplay'],allocation_rows=b['formalReplay']['observations'])\n env['allocation_expected']={case['id']+'/'+kind:(expected,sha(case[kind]['smt'].encode())) for case in a['cases'] for kind,expected in [('violation','unsat'),('negativeControl','sat'),('positivePopulation','sat')]}\n return {name:eval(compile(ast.Expression(body=node),str(p),'eval'),env)['status'] for name,node in checks.items()}\nresults=[]\ndef run(label,mutate,gate,wanted):\n a,b,c=copy.deepcopy((proof,review,execution));mutate(a,b,c);observed=evaluate(a,b,c)[gate]\n row={'id':label,'gate':gate,'expected':wanted,'observed':observed};results.append(row)\n if observed!=wanted:raise RuntimeError(json.dumps(row))\nfor gate in checks:run('baseline-'+gate,lambda a,b,c:None,gate,'passed')\ng='independent-owner-semantic-allocation-review'\nrun('review-no-observations',lambda a,b,c:b.update(observations=[]),g,'failed')\nrun('review-no-populations',lambda a,b,c:b['formalReplay'].update(concretePopulationControls=[]),g,'failed')\nfor i,entry in enumerate(review['observations']):\n label=entry['id']\n run('omit-observation-'+label,lambda a,b,c,i=i:b['observations'].pop(i),g,'failed')\n run('foreign-observation-'+label,lambda a,b,c,i=i:b['observations'][i].update(id='unrelated'),g,'failed')\n run('wrong-both-observation-'+label,lambda a,b,c,i=i:b['observations'][i].update(expected=None,observed=None),g,'failed')\n run('wrong-observed-observation-'+label,lambda a,b,c,i=i:b['observations'][i].update(observed=None),g,'failed')\nfor i,entry in enumerate(review['formalReplay']['concretePopulationControls']):\n label=entry['id']\n run('omit-population-'+label,lambda a,b,c,i=i:b['formalReplay']['concretePopulationControls'].pop(i),g,'failed')\n run('foreign-population-'+label,lambda a,b,c,i=i:b['formalReplay']['concretePopulationControls'][i].update(id='unrelated'),g,'failed')\n run('wrong-both-population-'+label,lambda a,b,c,i=i:b['formalReplay']['concretePopulationControls'][i].update(expected={},observed={}),g,'failed')\n run('wrong-observed-population-'+label,lambda a,b,c,i=i:b['formalReplay']['concretePopulationControls'][i].update(observed={}),g,'failed')\n for field,value in entry['expected'].items():\n  wrong=not value if type(value) is bool else 'unrelated'\n  def mutate(a,b,c,i=i,field=field,wrong=wrong):\n   row=b['formalReplay']['concretePopulationControls'][i];row['expected'][field]=wrong;row['observed'][field]=wrong\n  run('wrong-population-field-'+label+'/'+field,mutate,g,'failed')\nrun('duplicate-observation-id',lambda a,b,c:b['observations'][0].update(id=b['observations'][1]['id']),g,'failed')\nrun('duplicate-population-id',lambda a,b,c:b['formalReplay']['concretePopulationControls'][0].update(id=b['formalReplay']['concretePopulationControls'][1]['id']),g,'failed')\nrun('numeric-boolean-observation',lambda a,b,c:b['observations'][4].update(expected=1,observed=1),g,'failed')\nrun('numeric-boolean-population',lambda a,b,c:b['formalReplay']['concretePopulationControls'][0]['expected'].update(selection_a=0),g,'failed')\nfor key in ['expected','observed']:\n run('numeric-population-bool-'+key,lambda a,b,c,key=key:b['formalReplay']['concretePopulationControls'][0][key].update(retained_selection_b=1),g,'failed')\nfor before,after in [('113 passed','1113 passed'),('0 failed','1 failed'),('0 ignored','1 ignored'),('0 measured','1 measured'),('0 filtered out','1 filtered out')]:\n run('review-summary-'+after.replace(' ','-'),lambda a,b,c,before=before,after=after:b['independentExecutions'][0].update(stdout=b['independentExecutions'][0]['stdout'].replace(before,after)),g,'failed')\nrun('review-extra-summary',lambda a,b,c:b['independentExecutions'][0].update(stdout=b['independentExecutions'][0]['stdout']+'\\ntest result: ok. 113 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s\\n'),g,'failed')\nfor i,entry in enumerate(review['formalReplay']['observations']):\n run('wrong-smt-hash-'+entry['id'],lambda a,b,c,i=i:b['formalReplay']['observations'][i].update(smtSha256='0'*64),g,'failed')\nrun('duplicate-formula-id',lambda a,b,c:b['formalReplay']['observations'][0].update(id=b['formalReplay']['observations'][1]['id']),g,'failed')\nrun('wrong-formula-outcome',lambda a,b,c:b['formalReplay']['observations'][0].update(observed='sat'),g,'failed')\nrun('no-fresh-context',lambda a,b,c:b['formalReplay']['observations'][0].update(freshContext=False),g,'failed')\nrun('wrong-proof-sha',lambda a,b,c:b['formalReplay'].update(sha256='0'*64),g,'failed')\nrun('native-promotion',lambda a,b,c:b.update(nativeImplementationQualified=True),g,'failed')\nrun('acceptance-promotion',lambda a,b,c:b.update(acceptanceCasesPromoted=['truss.B08']),g,'failed')\nrun('remaining-finding',lambda a,b,c:b.update(remainingFindings=['unresolved']),g,'failed')\nrequired=[name for name in review['observations'][1]['expected']]\nfor name in required:\n run('missing-independent-test-'+name,lambda a,b,c,name=name:b['independentExecutions'][0].update(stdout=b['independentExecutions'][0]['stdout'].replace('test '+name+' ... ok','')),g,'failed')\n g_exec='private-owner-semantic-allocation-regressions'\n run('missing-producer-test-'+name,lambda a,b,c,name=name:c['execution'].update(stdout=c['execution']['stdout'].replace('test '+name+' ... ok','')),g_exec,'failed')\ng_exec='private-owner-semantic-allocation-regressions'\nrun('producer-summary1113',lambda a,b,c:c['execution'].update(stdout=c['execution']['stdout'].replace('113 passed','1113 passed')),g_exec,'failed')\nrun('producer-failed-exit',lambda a,b,c:c['execution'].update(exitCode=1),g_exec,'failed')\ng_proof='conditional-owner-semantic-allocation-laws'\nrun('proof-foreign-law',lambda a,b,c:a['cases'][0].update(id='unrelated'),g_proof,'failed')\nrun('proof-duplicate-law',lambda a,b,c:a['cases'][0].update(id=a['cases'][1]['id']),g_proof,'failed')\nrun('proof-missing-law',lambda a,b,c:a['cases'].pop(),g_proof,'failed')\nrun('proof-wrong-result',lambda a,b,c:a['cases'][0]['violation'].update(result='sat'),g_proof,'failed')\nrun('proof-wrong-replay',lambda a,b,c:a['cases'][0]['violation'].update(replayResult='sat'),g_proof,'failed')\nrun('proof-empty-smt',lambda a,b,c:a['cases'][0]['violation'].update(smt=''),g_proof,'failed')\nif any(Path(path).read_bytes()!=data for path,data in frozen.items()):raise RuntimeError('Captured input changed')\nif (out.read_bytes() if out.exists() else None)!=prior:raise RuntimeError('Prior review changed')\nreceipt={'id':'owner-semantic-allocation-gate-astra-review','status':'qualified-semantic-allocation-gate-review-passed','reviewer':'/root/astra_security_review','generatedAt':datetime.now(timezone.utc).isoformat(),'sourceDigests':{path:sha(data) for path,data in frozen.items()},'sourcesUnchanged':True,'reviewCommand':{'argv':[sys.executable,str(SELF)],'cwd':str(ROOT),'sourceSha256':sha(frozen[str(SELF)]),'source':frozen[str(SELF)].decode()},'observations':results,'remainingFindings':[],'scope':'Actual in-memory execution of three selected expressions and transitively referenced helpers from frozen validate-evidence.py AST. Three retained allocation receipts are baselines; mutants change copies only. Checks cover exact review observation and concrete population inventories and values, boolean versus numeric carriers, raw libtest summaries and required names, all 21 SMT hashes, exact law/replay identities, refusal on claimed native/acceptance promotion and remaining findings. This is named evidence-gate rejection behavior, not general validator completeness, authenticated receipts, another formal replay or native proof. No reviewed source/receipt, Cargo target or native state is modified. Python interpreter bytes are captured; standard-library/platform runtime remains a trusted premise.','acceptanceCriteria':['US-056-AC7','US-056-AC10'],'nativeImplementationQualified':False,'acceptanceCasesPromoted':[]}\nif prior is not None:\n h=sha(prior);archive=out.with_name(out.stem+'-prior-'+h[:16]+'.json')\n if archive.exists() and archive.read_bytes()!=prior:raise RuntimeError('Archive collision')\n if not archive.exists():archive.write_bytes(prior)\n receipt['previousReceipt']={'path':str(archive),'sha256':h,'scope':'Historical only.'}\nout.write_text(json.dumps(receipt,indent=2)+'\\n');print(json.dumps({'status':receipt['status'],'controls':len(results),'sourcePins':len(frozen),'sourcesUnchanged':True,'sha256':sha(out.read_bytes()),'output':str(out)}))\n"
+  },
+  "observations": [
+    {
+      "id": "baseline-conditional-owner-semantic-allocation-laws",
+      "gate": "conditional-owner-semantic-allocation-laws",
+      "expected": "passed",
+      "observed": "passed"
+    },
+    {
+      "id": "baseline-private-owner-semantic-allocation-regressions",
+      "gate": "private-owner-semantic-allocation-regressions",
+      "expected": "passed",
+      "observed": "passed"
+    },
+    {
+      "id": "baseline-independent-owner-semantic-allocation-review",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "passed",
+      "observed": "passed"
+    },
+    {
+      "id": "review-no-observations",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "review-no-populations",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "omit-observation-full-core-library",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "foreign-observation-full-core-library",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "wrong-both-observation-full-core-library",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "wrong-observed-observation-full-core-library",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "omit-observation-all-five-semantic-allocation-regressions",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "foreign-observation-all-five-semantic-allocation-regressions",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "wrong-both-observation-all-five-semantic-allocation-regressions",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "wrong-observed-observation-all-five-semantic-allocation-regressions",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "omit-observation-fresh-context-formal-replays",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "foreign-observation-fresh-context-formal-replays",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "wrong-both-observation-fresh-context-formal-replays",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "wrong-observed-observation-fresh-context-formal-replays",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "omit-observation-concrete-success-selection-and-projection-controls",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "foreign-observation-concrete-success-selection-and-projection-controls",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "wrong-both-observation-concrete-success-selection-and-projection-controls",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "wrong-observed-observation-concrete-success-selection-and-projection-controls",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "omit-observation-selected-zero-edge-registration-custody",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "foreign-observation-selected-zero-edge-registration-custody",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "wrong-both-observation-selected-zero-edge-registration-custody",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "wrong-observed-observation-selected-zero-edge-registration-custody",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "omit-observation-complete-scope-candidate-relation",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "foreign-observation-complete-scope-candidate-relation",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "wrong-both-observation-complete-scope-candidate-relation",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "wrong-observed-observation-complete-scope-candidate-relation",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "omit-observation-bounded-atomic-issuance",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "foreign-observation-bounded-atomic-issuance",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "wrong-both-observation-bounded-atomic-issuance",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "wrong-observed-observation-bounded-atomic-issuance",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "omit-observation-runtime-dispatch-remains-closed",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "foreign-observation-runtime-dispatch-remains-closed",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "wrong-both-observation-runtime-dispatch-remains-closed",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "wrong-observed-observation-runtime-dispatch-remains-closed",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "omit-population-selected-zero-edge-capability-remains-in-custody/selection-custody-population",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "foreign-population-selected-zero-edge-capability-remains-in-custody/selection-custody-population",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "wrong-both-population-selected-zero-edge-capability-remains-in-custody/selection-custody-population",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "wrong-observed-population-selected-zero-edge-capability-remains-in-custody/selection-custody-population",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "wrong-population-field-selected-zero-edge-capability-remains-in-custody/selection-custody-population/selection_a",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "wrong-population-field-selected-zero-edge-capability-remains-in-custody/selection-custody-population/selection_b",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "wrong-population-field-selected-zero-edge-capability-remains-in-custody/selection-custody-population/retained_selection_a",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "wrong-population-field-selected-zero-edge-capability-remains-in-custody/selection-custody-population/retained_selection_b",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "omit-population-partial-feature-union-does-not-cover-complete-scope/successful-population",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "foreign-population-partial-feature-union-does-not-cover-complete-scope/successful-population",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "wrong-both-population-partial-feature-union-does-not-cover-complete-scope/successful-population",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "wrong-observed-population-partial-feature-union-does-not-cover-complete-scope/successful-population",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "wrong-population-field-partial-feature-union-does-not-cover-complete-scope/successful-population/complete_a",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "wrong-population-field-partial-feature-union-does-not-cover-complete-scope/successful-population/covered",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "omit-population-selfjoin-and-action-scopes-remain-distinct/projection-collision-population",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "foreign-population-selfjoin-and-action-scopes-remain-distinct/projection-collision-population",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "wrong-both-population-selfjoin-and-action-scopes-remain-distinct/projection-collision-population",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "wrong-observed-population-selfjoin-and-action-scopes-remain-distinct/projection-collision-population",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "wrong-population-field-selfjoin-and-action-scopes-remain-distinct/projection-collision-population/s0",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "wrong-population-field-selfjoin-and-action-scopes-remain-distinct/projection-collision-population/s1",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "wrong-population-field-selfjoin-and-action-scopes-remain-distinct/projection-collision-population/x",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "wrong-population-field-selfjoin-and-action-scopes-remain-distinct/projection-collision-population/y",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "omit-population-per-scan-coverage-cannot-discharge-whole-application/successful-population",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "foreign-population-per-scan-coverage-cannot-discharge-whole-application/successful-population",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "wrong-both-population-per-scan-coverage-cannot-discharge-whole-application/successful-population",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "wrong-observed-population-per-scan-coverage-cannot-discharge-whole-application/successful-population",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "wrong-population-field-per-scan-coverage-cannot-discharge-whole-application/successful-population/scan0_covered",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "wrong-population-field-per-scan-coverage-cannot-discharge-whole-application/successful-population/scan1_covered",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "wrong-population-field-per-scan-coverage-cannot-discharge-whole-application/successful-population/whole_application",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "wrong-population-field-per-scan-coverage-cannot-discharge-whole-application/successful-population/admit",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "omit-population-assignment-correspondence-cannot-discharge-native-evidence/successful-population",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "foreign-population-assignment-correspondence-cannot-discharge-native-evidence/successful-population",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "wrong-both-population-assignment-correspondence-cannot-discharge-native-evidence/successful-population",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "wrong-observed-population-assignment-correspondence-cannot-discharge-native-evidence/successful-population",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "wrong-population-field-assignment-correspondence-cannot-discharge-native-evidence/successful-population/relation_matches",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "wrong-population-field-assignment-correspondence-cannot-discharge-native-evidence/successful-population/native_verified",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "wrong-population-field-assignment-correspondence-cannot-discharge-native-evidence/successful-population/admit",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "duplicate-observation-id",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "duplicate-population-id",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "numeric-boolean-observation",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "numeric-boolean-population",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "numeric-population-bool-expected",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "numeric-population-bool-observed",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "review-summary-1113-passed",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "review-summary-1-failed",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "review-summary-1-ignored",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "review-summary-1-measured",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "review-summary-1-filtered-out",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "review-extra-summary",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "wrong-smt-hash-selected-zero-edge-capability-remains-in-custody/violation",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "wrong-smt-hash-selected-zero-edge-capability-remains-in-custody/negativeControl",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "wrong-smt-hash-selected-zero-edge-capability-remains-in-custody/positivePopulation",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "wrong-smt-hash-all-complete-selected-candidates-retained/violation",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "wrong-smt-hash-all-complete-selected-candidates-retained/negativeControl",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "wrong-smt-hash-all-complete-selected-candidates-retained/positivePopulation",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "wrong-smt-hash-unselected-candidate-never-assigned/violation",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "wrong-smt-hash-unselected-candidate-never-assigned/negativeControl",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "wrong-smt-hash-unselected-candidate-never-assigned/positivePopulation",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "wrong-smt-hash-partial-feature-union-does-not-cover-complete-scope/violation",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "wrong-smt-hash-partial-feature-union-does-not-cover-complete-scope/negativeControl",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "wrong-smt-hash-partial-feature-union-does-not-cover-complete-scope/positivePopulation",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "wrong-smt-hash-selfjoin-and-action-scopes-remain-distinct/violation",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "wrong-smt-hash-selfjoin-and-action-scopes-remain-distinct/negativeControl",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "wrong-smt-hash-selfjoin-and-action-scopes-remain-distinct/positivePopulation",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "wrong-smt-hash-per-scan-coverage-cannot-discharge-whole-application/violation",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "wrong-smt-hash-per-scan-coverage-cannot-discharge-whole-application/negativeControl",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "wrong-smt-hash-per-scan-coverage-cannot-discharge-whole-application/positivePopulation",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "wrong-smt-hash-assignment-correspondence-cannot-discharge-native-evidence/violation",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "wrong-smt-hash-assignment-correspondence-cannot-discharge-native-evidence/negativeControl",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "wrong-smt-hash-assignment-correspondence-cannot-discharge-native-evidence/positivePopulation",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "duplicate-formula-id",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "wrong-formula-outcome",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "no-fresh-context",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "wrong-proof-sha",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "native-promotion",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "acceptance-promotion",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "remaining-finding",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "missing-independent-test-security_semantic_coverage::tests::allocation_issuer_borrows_actual_registration_and_context_after_callback_drift",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "missing-producer-test-security_semantic_coverage::tests::allocation_issuer_borrows_actual_registration_and_context_after_callback_drift",
+      "gate": "private-owner-semantic-allocation-regressions",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "missing-independent-test-security_semantic_coverage::tests::allocation_relation_bounds_refuse_empty_duplicate_scope_and_overflow",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "missing-producer-test-security_semantic_coverage::tests::allocation_relation_bounds_refuse_empty_duplicate_scope_and_overflow",
+      "gate": "private-owner-semantic-allocation-regressions",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "missing-independent-test-security_semantic_coverage::tests::issued_allocations_keep_all_complete_candidates_without_fragment_union",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "missing-producer-test-security_semantic_coverage::tests::issued_allocations_keep_all_complete_candidates_without_fragment_union",
+      "gate": "private-owner-semantic-allocation-regressions",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "missing-independent-test-security_semantic_coverage::tests::issued_allocations_keep_original_authorized_action_separate_from_read",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "missing-producer-test-security_semantic_coverage::tests::issued_allocations_keep_original_authorized_action_separate_from_read",
+      "gate": "private-owner-semantic-allocation-regressions",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "missing-independent-test-security_semantic_coverage::tests::issued_selfjoin_allocations_preserve_scopes_and_whole_application",
+      "gate": "independent-owner-semantic-allocation-review",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "missing-producer-test-security_semantic_coverage::tests::issued_selfjoin_allocations_preserve_scopes_and_whole_application",
+      "gate": "private-owner-semantic-allocation-regressions",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "producer-summary1113",
+      "gate": "private-owner-semantic-allocation-regressions",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "producer-failed-exit",
+      "gate": "private-owner-semantic-allocation-regressions",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "proof-foreign-law",
+      "gate": "conditional-owner-semantic-allocation-laws",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "proof-duplicate-law",
+      "gate": "conditional-owner-semantic-allocation-laws",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "proof-missing-law",
+      "gate": "conditional-owner-semantic-allocation-laws",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "proof-wrong-result",
+      "gate": "conditional-owner-semantic-allocation-laws",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "proof-wrong-replay",
+      "gate": "conditional-owner-semantic-allocation-laws",
+      "expected": "failed",
+      "observed": "failed"
+    },
+    {
+      "id": "proof-empty-smt",
+      "gate": "conditional-owner-semantic-allocation-laws",
+      "expected": "failed",
+      "observed": "failed"
+    }
+  ],
+  "remainingFindings": [],
+  "scope": "Actual in-memory execution of three selected expressions and transitively referenced helpers from frozen validate-evidence.py AST. Three retained allocation receipts are baselines; mutants change copies only. Checks cover exact review observation and concrete population inventories and values, boolean versus numeric carriers, raw libtest summaries and required names, all 21 SMT hashes, exact law/replay identities, refusal on claimed native/acceptance promotion and remaining findings. This is named evidence-gate rejection behavior, not general validator completeness, authenticated receipts, another formal replay or native proof. No reviewed source/receipt, Cargo target or native state is modified. Python interpreter bytes are captured; standard-library/platform runtime remains a trusted premise.",
+  "acceptanceCriteria": [
+    "US-056-AC7",
+    "US-056-AC10"
+  ],
+  "nativeImplementationQualified": false,
+  "acceptanceCasesPromoted": [],
+  "previousReceipt": {
+    "path": "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/owner-semantic-allocation-gate-astra-review-prior-7d0b2545768f56da.json",
+    "sha256": "7d0b2545768f56daa2d70039b93aad14c269ab824a441558a3686b29980bf367",
+    "scope": "Historical only."
+  }
+}

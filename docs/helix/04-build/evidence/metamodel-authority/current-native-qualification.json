@@ -1,0 +1,114 @@
+{
+  "profile": "umf.current-native-qualification-dispositions/1",
+  "scope": "Narrow current native qualification dispositions after authoritative metamodel cutover. Historical observations and current source-functional tests remain intact. This policy does not downgrade unrelated criteria or claim native equivalence.",
+  "criteria": [
+    {
+      "criterion": "US-040-AC8",
+      "currentQualification": "UNQUALIFIED",
+      "evidence": [
+        "fixtures/validation/field-conformance.json",
+        "docs/helix/04-build/evidence/metamodel-authority/historical-field-artifact-recovery/comparison.json"
+      ],
+      "rationale": "Current source operations, retained native-payload equality and refusal controls remain separately tested. Exact historical artifact/source pins are only partly revalidated; current native admission and all-priority delivery are not established by live test citations."
+    },
+    {
+      "criterion": "US-040-AC9",
+      "currentQualification": "UNQUALIFIED",
+      "evidence": [
+        "fixtures/validation/field-conformance.json",
+        "docs/helix/04-build/evidence/metamodel-authority/historical-field-artifact-recovery/comparison.json"
+      ],
+      "rationale": "Current source operations, retained native-payload equality and refusal controls remain separately tested. Exact historical artifact/source pins are only partly revalidated; current native admission and all-priority delivery are not established by live test citations."
+    },
+    {
+      "criterion": "US-041-AC8",
+      "currentQualification": "UNQUALIFIED",
+      "evidence": [
+        "fixtures/validation/nullability-conformance.json",
+        "docs/helix/04-build/evidence/metamodel-authority/historical-field-artifact-recovery/comparison.json"
+      ],
+      "rationale": "Current source operations, retained native-payload equality and refusal controls remain separately tested. Exact historical artifact/source pins are only partly revalidated; current native admission and all-priority delivery are not established by live test citations."
+    },
+    {
+      "criterion": "US-041-AC9",
+      "currentQualification": "UNQUALIFIED",
+      "evidence": [
+        "fixtures/validation/nullability-conformance.json",
+        "docs/helix/04-build/evidence/metamodel-authority/historical-field-artifact-recovery/comparison.json"
+      ],
+      "rationale": "Current source operations, retained native-payload equality and refusal controls remain separately tested. Exact historical artifact/source pins are only partly revalidated; current native admission and all-priority delivery are not established by live test citations."
+    },
+    {
+      "criterion": "US-042-AC8",
+      "currentQualification": "UNQUALIFIED",
+      "evidence": [
+        "fixtures/validation/cardinality-conformance.json",
+        "docs/helix/04-build/evidence/metamodel-authority/historical-field-artifact-recovery/comparison.json"
+      ],
+      "rationale": "Current source operations, retained native-payload equality and refusal controls remain separately tested. Exact historical artifact/source pins are only partly revalidated; current native admission and all-priority delivery are not established by live test citations."
+    },
+    {
+      "criterion": "US-042-AC9",
+      "currentQualification": "UNQUALIFIED",
+      "evidence": [
+        "fixtures/validation/cardinality-conformance.json",
+        "docs/helix/04-build/evidence/metamodel-authority/historical-field-artifact-recovery/comparison.json"
+      ],
+      "rationale": "Current source operations, retained native-payload equality and refusal controls remain separately tested. Exact historical artifact/source pins are only partly revalidated; current native admission and all-priority delivery are not established by live test citations."
+    },
+    {
+      "criterion": "US-043-AC8",
+      "currentQualification": "UNQUALIFIED",
+      "evidence": [
+        "fixtures/validation/facets-conformance.json",
+        "docs/helix/04-build/evidence/metamodel-authority/historical-field-artifact-recovery/comparison.json"
+      ],
+      "rationale": "Current source operations, retained native-payload equality and refusal controls remain separately tested. Exact historical artifact/source pins are only partly revalidated; current native admission and all-priority delivery are not established by live test citations."
+    },
+    {
+      "criterion": "US-043-AC9",
+      "currentQualification": "UNQUALIFIED",
+      "evidence": [
+        "fixtures/validation/facets-conformance.json",
+        "docs/helix/04-build/evidence/metamodel-authority/historical-field-artifact-recovery/comparison.json"
+      ],
+      "rationale": "Current source operations, retained native-payload equality and refusal controls remain separately tested. Exact historical artifact/source pins are only partly revalidated; current native admission and all-priority delivery are not established by live test citations."
+    },
+    {
+      "criterion": "US-044-AC8",
+      "currentQualification": "UNQUALIFIED",
+      "evidence": [
+        "fixtures/validation/key-conformance.json",
+        "docs/helix/04-build/evidence/metamodel-authority/historical-field-artifact-recovery/comparison.json"
+      ],
+      "rationale": "Current source operations, retained native-payload equality and refusal controls remain separately tested. Exact historical artifact/source pins are only partly revalidated; current native admission and all-priority delivery are not established by live test citations."
+    },
+    {
+      "criterion": "US-044-AC9",
+      "currentQualification": "UNQUALIFIED",
+      "evidence": [
+        "fixtures/validation/key-conformance.json",
+        "docs/helix/04-build/evidence/metamodel-authority/historical-field-artifact-recovery/comparison.json"
+      ],
+      "rationale": "Current source operations, retained native-payload equality and refusal controls remain separately tested. Exact historical artifact/source pins are only partly revalidated; current native admission and all-priority delivery are not established by live test citations."
+    },
+    {
+      "criterion": "US-044-AC13",
+      "currentQualification": "UNQUALIFIED",
+      "evidence": [
+        "fixtures/validation/key-conformance.json",
+        "docs/helix/04-build/evidence/metamodel-authority/historical-field-artifact-recovery/comparison.json"
+      ],
+      "rationale": "Current source operations, retained native-payload equality and refusal controls remain separately tested. Exact historical artifact/source pins are only partly revalidated; current native admission and all-priority delivery are not established by live test citations."
+    },
+    {
+      "criterion": "US-045-AC9",
+      "currentQualification": "UNQUALIFIED",
+      "evidence": [
+        "fixtures/validation/relationship-conformance.json",
+        "docs/helix/04-build/evidence/metamodel-authority/historical-field-artifact-recovery/comparison.json"
+      ],
+      "rationale": "Current source operations, retained native-payload equality and refusal controls remain separately tested. Exact historical artifact/source pins are only partly revalidated; current native admission and all-priority delivery are not established by live test citations."
+    }
+  ]
+}

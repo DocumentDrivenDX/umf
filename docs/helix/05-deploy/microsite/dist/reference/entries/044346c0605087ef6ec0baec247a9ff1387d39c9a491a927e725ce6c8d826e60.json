@@ -1,0 +1,33 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 1125,
+        "line": 1,
+        "path": "spec/extensions/arrow-ipc/consistency-result.schema.json",
+        "sha256": "00525e2c08ca230871a179f6abf7d0f0ac76b5120c8a00cef1d7c0ea7901b627"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "arrowIpcConsistencySchema",
+    "runtime": "unassessed",
+    "signatureText": [
+      "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"$id\": \"urn:umf:arrow-ipc-consistency:0.1.0\",\n  \"type\": \"object\",\n  \"required\": [\n    \"layout\",\n    \"complete\",\n    \"footerChecks\",\n    \"diagnostics\"\n  ],\n  \"properties\": {\n    \"layout\": {\n      \"$ref\": \"urn:umf:arrow-ipc-layout:0.1.0\"\n    },\n    \"complete\": {\n      \"const\": false\n    },\n    \"footerChecks\": {\n      \"enum\": [\n        \"not-applicable\",\n        \"matched\",\n        \"mismatch\",\n        \"unverified\"\n      ]\n    },\n    \"diagnostics\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"required\": [\n          \"code\",\n          \"path\",\n          \"severity\",\n          \"message\"\n        ],\n        \"properties\": {\n          \"code\": {\n            \"type\": \"string\"\n          },\n          \"path\": {\n            \"type\": \"string\"\n          },\n          \"severity\": {\n            \"enum\": [\n              \"error\",\n              \"warning\"\n            ]\n          },\n          \"message\": {\n            \"type\": \"string\"\n          }\n        },\n        \"additionalProperties\": false\n      }\n    }\n  },\n  \"additionalProperties\": false\n}\n"
+    ]
+  },
+  "id": "[\"api\",\".\",\"arrowIpcConsistencySchema\"]",
+  "kind": "api",
+  "links": [
+    "[\"schema\",\"spec/extensions/arrow-ipc/consistency-result.schema.json\",\"\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 1125,
+      "line": 1,
+      "path": "spec/extensions/arrow-ipc/consistency-result.schema.json",
+      "sha256": "00525e2c08ca230871a179f6abf7d0f0ac76b5120c8a00cef1d7c0ea7901b627"
+    }
+  ],
+  "summary": "Public export · spec/extensions/arrow-ipc/consistency-result.schema.json",
+  "title": "arrowIpcConsistencySchema"
+}

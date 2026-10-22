@@ -1,0 +1,14 @@
+{
+  "version": "umf.table-migration-options/0.1",
+  "backfills": [],
+  "concurrentIndexes": [
+    {
+      "table": "matters",
+      "index": "client_lookup"
+    },
+    {
+      "table": "matters",
+      "index": "unique_title"
+    }
+  ]
+}

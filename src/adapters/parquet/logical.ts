@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {inspectParquetSchema,type ParquetSchemaInspection} from './schema';
 import type {Document,Json} from '../../model/types';
 export interface ParquetLogicalAnnotation {index:number;origin:'logical'|'converted';name:string;parameters:Json;validation:'checked'|'uninterpreted'|'invalid'}

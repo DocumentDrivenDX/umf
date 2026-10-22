@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"getShaclPropertyPath\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"RdfNode\"]"
+      ],
+      "name": "shape",
+      "optional": false,
+      "type": "RdfNode"
+    }
+  ],
+  "purpose": "Compile one property shape's path. The returned tree is metadata, not a conformance report.",
+  "related": [],
+  "returns": "ShaclPath",
+  "task": "Inspect and select",
+  "type": "(document: Document, shape: RdfNode) => ShaclPath"
+}

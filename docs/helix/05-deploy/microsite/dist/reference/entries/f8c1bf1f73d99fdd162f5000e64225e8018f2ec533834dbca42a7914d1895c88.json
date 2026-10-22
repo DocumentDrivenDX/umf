@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 10346,
+        "line": 16,
+        "path": "src/core-ideals/cardinality-postgresql-projection.ts",
+        "sha256": "27b310cfd7c47e81bc6417fcf9cdfade198a88b711d47425ee78fbc5df26bb83"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "CardinalityPostgresqlProjection",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface CardinalityPostgresqlProjection {\n operation:'project-cardinality-postgresql';version:'1.0.0';status:'projected'|'blocked';source:Document;author:CoreCardinalityDeclaration;request:CardinalityPostgresqlRequest;target?:Document;nativeSql?:string;diagnostics:Diagnostic[];binding:typeof binding;\n mapping:{basis:'Explicit author declaration and requested native carrier; retained residuals qualify unrepresented obligations';origin:'authored';cardinality:'one'|'array'|'map'|'unspecified';encoding:'scalar'|'sequence-check'|'object-check'|'carrier-only';idealPath:string;nativePath:'/stmts/0/stmt/CreateStmt/tableElts/0/ColumnDef';outcome:'exact'|'approximated'|'unknown'|'not-expressible'};\n residuals:{path:string;value:Json;reason:string;outcome:'approximated'|'unknown'|'not-expressible';recovery:'Recover source meaning with retained projection receipt; native-only import does not recover author intent'}[];\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"CardinalityPostgresqlProjection\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 10346,
+      "line": 16,
+      "path": "src/core-ideals/cardinality-postgresql-projection.ts",
+      "sha256": "27b310cfd7c47e81bc6417fcf9cdfade198a88b711d47425ee78fbc5df26bb83"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/cardinality-postgresql-projection.ts",
+  "title": "CardinalityPostgresqlProjection"
+}

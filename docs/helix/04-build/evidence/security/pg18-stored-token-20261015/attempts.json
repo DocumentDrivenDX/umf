@@ -1,0 +1,32 @@
+[
+  {
+    "stage": "initial-runner",
+    "status": "failed-before-native",
+    "reason": "Unterminated triple-quoted native inventory query; corrected framing. Original failing bytes were not separately archived."
+  },
+  {
+    "stage": "initial-native-DDL",
+    "status": "failed",
+    "reason": "Qualified alias pg_catalog.boolean is not an actual PostgreSQL type; corrected to pg_catalog.bool. Owned fixture cleanup ran."
+  },
+  {
+    "stage": "initial-native-witness",
+    "status": "passed",
+    "observations": 47
+  },
+  {
+    "stage": "collision-and-owner-controls",
+    "status": "passed",
+    "observations": 55
+  },
+  {
+    "stage": "declaration-custody-review",
+    "status": "findings-fixed",
+    "reason": "Kinds/statuses alone allowed declaration substitution. Exact independent recipe, domain, storage and pin expectations added."
+  },
+  {
+    "stage": "final-prebinding",
+    "status": "passed",
+    "observations": 65
+  }
+]

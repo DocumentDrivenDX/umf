@@ -1,0 +1,30 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"recoverCardinalityFromAvro\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CardinalityAvroProjection\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "CardinalityAvroProjection"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "native",
+      "optional": false,
+      "type": "Bundle"
+    }
+  ],
+  "purpose": "recoverCardinalityFromAvro accepts input, native and returns Document.",
+  "related": [],
+  "returns": "Document",
+  "task": "Import and export",
+  "type": "(input: CardinalityAvroProjection, native: Bundle) => Document"
+}

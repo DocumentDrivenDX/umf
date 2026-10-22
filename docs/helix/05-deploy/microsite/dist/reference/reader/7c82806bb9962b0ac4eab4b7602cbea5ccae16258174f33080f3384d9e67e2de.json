@@ -1,0 +1,30 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"correlatePostgresqlCardinalityCatalog\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "text",
+      "optional": false,
+      "type": "string"
+    }
+  ],
+  "purpose": "Cross-check overlapping observations. Agreement is not proof of a shared\ndatabase snapshot; capture provenance must establish that separately.",
+  "related": [],
+  "returns": "{ matches: { column: string; path: string; identity: { schema: string; relation: string; name: string; }; type: PostgresqlTypeIdentity; }[]; qualifiedVersion: boolean; sameSnapshotVerified: false; nativeSupplement: string; }",
+  "task": "Other APIs",
+  "type": "(document: Document, text: string) => { matches: { column: string; path: string; identity: { schema: string; relation: string; name: string; }; type: PostgresqlTypeIdentity; }[]; qualifiedVersion: boolean; sameSnapshotVerified: false; nativeSupplement: string; }"
+}

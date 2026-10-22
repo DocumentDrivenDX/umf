@@ -1,0 +1,108 @@
+bun test v1.4.2 (43848b5a7)
+
+tests/security/write-read-protection.test.ts:
+ 7 | const run=(f:any,operation='update')=>evaluateSecurityWrite(f.policy,f.resolution,f.profile,{operation,...(operation!=='create'?{original:f.original}:{}),...(operation!=='delete'?{proposed:f.proposed}:{})} as any).decision;
+ 8 | function fixture(){const f=writeFixture() as any;f.profile.readProtection={version:'umf.security.write-read/0.1.0',readAction:'read',blindWriteActions:[]};return f;}
+ 9 | function original(f:any){f.policy.rules.find((r:any)=>r.id==='reader').disclosure=[{field:ref('salary'),disposition:{kind:'original'}}];}
+10 | function blind(f:any){f.resolution.ontology.actions.push('blind-salary');f.profile.readProtection.blindWriteActions=[{field:ref('salary'),action:'blind-salary'}];f.policy.rules.push({id:'blind',effect:'permit',actions:['blind-salary'],target:[ref('Resource')],condition:{op:'literal',value:true}});}
+11 | test('missing or unknown read protection never keeps legacy write permission',()=>{
+12 |  const old=writeFixture();expect(run(old)).toBe('indeterminate');
+                                                ^
+error: expect(received).toBe(expected)
+
+Expected: "indeterminate"
+Received: "permit"
+
+      at <anonymous> (/Users/erik/.codex/worktrees/security-main-integration/umf/tests/security/write-read-protection.test.ts:12:44)
+(fail) missing or unknown read protection never keeps legacy write permission [53.06ms]
+11 | test('missing or unknown read protection never keeps legacy write permission',()=>{
+12 |  const old=writeFixture();expect(run(old)).toBe('indeterminate');
+13 |  for(const mutate of [(f:any)=>delete f.profile.readProtection.readAction,(f:any)=>delete f.profile.readProtection.blindWriteActions,(f:any)=>f.profile.readProtection.version='future',(f:any)=>f.profile.readProtection.readAction='missing',(f:any)=>f.profile.readProtection.future=true]){const f=fixture();mutate(f);expect(run(f)).toBe('indeterminate');}
+14 | });
+15 | test('withheld and transformed reads cannot write even a value equal to the mask',()=>{
+16 |  const f=fixture();expect(run(f)).toBe('deny');
+                                       ^
+error: expect(received).toBe(expected)
+
+Expected: "deny"
+Received: "indeterminate"
+
+      at <anonymous> (/Users/erik/.codex/worktrees/security-main-integration/umf/tests/security/write-read-protection.test.ts:16:35)
+(fail) withheld and transformed reads cannot write even a value equal to the mask [1.66ms]
+17 |  f.policy.rules.find((r:any)=>r.id==='reader').disclosure=[{field:ref('salary'),disposition:{kind:'transformed',transform:'constant',version:'0.1.0',field:ref('salary'),value:{integerToken:'0'}}}];
+18 |  expect(run(f)).toBe('deny');f.proposed.resource.fields.find((x:any)=>x.field.elementId==='salary').value={integerToken:'0'};expect(run(f)).toBe('deny');
+19 |  original(f);expect(run(f)).toBe('permit');
+20 | });
+21 | test('blind write is exact Field-bound explicit permission, independent of field mutation grant',()=>{
+22 |  const f=fixture();blind(f);expect(run(f)).toBe('permit');
+                                                ^
+error: expect(received).toBe(expected)
+
+Expected: "permit"
+Received: "indeterminate"
+
+      at <anonymous> (/Users/erik/.codex/worktrees/security-main-integration/umf/tests/security/write-read-protection.test.ts:22:44)
+(fail) blind write is exact Field-bound explicit permission, independent of field mutation grant [1.24ms]
+(pass) blind bindings refuse duplicated foreign malformed or ordinary-action aliases [11.22ms]
+31 | test('update requires original or blind permission in both original and proposed states',()=>{
+32 |  for(const path of ['read','blind']){
+33 |   const f=fixture();f.profile.policyFields.push(ref('salary'));
+34 |   if(path==='read')original(f);else blind(f);
+35 |   const r=f.policy.rules.find((r:any)=>r.id===(path==='read'?'reader':'blind'));r.condition={op:'eq',left:{kind:'resource',field:ref('salary')},right:{kind:'constant',field:ref('salary'),value:{integerToken:'100'}}};
+36 |   expect(run(f)).toBe('deny');r.condition={op:'literal',value:true};expect(run(f)).toBe('permit');
+                      ^
+error: expect(received).toBe(expected)
+
+Expected: "deny"
+Received: "indeterminate"
+
+      at <anonymous> (/Users/erik/.codex/worktrees/security-main-integration/umf/tests/security/write-read-protection.test.ts:36:18)
+(fail) update requires original or blind permission in both original and proposed states [1.11ms]
+38 | });
+39 | test('original null and canonical absence keep original meaning before cell transport',()=>{
+40 |  for(const mode of ['null','absent']){const f=fixture();original(f);f.resolution.documents[0].document.modules[0].elements.find((e:any)=>e.id==='salary').nullability='absent-allowed';
+41 |   if(mode==='null')f.original.resource.fields.find((x:any)=>x.field.elementId==='salary').value=null;
+42 |   else{f.original.resource.fields=f.original.resource.fields.filter((x:any)=>x.field.elementId!=='salary');f.original.resource.absent=[ref('salary')];}
+43 |   expect(run(f),mode).toBe('permit');
+                           ^
+error: null
+
+Expected: "permit"
+Received: "indeterminate"
+
+      at <anonymous> (/Users/erik/.codex/worktrees/security-main-integration/umf/tests/security/write-read-protection.test.ts:43:23)
+(fail) original null and canonical absence keep original meaning before cell transport [2.13ms]
+42 |   else{f.original.resource.fields=f.original.resource.fields.filter((x:any)=>x.field.elementId!=='salary');f.original.resource.absent=[ref('salary')];}
+43 |   expect(run(f),mode).toBe('permit');
+44 |  }
+45 | });
+46 | test('create checks proposed, delete original, and unchanged masked fields need no invented mutation',()=>{
+47 |  const f=fixture();expect(run(f,'create')).toBe('deny');expect(run(f,'delete')).toBe('deny');original(f);expect(run(f,'create')).toBe('permit');expect(run(f,'delete')).toBe('permit');
+                                                ^
+error: expect(received).toBe(expected)
+
+Expected: "deny"
+Received: "indeterminate"
+
+      at <anonymous> (/Users/erik/.codex/worktrees/security-main-integration/umf/tests/security/write-read-protection.test.ts:47:44)
+(fail) create checks proposed, delete original, and unchanged masked fields need no invented mutation [1.12ms]
+46 | test('create checks proposed, delete original, and unchanged masked fields need no invented mutation',()=>{
+47 |  const f=fixture();expect(run(f,'create')).toBe('deny');expect(run(f,'delete')).toBe('deny');original(f);expect(run(f,'create')).toBe('permit');expect(run(f,'delete')).toBe('permit');
+48 |  const same=fixture();same.proposed=structuredClone(same.original);expect(run(same)).toBe('permit');
+49 | });
+50 | test('original permission can satisfy the guard despite unknown blind alternative and vice versa',()=>{
+51 |  const f=fixture();blind(f);original(f);f.profile.policyFields.push(ref('salary'));f.policy.rules.find((r:any)=>r.id==='blind').condition={op:'eq',left:{kind:'context',field:ref('salary')},right:{kind:'resource',field:ref('salary')}};f.resolution.ontology.context=[ref('salary')];expect(run(f)).toBe('permit');
+                                                                                                                                                                                                                                                                                                            ^
+error: expect(received).toBe(expected)
+
+Expected: "permit"
+Received: "indeterminate"
+
+      at <anonymous> (/Users/erik/.codex/worktrees/security-main-integration/umf/tests/security/write-read-protection.test.ts:51:296)
+(fail) original permission can satisfy the guard despite unknown blind alternative and vice versa [1.04ms]
+(pass) unknown facts, generation, source and exhausted budgets cannot issue write permission [8.60ms]
+
+ 2 pass
+ 7 fail
+ 23 expect() calls
+Ran 9 tests across 1 file. [248.00ms]

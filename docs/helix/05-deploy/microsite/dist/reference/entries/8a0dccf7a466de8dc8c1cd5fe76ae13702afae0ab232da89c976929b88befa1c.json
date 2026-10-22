@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 5552,
+        "line": 8,
+        "path": "src/projections/binding-iceberg/index.ts",
+        "sha256": "b8c028166ebb4108d1bf56a08b04dd46474bae9a95cf0d0939473469dedd501d"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "IcebergBindingProjection",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface IcebergBindingProjection {\n  status:'blocked'|'reported'|'projected';logical:Document;binding:Document;nativeArchive:Document;\n  target:BindingPayload['target'];residuals:IcebergBindingResidual[];\n  /** Complete metadata proposal only; no catalog commit or sorted data-file claim. */\n  candidate?:string;\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"IcebergBindingProjection\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 5552,
+      "line": 8,
+      "path": "src/projections/binding-iceberg/index.ts",
+      "sha256": "b8c028166ebb4108d1bf56a08b04dd46474bae9a95cf0d0939473469dedd501d"
+    }
+  ],
+  "summary": "Type declaration · src/projections/binding-iceberg/index.ts",
+  "title": "IcebergBindingProjection"
+}

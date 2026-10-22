@@ -1,0 +1,71 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"ActionAssessment\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "source",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ActionExecutorProfile\"]"
+      ],
+      "name": "profile",
+      "optional": false,
+      "type": "ActionExecutorProfile"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ActionIdentity\"]"
+      ],
+      "name": "identity",
+      "optional": false,
+      "type": "ActionIdentity"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "declaredCompatible",
+      "optional": false,
+      "type": "boolean"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "executionVerified",
+      "optional": false,
+      "type": "false"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "outcomes",
+      "optional": false,
+      "type": "{ obligation: string; path: string; status: \"supported\" | \"unsupported\" | \"unknown\"; evidence: string[]; }[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Diagnostic\"]"
+      ],
+      "name": "diagnostics",
+      "optional": false,
+      "type": "Diagnostic[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "ActionAssessment is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "ActionAssessment"
+}

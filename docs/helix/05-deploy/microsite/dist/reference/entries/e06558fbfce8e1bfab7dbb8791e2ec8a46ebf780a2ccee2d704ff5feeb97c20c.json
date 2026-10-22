@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 5416,
+        "line": 5,
+        "path": "src/adapters/parquet/schema.ts",
+        "sha256": "1c9fb95a5c01e76928cff994e3d9da7e64423af08375959af46c12af222828d8"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "ParquetSchemaInspection",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface ParquetSchemaInspection extends Omit<ParquetMetadataInspection,'status'> {status:'checked'|'blocked';tree?:ParquetSchemaNode;leaves?:ParquetSchemaLeaf[]}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"ParquetSchemaInspection\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 5416,
+      "line": 5,
+      "path": "src/adapters/parquet/schema.ts",
+      "sha256": "1c9fb95a5c01e76928cff994e3d9da7e64423af08375959af46c12af222828d8"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/parquet/schema.ts",
+  "title": "ParquetSchemaInspection"
+}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 14708,
+        "line": 113,
+        "path": "src/core-ideals/key-postgresql-projection.ts",
+        "sha256": "5bdc0f349a3508744c1f12c18dd35c8bef00451210be5d927dd4f4352e266b79"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "recoverKeysPostgresqlIdeal",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: KeyPostgresqlProjection, current: Document, backend: PostgresqlBackend): Promise<Document>"
+    ]
+  },
+  "id": "[\"api\",\".\",\"recoverKeysPostgresqlIdeal\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 14708,
+      "line": 113,
+      "path": "src/core-ideals/key-postgresql-projection.ts",
+      "sha256": "5bdc0f349a3508744c1f12c18dd35c8bef00451210be5d927dd4f4352e266b79"
+    }
+  ],
+  "summary": "Public export · src/core-ideals/key-postgresql-projection.ts",
+  "title": "recoverKeysPostgresqlIdeal"
+}

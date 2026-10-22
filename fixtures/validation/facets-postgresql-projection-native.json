@@ -8110,7 +8110,7 @@
     },
     {
       "id": "case_19-unicode",
-      "statement": "INSERT INTO facet_projection.\"case_19\" (value) VALUES ('😀e') RETURNING pg_catalog.char_length(value)::text",
+      "statement": "INSERT INTO facet_projection.\"case_19\" (value) VALUES ('\ud83d\ude00e') RETURNING pg_catalog.char_length(value)::text",
       "expected": "2",
       "reject": false,
       "actual": {
@@ -8180,7 +8180,7 @@
     },
     {
       "id": "case_25-unicode",
-      "statement": "INSERT INTO facet_projection.\"case_25\" (value) VALUES ('😀e') RETURNING pg_catalog.char_length(value)::text",
+      "statement": "INSERT INTO facet_projection.\"case_25\" (value) VALUES ('\ud83d\ude00e') RETURNING pg_catalog.char_length(value)::text",
       "expected": "2",
       "reject": false,
       "actual": {
@@ -8230,7 +8230,7 @@
     },
     {
       "id": "case_27-unicode",
-      "statement": "INSERT INTO facet_projection.\"case_27\" (value) VALUES ('😀e') RETURNING pg_catalog.char_length(value)::text",
+      "statement": "INSERT INTO facet_projection.\"case_27\" (value) VALUES ('\ud83d\ude00e') RETURNING pg_catalog.char_length(value)::text",
       "expected": "2",
       "reject": false,
       "actual": {
@@ -8290,7 +8290,7 @@
     },
     {
       "id": "case_31-unicode",
-      "statement": "INSERT INTO facet_projection.\"case_31\" (value) VALUES ('😀e') RETURNING pg_catalog.char_length(value)::text",
+      "statement": "INSERT INTO facet_projection.\"case_31\" (value) VALUES ('\ud83d\ude00e') RETURNING pg_catalog.char_length(value)::text",
       "expected": "2",
       "reject": false,
       "actual": {
@@ -8340,7 +8340,7 @@
     },
     {
       "id": "case_33-unicode",
-      "statement": "INSERT INTO facet_projection.\"case_33\" (value) VALUES ('😀e') RETURNING pg_catalog.char_length(value)::text",
+      "statement": "INSERT INTO facet_projection.\"case_33\" (value) VALUES ('\ud83d\ude00e') RETURNING pg_catalog.char_length(value)::text",
       "expected": "2",
       "reject": false,
       "actual": {
@@ -8400,7 +8400,7 @@
     },
     {
       "id": "case_37-unicode",
-      "statement": "INSERT INTO facet_projection.\"case_37\" (value) VALUES ('😀e') RETURNING pg_catalog.char_length(value)::text",
+      "statement": "INSERT INTO facet_projection.\"case_37\" (value) VALUES ('\ud83d\ude00e') RETURNING pg_catalog.char_length(value)::text",
       "expected": "2",
       "reject": false,
       "actual": {
@@ -8470,7 +8470,7 @@
     },
     {
       "id": "case_43-unicode",
-      "statement": "INSERT INTO facet_projection.\"case_43\" (value) VALUES ('😀e') RETURNING pg_catalog.char_length(value)::text",
+      "statement": "INSERT INTO facet_projection.\"case_43\" (value) VALUES ('\ud83d\ude00e') RETURNING pg_catalog.char_length(value)::text",
       "expected": "2",
       "reject": false,
       "actual": {
@@ -8520,7 +8520,7 @@
     },
     {
       "id": "case_45-unicode",
-      "statement": "INSERT INTO facet_projection.\"case_45\" (value) VALUES ('😀e') RETURNING pg_catalog.char_length(value)::text",
+      "statement": "INSERT INTO facet_projection.\"case_45\" (value) VALUES ('\ud83d\ude00e') RETURNING pg_catalog.char_length(value)::text",
       "expected": "2",
       "reject": false,
       "actual": {
@@ -8580,7 +8580,7 @@
     },
     {
       "id": "case_49-unicode",
-      "statement": "INSERT INTO facet_projection.\"case_49\" (value) VALUES ('😀e') RETURNING pg_catalog.char_length(value)::text",
+      "statement": "INSERT INTO facet_projection.\"case_49\" (value) VALUES ('\ud83d\ude00e') RETURNING pg_catalog.char_length(value)::text",
       "expected": "2",
       "reject": false,
       "actual": {
@@ -8630,7 +8630,7 @@
     },
     {
       "id": "case_51-unicode",
-      "statement": "INSERT INTO facet_projection.\"case_51\" (value) VALUES ('😀e') RETURNING pg_catalog.char_length(value)::text",
+      "statement": "INSERT INTO facet_projection.\"case_51\" (value) VALUES ('\ud83d\ude00e') RETURNING pg_catalog.char_length(value)::text",
       "expected": "2",
       "reject": false,
       "actual": {
@@ -31481,7 +31481,7 @@
     "native/postgresql/catalog/image.json": "90053ad165386ddc7d498b22cd84619fd2fd24aeb6bd1f0af3f7e5bc803624de",
     "native/postgresql/catalog/snapshot.sql": "90d558bdf04ecaf9799c76ce904c791eaa9f3eb7c2a951b9da46d5121fa87f77",
     "native/postgresql/catalog/facet-constraints.sql": "432f5cb9c9b21e754c8cb98db146a71ebefc766e63ed0078c7df3475e43be4e9",
-    "src/core-ideals/facets-postgresql-projection.ts": "e625d0c583ed9451eb815a239817771bdf6987a27a4e559a2171c338264c44e8",
+    "src/core-ideals/facets-postgresql-projection.ts": "14b171761d661519fe46cc0a93780a28538e64936b35b9d95318fd47597dd2a5",
     "spec/core/facets-postgresql-projection.schema.json": "ed76ebc56b23843f95bf4a19bb66e0a08a055090838c14ac2f4ccc8890a93675",
     "scripts/core-ideals/facets-postgresql-projection-cases.ts": "d78ebd7742f3c4a414a3a0b1273b326e99bac5695e7252ed13ff6d1f7f75f8d3",
     "scripts/core-ideals/facets-postgresql-projection-native.ts": "ce6f4e4c0eab2bfd5777368527fcee890a5c02422c12e28fec65039587598232"

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 22416,
+        "line": 177,
+        "path": "src/extensions/binding/index.ts",
+        "sha256": "d2e3a4d9dfef6f392a08fa4331a815cc8ad80c611f5f95511c2cbbd98a26c94b"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "BindingIndexOutcome",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface BindingIndexOutcome {name:string;path:string;outcome:'exact'|'approximated'|'not-expressible'|'unknown';reason?:string}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"BindingIndexOutcome\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 22416,
+      "line": 177,
+      "path": "src/extensions/binding/index.ts",
+      "sha256": "d2e3a4d9dfef6f392a08fa4331a815cc8ad80c611f5f95511c2cbbd98a26c94b"
+    }
+  ],
+  "summary": "Type declaration · src/extensions/binding/index.ts",
+  "title": "BindingIndexOutcome"
+}

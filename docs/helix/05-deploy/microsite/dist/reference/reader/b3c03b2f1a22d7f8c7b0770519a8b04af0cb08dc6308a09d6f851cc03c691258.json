@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"projectAvroToTableSpec\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"AvroTableSpecPolicy\"]"
+      ],
+      "name": "options",
+      "optional": false,
+      "type": "AvroTableSpecPolicy"
+    }
+  ],
+  "purpose": "Root-record schema projection. Instance encoders and TableSpec pipelines remain separate.",
+  "related": [],
+  "returns": "AvroTableSpecProjection",
+  "task": "Import and export",
+  "type": "(input: Document, options: AvroTableSpecPolicy) => AvroTableSpecProjection"
+}

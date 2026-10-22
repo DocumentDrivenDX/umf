@@ -3,8 +3,10 @@ requires = ["hatchling>=1.27,<2"]
 build-backend = "hatchling.build"
 
 [project]
+license = "MIT OR Apache-2.0"
+license-files = ["LICENSE.md", "LICENSE-MIT", "LICENSE-APACHE"]
 name = "umf-core"
-version = "0.8.1"
+version = "0.10.0"
 description = "Official Python document models and extension machinery for UMF"
 readme = "README.md"
 requires-python = ">=3.11"
@@ -17,11 +19,13 @@ Repository = "https://github.com/DocumentDrivenDX/umf"
 packages = ["src/umf"]
 
 [tool.hatch.build.targets.sdist.force-include]
-"../spec/core" = "spec/core"
+"../spec/core/schema.json" = "spec/core/schema.json"
+"../spec/core/semantic-type-reference.schema.json" = "spec/core/semantic-type-reference.schema.json"
+"../spec/core/extension-package.schema.json" = "spec/core/extension-package.schema.json"
+"../spec/metamodel/generated" = "spec/metamodel/generated"
 "../spec/extensions/domain-pack" = "spec/extensions/domain-pack"
 "../spec/extensions/dataset-source" = "spec/extensions/dataset-source"
-"../fixtures/python" = "fixtures/python"
-"../fixtures/core/schema-properties.json" = "fixtures/core/schema-properties.json"
+"../fixtures/metamodel/current-conformance.json" = "fixtures/metamodel/current-conformance.json"
 
 [dependency-groups]
 dev = ["pytest>=8.4,<10", "ruff>=0.13"]

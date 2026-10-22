@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"classifySqlServerRelationships\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SqlServerRelationshipRequest\"]"
+      ],
+      "name": "options",
+      "optional": false,
+      "type": "SqlServerRelationshipRequest"
+    }
+  ],
+  "purpose": "Permission-limited catalog observations; trust flags never establish authored relationship meaning.",
+  "related": [],
+  "returns": "SqlServerRelationshipClassification",
+  "task": "Other APIs",
+  "type": "(input: Document, options: SqlServerRelationshipRequest) => SqlServerRelationshipClassification"
+}

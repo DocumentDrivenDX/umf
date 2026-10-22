@@ -1,5 +1,19 @@
 # UMF
 
+The published [SDK 0.5.2 release](https://github.com/DocumentDrivenDX/umf/releases/tag/umf-v0.5.2)
+includes the immutable UMF 0.10.0 Python core, `umf_access` 0.1.0.dev4 host
+and `umf_codegen` 0.1.0a1. Its [release notes](docs/helix/05-deploy/sdk-release-notes-0.5.2.md)
+and [stack cohort](https://github.com/DocumentDrivenDX/umf/releases/download/umf-v0.5.2/stack-cohort.json)
+identify exact packages and local macOS qualification. Paired releases are
+[Weft 0.4.48](https://github.com/DocumentDrivenDX/weft/releases/tag/v0.4.48),
+[Truss 0.0.41](https://github.com/DocumentDrivenDX/truss/releases/tag/v0.0.41)
+and the [Ashlar developer preview](https://github.com/DocumentDrivenDX/ashlar/releases/tag/v0.1.0.dev1).
+Declared tables, seeds, forward migration, bounded batches and typed queries are
+published in their qualified subset. Complete application/UI and host-owned
+external-reference integration remain outside that evidence.
+
+Start with the [action guide](docs/helix/04-build/guides/actions/index.md) for runnable examples, diagrams, CQRS and formal-analysis explanations. [Recorded action qualification](docs/helix/04-build/evidence/actions-certification.md) has exact versions and limits; [current documentation delivery](docs/helix/04-build/evidence/actions-documentation-execution.md) is separate.
+
 UMF is a machine-readable metamodel and schema interchange fabric for complex
 systems built over evolving, partly understood data shapes. Reuse metadata for
 transforms, visualization, generators, forms, AI context, and human documentation
@@ -15,8 +29,20 @@ descriptor fields and unknown options; an optional WASM worker imports source
 bundles and emits edited source with a recompilation check.
 Edition 2024 source operations and broader conformance remain unsupported.
 
-Development: `bun install --frozen-lockfile`, `bun run typecheck`, `bun test`,
-and `bun run build`. Run browser checks with `bun run test:browser` after installing
+The normal SDK bundles `umf.actions`; use `createUmfRegistry()` for built-in action declaration support. Executors remain explicitly selected. `bun run build:sdk` creates one `.cache/sdk-distribution/umf-sdk.tgz` containing the library, types and schemas, including the action vocabulary descriptor. No separate actions installation is required.
+
+Development: `bun install --frozen-lockfile`, `bun run typecheck`, `bun run test`,
+and `bun run build`. `bun run test` builds the browser library, PostgreSQL parser,
+and adapter test bundles before running every live test file in a fresh, sequential
+Bun process. This prevents accumulated VM state and keeps native ownership serial.
+The runner rejects incomplete summaries, failures and crashes; it does not retry or
+skip files. It uses a bounded 30-second default; explicit per-case budgets and
+reference-executor deadlines remain separate. Native command
+tests require a running Docker daemon; setup pulls PostgreSQL 17.9 and the public,
+digest-pinned handler image. Handler execution itself still forbids image pulls.
+Run `bun run test:actions` for the PostgreSQL reference command tests. When running
+the test runner inside Docker, use `docker run --init` so terminated child processes
+are reaped. Run browser checks with `bun run test:browser` after installing
 Playwright Chromium, or set `UMF_CHROMIUM_PATH` to an installed Chromium executable.
 
 See [project documentation](docs/helix/README.md) for the activity structure
@@ -241,3 +267,30 @@ portable serialization and explicit extension registration. Consumer extension
 definitions stay in consumer repositories. Semantic support is qualified by
 [CONTRACT-051](docs/helix/02-design/contracts/CONTRACT-051-python-consumers.md);
 package presence does not establish full JavaScript or native-adapter parity.
+
+### Experimental managed Delta DDL
+
+UMF owns the reusable Delta generator used by Ashlar. Physical choices live in
+`umf.delta.definition` and exact schemas in `umf.delta`; unsupported meaning stays
+serializable and blocks generation. See
+[CONTRACT-064](docs/helix/02-design/contracts/CONTRACT-064-delta-ddl.md).
+
+```typescript
+import {defineDeltaTable, generateDeltaDDLBundle} from '@umf/core';
+const table = defineDeltaTable(schemaJson, {
+  profile: 'databricks-managed-delta/0.1',
+  name: ['catalog', 'schema', 'items'],
+  clusterBy: ['id'], partitionBy: [], properties: {}
+}, {id: 'items'});
+const proposal = generateDeltaDDLBundle([table]);
+// proposal.sql is reviewable CREATE SQL; proposal.tables retains each schema.
+```
+
+Bundle generation preserves caller order and refuses the entire proposal on an
+unsupported member or duplicate identity/name. It generates SQL without applying
+it; native acceptance, migrations and logical-to-physical mapping remain separate.
+
+## License
+
+First-party software is dual-licensed under MIT OR Apache-2.0, at your option.
+See [LICENSE.md](LICENSE.md). Third-party materials retain their original notices.

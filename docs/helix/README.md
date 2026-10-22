@@ -1,9 +1,146 @@
 # UMF project documentation
 
+[Schema migration design](02-design/solution-designs/SD-007-schema-migrations.md)
+and [delivery plan](04-build/schema-migration-plan.md) define field additions,
+requiredness/default/backfill, removals and type changes. The existing
+CONTRACT-081/TD-085/STP-085 stream owns the bounded PostgreSQL implementation;
+broader transforms, retained-value recovery and backend profiles remain planned.
+
+[U1–U3 candidate evidence](04-build/evidence/praxis-u123-adoption/README.md) records mixed-phase recovery, reviewed existing-object evolution and row_scope authorization against exact installed wheels. Mixed, reviewed-operation and owner+via native acceptance pass for the recorded maintenance profile. The [earlier lifecycle evidence](04-build/evidence/table-lifecycle-completion/README.md) retains its bounded predecessor scope. [Use the candidate](04-build/guides/legal-table-lifecycle.md); [stage a wheel mirror](04-build/guides/python-wheel-mirror.md). Local PostgreSQL qualification does not establish managed consumer adoption.
+
+[Praxis revision2 next-release requirements](01-frame/praxis-lifecycle-roadmap.md#next-release-requirements--praxis-revision2-2026-10-21) maps U1–U9 to existing WS-5–9, preserves the U1–U3 adoption gate, and distinguishes posted releases from locally verified successor work.
+
+[Additional Praxis table asks assessment](01-frame/praxis-lifecycle-roadmap.md#additional-consumer-assessment--2026-10-21) evaluates R1–R11, separates current source evidence from consumer/release acceptance, and sequences remaining DDL, migration, packaging and host work. It recommends the registered table profile rather than new core fields; Hohfeld alignment is a separate delivery cut.
+
+[Praxis lifecycle roadmap](01-frame/praxis-lifecycle-roadmap.md) assesses the ten
+client integration gaps and proposes gated delivery for direct tables, native
+identity/policies and Truss/Ashlar graph hosts. Release numbers are proposed;
+dates are uncommitted. [Stack licensing evidence](04-build/evidence/stack-licensing.md)
+records the separately authorized MIT OR Apache-2.0 source/package changes.
+[P1 implementation](04-build/evidence/praxis-p1.md) adds portable generated sync
+clients and installed Pydantic 2.13.5/2.14.1 compatibility. [Native per-call session evidence](04-build/evidence/praxis-p1/session-native-postgresql.json)
+now covers scoped Psycopg3, Psycopg2 and SQLAlchemy Core/PostgreSQL18 sessions.
+Production artifact execution and release/index delivery remain open. The
+[source-proved native head observer](04-build/evidence/praxis-p2/native-head.json)
+adds a private-history metadata projection, trusted installation references and
+read-only person/batch current-generation checks. The
+[per-call adapter evidence](04-build/evidence/praxis-p2/native-head-adapter-execution.json)
+qualifies sync/async native drivers, real pools and cancellation for this metadata
+observer. Full data admission remains
+open. The
+[local Python generator candidate](04-build/evidence/praxis-p1/python-codegen.json)
+runs the original portable generator without external Bun/Node; Linux/macOS
+hosted checks pass. Publication gates remain open.
+
+The [declared native reader evidence](04-build/evidence/praxis-p2/declared-reads/receipt.json)
+records checked Weft reads with pre/post live correspondence, identity-scoped
+cursors, bounded frames and126 PG18 assertions across six driver/pool variants.
+Generated lifecycle methods and the remaining full Praxis
+lifecycle/consumer/release gates remain open.
+
+The [native mutation/outcome packet](04-build/evidence/praxis-p2/durable-outcomes/receipt.json)
+adds declared CRUD/upsert/batch execution, authenticated effect-only recovery,
+version0.2 metadata references and commit/cancellation handling across the native
+driver configurations. Generated typed module integration, remaining codecs,
+seeds/evolution, private consumer acceptance and publication remain required.
+
+The [generated module evidence](04-build/evidence/praxis-p2/generated-modules/receipt.json)
+connects declared typed module methods to those native executors, with80 PG18
+assertions, three static checkers and Bun/Chromium/embedded-Python parity.
+Remaining lifecycle/codec, private acceptance and release gates stay open.
+
+The [finite temporal evidence](04-build/evidence/praxis-p2/finite-temporal/receipt.json)
+adds explicit date/UTC-instant/decimal native execution and finite-domain checks,
+with88 PG18 assertions across all six driver/pool variants. Source-declared
+current timestamps and ambient timezone/date-format independence are qualified;
+blocking enum/range and remaining lifecycle/consumer/release work stay open.
+
+The [scalar domain/clock evidence](04-build/evidence/praxis-p2/scalar-domains/receipt.json)
+adds native and generated membership/range/width/length validation plus typed
+server transaction-time assignments. Six driver/pool variants pass150 PG18
+assertions; seeds/evolution, final consumer acceptance and publication remain open.
+
+[Generated data access](01-frame/features/FEAT-033-generated-ontology-access.md)
+turns a current UMF schema into one typed model/query/action API for tables and
+ontologies. Developers compose reads directly and change the binding to change
+storage. [The design](02-design/solution-designs/SD-033-generated-ontology-access.md)
+uses sensible defaults and a shared host/worker transport, with stdlib-only Python.
+[Generate and use it](04-build/guides/unified-python-access.md);
+[implementation evidence](04-build/evidence/unified-python-access.md) records the
+UMF 0.10 Python cut and its native Weft/PostgreSQL checks.
+
+The [core0.10 semantic-reference restoration](04-build/evidence/core-semantic-types-010/receipt.json)
+composes exact vocabulary/release/term metadata with the unchanged core0.9
+UUID/128-bit profile. [CONTRACT-078](02-design/contracts/CONTRACT-078-semantic-types.md)
+and [US-090](01-frame/user-stories/US-090-core-semantic-types.md) define the
+scoped TypeScript/Bun/Chromium profile. Explicit source migration and semantic2.0
+receipts preserve collisions and rollback; external term meaning, native delivery,
+Python adoption and other version-specific authoring expansion remain separate.
+
+## Generated reference and microsite expansion
+
+The [current core self-model](../../spec/metamodel/umf.yaml) drives the unified
+Schemas ontology, object reference and model catalog navigation.
+[Self-description evidence](04-build/evidence/generated-reference/ontology/README.md)
+records browser journeys and qualifications. The [authority cutover plan](04-build/metamodel-authority-plan.md) replaces the
+bootstrap projection with an authored metamodel generating schemas and portable
+validators, and retires duplicate definitions and old runtime/browser paths.
+ADR-005 and CONTRACT-080 govern the desired transition; implementation and new
+qualification remain pending until its recorded gates pass.
+
+[Schema and API reference organization plan](04-build/schema-reference-ia-plan.md)
+defines latest-first concept navigation, key/value explanations and task-based
+API pages following the owner's 2026-10-17 feedback.
+[Local execution evidence](04-build/evidence/generated-reference/reader/README.md)
+records passing implementation and Chromium checks; recruited-reader comprehension
+remains unverified.
+
+[TD-089](02-design/technical-designs/TD-089-generated-reference.md) specifies
+the generated core/extension/API reference, scoped integration evidence and local
+interactive tools. [SD-032](02-design/solution-designs/SD-032-generated-reference.md)
+owns the feature approach; [CONTRACT-077](02-design/contracts/CONTRACT-077-generated-reference.md)
+owns the reference format and tooling boundaries. These draft designs link to
+FEAT-032 and US-089. The implemented reference and local browser qualification
+are recorded in the [execution evidence](04-build/evidence/generated-reference/README.md);
+native integration support remains qualified by each source record.
+
+The experimental non-temporal SDK now has [installed native integration evidence](04-build/evidence/typed-persistence/integrated-native-20261016/README.md) for schema/instance/codec E2Es, catalog reads, actions, atomic bulk, exact search, async execution and local Delta snapshot reads. Temporal qualification remains **HELD**. [Original engine and Delta evidence](04-build/evidence/typed-persistence/engine-adoption-20261016/README.md) qualifies ordinary Truss reads, held Ashlar publications and local atomic Delta actions/bulk. [Managed Lakebase evidence](04-build/evidence/typed-persistence/lakebase-native-20261016/README.md) qualifies the pinned read/catalog and exact search cohort. Protected Truss action/current-policy/manifest adoption, managed mutation authority and broader backend forms remain unfinished.
+
+The [generator/runtime qualification cut](04-build/evidence/typed-persistence/sdk-runtime-qualification-20261016/README.md) adds complete authored census coverage, recoverable writer faults, prepared core inspection capacity and browser parity, real seeded/fixed runtime wheels, exact three-checker diagnostics, shared conformance assertions and native generated prefix predicates. Its exact wheel/source cohorts remain distinct from complete engine adoption; temporal qualification stays **HELD**.
+
+The named [R23 installed cohort](04-build/evidence/typed-persistence/frontend-r23-20261017/README.md) passes317 tests and the pinned three-checker corpus. [Source-exact native evidence](04-build/evidence/typed-persistence/source-exact-r23-20261017/README.md) records fresh first-schema rejection and real qualified/unqualified action and bulk paths, with explicit artifact-capture limits. [R21 Python3.11 compatibility](04-build/evidence/typed-persistence/compatibility-r21-311-20261017/README.md) separately replays its installed tests and real schema-to-instance E2Es; it does not qualify later runtime cohorts. [Genuine Truss read/page/stream evidence](04-build/evidence/typed-persistence/truss-related-r19-20261017/README.md) qualifies the R19 projected `WithKeys` correction. Protected action/manifest providers, successor search correctness, selected native privilege closure, managed prerequisites and release remain separate gates. Temporal stays **HELD**.
+
+The experimental [typed reporting read profile](04-build/guides/typed-reporting.md) implements generated to-one joins and reviewed aggregates on the caller’s PostgreSQL 18 connection. [Scoped evidence](04-build/evidence/typed-reporting/README.md) includes Python 3.11 typing and native RLS/keyset/timeout checks; Pinned Lakebase 18.6 read/catalog and exact pgvector 0.8.6 search execution now has [isolated native evidence](04-build/evidence/typed-persistence/lakebase-native-20261016/README.md); other managed forms remain separately gated.
+
+The bounded [B-TP-003 implementation/test gate](04-build/evidence/typed-persistence/b-tp-003/README.md) now passes the archived stage-one conformance cut. Its synthetic test profile remains explicitly unqualified; downstream SDK/backend and release gates remain open, and temporal qualification is **HELD**.
+
+## Proposed typed data access SDK
+
+The [Truss manifest command guide](04-build/guides/truss-manifest-commands.md) describes the inert original-Artifact catalog path, explicit source inputs and engine-owned plan provider. Native Truss manifest execution remains separately gated.
+
+The [PostgreSQL fence deployment guide](04-build/guides/native-postgresql-fences.md) explains the explicit original binding, deployment program and native grants for selected text-search configurations and source-exact mutations. Its successor installed/native qualification remains pending.
+
+[Design and build handoff](04-build/typed-persistence-design.md) indexes draft
+FR-52 to FR-55, FEAT-028 to FEAT-031, CONTRACT-067 to CONTRACT-075 and nine
+story/design/test slices (080 to 088). A TypeScript generator emits typed Python
+models and action clients from UMF; a build step compiles typed query, search and
+bulk declarations through Weft into a checked-in catalog; the `umf_access`
+runtime executes catalog entries on raw tables or through Truss and Ashlar
+adapters. These specs do not claim implementation, native acceptance or consumer
+adoption. Current work is recorded in the
+[coordination evidence](04-build/evidence/typed-persistence/implementation-coordination.json).
+Scoped passing evidence exists for
+[boundary checker adoption](04-build/evidence/typed-persistence/b-tp-000/verification.json),
+the [bounded compatibility spike](04-build/evidence/typed-persistence/dsl-typing-spike/compatibility/README.md)
+and the [typed-access temporal profile](04-build/evidence/typed-persistence/temporal-profile/verification.json).
+Production generator/runtime, backend and engine acceptance remain separate gates.
+
+**Action entry point:** [Beginner guide](04-build/guides/actions/index.md), [recorded scoped qualification](04-build/evidence/actions-certification.md), and [documentation delivery](04-build/evidence/actions-documentation-execution.md). Older open/untested statements below describe their dated milestones; use the scoped evidence to distinguish historical work from current support.
+
 ## Domain-pack planning
 
 The [domain-pack roadmap](01-frame/domain-pack-roadmap.md) indexes plans for
-16 domains, including ecology/water management. UMF owns schemas and schema
+17 planned domains, including ecology/water management and public-company intelligence. UMF owns schemas and schema
 tooling; TableSpec owns dataset generation, CSV ZIP output, loading and data
 tests. FEAT-009 defines catalog behavior; separate features/stories define each
 domain outcome. [SD-024](02-design/solution-designs/SD-024-ecology-domain-pack.md)
@@ -12,6 +149,13 @@ proposes an ecology model with explicit scientific comparability boundaries.
 context-linked archaeological evidence and specialist analyses grounded in
 Madaba Plains Project source candidates. These draft plans do not claim
 delivered packs or native equivalence.
+
+The [public-company intelligence pack](../../spec/domain-packs/public-company-intelligence/GUIDE.md)
+adds 25 selected SEC issuers, 340 filing records and 647 exact financial
+observations with separate item-metadata signals and authored hypotheses.
+[Scoped evidence](04-build/evidence/public-company-intelligence.md) qualifies
+fixed local ingestion and browser inspection; narrative documents returned
+HTTP 403, and live Databricks/model/email execution remains consumer work.
 
 ## Ecosystem integration direction
 
@@ -27,6 +171,28 @@ three targets is not delivered. The owner's follow-up selects
 after a defined UMF finalization gate. Existing US-050 prerequisites must be
 reconciled when that gate is framed.
 
+## Declarative action requirements and design
+
+Owner-directed action planning (2026-10-08) is captured in
+[FEAT-900](01-frame/features/FEAT-900-declarative-actions.md),
+[US-900](01-frame/user-stories/US-900-declarative-actions.md),
+[CONTRACT-900](02-design/contracts/CONTRACT-900-declarative-actions.md),
+[SD-900](02-design/solution-designs/SD-900-declarative-actions.md),
+[TD-900](02-design/technical-designs/TD-900-declarative-actions.md) and
+[STP-900](03-test/test-plans/STP-900-declarative-actions.md).
+[CONTRACT-901](02-design/contracts/CONTRACT-901-transactional-action-profile.md) adds
+the proposed first executable consumer profile and protocol. These draft artifacts
+define a local core 0.8.0 `umf.actions` extension for authored declarations and
+executor capability comparison. An experimental portable implementation and bounded
+rule/selector interpretation now have [scoped passing evidence](04-build/evidence/actions-certification.md).
+The transactional reference consumer is allocated in
+[US-901](01-frame/user-stories/US-901-transactional-actions.md),
+[TD-901](02-design/technical-designs/TD-901-transactional-actions.md) and
+[STP-901](03-test/test-plans/STP-901-transactional-actions.md). Its historical certificate records completed bounded execution and qualification
+at captured sources. Current integrated qualification and release acceptance
+remain open. Execution remains
+consumer-owned; DDD operation metadata and native Delta log actions are separate.
+
 ## Shared schema properties
 
 Owner-directed core 0.8.0 adds titles, aliases, typed examples, collection size,
@@ -39,6 +205,12 @@ qualifies checks and limitations. Native bindings/admission and the TableSpec
 native port remain separate work.
 
 ## Current delivered scope
+
+The separately selected [RFC3339 exact instant helper](02-design/contracts/CONTRACT-065-rfc3339-exact-instant.md)
+provides precise instant keys/equality while retaining original text and local
+offset knowledge. [Basic Bun/browser evidence](04-build/evidence/rfc3339-exact-instant-20261014.md)
+does not establish Truss/Weft/Ashlar query adoption or change generic timestamp,
+temporal facets or temporal Key semantics.
 
 The shared [JavaScript numeric adapter](02-design/contracts/CONTRACT-049-schema-properties.md#shared-javascript-numeric-adapter-api-100)
 uses existing integer/decimal carriers for safe number admission, bigint
@@ -1146,6 +1318,17 @@ validation incomplete even with minimum-only or zero-maximum bounds, so
 extension editing refuses. Current scoped evidence and historical qualifications
 are recorded in [schema-property execution evidence](04-build/evidence/schema-properties-core.md).
 
+Action design investigation (2026-10-08): [provenance](00-discover/actions-requirement-provenance.md),
+[decision experiments](02-design/actions-investigation.md),
+[prior art/access](02-design/actions-prior-art-decisions.md),
+[executed evidence and gate status](04-build/evidence/actions-plan-execution.md).
+
+[Executed formal action analysis](04-build/evidence/actions-formal-analysis.md)
+records semantic counterexamples, corrected design, bounded TLC safety/progress
+and independent native-history conformance. This pointer describes the earlier
+design milestone; the later action certificate records completed bounded
+implementation qualification at its captured source. See the action guide and
+documentation delivery record above for the current integration status.
 Portable tabular domain packs are governed by
 [CONTRACT-052](02-design/contracts/CONTRACT-052-domain-packs.md). UMF owns pack
 metadata, table schemas and schema export tooling; TableSpec owns executable
@@ -1200,3 +1383,63 @@ CC BY 3.0 TCIA DICOM slice with retained originals. The Medical overview links
 all five packs; source/row downloads, ontology/table navigation and old bookmarks
 have real-browser evidence. See the [integrated medical evidence](04-build/evidence/medical-subpacks.md#integrated-medical-family-110--2026-10-08)
 and [complete family export](../../spec/domain-packs/medical/README.md#complete-family-export-and-browser).
+
+## Domain-pack loader and research releases
+
+The [release notes](05-deploy/domain-pack-release-notes.md) cover loader 1.0.0,
+legal-appellate 1.0.0 and public-company-intelligence 1.0.0. These fixed corpora
+ship the same canonical loader and verified publication reader; their qualified
+source coverage and consumer boundaries remain separate.
+
+
+The [document research tools 1.0.0](05-deploy/document-research.md) publish Supreme Court discovery,
+batching/acquisition configuration, SEC qualification harness and scoped local
+Spark evidence. Original local-use archives are excluded; live SEC/Databricks
+qualification remains pending. CONTRACT-060 governs the source mirror.
+
+## Artifact collections
+
+[CONTRACT-061](02-design/contracts/CONTRACT-061-artifact-collections.md) defines
+first-class source artifact collections and Documents/Imaging/Other browser views.
+The [plan](04-build/artifact-collections-plan.md) and
+[evidence](04-build/evidence/artifact-collections.md) qualify reference validation,
+rights-aware download links and the updated packs.
+Security planning: [shared security feature](01-frame/features/FEAT-008-shared-security.md), [semantic contract](02-design/contracts/CONTRACT-062-security-semantics.md), and [design](02-design/solution-designs/SD-008-shared-security.md). Native qualification is separate from spike results.
+
+## Portable plan and frozen-manifest construction — 2026-10-15
+
+[US-902](01-frame/user-stories/US-902-portable-action-plans.md) and [US-903](01-frame/user-stories/US-903-frozen-action-manifests.md) define the bounded plan preparation/inspection and unsealed frozen-manifest construction slice. [CONTRACT-903](02-design/contracts/CONTRACT-903-frozen-action-manifest.md) separates the pure constructor from Truss-owned selection, ordering, guard issuance, current authorization and durable sealing. Portable success is not execution qualification.
+
+## Proposed native 128-bit and UUID design — 2026-10-15
+
+[SD-005](02-design/solution-designs/SD-005-128-bit-uuid.md) and
+[CONTRACT-076](02-design/contracts/CONTRACT-076-128-bit-uuid.md) specify first-class
+opaque128-bit and UUID domains, existing integer128 width facets, exact literals,
+versioned keys and native/bytes/text/two64-bit physical carriers. This is an
+implemented core0.9.0 design; current qualified native support is recorded below.
+
+
+The initial [128-bit/UUID implementation](04-build/evidence/uuid-implementation.md)
+now provides experimental core0.9 values, literals, keys, copied authoring,
+inspection/selection, retained migration and explicit carrier codecs/proposals.
+Native observations qualify specific schemas and datum paths; complete ideal,
+five-binding, relationship/index and consumer-execution gates remain separate.
+
+
+Qualified128-bit/UUID ideal admission and five-priority carrier/model delivery
+now pass under the explicit uuid-model1 profile. The [completion record](04-build/evidence/uuid-adapter-completion.md)
+records complete singular Record/Key/index/FK SQL layouts, native constraints and
+transaction observations, Avro/Parquet grouped pairs and actual TableSpec/Spark
+string fallback. Native equivalence, wider composition and deployed consumer
+adoption are separate; unsupported meanings still refuse or remain residuals.
+
+
+The separately selected `uuid-model2` profile now qualifies mixed flat Records,
+finite nested arrays/maps and explicit groups, then association Records with
+polymorphic endpoint alternatives across all five priority targets.
+[Composition evidence and limits](04-build/evidence/uuid-composition.md) records
+native returned values, adapter recovery, complete-snapshot integrity checks,
+Chromium and source-bound gates. SQL/TableSpec JSON and file scalar text are
+explicit storage choices with residual enforcement obligations. Model1 retains
+its original interpretation; consumer execution and native equivalence remain
+separate.

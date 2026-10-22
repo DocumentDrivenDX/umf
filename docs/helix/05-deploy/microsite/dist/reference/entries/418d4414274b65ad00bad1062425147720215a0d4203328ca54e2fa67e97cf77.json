@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 12346,
+        "line": 17,
+        "path": "src/adapters/json-schema/index.ts",
+        "sha256": "e8ce2cd6580f7e12be58bf5e6d069ee4c64bfab113236219d043891acbf44248"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "JsonSchemaPayload",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface JsonSchemaPayload {dialect:typeof JSON_SCHEMA_DIALECT;baseUri:string;root:NativeJson;resources:Record<string,NativeJson>}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"JsonSchemaPayload\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 12346,
+      "line": 17,
+      "path": "src/adapters/json-schema/index.ts",
+      "sha256": "e8ce2cd6580f7e12be58bf5e6d069ee4c64bfab113236219d043891acbf44248"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/json-schema/index.ts",
+  "title": "JsonSchemaPayload"
+}

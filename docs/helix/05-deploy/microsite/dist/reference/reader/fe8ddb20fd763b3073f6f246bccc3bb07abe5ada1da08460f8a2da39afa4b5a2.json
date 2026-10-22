@@ -1,0 +1,30 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"inspectCoreRelationships\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "input",
+      "optional": false,
+      "type": "Source"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"RelationshipModuleIdentity\"]"
+      ],
+      "name": "identity",
+      "optional": false,
+      "type": "RelationshipModuleIdentity"
+    }
+  ],
+  "purpose": "inspectCoreRelationships accepts input, identity and returns CoreRelationshipInspection.",
+  "related": [],
+  "returns": "CoreRelationshipInspection",
+  "task": "Inspect and select",
+  "type": "(input: Source, identity: RelationshipModuleIdentity) => CoreRelationshipInspection"
+}

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 import json,random
 from pathlib import Path
 import pyarrow as pa

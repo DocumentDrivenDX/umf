@@ -1,0 +1,49 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"PythonClientRequest\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "text",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "format",
+      "optional": true,
+      "type": "\"json\" | \"yaml\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "package",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "records",
+      "optional": true,
+      "type": "{ module: string; element: string; }[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "actions",
+      "optional": true,
+      "type": "{ module: string; action: string; }[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "PythonClientRequest is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "PythonClientRequest"
+}

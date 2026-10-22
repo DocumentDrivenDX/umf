@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 7201,
+        "line": 6,
+        "path": "src/model/selection.ts",
+        "sha256": "27b1fe936fc1ddaf5fdb3f57226950c303984e1de67100d2e223e6db60711a00"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "CoreElementQuery",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface CoreElementQuery {references:'none'|'transitive';modules?:string[];namespaces?:string[];names?:string[];scalarTypes?:string[];cardinalities?:string[];identities?:{module:string;element:string}[];}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"CoreElementQuery\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 7201,
+      "line": 6,
+      "path": "src/model/selection.ts",
+      "sha256": "27b1fe936fc1ddaf5fdb3f57226950c303984e1de67100d2e223e6db60711a00"
+    }
+  ],
+  "summary": "Type declaration · src/model/selection.ts",
+  "title": "CoreElementQuery"
+}

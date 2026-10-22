@@ -1,0 +1,7 @@
+# Authored native collation facts — 2026-10-17
+
+Temporal qualification remains **HELD**. Source0c026575 adds explicit PostgreSQL/Lakebase qualified collation identities (or null) to native ColumnSets. Legacy omission remains declaration-authorable but cannot establish source-exact SDK native verification. No collation, locale or generation expression is inferred.
+
+Focused declaration/census/presence controls pass717 tests; after synchronizing the published embedded schema, structural/contextual controls pass362 tests, all69 package/schema audits pass, and TypeScript library/tools typechecks pass. Actual Chromium153.0.8010.12 and Bun1.4.2 produce identical complete packages for14 cases, each repeated twice, plus three independent source/profile/code identity perturbations. The new cases retain authored facts and refuse a name exceeding63 UTF-8 bytes and unknown selected meaning. The browser receipt's1381 source hashes match the frozen source.
+
+Initial tooling errors are retained: a nonexistent bunx path failed before typecheck, and the first schema audit lacked filesystem permission to write its original receipt. Correct original entrypoints/authorized receipt write then pass; no assertion or schema policy was weakened. These are declaration and browser proofs. Original compiler source-exact admissions, SDK promotion/runtime guards and real first-use native drift tests remain a separate successor gate.

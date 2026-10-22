@@ -1,0 +1,65 @@
+{
+  "scope": "source-bound administrative native table/column/schema ACLs and dedicated-schema root authority; no normal-operation admission",
+  "baseCommit": "f5174fd07",
+  "sourceHashes": {
+    ".github/workflows/access-boundaries.yml": "bf0b650d69e67d119cc88f49bcbbf5d5360ea7ad0379c32356c67e510d8c93ee",
+    "python/umf_access/src/umf_access/lifecycle/__init__.py": "e4ffcb36666e93273ca0b9c441e8c886628df82afd7e740418cb68cf1e7c0dae",
+    "python/umf_access/src/umf_access/lifecycle/catalog.py": "3c1bd33a48c98df2f0d2d23d4e72e5e838ae5ef5edae9ce83e9a33ed0b3d630f",
+    "python/umf_access/src/umf_access/lifecycle/privileges.py": "dfd47a60b08348a82c4c7ca752fe3970162754519352e6571ef3046b22c66ff6",
+    "python/umf_access/src/umf_access/lifecycle/roles.py": "77bb20e4148ba5d234ac4c3c614447b995be0f6fa752ec2a38a776536343da50",
+    "tests/unified/table_deployment_native.py": "a9b9c0328b0dd90c6858014564281b4aa477e36ebfc948e80841996dfeac41ce",
+    "tests/unified/table_privileges_native.py": "c7bec9920526b97440524f69107974ddee8e3166e420837f62362634aa906374",
+    "tests/unified/table_role_scope_native.py": "6901cdc04ec52d862da4c4a443c639c29b207e0b50e5eb8ec3ed473eb0aaa658"
+  },
+  "native": {
+    "postgres": 180006,
+    "psycopg": "3.2.13",
+    "pydantic": "2.13.5",
+    "privilegeAssertions": 133,
+    "roleAssertions": 62,
+    "catalogAssertions": 112,
+    "fixtureBundleSha256": "055c8be6674a80a5654596ab8d405027c659af753f007d7b2f010f1dcafa8301",
+    "execution": "sequential synthetic fixtures; owned roles/schema/largeobject/server/wrapper cleaned"
+  },
+  "hostWheel": {
+    "name": "umf_access-0.1.0.dev2-py3-none-any.whl",
+    "sha256": "c25a2bf19824efc21c2e71d478e8ea09e1689fcadd9c31b86a5968e2010df00f",
+    "installedModulesMatch": true,
+    "published": false
+  },
+  "checks": {
+    "ruff": "Python pass",
+    "mypy": "4 lifecycle modules strict; legacy imports not followed; pass",
+    "boundaries": {
+      "modules": 65,
+      "violations": 0,
+      "tests": 22,
+      "assertions": 143
+    },
+    "license": {
+      "expression": "MIT OR Apache-2.0",
+      "sourceHeaders": 2692,
+      "wheelLicenseFiles": [
+        "LICENSE-APACHE",
+        "LICENSE-MIT",
+        "LICENSE.md"
+      ],
+      "result": "pass"
+    }
+  },
+  "failedPrecursors": [
+    {
+      "reason": "Native planner evaluated sequence-privilege functions against non-sequence catalog rows before the WHERE relation-kind predicate.",
+      "fix": "Explicit CASE guards object-specific privilege functions; final native controls pass. No acceptance claimed from the failed attempt."
+    }
+  ],
+  "limits": [
+    "Catalog/ACL/role observations do not freeze native catalogs against out-of-protocol privileged changes",
+    "Operator must arrange dedicated-schema preconditions; no global/PUBLIC privilege repair",
+    "Actual people may access other plugins; plugin roots cannot access external user objects",
+    "Identity sequences are explicitly unqualified",
+    "Trusted installed generation and forward digest ledger remain open",
+    "Weft typed lifecycle operations, full codecs, generated clients and selected Praxis acceptance remain open"
+  ],
+  "nativeLifecycleReleaseQualified": false
+}

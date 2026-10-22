@@ -1,0 +1,108 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"CardinalitySqlServerProjection\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "operation",
+      "optional": false,
+      "type": "\"project-cardinality-sqlserver\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "version",
+      "optional": false,
+      "type": "\"1.0.0\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "status",
+      "optional": false,
+      "type": "\"blocked\" | \"projected\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "source",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreCardinalityDeclaration\"]"
+      ],
+      "name": "author",
+      "optional": false,
+      "type": "CoreCardinalityDeclaration"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CardinalitySqlServerRequest\"]"
+      ],
+      "name": "request",
+      "optional": false,
+      "type": "CardinalitySqlServerRequest"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "target",
+      "optional": true,
+      "type": "{ format: \"sqlserver-ddl\"; sql: string; }"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "nativeSql",
+      "optional": true,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Diagnostic\"]"
+      ],
+      "name": "diagnostics",
+      "optional": false,
+      "type": "Diagnostic[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "binding",
+      "optional": false,
+      "type": "{ id: string; version: string; nativeVersion: string; subset: string; }"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "mapping",
+      "optional": false,
+      "type": "{ origin: \"authored\"; cardinality: \"one\" | \"array\" | \"map\" | \"unspecified\"; encoding: \"scalar\" | \"json-array\" | \"json-object\" | \"carrier-only\"; basis: \"Explicit author declaration and selected native carrier; residuals qualify unrepresented obligations\"; idealPath: string; nativePath: \"/sql\"; outcome: \"exact\" | \"approximated\" | \"unknown\" | \"not-expressible\"; }"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Json\"]"
+      ],
+      "name": "residuals",
+      "optional": false,
+      "type": "{ path: string; value: Json; reason: string; outcome: \"approximated\" | \"unknown\" | \"not-expressible\"; recovery: \"Recover source meaning with retained projection receipt; native-only import does not recover author intent\"; }[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "CardinalitySqlServerProjection is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "CardinalitySqlServerProjection"
+}

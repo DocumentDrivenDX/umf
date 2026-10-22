@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 7481,
+        "line": 11,
+        "path": "src/core-ideals/postgresql-composite.ts",
+        "sha256": "9331bc1b538e6c8d078264adf931a770c996c68eb8a4d377bc6f31d096960d9c"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "PostgresqlCompositeRequest",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface PostgresqlCompositeRequest {recordModule:string;recordId:string;mode:'strict'|'report';nativeSource:string;relation:{schema:string;name:string}}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"PostgresqlCompositeRequest\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 7481,
+      "line": 11,
+      "path": "src/core-ideals/postgresql-composite.ts",
+      "sha256": "9331bc1b538e6c8d078264adf931a770c996c68eb8a4d377bc6f31d096960d9c"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/postgresql-composite.ts",
+  "title": "PostgresqlCompositeRequest"
+}

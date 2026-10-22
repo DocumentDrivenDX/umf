@@ -1,0 +1,620 @@
+{
+  "data": {
+    "extensionId": "umf.access",
+    "manifest": {
+      "capabilities": {
+        "directions": [],
+        "evidence": [
+          "tests/compilation/access-extension.test.ts",
+          "tests/compilation/access-context.test.ts"
+        ],
+        "validation": "structural"
+      },
+      "coreVersion": "0.10.0",
+      "description": "Authored typed access views over core 0.8.0; experimental metadata validation",
+      "id": "umf.access",
+      "schema": {
+        "$id": "urn:umf:access:0.1.0",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": true,
+        "properties": {
+          "columns": {
+            "items": {
+              "additionalProperties": true,
+              "properties": {
+                "binding": {
+                  "additionalProperties": true,
+                  "properties": {
+                    "module": {
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "sourceId": {
+                      "minLength": 1,
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "sourceId",
+                    "module"
+                  ],
+                  "type": "object"
+                },
+                "columns": {
+                  "items": {
+                    "additionalProperties": true,
+                    "properties": {
+                      "collation": {
+                        "anyOf": [
+                          {
+                            "type": "null"
+                          },
+                          {
+                            "additionalProperties": true,
+                            "properties": {
+                              "name": {
+                                "maxLength": 63,
+                                "minLength": 1,
+                                "type": "string"
+                              },
+                              "schema": {
+                                "maxLength": 63,
+                                "minLength": 1,
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "schema",
+                              "name"
+                            ],
+                            "type": "object"
+                          }
+                        ]
+                      },
+                      "field": {
+                        "additionalProperties": true,
+                        "properties": {
+                          "element": {
+                            "minLength": 1,
+                            "type": "string"
+                          },
+                          "module": {
+                            "minLength": 1,
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "module",
+                          "element"
+                        ],
+                        "type": "object"
+                      },
+                      "generation": {
+                        "enum": [
+                          null,
+                          "identity",
+                          "stored-expression",
+                          "default"
+                        ]
+                      },
+                      "notNull": {
+                        "type": "boolean"
+                      },
+                      "type": {
+                        "minLength": 1,
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "field",
+                      "type",
+                      "notNull",
+                      "generation"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "target": {
+                  "additionalProperties": true,
+                  "properties": {
+                    "majorVersion": {
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "platform": {
+                      "enum": [
+                        "postgresql",
+                        "lakebase",
+                        "spark-delta",
+                        "unity-catalog"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "platform",
+                    "majorVersion"
+                  ],
+                  "type": "object"
+                }
+              },
+              "required": [
+                "binding",
+                "target",
+                "columns"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "search": {
+            "items": {
+              "additionalProperties": true,
+              "properties": {
+                "exactness": {
+                  "enum": [
+                    "exact",
+                    "approximate"
+                  ]
+                },
+                "filterable": {
+                  "items": {
+                    "additionalProperties": true,
+                    "properties": {
+                      "element": {
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "module": {
+                        "minLength": 1,
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "module",
+                      "element"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "id": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "keyword": {
+                  "additionalProperties": true,
+                  "properties": {
+                    "analyzer": {
+                      "oneOf": [
+                        {
+                          "const": "implementation-defined"
+                        },
+                        {
+                          "additionalProperties": true,
+                          "properties": {
+                            "language": {
+                              "minLength": 1,
+                              "type": "string"
+                            },
+                            "stemming": {
+                              "type": "boolean"
+                            }
+                          },
+                          "required": [
+                            "language",
+                            "stemming"
+                          ],
+                          "type": "object"
+                        }
+                      ]
+                    },
+                    "ranking": {
+                      "additionalProperties": true,
+                      "properties": {
+                        "b": {
+                          "type": "number"
+                        },
+                        "family": {
+                          "enum": [
+                            "bm25",
+                            "implementation-defined"
+                          ]
+                        },
+                        "k1": {
+                          "type": "number"
+                        }
+                      },
+                      "required": [
+                        "family"
+                      ],
+                      "type": "object"
+                    },
+                    "source": {
+                      "items": {
+                        "additionalProperties": true,
+                        "properties": {
+                          "element": {
+                            "minLength": 1,
+                            "type": "string"
+                          },
+                          "module": {
+                            "minLength": 1,
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "module",
+                          "element"
+                        ],
+                        "type": "object"
+                      },
+                      "type": "array"
+                    },
+                    "syntax": {
+                      "const": "plain"
+                    }
+                  },
+                  "required": [
+                    "source",
+                    "ranking",
+                    "analyzer",
+                    "syntax"
+                  ],
+                  "type": "object"
+                },
+                "kind": {
+                  "enum": [
+                    "vector",
+                    "keyword"
+                  ]
+                },
+                "record": {
+                  "additionalProperties": true,
+                  "properties": {
+                    "element": {
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "module": {
+                      "minLength": 1,
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "module",
+                    "element"
+                  ],
+                  "type": "object"
+                },
+                "vector": {
+                  "additionalProperties": true,
+                  "properties": {
+                    "computedBy": {
+                      "enum": [
+                        "host",
+                        "target"
+                      ]
+                    },
+                    "dimensions": {
+                      "minimum": 1,
+                      "type": "integer"
+                    },
+                    "field": {
+                      "additionalProperties": true,
+                      "properties": {
+                        "element": {
+                          "minLength": 1,
+                          "type": "string"
+                        },
+                        "module": {
+                          "minLength": 1,
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "module",
+                        "element"
+                      ],
+                      "type": "object"
+                    },
+                    "metric": {
+                      "enum": [
+                        "cosine",
+                        "dot",
+                        "l2"
+                      ]
+                    },
+                    "model": {
+                      "additionalProperties": true,
+                      "properties": {
+                        "id": {
+                          "minLength": 1,
+                          "type": "string"
+                        },
+                        "version": {
+                          "minLength": 1,
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "version"
+                      ],
+                      "type": "object"
+                    },
+                    "source": {
+                      "additionalProperties": true,
+                      "properties": {
+                        "element": {
+                          "minLength": 1,
+                          "type": "string"
+                        },
+                        "module": {
+                          "minLength": 1,
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "module",
+                        "element"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "field",
+                    "model",
+                    "dimensions",
+                    "metric",
+                    "computedBy"
+                  ],
+                  "type": "object"
+                }
+              },
+              "required": [
+                "id",
+                "record",
+                "kind",
+                "exactness",
+                "filterable"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "searchBindings": {
+            "items": {
+              "additionalProperties": true,
+              "properties": {
+                "filtering": {
+                  "enum": [
+                    "complete",
+                    "partial"
+                  ]
+                },
+                "freshness": {
+                  "enum": [
+                    "transactional",
+                    "asynchronous"
+                  ]
+                },
+                "index": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "maxK": {
+                  "minimum": 1,
+                  "type": "integer"
+                },
+                "native": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "target": {
+                  "additionalProperties": true,
+                  "properties": {
+                    "majorVersion": {
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "platform": {
+                      "enum": [
+                        "postgresql",
+                        "lakebase",
+                        "spark-delta",
+                        "unity-catalog"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "platform",
+                    "majorVersion"
+                  ],
+                  "type": "object"
+                }
+              },
+              "required": [
+                "index",
+                "target",
+                "native",
+                "freshness",
+                "maxK",
+                "filtering"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "views": {
+            "items": {
+              "additionalProperties": true,
+              "properties": {
+                "fields": {
+                  "items": {
+                    "additionalProperties": true,
+                    "properties": {
+                      "create": {
+                        "additionalProperties": true,
+                        "properties": {
+                          "missing": {
+                            "type": "boolean"
+                          },
+                          "null": {
+                            "type": "boolean"
+                          }
+                        },
+                        "required": [
+                          "missing",
+                          "null"
+                        ],
+                        "type": "object"
+                      },
+                      "field": {
+                        "additionalProperties": true,
+                        "properties": {
+                          "element": {
+                            "minLength": 1,
+                            "type": "string"
+                          },
+                          "module": {
+                            "minLength": 1,
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "module",
+                          "element"
+                        ],
+                        "type": "object"
+                      },
+                      "generated": {
+                        "type": "boolean"
+                      },
+                      "mutable": {
+                        "type": "boolean"
+                      },
+                      "row": {
+                        "additionalProperties": true,
+                        "properties": {
+                          "missing": {
+                            "type": "boolean"
+                          },
+                          "null": {
+                            "type": "boolean"
+                          }
+                        },
+                        "required": [
+                          "missing",
+                          "null"
+                        ],
+                        "type": "object"
+                      },
+                      "temporal": {
+                        "enum": [
+                          "instant",
+                          "local"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "field",
+                      "row",
+                      "create",
+                      "mutable",
+                      "generated"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "record": {
+                  "additionalProperties": true,
+                  "properties": {
+                    "element": {
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "module": {
+                      "minLength": 1,
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "module",
+                    "element"
+                  ],
+                  "type": "object"
+                },
+                "selectedKey": {
+                  "additionalProperties": true,
+                  "properties": {
+                    "element": {
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "key": {
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "module": {
+                      "minLength": 1,
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "module",
+                    "element",
+                    "key"
+                  ],
+                  "type": "object"
+                }
+              },
+              "required": [
+                "record",
+                "fields",
+                "selectedKey"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "views",
+          "columns",
+          "search",
+          "searchBindings"
+        ],
+        "type": "object"
+      },
+      "scopes": [
+        "module"
+      ],
+      "semantics": "CONTRACT-070; contextual validation through the compilation admission API",
+      "version": "0.1.0"
+    },
+    "registration": {
+      "apiIds": [],
+      "coreProfiles": [],
+      "mode": "unmapped"
+    },
+    "schemaId": "[\"schema\",\"spec/extensions/access/schema.json\",\"\"]",
+    "version": "0.1.0"
+  },
+  "id": "[\"extension\",\"umf.access\",\"0.1.0\"]",
+  "kind": "extension",
+  "links": [
+    "[\"guide\",\"consumers\"]",
+    "[\"schema\",\"spec/extensions/access/schema.json\",\"\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 16720,
+      "path": "spec/extensions/access/package.json",
+      "sha256": "899d38b79f2adc3e5c058aaaafb2ca710b43e3a856d517ea5ba47d3a66b0064e"
+    }
+  ],
+  "summary": "Authored typed access views over core 0.8.0; experimental metadata validation",
+  "title": "umf.access · 0.1.0"
+}

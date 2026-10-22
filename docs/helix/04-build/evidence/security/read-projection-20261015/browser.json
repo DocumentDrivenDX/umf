@@ -1,0 +1,317 @@
+{
+  "status": "passed",
+  "bun": "1.4.2",
+  "chromium": "153.0.8010.12",
+  "checks": 25,
+  "rows": [
+    {
+      "id": "mask-domain-without-operator",
+      "expected": [
+        "inspected",
+        false,
+        false,
+        {
+          "kind": "transformed",
+          "field": {
+            "documentId": "domain",
+            "moduleId": "m",
+            "elementId": "salaryMaskLabel"
+          }
+        }
+      ],
+      "observed": [
+        "inspected",
+        false,
+        false,
+        {
+          "kind": "transformed",
+          "field": {
+            "documentId": "domain",
+            "moduleId": "m",
+            "elementId": "salaryMaskLabel"
+          }
+        }
+      ]
+    },
+    {
+      "id": "all-read-conditions-retained",
+      "expected": 2,
+      "observed": 2
+    },
+    {
+      "id": "mask-original-field-definition",
+      "expected": "field",
+      "observed": "field"
+    },
+    {
+      "id": "no-query-grant-surface",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "protected-missing-is-unresolved",
+      "expected": {
+        "kind": "unresolved-missing-disclosure"
+      },
+      "observed": {
+        "kind": "unresolved-missing-disclosure"
+      }
+    },
+    {
+      "id": "withheld-is-not-null",
+      "expected": {
+        "kind": "withheld"
+      },
+      "observed": {
+        "kind": "withheld"
+      }
+    },
+    {
+      "id": "flat-unprotected-default",
+      "expected": {
+        "kind": "original",
+        "field": {
+          "documentId": "domain",
+          "moduleId": "m",
+          "elementId": "resourceId"
+        }
+      },
+      "observed": {
+        "kind": "original",
+        "field": {
+          "documentId": "domain",
+          "moduleId": "m",
+          "elementId": "resourceId"
+        }
+      }
+    },
+    {
+      "id": "graph-unprotected-default",
+      "expected": {
+        "kind": "original",
+        "field": {
+          "documentId": "domain",
+          "moduleId": "m",
+          "elementId": "resourceId"
+        }
+      },
+      "observed": {
+        "kind": "original",
+        "field": {
+          "documentId": "domain",
+          "moduleId": "m",
+          "elementId": "resourceId"
+        }
+      }
+    },
+    {
+      "id": "permit-occurrences-not-collapsed",
+      "expected": [
+        0,
+        8
+      ],
+      "observed": [
+        0,
+        8
+      ]
+    },
+    {
+      "id": "no-permit-is-no-inferred-output",
+      "expected": [
+        "inspected",
+        []
+      ],
+      "observed": [
+        "inspected",
+        []
+      ]
+    },
+    {
+      "id": "missing-read-action",
+      "expected": [
+        "refused",
+        [],
+        []
+      ],
+      "observed": [
+        "refused",
+        [],
+        []
+      ]
+    },
+    {
+      "id": "incomplete-owner-storage",
+      "expected": [
+        "refused",
+        [],
+        []
+      ],
+      "observed": [
+        "refused",
+        [],
+        []
+      ]
+    },
+    {
+      "id": "closed-or-scoped-selection-{\"type\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Resource\"},\"field\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"salary\"},\"operator\":\"predicate\"}",
+      "expected": "refused",
+      "observed": "refused"
+    },
+    {
+      "id": "closed-or-scoped-selection-{\"type\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Project\"},\"field\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"salary\"}}",
+      "expected": "refused",
+      "observed": "refused"
+    },
+    {
+      "id": "closed-or-scoped-selection-{\"type\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Resource\"},\"field\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"absent\"}}",
+      "expected": "refused",
+      "observed": "refused"
+    },
+    {
+      "id": "forged-handle",
+      "expected": "refused",
+      "observed": "refused"
+    },
+    {
+      "id": "detached-issued-source-and-frozen-result",
+      "expected": [
+        "transformed",
+        true,
+        true
+      ],
+      "observed": [
+        "transformed",
+        true,
+        true
+      ]
+    },
+    {
+      "id": "read-metadata-independent-of-prohibited-query-use",
+      "expected": "inspected",
+      "observed": "inspected"
+    },
+    {
+      "id": "stored-token-live-projection",
+      "expected": [
+        "stored-transformed",
+        {
+          "kind": "original",
+          "field": {
+            "documentId": "domain",
+            "moduleId": "m",
+            "elementId": "token"
+          }
+        },
+        [
+          "token"
+        ]
+      ],
+      "observed": [
+        "stored-transformed",
+        {
+          "kind": "original",
+          "field": {
+            "documentId": "domain",
+            "moduleId": "m",
+            "elementId": "token"
+          }
+        },
+        [
+          "token"
+        ]
+      ]
+    },
+    {
+      "id": "actual-read-render-domain-corresponds",
+      "expected": [
+        "rendered",
+        {
+          "documentId": "domain",
+          "moduleId": "m",
+          "elementId": "salaryMaskLabel"
+        }
+      ],
+      "observed": [
+        "rendered",
+        {
+          "documentId": "domain",
+          "moduleId": "m",
+          "elementId": "salaryMaskLabel"
+        }
+      ]
+    },
+    {
+      "id": "legacy-null-keeps-transform-domain-and-literal",
+      "expected": [
+        "inspected",
+        {
+          "kind": "transformed",
+          "field": {
+            "documentId": "domain",
+            "moduleId": "m",
+            "elementId": "salaryMaskLabel"
+          }
+        },
+        null
+      ],
+      "observed": [
+        "inspected",
+        {
+          "kind": "transformed",
+          "field": {
+            "documentId": "domain",
+            "moduleId": "m",
+            "elementId": "salaryMaskLabel"
+          }
+        },
+        null
+      ]
+    },
+    {
+      "id": "whole-result-framing-boundary--1",
+      "expected": [
+        "inspected",
+        3999999
+      ],
+      "observed": [
+        "inspected",
+        3999999
+      ]
+    },
+    {
+      "id": "whole-result-framing-boundary-0",
+      "expected": [
+        "inspected",
+        4000000
+      ],
+      "observed": [
+        "inspected",
+        4000000
+      ]
+    },
+    {
+      "id": "whole-result-framing-boundary-1",
+      "expected": [
+        "refused",
+        null
+      ],
+      "observed": [
+        "refused",
+        null
+      ]
+    },
+    {
+      "id": "invalid-selection-not-echoed",
+      "expected": [
+        "refused",
+        null
+      ],
+      "observed": [
+        "refused",
+        null
+      ]
+    }
+  ],
+  "bundleSha256": "a017d4fc7d3741694e27486a7c1428801d93ca4fbcf163972cc3d6e6b93e8f3a",
+  "scope": "Operator-free read metadata corpus in real browser; no native authority or child protocol"
+}

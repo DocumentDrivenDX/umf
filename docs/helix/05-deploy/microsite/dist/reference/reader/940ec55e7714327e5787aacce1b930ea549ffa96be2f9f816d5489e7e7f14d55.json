@@ -1,0 +1,80 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"CoreRelationshipSelectionEntry\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreRelationshipIdentity\"]"
+      ],
+      "name": "identity",
+      "optional": false,
+      "type": "CoreRelationshipIdentity"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "path",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreRelationship\"]"
+      ],
+      "name": "relationship",
+      "optional": false,
+      "type": "CoreRelationship"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"RelationshipEndpoint\"]"
+      ],
+      "name": "sources",
+      "optional": false,
+      "type": "{ reference: RelationshipEndpoint; recordPath: string; }[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"RelationshipTarget\"]"
+      ],
+      "name": "targets",
+      "optional": false,
+      "type": "{ reference: RelationshipTarget; recordPath: string; keyPath: string; }[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"RelationshipEndpoint\"]"
+      ],
+      "name": "associationRecord",
+      "optional": true,
+      "type": "{ reference: RelationshipEndpoint; recordPath: string; }"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "navigation",
+      "optional": false,
+      "type": "{ forward: Navigation; reverse?: Navigation; }"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "uninterpretedPaths",
+      "optional": false,
+      "type": "string[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "CoreRelationshipSelectionEntry is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "CoreRelationshipSelectionEntry"
+}

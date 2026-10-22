@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {chromium} from 'playwright';
@@ -29,7 +30,7 @@ try{
   const pair=u.correlatePostgresqlCardinalityCatalog(capture,text);require(pair.matches.length===26);require(pair.sameSnapshotVerified===false);
   const changed=structuredClone(supplement);changed.columns[0].declaredDimensions=8;
   let mismatch=false;try{u.correlatePostgresqlCardinalityCatalog(capture,JSON.stringify(changed));}catch{mismatch=true;}require(mismatch);refused++;
-  const model=u.upgradeCardinalityEnvelope(u.upgradeNullabilityEnvelope(u.upgradeFieldEnvelope(capture).target).target).target;
+  const model=capture;
   for(const e of model.modules.find((m:any)=>m.id==='postgresql.columns').elements)e.kind='field';
   let classified=0,recovered=0,strictScalars=0;
   for(const c of u.getPostgresqlColumnMetadata(model)){

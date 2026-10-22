@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"verifyCoreSemanticTypeDeclaration\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreSemanticTypeDeclaration\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "CoreSemanticTypeDeclaration"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "current",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "Recomputed consistency/provenance check; it cannot authenticate a submitted source.",
+  "related": [],
+  "returns": "CoreSemanticTypeDeclaration",
+  "task": "Other APIs",
+  "type": "(input: CoreSemanticTypeDeclaration, current: Document) => CoreSemanticTypeDeclaration"
+}

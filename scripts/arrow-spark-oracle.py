@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Independently parse every emitted Spark schema in Python and JVM."""
 import json,copy,os
 from pathlib import Path

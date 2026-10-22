@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 6693,
+        "line": 48,
+        "path": "src/model/nullability.ts",
+        "sha256": "2ec3cc469eee2460332fcc99fc0e14fef416180bdeede59b2b34ac19a39e6957"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "verifyCoreNullabilityDeclaration",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: CoreNullabilityDeclaration, current: Document): CoreNullabilityDeclaration"
+    ]
+  },
+  "id": "[\"api\",\".\",\"verifyCoreNullabilityDeclaration\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 6693,
+      "line": 48,
+      "path": "src/model/nullability.ts",
+      "sha256": "2ec3cc469eee2460332fcc99fc0e14fef416180bdeede59b2b34ac19a39e6957"
+    }
+  ],
+  "summary": "Revalidate a retained declaration before relying on its provenance. Any model change requires a new declaration.",
+  "title": "verifyCoreNullabilityDeclaration"
+}

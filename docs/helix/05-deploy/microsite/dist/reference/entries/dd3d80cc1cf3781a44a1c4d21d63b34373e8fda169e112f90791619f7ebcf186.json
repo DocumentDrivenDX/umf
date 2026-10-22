@@ -1,0 +1,103 @@
+{
+  "data": {
+    "extensionId": "umf.sqlserver.nullability",
+    "manifest": {
+      "capabilities": {
+        "directions": [
+          "import"
+        ],
+        "evidence": [
+          "tests/core-ideals/nullability-sqlserver.test.ts",
+          "fixtures/validation/nullability-sqlserver-native.json"
+        ],
+        "native": {
+          "subset": "Captured SQL Server 16.0.4295.3 stored-column declarations; excludes query results and input omission; not live enforcement verification",
+          "system": "SQL Server",
+          "version": "16.0.4295.3"
+        },
+        "validation": "structural"
+      },
+      "coreVersion": "0.10.0",
+      "description": "Retained relation and SQL-NULL carrier scope for a SQL Server availability observation; not native execution or equivalence",
+      "id": "umf.sqlserver.nullability",
+      "schema": {
+        "$id": "urn:umf:sqlserver:nullability-binding:1.0.0",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "properties": {
+          "binding": {
+            "const": {
+              "id": "umf.sqlserver.nullability",
+              "version": "1.0.0"
+            }
+          },
+          "carrier": {
+            "enum": [
+              "sql-null",
+              "unresolved"
+            ]
+          },
+          "interpretation": {
+            "enum": [
+              "declared",
+              "unknown",
+              "unsupported"
+            ]
+          },
+          "nativePath": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "origin": {
+            "const": "classified"
+          },
+          "scope": {
+            "enum": [
+              "stored-relation",
+              "query-result",
+              "write-input",
+              "unresolved"
+            ]
+          }
+        },
+        "required": [
+          "origin",
+          "binding",
+          "scope",
+          "carrier",
+          "interpretation",
+          "nativePath"
+        ],
+        "title": "Retained SQL Server availability binding scope",
+        "type": "object"
+      },
+      "scopes": [
+        "element"
+      ],
+      "semantics": "CONTRACT-040 and TD-041 SQL Server up-classification; core 0.3.0 ideal label is qualified by this retained scope. Unknown refinements must remain attached.",
+      "version": "1.0.0"
+    },
+    "registration": {
+      "apiIds": [],
+      "coreProfiles": [],
+      "mode": "unmapped"
+    },
+    "schemaId": "[\"schema\",\"spec/extensions/sqlserver-nullability/schema.json\",\"\"]",
+    "version": "1.0.0"
+  },
+  "id": "[\"extension\",\"umf.sqlserver.nullability\",\"1.0.0\"]",
+  "kind": "extension",
+  "links": [
+    "[\"guide\",\"extensions\"]",
+    "[\"schema\",\"spec/extensions/sqlserver-nullability/schema.json\",\"\"]",
+    "[\"integration\",\"umf.sqlserver.nullability@1.0.0:import\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 1961,
+      "path": "spec/extensions/sqlserver-nullability/package.json",
+      "sha256": "92fecfdb32cc69078e3aff6573a0f3c7a0f41d9e5c7c7068b1331074a5849b18"
+    }
+  ],
+  "summary": "Retained relation and SQL-NULL carrier scope for a SQL Server availability observation; not native execution or equivalence",
+  "title": "umf.sqlserver.nullability · 1.0.0"
+}

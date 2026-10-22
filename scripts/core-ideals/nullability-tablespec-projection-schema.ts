@@ -1,9 +1,10 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import base from '../../spec/core/field-tablespec-projection.schema.json';
 const schema:any=structuredClone(base);
 schema.$id='urn:umf:core:nullability-tablespec-projection:1.0.0';schema.title='Authored availability projection to an explicitly selected TableSpec profile';
 schema.properties.operation.const='project-nullability-tablespec';
-schema.properties.source.$ref='urn:umf:core:0.3.0';
-schema.properties.author.$ref='urn:umf:core:nullability-operation:1.0.0#/$defs/declaration';
+schema.properties.source.$ref='urn:umf:core:0.10.0';
+schema.properties.author.$ref='urn:umf:core:nullability-operation:5.0.0#/$defs/declaration';
 schema.properties.binding.const={id:'umf.core.nullability.tablespec',version:'1.0.0',nativeVersion:'647e8e566ad78b864282ec65c0b0b2237aa63084',subset:'Single authored Field availability; explicit profile/context/null-value carrier; no omitted-member or native execution equivalence'};
 const req=schema.properties.request;
 for(const name of ['tableName','columnName'])req.properties[name]={type:'string',minLength:1,maxLength:128,pattern:'^[A-Za-z][A-Za-z0-9_]*$'};

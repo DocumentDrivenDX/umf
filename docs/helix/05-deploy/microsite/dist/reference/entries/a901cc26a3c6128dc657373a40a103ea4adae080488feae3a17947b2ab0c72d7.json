@@ -1,0 +1,33 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 3286,
+        "line": 1,
+        "path": "spec/extensions/sqlserver-nullability/native.schema.json",
+        "sha256": "056ef90d9739962b91b5987a3a6fcfd10fd397329494a5e51b06bcc004c78df0"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "sqlserverNullabilityEvidenceSchema",
+    "runtime": "unassessed",
+    "signatureText": [
+      "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"$id\": \"urn:umf:sqlserver:nullability-evidence:1.0.0\",\n  \"title\": \"Native SQL Server availability evidence supplement\",\n  \"type\": \"object\",\n  \"required\": [\n    \"profile\",\n    \"query\",\n    \"sourceSql\",\n    \"database_view_definition\",\n    \"triggers\",\n    \"alias_types\",\n    \"column_refinements\"\n  ],\n  \"properties\": {\n    \"profile\": {\n      \"const\": \"umf-sqlserver-nullability-evidence-v2\"\n    },\n    \"query\": {\n      \"type\": \"string\",\n      \"minLength\": 1\n    },\n    \"sourceSql\": {\n      \"type\": \"string\"\n    },\n    \"database_view_definition\": {\n      \"type\": [\n        \"boolean\",\n        \"null\"\n      ]\n    },\n    \"triggers\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"required\": [\n          \"schema\",\n          \"table\",\n          \"name\",\n          \"is_disabled\",\n          \"is_instead_of_trigger\",\n          \"definition\"\n        ],\n        \"properties\": {\n          \"schema\": {\n            \"type\": \"string\"\n          },\n          \"table\": {\n            \"type\": \"string\"\n          },\n          \"name\": {\n            \"type\": \"string\"\n          },\n          \"is_disabled\": {\n            \"type\": \"boolean\"\n          },\n          \"is_instead_of_trigger\": {\n            \"type\": \"boolean\"\n          },\n          \"definition\": {\n            \"type\": [\n              \"string\",\n              \"null\"\n            ]\n          }\n        },\n        \"additionalProperties\": true\n      }\n    },\n    \"alias_types\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"required\": [\n          \"schema\",\n          \"name\",\n          \"is_nullable\",\n          \"default_object_id\",\n          \"rule_object_id\"\n        ],\n        \"properties\": {\n          \"schema\": {\n            \"type\": \"string\"\n          },\n          \"name\": {\n            \"type\": \"string\"\n          },\n          \"is_nullable\": {\n            \"type\": \"boolean\"\n          },\n          \"default_object_id\": {\n            \"type\": \"integer\",\n            \"minimum\": 0,\n            \"maximum\": 2147483647\n          },\n          \"rule_object_id\": {\n            \"type\": \"integer\",\n            \"minimum\": 0,\n            \"maximum\": 2147483647\n          }\n        },\n        \"additionalProperties\": true\n      }\n    },\n    \"column_refinements\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"required\": [\n          \"schema\",\n          \"table\",\n          \"name\",\n          \"is_sparse\",\n          \"generated_always_type\",\n          \"is_hidden\",\n          \"rule_object_id\"\n        ],\n        \"properties\": {\n          \"schema\": {\n            \"type\": \"string\"\n          },\n          \"table\": {\n            \"type\": \"string\"\n          },\n          \"name\": {\n            \"type\": \"string\"\n          },\n          \"is_sparse\": {\n            \"type\": \"boolean\"\n          },\n          \"generated_always_type\": {\n            \"type\": \"integer\",\n            \"minimum\": 0,\n            \"maximum\": 2147483647\n          },\n          \"is_hidden\": {\n            \"type\": \"boolean\"\n          },\n          \"rule_object_id\": {\n            \"type\": \"integer\",\n            \"minimum\": 0,\n            \"maximum\": 2147483647\n          }\n        },\n        \"additionalProperties\": true\n      }\n    }\n  },\n  \"additionalProperties\": true\n}\n"
+    ]
+  },
+  "id": "[\"api\",\".\",\"sqlserverNullabilityEvidenceSchema\"]",
+  "kind": "api",
+  "links": [
+    "[\"schema\",\"spec/extensions/sqlserver-nullability/native.schema.json\",\"\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 3286,
+      "line": 1,
+      "path": "spec/extensions/sqlserver-nullability/native.schema.json",
+      "sha256": "056ef90d9739962b91b5987a3a6fcfd10fd397329494a5e51b06bcc004c78df0"
+    }
+  ],
+  "summary": "Public export · spec/extensions/sqlserver-nullability/native.schema.json",
+  "title": "sqlserverNullabilityEvidenceSchema"
+}

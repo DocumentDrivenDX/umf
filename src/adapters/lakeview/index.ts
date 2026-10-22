@@ -1,4 +1,6 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import manifest from '../../../spec/extensions/lakeview/package.json';
+import {CURRENT_CORE_VERSION} from '../../generated/core-model';
 import {validateDocument} from '../../validation/document';
 import {parseNativeJson,renderTree,cloneTree,type NativeJson} from '../../model/native-json';
 import {UmfError,pointer,type Document,type Json,type Diagnostic,type ExtensionPackage,type Scope} from '../../model/types';
@@ -63,7 +65,7 @@ export function importLakeviewDashboard(text:string,options:{id:string;title?:st
  const pages=nativePages.map((n,i)=>{const items=new Set<string>(),layout=n.members.layout;if(layout!==undefined&&layout.kind!=='array')throw new UmfError('LAKEVIEW_NATIVE','Page layout must be an array');const nativeItems=objects(layout?.items??[],'Layout items');return {id:unique(moduleIds,view.pages[i].name,'page_'+i),n,nativeItems,items:nativeItems.map((_,j)=>unique(items,view.pages[i].layout[j].widget?.name,'item_'+j))};});
  const data=unique(moduleIds,'data','data'),datasets=nativeDatasets.map((_,i)=>unique(datasetIds,view.datasets[i].name,'dataset_'+i));
  const namespace=options.namespace??'';
- const document:Document={umf:'0.1.0',id:options.id,vocabularies:{[DASHBOARD_EXTENSION]:{version:'0.1.0'},[LAKEVIEW_EXTENSION]:{version:'0.1.0'}},
+ const document:Document={umf:CURRENT_CORE_VERSION,id:options.id,vocabularies:{[DASHBOARD_EXTENSION]:{version:'0.1.0'},[LAKEVIEW_EXTENSION]:{version:'0.1.0'}},
   extensions:{[LAKEVIEW_EXTENSION]:{kind:'dashboard',native:strip(tree,rebuilt.dashboard!),order:Object.keys(tree.members)} as unknown as Json},
   modules:[{id:data,namespace,extensions:{[LAKEVIEW_EXTENSION]:{kind:'data'}},elements:nativeDatasets.map((n,i)=>({id:datasets[i]!,extensions:{[LAKEVIEW_EXTENSION]:{kind:'dataset',native:n} as unknown as Json}}))},
    ...pages.map(p=>({id:p.id,namespace,extensions:{[LAKEVIEW_EXTENSION]:{kind:'page',native:strip(p.n,rebuilt.page!),order:Object.keys(p.n.members)} as unknown as Json},elements:p.nativeItems.map((n,j)=>({id:p.items[j]!,extensions:{[LAKEVIEW_EXTENSION]:{kind:'layout-item',native:n} as unknown as Json}}))}))]};

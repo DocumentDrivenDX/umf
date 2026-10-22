@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Pinned native read of the shared DDD graph's Delta clustering proposal."""
 import json
 import pathlib

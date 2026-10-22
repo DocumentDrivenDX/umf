@@ -1,0 +1,122 @@
+{
+  "status": "no_remaining_actionable_blocker_within_expression_primitive_scope",
+  "head": "7a74b77a284940e08756384f3a7c1f30e40effd7",
+  "scope": "Closed private PostgreSQL18 expression generation and finite native correspondence prerequisite; not catalog binding, view/actor enforcement, transport, P02 acceptance or native authority",
+  "sourcePins": {
+    "docs/helix/03-test/security/cases.json": "b057a4a17291a7f761759b1f7f0d65237407930e409d0e07fdc2607b75fa6137",
+    "docs/helix/03-test/test-plans/STP-056-security-bindings.md": "1d672c626307b03c982781db5112ef07ddab38992b855f05fa22a0c2fb9e41ef",
+    "docs/helix/01-frame/user-stories/US-056-security-bindings.md": "c11ecdec8e6b429e7bef2f60d2a9faa42ee0699bc5f0d1627f76d9b486f91171",
+    "docs/helix/02-design/contracts/CONTRACT-062-security-semantics.md": "56595530f73fbbaa7a5967c55e68b31abf75c94d781e36aef80c9a8d743bfe1f",
+    "docs/helix/02-design/contracts/CONTRACT-063-security-enforcement.md": "a2ef9ce52ce65db723ae89a10b7c1d207a278b2ea6e9e3bb903713abb3e988b3",
+    "docs/helix/02-design/contracts/CONTRACT-066-gregorian-date-operations.md": "d20814589fa55f87fbc2aba2db150739b9df154d47e0067645b1fe411e58adf4",
+    "docs/helix/04-build/security-field-protection-plan.md": "7e7f6f5fe11ac11e432a42292fe549de23fc45b5a82a4e376d7f8d8c296df52f",
+    "src/extensions/security/protection/functions.ts": "b20bfd2016e15cf0f0590282b9284ff716251a88043514ed9052a7695ddb57db",
+    "src/extensions/security/protection/disclosure.ts": "a8aec1e8fb596efb925b017127a8dff0b5c64c4cd3303194a9d123bfb443f238",
+    "src/extensions/security/protection/parameters.ts": "d5920790eba3c62904645d98a06f61f54c68483b8276cfe1d455268cde20d0e4",
+    "src/extensions/security/protection/domains.ts": "b8dc68f55221aa7e666aae0a9e9b26f874e9ba27fccbdcc8139084f4fbc7a7d9",
+    "src/model/json.ts": "c58fac512cbbea7746f4a6cb0119ac13c8bad4ebf769c7bfc48c30b1b80d5cf5",
+    "src/model/types.ts": "54f4e6df10f7f358e81fbb637fe39869df077f82751aa6221b3532e3c9167785",
+    "tools/security/protection-pg18-expressions.ts": "5b13ded8969085f55fa12e07bba2af87089ae3c47b0ba14dc1c8dac5ae83572c",
+    "tests/security/native/pg18-projection-compile.ts": "a832a630af3a7af15ef0778ec17b5839bbc0a089654139355696b5b67235386f",
+    "tests/security/native/pg18-projection-expressions.py": "9b6d09a1ac2c89abe64643b2038dc655cca06a8e633e33bdb3bda4c9cebf6893",
+    "tests/security/native/pg18-projection-expressions.test.ts": "bbfff48ed4ac7d5b95318cc0802e304c6d0f874b7123163ed4bb22e2cc2f4d93",
+    "tools/security/prove-pg18-bucket.py": "fe364d6aadd66113d3763addb26ce31e57a9621daae94a0a96ce2e58604860e4",
+    "docs/helix/04-build/evidence/security/pg18-projection-expressions-20261015/types.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/helix/04-build/evidence/security/pg18-projection-expressions-20261015/helix-validation.json": "6d8351b566f72c39dc7ba26d141438a16d9cc33bb4120d4108eb98c5b4c7b65c",
+    "docs/helix/04-build/evidence/security/pg18-projection-expressions-20261015/failures.json": "166849374ea98fff6377060ee9379294cf9891ad974d8dd407444b1db490d016",
+    "docs/helix/04-build/evidence/security/pg18-projection-expressions-20261015/core-types.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/helix/04-build/evidence/security/pg18-projection-expressions-20261015/native-receipt.json": "dcc92928c70bd0ca175d8ef144481f638efd1fc305306a84805cd59d70d4cb51",
+    "docs/helix/04-build/evidence/security/pg18-projection-expressions-20261015/README.md": "ae2b6b6cfd0b222f456663ed4e6b0ba532490aa13d5edfe6155177671f19d3ae",
+    "docs/helix/04-build/evidence/security/pg18-projection-expressions-20261015/unit.log": "47a55919e3cc7bc2fcd0de7c351fb22f660bf5ec6772a560e9fcaaf74d76aa46",
+    "docs/helix/04-build/evidence/security/pg18-projection-expressions-20261015/astra-design-review.json": "2dd56ac6ec7ee120469745c5ae54b1511ffe88666a9d1fc9cf16e9f25e3c8bd3",
+    "docs/helix/04-build/evidence/security/pg18-projection-expressions-20261015/phase-validation.json": "d6b0a386aba4bee714209bdd183c4502b70348dd3f7690cffa4550d4362846c5",
+    "docs/helix/04-build/evidence/security/pg18-projection-expressions-20261015/conditional-proof.json": "8c378da97f52eee0c67346c47e80598db70a0ef071542346ec94fc45042e3a48",
+    "docs/helix/04-build/evidence/security/pg18-projection-expressions-20261015/failed-operator-precedence.ts.txt": "bbb3db0bae1a9cf52379eabd8f97b62a836a86a3b51416b3bdaf137ec70e915f",
+    "docs/helix/04-build/evidence/security/pg18-projection-expressions-20261015/validation-summary.json": "f8bda3d1723c171daa1ca6c52a0b878a8fa78cf50524e2636e0d0cb1431a6d6e"
+  },
+  "independentExecuted": {
+    "compilerControls": 101,
+    "sourceExtractedObservationAndMockCleanupControls": 24,
+    "actualSourceWeakeningVariantsDetected": 4,
+    "conditionalZ3Queries": {
+      "unsat": 3,
+      "sat": 1,
+      "sqlRefinement": false
+    },
+    "nativeLifecycleRerun": false,
+    "browserRun": false
+  },
+  "inspectedParentNative": {
+    "observations": 210,
+    "serverVersionNum": "180006",
+    "image": "postgres@sha256:74935e72241653ca55e0414067e6d8763aceb8a810eb51b452253ec3dcfc4336",
+    "exactCurrentSourcePins": true,
+    "sourceCount": 6,
+    "cleanup": {
+      "containerAbsent": true,
+      "volumesAbsent": true,
+      "count": 1
+    },
+    "comparison": "Text/date/hash exact text, numeric exact Fraction (physical scale retained), not P02 byte-exact transport",
+    "namespaceCounterexample": {
+      "expectedOriginal": "ab",
+      "weakenedObserved": "CAPTURED"
+    },
+    "numericRoundingCounterexample": {
+      "expectedExact": "0",
+      "weakenedObserved": "1"
+    }
+  },
+  "resolvedFindings": [
+    "Generated casts/collation/operators qualified and numeric tokens quoted; explicit multiplication parentheses preserve generic OPERATOR precedence",
+    "Cleanup only accepts successful native inventories plus owned-label/shared-volume checks; daemon/access errors cannot establish absence",
+    "Observation exact ordered bijection, index exact int (not bool), exact string/null values; duplicate-first-row false-pass witness now rejected",
+    "Before/after source custody includes executed copyJson/types import closure",
+    "Formal query correctly named bucket lattice membership"
+  ],
+  "retainedDevelopmentEvidence": [
+    "initial-source/ (pre-operator qualification and pre-cleanup correction)",
+    "initial-native-receipt.json (earlier source scope)",
+    "duplicate-observation-before.json (source-extracted false pass)",
+    "fault-control-selector-setup-failure.json (wrong AST selector, excluded from pass counts)",
+    "final-source/docs/helix/04-build/evidence/security/pg18-projection-expressions-20261015/failures.json",
+    "final-source/docs/helix/04-build/evidence/security/pg18-projection-expressions-20261015/failed-operator-precedence.ts.txt"
+  ],
+  "limitations": [
+    "Exact typed present input, carrier representability, input/output nullability/refinements and output budgets remain caller obligations; this primitive deliberately does not validate source values",
+    "No original catalog/domain/policy binding, owner-held view, ordinary TCP actor, RLS/no-base-SELECT, output metadata or native guard/issuer qualification",
+    "Regex only selected global C-collation literal/[0-9]+ provider; no general regex or pure-reference API activation",
+    "Hash only selected unsalted SHA256 UTF8 lowerhex with retained equality/warning declarations; no custody, reverse or write permission",
+    "Arithmetic proof assumes unbounded coefficients/positive width; no PostgreSQL/kernel refinement or total resource theorem",
+    "Partial component does not satisfy original P02 assertion; P02 and all other unbound cases unchanged"
+  ],
+  "caseUnchanged": {
+    "id": "pg-raw.P02",
+    "backend": "pg-raw",
+    "covers": [
+      "US-056-AC6"
+    ],
+    "name": "protection-transform-correspondence",
+    "assertion": "Owner-held security_barrier views project each catalog transform (mask function classes, generalize buckets/date truncation, hash) for the authored Resource fields; per-actor disclosed values match the independent Python oracle byte-exact, with storageEffect and output-domain metadata on the disclosure transport; the base table grants no ordinary SELECT.",
+    "required": true,
+    "layer": "native",
+    "status": "not-run",
+    "command": null,
+    "evidence": null,
+    "testSource": null,
+    "oracleSource": null,
+    "implementationSources": [],
+    "timeoutMs": 60000,
+    "assertionIds": [
+      "pg-raw.P02"
+    ]
+  },
+  "artifacts": {
+    "design": "design-review.json",
+    "controls": "final-controls.json",
+    "faultControls": "receipt-fault-controls.json",
+    "mutations": "mutations.json",
+    "formal": "formal-replay.json",
+    "nativeInspected": "final-native-receipt-inspected.json"
+  }
+}

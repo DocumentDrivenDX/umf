@@ -1,0 +1,17 @@
+{
+  "command": [
+    "/private/tmp/sdk-r25-r22-314-env/bin/python",
+    "-I",
+    "-B",
+    "/private/tmp/sdk-r25-frozen-frontend-inputs/scripts/record-access-pg-runtime.py",
+    "--out",
+    "/private/tmp/sdk-search-filter-native-r25-r2/runtime.json",
+    "--compile-recorder",
+    "/private/tmp/sdk-r25-frozen-frontend-inputs/scripts/record-access-privilege-build.py",
+    "/private/tmp/sdk-r25-frozen-frontend-inputs/python/umf_access/tests/search_filter_parameters_e2e.py"
+  ],
+  "generated": "/private/tmp/sdk-search-filter-native-r25-generated-r2",
+  "sourceRoot": "/private/tmp/sdk-r25-frozen-frontend-inputs",
+  "sdkSource": "c042a13e88d51d52a810149f6e407da3eaef0cd2",
+  "weftSource": "5605d358650468d651f69ff29c40e986a0359a5b"
+}

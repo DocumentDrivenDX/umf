@@ -1,6 +1,7 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
-import {inspectAvroFieldShape,inspectAvroTypeShape} from '../../src/core-ideals/avro-cardinality-type';
-import {parseNativeJson,renderTree} from '../../src/model/native-json';
+import {inspectAvroFieldShape, inspectAvroTypeShape} from '../../src/core-ideals/avro-cardinality-type';
+import {parseNativeJson, renderTree} from '../../src/model/native-json';
 import fixture from '../../fixtures/avro/cardinality-cases.json';
 const inspect=(schema:unknown)=>inspectAvroFieldShape([{root:parseNativeJson(JSON.stringify(schema))}],'n.Example','value');
 const field=(type:unknown)=>({type:'record',name:'Example',namespace:'n',fields:[{name:'value',type}]});

@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"verifyParquetFacetClassification\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ParquetFacetClassification\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "ParquetFacetClassification"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "current",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "verifyParquetFacetClassification accepts input, current and returns ParquetFacetClassification.",
+  "related": [],
+  "returns": "ParquetFacetClassification",
+  "task": "Other APIs",
+  "type": "(input: ParquetFacetClassification, current: Document) => ParquetFacetClassification"
+}

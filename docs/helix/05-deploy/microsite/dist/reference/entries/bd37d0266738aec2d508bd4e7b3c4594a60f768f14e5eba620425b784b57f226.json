@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 7247,
+        "line": 13,
+        "path": "src/core-ideals/field-parquet-projection.ts",
+        "sha256": "07d54692d8315fb79d3aee32ab08a69c42e1d8d5ae6bd5b996bd8793e8a01dcf"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "FieldParquetRequest",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface FieldParquetRequest {id:string;recordName:string;repetition:'required'|'optional'|'repeated';fieldName:string;nativeType:keyof typeof parquetCarriers;mode:'strict'|'report'}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"FieldParquetRequest\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 7247,
+      "line": 13,
+      "path": "src/core-ideals/field-parquet-projection.ts",
+      "sha256": "07d54692d8315fb79d3aee32ab08a69c42e1d8d5ae6bd5b996bd8793e8a01dcf"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/field-parquet-projection.ts",
+  "title": "FieldParquetRequest"
+}

@@ -1,0 +1,104 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"FacetsTableSpecProjection\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "operation",
+      "optional": false,
+      "type": "\"project-facets-tablespec\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "version",
+      "optional": false,
+      "type": "\"1.0.0\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "status",
+      "optional": false,
+      "type": "\"blocked\" | \"projected\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "source",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "author",
+      "optional": false,
+      "type": "Author"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"FacetsTableSpecRequest\"]"
+      ],
+      "name": "request",
+      "optional": false,
+      "type": "FacetsTableSpecRequest"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "target",
+      "optional": true,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "binding",
+      "optional": false,
+      "type": "{ id: string; version: string; nativeVersion: string; subset: string; }"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Diagnostic\"]"
+      ],
+      "name": "diagnostics",
+      "optional": false,
+      "type": "Diagnostic[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreFacetPatch\"]",
+        "[\"api\",\".\",\"TableSpecFacetProfile\"]"
+      ],
+      "name": "mapping",
+      "optional": false,
+      "type": "{ origin: \"authored\"; idealPath: string; nativePath: \"/columns/0\"; facets: CoreFacetPatch; profile: TableSpecFacetProfile; outcome: Outcome; }"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Json\"]"
+      ],
+      "name": "residuals",
+      "optional": false,
+      "type": "{ path: string; value: Json; reason: string; outcome: Exclude<Outcome, \"exact\">; recovery: typeof recovery; }[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "FacetsTableSpecProjection is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "FacetsTableSpecProjection"
+}

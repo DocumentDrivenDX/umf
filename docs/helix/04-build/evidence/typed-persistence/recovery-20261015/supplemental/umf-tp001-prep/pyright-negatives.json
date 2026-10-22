@@ -1,0 +1,590 @@
+{
+    "version": "1.1.414",
+    "time": "1792086179634",
+    "generalDiagnostics": [
+        {
+            "file": "/private/tmp/umf-tp001-prep/compatibility/negative/call_keyword.py",
+            "severity": "error",
+            "message": "Argument missing for parameter \"amount\"",
+            "range": {
+                "start": {
+                    "line": 6,
+                    "character": 0
+                },
+                "end": {
+                    "line": 6,
+                    "character": 28
+                }
+            },
+            "rule": "reportCallIssue"
+        },
+        {
+            "file": "/private/tmp/umf-tp001-prep/compatibility/negative/call_keyword.py",
+            "severity": "error",
+            "message": "No parameter named \"ammount\"",
+            "range": {
+                "start": {
+                    "line": 6,
+                    "character": 7
+                },
+                "end": {
+                    "line": 6,
+                    "character": 14
+                }
+            },
+            "rule": "reportCallIssue"
+        },
+        {
+            "file": "/private/tmp/umf-tp001-prep/compatibility/negative/call_missing.py",
+            "severity": "error",
+            "message": "Argument missing for parameter \"amount\"",
+            "range": {
+                "start": {
+                    "line": 6,
+                    "character": 0
+                },
+                "end": {
+                    "line": 6,
+                    "character": 8
+                }
+            },
+            "rule": "reportCallIssue"
+        },
+        {
+            "file": "/private/tmp/umf-tp001-prep/compatibility/negative/call_type.py",
+            "severity": "error",
+            "message": "Argument of type \"Literal['1']\" cannot be assigned to parameter \"amount\" of type \"Decimal\" in function \"orders\"\n  \"Literal['1']\" is not assignable to \"Decimal\"",
+            "range": {
+                "start": {
+                    "line": 6,
+                    "character": 14
+                },
+                "end": {
+                    "line": 6,
+                    "character": 17
+                }
+            },
+            "rule": "reportArgumentType"
+        },
+        {
+            "file": "/private/tmp/umf-tp001-prep/compatibility/negative/count_iterated.py",
+            "severity": "error",
+            "message": "Argument of type \"int\" cannot be assigned to parameter \"iterable\" of type \"Iterable[_T@list]\" in function \"__init__\"\n  \"int\" is incompatible with protocol \"Iterable[_T@list]\"\n    \"__iter__\" is not present",
+            "range": {
+                "start": {
+                    "line": 6,
+                    "character": 5
+                },
+                "end": {
+                    "line": 6,
+                    "character": 19
+                }
+            },
+            "rule": "reportArgumentType"
+        },
+        {
+            "file": "/private/tmp/umf-tp001-prep/compatibility/negative/first_optional.py",
+            "severity": "error",
+            "message": "\"amount\" is not a known attribute of \"None\"",
+            "range": {
+                "start": {
+                    "line": 6,
+                    "character": 14
+                },
+                "end": {
+                    "line": 6,
+                    "character": 20
+                }
+            },
+            "rule": "reportOptionalMemberAccess"
+        },
+        {
+            "file": "/private/tmp/umf-tp001-prep/compatibility/negative/foreign_filter.py",
+            "severity": "error",
+            "message": "Argument of type \"Predicate[Customer]\" cannot be assigned to parameter \"preds\" of type \"Predicate[Order]\" in function \"filter\"\n  \"Predicate[Customer]\" is not assignable to \"Predicate[Order]\"\n    Type parameter \"O@Predicate\" is invariant, but \"Customer\" is not the same as \"Order\"",
+            "range": {
+                "start": {
+                    "line": 6,
+                    "character": 21
+                },
+                "end": {
+                    "line": 6,
+                    "character": 43
+                }
+            },
+            "rule": "reportArgumentType"
+        },
+        {
+            "file": "/private/tmp/umf-tp001-prep/compatibility/negative/foreign_projection.py",
+            "severity": "error",
+            "message": "Argument of type \"type[CustomerSummary]\" cannot be assigned to parameter \"model\" of type \"type[OrderSummary]\" in function \"into\"\n  \"type[CustomerSummary]\" is not assignable to \"type[OrderSummary]\"\n  Type \"type[CustomerSummary]\" is not assignable to type \"type[OrderSummary]\"",
+            "range": {
+                "start": {
+                    "line": 6,
+                    "character": 19
+                },
+                "end": {
+                    "line": 6,
+                    "character": 34
+                }
+            },
+            "rule": "reportArgumentType"
+        },
+        {
+            "file": "/private/tmp/umf-tp001-prep/compatibility/negative/foreign_select.py",
+            "severity": "error",
+            "message": "Argument of type \"Column[Customer, str]\" cannot be assigned to parameter \"c1\" of type \"Column[Order, T1@select]\" in function \"select\"\n  \"Column[Customer, str]\" is not assignable to \"Column[Order, str]\"\n    Type parameter \"O@Column\" is invariant, but \"Customer\" is not the same as \"Order\"",
+            "range": {
+                "start": {
+                    "line": 6,
+                    "character": 21
+                },
+                "end": {
+                    "line": 6,
+                    "character": 36
+                }
+            },
+            "rule": "reportArgumentType"
+        },
+        {
+            "file": "/private/tmp/umf-tp001-prep/compatibility/negative/ninth_select.py",
+            "severity": "error",
+            "message": "No overloads for \"select\" match the provided arguments\n  Argument types: (Column[Order, str], Column[Order, str], Column[Order, str], Column[Order, str], Column[Order, str], Column[Order, str], Column[Order, str], Column[Order, str], Column[Order, str])",
+            "range": {
+                "start": {
+                    "line": 6,
+                    "character": 0
+                },
+                "end": {
+                    "line": 6,
+                    "character": 182
+                }
+            },
+            "rule": "reportCallIssue"
+        },
+        {
+            "file": "/private/tmp/umf-tp001-prep/compatibility/negative/nullable_nonnull.py",
+            "severity": "error",
+            "message": "Argument of type \"bool\" cannot be assigned to parameter \"preds\" of type \"Predicate[Order]\" in function \"filter\"\n  \"bool\" is not assignable to \"Predicate[Order]\"",
+            "range": {
+                "start": {
+                    "line": 6,
+                    "character": 21
+                },
+                "end": {
+                    "line": 6,
+                    "character": 64
+                }
+            },
+            "rule": "reportArgumentType"
+        },
+        {
+            "file": "/private/tmp/umf-tp001-prep/compatibility/negative/page_indexed.py",
+            "severity": "error",
+            "message": "\"__getitem__\" method not defined on type \"Page[Order, OrderKey]\"",
+            "range": {
+                "start": {
+                    "line": 6,
+                    "character": 0
+                },
+                "end": {
+                    "line": 6,
+                    "character": 12
+                }
+            },
+            "rule": "reportIndexIssue"
+        },
+        {
+            "file": "/private/tmp/umf-tp001-prep/compatibility/negative/page_key.py",
+            "severity": "error",
+            "message": "Type \"Page[Order, OrderKey]\" is not assignable to declared type \"Page[Order, CustomerKey]\"\n  \"Page[Order, OrderKey]\" is not assignable to \"Page[Order, CustomerKey]\"\n    Type parameter \"K@Page\" is invariant, but \"OrderKey\" is not the same as \"CustomerKey\"",
+            "range": {
+                "start": {
+                    "line": 6,
+                    "character": 33
+                },
+                "end": {
+                    "line": 6,
+                    "character": 45
+                }
+            },
+            "rule": "reportAssignmentType"
+        },
+        {
+            "file": "/private/tmp/umf-tp001-prep/compatibility/negative/patch_keyword.py",
+            "severity": "error",
+            "message": "No parameter named \"ammount\"",
+            "range": {
+                "start": {
+                    "line": 6,
+                    "character": 11
+                },
+                "end": {
+                    "line": 6,
+                    "character": 18
+                }
+            },
+            "rule": "reportCallIssue"
+        },
+        {
+            "file": "/private/tmp/umf-tp001-prep/compatibility/negative/patch_null.py",
+            "severity": "error",
+            "message": "Argument of type \"None\" cannot be assigned to parameter \"amount\" of type \"Decimal | MISSING\" in function \"__init__\"\n  Type \"None\" is not assignable to type \"Decimal | MISSING\"\n    \"None\" is not assignable to \"Decimal\"\n    \"None\" is not assignable to \"MISSING\"",
+            "range": {
+                "start": {
+                    "line": 6,
+                    "character": 18
+                },
+                "end": {
+                    "line": 6,
+                    "character": 22
+                }
+            },
+            "rule": "reportArgumentType"
+        },
+        {
+            "file": "/private/tmp/umf-tp001-prep/compatibility/negative/ranked_count.py",
+            "severity": "error",
+            "message": "Type of \"count\" is unknown",
+            "range": {
+                "start": {
+                    "line": 6,
+                    "character": 0
+                },
+                "end": {
+                    "line": 6,
+                    "character": 28
+                }
+            },
+            "rule": "reportUnknownMemberType"
+        },
+        {
+            "file": "/private/tmp/umf-tp001-prep/compatibility/negative/ranked_count.py",
+            "severity": "error",
+            "message": "Cannot access attribute \"count\" for class \"OrderRanked\"\n  Attribute \"count\" is unknown",
+            "range": {
+                "start": {
+                    "line": 6,
+                    "character": 23
+                },
+                "end": {
+                    "line": 6,
+                    "character": 28
+                }
+            },
+            "rule": "reportAttributeAccessIssue"
+        },
+        {
+            "file": "/private/tmp/umf-tp001-prep/compatibility/negative/ranked_page.py",
+            "severity": "error",
+            "message": "Type of \"page\" is unknown",
+            "range": {
+                "start": {
+                    "line": 6,
+                    "character": 0
+                },
+                "end": {
+                    "line": 6,
+                    "character": 27
+                }
+            },
+            "rule": "reportUnknownMemberType"
+        },
+        {
+            "file": "/private/tmp/umf-tp001-prep/compatibility/negative/ranked_page.py",
+            "severity": "error",
+            "message": "Cannot access attribute \"page\" for class \"OrderRanked\"\n  Attribute \"page\" is unknown",
+            "range": {
+                "start": {
+                    "line": 6,
+                    "character": 23
+                },
+                "end": {
+                    "line": 6,
+                    "character": 27
+                }
+            },
+            "rule": "reportAttributeAccessIssue"
+        },
+        {
+            "file": "/private/tmp/umf-tp001-prep/compatibility/negative/ranked_update.py",
+            "severity": "error",
+            "message": "Type of \"update\" is unknown",
+            "range": {
+                "start": {
+                    "line": 6,
+                    "character": 0
+                },
+                "end": {
+                    "line": 6,
+                    "character": 29
+                }
+            },
+            "rule": "reportUnknownMemberType"
+        },
+        {
+            "file": "/private/tmp/umf-tp001-prep/compatibility/negative/ranked_update.py",
+            "severity": "error",
+            "message": "Cannot access attribute \"update\" for class \"OrderRanked\"\n  Attribute \"update\" is unknown",
+            "range": {
+                "start": {
+                    "line": 6,
+                    "character": 23
+                },
+                "end": {
+                    "line": 6,
+                    "character": 29
+                }
+            },
+            "rule": "reportAttributeAccessIssue"
+        },
+        {
+            "file": "/private/tmp/umf-tp001-prep/compatibility/negative/replay_executor.py",
+            "severity": "error",
+            "message": "Argument of type \"ActionExecutor\" cannot be assigned to parameter \"executor\" of type \"ReplayingActionExecutor\" in function \"__init__\"\n  \"ActionExecutor\" is not assignable to \"ReplayingActionExecutor\"",
+            "range": {
+                "start": {
+                    "line": 6,
+                    "character": 17
+                },
+                "end": {
+                    "line": 6,
+                    "character": 33
+                }
+            },
+            "rule": "reportArgumentType"
+        },
+        {
+            "file": "/private/tmp/umf-tp001-prep/compatibility/negative/unknown_column.py",
+            "severity": "error",
+            "message": "Type of \"ammount\" is unknown",
+            "range": {
+                "start": {
+                    "line": 6,
+                    "character": 0
+                },
+                "end": {
+                    "line": 6,
+                    "character": 15
+                }
+            },
+            "rule": "reportUnknownMemberType"
+        },
+        {
+            "file": "/private/tmp/umf-tp001-prep/compatibility/negative/unknown_column.py",
+            "severity": "error",
+            "message": "Cannot access attribute \"ammount\" for class \"OrderColumns\"\n  Attribute \"ammount\" is unknown",
+            "range": {
+                "start": {
+                    "line": 6,
+                    "character": 8
+                },
+                "end": {
+                    "line": 6,
+                    "character": 15
+                }
+            },
+            "rule": "reportAttributeAccessIssue"
+        },
+        {
+            "file": "/private/tmp/umf-tp001-prep/compatibility/negative/update_generated.py",
+            "severity": "error",
+            "message": "No parameter named \"revision\"",
+            "range": {
+                "start": {
+                    "line": 6,
+                    "character": 21
+                },
+                "end": {
+                    "line": 6,
+                    "character": 29
+                }
+            },
+            "rule": "reportCallIssue"
+        },
+        {
+            "file": "/private/tmp/umf-tp001-prep/compatibility/negative/update_immutable.py",
+            "severity": "error",
+            "message": "No parameter named \"placed_at\"",
+            "range": {
+                "start": {
+                    "line": 6,
+                    "character": 21
+                },
+                "end": {
+                    "line": 6,
+                    "character": 30
+                }
+            },
+            "rule": "reportCallIssue"
+        },
+        {
+            "file": "/private/tmp/umf-tp001-prep/compatibility/negative/update_unknown.py",
+            "severity": "error",
+            "message": "No parameter named \"ammount\"",
+            "range": {
+                "start": {
+                    "line": 6,
+                    "character": 21
+                },
+                "end": {
+                    "line": 6,
+                    "character": 28
+                }
+            },
+            "rule": "reportCallIssue"
+        },
+        {
+            "file": "/private/tmp/umf-tp001-prep/compatibility/negative/update_value.py",
+            "severity": "error",
+            "message": "Argument of type \"Literal['1']\" cannot be assigned to parameter \"amount\" of type \"Decimal\" in function \"update\"\n  \"Literal['1']\" is not assignable to \"Decimal\"",
+            "range": {
+                "start": {
+                    "line": 6,
+                    "character": 28
+                },
+                "end": {
+                    "line": 6,
+                    "character": 31
+                }
+            },
+            "rule": "reportArgumentType"
+        },
+        {
+            "file": "/private/tmp/umf-tp001-prep/compatibility/negative/when_reserved.py",
+            "severity": "error",
+            "message": "Type of \"when\" is unknown",
+            "range": {
+                "start": {
+                    "line": 6,
+                    "character": 0
+                },
+                "end": {
+                    "line": 6,
+                    "character": 18
+                }
+            },
+            "rule": "reportUnknownMemberType"
+        },
+        {
+            "file": "/private/tmp/umf-tp001-prep/compatibility/negative/when_reserved.py",
+            "severity": "error",
+            "message": "Cannot access attribute \"when\" for class \"OrderQuery\"\n  Attribute \"when\" is unknown",
+            "range": {
+                "start": {
+                    "line": 6,
+                    "character": 14
+                },
+                "end": {
+                    "line": 6,
+                    "character": 18
+                }
+            },
+            "rule": "reportAttributeAccessIssue"
+        },
+        {
+            "file": "/private/tmp/umf-tp001-prep/compatibility/negative/wrong_eq.py",
+            "severity": "error",
+            "message": "Argument of type \"bool\" cannot be assigned to parameter \"preds\" of type \"Predicate[Order]\" in function \"filter\"\n  \"bool\" is not assignable to \"Predicate[Order]\"",
+            "range": {
+                "start": {
+                    "line": 6,
+                    "character": 21
+                },
+                "end": {
+                    "line": 6,
+                    "character": 43
+                }
+            },
+            "rule": "reportArgumentType"
+        },
+        {
+            "file": "/private/tmp/umf-tp001-prep/compatibility/negative/wrong_ne.py",
+            "severity": "error",
+            "message": "Argument of type \"bool\" cannot be assigned to parameter \"preds\" of type \"Predicate[Order]\" in function \"filter\"\n  \"bool\" is not assignable to \"Predicate[Order]\"",
+            "range": {
+                "start": {
+                    "line": 6,
+                    "character": 21
+                },
+                "end": {
+                    "line": 6,
+                    "character": 43
+                }
+            },
+            "rule": "reportArgumentType"
+        },
+        {
+            "file": "/private/tmp/umf-tp001-prep/compatibility/negative/wrong_operand.py",
+            "severity": "error",
+            "message": "Operator \">\" not supported for types \"Column[Order, Decimal]\" and \"Literal['10']\"",
+            "range": {
+                "start": {
+                    "line": 6,
+                    "character": 0
+                },
+                "end": {
+                    "line": 6,
+                    "character": 21
+                }
+            },
+            "rule": "reportOperatorIssue"
+        },
+        {
+            "file": "/private/tmp/umf-tp001-prep/compatibility/negative/wrong_operand.py",
+            "severity": "error",
+            "message": "Expression value is unused",
+            "range": {
+                "start": {
+                    "line": 6,
+                    "character": 0
+                },
+                "end": {
+                    "line": 6,
+                    "character": 21
+                }
+            },
+            "rule": "reportUnusedExpression"
+        },
+        {
+            "file": "/private/tmp/umf-tp001-prep/compatibility/negative/wrong_param.py",
+            "severity": "error",
+            "message": "Operator \">=\" not supported for types \"Column[Order, datetime]\" and \"Param[str]\"",
+            "range": {
+                "start": {
+                    "line": 6,
+                    "character": 0
+                },
+                "end": {
+                    "line": 6,
+                    "character": 39
+                }
+            },
+            "rule": "reportOperatorIssue"
+        },
+        {
+            "file": "/private/tmp/umf-tp001-prep/compatibility/negative/wrong_param.py",
+            "severity": "error",
+            "message": "Expression value is unused",
+            "range": {
+                "start": {
+                    "line": 6,
+                    "character": 0
+                },
+                "end": {
+                    "line": 6,
+                    "character": 39
+                }
+            },
+            "rule": "reportUnusedExpression"
+        }
+    ],
+    "summary": {
+        "filesAnalyzed": 30,
+        "errorCount": 36,
+        "warningCount": 0,
+        "informationCount": 0,
+        "timeInSec": 0.44
+    }
+}
+

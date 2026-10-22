@@ -128,54 +128,10 @@
       ]
     },
     "source": {
-      "anyOf": [
-        {
-          "$ref": "urn:umf:core:0.1.0"
-        },
-        {
-          "$ref": "urn:umf:core:0.2.0"
-        },
-        {
-          "$ref": "urn:umf:core:0.3.0"
-        },
-        {
-          "$ref": "urn:umf:core:0.4.0"
-        },
-        {
-          "$ref": "urn:umf:core:0.5.0"
-        },
-        {
-          "$ref": "urn:umf:core:0.6.0"
-        },
-        {
-          "$ref": "urn:umf:core:0.7.0"
-        }
-      ]
+      "$ref": "urn:umf:core:0.10.0"
     },
     "target": {
-      "anyOf": [
-        {
-          "$ref": "urn:umf:core:0.1.0"
-        },
-        {
-          "$ref": "urn:umf:core:0.2.0"
-        },
-        {
-          "$ref": "urn:umf:core:0.3.0"
-        },
-        {
-          "$ref": "urn:umf:core:0.4.0"
-        },
-        {
-          "$ref": "urn:umf:core:0.5.0"
-        },
-        {
-          "$ref": "urn:umf:core:0.6.0"
-        },
-        {
-          "$ref": "urn:umf:core:0.7.0"
-        }
-      ]
+      "$ref": "urn:umf:core:0.10.0"
     },
     "request": {
       "type": "object",

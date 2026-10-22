@@ -1,0 +1,13 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"rawTableBindingProfiles\"]",
+  "kind": "Constant",
+  "members": [],
+  "parameters": [],
+  "purpose": "rawTableBindingProfiles is a constant in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "readonly Readonly<{ system: \"lakebase\" | \"unity-catalog\" | \"spark-delta\"; subset: \"typed-access-columns/0.1\"; bindingProfile: \"umf-binding-2\"; vocabularyVersion: \"0.2.0\"; nativeQualification: \"UNTESTED\"; directions: readonly string[]; }>[]"
+}

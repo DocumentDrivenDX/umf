@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 11922,
+        "line": 96,
+        "path": "src/core-ideals/key-sqlserver.ts",
+        "sha256": "50b3eb2d072df4b15abe6de9bc222a1d4cdf441f7e2a5672b6a20fcddf62c18f"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "recoverSqlServerKeySource",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: SqlServerKeyClassification, current: Document): string"
+    ]
+  },
+  "id": "[\"api\",\".\",\"recoverSqlServerKeySource\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 11922,
+      "line": 96,
+      "path": "src/core-ideals/key-sqlserver.ts",
+      "sha256": "50b3eb2d072df4b15abe6de9bc222a1d4cdf441f7e2a5672b6a20fcddf62c18f"
+    }
+  ],
+  "summary": "Public export · src/core-ideals/key-sqlserver.ts",
+  "title": "recoverSqlServerKeySource"
+}

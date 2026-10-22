@@ -1,0 +1,983 @@
+{
+  "id": "typed-many-navigation-metadata",
+  "modules": [
+    {
+      "elements": [
+        {
+          "cardinality": "one",
+          "extensions": {},
+          "id": "id",
+          "kind": "field",
+          "name": "id",
+          "nullability": "required",
+          "scalarType": "string"
+        },
+        {
+          "cardinality": "one",
+          "extensions": {},
+          "id": "status",
+          "kind": "field",
+          "name": "status",
+          "nullability": "required",
+          "scalarType": "string"
+        },
+        {
+          "extensions": {},
+          "id": "order",
+          "keys": [
+            {
+              "fields": [
+                {
+                  "element": "id",
+                  "module": "sales"
+                }
+              ],
+              "id": "pk",
+              "name": "primary",
+              "primary": true
+            },
+            {
+              "id": "chosen",
+              "name": "selected compound key",
+              "fields": [
+                {
+                  "element": "id",
+                  "module": "sales"
+                },
+                {
+                  "element": "status",
+                  "module": "sales"
+                }
+              ],
+              "primary": false
+            }
+          ],
+          "kind": "record",
+          "members": [
+            {
+              "element": "id",
+              "module": "sales"
+            },
+            {
+              "element": "status",
+              "module": "sales"
+            }
+          ],
+          "name": "order"
+        },
+        {
+          "cardinality": "one",
+          "extensions": {},
+          "id": "customerId",
+          "kind": "field",
+          "name": "customerId",
+          "nullability": "required",
+          "scalarType": "string"
+        },
+        {
+          "cardinality": "one",
+          "extensions": {},
+          "id": "customerName",
+          "kind": "field",
+          "name": "customerName",
+          "nullability": "required",
+          "scalarType": "string"
+        },
+        {
+          "extensions": {},
+          "id": "customer",
+          "keys": [
+            {
+              "fields": [
+                {
+                  "element": "customerId",
+                  "module": "sales"
+                }
+              ],
+              "id": "pk",
+              "name": "primary",
+              "primary": true
+            },
+            {
+              "id": "chosen",
+              "name": "selected compound key",
+              "fields": [
+                {
+                  "element": "customerId",
+                  "module": "sales"
+                },
+                {
+                  "element": "customerName",
+                  "module": "sales"
+                }
+              ],
+              "primary": false
+            }
+          ],
+          "kind": "record",
+          "members": [
+            {
+              "element": "customerId",
+              "module": "sales"
+            },
+            {
+              "element": "customerName",
+              "module": "sales"
+            }
+          ],
+          "name": "customer"
+        }
+      ],
+      "extensions": {
+        "umf.access": {
+          "columns": [],
+          "search": [],
+          "searchBindings": [],
+          "views": [
+            {
+              "fields": [
+                {
+                  "create": {
+                    "missing": false,
+                    "null": false
+                  },
+                  "field": {
+                    "element": "id",
+                    "module": "sales"
+                  },
+                  "generated": false,
+                  "mutable": false,
+                  "row": {
+                    "missing": false,
+                    "null": false
+                  }
+                },
+                {
+                  "create": {
+                    "missing": false,
+                    "null": false
+                  },
+                  "field": {
+                    "element": "status",
+                    "module": "sales"
+                  },
+                  "generated": false,
+                  "mutable": false,
+                  "row": {
+                    "missing": false,
+                    "null": false
+                  }
+                }
+              ],
+              "record": {
+                "element": "order",
+                "module": "sales"
+              },
+              "selectedKey": {
+                "element": "order",
+                "key": "chosen",
+                "module": "sales"
+              }
+            },
+            {
+              "fields": [
+                {
+                  "create": {
+                    "missing": false,
+                    "null": false
+                  },
+                  "field": {
+                    "element": "customerId",
+                    "module": "sales"
+                  },
+                  "generated": false,
+                  "mutable": false,
+                  "row": {
+                    "missing": false,
+                    "null": false
+                  }
+                },
+                {
+                  "create": {
+                    "missing": false,
+                    "null": false
+                  },
+                  "field": {
+                    "element": "customerName",
+                    "module": "sales"
+                  },
+                  "generated": false,
+                  "mutable": false,
+                  "row": {
+                    "missing": false,
+                    "null": false
+                  }
+                }
+              ],
+              "record": {
+                "element": "customer",
+                "module": "sales"
+              },
+              "selectedKey": {
+                "element": "customer",
+                "key": "chosen",
+                "module": "sales"
+              }
+            }
+          ]
+        },
+        "umf.actions": {
+          "actions": [
+            {
+              "atomicity": "single-store",
+              "attribution": {
+                "subject": "person-required"
+              },
+              "authorization": {
+                "kind": "roles",
+                "profile": {
+                  "id": "umf.actions.roles",
+                  "version": "1"
+                },
+                "roles": [
+                  "approver"
+                ]
+              },
+              "binding": {
+                "effects": [
+                  {
+                    "entity": {
+                      "parameter": "order"
+                    },
+                    "id": "approve-status",
+                    "kind": "set",
+                    "values": [
+                      {
+                        "field": {
+                          "element": "status",
+                          "module": "sales"
+                        },
+                        "value": {
+                          "literal": {
+                            "string": "approved"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "kind": "recipe",
+                "profile": {
+                  "id": "graph-write",
+                  "version": "1"
+                }
+              },
+              "description": "Set an order status to approved.",
+              "failures": [],
+              "id": "approve",
+              "idempotency": "caller-key-optional",
+              "name": "Approve",
+              "outputs": [],
+              "parameters": [
+                {
+                  "id": "order",
+                  "kind": "entity",
+                  "required": true,
+                  "target": {
+                    "element": "order",
+                    "key": "pk",
+                    "module": "sales"
+                  }
+                }
+              ],
+              "postconditions": [],
+              "preconditions": [],
+              "reads": [],
+              "result": {
+                "identities": "created-and-changed",
+                "receipt": "read-at-least",
+                "version": "store-opaque"
+              },
+              "writes": [
+                {
+                  "create": false,
+                  "delete": false,
+                  "fields": [
+                    {
+                      "element": "status",
+                      "module": "sales"
+                    }
+                  ],
+                  "id": "order-write",
+                  "maxEntities": 1,
+                  "record": {
+                    "element": "order",
+                    "module": "sales"
+                  },
+                  "relationships": [],
+                  "selector": {
+                    "expression": "{\"entity\":\"order\"}",
+                    "language": "umf.actions.keys",
+                    "references": [
+                      {
+                        "parameter": "order"
+                      }
+                    ],
+                    "version": "1"
+                  }
+                }
+              ]
+            },
+            {
+              "atomicity": "single-store",
+              "attribution": {
+                "subject": "person-required"
+              },
+              "authorization": {
+                "kind": "roles",
+                "profile": {
+                  "id": "umf.actions.roles",
+                  "version": "1"
+                },
+                "roles": [
+                  "approver"
+                ]
+              },
+              "binding": {
+                "effects": [
+                  {
+                    "entity": {
+                      "parameter": "order"
+                    },
+                    "id": "approve-status",
+                    "kind": "set",
+                    "values": [
+                      {
+                        "field": {
+                          "element": "status",
+                          "module": "sales"
+                        },
+                        "value": {
+                          "literal": {
+                            "string": "approved"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "kind": "recipe",
+                "profile": {
+                  "id": "graph-write",
+                  "version": "1"
+                }
+              },
+              "description": "Set an order status to approved.",
+              "failures": [
+                {
+                  "code": "NOT_DRAFT",
+                  "message": "NOT_DRAFT",
+                  "retryable": false
+                }
+              ],
+              "id": "guarded",
+              "idempotency": "caller-key-optional",
+              "name": "Guarded",
+              "outputs": [],
+              "parameters": [
+                {
+                  "id": "order",
+                  "kind": "entity",
+                  "required": true,
+                  "target": {
+                    "element": "order",
+                    "key": "pk",
+                    "module": "sales"
+                  }
+                }
+              ],
+              "postconditions": [],
+              "preconditions": [
+                {
+                  "failure": {
+                    "code": "NOT_DRAFT",
+                    "message": "NOT_DRAFT"
+                  },
+                  "id": "NOT_DRAFT",
+                  "rule": {
+                    "expression": "{\"op\":\"eq\",\"args\":[{\"state\":\"pre\",\"frame\":\"order-read\",\"field\":{\"module\":\"sales\",\"element\":\"status\"}},{\"literal\":{\"string\":\"draft\"}}]}",
+                    "language": "umf.actions.rules",
+                    "references": [
+                      {
+                        "record": {
+                          "element": "order",
+                          "module": "sales"
+                        }
+                      }
+                    ],
+                    "version": "1"
+                  }
+                }
+              ],
+              "reads": [
+                {
+                  "create": false,
+                  "delete": false,
+                  "fields": [
+                    {
+                      "element": "status",
+                      "module": "sales"
+                    }
+                  ],
+                  "id": "order-read",
+                  "maxEntities": 1,
+                  "record": {
+                    "element": "order",
+                    "module": "sales"
+                  },
+                  "relationships": [],
+                  "selector": {
+                    "expression": "{\"entity\":\"order\"}",
+                    "language": "umf.actions.keys",
+                    "references": [
+                      {
+                        "parameter": "order"
+                      }
+                    ],
+                    "version": "1"
+                  }
+                }
+              ],
+              "result": {
+                "identities": "created-and-changed",
+                "receipt": "read-at-least",
+                "version": "store-opaque"
+              },
+              "writes": [
+                {
+                  "create": false,
+                  "delete": false,
+                  "fields": [
+                    {
+                      "element": "status",
+                      "module": "sales"
+                    }
+                  ],
+                  "id": "order-write",
+                  "maxEntities": 1,
+                  "record": {
+                    "element": "order",
+                    "module": "sales"
+                  },
+                  "relationships": [],
+                  "selector": {
+                    "expression": "{\"entity\":\"order\"}",
+                    "language": "umf.actions.keys",
+                    "references": [
+                      {
+                        "parameter": "order"
+                      }
+                    ],
+                    "version": "1"
+                  }
+                }
+              ]
+            },
+            {
+              "atomicity": "single-store",
+              "attribution": {
+                "subject": "person-required"
+              },
+              "authorization": {
+                "kind": "roles",
+                "profile": {
+                  "id": "umf.actions.roles",
+                  "version": "1"
+                },
+                "roles": [
+                  "approver"
+                ]
+              },
+              "binding": {
+                "effects": [
+                  {
+                    "entity": {
+                      "parameter": "order"
+                    },
+                    "id": "approve-status",
+                    "kind": "set",
+                    "values": [
+                      {
+                        "field": {
+                          "element": "status",
+                          "module": "sales"
+                        },
+                        "value": {
+                          "literal": {
+                            "string": "approved"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "kind": "recipe",
+                "profile": {
+                  "id": "graph-write",
+                  "version": "1"
+                }
+              },
+              "description": "Set an order status to approved.",
+              "failures": [
+                {
+                  "code": "POST_REFUSED",
+                  "message": "POST_REFUSED",
+                  "retryable": false
+                }
+              ],
+              "id": "postFail",
+              "idempotency": "caller-key-optional",
+              "name": "Post fail",
+              "outputs": [],
+              "parameters": [
+                {
+                  "id": "order",
+                  "kind": "entity",
+                  "required": true,
+                  "target": {
+                    "element": "order",
+                    "key": "pk",
+                    "module": "sales"
+                  }
+                }
+              ],
+              "postconditions": [
+                {
+                  "failure": {
+                    "code": "POST_REFUSED",
+                    "message": "POST_REFUSED"
+                  },
+                  "id": "POST_REFUSED",
+                  "rule": {
+                    "expression": "{\"literal\":{\"boolean\":false}}",
+                    "language": "umf.actions.rules",
+                    "references": [
+                      {
+                        "record": {
+                          "element": "order",
+                          "module": "sales"
+                        }
+                      }
+                    ],
+                    "version": "1"
+                  }
+                }
+              ],
+              "preconditions": [],
+              "reads": [
+                {
+                  "create": false,
+                  "delete": false,
+                  "fields": [
+                    {
+                      "element": "status",
+                      "module": "sales"
+                    }
+                  ],
+                  "id": "order-read",
+                  "maxEntities": 1,
+                  "record": {
+                    "element": "order",
+                    "module": "sales"
+                  },
+                  "relationships": [],
+                  "selector": {
+                    "expression": "{\"entity\":\"order\"}",
+                    "language": "umf.actions.keys",
+                    "references": [
+                      {
+                        "parameter": "order"
+                      }
+                    ],
+                    "version": "1"
+                  }
+                }
+              ],
+              "result": {
+                "identities": "created-and-changed",
+                "receipt": "read-at-least",
+                "version": "store-opaque"
+              },
+              "writes": [
+                {
+                  "create": false,
+                  "delete": false,
+                  "fields": [
+                    {
+                      "element": "status",
+                      "module": "sales"
+                    }
+                  ],
+                  "id": "order-write",
+                  "maxEntities": 1,
+                  "record": {
+                    "element": "order",
+                    "module": "sales"
+                  },
+                  "relationships": [],
+                  "selector": {
+                    "expression": "{\"entity\":\"order\"}",
+                    "language": "umf.actions.keys",
+                    "references": [
+                      {
+                        "parameter": "order"
+                      }
+                    ],
+                    "version": "1"
+                  }
+                }
+              ]
+            },
+            {
+              "atomicity": "single-store",
+              "attribution": {
+                "subject": "person-required"
+              },
+              "authorization": {
+                "kind": "roles",
+                "profile": {
+                  "id": "umf.actions.roles",
+                  "version": "1"
+                },
+                "roles": [
+                  "approver"
+                ]
+              },
+              "binding": {
+                "effects": [
+                  {
+                    "id": "create-order",
+                    "key": "pk",
+                    "kind": "create",
+                    "record": {
+                      "element": "order",
+                      "module": "sales"
+                    },
+                    "values": [
+                      {
+                        "field": {
+                          "element": "id",
+                          "module": "sales"
+                        },
+                        "value": {
+                          "parameter": "id"
+                        }
+                      },
+                      {
+                        "field": {
+                          "element": "status",
+                          "module": "sales"
+                        },
+                        "value": {
+                          "parameter": "status"
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "kind": "recipe",
+                "profile": {
+                  "id": "graph-write",
+                  "version": "1"
+                }
+              },
+              "description": "Set an order status to approved.",
+              "failures": [],
+              "id": "createOrder",
+              "idempotency": "caller-key-optional",
+              "name": "Create order",
+              "outputs": [],
+              "parameters": [
+                {
+                  "field": {
+                    "element": "id",
+                    "module": "sales"
+                  },
+                  "id": "id",
+                  "kind": "value",
+                  "required": true
+                },
+                {
+                  "field": {
+                    "element": "status",
+                    "module": "sales"
+                  },
+                  "id": "status",
+                  "kind": "value",
+                  "required": true
+                }
+              ],
+              "postconditions": [],
+              "preconditions": [],
+              "reads": [],
+              "result": {
+                "identities": "created-and-changed",
+                "receipt": "read-at-least",
+                "version": "store-opaque"
+              },
+              "writes": [
+                {
+                  "create": true,
+                  "delete": false,
+                  "fields": [
+                    {
+                      "element": "id",
+                      "module": "sales"
+                    },
+                    {
+                      "element": "status",
+                      "module": "sales"
+                    }
+                  ],
+                  "id": "create-order",
+                  "maxEntities": 1,
+                  "record": {
+                    "element": "order",
+                    "module": "sales"
+                  },
+                  "relationships": [],
+                  "selector": {
+                    "expression": "{\"key\":\"pk\",\"components\":[{\"input\":\"id\"}]}",
+                    "language": "umf.actions.keys",
+                    "references": [
+                      {
+                        "parameter": "id"
+                      }
+                    ],
+                    "version": "1"
+                  }
+                }
+              ]
+            },
+            {
+              "atomicity": "single-store",
+              "attribution": {
+                "subject": "person-required"
+              },
+              "authorization": {
+                "kind": "roles",
+                "profile": {
+                  "id": "umf.actions.roles",
+                  "version": "1"
+                },
+                "roles": [
+                  "approver"
+                ]
+              },
+              "binding": {
+                "effects": [
+                  {
+                    "entity": {
+                      "parameter": "order"
+                    },
+                    "id": "approve-status",
+                    "kind": "set",
+                    "values": [
+                      {
+                        "field": {
+                          "element": "status",
+                          "module": "sales"
+                        },
+                        "value": {
+                          "literal": {
+                            "string": "approved"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "kind": "recipe",
+                "profile": {
+                  "id": "graph-write",
+                  "version": "1"
+                }
+              },
+              "description": "Set an order status to approved.",
+              "failures": [
+                {
+                  "code": "FIRST",
+                  "message": "FIRST",
+                  "retryable": false
+                },
+                {
+                  "code": "LATER_ERROR",
+                  "message": "LATER_ERROR",
+                  "retryable": false
+                }
+              ],
+              "id": "firstFalse",
+              "idempotency": "caller-key-optional",
+              "name": "First false",
+              "outputs": [],
+              "parameters": [
+                {
+                  "id": "order",
+                  "kind": "entity",
+                  "required": true,
+                  "target": {
+                    "element": "order",
+                    "key": "pk",
+                    "module": "sales"
+                  }
+                }
+              ],
+              "postconditions": [],
+              "preconditions": [
+                {
+                  "failure": {
+                    "code": "FIRST",
+                    "message": "FIRST"
+                  },
+                  "id": "FIRST",
+                  "rule": {
+                    "expression": "{\"literal\":{\"boolean\":false}}",
+                    "language": "umf.actions.rules",
+                    "references": [
+                      {
+                        "record": {
+                          "element": "order",
+                          "module": "sales"
+                        }
+                      }
+                    ],
+                    "version": "1"
+                  }
+                },
+                {
+                  "failure": {
+                    "code": "LATER_ERROR",
+                    "message": "LATER_ERROR"
+                  },
+                  "id": "LATER_ERROR",
+                  "rule": {
+                    "expression": "{\"op\":\"eq\",\"args\":[{\"state\":\"pre\",\"frame\":\"gone-read\",\"field\":{\"module\":\"sales\",\"element\":\"status\"}},{\"literal\":{\"string\":\"draft\"}}]}",
+                    "language": "umf.actions.rules",
+                    "references": [
+                      {
+                        "record": {
+                          "element": "order",
+                          "module": "sales"
+                        }
+                      }
+                    ],
+                    "version": "1"
+                  }
+                }
+              ],
+              "reads": [
+                {
+                  "create": false,
+                  "delete": false,
+                  "fields": [
+                    {
+                      "element": "status",
+                      "module": "sales"
+                    }
+                  ],
+                  "id": "gone-read",
+                  "maxEntities": 1,
+                  "record": {
+                    "element": "order",
+                    "module": "sales"
+                  },
+                  "relationships": [],
+                  "selector": {
+                    "expression": "{\"key\":\"pk\",\"components\":[{\"literal\":{\"string\":\"gone\"}}]}",
+                    "language": "umf.actions.keys",
+                    "references": [],
+                    "version": "1"
+                  }
+                }
+              ],
+              "result": {
+                "identities": "created-and-changed",
+                "receipt": "read-at-least",
+                "version": "store-opaque"
+              },
+              "writes": [
+                {
+                  "create": false,
+                  "delete": false,
+                  "fields": [
+                    {
+                      "element": "status",
+                      "module": "sales"
+                    }
+                  ],
+                  "id": "order-write",
+                  "maxEntities": 1,
+                  "record": {
+                    "element": "order",
+                    "module": "sales"
+                  },
+                  "relationships": [],
+                  "selector": {
+                    "expression": "{\"entity\":\"order\"}",
+                    "language": "umf.actions.keys",
+                    "references": [
+                      {
+                        "parameter": "order"
+                      }
+                    ],
+                    "version": "1"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "id": "sales",
+      "namespace": "sales",
+      "relationships": [
+        {
+          "directed": true,
+          "id": "customers",
+          "name": "customers",
+          "source": [
+            {
+              "element": "order",
+              "module": "sales"
+            }
+          ],
+          "sourceMultiplicity": {
+            "max": "*",
+            "min": 0
+          },
+          "target": [
+            {
+              "element": "customer",
+              "key": "pk",
+              "module": "sales"
+            }
+          ],
+          "targetLifecycle": "independent",
+          "targetMultiplicity": {
+            "max": "*",
+            "min": 0
+          }
+        }
+      ]
+    }
+  ],
+  "umf": "0.10.0",
+  "vocabularies": {
+    "umf.access": {
+      "version": "0.1.0"
+    },
+    "umf.actions": {
+      "version": "0.1.0"
+    }
+  }
+}

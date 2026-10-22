@@ -1,6 +1,9 @@
-import {declareCoreFacets,declareCoreElementKind,type Document,type CoreFacetPatch,type CoreFacetDeclaration,type CoreKindDeclaration} from '../../src';
+// SPDX-License-Identifier: MIT OR Apache-2.0
+import {CURRENT_CORE_VERSION} from '../../src/model/types';
+// Synthetic current-core fixture for active operation/projection behavior.
+import {declareCoreFacets, declareCoreElementKind, type Document, type CoreFacetPatch, type CoreFacetDeclaration, type CoreKindDeclaration} from '../../src';
 import type {FacetsAvroRequest} from '../../src/core-ideals/facets-avro-projection';
-export const avroFacetIdeal=(scalarType:string):Document=>({umf:'0.5.0',id:'ideal',vocabularies:{},modules:[{id:'m',namespace:'',elements:[{id:'value',name:'value',kind:'field',cardinality:'one',scalarType,extensions:{}}]}]});
+export const avroFacetIdeal=(scalarType:string):Document=>({umf:CURRENT_CORE_VERSION,id:'ideal',vocabularies:{},modules:[{id:'m',namespace:'',elements:[{id:'value',name:'value',kind:'field',cardinality:'one',scalarType,extensions:{}}]}]});
 export function facetsAvroProjectionCases(){
  const seeds:{id:string;family:string;facets?:CoreFacetPatch;native:Partial<FacetsAvroRequest>}[]=[];
  for(const bits of [8,32,64])for(const signed of [true,false])for(const nativeType of ['int','long'] as const)seeds.push({id:`${nativeType}-${bits}-${signed}`,family:'integer',facets:{integerWidth:{bits,signed}},native:{nativeType}});

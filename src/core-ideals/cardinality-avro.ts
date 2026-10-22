@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
+import {CURRENT_CORE_VERSION} from '../generated/core-model';
 import {copyJson} from '../model/json';
 import {UmfError,type Document,type Json,type Diagnostic,type Cardinality,type ExtensionPackage,type Element} from '../model/types';
 import {parseNativeJson,renderTree,type NativeJson} from '../model/native-json';
@@ -6,10 +8,8 @@ import {deriveAvroFields} from '../adapters/avro/metadata';
 import {inspectAvroTypeShape,type AvroTypeLocation,type AvroTypeShape} from './avro-cardinality-type';
 import {validateDocument} from '../validation/document';
 import {createValidator} from '../validation/schema';
-import legacy from '../../spec/core/schema.json';
-import fields from '../../spec/core/field-document.schema.json';
-import availability from '../../spec/core/nullability-document.schema.json';
-import core from '../../spec/core/cardinality-document.schema.json';
+
+import core from '../../spec/core/schema.json';
 import nativeSchema from '../../spec/core/native-json.schema.json';
 import schema from '../../spec/core/avro-cardinality-classification.schema.json';
 import manifest from '../../spec/extensions/avro-cardinality/package.json';
@@ -25,14 +25,14 @@ export interface AvroCardinalityClassification {
  mapping:{origin:'classified';cardinality:Cardinality;outcome:'exact'|'unknown'|'not-expressible';basis:typeof basis;nodes:Node[]};
  residuals:{path:string;value:Json;reason:string;recovery:typeof recovery}[];diagnostics:Diagnostic[];
 }
-const validator=createValidator();for(const s of [legacy,fields,availability,core,nativeSchema])validator.addSchema(s);
+const validator=createValidator();for(const s of [core,nativeSchema])validator.addSchema(s);
 const check=validator.compile(schema),checkRequest=validator.compile(schema.properties.request);
 const canonical=(v:Json):string=>Array.isArray(v)?'['+v.map(canonical).join(',')+']':v!==null&&typeof v==='object'?'{'+Object.keys(v).sort().map(k=>JSON.stringify(k)+':'+canonical(v[k]!)).join(',')+'}':JSON.stringify(v);
 /** Schema classification creates logical identities; native metadata and codec semantics remain intact. */
 export function classifyAvroCardinality(input:Document,options:AvroCardinalityRequest):AvroCardinalityClassification {
  const source=copyJson(input) as unknown as Document,request=copyJson(options) as unknown as AvroCardinalityRequest;
  if(!checkRequest(request))throw new UmfError('AVRO_CARDINALITY_REQUEST',JSON.stringify(checkRequest.errors));
- if(source.umf!=='0.4.0'||!validateDocument(source).valid)throw new UmfError('AVRO_CARDINALITY_SOURCE','Valid core 0.4.0 required; migrate explicitly');
+ if(source.umf!==CURRENT_CORE_VERSION||!validateDocument(source).valid)throw new UmfError('AVRO_CARDINALITY_SOURCE','Valid core 0.10.0 required; migrate explicitly');
  const exported=exportAvroBundle(source),dependencies=request.dependencies??[];
  if(exported.schema!==renderTree(parseNativeJson(request.nativeSource))+'\n'||exported.dependencies.length!==dependencies.length||exported.dependencies.some((d,i)=>d.id!==dependencies[i]!.id||d.schema!==renderTree(parseNativeJson(dependencies[i]!.schema))+'\n'))throw new UmfError('AVRO_CARDINALITY_ARCHIVE','Source bundle differs from retained native archive');
  const column=getAvroFieldMetadata(source).find(c=>c.element.id===request.column);

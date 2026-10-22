@@ -1,0 +1,30 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"recoverRecordFromParquet\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"RecordParquetProjection\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "RecordParquetProjection"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "nativeBytes",
+      "optional": false,
+      "type": "Uint8Array<ArrayBufferLike>"
+    }
+  ],
+  "purpose": "recoverRecordFromParquet accepts input, nativeBytes and returns Document.",
+  "related": [],
+  "returns": "Document",
+  "task": "Import and export",
+  "type": "(input: RecordParquetProjection, nativeBytes: Uint8Array) => Document"
+}

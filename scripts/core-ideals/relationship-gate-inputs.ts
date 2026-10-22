@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {createHash} from 'node:crypto';
 import {readdir,readFile} from 'node:fs/promises';
 import {resolve,relative,sep} from 'node:path';
@@ -20,7 +21,7 @@ export const relationshipRefreshCommands=[
  ['bun','scripts/core-ideals/relationship-extras-oracle.ts'],
  ...['tablespec-projection','avro-projection','parquet','sqlserver','postgresql','extras'].map(s=>['bun',`scripts/core-ideals/relationship-${s}-browser.ts`]),
  ['bun','scripts/core-ideals/relationship-conformance-browser.ts'],
- ['bun','test',...relationshipTests],['bun','run','typecheck'],
+ ['bun','scripts/run-tests.ts',...relationshipTests],['bun','run','typecheck'],
 ];
 export const digest=(text:string|Uint8Array)=>createHash('sha256').update(text).digest('hex');
 export function safePath(path:string){const rel=relative(process.cwd(),resolve(path)).split(sep).join('/');if(!path||path.includes('\\')||path.startsWith('/')||rel.startsWith('..')||rel!==path)throw Error('Unsafe proof path '+path);return path;}
@@ -31,6 +32,6 @@ export async function relationshipSourceHashes(){
   async function visit(dir:string){for(const entry of await readdir(dir,{withFileTypes:true})){const p=dir+'/'+entry.name;if(entry.isDirectory()){if(!['node_modules','.cache','target','build'].includes(entry.name))await visit(p);}else if(/\.(ts|py|json|sql)$/.test(p))paths.push(p);}}
   await visit(root);
  }
- paths.push('package.json','bun.lock','fixtures/relationship/authored/corpus.json','fixtures/projections/ddd-authored-relationships/base.json');
+ paths.push('package.json','bun.lock','bunfig.toml','fixtures/relationship/authored/corpus.json','fixtures/projections/ddd-authored-relationships/base.json');
  return Object.fromEntries(await Promise.all(paths.sort().map(async p=>[p,digest(await readEvidence(p))])));
 }

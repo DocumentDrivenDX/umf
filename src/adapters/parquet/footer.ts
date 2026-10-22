@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {decodeCompactStruct} from './compact';
 import {exportParquetCapture,inspectParquetFraming} from './index';
 import type {Document,Diagnostic} from '../../model/types';

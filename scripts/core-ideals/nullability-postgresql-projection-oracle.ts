@@ -1,13 +1,14 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {createHash,randomUUID} from 'node:crypto';
 import {backend} from '../../native/postgresql/runtime';
 import {postgresqlNullabilityProjectionCases} from './nullability-postgresql-projection-cases';
-import {projectNullabilityToPostgresql,recoverNullabilityFromPostgresql} from '../../src/core-ideals/nullability-postgresql-projection';
-import {classifyPostgresqlNullability,recoverPostgresqlNullabilitySource} from '../../src/core-ideals/nullability-postgresql';
-import {importPostgresqlCatalogCapture,getPostgresqlColumnMetadata} from '../../src/adapters/postgresql/catalog';
-import {upgradeFieldEnvelope} from '../../src/model/field-transition';
-import {upgradeNullabilityEnvelope} from '../../src/model/nullability-transition';
+import {projectNullabilityToPostgresql, recoverNullabilityFromPostgresql} from '../../src/core-ideals/nullability-postgresql-projection';
+import {classifyPostgresqlNullability, recoverPostgresqlNullabilitySource} from '../../src/core-ideals/nullability-postgresql';
+import {importPostgresqlCatalogCapture, getPostgresqlColumnMetadata} from '../../src/adapters/postgresql/catalog';
+
+
 import {classifyPostgresqlField} from '../../src/core-ideals/postgresql-field';
-import {identifier,carriers} from '../../src/core-ideals/postgresql-syntax';
+import {identifier, carriers} from '../../src/core-ideals/postgresql-syntax';
 const name='umf-nullability-down-'+randomUUID();let created=false;
 async function run(args:string[],input?:string){
  const p=Bun.spawn(args,{stdin:input===undefined?'ignore':'pipe',stdout:'pipe',stderr:'pipe'});
@@ -42,7 +43,7 @@ try{
  }
  if((await sql("SELECT to_regclass('public.sentinel') IS NOT NULL")).trim()!=='t')throw Error('Quoted identifier escaped');
  const capture={profile:'postgresql-catalog-capture-v1',state:'captured',serverVersion:170004,query,snapshot:JSON.parse(await sql(query)),reconstruction:{format:'pg-dump-plain-schema-only',toolVersion:(await exec(['pg_dump','--version'])).trim(),sql:await exec(['pg_dump','-U','postgres','--schema-only','postgres'])}};
- const nativeSource=JSON.stringify(capture),source=upgradeFieldEnvelope(importPostgresqlCatalogCapture(nativeSource,{id:'native-nullability'})).target;
+ const nativeSource=JSON.stringify(capture),source=importPostgresqlCatalogCapture(nativeSource,{id:'native-nullability'});
  for(const c of rows.filter(c=>c.result.status==='blocked'))if(getPostgresqlColumnMetadata(source).some(m=>m.relation.schema==='availability'&&m.relation.name===c.request.tableName))throw Error('Blocked target executed '+c.id);
  let classified=0,nativeRecoveries=0;const observations=[];
  for(const c of rows.filter(c=>c.result.status==='projected')){
@@ -52,7 +53,7 @@ try{
   if(nativeType?.kind!=='object'||nativeType.members.schema?.kind!=='string'||nativeType.members.schema.value!=='pg_catalog'||nativeType.members.name?.kind!=='string'||nativeType.members.name.value!==carriers[c.nativeType][0])throw Error('Wrong native type identity '+c.id);
   if(column.element.name!==c.request.columnName||column.element.description!==c.author.target.modules[0]!.elements[0]!.description)throw Error('Native name/comment changed '+c.id);
   const field=classifyPostgresqlField(source,{column:column.path,nativeSource,mode:'strict'});
-  const upgraded=upgradeNullabilityEnvelope(field.target!).target;
+  const upgraded=field.target!;
   const observation=classifyPostgresqlNullability(upgraded,{column:column.path,nativeSource,mode:'strict',scope:'stored-relation',carrier:'sql-null'});
   const expected=c.expectedNotNull?'required':'absent-allowed';
   if(observation.status!=='classified'||observation.mapping.nullability!==expected)throw Error('Native reclassification '+c.id);

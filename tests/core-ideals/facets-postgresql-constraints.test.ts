@@ -1,9 +1,10 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {createHash} from 'node:crypto';
 import evidence from '../../fixtures/validation/facets-postgresql-constraints-native.json';
 import {inspectPostgresqlFacetPredicate} from '../../src/adapters/postgresql/facet-predicate';
 import {copyJson} from '../../src/model/json';
-import {readJsonValue,writeJsonValue} from '../../src/model/serialization';
+import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
 const find=(schema:string,relation:string)=>evidence.capture.constraints.find(c=>c.schema===schema&&c.relation===relation)!;
 test('native supplement is pinned, fingerprinted and preserves resolved identities separately from syntax',async()=>{
  expect(evidence.capture.serverVersion).toBe(170004);expect(evidence.capture.encoding).toBe('UTF8');

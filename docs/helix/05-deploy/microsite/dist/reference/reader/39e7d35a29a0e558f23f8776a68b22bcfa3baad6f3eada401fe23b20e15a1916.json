@@ -1,0 +1,21 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"SecurityReadHandle\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "kind",
+      "optional": false,
+      "type": "\"registered-security-read\""
+    }
+  ],
+  "parameters": [],
+  "purpose": "Opaque in-process selection handle; never a native authorization credential.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "SecurityReadHandle"
+}

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
+import {CURRENT_CORE_VERSION} from '../generated/core-model';
 import {copyJson} from '../model/json';
 import {UmfError,pointer,type Document,type Json,type Diagnostic,type Cardinality,type ExtensionPackage} from '../model/types';
 import {parseNativeJson,renderTree,type NativeJson} from '../model/native-json';
@@ -6,11 +8,9 @@ import {exportPostgresqlCatalogCapture,getPostgresqlColumnMetadata} from '../ada
 import {correlatePostgresqlCardinalityCatalog,resolvePostgresqlCardinalityType} from '../adapters/postgresql/cardinality-catalog';
 import {validateDocument} from '../validation/document';
 import {createValidator} from '../validation/schema';
-import legacy from '../../spec/core/schema.json';
-import fields from '../../spec/core/field-document.schema.json';
-import availability from '../../spec/core/nullability-document.schema.json';
-import core from '../../spec/core/cardinality-document.schema.json';
-import authorSchema from '../../spec/core/cardinality-operation.schema.json';
+
+import core from '../../spec/core/schema.json';
+import authorSchema from '../../spec/core/cardinality-operation-v4.schema.json';
 import nativeSchema from '../../spec/core/native-json.schema.json';
 import schema from '../../spec/core/postgresql-cardinality-classification.schema.json';
 import manifest from '../../spec/extensions/postgresql-cardinality/package.json';
@@ -27,14 +27,14 @@ export interface PostgresqlCardinalityClassification {
  mapping:{origin:'classified';idealPath:string;nativePath:string;nativeFragment:NativeJson;cardinality:Cardinality;interpretation:'declared'|'unknown'|'unsupported';outcome:'exact'|'approximated'|'unknown'|'not-expressible';basis:'Explicit captured native type relationships; bounds, rank, item and execution semantics remain native'};
  residuals:{path:string;value:Json;reason:string;recovery:typeof recovery}[];diagnostics:Diagnostic[];
 }
-const validator=createValidator();for(const s of [legacy,fields,availability,core,authorSchema,nativeSchema])validator.addSchema(s);
+const validator=createValidator();for(const s of [core,authorSchema,nativeSchema])validator.addSchema(s);
 const check=validator.compile(schema),checkRequest=validator.compile(schema.properties.request);
 const canonical=(value:Json):string=>Array.isArray(value)?'['+value.map(canonical).join(',')+']':value!==null&&typeof value==='object'?'{'+Object.keys(value).sort().map(k=>JSON.stringify(k)+':'+canonical(value[k]!)).join(',')+'}':JSON.stringify(value);
 /** Classify declared column shape only. Retain vector/item/runtime refinements in the native archive. */
 export function classifyPostgresqlCardinality(input:Document,options:PostgresqlCardinalityRequest):PostgresqlCardinalityClassification {
  const source=copyJson(input) as unknown as Document,request=copyJson(options) as unknown as PostgresqlCardinalityRequest;
  if(!checkRequest(request))throw new UmfError('POSTGRESQL_CARDINALITY_REQUEST',JSON.stringify(checkRequest.errors));
- if(!validateDocument(source).valid||source.umf!=='0.4.0')throw new UmfError('POSTGRESQL_CARDINALITY_SOURCE','Valid core 0.4.0 required; migrate explicitly');
+ if(!validateDocument(source).valid||source.umf!==CURRENT_CORE_VERSION)throw new UmfError('POSTGRESQL_CARDINALITY_SOURCE','Valid core 0.10.0 required; migrate explicitly');
  const exported=exportPostgresqlCatalogCapture(source);
  if(renderTree(parseNativeJson(request.nativeSource))!==exported.json)throw new UmfError('POSTGRESQL_CARDINALITY_ARCHIVE','Native archive differs from retained source');
  const correspondence=correlatePostgresqlCardinalityCatalog(source,request.supplement);

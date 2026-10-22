@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {importOwlTurtle,exportOwlTurtle,getOwlQuads,getOwlOntologyHeaders,proposeOwlQuadEdit,writeDocument,readDocument} from '../src';
 const results=[];
 for(const file of ['primer-corrected','authored']){const raw=await Bun.file('native/owl/'+file+'.ttl').text(),doc=importOwlTurtle(raw,{id:file,baseIRI:'https://example.org/',blankNodeScope:file});

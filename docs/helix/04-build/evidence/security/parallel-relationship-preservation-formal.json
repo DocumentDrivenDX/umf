@@ -1,0 +1,87 @@
+{
+  "status": "conditional-analysis-passed",
+  "solverVersion": "4.15.4",
+  "sourceDigests": {
+    "/Users/erik/.codex/worktrees/1598/umf/tools/security/prove-parallel-relationship-preservation.py": "f845485171c801658dae6a45b79c5dfbe2ff75bf53205ffad7114e08efa967af",
+    "/Users/erik/Projects/truss/docs/helix/02-design/contracts/reference-relationship-binding.proposal.md": "1e5dbccc7beee2602be2cbcf6661f2fd005f6e1f7a3f47e1456e66bd0460f2a3",
+    "/Users/erik/Projects/truss/docs/helix/04-build/evidence/qualified-property-layout-0.15.owner-export.sql": "cc725df53f0d74e13bb51fda29603f8cafe8c0cee237667778566f81b33f5011"
+  },
+  "queries": [
+    {
+      "id": "endpoint_existence_preserved",
+      "result": "unsat",
+      "smt": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun original_same_tuple_occurrences () Int)\n(declare-fun maximum_participation () Int)\n(assert\n (>= original_same_tuple_occurrences 0))\n(assert\n (>= maximum_participation 0))\n(assert\n (let (($x8 (> original_same_tuple_occurrences 0)))\n(xor $x8 (> (ite $x8 1 0) 0))))\n(check-sat)\n",
+      "model": null
+    },
+    {
+      "id": "counts_preserved_when_tuple_unique",
+      "result": "unsat",
+      "smt": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun original_same_tuple_occurrences () Int)\n(declare-fun maximum_participation () Int)\n(assert\n (>= original_same_tuple_occurrences 0))\n(assert\n (>= maximum_participation 0))\n(assert\n (let (($x8 (> original_same_tuple_occurrences 0)))\n(let ((?x10 (ite $x8 1 0)))\n(let (($x16 (and (distinct original_same_tuple_occurrences ?x10) true)))\n(let (($x15 (<= original_same_tuple_occurrences 1)))\n(and $x15 $x16))))))\n(check-sat)\n",
+      "model": null
+    },
+    {
+      "id": "parallel_occurrence_loss",
+      "result": "sat",
+      "smt": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun original_same_tuple_occurrences () Int)\n(declare-fun maximum_participation () Int)\n(assert\n (>= original_same_tuple_occurrences 0))\n(assert\n (>= maximum_participation 0))\n(assert\n (let (($x8 (> original_same_tuple_occurrences 0)))\n(let ((?x10 (ite $x8 1 0)))\n(let (($x16 (and (distinct original_same_tuple_occurrences ?x10) true)))\n(let (($x19 (= original_same_tuple_occurrences 2)))\n(and $x19 $x16))))))\n(check-sat)\n",
+      "model": "[maximum_participation = 0,\n original_same_tuple_occurrences = 2]"
+    },
+    {
+      "id": "maximum_bound_false_admission",
+      "result": "sat",
+      "smt": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun original_same_tuple_occurrences () Int)\n(declare-fun maximum_participation () Int)\n(assert\n (>= original_same_tuple_occurrences 0))\n(assert\n (>= maximum_participation 0))\n(assert\n (let (($x8 (> original_same_tuple_occurrences 0)))\n(let ((?x10 (ite $x8 1 0)))\n(let (($x21 (= maximum_participation 1)))\n(let (($x19 (= original_same_tuple_occurrences 2)))\n(and $x19 $x21 (> original_same_tuple_occurrences maximum_participation) (<= ?x10 maximum_participation)))))))\n(check-sat)\n",
+      "model": "[maximum_participation = 1,\n original_same_tuple_occurrences = 2]"
+    },
+    {
+      "id": "minimum_bound_false_refusal",
+      "result": "sat",
+      "smt": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun original_same_tuple_occurrences () Int)\n(declare-fun maximum_participation () Int)\n(assert\n (>= original_same_tuple_occurrences 0))\n(assert\n (>= maximum_participation 0))\n(assert\n (let (($x8 (> original_same_tuple_occurrences 0)))\n(let ((?x10 (ite $x8 1 0)))\n(let (($x25 (= maximum_participation 2)))\n(let (($x19 (= original_same_tuple_occurrences 2)))\n(and $x19 $x25 (>= original_same_tuple_occurrences maximum_participation) (< ?x10 maximum_participation)))))))\n(check-sat)\n",
+      "model": "[maximum_participation = 2,\n original_same_tuple_occurrences = 2]"
+    },
+    {
+      "id": "occurrence_max_implies_distinct_max",
+      "result": "unsat",
+      "smt": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun original_same_tuple_occurrences () Int)\n(declare-fun maximum_participation () Int)\n(declare-fun distinct_related_records () Int)\n(declare-fun total_edge_occurrences () Int)\n(assert\n (>= original_same_tuple_occurrences 0))\n(assert\n (>= maximum_participation 0))\n(assert\n (let (($x37 (<= total_edge_occurrences maximum_participation)))\n(let (($x35 (= (= distinct_related_records 0) (= total_edge_occurrences 0))))\n(let (($x31 (>= distinct_related_records 0)))\n(let (($x36 (and $x31 (>= total_edge_occurrences distinct_related_records) $x35)))\n(and $x36 $x37 (> distinct_related_records maximum_participation)))))))\n(check-sat)\n",
+      "model": null
+    },
+    {
+      "id": "distinct_min_implies_occurrence_min",
+      "result": "unsat",
+      "smt": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun original_same_tuple_occurrences () Int)\n(declare-fun maximum_participation () Int)\n(declare-fun total_edge_occurrences () Int)\n(declare-fun distinct_related_records () Int)\n(assert\n (>= original_same_tuple_occurrences 0))\n(assert\n (>= maximum_participation 0))\n(assert\n (let (($x40 (>= distinct_related_records maximum_participation)))\n(let (($x35 (= (= distinct_related_records 0) (= total_edge_occurrences 0))))\n(let (($x31 (>= distinct_related_records 0)))\n(let (($x36 (and $x31 (>= total_edge_occurrences distinct_related_records) $x35)))\n(and $x36 $x40 (< total_edge_occurrences maximum_participation)))))))\n(check-sat)\n",
+      "model": null
+    },
+    {
+      "id": "distinct_max_does_not_imply_occurrence_max",
+      "result": "sat",
+      "smt": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun original_same_tuple_occurrences () Int)\n(declare-fun maximum_participation () Int)\n(declare-fun total_edge_occurrences () Int)\n(declare-fun distinct_related_records () Int)\n(assert\n (>= original_same_tuple_occurrences 0))\n(assert\n (>= maximum_participation 0))\n(assert\n (let (($x45 (<= distinct_related_records maximum_participation)))\n(let (($x21 (= maximum_participation 1)))\n(let (($x44 (= total_edge_occurrences 2)))\n(let (($x43 (= distinct_related_records 1)))\n(let (($x35 (= (= distinct_related_records 0) (= total_edge_occurrences 0))))\n(let (($x31 (>= distinct_related_records 0)))\n(let (($x36 (and $x31 (>= total_edge_occurrences distinct_related_records) $x35)))\n(and $x36 $x43 $x44 $x21 $x45 (> total_edge_occurrences maximum_participation))))))))))\n(check-sat)\n",
+      "model": "[original_same_tuple_occurrences = 0,\n maximum_participation = 1,\n distinct_related_records = 1,\n total_edge_occurrences = 2]"
+    },
+    {
+      "id": "occurrence_min_does_not_imply_distinct_min",
+      "result": "sat",
+      "smt": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun original_same_tuple_occurrences () Int)\n(declare-fun maximum_participation () Int)\n(declare-fun distinct_related_records () Int)\n(declare-fun total_edge_occurrences () Int)\n(assert\n (>= original_same_tuple_occurrences 0))\n(assert\n (>= maximum_participation 0))\n(assert\n (let (($x48 (>= total_edge_occurrences maximum_participation)))\n(let (($x25 (= maximum_participation 2)))\n(let (($x44 (= total_edge_occurrences 2)))\n(let (($x43 (= distinct_related_records 1)))\n(let (($x35 (= (= distinct_related_records 0) (= total_edge_occurrences 0))))\n(let (($x31 (>= distinct_related_records 0)))\n(let (($x36 (and $x31 (>= total_edge_occurrences distinct_related_records) $x35)))\n(and $x36 $x43 $x44 $x25 $x48 (< distinct_related_records maximum_participation))))))))))\n(check-sat)\n",
+      "model": "[original_same_tuple_occurrences = 0,\n maximum_participation = 2,\n distinct_related_records = 1,\n total_edge_occurrences = 2]"
+    },
+    {
+      "id": "count_equivalence_under_no_parallel",
+      "result": "unsat",
+      "smt": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun original_same_tuple_occurrences () Int)\n(declare-fun maximum_participation () Int)\n(declare-fun distinct_related_records () Int)\n(declare-fun total_edge_occurrences () Int)\n(assert\n (>= original_same_tuple_occurrences 0))\n(assert\n (>= maximum_participation 0))\n(assert\n (let (($x40 (>= distinct_related_records maximum_participation)))\n(let (($x48 (>= total_edge_occurrences maximum_participation)))\n(let (($x45 (<= distinct_related_records maximum_participation)))\n(let (($x37 (<= total_edge_occurrences maximum_participation)))\n(let (($x51 (= total_edge_occurrences distinct_related_records)))\n(let (($x35 (= (= distinct_related_records 0) (= total_edge_occurrences 0))))\n(let (($x31 (>= distinct_related_records 0)))\n(let (($x36 (and $x31 (>= total_edge_occurrences distinct_related_records) $x35)))\n(and $x36 $x51 (or (and (distinct $x37 $x45) true) (and (distinct $x48 $x40) true))))))))))))\n(check-sat)\n",
+      "model": null
+    },
+    {
+      "id": "selected_representative_loses_membership",
+      "result": "sat",
+      "smt": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun original_same_tuple_occurrences () Int)\n(declare-fun maximum_participation () Int)\n(declare-fun first_edge_active () Bool)\n(declare-fun second_edge_active () Bool)\n(assert\n (>= original_same_tuple_occurrences 0))\n(assert\n (>= maximum_participation 0))\n(assert\n (let (($x59 (or first_edge_active second_edge_active)))\n(let (($x58 (not first_edge_active)))\n(let (($x19 (= original_same_tuple_occurrences 2)))\n(and $x19 $x58 second_edge_active (and (distinct $x59 first_edge_active) true))))))\n(check-sat)\n",
+      "model": "[maximum_participation = 0,\n first_edge_active = False,\n second_edge_active = True,\n original_same_tuple_occurrences = 2]"
+    }
+  ],
+  "assumptions": [
+    "One fixed typed endpoint/relationship tuple; logical bag size is a nonnegative integer",
+    "maximum_bound_false_admission and minimum_bound_false_refusal use occurrence-count bounds only, as in the Truss proposal; registered UMF multiplicity counts distinct related Records",
+    "General count-transfer checks assume distinct related Records <= edge occurrences and equivalent zero populations; no native mapping establishes these premises here",
+    "Hypothetical deduplication retains one representative when the tuple is nonempty; this is NOT the native insertion behavior",
+    "Existence equivalence applies only to predicates depending solely on the fixed tuple, without edge-specific attributes or identity"
+  ],
+  "scope": "Unbounded integer bag/set count correspondence; two-edge attribute counterexample. Native edge_out rejects parallel inserts rather than deduplicating them. No general graph mapping, compiler correctness or backend qualification proved.",
+  "requiredLoweringDecision": "Preserve every occurrence in an admitted occurrence-capable physical profile, or refuse the incompatible source/dataset. Never silently deduplicate or advertise general predicate equivalence.",
+  "nativeImplementationQualified": false
+}

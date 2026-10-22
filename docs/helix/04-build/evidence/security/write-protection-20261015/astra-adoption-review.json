@@ -1,0 +1,75 @@
+{
+  "status": "Reviewed; no remaining actionable wrapper/adoption issue",
+  "baseReview": {
+    "path": "/private/tmp/security-write-protection-review-20261015/review.json",
+    "sha256": "629ce52df484ca2f7ec791a3361f1271ac1d4c56b46d4185c0b565d93d415311"
+  },
+  "adoption": {
+    "pythonByteExact": true,
+    "fixturesByteExact": true,
+    "typescriptOnlyRootImportAndFixtureNameRelocated": true,
+    "independentExpectedDecisionsUnchanged": 42
+  },
+  "caseMetadata": {
+    "rows": 158,
+    "idsOrderAssertionsCoversRequiredLayersTimeoutsUnchanged": true,
+    "onlyChanges": "Additive implementationSources fingerprints on listed existing cases",
+    "changedCases": [
+      "S01",
+      "S02",
+      "S03",
+      "S04",
+      "S05",
+      "S06",
+      "S07",
+      "S08",
+      "S10",
+      "S11",
+      "S13",
+      "S14",
+      "S15",
+      "S16",
+      "S17",
+      "S18",
+      "S19",
+      "S20",
+      "S21",
+      "S22",
+      "S23"
+    ],
+    "S24AndS25EntireRowsUnchanged": true,
+    "acceptancePromotions": []
+  },
+  "wrapperReview": {
+    "freshIndependentPythonRegenerationAndFixtureByteEquality": true,
+    "rootApiBunAndActualChromiumFullRowParity": true,
+    "selectedSourceBeforeAfterHashes": true,
+    "browserPageErrorExternalRequestHostGlobalGuards": true,
+    "boundedReceiptWriter": true,
+    "cleanupReviewed": true,
+    "metadataFindingResolved": "Copied AC14/AC7 annotations corrected to AC16/US057-AC1 with AC10 retained; final replay matches corrected wrapper."
+  },
+  "inspectedParentReplay": {
+    "observations": 92,
+    "allPassed": true,
+    "selectedPins": 34,
+    "allPinsMatchCurrentSource": true,
+    "versions": {
+      "bun": "1.4.2",
+      "chromium": "153.0.8010.12",
+      "python": "3.9.6"
+    },
+    "sha256": "08eb464032d81914c6c0ad356c8d64f8559c1772501c629f1b302718ccfc0360",
+    "executionQualification": "Retained final parent wrapper receipt inspected, not independently rerun. Reviewer separately executed 42 exact cases in each runtime in the base review."
+  },
+  "sourceDigests": {
+    "tools/security/write-read-verification.ts": "6d2c3efd408d33ad9f5f21e15d94ac4304628d505e2bae010afa239217e406bf",
+    "tests/security/write-read-oracle.py": "71cbceb4fdca147f85bf1c5acd18e7c094f66f24282b04a6e581321df0295b97",
+    "tests/security/write-read-oracle.ts": "462b374c84686e8dd4a7ab9c614e2d78baa7471e177e8f5b774b7c3fbf368a4f",
+    "tests/security/write-read-fixtures.json": "24267f8c973f57d7e5df8ad23350ed9c7e810e837ef2a7900d974f09a31bb8af",
+    "docs/helix/03-test/security/cases.json": "62faedfb1c49d8d190728f257ef7db4554d75228acd07ba23d6122851d601e3c",
+    "src/extensions/security/write.ts": "bd7475dd43d42407e8900136c9dc5647195c9e02cdaa0d1d5b65bd83d196dee0",
+    "src/extensions/security/evaluate.ts": "925b305becaad715708e80245b1a5442b0d6538f7fb6342a1c132306ba861524"
+  },
+  "scope": "Standalone legacy correction verification, not a governed S24/S25 acceptance runner. Full shared gate was running during review and is not qualified by this receipt. Source-owner profile authenticity, native effects, catalog-aware disposition and vault-write enforcement remain separate."
+}

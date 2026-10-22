@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Pin JVM metadata loss/rejection observations independently of UMF diagnostics."""
 import json,os,sys
 from pathlib import Path

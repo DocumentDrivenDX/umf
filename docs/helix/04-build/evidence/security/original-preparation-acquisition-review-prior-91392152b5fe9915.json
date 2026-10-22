@@ -1,0 +1,484 @@
+{
+  "status": "qualified-independent-preflight-review-passed",
+  "generatedAt": "2026-10-10T04:44:44.389073+00:00",
+  "nativeImplementationQualified": false,
+  "sourceDigests": {
+    "tools/security/truss-original-use-probe.py": "9d2e4aa35dde14bd81871276a112d5bd62e563a68713b543b44c9feb0ec4b7c6",
+    "tests/security/native/pg-raw-membership.py": "19a062f5cb18532b9da3925d6444faa78f2a92c2bfe8bfaedfd78887ef9d29ab",
+    "tests/security/native/pg-raw-membership.sql": "ac5640077786e81b80e536acc7c5d89d8f6747e1d8f425f17c4e3dfc3b37daf6",
+    "tools/security/truss-original-use.ts": "c4e394c093cf07576e191eeb76d9e5e317231c2a32e5bae90d75377bed2dfd32",
+    "tools/security/truss-original-preparation.ts": "d075285cf4f671aa2fec4ed0f2131b8676fa2b08edd56c920111c5db9370d700",
+    "tools/security/truss-source-completeness.ts": "e96bd269fbae5392ef1cf0186834dec1baa395c43359b1170739a53957e3bc0b",
+    "tools/security/truss-original-use-release.ts": "29b834336f8699ea05c891012ad1e364ebeecd8b8f1ca994345aa35657692653",
+    "src/extensions/security/authority-guard.ts": "fb551273b2141ca3c3a906bfdbd0a3ba6a4addcb2ce6e3953b1b351716b4cdb3",
+    "src/model/types.ts": "54f4e6df10f7f358e81fbb637fe39869df077f82751aa6221b3532e3c9167785",
+    "/Users/erik/Projects/truss/packages/postgresql/src/security-query-use.ts": "796ba775eb864b0ad1b93702072b149490ab175427a5eb280a0598296bb335b0",
+    "/Users/erik/Projects/truss/packages/postgresql/src/security-source-completeness.ts": "51163293d9622edf2107f6950a3b5b638833245928a11c0e9481a8c0b32aa5c8",
+    "/Users/erik/Projects/truss/packages/postgresql/src/security-predicate.ts": "cd04f93e2b79da2767428a990262421612df1fe74187a75b57cd8b0e323b0207",
+    "/Users/erik/Projects/truss/packages/postgresql/src/security-graph-source.ts": "c5732745038b27d0f7c54adead5e5c090a9855053161f720c0f962a7095cdc27",
+    "docs/helix/04-build/evidence/security/weft-original-use.json": "f65ccce8b0e6424c4777a29f2aa2563f8a59c27fd26fdc51a93cfe6d50c62fc3",
+    "docs/helix/03-test/security/cases.json": "71eb930c78ad5e63e35c2b343a276ee5d78e9a38fe3ce78b840f81384fe4d2aa",
+    "tests/security/native/pg-raw-membership-oracle.json": "1b04b8a2fe0de4f72ca2926398ff2717909bdbdee9d53e4284e4f4bd2fc5acee",
+    "/Users/erik/.codex/worktrees/1598/umf/tools/security/weft-original-use-probe.py": "be0e11adda122def0b3025132a17fe4806236b4c50492dbdb8a6459ad75f3d64",
+    "docs/helix/04-build/evidence/security/weft-handoff.json": "562b96bbd0f9c02ff68dd8e3858c9105619abe971efc2627ec543b6f1f25a947",
+    "/private/tmp/umf-security-weft-bridge-target/debug/examples/security_mapping_handoff": "d72bac2a6a473f02eb9be243ba5c298aa51a08ed1ff37fbb54403e8348778477",
+    "/Users/erik/.codex/worktrees/1598/umf/tools/security/weft-handoff-probe.py": "dbbd5e14e696bd0805f4dc50e77a1a18db69956fbcc39d39355a8b898037370d",
+    "tests/security/weft-source-fixture.json": "733a07134423c759a540623e9f996d406024d9848c62b68c0a14f1a1a6f57150",
+    "/Users/erik/Projects/weft/Cargo.toml": "c27253232c3d1d17536c2c1006546c20b09d6872f1a87c379dc9f0699eb44ca5",
+    "/Users/erik/Projects/weft/Cargo.lock": "e1c15a0cda8494bd51aa6d199edb5b0c997a4c1c028b45cf9c72a3bfb7419e45",
+    "/Users/erik/Projects/weft/crates/weft-core/Cargo.toml": "1d7e0eb769344add1e9b21d3bdbe7ddb3148003eba9bc2b22d53c25f412b0786",
+    "/Users/erik/Projects/weft/crates/weft-core/examples/security_candidate_ir.rs": "a8ee96a1b6cf0a29fbfaee2845128891a3f3ba97566a25fbd4fbde4f3b5fa19d",
+    "/Users/erik/Projects/weft/crates/weft-core/examples/security_mapping_handoff.rs": "e9ba11a4ce1f323f59df8965bdce8f690dc24cfc2cdd59b29480c41ee10b0989",
+    "/Users/erik/Projects/weft/crates/weft-core/src/application_ir.rs": "6653d07a2eeeb632cbbff53419590f1a950240fa8934e3ffd52a1d9eae232a1c",
+    "/Users/erik/Projects/weft/crates/weft-core/src/application_model.rs": "240a65d6d8f4aacfea6c6e8aadb6d35c8af32602eb3ad3d1c72fef14b769ab5f",
+    "/Users/erik/Projects/weft/crates/weft-core/src/application_resolve.rs": "df48e51b8d08b881ee9ab3d3cdc9ea04a7ce7ddd52d3aff436c1b2396e22b6fa",
+    "/Users/erik/Projects/weft/crates/weft-core/src/application_syntax.rs": "6a0159d49c6d5000dcf639837dbe8f1a64511875a9b0f2f4c004367dc420f082",
+    "/Users/erik/Projects/weft/crates/weft-core/src/backend.rs": "d638e0d8b4e85c41848a750b89db463578721746595aa0f2e704fb22628956eb",
+    "/Users/erik/Projects/weft/crates/weft-core/src/backend_emission.rs": "ac850e4b0bf0ac481b3fbc3e6cfc2e1d21a268955651555a5e60f10c97544645",
+    "/Users/erik/Projects/weft/crates/weft-core/src/bin/frontend.rs": "95469b6c18c6e50832f5beb8038fce512e58415676a84278630fcb6494392050",
+    "/Users/erik/Projects/weft/crates/weft-core/src/compile.rs": "6f23265ac68dbbf5240d05285e3128c460ae50053140a880eb058d7272b72585",
+    "/Users/erik/Projects/weft/crates/weft-core/src/error.rs": "aef90fed252a4edb716b3ba3c06cec8ecbb6bf711d30c5640bf660006af105aa",
+    "/Users/erik/Projects/weft/crates/weft-core/src/exact.rs": "97934f708fec6281ffd48b185fdd921c9a2ce4a9a0182ffb09755114922a68f1",
+    "/Users/erik/Projects/weft/crates/weft-core/src/ir.rs": "ec75a449cd52b95930c1aed95e201cd3317e4171f482d8d17be111e28f559f9f",
+    "/Users/erik/Projects/weft/crates/weft-core/src/json.rs": "e791b5d3f5de812bc59366fedc9d62d7687da93c31f0dbd82297faa9605535e4",
+    "/Users/erik/Projects/weft/crates/weft-core/src/lib.rs": "6ccd1c3768371c58ca77c7fc4303f3f89028389fd9be79255c39ed2badaab4a2",
+    "/Users/erik/Projects/weft/crates/weft-core/src/model.rs": "c64e2d60ddf3d42228f346a4aede536e29320368d7344e5678eefcab9220eee5",
+    "/Users/erik/Projects/weft/crates/weft-core/src/resolve.rs": "f9569ca7451a9b85957d3f852fdfee2cff22929ddde48591303df952b074b70e",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_association_ref.rs": "7683d8989a765c2713272d7643b41fdd2f73cb513a04a7ed97abeb53884d5a3e",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_backend.rs": "ca5a76498807f3632493640203c5f74859b40736451b7b72b7e15cdae9a1c9eb",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_candidate_dependencies.rs": "e914f1ff5e5fa0f5ca6367b1d199be4c30e10d4a3bc6cdedc12e3c7ca0f59423",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_candidate_incidence.rs": "3c318f0bf460647279bbd8b6461556f58a4617f481fb5d61e8b034c16d86d9a6",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_candidate_ir.rs": "8870ab073cdaff2dc34c6904240ea6766e8f5ff82e405c8a8760261ffb3da1d3",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_candidate_ontology.rs": "e1fb1492cc68b7ee385138ae7d4524a24190ea1dbcb034a3aab2407b77f1870f",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_candidate_policy_types.rs": "f1a42c3068c771bcfe8c322b0a305115aa33f31a78cf6b5c98b6694e88bd631f",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_composition.rs": "6fa62658499a4d60308235d010bea0e9bfc0caf03fcbf61cca932be9f441674d",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_evaluation.rs": "143fa3a91190987e6b365c136422846dbfb3e9ecc7b3fa8051786e4692806326",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_ir.rs": "422e4b2641a276fefc8d2dc97a4414cdb8db960ed42c6fd5d28bd52671cf4e9f",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_literals.rs": "8bd7995326ab3c544800f59980e8a60b0b83d81ba5138bc42ffeb351f82c7cd4",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_lowering.rs": "1921ba60fcd7d56cce6e510198f20b6e1eb887845db6f8b2ff3234c73bf51d72",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_ontology.rs": "a1e19a2605a2d247b6c58f252886d0ab45077cd2e3d53f0bffb995a2ae2a7d19",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_policy_types.rs": "0e26b8fd4e2da7a80ccc84d7ae4ad05495e334cdd0cc0e3c59633d7663fb7d06",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_query_profile.rs": "6af9b6c910b6e6b2c1f20710de2a34abbbce81bd0a6b2e841c69d1b690ab9ad3",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_query_uses.rs": "71d57b69776cf6217fb4b25780e0eae815c4f589cf21aff0e289efbf164d9183",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_requirements.rs": "937f259ae5cdca5afbee653d89f7882e6f0bb2a454a6703256d14625e8fe2711",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_result_check.rs": "d8844b3024a2e519c4408040267ba9c6282c29a6ff6d8bc586a30abd4c6a127f",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_scan_obligations.rs": "4d9bf60f49ab0d16be173573f6d36349110d45b0a73e2513e70dfed21ca2b113",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_source.rs": "d7d98da8b12ed8897100c71c242bcbbabb7c18637f9668b9776085a0caa2634e",
+    "/Users/erik/Projects/weft/crates/weft-core/src/syntax.rs": "d3dc34a52d04550b59fe96f9f95decaf5bd80cdf5ecd5e4b730de816b4707233",
+    "/Users/erik/Projects/weft/crates/weft-core/tests/frontend.rs": "4e24cdff14d6253447fce48b7b8545c2818db4e5d1219e7d841b2eb90b722bf5",
+    "/Users/erik/Projects/weft/crates/weft-core/tests/security_admission.rs": "a575a291b5d81598fe7e265a661283cc6051e3b4629c3221e2f2db91c76b3847",
+    "/Users/erik/Projects/weft/crates/weft-core/tests/security_literals.rs": "5f0cb5f2638cd0a7ce657ed5c467788adaf922a6bf16d4d000e4f6bf000c767b",
+    "/Users/erik/Projects/weft/docs/helix/02-design/contracts/application-result-v0.2.schema.json": "0e9fc7aa16d14a4e78027a70514d75476d1576f9625747e1b5f56b76147f8014",
+    "/Users/erik/Projects/weft/docs/helix/02-design/contracts/backend-manifest-v0.2.schema.json": "72c6d9c2542d0562419c1df6146932fbf5fc46f86e7f2a1c2e5a995119d8e2e5",
+    "/Users/erik/Projects/weft/docs/helix/02-design/contracts/backend-manifest.schema.json": "d18133db2b104714f78839aba458d62dffa79d969195df02582a87465a2ac4a1",
+    "/Users/erik/Projects/weft/docs/helix/02-design/contracts/compile-request-v0.2.schema.json": "2277d5735179f9605bd8919d88a7d9eea54467bff4988dc0bf468ac1c2a816bc",
+    "/Users/erik/Projects/weft/docs/helix/02-design/contracts/compile-request-v0.3.schema.json": "716f27d21aaa98de29e87aba4ffb9885e2ee77e00aaf3d1cedcba583e935f175",
+    "/Users/erik/Projects/weft/docs/helix/02-design/contracts/compile-request-v0.4.schema.json": "1e9fdf07b8bea744fa1408eae33e7c1663f2a85206c198560a5d98f2ed6c38fb",
+    "/Users/erik/Projects/weft/docs/helix/02-design/contracts/compile-request.schema.json": "4c5f657d8f12d1e08461891edf709ccf8214c27fb8fc708dce8122d3d7ed4c9d",
+    "/Users/erik/Projects/weft/docs/helix/02-design/contracts/compile-response-v0.2.schema.json": "505927dea45a68c0e15a79db024ce17f6b5b416a40d6aedaf9094df8eebf7688",
+    "/Users/erik/Projects/weft/docs/helix/02-design/contracts/compile-response-v0.3.schema.json": "f7a67a742bbc645d68209edd80fec8d63fbe9886bd9d94b289b060c094365612",
+    "/Users/erik/Projects/weft/docs/helix/02-design/contracts/compile-response-v0.4.schema.json": "8a79dab6a5eae1523f6245c65f73aeafc6a00fedc8c799ffd6cf9376cd00b026",
+    "/Users/erik/Projects/weft/docs/helix/02-design/contracts/compile-response.schema.json": "761f749b112f13047f952217cd6e739e0dc50b3814a8f2e68a43066b9cca85e2",
+    "/Users/erik/Projects/weft/docs/helix/02-design/contracts/conformance-case.schema.json": "837197d5a3d7ef43b80ae50ef8d45caf14a42ce88d5d166492abf8247e791e99",
+    "/Users/erik/Projects/weft/docs/helix/02-design/contracts/logical-plan-v0.2.schema.json": "2ae88a6d6fc9cbb882c8228896911d81b5e3a1974f42e8a14fac01b042953bfc",
+    "/Users/erik/Projects/weft/docs/helix/02-design/contracts/logical-plan.schema.json": "1c95eebd4be443e70cc7e5c8f1389939f7395abe96e9388018a9cd6335c39453",
+    "/Users/erik/Projects/weft/docs/helix/02-design/contracts/security-backend-manifest-v0.1.schema.json": "2b8a6870b9984d27c2638ce3e8a97e33a7289a5dc384e32c2173eff19ec4c945",
+    "/Users/erik/Projects/weft/docs/helix/02-design/contracts/security-cells-v0.1.schema.json": "73c7345d444cd40c1bd15f2ee718cedd40531513943395d53104d452a0f0661f",
+    "/Users/erik/Projects/weft/docs/helix/02-design/contracts/security-query-profile-v0.1.schema.json": "8fcd179fb2582525776902d8e550fbae4591655a33c93767f1ca883042e98fc9",
+    "/Users/erik/Projects/weft/spec/upstream/umf-0.7.0.schema.json": "a95512729481417f1a3a094cc337d7264a575bd6b54046b05c037db6c33b4813",
+    "/Users/erik/Projects/weft/spec/upstream/umf-0.8.0.schema.json": "79e72f2ebef434c7d1e09d372c74d330b24109bb8af9778745a8d41275acee6e",
+    "/Users/erik/Projects/weft/spec/upstream/umf-0.8.0.source.json": "e9cb65ca44211e1ee57fad549e31aa8c3fdba94ef2bd10d7489993a8748022cf",
+    "/Users/erik/Projects/weft/spec/upstream/umf-security-ontology-0.1.0-selected.schema.json": "bc9423587424e83ccf20a90054d31dda1a7656d5860e822c69db3bc8cf01a066",
+    "/Users/erik/Projects/weft/spec/upstream/umf-security-ontology-0.1.0.schema.json": "590c2d2d851280bad715ac928ad333215617e53b23d52c6bd9e4982b8566fcef",
+    "/Users/erik/Projects/weft/spec/upstream/umf-security-ontology-0.2.0-draft-selected.schema.json": "7e605eaee2f580336c7117de3717c8c6281485851126b5187a6e9583c1aaa4a7",
+    "/Users/erik/Projects/weft/spec/upstream/umf-security-ontology-0.2.0-draft.schema.json": "46248b7f8e45eb8dd883ff45b43f54bd63bf6fe19a2469b4fc6b6cd57214cb4c",
+    "/Users/erik/Projects/weft/spec/upstream/umf-security-policy-0.1.0-selected.schema.json": "e14fd4d7acac1a901a171ca942e9ba227218353c63a8af966429e4cdfdc498f3",
+    "/Users/erik/Projects/weft/spec/upstream/umf-security-policy-0.1.0.schema.json": "da6875e8889a7d0adb215964e4298b6642ba6667710d7a274888dcff2a9ef6fc",
+    "/Users/erik/Projects/weft/spec/upstream/umf-security-policy-0.2.0-draft-selected.schema.json": "40e942605f166f6bece3b55919cc646808eb275076c0df221be99e8617737ef2",
+    "/Users/erik/Projects/weft/spec/upstream/umf-security-policy-0.2.0-draft.schema.json": "bdaa033eeac6989bdc63e3e3e64e5ac030596868e9fc213597a5a498b7bd1a3e"
+  },
+  "sourcesUnchanged": true,
+  "reviewCommand": {
+    "argv": [
+      "/Library/Developer/CommandLineTools/usr/bin/python3",
+      "/private/tmp/original-preparation-acquisition-review.py"
+    ],
+    "cwd": "/Users/erik/.codex/worktrees/1598/umf",
+    "sourceSha256": "d39271196b3cc6dccc5305ae42fbba7432d31a79438eb7926178976f0d74bafb",
+    "source": "\"\"\"Independent intercepted parent-dispatch review; no native fixture execution.\"\"\"\nimport ast\nimport hashlib\nimport json\nimport pathlib\nimport re\nimport subprocess\nimport sys\nfrom datetime import datetime, timezone\n\nROOT = pathlib.Path('/Users/erik/.codex/worktrees/1598/umf')\nassert pathlib.Path.cwd() == ROOT\nOUTPUT = ROOT / 'docs/helix/04-build/evidence/security/original-preparation-acquisition-review.json'\nprior_receipt_bytes = OUTPUT.read_bytes() if OUTPUT.exists() else None\nSELF = pathlib.Path(__file__).resolve()\nreview_bytes = SELF.read_bytes()\nsha = lambda value: hashlib.sha256(value).hexdigest()\nPROBE = 'tools/security/truss-original-use-probe.py'\nHELPER = 'tests/security/native/pg-raw-membership.py'\nFOUNDATION = 'docs/helix/04-build/evidence/security/weft-original-use.json'\nPLAN = 'docs/helix/03-test/security/cases.json'\nfoundation_bytes = pathlib.Path(FOUNDATION).read_bytes()\nfoundation = json.loads(foundation_bytes)\nplan_bytes = pathlib.Path(PLAN).read_bytes()\ncase = next(c for c in json.loads(plan_bytes)['cases'] if c['id'] == 'pg-raw.B01')\npaths = [PROBE, HELPER, 'tests/security/native/pg-raw-membership.sql',\n 'tools/security/truss-original-use.ts', 'tools/security/truss-original-preparation.ts',\n 'tools/security/truss-source-completeness.ts', 'tools/security/truss-original-use-release.ts',\n 'src/extensions/security/authority-guard.ts', 'src/model/types.ts',\n '/Users/erik/Projects/truss/packages/postgresql/src/security-query-use.ts',\n '/Users/erik/Projects/truss/packages/postgresql/src/security-source-completeness.ts',\n '/Users/erik/Projects/truss/packages/postgresql/src/security-predicate.ts',\n '/Users/erik/Projects/truss/packages/postgresql/src/security-graph-source.ts', FOUNDATION, PLAN,\n case['testSource'], case['oracleSource'], *case['implementationSources'],\n *foundation['sourceDigests']]\nfrozen = {p: pathlib.Path(p).read_bytes() for p in paths}\nassert frozen[FOUNDATION] == foundation_bytes and frozen[PLAN] == plan_bytes\npins = {p: sha(value) for p, value in frozen.items()}\nassert all(pins[p] == h for p, h in foundation['sourceDigests'].items())\nbinary = '/private/tmp/umf-security-weft-bridge-target/debug/examples/security_mapping_handoff'\ntree = ast.parse(frozen[PROBE].decode('utf-8'), filename=PROBE)\ncut = next(i for i, node in enumerate(tree.body) if isinstance(node, ast.Try))\nfirst_native = tree.body[cut]\nassert \"['docker', 'container', 'ls'\" in ast.unparse(first_native.body[0])\nprefix = ast.Module(body=tree.body[:cut], type_ignores=[])\nallowed = {(binary,), ('bun', 'tools/security/truss-original-use.ts')}\nnative_attempts, launches, rejected_controls = [], [], []\nactual_popen = subprocess.Popen\ncontrol_phase = True\n\nclass ReviewDispatchRefused(Exception):\n pass\n\ndef intercepted_popen(args, *positional, **kwargs):\n argv = tuple(args) if type(args) in (list, tuple) else None\n if not argv or pathlib.Path(argv[0]).name in ('docker', 'psql'):\n  if control_phase:\n   rejected_controls.append(list(argv) if argv else repr(args))\n  else:\n   native_attempts.append(list(argv) if argv else repr(args))\n  raise ReviewDispatchRefused('Native dispatch prohibited during independent review')\n if argv not in allowed:\n  raise ReviewDispatchRefused('Unexpected subprocess in preparation prefix')\n process = actual_popen(args, *positional, **kwargs)\n launches.append((list(argv), process))\n return process\n\nsubprocess.Popen = intercepted_popen\ntry:\n for argv in [['docker', 'container', 'ls'], ['/usr/local/bin/docker', 'run'], ['psql', '-c', 'SELECT 1']]:\n  try:\n   subprocess.run(argv, capture_output=True)\n  except ReviewDispatchRefused:\n   pass\n  else:\n   raise AssertionError('Review interception failed its native-command control')\n assert not launches and len(rejected_controls) == 3\n control_phase = False\n environment = {'__file__': PROBE, '__name__': '__independent_preflight_review__'}\n exec(compile(prefix, PROBE, 'exec'), environment)\nfinally:\n subprocess.Popen = actual_popen\n\nassert environment['sources'] == pins\nassert len(environment['prepared']) == 12\nobservations = environment['observations']\nassert len(observations) == 44\nassert len({o['id'] for o in observations}) == len(observations)\nassert all(o['expected'] == o['observed'] for o in observations)\nassert not native_attempts and environment['context']['creation_attempted'] is False\nassert environment['context']['container'] is None\nassert len(launches) == 27\nassert sum(argv == [binary] for argv, _ in launches) == 13\nassert sum(argv == ['bun', 'tools/security/truss-original-use.ts'] for argv, _ in launches) == 14\nrefusals = environment['preparation_refusals']\nassert [r['id'] for r in refusals] == ['unrelated-profile', 'protected-projection']\nassert all(r['exitCode'] != 0 and not r['stdout'].strip()\n and re.search(r'^error: TRUSS_SECURITY_QUERY_USE_UNSUPPORTED$', r['stderr'], re.M)\n for r in refusals)\nassert all(pathlib.Path(p).read_bytes() == value for p, value in frozen.items())\nassert SELF.read_bytes() == review_bytes\nchecks = [\n ('native-interceptor-controls', 3, len(rejected_controls)),\n ('prepared-programs', 12, len(environment['prepared'])),\n ('preflight-assertions', 44, len(observations)),\n ('preflight-all-match', True, all(o['expected'] == o['observed'] for o in observations)),\n ('native-parent-dispatch-attempts', 0, len(native_attempts)),\n ('creation-attempted', False, environment['context']['creation_attempted']),\n ('container-acquired', False, environment['context']['container'] is not None),\n ('independent-owner-executions', 13, sum(argv == [binary] for argv, _ in launches)),\n ('host-bridge-executions', 14, sum(argv == ['bun', 'tools/security/truss-original-use.ts'] for argv, _ in launches)),\n ('semantic-consumer-refusals', 2, len(refusals)),\n]\nreceipt = {\n 'status': 'qualified-independent-preflight-review-passed',\n 'generatedAt': datetime.now(timezone.utc).isoformat(),\n 'nativeImplementationQualified': False,\n 'sourceDigests': pins,\n 'sourcesUnchanged': True,\n 'reviewCommand': {'argv': [sys.executable, str(SELF)], 'cwd': str(ROOT),\n  'sourceSha256': sha(review_bytes), 'source': review_bytes.decode('utf-8'),\n  'pythonVersion': sys.version},\n 'executedBoundary': {'selected': 'All original top-level statements before the first top-level try; its first statement is Docker container listing.',\n  'firstExcludedLine': first_native.lineno,\n  'prefixAstSha256': sha(ast.dump(prefix, include_attributes=True).encode('utf-8'))},\n 'observations': [{'id': i, 'expected': e, 'observed': o} for i, e, o in checks],\n 'producerPreflightAssertionIds': [o['id'] for o in observations],\n 'producerPreflightObservationsSha256': sha(json.dumps(observations, sort_keys=True, separators=(',', ':')).encode('utf-8')),\n 'subprocessExecutions': [{'argv': argv, 'exitCode': process.returncode} for argv, process in launches],\n 'interceptorControlRequests': rejected_controls,\n 'preparationRefusals': refusals,\n 'scope': 'Independent execution of the actual parent Python preparation prefix with subprocess.Popen intercepted. Only the pinned original compiler and fresh Bun host bridge commands are allowed; Docker/psql are rejected before launch. All twelve programs and both exact consumer refusals complete before the excluded fixture-acquisition block. No native fixture was created or queried by this review. The interceptor covers direct subprocess dispatch from this Python process, not OS-level interception of descendants; the fresh Bun host and owner binary are source-pinned reviewed dependencies. This does not establish arbitrary-host isolation, complete resource bounds, public compiler activation, installed authority, native rollback/drain, or backend acceptance.',\n 'resolvedFinding': 'Both producer refusal controls now require the expected consumer diagnostic and retain request/exit/stdout/stderr. This review independently requires the anchored error line as well.',\n}\noutput = ROOT / 'docs/helix/04-build/evidence/security/original-preparation-acquisition-review.json'\nassert output == OUTPUT\nassert (output.read_bytes() if output.exists() else None) == prior_receipt_bytes, 'Prior review receipt changed during replay'\nif prior_receipt_bytes is not None:\n prior_digest = sha(prior_receipt_bytes)\n archived = output.with_name('original-preparation-acquisition-review-prior-' + prior_digest[:16] + '.json')\n if archived.exists():\n  assert archived.read_bytes() == prior_receipt_bytes\n else:\n  archived.write_bytes(prior_receipt_bytes)\n receipt['previousReceipt'] = {'path': str(archived), 'sha256': prior_digest, 'scope': 'Preserved historical evidence; freshness is not carried forward.'}\noutput.write_text(json.dumps(receipt, indent=2) + '\\n')\nprint(json.dumps({'status': receipt['status'], 'pins': len(pins), 'prepared': 12,\n 'preflightAssertions': 44, 'nativeParentDispatchAttempts': 0, 'output': str(output)}))\n",
+    "pythonVersion": "3.9.6 (default, Aug 25 2026, 21:26:21) \n[Clang 21.0.0 (clang-2100.3.34.2)]"
+  },
+  "executedBoundary": {
+    "selected": "All original top-level statements before the first top-level try; its first statement is Docker container listing.",
+    "firstExcludedLine": 72,
+    "prefixAstSha256": "23ac978f53cf5bd226001a53c45ee2e8696ba9e3acd18dd28a96823eded8b4ee"
+  },
+  "observations": [
+    {
+      "id": "native-interceptor-controls",
+      "expected": 3,
+      "observed": 3
+    },
+    {
+      "id": "prepared-programs",
+      "expected": 12,
+      "observed": 12
+    },
+    {
+      "id": "preflight-assertions",
+      "expected": 44,
+      "observed": 44
+    },
+    {
+      "id": "preflight-all-match",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "native-parent-dispatch-attempts",
+      "expected": 0,
+      "observed": 0
+    },
+    {
+      "id": "creation-attempted",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "container-acquired",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "independent-owner-executions",
+      "expected": 13,
+      "observed": 13
+    },
+    {
+      "id": "host-bridge-executions",
+      "expected": 14,
+      "observed": 14
+    },
+    {
+      "id": "semantic-consumer-refusals",
+      "expected": 2,
+      "observed": 2
+    }
+  ],
+  "producerPreflightAssertionIds": [
+    "predicate:original-owner-correspondence",
+    "predicate:host-preparation-owner-correspondence",
+    "predicate:copied-program-preflight-refused",
+    "predicate:prepared-before-native-fixture",
+    "predicate-empty:host-preparation-owner-correspondence",
+    "predicate-empty:copied-program-preflight-refused",
+    "predicate-empty:prepared-before-native-fixture",
+    "order:original-owner-correspondence",
+    "order:host-preparation-owner-correspondence",
+    "order:copied-program-preflight-refused",
+    "order:prepared-before-native-fixture",
+    "order-empty:host-preparation-owner-correspondence",
+    "order-empty:copied-program-preflight-refused",
+    "order-empty:prepared-before-native-fixture",
+    "group:original-owner-correspondence",
+    "group:host-preparation-owner-correspondence",
+    "group:copied-program-preflight-refused",
+    "group:prepared-before-native-fixture",
+    "group-empty:host-preparation-owner-correspondence",
+    "group-empty:copied-program-preflight-refused",
+    "group-empty:prepared-before-native-fixture",
+    "join:original-owner-correspondence",
+    "join:host-preparation-owner-correspondence",
+    "join:copied-program-preflight-refused",
+    "join:prepared-before-native-fixture",
+    "join-empty:host-preparation-owner-correspondence",
+    "join-empty:copied-program-preflight-refused",
+    "join-empty:prepared-before-native-fixture",
+    "aggregate:original-owner-correspondence",
+    "aggregate:host-preparation-owner-correspondence",
+    "aggregate:copied-program-preflight-refused",
+    "aggregate:prepared-before-native-fixture",
+    "aggregate-empty:host-preparation-owner-correspondence",
+    "aggregate-empty:copied-program-preflight-refused",
+    "aggregate-empty:prepared-before-native-fixture",
+    "multioutput:original-owner-correspondence",
+    "multioutput:host-preparation-owner-correspondence",
+    "multioutput:copied-program-preflight-refused",
+    "multioutput:prepared-before-native-fixture",
+    "multioutput-empty:host-preparation-owner-correspondence",
+    "multioutput-empty:copied-program-preflight-refused",
+    "multioutput-empty:prepared-before-native-fixture",
+    "unrelated-profile:refusal-before-native-fixture",
+    "protected-projection:refusal-before-native-fixture"
+  ],
+  "producerPreflightObservationsSha256": "e3ace69a9a8c6c997dfc37bd11c583d5f4763b1f7d16102d2e79e6fcba532ef9",
+  "subprocessExecutions": [
+    {
+      "argv": [
+        "/private/tmp/umf-security-weft-bridge-target/debug/examples/security_mapping_handoff"
+      ],
+      "exitCode": 0
+    },
+    {
+      "argv": [
+        "/private/tmp/umf-security-weft-bridge-target/debug/examples/security_mapping_handoff"
+      ],
+      "exitCode": 0
+    },
+    {
+      "argv": [
+        "bun",
+        "tools/security/truss-original-use.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "argv": [
+        "/private/tmp/umf-security-weft-bridge-target/debug/examples/security_mapping_handoff"
+      ],
+      "exitCode": 0
+    },
+    {
+      "argv": [
+        "bun",
+        "tools/security/truss-original-use.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "argv": [
+        "/private/tmp/umf-security-weft-bridge-target/debug/examples/security_mapping_handoff"
+      ],
+      "exitCode": 0
+    },
+    {
+      "argv": [
+        "bun",
+        "tools/security/truss-original-use.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "argv": [
+        "/private/tmp/umf-security-weft-bridge-target/debug/examples/security_mapping_handoff"
+      ],
+      "exitCode": 0
+    },
+    {
+      "argv": [
+        "bun",
+        "tools/security/truss-original-use.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "argv": [
+        "/private/tmp/umf-security-weft-bridge-target/debug/examples/security_mapping_handoff"
+      ],
+      "exitCode": 0
+    },
+    {
+      "argv": [
+        "bun",
+        "tools/security/truss-original-use.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "argv": [
+        "/private/tmp/umf-security-weft-bridge-target/debug/examples/security_mapping_handoff"
+      ],
+      "exitCode": 0
+    },
+    {
+      "argv": [
+        "bun",
+        "tools/security/truss-original-use.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "argv": [
+        "/private/tmp/umf-security-weft-bridge-target/debug/examples/security_mapping_handoff"
+      ],
+      "exitCode": 0
+    },
+    {
+      "argv": [
+        "bun",
+        "tools/security/truss-original-use.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "argv": [
+        "/private/tmp/umf-security-weft-bridge-target/debug/examples/security_mapping_handoff"
+      ],
+      "exitCode": 0
+    },
+    {
+      "argv": [
+        "bun",
+        "tools/security/truss-original-use.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "argv": [
+        "/private/tmp/umf-security-weft-bridge-target/debug/examples/security_mapping_handoff"
+      ],
+      "exitCode": 0
+    },
+    {
+      "argv": [
+        "bun",
+        "tools/security/truss-original-use.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "argv": [
+        "/private/tmp/umf-security-weft-bridge-target/debug/examples/security_mapping_handoff"
+      ],
+      "exitCode": 0
+    },
+    {
+      "argv": [
+        "bun",
+        "tools/security/truss-original-use.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "argv": [
+        "/private/tmp/umf-security-weft-bridge-target/debug/examples/security_mapping_handoff"
+      ],
+      "exitCode": 0
+    },
+    {
+      "argv": [
+        "bun",
+        "tools/security/truss-original-use.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "argv": [
+        "/private/tmp/umf-security-weft-bridge-target/debug/examples/security_mapping_handoff"
+      ],
+      "exitCode": 0
+    },
+    {
+      "argv": [
+        "bun",
+        "tools/security/truss-original-use.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "argv": [
+        "bun",
+        "tools/security/truss-original-use.ts"
+      ],
+      "exitCode": 1
+    },
+    {
+      "argv": [
+        "bun",
+        "tools/security/truss-original-use.ts"
+      ],
+      "exitCode": 1
+    }
+  ],
+  "interceptorControlRequests": [
+    [
+      "docker",
+      "container",
+      "ls"
+    ],
+    [
+      "/usr/local/bin/docker",
+      "run"
+    ],
+    [
+      "psql",
+      "-c",
+      "SELECT 1"
+    ]
+  ],
+  "preparationRefusals": [
+    {
+      "id": "unrelated-profile",
+      "request": {
+        "version": "weft.security.mapping-input/0.1.0",
+        "modules": [
+          {
+            "documentJson": "{\"umf\":\"0.8.0\",\"id\":\"domain\",\"vocabularies\":{},\"modules\":[{\"id\":\"m\",\"namespace\":\"\",\"elements\":[{\"id\":\"Staff\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"staffId\"}],\"keys\":[{\"id\":\"pk\",\"name\":\"Key\",\"fields\":[{\"module\":\"m\",\"element\":\"staffId\"}]}],\"extensions\":{},\"name\":\"Staff\"},{\"id\":\"staffId\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"name\":\"staffId\"},{\"id\":\"Project\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"projectId\"}],\"keys\":[{\"id\":\"pk\",\"name\":\"Key\",\"fields\":[{\"module\":\"m\",\"element\":\"projectId\"}]}],\"extensions\":{},\"name\":\"Project\"},{\"id\":\"projectId\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"name\":\"projectId\"},{\"id\":\"Resource\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"resourceId\"},{\"module\":\"m\",\"element\":\"salary\"}],\"keys\":[{\"id\":\"pk\",\"name\":\"Key\",\"fields\":[{\"module\":\"m\",\"element\":\"resourceId\"}]}],\"extensions\":{},\"name\":\"Resource\"},{\"id\":\"resourceId\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"name\":\"resourceId\"},{\"id\":\"salary\",\"kind\":\"field\",\"scalarType\":\"integer\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"name\":\"salary\",\"facets\":{\"integerWidth\":{\"bits\":64,\"signed\":true}}},{\"id\":\"Ownership\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"ownerResource\"},{\"module\":\"m\",\"element\":\"ownerProject\"}],\"keys\":[{\"id\":\"pk\",\"name\":\"Key\",\"fields\":[{\"module\":\"m\",\"element\":\"ownerResource\"},{\"module\":\"m\",\"element\":\"ownerProject\"}]}],\"extensions\":{},\"name\":\"Ownership\"},{\"id\":\"ownerId\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"name\":\"ownerId\"},{\"id\":\"ownerResource\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"name\":\"ownerResource\"},{\"id\":\"ownerProject\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"name\":\"ownerProject\"},{\"id\":\"Assignment\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"assignmentStaff\"},{\"module\":\"m\",\"element\":\"assignmentProject\"},{\"module\":\"m\",\"element\":\"active\"}],\"keys\":[{\"id\":\"pk\",\"name\":\"Key\",\"fields\":[{\"module\":\"m\",\"element\":\"assignmentStaff\"},{\"module\":\"m\",\"element\":\"assignmentProject\"}]}],\"extensions\":{},\"name\":\"Assignment\"},{\"id\":\"assignmentId\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"name\":\"assignmentId\"},{\"id\":\"assignmentStaff\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"name\":\"assignmentStaff\"},{\"id\":\"assignmentProject\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"name\":\"assignmentProject\"},{\"id\":\"active\",\"kind\":\"field\",\"scalarType\":\"boolean\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"name\":\"active\"}]}]}",
+            "pin": {
+              "documentId": "domain",
+              "revision": "schema-natural-1",
+              "umfVersion": "0.8.0",
+              "sha256": "bb6a609480975f782bea1a8d6cae9e0623218a8711a7cba1669353ea8ef3962a"
+            },
+            "selectedModuleIds": [
+              "m"
+            ]
+          }
+        ],
+        "policyJson": "{\"vocabulary\":\"umf.security\",\"version\":\"0.1.0\",\"id\":\"project-access\",\"revision\":\"policy-original-use-1\",\"ontology\":{\"documentId\":\"domain\",\"revision\":\"ontology-original-use-1\"},\"rules\":[{\"id\":\"reader\",\"effect\":\"permit\",\"actions\":[\"read\"],\"target\":[{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Resource\"}],\"condition\":{\"op\":\"literal\",\"value\":true},\"disclosure\":[{\"field\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"salary\"},\"disposition\":{\"kind\":\"withheld\"}}]},{\"id\":\"membership\",\"effect\":\"require\",\"actions\":[\"read\"],\"target\":[{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Resource\"}],\"condition\":{\"op\":\"exists\",\"association\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Ownership\"},\"as\":\"o\",\"where\":{\"op\":\"and\",\"args\":[{\"op\":\"eq\",\"left\":{\"kind\":\"variable\",\"name\":\"o\",\"endpoint\":\"resource\"},\"right\":{\"kind\":\"resource\",\"identity\":true}},{\"op\":\"exists\",\"association\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Assignment\"},\"as\":\"a\",\"where\":{\"op\":\"and\",\"args\":[{\"op\":\"eq\",\"left\":{\"kind\":\"variable\",\"name\":\"a\",\"endpoint\":\"staff\"},\"right\":{\"kind\":\"subject\",\"identity\":true}},{\"op\":\"eq\",\"left\":{\"kind\":\"variable\",\"name\":\"a\",\"endpoint\":\"project\"},\"right\":{\"kind\":\"variable\",\"name\":\"o\",\"endpoint\":\"project\"}},{\"op\":\"eq\",\"left\":{\"kind\":\"variable\",\"name\":\"a\",\"field\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"active\"}},\"right\":{\"kind\":\"constant\",\"field\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"active\"},\"value\":{\"boolean\":true}}}]}}]}}},{\"id\":\"salary-original\",\"effect\":\"permit\",\"actions\":[\"querySalary\"],\"target\":[{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Resource\"}],\"condition\":{\"op\":\"eq\",\"left\":{\"kind\":\"subject\",\"field\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"staffId\"}},\"right\":{\"kind\":\"constant\",\"field\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"staffId\"},\"value\":{\"string\":\"Alice\"}}},\"disclosure\":[]},{\"id\":\"unrelated-broad\",\"effect\":\"permit\",\"actions\":[\"unrelatedOriginal\"],\"target\":[{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Resource\"}],\"condition\":{\"op\":\"literal\",\"value\":true},\"disclosure\":[]}]}",
+        "ontologyJson": "{\"version\":\"0.1.0\",\"documentId\":\"domain\",\"revision\":\"ontology-original-use-1\",\"documents\":[{\"documentId\":\"domain\",\"revision\":\"schema-natural-1\"}],\"subject\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Staff\"},\"entities\":[{\"type\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Staff\"},\"keyId\":\"pk\",\"fields\":[{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"staffId\"},\"protection\":\"unprotected\"}]},{\"type\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Project\"},\"keyId\":\"pk\",\"fields\":[{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"projectId\"},\"protection\":\"unprotected\"}]},{\"type\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Resource\"},\"keyId\":\"pk\",\"fields\":[{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"resourceId\"},\"protection\":\"unprotected\"},{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"salary\"},\"protection\":\"protected\",\"queryUse\":{\"predicate\":\"original-authorized\",\"order\":\"original-authorized\",\"group\":\"original-authorized\",\"join\":\"original-authorized\",\"aggregate\":\"original-authorized\"}}]}],\"associations\":[{\"type\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Ownership\"},\"keyId\":\"pk\",\"fields\":[{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"ownerResource\"},\"protection\":\"unprotected\"},{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"ownerProject\"},\"protection\":\"unprotected\"}],\"endpoints\":[{\"role\":\"resource\",\"target\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Resource\"},\"fields\":[{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"ownerResource\"}]},{\"role\":\"project\",\"target\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Project\"},\"fields\":[{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"ownerProject\"}]}]},{\"type\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Assignment\"},\"keyId\":\"pk\",\"fields\":[{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"assignmentStaff\"},\"protection\":\"unprotected\"},{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"assignmentProject\"},\"protection\":\"unprotected\"},{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"active\"},\"protection\":\"unprotected\"}],\"endpoints\":[{\"role\":\"staff\",\"target\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Staff\"},\"fields\":[{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"assignmentStaff\"}]},{\"role\":\"project\",\"target\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Project\"},\"fields\":[{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"assignmentProject\"}]}]}],\"context\":[],\"actions\":[\"read\",\"update\",\"querySalary\",\"unrelatedOriginal\"]}",
+        "queryProfileJson": "{\"version\":\"weft.security.query-profile/0.1.0\",\"id\":\"original-use-inspection\",\"revision\":\"different-original-action\",\"action\":\"read\",\"modelPins\":[{\"documentId\":\"domain\",\"revision\":\"schema-natural-1\",\"umfVersion\":\"0.8.0\",\"sha256\":\"bb6a609480975f782bea1a8d6cae9e0623218a8711a7cba1669353ea8ef3962a\"}],\"policySha256\":\"3894e01728f967f4f914917c0df82ff16302f494c8b0415a8bec35a7cfbd3747\",\"ontologySha256\":\"ebb98c2c30d3075855e9a2a035626238ba12e6cb1dd85652df41fd887ec98578\",\"binding\":{\"backendId\":\"fixture\",\"backendVersion\":\"unqualified\",\"targetProfile\":\"inspection-only\",\"sha256\":\"7192b9de045240e13ff94b512e6a5668b3fb81db1d2be851694c4729eb656c11\"},\"targets\":[{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Resource\"}],\"bindings\":[{\"target\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Resource\"},\"field\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"salary\"},\"operator\":\"predicate\",\"originalAction\":\"unrelatedOriginal\"},{\"target\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Resource\"},\"field\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"salary\"},\"operator\":\"order\",\"originalAction\":\"querySalary\"},{\"target\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Resource\"},\"field\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"salary\"},\"operator\":\"group\",\"originalAction\":\"querySalary\"},{\"target\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Resource\"},\"field\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"salary\"},\"operator\":\"join\",\"originalAction\":\"querySalary\"},{\"target\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Resource\"},\"field\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"salary\"},\"operator\":\"aggregate\",\"originalAction\":\"querySalary\"}]}",
+        "bindingJson": "{\"version\":\"truss.security.raw-query-home/0.2.0\",\"target\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Resource\"},\"subject\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Staff\"},\"types\":[{\"type\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Staff\"},\"keyId\":\"pk\",\"keyFields\":[{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"staffId\"},\"column\":\"id\"}],\"fields\":[{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"staffId\"},\"column\":\"id\"}],\"home\":{\"schema\":\"security_raw\",\"table\":\"employee\"}},{\"type\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Project\"},\"keyId\":\"pk\",\"keyFields\":[{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"projectId\"},\"column\":\"id\"}],\"fields\":[{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"projectId\"},\"column\":\"id\"}],\"home\":{\"schema\":\"security_raw\",\"table\":\"project\"}},{\"type\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Resource\"},\"keyId\":\"pk\",\"keyFields\":[{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"resourceId\"},\"column\":\"id\"}],\"fields\":[{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"resourceId\"},\"column\":\"id\"},{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"salary\"},\"column\":\"salary\"}],\"home\":{\"schema\":\"security_raw\",\"table\":\"resource\"}},{\"type\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Ownership\"},\"keyId\":\"pk\",\"keyFields\":[{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"ownerResource\"},\"column\":\"resource_id\"},{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"ownerProject\"},\"column\":\"project_id\"}],\"fields\":[{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"ownerResource\"},\"column\":\"resource_id\"},{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"ownerProject\"},\"column\":\"project_id\"}],\"home\":{\"schema\":\"security_raw\",\"table\":\"m2m_resource_project\"},\"endpoints\":[{\"role\":\"resource\",\"target\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Resource\"},\"fields\":[{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"ownerResource\"}]},{\"role\":\"project\",\"target\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Project\"},\"fields\":[{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"ownerProject\"}]}]},{\"type\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Assignment\"},\"keyId\":\"pk\",\"keyFields\":[{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"assignmentStaff\"},\"column\":\"employee_id\"},{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"assignmentProject\"},\"column\":\"project_id\"}],\"fields\":[{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"assignmentStaff\"},\"column\":\"employee_id\"},{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"assignmentProject\"},\"column\":\"project_id\"},{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"active\"},\"column\":\"active\"}],\"home\":{\"schema\":\"security_raw\",\"table\":\"m2m_employee_project\"},\"endpoints\":[{\"role\":\"staff\",\"target\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Staff\"},\"fields\":[{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"assignmentStaff\"}]},{\"role\":\"project\",\"target\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Project\"},\"fields\":[{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"assignmentProject\"}]}]}],\"home\":{\"schema\":\"security_raw\",\"table\":\"original_salary_source\",\"fields\":[{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"resourceId\"},\"column\":\"id\",\"family\":\"string\",\"protected\":false},{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"salary\"},\"column\":\"salary\",\"family\":\"integer\",\"protected\":true}]}}",
+        "backendId": "fixture",
+        "backendVersion": "unqualified",
+        "targetProfile": "inspection-only",
+        "sql": "SELECT r.resourceId FROM Resource r WHERE r.salary=333",
+        "parameters": {},
+        "readProfile": null
+      },
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": "1 | /** Experimental actual-owner IR consumer. A packet is not authority: registered\n2 |  * compiler provenance, native mapping/cut and final-release guard are host duties. */\n3 | import {lowerSecurityRowPredicate,type SecurityPhysicalType} from './security-predicate';\n4 | import {lowerSecuritySourceCompleteness} from './security-source-completeness';\n5 | const issuedPrograms=new WeakSet<object>();\n6 | const fail=():never=>{throw Error('TRUSS_SECURITY_QUERY_USE_UNSUPPORTED');};\n                                ^\nerror: TRUSS_SECURITY_QUERY_USE_UNSUPPORTED\n      at fail (/Users/erik/Projects/truss/packages/postgresql/src/security-query-use.ts:6:29)\n      at prepare (/Users/erik/.codex/worktrees/1598/umf/tools/security/truss-original-preparation.ts:34:23)\n\nBun v1.4.2 (macOS arm64)\n"
+    },
+    {
+      "id": "protected-projection",
+      "request": {
+        "version": "weft.security.mapping-input/0.1.0",
+        "modules": [
+          {
+            "documentJson": "{\"umf\":\"0.8.0\",\"id\":\"domain\",\"vocabularies\":{},\"modules\":[{\"id\":\"m\",\"namespace\":\"\",\"elements\":[{\"id\":\"Staff\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"staffId\"}],\"keys\":[{\"id\":\"pk\",\"name\":\"Key\",\"fields\":[{\"module\":\"m\",\"element\":\"staffId\"}]}],\"extensions\":{},\"name\":\"Staff\"},{\"id\":\"staffId\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"name\":\"staffId\"},{\"id\":\"Project\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"projectId\"}],\"keys\":[{\"id\":\"pk\",\"name\":\"Key\",\"fields\":[{\"module\":\"m\",\"element\":\"projectId\"}]}],\"extensions\":{},\"name\":\"Project\"},{\"id\":\"projectId\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"name\":\"projectId\"},{\"id\":\"Resource\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"resourceId\"},{\"module\":\"m\",\"element\":\"salary\"}],\"keys\":[{\"id\":\"pk\",\"name\":\"Key\",\"fields\":[{\"module\":\"m\",\"element\":\"resourceId\"}]}],\"extensions\":{},\"name\":\"Resource\"},{\"id\":\"resourceId\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"name\":\"resourceId\"},{\"id\":\"salary\",\"kind\":\"field\",\"scalarType\":\"integer\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"name\":\"salary\",\"facets\":{\"integerWidth\":{\"bits\":64,\"signed\":true}}},{\"id\":\"Ownership\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"ownerResource\"},{\"module\":\"m\",\"element\":\"ownerProject\"}],\"keys\":[{\"id\":\"pk\",\"name\":\"Key\",\"fields\":[{\"module\":\"m\",\"element\":\"ownerResource\"},{\"module\":\"m\",\"element\":\"ownerProject\"}]}],\"extensions\":{},\"name\":\"Ownership\"},{\"id\":\"ownerId\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"name\":\"ownerId\"},{\"id\":\"ownerResource\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"name\":\"ownerResource\"},{\"id\":\"ownerProject\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"name\":\"ownerProject\"},{\"id\":\"Assignment\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"assignmentStaff\"},{\"module\":\"m\",\"element\":\"assignmentProject\"},{\"module\":\"m\",\"element\":\"active\"}],\"keys\":[{\"id\":\"pk\",\"name\":\"Key\",\"fields\":[{\"module\":\"m\",\"element\":\"assignmentStaff\"},{\"module\":\"m\",\"element\":\"assignmentProject\"}]}],\"extensions\":{},\"name\":\"Assignment\"},{\"id\":\"assignmentId\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"name\":\"assignmentId\"},{\"id\":\"assignmentStaff\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"name\":\"assignmentStaff\"},{\"id\":\"assignmentProject\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"name\":\"assignmentProject\"},{\"id\":\"active\",\"kind\":\"field\",\"scalarType\":\"boolean\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"name\":\"active\"}]}]}",
+            "pin": {
+              "documentId": "domain",
+              "revision": "schema-natural-1",
+              "umfVersion": "0.8.0",
+              "sha256": "bb6a609480975f782bea1a8d6cae9e0623218a8711a7cba1669353ea8ef3962a"
+            },
+            "selectedModuleIds": [
+              "m"
+            ]
+          }
+        ],
+        "policyJson": "{\"vocabulary\":\"umf.security\",\"version\":\"0.1.0\",\"id\":\"project-access\",\"revision\":\"policy-original-use-1\",\"ontology\":{\"documentId\":\"domain\",\"revision\":\"ontology-original-use-1\"},\"rules\":[{\"id\":\"reader\",\"effect\":\"permit\",\"actions\":[\"read\"],\"target\":[{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Resource\"}],\"condition\":{\"op\":\"literal\",\"value\":true},\"disclosure\":[{\"field\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"salary\"},\"disposition\":{\"kind\":\"withheld\"}}]},{\"id\":\"membership\",\"effect\":\"require\",\"actions\":[\"read\"],\"target\":[{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Resource\"}],\"condition\":{\"op\":\"exists\",\"association\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Ownership\"},\"as\":\"o\",\"where\":{\"op\":\"and\",\"args\":[{\"op\":\"eq\",\"left\":{\"kind\":\"variable\",\"name\":\"o\",\"endpoint\":\"resource\"},\"right\":{\"kind\":\"resource\",\"identity\":true}},{\"op\":\"exists\",\"association\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Assignment\"},\"as\":\"a\",\"where\":{\"op\":\"and\",\"args\":[{\"op\":\"eq\",\"left\":{\"kind\":\"variable\",\"name\":\"a\",\"endpoint\":\"staff\"},\"right\":{\"kind\":\"subject\",\"identity\":true}},{\"op\":\"eq\",\"left\":{\"kind\":\"variable\",\"name\":\"a\",\"endpoint\":\"project\"},\"right\":{\"kind\":\"variable\",\"name\":\"o\",\"endpoint\":\"project\"}},{\"op\":\"eq\",\"left\":{\"kind\":\"variable\",\"name\":\"a\",\"field\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"active\"}},\"right\":{\"kind\":\"constant\",\"field\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"active\"},\"value\":{\"boolean\":true}}}]}}]}}},{\"id\":\"salary-original\",\"effect\":\"permit\",\"actions\":[\"querySalary\"],\"target\":[{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Resource\"}],\"condition\":{\"op\":\"eq\",\"left\":{\"kind\":\"subject\",\"field\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"staffId\"}},\"right\":{\"kind\":\"constant\",\"field\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"staffId\"},\"value\":{\"string\":\"Alice\"}}},\"disclosure\":[]},{\"id\":\"unrelated-broad\",\"effect\":\"permit\",\"actions\":[\"unrelatedOriginal\"],\"target\":[{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Resource\"}],\"condition\":{\"op\":\"literal\",\"value\":true},\"disclosure\":[]}]}",
+        "ontologyJson": "{\"version\":\"0.1.0\",\"documentId\":\"domain\",\"revision\":\"ontology-original-use-1\",\"documents\":[{\"documentId\":\"domain\",\"revision\":\"schema-natural-1\"}],\"subject\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Staff\"},\"entities\":[{\"type\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Staff\"},\"keyId\":\"pk\",\"fields\":[{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"staffId\"},\"protection\":\"unprotected\"}]},{\"type\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Project\"},\"keyId\":\"pk\",\"fields\":[{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"projectId\"},\"protection\":\"unprotected\"}]},{\"type\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Resource\"},\"keyId\":\"pk\",\"fields\":[{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"resourceId\"},\"protection\":\"unprotected\"},{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"salary\"},\"protection\":\"protected\",\"queryUse\":{\"predicate\":\"original-authorized\",\"order\":\"original-authorized\",\"group\":\"original-authorized\",\"join\":\"original-authorized\",\"aggregate\":\"original-authorized\"}}]}],\"associations\":[{\"type\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Ownership\"},\"keyId\":\"pk\",\"fields\":[{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"ownerResource\"},\"protection\":\"unprotected\"},{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"ownerProject\"},\"protection\":\"unprotected\"}],\"endpoints\":[{\"role\":\"resource\",\"target\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Resource\"},\"fields\":[{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"ownerResource\"}]},{\"role\":\"project\",\"target\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Project\"},\"fields\":[{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"ownerProject\"}]}]},{\"type\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Assignment\"},\"keyId\":\"pk\",\"fields\":[{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"assignmentStaff\"},\"protection\":\"unprotected\"},{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"assignmentProject\"},\"protection\":\"unprotected\"},{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"active\"},\"protection\":\"unprotected\"}],\"endpoints\":[{\"role\":\"staff\",\"target\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Staff\"},\"fields\":[{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"assignmentStaff\"}]},{\"role\":\"project\",\"target\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Project\"},\"fields\":[{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"assignmentProject\"}]}]}],\"context\":[],\"actions\":[\"read\",\"update\",\"querySalary\",\"unrelatedOriginal\"]}",
+        "queryProfileJson": "{\"version\":\"weft.security.query-profile/0.1.0\",\"id\":\"original-use-inspection\",\"revision\":\"1\",\"action\":\"read\",\"modelPins\":[{\"documentId\":\"domain\",\"revision\":\"schema-natural-1\",\"umfVersion\":\"0.8.0\",\"sha256\":\"bb6a609480975f782bea1a8d6cae9e0623218a8711a7cba1669353ea8ef3962a\"}],\"policySha256\":\"3894e01728f967f4f914917c0df82ff16302f494c8b0415a8bec35a7cfbd3747\",\"ontologySha256\":\"ebb98c2c30d3075855e9a2a035626238ba12e6cb1dd85652df41fd887ec98578\",\"binding\":{\"backendId\":\"fixture\",\"backendVersion\":\"unqualified\",\"targetProfile\":\"inspection-only\",\"sha256\":\"7192b9de045240e13ff94b512e6a5668b3fb81db1d2be851694c4729eb656c11\"},\"targets\":[{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Resource\"}],\"bindings\":[{\"target\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Resource\"},\"field\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"salary\"},\"operator\":\"predicate\",\"originalAction\":\"querySalary\"},{\"target\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Resource\"},\"field\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"salary\"},\"operator\":\"order\",\"originalAction\":\"querySalary\"},{\"target\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Resource\"},\"field\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"salary\"},\"operator\":\"group\",\"originalAction\":\"querySalary\"},{\"target\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Resource\"},\"field\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"salary\"},\"operator\":\"join\",\"originalAction\":\"querySalary\"},{\"target\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Resource\"},\"field\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"salary\"},\"operator\":\"aggregate\",\"originalAction\":\"querySalary\"}]}",
+        "bindingJson": "{\"version\":\"truss.security.raw-query-home/0.2.0\",\"target\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Resource\"},\"subject\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Staff\"},\"types\":[{\"type\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Staff\"},\"keyId\":\"pk\",\"keyFields\":[{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"staffId\"},\"column\":\"id\"}],\"fields\":[{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"staffId\"},\"column\":\"id\"}],\"home\":{\"schema\":\"security_raw\",\"table\":\"employee\"}},{\"type\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Project\"},\"keyId\":\"pk\",\"keyFields\":[{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"projectId\"},\"column\":\"id\"}],\"fields\":[{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"projectId\"},\"column\":\"id\"}],\"home\":{\"schema\":\"security_raw\",\"table\":\"project\"}},{\"type\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Resource\"},\"keyId\":\"pk\",\"keyFields\":[{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"resourceId\"},\"column\":\"id\"}],\"fields\":[{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"resourceId\"},\"column\":\"id\"},{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"salary\"},\"column\":\"salary\"}],\"home\":{\"schema\":\"security_raw\",\"table\":\"resource\"}},{\"type\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Ownership\"},\"keyId\":\"pk\",\"keyFields\":[{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"ownerResource\"},\"column\":\"resource_id\"},{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"ownerProject\"},\"column\":\"project_id\"}],\"fields\":[{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"ownerResource\"},\"column\":\"resource_id\"},{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"ownerProject\"},\"column\":\"project_id\"}],\"home\":{\"schema\":\"security_raw\",\"table\":\"m2m_resource_project\"},\"endpoints\":[{\"role\":\"resource\",\"target\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Resource\"},\"fields\":[{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"ownerResource\"}]},{\"role\":\"project\",\"target\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Project\"},\"fields\":[{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"ownerProject\"}]}]},{\"type\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Assignment\"},\"keyId\":\"pk\",\"keyFields\":[{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"assignmentStaff\"},\"column\":\"employee_id\"},{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"assignmentProject\"},\"column\":\"project_id\"}],\"fields\":[{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"assignmentStaff\"},\"column\":\"employee_id\"},{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"assignmentProject\"},\"column\":\"project_id\"},{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"active\"},\"column\":\"active\"}],\"home\":{\"schema\":\"security_raw\",\"table\":\"m2m_employee_project\"},\"endpoints\":[{\"role\":\"staff\",\"target\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Staff\"},\"fields\":[{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"assignmentStaff\"}]},{\"role\":\"project\",\"target\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Project\"},\"fields\":[{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"assignmentProject\"}]}]}],\"home\":{\"schema\":\"security_raw\",\"table\":\"original_salary_source\",\"fields\":[{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"resourceId\"},\"column\":\"id\",\"family\":\"string\",\"protected\":false},{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"salary\"},\"column\":\"salary\",\"family\":\"integer\",\"protected\":true}]}}",
+        "backendId": "fixture",
+        "backendVersion": "unqualified",
+        "targetProfile": "inspection-only",
+        "sql": "SELECT r.salary FROM Resource r",
+        "parameters": {},
+        "readProfile": null
+      },
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": "1 | /** Experimental actual-owner IR consumer. A packet is not authority: registered\n2 |  * compiler provenance, native mapping/cut and final-release guard are host duties. */\n3 | import {lowerSecurityRowPredicate,type SecurityPhysicalType} from './security-predicate';\n4 | import {lowerSecuritySourceCompleteness} from './security-source-completeness';\n5 | const issuedPrograms=new WeakSet<object>();\n6 | const fail=():never=>{throw Error('TRUSS_SECURITY_QUERY_USE_UNSUPPORTED');};\n                                ^\nerror: TRUSS_SECURITY_QUERY_USE_UNSUPPORTED\n      at fail (/Users/erik/Projects/truss/packages/postgresql/src/security-query-use.ts:6:29)\n      at <anonymous> (/Users/erik/Projects/truss/packages/postgresql/src/security-query-use.ts:77:25)\n      at map (1:11)\n      at lowerSecurityOriginalUseProgram (/Users/erik/Projects/truss/packages/postgresql/src/security-query-use.ts:75:29)\n      at async prepare (/Users/erik/.codex/worktrees/1598/umf/tools/security/truss-original-preparation.ts:34:23)\n\nBun v1.4.2 (macOS arm64)\n"
+    }
+  ],
+  "scope": "Independent execution of the actual parent Python preparation prefix with subprocess.Popen intercepted. Only the pinned original compiler and fresh Bun host bridge commands are allowed; Docker/psql are rejected before launch. All twelve programs and both exact consumer refusals complete before the excluded fixture-acquisition block. No native fixture was created or queried by this review. The interceptor covers direct subprocess dispatch from this Python process, not OS-level interception of descendants; the fresh Bun host and owner binary are source-pinned reviewed dependencies. This does not establish arbitrary-host isolation, complete resource bounds, public compiler activation, installed authority, native rollback/drain, or backend acceptance.",
+  "resolvedFinding": "Both producer refusal controls now require the expected consumer diagnostic and retain request/exit/stdout/stderr. This review independently requires the anchored error line as well.",
+  "previousReceipt": {
+    "path": "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/original-preparation-acquisition-review-prior-3fc5f6e2d5dece34.json",
+    "sha256": "3fc5f6e2d5dece34bfcb6cf965271d149fecdc1e8f11fb0c7ca877fec5851174",
+    "scope": "Preserved historical evidence; freshness is not carried forward."
+  }
+}

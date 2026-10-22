@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
 const cases=await Promise.all((await Bun.file('fixtures/owl/annotation-case-results.json').json()).map(async (c:any)=>({...c,raw:await Bun.file('native/owl/annotation-cases/'+c.id+'.ttl').text()})));
 const built=await Bun.build({entrypoints:['src/index.ts'],outdir:'.cache/owl-annotation-browser',naming:'umf.js',target:'browser',format:'esm'});if(!built.success)throw Error(built.logs.join('\n'));

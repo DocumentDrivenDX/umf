@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 14292,
+        "line": 14,
+        "path": "src/extensions/actions/expression.ts",
+        "sha256": "d75694336d0a377c13d8f783fd3cf5d7a66a2a8e2b8bc869203af105b2745676"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "ActionExpressionType",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface ActionExpressionType {family:'boolean'|'integer'|'string'|'null';nullable:boolean}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"ActionExpressionType\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 14292,
+      "line": 14,
+      "path": "src/extensions/actions/expression.ts",
+      "sha256": "d75694336d0a377c13d8f783fd3cf5d7a66a2a8e2b8bc869203af105b2745676"
+    }
+  ],
+  "summary": "Type declaration · src/extensions/actions/expression.ts",
+  "title": "ActionExpressionType"
+}

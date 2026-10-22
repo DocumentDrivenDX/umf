@@ -1,0 +1,705 @@
+{
+  "sourceCommit": "5605d358650468d651f69ff29c40e986a0359a5b",
+  "wheel": "/private/tmp/weft-combined-sdk-local-r22/wheels/weft_sql-0.4.42.dev0-cp39-abi3-macosx_11_0_arm64.whl",
+  "wheelSha256": "f92e23d68afc6619e41e76f19e8760871eb86fe1ad1bf44de66c47c27ca48dc8",
+  "payloads": {
+    "weft/__init__.py": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d",
+    "weft/weft.abi3.so": "3ca29741b86eb6ce26187fede41e754dbd15e4db8abc7f556ff0a1d5d60dcc95"
+  },
+  "controls": [
+    {
+      "name": "full-projection",
+      "status": "pass"
+    },
+    {
+      "name": "full-projection-stream",
+      "status": "pass"
+    },
+    {
+      "name": "schema-conflict",
+      "status": "pass"
+    },
+    {
+      "name": "full-projection-search-path",
+      "status": "pass"
+    },
+    {
+      "name": "stream-nonkeyset-refused",
+      "status": "pass"
+    },
+    {
+      "name": "unity-ann-request",
+      "status": "pass"
+    },
+    {
+      "name": "unity-hybrid-request",
+      "status": "pass"
+    },
+    {
+      "name": "unity-shaped-request",
+      "status": "pass"
+    },
+    {
+      "name": "related-forward",
+      "status": "pass"
+    },
+    {
+      "name": "related-inverse",
+      "status": "pass"
+    },
+    {
+      "name": "spark-page",
+      "status": "pass"
+    },
+    {
+      "name": "spark-stream",
+      "status": "pass"
+    },
+    {
+      "name": "managed-action",
+      "status": "pass"
+    },
+    {
+      "name": "managed-bulk",
+      "status": "pass"
+    },
+    {
+      "name": "related-wildcards",
+      "status": "pass"
+    },
+    {
+      "name": "negative-literal",
+      "status": "pass"
+    },
+    {
+      "name": "literal-null-membership",
+      "status": "pass"
+    },
+    {
+      "name": "empty-membership",
+      "status": "pass"
+    },
+    {
+      "name": "has-literal-key",
+      "status": "pass"
+    },
+    {
+      "name": "bound-list",
+      "status": "pass"
+    },
+    {
+      "name": "related-keys",
+      "status": "pass"
+    },
+    {
+      "name": "ashlar-related-keys",
+      "status": "pass"
+    },
+    {
+      "name": "spark-string-list",
+      "status": "pass"
+    },
+    {
+      "name": "spark-integer-list",
+      "status": "pass"
+    },
+    {
+      "name": "spark-decimal-list",
+      "status": "pass"
+    },
+    {
+      "name": "ashlar-required-nulls",
+      "status": "pass"
+    },
+    {
+      "name": "retained-graph-export-closure",
+      "status": "pass"
+    },
+    {
+      "name": "truss-related-key-metadata",
+      "status": "pass"
+    },
+    {
+      "name": "ashlar-related-key-page",
+      "status": "pass"
+    },
+    {
+      "name": "spark-hll-global",
+      "status": "pass"
+    },
+    {
+      "name": "spark-hll-grouped",
+      "status": "pass"
+    },
+    {
+      "name": "ashlar-engine-related",
+      "status": "pass"
+    },
+    {
+      "name": "ashlar-engine-related-page",
+      "status": "pass"
+    },
+    {
+      "name": "ashlar-related-native-continuation",
+      "status": "pass"
+    },
+    {
+      "name": "truss-engine-related",
+      "status": "pass"
+    },
+    {
+      "name": "truss-engine-related-page",
+      "status": "pass"
+    },
+    {
+      "name": "truss-related-original-cursor",
+      "status": "pass"
+    },
+    {
+      "name": "related-id-refusal",
+      "status": "pass"
+    },
+    {
+      "name": "related-direction-refusal",
+      "status": "pass"
+    },
+    {
+      "name": "ashlar-fields38",
+      "status": "pass"
+    },
+    {
+      "name": "ashlar-fields38-checked",
+      "status": "pass"
+    },
+    {
+      "name": "ashlar-fields38-rebind-refusal",
+      "status": "pass"
+    },
+    {
+      "name": "native-privilege-probes",
+      "status": "pass"
+    },
+    {
+      "name": "native-privilege-probes-checked",
+      "status": "pass"
+    },
+    {
+      "name": "native-privilege-probes-forgery-refusal",
+      "status": "pass"
+    },
+    {
+      "name": "explicit-deployment-search-0",
+      "status": "pass"
+    },
+    {
+      "name": "original-search-0",
+      "status": "pass"
+    },
+    {
+      "name": "original-search-0-checked",
+      "status": "pass"
+    },
+    {
+      "name": "legacy-search-1-byte-exact",
+      "status": "pass"
+    },
+    {
+      "name": "original-search-1",
+      "status": "pass"
+    },
+    {
+      "name": "original-search-1-checked",
+      "status": "pass"
+    },
+    {
+      "name": "legacy-search-2-byte-exact",
+      "status": "pass"
+    },
+    {
+      "name": "original-search-2",
+      "status": "pass"
+    },
+    {
+      "name": "original-search-2-checked",
+      "status": "pass"
+    },
+    {
+      "name": "explicit-deployment-search-3",
+      "status": "pass"
+    },
+    {
+      "name": "original-search-3",
+      "status": "pass"
+    },
+    {
+      "name": "original-search-3-checked",
+      "status": "pass"
+    },
+    {
+      "name": "legacy-search-4-byte-exact",
+      "status": "pass"
+    },
+    {
+      "name": "original-search-4",
+      "status": "pass"
+    },
+    {
+      "name": "original-search-4-checked",
+      "status": "pass"
+    },
+    {
+      "name": "legacy-search-5-byte-exact",
+      "status": "pass"
+    },
+    {
+      "name": "original-search-5",
+      "status": "pass"
+    },
+    {
+      "name": "original-search-5-checked",
+      "status": "pass"
+    },
+    {
+      "name": "explicit-deployment-search-6",
+      "status": "pass"
+    },
+    {
+      "name": "original-search-6",
+      "status": "pass"
+    },
+    {
+      "name": "original-search-6-checked",
+      "status": "pass"
+    },
+    {
+      "name": "explicit-deployment-search-7",
+      "status": "pass"
+    },
+    {
+      "name": "original-search-7",
+      "status": "pass"
+    },
+    {
+      "name": "original-search-7-checked",
+      "status": "pass"
+    },
+    {
+      "name": "legacy-action-0-byte-exact",
+      "status": "pass"
+    },
+    {
+      "name": "original-action-0",
+      "status": "pass"
+    },
+    {
+      "name": "original-action-0-checked",
+      "status": "pass"
+    },
+    {
+      "name": "legacy-action-1-byte-exact",
+      "status": "pass"
+    },
+    {
+      "name": "original-action-1",
+      "status": "pass"
+    },
+    {
+      "name": "original-action-1-checked",
+      "status": "pass"
+    },
+    {
+      "name": "legacy-action-2-byte-exact",
+      "status": "pass"
+    },
+    {
+      "name": "original-action-2",
+      "status": "pass"
+    },
+    {
+      "name": "original-action-2-checked",
+      "status": "pass"
+    },
+    {
+      "name": "legacy-action-3-byte-exact",
+      "status": "pass"
+    },
+    {
+      "name": "original-action-3",
+      "status": "pass"
+    },
+    {
+      "name": "original-action-3-checked",
+      "status": "pass"
+    },
+    {
+      "name": "legacy-action-4-byte-exact",
+      "status": "pass"
+    },
+    {
+      "name": "original-action-4",
+      "status": "pass"
+    },
+    {
+      "name": "original-action-4-checked",
+      "status": "pass"
+    },
+    {
+      "name": "legacy-action-6-byte-exact",
+      "status": "pass"
+    },
+    {
+      "name": "original-action-6",
+      "status": "pass"
+    },
+    {
+      "name": "original-action-6-checked",
+      "status": "pass"
+    },
+    {
+      "name": "bulk-list-owner-facets",
+      "status": "pass"
+    },
+    {
+      "name": "bulk-list-owner-probes",
+      "status": "pass"
+    },
+    {
+      "name": "bulk-list-container-mismatch-refused",
+      "status": "pass"
+    },
+    {
+      "name": "bulk-list-elementNullable-mismatch-refused",
+      "status": "pass"
+    },
+    {
+      "name": "bulk-list-maxItems-mismatch-refused",
+      "status": "pass"
+    },
+    {
+      "name": "bulk-list-nullable-mismatch-refused",
+      "status": "pass"
+    },
+    {
+      "name": "source-exact-full",
+      "status": "pass"
+    },
+    {
+      "name": "source-exact-full-probes",
+      "status": "pass"
+    },
+    {
+      "name": "source-exact-full-exact-check",
+      "status": "pass"
+    },
+    {
+      "name": "source-exact-full-unknown-profile-refused",
+      "status": "pass"
+    },
+    {
+      "name": "source-exact-drift",
+      "status": "pass"
+    },
+    {
+      "name": "source-exact-drift-probes",
+      "status": "pass"
+    },
+    {
+      "name": "source-exact-drift-exact-check",
+      "status": "pass"
+    },
+    {
+      "name": "source-exact-drift-unknown-profile-refused",
+      "status": "pass"
+    },
+    {
+      "name": "source-exact-search",
+      "status": "pass"
+    },
+    {
+      "name": "source-exact-search-probes",
+      "status": "pass"
+    },
+    {
+      "name": "source-exact-search-exact-check",
+      "status": "pass"
+    },
+    {
+      "name": "source-exact-search-unknown-profile-refused",
+      "status": "pass"
+    },
+    {
+      "name": "source-exact-search-full",
+      "status": "pass"
+    },
+    {
+      "name": "source-exact-search-full-probes",
+      "status": "pass"
+    },
+    {
+      "name": "source-exact-search-full-exact-check",
+      "status": "pass"
+    },
+    {
+      "name": "source-exact-search-full-unknown-profile-refused",
+      "status": "pass"
+    },
+    {
+      "name": "source-exact-action",
+      "status": "pass"
+    },
+    {
+      "name": "source-exact-action-probes",
+      "status": "pass"
+    },
+    {
+      "name": "source-exact-action-exact-check",
+      "status": "pass"
+    },
+    {
+      "name": "source-exact-action-unknown-profile-refused",
+      "status": "pass"
+    },
+    {
+      "name": "source-exact-bulk",
+      "status": "pass"
+    },
+    {
+      "name": "source-exact-bulk-probes",
+      "status": "pass"
+    },
+    {
+      "name": "source-exact-bulk-exact-check",
+      "status": "pass"
+    },
+    {
+      "name": "source-exact-bulk-unknown-profile-refused",
+      "status": "pass"
+    },
+    {
+      "name": "source-exact-search-binding-extensionVersion-refused",
+      "status": "pass"
+    },
+    {
+      "name": "source-exact-search-binding-extensionSchema-refused",
+      "status": "pass"
+    },
+    {
+      "name": "source-exact-search-binding-native-refused",
+      "status": "pass"
+    },
+    {
+      "name": "source-exact-search-binding-dimensions-refused",
+      "status": "pass"
+    },
+    {
+      "name": "source-exact-vector-projection-no-query-binding",
+      "status": "pass"
+    },
+    {
+      "name": "composed-bulk-qualified",
+      "status": "pass"
+    },
+    {
+      "name": "composed-bulk-neutral",
+      "status": "pass"
+    },
+    {
+      "name": "ranked-keyword-config",
+      "status": "pass"
+    },
+    {
+      "name": "search-term-prefilter",
+      "status": "pass"
+    },
+    {
+      "name": "search-term-prefilter-probes",
+      "status": "pass"
+    },
+    {
+      "name": "search-list-filter",
+      "status": "pass"
+    },
+    {
+      "name": "search-list-filter-probes",
+      "status": "pass"
+    },
+    {
+      "name": "search-nullable-filter",
+      "status": "pass"
+    },
+    {
+      "name": "search-nullable-filter-probes",
+      "status": "pass"
+    },
+    {
+      "name": "fenced-ranked",
+      "status": "pass"
+    },
+    {
+      "name": "fenced-ranked-probes",
+      "status": "pass"
+    },
+    {
+      "name": "fenced-ranked-missing-lock-probe-refused",
+      "status": "pass"
+    },
+    {
+      "name": "fenced-scalar-action",
+      "status": "pass"
+    },
+    {
+      "name": "fenced-scalar-action-probes",
+      "status": "pass"
+    },
+    {
+      "name": "fenced-scalar-action-missing-lock-probe-refused",
+      "status": "pass"
+    },
+    {
+      "name": "fenced-effect-action",
+      "status": "pass"
+    },
+    {
+      "name": "fenced-effect-action-probes",
+      "status": "pass"
+    },
+    {
+      "name": "fenced-effect-action-missing-lock-probe-refused",
+      "status": "pass"
+    },
+    {
+      "name": "fenced-bulk",
+      "status": "pass"
+    },
+    {
+      "name": "fenced-bulk-probes",
+      "status": "pass"
+    },
+    {
+      "name": "fenced-bulk-missing-lock-probe-refused",
+      "status": "pass"
+    },
+    {
+      "name": "fenced-raw-terms",
+      "status": "pass"
+    },
+    {
+      "name": "fence-absent-refused",
+      "status": "pass"
+    },
+    {
+      "name": "fence-unknown-refused",
+      "status": "pass"
+    },
+    {
+      "name": "fence-overlong-refused",
+      "status": "pass"
+    },
+    {
+      "name": "fence-utf8-overlong-refused",
+      "status": "pass"
+    },
+    {
+      "name": "public12-string_list",
+      "status": "pass"
+    },
+    {
+      "name": "public12-string_list-probes",
+      "status": "pass"
+    },
+    {
+      "name": "public12-string_not_list",
+      "status": "pass"
+    },
+    {
+      "name": "public12-string_not_list-probes",
+      "status": "pass"
+    },
+    {
+      "name": "public12-integer_list",
+      "status": "pass"
+    },
+    {
+      "name": "public12-integer_list-probes",
+      "status": "pass"
+    },
+    {
+      "name": "public12-decimal_list",
+      "status": "pass"
+    },
+    {
+      "name": "public12-decimal_list-probes",
+      "status": "pass"
+    },
+    {
+      "name": "public12-boolean_list",
+      "status": "pass"
+    },
+    {
+      "name": "public12-boolean_list-probes",
+      "status": "pass"
+    },
+    {
+      "name": "public12-nullable_scalar",
+      "status": "pass"
+    },
+    {
+      "name": "public12-nullable_scalar-probes",
+      "status": "pass"
+    },
+    {
+      "name": "public12-all_terms",
+      "status": "pass"
+    },
+    {
+      "name": "public12-all_terms-probes",
+      "status": "pass"
+    },
+    {
+      "name": "public12-literal_empty",
+      "status": "pass"
+    },
+    {
+      "name": "public12-literal_empty-probes",
+      "status": "pass"
+    },
+    {
+      "name": "public12-literal_nulls",
+      "status": "pass"
+    },
+    {
+      "name": "public12-literal_nulls-probes",
+      "status": "pass"
+    },
+    {
+      "name": "public12-raw_terms",
+      "status": "pass"
+    },
+    {
+      "name": "public12-raw_terms-probes",
+      "status": "pass"
+    },
+    {
+      "name": "public12-raw_pages",
+      "status": "pass"
+    },
+    {
+      "name": "public12-raw_pages-probes",
+      "status": "pass"
+    },
+    {
+      "name": "public12-any_terms",
+      "status": "pass"
+    },
+    {
+      "name": "public12-any_terms-probes",
+      "status": "pass"
+    }
+  ],
+  "controlCount": 172,
+  "temporalQualification": "held",
+  "managedNativeQualification": false,
+  "sourceFingerprintCount": 1218,
+  "sourceFingerprintsUnchanged": true,
+  "sourceClean": true
+}

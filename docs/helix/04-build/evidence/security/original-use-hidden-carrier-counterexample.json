@@ -1,0 +1,10 @@
+{
+  "status": "counterexample-observed",
+  "engine": "PostgreSQL 17.9",
+  "sourceSha256": "21d4419ac42e060a8f6daac3f2c131ca8011583735e217efe686545148d24e81",
+  "sourceArchive": "docs/helix/04-build/evidence/security/original-use-hidden-carrier-vulnerable.py.txt",
+  "control": "Eligible Alice query_predicate with only unreadable RB salary set to JSON null",
+  "expected": "Authorized predicate result RAB, no diagnostics",
+  "observed": "Nonzero client exit: Original query unavailable, PL/pgSQL query_predicate at RAISE",
+  "scope": "Actual owned fixture failure with finally cleanup. Indicates hidden-source error interference; not a diagnostic value disclosure or full production exploit."
+}

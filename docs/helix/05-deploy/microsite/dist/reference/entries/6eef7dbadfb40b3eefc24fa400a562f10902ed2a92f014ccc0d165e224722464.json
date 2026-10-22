@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 8267,
+        "line": 23,
+        "path": "src/core-ideals/nullability-parquet-projection.ts",
+        "sha256": "1764b89974dce6f552ccfa8f9bc8dd34f90c98cfb33a534e4574b51c2296deda"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "projectNullabilityToParquet",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: CoreNullabilityDeclaration, options: NullabilityParquetRequest): NullabilityParquetProjection & { diagnostics: Diagnostic[]; }"
+    ]
+  },
+  "id": "[\"api\",\".\",\"projectNullabilityToParquet\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 8267,
+      "line": 23,
+      "path": "src/core-ideals/nullability-parquet-projection.ts",
+      "sha256": "1764b89974dce6f552ccfa8f9bc8dd34f90c98cfb33a534e4574b51c2296deda"
+    }
+  ],
+  "summary": "Public export · src/core-ideals/nullability-parquet-projection.ts",
+  "title": "projectNullabilityToParquet"
+}

@@ -1,0 +1,3015 @@
+{
+  "results": [
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "schema-properties/valid",
+      "valid": true
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "CORE_SCHEMA_PROPERTIES",
+          "message": "Duplicate equal allowed value",
+          "path": "/modules/0/elements/0/allowedValues/1",
+          "severity": "error"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "schema-properties/duplicate-equal-integers",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "CORE_SCHEMA_PROPERTIES",
+          "message": "Duplicate equal allowed value",
+          "path": "/modules/0/elements/1/allowedValues/1",
+          "severity": "error"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "schema-properties/duplicate-equal-decimals",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "CORE_SCHEMA_PROPERTIES",
+          "message": "Duplicate equal allowed value",
+          "path": "/modules/0/elements/3/allowedValues/1",
+          "severity": "error"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "schema-properties/duplicate-equal-binary",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "CORE_SCHEMA_PROPERTIES",
+          "message": "Literal does not match scalar family",
+          "path": "/modules/0/elements/0/default/value",
+          "severity": "error"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "schema-properties/invalid-default-domain",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "CORE_SCHEMA_PROPERTIES",
+          "message": "Literal is not an allowed value",
+          "path": "/modules/0/elements/0/default/value",
+          "severity": "error"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "schema-properties/default-not-in-set",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "CORE_SCHEMA_PROPERTIES",
+          "message": "Numeric value would require rounding",
+          "path": "/modules/0/elements/0/examples/0",
+          "severity": "error"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "schema-properties/fractional-integer",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "CORE_SCHEMA_PROPERTIES",
+          "message": "Numeric value would require rounding",
+          "path": "/modules/0/elements/1/examples/0",
+          "severity": "error"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "schema-properties/decimal-rounding",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "CORE_SCHEMA_PROPERTIES",
+          "message": "Collection size outside bounds",
+          "path": "/modules/0/elements/5/default/value",
+          "severity": "error"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "schema-properties/collection-size",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "CORE_SCHEMA_PROPERTIES",
+          "message": "Literal length outside bounds",
+          "path": "/modules/0/elements/2/examples/0",
+          "severity": "error"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "schema-properties/min-length",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "CORE_SCHEMA_PROPERTIES",
+          "message": "Unpaired Unicode surrogate",
+          "path": "/modules/0/elements/2/examples/0",
+          "severity": "error"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "schema-properties/surrogate",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "CORE_SCHEMA_PROPERTIES",
+          "message": "Empty or inverted numeric interval",
+          "path": "/modules/0/elements/1/facets/range",
+          "severity": "error"
+        },
+        {
+          "code": "CORE_SCHEMA_PROPERTIES",
+          "message": "Literal outside numeric range",
+          "path": "/modules/0/elements/1/default/value",
+          "severity": "error"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "schema-properties/empty-range",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "CORE_SCHEMA_PROPERTIES",
+          "message": "Inclusive flag requires its bound",
+          "path": "/modules/0/elements/1/facets/range/maxInclusive",
+          "severity": "error"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "schema-properties/unpaired-flag",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "CORE_SCHEMA_PROPERTIES",
+          "message": "Minimum exceeds maximum",
+          "path": "/modules/0/elements/2/facets/length",
+          "severity": "error"
+        },
+        {
+          "code": "CORE_SCHEMA_PROPERTIES",
+          "message": "Literal length outside bounds",
+          "path": "/modules/0/elements/2/examples/0",
+          "severity": "error"
+        },
+        {
+          "code": "CORE_SCHEMA_PROPERTIES",
+          "message": "Literal length outside bounds",
+          "path": "/modules/0/elements/2/default/value",
+          "severity": "error"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "schema-properties/inverted-length",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "CORE_SCHEMA_PROPERTIES",
+          "message": "Minimum exceeds maximum",
+          "path": "/modules/0/elements/5/facets/collectionSize",
+          "severity": "error"
+        },
+        {
+          "code": "CORE_SCHEMA_PROPERTIES",
+          "message": "Collection size outside bounds",
+          "path": "/modules/0/elements/5/examples/0",
+          "severity": "error"
+        },
+        {
+          "code": "CORE_SCHEMA_PROPERTIES",
+          "message": "Collection size outside bounds",
+          "path": "/modules/0/elements/5/default/value",
+          "severity": "error"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "schema-properties/inverted-size",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "CORE_SCHEMA_PROPERTIES",
+          "message": "Collection bounds require array/map Field",
+          "path": "/modules/0/elements/4/facets/collectionSize",
+          "severity": "error"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "schema-properties/collection-bound-on-scalar",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "CORE_SCHEMA_PROPERTIES",
+          "message": "Range requires integer/decimal Field",
+          "path": "/modules/0/elements/2/facets/range",
+          "severity": "error"
+        },
+        {
+          "code": "CORE_SCHEMA_PROPERTIES",
+          "message": "Expected exact JSON numeric token",
+          "path": "/modules/0/elements/2/default/value",
+          "severity": "error"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "schema-properties/range-on-string",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "SEMANTIC_TYPE_STRUCTURE",
+          "message": "must pass \"enum\" keyword validation",
+          "path": "/modules/0/elements/0/default/on",
+          "severity": "error"
+        }
+      ],
+      "id": "schema-properties/unknown-default-behavior",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "CORE_SCHEMA_PROPERTIES",
+          "message": "Numeric bounds cannot be null",
+          "path": "/modules/0/elements/4/facets/range/min",
+          "severity": "error"
+        },
+        {
+          "code": "CORE_SCHEMA_PROPERTIES",
+          "message": "Numeric bounds cannot be null",
+          "path": "/modules/0/elements/5/default/value/facets/range/min",
+          "severity": "error"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "schema-properties/null-numeric-bound",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "UNKNOWN_FACET",
+          "message": "Facet member retained without interpretation",
+          "path": "/modules/0/elements/4/facets/future",
+          "severity": "warning"
+        },
+        {
+          "code": "CORE_SCHEMA_PROPERTIES",
+          "message": "Empty or inverted numeric interval",
+          "path": "/modules/0/elements/4/facets/range",
+          "severity": "error"
+        },
+        {
+          "code": "CORE_SCHEMA_PROPERTY_UNKNOWN",
+          "message": "Unknown relevant qualifier: future",
+          "path": "/modules/0/elements/5/examples/0/facets/future",
+          "severity": "warning"
+        },
+        {
+          "code": "CORE_SCHEMA_PROPERTY_UNKNOWN",
+          "message": "Unknown relevant qualifier: future",
+          "path": "/modules/0/elements/5/default/value/facets/future",
+          "severity": "warning"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "schema-properties/unknown-facet-inverted-range",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "CORE_SCHEMA_PROPERTIES",
+          "message": "Empty or inverted numeric interval",
+          "path": "/modules/0/elements/4/facets/range",
+          "severity": "error"
+        },
+        {
+          "code": "CORE_SCHEMA_PROPERTIES",
+          "message": "Literal outside numeric range",
+          "path": "/modules/0/elements/5/default/value",
+          "severity": "error"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "schema-properties/empty-discrete-integer-range",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "CORE_SCHEMA_PROPERTIES",
+          "message": "Empty or inverted numeric interval",
+          "path": "/modules/0/elements/1/facets/range",
+          "severity": "error"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "schema-properties/empty-discrete-decimal-range",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "CORE_SCHEMA_PROPERTIES",
+          "message": "Empty or inverted numeric interval",
+          "path": "/modules/0/elements/0/facets/range",
+          "severity": "error"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "schema-properties/signed8-min-domain-extreme-exclusive",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "schema-properties/signed8-min-domain-extreme-inclusive",
+      "valid": true
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "CORE_SCHEMA_PROPERTIES",
+          "message": "Empty or inverted numeric interval",
+          "path": "/modules/0/elements/0/facets/range",
+          "severity": "error"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "schema-properties/signed8-max-domain-extreme-exclusive",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "schema-properties/signed8-max-domain-extreme-inclusive",
+      "valid": true
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "CORE_SCHEMA_PROPERTIES",
+          "message": "Empty or inverted numeric interval",
+          "path": "/modules/0/elements/0/facets/range",
+          "severity": "error"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "schema-properties/unsigned8-min-domain-extreme-exclusive",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "schema-properties/unsigned8-min-domain-extreme-inclusive",
+      "valid": true
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "CORE_SCHEMA_PROPERTIES",
+          "message": "Empty or inverted numeric interval",
+          "path": "/modules/0/elements/0/facets/range",
+          "severity": "error"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "schema-properties/unsigned8-max-domain-extreme-exclusive",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "schema-properties/unsigned8-max-domain-extreme-inclusive",
+      "valid": true
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "CORE_SCHEMA_PROPERTIES",
+          "message": "Empty or inverted numeric interval",
+          "path": "/modules/0/elements/0/facets/range",
+          "severity": "error"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "schema-properties/decimal-scale0-min-domain-extreme-exclusive",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "schema-properties/decimal-scale0-min-domain-extreme-inclusive",
+      "valid": true
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "CORE_SCHEMA_PROPERTIES",
+          "message": "Empty or inverted numeric interval",
+          "path": "/modules/0/elements/0/facets/range",
+          "severity": "error"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "schema-properties/decimal-scale0-max-domain-extreme-exclusive",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "schema-properties/decimal-scale0-max-domain-extreme-inclusive",
+      "valid": true
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "CORE_SCHEMA_PROPERTIES",
+          "message": "Empty or inverted numeric interval",
+          "path": "/modules/0/elements/0/facets/range",
+          "severity": "error"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "schema-properties/decimal-scale2-min-domain-extreme-exclusive",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "schema-properties/decimal-scale2-min-domain-extreme-inclusive",
+      "valid": true
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "CORE_SCHEMA_PROPERTIES",
+          "message": "Empty or inverted numeric interval",
+          "path": "/modules/0/elements/0/facets/range",
+          "severity": "error"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "schema-properties/decimal-scale2-max-domain-extreme-exclusive",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "schema-properties/decimal-scale2-max-domain-extreme-inclusive",
+      "valid": true
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "UNKNOWN_EXTENSION",
+          "message": "Exact extension version unavailable; content retained",
+          "path": "/vocabularies/future",
+          "severity": "warning"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "keys/primary-and-alternate",
+      "valid": true
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "UNKNOWN_EXTENSION",
+          "message": "Exact extension version unavailable; content retained",
+          "path": "/vocabularies/future",
+          "severity": "warning"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "keys/no-primary",
+      "valid": true
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "UNKNOWN_EXTENSION",
+          "message": "Exact extension version unavailable; content retained",
+          "path": "/vocabularies/future",
+          "severity": "warning"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "keys/explicit-false-primary",
+      "valid": true
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "UNKNOWN_EXTENSION",
+          "message": "Exact extension version unavailable; content retained",
+          "path": "/vocabularies/future",
+          "severity": "warning"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "keys/key-list-order-not-identity",
+      "valid": true
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "UNKNOWN_EXTENSION",
+          "message": "Exact extension version unavailable; content retained",
+          "path": "/vocabularies/future",
+          "severity": "warning"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "keys/rename-keeps-id",
+      "valid": true
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "UNKNOWN_EXTENSION",
+          "message": "Exact extension version unavailable; content retained",
+          "path": "/vocabularies/future",
+          "severity": "warning"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "keys/record-without-keys",
+      "valid": true
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "UNKNOWN_EXTENSION",
+          "message": "Exact extension version unavailable; content retained",
+          "path": "/vocabularies/future",
+          "severity": "warning"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "keys/empty-record",
+      "valid": true
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "UNKNOWN_EXTENSION",
+          "message": "Exact extension version unavailable; content retained",
+          "path": "/vocabularies/future",
+          "severity": "warning"
+        },
+        {
+          "code": "UNKNOWN_CORE_FIELD",
+          "message": "Field retained without interpretation",
+          "path": "/modules/0/elements/0/key",
+          "severity": "warning"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "keys/opaque-singular-key",
+      "valid": true
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "UNKNOWN_EXTENSION",
+          "message": "Exact extension version unavailable; content retained",
+          "path": "/vocabularies/future",
+          "severity": "warning"
+        },
+        {
+          "code": "UNKNOWN_KEY_QUALIFIER",
+          "message": "Qualifier retained without interpretation",
+          "path": "/modules/0/elements/0/keys/0/a~1b~0c",
+          "severity": "warning"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "keys/unknown-qualifier",
+      "valid": true
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "UNKNOWN_EXTENSION",
+          "message": "Exact extension version unavailable; content retained",
+          "path": "/vocabularies/future",
+          "severity": "warning"
+        },
+        {
+          "code": "UNKNOWN_KEY_QUALIFIER",
+          "message": "Qualifier retained without interpretation",
+          "path": "/modules/0/elements/0/members/0/future",
+          "severity": "warning"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "keys/unknown-member-qualifier",
+      "valid": true
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "UNKNOWN_EXTENSION",
+          "message": "Exact extension version unavailable; content retained",
+          "path": "/vocabularies/future",
+          "severity": "warning"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "keys/same-key-id-in-other-record",
+      "valid": true
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "UNKNOWN_EXTENSION",
+          "message": "Exact extension version unavailable; content retained",
+          "path": "/vocabularies/future",
+          "severity": "warning"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "keys/allowed-boolean",
+      "valid": true
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "UNKNOWN_EXTENSION",
+          "message": "Exact extension version unavailable; content retained",
+          "path": "/vocabularies/future",
+          "severity": "warning"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "keys/allowed-binary",
+      "valid": true
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "UNKNOWN_EXTENSION",
+          "message": "Exact extension version unavailable; content retained",
+          "path": "/vocabularies/future",
+          "severity": "warning"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "keys/allowed-decimal",
+      "valid": true
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "UNKNOWN_EXTENSION",
+          "message": "Exact extension version unavailable; content retained",
+          "path": "/vocabularies/future",
+          "severity": "warning"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "keys/composite-key",
+      "valid": true
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "SEMANTIC_TYPE_STRUCTURE",
+          "message": "must NOT have fewer than 1 items",
+          "path": "/modules/0/elements/0/keys",
+          "severity": "error"
+        }
+      ],
+      "id": "keys/empty-keys",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "SEMANTIC_TYPE_STRUCTURE",
+          "message": "must NOT have fewer than 1 items",
+          "path": "/modules/0/elements/0/keys/0/fields",
+          "severity": "error"
+        }
+      ],
+      "id": "keys/empty-components",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "SEMANTIC_TYPE_STRUCTURE",
+          "message": "must have required property 'id'",
+          "path": "/modules/0/elements/0/keys/0",
+          "severity": "error"
+        }
+      ],
+      "id": "keys/missing-id",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "SEMANTIC_TYPE_STRUCTURE",
+          "message": "must have required property 'name'",
+          "path": "/modules/0/elements/0/keys/0",
+          "severity": "error"
+        }
+      ],
+      "id": "keys/missing-name",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "SEMANTIC_TYPE_STRUCTURE",
+          "message": "must NOT have fewer than 1 characters",
+          "path": "/modules/0/elements/0/keys/0/name",
+          "severity": "error"
+        }
+      ],
+      "id": "keys/empty-name",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "SEMANTIC_TYPE_STRUCTURE",
+          "message": "must be boolean",
+          "path": "/modules/0/elements/0/keys/0/primary",
+          "severity": "error"
+        }
+      ],
+      "id": "keys/string-primary",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "SEMANTIC_TYPE_STRUCTURE",
+          "message": "must pass \"const\" keyword validation",
+          "path": "/modules/0/elements/0/kind",
+          "severity": "error"
+        },
+        {
+          "code": "SEMANTIC_TYPE_STRUCTURE",
+          "message": "must match \"then\" schema",
+          "path": "/modules/0/elements/0",
+          "severity": "error"
+        },
+        {
+          "code": "SEMANTIC_TYPE_STRUCTURE",
+          "message": "must pass \"const\" keyword validation",
+          "path": "/modules/0/elements/0/kind",
+          "severity": "error"
+        },
+        {
+          "code": "SEMANTIC_TYPE_STRUCTURE",
+          "message": "must match \"then\" schema",
+          "path": "/modules/0/elements/0",
+          "severity": "error"
+        }
+      ],
+      "id": "keys/non-record-keys",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "SEMANTIC_TYPE_STRUCTURE",
+          "message": "must pass \"const\" keyword validation",
+          "path": "/modules/0/elements/0/kind",
+          "severity": "error"
+        },
+        {
+          "code": "SEMANTIC_TYPE_STRUCTURE",
+          "message": "must match \"then\" schema",
+          "path": "/modules/0/elements/0",
+          "severity": "error"
+        }
+      ],
+      "id": "keys/non-record-members",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "SEMANTIC_TYPE_STRUCTURE",
+          "message": "must have required property 'members'",
+          "path": "/modules/0/elements/0",
+          "severity": "error"
+        },
+        {
+          "code": "SEMANTIC_TYPE_STRUCTURE",
+          "message": "must match \"then\" schema",
+          "path": "/modules/0/elements/0",
+          "severity": "error"
+        }
+      ],
+      "id": "keys/missing-members",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "UNKNOWN_EXTENSION",
+          "message": "Exact extension version unavailable; content retained",
+          "path": "/vocabularies/future",
+          "severity": "warning"
+        },
+        {
+          "code": "KEY_DUPLICATE_ID",
+          "message": "Key ID is not unique within the Record",
+          "path": "/modules/0/elements/0/keys/1/id",
+          "severity": "error"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "keys/duplicate-id",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "UNKNOWN_EXTENSION",
+          "message": "Exact extension version unavailable; content retained",
+          "path": "/vocabularies/future",
+          "severity": "warning"
+        },
+        {
+          "code": "KEY_DUPLICATE_NAME",
+          "message": "Key name is not unique within the Record",
+          "path": "/modules/0/elements/0/keys/1/name",
+          "severity": "error"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "keys/duplicate-name",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "UNKNOWN_EXTENSION",
+          "message": "Exact extension version unavailable; content retained",
+          "path": "/vocabularies/future",
+          "severity": "warning"
+        },
+        {
+          "code": "KEY_PRIMARY_COUNT",
+          "message": "At most one key may be primary",
+          "path": "/modules/0/elements/0/keys/1/primary",
+          "severity": "error"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "keys/multiple-primary",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "UNKNOWN_EXTENSION",
+          "message": "Exact extension version unavailable; content retained",
+          "path": "/vocabularies/future",
+          "severity": "warning"
+        },
+        {
+          "code": "KEY_DUPLICATE_SET",
+          "message": "Key component set duplicates another key, regardless of order",
+          "path": "/modules/0/elements/0/keys/1/fields",
+          "severity": "error"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "keys/duplicate-set-order-independent",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "UNKNOWN_EXTENSION",
+          "message": "Exact extension version unavailable; content retained",
+          "path": "/vocabularies/future",
+          "severity": "warning"
+        },
+        {
+          "code": "KEY_DUPLICATE_FIELD",
+          "message": "Key repeats a Field identity",
+          "path": "/modules/0/elements/0/keys/0/fields",
+          "severity": "error"
+        },
+        {
+          "code": "UNKNOWN_KEY_QUALIFIER",
+          "message": "Qualifier retained without interpretation",
+          "path": "/modules/0/elements/0/keys/0/fields/1/future",
+          "severity": "warning"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "keys/duplicate-ref-with-unknown",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "UNKNOWN_EXTENSION",
+          "message": "Exact extension version unavailable; content retained",
+          "path": "/vocabularies/future",
+          "severity": "warning"
+        },
+        {
+          "code": "UNKNOWN_KEY_QUALIFIER",
+          "message": "Qualifier retained without interpretation",
+          "path": "/modules/0/elements/0/members/2/future",
+          "severity": "warning"
+        },
+        {
+          "code": "KEY_DUPLICATE_MEMBER",
+          "message": "Record membership repeats a Field identity",
+          "path": "/modules/0/elements/0/members/2",
+          "severity": "error"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "keys/duplicate-member-with-unknown",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "UNKNOWN_EXTENSION",
+          "message": "Exact extension version unavailable; content retained",
+          "path": "/vocabularies/future",
+          "severity": "warning"
+        },
+        {
+          "code": "KEY_MEMBER_MISSING",
+          "message": "Member Field does not exist",
+          "path": "/modules/0/elements/0/members/2",
+          "severity": "error"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "keys/missing-member",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "UNKNOWN_EXTENSION",
+          "message": "Exact extension version unavailable; content retained",
+          "path": "/vocabularies/future",
+          "severity": "warning"
+        },
+        {
+          "code": "KEY_MEMBER_KIND",
+          "message": "Record members must be explicit Fields",
+          "path": "/modules/0/elements/0/members/2",
+          "severity": "error"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "keys/record-as-member",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "UNKNOWN_EXTENSION",
+          "message": "Exact extension version unavailable; content retained",
+          "path": "/vocabularies/future",
+          "severity": "warning"
+        },
+        {
+          "code": "KEY_MEMBER_OWNER",
+          "message": "Field already belongs to another Record: /modules/0/elements/0",
+          "path": "/modules/0/elements/3/members/0",
+          "severity": "error"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "keys/multiple-owners",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "UNKNOWN_EXTENSION",
+          "message": "Exact extension version unavailable; content retained",
+          "path": "/vocabularies/future",
+          "severity": "warning"
+        },
+        {
+          "code": "KEY_FIELD_OWNER",
+          "message": "Key component is not a member of its owning Record",
+          "path": "/modules/0/elements/0/keys/0/fields/0",
+          "severity": "error"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "keys/cross-record-field",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "UNKNOWN_EXTENSION",
+          "message": "Exact extension version unavailable; content retained",
+          "path": "/vocabularies/future",
+          "severity": "warning"
+        },
+        {
+          "code": "KEY_FIELD_OWNER",
+          "message": "Key component is not a member of its owning Record",
+          "path": "/modules/0/elements/0/keys/0/fields/0",
+          "severity": "error"
+        },
+        {
+          "code": "KEY_FIELD_MISSING",
+          "message": "Key Field does not exist",
+          "path": "/modules/0/elements/0/keys/0/fields/0",
+          "severity": "error"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "keys/missing-component",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "UNKNOWN_EXTENSION",
+          "message": "Exact extension version unavailable; content retained",
+          "path": "/vocabularies/future",
+          "severity": "warning"
+        },
+        {
+          "code": "KEY_FIELD_REQUIRED",
+          "message": "Key component must explicitly supply a value",
+          "path": "/modules/0/elements/0/keys/0/fields/0",
+          "severity": "error"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "keys/availability-absent-allowed",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "UNKNOWN_EXTENSION",
+          "message": "Exact extension version unavailable; content retained",
+          "path": "/vocabularies/future",
+          "severity": "warning"
+        },
+        {
+          "code": "KEY_FIELD_REQUIRED",
+          "message": "Key component must explicitly supply a value",
+          "path": "/modules/0/elements/0/keys/0/fields/0",
+          "severity": "error"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "keys/availability-unspecified",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "UNKNOWN_EXTENSION",
+          "message": "Exact extension version unavailable; content retained",
+          "path": "/vocabularies/future",
+          "severity": "warning"
+        },
+        {
+          "code": "UNKNOWN_NULLABILITY",
+          "message": "Availability label retained without interpretation",
+          "path": "/modules/0/elements/1/nullability",
+          "severity": "warning"
+        },
+        {
+          "code": "KEY_FIELD_REQUIRED",
+          "message": "Key component must explicitly supply a value",
+          "path": "/modules/0/elements/0/keys/0/fields/0",
+          "severity": "error"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "keys/availability-future",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "UNKNOWN_EXTENSION",
+          "message": "Exact extension version unavailable; content retained",
+          "path": "/vocabularies/future",
+          "severity": "warning"
+        },
+        {
+          "code": "KEY_FIELD_REQUIRED",
+          "message": "Key component must explicitly supply a value",
+          "path": "/modules/0/elements/0/keys/0/fields/0",
+          "severity": "error"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "keys/availability-undefined",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "UNKNOWN_EXTENSION",
+          "message": "Exact extension version unavailable; content retained",
+          "path": "/vocabularies/future",
+          "severity": "warning"
+        },
+        {
+          "code": "KEY_FIELD_SINGULAR",
+          "message": "Key component must explicitly be singular",
+          "path": "/modules/0/elements/0/keys/0/fields/0",
+          "severity": "error"
+        },
+        {
+          "code": "KEY_EQUALITY",
+          "message": "Key equality is undefined for this component",
+          "path": "/modules/0/elements/0/keys/0/fields/0",
+          "severity": "error"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "keys/shape-array",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "UNKNOWN_EXTENSION",
+          "message": "Exact extension version unavailable; content retained",
+          "path": "/vocabularies/future",
+          "severity": "warning"
+        },
+        {
+          "code": "KEY_FIELD_SINGULAR",
+          "message": "Key component must explicitly be singular",
+          "path": "/modules/0/elements/0/keys/0/fields/0",
+          "severity": "error"
+        },
+        {
+          "code": "KEY_EQUALITY",
+          "message": "Key equality is undefined for this component",
+          "path": "/modules/0/elements/0/keys/0/fields/0",
+          "severity": "error"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "keys/shape-map",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "UNKNOWN_EXTENSION",
+          "message": "Exact extension version unavailable; content retained",
+          "path": "/vocabularies/future",
+          "severity": "warning"
+        },
+        {
+          "code": "KEY_FIELD_SINGULAR",
+          "message": "Key component must explicitly be singular",
+          "path": "/modules/0/elements/0/keys/0/fields/0",
+          "severity": "error"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "keys/shape-unspecified",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "UNKNOWN_EXTENSION",
+          "message": "Exact extension version unavailable; content retained",
+          "path": "/vocabularies/future",
+          "severity": "warning"
+        },
+        {
+          "code": "UNKNOWN_CARDINALITY",
+          "message": "Container label retained without interpretation",
+          "path": "/modules/0/elements/1/cardinality",
+          "severity": "warning"
+        },
+        {
+          "code": "KEY_FIELD_SINGULAR",
+          "message": "Key component must explicitly be singular",
+          "path": "/modules/0/elements/0/keys/0/fields/0",
+          "severity": "error"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "keys/shape-future",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "UNKNOWN_EXTENSION",
+          "message": "Exact extension version unavailable; content retained",
+          "path": "/vocabularies/future",
+          "severity": "warning"
+        },
+        {
+          "code": "KEY_FIELD_SINGULAR",
+          "message": "Key component must explicitly be singular",
+          "path": "/modules/0/elements/0/keys/0/fields/0",
+          "severity": "error"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "keys/shape-undefined",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "UNKNOWN_EXTENSION",
+          "message": "Exact extension version unavailable; content retained",
+          "path": "/vocabularies/future",
+          "severity": "warning"
+        },
+        {
+          "code": "KEY_EQUALITY",
+          "message": "Key equality is undefined for this component",
+          "path": "/modules/0/elements/0/keys/0/fields/0",
+          "severity": "error"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "keys/undefined-equality-float",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "UNKNOWN_EXTENSION",
+          "message": "Exact extension version unavailable; content retained",
+          "path": "/vocabularies/future",
+          "severity": "warning"
+        },
+        {
+          "code": "KEY_EQUALITY",
+          "message": "Key equality is undefined for this component",
+          "path": "/modules/0/elements/0/keys/0/fields/0",
+          "severity": "error"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "keys/undefined-equality-date",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "UNKNOWN_EXTENSION",
+          "message": "Exact extension version unavailable; content retained",
+          "path": "/vocabularies/future",
+          "severity": "warning"
+        },
+        {
+          "code": "KEY_EQUALITY",
+          "message": "Key equality is undefined for this component",
+          "path": "/modules/0/elements/0/keys/0/fields/0",
+          "severity": "error"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "keys/undefined-equality-time",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "UNKNOWN_EXTENSION",
+          "message": "Exact extension version unavailable; content retained",
+          "path": "/vocabularies/future",
+          "severity": "warning"
+        },
+        {
+          "code": "KEY_EQUALITY",
+          "message": "Key equality is undefined for this component",
+          "path": "/modules/0/elements/0/keys/0/fields/0",
+          "severity": "error"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "keys/undefined-equality-timestamp",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "UNKNOWN_EXTENSION",
+          "message": "Exact extension version unavailable; content retained",
+          "path": "/vocabularies/future",
+          "severity": "warning"
+        },
+        {
+          "code": "UNKNOWN_SCALAR_TYPE",
+          "message": "Scalar family retained without interpretation",
+          "path": "/modules/0/elements/1/scalarType",
+          "severity": "warning"
+        },
+        {
+          "code": "KEY_EQUALITY",
+          "message": "Key equality is undefined for this component",
+          "path": "/modules/0/elements/0/keys/0/fields/0",
+          "severity": "error"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "keys/undefined-equality-future",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "UNKNOWN_EXTENSION",
+          "message": "Exact extension version unavailable; content retained",
+          "path": "/vocabularies/future",
+          "severity": "warning"
+        },
+        {
+          "code": "KEY_EQUALITY",
+          "message": "Key equality is undefined for this component",
+          "path": "/modules/0/elements/0/keys/0/fields/0",
+          "severity": "error"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "keys/undefined-equality-undefined",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "UNKNOWN_EXTENSION",
+          "message": "Exact extension version unavailable; content retained",
+          "path": "/vocabularies/future",
+          "severity": "warning"
+        },
+        {
+          "code": "KEY_EQUALITY",
+          "message": "Key equality is undefined for this component",
+          "path": "/modules/0/elements/0/keys/0/fields/0",
+          "severity": "error"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "keys/record-valued-field",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "UNKNOWN_EXTENSION",
+          "message": "Exact extension version unavailable; content retained",
+          "path": "/vocabularies/future",
+          "severity": "warning"
+        },
+        {
+          "code": "KEY_DECIMAL_DOMAIN",
+          "message": "Decimal key equality requires explicit precision and scale",
+          "path": "/modules/0/elements/0/keys/0/fields/0",
+          "severity": "error"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "keys/unqualified-decimal",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "UNKNOWN_EXTENSION",
+          "message": "Exact extension version unavailable; content retained",
+          "path": "/vocabularies/future",
+          "severity": "warning"
+        },
+        {
+          "code": "FACET_SCALE",
+          "message": "Scale must not exceed precision",
+          "path": "/modules/0/elements/1/facets/scale",
+          "severity": "error"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "keys/invalid-decimal-scale",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "UNKNOWN_EXTENSION",
+          "message": "Exact extension version unavailable; content retained",
+          "path": "/vocabularies/future",
+          "severity": "warning"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "keys/legacy-profile",
+      "valid": true
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "UNKNOWN_EXTENSION",
+          "message": "Exact extension version unavailable; content retained",
+          "path": "/vocabularies/future",
+          "severity": "warning"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "relationships/many-to-one",
+      "valid": true
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "UNKNOWN_EXTENSION",
+          "message": "Exact extension version unavailable; content retained",
+          "path": "/vocabularies/future",
+          "severity": "warning"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "relationships/one-to-one",
+      "valid": true
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "UNKNOWN_EXTENSION",
+          "message": "Exact extension version unavailable; content retained",
+          "path": "/vocabularies/future",
+          "severity": "warning"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "relationships/many-to-many",
+      "valid": true
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "UNKNOWN_EXTENSION",
+          "message": "Exact extension version unavailable; content retained",
+          "path": "/vocabularies/future",
+          "severity": "warning"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "relationships/heterogeneous",
+      "valid": true
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "UNKNOWN_EXTENSION",
+          "message": "Exact extension version unavailable; content retained",
+          "path": "/vocabularies/future",
+          "severity": "warning"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "relationships/self",
+      "valid": true
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "UNKNOWN_EXTENSION",
+          "message": "Exact extension version unavailable; content retained",
+          "path": "/vocabularies/future",
+          "severity": "warning"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "relationships/undirected",
+      "valid": true
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "UNKNOWN_EXTENSION",
+          "message": "Exact extension version unavailable; content retained",
+          "path": "/vocabularies/future",
+          "severity": "warning"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "relationships/alternate-key",
+      "valid": true
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "UNKNOWN_EXTENSION",
+          "message": "Exact extension version unavailable; content retained",
+          "path": "/vocabularies/future",
+          "severity": "warning"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "relationships/bounded",
+      "valid": true
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "UNKNOWN_EXTENSION",
+          "message": "Exact extension version unavailable; content retained",
+          "path": "/vocabularies/future",
+          "severity": "warning"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "relationships/reified-enrollment",
+      "valid": true
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "UNKNOWN_EXTENSION",
+          "message": "Exact extension version unavailable; content retained",
+          "path": "/vocabularies/future",
+          "severity": "warning"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "relationships/owned",
+      "valid": true
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "UNKNOWN_EXTENSION",
+          "message": "Exact extension version unavailable; content retained",
+          "path": "/vocabularies/future",
+          "severity": "warning"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "relationships/no-relationships",
+      "valid": true
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "UNKNOWN_EXTENSION",
+          "message": "Exact extension version unavailable; content retained",
+          "path": "/vocabularies/future",
+          "severity": "warning"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "relationships/empty-relationships",
+      "valid": true
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "UNKNOWN_EXTENSION",
+          "message": "Exact extension version unavailable; content retained",
+          "path": "/vocabularies/future",
+          "severity": "warning"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "relationships/renamed-key",
+      "valid": true
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "UNKNOWN_EXTENSION",
+          "message": "Exact extension version unavailable; content retained",
+          "path": "/vocabularies/future",
+          "severity": "warning"
+        },
+        {
+          "code": "UNKNOWN_RELATIONSHIP_QUALIFIER",
+          "message": "Qualifier retained without interpretation",
+          "path": "/modules/0/relationships/0/a~1b~0c",
+          "severity": "warning"
+        },
+        {
+          "code": "UNKNOWN_RELATIONSHIP_QUALIFIER",
+          "message": "Qualifier retained without interpretation",
+          "path": "/modules/0/relationships/0/sourceMultiplicity/future",
+          "severity": "warning"
+        },
+        {
+          "code": "UNKNOWN_RELATIONSHIP_QUALIFIER",
+          "message": "Qualifier retained without interpretation",
+          "path": "/modules/0/relationships/0/target/0/future",
+          "severity": "warning"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "relationships/future-qualifiers",
+      "valid": true
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "UNKNOWN_EXTENSION",
+          "message": "Exact extension version unavailable; content retained",
+          "path": "/vocabularies/future",
+          "severity": "warning"
+        },
+        {
+          "code": "UNKNOWN_RELATIONSHIP_LIFECYCLE",
+          "message": "Future lifecycle retained without interpretation",
+          "path": "/modules/0/relationships/0/targetLifecycle",
+          "severity": "warning"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "relationships/future-lifecycle",
+      "valid": true
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "UNKNOWN_EXTENSION",
+          "message": "Exact extension version unavailable; content retained",
+          "path": "/vocabularies/future",
+          "severity": "warning"
+        },
+        {
+          "code": "RELATIONSHIP_DUPLICATE_ID",
+          "message": "Relationship ID must be unique in its module",
+          "path": "/modules/0/relationships/1/id",
+          "severity": "error"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "relationships/duplicate-id",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "UNKNOWN_EXTENSION",
+          "message": "Exact extension version unavailable; content retained",
+          "path": "/vocabularies/future",
+          "severity": "warning"
+        },
+        {
+          "code": "RELATIONSHIP_DUPLICATE_NAME",
+          "message": "Relationship name must be unique in its module",
+          "path": "/modules/0/relationships/1/name",
+          "severity": "error"
+        },
+        {
+          "code": "RELATIONSHIP_PRESENTATION_COLLISION",
+          "message": "Inverse presentation collides on this endpoint with /modules/0/relationships/0/inverse",
+          "path": "/modules/0/relationships/1/inverse",
+          "severity": "error"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "relationships/duplicate-name",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "UNKNOWN_EXTENSION",
+          "message": "Exact extension version unavailable; content retained",
+          "path": "/vocabularies/future",
+          "severity": "warning"
+        },
+        {
+          "code": "UNKNOWN_RELATIONSHIP_QUALIFIER",
+          "message": "Qualifier retained without interpretation",
+          "path": "/modules/0/relationships/0/source/1/future",
+          "severity": "warning"
+        },
+        {
+          "code": "RELATIONSHIP_DUPLICATE_ENDPOINT",
+          "message": "Endpoint Record repeats, regardless of qualifiers or target key",
+          "path": "/modules/0/relationships/0/source/1",
+          "severity": "error"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "relationships/duplicate-source",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "UNKNOWN_EXTENSION",
+          "message": "Exact extension version unavailable; content retained",
+          "path": "/vocabularies/future",
+          "severity": "warning"
+        },
+        {
+          "code": "RELATIONSHIP_DUPLICATE_ENDPOINT",
+          "message": "Endpoint Record repeats, regardless of qualifiers or target key",
+          "path": "/modules/0/relationships/0/target/1",
+          "severity": "error"
+        },
+        {
+          "code": "RELATIONSHIP_PRESENTATION_COLLISION",
+          "message": "Inverse presentation collides on this endpoint with /modules/0/relationships/0/inverse",
+          "path": "/modules/0/relationships/0/inverse",
+          "severity": "error"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "relationships/duplicate-target",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "UNKNOWN_EXTENSION",
+          "message": "Exact extension version unavailable; content retained",
+          "path": "/vocabularies/future",
+          "severity": "warning"
+        },
+        {
+          "code": "RELATIONSHIP_ENDPOINT_MISSING",
+          "message": "Endpoint does not resolve by exact module and element IDs",
+          "path": "/modules/0/relationships/0/target/0",
+          "severity": "error"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "relationships/missing-endpoint",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "UNKNOWN_EXTENSION",
+          "message": "Exact extension version unavailable; content retained",
+          "path": "/vocabularies/future",
+          "severity": "warning"
+        },
+        {
+          "code": "RELATIONSHIP_ENDPOINT_KIND",
+          "message": "Endpoint must be a Record",
+          "path": "/modules/0/relationships/0/source/0",
+          "severity": "error"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "relationships/field-endpoint",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "UNKNOWN_EXTENSION",
+          "message": "Exact extension version unavailable; content retained",
+          "path": "/vocabularies/future",
+          "severity": "warning"
+        },
+        {
+          "code": "RELATIONSHIP_ENDPOINT_KEY",
+          "message": "Endpoint must have authored Keys",
+          "path": "/modules/0/relationships/0/source/0",
+          "severity": "error"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "relationships/unkeyed-endpoint",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "UNKNOWN_EXTENSION",
+          "message": "Exact extension version unavailable; content retained",
+          "path": "/vocabularies/future",
+          "severity": "warning"
+        },
+        {
+          "code": "RELATIONSHIP_TARGET_KEY",
+          "message": "Target key must resolve by its stable ID",
+          "path": "/modules/0/relationships/0/target/0/key",
+          "severity": "error"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "relationships/key-name-not-id",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "SEMANTIC_TYPE_STRUCTURE",
+          "message": "must have required property 'key'",
+          "path": "/modules/0/relationships/0/target/0",
+          "severity": "error"
+        }
+      ],
+      "id": "relationships/missing-target-key",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "UNKNOWN_EXTENSION",
+          "message": "Exact extension version unavailable; content retained",
+          "path": "/vocabularies/future",
+          "severity": "warning"
+        },
+        {
+          "code": "RELATIONSHIP_ENDPOINT_KEY",
+          "message": "Endpoint must have authored Keys",
+          "path": "/modules/0/relationships/0/associationRecord",
+          "severity": "error"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "relationships/unkeyed-association",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "UNKNOWN_EXTENSION",
+          "message": "Exact extension version unavailable; content retained",
+          "path": "/vocabularies/future",
+          "severity": "warning"
+        },
+        {
+          "code": "RELATIONSHIP_MULTIPLICITY",
+          "message": "Maximum must be at least the minimum",
+          "path": "/modules/0/relationships/0/sourceMultiplicity",
+          "severity": "error"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "relationships/inverted-bounds",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "SEMANTIC_TYPE_STRUCTURE",
+          "message": "must be >= 1",
+          "path": "/modules/0/relationships/0/targetMultiplicity/max",
+          "severity": "error"
+        },
+        {
+          "code": "SEMANTIC_TYPE_STRUCTURE",
+          "message": "must pass \"const\" keyword validation",
+          "path": "/modules/0/relationships/0/targetMultiplicity/max",
+          "severity": "error"
+        },
+        {
+          "code": "SEMANTIC_TYPE_STRUCTURE",
+          "message": "must match a schema in anyOf",
+          "path": "/modules/0/relationships/0/targetMultiplicity/max",
+          "severity": "error"
+        }
+      ],
+      "id": "relationships/invalid-max--1",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "SEMANTIC_TYPE_STRUCTURE",
+          "message": "must be >= 1",
+          "path": "/modules/0/relationships/0/targetMultiplicity/max",
+          "severity": "error"
+        },
+        {
+          "code": "SEMANTIC_TYPE_STRUCTURE",
+          "message": "must pass \"const\" keyword validation",
+          "path": "/modules/0/relationships/0/targetMultiplicity/max",
+          "severity": "error"
+        },
+        {
+          "code": "SEMANTIC_TYPE_STRUCTURE",
+          "message": "must match a schema in anyOf",
+          "path": "/modules/0/relationships/0/targetMultiplicity/max",
+          "severity": "error"
+        }
+      ],
+      "id": "relationships/invalid-max-0",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "SEMANTIC_TYPE_STRUCTURE",
+          "message": "must be integer",
+          "path": "/modules/0/relationships/0/targetMultiplicity/max",
+          "severity": "error"
+        },
+        {
+          "code": "SEMANTIC_TYPE_STRUCTURE",
+          "message": "must pass \"const\" keyword validation",
+          "path": "/modules/0/relationships/0/targetMultiplicity/max",
+          "severity": "error"
+        },
+        {
+          "code": "SEMANTIC_TYPE_STRUCTURE",
+          "message": "must match a schema in anyOf",
+          "path": "/modules/0/relationships/0/targetMultiplicity/max",
+          "severity": "error"
+        }
+      ],
+      "id": "relationships/invalid-max-1.5",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "SEMANTIC_TYPE_STRUCTURE",
+          "message": "must be integer",
+          "path": "/modules/0/relationships/0/targetMultiplicity/max",
+          "severity": "error"
+        },
+        {
+          "code": "SEMANTIC_TYPE_STRUCTURE",
+          "message": "must pass \"const\" keyword validation",
+          "path": "/modules/0/relationships/0/targetMultiplicity/max",
+          "severity": "error"
+        },
+        {
+          "code": "SEMANTIC_TYPE_STRUCTURE",
+          "message": "must match a schema in anyOf",
+          "path": "/modules/0/relationships/0/targetMultiplicity/max",
+          "severity": "error"
+        }
+      ],
+      "id": "relationships/invalid-max-many",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "UNKNOWN_EXTENSION",
+          "message": "Exact extension version unavailable; content retained",
+          "path": "/vocabularies/future",
+          "severity": "warning"
+        },
+        {
+          "code": "RELATIONSHIP_LIFECYCLE",
+          "message": "Owned target lifecycle requires a directed relationship",
+          "path": "/modules/0/relationships/0/targetLifecycle",
+          "severity": "error"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "relationships/owned-undirected",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "UNKNOWN_EXTENSION",
+          "message": "Exact extension version unavailable; content retained",
+          "path": "/vocabularies/future",
+          "severity": "warning"
+        },
+        {
+          "code": "RELATIONSHIP_PRESENTATION_COLLISION",
+          "message": "Inverse presentation collides on this endpoint with /modules/0/relationships/0/inverse",
+          "path": "/modules/0/relationships/1/inverse",
+          "severity": "error"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "relationships/inverse-collision",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "UNKNOWN_EXTENSION",
+          "message": "Exact extension version unavailable; content retained",
+          "path": "/vocabularies/future",
+          "severity": "warning"
+        },
+        {
+          "code": "RELATIONSHIP_PRESENTATION_COLLISION",
+          "message": "Inverse presentation collides on this endpoint with /modules/0/relationships/0/inverse",
+          "path": "/modules/0/relationships/1/source/0",
+          "severity": "error"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "relationships/inverse-forward-collision",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "UNKNOWN_EXTENSION",
+          "message": "Exact extension version unavailable; content retained",
+          "path": "/vocabularies/future",
+          "severity": "warning"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "relationships/same-forward-name-other-module",
+      "valid": true
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "UNKNOWN_EXTENSION",
+          "message": "Exact extension version unavailable; content retained",
+          "path": "/vocabularies/future",
+          "severity": "warning"
+        },
+        {
+          "code": "RELATIONSHIP_PRESENTATION_COLLISION",
+          "message": "Inverse presentation collides on this endpoint with /modules/0/relationships/0/inverse",
+          "path": "/modules/1/relationships/0/inverse",
+          "severity": "error"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "relationships/inverse-collision-other-module",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "SEMANTIC_TYPE_STRUCTURE",
+          "message": "must NOT have fewer than 1 items",
+          "path": "/modules/0/relationships/0/source",
+          "severity": "error"
+        }
+      ],
+      "id": "relationships/empty-source",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "UNKNOWN_EXTENSION",
+          "message": "Exact extension version unavailable; content retained",
+          "path": "/vocabularies/future",
+          "severity": "warning"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "relationships/old-version",
+      "valid": true
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "structure/current-valid",
+      "valid": true
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "SEMANTIC_TYPE_STRUCTURE",
+          "message": "must have required property 'vocabularies'",
+          "path": "",
+          "severity": "error"
+        }
+      ],
+      "id": "structure/current-missing-vocabularies",
+      "valid": false
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "domains/all-current-scalars",
+      "valid": true
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "UNKNOWN_SCALAR_TYPE",
+          "message": "Scalar family retained without interpretation",
+          "path": "/modules/0/elements/0/scalarType",
+          "severity": "warning"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "domains/unknown-scalar-retained",
+      "valid": true
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "UNKNOWN_CORE_FIELD",
+          "message": "Field retained without interpretation",
+          "path": "/future",
+          "severity": "warning"
+        },
+        {
+          "code": "UNKNOWN_EXTENSION",
+          "message": "Exact extension version unavailable; content retained",
+          "path": "/vocabularies/future",
+          "severity": "warning"
+        },
+        {
+          "code": "UNKNOWN_CORE_FIELD",
+          "message": "Field retained without interpretation",
+          "path": "/modules/0/elements/0/future",
+          "severity": "warning"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "unknown/current-extension-and-fields",
+      "valid": true
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        },
+        {
+          "code": "SEMANTIC_TYPE_EXTERNAL",
+          "message": "Exact external semantic definitions and value validators are resolved separately",
+          "path": "/modules/0/elements/0/semanticTypes",
+          "severity": "warning"
+        },
+        {
+          "code": "UNKNOWN_SEMANTIC_TYPE_QUALIFIER",
+          "message": "Qualifier retained without interpretation",
+          "path": "/modules/0/elements/0/semanticTypes/0/a~1b~0c",
+          "severity": "warning"
+        }
+      ],
+      "id": "unknown/current-unknown-semantic-type-qualifier",
+      "valid": true
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "BASELINE_CALLBACK",
+          "message": "callback-document:document:sentinel",
+          "path": "/extensions/example.baseline-callback",
+          "severity": "warning"
+        },
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "registry/callback-context",
+      "valid": true
+    },
+    {
+      "complete": false,
+      "defaultResolution": {
+        "error": "Expected valid 0.8.0 envelope"
+      },
+      "diagnostics": [
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "defaults/missing-applies",
+      "valid": true
+    },
+    {
+      "complete": false,
+      "defaultResolution": {
+        "error": "Expected valid 0.8.0 envelope"
+      },
+      "diagnostics": [
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "defaults/present-null-applies",
+      "valid": true
+    },
+    {
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+          "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+          "path": "/umf",
+          "severity": "warning"
+        }
+      ],
+      "id": "domains/uuid-literal-version-boundary",
+      "uuidLiteralEntryPoints": {
+        "direct010": {
+          "accepted": false,
+          "error": "128-bit domains require core 0.9.0"
+        },
+        "documentValidation": {
+          "complete": false,
+          "diagnostics": [
+            {
+              "code": "EXPERIMENTAL_CORE_SEMANTIC_TYPES",
+              "message": "Experimental semantic references; publisher-owned meanings and native enforcement are not inferred",
+              "path": "/umf",
+              "severity": "warning"
+            }
+          ],
+          "valid": true
+        },
+        "privateInheritedView": {
+          "accepted": true
+        }
+      },
+      "valid": true
+    }
+  ],
+  "runtime": "Bun 1.4.3"
+}

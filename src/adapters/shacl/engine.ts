@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import SHACLValidator from 'rdf-validate-shacl';
 import {installExactShaclNumbers} from './numeric';
 import {installShaclStrings} from './strings';

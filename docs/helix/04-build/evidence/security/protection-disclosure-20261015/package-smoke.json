@@ -1,0 +1,28 @@
+{
+  "status": "built-package-disclosure-passed",
+  "bun": "1.4.2",
+  "sourceDigests": {
+    "package.json": "e82680c3e3eacd083bf2555b1605a60ff4cd65dc59288256ad0bc1e8f811afc1",
+    "src/index.ts": "aee4f9f8344febaffb091b31f47fee783d77bf253857bc4ff6f42c686878ac15",
+    "src/extensions/security/protection/disclosure.ts": "a8aec1e8fb596efb925b017127a8dff0b5c64c4cd3303194a9d123bfb443f238",
+    "tests/security/protection/disclosure-fixtures.json": "5f1814dc8530a2096bec83e940676f053ca8d38d9220ddbbf00d7dfe60b89074",
+    "tools/security/protection-disclosure-package-smoke.ts": "3926dbc5636403f2743fda082db3c81a4af29dd7b3dead060be1c08c36a614c3",
+    "dist/umf.js": "bedfbde5258bfc4c066b32ed23cc0677be194bbdd7173c872459ac31cc976fa4",
+    "dist/src/index.d.ts": "dd2bd687540b5e82c449b330332835a94a833e5917bd79aa2a48b44bdecff191",
+    "dist/src/extensions/security/protection/disclosure.d.ts": "c0f238e455e642018d08c203075fd5342a0a62d6e902b3456e5f57f42f0ba6d0"
+  },
+  "observations": [
+    {
+      "format": "json",
+      "roundtrip": true,
+      "authority": false
+    },
+    {
+      "format": "yaml",
+      "roundtrip": true,
+      "authority": false
+    }
+  ],
+  "staleRefusal": true,
+  "scope": "Actual built package API/declaration and JSON/YAML data smoke; no transform execution, row authorization or native qualification."
+}

@@ -1,0 +1,94 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:core:record-type-operation:2.0.0",
+  "title": "Explicit authored Field to record-definition reference (Nullability envelope)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "operation",
+    "version",
+    "source",
+    "target",
+    "fieldAuthor",
+    "recordAuthor",
+    "reference",
+    "provenance"
+  ],
+  "properties": {
+    "operation": {
+      "const": "declare-core-record-type"
+    },
+    "version": {
+      "const": "2.0.0"
+    },
+    "source": {
+      "$ref": "urn:umf:core:0.3.0"
+    },
+    "target": {
+      "$ref": "urn:umf:core:0.3.0"
+    },
+    "fieldAuthor": {
+      "$ref": "urn:umf:core:kind-operation:2.0.0#/$defs/declaration"
+    },
+    "recordAuthor": {
+      "$ref": "urn:umf:core:kind-operation:2.0.0#/$defs/declaration"
+    },
+    "reference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "role",
+        "module",
+        "element"
+      ],
+      "properties": {
+        "role": {
+          "const": "record-type"
+        },
+        "module": {
+          "type": "string",
+          "minLength": 1
+        },
+        "element": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "origin",
+        "idealPath",
+        "recordPath",
+        "nativePath",
+        "basis",
+        "binding"
+      ],
+      "properties": {
+        "origin": {
+          "const": "authored"
+        },
+        "idealPath": {
+          "type": "string"
+        },
+        "recordPath": {
+          "type": "string"
+        },
+        "nativePath": {
+          "type": "null"
+        },
+        "basis": {
+          "const": "explicit-record-type-declaration"
+        },
+        "binding": {
+          "const": {
+            "id": "umf.core.record-type.authoring",
+            "version": "2.0.0"
+          }
+        }
+      }
+    }
+  }
+}

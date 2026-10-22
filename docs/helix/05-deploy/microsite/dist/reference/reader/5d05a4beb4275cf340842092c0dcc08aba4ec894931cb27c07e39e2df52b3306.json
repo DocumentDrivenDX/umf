@@ -1,0 +1,23 @@
+{
+  "alternatives": [
+    "null",
+    "{ kind: \"struct\"; fields: { index: number; name: string; value: ParquetTypedValue; }[]; }",
+    "{ kind: \"list\"; items: ParquetTypedValue[]; }",
+    "{ kind: \"map\"; entries: { key: ParquetTypedValue; value: ParquetTypedValue; }[]; duplicateKeys: \"last-value\"; }",
+    "{ kind: \"opaque\"; annotation: string; parameters: Json; physical: ParquetRowValue; }",
+    "{ kind: \"bool\"; value: boolean; physical: ParquetPhysicalValue; }",
+    "{ kind: \"int\" | \"uint\" | \"float\"; bits: number; value: string; physical: ParquetPhysicalValue; }",
+    "{ kind: \"decimal\" | \"string\" | \"enum\" | \"json\" | \"bytes\" | \"uuid\" | \"int96\" | \"date\"; value: string; physical: ParquetPhysicalValue; }",
+    "{ kind: \"time\" | \"timestamp\"; unit: \"MILLIS\" | \"MICROS\" | \"NANOS\"; isAdjustedToUTC: boolean; value: string; physical: ParquetPhysicalValue; }"
+  ],
+  "authored": false,
+  "id": "[\"api\",\".\",\"ParquetTypedValue\"]",
+  "kind": "Type alias",
+  "members": [],
+  "parameters": [],
+  "purpose": "ParquetTypedValue is a type alias in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "ParquetTypedValue"
+}

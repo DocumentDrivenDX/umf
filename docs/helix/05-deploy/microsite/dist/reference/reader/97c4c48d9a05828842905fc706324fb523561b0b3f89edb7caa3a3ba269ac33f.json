@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"verifyCoreKeyOperation\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreKeyOperation\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "CoreKeyOperation"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "current",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "Recomputes retained meaning and current context; not cryptographic authorship.",
+  "related": [],
+  "returns": "CoreKeyOperation",
+  "task": "Other APIs",
+  "type": "(input: CoreKeyOperation, current: Document) => CoreKeyOperation"
+}

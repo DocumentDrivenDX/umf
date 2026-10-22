@@ -1,13 +1,14 @@
-import {importAvroSchema,getAvroFieldMetadata} from '../../src/adapters/avro';
-import {upgradeFieldEnvelope} from '../../src/model/field-transition';
-import {upgradeNullabilityEnvelope} from '../../src/model/nullability-transition';
+// SPDX-License-Identifier: MIT OR Apache-2.0
+import {importAvroSchema, getAvroFieldMetadata} from '../../src/adapters/avro';
+
+
 import {classifyAvroField} from '../../src/core-ideals/avro-field';
 import type {AvroNullabilityRequest} from '../../src/core-ideals/nullability-avro';
 export function avroAvailabilitySource(nativeSource:string,dependencies:{id:string;schema:string}[]=[],record='availability.Example',name='value'){
- const initial=upgradeFieldEnvelope(importAvroSchema(nativeSource,{id:'availability',dependencies})).target;
+ const initial=importAvroSchema(nativeSource,{id:'availability',dependencies});
  const metadata=getAvroFieldMetadata(initial).find(f=>f.record===record&&f.element.name===name);if(!metadata)throw Error('Missing field');
  const classified=classifyAvroField(initial,{column:metadata.element.id,nativeSource,dependencies,mode:'strict'});if(!classified.target)throw Error('Field blocked');
- return {source:upgradeNullabilityEnvelope(classified.target).target,column:metadata.element.id};
+ return {source:classified.target,column:metadata.element.id};
 }
 export function avroNullabilityCases(rows:{id:string;schema:string}[]){
  const nullable=new Set(['null-first','null-last','null-first-default-null','null-last-default-null','null-first-default-int','null-last-default-int','null-only','multiple-values','nullable-array','nullable-map','optional-parent']);

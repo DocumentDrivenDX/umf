@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"verifyPostgresqlNullabilityClassification\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"PostgresqlNullabilityClassification\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "PostgresqlNullabilityClassification"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "current",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "Receipt consistency is not authentication; any model edit requires reclassification.",
+  "related": [],
+  "returns": "PostgresqlNullabilityClassification",
+  "task": "Other APIs",
+  "type": "(input: PostgresqlNullabilityClassification, current: Document) => PostgresqlNullabilityClassification"
+}

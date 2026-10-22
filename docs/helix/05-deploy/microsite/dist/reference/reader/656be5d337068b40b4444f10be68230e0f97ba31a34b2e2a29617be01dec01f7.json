@@ -1,0 +1,49 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"SqlServerDdlPolicy\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "aliases",
+      "optional": false,
+      "type": "\"reject\" | \"base-type\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "physicalLayout",
+      "optional": false,
+      "type": "\"default-rowstore\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "nativeExpressions",
+      "optional": false,
+      "type": "\"verbatim\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "sourceState",
+      "optional": false,
+      "type": "\"captured-only\" | \"allow-candidate\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "lossPolicy",
+      "optional": false,
+      "type": "\"strict\" | \"allow-reported-loss\""
+    }
+  ],
+  "parameters": [],
+  "purpose": "SqlServerDdlPolicy is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "SqlServerDdlPolicy"
+}

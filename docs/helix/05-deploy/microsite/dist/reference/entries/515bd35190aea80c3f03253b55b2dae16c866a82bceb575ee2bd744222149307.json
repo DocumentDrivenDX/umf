@@ -1,0 +1,1033 @@
+{
+  "data": {
+    "pointer": "",
+    "profileVersions": [],
+    "references": [
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/smithy/native-structure.schema.json\",\"\"]",
+        "target": "#/$defs/reference"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/smithy/native-structure.schema.json\",\"\"]",
+        "target": "#/$defs/member"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/smithy/native-structure.schema.json\",\"\"]",
+        "target": "#/$defs/member"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/smithy/native-structure.schema.json\",\"\"]",
+        "target": "#/$defs/member"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/smithy/native-structure.schema.json\",\"\"]",
+        "target": "#/$defs/member"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/smithy/native-structure.schema.json\",\"\"]",
+        "target": "#/$defs/reference"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/smithy/native-structure.schema.json\",\"\"]",
+        "target": "#/$defs/reference"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/smithy/native-structure.schema.json\",\"\"]",
+        "target": "#/$defs/reference"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/smithy/native-structure.schema.json\",\"\"]",
+        "target": "#/$defs/reference"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/smithy/native-structure.schema.json\",\"\"]",
+        "target": "#/$defs/reference"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/smithy/native-structure.schema.json\",\"\"]",
+        "target": "#/$defs/reference"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/smithy/native-structure.schema.json\",\"\"]",
+        "target": "#/$defs/reference"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/smithy/native-structure.schema.json\",\"\"]",
+        "target": "#/$defs/reference"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/smithy/native-structure.schema.json\",\"\"]",
+        "target": "#/$defs/reference"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/smithy/native-structure.schema.json\",\"\"]",
+        "target": "#/$defs/reference"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/smithy/native-structure.schema.json\",\"\"]",
+        "target": "#/$defs/reference"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/smithy/native-structure.schema.json\",\"\"]",
+        "target": "#/$defs/reference"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/smithy/native-structure.schema.json\",\"\"]",
+        "target": "#/$defs/reference"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/smithy/native-structure.schema.json\",\"\"]",
+        "target": "#/$defs/reference"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/smithy/native-structure.schema.json\",\"\"]",
+        "target": "#/$defs/reference"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/smithy/native-structure.schema.json\",\"\"]",
+        "target": "#/$defs/reference"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/smithy/native-structure.schema.json\",\"\"]",
+        "target": "#/$defs/reference"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/extensions/smithy/native-structure.schema.json\",\"\"]",
+        "target": "#/$defs/shape"
+      }
+    ],
+    "role": "extension-payload",
+    "schemaPath": "spec/extensions/smithy/native-structure.schema.json",
+    "sourceData": {
+      "kind": "object",
+      "members": {
+        "$defs": {
+          "kind": "object",
+          "members": {
+            "member": {
+              "kind": "object",
+              "members": {
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "target": {
+                      "kind": "object",
+                      "members": {
+                        "pattern": {
+                          "kind": "string",
+                          "value": "^[A-Za-z_][A-Za-z_0-9]*(\\.[A-Za-z_][A-Za-z_0-9]*)*#[A-Za-z_][A-Za-z_0-9]*(\\$[A-Za-z_][A-Za-z_0-9]*)?$"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    },
+                    "traits": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "object"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "target"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "reference": {
+              "kind": "object",
+              "members": {
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "target": {
+                      "kind": "object",
+                      "members": {
+                        "pattern": {
+                          "kind": "string",
+                          "value": "^[A-Za-z_][A-Za-z_0-9]*(\\.[A-Za-z_][A-Za-z_0-9]*)*#[A-Za-z_][A-Za-z_0-9]*(\\$[A-Za-z_][A-Za-z_0-9]*)?$"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "target"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "shape": {
+              "kind": "object",
+              "members": {
+                "allOf": {
+                  "items": [
+                    {
+                      "kind": "object",
+                      "members": {
+                        "if": {
+                          "kind": "object",
+                          "members": {
+                            "properties": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "object",
+                                  "members": {
+                                    "enum": {
+                                      "items": [
+                                        {
+                                          "kind": "string",
+                                          "value": "list"
+                                        }
+                                      ],
+                                      "kind": "array"
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "then": {
+                          "kind": "object",
+                          "members": {
+                            "anyOf": {
+                              "items": [
+                                {
+                                  "kind": "object",
+                                  "members": {
+                                    "required": {
+                                      "items": [
+                                        {
+                                          "kind": "string",
+                                          "value": "member"
+                                        }
+                                      ],
+                                      "kind": "array"
+                                    }
+                                  }
+                                },
+                                {
+                                  "kind": "object",
+                                  "members": {
+                                    "properties": {
+                                      "kind": "object",
+                                      "members": {
+                                        "mixins": {
+                                          "kind": "object",
+                                          "members": {
+                                            "minItems": {
+                                              "kind": "number",
+                                              "value": "1"
+                                            }
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "required": {
+                                      "items": [
+                                        {
+                                          "kind": "string",
+                                          "value": "mixins"
+                                        }
+                                      ],
+                                      "kind": "array"
+                                    }
+                                  }
+                                }
+                              ],
+                              "kind": "array"
+                            },
+                            "properties": {
+                              "kind": "object",
+                              "members": {
+                                "member": {
+                                  "kind": "object",
+                                  "members": {
+                                    "$ref": {
+                                      "kind": "string",
+                                      "value": "#/$defs/member"
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "kind": "object",
+                      "members": {
+                        "if": {
+                          "kind": "object",
+                          "members": {
+                            "properties": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "object",
+                                  "members": {
+                                    "enum": {
+                                      "items": [
+                                        {
+                                          "kind": "string",
+                                          "value": "map"
+                                        }
+                                      ],
+                                      "kind": "array"
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "then": {
+                          "kind": "object",
+                          "members": {
+                            "anyOf": {
+                              "items": [
+                                {
+                                  "kind": "object",
+                                  "members": {
+                                    "required": {
+                                      "items": [
+                                        {
+                                          "kind": "string",
+                                          "value": "key"
+                                        },
+                                        {
+                                          "kind": "string",
+                                          "value": "value"
+                                        }
+                                      ],
+                                      "kind": "array"
+                                    }
+                                  }
+                                },
+                                {
+                                  "kind": "object",
+                                  "members": {
+                                    "properties": {
+                                      "kind": "object",
+                                      "members": {
+                                        "mixins": {
+                                          "kind": "object",
+                                          "members": {
+                                            "minItems": {
+                                              "kind": "number",
+                                              "value": "1"
+                                            }
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "required": {
+                                      "items": [
+                                        {
+                                          "kind": "string",
+                                          "value": "mixins"
+                                        }
+                                      ],
+                                      "kind": "array"
+                                    }
+                                  }
+                                }
+                              ],
+                              "kind": "array"
+                            },
+                            "properties": {
+                              "kind": "object",
+                              "members": {
+                                "key": {
+                                  "kind": "object",
+                                  "members": {
+                                    "$ref": {
+                                      "kind": "string",
+                                      "value": "#/$defs/member"
+                                    }
+                                  }
+                                },
+                                "value": {
+                                  "kind": "object",
+                                  "members": {
+                                    "$ref": {
+                                      "kind": "string",
+                                      "value": "#/$defs/member"
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "kind": "object",
+                      "members": {
+                        "if": {
+                          "kind": "object",
+                          "members": {
+                            "properties": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "object",
+                                  "members": {
+                                    "enum": {
+                                      "items": [
+                                        {
+                                          "kind": "string",
+                                          "value": "structure"
+                                        },
+                                        {
+                                          "kind": "string",
+                                          "value": "union"
+                                        },
+                                        {
+                                          "kind": "string",
+                                          "value": "enum"
+                                        },
+                                        {
+                                          "kind": "string",
+                                          "value": "intEnum"
+                                        }
+                                      ],
+                                      "kind": "array"
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "then": {
+                          "kind": "object",
+                          "members": {
+                            "properties": {
+                              "kind": "object",
+                              "members": {
+                                "members": {
+                                  "kind": "object",
+                                  "members": {
+                                    "additionalProperties": {
+                                      "kind": "object",
+                                      "members": {
+                                        "$ref": {
+                                          "kind": "string",
+                                          "value": "#/$defs/member"
+                                        }
+                                      }
+                                    },
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "object"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "required": {
+                              "items": [],
+                              "kind": "array"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "kind": "object",
+                      "members": {
+                        "if": {
+                          "kind": "object",
+                          "members": {
+                            "properties": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "object",
+                                  "members": {
+                                    "enum": {
+                                      "items": [
+                                        {
+                                          "kind": "string",
+                                          "value": "service"
+                                        }
+                                      ],
+                                      "kind": "array"
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "then": {
+                          "kind": "object",
+                          "members": {
+                            "properties": {
+                              "kind": "object",
+                              "members": {
+                                "errors": {
+                                  "kind": "object",
+                                  "members": {
+                                    "items": {
+                                      "kind": "object",
+                                      "members": {
+                                        "$ref": {
+                                          "kind": "string",
+                                          "value": "#/$defs/reference"
+                                        }
+                                      }
+                                    },
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "array"
+                                    }
+                                  }
+                                },
+                                "operations": {
+                                  "kind": "object",
+                                  "members": {
+                                    "items": {
+                                      "kind": "object",
+                                      "members": {
+                                        "$ref": {
+                                          "kind": "string",
+                                          "value": "#/$defs/reference"
+                                        }
+                                      }
+                                    },
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "array"
+                                    }
+                                  }
+                                },
+                                "rename": {
+                                  "kind": "object",
+                                  "members": {
+                                    "additionalProperties": {
+                                      "kind": "object",
+                                      "members": {
+                                        "type": {
+                                          "kind": "string",
+                                          "value": "string"
+                                        }
+                                      }
+                                    },
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "object"
+                                    }
+                                  }
+                                },
+                                "resources": {
+                                  "kind": "object",
+                                  "members": {
+                                    "items": {
+                                      "kind": "object",
+                                      "members": {
+                                        "$ref": {
+                                          "kind": "string",
+                                          "value": "#/$defs/reference"
+                                        }
+                                      }
+                                    },
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "array"
+                                    }
+                                  }
+                                },
+                                "version": {
+                                  "kind": "object",
+                                  "members": {
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "string"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "required": {
+                              "items": [],
+                              "kind": "array"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "kind": "object",
+                      "members": {
+                        "if": {
+                          "kind": "object",
+                          "members": {
+                            "properties": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "object",
+                                  "members": {
+                                    "enum": {
+                                      "items": [
+                                        {
+                                          "kind": "string",
+                                          "value": "operation"
+                                        }
+                                      ],
+                                      "kind": "array"
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "then": {
+                          "kind": "object",
+                          "members": {
+                            "properties": {
+                              "kind": "object",
+                              "members": {
+                                "errors": {
+                                  "kind": "object",
+                                  "members": {
+                                    "items": {
+                                      "kind": "object",
+                                      "members": {
+                                        "$ref": {
+                                          "kind": "string",
+                                          "value": "#/$defs/reference"
+                                        }
+                                      }
+                                    },
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "array"
+                                    }
+                                  }
+                                },
+                                "input": {
+                                  "kind": "object",
+                                  "members": {
+                                    "$ref": {
+                                      "kind": "string",
+                                      "value": "#/$defs/reference"
+                                    }
+                                  }
+                                },
+                                "output": {
+                                  "kind": "object",
+                                  "members": {
+                                    "$ref": {
+                                      "kind": "string",
+                                      "value": "#/$defs/reference"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "required": {
+                              "items": [],
+                              "kind": "array"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "kind": "object",
+                      "members": {
+                        "if": {
+                          "kind": "object",
+                          "members": {
+                            "properties": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "object",
+                                  "members": {
+                                    "enum": {
+                                      "items": [
+                                        {
+                                          "kind": "string",
+                                          "value": "resource"
+                                        }
+                                      ],
+                                      "kind": "array"
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "then": {
+                          "kind": "object",
+                          "members": {
+                            "properties": {
+                              "kind": "object",
+                              "members": {
+                                "collectionOperations": {
+                                  "kind": "object",
+                                  "members": {
+                                    "items": {
+                                      "kind": "object",
+                                      "members": {
+                                        "$ref": {
+                                          "kind": "string",
+                                          "value": "#/$defs/reference"
+                                        }
+                                      }
+                                    },
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "array"
+                                    }
+                                  }
+                                },
+                                "create": {
+                                  "kind": "object",
+                                  "members": {
+                                    "$ref": {
+                                      "kind": "string",
+                                      "value": "#/$defs/reference"
+                                    }
+                                  }
+                                },
+                                "delete": {
+                                  "kind": "object",
+                                  "members": {
+                                    "$ref": {
+                                      "kind": "string",
+                                      "value": "#/$defs/reference"
+                                    }
+                                  }
+                                },
+                                "identifiers": {
+                                  "kind": "object",
+                                  "members": {
+                                    "additionalProperties": {
+                                      "kind": "object",
+                                      "members": {
+                                        "$ref": {
+                                          "kind": "string",
+                                          "value": "#/$defs/reference"
+                                        }
+                                      }
+                                    },
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "object"
+                                    }
+                                  }
+                                },
+                                "list": {
+                                  "kind": "object",
+                                  "members": {
+                                    "$ref": {
+                                      "kind": "string",
+                                      "value": "#/$defs/reference"
+                                    }
+                                  }
+                                },
+                                "operations": {
+                                  "kind": "object",
+                                  "members": {
+                                    "items": {
+                                      "kind": "object",
+                                      "members": {
+                                        "$ref": {
+                                          "kind": "string",
+                                          "value": "#/$defs/reference"
+                                        }
+                                      }
+                                    },
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "array"
+                                    }
+                                  }
+                                },
+                                "properties": {
+                                  "kind": "object",
+                                  "members": {
+                                    "additionalProperties": {
+                                      "kind": "object",
+                                      "members": {
+                                        "$ref": {
+                                          "kind": "string",
+                                          "value": "#/$defs/reference"
+                                        }
+                                      }
+                                    },
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "object"
+                                    }
+                                  }
+                                },
+                                "put": {
+                                  "kind": "object",
+                                  "members": {
+                                    "$ref": {
+                                      "kind": "string",
+                                      "value": "#/$defs/reference"
+                                    }
+                                  }
+                                },
+                                "read": {
+                                  "kind": "object",
+                                  "members": {
+                                    "$ref": {
+                                      "kind": "string",
+                                      "value": "#/$defs/reference"
+                                    }
+                                  }
+                                },
+                                "resources": {
+                                  "kind": "object",
+                                  "members": {
+                                    "items": {
+                                      "kind": "object",
+                                      "members": {
+                                        "$ref": {
+                                          "kind": "string",
+                                          "value": "#/$defs/reference"
+                                        }
+                                      }
+                                    },
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "array"
+                                    }
+                                  }
+                                },
+                                "update": {
+                                  "kind": "object",
+                                  "members": {
+                                    "$ref": {
+                                      "kind": "string",
+                                      "value": "#/$defs/reference"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "required": {
+                              "items": [],
+                              "kind": "array"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "mixins": {
+                      "kind": "object",
+                      "members": {
+                        "items": {
+                          "kind": "object",
+                          "members": {
+                            "$ref": {
+                              "kind": "string",
+                              "value": "#/$defs/reference"
+                            }
+                          }
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "array"
+                        }
+                      }
+                    },
+                    "traits": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "object"
+                        }
+                      }
+                    },
+                    "type": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "type"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            }
+          }
+        },
+        "$id": {
+          "kind": "string",
+          "value": "urn:umf:smithy:native-structure:0.1.0"
+        },
+        "$schema": {
+          "kind": "string",
+          "value": "https://json-schema.org/draft/2020-12/schema"
+        },
+        "properties": {
+          "kind": "object",
+          "members": {
+            "metadata": {
+              "kind": "object",
+              "members": {
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "shapes": {
+              "kind": "object",
+              "members": {
+                "additionalProperties": {
+                  "kind": "object",
+                  "members": {
+                    "$ref": {
+                      "kind": "string",
+                      "value": "#/$defs/shape"
+                    }
+                  }
+                },
+                "propertyNames": {
+                  "kind": "object",
+                  "members": {
+                    "pattern": {
+                      "kind": "string",
+                      "value": "^[A-Za-z_][A-Za-z_0-9]*(\\.[A-Za-z_][A-Za-z_0-9]*)*#[A-Za-z_][A-Za-z_0-9]*(\\$[A-Za-z_][A-Za-z_0-9]*)?$"
+                    },
+                    "type": {
+                      "kind": "string",
+                      "value": "string"
+                    }
+                  }
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "smithy": {
+              "kind": "object",
+              "members": {
+                "type": {
+                  "kind": "string",
+                  "value": "string"
+                }
+              }
+            }
+          }
+        },
+        "required": {
+          "items": [
+            {
+              "kind": "string",
+              "value": "smithy"
+            }
+          ],
+          "kind": "array"
+        },
+        "type": {
+          "kind": "string",
+          "value": "object"
+        }
+      }
+    }
+  },
+  "id": "[\"schema\",\"spec/extensions/smithy/native-structure.schema.json\",\"\"]",
+  "kind": "schema",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 7275,
+      "path": "spec/extensions/smithy/native-structure.schema.json",
+      "sha256": "b6e931ca2f676c981b39fe7a318e8f1d1fb6e27ac00730773e711d17cda0ee25"
+    }
+  ],
+  "summary": "spec/extensions/smithy/native-structure.schema.json",
+  "title": "native-structure.schema.json"
+}

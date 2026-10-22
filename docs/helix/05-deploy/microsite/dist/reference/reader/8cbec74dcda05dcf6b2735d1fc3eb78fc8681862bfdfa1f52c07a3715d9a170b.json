@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"classifyRelationshipExtra\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"RelationshipExtraClassificationRequest\"]"
+      ],
+      "name": "options",
+      "optional": false,
+      "type": "RelationshipExtraClassificationRequest"
+    }
+  ],
+  "purpose": "Native syntax observations only. The source is copied unchanged; no authored assertions are created.",
+  "related": [],
+  "returns": "RelationshipExtraClassification",
+  "task": "Other APIs",
+  "type": "(input: Document, options: RelationshipExtraClassificationRequest) => RelationshipExtraClassification"
+}

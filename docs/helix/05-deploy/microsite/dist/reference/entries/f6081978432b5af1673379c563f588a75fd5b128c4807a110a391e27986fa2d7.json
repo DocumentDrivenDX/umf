@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 9557,
+        "line": 11,
+        "path": "src/core-ideals/record-tablespec-projection.ts",
+        "sha256": "0ce0e24fdce4effbf96764e51c7aa11f8e681ceb1a62605c51d72974168da724"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "RecordTableSpecProjection",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface RecordTableSpecProjection {operation:'project-record-tablespec';version:'1.0.0';status:'projected'|'blocked';source:Document;author:CoreKindDeclaration;request:RecordTableSpecRequest;binding:typeof binding;target?:Document;mappings:{origin:'authored';kind:'record'|'field';idealPath:string;nativePath:string;outcome:'exact'|'unknown'|'not-expressible'}[];residuals:FieldTableSpecProjection['residuals'];diagnostics:Diagnostic[]}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"RecordTableSpecProjection\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 9557,
+      "line": 11,
+      "path": "src/core-ideals/record-tablespec-projection.ts",
+      "sha256": "0ce0e24fdce4effbf96764e51c7aa11f8e681ceb1a62605c51d72974168da724"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/record-tablespec-projection.ts",
+  "title": "RecordTableSpecProjection"
+}

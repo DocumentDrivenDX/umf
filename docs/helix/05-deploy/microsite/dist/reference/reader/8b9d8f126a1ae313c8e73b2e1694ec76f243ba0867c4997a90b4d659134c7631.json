@@ -1,0 +1,23 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"generateDeltaDDL\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "Pure browser-compatible CREATE generator. Never applies SQL or changes maintenance policy.",
+  "related": [],
+  "returns": "{ sql: string; definition: DeltaDefinition; schemaJson: string; qualification: string; }",
+  "task": "Other APIs",
+  "type": "(input: Document) => { sql: string; definition: DeltaDefinition; schemaJson: string; qualification: string; }"
+}

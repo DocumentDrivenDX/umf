@@ -1,0 +1,94 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "profile": {
+      "const": "umf.reference.profiles/1"
+    },
+    "coreProfiles": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "version": {
+            "type": "string"
+          },
+          "schemaPath": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "version",
+          "schemaPath"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "registrations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "extensionId": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          },
+          "mode": {
+            "enum": [
+              "sdk-default",
+              "explicit"
+            ]
+          },
+          "apiNames": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "coreProfiles": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "extensionId",
+          "version",
+          "mode",
+          "apiNames",
+          "coreProfiles"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "exclusions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "reason": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "path",
+          "reason"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "profile",
+    "coreProfiles",
+    "registrations",
+    "exclusions"
+  ],
+  "additionalProperties": false
+}

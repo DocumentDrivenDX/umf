@@ -1,0 +1,48 @@
+{
+  "reviewedAt": "2026-10-15T01:16:23.134962+00:00",
+  "reviewer": "Astra Ultra independent subagent",
+  "status": "no actionable finding within the wire/local-bound component scope",
+  "repository": "/Users/erik/.codex/worktrees/security-main-integration/umf",
+  "baseline": "499098a6cf339bbde72b34d0e9dbd02331ac2576",
+  "scope": "Read-only review of CONTRACT-062 wire refinement, generator/schema/package, inspector, associated design/allocation changes and component evidence. Earlier envelope scaffold review remains historical.",
+  "criticalSourceDigests": {
+    "src/extensions/security/protection/catalog.ts": "232b8bd647fe919b79c96d89972e08eff51540aefc26c9f5e7474fa2ce6aa97e",
+    "scripts/security-protection-schema.py": "b6df7b9e7ca2f8113becacb7e610058726995de73786747f351cc51ebc375652",
+    "spec/extensions/security-protection/package.json": "df3dbb7faa2df45dc395caeb829340e84deb4dfd4f1940c2f6dd846aa9d55e1f",
+    "spec/extensions/security-protection/schema.json": "902f2ae2b011007b91e08c8211a7df35cee8cba4ac8f0679f873589ad8d313ee",
+    "tests/security/protection/wire.test.ts": "38dbeab8d707b22d619e9271dc90bd5954caeb8bdd8ecb16b84f166a728651a1",
+    "docs/helix/02-design/contracts/CONTRACT-062-security-semantics.md": "f55a52ea29246ece8f417dfe23a021ad5dcd26dff4f5bf4744bad61d53081584"
+  },
+  "sourcePins": "source-pins.json: 23 files identical before and after independent final execution",
+  "independentChecks": {
+    "wireControls": 143,
+    "result": "passed",
+    "script": "controls.ts",
+    "results": "results.json",
+    "suppliedFocusedTestsIndependentlyRerun": 11,
+    "log": "final-supplied-tests.log",
+    "generator": "generator-results.json; exact schema/package replay from both current metadata and original scaffold HEAD metadata, using the original security literal schema",
+    "allocation": "allocation-delta.json; sole case delta /cases/17/assertion specifies canonical JSON encoding measure, with statuses/bindings unchanged"
+  },
+  "suppliedEvidenceInspected": {
+    "chromiumControls": 30,
+    "wireMutationVariants": 5,
+    "envelopeMutationVariants": 4,
+    "allSourcePinsMatch": true,
+    "executionQualification": "Receipts/log outputs inspected and hashes checked; these browser/mutation executions were not independently rerun."
+  },
+  "conclusions": [
+    "Known class/field combinations, qualified-reference shapes, duplicate parameter/transform identities and opaque custody declarations match the wire amendment.",
+    "Canonical literal bounds include wrappers and escaping in UTF-16 units; exact 4096/4097 nested, astral and escaped controls pass without numeric normalization.",
+    "Cumulative object-key/string-value 4000000-unit guard runs after the bounded core snapshot and before schema/literal processing; exact boundary, cumulative, key and astral controls pass.",
+    "Source mutation is isolated; unknown payload remains preserved. complete is always false and requireProtectionInterpretation always refuses, including shape-valid unresolved domains and unsupported semantics.",
+    "Generator output is reproducible. There is no new root export or acceptance promotion."
+  ],
+  "limits": [
+    "Wire validation does not establish domain closure, function-specific parameter semantics, numeric bucket equivalence, query dependencies, disclosure obligations, action distinctness or verified custody/propagation.",
+    "No transform execution, native enforcement, authenticated authority or protected release qualification.",
+    "Text/structure/canonical-output limits are not total preallocation, heap/CPU or arbitrary JavaScript Proxy sandbox proofs.",
+    "Final full acceptance-gate refresh is pending parent execution; no inherited freshness claim."
+  ],
+  "controlDevelopmentNote": "Two initial reviewer fixture mistakes are retained in initial-control-setup-results.json/log: an object-literal __proto__ custom prototype and an unsafe-number refusal incorrectly required source preservation. Corrected controls passed; these were not product defects."
+}

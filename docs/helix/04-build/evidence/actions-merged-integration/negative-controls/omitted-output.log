@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/private/tmp/umf-audit-merged-actions-execution.py", line 58, in <module>
+    generated_paths={str(p.relative_to(F)):sha(p) for root in ['dist',site+'/dist'] for p in sorted((F/root).rglob('*')) if p.is_file()};assert generated_paths==runs[-1]['generatedOutputs']
+AssertionError

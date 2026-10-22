@@ -1,9 +1,11 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
+import reference from '../../spec/core/semantic-type-reference.schema.json';
 import {test,expect} from 'bun:test';
 import Ajv from 'ajv/dist/2020';
 import {getOwlAxiomAnnotations,importOwlTurtle,exportOwlTurtle,getOwlQuads,proposeOwlQuadEdit,writeDocument,readDocument} from '../../src';
 const E='https://example.org/';
 test('US-029 nested axiom annotations preserve term identity and source edits',async()=>{
- const raw=await Bun.file('native/owl/annotations.ttl').text(),doc=importOwlTurtle(raw,{id:'annotations',baseIRI:E,blankNodeScope:'scope'}),ajv=new Ajv({strict:false});ajv.addSchema(await Bun.file('spec/core/schema.json').json());const check=ajv.compile(await Bun.file('spec/extensions/owl/annotations-schema.json').json());
+ const raw=await Bun.file('native/owl/annotations.ttl').text(),doc=importOwlTurtle(raw,{id:'annotations',baseIRI:E,blankNodeScope:'scope'}),ajv=new Ajv({strict:false});ajv.addSchema(reference).addSchema(await Bun.file('spec/core/schema.json').json());const check=ajv.compile(await Bun.file('spec/extensions/owl/annotations-schema.json').json());
  for(const format of ['json','yaml'] as const){const restored=readDocument(writeDocument(doc,format),format),v=getOwlAxiomAnnotations(restored,0);expect(check(v)).toBe(true);expect(v.complete).toBe(false);expect(v.blankNodeScope).toBe('scope');expect(v.roots.map(n=>n.value)).toEqual([E+'ax1',E+'ax2']);expect(v.records.map(r=>r.node.value)).toEqual([E+'ax1',E+'ax2',E+'ann',E+'deep']);expect(v.malformed.map(n=>n.value)).toEqual([E+'bad']);expect(exportOwlTurtle(v.source)).toBe(raw);expect(v.records[2]!.target.object.value).toBe('0.90');expect(v.records[2]!.assertedQuadIndexes).toHaveLength(1);
  const q=getOwlQuads(restored)[0]!;q.object={kind:'iri',value:E+'C'};const next=proposeOwlQuadEdit(restored,0,q).document;expect(getOwlAxiomAnnotations(next,0).roots).toEqual([]);expect(getOwlQuads(next).filter(q=>q.subject.value===E+'ax1')).toHaveLength(6);expect(exportOwlTurtle(restored)).toBe(raw);v.records[0]!.node.value='changed';expect(getOwlAxiomAnnotations(restored,0).roots[0]!.value).toBe(E+'ax1');
  }

@@ -1,0 +1,21 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"inspectSecurityPolicyV2Source\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "input",
+      "optional": false,
+      "type": "unknown"
+    }
+  ],
+  "purpose": "inspectSecurityPolicyV2Source accepts input and returns SecurityPolicyV2Inspection.",
+  "related": [],
+  "returns": "SecurityPolicyV2Inspection",
+  "task": "Inspect and select",
+  "type": "(input: unknown) => SecurityPolicyV2Inspection"
+}

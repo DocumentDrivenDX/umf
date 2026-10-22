@@ -1,0 +1,54 @@
+bun test v1.4.2 (43848b5a7)
+
+tests/security/write.test.ts:
+(pass) writes require both states and exact field permission; admission has no effects [193.10ms]
+13 | // @covers US-057-AC1
+14 | test('ownership changes require a separately granted action even with permitted old/new states',()=>{
+15 |   const f=writeFixture();f.policy.rules.find(r=>r.id==='write-membership')!.condition={op:'literal',value:true};
+16 |   f.proposed.cut.facts.find(r=>r.type.elementId==='Ownership')!.fields.find(x=>x.field.elementId==='ownerProject')!.value={string:'p2'};
+17 |   f.policy.rules.find(r=>r.id==='writer')!.actions=['create','update','delete','write-fields','change-policy'];expect(run(f)).toBe('deny');
+18 |   f.policy.rules.find(r=>r.id==='writer')!.actions.push('change-owner');expect(run(f)).toBe('permit');
+                                                                                            ^
+error: expect(received).toBe(expected)
+
+Expected: "permit"
+Received: "deny"
+
+      at <anonymous> (/Users/erik/.codex/worktrees/security-main-integration/umf/tests/security/write.test.ts:18:88)
+(fail) ownership changes require a separately granted action even with permitted old/new states [81.80ms]
+(pass) incomplete states, mixed authority and changed authorization facts refuse [9.21ms]
+(pass) create and delete admit only their declared state shape [54.62ms]
+(pass) policy attribute changes need separate authority and null/absence remain distinct [175.98ms]
+(pass) ownership inventories used by policy require policy-change authority on both states [178.74ms]
+(pass) ownership policy-change action cannot borrow permission from only one update state [118.80ms]
+(pass) create/delete policy-used ownership inventory checks are independent of target fields [43.23ms]
+(pass) unchanged used inventory and changed policy-unused inventory do not need policy-change permission [47.98ms]
+(pass) write authority comparison ignores field order and equivalent typed context literals [58.05ms]
+(pass) write comparison uses typed subject keys and authorization fact values [30.13ms]
+(pass) write comparison rejects duplicate projections and exhausted comparison budgets [10.43ms]
+(pass) normalized comparison payload has a discriminating refusal independent of step exhaustion [1208.97ms]
+(pass) numeric ownership equivalence avoids special actions while actual changes require both grants [89.62ms]
+
+tests/security/write-read-protection.test.ts:
+(pass) missing or unknown read protection never keeps legacy write permission [4.24ms]
+(pass) withheld and transformed reads cannot write even a value equal to the mask [113.03ms]
+(pass) blind write is exact Field-bound explicit permission, independent of field mutation grant [149.09ms]
+(pass) blind bindings refuse duplicated foreign malformed or ordinary-action aliases [6.64ms]
+(pass) update requires original or blind permission in both original and proposed states [149.10ms]
+(pass) original null and canonical absence keep original meaning before cell transport [63.92ms]
+(pass) create checks proposed, delete original, and unchanged masked fields need no invented mutation [98.10ms]
+(pass) original permission can satisfy the guard despite unknown blind alternative and vice versa [75.50ms]
+(pass) unknown facts, generation, source and exhausted budgets cannot issue write permission [34.63ms]
+
+tests/security/dependencies.test.ts:
+(pass) typed dependency closure includes endpoint components and exact identity keys [3.75ms]
+(pass) a write binding cannot omit a policy-read field to avoid separate policy mutation authority [73.77ms]
+(pass) incomplete interpretation cannot produce an apparently complete dependency inventory [0.71ms]
+
+1 tests failed:
+(fail) ownership changes require a separately granted action even with permitted old/new states [81.80ms]
+
+ 25 pass
+ 1 fail
+ 99 expect() calls
+Ran 26 tests across 3 files. [3.25s]

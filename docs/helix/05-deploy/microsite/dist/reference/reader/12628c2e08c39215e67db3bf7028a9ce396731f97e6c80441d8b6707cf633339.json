@@ -1,0 +1,60 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"SmithySelectionResult\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "status",
+      "optional": false,
+      "type": "\"blocked\" | \"selected\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "selector",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SmithyAssemblyResult\"]"
+      ],
+      "name": "assembly",
+      "optional": false,
+      "type": "SmithyAssemblyResult"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "shapeIds",
+      "optional": true,
+      "type": "string[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Diagnostic\"]"
+      ],
+      "name": "issues",
+      "optional": false,
+      "type": "Diagnostic[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "complete",
+      "optional": false,
+      "type": "false"
+    }
+  ],
+  "parameters": [],
+  "purpose": "SmithySelectionResult is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "SmithySelectionResult"
+}

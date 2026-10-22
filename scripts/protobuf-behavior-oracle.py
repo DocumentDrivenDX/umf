@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Native Python Protobuf behavioral oracle. Does not import the UMF implementation."""
 import json
 import sys

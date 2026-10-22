@@ -1,0 +1,935 @@
+{
+  "anyOf": [
+    {
+      "$ref": "urn:umf:actions:bulk:1#/$defs/submitted"
+    },
+    {
+      "$ref": "urn:umf:actions:bulk:1#/$defs/submitConflict"
+    },
+    {
+      "$ref": "urn:umf:actions:bulk:1#/$defs/refusal"
+    },
+    {
+      "$ref": "urn:umf:actions:bulk:1#/$defs/controlUnknown"
+    },
+    {
+      "$ref": "urn:umf:actions:bulk:1#/$defs/controlFailure"
+    },
+    {
+      "$ref": "urn:umf:actions:bulk:1#/$defs/claimed"
+    },
+    {
+      "$ref": "urn:umf:actions:bulk:1#/$defs/idle"
+    },
+    {
+      "$ref": "urn:umf:actions:bulk:1#/$defs/cancelRequested"
+    },
+    {
+      "$ref": "urn:umf:actions:bulk:1#/$defs/state"
+    },
+    {
+      "$ref": "urn:umf:actions:bulk:1#/$defs/sealed"
+    },
+    {
+      "$ref": "urn:umf:actions:bulk:1#/$defs/review"
+    },
+    {
+      "$ref": "urn:umf:actions:bulk:1#/$defs/batchCommitted"
+    },
+    {
+      "$ref": "urn:umf:actions:bulk:1#/$defs/batchConflict"
+    },
+    {
+      "$ref": "urn:umf:actions:bulk:1#/$defs/batchFailure"
+    },
+    {
+      "$ref": "urn:umf:actions:bulk:1#/$defs/executeUnknown"
+    },
+    {
+      "$ref": "urn:umf:actions:bulk:1#/$defs/notFound"
+    }
+  ],
+  "$defs": {
+    "job": {
+      "type": "object",
+      "properties": {
+        "namespace": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]{1,128}$"
+        },
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]{1,128}$"
+        }
+      },
+      "required": [
+        "namespace",
+        "id"
+      ],
+      "additionalProperties": false
+    },
+    "manifestRef": {
+      "type": "object",
+      "properties": {
+        "protocol": {
+          "const": "umf.actions.manifest/1"
+        },
+        "sha256": {
+          "$ref": "urn:umf:actions:plan:1#/$defs/sha256"
+        }
+      },
+      "required": [
+        "protocol",
+        "sha256"
+      ],
+      "additionalProperties": false
+    },
+    "recovery": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "urn:umf:actions:plan:1#/$defs/id"
+        },
+        "operation": {
+          "enum": [
+            "submit",
+            "claim",
+            "cancel",
+            "reconcile",
+            "materialize"
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "operation"
+      ],
+      "additionalProperties": false
+    },
+    "refusal": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "enum": [
+            "denied",
+            "unsupported",
+            "expired"
+          ]
+        },
+        "code": {
+          "$ref": "urn:umf:actions:plan:1#/$defs/id"
+        }
+      },
+      "required": [
+        "status",
+        "code"
+      ],
+      "additionalProperties": false
+    },
+    "state": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "enum": [
+            "queued",
+            "running",
+            "reconciling",
+            "completed",
+            "stopped",
+            "cancelled"
+          ]
+        },
+        "job": {
+          "type": "object",
+          "properties": {
+            "namespace": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]{1,128}$"
+            },
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]{1,128}$"
+            }
+          },
+          "required": [
+            "namespace",
+            "id"
+          ],
+          "additionalProperties": false
+        },
+        "manifest": {
+          "type": "object",
+          "properties": {
+            "protocol": {
+              "const": "umf.actions.manifest/1"
+            },
+            "sha256": {
+              "$ref": "urn:umf:actions:plan:1#/$defs/sha256"
+            }
+          },
+          "required": [
+            "protocol",
+            "sha256"
+          ],
+          "additionalProperties": false
+        },
+        "nextBatch": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 10000
+        },
+        "committedBatches": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 10000
+        },
+        "unresolvedBatch": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9999
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "stop": {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "batch": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9999
+                },
+                "code": {
+                  "$ref": "urn:umf:actions:plan:1#/$defs/id"
+                }
+              },
+              "required": [
+                "batch",
+                "code"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "status",
+        "job",
+        "manifest",
+        "nextBatch",
+        "committedBatches",
+        "unresolvedBatch",
+        "stop"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "stopped"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "stop": {
+                "type": "object"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "stop": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "cancelled"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "unresolvedBatch": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "controlUnknown": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "const": "indeterminate"
+        },
+        "recovery": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "$ref": "urn:umf:actions:plan:1#/$defs/id"
+            },
+            "operation": {
+              "enum": [
+                "submit",
+                "claim",
+                "cancel",
+                "reconcile",
+                "materialize"
+              ]
+            }
+          },
+          "required": [
+            "id",
+            "operation"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "status",
+        "recovery"
+      ],
+      "additionalProperties": false
+    },
+    "controlFailure": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "const": "failed"
+        },
+        "code": {
+          "const": "PAP_CONTROL_NONCOMMIT"
+        },
+        "recovery": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "$ref": "urn:umf:actions:plan:1#/$defs/id"
+            },
+            "operation": {
+              "enum": [
+                "submit",
+                "claim",
+                "cancel",
+                "reconcile",
+                "materialize"
+              ]
+            }
+          },
+          "required": [
+            "id",
+            "operation"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "status",
+        "code",
+        "recovery"
+      ],
+      "additionalProperties": false
+    },
+    "submitted": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "const": "submitted"
+        },
+        "state": {
+          "$ref": "urn:umf:actions:bulk:1#/$defs/state"
+        }
+      },
+      "required": [
+        "status",
+        "state"
+      ],
+      "additionalProperties": false
+    },
+    "submitConflict": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "const": "conflict"
+        },
+        "code": {
+          "const": "TOKEN_REUSE"
+        }
+      },
+      "required": [
+        "status",
+        "code"
+      ],
+      "additionalProperties": false
+    },
+    "claimed": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "const": "claimed"
+        },
+        "job": {
+          "type": "object",
+          "properties": {
+            "namespace": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]{1,128}$"
+            },
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]{1,128}$"
+            }
+          },
+          "required": [
+            "namespace",
+            "id"
+          ],
+          "additionalProperties": false
+        },
+        "batch": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9999
+        },
+        "fence": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)$",
+          "maxLength": 256
+        },
+        "leaseUntil": {
+          "$ref": "urn:umf:actions:plan:1#/$defs/id"
+        }
+      },
+      "required": [
+        "status",
+        "job",
+        "batch",
+        "fence",
+        "leaseUntil"
+      ],
+      "additionalProperties": false
+    },
+    "idle": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "const": "idle"
+        },
+        "job": {
+          "type": "object",
+          "properties": {
+            "namespace": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]{1,128}$"
+            },
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]{1,128}$"
+            }
+          },
+          "required": [
+            "namespace",
+            "id"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "status",
+        "job"
+      ],
+      "additionalProperties": false
+    },
+    "cancelRequested": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "const": "cancel-requested"
+        },
+        "job": {
+          "type": "object",
+          "properties": {
+            "namespace": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]{1,128}$"
+            },
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]{1,128}$"
+            }
+          },
+          "required": [
+            "namespace",
+            "id"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "status",
+        "job"
+      ],
+      "additionalProperties": false
+    },
+    "sealed": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "const": "sealed"
+        },
+        "manifest": {
+          "$ref": "urn:umf:actions:manifest:1#/$defs/artifact"
+        }
+      },
+      "required": [
+        "status",
+        "manifest"
+      ],
+      "additionalProperties": false
+    },
+    "review": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "const": "review"
+        },
+        "state": {
+          "$ref": "urn:umf:actions:bulk:1#/$defs/state"
+        },
+        "manifest": {
+          "$ref": "urn:umf:actions:manifest:1#/$defs/artifact"
+        }
+      },
+      "required": [
+        "status",
+        "state",
+        "manifest"
+      ],
+      "additionalProperties": false
+    },
+    "batchCommitted": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "const": "committed"
+        },
+        "job": {
+          "type": "object",
+          "properties": {
+            "namespace": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]{1,128}$"
+            },
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]{1,128}$"
+            }
+          },
+          "required": [
+            "namespace",
+            "id"
+          ],
+          "additionalProperties": false
+        },
+        "batch": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9999
+        },
+        "manifest": {
+          "type": "object",
+          "properties": {
+            "protocol": {
+              "const": "umf.actions.manifest/1"
+            },
+            "sha256": {
+              "$ref": "urn:umf:actions:plan:1#/$defs/sha256"
+            }
+          },
+          "required": [
+            "protocol",
+            "sha256"
+          ],
+          "additionalProperties": false
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "ordinal": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9999
+              },
+              "result": {
+                "$ref": "urn:umf:actions:tx-results:1#/$defs/committed"
+              }
+            },
+            "required": [
+              "ordinal",
+              "result"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 1,
+          "maxItems": 100
+        },
+        "receipt": {
+          "$ref": "urn:umf:actions:tx-results:1#/$defs/receipt"
+        }
+      },
+      "required": [
+        "status",
+        "job",
+        "batch",
+        "manifest",
+        "items",
+        "receipt"
+      ],
+      "additionalProperties": false
+    },
+    "batchConflict": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "enum": [
+            "conflict",
+            "rejected"
+          ]
+        },
+        "job": {
+          "type": "object",
+          "properties": {
+            "namespace": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]{1,128}$"
+            },
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]{1,128}$"
+            }
+          },
+          "required": [
+            "namespace",
+            "id"
+          ],
+          "additionalProperties": false
+        },
+        "batch": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9999
+        },
+        "manifest": {
+          "type": "object",
+          "properties": {
+            "protocol": {
+              "const": "umf.actions.manifest/1"
+            },
+            "sha256": {
+              "$ref": "urn:umf:actions:plan:1#/$defs/sha256"
+            }
+          },
+          "required": [
+            "protocol",
+            "sha256"
+          ],
+          "additionalProperties": false
+        },
+        "code": {
+          "$ref": "urn:umf:actions:plan:1#/$defs/id"
+        },
+        "item": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9999
+        }
+      },
+      "required": [
+        "status",
+        "job",
+        "batch",
+        "manifest",
+        "code",
+        "item"
+      ],
+      "additionalProperties": false
+    },
+    "batchFailure": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "const": "failed"
+        },
+        "job": {
+          "type": "object",
+          "properties": {
+            "namespace": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]{1,128}$"
+            },
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]{1,128}$"
+            }
+          },
+          "required": [
+            "namespace",
+            "id"
+          ],
+          "additionalProperties": false
+        },
+        "batch": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9999
+        },
+        "code": {
+          "$ref": "urn:umf:actions:plan:1#/$defs/id"
+        }
+      },
+      "required": [
+        "status",
+        "job",
+        "batch",
+        "code"
+      ],
+      "additionalProperties": false
+    },
+    "executeUnknown": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "const": "indeterminate"
+        }
+      },
+      "required": [
+        "status"
+      ],
+      "additionalProperties": false
+    },
+    "notFound": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "const": "not-found"
+        }
+      },
+      "required": [
+        "status"
+      ],
+      "additionalProperties": false
+    },
+    "submitResult": {
+      "anyOf": [
+        {
+          "$ref": "urn:umf:actions:bulk:1#/$defs/submitted"
+        },
+        {
+          "$ref": "urn:umf:actions:bulk:1#/$defs/submitConflict"
+        },
+        {
+          "$ref": "urn:umf:actions:bulk:1#/$defs/refusal"
+        },
+        {
+          "$ref": "urn:umf:actions:bulk:1#/$defs/controlUnknown"
+        },
+        {
+          "$ref": "urn:umf:actions:bulk:1#/$defs/controlFailure"
+        }
+      ]
+    },
+    "claimResult": {
+      "anyOf": [
+        {
+          "$ref": "urn:umf:actions:bulk:1#/$defs/claimed"
+        },
+        {
+          "$ref": "urn:umf:actions:bulk:1#/$defs/idle"
+        },
+        {
+          "$ref": "urn:umf:actions:bulk:1#/$defs/refusal"
+        },
+        {
+          "$ref": "urn:umf:actions:bulk:1#/$defs/controlUnknown"
+        },
+        {
+          "$ref": "urn:umf:actions:bulk:1#/$defs/controlFailure"
+        }
+      ]
+    },
+    "executeResult": {
+      "anyOf": [
+        {
+          "$ref": "urn:umf:actions:bulk:1#/$defs/batchCommitted"
+        },
+        {
+          "$ref": "urn:umf:actions:bulk:1#/$defs/batchConflict"
+        },
+        {
+          "$ref": "urn:umf:actions:bulk:1#/$defs/batchFailure"
+        },
+        {
+          "$ref": "urn:umf:actions:bulk:1#/$defs/executeUnknown"
+        },
+        {
+          "$ref": "urn:umf:actions:bulk:1#/$defs/refusal"
+        }
+      ]
+    },
+    "lookupResult": {
+      "anyOf": [
+        {
+          "$ref": "urn:umf:actions:bulk:1#/$defs/batchCommitted"
+        },
+        {
+          "$ref": "urn:umf:actions:bulk:1#/$defs/batchConflict"
+        },
+        {
+          "$ref": "urn:umf:actions:bulk:1#/$defs/batchFailure"
+        },
+        {
+          "$ref": "urn:umf:actions:bulk:1#/$defs/notFound"
+        },
+        {
+          "$ref": "urn:umf:actions:bulk:1#/$defs/refusal"
+        }
+      ]
+    },
+    "reconcileResult": {
+      "anyOf": [
+        {
+          "$ref": "urn:umf:actions:bulk:1#/$defs/state"
+        },
+        {
+          "$ref": "urn:umf:actions:bulk:1#/$defs/refusal"
+        },
+        {
+          "$ref": "urn:umf:actions:bulk:1#/$defs/controlUnknown"
+        },
+        {
+          "$ref": "urn:umf:actions:bulk:1#/$defs/controlFailure"
+        }
+      ]
+    },
+    "cancelResult": {
+      "anyOf": [
+        {
+          "$ref": "urn:umf:actions:bulk:1#/$defs/cancelRequested"
+        },
+        {
+          "$ref": "urn:umf:actions:bulk:1#/$defs/state"
+        },
+        {
+          "$ref": "urn:umf:actions:bulk:1#/$defs/refusal"
+        },
+        {
+          "$ref": "urn:umf:actions:bulk:1#/$defs/controlUnknown"
+        },
+        {
+          "$ref": "urn:umf:actions:bulk:1#/$defs/controlFailure"
+        }
+      ]
+    },
+    "statusResult": {
+      "anyOf": [
+        {
+          "$ref": "urn:umf:actions:bulk:1#/$defs/state"
+        },
+        {
+          "$ref": "urn:umf:actions:bulk:1#/$defs/refusal"
+        }
+      ]
+    },
+    "materializeResult": {
+      "anyOf": [
+        {
+          "$ref": "urn:umf:actions:bulk:1#/$defs/sealed"
+        },
+        {
+          "$ref": "urn:umf:actions:bulk:1#/$defs/refusal"
+        },
+        {
+          "$ref": "urn:umf:actions:bulk:1#/$defs/controlUnknown"
+        },
+        {
+          "$ref": "urn:umf:actions:bulk:1#/$defs/controlFailure"
+        }
+      ]
+    },
+    "reviewResult": {
+      "anyOf": [
+        {
+          "$ref": "urn:umf:actions:bulk:1#/$defs/review"
+        },
+        {
+          "$ref": "urn:umf:actions:bulk:1#/$defs/refusal"
+        }
+      ]
+    },
+    "controlResult": {
+      "anyOf": [
+        {
+          "$ref": "urn:umf:actions:bulk:1#/$defs/submitted"
+        },
+        {
+          "$ref": "urn:umf:actions:bulk:1#/$defs/submitConflict"
+        },
+        {
+          "$ref": "urn:umf:actions:bulk:1#/$defs/refusal"
+        },
+        {
+          "$ref": "urn:umf:actions:bulk:1#/$defs/controlFailure"
+        },
+        {
+          "$ref": "urn:umf:actions:bulk:1#/$defs/claimed"
+        },
+        {
+          "$ref": "urn:umf:actions:bulk:1#/$defs/idle"
+        },
+        {
+          "$ref": "urn:umf:actions:bulk:1#/$defs/cancelRequested"
+        },
+        {
+          "$ref": "urn:umf:actions:bulk:1#/$defs/state"
+        },
+        {
+          "$ref": "urn:umf:actions:bulk:1#/$defs/sealed"
+        }
+      ]
+    },
+    "recoverControlResult": {
+      "anyOf": [
+        {
+          "$ref": "urn:umf:actions:bulk:1#/$defs/controlResult"
+        },
+        {
+          "$ref": "urn:umf:actions:bulk:1#/$defs/controlUnknown"
+        },
+        {
+          "$ref": "urn:umf:actions:bulk:1#/$defs/refusal"
+        }
+      ]
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:actions:bulk:1"
+}

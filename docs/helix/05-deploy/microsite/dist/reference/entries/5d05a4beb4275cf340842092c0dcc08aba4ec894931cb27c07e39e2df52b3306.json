@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 7758,
+        "line": 6,
+        "path": "src/adapters/parquet/values.ts",
+        "sha256": "3487055e71d5edbb3336863bc77390255b7bcdedb827726aec1c8f7a94e9d4b6"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "ParquetTypedValue",
+    "runtime": "type-only",
+    "signatureText": [
+      "export type ParquetTypedValue=null|{kind:'struct';fields:{index:number;name:string;value:ParquetTypedValue}[]}|{kind:'list';items:ParquetTypedValue[]}|{kind:'map';entries:{key:ParquetTypedValue;value:ParquetTypedValue}[];duplicateKeys:'last-value'}|{kind:'opaque';annotation:string;parameters:Json;physical:ParquetRowValue}|{kind:'bool';value:boolean;physical:ParquetPhysicalValue}|{kind:'int'|'uint'|'float';bits:number;value:string;physical:ParquetPhysicalValue}|{kind:'decimal'|'string'|'enum'|'json'|'bytes'|'uuid'|'int96'|'date';value:string;physical:ParquetPhysicalValue}|{kind:'time'|'timestamp';unit:'MILLIS'|'MICROS'|'NANOS';isAdjustedToUTC:boolean;value:string;physical:ParquetPhysicalValue};"
+    ]
+  },
+  "id": "[\"api\",\".\",\"ParquetTypedValue\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 7758,
+      "line": 6,
+      "path": "src/adapters/parquet/values.ts",
+      "sha256": "3487055e71d5edbb3336863bc77390255b7bcdedb827726aec1c8f7a94e9d4b6"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/parquet/values.ts",
+  "title": "ParquetTypedValue"
+}

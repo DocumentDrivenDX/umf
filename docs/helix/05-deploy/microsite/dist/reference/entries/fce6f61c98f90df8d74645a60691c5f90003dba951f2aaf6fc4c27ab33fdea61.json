@@ -1,0 +1,50 @@
+{
+  "data": {
+    "conflicts": [],
+    "correspondence": "unassessed",
+    "declarations": [
+      {
+        "bytes": 4153,
+        "path": "spec/extensions/delta-table/package.json",
+        "sha256": "d167709ab95d8ca2f2160ff40267c7435510b0c819d87698c15b1eba067a5b4e"
+      }
+    ],
+    "evidence": [],
+    "operation": {
+      "apiNames": [],
+      "coreProfiles": [],
+      "extensionVersions": [],
+      "fixturePaths": [],
+      "id": "umf.delta.table@0.1.0:import",
+      "kind": "import",
+      "limitations": [
+        "Recorded scope only; native equivalence and production adoption are separate."
+      ],
+      "runtime": {
+        "availability": "host-only",
+        "profileId": "umf.delta.table@0.1.0:import",
+        "requirements": [
+          "Native runtime / original qualification harness; not executed by this page."
+        ]
+      },
+      "sourceSystem": "Delta transaction-log metadata and protocol context · Protocol 3b1b99cd077ec9c84c8a94c250dea3730cc33392; deltalake 1.6.4 examples",
+      "subset": "Exact context preservation, known shape checks, incomplete feature diagnostics and guarded mapped rename candidates. No log reconciliation, transaction commit or general table evolution claim.",
+      "targetSystem": "UMF",
+      "title": "umf.delta.table · import"
+    }
+  },
+  "id": "[\"integration\",\"umf.delta.table@0.1.0:import\"]",
+  "kind": "integration",
+  "links": [
+    "[\"extension\",\"umf.delta.table\",\"0.1.0\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 134795,
+      "path": "docs/helix/05-deploy/reference/operations.json",
+      "sha256": "793743bbca36e56e90e82df5ef0408b628c434e58cb68aea4d6486349be78e61"
+    }
+  ],
+  "summary": "Exact context preservation, known shape checks, incomplete feature diagnostics and guarded mapped rename candidates. No log reconciliation, transaction commit or general table evolution claim.",
+  "title": "umf.delta.table · import"
+}

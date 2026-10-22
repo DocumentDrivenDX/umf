@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 7884,
+        "line": 57,
+        "path": "src/adapters/postgresql/index.ts",
+        "sha256": "2fc7d43f7d4ebe141833440c26c113079fa85ff41be1056e0bca158edea69b9d"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "exportPostgresqlSql",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(document: Document, backend: PostgresqlBackend): Promise<string>"
+    ]
+  },
+  "id": "[\"api\",\".\",\"exportPostgresqlSql\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 7884,
+      "line": 57,
+      "path": "src/adapters/postgresql/index.ts",
+      "sha256": "2fc7d43f7d4ebe141833440c26c113079fa85ff41be1056e0bca158edea69b9d"
+    }
+  ],
+  "summary": "Regenerate SQL from the current AST, preserving the source archive separately. No SQL is executed.",
+  "title": "exportPostgresqlSql"
+}

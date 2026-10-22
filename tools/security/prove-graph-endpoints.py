@@ -1,0 +1,110 @@
+"""Conditional correlated endpoint refinement; no native graph qualification."""
+import hashlib
+import json
+from pathlib import Path
+import z3
+
+Edge = z3.DeclareSort('AssociationWitness')
+Object = z3.DeclareSort('NativeObjectLocator')
+Type = z3.DeclareSort('QualifiedLogicalType')
+Key = z3.DeclareSort('CompleteLogicalKey')
+e = z3.Const('edge', Edge)
+logical_member = z3.Function('logical_member', Edge, z3.BoolSort())
+native_member = z3.Function('native_member', Edge, z3.BoolSort())
+source = z3.Function('native_source_locator', Edge, Object)
+target = z3.Function('native_target_locator', Edge, Object)
+object_type = z3.Function('admitted_object_type', Object, Type)
+object_key = z3.Function('admitted_complete_object_key', Object, Key)
+source_type = z3.Function('logical_source_type', Edge, Type)
+target_type = z3.Function('logical_target_type', Edge, Type)
+source_key = z3.Function('logical_source_key', Edge, Key)
+target_key = z3.Function('logical_target_key', Edge, Key)
+staff_type, project_type = z3.Consts('staff_type project_type', Type)
+staff_key, project_key = z3.Consts('staff_key project_key', Key)
+
+coverage = z3.ForAll(e, native_member(e) == logical_member(e))
+endpoint_correspondence = z3.ForAll(e, z3.Implies(logical_member(e), z3.And(
+    object_type(source(e)) == source_type(e),
+    object_type(target(e)) == target_type(e),
+    object_key(source(e)) == source_key(e),
+    object_key(target(e)) == target_key(e))))
+logical_match = z3.And(source_type(e) == staff_type, source_key(e) == staff_key,
+                       target_type(e) == project_type, target_key(e) == project_key)
+native_match = z3.And(object_type(source(e)) == staff_type, object_key(source(e)) == staff_key,
+                      object_type(target(e)) == project_type, object_key(target(e)) == project_key)
+logical = z3.Exists(e, z3.And(logical_member(e), logical_match))
+native = z3.Exists(e, z3.And(native_member(e), native_match))
+type_erased = z3.Exists(e, z3.And(native_member(e), object_key(source(e)) == staff_key,
+                                object_key(target(e)) == project_key))
+role_swapped = z3.Exists(e, z3.And(native_member(e), object_type(target(e)) == staff_type,
+                                 object_key(target(e)) == staff_key,
+                                 object_type(source(e)) == project_type,
+                                 object_key(source(e)) == project_key))
+split_witness = z3.And(
+    z3.Exists(e, z3.And(native_member(e), object_type(source(e)) == staff_type,
+                        object_key(source(e)) == staff_key)),
+    z3.Exists(e, z3.And(native_member(e), object_type(target(e)) == project_type,
+                        object_key(target(e)) == project_key)))
+premises = [coverage, endpoint_correspondence, staff_type != project_type]
+logical_active = z3.Function('logical_assignment_active', Edge, z3.BoolSort())
+native_active = z3.Function('native_assignment_active', Edge, z3.BoolSort())
+attribute_correspondence = z3.ForAll(e, z3.Implies(logical_member(e),
+    logical_active(e) == native_active(e)))
+active_premises = [*premises, attribute_correspondence]
+logical_active_member = z3.Exists(e, z3.And(logical_member(e), logical_match, logical_active(e)))
+native_active_member = z3.Exists(e, z3.And(native_member(e), native_match, native_active(e)))
+split_attribute = z3.And(native, z3.Exists(e, z3.And(native_member(e), native_active(e))))
+specs = [
+    ('same-witness-active-attribute-refinement', active_premises,
+     logical_active_member != native_active_member,
+     active_premises, z3.And(logical_active_member, native_active_member),
+     active_premises, z3.And(split_attribute, z3.Not(logical_active_member))),
+    ('inactive-assignment-cannot-grant', active_premises,
+     z3.And(native_active_member, z3.Not(logical_active_member)),
+     active_premises, z3.And(logical_active_member, native_active_member),
+     active_premises, z3.And(native, z3.Not(logical_active_member))),
+    ('split-endpoint-witnesses-can-grant', premises, logical != native,
+     premises, z3.And(logical, native),
+     premises, z3.And(split_witness, z3.Not(logical))),
+    ('correlated-endpoint-existence-refinement', premises, logical != native,
+     premises, z3.And(logical, native),
+     premises, z3.And(type_erased, z3.Not(logical))),
+    ('endpoint-type-erasure-can-grant', premises, z3.And(native, z3.Not(logical)),
+     premises, z3.And(logical, native),
+     premises, z3.And(type_erased, z3.Not(logical))),
+    ('endpoint-role-reversal-can-grant', premises, z3.And(native, z3.Not(logical)),
+     premises, z3.And(logical, native),
+     premises, z3.And(role_swapped, z3.Not(logical))),
+    ('complete-incidence-required-for-negation', premises, z3.Not(logical) != z3.Not(native),
+     premises, z3.And(z3.Not(logical), z3.Not(native)),
+     [endpoint_correspondence, staff_type != project_type], z3.And(logical, z3.Not(native))),
+]
+cases = []
+for name, safety_p, safety, positive_p, positive, control_p, control in specs:
+    outcomes = {}
+    for kind, assumptions, formula, expected in [
+        ('violation', safety_p, safety, z3.unsat),
+        ('positivePopulation', positive_p, positive, z3.sat),
+        ('negativeControl', control_p, control, z3.sat),
+    ]:
+        solver = z3.Solver(); solver.set(timeout=10000)
+        solver.add(*assumptions, formula)
+        smt = solver.sexpr()
+        result = solver.check()
+        replay = z3.Solver(); replay.set(timeout=10000); replay.from_string(smt)
+        replayed = replay.check()
+        if result != expected or replayed != expected:
+            raise RuntimeError(name + '/' + kind + ': ' + str(result) + '/' + str(replayed))
+        outcomes[kind] = {'smt': smt, 'result': str(result), 'replayResult': str(replayed),
+                          'model': str(solver.model()) if result == z3.sat else None}
+    cases.append({'id': name, 'covers': ['US-056-AC2'], **outcomes})
+paths = [Path('tools/security/prove-graph-endpoints.py'),
+         Path('docs/helix/02-design/contracts/CONTRACT-062-security-semantics.md'),
+         Path('docs/helix/02-design/contracts/CONTRACT-063-security-enforcement.md')]
+receipt = {
+    'status': 'conditional-proof-passed', 'solverVersion': z3.get_version_string(),
+    'sourceDigests': {str(p): hashlib.sha256(p.read_bytes()).hexdigest() for p in paths},
+    'nativeImplementationQualified': False, 'cases': cases,
+    'scope': 'Unbounded first-order association witnesses, native object locators and separate qualified logical type/key domains. Complete sound incidence and exact role-specific type/key projection are explicit premises. Correlated two-endpoint existence and its negation preserve logical truth. The active-assignment slice additionally assumes exact total Boolean attribute correspondence and keeps the attribute on the same association witness. Split endpoint/attribute witnesses, omitted active tests, type erasure and role reversal admit SAT false-positive controls; missing incidence admits a SAT false grant under negation. This Boolean complete-fact slice does not model unknown/missing attributes, nested policy composition, property codecs, tuple encoding, bucket uniqueness/collision processing, actual Truss layout/SQL/compiler, original identity/source authentication, current authority or publication. No backend acceptance follows.'}
+Path('docs/helix/04-build/evidence/security/graph-endpoints-formal.json').write_text(json.dumps(receipt, indent=2) + '\n')
+print(json.dumps({'status': receipt['status'], 'checks': len(cases)}))

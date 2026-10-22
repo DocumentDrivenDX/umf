@@ -52,6 +52,26 @@ remain different claims.
 
 ## Level 1: System Context
 
+### Proposed schema migration ownership
+
+FR-18, FEAT-007 COMP-06–11 and [SD-007](solution-designs/SD-007-schema-migrations.md)
+define the proposed field migration boundary. The portable library owns exact
+source comparison, declared migration intent, dependency and loss analysis,
+capability-qualified plan generation and receipt verification. Backend compilers
+own physical lowering and version-specific operations. Execution hosts own
+authenticated installation state, approval, data scans/transforms, writer
+coordination, checkpoints, native validation, cutover and recovery. Optional
+UMF-distributed host code follows this boundary; portable core remains free of
+connections and storage execution under NFR-50.
+
+Backfills, logical defaults and defaults for future native writes are separate.
+Logical Field retirement, physical deletion and historical purge are separate.
+Type conversion requires explicit meaning/loss rules and complete target checks.
+No shared online, atomic or reversible guarantee is inferred across backends.
+CONTRACT-046 remains observational; CONTRACT-081 governs the first table host
+profile. The [migration plan](../04-build/schema-migration-plan.md) sequences
+exact contracts, module/checker adoption and native qualification before support.
+
 | Participant | Relationship to UMF | Boundary |
 | --- | --- | --- |
 | Schema authors and tooling | Create, inspect, validate, compare, and transform artifacts | Programmatic and human workflows; no mandatory UI |
@@ -76,6 +96,27 @@ The brief names object types, properties, links, interfaces, value types, action
 datasource mappings, and policy/capability metadata as Palantir preservation
 candidates. This is an inventory to validate against the chosen native interface,
 not a researched completeness claim or a list of mandatory core primitives.
+
+## Proposed declarative action boundary
+
+[FR-51/FEAT-900](../01-frame/features/FEAT-900-declarative-actions.md) introduces
+a proposed independently versioned `umf.actions` extension. The feature-level
+[SD-900](solution-designs/SD-900-declarative-actions.md) separates declaration
+validation/inspection and profile comparison from consumer-owned execution.
+[CONTRACT-900](contracts/CONTRACT-900-declarative-actions.md) owns exact action
+semantics; [TD-900](technical-designs/TD-900-declarative-actions.md) describes the
+bounded library slice. [CONTRACT-901](contracts/CONTRACT-901-transactional-action-profile.md)
+adds a proposed bounded executable consumer profile, revision/protocol and
+handler-access/audit requirements. These are design proposals, not delivered architecture.
+
+Core Record/Field/Key and relationship assertions retain their own meaning.
+Initial action references are document-local and require no US-050 implementation.
+DDD operations become associated only through an explicit action binding.
+Constraints and handler names are inert data: UMF supplies neither a general
+rule evaluator nor a transaction engine. An executor capability match is a
+self-declared claim over a retained exact document, not authorization or proof
+of atomicity, replay or receipt freshness. Those need independent, versioned
+consumer witnesses before any execution support claim.
 
 ## Level 2: Container Diagram
 
@@ -460,7 +501,7 @@ resource limits and transparent expensive operations remain required.
 | TypeSpec as interchange, not defining metamodel | Owner-directed | Avoid privileging its model absent fidelity evidence | Reconsider only with metamodel-wide evidence |
 | LinkML as interchange and benchmark | Owner-directed | Learn from existing generators and compliance evidence | Measure actual semantic gaps; do not assert superiority |
 | Runtime execution outside UMF | Required by NFR-50 | Preserve interchange boundary | Axon/TableSpec execution remains downstream |
-| Self-description | Later capability, FR-35 | Test the model with its own vocabulary | Compare to bootstrap authority before any authority transition |
+| Self-description | Current descriptive core projection, FR-35 | Test the model with its own vocabulary | Retain exact bootstrap constraints; no authority transition |
 
 ### Ecosystem direction and remaining expansion
 
@@ -603,3 +644,215 @@ Unknown third-party redistribution rights block full source export.
 ## Domain pack ontology targets
 
 [SD-026](solution-designs/SD-026-domain-pack-platform.md) and [CONTRACT-053](contracts/CONTRACT-053-domain-pack-profiles.md) add explicit tabular and graph schema targets to portable packs. UMF owns domain ontology schemas using existing core Records/Fields/Keys/Relationships and native ontology vocabularies as applicable. TableSpec owns tabular replay; Truss/Ashlar own binding acceptance, graph storage and execution. Schema-targeted graph candidates are not native storage IDs or accepted catalogs. Source/run integrity and mixed-schema archive closure remain shared boundaries.
+
+## Proposed typed data access SDK
+
+FR-52 to FR-55 and FEAT-028 to FEAT-031 add a schema-first Python data access SDK.
+[ADR-004](adr/ADR-004-typed-data-access-sdk.md) records the decision. Stage one is
+a TypeScript generator in this package (ADR-002 unchanged); stage two and the
+runtime are a new Python distribution, `umf_access`, in this repository. Weft owns
+all SQL lowering; Truss and Ashlar own their adapters.
+[Design entry point](../04-build/typed-persistence-design.md).
+
+FR-56 and [FEAT-033](../01-frame/features/FEAT-033-generated-ontology-access.md)
+add typed ontology access generated directly from current UMF schemas. A shared
+API description drives standard-library Python and TypeScript clients; consumers
+implement transport and execution. [SD-033](solution-designs/SD-033-generated-ontology-access.md)
+explains generation, async plugin calls, values and failures. Tables and ontologies share the generated model/query/action API; the binding
+owns storage-specific execution. ADR-004 replaces mandatory query capture with
+direct expression composition and optional backend preparation.
+
+## Module Boundaries
+
+**Source Applicability**: source; the stage-one compiler and Python access SDK
+contain handwritten source. This is the bounded adoption scope selected in
+Concerns; it does not baseline unrelated legacy modules.
+
+Python paths below are relative to `python/umf_access/src/umf_access/`.
+The checker also admits the earlier direct `python/umf_access/` layout, rejects
+duplicate module identities across layouts and refuses empty scans. Only the
+distribution's tests, caches, virtual environment and output directories are
+excluded; unknown source-module owners refuse.
+
+| Module | Responsibility / Owned Types | Public API | Allowed Dependencies | Forbidden Dependencies |
+| --- | --- | --- | --- | --- |
+| `src/compilation/admission/` | Admission, access validation, closure, census | `admission/index.ts`; CONTRACT-067/070 | Own internals, IR public barrel, named public semantic exports via barrel or identity-checked leaf imports | Emitters, bundle, host I/O |
+| `src/compilation/ir/` | Immutable resolved nodes, provenance, obligations | `ir/index.ts`; private compiler representation | Own internals; erased public semantic types via barrel or identity-checked leaf imports | External values, renderers, host globals |
+| `src/compilation/targets/python/` | Python source emission | `targets/python/index.ts`; CONTRACT-068 output | Own literal renderer, IR public barrel, generated `CURRENT_CORE_VERSION` for emitted metadata | SQL lowering, execution, host I/O |
+| `src/compilation/bundle/` | Manifest, source archive, portable hashing | `bundle/index.ts`; CONTRACT-067 results | Own internals, IR and Python target public barrels | Filesystem, external host dependencies |
+| `src/compilation/index.ts` | Generator facade and trusted composition | `generateAccessPackage`; CONTRACT-067 | Public compilation barrels, named public UMF exports via barrel or identity-checked leaf imports | Artifact-selected loading, host I/O |
+| `scripts/umf-access-generate.ts` | Host writer and drift check | `generate`/`check`; CONTRACT-067 | Generator facade and host APIs | Semantic reimplementation; reviewed host boundary |
+| `types.py`, `values.py`, `codec_support.py` | Shared carriers, strict values, codec revalidation; foundation owner | Named top-level modules; CONTRACT-068/072 | Other foundation modules, standard library, Pydantic | DSL, capture, drivers, Weft, host I/O |
+| `dsl/`, `capture.py` | Typed expressions and in-memory declaration capture; DSL owner | `dsl/__init__.py`, `capture.py`; CONTRACT-071 | DSL internals, foundation, pure standard library, Pydantic | Drivers, Weft, network/filesystem, dynamic loading |
+| `build/` | Catalog compilation | `build/__init__.py`; CONTRACT-071 | DSL, runtime, foundation public APIs; pinned Weft; standard-library file writing | Drivers, network |
+| `runtime/`, `protocols.py`, `pages.py`, `adoption.py` | Protocols, outcomes, catalog execution and continuations; runtime owner | `runtime/__init__.py`, named helpers; CONTRACT-072 | Own internals, DSL and foundation public APIs | Host I/O, SQL assembly; Weft except exact `runtime/bulk.py` |
+| `runtime/bulk.py` | Instantiate and verify bulk plans | Runtime-owned bulk boundary; CONTRACT-071/072 | Runtime dependencies plus pinned Weft only here | Read/action Weft use; competing SQL lowering |
+| `targets/` | Raw-table integration and native execution | `targets/__init__.py`; CONTRACT-072/073 | Runtime, DSL, foundation public APIs; standard library, optional psycopg/Databricks/PySpark drivers | Generated packages by name; engine internals |
+| `conformance/` | Shared adapter conformance | `conformance/__init__.py`; CONTRACT-069/072 | Runtime/foundation public APIs, pure standard library, Pydantic | Engine internals and host I/O |
+| `__init__.py` | SDK public re-exports | CONTRACT-068/071/072 exports when implemented | DSL, runtime and foundation public APIs | Build/compiler dependencies, drivers |
+
+Named leaf imports are admitted only when TypeScript resolves the imported symbol to the same symbol exported by `src/index.ts`; exposing a symbol in a leaf alone does not make it public. Admission and the facade use this to avoid eager initialization of every adapter. IR dependencies remain erased types (including an erased `typeof` current-marker query); the Python target may load only the generated current marker for metadata. Private, default, namespace and side-effect leaf imports remain refused, together with cross-owner internals and host I/O.
+
+**Integration Owners**: Weft -> Python `build/` and the exact `runtime/bulk.py`
+exception; raw-table drivers -> `targets/`; Truss/Ashlar -> their own repositories'
+adapters over CONTRACT-072. Engine storage is never a binding target.
+
+**Construction Policy**: `src/compilation/index.ts` composes the pure generator;
+the host writer owns filesystem operations. Hosts supply runtime targets and
+connections explicitly. No generated package holds connections or table handles.
+Cross-module imports use `index.ts` or Python package/top-level public boundaries;
+all cycles refuse, including type-only cycles.
+
+**Boundary Check**: `bun run check:access-boundaries` runs
+`bun scripts/check-compilation-boundaries.ts` and
+`python3 scripts/check-access-python-boundaries.py`. The same command is wired
+in `.githooks/pre-commit` and `.github/workflows/access-boundaries.yml`.
+`bun run test:access-boundaries` executes the actual checkers, including a
+temporary Git repository with the installed hook and injected TS/Python failures.
+Hook installation is local: `git config core.hooksPath .githooks`; it is not
+silently installed into the integration checkout's shared Git configuration.
+
+The TypeScript checker uses the pinned compiler API for import/re-export/type
+imports and aliases. The Python checker uses `ast` without importing SDK modules.
+Both check graph cycles and cross-module private imports. Portable TypeScript
+host/network/code-execution identifiers and Python pure-layer host I/O and
+dynamic-loading APIs refuse. These static checks are dependency enforcement,
+not a sandbox: reflective/deliberately obscured calls, arbitrary object private
+access, transitive behavior of existing public APIs, runtime SQL assembly,
+generated table handles, and engine-storage access require semantic review and
+behavioral gates. B-TP-000 evidence qualifies enforcement, not SDK functionality.
+
+## Generated reference consumer boundaries
+
+[FEAT-032](../01-frame/features/FEAT-032-generated-reference.md) adds a static
+metadata consumer. [SD-032](solution-designs/SD-032-generated-reference.md) owns
+the feature approach; [CONTRACT-077](contracts/CONTRACT-077-generated-reference.md)
+owns its versioned interchange, evidence normalization and tool protocol.
+These are proposed implementation boundaries, not delivered checks. They reuse
+ADR-002 and the current DOM-based site; no new service or framework is introduced.
+
+| Module | Owns / public boundary | Allowed dependencies | Forbidden dependencies |
+| --- | --- | --- | --- |
+| `docs/helix/05-deploy/reference/model/` | Reference records, joins, search, structural comparison; `index.ts` | Own internals, type-only public UMF types | DOM, host globals, network, registry compilation, native execution |
+| `scripts/reference/` | Discovery, TypeScript export analysis, evidence readers, standalone validator generation, deterministic staging; `build.ts` entry | Model public barrel, public UMF APIs, pinned compiler API, host I/O | Importing browser UI; artifact-selected execution; rewriting evidence |
+| `docs/helix/05-deploy/microsite/reference/` | Rendering, routing, search, workbench controller; `index.ts` | Model barrel, runtime protocol types, DOM, explicit same-origin bundle loader, pinned schema-browser public graph API | UMF internals, host APIs, dynamic validator compilation, native executors |
+| `docs/helix/05-deploy/reference/runtime/` | Fixed operation dispatch and cancellable worker; `index.ts` | Model barrel, public `src/index.ts` APIs, build-supplied fixed validators | UI imports, host APIs, arbitrary imports/network, artifact-supplied code |
+
+The build may reuse the existing schema-browser `notices.ts` host utility to
+retain dependency licenses; this imports no renderer or package internals.
+The build composes discovered inputs and reviewed mappings; browser controllers
+construct workers only from the generated allowlist. Integration translation
+belongs to evidence readers and runtime bridges, never templates. Existing
+schema-browser mount/asset ownership remains independent. Modules cross only
+their public barrels; cycles, private cross-imports and uncovered source files
+refuse. Proposed enforcement is `bun scripts/reference/check-boundaries.ts`,
+including browser transitive-closure checks and injected negative controls.
+Its scope must not imply that the existing access-SDK checker covers these paths.
+
+## Proposed 128-bit and UUID module boundaries
+
+[SD-005](solution-designs/SD-005-128-bit-uuid.md) and
+[CONTRACT-076](contracts/CONTRACT-076-128-bit-uuid.md) extend the portable core
+under FEAT-005 IDEAL-09. The experimental0.9.0 profile implements bits128 and UUID
+meaning; integer width facets retain arithmetic meaning. Scoped implementation
+and native limitations are in [the execution record](../04-build/evidence/uuid-implementation.md).
+
+| Module | Owns | Dependencies and exclusions |
+| --- | --- | --- |
+| `src/model/bit128.ts` | Immutable JSON-safe exact value codecs and comparisons | No document, adapter, registry, filesystem, network or host-runtime imports |
+| `src/model/bit128-field.ts` | Copied0.9 Field-domain authoring | Model/validation coordination only; no native storage imports or routine receipt |
+| `src/model/uuid.ts` | UUID text/byte view over exact bits | May import bit128 and portable error types; no generation or native layout assumptions |
+| `src/model/schema-literals.ts`, `src/validation/` | Field-context checks, literal and facet interpretation | Import portable value codecs; codecs must not import these coordinators |
+| `src/model/key-tuple.ts` | Versioned key framing over validated literal payloads | Reuse codecs; no native database comparison or storage imports |
+| `src/extensions/binding/` | Independently versioned physical carrier declarations | Resolve supplied logical identity; no database execution or core-to-binding back import |
+| `src/core-ideals/`, `src/adapters/`, `src/projections/` | Native identity classification and qualified target mappings | Import core codecs; no importing native adapters into portable value modules |
+| `scripts/`, `native/`, consumer runtimes | Independent oracles, benchmark harnesses and actual storage execution | Never imported by the browser library; consumer codecs remain consumer-owned |
+
+Construction/export integration belongs in `src/index.ts`; codec modules receive
+values and explicit options and never select a runtime backend. Proposed boundary
+verification: `bun run typecheck`, `bun run build`, plus a focused import-closure
+check in the new UUID browser harness rejecting host imports/globals and external
+requests. Browser execution must exercise the public bundle; typechecking alone
+is insufficient. No service, schema registry or entropy source is introduced.
+
+### Qualified128-bit model composition modules
+
+The separately selected CONTRACT-076 uuid-model1 profile composes singular
+UUID/bits128 Records without changing carrier1 or older adapter interpretations.
+`extensions/binding/bit128-layout.ts` resolves complete membership, slot ownership,
+Keys and explicit relationship/index layouts; `bit128-record.ts` owns copied
+complete-row tokens. `projections/bit128-model.ts` coordinates source validation,
+policy, result schema and exact recovery. SQL DDL belongs in
+`bit128-sql-model.ts`; Avro/Parquet/TableSpec bundles and pair grouping belong in
+`bit128-file-model.ts`, with JSON-safe driver-boundary tokens in
+`bit128-file-values.ts`. These modules do not execute transports or import host
+APIs. Native harnesses and admission/delivery verification stay in `scripts/uuid/`.
+The public-bundle browser and forbidden-host/value-layer controls verify the
+portable boundary. Existing mixed/container/association/partition profiles are
+not silently widened; unsupported composition refuses and native file enforcement
+limits remain residuals. No persistent routine metadata receipt is added.
+
+### UUID model2 composition boundaries
+
+CONTRACT-076's explicitly selected `uuid-model2` adds mixed scalar leaves,
+finite array/map/group shapes and explicit junction endpoint alternatives.
+`binding/model-source.ts` owns copied source resolution shared by projections and
+snapshot validation. `model-scalar.ts` owns exact scalar tokens and SQL type
+selection; `model-shape.ts` owns finite shape resolution; `model-shape-values.ts`
+owns recursive value/group validation; `model-associations.ts` lowers explicit
+endpoint alternatives into a private FK view; `model-dataset.ts` validates complete
+finite populations, Keys, references and distinct-endpoint counts. These binding
+modules import portable model/validation helpers, never projections or native
+runtimes. Existing bit128 value modules retain their smaller dependency boundary.
+
+`projections/model-shape-schema.ts` renders nested Avro/Parquet schemas;
+`model-shape-mappings.ts` reports tagged native paths. SQL uses explicit JSON
+storage for composites; TableSpec uses explicit JSON/exact-text fallback. All
+native enforcement gaps remain residuals. Host-only composition qualification
+stays under `scripts/uuid/`; public-bundle Chromium execution and current-source
+fingerprint refusal controls verify portability and proof freshness. Library
+functions do not execute transactions or claim native lifecycle equivalence.
+
+## Core0.10 semantic-reference composition — 2026-10-17
+
+CONTRACT-078 adds semantic references over CONTRACT-076's unchanged core0.9.0
+UUID/128-bit envelope. New structural validation inherits the complete core0.9.0
+constraints through a private view; extension callbacks observe the full actual
+core0.10.0 source. No view is a native downgrade or public version conversion.
+Semantic checks use separately supplied exact registries, never remote loading.
+Migration and rollback preserve all source bytes as JSON values and explicit
+residuals. Existing native/version-specific APIs retain their declared limits.
+
+## Authoritative metamodel boundary — 2026-10-18
+
+ADR-005 / CONTRACT-080 / TD-091 supersede layered core schema authority. The
+host-side `scripts/metamodel/` compiler independently loads authored
+`spec/metamodel/umf.yaml`, checks its closed vocabulary and emits current schema,
+TS/Python shapes, portable ordered constraints/domain policy and provenance.
+`src/generated/core-model.ts` exposes data/types; browser-compatible
+`src/validation/constraint-kernel.ts` executes generic operations. Python executes
+the same inert program. No runtime imports compiler/filesystem modules, and no
+compiler bootstrap imports generated document admission. Reference/ontology and
+current browser consumers read generated/model data, never reverse-author rules
+from schema fragments. Inert historical archives cannot enter current packages.
+Architecture checks must enforce these boundaries and retired import families.
+One `reference/core.html` host owns ontology/reference/catalog; reusable current
+renderer behavior belongs in a qualified released package, not host shims.
+
+### Table lifecycle administration ownership
+
+`src/table-deployment` and `src/table-migration` own inert portable SQL/schema
+programs, original-source verification and explicit migration options. They use
+portable model/validation/hashing and never driver, process, filesystem or network
+APIs. Weft's prepared-operation boundary owns backfill UPDATE lowering; UMF does
+not assemble data mutation SQL. `umf_access.lifecycle` owns administrative native
+catalog/privilege verification, ledger/file digests, typed backfill execution and
+index-only concurrent phases. Its `cli` owns explicit connection creation and
+filesystem inputs; no global pool or implicit database invocation exists.
+`phase_fence` owns the exact metadata-head SELECT fence and rollback-only
+verification grants; `concurrent` owns the session lifecycle lock and final
+transactional publication. The boundary checker admits Weft only in backfills
+and seeds, codegen compiler functions only in the explicit CLI/prefix preparation,
+and leaves portable application clients unchanged. Existing negative controls
+remain required. Generic host-applier and mixed-phase profiles are revision2
+next-release work; no adapter-independent native guarantee follows here.

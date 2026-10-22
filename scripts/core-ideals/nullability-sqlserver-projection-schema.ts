@@ -1,8 +1,9 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import base from '../../spec/core/field-sqlserver-projection.schema.json';
 const schema:any=structuredClone(base);
 schema.$id='urn:umf:core:nullability-sqlserver-projection:1.0.0';schema.title='Authored availability projection to SQL Server stored columns';
-schema.properties.operation.const='project-nullability-sqlserver';schema.properties.source.$ref='urn:umf:core:0.3.0';
-schema.properties.author.$ref='urn:umf:core:nullability-operation:1.0.0#/$defs/declaration';
+schema.properties.operation.const='project-nullability-sqlserver';schema.properties.source.$ref='urn:umf:core:0.10.0';
+schema.properties.author.$ref='urn:umf:core:nullability-operation:5.0.0#/$defs/declaration';
 schema.properties.binding.const={id:'umf.core.nullability.sqlserver',version:'1.0.0',nativeVersion:'16.0.4295.3',subset:'Single authored Field availability with explicit builtin carrier and stored-relation SQL-NULL policy; excludes input omission, query guarantees and native equivalence'};
 const req=schema.properties.request;
 Object.assign(req.properties,{scope:{enum:['stored-relation','query-result','write-input','unresolved']},carrier:{enum:['sql-null','unresolved']}});req.required.push('scope','carrier');

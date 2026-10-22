@@ -1,0 +1,39 @@
+{
+  "complete": true,
+  "sourceRevision": "5be80ab9e71d2da9aea589e688fdc61af0a0e251",
+  "uniqueTests": 17,
+  "files": 8,
+  "failed": 0,
+  "runs": [
+    {
+      "command": [
+        "bun",
+        "test",
+        "tests/core-ideals/cardinality-conformance.test.ts",
+        "tests/core-ideals/facets-conformance.test.ts",
+        "tests/core-ideals/facets-evidence.test.ts",
+        "tests/core-ideals/field-conformance.test.ts",
+        "tests/core-ideals/key-conformance.test.ts",
+        "tests/core-ideals/key-evidence.test.ts",
+        "tests/core-ideals/nullability-conformance.test.ts",
+        "tests/core-ideals/relationship-conformance.test.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-check-refresh/container-gates.log",
+      "logSha256": "d55fff303103bb1509d7659881235180a6ba21f0a8f6435fe826c7b100cbae44",
+      "results": {
+        "passed": 17,
+        "failed": 0,
+        "assertions": 210,
+        "tests": 17,
+        "files": 8
+      }
+    }
+  ],
+  "previousEvidence": {
+    "revision": "5be80ab9e71d2da9aea589e688fdc61af0a0e251",
+    "path": "fixtures/validation/core-check-refresh/gates.json",
+    "sha256": "3256a8cdcd04f2309500cc7f1be111ad3e29b55eda7c648720e59c976f156e74"
+  },
+  "scope": "Complete eight-file admission run; overlapping auxiliary and affected checks excluded."
+}

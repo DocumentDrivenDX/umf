@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 11723,
+        "line": 98,
+        "path": "src/adapters/postgresql/catalog.ts",
+        "sha256": "7dfac2004e731abc89012227d0d69adb4507a9ad11be0e390eced62305e58213"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "queryPostgresqlCatalogDependencies",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(document: Document, filter?: { side: \"dependent\" | \"referenced\"; object: PostgresqlCatalogObjectIdentity; } | undefined): { available: boolean; complete: false; state: \"captured\" | \"modified\"; edges: NativeJson[]; }"
+    ]
+  },
+  "id": "[\"api\",\".\",\"queryPostgresqlCatalogDependencies\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 11723,
+      "line": 98,
+      "path": "src/adapters/postgresql/catalog.ts",
+      "sha256": "7dfac2004e731abc89012227d0d69adb4507a9ad11be0e390eced62305e58213"
+    }
+  ],
+  "summary": "Observed pg_depend edges only. Missing coverage is distinct from no matches.\nNative dependency kinds and multiplicity are retained; this is not a DDL plan.",
+  "title": "queryPostgresqlCatalogDependencies"
+}

@@ -1,5 +1,6 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {createHash} from 'node:crypto';
-import {importSqlServerCatalog,exportSqlServerCatalog,getSqlServerColumnMetadata,readDocument,writeDocument} from '../../src';
+import {importSqlServerCatalog, exportSqlServerCatalog, getSqlServerColumnMetadata, readDocument, writeDocument} from '../../src';
 const image='mcr.microsoft.com/mssql/server@sha256:4402d880dd4c34bfa7d8705e56a86cd6c88da80a1f6bbbe741f999e76264a090',name='umf-nullability-sqlserver-'+crypto.randomUUID(),password='Umf!'+crypto.randomUUID()+'A9';
 async function run(args:string[],input?:string){const p=Bun.spawn(args,{stdin:input===undefined?'ignore':new Blob([input]),stdout:'pipe',stderr:'pipe'});const [out,err,code]=await Promise.all([new Response(p.stdout).text(),new Response(p.stderr).text(),p.exited]);if(code)throw Error(err||out||'Process failed');return out;}
 let created=false,sqlcmd='/opt/mssql-tools18/bin/sqlcmd';

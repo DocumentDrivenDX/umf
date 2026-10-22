@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 14201,
+        "line": 37,
+        "path": "src/core-ideals/nullability-sqlserver.ts",
+        "sha256": "795e8c6081c8012ff00aa2e8a2fa387102480906fc879c5eae5f62f1e233bde4"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "classifySqlServerNullability",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: Document, options: SqlServerNullabilityRequest): SqlServerNullabilityClassification"
+    ]
+  },
+  "id": "[\"api\",\".\",\"classifySqlServerNullability\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 14201,
+      "line": 37,
+      "path": "src/core-ideals/nullability-sqlserver.ts",
+      "sha256": "795e8c6081c8012ff00aa2e8a2fa387102480906fc879c5eae5f62f1e233bde4"
+    }
+  ],
+  "summary": "Native absence is classified only for explicitly scoped stored-relation declarations.",
+  "title": "classifySqlServerNullability"
+}

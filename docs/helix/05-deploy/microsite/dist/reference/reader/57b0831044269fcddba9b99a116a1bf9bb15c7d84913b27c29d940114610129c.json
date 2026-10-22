@@ -1,0 +1,37 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"PortableActionPin\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ActionIdentity\"]"
+      ],
+      "name": "identity",
+      "optional": false,
+      "type": "ActionIdentity"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "documentSha256",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "invocation",
+      "optional": false,
+      "type": "ActionProfileIdentity"
+    }
+  ],
+  "parameters": [],
+  "purpose": "PortableActionPin is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "PortableActionPin"
+}

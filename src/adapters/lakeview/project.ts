@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {pointer,type Json} from '../../model/types';
 import type {ProjectionIssue} from '../../projections/json-schema-protobuf';
 export type LakeviewIssue=ProjectionIssue;

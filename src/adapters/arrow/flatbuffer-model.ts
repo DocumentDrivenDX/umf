@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
+import {CURRENT_CORE_VERSION} from '../../generated/core-model';
 import manifest from '../../../spec/extensions/arrow-flatbuffer/package.json';
 import {Registry} from '../../registry/registry';
 import {validateDocument} from '../../validation/document';
@@ -10,7 +12,7 @@ export function arrowFlatbufferRegistry(){return new Registry().register(arrowFl
 export function inspectArrowFlatbufferModel(document:Document){const result=validateDocument(document,arrowFlatbufferRegistry());return {...result,complete:false,diagnostics:[...result.diagnostics,{code:'ARROW_FLATBUFFER_SEMANTICS',path:'',severity:'warning' as const,message:'Metadata structure only; Arrow semantic invariants, unknown fields and binary/data conversion remain unverified'}]};}
 /** Imports the documented logical JSON profile, not native FlatBuffers bytes or flatc JSON. */
 export function importArrowFlatbufferModel(text:string,options:{id:string}):Document{
- const document:Document={umf:'0.1.0',id:options.id,vocabularies:{[ARROW_FLATBUFFER_EXTENSION]:{version:'0.1.0'}},modules:[{id:'metadata',namespace:'',elements:[{id:'root',extensions:{[ARROW_FLATBUFFER_EXTENSION]:{profile:'arrow-flatbuffer-model',model:readJsonValue(text,'json')}}}]}]};exportArrowFlatbufferModel(document);return document;
+ const document:Document={umf:CURRENT_CORE_VERSION,id:options.id,vocabularies:{[ARROW_FLATBUFFER_EXTENSION]:{version:'0.1.0'}},modules:[{id:'metadata',namespace:'',elements:[{id:'root',extensions:{[ARROW_FLATBUFFER_EXTENSION]:{profile:'arrow-flatbuffer-model',model:readJsonValue(text,'json')}}}]}]};exportArrowFlatbufferModel(document);return document;
 }
 export function exportArrowFlatbufferModel(document:Document):string{
  const checked=inspectArrowFlatbufferModel(document);if(!checked.valid)throw new UmfError('ARROW_FLATBUFFER_MODEL','Invalid logical FlatBuffer model');

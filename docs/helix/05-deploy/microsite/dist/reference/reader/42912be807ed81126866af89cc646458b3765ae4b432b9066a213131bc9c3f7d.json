@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"inspectBinding\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "binding",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "logical",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "Validate a separate binding document against an explicitly supplied logical model.",
+  "related": [],
+  "returns": "Validation",
+  "task": "Inspect and select",
+  "type": "(binding: Document, logical: Document) => Validation"
+}

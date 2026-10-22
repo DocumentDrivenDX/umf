@@ -1,0 +1,90 @@
+{
+  "python": "3.11.17",
+  "generator": "0.1.0a1",
+  "engine": "0.14.1",
+  "cases": [
+    {
+      "name": "original-json",
+      "accepted": true,
+      "completeBytesAndRefusalEqual": true
+    },
+    {
+      "name": "crlf-source",
+      "accepted": true,
+      "completeBytesAndRefusalEqual": true
+    },
+    {
+      "name": "yaml",
+      "accepted": true,
+      "completeBytesAndRefusalEqual": true
+    },
+    {
+      "name": "customer-selection",
+      "accepted": true,
+      "completeBytesAndRefusalEqual": true
+    },
+    {
+      "name": "action-selection",
+      "accepted": true,
+      "completeBytesAndRefusalEqual": true
+    },
+    {
+      "name": "unicode",
+      "accepted": true,
+      "completeBytesAndRefusalEqual": true
+    },
+    {
+      "name": "optional-value",
+      "accepted": true,
+      "completeBytesAndRefusalEqual": true
+    },
+    {
+      "name": "array-value",
+      "accepted": true,
+      "completeBytesAndRefusalEqual": true
+    },
+    {
+      "name": "foreign-field-extension-refuses",
+      "accepted": false,
+      "completeBytesAndRefusalEqual": true
+    },
+    {
+      "name": "nullable-key-refuses",
+      "accepted": false,
+      "completeBytesAndRefusalEqual": true
+    },
+    {
+      "name": "reserved-name-refuses",
+      "accepted": false,
+      "completeBytesAndRefusalEqual": true
+    },
+    {
+      "name": "unknown-facet-refuses",
+      "accepted": false,
+      "completeBytesAndRefusalEqual": true
+    },
+    {
+      "name": "table-lifecycle-refuses-unqualified-client",
+      "accepted": false,
+      "completeBytesAndRefusalEqual": true
+    },
+    {
+      "name": "source-core-refuses",
+      "accepted": false,
+      "completeBytesAndRefusalEqual": true
+    },
+    {
+      "name": "invalid-package-refuses",
+      "accepted": false,
+      "completeBytesAndRefusalEqual": true
+    },
+    {
+      "name": "invalid-json-refuses",
+      "accepted": false,
+      "completeBytesAndRefusalEqual": true
+    }
+  ],
+  "writerAndIntegrityControls": "passed",
+  "externalJavascriptProcesses": "forbidden",
+  "platform": "macOS-27.0.1-arm64-arm-64bit"
+}

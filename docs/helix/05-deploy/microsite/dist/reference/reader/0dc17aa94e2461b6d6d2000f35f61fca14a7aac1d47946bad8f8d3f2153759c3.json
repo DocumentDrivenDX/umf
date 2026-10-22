@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"recoverSqlServerRelationshipSource\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SqlServerRelationshipClassification\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "SqlServerRelationshipClassification"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "current",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "recoverSqlServerRelationshipSource accepts input, current and returns string.",
+  "related": [],
+  "returns": "string",
+  "task": "Import and export",
+  "type": "(input: SqlServerRelationshipClassification, current: Document) => string"
+}

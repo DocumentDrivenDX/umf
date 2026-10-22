@@ -1,0 +1,21 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"inspectDomainPack\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "input",
+      "optional": false,
+      "type": "unknown"
+    }
+  ],
+  "purpose": "inspectDomainPack accepts input and returns { valid: boolean; complete: boolean; diagnostics: string[]; }.",
+  "related": [],
+  "returns": "{ valid: boolean; complete: boolean; diagnostics: string[]; }",
+  "task": "Inspect and select",
+  "type": "(input: unknown) => { valid: boolean; complete: boolean; diagnostics: string[]; }"
+}

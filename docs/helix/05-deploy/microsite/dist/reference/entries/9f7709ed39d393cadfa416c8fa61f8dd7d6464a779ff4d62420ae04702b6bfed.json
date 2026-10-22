@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 6555,
+        "line": 42,
+        "path": "src/adapters/odcs/index.ts",
+        "sha256": "af9bb68de5c7e977e6830b5cc32a46c359ccd9eed9d0b957376bf3a012041d1b"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "importOdcsDocument",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(text: string, options: { id: string; format: \"json\" | \"yaml\"; }): Document"
+    ]
+  },
+  "id": "[\"api\",\".\",\"importOdcsDocument\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 6555,
+      "line": 42,
+      "path": "src/adapters/odcs/index.ts",
+      "sha256": "af9bb68de5c7e977e6830b5cc32a46c359ccd9eed9d0b957376bf3a012041d1b"
+    }
+  ],
+  "summary": "Public export · src/adapters/odcs/index.ts",
+  "title": "importOdcsDocument"
+}

@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"editTableSpecTable\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"NativeJson\"]"
+      ],
+      "name": "changes",
+      "optional": false,
+      "type": "Record<string, NativeJson>"
+    }
+  ],
+  "purpose": "Merge explicit table metadata; column ordering/identity requires separate operations.",
+  "related": [],
+  "returns": "Document",
+  "task": "Author and edit",
+  "type": "(document: Document, changes: Record<string, NativeJson>) => Document"
+}

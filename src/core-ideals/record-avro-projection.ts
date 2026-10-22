@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {avroCarriers} from './avro-carriers';
 import {copyJson} from '../model/json';
 import {UmfError,pointer,type Document,type Json,type Diagnostic} from '../model/types';
@@ -5,12 +6,12 @@ import {verifyCoreKindDeclaration,type CoreKindDeclaration} from '../model/field
 import {importAvroSchema,exportAvroSchema,getAvroFieldMetadata} from '../adapters/avro';
 import {type FieldAvroRequest,type FieldAvroProjection} from './field-avro-projection';
 import {createValidator} from '../validation/schema';
-import legacy from '../../spec/core/schema.json';import fields from '../../spec/core/field-document.schema.json';import kinds from '../../spec/core/kind-operation.schema.json';import schema from '../../spec/core/record-avro-projection.schema.json';
+import legacy from '../../spec/core/schema.json';import kinds from '../../spec/core/kind-operation-v6.schema.json';import schema from '../../spec/core/record-avro-projection.schema.json';
 export {default as recordAvroProjectionSchema} from '../../spec/core/record-avro-projection.schema.json';
 export interface RecordAvroRequest {id:string;recordName:string;namespace:string;mode:'strict'|'report';fields:{author:CoreKindDeclaration;fieldName:string;nativeType:FieldAvroRequest['nativeType']}[]}
 const binding={id:'umf.core.record.avro',version:'1.0.0',nativeVersion:'1.12.0',subset:'Authored flat record with explicit primitive/logical field carriers; no presence, execution or value-domain equivalence'} as const;
 export interface RecordAvroProjection {operation:'project-record-avro';version:'1.0.0';status:'projected'|'blocked';source:Document;author:CoreKindDeclaration;request:RecordAvroRequest;binding:typeof binding;target?:Document;mappings:{origin:'authored';kind:'record'|'field';idealPath:string;nativePath:string;outcome:'exact'|'unknown'|'not-expressible'}[];residuals:FieldAvroProjection['residuals'];diagnostics:Diagnostic[]}
-const validator=createValidator();validator.addSchema(legacy);validator.addSchema(fields);validator.addSchema(kinds);const check=validator.compile(schema),checkRequest=validator.compile(schema.properties.request);
+const validator=createValidator();validator.addSchema(legacy);validator.addSchema(kinds);const check=validator.compile(schema),checkRequest=validator.compile(schema.properties.request);
 export function projectRecordToAvro(input:CoreKindDeclaration,options:RecordAvroRequest):RecordAvroProjection {
  const copied=copyJson(input) as unknown as CoreKindDeclaration,author=verifyCoreKindDeclaration(copied,copied.target),source=copyJson(author.target) as unknown as Document,request=copyJson(options) as unknown as RecordAvroRequest;
  if(!checkRequest(request))throw new UmfError('RECORD_AVRO_REQUEST',JSON.stringify(checkRequest.errors));

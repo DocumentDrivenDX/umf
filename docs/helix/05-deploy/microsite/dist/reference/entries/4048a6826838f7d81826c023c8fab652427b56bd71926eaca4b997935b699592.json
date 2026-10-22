@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 3722,
+        "line": 9,
+        "path": "src/adapters/owl/list-axioms.ts",
+        "sha256": "d5b10df21db6e8186092480c7ed26e54f3110cb9f412ff27bda4457f64efabd1"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "OwlListAxiomView",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface OwlListAxiomView {profile:'owl-list-axioms-1';complete:false;source:Document;blankNodeScope:string;axioms:OwlListAxiom[];malformed:OwlMalformedListAxiom[]}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"OwlListAxiomView\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 3722,
+      "line": 9,
+      "path": "src/adapters/owl/list-axioms.ts",
+      "sha256": "d5b10df21db6e8186092480c7ed26e54f3110cb9f412ff27bda4457f64efabd1"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/owl/list-axioms.ts",
+  "title": "OwlListAxiomView"
+}

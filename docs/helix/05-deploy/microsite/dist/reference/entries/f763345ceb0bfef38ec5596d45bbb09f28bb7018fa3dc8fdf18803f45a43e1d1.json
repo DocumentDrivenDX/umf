@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 11328,
+        "line": 12,
+        "path": "src/projections/tablespec-avro.ts",
+        "sha256": "9f136bcd562897ade406116a29ba971de22ecce6b056ccae550660ab7d2312ca"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "projectTableSpecToAvro",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(source: Document, input: TableSpecAvroPolicy): TableSpecAvroProjection"
+    ]
+  },
+  "id": "[\"api\",\".\",\"projectTableSpecToAvro\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 11328,
+      "line": 12,
+      "path": "src/projections/tablespec-avro.ts",
+      "sha256": "9f136bcd562897ade406116a29ba971de22ecce6b056ccae550660ab7d2312ca"
+    }
+  ],
+  "summary": "Public export · src/projections/tablespec-avro.ts",
+  "title": "projectTableSpecToAvro"
+}

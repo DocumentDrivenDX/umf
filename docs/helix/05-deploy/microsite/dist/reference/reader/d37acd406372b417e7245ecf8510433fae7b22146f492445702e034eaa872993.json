@@ -1,0 +1,53 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"ConstructedActionManifest\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ActionPlanArtifact\"]"
+      ],
+      "name": "artifact",
+      "optional": false,
+      "type": "ActionPlanArtifact"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreKeyTupleReceipt\"]"
+      ],
+      "name": "keyReceipts",
+      "optional": false,
+      "type": "CoreKeyTupleReceipt[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "sealed",
+      "optional": false,
+      "type": "false"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "complete",
+      "optional": false,
+      "type": "false"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "authority",
+      "optional": false,
+      "type": "false"
+    }
+  ],
+  "parameters": [],
+  "purpose": "ConstructedActionManifest is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "ConstructedActionManifest"
+}

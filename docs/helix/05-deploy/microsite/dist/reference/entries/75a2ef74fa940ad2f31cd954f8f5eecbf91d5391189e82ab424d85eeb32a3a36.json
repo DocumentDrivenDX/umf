@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 18927,
+        "line": 34,
+        "path": "src/core-ideals/relationship-tablespec-projection.ts",
+        "sha256": "8786f0f4815e314e286fdbcebf874c91b48cd2f13f8ef658f5876d9097f552cd"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "projectRelationshipToTableSpec",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: Document, authorInput: CoreRelationshipDeclaration, nativeSourceInput: Document, nativeTargetInput: Document, options: RelationshipTableSpecRequest): RelationshipTableSpecProjection"
+    ]
+  },
+  "id": "[\"api\",\".\",\"projectRelationshipToTableSpec\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 18927,
+      "line": 34,
+      "path": "src/core-ideals/relationship-tablespec-projection.ts",
+      "sha256": "8786f0f4815e314e286fdbcebf874c91b48cd2f13f8ef658f5876d9097f552cd"
+    }
+  ],
+  "summary": "Explicit metadata lowering; no native execution or author-intent inference.",
+  "title": "projectRelationshipToTableSpec"
+}

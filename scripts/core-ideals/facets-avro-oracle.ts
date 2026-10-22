@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Pinned native stages; historical evidence alone cannot pass this command. */
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';

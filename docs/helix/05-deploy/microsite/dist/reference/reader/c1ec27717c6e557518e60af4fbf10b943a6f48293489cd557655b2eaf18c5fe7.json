@@ -1,0 +1,30 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"dddFieldBinding\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"DddReference\"]"
+      ],
+      "name": "ref",
+      "optional": false,
+      "type": "DddReference"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "field",
+      "optional": false,
+      "type": "string"
+    }
+  ],
+  "purpose": "dddFieldBinding accepts ref, field and returns string.",
+  "related": [],
+  "returns": "string",
+  "task": "Other APIs",
+  "type": "(ref: DddReference, field: string) => string"
+}

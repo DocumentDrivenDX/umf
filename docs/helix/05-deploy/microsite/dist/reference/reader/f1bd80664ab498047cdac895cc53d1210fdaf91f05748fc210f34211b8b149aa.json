@@ -1,0 +1,59 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"RecordSqlServerRequest\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "id",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "namespace",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "tableName",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "identifierCollation",
+      "optional": false,
+      "type": "\"Latin1_General_100_BIN2\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "mode",
+      "optional": false,
+      "type": "\"strict\" | \"report\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreKindDeclaration\"]",
+        "[\"api\",\".\",\"FieldSqlServerRequest\"]"
+      ],
+      "name": "fields",
+      "optional": false,
+      "type": "{ author: CoreKindDeclaration; columnName: string; nativeType: FieldSqlServerRequest[\"nativeType\"]; }[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "RecordSqlServerRequest is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "RecordSqlServerRequest"
+}

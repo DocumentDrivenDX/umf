@@ -1,13 +1,14 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
+import {CURRENT_CORE_VERSION} from '../generated/core-model';
 import {copyJson} from '../model/json';
 import {UmfError,pointer,type Document,type Json,type Diagnostic} from '../model/types';
 import {verifyCoreCardinalityDeclaration,type CoreCardinalityDeclaration} from '../model/cardinality';
 import {importPostgresqlSql,getPostgresqlSource,type PostgresqlBackend} from '../adapters/postgresql';
 import {createValidator} from '../validation/schema';
 import legacy from '../../spec/core/schema.json';
-import fields from '../../spec/core/field-document.schema.json';
-import kinds from '../../spec/core/cardinality-operation.schema.json';
-import availability from '../../spec/core/nullability-document.schema.json';
-import containers from '../../spec/core/cardinality-document.schema.json';
+
+import kinds from '../../spec/core/cardinality-operation-v4.schema.json';
+
 import schema from '../../spec/core/cardinality-postgresql-projection.schema.json';
 export {default as cardinalityPostgresqlProjectionSchema} from '../../spec/core/cardinality-postgresql-projection.schema.json';
 import {carriers,identifier,literal} from './postgresql-syntax';
@@ -18,12 +19,12 @@ export interface CardinalityPostgresqlProjection {
  mapping:{basis:'Explicit author declaration and requested native carrier; retained residuals qualify unrepresented obligations';origin:'authored';cardinality:'one'|'array'|'map'|'unspecified';encoding:'scalar'|'sequence-check'|'object-check'|'carrier-only';idealPath:string;nativePath:'/stmts/0/stmt/CreateStmt/tableElts/0/ColumnDef';outcome:'exact'|'approximated'|'unknown'|'not-expressible'};
  residuals:{path:string;value:Json;reason:string;outcome:'approximated'|'unknown'|'not-expressible';recovery:'Recover source meaning with retained projection receipt; native-only import does not recover author intent'}[];
 }
-const validator=createValidator();validator.addSchema(legacy);validator.addSchema(fields);validator.addSchema(availability);validator.addSchema(containers);validator.addSchema(kinds);const check=validator.compile(schema);
+const validator=createValidator();validator.addSchema(legacy);validator.addSchema(kinds);const check=validator.compile(schema);
 const checkRequest=validator.compile({...schema.properties.request});
 export async function projectCardinalityToPostgresql(input:CoreCardinalityDeclaration,options:CardinalityPostgresqlRequest,backend:PostgresqlBackend):Promise<CardinalityPostgresqlProjection> {
  const copied=copyJson(input) as unknown as CoreCardinalityDeclaration;
  const author=verifyCoreCardinalityDeclaration(copied,copied.target),source=copyJson(author.target) as unknown as Document,request=copyJson(options) as unknown as CardinalityPostgresqlRequest;
- if(source.umf!=='0.4.0')throw new UmfError('CARDINALITY_POSTGRESQL_VERSION','This binding requires a core 0.4.0 declaration; facet-envelope projection requires a separately qualified binding');
+ if(source.umf!==CURRENT_CORE_VERSION)throw new UmfError('CARDINALITY_POSTGRESQL_VERSION','This binding requires a core 0.10.0 declaration; facet-envelope projection requires a separately qualified binding');
  if(!checkRequest(request))throw new UmfError('CARDINALITY_POSTGRESQL_REQUEST',JSON.stringify(checkRequest.errors));
  const namespace=identifier(request.namespace),tableName=identifier(request.tableName),columnName=identifier(request.columnName);
  const mi=source.modules.findIndex(m=>m.id===author.identity.module),module=source.modules[mi]!,ei=module.elements.findIndex(e=>e.id===author.identity.element),element=module.elements[ei]!,path=`/modules/${mi}/elements/${ei}`;

@@ -1,0 +1,764 @@
+---
+ddx:
+  id: STP-079
+  type: story-test-plan
+  activity: test
+  status: draft
+  authoring:
+    home: repo
+  links:
+    - id: US-079
+      kind: informed_by
+    - id: TD-079
+      kind: informed_by
+    - id: SD-008
+      kind: informed_by
+---
+
+# STP-079: security-semantics
+
+## Story Reference
+
+**User Story:** [[US-079-security-semantics]] **Technical Design:** [[TD-079-security-semantics]]
+**Solution Design:** [[SD-008]] **Project Test Plan:** TP-001.
+
+## Scope and Objective
+
+All P0 criteria in this story must have exercising evidence. The machine-readable
+case inventory is `../security/cases.json`; plans are not passing executions.
+Spikes supply qualified feasibility evidence only. No deferred or missing native
+case can be represented as a pass.
+
+## Acceptance Criteria Test Mapping
+
+| AC ID | Named tests | Asserted behavior | Citation | Primary layer |
+| --- | --- | --- | --- | --- |
+| US-079-AC1 | S01 | Resolve Staff/Project/Ownership/Assignment and require active Assignment to same owning Project. | `@covers US-079-AC1` required in exercising test | contract/browser |
+| US-079-AC2 | S02 | Same labels in different documents never join; exact typed keys and Unicode remain distinct. | `@covers US-079-AC2` required in exercising test | contract/browser |
+| US-079-AC3 | S03, S11 | Reject wrong endpoint role, undeclared action, boolean/string comparison, unknown operator and depth/node excess. | `@covers US-079-AC3` required in exercising test | contract/browser |
+| US-079-AC4 | S04, S12 | Broad read permit plus false mandatory membership denies; forbid dominates all permits; rule permutation agrees. | `@covers US-079-AC4` required in exercising test | contract/browser |
+| US-079-AC5 | S05 | Active same-Project allows; inactive, missing, sibling Client/Project denies; any/all and ownerless behavior explicit. | `@covers US-079-AC5` required in exercising test | contract/browser |
+| US-079-AC6 | S06 | Missing/ambiguous subject, incomplete assignment inventory, stale cut or untrusted attribute refuses entire collection. | `@covers US-079-AC6` required in exercising test | contract/browser |
+| US-079-AC7 | S07 | Null, absence, withheld, constant transform and output type survive encoding; false permits add no obligations; absent protected disposition refuses. | `@covers US-079-AC7` required in exercising test | contract/browser |
+| US-079-AC8 | S08 | Predicate/order/group/join/aggregate uses disclosed representation or explicit original-use action; withheld use refuses. | `@covers US-079-AC8` required in exercising test | contract/browser |
+| US-079-AC9 | S09 | Preserve unknown rules and native source byte content where promised; unknown security meaning blocks interpretation. | `@covers US-079-AC9` required in exercising test | contract/browser |
+| US-079-AC10 | S10 | Same policy/facts/diagnostics and refusal outcomes in Bun and Chromium, no host globals or external requests. | `@covers US-079-AC10` required in exercising test | contract/browser |
+
+### Field-protection allocation — 2026-10-15 UTC
+
+These are required semantic cases under accepted FEAT-008 SEC-13..15 and
+CONTRACT-062/063. Every case also exercises US-079-AC10 in real Chromium.
+All 13 are `not-run`, without runner bindings; this allocation supplies no pass.
+
+| Case | Criteria | Required independent assertion |
+| --- | --- | --- |
+| S13 | US-079-AC11, US-079-AC12 | Resolve exact pinned catalog/transform/version and qualified input/output Field domains; foreign or missing references refuse. |
+| S14 | US-079-AC11, US-079-AC3, US-079-AC9 | Preserve unknown catalog/version/kind/member and native source content through JSON/YAML; unknown meaning blocks interpretation. |
+| S15 | US-079-AC12 | Additive security0.1-to0.2 migration preserves legacy constant meaning; rollback refuses any non-constant reference without changing the source. |
+| S16 | US-079-AC13, US-079-AC8 | Positive and missing-property refusal controls cover predicate, join, group, order and aggregate dependencies: equality predicates/join/group require retained equality, order requires retained order, and each selected aggregate requires its declared input properties. Omitted queryUse defaults to prohibited. Deterministic transforms report implied equality even if omitted from authored properties. |
+| S17 | US-079-AC13 | Random tokenization cannot admit disclosed equality join/group; a weakened validator ignoring that dependency must be distinguished. |
+| S18 | US-079-AC11, US-079-AC3 | Catalogs over256 transforms, more than32 typed parameters or canonical JSON literal encodings exceeding4096 UTF-16 units refuse bounded interpretation rather than trimming. |
+| S19 | US-079-AC14 | Constant, partial, fixed-length-redact, range-bucket, truncate-date and prefix-only exact outputs match independently authored Python expectations; keyed/vault operations are not executed by UMF. |
+| S20 | US-079-AC14, US-079-AC7 | Canonical null, absence, withheld, transformed null, changed output domain and stored token survive disposition transport distinctly. |
+| S21 | US-079-AC15, US-079-AC3 | Hash declarations require an algorithm and declared salt custody (none or keyed); unsalted hash requires retained equality and a mandatory dictionary-attack warning obligation. Tokenize/encrypt declarations require complete stored custody and propagation metadata; keyed/vault reversibility requires a distinct reverse action. Declarations remain unverified native obligations. |
+| S22 | US-079-AC15 | Reverse action is distinct from read/field/original-authorized actions; ordinary/original disposition exposes stored token and never implies plaintext recovery. |
+| S23 | US-079-AC15 | History, snapshots, exports, feeds and caches each have explicit propagation declarations; missing or unknown required meaning refuses and source is preserved. |
+| S24 | US-079-AC16 | Field mutation without original disposition or explicit field-bound blind-write permission refuses, including a proposed value equal to the mask output. |
+| S25 | US-079-AC16, US-079-AC15 | Stored-transformed field mutation additionally requires the exact declared vault-write action; unrelated read/original/reverse permissions cannot substitute. |
+
+Implement real failing assertions and independent oracle expectations before
+implementing each slice. Register exact commands, sources and assertion IDs in
+`cases.json` only when those exercising runners exist. Missing APIs, partial
+closure or unavailable native custody cannot be replaced by a passing placeholder.
+No native US-056/057 obligation is discharged by a semantic case.
+
+## Executable Proof
+
+Run `bun docs/helix/02-design/spikes/security/acceptance.ts` for the release gate.
+It must reject missing commands, nonpassing evidence and incomplete coverage.
+Per-backend procedures in `../security/` specify original-role execution and
+scenario expansions. Named cases currently without commands are implementation
+obligations, explicitly not executable proof. Formal and native spike receipts
+are under `../../04-build/evidence/security/` with scope limits.
+
+## Data and Setup
+
+Use Clients/Projects/Staff ownership/assignment fixtures; duplicate labels,
+reversed endpoints, null/absence, multiple owners, private bags, historical owner
+changes and complete/incomplete fact cuts. Disposable native installations and
+independent expected outcomes are mandatory. Do not reuse compiler predicates
+as the expected-result oracle.
+
+## Edge Cases and Failure Modes
+
+Unknown security meaning refuses interpretation while preserving source.
+Collection uncertainty refuses before output. False permits add no masks;
+protected output without disposition refuses. Native inventory/authority drift
+invalidates prior evidence. Old snapshots cannot adopt new authority generations.
+
+## Build Handoff
+
+1. Implement declared typed contract and independent oracle tests.
+2. Bind exact native profiles and execute positive/bypass controls.
+3. Exercise lifecycle barriers and publish source-qualified evidence.
+4. Require 100% P0 cases and stable AC citations before story acceptance.
+
+Done requires actual assertions, matching command/source receipts and no skipped
+required cases. Compiler/native profile gaps remain open rather than assumed.
+
+
+### Identity transport closure controls — 2026-10-11
+
+For US-079 AC3/AC10 prerequisites, preserve separate policy reads versus extra
+instance keys; preserve original compound-key and endpoint role/component order;
+exclude unused ontology records; include identity/endpoints even for literal
+association conditions; refuse unknown meaning without source mutation; reach
+endpoint identities for association resource targets and nested association targets.
+Eight new unit controls plus three dependency/write regressions pass in the final
+owner packet, with six checks replayed through the exported browser bundle. This
+qualifies metadata derivation only. Native mapping/decoding, trusted completeness,
+authenticated subject/current authority and final disclosure still need evidence.
+
+
+## Wire component evidence (2026-10-15)
+
+`bun test tests/security/protection/` exercises AC11 wire/local-bound subsets and
+AC15 custody/reversal shape only. `bun tools/security/protection-catalog-browser.ts`
+replays the public source/inspection/refusal API from the actual root browser
+bundle. `python3 tools/security/protection-wire-controls.py` and
+`python3 tools/security/protection-catalog-controls.py` distinguish weakened
+validators by exact intended test failures, not generic import/runtime errors.
+These component checks do not bind or pass S13–S25. Core domains, function
+behavior, query dependencies, reverse/write permission binding and physical
+obligations remain required. Receipts and independent review are retained under
+`../../04-build/evidence/security/protection-wire-20261015/`.
+
+
+## Policy0.2 migration and legacy embedding component plan — 2026-10-15
+
+`tests/security/protection/policy-v2.test.ts` exercises representation frames,
+new revisions, bounded sources/targets, exact catalog pins/version lookup,
+unknown promotion refusals and forward legacy constant semantics. Original
+attestations must refuse after migration; separately authored fixture cuts name
+the new revision. Missing project assignment denies and incomplete coverage
+refuses. A catalog transform named `constant` never becomes an inline constant.
+
+`tools/security/policy-v2-browser.ts` replays the same public-root observations in
+Bun and real Chromium; `policy-v2-mutations.py` requires exact named failures
+under weakened classification, text bounds and omission of semantic embedding.
+`policy-v2-package-smoke.ts` exercises the standard built package exports.
+`prove-policy-source-migration.py` records conditional frame/guard checks and
+weakened SAT controls, not executable or native refinement.
+
+These component receipts alone do not bind S15. Its unchanged full assertion
+requires a reviewed independent oracle for forward constant meaning and all
+nonconstant rollback refusals, identical Bun/Chromium expectations, original
+source retention and fresh governed runner evidence. S13 additionally requires
+qualified immutable core Field domains; source-address lookup is insufficient.
+General protection semantics, backend acceptance and the full158-case gate
+remain required.
+
+
+### S15 governed execution checkpoint
+
+`protection/migration-oracle.ts` is the independently authored finite oracle;
+`protection/migration-acceptance.ts S15` binds fresh case/run identity and executes
+it in Bun and real Chromium through the root API. The original S15 assertion is
+unchanged. All149 controls per runtime, parity, source custody and browser
+boundary checks produce304 matching observations. The full158-case gate accepts
+S15 and the earlier26 cases;131 bindings remain missing. Evidence:
+`../../04-build/evidence/security/policy-v2-20261015/acceptance.json`.
+S13/core-domain closure, S14 and all later protection/native cases remain open.
+
+
+## Qualified domain and preservation runners — 2026-10-15
+
+`tests/security/protection/domains.test.ts` covers exact pins, every declared
+Field occurrence (including unused transforms/parameters/buckets), all-or-nothing
+refusal, source immutability, all known core families/containers and the256-entry
+positive/overflow bounds. Unknown core/source meaning, stale revisions, ambiguous
+closures and foreign or non-Field references must refuse without coordinates.
+These assertions do not establish literal/function applicability.
+
+`tests/security/protection/domains-oracle.ts` is independently authored.
+`bun tests/security/protection/domains-acceptance.ts S13` and the corresponding
+`S14` command require fresh gate-provided case/run identity; they execute the
+actual public root API in Bun and real Chromium, compare complete observations,
+check selected source endpoints and browser boundaries, and emit structured
+receipts. S13 has111 independent controls; S14 has54, including known-domain
+success to avoid a vacuous unknown-only refusal test. The original assertions,
+coverage and all other156 cases remain unchanged.
+
+S14 preserves the JSON-compatible unknown tree and opaque native source text,
+including exact literal carriers and CRLF/Unicode, through both JSON and YAML.
+It does not claim unchanged YAML comment/layout text or authenticate archives.
+`tools/security/protection-domain-mutations.py` requires exact intended failures
+under weakened revision, Field-kind, unknown-source, partial-result and text-bound
+checks. The conditional domain formal script and actual built package smoke are
+separate supporting evidence; the whole158-case gate remains required.
+
+
+### S13/S14 governed acceptance checkpoint
+
+The final whole158-case gate accepts both new bindings: S13 has228 matching
+observations and S14 has114. All prior27 bound cases pass;129 bindings remain
+missing. This closes the B-SFP-002 slice exit only. Full protection applicability,
+parameter values, query-use and backend qualification remain open. Retained
+fresh receipt: `../../04-build/evidence/security/protection-domains-20261015/acceptance.json`.
+
+
+## Conditional protection property runners — 2026-10-15
+
+The independent `query-oracle.ts` has272 expected observations per runtime:
+S16=135, S17=33, S18=104. The fresh `query-acceptance.ts` wrapper executes the
+actual public API in Bun and real Chromium, compares all original rows, checks
+source endpoints/browser boundaries and emits the original case/run binding.
+S16 exercises positive and missing properties for all five operators, mandatory
+join/group/order dependencies, implied equality, default prohibition and distinct
+original-action requirements. Dependencies are supplied assumptions; actual
+compiler provenance remains B08 work. S17 exercises the random-token hard rule
+even with authored equality. S18 includes exact256/32/4096 positive/overflow
+bounds, original typed refinements and exact shared-ledger100000/100001 controls.
+
+The original158 required assertions/coverage/layers/timeouts remain unchanged.
+Only S16-S18 runner bindings and S13/S14's new private Field-index source
+dependency change. Source mutation controls require the precise named failures;
+conditional Z3 queries retain both UNSAT laws and SAT countermodels. Neither
+supports a general interpreter, function-applicability or native-authority claim.
+The full gate must execute all earlier bound cases again; a standalone oracle
+receipt cannot promote a case. Evidence:
+`../../04-build/evidence/security/protection-query-20261015/`.
+
+
+### S16-S18 whole-gate result
+
+The fresh whole158-case run accepts32 bound cases; all earlier29 remain passing.
+S16 has276 observations, S17 has76 (including both-runtime actual mutant
+discrimination and original-source correspondence), and S18 has214. Required
+unbound cases remain126. The overall gate is failed/open, and B-SFP-003 remains
+in progress for function applicability and actual compiler-derived dependencies.
+See the retained `protection-query-20261015/acceptance.json`; the previous29/129
+tally describes the preceding checkpoint.
+
+
+## Pure reference function verification — design2026-10-15
+
+S19 retains all six original named function classes; supplemental null-out and
+non-pure refusal tests cannot replace any of them. Independently authored Python
+fixtures must supply original Field definitions, literal inputs/parameters and
+exact outputs/refusals. A mechanical adapter constructs real pinned source and
+replays those expectations against the public API in Bun and Chromium. Positive
+wire-valid keyed/vault/hash declarations must still refuse execution.
+
+The Gregorian dependency must also agree with an independent Python datetime
+400-year cycle digest, plus malformed, century-boundary and foreign-temporal
+refusals. The cycle is finite evidence, not automatic core/native date admission.
+Mutation controls must distinguish omitted original-input/output checks, closed
+signatures, negative-floor correction, overlapping suffix, selected domain
+binding and explicit calendar selection. Symbolic proofs retain SAT weakened
+controls and qualify their parser/domain/executable-refinement premises. Source
+metadata, guards and request shape remain frozen throughout a whole-gate replay.
+S19 is not promoted by unit/standalone proof success; S20 disposition transport
+and every other remaining backend/function criterion stay required.
+
+
+### S19 whole-gate result — 2026-10-15
+
+S19 is accepted by the fresh whole158-case run with928 matching observations.
+The source-pinned runner regenerated the459 independent Python fixtures exactly
+before replaying them and the146097-date digest in Bun1.4.2 and
+Chromium153.0.8010.12; Python3.9.6 was observed. All32 earlier bound cases pass.
+Total accepted cases are33, with125 bindings missing; no required assertion,
+coverage, layer or timeout changed. Source custody and final Astra review are
+retained under `../../04-build/evidence/security/protection-functions-20261015/`.
+S20 and full function-property/compiler/native obligations remain open.
+
+
+## S20 transport verification — design2026-10-15
+
+S20 retains US-079-AC14/7/10 and its original assertion/layer/timeout. Independent
+Python fixtures MUST distinguish original null, absent, withheld, transformed
+null, changed output Field and positive original stored token/ciphertext. Replay
+identical expected source trees and refusals in Bun and real Chromium through
+the root codec APIs with JSON/YAML round trips. Tests cite all three AC IDs.
+
+Adversarial controls include stale policy/catalog/core pins, duplicate/reordered
+qualified identities, rectangular arity, missing values vs explicit null,
+wrong original/output domains, hidden values on absent/withheld, unsupported
+reverse, unknown members/tags/profiles, unknown empty-column metadata, invalid
+Gregorian dates, original stored-token type checks, storage-tag downgrade and
+read-time transformation over a stored canonical Field. Include accepted exact
+bounds and exceeding bounds, and shared multi-cell ledger exhaustion. Refusal
+MUST retain source where copy succeeds and expose no partial validated batch.
+
+Mutation controls must remove exact selected-field checks, storage binding,
+null/absent/withheld shape constraints, pins, unknown rejection and atomicity;
+the exercising tests must fail for the intended cause. Conditional symbolic
+UNSAT laws retain SAT countermodels for weakened guards. The independent fixture
+source, fresh generation receipt, both-runtime observations, source fingerprints
+and final review are retained together. A standalone test/proof is not whole-gate
+admission. Native row authorization and custody remain independently unverified.
+
+
+### S20 whole-gate result — 2026-10-15
+
+The fresh whole158-case gate accepts S20 with358 matching observations and all33
+previously bound cases. There are34 accepted/124 required unbound cases; the
+release gate remains failed/open. Independent160-fixture Python expectations
+(38 positive/122 refusal) and175 observations per Bun/Chromium runtime retain
+JSON/YAML/source/null/token/domain distinctions and explicit runtime/serialization
+controls. The first gate's native B11 timeout is retained, as are its unchanged
+isolated passing replay and the final full replay. No criterion or timeout changed.
+Evidence: `../../04-build/evidence/security/protection-disclosure-20261015/`.
+Neither finite transport acceptance nor conditional formal laws grant native,
+compiler, source-authentication, storage-custody or row-policy authority.
+
+
+## Action-purpose prerequisite for S21-S23 — design2026-10-15
+
+US-079-AC3/10/15 need exhaustive ontology purpose closure and actual owner
+compatibility before reversal admission. The foundation tests must exercise
+all six categories, permissible ordinary combinations, singleton-exclusive
+reverse/vault-write/other, duplicate/missing/foreign IDs, unknown values/members,
+absent closure, empty declarations, exact ontology revision/source identity,
+caller mutation, resource limits and preserved atomic refusal. Reuse both raw
+member-association and graph-witness whole ontology resolution. Bun/Chromium
+expectations must agree through the real public API, with no host globals or
+external requests. A supplied purpose list is not a credential or an owner
+mapping. Independent symbolic controls expose omitted classification, incomplete
+inventories and missing actual owner compatibility. No S21/S22/S23 case is
+promoted by this prerequisite alone; crypto warning/propagation obligations and
+real read/query/write owner integration remain required.
+
+
+## S21-S23 declared obligation verification — 2026-10-15
+
+The fresh unchanged158-case gate accepts all37 bound cases: S01-S23 and the
+previous14 raw-native cases. The121 other required bindings remain missing,
+so the overall gate remains failed/open. S21/S22/S23 respectively retain150/186/152
+matching observations, with71/89/72 independent Python-authored checks in each
+Bun/Chromium runtime plus parity, source-custody and browser controls. All
+assertions, criteria, layers, deadlines and required IDs remain unchanged.
+
+Exhaustive authored action purposes are checked against the exact ontology pin;
+reverse/vault-write purposes remain exclusive while explicit reverse policy
+grants remain legal. Hash algorithm/salt, effective unsalted equality and the
+mandatory dictionary warning, complete token/encrypt custody, all five propagation
+channels, unused transforms, original stored token/cipher transport and atomic
+source-preserving refusal are covered. Every obligation remains unverified;
+complete:false and authority:false are retained. Actual operation-owner profile
+compatibility, source authentication, permission and native custody/propagation
+are not qualified by these tests.
+
+All200 related tests (2932 assertions), strict types, build,392 schemas and67
+packages pass. Thirteen actual-source controls reproduce exact named assertion
+failures when guards are removed. Root conditional logic analysis records8UNSAT
+laws/9SAT countermodels; independent design analysis records10UNSAT/6SAT, with
+explicit owner-compatibility premises and no program/native refinement theorem.
+Astra reviewed the complete original declaration assertions and independent
+expectations; two oracle/harness corrections, the conservative source-word guard
+failure, wrapper type failure and interrupted gate remain retained. See
+`evidence/security/protection-obligations-20261015/` from the HELIX build root.
+
+B-SFP-005's declared-model S21-S23 exits are met. Its full upstream B-SFP-003
+compiler/property dependency, S24/S25, all remaining backend/lifecycle cases and
+original current-authority/native composition remain required. No vault calls,
+crypto execution, native reversal or permission are introduced. The goal remains
+active. Existing raw-native qualification remains PostgreSQL17.9.
+
+
+## Legacy write guard regression plan — 2026-10-15
+
+Before implementation, reproduce withheld, transformed and proposed==mask writes
+permitted by the existing entry point. Exercise mandatory source-owned binding,
+original/null/absence, exact field-bound blind permission, ordinary-action alias
+refusal, original/proposed state requirements, create/delete/no-op updates, both
+OR alternatives with unknown opposite branches, atomic original-Field capture,
+unknown source, stale cuts and bounded work. Independently replay Bun/Chromium
+expectations, remove actual source guards with named-failure controls and retain
+conditional logic countermodels. Re-run every existing bound original gate case.
+Full original S24/S25 remain unbound until catalog-aware disposition and exact
+vault-write action admission also meet the original assertions.
+
+
+## Actual legacy write guard correction — 2026-10-15
+
+The admitted0.1 evaluateSecurityWrite now requires a trusted versioned
+readProtection component. It checks exact Field-bound blind grants or composed
+original read disposition in every selected state, preserves original null and
+canonical absence, and refuses omitted legacy bindings. Mutation grants remain
+independent. Capture reuses the original scoped resolver and discards partial
+results atomically. Original state budgets are strictly checked before a single
+operation allowance is partitioned across all possible calls in both update
+states; the comparison ledger remains separately bounded.
+
+Actual baseline counterexamples and ten failing-before regression tests were
+retained before implementation. All210 related tests (2983 assertions), strict
+types and browser build pass. Independent Python fixtures specify42 exact
+decisions, replayed identically in Bun1.4.2 and Chromium153.0.8010.12 through the
+public API; a fresh root replay retains92 matching observations. Thirteen actual
+source controls reproduce exact named assertion failures. Conditional formal
+analysis retains19 queries (11UNSAT/8SAT), including a weak per-state-budget
+countermodel; this is not implementation/native refinement. Astra independently
+reviews source, old-HEAD reproduction, exact expectations and budget algebra.
+
+The fresh original158-case gate still accepts all37 bound cases, with121
+required bindings missing. Assertions, criteria, layers, deadlines and command
+bindings are unchanged; only relevant source fingerprints were added. S24/S25
+remain required and unbound: this necessary admitted-legacy correction does not
+substitute for full catalog-aware disposition and exact vault-write admission.
+Full0.2 interpretation, actual owner-purpose compatibility, current authority and
+all native/backend/lifecycle work remain required; the goal stays active.
+See `evidence/security/write-protection-20261015/` from the HELIX build root.
+
+
+## Candidate closure and compact-IR prerequisites — 2026-10-15
+
+Test nullable scalar attribute/null constant agreement; reject null for required
+Keys. Resolve constants, inline outputs and explicit context from closure-only
+Fields while rejecting inferred live ownership, non-Fields, missing/foreign refs
+and undeclared context. Preserve original source cuts and exact domains.
+Compare compact IR with the original complete source transport for nested
+record-member, native graph record-key and opaque witnesses; rebase only the
+same issued association table, reject copies, residuals and omitted unused
+declarations without invoking accessors. Add actual source mutation controls and
+independent Bun/Chromium expectations. These prerequisites do not replace the
+full catalog-aware action/fact/disposition/vault-write tests for original S24/S25.
+
+Shared-source controls must check detached immutable capture, rejection of invalid
+or accessor-bearing input, exact source reference sharing across associations and
+scopes, copied-root/scope refusal, and detached public transport. Compact controls
+must reject reordered tables at consumption and fresh source scopes even when
+JSON is equal. Run strict types, browser build, security/date regression and the
+original158-case gate without changing required assertions or deadlines. Boolean
+judgment proofs remain conditional and do not replace implementation/native tests.
+
+### Canonical source compiler controls — 2026-10-15
+
+Exercise actual canonical catalog and genuine null-catalog paths. Require exact
+policy/ontology/catalog/core pins; refuse missing/extra/stale sources, unknown
+required members, copied handles and residual conditions. Test every actual
+rule-target pair, unused invalid recipes, nullable/DTO output domains, live input
+membership, non-permit disclosures, duplicate identities and binding correspondence.
+Confirm original source version/bytes, lexical occurrence/ordered association
+indices, shared immutable closure and atomic refusal without a partial handle.
+
+Direct definition tests must use empty rules and actual unused transform indices,
+retain an unchanged policy, and preserve public selected-disclosure refusal. Check
+shared catalog work exhaustion, unsupported/date/decimal/output recipe conditions,
+nonexecuting non-pure obligation declarations, and caller inability to inject a
+validated context. Mutation controls must distinguish removing unused-definition
+checks, exact pin/domain checks, issuance, live membership and expansion precharge.
+Test repeated/mixed-source normalization to detect cache poisoning or cross-scope
+reuse. Independent Bun/Chromium parity and conditional formal analysis remain
+separate from native admission and fullS24/S25 qualification.
+
+
+### Canonical action kernel component checks
+
+`tests/security/catalog-runtime.test.ts` exercises US-079-AC3/4/5/6/10 at the
+private logical component boundary: actual Staff/project membership in flat and
+graph sources, parallel/opaque/Record witnesses, independent completeness,
+false-branch and empty-request preflight, typed null/absence, duplicate normalized
+Keys, explicit Gregorian profiles, exact pins and exhaustive stored-carrier
+bindings, original/withheld/transform-conflict composition and atomic refusals.
+Opaque reference metadata compatibility has paired flat/graph positives and
+record-type/malformed negatives. Independent Astra controls must execute the real
+module in Bun and Chromium, retain mutations and source hashes, and verify the
+whole-operation disposition accounting witness. Finite oracle parity and
+conditional formal laws do not establish executable/native refinement.
+
+These component checks supplement the unchanged 158 required acceptance cases.
+No S24/S25 assertion is retired, weakened, or promoted: full rendered Cells,
+original-read/blind-write comparison, vault permission and native enforcement
+still require their original case evidence.
+
+
+### Atomic collection component checks
+
+`tests/security/catalog-collection.test.ts` extends the private logical AC3/4/5/6/10
+checks to actual output Cells: flat/graph original/null/absence/withheld; every
+admitted pure recipe with exact numeric/Unicode/date output; source-independent
+inline null/absence/unavailable compatibility; catalog present-input requirements;
+exact owner read role plus real grants; denial filtering; late U/conflict/output
+refinement failure and repeated-resource output budget exhaustion. Empty targets
+exercise input coverage and unconditional withholding/transform suppression.
+
+Independent Bun/Chromium controls and source weakenings must exercise actual
+collection output, definition-context custody, one shared action/render ledger,
+output framing/refs/profile text, typed input/output refinements and atomic
+publication. Arbitrary-row conditional laws assume faithful failure accounting
+and delayed publication; finite parity does not prove native or TS refinement.
+The original 158 cases, assertions, timeouts and commands remain unchanged.
+Component evidence cannot replace full S24/S25 or native backend evidence.
+
+
+### Catalog-aware write acceptance increment
+
+S24 and S25 retain their original assertions, criteria and timeouts. Their semantic
+contract/browser implementations must exercise the actual private catalog write
+guard against independently authored Python expected outcomes, regenerate fixture
+bytes freshly, pin the full source closure before/after execution and replay exact
+row parity in Bun and real Chromium without host globals or external requests.
+S24 includes changed Field mask-equality, original/null/absence, explicit per-Field
+blind bindings and actual grants, create/update/delete required states, no-op
+object grants, flat association Records, graph Record/opaque incidence changes,
+complete listing/coverage and fixed owner roles. S25 additionally covers missing,
+unrelated and exact declared vault-write actions, grants in all required states,
+and original stored carrier/output-domain semantics.
+
+Focused actual-source weakenings must detect loss of vault declaration/grant,
+original-or-bound-blind checks, state conjunction, complete mutation listing,
+Subject stability, association ownership or shared operation accounting. Preserve
+failed source preimages and development logs. Conditional formal proofs and finite
+browser parity qualify logical admission only: native statement/effect closure,
+opaque replacement intent, authentication/current authority, query/compiler lineage
+and remaining physical/backend acceptance cases retain their separate obligations.
+An accepted S24/S25 semantic receipt does not qualify any native backend profile.
+
+
+## Stored-Field conditional query source controls — 2026-10-15
+
+`tests/security/stored-query-corpus.ts` supplies independently authored expected
+outcomes for the private source selector in Bun and Chromium. Controls cover all
+five operators; authored/implied equality; omitted/prohibited and separately
+original-authorized modes; random-token join/group; actual stored output versus
+plaintext input; live type/Field membership; complete unrelated storage entries;
+duplicate/missing/wrong-version/output/canonical-downgrade/unknown owner content;
+forged program handles; unsupported dependencies and bounded source shapes.
+Snapshots must remain immutable, source inputs unchanged and getter calls zero.
+A withheld read policy must not be misreported as a source-selection failure or
+as read permission: storage classification and effective disclosure are separate.
+
+The extracted validator must preserve existing action/collection/write behavior,
+including graph/raw ownership and null/absence. The legacy public query-property
+suite must remain unchanged. Run strict library/tools typing, the real-browser
+probe `tools/security/stored-query-browser.ts` without Bun/Node globals, focused
+logical regressions and the fresh full required-case gate. Add the extracted
+validator to the affected case source fingerprints without changing assertions,
+allocations or timeouts. P03/B08 stay unbound; these are source consistency tests,
+not native query admission or proof of key/provider correspondence.
+
+
+### Current source profile for query-lineage integration — 2026-10-15
+
+The new `tests/security/protection/current-query-source.json` is an explicitly
+authored source profile, not a migration of historical unnamed fixtures. It
+retains current core0.8, policy0.2, ontology0.2, protection0.1 and logical-owner0.1
+semantics while declaring queryable element names and int64 facets under new
+revision pins. Existing current UMF owners validate the complete source packet;
+no legacy policy or synthetic plaintext transform is substituted.
+
+Five queries exercise stored-token equality, self-join/group occurrences, an
+unselected token ordering dependency, numeric SUM and field-free COUNT. The
+fixture's expected uses are authored test expectations. Weft's actual Application
+parser/resolver must independently derive occurrence-sensitive source lineage,
+without interpreting the opaque current policy/catalog or inventing mode/action
+claims. UMF then matches the original revisions and exact live (type,Field) to
+the complete storage owner. Numeric SUM remains unsupported; COUNT supplies no
+invented Field dependency but retains its scan.
+
+The portable source-owner corpus rejects stale core/document/ontology/catalog
+pins, legacy policy substitution, missing live members, storage-transform drift,
+missing unrelated storage and canonical downgrade. Random-token join refuses;
+original-authorized mode still requires action. Nineteen Bun/Chromium observations
+pass at the retained selected source pins. These are correspondence controls,
+not a new solver/refinement proof, query attestation, current ORIGINAL-read permit,
+mixed-mode physical integration or native qualification. P03/B08 and the original
+158-case requirements stay unchanged.
+
+
+#### Actual compiler correspondence and separate logical read controls
+
+The host-only `tools/security/current-query-lineage.ts` invokes the frozen actual
+Weft Application parser/resolver on independently encoded exact current sources.
+Seventy-five checks match original request/SQL/model/plan hashes, uninterpreted
+opaque source custody, full scan/use populations and distinct occurrence paths
+to the existing current storage owner. Self-join/group, unselected token ordering,
+unsupported numeric SUM and field-free COUNT remain distinct. Caller property,
+mode or authority overrides and source digest substitutions refuse without a
+partial report. Selected source pins are retained, without a hermeticity claim.
+
+The original r1 policy discloses salary but not the protected token. Its actual
+logical token read is indeterminate, even when query properties are compatible.
+The separately authored `current-query-read-scenarios.json` pins the r1 fixture
+SHA and explicitly revises policy to named-query-token-read-r2, adding ORIGINAL
+stored-token disclosure. Complete supplied logical facts permit active project
+staff, deny inactive or different-project staff, and refuse missing coverage or
+stale policy pins. This reads the opaque stored token, not its pre-storage input.
+Five focused/current resolver tests pass107 expectations. Current native fact
+custody, actual query read-mode lowering, key scope, mixed-mode physical execution
+and P03/B08 acceptance remain unfinished. Existing conditional formal models are
+not extended or promoted to compiler/native refinement by these tests.
+
+
+### Selected availability must remain explicit in query lineage — 2026-10-15
+
+An independent source-only probe of committed Weft main05b68633 and producer
+8d2ff86173efe81aafd17cb14cad06d880c55802fc39fc361802d520307487a1
+changes the actual selected token Field to absent-allowed under a new exact
+core revision/digest. Projection, predicate, hidden ordering and self-join
+currently succeed while the property use reports ideal nullable:false without
+separate availability. Retaining original core bytes is necessary but does not
+justify interpreting that ideal type as an actual required/nonnullable value.
+
+UMF allows explicit null only for absent-allowed Fields and distinguishes null
+from absence. No alternate nullable facet is invented. Until Weft explicitly
+represents and qualifies both meanings, selected absent-allowed values must
+refuse on this lineage subset. The required-nonnull original predicate remains
+supported; field-free COUNT preserves its scan without inventing a dependency
+on an unrelated optional Field. The independent six-request regression is
+`tools/security/current-query-absence.py`; the original producer passes2 and
+fails4 intended controls. Exact requests/results are retained under
+`evidence/security/current-query-availability-20261015/`.
+
+The Weft owner is repairing this source boundary, preserving all required-field
+reports. This finding is source-reporting evidence, not native execution or a
+backend leak. Existing current named required-field qualification remains scoped
+to its exact domains; no P03/B08 or native acceptance follows.
+
+
+#### Repaired selected availability boundary
+
+The fixed Weft producer6069d58a2009ca2d5f5d65557e5a7d71900c1343ad3ef792f4e3f375e6a3fc65
+resolves each actual selected Field through its original scan owner and catalog
+member descriptor before issuing either lineage0.1 or legacy property reports.
+Selected availability must be explicitly required; projected values and hidden
+predicate/order/group/join/aggregate dependencies are checked. Unselected optional
+fields do not force a fake dependency into field-free COUNT. This is an explicit
+subset refusal until both actual null and absence semantics can be represented.
+
+The independent regression expanded chronologically from6 to8 to12 requests,
+preserving every earlier expectation and witness. The original producer passes2
+and fails10 final cases; the repaired producer passes12, including right-hand
+operands and later output/order positions. Refusals require the intended
+WFT-APPLICATION-LINEAGE-AVAILABILITY diagnostic and zero partial stdout. All75
+current required-field correspondence controls still pass, and all five original
+reports are byte-identical. Native query admission and P03/B08 remain unqualified.
+
+The existing abstract fact-consistency proof replays2UNSAT/2SAT and keeps absence
+and null distinct. Its premise of exact source-kind classification is precisely
+what the observed old source-report boundary failed to establish; that proof is
+not promoted to Rust/compiler or native refinement by these regression results.
+
+
+### Complete typed scan reference for query read admission — 2026-10-15
+
+CONTRACT-062's private complete logical scan operation closes the gap between
+caller-selected collection resources and a full typed scan. Implement it inside
+the existing current collection runtime, deriving selectors only after the
+complete supplied fact inventory has validated. Reuse exactly the issued program,
+owner read action, coverage/action/disposition preflight and output ledger; charge
+the derived selector population before allocation and preserve aggregate fact
+limits. Existing action/collection entry points retain their subset semantics.
+
+Verify flat and graph-witness counterparts, active/inactive/different-project
+authority, original/withheld/transformed/absent/null cells, field-free row reads,
+source-scoped empty-population checks, caller selection/action substitution,
+malformed unselected facts, late unknown/conflict atomic refusal and operation
+limits. Compare the explicit new scan against independently authored expected
+rows; a legal old subset collection is not a full-scan credential. Browser parity
+and all affected current kernel/native acceptance source closures must replay.
+
+Source-only compiler readsets and native permission/dispatch remain separate
+requirements; no SQL/query compiler or backend authority is introduced in UMF.
+
+
+### Atomic scan batch controls — 2026-10-15
+
+Exercise flat/graph positive self joins, ordered distinct scan labels, field-free
+read duties, denied rows and empty target preflight. A late missing disclosure,
+unknown target, stale cut or malformed request must erase every earlier scan.
+Reject empty/over256/duplicate/invalid scan labels, caller actions/subsets and
+extra members. Preserve detached frozen results, no getter invocation, original
+input immutability and copied/forged program refusal. Distinguish a deliberately
+reset per-scan work ledger from the shared ledger: find a cut where each original
+single scan passes but the combined batch exceeds work, literal or text limits.
+Charge aggregate target visits across occurrences against maxFacts.
+
+Run identical independently authored controls in Bun and Chromium with host
+globals absent and no outside requests. Formal analysis must state exact complete
+scan outcomes/faithful leaf kernel as premises and prove atomic result release,
+order/occurrence retention and monotone cumulative budget refusal, including a
+SAT countermodel for independent-reset budgets. This is not a compiler or native
+refinement proof. Keep all158 original required cases/34criteria; no case is
+promoted by these component controls. Original P03/B08/native gates remain.
+
+
+### Query value-origin and operation-metadata controls — 2026-10-15
+
+Support original S08/S16/S20/S22 and pg-raw.P03/B08 obligations without promoting
+them: distinguish original live Fields, read DTOs and stored pre-input DTOs;
+check separate-action/no-reverse paths; reject incompatible operand domains and
+unknown/conflicting mode sources; retain null/absence/withheld distinctions.
+Formal positives include separately authorized original use under presentation
+withholding, original stored-token use remaining token typed, compatible disclosed
+use and exact direction retention. Weakened controls must expose raw fallback,
+plaintext substitution, row-emptiness bypass, mismatched key scope, deterministic
+many-to-one grouping and swapped direction positions.
+
+The actual source verifier must compare the whole independent direction vector,
+including default ASC, explicit DESC and two mixed-position queries with the
+same original plan bytes. Preserve all previous report bytes. A finite isolated
+PG18 primitive probe supplies actual type/operator/count/order observations; no
+actor/policy/registration/current-authority claim follows. Formal proofs must
+state supplied source/mode/type/scope correctness as premises, without compiler,
+TypeScript or SQL refinement. Retain exact solver/native sources and failures.
+The original158case definitions/34criteria remain unchanged and the full goal
+continues to require all missing backend implementations.
+
+
+### Mixed logical operation controls — 2026-10-15
+
+Extend the supplied-batch prerequisite for S08/S16/S20/S22 and P03/B08 with reads plus distinct original-use action checks: retain masked public output, live opaque stored output, ordered operation IDs, and explicit denied action decisions. Exercise ordinary relational associations and graph relationship witnesses, empty populations, missing action dependency coverage even when empty, stale cuts, caller shape/authority injection, forged handles and accessor refusal. Every late structural or resource failure must erase preceding results.
+
+Demonstrate independent single operations can pass while the mixed whole operation refuses shared fact, work, text and literal exhaustion. Preserve detached frozen results and unchanged inputs. Independently replay the same corpus in Chromium without host globals or external requests. Conditional formal analysis should separate structural completion from permission and show how independent resets or prefix release violate atomic/budget requirements; it does not prove the actual kernel or native query execution. No original acceptance definition is replaced or promoted.
+
+
+### Source-route and disclosure-guard qualification — 2026-10-15
+
+Support S08/S16/S20/S22 and P03/B08 without replacing their integrated tests. Exhaust all27 ontology/storage/read-mode combinations and retain original live versus disclosed DTO origins. Check independent missing defaults, no caller mode/action, exact full Field identities/catalog declarations, original Project membership/context rules, no storage-input promotion, null/absence/withholding, numerically equivalent legacy token spellings, missing properties, random-token restrictions and all source/literal bounds. The4096 canonical literal bound must apply without a catalog as well as inside property comparison.
+
+Use a separately authored six-Boolean-context fixture to enumerate all64 states of same/different masks, original, withholding and missing disclosure. Compare generated branch guards to an independent fold and to actual field-free/read-render evaluations. Model the actual generated guard metadata in Z3 against that independent finite fold, retaining SAT weakenings for omitted exclusions/contributors and diagnostic-permission confusion. This qualifies only the named finite family, not arbitrary policy expressions, native SQL or current authority. Preserve original source/schema/issuer bytes, source endpoint hashes, failures and independent browser/mutation review. All original158 acceptance definitions/34criteria remain required.
+
+
+### Actual route activation controls — 2026-10-15
+
+For all64 context states, compare actual original compiled rule truth and resulting route choice with an independent finite oracle. Cover complete flat Record and graph witness membership, stale source/cut pins, missing context/coverage, invalid late rows, empty populations, unknown/denied decisions, caller guard/mode/action/truth injection, forged handles, immutable results and operation exhaustion. Field-free eligibility must not force a hidden original operand through public disclosure. Native current authority, exact issued occurrence/action correspondence and original integrated acceptance cases remain mandatory and unpromoted.
+
+
+### Same-cut rule/action composition controls — 2026-10-15
+
+For S08/S16/S20/S22 and P03/B08 prerequisites, compose original field-free rule evidence and separate action duties on one detached complete cut. Preserve permit/deny/U and rule/source indices, private resource identity and operation order; do not render hidden operands through public masking. Test missing public disclosure, action denial, valid flat/graph membership revocation, empty original dependencies, closed shapes and caller truth/action/branch injection, stale cuts, source/accessor forgery, all-or-nothing late failure, frozen detached results and cumulative fact/work/text/literal exhaustion. Freeze the original fixture work threshold independently and retain calibration; standalone successes must not bypass whole-operation limits. Browser correspondence and conditional composition proofs do not establish issued query correspondence or native authority. All original158cases/34criteria remain required.
+
+### Exhaustive finite route composition — 2026-10-15
+
+Exhaust the finite eight-guard read/route composition with known absence, duplicate/conflicting transforms, withheld/original/missing dispositions and independent forbid/require. Compare original rule truths and selected branches in forward/reverse orders in Bun and real Chromium; retain semantic mutation controls. This adds logical coverage, not native acceptance. See [retained evidence](../../04-build/evidence/security/three-valued-route-exhaustion-20261015/README.md).
+
+### Operator-free read projection metadata — 2026-10-15
+
+US-079-AC3/AC7/AC10 gain component checks in
+`tests/security/read-projection-corpus.ts` and its Bun wrapper. Exercise qualified
+flat/graph Fields, protected missing versus withheld, stored live token identity,
+legacy scalar NULL transform, duplicate permit occurrences, no permit, complete
+owner/source refusal, closed/scoped selections and opaque handles, immutable
+snapshots, actual rendered output-domain correspondence and prohibited query use
+independent of read metadata. Check whole serialized-result limits at -1/exact/+1
+including framing, plus large invalid selection refusal without echo. Run the
+same portable corpus in Chromium. No native case or source permission is inferred;
+r3 transport is unchanged and no backend adoption is implied by helper tests.
+
+### Versioned projection child controls — 2026-10-15
+
+For US-079-AC3/AC7/AC10 prerequisites, test the actual v2 subprocess and exact
+built bundle through the original Truss generic pipe. Regenerate actual public
+Weft projection packets byte-exact, including plain salary, FALSE, LIMIT0 and live
+stored-token projections with no invented query operators. Retain original model
+and opaque source byte custody. Compare source metadata and batch results with
+original functions; test empty population, query-prohibited read independence,
+withheld/missing/conflicting active transforms, imported handles, changed source
+receipt/owner/projection order, duplicate IDs, foreign Fields, stale cuts, terminal
+refusal, invalid UTF-8, fragmented frames and exact response limits. FALSE/LIMIT
+are compiler inputs here, not executed SQL. Native enforcement requires its own
+qualified cohort and original integrated assertions. Frozen r3 compatibility is
+explicit refusal, not protocol downgrade or registration migration.

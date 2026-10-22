@@ -1,8 +1,11 @@
+import {CURRENT_CORE_VERSION} from '../../../../src/model/types';
+import current from '../reference/examples/orders.json';
+import uuid from '../reference/examples/uuid.json';
 import {readDocument, writeDocument} from '../../../../src/model/document';
 import {writeJsonValue} from '../../../../src/model/serialization';
 import {validateDocument} from '../../../../src/validation/document';
 
-const base = {umf:'0.1.0',id:'example:customer',vocabularies:{},modules:[{id:'sales',namespace:'sales',elements:[{id:'customer',name:'Customer',scalarType:'string',extensions:{}}]}]};
+const base = {umf:CURRENT_CORE_VERSION,id:'example:customer',vocabularies:{},modules:[{id:'sales',namespace:'sales',elements:[{id:'customer',kind:'field',name:'Customer',scalarType:'string',cardinality:'one',nullability:'required',extensions:{}}]}]};
 const unknown = {...base,vocabularies:{'example.policy':{version:'1.0.0'}},modules:[{...base.modules[0],elements:[{...base.modules[0]!.elements[0],extensions:{'example.policy':{owner:'sales',retentionDays:30,unfamiliar:{keepMe:true}}}}]}]};
 const input=document.querySelector<HTMLTextAreaElement>('#source')!;
 const output=document.querySelector<HTMLElement>('#output')!;
@@ -11,7 +14,7 @@ const diagnostics=document.querySelector<HTMLElement>('#diagnostics')!;
 const preset=document.querySelector<HTMLSelectElement>('#preset')!;
 const format=document.querySelector<HTMLSelectElement>('#format')!;
 function clear(){output.textContent='Check the document to see its output.';status.textContent='Ready to check';diagnostics.textContent='';}
-function load(){input.value=writeJsonValue(preset.value==='unknown'?unknown:preset.value==='invalid'?{...base,umf:'99.0.0'}:base,'yaml');clear();}
+function load(){input.value=writeJsonValue(preset.value==='current'?current:preset.value==='uuid'?uuid:preset.value==='unknown'?unknown:preset.value==='invalid'?{...base,umf:'99.0.0'}:base,'yaml');clear();}
 function run(){
   try {
     const doc=readDocument(input.value,'yaml');

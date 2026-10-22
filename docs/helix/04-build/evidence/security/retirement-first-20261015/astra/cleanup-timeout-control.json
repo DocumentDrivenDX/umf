@@ -1,0 +1,18 @@
+{
+  "test": "fault-injected docker-run timeout after simulated daemon-side creation",
+  "nativeExecution": false,
+  "calls": [
+    [
+      "docker",
+      "container",
+      "ls"
+    ],
+    [
+      "docker",
+      "run",
+      "-d"
+    ]
+  ],
+  "simulatedOwnedFixtureRemains": true,
+  "cleanupAttempted": false
+}

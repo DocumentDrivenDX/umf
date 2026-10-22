@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {importShaclTurtle,importRdfTurtle,proposeShaclEngineValidation,exportRdfNQuads,readDocument,writeDocument} from '../src';
 const input=await Bun.file('fixtures/shacl/validation-inputs.json').json(),results=[];
 for(const [index,c] of input.cases.entries()){

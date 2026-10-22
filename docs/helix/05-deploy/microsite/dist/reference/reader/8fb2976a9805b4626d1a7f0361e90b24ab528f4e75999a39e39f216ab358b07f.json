@@ -1,0 +1,60 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"ParquetRecordTypeRequest\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreKindDeclaration\"]"
+      ],
+      "name": "fieldAuthor",
+      "optional": true,
+      "type": "CoreKindDeclaration"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "recordModule",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "recordId",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "index",
+      "optional": false,
+      "type": "number"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "mode",
+      "optional": false,
+      "type": "\"strict\" | \"report\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreKindDeclaration\"]"
+      ],
+      "name": "authors",
+      "optional": true,
+      "type": "CoreKindDeclaration[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "ParquetRecordTypeRequest is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "ParquetRecordTypeRequest"
+}

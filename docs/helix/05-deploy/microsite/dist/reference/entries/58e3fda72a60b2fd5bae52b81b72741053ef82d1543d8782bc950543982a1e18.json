@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 6693,
+        "line": 27,
+        "path": "src/model/nullability.ts",
+        "sha256": "2ec3cc469eee2460332fcc99fc0e14fef416180bdeede59b2b34ac19a39e6957"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "inspectCoreNullability",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: Document, identity: CoreNullabilityIdentity): CoreNullabilityInspection"
+    ]
+  },
+  "id": "[\"api\",\".\",\"inspectCoreNullability\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 6693,
+      "line": 27,
+      "path": "src/model/nullability.ts",
+      "sha256": "2ec3cc469eee2460332fcc99fc0e14fef416180bdeede59b2b34ac19a39e6957"
+    }
+  ],
+  "summary": "Inspect availability without inferring a native absence carrier or provenance.",
+  "title": "inspectCoreNullability"
+}

@@ -1,0 +1,1119 @@
+{
+  "status": "counterexample-reproduced",
+  "sourceDigests": {
+    "/Users/erik/.codex/worktrees/1598/umf/tools/security/pg-private-diagnostics.py": "ea60ba265fd660dee411788f1fab2bb80a6f8349eea00e22b7e38d25e1281228",
+    "tests/security/native/pg-raw-membership.py": "19a062f5cb18532b9da3925d6444faa78f2a92c2bfe8bfaedfd78887ef9d29ab",
+    "tests/security/native/pg-raw-membership.sql": "ac5640077786e81b80e536acc7c5d89d8f6747e1d8f425f17c4e3dfc3b37daf6"
+  },
+  "engine": {
+    "version": "PostgreSQL 17.9 (Debian 17.9-1.pgdg13+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+    "number": "170009"
+  },
+  "runId": "d4d4d286-861a-4034-89ab-8622d543b097",
+  "observations": [
+    {
+      "actor": {
+        "sessionUser": "umf_sec_alice",
+        "superuser": false,
+        "bypassRls": false
+      },
+      "stage": "baseline",
+      "authorizedResourceIds": [
+        "RA",
+        "RAB"
+      ],
+      "privateAssignmentEstimate": 3
+    },
+    {
+      "actor": {
+        "sessionUser": "umf_sec_bob",
+        "superuser": false,
+        "bypassRls": false
+      },
+      "stage": "baseline",
+      "authorizedResourceIds": [
+        "RAB",
+        "RB"
+      ],
+      "privateAssignmentEstimate": 3
+    },
+    {
+      "actor": {
+        "sessionUser": "umf_sec_outsider",
+        "superuser": false,
+        "bypassRls": false
+      },
+      "stage": "baseline",
+      "authorizedResourceIds": [],
+      "privateAssignmentEstimate": 3
+    },
+    {
+      "actor": "umf_sec_alice",
+      "stage": "unrelated-private-fact-added",
+      "authorizedResourceIds": [
+        "RA",
+        "RAB"
+      ],
+      "privateAssignmentEstimate": 4
+    },
+    {
+      "actor": "umf_sec_bob",
+      "stage": "unrelated-private-fact-added",
+      "authorizedResourceIds": [
+        "RAB",
+        "RB"
+      ],
+      "privateAssignmentEstimate": 4
+    },
+    {
+      "actor": "umf_sec_outsider",
+      "stage": "unrelated-private-fact-added",
+      "authorizedResourceIds": [],
+      "privateAssignmentEstimate": 4
+    },
+    {
+      "actor": "umf_sec_alice",
+      "stage": "pg-class-only-restriction",
+      "directCatalogDenied": true,
+      "publicViewPrivateEstimate": 5,
+      "publicFunctionPrivateEstimate": 5
+    },
+    {
+      "actor": "umf_sec_bob",
+      "stage": "pg-class-only-restriction",
+      "directCatalogDenied": true,
+      "publicViewPrivateEstimate": 5,
+      "publicFunctionPrivateEstimate": 5
+    },
+    {
+      "actor": "umf_sec_outsider",
+      "stage": "pg-class-only-restriction",
+      "directCatalogDenied": true,
+      "publicViewPrivateEstimate": 5,
+      "publicFunctionPrivateEstimate": 5
+    },
+    {
+      "actor": "umf_sec_alice",
+      "stage": "three-known-families-restricted",
+      "knownDiagnosticDenials": [
+        true,
+        true,
+        true
+      ],
+      "authorizedResourceIds": [
+        "RA",
+        "RAB"
+      ]
+    },
+    {
+      "actor": "umf_sec_bob",
+      "stage": "three-known-families-restricted",
+      "knownDiagnosticDenials": [
+        true,
+        true,
+        true
+      ],
+      "authorizedResourceIds": [
+        "RAB",
+        "RB"
+      ]
+    },
+    {
+      "actor": "umf_sec_outsider",
+      "stage": "three-known-families-restricted",
+      "knownDiagnosticDenials": [
+        true,
+        true,
+        true
+      ],
+      "authorizedResourceIds": []
+    },
+    {
+      "actor": "umf_sec_alice",
+      "stage": "insert-counter-bypasses-three-family-restriction",
+      "privateAssignmentInsertedCount": 4,
+      "authorizedResourceIds": [
+        "RA",
+        "RAB"
+      ]
+    },
+    {
+      "actor": "umf_sec_bob",
+      "stage": "insert-counter-bypasses-three-family-restriction",
+      "privateAssignmentInsertedCount": 4,
+      "authorizedResourceIds": [
+        "RAB",
+        "RB"
+      ]
+    },
+    {
+      "actor": "umf_sec_outsider",
+      "stage": "insert-counter-bypasses-three-family-restriction",
+      "privateAssignmentInsertedCount": 4,
+      "authorizedResourceIds": []
+    },
+    {
+      "actor": "umf_sec_alice",
+      "stage": "unrelated-fact-changes-insert-counter",
+      "priorPrivateAssignmentInsertedCount": 4,
+      "privateAssignmentInsertedCount": 5,
+      "authorizedResourceIds": [
+        "RA",
+        "RAB"
+      ]
+    },
+    {
+      "actor": "umf_sec_bob",
+      "stage": "unrelated-fact-changes-insert-counter",
+      "priorPrivateAssignmentInsertedCount": 4,
+      "privateAssignmentInsertedCount": 5,
+      "authorizedResourceIds": [
+        "RAB",
+        "RB"
+      ]
+    },
+    {
+      "actor": "umf_sec_outsider",
+      "stage": "unrelated-fact-changes-insert-counter",
+      "priorPrivateAssignmentInsertedCount": 4,
+      "privateAssignmentInsertedCount": 5,
+      "authorizedResourceIds": []
+    },
+    {
+      "actor": "umf_sec_alice",
+      "stage": "insert-counter-restricted",
+      "diagnosticDenied": true,
+      "authorizedResourceIds": [
+        "RA",
+        "RAB"
+      ]
+    },
+    {
+      "actor": "umf_sec_bob",
+      "stage": "insert-counter-restricted",
+      "diagnosticDenied": true,
+      "authorizedResourceIds": [
+        "RAB",
+        "RB"
+      ]
+    },
+    {
+      "actor": "umf_sec_outsider",
+      "stage": "insert-counter-restricted",
+      "diagnosticDenied": true,
+      "authorizedResourceIds": []
+    },
+    {
+      "actor": "umf_sec_alice",
+      "stage": "deny-first-candidate-known-surfaces",
+      "nativeIdentity": "umf_sec_alice|umf_sec_alice",
+      "authorizedRows": [
+        [
+          "RA",
+          "A-only"
+        ],
+        [
+          "RAB",
+          "multiple-owners"
+        ]
+      ],
+      "knownBypassRefusals": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "actor": "umf_sec_alice",
+      "stage": "deny-first-candidate-native-acl",
+      "effectivePrivileges": {
+        "catalogReadableRelations": 0,
+        "catalogExecutableRoutines": 0,
+        "factReadableRelations": 0,
+        "canCreateCatalogRoutine": false,
+        "canCreatePublicRoutine": false
+      }
+    },
+    {
+      "actor": "umf_sec_alice",
+      "stage": "deny-first-candidate-command-wrapper-refusals",
+      "refusals": [
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "actor": "umf_sec_bob",
+      "stage": "deny-first-candidate-known-surfaces",
+      "nativeIdentity": "umf_sec_bob|umf_sec_bob",
+      "authorizedRows": [
+        [
+          "RAB",
+          "multiple-owners"
+        ],
+        [
+          "RB",
+          "B-only"
+        ]
+      ],
+      "knownBypassRefusals": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "actor": "umf_sec_bob",
+      "stage": "deny-first-candidate-native-acl",
+      "effectivePrivileges": {
+        "catalogReadableRelations": 0,
+        "catalogExecutableRoutines": 0,
+        "factReadableRelations": 0,
+        "canCreateCatalogRoutine": false,
+        "canCreatePublicRoutine": false
+      }
+    },
+    {
+      "actor": "umf_sec_bob",
+      "stage": "deny-first-candidate-command-wrapper-refusals",
+      "refusals": [
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "actor": "umf_sec_outsider",
+      "stage": "deny-first-candidate-known-surfaces",
+      "nativeIdentity": "umf_sec_outsider|umf_sec_outsider",
+      "authorizedRows": [],
+      "knownBypassRefusals": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "actor": "umf_sec_outsider",
+      "stage": "deny-first-candidate-native-acl",
+      "effectivePrivileges": {
+        "catalogReadableRelations": 0,
+        "catalogExecutableRoutines": 0,
+        "factReadableRelations": 0,
+        "canCreateCatalogRoutine": false,
+        "canCreatePublicRoutine": false
+      }
+    },
+    {
+      "actor": "umf_sec_outsider",
+      "stage": "deny-first-candidate-command-wrapper-refusals",
+      "refusals": [
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "actor": "umf_sec_alice",
+      "stage": "deny-first-candidate-plan-two-worlds",
+      "beforePlan": [
+        {
+          "Plan": {
+            "Node Type": "Result",
+            "Parallel Aware": false,
+            "Async Capable": false,
+            "Startup Cost": 0.0,
+            "Total Cost": 0.26,
+            "Plan Rows": 1,
+            "Plan Width": 32
+          }
+        }
+      ],
+      "afterPlan": [
+        {
+          "Plan": {
+            "Node Type": "Result",
+            "Parallel Aware": false,
+            "Async Capable": false,
+            "Startup Cost": 0.0,
+            "Total Cost": 0.26,
+            "Plan Rows": 1,
+            "Plan Width": 32
+          }
+        }
+      ],
+      "authorizedRows": [
+        [
+          "RA",
+          "A-only"
+        ],
+        [
+          "RAB",
+          "multiple-owners"
+        ]
+      ]
+    },
+    {
+      "actor": "umf_sec_bob",
+      "stage": "deny-first-candidate-plan-two-worlds",
+      "beforePlan": [
+        {
+          "Plan": {
+            "Node Type": "Result",
+            "Parallel Aware": false,
+            "Async Capable": false,
+            "Startup Cost": 0.0,
+            "Total Cost": 0.26,
+            "Plan Rows": 1,
+            "Plan Width": 32
+          }
+        }
+      ],
+      "afterPlan": [
+        {
+          "Plan": {
+            "Node Type": "Result",
+            "Parallel Aware": false,
+            "Async Capable": false,
+            "Startup Cost": 0.0,
+            "Total Cost": 0.26,
+            "Plan Rows": 1,
+            "Plan Width": 32
+          }
+        }
+      ],
+      "authorizedRows": [
+        [
+          "RAB",
+          "multiple-owners"
+        ],
+        [
+          "RB",
+          "B-only"
+        ]
+      ]
+    },
+    {
+      "actor": "umf_sec_outsider",
+      "stage": "deny-first-candidate-plan-two-worlds",
+      "beforePlan": [
+        {
+          "Plan": {
+            "Node Type": "Result",
+            "Parallel Aware": false,
+            "Async Capable": false,
+            "Startup Cost": 0.0,
+            "Total Cost": 0.26,
+            "Plan Rows": 1,
+            "Plan Width": 32
+          }
+        }
+      ],
+      "afterPlan": [
+        {
+          "Plan": {
+            "Node Type": "Result",
+            "Parallel Aware": false,
+            "Async Capable": false,
+            "Startup Cost": 0.0,
+            "Total Cost": 0.26,
+            "Plan Rows": 1,
+            "Plan Width": 32
+          }
+        }
+      ],
+      "authorizedRows": []
+    },
+    {
+      "actor": "umf_sec_alice",
+      "stage": "caller-planner-diagnostics",
+      "privateAssignmentPlanVisible": true,
+      "privateAssignmentOid": "16417",
+      "planRowEstimates": [
+        "1",
+        "1",
+        "293",
+        "293",
+        "1",
+        "1",
+        "1",
+        "5",
+        "4",
+        "4",
+        "4",
+        "1"
+      ],
+      "diagnosticLog": "docs/helix/04-build/evidence/security/pg-private-planner-d4d4d286-861a-4034-89ab-8622d543b097-umf_sec_alice-caller.log",
+      "diagnosticSha256": "7adeb2f0e52cab62ae09f6b8ee66cda2d586de02a4c4f03ff513710e0998dfef"
+    },
+    {
+      "actor": "umf_sec_bob",
+      "stage": "caller-planner-diagnostics",
+      "privateAssignmentPlanVisible": true,
+      "privateAssignmentOid": "16417",
+      "planRowEstimates": [
+        "1",
+        "1",
+        "293",
+        "293",
+        "1",
+        "1",
+        "1",
+        "5",
+        "4",
+        "4",
+        "4",
+        "1"
+      ],
+      "diagnosticLog": "docs/helix/04-build/evidence/security/pg-private-planner-d4d4d286-861a-4034-89ab-8622d543b097-umf_sec_bob-caller.log",
+      "diagnosticSha256": "7adeb2f0e52cab62ae09f6b8ee66cda2d586de02a4c4f03ff513710e0998dfef"
+    },
+    {
+      "actor": "umf_sec_outsider",
+      "stage": "caller-planner-diagnostics",
+      "privateAssignmentPlanVisible": true,
+      "privateAssignmentOid": "16417",
+      "planRowEstimates": [
+        "1",
+        "1",
+        "293",
+        "293",
+        "1",
+        "1",
+        "1",
+        "5",
+        "4",
+        "4",
+        "4",
+        "1"
+      ],
+      "diagnosticLog": "docs/helix/04-build/evidence/security/pg-private-planner-d4d4d286-861a-4034-89ab-8622d543b097-umf_sec_outsider-caller.log",
+      "diagnosticSha256": "7adeb2f0e52cab62ae09f6b8ee66cda2d586de02a4c4f03ff513710e0998dfef"
+    },
+    {
+      "actor": "umf_sec_alice",
+      "stage": "caller-planner-two-private-worlds",
+      "authorizedRows": [
+        [
+          "RA",
+          "A-only"
+        ],
+        [
+          "RAB",
+          "multiple-owners"
+        ]
+      ],
+      "priorEstimates": [
+        "1",
+        "1",
+        "293",
+        "293",
+        "1",
+        "1",
+        "1",
+        "5",
+        "4",
+        "4",
+        "4",
+        "1"
+      ],
+      "changedEstimates": [
+        "1",
+        "1",
+        "293",
+        "293",
+        "1",
+        "1",
+        "1",
+        "1",
+        "1",
+        "1"
+      ],
+      "diagnosticLog": "docs/helix/04-build/evidence/security/pg-private-planner-d4d4d286-861a-4034-89ab-8622d543b097-umf_sec_alice-changed-private-population.log",
+      "diagnosticSha256": "7e014e90ba5b853fffd5298f9c0d280659c966e3f993cfed4c1784749948bb68"
+    },
+    {
+      "actor": "umf_sec_bob",
+      "stage": "caller-planner-two-private-worlds",
+      "authorizedRows": [
+        [
+          "RAB",
+          "multiple-owners"
+        ],
+        [
+          "RB",
+          "B-only"
+        ]
+      ],
+      "priorEstimates": [
+        "1",
+        "1",
+        "293",
+        "293",
+        "1",
+        "1",
+        "1",
+        "5",
+        "4",
+        "4",
+        "4",
+        "1"
+      ],
+      "changedEstimates": [
+        "1",
+        "1",
+        "293",
+        "293",
+        "1",
+        "1",
+        "1",
+        "1",
+        "1",
+        "1"
+      ],
+      "diagnosticLog": "docs/helix/04-build/evidence/security/pg-private-planner-d4d4d286-861a-4034-89ab-8622d543b097-umf_sec_bob-changed-private-population.log",
+      "diagnosticSha256": "7e014e90ba5b853fffd5298f9c0d280659c966e3f993cfed4c1784749948bb68"
+    },
+    {
+      "actor": "umf_sec_outsider",
+      "stage": "caller-planner-two-private-worlds",
+      "authorizedRows": [],
+      "priorEstimates": [
+        "1",
+        "1",
+        "293",
+        "293",
+        "1",
+        "1",
+        "1",
+        "5",
+        "4",
+        "4",
+        "4",
+        "1"
+      ],
+      "changedEstimates": [
+        "1",
+        "1",
+        "293",
+        "293",
+        "1",
+        "1",
+        "1",
+        "1",
+        "1",
+        "1"
+      ],
+      "diagnosticLog": "docs/helix/04-build/evidence/security/pg-private-planner-d4d4d286-861a-4034-89ab-8622d543b097-umf_sec_outsider-changed-private-population.log",
+      "diagnosticSha256": "7e014e90ba5b853fffd5298f9c0d280659c966e3f993cfed4c1784749948bb68"
+    },
+    {
+      "actor": "umf_sec_alice",
+      "stage": "routine-local-planner-diagnostic-guard",
+      "privateAssignmentPlanVisible": false,
+      "privateAssignmentOid": "16417",
+      "planRowEstimates": [
+        "1"
+      ],
+      "diagnosticLog": "docs/helix/04-build/evidence/security/pg-private-planner-d4d4d286-861a-4034-89ab-8622d543b097-umf_sec_alice-guarded.log",
+      "diagnosticSha256": "44cb1312c700878c795d1329d427a729e39785767bed6c40f5b439c1a21d17cb",
+      "authorizedRows": [
+        [
+          "RA",
+          "A-only"
+        ],
+        [
+          "RAB",
+          "multiple-owners"
+        ]
+      ]
+    },
+    {
+      "actor": "umf_sec_bob",
+      "stage": "routine-local-planner-diagnostic-guard",
+      "privateAssignmentPlanVisible": false,
+      "privateAssignmentOid": "16417",
+      "planRowEstimates": [
+        "1"
+      ],
+      "diagnosticLog": "docs/helix/04-build/evidence/security/pg-private-planner-d4d4d286-861a-4034-89ab-8622d543b097-umf_sec_bob-guarded.log",
+      "diagnosticSha256": "44cb1312c700878c795d1329d427a729e39785767bed6c40f5b439c1a21d17cb",
+      "authorizedRows": [
+        [
+          "RAB",
+          "multiple-owners"
+        ],
+        [
+          "RB",
+          "B-only"
+        ]
+      ]
+    },
+    {
+      "actor": "umf_sec_outsider",
+      "stage": "routine-local-planner-diagnostic-guard",
+      "privateAssignmentPlanVisible": false,
+      "privateAssignmentOid": "16417",
+      "planRowEstimates": [
+        "1"
+      ],
+      "diagnosticLog": "docs/helix/04-build/evidence/security/pg-private-planner-d4d4d286-861a-4034-89ab-8622d543b097-umf_sec_outsider-guarded.log",
+      "diagnosticSha256": "44cb1312c700878c795d1329d427a729e39785767bed6c40f5b439c1a21d17cb",
+      "authorizedRows": []
+    },
+    {
+      "actor": "umf_sec_alice",
+      "stage": "individual-planner-guard-weakened",
+      "parameter": "debug_print_plan",
+      "privateAssignmentPlanVisible": true,
+      "privateAssignmentOid": "16417",
+      "authorizedRows": [
+        [
+          "RA",
+          "A-only"
+        ],
+        [
+          "RAB",
+          "multiple-owners"
+        ]
+      ],
+      "diagnosticLog": "docs/helix/04-build/evidence/security/pg-private-planner-d4d4d286-861a-4034-89ab-8622d543b097-umf_sec_alice-weakened-debug_print_plan.log",
+      "diagnosticSha256": "ce85af7936346b74a68bd011ba9d9d6fc895120aabc6e6ca42e949f89869ca98"
+    },
+    {
+      "actor": "umf_sec_bob",
+      "stage": "individual-planner-guard-weakened",
+      "parameter": "debug_print_plan",
+      "privateAssignmentPlanVisible": true,
+      "privateAssignmentOid": "16417",
+      "authorizedRows": [
+        [
+          "RAB",
+          "multiple-owners"
+        ],
+        [
+          "RB",
+          "B-only"
+        ]
+      ],
+      "diagnosticLog": "docs/helix/04-build/evidence/security/pg-private-planner-d4d4d286-861a-4034-89ab-8622d543b097-umf_sec_bob-weakened-debug_print_plan.log",
+      "diagnosticSha256": "ce85af7936346b74a68bd011ba9d9d6fc895120aabc6e6ca42e949f89869ca98"
+    },
+    {
+      "actor": "umf_sec_outsider",
+      "stage": "individual-planner-guard-weakened",
+      "parameter": "debug_print_plan",
+      "privateAssignmentPlanVisible": true,
+      "privateAssignmentOid": "16417",
+      "authorizedRows": [],
+      "diagnosticLog": "docs/helix/04-build/evidence/security/pg-private-planner-d4d4d286-861a-4034-89ab-8622d543b097-umf_sec_outsider-weakened-debug_print_plan.log",
+      "diagnosticSha256": "ce85af7936346b74a68bd011ba9d9d6fc895120aabc6e6ca42e949f89869ca98"
+    },
+    {
+      "actor": "umf_sec_alice",
+      "stage": "individual-planner-guard-weakened",
+      "parameter": "debug_print_parse",
+      "privateAssignmentPlanVisible": true,
+      "privateAssignmentOid": "16417",
+      "authorizedRows": [
+        [
+          "RA",
+          "A-only"
+        ],
+        [
+          "RAB",
+          "multiple-owners"
+        ]
+      ],
+      "diagnosticLog": "docs/helix/04-build/evidence/security/pg-private-planner-d4d4d286-861a-4034-89ab-8622d543b097-umf_sec_alice-weakened-debug_print_parse.log",
+      "diagnosticSha256": "1fa3a4467e33df5d189a0600f731c815dc67d477e30833c57c8b1af38ad1409b"
+    },
+    {
+      "actor": "umf_sec_bob",
+      "stage": "individual-planner-guard-weakened",
+      "parameter": "debug_print_parse",
+      "privateAssignmentPlanVisible": true,
+      "privateAssignmentOid": "16417",
+      "authorizedRows": [
+        [
+          "RAB",
+          "multiple-owners"
+        ],
+        [
+          "RB",
+          "B-only"
+        ]
+      ],
+      "diagnosticLog": "docs/helix/04-build/evidence/security/pg-private-planner-d4d4d286-861a-4034-89ab-8622d543b097-umf_sec_bob-weakened-debug_print_parse.log",
+      "diagnosticSha256": "1fa3a4467e33df5d189a0600f731c815dc67d477e30833c57c8b1af38ad1409b"
+    },
+    {
+      "actor": "umf_sec_outsider",
+      "stage": "individual-planner-guard-weakened",
+      "parameter": "debug_print_parse",
+      "privateAssignmentPlanVisible": true,
+      "privateAssignmentOid": "16417",
+      "authorizedRows": [],
+      "diagnosticLog": "docs/helix/04-build/evidence/security/pg-private-planner-d4d4d286-861a-4034-89ab-8622d543b097-umf_sec_outsider-weakened-debug_print_parse.log",
+      "diagnosticSha256": "1fa3a4467e33df5d189a0600f731c815dc67d477e30833c57c8b1af38ad1409b"
+    },
+    {
+      "actor": "umf_sec_alice",
+      "stage": "individual-planner-guard-weakened",
+      "parameter": "debug_print_rewritten",
+      "privateAssignmentPlanVisible": true,
+      "privateAssignmentOid": "16417",
+      "authorizedRows": [
+        [
+          "RA",
+          "A-only"
+        ],
+        [
+          "RAB",
+          "multiple-owners"
+        ]
+      ],
+      "diagnosticLog": "docs/helix/04-build/evidence/security/pg-private-planner-d4d4d286-861a-4034-89ab-8622d543b097-umf_sec_alice-weakened-debug_print_rewritten.log",
+      "diagnosticSha256": "50880ab46b99ba732746dc8c09ade5e6440a39685120cf78f06b51ca10b4e5a3"
+    },
+    {
+      "actor": "umf_sec_bob",
+      "stage": "individual-planner-guard-weakened",
+      "parameter": "debug_print_rewritten",
+      "privateAssignmentPlanVisible": true,
+      "privateAssignmentOid": "16417",
+      "authorizedRows": [
+        [
+          "RAB",
+          "multiple-owners"
+        ],
+        [
+          "RB",
+          "B-only"
+        ]
+      ],
+      "diagnosticLog": "docs/helix/04-build/evidence/security/pg-private-planner-d4d4d286-861a-4034-89ab-8622d543b097-umf_sec_bob-weakened-debug_print_rewritten.log",
+      "diagnosticSha256": "50880ab46b99ba732746dc8c09ade5e6440a39685120cf78f06b51ca10b4e5a3"
+    },
+    {
+      "actor": "umf_sec_outsider",
+      "stage": "individual-planner-guard-weakened",
+      "parameter": "debug_print_rewritten",
+      "privateAssignmentPlanVisible": true,
+      "privateAssignmentOid": "16417",
+      "authorizedRows": [],
+      "diagnosticLog": "docs/helix/04-build/evidence/security/pg-private-planner-d4d4d286-861a-4034-89ab-8622d543b097-umf_sec_outsider-weakened-debug_print_rewritten.log",
+      "diagnosticSha256": "50880ab46b99ba732746dc8c09ade5e6440a39685120cf78f06b51ca10b4e5a3"
+    },
+    {
+      "stage": "planner-guard-restored-native-configuration",
+      "expected": [
+        "search_path=pg_catalog",
+        "debug_print_plan=off",
+        "debug_print_parse=off",
+        "debug_print_rewritten=off"
+      ],
+      "observed": [
+        "search_path=pg_catalog",
+        "debug_print_plan=off",
+        "debug_print_parse=off",
+        "debug_print_rewritten=off"
+      ]
+    },
+    {
+      "actor": "umf_sec_alice",
+      "stage": "denied-getter-through-installer-operator",
+      "directGetterDenied": true,
+      "operatorLeaksPrivateCount": false,
+      "operatorRefuses": true,
+      "privateCount": null
+    },
+    {
+      "actor": "umf_sec_bob",
+      "stage": "denied-getter-through-installer-operator",
+      "directGetterDenied": true,
+      "operatorLeaksPrivateCount": false,
+      "operatorRefuses": true,
+      "privateCount": null
+    },
+    {
+      "actor": "umf_sec_outsider",
+      "stage": "denied-getter-through-installer-operator",
+      "directGetterDenied": true,
+      "operatorLeaksPrivateCount": false,
+      "operatorRefuses": true,
+      "privateCount": null
+    },
+    {
+      "actor": "umf_sec_alice",
+      "stage": "operator-explicit-grant-positive-control",
+      "privateCount": "1006",
+      "matchesAssessor": true
+    },
+    {
+      "actor": "umf_sec_bob",
+      "stage": "operator-explicit-grant-positive-control",
+      "privateCount": "1006",
+      "matchesAssessor": true
+    },
+    {
+      "actor": "umf_sec_outsider",
+      "stage": "operator-explicit-grant-positive-control",
+      "privateCount": "1006",
+      "matchesAssessor": true
+    },
+    {
+      "actor": "umf_sec_alice",
+      "stage": "operator-revocation-restores-refusal",
+      "privateGetterDenied": true,
+      "authorizedRows": [
+        [
+          "RA",
+          "A-only"
+        ],
+        [
+          "RAB",
+          "multiple-owners"
+        ]
+      ]
+    },
+    {
+      "actor": "umf_sec_bob",
+      "stage": "operator-revocation-restores-refusal",
+      "privateGetterDenied": true,
+      "authorizedRows": [
+        [
+          "RAB",
+          "multiple-owners"
+        ],
+        [
+          "RB",
+          "B-only"
+        ]
+      ]
+    },
+    {
+      "actor": "umf_sec_outsider",
+      "stage": "operator-revocation-restores-refusal",
+      "privateGetterDenied": true,
+      "authorizedRows": []
+    },
+    {
+      "actor": "umf_sec_alice",
+      "stage": "prepared-operator-same-session-revocation",
+      "admittedPrivateCount": "1006",
+      "revocationMarkerObserved": true,
+      "postRevocationExecutionDenied": true,
+      "effectiveGetterExecute": false,
+      "installerRevokeOnlyHook": true
+    },
+    {
+      "actor": "umf_sec_bob",
+      "stage": "prepared-operator-same-session-revocation",
+      "admittedPrivateCount": "1006",
+      "revocationMarkerObserved": true,
+      "postRevocationExecutionDenied": true,
+      "effectiveGetterExecute": false,
+      "installerRevokeOnlyHook": true
+    },
+    {
+      "actor": "umf_sec_outsider",
+      "stage": "prepared-operator-same-session-revocation",
+      "admittedPrivateCount": "1006",
+      "revocationMarkerObserved": true,
+      "postRevocationExecutionDenied": true,
+      "effectiveGetterExecute": false,
+      "installerRevokeOnlyHook": true
+    },
+    {
+      "actor": "umf_sec_alice",
+      "stage": "private-principal-ordinary",
+      "expected": "umf_sec_alice|umf_sec_alice|false|false|UTF8",
+      "observed": "umf_sec_alice|umf_sec_alice|false|false|UTF8"
+    },
+    {
+      "actor": "umf_sec_alice",
+      "stage": "private-principal-no-direct-or-supplied-identity",
+      "refusals": [
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "actor": "umf_sec_alice",
+      "stage": "private-principal-role-change-visible",
+      "observed": "umf_sec_alice|umf_sec_observer_low|false|false|UTF8"
+    },
+    {
+      "actor": "umf_sec_alice",
+      "stage": "private-principal-reset-restores",
+      "expected": "umf_sec_alice|umf_sec_alice|false|false|UTF8",
+      "observed": "umf_sec_alice|umf_sec_alice|false|false|UTF8"
+    },
+    {
+      "actor": "umf_sec_alice",
+      "stage": "private-principal-changed-encoding-visible",
+      "observed": "umf_sec_alice|umf_sec_alice|false|false|LATIN1"
+    },
+    {
+      "actor": "umf_sec_bob",
+      "stage": "private-principal-ordinary",
+      "expected": "umf_sec_bob|umf_sec_bob|false|false|UTF8",
+      "observed": "umf_sec_bob|umf_sec_bob|false|false|UTF8"
+    },
+    {
+      "actor": "umf_sec_bob",
+      "stage": "private-principal-no-direct-or-supplied-identity",
+      "refusals": [
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "actor": "umf_sec_bob",
+      "stage": "private-principal-role-change-visible",
+      "observed": "umf_sec_bob|umf_sec_observer_low|false|false|UTF8"
+    },
+    {
+      "actor": "umf_sec_bob",
+      "stage": "private-principal-reset-restores",
+      "expected": "umf_sec_bob|umf_sec_bob|false|false|UTF8",
+      "observed": "umf_sec_bob|umf_sec_bob|false|false|UTF8"
+    },
+    {
+      "actor": "umf_sec_bob",
+      "stage": "private-principal-changed-encoding-visible",
+      "observed": "umf_sec_bob|umf_sec_bob|false|false|LATIN1"
+    },
+    {
+      "actor": "umf_sec_outsider",
+      "stage": "private-principal-ordinary",
+      "expected": "umf_sec_outsider|umf_sec_outsider|false|false|UTF8",
+      "observed": "umf_sec_outsider|umf_sec_outsider|false|false|UTF8"
+    },
+    {
+      "actor": "umf_sec_outsider",
+      "stage": "private-principal-no-direct-or-supplied-identity",
+      "refusals": [
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "actor": "umf_sec_outsider",
+      "stage": "private-principal-role-change-visible",
+      "observed": "umf_sec_outsider|umf_sec_observer_low|false|false|UTF8"
+    },
+    {
+      "actor": "umf_sec_outsider",
+      "stage": "private-principal-reset-restores",
+      "expected": "umf_sec_outsider|umf_sec_outsider|false|false|UTF8",
+      "observed": "umf_sec_outsider|umf_sec_outsider|false|false|UTF8"
+    },
+    {
+      "actor": "umf_sec_outsider",
+      "stage": "private-principal-changed-encoding-visible",
+      "observed": "umf_sec_outsider|umf_sec_outsider|false|false|LATIN1"
+    },
+    {
+      "actor": "umf_sec_alice",
+      "stage": "private-principal-elevated-bypassrls",
+      "expected": "umf_sec_alice|umf_sec_alice|false|true|UTF8",
+      "observed": "umf_sec_alice|umf_sec_alice|false|true|UTF8",
+      "excludedNegativeProfile": true
+    },
+    {
+      "actor": "umf_sec_alice",
+      "stage": "private-principal-elevated-superuser",
+      "expected": "umf_sec_alice|umf_sec_alice|true|false|UTF8",
+      "observed": "umf_sec_alice|umf_sec_alice|true|false|UTF8",
+      "excludedNegativeProfile": true
+    },
+    {
+      "actor": "umf_sec_bob",
+      "stage": "private-principal-elevated-bypassrls",
+      "expected": "umf_sec_bob|umf_sec_bob|false|true|UTF8",
+      "observed": "umf_sec_bob|umf_sec_bob|false|true|UTF8",
+      "excludedNegativeProfile": true
+    },
+    {
+      "actor": "umf_sec_bob",
+      "stage": "private-principal-elevated-superuser",
+      "expected": "umf_sec_bob|umf_sec_bob|true|false|UTF8",
+      "observed": "umf_sec_bob|umf_sec_bob|true|false|UTF8",
+      "excludedNegativeProfile": true
+    },
+    {
+      "actor": "umf_sec_outsider",
+      "stage": "private-principal-elevated-bypassrls",
+      "expected": "umf_sec_outsider|umf_sec_outsider|false|true|UTF8",
+      "observed": "umf_sec_outsider|umf_sec_outsider|false|true|UTF8",
+      "excludedNegativeProfile": true
+    },
+    {
+      "actor": "umf_sec_outsider",
+      "stage": "private-principal-elevated-superuser",
+      "expected": "umf_sec_outsider|umf_sec_outsider|true|false|UTF8",
+      "observed": "umf_sec_outsider|umf_sec_outsider|true|false|UTF8",
+      "excludedNegativeProfile": true
+    },
+    {
+      "stage": "private-principal-owner-qualification",
+      "nativePrivileges": {
+        "login": false,
+        "superuser": false,
+        "bypass": false,
+        "facts": false,
+        "create": false
+      }
+    },
+    {
+      "stage": "private-principal-independent-routine-metadata",
+      "expected": {
+        "owner": "umf_sec_principal_observer",
+        "definer": true,
+        "volatility": "s",
+        "arguments": 0,
+        "configuration": [
+          "search_path=pg_catalog"
+        ],
+        "publicExecute": false,
+        "ordinaryExecute": true
+      },
+      "observed": {
+        "owner": "umf_sec_principal_observer",
+        "definer": true,
+        "volatility": "s",
+        "arguments": 0,
+        "configuration": [
+          "search_path=pg_catalog"
+        ],
+        "publicExecute": false,
+        "ordinaryExecute": true
+      }
+    }
+  ],
+  "restrictedPrototypeOnly": true,
+  "assessorDiagnosticEstimates": {
+    "baseline": 3,
+    "afterUnrelatedFact": 5
+  },
+  "violates": "US-056-AC8 private authorization facts do not leak through diagnostics",
+  "scope": "PostgreSQL 17.9 ordinary SCRAM connections with default catalog privileges. A private Assignment change leaves authorized data unchanged but changes visible pg_class.reltuples. Direct-table-only catalog restriction remains bypassable through public views/functions. The three-family restriction remains bypassable through the cumulative insert-counter getter; revoking that additional function preserves authorized reads. A separate deny-first routine candidate preserves authorized rows and refuses six known direct/catalog/statistics/size/EXPLAIN surfaces. Neither scoped restrictions nor that candidate establish complete diagnostic closure. Not a passing B10 receipt or complete backend qualification."
+}

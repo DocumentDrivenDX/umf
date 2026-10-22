@@ -1,0 +1,144 @@
+{
+  "status": "conditional-lifetime-induction-passed",
+  "z3Version": "4.15.4",
+  "sourceDigests": {
+    "/Users/erik/.codex/worktrees/security-main-integration/umf/tools/security/prove-epoch-acquisition-lifetime.py": "5ddf477ab621145b39aad966fc90aefdc9d08c1184667c6bca53d2a8974a08e6",
+    "/private/tmp/truss-security-main-integration/packages/python/src/truss/_native_transactions.py": "0eec3cec0c48c54a29c966833a9d185c57724300171b961ac2623efdfdc16c86",
+    "/private/tmp/truss-security-main-integration/packages/python/src/truss/_native_fresh_epoch_capture.py": "6b0958b62da54db0978478cde60a6cc8ae1ae7f9ab5b38ad4b6ee550b3e8b2e7",
+    "/private/tmp/truss-security-main-integration/packages/postgresql/native/source-epoch-fresh-lock.sql": "b9d48c570237cac5b69b959270b363862ec5f87d33ac5145cdd9d847e9640ebc",
+    "/private/tmp/truss-security-main-integration/packages/postgresql/native/source-epoch-issue.sql": "f9a245ac08be79605dc200a7a345ead629221dbc927645b0288161f45fdd95d5",
+    "/private/tmp/truss-security-main-integration/scripts/python-fresh-epoch-worker.py": "a22a6507aea2f01eced4442d7750be307a31743182850b07aa802c8b8ea1220a"
+  },
+  "queries": [
+    {
+      "id": "truthful-original-acquisition-base",
+      "expected": "unsat",
+      "result": "unsat",
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun valid () Bool)\n(declare-fun held () Bool)\n(declare-fun captured_epoch () Int)\n(declare-fun epoch () Int)\n(assert\n valid)\n(assert\n held)\n(assert\n (= epoch captured_epoch))\n(assert\n (let (($x13 (= epoch captured_epoch)))\n(let (($x14 (and held $x13)))\n(let (($x15 (=> valid $x14)))\n(not $x15)))))\n(check-sat)\n",
+      "freshContextReplay": "unsat",
+      "witness": null
+    },
+    {
+      "id": "closed-lifetime-arbitrary-event-step",
+      "expected": "unsat",
+      "result": "unsat",
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun captured_epoch () Int)\n(declare-fun epoch () Int)\n(declare-fun held () Bool)\n(declare-fun valid () Bool)\n(declare-fun kind () Int)\n(declare-fun next_epoch () Int)\n(declare-fun next_valid () Bool)\n(declare-fun next_held () Bool)\n(assert\n (let (($x13 (= epoch captured_epoch)))\n (let (($x14 (and held $x13)))\n (=> valid $x14))))\n(assert\n (>= kind 0))\n(assert\n (<= kind 7))\n(assert\n (let (($x22 (= next_epoch epoch)))\n (let (($x25 (= next_valid valid)))\n (let (($x24 (= next_held held)))\n (let (($x26 (and $x24 $x25 $x22)))\n (let (($x35 (= kind 3)))\n (let (($x33 (= kind 2)))\n (let (($x31 (= kind 0)))\n (let (($x36 (or $x31 $x33 $x35)))\n (=> $x36 $x26))))))))))\n(assert\n (let (($x22 (= next_epoch epoch)))\n (let (($x21 (= next_valid false)))\n (let (($x20 (= next_held false)))\n (let (($x23 (and $x20 $x21 $x22)))\n (let (($x41 (= kind 4)))\n (let (($x39 (= kind 1)))\n (let (($x42 (or $x39 $x41)))\n (=> $x42 $x23)))))))))\n(assert\n (let (($x47 (and (distinct next_epoch epoch) true)))\n (let (($x24 (= next_held held)))\n (let (($x21 (= next_valid false)))\n (let (($x46 (not valid)))\n (let (($x45 (= kind 5)))\n (=> $x45 (and $x46 $x21 $x24 $x47))))))))\n(assert\n (let (($x47 (and (distinct next_epoch epoch) true)))\n (let (($x24 (= next_held held)))\n (let (($x21 (= next_valid false)))\n (let (($x52 (not held)))\n (let (($x51 (= kind 6)))\n (=> $x51 (and $x52 $x21 $x24 $x47))))))))\n(assert\n (let (($x21 (= next_valid false)))\n (let (($x55 (= kind 7)))\n (=> $x55 $x21))))\n(assert\n (and next_valid (or (not next_held) (and (distinct next_epoch captured_epoch) true))))\n(check-sat)\n",
+      "freshContextReplay": "unsat",
+      "witness": null
+    },
+    {
+      "id": "irrelevant-retains-acquisition-positive",
+      "expected": "sat",
+      "result": "sat",
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun captured_epoch () Int)\n(declare-fun epoch () Int)\n(declare-fun held () Bool)\n(declare-fun valid () Bool)\n(declare-fun kind () Int)\n(declare-fun next_epoch () Int)\n(declare-fun next_valid () Bool)\n(declare-fun next_held () Bool)\n(assert\n (let (($x13 (= epoch captured_epoch)))\n (let (($x14 (and held $x13)))\n (=> valid $x14))))\n(assert\n (>= kind 0))\n(assert\n (<= kind 7))\n(assert\n (let (($x22 (= next_epoch epoch)))\n (let (($x25 (= next_valid valid)))\n (let (($x24 (= next_held held)))\n (let (($x26 (and $x24 $x25 $x22)))\n (let (($x35 (= kind 3)))\n (let (($x33 (= kind 2)))\n (let (($x31 (= kind 0)))\n (let (($x36 (or $x31 $x33 $x35)))\n (=> $x36 $x26))))))))))\n(assert\n (let (($x22 (= next_epoch epoch)))\n (let (($x21 (= next_valid false)))\n (let (($x20 (= next_held false)))\n (let (($x23 (and $x20 $x21 $x22)))\n (let (($x41 (= kind 4)))\n (let (($x39 (= kind 1)))\n (let (($x42 (or $x39 $x41)))\n (=> $x42 $x23)))))))))\n(assert\n (let (($x47 (and (distinct next_epoch epoch) true)))\n (let (($x24 (= next_held held)))\n (let (($x21 (= next_valid false)))\n (let (($x46 (not valid)))\n (let (($x45 (= kind 5)))\n (=> $x45 (and $x46 $x21 $x24 $x47))))))))\n(assert\n (let (($x47 (and (distinct next_epoch epoch) true)))\n (let (($x24 (= next_held held)))\n (let (($x21 (= next_valid false)))\n (let (($x52 (not held)))\n (let (($x51 (= kind 6)))\n (=> $x51 (and $x52 $x21 $x24 $x47))))))))\n(assert\n (let (($x21 (= next_valid false)))\n (let (($x55 (= kind 7)))\n (=> $x55 $x21))))\n(assert\n valid)\n(assert\n (= kind 0))\n(assert\n next_valid)\n(assert\n next_held)\n(assert\n (= next_epoch captured_epoch))\n(check-sat)\n",
+      "freshContextReplay": "sat",
+      "witness": "[epoch = 0,\n next_epoch = 0,\n next_held = True,\n captured_epoch = 0,\n valid = True,\n kind = 0,\n next_valid = True,\n held = True]"
+    },
+    {
+      "id": "rollback-after-retains-acquisition-positive",
+      "expected": "sat",
+      "result": "sat",
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun captured_epoch () Int)\n(declare-fun epoch () Int)\n(declare-fun held () Bool)\n(declare-fun valid () Bool)\n(declare-fun kind () Int)\n(declare-fun next_epoch () Int)\n(declare-fun next_valid () Bool)\n(declare-fun next_held () Bool)\n(assert\n (let (($x13 (= epoch captured_epoch)))\n (let (($x14 (and held $x13)))\n (=> valid $x14))))\n(assert\n (>= kind 0))\n(assert\n (<= kind 7))\n(assert\n (let (($x22 (= next_epoch epoch)))\n (let (($x25 (= next_valid valid)))\n (let (($x24 (= next_held held)))\n (let (($x26 (and $x24 $x25 $x22)))\n (let (($x35 (= kind 3)))\n (let (($x33 (= kind 2)))\n (let (($x31 (= kind 0)))\n (let (($x36 (or $x31 $x33 $x35)))\n (=> $x36 $x26))))))))))\n(assert\n (let (($x22 (= next_epoch epoch)))\n (let (($x21 (= next_valid false)))\n (let (($x20 (= next_held false)))\n (let (($x23 (and $x20 $x21 $x22)))\n (let (($x41 (= kind 4)))\n (let (($x39 (= kind 1)))\n (let (($x42 (or $x39 $x41)))\n (=> $x42 $x23)))))))))\n(assert\n (let (($x47 (and (distinct next_epoch epoch) true)))\n (let (($x24 (= next_held held)))\n (let (($x21 (= next_valid false)))\n (let (($x46 (not valid)))\n (let (($x45 (= kind 5)))\n (=> $x45 (and $x46 $x21 $x24 $x47))))))))\n(assert\n (let (($x47 (and (distinct next_epoch epoch) true)))\n (let (($x24 (= next_held held)))\n (let (($x21 (= next_valid false)))\n (let (($x52 (not held)))\n (let (($x51 (= kind 6)))\n (=> $x51 (and $x52 $x21 $x24 $x47))))))))\n(assert\n (let (($x21 (= next_valid false)))\n (let (($x55 (= kind 7)))\n (=> $x55 $x21))))\n(assert\n valid)\n(assert\n (= kind 2))\n(assert\n next_valid)\n(assert\n next_held)\n(assert\n (= next_epoch captured_epoch))\n(check-sat)\n",
+      "freshContextReplay": "sat",
+      "witness": "[epoch = 0,\n next_epoch = 0,\n next_held = True,\n captured_epoch = 0,\n valid = True,\n kind = 2,\n next_valid = True,\n held = True]"
+    },
+    {
+      "id": "release-reparent-retains-acquisition-positive",
+      "expected": "sat",
+      "result": "sat",
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun captured_epoch () Int)\n(declare-fun epoch () Int)\n(declare-fun held () Bool)\n(declare-fun valid () Bool)\n(declare-fun kind () Int)\n(declare-fun next_epoch () Int)\n(declare-fun next_valid () Bool)\n(declare-fun next_held () Bool)\n(assert\n (let (($x13 (= epoch captured_epoch)))\n (let (($x14 (and held $x13)))\n (=> valid $x14))))\n(assert\n (>= kind 0))\n(assert\n (<= kind 7))\n(assert\n (let (($x22 (= next_epoch epoch)))\n (let (($x25 (= next_valid valid)))\n (let (($x24 (= next_held held)))\n (let (($x26 (and $x24 $x25 $x22)))\n (let (($x35 (= kind 3)))\n (let (($x33 (= kind 2)))\n (let (($x31 (= kind 0)))\n (let (($x36 (or $x31 $x33 $x35)))\n (=> $x36 $x26))))))))))\n(assert\n (let (($x22 (= next_epoch epoch)))\n (let (($x21 (= next_valid false)))\n (let (($x20 (= next_held false)))\n (let (($x23 (and $x20 $x21 $x22)))\n (let (($x41 (= kind 4)))\n (let (($x39 (= kind 1)))\n (let (($x42 (or $x39 $x41)))\n (=> $x42 $x23)))))))))\n(assert\n (let (($x47 (and (distinct next_epoch epoch) true)))\n (let (($x24 (= next_held held)))\n (let (($x21 (= next_valid false)))\n (let (($x46 (not valid)))\n (let (($x45 (= kind 5)))\n (=> $x45 (and $x46 $x21 $x24 $x47))))))))\n(assert\n (let (($x47 (and (distinct next_epoch epoch) true)))\n (let (($x24 (= next_held held)))\n (let (($x21 (= next_valid false)))\n (let (($x52 (not held)))\n (let (($x51 (= kind 6)))\n (=> $x51 (and $x52 $x21 $x24 $x47))))))))\n(assert\n (let (($x21 (= next_valid false)))\n (let (($x55 (= kind 7)))\n (=> $x55 $x21))))\n(assert\n valid)\n(assert\n (= kind 3))\n(assert\n next_valid)\n(assert\n next_held)\n(assert\n (= next_epoch captured_epoch))\n(check-sat)\n",
+      "freshContextReplay": "sat",
+      "witness": "[epoch = 0,\n next_epoch = 0,\n next_held = True,\n captured_epoch = 0,\n valid = True,\n kind = 3,\n next_valid = True,\n held = True]"
+    },
+    {
+      "id": "rollback-across-invalidates-before-use",
+      "expected": "unsat",
+      "result": "unsat",
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun captured_epoch () Int)\n(declare-fun epoch () Int)\n(declare-fun held () Bool)\n(declare-fun valid () Bool)\n(declare-fun kind () Int)\n(declare-fun next_epoch () Int)\n(declare-fun next_valid () Bool)\n(declare-fun next_held () Bool)\n(assert\n (let (($x13 (= epoch captured_epoch)))\n (let (($x14 (and held $x13)))\n (=> valid $x14))))\n(assert\n (>= kind 0))\n(assert\n (<= kind 7))\n(assert\n (let (($x22 (= next_epoch epoch)))\n (let (($x25 (= next_valid valid)))\n (let (($x24 (= next_held held)))\n (let (($x26 (and $x24 $x25 $x22)))\n (let (($x35 (= kind 3)))\n (let (($x33 (= kind 2)))\n (let (($x31 (= kind 0)))\n (let (($x36 (or $x31 $x33 $x35)))\n (=> $x36 $x26))))))))))\n(assert\n (let (($x22 (= next_epoch epoch)))\n (let (($x21 (= next_valid false)))\n (let (($x20 (= next_held false)))\n (let (($x23 (and $x20 $x21 $x22)))\n (let (($x41 (= kind 4)))\n (let (($x39 (= kind 1)))\n (let (($x42 (or $x39 $x41)))\n (=> $x42 $x23)))))))))\n(assert\n (let (($x47 (and (distinct next_epoch epoch) true)))\n (let (($x24 (= next_held held)))\n (let (($x21 (= next_valid false)))\n (let (($x46 (not valid)))\n (let (($x45 (= kind 5)))\n (=> $x45 (and $x46 $x21 $x24 $x47))))))))\n(assert\n (let (($x47 (and (distinct next_epoch epoch) true)))\n (let (($x24 (= next_held held)))\n (let (($x21 (= next_valid false)))\n (let (($x52 (not held)))\n (let (($x51 (= kind 6)))\n (=> $x51 (and $x52 $x21 $x24 $x47))))))))\n(assert\n (let (($x21 (= next_valid false)))\n (let (($x55 (= kind 7)))\n (=> $x55 $x21))))\n(assert\n valid)\n(assert\n (= kind 1))\n(assert\n next_valid)\n(check-sat)\n",
+      "freshContextReplay": "unsat",
+      "witness": null
+    },
+    {
+      "id": "transaction-end-invalidates-before-use",
+      "expected": "unsat",
+      "result": "unsat",
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun captured_epoch () Int)\n(declare-fun epoch () Int)\n(declare-fun held () Bool)\n(declare-fun valid () Bool)\n(declare-fun kind () Int)\n(declare-fun next_epoch () Int)\n(declare-fun next_valid () Bool)\n(declare-fun next_held () Bool)\n(assert\n (let (($x13 (= epoch captured_epoch)))\n (let (($x14 (and held $x13)))\n (=> valid $x14))))\n(assert\n (>= kind 0))\n(assert\n (<= kind 7))\n(assert\n (let (($x22 (= next_epoch epoch)))\n (let (($x25 (= next_valid valid)))\n (let (($x24 (= next_held held)))\n (let (($x26 (and $x24 $x25 $x22)))\n (let (($x35 (= kind 3)))\n (let (($x33 (= kind 2)))\n (let (($x31 (= kind 0)))\n (let (($x36 (or $x31 $x33 $x35)))\n (=> $x36 $x26))))))))))\n(assert\n (let (($x22 (= next_epoch epoch)))\n (let (($x21 (= next_valid false)))\n (let (($x20 (= next_held false)))\n (let (($x23 (and $x20 $x21 $x22)))\n (let (($x41 (= kind 4)))\n (let (($x39 (= kind 1)))\n (let (($x42 (or $x39 $x41)))\n (=> $x42 $x23)))))))))\n(assert\n (let (($x47 (and (distinct next_epoch epoch) true)))\n (let (($x24 (= next_held held)))\n (let (($x21 (= next_valid false)))\n (let (($x46 (not valid)))\n (let (($x45 (= kind 5)))\n (=> $x45 (and $x46 $x21 $x24 $x47))))))))\n(assert\n (let (($x47 (and (distinct next_epoch epoch) true)))\n (let (($x24 (= next_held held)))\n (let (($x21 (= next_valid false)))\n (let (($x52 (not held)))\n (let (($x51 (= kind 6)))\n (=> $x51 (and $x52 $x21 $x24 $x47))))))))\n(assert\n (let (($x21 (= next_valid false)))\n (let (($x55 (= kind 7)))\n (=> $x55 $x21))))\n(assert\n valid)\n(assert\n (= kind 4))\n(assert\n next_valid)\n(check-sat)\n",
+      "freshContextReplay": "unsat",
+      "witness": null
+    },
+    {
+      "id": "self-issuance-excluded-during-admitted-use",
+      "expected": "unsat",
+      "result": "unsat",
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun captured_epoch () Int)\n(declare-fun epoch () Int)\n(declare-fun held () Bool)\n(declare-fun valid () Bool)\n(declare-fun kind () Int)\n(declare-fun next_epoch () Int)\n(declare-fun next_valid () Bool)\n(declare-fun next_held () Bool)\n(assert\n (let (($x13 (= epoch captured_epoch)))\n (let (($x14 (and held $x13)))\n (=> valid $x14))))\n(assert\n (>= kind 0))\n(assert\n (<= kind 7))\n(assert\n (let (($x22 (= next_epoch epoch)))\n (let (($x25 (= next_valid valid)))\n (let (($x24 (= next_held held)))\n (let (($x26 (and $x24 $x25 $x22)))\n (let (($x35 (= kind 3)))\n (let (($x33 (= kind 2)))\n (let (($x31 (= kind 0)))\n (let (($x36 (or $x31 $x33 $x35)))\n (=> $x36 $x26))))))))))\n(assert\n (let (($x22 (= next_epoch epoch)))\n (let (($x21 (= next_valid false)))\n (let (($x20 (= next_held false)))\n (let (($x23 (and $x20 $x21 $x22)))\n (let (($x41 (= kind 4)))\n (let (($x39 (= kind 1)))\n (let (($x42 (or $x39 $x41)))\n (=> $x42 $x23)))))))))\n(assert\n (let (($x47 (and (distinct next_epoch epoch) true)))\n (let (($x24 (= next_held held)))\n (let (($x21 (= next_valid false)))\n (let (($x46 (not valid)))\n (let (($x45 (= kind 5)))\n (=> $x45 (and $x46 $x21 $x24 $x47))))))))\n(assert\n (let (($x47 (and (distinct next_epoch epoch) true)))\n (let (($x24 (= next_held held)))\n (let (($x21 (= next_valid false)))\n (let (($x52 (not held)))\n (let (($x51 (= kind 6)))\n (=> $x51 (and $x52 $x21 $x24 $x47))))))))\n(assert\n (let (($x21 (= next_valid false)))\n (let (($x55 (= kind 7)))\n (=> $x55 $x21))))\n(assert\n valid)\n(assert\n (= kind 5))\n(check-sat)\n",
+      "freshContextReplay": "unsat",
+      "witness": null
+    },
+    {
+      "id": "participating-external-issue-excluded-while-held",
+      "expected": "unsat",
+      "result": "unsat",
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun captured_epoch () Int)\n(declare-fun epoch () Int)\n(declare-fun held () Bool)\n(declare-fun valid () Bool)\n(declare-fun kind () Int)\n(declare-fun next_epoch () Int)\n(declare-fun next_valid () Bool)\n(declare-fun next_held () Bool)\n(assert\n (let (($x13 (= epoch captured_epoch)))\n (let (($x14 (and held $x13)))\n (=> valid $x14))))\n(assert\n (>= kind 0))\n(assert\n (<= kind 7))\n(assert\n (let (($x22 (= next_epoch epoch)))\n (let (($x25 (= next_valid valid)))\n (let (($x24 (= next_held held)))\n (let (($x26 (and $x24 $x25 $x22)))\n (let (($x35 (= kind 3)))\n (let (($x33 (= kind 2)))\n (let (($x31 (= kind 0)))\n (let (($x36 (or $x31 $x33 $x35)))\n (=> $x36 $x26))))))))))\n(assert\n (let (($x22 (= next_epoch epoch)))\n (let (($x21 (= next_valid false)))\n (let (($x20 (= next_held false)))\n (let (($x23 (and $x20 $x21 $x22)))\n (let (($x41 (= kind 4)))\n (let (($x39 (= kind 1)))\n (let (($x42 (or $x39 $x41)))\n (=> $x42 $x23)))))))))\n(assert\n (let (($x47 (and (distinct next_epoch epoch) true)))\n (let (($x24 (= next_held held)))\n (let (($x21 (= next_valid false)))\n (let (($x46 (not valid)))\n (let (($x45 (= kind 5)))\n (=> $x45 (and $x46 $x21 $x24 $x47))))))))\n(assert\n (let (($x47 (and (distinct next_epoch epoch) true)))\n (let (($x24 (= next_held held)))\n (let (($x21 (= next_valid false)))\n (let (($x52 (not held)))\n (let (($x51 (= kind 6)))\n (=> $x51 (and $x52 $x21 $x24 $x47))))))))\n(assert\n (let (($x21 (= next_valid false)))\n (let (($x55 (= kind 7)))\n (=> $x55 $x21))))\n(assert\n valid)\n(assert\n (= kind 6))\n(check-sat)\n",
+      "freshContextReplay": "unsat",
+      "witness": null
+    },
+    {
+      "id": "unadmitted-self-issue-positive",
+      "expected": "sat",
+      "result": "sat",
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun captured_epoch () Int)\n(declare-fun epoch () Int)\n(declare-fun held () Bool)\n(declare-fun valid () Bool)\n(declare-fun kind () Int)\n(declare-fun next_epoch () Int)\n(declare-fun next_valid () Bool)\n(declare-fun next_held () Bool)\n(assert\n (let (($x13 (= epoch captured_epoch)))\n (let (($x14 (and held $x13)))\n (=> valid $x14))))\n(assert\n (>= kind 0))\n(assert\n (<= kind 7))\n(assert\n (let (($x22 (= next_epoch epoch)))\n (let (($x25 (= next_valid valid)))\n (let (($x24 (= next_held held)))\n (let (($x26 (and $x24 $x25 $x22)))\n (let (($x35 (= kind 3)))\n (let (($x33 (= kind 2)))\n (let (($x31 (= kind 0)))\n (let (($x36 (or $x31 $x33 $x35)))\n (=> $x36 $x26))))))))))\n(assert\n (let (($x22 (= next_epoch epoch)))\n (let (($x21 (= next_valid false)))\n (let (($x20 (= next_held false)))\n (let (($x23 (and $x20 $x21 $x22)))\n (let (($x41 (= kind 4)))\n (let (($x39 (= kind 1)))\n (let (($x42 (or $x39 $x41)))\n (=> $x42 $x23)))))))))\n(assert\n (let (($x47 (and (distinct next_epoch epoch) true)))\n (let (($x24 (= next_held held)))\n (let (($x21 (= next_valid false)))\n (let (($x46 (not valid)))\n (let (($x45 (= kind 5)))\n (=> $x45 (and $x46 $x21 $x24 $x47))))))))\n(assert\n (let (($x47 (and (distinct next_epoch epoch) true)))\n (let (($x24 (= next_held held)))\n (let (($x21 (= next_valid false)))\n (let (($x52 (not held)))\n (let (($x51 (= kind 6)))\n (=> $x51 (and $x52 $x21 $x24 $x47))))))))\n(assert\n (let (($x21 (= next_valid false)))\n (let (($x55 (= kind 7)))\n (=> $x55 $x21))))\n(assert\n (not valid))\n(assert\n held)\n(assert\n (= kind 5))\n(check-sat)\n",
+      "freshContextReplay": "sat",
+      "witness": "[next_epoch = 1,\n epoch = 0,\n next_held = True,\n valid = False,\n kind = 5,\n next_valid = False,\n held = True]"
+    },
+    {
+      "id": "uncertain-completion-closes-admission",
+      "expected": "unsat",
+      "result": "unsat",
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun captured_epoch () Int)\n(declare-fun epoch () Int)\n(declare-fun held () Bool)\n(declare-fun valid () Bool)\n(declare-fun kind () Int)\n(declare-fun next_epoch () Int)\n(declare-fun next_valid () Bool)\n(declare-fun next_held () Bool)\n(assert\n (let (($x13 (= epoch captured_epoch)))\n (let (($x14 (and held $x13)))\n (=> valid $x14))))\n(assert\n (>= kind 0))\n(assert\n (<= kind 7))\n(assert\n (let (($x22 (= next_epoch epoch)))\n (let (($x25 (= next_valid valid)))\n (let (($x24 (= next_held held)))\n (let (($x26 (and $x24 $x25 $x22)))\n (let (($x35 (= kind 3)))\n (let (($x33 (= kind 2)))\n (let (($x31 (= kind 0)))\n (let (($x36 (or $x31 $x33 $x35)))\n (=> $x36 $x26))))))))))\n(assert\n (let (($x22 (= next_epoch epoch)))\n (let (($x21 (= next_valid false)))\n (let (($x20 (= next_held false)))\n (let (($x23 (and $x20 $x21 $x22)))\n (let (($x41 (= kind 4)))\n (let (($x39 (= kind 1)))\n (let (($x42 (or $x39 $x41)))\n (=> $x42 $x23)))))))))\n(assert\n (let (($x47 (and (distinct next_epoch epoch) true)))\n (let (($x24 (= next_held held)))\n (let (($x21 (= next_valid false)))\n (let (($x46 (not valid)))\n (let (($x45 (= kind 5)))\n (=> $x45 (and $x46 $x21 $x24 $x47))))))))\n(assert\n (let (($x47 (and (distinct next_epoch epoch) true)))\n (let (($x24 (= next_held held)))\n (let (($x21 (= next_valid false)))\n (let (($x52 (not held)))\n (let (($x51 (= kind 6)))\n (=> $x51 (and $x52 $x21 $x24 $x47))))))))\n(assert\n (let (($x21 (= next_valid false)))\n (let (($x55 (= kind 7)))\n (=> $x55 $x21))))\n(assert\n valid)\n(assert\n (= kind 7))\n(assert\n next_valid)\n(check-sat)\n",
+      "freshContextReplay": "unsat",
+      "witness": null
+    },
+    {
+      "id": "uncertain-completion-need-not-release-native-lock",
+      "expected": "sat",
+      "result": "sat",
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun captured_epoch () Int)\n(declare-fun epoch () Int)\n(declare-fun held () Bool)\n(declare-fun valid () Bool)\n(declare-fun kind () Int)\n(declare-fun next_epoch () Int)\n(declare-fun next_valid () Bool)\n(declare-fun next_held () Bool)\n(assert\n (let (($x13 (= epoch captured_epoch)))\n (let (($x14 (and held $x13)))\n (=> valid $x14))))\n(assert\n (>= kind 0))\n(assert\n (<= kind 7))\n(assert\n (let (($x22 (= next_epoch epoch)))\n (let (($x25 (= next_valid valid)))\n (let (($x24 (= next_held held)))\n (let (($x26 (and $x24 $x25 $x22)))\n (let (($x35 (= kind 3)))\n (let (($x33 (= kind 2)))\n (let (($x31 (= kind 0)))\n (let (($x36 (or $x31 $x33 $x35)))\n (=> $x36 $x26))))))))))\n(assert\n (let (($x22 (= next_epoch epoch)))\n (let (($x21 (= next_valid false)))\n (let (($x20 (= next_held false)))\n (let (($x23 (and $x20 $x21 $x22)))\n (let (($x41 (= kind 4)))\n (let (($x39 (= kind 1)))\n (let (($x42 (or $x39 $x41)))\n (=> $x42 $x23)))))))))\n(assert\n (let (($x47 (and (distinct next_epoch epoch) true)))\n (let (($x24 (= next_held held)))\n (let (($x21 (= next_valid false)))\n (let (($x46 (not valid)))\n (let (($x45 (= kind 5)))\n (=> $x45 (and $x46 $x21 $x24 $x47))))))))\n(assert\n (let (($x47 (and (distinct next_epoch epoch) true)))\n (let (($x24 (= next_held held)))\n (let (($x21 (= next_valid false)))\n (let (($x52 (not held)))\n (let (($x51 (= kind 6)))\n (=> $x51 (and $x52 $x21 $x24 $x47))))))))\n(assert\n (let (($x21 (= next_valid false)))\n (let (($x55 (= kind 7)))\n (=> $x55 $x21))))\n(assert\n valid)\n(assert\n (= kind 7))\n(assert\n next_held)\n(assert\n (not next_valid))\n(check-sat)\n",
+      "freshContextReplay": "sat",
+      "witness": "[next_held = True,\n captured_epoch = 0,\n epoch = 0,\n valid = True,\n kind = 7,\n next_valid = False,\n held = True]"
+    },
+    {
+      "id": "same-xid-rollback-does-not-prove-held",
+      "expected": "sat",
+      "result": "sat",
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun valid () Bool)\n(declare-fun held () Bool)\n(declare-fun captured_epoch () Int)\n(declare-fun epoch () Int)\n(declare-fun kind () Int)\n(declare-fun xid () Int)\n(declare-fun next_xid () Int)\n(declare-fun next_held () Bool)\n(declare-fun next_valid () Bool)\n(declare-fun next_epoch () Int)\n(assert\n valid)\n(assert\n held)\n(assert\n (= epoch captured_epoch))\n(assert\n (= kind 1))\n(assert\n (= next_xid xid))\n(assert\n (= next_held false))\n(assert\n (= next_valid true))\n(assert\n (= next_epoch epoch))\n(assert\n (and next_valid (or (not next_held) (and (distinct next_epoch captured_epoch) true))))\n(check-sat)\n",
+      "freshContextReplay": "sat",
+      "witness": "[next_held = False,\n xid = 0,\n next_xid = 0,\n valid = True,\n next_valid = True,\n captured_epoch = 0,\n next_epoch = 0,\n kind = 1,\n epoch = 0,\n held = True]"
+    },
+    {
+      "id": "same-xid-self-issue-does-not-prove-source",
+      "expected": "sat",
+      "result": "sat",
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun valid () Bool)\n(declare-fun held () Bool)\n(declare-fun captured_epoch () Int)\n(declare-fun epoch () Int)\n(declare-fun kind () Int)\n(declare-fun xid () Int)\n(declare-fun next_xid () Int)\n(declare-fun next_held () Bool)\n(declare-fun next_valid () Bool)\n(declare-fun next_epoch () Int)\n(assert\n valid)\n(assert\n held)\n(assert\n (= epoch captured_epoch))\n(assert\n (= kind 5))\n(assert\n (= next_xid xid))\n(assert\n (= next_held held))\n(assert\n (= next_valid true))\n(assert\n (and (distinct next_epoch epoch) true))\n(assert\n (and next_valid (or (not next_held) (and (distinct next_epoch captured_epoch) true))))\n(check-sat)\n",
+      "freshContextReplay": "sat",
+      "witness": "[next_epoch = 1,\n captured_epoch = 0,\n next_held = True,\n xid = 0,\n next_xid = 0,\n next_valid = True,\n valid = True,\n kind = 5,\n epoch = 0,\n held = True]"
+    },
+    {
+      "id": "nonparticipant-writer-invalidates-closure-premise",
+      "expected": "sat",
+      "result": "sat",
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun captured_epoch () Int)\n(declare-fun epoch () Int)\n(declare-fun held () Bool)\n(declare-fun valid () Bool)\n(declare-fun kind () Int)\n(declare-fun next_held () Bool)\n(declare-fun next_valid () Bool)\n(declare-fun next_epoch () Int)\n(assert\n (let (($x13 (= epoch captured_epoch)))\n (let (($x14 (and held $x13)))\n (=> valid $x14))))\n(assert\n valid)\n(assert\n (= kind 6))\n(assert\n (= next_held held))\n(assert\n (= next_valid valid))\n(assert\n (and (distinct next_epoch epoch) true))\n(assert\n (and next_valid (or (not next_held) (and (distinct next_epoch captured_epoch) true))))\n(check-sat)\n",
+      "freshContextReplay": "sat",
+      "witness": "[next_epoch = 1,\n captured_epoch = 0,\n next_held = True,\n epoch = 0,\n valid = True,\n kind = 6,\n next_valid = True,\n held = True]"
+    },
+    {
+      "id": "same-depth-recreated-savepoint-not-original-ancestry",
+      "expected": "sat",
+      "result": "sat",
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun valid () Bool)\n(declare-fun held () Bool)\n(declare-fun captured_epoch () Int)\n(declare-fun epoch () Int)\n(declare-fun next_depth () Int)\n(declare-fun depth () Int)\n(declare-fun replacement_scope () Int)\n(declare-fun original_scope () Int)\n(declare-fun next_held () Bool)\n(declare-fun next_valid () Bool)\n(declare-fun next_epoch () Int)\n(assert\n valid)\n(assert\n held)\n(assert\n (= epoch captured_epoch))\n(assert\n (= depth next_depth))\n(assert\n (and (distinct original_scope replacement_scope) true))\n(assert\n (= next_held false))\n(assert\n (= next_valid true))\n(assert\n (= next_epoch epoch))\n(assert\n (and next_valid (or (not next_held) (and (distinct next_epoch captured_epoch) true))))\n(check-sat)\n",
+      "freshContextReplay": "sat",
+      "witness": "[original_scope = 1,\n replacement_scope = 0,\n captured_epoch = 0,\n next_epoch = 0,\n next_held = False,\n next_depth = 0,\n depth = 0,\n valid = True,\n next_valid = True,\n epoch = 0,\n held = True]"
+    }
+  ],
+  "induction": "Truthful original acquisition establishes valid implies held and actual epoch equals captured. The arbitrary closed transition preserves that invariant; induction covers every finite ordered history, without an event-count bound. Original scope ancestry, invalidation before use, participation and actual execution using the checked guard are premises.",
+  "scope": "Abstract Boolean lock/admission state and unbounded integer source values. Rollback-across/after classification and release reparenting must follow native original scope ancestry, not depth or savepoint text. No PostgreSQL MVCC/lock refinement, Python synchronization/refinement, authenticated provider, external-writer completeness, authority/data cut, final-disclosure ordering, resource/overflow proof, installed profile, protected call or backend acceptance. Source pins connect native countercontrols and intended implementation sites; they do not prove implementation of this transition relation."
+}

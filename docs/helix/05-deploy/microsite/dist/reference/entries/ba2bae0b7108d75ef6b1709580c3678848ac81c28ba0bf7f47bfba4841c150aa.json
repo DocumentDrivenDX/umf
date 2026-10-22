@@ -1,0 +1,33 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 2826,
+        "line": 1,
+        "path": "spec/extensions/delta/datatype-schema.json",
+        "sha256": "c445153a9b434c66ddb8ee2d9a723b5c57d652375e3b751f15663ab31304807f"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "deltaDataTypeSchema",
+    "runtime": "unassessed",
+    "signatureText": [
+      "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"$id\": \"urn:umf:delta:schema-json:0.1.0\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"type\": {\n      \"const\": \"struct\"\n    },\n    \"fields\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"$ref\": \"#/$defs/field\"\n      }\n    }\n  },\n  \"required\": [\n    \"type\",\n    \"fields\"\n  ],\n  \"additionalProperties\": true,\n  \"$defs\": {\n    \"type\": {\n      \"anyOf\": [\n        {\n          \"type\": \"string\",\n          \"minLength\": 1\n        },\n        {\n          \"type\": \"object\",\n          \"properties\": {\n            \"type\": {\n              \"const\": \"struct\"\n            },\n            \"fields\": {\n              \"type\": \"array\",\n              \"items\": {\n                \"$ref\": \"#/$defs/field\"\n              }\n            }\n          },\n          \"required\": [\n            \"type\",\n            \"fields\"\n          ],\n          \"additionalProperties\": true\n        },\n        {\n          \"type\": \"object\",\n          \"properties\": {\n            \"type\": {\n              \"const\": \"array\"\n            },\n            \"elementType\": {\n              \"$ref\": \"#/$defs/type\"\n            },\n            \"containsNull\": {\n              \"type\": \"boolean\"\n            }\n          },\n          \"required\": [\n            \"type\",\n            \"elementType\",\n            \"containsNull\"\n          ],\n          \"additionalProperties\": true\n        },\n        {\n          \"type\": \"object\",\n          \"properties\": {\n            \"type\": {\n              \"const\": \"map\"\n            },\n            \"keyType\": {\n              \"$ref\": \"#/$defs/type\"\n            },\n            \"valueType\": {\n              \"$ref\": \"#/$defs/type\"\n            },\n            \"valueContainsNull\": {\n              \"type\": \"boolean\"\n            }\n          },\n          \"required\": [\n            \"type\",\n            \"keyType\",\n            \"valueType\"\n          ],\n          \"additionalProperties\": true\n        },\n        {\n          \"type\": \"object\",\n          \"properties\": {\n            \"type\": {\n              \"type\": \"string\",\n              \"minLength\": 1,\n              \"not\": {\n                \"enum\": [\n                  \"array\",\n                  \"map\",\n                  \"struct\"\n                ]\n              }\n            }\n          },\n          \"required\": [\n            \"type\"\n          ],\n          \"additionalProperties\": true\n        }\n      ]\n    },\n    \"field\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"name\": {\n          \"type\": \"string\"\n        },\n        \"type\": {\n          \"$ref\": \"#/$defs/type\"\n        },\n        \"nullable\": {\n          \"type\": \"boolean\"\n        },\n        \"metadata\": {\n          \"type\": \"object\"\n        }\n      },\n      \"required\": [\n        \"name\",\n        \"type\",\n        \"nullable\",\n        \"metadata\"\n      ],\n      \"additionalProperties\": true\n    }\n  }\n}\n"
+    ]
+  },
+  "id": "[\"api\",\".\",\"deltaDataTypeSchema\"]",
+  "kind": "api",
+  "links": [
+    "[\"schema\",\"spec/extensions/delta/datatype-schema.json\",\"\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 2826,
+      "line": 1,
+      "path": "spec/extensions/delta/datatype-schema.json",
+      "sha256": "c445153a9b434c66ddb8ee2d9a723b5c57d652375e3b751f15663ab31304807f"
+    }
+  ],
+  "summary": "Public export · spec/extensions/delta/datatype-schema.json",
+  "title": "deltaDataTypeSchema"
+}

@@ -1,0 +1,90 @@
+{
+  "status": "conditional-algebraic-address-laws-passed",
+  "solverVersion": "4.15.4",
+  "sourceDigests": {
+    "/Users/erik/.codex/worktrees/1598/umf/tools/security/prove-rule-occurrence-addresses.py": "4376565f47fddb7fea21d92bf20d7d87a77f6f689d98764da34d9587c1509151",
+    "/Users/erik/.codex/worktrees/1598/umf/docs/helix/02-design/spikes/security/backend-requirement-issuer-v0.2.md": "b95cb76f7cdf746d5283e5df60c7befbc22055f96eece8c7896da966b9889e8e",
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_rule_occurrences.rs": "30c472269532e2f90a9bfa5ab3fc4b5a6e548a86500bc46262c43461f92f83f9"
+  },
+  "sourcesUnchanged": true,
+  "cases": [
+    {
+      "id": "ordered-child-addresses-cannot-collapse",
+      "covers": [
+        "US-056-AC7",
+        "US-056-AC10"
+      ],
+      "violation": {
+        "smt": "(declare-datatypes ((RuleTreePath 0)) (((Root) (Child (parent RuleTreePath) (index Int)))))\n(declare-fun j () Int)\n(declare-fun i () Int)\n(declare-fun q () RuleTreePath)\n(declare-fun p () RuleTreePath)\n(assert (and (>= i 0)\n     (>= j 0)\n     (= (Child p i) (Child q j))\n     (or (distinct p q) (distinct i j))))\n",
+        "result": "unsat",
+        "replayResult": "unsat",
+        "witness": null
+      },
+      "negativeControl": {
+        "smt": "(declare-datatypes ((RuleTreePath 0)) (((Root) (Child (parent RuleTreePath) (index Int)))))\n(declare-fun j () Int)\n(declare-fun i () Int)\n(declare-fun q () RuleTreePath)\n(declare-fun p () RuleTreePath)\n(assert (and (>= i 0) (>= j 0) (= p q) (distinct i j)))\n",
+        "result": "sat",
+        "replayResult": "sat",
+        "witness": "[i = 0,\n j = 1,\n q = Root,\n p = Root,\n eraseNamespace = [else ->\n                   If(is(RuleRoot, Var(0)),\n                      Root,\n                      If(is(Condition, Var(0)),\n                         conditionPath(Var(0)),\n                         If(is(Operand, Var(0)),\n                            operandPath(Var(0)),\n                            Child(Root,\n                                  disclosurePosition(Var(0))))))]]"
+      },
+      "positivePopulation": {
+        "smt": "(declare-datatypes ((RuleTreePath 0)) (((Root) (Child (parent RuleTreePath) (index Int)))))\n(declare-fun j () Int)\n(declare-fun q () RuleTreePath)\n(declare-fun i () Int)\n(declare-fun p () RuleTreePath)\n(assert (and (>= i 0)\n     (>= j 0)\n     (= p q)\n     (distinct i j)\n     (distinct (Child p i) (Child q j))))\n",
+        "result": "sat",
+        "replayResult": "sat",
+        "witness": "[i = 0,\n j = 1,\n q = Root,\n p = Root,\n eraseNamespace = [else ->\n                   If(is(RuleRoot, Var(0)),\n                      Root,\n                      If(is(Condition, Var(0)),\n                         conditionPath(Var(0)),\n                         If(is(Operand, Var(0)),\n                            operandPath(Var(0)),\n                            Child(Root,\n                                  disclosurePosition(Var(0))))))]]"
+      }
+    },
+    {
+      "id": "condition-operand-disclosure-namespaces-stay-distinct",
+      "covers": [
+        "US-056-AC7",
+        "US-056-AC10"
+      ],
+      "violation": {
+        "smt": "(declare-datatypes ((RuleTreePath 0)) (((Root) (Child (parent RuleTreePath) (index Int)))))\n(declare-datatypes ((RuleOccurrenceAddress 0)) (((RuleRoot) (Condition (conditionPath RuleTreePath)) (Operand (operandPath RuleTreePath) (operandPosition Int)) (Disclosure (disclosurePosition Int)))))\n(declare-fun p () RuleTreePath)\n(assert (or (= (Condition p) (Operand p 0))\n    (= (Condition Root) RuleRoot)\n    (= (Disclosure 0) (Operand Root 0))))\n",
+        "result": "unsat",
+        "replayResult": "unsat",
+        "witness": null
+      },
+      "negativeControl": {
+        "smt": "(declare-datatypes ((RuleTreePath 0)) (((Root) (Child (parent RuleTreePath) (index Int)))))\n(declare-datatypes ((RuleOccurrenceAddress 0)) (((RuleRoot) (Condition (conditionPath RuleTreePath)) (Operand (operandPath RuleTreePath) (operandPosition Int)) (Disclosure (disclosurePosition Int)))))\n(declare-fun p () RuleTreePath)\n(define-funs-rec ( ( eraseNamespace ((x!1 RuleOccurrenceAddress)) RuleTreePath))\n                 ( (let ((a!1 (ite ((_ is Condition) x!1)\n                                   (conditionPath x!1)\n                                   (ite ((_ is Operand) x!1)\n                                        (operandPath x!1)\n                                        (Child Root (disclosurePosition x!1))))))\n                     (ite ((_ is RuleRoot) x!1) Root a!1))))\n(assert (= ((_ eraseNamespace 0) (Condition p)) ((_ eraseNamespace 0) (Operand p 0))))\n",
+        "result": "sat",
+        "replayResult": "sat",
+        "witness": "[p = Root,\n eraseNamespace = [else ->\n                   If(is(RuleRoot, Var(0)),\n                      Root,\n                      If(is(Condition, Var(0)),\n                         conditionPath(Var(0)),\n                         If(is(Operand, Var(0)),\n                            operandPath(Var(0)),\n                            Child(Root,\n                                  disclosurePosition(Var(0))))))]]"
+      },
+      "positivePopulation": {
+        "smt": "(declare-datatypes ((RuleTreePath 0)) (((Root) (Child (parent RuleTreePath) (index Int)))))\n(declare-datatypes ((RuleOccurrenceAddress 0)) (((RuleRoot) (Condition (conditionPath RuleTreePath)) (Operand (operandPath RuleTreePath) (operandPosition Int)) (Disclosure (disclosurePosition Int)))))\n(declare-fun p () RuleTreePath)\n(define-funs-rec ( ( eraseNamespace ((x!1 RuleOccurrenceAddress)) RuleTreePath))\n                 ( (let ((a!1 (ite ((_ is Condition) x!1)\n                                   (conditionPath x!1)\n                                   (ite ((_ is Operand) x!1)\n                                        (operandPath x!1)\n                                        (Child Root (disclosurePosition x!1))))))\n                     (ite ((_ is RuleRoot) x!1) Root a!1))))\n(assert (and (distinct (Condition p) (Operand p 0))\n     (= ((_ eraseNamespace 0) (Condition p))\n        ((_ eraseNamespace 0) (Operand p 0)))\n     (distinct (Operand p 0) (Operand p 1))))\n",
+        "result": "sat",
+        "replayResult": "sat",
+        "witness": "[p = Root,\n eraseNamespace = [else ->\n                   If(is(RuleRoot, Var(0)),\n                      Root,\n                      If(is(Condition, Var(0)),\n                         conditionPath(Var(0)),\n                         If(is(Operand, Var(0)),\n                            operandPath(Var(0)),\n                            Child(Root,\n                                  disclosurePosition(Var(0))))))]]"
+      }
+    },
+    {
+      "id": "repeated-owner-occurrences-retain-source-coordinate",
+      "covers": [
+        "US-056-AC7",
+        "US-056-AC10"
+      ],
+      "violation": {
+        "smt": "(declare-datatypes ((RuleTreePath 0)) (((Root) (Child (parent RuleTreePath) (index Int)))))\n(declare-datatypes ((RuleOccurrenceAddress 0)) (((RuleRoot) (Condition (conditionPath RuleTreePath)) (Operand (operandPath RuleTreePath) (operandPosition Int)) (Disclosure (disclosurePosition Int)))))\n(declare-datatypes ((LocatedRuleOccurrence 0)) (((Located (source String) (address RuleOccurrenceAddress)))))\n(declare-fun p () RuleTreePath)\n(declare-fun source_b () String)\n(declare-fun source_a () String)\n(assert (and (distinct source_a source_b)\n     (= (Located source_a (Condition p)) (Located source_b (Condition p)))))\n",
+        "result": "unsat",
+        "replayResult": "unsat",
+        "witness": null
+      },
+      "negativeControl": {
+        "smt": "(declare-datatypes ((RuleTreePath 0)) (((Root) (Child (parent RuleTreePath) (index Int)))))\n(declare-datatypes ((RuleOccurrenceAddress 0)) (((RuleRoot) (Condition (conditionPath RuleTreePath)) (Operand (operandPath RuleTreePath) (operandPosition Int)) (Disclosure (disclosurePosition Int)))))\n(declare-datatypes ((LocatedRuleOccurrence 0)) (((Located (source String) (address RuleOccurrenceAddress)))))\n(declare-fun p () RuleTreePath)\n(declare-fun source_b () String)\n(declare-fun source_a () String)\n(assert (let ((a!1 (= (address (Located source_a (Condition p)))\n              (address (Located source_b (Condition p))))))\n  (and (distinct source_a source_b) a!1)))\n",
+        "result": "sat",
+        "replayResult": "sat",
+        "witness": "[source_a = \"!0!\",\n source_b = \"!1!\",\n eraseNamespace = [else ->\n                   If(is(RuleRoot, Var(0)),\n                      Root,\n                      If(is(Condition, Var(0)),\n                         conditionPath(Var(0)),\n                         If(is(Operand, Var(0)),\n                            operandPath(Var(0)),\n                            Child(Root,\n                                  disclosurePosition(Var(0))))))]]"
+      },
+      "positivePopulation": {
+        "smt": "(declare-datatypes ((RuleTreePath 0)) (((Root) (Child (parent RuleTreePath) (index Int)))))\n(declare-datatypes ((RuleOccurrenceAddress 0)) (((RuleRoot) (Condition (conditionPath RuleTreePath)) (Operand (operandPath RuleTreePath) (operandPosition Int)) (Disclosure (disclosurePosition Int)))))\n(declare-datatypes ((LocatedRuleOccurrence 0)) (((Located (source String) (address RuleOccurrenceAddress)))))\n(declare-fun p () RuleTreePath)\n(declare-fun source_b () String)\n(declare-fun source_a () String)\n(assert (and (distinct source_a source_b)\n     (distinct (Located source_a (Condition p))\n               (Located source_b (Condition p)))))\n",
+        "result": "sat",
+        "replayResult": "sat",
+        "witness": "[source_a = \"\",\n source_b = \"A\",\n eraseNamespace = [else ->\n                   If(is(RuleRoot, Var(0)),\n                      Root,\n                      If(is(Condition, Var(0)),\n                         conditionPath(Var(0)),\n                         If(is(Operand, Var(0)),\n                            operandPath(Var(0)),\n                            Child(Root,\n                                  disclosurePosition(Var(0))))))]]"
+      }
+    }
+  ],
+  "scope": "Algebraic constructor identity laws for arbitrary finite tree addresses. Negative controls omit ordered index, namespace or source coordinates. These do not prove Rust Vec representation correspondence, traversal completeness, bounds, obligation applicability or native enforcement.",
+  "nativeImplementationQualified": false,
+  "acceptanceCasesPromoted": []
+}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 8848,
+        "line": 14,
+        "path": "src/core-ideals/nullability-sqlserver-projection.ts",
+        "sha256": "978f5c18fe9d531f252ef1cc4a0d3799c4bcc732589b7fc9e587a4ac9079e99b"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "NullabilitySqlServerProjection",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface NullabilitySqlServerProjection {\n operation:'project-nullability-sqlserver';version:'1.0.0';status:'projected'|'blocked';source:Document;author:CoreNullabilityDeclaration;request:NullabilitySqlServerRequest;target?:{format:'sqlserver-ddl';sql:string};nativeSql?:string;diagnostics:Diagnostic[];binding:typeof binding;\n mapping:{origin:'authored';nullability:'required'|'absent-allowed'|'unspecified';encoding:'not-null'|'null';basis:'authored-requirement'|'no-authored-requirement'|'unprojected-requirement';scope:NullabilitySqlServerRequest['scope'];carrier:NullabilitySqlServerRequest['carrier'];idealPath:string;nativePath:'/sql';outcome:'exact'|'unknown'|'not-expressible'};\n residuals:{path:string;value:Json;reason:string;outcome:'unknown'|'not-expressible';recovery:'Recover source meaning with retained projection receipt; native-only import does not recover author intent'}[];\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"NullabilitySqlServerProjection\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 8848,
+      "line": 14,
+      "path": "src/core-ideals/nullability-sqlserver-projection.ts",
+      "sha256": "978f5c18fe9d531f252ef1cc4a0d3799c4bcc732589b7fc9e587a4ac9079e99b"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/nullability-sqlserver-projection.ts",
+  "title": "NullabilitySqlServerProjection"
+}

@@ -1,0 +1,79 @@
+{
+  "profile": "umf.metamodel-authority.current-uuid-composition/1",
+  "createdAt": "2026-10-18T20:29:35.873235+00:00",
+  "status": "passed",
+  "sourceRevision": "19fe5f1bc98840e3177e0d05584321c1e274bfdd with uncommitted reviewed integration",
+  "runtime": {
+    "bun": "1.4.2",
+    "javaHome": "/opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk/Contents/Home",
+    "filePython": "/private/tmp/umf-authority-native-oracles/bin/python",
+    "tableSpecPython": "/Users/erik/Projects/tablespec/.venv/bin/python"
+  },
+  "commands": {
+    "build": 0,
+    "testPrerequisites": 0,
+    "typecheck": 0,
+    "schemas": 0,
+    "tests": 0,
+    "artifacts": 0,
+    "postgresql": 0,
+    "sqlserver": 0,
+    "files": 0,
+    "tablespec": 0,
+    "recovery": 0,
+    "returned": 0,
+    "browser": 0,
+    "gates": 0,
+    "gateTests": 0
+  },
+  "claim": {
+    "profile": "uuid-model2",
+    "fiveTargetCompositionDelivery": true,
+    "nativeEquivalence": false,
+    "consumerRuntimeAdoption": false,
+    "stages": [
+      "mixed",
+      "containers",
+      "associations",
+      "associations-polymorphic"
+    ],
+    "systems": [
+      "postgresql",
+      "sqlserver",
+      "avro",
+      "parquet",
+      "tablespec"
+    ],
+    "nativeReturnedRows": 72,
+    "sourceRecoveries": 116
+  },
+  "limits": [
+    "Exact-text scalar fallback in file/model targets; float and temporal tokens retain lexical values without new arithmetic/validity semantics.",
+    "SQL JSON and TableSpec JSON text do not enforce nested domains or collection bounds; complete-value codecs required.",
+    "Native constraints do not establish lifecycle/ownership, inverse navigation or all distinct-endpoint participation bounds.",
+    "Finite acyclic shape definitions only; concurrent consumer execution, arbitrary native edits, physical cutover and native equivalence remain separately qualified."
+  ],
+  "sourceBoundProof": "fixtures/validation/uuid/composition-qualification.json",
+  "sourceBoundProofSha256": "4a15210ba0cf2b6ca697d1a24a0d9c19e611d1570d3424e1402d44d3f2954eed",
+  "qualificationFingerprintEntries": 1417,
+  "qualification": "Actual five-target current source campaign. Original historical qualification retained separately. This is local reviewed integration, not a clean released producer revision or universal native-equivalence claim.",
+  "artifacts": {
+    "browser.log": "abef4a06a3f20cabba6cfe8946f011479770c56e4bf7782a8118c878b2735093",
+    "returned.log": "204c6ce203910b809082f6c41b8d669da0a66c9c6b13adf5107aa93d2997d345",
+    "artifacts.log": "e40652770af81148489a38006c5942c0bae041ad3fe4563b4b5d5b541fdd0a79",
+    "testPrerequisites.log": "897ee7702aee09aef94dbdfac5d6ac6c3d1233e1ada10683435db76443e97d9f",
+    "tablespec.log": "fef61a0ad1cd9f63bfb76cf356a31902f32ef63c86e2c13fd1396f3b08657229",
+    "sqlserver.log": "58bd07f53dabd69d56601b3eb3c758da76ad9e5e83a61d10f1b9a23e6482e25e",
+    "postgresql.log": "2742af8ab0743758c91c547b8c382aba71565bb48708963406669ad9b9caaf30",
+    "typecheck.log": "b1a6cc0f4b7ea761f9223617aa029a27603b7b5f88c2452991d75c362d4f39b9",
+    "schemas.log": "9a8035194e5ba0d38d0a2d54f10afea363d7e9c5f837b4eb38251650c959268e",
+    "gateTests.log": "1d2d6c07af5c3012c705d6b0c21af2d07c31e116e8e50091264f16a9417f78ce",
+    "files.log": "c57990c652b633baaf69b3f5ebfb15a9f3fd7860cdd3a0912d117ae5a19d3dd8",
+    "gates.log": "908c72777ef70d28d4fb29d754238a86cf4670dbe10cc0f90bbe9fa31af2213b",
+    "orchestrator.log": "3c58ede49f1705aaa3d6d27020155389a0327d9b3176910651b6080abf67e34b",
+    "tests.log": "140c98473e5d7541590a4e54b683cf83ec11443ec29a4ff8573172f3450b458d",
+    "exits.json": "7480552eb41ab0cac881dcd04f6a6b853e006ec0327e4846e40aaa9fb2a09a01",
+    "recovery.log": "0ec603ee686d64d36b3d3372e3221f991d90a8ce9349c46020bfaca080aac33e",
+    "build.log": "bdf1251c67fd89ae92a55b0238e65cc642eec0248d5c079ca15f1ab29c767ca0"
+  }
+}

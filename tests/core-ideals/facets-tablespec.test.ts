@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import * as u from '../../src';
 import {facetTableSpecCases,tableSpecFacetSource} from '../../scripts/core-ideals/facets-tablespec-cases';
@@ -68,7 +69,7 @@ test('published facet extension validates its profile and preserves unknown futu
 test('exact lexical checks and split archives retain unclaimed content',()=>{
  for(const token of ['1.0000000000000000001','9007199254740993','1e100000']){const text='{"version":"1.0","table_name":"Lexical","columns":[{"name":"value","data_type":"VARCHAR","length":'+token+'}]}',doc=tableSpecFacetSource(text);expect(u.classifyTableSpecFacets(doc,request).status).toBe('blocked');const report=u.classifyTableSpecFacets(doc,{...request,mode:'report'});expect(u.recoverTableSpecFacetSource(report,report.target!)).toBe(text);}
  const files={'table.yaml':'version: "1.0"\ntable_name: Split\nfuture: 9007199254740993\n','columns/a.yaml':'column: {name: a, data_type: VARCHAR, length: 20}\nfutureSibling: retained\n','notes.txt':'opaque future bytes\n'};
- const imported=u.importTableSpecBundle(files,{id:'split-facets'}),field=u.classifyTableSpecField(u.upgradeFieldEnvelope(imported).target,{column:0,mode:'strict'}).target!;
- const doc=u.upgradeFacetEnvelope(u.upgradeCardinalityEnvelope(u.upgradeNullabilityEnvelope(field).target).target).target,r=u.classifyTableSpecFacets(doc,request);expect(r.status).toBe('classified');
+ const imported=u.importTableSpecBundle(files,{id:'split-facets'}),field=u.classifyTableSpecField(imported,{column:0,mode:'strict'}).target!;
+ const doc=field,r=u.classifyTableSpecFacets(doc,request);expect(r.status).toBe('classified');
  for(const format of ['json','yaml'] as const){const receipt=u.readJsonValue(u.writeJsonValue(u.copyJson(r),format),format) as unknown as u.TableSpecFacetClassification;expect(u.recoverTableSpecFacetSource(receipt,receipt.target!)).toEqual(files);}
 });

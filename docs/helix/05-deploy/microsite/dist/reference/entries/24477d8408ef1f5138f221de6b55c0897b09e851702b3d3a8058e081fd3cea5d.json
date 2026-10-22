@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 15755,
+        "line": 14,
+        "path": "src/access/index.ts",
+        "sha256": "a658a89077e0c80ad517dff1e3512e233d2bdd085a485da01aae216196db03bd"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "PythonClientResult",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface PythonClientResult {\n sourceDigest:string; description:Record<string,unknown>;\n files:{path:string;text:string;sha256:string}[];\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"PythonClientResult\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 15755,
+      "line": 14,
+      "path": "src/access/index.ts",
+      "sha256": "a658a89077e0c80ad517dff1e3512e233d2bdd085a485da01aae216196db03bd"
+    }
+  ],
+  "summary": "Type declaration · src/access/index.ts",
+  "title": "PythonClientResult"
+}

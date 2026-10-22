@@ -1,0 +1,28 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"writeProtectionSource\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "input",
+      "optional": false,
+      "type": "unknown"
+    },
+    {
+      "description": "Default: 'json'.",
+      "links": [],
+      "name": "format",
+      "optional": true,
+      "type": "\"json\" | \"yaml\""
+    }
+  ],
+  "purpose": "writeProtectionSource accepts input, format and returns string.",
+  "related": [],
+  "returns": "string",
+  "task": "Serialize",
+  "type": "(input: unknown, format?: \"json\" | \"yaml\") => string"
+}

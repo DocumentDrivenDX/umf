@@ -1,0 +1,356 @@
+{
+  "profile": "umf.reference.profiles/1",
+  "coreProfiles": [
+    {
+      "version": "0.10.0",
+      "schemaPath": "spec/core/schema.json"
+    }
+  ],
+  "registrations": [
+    {
+      "extensionId": "umf.actions",
+      "version": "0.1.0",
+      "mode": "sdk-default",
+      "apiNames": [
+        "createUmfRegistry",
+        "registerActions"
+      ],
+      "coreProfiles": [
+        "0.10.0"
+      ]
+    },
+    {
+      "extensionId": "umf.ddd",
+      "version": "0.1.0",
+      "mode": "explicit",
+      "apiNames": [
+        "dddRegistry"
+      ],
+      "coreProfiles": [
+        "0.10.0"
+      ]
+    },
+    {
+      "extensionId": "umf.json-schema",
+      "version": "0.1.0",
+      "mode": "explicit",
+      "apiNames": [
+        "jsonSchemaRegistry"
+      ],
+      "coreProfiles": [
+        "0.10.0"
+      ]
+    },
+    {
+      "extensionId": "umf.protobuf",
+      "version": "0.1.0",
+      "mode": "explicit",
+      "apiNames": [
+        "protobufRegistry"
+      ],
+      "coreProfiles": [
+        "0.10.0"
+      ]
+    },
+    {
+      "extensionId": "umf.spark",
+      "version": "0.1.0",
+      "mode": "explicit",
+      "apiNames": [
+        "sparkRegistry"
+      ],
+      "coreProfiles": []
+    },
+    {
+      "extensionId": "umf.rdf",
+      "version": "0.1.0",
+      "mode": "explicit",
+      "apiNames": [
+        "rdfRegistry"
+      ],
+      "coreProfiles": []
+    },
+    {
+      "extensionId": "umf.jsonld",
+      "version": "0.1.0",
+      "mode": "explicit",
+      "apiNames": [
+        "jsonldRegistry"
+      ],
+      "coreProfiles": []
+    },
+    {
+      "extensionId": "umf.generalized-rdf",
+      "version": "0.1.0",
+      "mode": "explicit",
+      "apiNames": [
+        "generalizedRdfRegistry"
+      ],
+      "coreProfiles": []
+    },
+    {
+      "extensionId": "umf.parquet",
+      "version": "0.1.0",
+      "mode": "explicit",
+      "apiNames": [
+        "parquetRegistry"
+      ],
+      "coreProfiles": []
+    },
+    {
+      "extensionId": "umf.shacl",
+      "version": "0.1.0",
+      "mode": "explicit",
+      "apiNames": [
+        "shaclRegistry"
+      ],
+      "coreProfiles": []
+    },
+    {
+      "extensionId": "umf.odcs",
+      "version": "0.1.0",
+      "mode": "explicit",
+      "apiNames": [
+        "odcsRegistry"
+      ],
+      "coreProfiles": []
+    },
+    {
+      "extensionId": "umf.iceberg.table",
+      "version": "0.1.0",
+      "mode": "explicit",
+      "apiNames": [
+        "icebergTableRegistry"
+      ],
+      "coreProfiles": []
+    },
+    {
+      "extensionId": "umf.sqlserver",
+      "version": "0.1.0",
+      "mode": "explicit",
+      "apiNames": [
+        "sqlserverRegistry"
+      ],
+      "coreProfiles": []
+    },
+    {
+      "extensionId": "umf.delta.log",
+      "version": "0.1.0",
+      "mode": "explicit",
+      "apiNames": [
+        "deltaLogRegistry"
+      ],
+      "coreProfiles": []
+    },
+    {
+      "extensionId": "umf.graphql",
+      "version": "0.1.0",
+      "mode": "explicit",
+      "apiNames": [
+        "graphqlRegistry"
+      ],
+      "coreProfiles": []
+    },
+    {
+      "extensionId": "umf.avro",
+      "version": "0.1.0",
+      "mode": "explicit",
+      "apiNames": [
+        "avroRegistry"
+      ],
+      "coreProfiles": []
+    },
+    {
+      "extensionId": "umf.dbt.artifact",
+      "version": "0.1.0",
+      "mode": "explicit",
+      "apiNames": [
+        "dbtArtifactRegistry"
+      ],
+      "coreProfiles": []
+    },
+    {
+      "extensionId": "umf.dashboard",
+      "version": "0.1.0",
+      "mode": "explicit",
+      "apiNames": [
+        "dashboardRegistry"
+      ],
+      "coreProfiles": []
+    },
+    {
+      "extensionId": "umf.dbt.semantic",
+      "version": "0.1.0",
+      "mode": "explicit",
+      "apiNames": [
+        "dbtSemanticManifestRegistry"
+      ],
+      "coreProfiles": []
+    },
+    {
+      "extensionId": "umf.iceberg",
+      "version": "0.1.0",
+      "mode": "explicit",
+      "apiNames": [
+        "icebergRegistry"
+      ],
+      "coreProfiles": []
+    },
+    {
+      "extensionId": "umf.binding",
+      "version": "0.1.0",
+      "mode": "explicit",
+      "apiNames": [
+        "bindingRegistry"
+      ],
+      "coreProfiles": []
+    },
+    {
+      "extensionId": "umf.openapi",
+      "version": "0.1.0",
+      "mode": "explicit",
+      "apiNames": [
+        "openapiRegistry"
+      ],
+      "coreProfiles": []
+    },
+    {
+      "extensionId": "umf.binding",
+      "version": "0.2.0",
+      "mode": "explicit",
+      "apiNames": [
+        "bindingRegistry"
+      ],
+      "coreProfiles": []
+    },
+    {
+      "extensionId": "umf.dbt.manifest",
+      "version": "0.1.0",
+      "mode": "explicit",
+      "apiNames": [
+        "dbtManifestRegistry"
+      ],
+      "coreProfiles": []
+    },
+    {
+      "extensionId": "umf.owl",
+      "version": "0.1.0",
+      "mode": "explicit",
+      "apiNames": [
+        "owlRegistry"
+      ],
+      "coreProfiles": []
+    },
+    {
+      "extensionId": "umf.arrow.ipc",
+      "version": "0.1.0",
+      "mode": "explicit",
+      "apiNames": [
+        "arrowIpcRegistry"
+      ],
+      "coreProfiles": []
+    },
+    {
+      "extensionId": "umf.linkml",
+      "version": "0.1.0",
+      "mode": "explicit",
+      "apiNames": [
+        "linkmlRegistry"
+      ],
+      "coreProfiles": []
+    },
+    {
+      "extensionId": "umf.arrow",
+      "version": "0.1.0",
+      "mode": "explicit",
+      "apiNames": [
+        "arrowRegistry"
+      ],
+      "coreProfiles": []
+    },
+    {
+      "extensionId": "umf.security",
+      "version": "0.1.0",
+      "mode": "explicit",
+      "apiNames": [
+        "securityRegistry"
+      ],
+      "coreProfiles": []
+    },
+    {
+      "extensionId": "umf.delta.table",
+      "version": "0.1.0",
+      "mode": "explicit",
+      "apiNames": [
+        "deltaTableRegistry"
+      ],
+      "coreProfiles": []
+    },
+    {
+      "extensionId": "umf.arrow.flatbuffer",
+      "version": "0.1.0",
+      "mode": "explicit",
+      "apiNames": [
+        "arrowFlatbufferRegistry"
+      ],
+      "coreProfiles": []
+    },
+    {
+      "extensionId": "umf.smithy",
+      "version": "0.1.0",
+      "mode": "explicit",
+      "apiNames": [
+        "smithyRegistry"
+      ],
+      "coreProfiles": []
+    },
+    {
+      "extensionId": "umf.postgresql.catalog",
+      "version": "0.1.0",
+      "mode": "explicit",
+      "apiNames": [
+        "postgresqlCatalogRegistry"
+      ],
+      "coreProfiles": []
+    },
+    {
+      "extensionId": "umf.typespec",
+      "version": "0.1.0",
+      "mode": "explicit",
+      "apiNames": [
+        "typespecRegistry"
+      ],
+      "coreProfiles": []
+    },
+    {
+      "extensionId": "umf.postgresql",
+      "version": "0.1.0",
+      "mode": "explicit",
+      "apiNames": [
+        "postgresqlRegistry"
+      ],
+      "coreProfiles": []
+    },
+    {
+      "extensionId": "umf.delta",
+      "version": "0.1.0",
+      "mode": "explicit",
+      "apiNames": [
+        "deltaRegistry"
+      ],
+      "coreProfiles": []
+    },
+    {
+      "extensionId": "umf.semantic-types",
+      "version": "0.1.0",
+      "mode": "explicit",
+      "apiNames": [
+        "semanticTypesRegistry"
+      ],
+      "coreProfiles": [
+        "0.10.0"
+      ]
+    }
+  ],
+  "exclusions": []
+}

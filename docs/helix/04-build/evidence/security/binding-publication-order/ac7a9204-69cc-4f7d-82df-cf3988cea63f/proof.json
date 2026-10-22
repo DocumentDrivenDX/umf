@@ -1,0 +1,121 @@
+{
+  "status": "pass",
+  "z3Version": "4.15.4",
+  "sourceSha256": {
+    "/Users/erik/.codex/worktrees/security-main-integration/umf/tools/security/prove-binding-publication-order.py": "be93771651aba739f47723ee19c0c10d3345d324570e51f7076011be008f7699",
+    "/Users/erik/.codex/worktrees/security-main-integration/umf/docs/helix/02-design/contracts/security-association-binding.proposal.md": "493523daacc516c83e98b95ff133809eb910ac10373e7268e49dde833c850d08",
+    "/private/tmp/truss-security-main-integration/docs/helix/02-design/contracts/CONTRACT-001-storage-layout.md": "44804bebff6e48310b2423b6c52fe4aa33eecf6593439b809e9d13031fe75244",
+    "/private/tmp/truss-security-main-integration/packages/umf-bun/src/catalog-report-preparation.ts": "421dc89fe416e098225fe6265a63eb523f7d1fdf650178f8759678144d6e0dbf",
+    "/private/tmp/truss-security-main-integration/packages/umf-bun/src/catalog-ingress-report-basis.ts": "3d1650163c390a9ea58de1996b017aeae66b048fe72a6d37413d4d7fcd91e50e",
+    "/private/tmp/truss-security-main-integration/packages/postgresql/native/catalog-new-inventory.sql": "13650d877ec81718810b71f8ae3022a08c4a21f38ee50cbcb5207d779255ab86",
+    "/private/tmp/truss-security-main-integration/packages/postgresql/native/catalog-binding-observation.sql": "e2dfd6907eb700abfde70f333cffd2cdec013a06629ccb6dc60c4ed625f15215",
+    "/private/tmp/truss-security-main-integration/packages/postgresql/native/catalog-report-immutability.sql": "c243b51682de3fee979b977626bb54279eccb3de22a24270e0bda467bd215167"
+  },
+  "observations": [
+    {
+      "id": "accepted-source-before-report-cycle",
+      "expected": "unsat",
+      "observed": "unsat",
+      "replay": "unsat",
+      "formulaSha256": "3828ba18cc7b00651d274e85f25a4baf42d696825470d53fe31a0d2686901c9b",
+      "model": null
+    },
+    {
+      "id": "pending-source-protocol-has-valid-execution",
+      "expected": "sat",
+      "observed": "sat",
+      "replay": "sat",
+      "formulaSha256": "3935423323e578b3ae705a04bd04dad814d2661c55feeca03f0d0343bdc91ed5",
+      "model": "[promote = 3,\n report = 2,\n report_generation = 0,\n inventory = 1,\n authenticated_operation = True,\n publish = 5,\n stage = 0,\n final_generation = 1,\n recheck = 4,\n current_generation = 1,\n original_source_exact = True,\n complete_final_closure = True,\n registered_interpretation = True,\n inventory_before = [else -> False],\n inventory_after = [else -> False],\n physical_value_after = [else -> 0],\n physical_value_before = [else -> 1]]"
+    },
+    {
+      "id": "publication-cannot-precede-report",
+      "expected": "unsat",
+      "observed": "unsat",
+      "replay": "unsat",
+      "formulaSha256": "d6f8ef495818a17e195bef5e61cdb189c96d7d74ced0c4c512fd32fc92b39afa",
+      "model": null
+    },
+    {
+      "id": "promotion-cannot-precede-report",
+      "expected": "unsat",
+      "observed": "unsat",
+      "replay": "unsat",
+      "formulaSha256": "ad3e89f13d0ba875905a83bd47bb72306f406485f671d779b474c60e8bc35966",
+      "model": null
+    },
+    {
+      "id": "publication-cannot-use-pre-promotion-recheck",
+      "expected": "unsat",
+      "observed": "unsat",
+      "replay": "unsat",
+      "formulaSha256": "aa4be8017ec6d71dabb052a0f7b66c4f6c10a454b89824f2babe6ec17d4b19d4",
+      "model": null
+    },
+    {
+      "id": "publication-cannot-reuse-pre-report-generation",
+      "expected": "unsat",
+      "observed": "unsat",
+      "replay": "unsat",
+      "formulaSha256": "471ac427ce20f65a313dfa0dce98a1d063c359b97a4877e56cf19b3e91adfaa2",
+      "model": null
+    },
+    {
+      "id": "publication-cannot-ignore-later-effect",
+      "expected": "unsat",
+      "observed": "unsat",
+      "replay": "unsat",
+      "formulaSha256": "fc3a654e758ce8e7478bc2537b4b859dbc1c27ac7044f7818452b3bbc3d57ed7",
+      "model": null
+    },
+    {
+      "id": "complete-parity-forbids-extra-omitted-or-changed-effect",
+      "expected": "unsat",
+      "observed": "unsat",
+      "replay": "unsat",
+      "formulaSha256": "6803f8c5dcc2a0daed3ebca1da229279750bf09a4c90698b5c28e992d160467c",
+      "model": null
+    },
+    {
+      "id": "equal-counts-can-hide-physical-value-substitution",
+      "expected": "sat",
+      "observed": "sat",
+      "replay": "sat",
+      "formulaSha256": "cc80737140161609ae2950e0c985aecc5b637f62c6009c5909a4cb059c623a17",
+      "model": "[fault_definition = Definition!val!0,\n inventory_before = [else -> True],\n inventory_after = [else -> True],\n physical_value_after = [else -> 3],\n physical_value_before = [else -> 2]]"
+    },
+    {
+      "id": "weakened-generation-gate-admits-stale-publication",
+      "expected": "sat",
+      "observed": "sat",
+      "replay": "sat",
+      "formulaSha256": "bff0a1a8370a3ea711b713d0ebb7820e2bddfe4c1b6b7100feb27dce6c97d026",
+      "model": "[recheck = 4,\n stage = 0,\n promote = 3,\n publish = 5,\n report = 2,\n current_generation = 2,\n inventory = 1,\n report_generation = 0,\n final_generation = 1,\n authenticated_operation = True,\n original_source_exact = True,\n complete_final_closure = True,\n registered_interpretation = True,\n inventory_before = [else -> False],\n inventory_after = [else -> False],\n physical_value_after = [else -> 5],\n physical_value_before = [else -> 6]]"
+    },
+    {
+      "id": "weakened-order-gate-admits-report-before-observed-effects",
+      "expected": "sat",
+      "observed": "sat",
+      "replay": "sat",
+      "formulaSha256": "f9351c9d767600b3db01b0ca4bd79448f081a576dce4b84112880ab792ad097b",
+      "model": "[stage = 1,\n report = 0,\n authenticated_operation = True,\n original_source_exact = True,\n complete_final_closure = True,\n registered_interpretation = True,\n inventory_before = [else -> False],\n inventory_after = [else -> False],\n physical_value_after = [else -> 3],\n physical_value_before = [else -> 4]]"
+    },
+    {
+      "id": "private-source-custody-alone-cannot-establish-authority",
+      "expected": "sat",
+      "observed": "sat",
+      "replay": "sat",
+      "formulaSha256": "13acee90745f71bebd9d654a8a95f0a1f5bec95d43dae37c48512d07081b5097",
+      "model": "[authenticated_operation = False,\n registered_interpretation = False,\n original_source_exact = True]"
+    }
+  ],
+  "scope": "Conditional causal ordering and exact inventory/generation parity for the selected pending-source protocol",
+  "limitations": [
+    "Fixed selected event families over unbounded integer order/generation; not arbitrary concurrent native execution or liveness",
+    "Registered interpretation, authenticated operation, original source equality, complete final closure and monotone generation correspondence are premises, not derived from bytes",
+    "Full physical inventory equality is an explicit quantified premise; native inventory decoding, permitted provenance promotion and report equality are not implemented by this model",
+    "No pending native source tuple/layout/decoder, SQL refinement, registered association staging, report producer, privilege/drain or publication implementation",
+    "The strict accepted-source-first cycle is an incompatible proposed ordering, not a claim that current code executes a cyclic protocol"
+  ],
+  "acceptancePromoted": false
+}

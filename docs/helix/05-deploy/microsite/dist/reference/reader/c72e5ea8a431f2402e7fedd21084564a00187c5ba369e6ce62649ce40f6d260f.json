@@ -1,0 +1,33 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"verifyRelationshipExtra\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"RelationshipExtraClassification\"]",
+        "[\"api\",\".\",\"RelationshipExtraProjection\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "RelationshipExtraClassification | RelationshipExtraProjection"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "current",
+      "optional": true,
+      "type": "Document | undefined"
+    }
+  ],
+  "purpose": "verifyRelationshipExtra accepts input, current and returns RelationshipExtraClassification | RelationshipExtraProjection.",
+  "related": [],
+  "returns": "RelationshipExtraClassification | RelationshipExtraProjection",
+  "task": "Other APIs",
+  "type": "(input: RelationshipExtraProjection | RelationshipExtraClassification, current?: Document) => RelationshipExtraClassification | RelationshipExtraProjection"
+}

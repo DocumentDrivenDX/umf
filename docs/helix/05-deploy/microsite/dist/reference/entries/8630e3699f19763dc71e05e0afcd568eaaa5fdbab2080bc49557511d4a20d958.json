@@ -1,0 +1,50 @@
+{
+  "data": {
+    "conflicts": [],
+    "correspondence": "unassessed",
+    "declarations": [
+      {
+        "bytes": 15045,
+        "path": "spec/extensions/dashboard/package.json",
+        "sha256": "1eeca38db3fa0d132e79748355d85a2546a47b0f99557709b6e48f06eddfee6a"
+      }
+    ],
+    "evidence": [],
+    "operation": {
+      "apiNames": [],
+      "coreProfiles": [],
+      "extensionVersions": [],
+      "fixturePaths": [],
+      "id": "umf.dashboard@0.1.0:import",
+      "kind": "import",
+      "limitations": [
+        "Recorded scope only; native equivalence and production adoption are separate."
+      ],
+      "runtime": {
+        "availability": "host-only",
+        "profileId": "umf.dashboard@0.1.0:import",
+        "requirements": [
+          "Native runtime / original qualification harness; not executed by this page."
+        ]
+      },
+      "sourceSystem": "UMF-authored dashboard profile · 0.1.0",
+      "subset": "Versioned semantic declarations in UMF JSON/YAML; expressions retained, not executed; no Lakeview, Tableau or other BI tool compatibility claimed",
+      "targetSystem": "UMF",
+      "title": "umf.dashboard · import"
+    }
+  },
+  "id": "[\"integration\",\"umf.dashboard@0.1.0:import\"]",
+  "kind": "integration",
+  "links": [
+    "[\"extension\",\"umf.dashboard\",\"0.1.0\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 134795,
+      "path": "docs/helix/05-deploy/reference/operations.json",
+      "sha256": "793743bbca36e56e90e82df5ef0408b628c434e58cb68aea4d6486349be78e61"
+    }
+  ],
+  "summary": "Versioned semantic declarations in UMF JSON/YAML; expressions retained, not executed; no Lakeview, Tableau or other BI tool compatibility claimed",
+  "title": "umf.dashboard · import"
+}

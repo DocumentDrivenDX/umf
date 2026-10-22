@@ -1,0 +1,6 @@
+$ bun node_modules/typescript/bin/tsc --noEmit && bun node_modules/typescript/bin/tsc -p tsconfig.tools.json
+src/extensions/security/protection/functions.ts(170,72): error TS2322: Type '{ complete: false; authority: false; policy: Json; catalog: Json; closure: Json; status: string; validated: readonly { path: string; transformIndex: number; }[]; definitions: { transformIndex: number; inputDomain: Json; outputDomain: Json; valueProfile: string | null; }[]; diagnostics: Diagnostic[]; }' is not assignable to type 'ProtectionParameterValidation & { definitions: readonly { transformIndex: number; inputDomain: Json; outputDomain: Json; valueProfile: string | null; }[]; }'.
+  Type '{ complete: false; authority: false; policy: Json; catalog: Json; closure: Json; status: string; validated: readonly { path: string; transformIndex: number; }[]; definitions: { transformIndex: number; inputDomain: Json; outputDomain: Json; valueProfile: string | null; }[]; diagnostics: Diagnostic[]; }' is not assignable to type 'ProtectionParameterValidation'.
+    Types of property 'status' are incompatible.
+      Type 'string' is not assignable to type '"refused" | "validated-parameters"'.
+error: script "typecheck" exited with code 1

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 6252,
+        "line": 20,
+        "path": "src/core-ideals/sqlserver-field.ts",
+        "sha256": "262111d80c56a8f09e9ea6a380826e7176614841d15eb20c0d4989aed372e607"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "classifySqlServerField",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: Document, options: SqlServerFieldRequest): SqlServerFieldClassification"
+    ]
+  },
+  "id": "[\"api\",\".\",\"classifySqlServerField\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 6252,
+      "line": 20,
+      "path": "src/core-ideals/sqlserver-field.ts",
+      "sha256": "262111d80c56a8f09e9ea6a380826e7176614841d15eb20c0d4989aed372e607"
+    }
+  ],
+  "summary": "Native paths are JSON pointers into the retained capture text, not pointers into the tagged UMF encoding.",
+  "title": "classifySqlServerField"
+}

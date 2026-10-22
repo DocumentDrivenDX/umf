@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
 const corpora=[await Bun.file('fixtures/smithy/oracle-results.json').json(),await Bun.file('fixtures/smithy/idl/oracle-results.json').json(),await Bun.file('fixtures/smithy/negative-oracle-results.json').json()];
 const inputs:{file:string;text:string;expected:any}[]=[];

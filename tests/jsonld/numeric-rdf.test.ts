@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {importJsonLdDocument,proposeJsonLdNodeEdit,proposeJsonLdToRdf,getJsonLdNode,getRdfQuads} from '../../src';
 test('US-026-AC17: edited exact tokens remain archived while binary64 projections disclose rounding',async()=>{

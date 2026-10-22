@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 14321,
+        "line": 86,
+        "path": "src/adapters/sqlserver/index.ts",
+        "sha256": "c3293b45da791d1566524ca4388107d8110776b7cb2ab8996d529e553b1594d4"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "SqlServerIndexMetadata",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface SqlServerIndexMetadata {complete:false;tables:{path:string;table:{schema:string;name:string};available:boolean;indexes:NativeJson[]}[];}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"SqlServerIndexMetadata\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 14321,
+      "line": 86,
+      "path": "src/adapters/sqlserver/index.ts",
+      "sha256": "c3293b45da791d1566524ca4388107d8110776b7cb2ab8996d529e553b1594d4"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/sqlserver/index.ts",
+  "title": "SqlServerIndexMetadata"
+}

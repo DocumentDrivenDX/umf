@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 5089,
+        "line": 36,
+        "path": "src/model/record-type.ts",
+        "sha256": "8ac51b25f81eebbd78168922671f1633c439c7f62100922ba01a18f396c0f61e"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "verifyCoreRecordTypeDeclaration",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: CoreRecordTypeDeclaration, current: Document): CoreRecordTypeDeclaration"
+    ]
+  },
+  "id": "[\"api\",\".\",\"verifyCoreRecordTypeDeclaration\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 5089,
+      "line": 36,
+      "path": "src/model/record-type.ts",
+      "sha256": "8ac51b25f81eebbd78168922671f1633c439c7f62100922ba01a18f396c0f61e"
+    }
+  ],
+  "summary": "Checks consistency and current identity resolution, not cryptographic authorship.",
+  "title": "verifyCoreRecordTypeDeclaration"
+}

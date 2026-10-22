@@ -1,0 +1,30 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"recoverRecordFromAvro\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"RecordAvroProjection\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "RecordAvroProjection"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "nativeText",
+      "optional": false,
+      "type": "string"
+    }
+  ],
+  "purpose": "recoverRecordFromAvro accepts input, nativeText and returns Document.",
+  "related": [],
+  "returns": "Document",
+  "task": "Import and export",
+  "type": "(input: RecordAvroProjection, nativeText: string) => Document"
+}

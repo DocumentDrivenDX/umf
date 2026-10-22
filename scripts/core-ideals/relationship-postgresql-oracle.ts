@@ -1,8 +1,10 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
+import {assertJsonDataEqual} from './json-data-assert';
 import assert from 'node:assert/strict';
 import {createHash,randomUUID} from 'node:crypto';
 import {backend} from '../../native/postgresql/runtime';
 import {postgresqlRelationshipCases} from './relationship-postgresql-cases';
-import {classifyPostgresqlRelationships,importPostgresqlCatalogCapture,projectRelationshipsToPostgresql,recoverPostgresqlRelationshipSource,recoverRelationshipPostgresqlIdeal,recoverRelationshipPostgresqlNative,readDocument,writeDocument} from '../../src';
+import {classifyPostgresqlRelationships, importPostgresqlCatalogCapture, projectRelationshipsToPostgresql, recoverPostgresqlRelationshipSource, recoverRelationshipPostgresqlIdeal, recoverRelationshipPostgresqlNative, readDocument, writeDocument} from '../../src';
 import {literal} from '../../src/core-ideals/postgresql-syntax';
 const name='umf-relationship-binding-'+randomUUID();let created=false;
 async function run(args:string[],input?:string){const p=Bun.spawn(args,{stdin:input===undefined?'ignore':new Blob([input]),stdout:'pipe',stderr:'pipe'});const [out,err,code]=await Promise.all([new Response(p.stdout).text(),new Response(p.stderr).text(),p.exited]);assert.equal(code,0,err||out);return out;}
@@ -26,7 +28,7 @@ try{
  for(const c of postgresqlRelationshipCases()){
   const r=await projectRelationshipsToPostgresql(c.source,c.binding,c.authors,c.request,backend);assert.equal(r.status,c.expected,c.id);if(r.status==='blocked'){rows.push({id:c.id,status:r.status});continue;}
   await sql('DROP SCHEMA IF EXISTS sales CASCADE;\n'+r.nativeSql!);await Bun.write(`${directory}/${c.id}.sql`,r.nativeSql!);
-  assert.deepEqual(await recoverRelationshipPostgresqlIdeal(r,r.target!,backend),c.source);assert.equal(await recoverRelationshipPostgresqlNative(r,r.target!,backend),r.nativeSql!);
+  assertJsonDataEqual(await recoverRelationshipPostgresqlIdeal(r,r.target!,backend),c.source);assert.equal(await recoverRelationshipPostgresqlNative(r,r.target!,backend),r.nativeSql!);
   const probes:any[]=[];const composite=c.id==='nullable-composite';
   probes.push(await probe('parent',`INSERT INTO sales.customers(id,name${composite?',code':''}) VALUES(1,'customer'${composite?',7':''}) RETURNING 'accepted'::text`));
   probes.push(await probe('source-valid',`INSERT INTO sales.orders(id,tenant,"customerId",status${composite?',"customerCode"':''}) VALUES(10,'tenant',1,'new'${composite?',7':''}) RETURNING 'accepted'::text`));

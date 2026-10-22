@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {inspectDbtManifestGraph,type DbtManifestGraph} from './graph';
 import {copyJson} from '../../model/json';
 import {UmfError,type Document,type Diagnostic} from '../../model/types';

@@ -1,0 +1,64 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"ArrowSparkProjection\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "status",
+      "optional": false,
+      "type": "\"blocked\" | \"projected\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "complete",
+      "optional": false,
+      "type": "false"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "source",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ArrowSparkPolicy\"]"
+      ],
+      "name": "policy",
+      "optional": false,
+      "type": "ArrowSparkPolicy"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SparkArrowIssue\"]"
+      ],
+      "name": "issues",
+      "optional": false,
+      "type": "SparkArrowIssue[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "target",
+      "optional": true,
+      "type": "Document"
+    }
+  ],
+  "parameters": [],
+  "purpose": "ArrowSparkProjection is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "ArrowSparkProjection"
+}

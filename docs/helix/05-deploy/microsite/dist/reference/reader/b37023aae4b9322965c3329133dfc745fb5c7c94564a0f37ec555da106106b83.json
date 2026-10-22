@@ -1,0 +1,23 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"exportOpenapiBundle\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "exportOpenapiBundle accepts document and returns { resources: { uri: string; text: string; format: \"json\" | \"yaml\"; }[]; source: Document; diagnostics: Diagnostic[]; baseUri?: string; schema: string; format: \"json\" | \"yaml\"; }.",
+  "related": [],
+  "returns": "{ resources: { uri: string; text: string; format: \"json\" | \"yaml\"; }[]; source: Document; diagnostics: Diagnostic[]; baseUri?: string; schema: string; format: \"json\" | \"yaml\"; }",
+  "task": "Import and export",
+  "type": "(document: Document) => { resources: { uri: string; text: string; format: \"json\" | \"yaml\"; }[]; source: Document; diagnostics: Diagnostic[]; baseUri?: string; schema: string; format: \"json\" | \"yaml\"; }"
+}

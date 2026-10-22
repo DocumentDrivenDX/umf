@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 8516,
+        "line": 15,
+        "path": "src/core-ideals/sqlserver-record.ts",
+        "sha256": "9f2801c32316478aa602119c8e37ed0f02e653bcc96717b8fd5b2a37fb52c340"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "SqlServerRecordClassification",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface SqlServerRecordClassification {\n operation:'classify-sqlserver-record';version:'1.0.0';status:'classified'|'blocked';source:Document;target?:Document;request:SqlServerRecordRequest;binding:typeof binding;mappings:Mapping[];\n residuals:{path:string;value:Json;reason:string;recovery:'Source and native fragments retained; resolve conflict then recompute whole record classification'}[];diagnostics:Diagnostic[];\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"SqlServerRecordClassification\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 8516,
+      "line": 15,
+      "path": "src/core-ideals/sqlserver-record.ts",
+      "sha256": "9f2801c32316478aa602119c8e37ed0f02e653bcc96717b8fd5b2a37fb52c340"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/sqlserver-record.ts",
+  "title": "SqlServerRecordClassification"
+}

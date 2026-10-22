@@ -1,0 +1,23 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"securityRefIdentity\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SecurityRef\"]"
+      ],
+      "name": "ref",
+      "optional": false,
+      "type": "SecurityRef"
+    }
+  ],
+  "purpose": "securityRefIdentity accepts ref and returns string.",
+  "related": [],
+  "returns": "string",
+  "task": "Other APIs",
+  "type": "(ref: SecurityRef) => string"
+}

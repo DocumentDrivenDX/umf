@@ -1,0 +1,390 @@
+{
+  "status": "pass",
+  "scope": "public schema load and CLI generation to real installed Python creation, validation and codec round trip; no database/native or temporal qualification",
+  "work": "/private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-access-e2e-Irfq4k",
+  "wheelSha256": "b0f5333177983412cc32746c73e0288a1227d75debfdd7452b9bb3ebd206ce49",
+  "outcomes": [
+    {
+      "fixture": "engine-only",
+      "checks": [
+        "create",
+        "exact-decimal-coefficient",
+        "missing-omission",
+        "explicit-null",
+        "empty-patch",
+        "valid-patch",
+        "missing-key",
+        "missing-required",
+        "wrong-decimal",
+        "rounding",
+        "nonfinite",
+        "generated-create",
+        "unknown-field",
+        "null-nonnullable",
+        "immutable-key",
+        "sealed-generated-class",
+        "unhashable-key",
+        "construct-bypass",
+        "copy-bypass",
+        "decode-reordered-row",
+        "duplicate-columns",
+        "missing-columns",
+        "extra-column",
+        "row-cardinality",
+        "invalid-row"
+      ],
+      "count": 25,
+      "python": "3.14.8",
+      "encoded": {
+        "orderId": {
+          "string": "o-1"
+        },
+        "amount": {
+          "decimalToken": "1.200"
+        },
+        "revision": {
+          "integerToken": "1"
+        },
+        "memo": null
+      },
+      "loaded": "/private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-access-e2e-Irfq4k/engine-only/output/e2e_shop/__init__.py",
+      "sourceSha256": "dd31f894dd9797f972aa04a78823c32f8f90cafc584f44735fca9570d83d1986",
+      "inventory": {
+        "e2e_shop/models.py": "a199c8976e98a1dcb4a867de72863c5b5c86933085105b3cf6c34c9902d6daf6",
+        "e2e_shop/fields.py": "9287420eefeff84ae7bd670642a224faf971635b8e02745868b57ee758e52ff0",
+        "e2e_shop/codecs.py": "68b5293e8c52b09864ed5fad4955873915ce08a087b3a82906ecb17054325ba4",
+        "e2e_shop/__init__.py": "1b38905cfbf7a7db0172d360a6311e9acf70c5e7346e6bede8ae17f8eb70e68f",
+        "e2e_shop/keys.py": "e4392a1f04c4b76c8b987b431e656548013cb0fff06d021b529a6ee58a932f32",
+        "e2e_shop/_umf/sources.json": "0ebaa8aa21e43df8c7d32082d00754772198270a61c3f80eb192ce5668250234",
+        "e2e_shop/_umf/manifest.json": "472f270300ecb692413d1140c83d6c962231656a1a1e6a52a45721d13747b397",
+        "e2e_shop/py.typed": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+      }
+    },
+    {
+      "fixture": "containers",
+      "checks": [
+        "create",
+        "exact-decimal-coefficient",
+        "missing-omission",
+        "explicit-null",
+        "empty-patch",
+        "valid-patch",
+        "missing-key",
+        "missing-required",
+        "wrong-decimal",
+        "rounding",
+        "nonfinite",
+        "generated-create",
+        "unknown-field",
+        "null-nonnullable",
+        "immutable-key",
+        "sealed-generated-class",
+        "unhashable-key",
+        "construct-bypass",
+        "copy-bypass",
+        "decode-reordered-row",
+        "duplicate-columns",
+        "missing-columns",
+        "extra-column",
+        "row-cardinality",
+        "invalid-row",
+        "empty-array",
+        "null-array-item",
+        "missing-map-value",
+        "post-creation-nested-mutation",
+        "nested-container-copy"
+      ],
+      "count": 30,
+      "python": "3.14.8",
+      "encoded": {
+        "orderId": {
+          "string": "o-1"
+        },
+        "amount": {
+          "decimalToken": "1.200"
+        },
+        "revision": {
+          "integerToken": "1"
+        },
+        "memo": null
+      },
+      "loaded": "/private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-access-e2e-Irfq4k/containers/output/e2e_shop/__init__.py",
+      "sourceSha256": "1f945d50a2dcbff58e185442445b6a9a7d476e3704757297542ded64072adf30",
+      "inventory": {
+        "e2e_shop/models.py": "994d6e4385b12e27ca144ed6bc947162032d983b72f9e7d5206a2fc061b7e59d",
+        "e2e_shop/fields.py": "9b74d42bf996c2de4cf3dcfdd5a271e1633438d68ce1ee7c5ac70e833e4b9a25",
+        "e2e_shop/codecs.py": "3050adde4e3d259851209a8c825b680e1a616017c304462bf271e83d83b861c9",
+        "e2e_shop/__init__.py": "1b38905cfbf7a7db0172d360a6311e9acf70c5e7346e6bede8ae17f8eb70e68f",
+        "e2e_shop/keys.py": "d989bec59e2b3ffa5504a0343cbb6512f6216e1f49f317dd1fe6b11f29a30908",
+        "e2e_shop/_umf/sources.json": "536e3f6449b0ec748d5b54847af228753b48ce7b229fee6392467a9da60c4a64",
+        "e2e_shop/_umf/manifest.json": "b77482fc434a3a6228813d7869bdd5608cad286c8d4baf71a38994bcf28e54ce",
+        "e2e_shop/py.typed": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+      }
+    },
+    {
+      "fixture": "alternate-key",
+      "checks": [
+        "create",
+        "exact-decimal-coefficient",
+        "missing-omission",
+        "explicit-null",
+        "empty-patch",
+        "valid-patch",
+        "missing-key",
+        "missing-required",
+        "wrong-decimal",
+        "rounding",
+        "nonfinite",
+        "generated-create",
+        "unknown-field",
+        "null-nonnullable",
+        "immutable-key",
+        "sealed-generated-class",
+        "unhashable-key",
+        "wrong-exact-key",
+        "same-shaped-foreign-generated-key",
+        "explicit-key-selection-despite-declaration-order",
+        "construct-bypass",
+        "copy-bypass",
+        "decode-reordered-row",
+        "duplicate-columns",
+        "missing-columns",
+        "extra-column",
+        "row-cardinality",
+        "invalid-row"
+      ],
+      "count": 28,
+      "python": "3.14.8",
+      "encoded": {
+        "orderId": {
+          "string": "o-1"
+        },
+        "amount": {
+          "decimalToken": "1.200"
+        },
+        "revision": {
+          "integerToken": "1"
+        },
+        "memo": null
+      },
+      "loaded": "/private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-access-e2e-Irfq4k/alternate-key/output/e2e_shop/__init__.py",
+      "sourceSha256": "f2952f800860f355c3937248fcdb13d4c786dd7f0a80508db3e997ec730d1cd0",
+      "inventory": {
+        "e2e_shop/models.py": "47cb472f6932ce22fe334b13c543a9263062650d8a177c83f0e999b675c7458d",
+        "e2e_shop/fields.py": "f2524eb12856e42a0e39c123f2e681c5fbaab16a205a3a70e91ab99a58ed9b2b",
+        "e2e_shop/codecs.py": "421ba82c262704bf206a4a7e97cca8761ed124f919b904d0022f5a69c9dd356a",
+        "e2e_shop/__init__.py": "1b38905cfbf7a7db0172d360a6311e9acf70c5e7346e6bede8ae17f8eb70e68f",
+        "e2e_shop/keys.py": "dde0bc820b656a09799f6c74a62dcfab9a342c04650752d6ce4fbdd49b016f29",
+        "e2e_shop/_umf/sources.json": "c92262878ba64c1b30cc917b2434ab79eaf948990ee1593f605af3d2cab441ca",
+        "e2e_shop/_umf/manifest.json": "5feaf798f6cf0a911983f2135f899f079504b72e39cc255dd756cc09854aec29",
+        "e2e_shop/py.typed": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+      }
+    }
+  ],
+  "commands": [
+    {
+      "label": "engine-only-generate",
+      "args": [
+        "bun",
+        "/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/scripts/umf-access-generate.ts",
+        "generate",
+        "--request",
+        "/private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-access-e2e-Irfq4k/engine-only/request.json",
+        "--profile",
+        "/private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-access-e2e-Irfq4k/engine-only/profile.json",
+        "--output",
+        "/private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-access-e2e-Irfq4k/engine-only/output"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stdout": "{\"kind\":\"access-public-diff\",\"scope\":\"source compatibility only; target and data compatibility unqualified\",\"changes\":[]}\n",
+      "stderr": ""
+    },
+    {
+      "label": "engine-only-check",
+      "args": [
+        "bun",
+        "/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/scripts/umf-access-generate.ts",
+        "check",
+        "--request",
+        "/private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-access-e2e-Irfq4k/engine-only/request.json",
+        "--profile",
+        "/private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-access-e2e-Irfq4k/engine-only/profile.json",
+        "--output",
+        "/private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-access-e2e-Irfq4k/engine-only/output"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "label": "engine-only-create-decode",
+      "args": [
+        "/private/tmp/sdk-r17-314-env/bin/python",
+        "-I",
+        "-B",
+        "-c",
+        "import sys,json,zipfile,hashlib,importlib.metadata as metadata\nfrom pathlib import Path\nfrom decimal import Decimal\nassert sys.version.split()[0] in ('3.11.17','3.14.8')\nassert metadata.version('pydantic')=='2.14.1'\nimport umf_access\nsite=Path(umf_access.__file__).parent.parent\nwith zipfile.ZipFile(\"/private/tmp/sdk-completion-runtime-r17-wheels/umf_access-0.1.0.dev0-py3-none-any.whl\") as archive:\n for name in archive.namelist():\n  if name.startswith('umf_access/') and not name.endswith('/'):\n   assert (site/name).read_bytes()==archive.read(name),name\nsys.path.insert(0,\"/private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-access-e2e-Irfq4k/engine-only/output\")\nimport e2e_shop\nfrom e2e_shop import Order,OrderCreate,OrderPatch,OrderKey\nfrom e2e_shop.codecs import encode_Order_create,encode_Order_patch,decode_Order\nfrom pydantic import MISSING\nchecks=[]\ndef refuses(label,call):\n try: call()\n except (ValueError,TypeError) as error:\n  assert 'private-invalid-value' not in str(error)\n  checks.append(label)\n else: raise AssertionError(label+' accepted')\nbase={'order_id':'o-1','amount':Decimal('1.200')}\ncontainers=False\nif containers: base.update(tags=['a'],labels={'a':'ok'})\ncreated=OrderCreate(**base)\nencoded=encode_Order_create(created)\nassert encoded['orderId']=='o-1' and encoded['amount'].as_tuple()==Decimal('1.200').as_tuple()\nassert 'revision' not in encoded and 'memo' not in encoded\nassert encode_Order_patch(OrderPatch())=={}\nassert encode_Order_patch(OrderPatch(memo=None))=={'memo':None}\nassert encode_Order_patch(OrderPatch(amount=Decimal('1.20')))['amount'].as_tuple()==Decimal('1.20').as_tuple()\nchecks += ['create','exact-decimal-coefficient','missing-omission','explicit-null','empty-patch','valid-patch']\nfor label,kwargs in [('missing-key',{'amount':Decimal('1.2')}),('missing-required',{'order_id':'o-1'}),('wrong-decimal',base|{'amount':'private-invalid-value'}),('rounding',base|{'amount':Decimal('1.234')}),('nonfinite',base|{'amount':Decimal('NaN')}),('generated-create',base|{'revision':1}),('unknown-field',base|{'unknown':1})]:\n refuses(label,lambda kwargs=kwargs:OrderCreate(**kwargs))\nrefuses('null-nonnullable',lambda:OrderPatch(amount=None))\nrefuses('immutable-key',lambda:OrderPatch(order_id='changed'))\nrefuses('sealed-generated-class',lambda:type('Bypass',(Order,),{}))\nrefuses('unhashable-key',lambda:hash(OrderKey(order_id='o-1')))\nassert list(OrderKey.model_fields)==['order_id']\nif False:\n from e2e_shop.keys import OrderAlternateKey,CustomerKey\n from umf_access.types import StrictModel\n from umf_access.codec_support import revalidate_model\n class Holder(StrictModel):\n  key:OrderKey\n refuses('wrong-exact-key',lambda:revalidate_model(Holder,Holder.model_construct(key=OrderAlternateKey(revision=1))))\n assert list(CustomerKey.model_fields)==list(OrderKey.model_fields)==['order_id']\n refuses('same-shaped-foreign-generated-key',lambda:revalidate_model(Holder,Holder.model_construct(key=CustomerKey(order_id='o-1'))))\n checks.append('explicit-key-selection-despite-declaration-order')\nrefuses('construct-bypass',lambda:encode_Order_patch(OrderPatch.model_construct(amount='private-invalid-value')))\nrefuses('copy-bypass',lambda:encode_Order_patch(OrderPatch().model_copy(update={'amount':'private-invalid-value'})))\nrow_values=encoded|{'memo':None,'revision':1}\ncolumns=list(reversed(list(row_values)))\nrow=decode_Order(columns,[row_values[column] for column in columns])\nassert row.order_id==created.order_id and row.amount.as_tuple()==created.amount.as_tuple() and row.memo is None\nchecks.append('decode-reordered-row')\nfor label,columns,values in [('duplicate-columns',['orderId','orderId'],['a','b']),('missing-columns',[],[]),('extra-column',list(row_values)+['other'],list(row_values.values())+[1]),('row-cardinality',list(row_values),[])]:\n refuses(label,lambda columns=columns,values=values:decode_Order(columns,values))\nrefuses('invalid-row',lambda:decode_Order(list(row_values),list((row_values|{'amount':'private-invalid-value'}).values())))\nif containers:\n refuses('empty-array',lambda:OrderCreate(**(base|{'tags':[]})))\n refuses('null-array-item',lambda:OrderCreate(**(base|{'tags':[None]})))\n refuses('missing-map-value',lambda:OrderCreate(**(base|{'labels':{'a':MISSING}})))\n created.tags.append('private-invalid-value')\n created.tags.append(1)\n refuses('post-creation-nested-mutation',lambda:encode_Order_create(created))\n value=OrderCreate(**(base|{'tags':['a']}))\n copied=encode_Order_create(value)\n assert copied['tags'] is not value.tags and copied['labels'] is not value.labels\n checks.append('nested-container-copy')\nprint(json.dumps({'checks':checks,'count':len(checks),'python':sys.version.split()[0],'encoded':{'orderId':{'string':'o-1'},'amount':{'decimalToken':str(encoded['amount'])},'revision':{'integerToken':'1'},'memo':None},'loaded':str(Path(e2e_shop.__file__).resolve())}))\n"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stdout": "{\"checks\": [\"create\", \"exact-decimal-coefficient\", \"missing-omission\", \"explicit-null\", \"empty-patch\", \"valid-patch\", \"missing-key\", \"missing-required\", \"wrong-decimal\", \"rounding\", \"nonfinite\", \"generated-create\", \"unknown-field\", \"null-nonnullable\", \"immutable-key\", \"sealed-generated-class\", \"unhashable-key\", \"construct-bypass\", \"copy-bypass\", \"decode-reordered-row\", \"duplicate-columns\", \"missing-columns\", \"extra-column\", \"row-cardinality\", \"invalid-row\"], \"count\": 25, \"python\": \"3.14.8\", \"encoded\": {\"orderId\": {\"string\": \"o-1\"}, \"amount\": {\"decimalToken\": \"1.200\"}, \"revision\": {\"integerToken\": \"1\"}, \"memo\": null}, \"loaded\": \"/private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-access-e2e-Irfq4k/engine-only/output/e2e_shop/__init__.py\"}\n",
+      "stderr": ""
+    },
+    {
+      "label": "engine-only-invalid-schema-refuses",
+      "args": [
+        "bun",
+        "/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/scripts/umf-access-generate.ts",
+        "generate",
+        "--request",
+        "/private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-access-e2e-Irfq4k/engine-only/request.json",
+        "--profile",
+        "/private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-access-e2e-Irfq4k/engine-only/profile.json",
+        "--output",
+        "/private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-access-e2e-Irfq4k/engine-only/output"
+      ],
+      "exit": 1,
+      "expected": 1,
+      "stdout": "",
+      "stderr": "{\"code\":\"INPUT\",\"message\":\"Typed access admission refused: INPUT\"}\n"
+    },
+    {
+      "label": "containers-generate",
+      "args": [
+        "bun",
+        "/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/scripts/umf-access-generate.ts",
+        "generate",
+        "--request",
+        "/private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-access-e2e-Irfq4k/containers/request.json",
+        "--profile",
+        "/private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-access-e2e-Irfq4k/containers/profile.json",
+        "--output",
+        "/private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-access-e2e-Irfq4k/containers/output"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stdout": "{\"kind\":\"access-public-diff\",\"scope\":\"source compatibility only; target and data compatibility unqualified\",\"changes\":[]}\n",
+      "stderr": ""
+    },
+    {
+      "label": "containers-check",
+      "args": [
+        "bun",
+        "/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/scripts/umf-access-generate.ts",
+        "check",
+        "--request",
+        "/private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-access-e2e-Irfq4k/containers/request.json",
+        "--profile",
+        "/private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-access-e2e-Irfq4k/containers/profile.json",
+        "--output",
+        "/private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-access-e2e-Irfq4k/containers/output"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "label": "containers-create-decode",
+      "args": [
+        "/private/tmp/sdk-r17-314-env/bin/python",
+        "-I",
+        "-B",
+        "-c",
+        "import sys,json,zipfile,hashlib,importlib.metadata as metadata\nfrom pathlib import Path\nfrom decimal import Decimal\nassert sys.version.split()[0] in ('3.11.17','3.14.8')\nassert metadata.version('pydantic')=='2.14.1'\nimport umf_access\nsite=Path(umf_access.__file__).parent.parent\nwith zipfile.ZipFile(\"/private/tmp/sdk-completion-runtime-r17-wheels/umf_access-0.1.0.dev0-py3-none-any.whl\") as archive:\n for name in archive.namelist():\n  if name.startswith('umf_access/') and not name.endswith('/'):\n   assert (site/name).read_bytes()==archive.read(name),name\nsys.path.insert(0,\"/private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-access-e2e-Irfq4k/containers/output\")\nimport e2e_shop\nfrom e2e_shop import Order,OrderCreate,OrderPatch,OrderKey\nfrom e2e_shop.codecs import encode_Order_create,encode_Order_patch,decode_Order\nfrom pydantic import MISSING\nchecks=[]\ndef refuses(label,call):\n try: call()\n except (ValueError,TypeError) as error:\n  assert 'private-invalid-value' not in str(error)\n  checks.append(label)\n else: raise AssertionError(label+' accepted')\nbase={'order_id':'o-1','amount':Decimal('1.200')}\ncontainers=True\nif containers: base.update(tags=['a'],labels={'a':'ok'})\ncreated=OrderCreate(**base)\nencoded=encode_Order_create(created)\nassert encoded['orderId']=='o-1' and encoded['amount'].as_tuple()==Decimal('1.200').as_tuple()\nassert 'revision' not in encoded and 'memo' not in encoded\nassert encode_Order_patch(OrderPatch())=={}\nassert encode_Order_patch(OrderPatch(memo=None))=={'memo':None}\nassert encode_Order_patch(OrderPatch(amount=Decimal('1.20')))['amount'].as_tuple()==Decimal('1.20').as_tuple()\nchecks += ['create','exact-decimal-coefficient','missing-omission','explicit-null','empty-patch','valid-patch']\nfor label,kwargs in [('missing-key',{'amount':Decimal('1.2')}),('missing-required',{'order_id':'o-1'}),('wrong-decimal',base|{'amount':'private-invalid-value'}),('rounding',base|{'amount':Decimal('1.234')}),('nonfinite',base|{'amount':Decimal('NaN')}),('generated-create',base|{'revision':1}),('unknown-field',base|{'unknown':1})]:\n refuses(label,lambda kwargs=kwargs:OrderCreate(**kwargs))\nrefuses('null-nonnullable',lambda:OrderPatch(amount=None))\nrefuses('immutable-key',lambda:OrderPatch(order_id='changed'))\nrefuses('sealed-generated-class',lambda:type('Bypass',(Order,),{}))\nrefuses('unhashable-key',lambda:hash(OrderKey(order_id='o-1')))\nassert list(OrderKey.model_fields)==['order_id']\nif False:\n from e2e_shop.keys import OrderAlternateKey,CustomerKey\n from umf_access.types import StrictModel\n from umf_access.codec_support import revalidate_model\n class Holder(StrictModel):\n  key:OrderKey\n refuses('wrong-exact-key',lambda:revalidate_model(Holder,Holder.model_construct(key=OrderAlternateKey(revision=1))))\n assert list(CustomerKey.model_fields)==list(OrderKey.model_fields)==['order_id']\n refuses('same-shaped-foreign-generated-key',lambda:revalidate_model(Holder,Holder.model_construct(key=CustomerKey(order_id='o-1'))))\n checks.append('explicit-key-selection-despite-declaration-order')\nrefuses('construct-bypass',lambda:encode_Order_patch(OrderPatch.model_construct(amount='private-invalid-value')))\nrefuses('copy-bypass',lambda:encode_Order_patch(OrderPatch().model_copy(update={'amount':'private-invalid-value'})))\nrow_values=encoded|{'memo':None,'revision':1}\ncolumns=list(reversed(list(row_values)))\nrow=decode_Order(columns,[row_values[column] for column in columns])\nassert row.order_id==created.order_id and row.amount.as_tuple()==created.amount.as_tuple() and row.memo is None\nchecks.append('decode-reordered-row')\nfor label,columns,values in [('duplicate-columns',['orderId','orderId'],['a','b']),('missing-columns',[],[]),('extra-column',list(row_values)+['other'],list(row_values.values())+[1]),('row-cardinality',list(row_values),[])]:\n refuses(label,lambda columns=columns,values=values:decode_Order(columns,values))\nrefuses('invalid-row',lambda:decode_Order(list(row_values),list((row_values|{'amount':'private-invalid-value'}).values())))\nif containers:\n refuses('empty-array',lambda:OrderCreate(**(base|{'tags':[]})))\n refuses('null-array-item',lambda:OrderCreate(**(base|{'tags':[None]})))\n refuses('missing-map-value',lambda:OrderCreate(**(base|{'labels':{'a':MISSING}})))\n created.tags.append('private-invalid-value')\n created.tags.append(1)\n refuses('post-creation-nested-mutation',lambda:encode_Order_create(created))\n value=OrderCreate(**(base|{'tags':['a']}))\n copied=encode_Order_create(value)\n assert copied['tags'] is not value.tags and copied['labels'] is not value.labels\n checks.append('nested-container-copy')\nprint(json.dumps({'checks':checks,'count':len(checks),'python':sys.version.split()[0],'encoded':{'orderId':{'string':'o-1'},'amount':{'decimalToken':str(encoded['amount'])},'revision':{'integerToken':'1'},'memo':None},'loaded':str(Path(e2e_shop.__file__).resolve())}))\n"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stdout": "{\"checks\": [\"create\", \"exact-decimal-coefficient\", \"missing-omission\", \"explicit-null\", \"empty-patch\", \"valid-patch\", \"missing-key\", \"missing-required\", \"wrong-decimal\", \"rounding\", \"nonfinite\", \"generated-create\", \"unknown-field\", \"null-nonnullable\", \"immutable-key\", \"sealed-generated-class\", \"unhashable-key\", \"construct-bypass\", \"copy-bypass\", \"decode-reordered-row\", \"duplicate-columns\", \"missing-columns\", \"extra-column\", \"row-cardinality\", \"invalid-row\", \"empty-array\", \"null-array-item\", \"missing-map-value\", \"post-creation-nested-mutation\", \"nested-container-copy\"], \"count\": 30, \"python\": \"3.14.8\", \"encoded\": {\"orderId\": {\"string\": \"o-1\"}, \"amount\": {\"decimalToken\": \"1.200\"}, \"revision\": {\"integerToken\": \"1\"}, \"memo\": null}, \"loaded\": \"/private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-access-e2e-Irfq4k/containers/output/e2e_shop/__init__.py\"}\n",
+      "stderr": ""
+    },
+    {
+      "label": "containers-invalid-schema-refuses",
+      "args": [
+        "bun",
+        "/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/scripts/umf-access-generate.ts",
+        "generate",
+        "--request",
+        "/private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-access-e2e-Irfq4k/containers/request.json",
+        "--profile",
+        "/private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-access-e2e-Irfq4k/containers/profile.json",
+        "--output",
+        "/private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-access-e2e-Irfq4k/containers/output"
+      ],
+      "exit": 1,
+      "expected": 1,
+      "stdout": "",
+      "stderr": "{\"code\":\"INPUT\",\"message\":\"Typed access admission refused: INPUT\"}\n"
+    },
+    {
+      "label": "alternate-key-generate",
+      "args": [
+        "bun",
+        "/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/scripts/umf-access-generate.ts",
+        "generate",
+        "--request",
+        "/private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-access-e2e-Irfq4k/alternate-key/request.json",
+        "--profile",
+        "/private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-access-e2e-Irfq4k/alternate-key/profile.json",
+        "--output",
+        "/private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-access-e2e-Irfq4k/alternate-key/output"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stdout": "{\"kind\":\"access-public-diff\",\"scope\":\"source compatibility only; target and data compatibility unqualified\",\"changes\":[]}\n",
+      "stderr": ""
+    },
+    {
+      "label": "alternate-key-check",
+      "args": [
+        "bun",
+        "/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/scripts/umf-access-generate.ts",
+        "check",
+        "--request",
+        "/private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-access-e2e-Irfq4k/alternate-key/request.json",
+        "--profile",
+        "/private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-access-e2e-Irfq4k/alternate-key/profile.json",
+        "--output",
+        "/private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-access-e2e-Irfq4k/alternate-key/output"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "label": "alternate-key-create-decode",
+      "args": [
+        "/private/tmp/sdk-r17-314-env/bin/python",
+        "-I",
+        "-B",
+        "-c",
+        "import sys,json,zipfile,hashlib,importlib.metadata as metadata\nfrom pathlib import Path\nfrom decimal import Decimal\nassert sys.version.split()[0] in ('3.11.17','3.14.8')\nassert metadata.version('pydantic')=='2.14.1'\nimport umf_access\nsite=Path(umf_access.__file__).parent.parent\nwith zipfile.ZipFile(\"/private/tmp/sdk-completion-runtime-r17-wheels/umf_access-0.1.0.dev0-py3-none-any.whl\") as archive:\n for name in archive.namelist():\n  if name.startswith('umf_access/') and not name.endswith('/'):\n   assert (site/name).read_bytes()==archive.read(name),name\nsys.path.insert(0,\"/private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-access-e2e-Irfq4k/alternate-key/output\")\nimport e2e_shop\nfrom e2e_shop import Order,OrderCreate,OrderPatch,OrderKey\nfrom e2e_shop.codecs import encode_Order_create,encode_Order_patch,decode_Order\nfrom pydantic import MISSING\nchecks=[]\ndef refuses(label,call):\n try: call()\n except (ValueError,TypeError) as error:\n  assert 'private-invalid-value' not in str(error)\n  checks.append(label)\n else: raise AssertionError(label+' accepted')\nbase={'order_id':'o-1','amount':Decimal('1.200')}\ncontainers=False\nif containers: base.update(tags=['a'],labels={'a':'ok'})\ncreated=OrderCreate(**base)\nencoded=encode_Order_create(created)\nassert encoded['orderId']=='o-1' and encoded['amount'].as_tuple()==Decimal('1.200').as_tuple()\nassert 'revision' not in encoded and 'memo' not in encoded\nassert encode_Order_patch(OrderPatch())=={}\nassert encode_Order_patch(OrderPatch(memo=None))=={'memo':None}\nassert encode_Order_patch(OrderPatch(amount=Decimal('1.20')))['amount'].as_tuple()==Decimal('1.20').as_tuple()\nchecks += ['create','exact-decimal-coefficient','missing-omission','explicit-null','empty-patch','valid-patch']\nfor label,kwargs in [('missing-key',{'amount':Decimal('1.2')}),('missing-required',{'order_id':'o-1'}),('wrong-decimal',base|{'amount':'private-invalid-value'}),('rounding',base|{'amount':Decimal('1.234')}),('nonfinite',base|{'amount':Decimal('NaN')}),('generated-create',base|{'revision':1}),('unknown-field',base|{'unknown':1})]:\n refuses(label,lambda kwargs=kwargs:OrderCreate(**kwargs))\nrefuses('null-nonnullable',lambda:OrderPatch(amount=None))\nrefuses('immutable-key',lambda:OrderPatch(order_id='changed'))\nrefuses('sealed-generated-class',lambda:type('Bypass',(Order,),{}))\nrefuses('unhashable-key',lambda:hash(OrderKey(order_id='o-1')))\nassert list(OrderKey.model_fields)==['order_id']\nif True:\n from e2e_shop.keys import OrderAlternateKey,CustomerKey\n from umf_access.types import StrictModel\n from umf_access.codec_support import revalidate_model\n class Holder(StrictModel):\n  key:OrderKey\n refuses('wrong-exact-key',lambda:revalidate_model(Holder,Holder.model_construct(key=OrderAlternateKey(revision=1))))\n assert list(CustomerKey.model_fields)==list(OrderKey.model_fields)==['order_id']\n refuses('same-shaped-foreign-generated-key',lambda:revalidate_model(Holder,Holder.model_construct(key=CustomerKey(order_id='o-1'))))\n checks.append('explicit-key-selection-despite-declaration-order')\nrefuses('construct-bypass',lambda:encode_Order_patch(OrderPatch.model_construct(amount='private-invalid-value')))\nrefuses('copy-bypass',lambda:encode_Order_patch(OrderPatch().model_copy(update={'amount':'private-invalid-value'})))\nrow_values=encoded|{'memo':None,'revision':1}\ncolumns=list(reversed(list(row_values)))\nrow=decode_Order(columns,[row_values[column] for column in columns])\nassert row.order_id==created.order_id and row.amount.as_tuple()==created.amount.as_tuple() and row.memo is None\nchecks.append('decode-reordered-row')\nfor label,columns,values in [('duplicate-columns',['orderId','orderId'],['a','b']),('missing-columns',[],[]),('extra-column',list(row_values)+['other'],list(row_values.values())+[1]),('row-cardinality',list(row_values),[])]:\n refuses(label,lambda columns=columns,values=values:decode_Order(columns,values))\nrefuses('invalid-row',lambda:decode_Order(list(row_values),list((row_values|{'amount':'private-invalid-value'}).values())))\nif containers:\n refuses('empty-array',lambda:OrderCreate(**(base|{'tags':[]})))\n refuses('null-array-item',lambda:OrderCreate(**(base|{'tags':[None]})))\n refuses('missing-map-value',lambda:OrderCreate(**(base|{'labels':{'a':MISSING}})))\n created.tags.append('private-invalid-value')\n created.tags.append(1)\n refuses('post-creation-nested-mutation',lambda:encode_Order_create(created))\n value=OrderCreate(**(base|{'tags':['a']}))\n copied=encode_Order_create(value)\n assert copied['tags'] is not value.tags and copied['labels'] is not value.labels\n checks.append('nested-container-copy')\nprint(json.dumps({'checks':checks,'count':len(checks),'python':sys.version.split()[0],'encoded':{'orderId':{'string':'o-1'},'amount':{'decimalToken':str(encoded['amount'])},'revision':{'integerToken':'1'},'memo':None},'loaded':str(Path(e2e_shop.__file__).resolve())}))\n"
+      ],
+      "exit": 0,
+      "expected": 0,
+      "stdout": "{\"checks\": [\"create\", \"exact-decimal-coefficient\", \"missing-omission\", \"explicit-null\", \"empty-patch\", \"valid-patch\", \"missing-key\", \"missing-required\", \"wrong-decimal\", \"rounding\", \"nonfinite\", \"generated-create\", \"unknown-field\", \"null-nonnullable\", \"immutable-key\", \"sealed-generated-class\", \"unhashable-key\", \"wrong-exact-key\", \"same-shaped-foreign-generated-key\", \"explicit-key-selection-despite-declaration-order\", \"construct-bypass\", \"copy-bypass\", \"decode-reordered-row\", \"duplicate-columns\", \"missing-columns\", \"extra-column\", \"row-cardinality\", \"invalid-row\"], \"count\": 28, \"python\": \"3.14.8\", \"encoded\": {\"orderId\": {\"string\": \"o-1\"}, \"amount\": {\"decimalToken\": \"1.200\"}, \"revision\": {\"integerToken\": \"1\"}, \"memo\": null}, \"loaded\": \"/private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-access-e2e-Irfq4k/alternate-key/output/e2e_shop/__init__.py\"}\n",
+      "stderr": ""
+    },
+    {
+      "label": "alternate-key-invalid-schema-refuses",
+      "args": [
+        "bun",
+        "/Users/erik/.codex/worktrees/typed-sdk-recovery/umf/scripts/umf-access-generate.ts",
+        "generate",
+        "--request",
+        "/private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-access-e2e-Irfq4k/alternate-key/request.json",
+        "--profile",
+        "/private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-access-e2e-Irfq4k/alternate-key/profile.json",
+        "--output",
+        "/private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-access-e2e-Irfq4k/alternate-key/output"
+      ],
+      "exit": 1,
+      "expected": 1,
+      "stdout": "",
+      "stderr": "{\"code\":\"INPUT\",\"message\":\"Typed access admission refused: INPUT\"}\n"
+    }
+  ]
+}

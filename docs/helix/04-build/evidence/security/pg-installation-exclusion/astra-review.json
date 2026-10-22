@@ -1,0 +1,20 @@
+{
+  "reviewer": "Astra ultra",
+  "status": "qualified-spike-review-passed",
+  "remainingFindings": [],
+  "observationsVerified": 61,
+  "nativeSourcePinsVerified": 6,
+  "formalSourcePinsVerified": 8,
+  "traceHashesVerified": 6,
+  "freshContextFormulaReplays": 8,
+  "unsat": 3,
+  "sat": 5,
+  "feedbackApplied": [
+    "Offset-independent pread capture replaces shared stderr descriptor seeks",
+    "SAT writer transition described as possible, not eventual progress or fairness"
+  ],
+  "nativeExecutionByReviewer": false,
+  "acceptanceCasesPromoted": [],
+  "B10": "counterexample-found",
+  "scope": "Conditional cooperative protocol only; no native refinement, complete enforcement or full backend qualification."
+}

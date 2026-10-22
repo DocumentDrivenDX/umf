@@ -1,0 +1,83 @@
+{
+  "activationOutcome": "Ok(value=CurrentQueryProtection(installation_id='a06102ca-fac7-4915-b5df-9d0fdc8f2273', inventory_digest='ad1e9705699d380cfd34117519993bbc7336977c36a6984aabde2283c0dcd761', status='pending_commit'), status='ok')",
+  "ordinaryRawTableSelect": false,
+  "externalWrapperRows": [
+    {
+      "12": {
+        "kind": "string",
+        "text": "alice"
+      }
+    },
+    {
+      "8": {
+        "kind": "string",
+        "text": "p1"
+      }
+    },
+    {
+      "9": {
+        "kind": "string",
+        "text": "r1"
+      },
+      "10": {
+        "kind": "integer",
+        "text": "9007199254740993"
+      },
+      "11": {
+        "kind": "string",
+        "text": "opaque-one"
+      }
+    },
+    {
+      "9": {
+        "kind": "string",
+        "text": "r2"
+      },
+      "10": {
+        "kind": "integer",
+        "text": "9007199254740993"
+      },
+      "11": {
+        "kind": "string",
+        "text": "opaque-two"
+      }
+    },
+    {
+      "5": {
+        "kind": "string",
+        "text": "o1"
+      },
+      "6": {
+        "kind": "string",
+        "text": "p1"
+      },
+      "7": {
+        "kind": "string",
+        "text": "r1"
+      }
+    },
+    {
+      "1": {
+        "kind": "boolean",
+        "value": true
+      },
+      "2": {
+        "kind": "string",
+        "text": "a1"
+      },
+      "3": {
+        "kind": "string",
+        "text": "p1"
+      },
+      "4": {
+        "kind": "string",
+        "text": "alice"
+      }
+    }
+  ],
+  "passed": true,
+  "originalRuntimeStopped": true,
+  "leaseReleased": true,
+  "testDirectoryAbsent": true,
+  "scope": "Uncommitted owner working snapshot, test-only pre-existing outside-schema SECURITY DEFINER wrapper, not post-activation hostile DDL or a released security claim. Fresh owned DB."
+}

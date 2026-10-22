@@ -1,0 +1,166 @@
+[
+  {
+    "cohort": "sdk-filter-native-r26-314-r1",
+    "counts": {
+      "timeout": 158,
+      "context": 0
+    },
+    "examples": {
+      "timeout": {
+        "version": "umf.pg-runtime-utility-observation/0.1",
+        "kind": "snapshot-free-statement-timeout",
+        "sql": "SET LOCAL statement_timeout = '4997ms'",
+        "sqlSha256": "88fe127b00993442c597e8f184a76f0c2237571c3dc06721160081108f6e9018",
+        "milliseconds": 4997,
+        "protocol": {
+          "observed": true,
+          "nativeSql": "SET LOCAL statement_timeout = '4997ms'",
+          "nativeSqlSha256": "88fe127b00993442c597e8f184a76f0c2237571c3dc06721160081108f6e9018",
+          "parameterOids": [],
+          "parameterFormats": [],
+          "parameterNulls": []
+        },
+        "sourceWheelSha256": "069e6423e4bc09ce66fe43f56987a497e06d411cd01582258226e8f64b538ab7",
+        "helperPayload": "umf_access/postgres_read.py",
+        "helperPayloadSha256": "7ca535c09471b8725e61aeb0210565dc5435ba66f877ceae44d41dbaef87bd10",
+        "helperSourceSha256": "10a9145b2464b8318e3c705a0d7c301a825f924e6808220ecde68df1b7827160",
+        "actualCallsites": [
+          {
+            "path": "/private/tmp/sdk-r26-r22-314-env/lib/python3.14/site-packages/umf_access/postgres_search.py",
+            "line": 444,
+            "function": "_run_search",
+            "sourceSha256": "1860de919700f558e4daa0e47d85f89e023bc28683ab0040a0fde369565e198d"
+          }
+        ],
+        "nativeAuthorizationOutcome": "selected-execution-returned",
+        "parseTreeAnalysisApplicable": false,
+        "nativeAuthority": false,
+        "inventoryComplete": false
+      }
+    },
+    "scope": "observed actual source-bound returned utilities only; no parse-tree or inventory-complete claim"
+  },
+  {
+    "cohort": "sdk-ranked-strict-native-r26-314-r1",
+    "counts": {
+      "timeout": 80,
+      "context": 0
+    },
+    "examples": {
+      "timeout": {
+        "version": "umf.pg-runtime-utility-observation/0.1",
+        "kind": "snapshot-free-statement-timeout",
+        "sql": "SET LOCAL statement_timeout = '4994ms'",
+        "sqlSha256": "68adb11575942c695d16b8be55c675a205ffc6140bb11ee05b3e3dc4526e5eaa",
+        "milliseconds": 4994,
+        "protocol": {
+          "observed": true,
+          "nativeSql": "SET LOCAL statement_timeout = '4994ms'",
+          "nativeSqlSha256": "68adb11575942c695d16b8be55c675a205ffc6140bb11ee05b3e3dc4526e5eaa",
+          "parameterOids": [],
+          "parameterFormats": [],
+          "parameterNulls": []
+        },
+        "sourceWheelSha256": "069e6423e4bc09ce66fe43f56987a497e06d411cd01582258226e8f64b538ab7",
+        "helperPayload": "umf_access/postgres_read.py",
+        "helperPayloadSha256": "7ca535c09471b8725e61aeb0210565dc5435ba66f877ceae44d41dbaef87bd10",
+        "helperSourceSha256": "10a9145b2464b8318e3c705a0d7c301a825f924e6808220ecde68df1b7827160",
+        "actualCallsites": [
+          {
+            "path": "/private/tmp/sdk-r26-r22-314-env/lib/python3.14/site-packages/umf_access/postgres_search.py",
+            "line": 444,
+            "function": "_run_search",
+            "sourceSha256": "1860de919700f558e4daa0e47d85f89e023bc28683ab0040a0fde369565e198d"
+          }
+        ],
+        "nativeAuthorizationOutcome": "selected-execution-returned",
+        "parseTreeAnalysisApplicable": false,
+        "nativeAuthority": false,
+        "inventoryComplete": false
+      }
+    },
+    "scope": "observed actual source-bound returned utilities only; no parse-tree or inventory-complete claim"
+  },
+  {
+    "cohort": "sdk-filter-native-r26-311-r1",
+    "counts": {
+      "timeout": 158,
+      "context": 0
+    },
+    "examples": {
+      "timeout": {
+        "version": "umf.pg-runtime-utility-observation/0.1",
+        "kind": "snapshot-free-statement-timeout",
+        "sql": "SET LOCAL statement_timeout = '4991ms'",
+        "sqlSha256": "9ba20e3de091841004215b77d6b4d342211bd8bd881394e2ebb8b4306c268fb4",
+        "milliseconds": 4991,
+        "protocol": {
+          "observed": true,
+          "nativeSql": "SET LOCAL statement_timeout = '4991ms'",
+          "nativeSqlSha256": "9ba20e3de091841004215b77d6b4d342211bd8bd881394e2ebb8b4306c268fb4",
+          "parameterOids": [],
+          "parameterFormats": [],
+          "parameterNulls": []
+        },
+        "sourceWheelSha256": "069e6423e4bc09ce66fe43f56987a497e06d411cd01582258226e8f64b538ab7",
+        "helperPayload": "umf_access/postgres_read.py",
+        "helperPayloadSha256": "7ca535c09471b8725e61aeb0210565dc5435ba66f877ceae44d41dbaef87bd10",
+        "helperSourceSha256": "10a9145b2464b8318e3c705a0d7c301a825f924e6808220ecde68df1b7827160",
+        "actualCallsites": [
+          {
+            "path": "/private/tmp/sdk-r26-r22-311-env/lib/python3.11/site-packages/umf_access/postgres_search.py",
+            "line": 444,
+            "function": "_run_search",
+            "sourceSha256": "1860de919700f558e4daa0e47d85f89e023bc28683ab0040a0fde369565e198d"
+          }
+        ],
+        "nativeAuthorizationOutcome": "selected-execution-returned",
+        "parseTreeAnalysisApplicable": false,
+        "nativeAuthority": false,
+        "inventoryComplete": false
+      }
+    },
+    "scope": "observed actual source-bound returned utilities only; no parse-tree or inventory-complete claim"
+  },
+  {
+    "cohort": "sdk-ranked-strict-native-r26-311-r1",
+    "counts": {
+      "timeout": 80,
+      "context": 0
+    },
+    "examples": {
+      "timeout": {
+        "version": "umf.pg-runtime-utility-observation/0.1",
+        "kind": "snapshot-free-statement-timeout",
+        "sql": "SET LOCAL statement_timeout = '4997ms'",
+        "sqlSha256": "88fe127b00993442c597e8f184a76f0c2237571c3dc06721160081108f6e9018",
+        "milliseconds": 4997,
+        "protocol": {
+          "observed": true,
+          "nativeSql": "SET LOCAL statement_timeout = '4997ms'",
+          "nativeSqlSha256": "88fe127b00993442c597e8f184a76f0c2237571c3dc06721160081108f6e9018",
+          "parameterOids": [],
+          "parameterFormats": [],
+          "parameterNulls": []
+        },
+        "sourceWheelSha256": "069e6423e4bc09ce66fe43f56987a497e06d411cd01582258226e8f64b538ab7",
+        "helperPayload": "umf_access/postgres_read.py",
+        "helperPayloadSha256": "7ca535c09471b8725e61aeb0210565dc5435ba66f877ceae44d41dbaef87bd10",
+        "helperSourceSha256": "10a9145b2464b8318e3c705a0d7c301a825f924e6808220ecde68df1b7827160",
+        "actualCallsites": [
+          {
+            "path": "/private/tmp/sdk-r26-r22-311-env/lib/python3.11/site-packages/umf_access/postgres_search.py",
+            "line": 444,
+            "function": "_run_search",
+            "sourceSha256": "1860de919700f558e4daa0e47d85f89e023bc28683ab0040a0fde369565e198d"
+          }
+        ],
+        "nativeAuthorizationOutcome": "selected-execution-returned",
+        "parseTreeAnalysisApplicable": false,
+        "nativeAuthority": false,
+        "inventoryComplete": false
+      }
+    },
+    "scope": "observed actual source-bound returned utilities only; no parse-tree or inventory-complete claim"
+  }
+]

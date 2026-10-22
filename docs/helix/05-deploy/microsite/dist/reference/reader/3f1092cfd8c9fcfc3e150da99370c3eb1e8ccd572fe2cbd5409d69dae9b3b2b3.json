@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"BindingMigrationResult\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "document",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"BindingMigrationReceipt\"]"
+      ],
+      "name": "receipt",
+      "optional": false,
+      "type": "BindingMigrationReceipt"
+    }
+  ],
+  "parameters": [],
+  "purpose": "BindingMigrationResult is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "BindingMigrationResult"
+}

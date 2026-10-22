@@ -1,0 +1,35 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"resolveSecurityProtectionDomains\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "policyInput",
+      "optional": false,
+      "type": "unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "catalogInput",
+      "optional": false,
+      "type": "unknown"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "closureInput",
+      "optional": false,
+      "type": "unknown"
+    }
+  ],
+  "purpose": "Exact pins qualify only the supplied immutable core definitions, not their provenance.",
+  "related": [],
+  "returns": "SecurityProtectionDomainResolution",
+  "task": "Inspect and select",
+  "type": "(policyInput: unknown, catalogInput: unknown, closureInput: unknown) => SecurityProtectionDomainResolution"
+}

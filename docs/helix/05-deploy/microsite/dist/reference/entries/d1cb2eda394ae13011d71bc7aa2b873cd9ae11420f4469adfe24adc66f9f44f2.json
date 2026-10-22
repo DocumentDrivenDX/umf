@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 9572,
+        "line": 11,
+        "path": "src/core-ideals/relationship-sqlserver.ts",
+        "sha256": "37ad0b63418f428ef2841835f45874ad702d2436d7582d0ea765114533552708"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "SqlServerRelationshipObservation",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface SqlServerRelationshipObservation {nativePath:string;table:{schema:string;name:string};name:string;nativeForeignKey:Json;referencedKeys:{path:string;nativeKey:Json}[];sourceFields:{module:string;element:string}[];targetFields:{module:string;element:string}[];enforcement:'enabled-trusted'|'enabled-untrusted'|'disabled'|'unknown';authorIntent:'unknown';provenance:'inferred';deleteAction:string;updateAction:string;notForReplication:boolean;resolution:'captured-tuple-candidate'|'unresolved'}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"SqlServerRelationshipObservation\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 9572,
+      "line": 11,
+      "path": "src/core-ideals/relationship-sqlserver.ts",
+      "sha256": "37ad0b63418f428ef2841835f45874ad702d2436d7582d0ea765114533552708"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/relationship-sqlserver.ts",
+  "title": "SqlServerRelationshipObservation"
+}

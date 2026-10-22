@@ -1,0 +1,69 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"Document\"]",
+  "kind": "Type alias",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "umf",
+      "optional": false,
+      "type": "\"0.10.0\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "id",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "vocabularies",
+      "optional": false,
+      "type": "{ [key: string]: { [key: string]: unknown; version: Version; }; }"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Module\"]"
+      ],
+      "name": "modules",
+      "optional": false,
+      "type": "Module[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "extensions",
+      "optional": true,
+      "type": "Extensions"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "title",
+      "optional": true,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "aliases",
+      "optional": true,
+      "type": "string[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "The programmatic UMF document envelope: document marker, stable identity, vocabulary declarations and modules.",
+  "related": [
+    "[\"api\",\".\",\"readDocument\"]",
+    "[\"api\",\".\",\"validateDocument\"]",
+    "[\"api\",\".\",\"Module\"]"
+  ],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "Document"
+}

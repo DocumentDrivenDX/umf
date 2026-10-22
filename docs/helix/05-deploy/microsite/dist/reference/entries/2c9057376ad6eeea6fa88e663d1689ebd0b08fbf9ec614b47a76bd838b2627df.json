@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 6206,
+        "line": 9,
+        "path": "src/adapters/parquet/pages.ts",
+        "sha256": "d9389c85de0bfc672e83dc3905bdad754339f8fc1c4e059a72f6e573719d1072"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "ParquetPageInspection",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface ParquetPageInspection {source:Document;status:'checked'|'blocked';complete:false;diagnostics:Diagnostic[];pages?:ParquetPage[];declaredUncompressedBytes?:number;declaredValues?:number}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"ParquetPageInspection\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 6206,
+      "line": 9,
+      "path": "src/adapters/parquet/pages.ts",
+      "sha256": "d9389c85de0bfc672e83dc3905bdad754339f8fc1c4e059a72f6e573719d1072"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/parquet/pages.ts",
+  "title": "ParquetPageInspection"
+}

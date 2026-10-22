@@ -1,0 +1,37 @@
+$ python3 scripts/actions-docs/render-diagrams.py && bun scripts/actions-docs/build.ts
+Rendered 8 distinct diagrams, each with desktop/mobile layout
+Built 10 action guide pages; SVG bytes inline, asset hashes bound in each page
+$ python3 scripts/actions-docs/render-diagrams.py --check && bun scripts/actions-docs/build.ts --check && bun scripts/actions-docs/check.ts && python3 scripts/actions-docs/render-negative-control.py && python3 scripts/actions-docs/build-negative-controls.py
+Checked 8 distinct diagrams, each with desktop/mobile layout
+Deterministic guide output, snippets and asset manifest match
+Portable tutorial, generated assets and unchanged historic certificate checked
+Checked 8 distinct diagrams, each with desktop/mobile layout
+Render-drift negative control rejected; check left corrupted bytes unchanged
+Untouched build passes; all seven malformed-source/output controls refuse without repair
+$ bun scripts/actions-docs/portable-example.ts && bun scripts/actions-docs/refusal-example.ts && bun scripts/actions-docs/rule-example.ts
+{
+  "module": "sales",
+  "action": "approve",
+  "valid": true,
+  "complete": false,
+  "unchecked": [
+    "authorization"
+  ],
+  "declaredCompatible": false,
+  "executionVerified": false,
+  "businessWrites": 0
+}
+{
+  "code": "ACTION_IDENTITY",
+  "sourceUnchanged": true,
+  "businessWrites": 0
+}
+{
+  "compiledType": "boolean",
+  "satisfied": true,
+  "unsatisfied": false,
+  "businessWrites": 0,
+  "stateSource": "explicitly supplied illustrative state; not authenticated store state"
+}
+$ bun scripts/actions-docs/browser.ts
+{"routes":10,"widths":[1440,390],"browser":"153.0.8010.12","externalRequests":0,"pageErrors":0}

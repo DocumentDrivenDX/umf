@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 3392,
+        "line": 5,
+        "path": "src/adapters/rfc3339-exact-instant.ts",
+        "sha256": "323828b047b88321facab39aac05943635bd28dcef156b7951c69c462c9e4adb"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "Rfc3339ExactInstant",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface Rfc3339ExactInstant {\n readonly profile: typeof RFC3339_EXACT_INSTANT_PROFILE;\n readonly originalText: string;\n /** Whole seconds since 1970-01-01T00:00:00Z, rounded toward negative infinity. */\n readonly utcSeconds: string;\n /** Nonnegative fractional second digits, with trailing zeros removed. */\n readonly fractionalDigits: string;\n readonly originalOffset: string;\n readonly localOffsetKnown: boolean;\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"Rfc3339ExactInstant\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 3392,
+      "line": 5,
+      "path": "src/adapters/rfc3339-exact-instant.ts",
+      "sha256": "323828b047b88321facab39aac05943635bd28dcef156b7951c69c462c9e4adb"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/rfc3339-exact-instant.ts",
+  "title": "Rfc3339ExactInstant"
+}

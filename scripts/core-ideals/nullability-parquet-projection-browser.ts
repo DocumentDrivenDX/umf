@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {createHash} from 'node:crypto';
 import {chromium} from 'playwright';
 const fixture=await Bun.file('fixtures/validation/nullability-parquet-projection-corpus.json').json();

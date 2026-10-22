@@ -1,0 +1,251 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:ddd-postgresql-projection:1.0.0",
+  "title": "Complete retained DDD/PostgreSQL directed projection result",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "operation",
+    "version",
+    "status",
+    "source",
+    "binding",
+    "policy",
+    "nativeVersion",
+    "mappings",
+    "residuals",
+    "diagnostics"
+  ],
+  "properties": {
+    "operation": {
+      "const": "project-ddd-postgresql"
+    },
+    "version": {
+      "const": "1.0.0"
+    },
+    "status": {
+      "enum": [
+        "projected",
+        "blocked"
+      ]
+    },
+    "source": {
+      "$ref": "urn:umf:core:0.7.0"
+    },
+    "binding": {
+      "anyOf": [
+        {
+          "$ref": "urn:umf:core:0.1.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.2.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.3.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.4.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.5.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.6.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.7.0"
+        }
+      ]
+    },
+    "policy": {
+      "$ref": "urn:umf:ddd-postgresql-policy:1.0.0"
+    },
+    "nativeVersion": {
+      "const": "17.4"
+    },
+    "mappings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "source",
+          "path",
+          "statement",
+          "kind",
+          "target",
+          "outcome"
+        ],
+        "properties": {
+          "source": {
+            "enum": [
+              "logical",
+              "binding",
+              "policy"
+            ]
+          },
+          "path": {
+            "type": "string"
+          },
+          "statement": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "kind": {
+            "enum": [
+              "schema",
+              "table",
+              "column",
+              "embedded-check",
+              "partition",
+              "key",
+              "relationship",
+              "index"
+            ]
+          },
+          "target": {
+            "type": "string",
+            "minLength": 1
+          },
+          "outcome": {
+            "enum": [
+              "exact",
+              "approximated"
+            ]
+          }
+        }
+      }
+    },
+    "residuals": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "source",
+          "path",
+          "value",
+          "outcome",
+          "reason"
+        ],
+        "properties": {
+          "source": {
+            "enum": [
+              "logical",
+              "binding",
+              "policy"
+            ]
+          },
+          "path": {
+            "type": "string"
+          },
+          "value": {},
+          "outcome": {
+            "enum": [
+              "unknown",
+              "not-expressible",
+              "approximated"
+            ]
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "diagnostics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "code",
+          "path",
+          "message",
+          "severity"
+        ],
+        "properties": {
+          "code": {
+            "type": "string",
+            "minLength": 1
+          },
+          "path": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          },
+          "severity": {
+            "enum": [
+              "error",
+              "warning"
+            ]
+          }
+        }
+      }
+    },
+    "nativeSource": {
+      "type": "string",
+      "minLength": 1
+    },
+    "targetArchive": {
+      "anyOf": [
+        {
+          "$ref": "urn:umf:core:0.1.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.2.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.3.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.4.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.5.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.6.0"
+        },
+        {
+          "$ref": "urn:umf:core:0.7.0"
+        }
+      ]
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "projected"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "nativeSource",
+          "targetArchive"
+        ],
+        "properties": {
+          "policy": {
+            "properties": {
+              "mode": {
+                "const": "report"
+              }
+            }
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "nativeSource": false,
+          "targetArchive": false
+        }
+      }
+    }
+  ]
+}

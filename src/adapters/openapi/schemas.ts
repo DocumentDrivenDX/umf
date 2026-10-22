@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {createValidator} from '../../validation/schema';
 import {pointer,type Json,type Diagnostic} from '../../model/types';
 import meta31 from '../../../spec/extensions/openapi/upstream/3.1-meta.json';

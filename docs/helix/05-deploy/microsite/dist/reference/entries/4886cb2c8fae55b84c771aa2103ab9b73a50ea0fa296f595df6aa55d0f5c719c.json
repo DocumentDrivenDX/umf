@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 17891,
+        "line": 24,
+        "path": "src/core-ideals/facets-tablespec.ts",
+        "sha256": "845cea8250367aa3230ca488b8dde26c4523ac233eade2a7ebb55646b3e4082f"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "TableSpecFacetClassification",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface TableSpecFacetClassification {\n operation:'classify-tablespec-facets';version:'1.0.0';status:'classified'|'blocked';outcome:Outcome;source:Document;target?:Document;request:TableSpecFacetRequest;binding:typeof binding;\n mapping:{origin:'classified';idealPath:string;nativePath:string;nativeFragment:NativeJson;facets:CoreFacetPatch;observations:Observation[]};\n residuals:{path:string;targetPath:string|null;value:Json;reason:string;outcome:Exclude<Outcome,'exact'>;binding:typeof binding;recovery:typeof recovery}[];diagnostics:Diagnostic[];\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"TableSpecFacetClassification\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 17891,
+      "line": 24,
+      "path": "src/core-ideals/facets-tablespec.ts",
+      "sha256": "845cea8250367aa3230ca488b8dde26c4523ac233eade2a7ebb55646b3e4082f"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/facets-tablespec.ts",
+  "title": "TableSpecFacetClassification"
+}

@@ -1,0 +1,50 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"SecurityIdentityTransportDependencies\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "Keep policy reads distinct from extra key/endpoint transport requirements.",
+      "links": [
+        "[\"api\",\".\",\"SecurityRef\"]"
+      ],
+      "name": "policyFields",
+      "optional": false,
+      "type": "SecurityRef[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SecurityRef\"]"
+      ],
+      "name": "records",
+      "optional": false,
+      "type": "{ type: SecurityRef; keyId: string; keyFields: SecurityRef[]; endpoints: { role: string; target: SecurityRef; fields: SecurityRef[]; }[]; }[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SecurityRef\"]"
+      ],
+      "name": "fields",
+      "optional": false,
+      "type": "SecurityRef[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SecurityRef\"]"
+      ],
+      "name": "associations",
+      "optional": false,
+      "type": "SecurityRef[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "SecurityIdentityTransportDependencies is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "SecurityIdentityTransportDependencies"
+}

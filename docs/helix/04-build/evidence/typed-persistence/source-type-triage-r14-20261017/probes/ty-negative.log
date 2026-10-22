@@ -1,0 +1,60 @@
+error[invalid-argument-type]: Argument to bound method `RequiredJoin.to_alias` is incorrect
+  --> /private/tmp/sdk-r14-mypy-triage/probes/misuse_negative.py:10:19
+   |
+10 |     join.to_alias(foreign)
+   |                   ^^^^^^^ Expected `RecordAlias[Row, Tag]`, found `RecordAlias[Foreign, Tag]`
+info: Method defined here
+   --> /private/tmp/sdk-r14-314-env/lib/python3.14/site-packages/umf_access/dsl/_expressions.py:428:9
+    |
+428 |     def to_alias(self, target: RecordAlias[J, AliasTag]) -> RequiredJoin[OutputT, AliasOwner[J, AliasTag], K]:
+    |         ^^^^^^^^       -------------------------------- Parameter declared here
+
+error[no-matching-overload]: No overload of bound method `Column.bucket_width` matches arguments
+  --> /private/tmp/sdk-r14-mypy-triage/probes/misuse_negative.py:11:5
+   |
+11 |     integer.bucket_width('1')
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^
+info: First overload defined here
+   --> /private/tmp/sdk-r14-314-env/lib/python3.14/site-packages/umf_access/dsl/_expressions.py:121:5
+    |
+121 | /     @overload
+122 | |     def bucket_width(self: Column[OutputT, int], width: int) -> Bucket[OutputT, int]: ...
+    | |_________________________________________________________________________________________^ First overload defined here
+info: Possible overloads for bound method `bucket_width`:
+info:   (self: Column[OutputT@Column, int], width: int) -> Bucket[OutputT@Column, int]
+info:   (self: Column[OutputT@Column, int | None], width: int) -> Bucket[OutputT@Column, int | None]
+info:   (self: Column[OutputT@Column, int] | Column[OutputT@Column, Decimal], width: Decimal) -> Bucket[OutputT@Column, Decimal]
+info:   (self: Column[OutputT@Column, int | None] | Column[OutputT@Column, Decimal | None], width: Decimal) -> Bucket[OutputT@Column, Decimal | None]
+info:   (self: Column[OutputT@Column, Decimal], width: int) -> Bucket[OutputT@Column, Decimal]
+info:   (self: Column[OutputT@Column, Decimal | None], width: int) -> Bucket[OutputT@Column, Decimal | None]
+info: Overload implementation defined here
+   --> /private/tmp/sdk-r14-314-env/lib/python3.14/site-packages/umf_access/dsl/_expressions.py:133:9
+    |
+133 |     def bucket_width(self, width: int | Decimal) -> Bucket[OutputT, Any]:
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error[no-matching-overload]: No overload of bound method `Column.bucket_width` matches arguments
+  --> /private/tmp/sdk-r14-mypy-triage/probes/misuse_negative.py:12:5
+   |
+12 |     decimal.bucket_width(1.0)
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^
+info: First overload defined here
+   --> /private/tmp/sdk-r14-314-env/lib/python3.14/site-packages/umf_access/dsl/_expressions.py:121:5
+    |
+121 | /     @overload
+122 | |     def bucket_width(self: Column[OutputT, int], width: int) -> Bucket[OutputT, int]: ...
+    | |_________________________________________________________________________________________^ First overload defined here
+info: Possible overloads for bound method `bucket_width`:
+info:   (self: Column[OutputT@Column, int], width: int) -> Bucket[OutputT@Column, int]
+info:   (self: Column[OutputT@Column, int | None], width: int) -> Bucket[OutputT@Column, int | None]
+info:   (self: Column[OutputT@Column, int] | Column[OutputT@Column, Decimal], width: Decimal) -> Bucket[OutputT@Column, Decimal]
+info:   (self: Column[OutputT@Column, int | None] | Column[OutputT@Column, Decimal | None], width: Decimal) -> Bucket[OutputT@Column, Decimal | None]
+info:   (self: Column[OutputT@Column, Decimal], width: int) -> Bucket[OutputT@Column, Decimal]
+info:   (self: Column[OutputT@Column, Decimal | None], width: int) -> Bucket[OutputT@Column, Decimal | None]
+info: Overload implementation defined here
+   --> /private/tmp/sdk-r14-314-env/lib/python3.14/site-packages/umf_access/dsl/_expressions.py:133:9
+    |
+133 |     def bucket_width(self, width: int | Decimal) -> Bucket[OutputT, Any]:
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Found 3 diagnostics

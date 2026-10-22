@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 4905,
+        "line": 13,
+        "path": "src/adapters/parquet/field-metadata.ts",
+        "sha256": "4ab6e9e2c566276dfc5cbcc7d96c667f2acd5bbc5efb08a611912342bfd3827e"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "getParquetFieldMetadata",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(source: Document): ParquetFieldMetadataResult"
+    ]
+  },
+  "id": "[\"api\",\".\",\"getParquetFieldMetadata\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 4905,
+      "line": 13,
+      "path": "src/adapters/parquet/field-metadata.ts",
+      "sha256": "4ab6e9e2c566276dfc5cbcc7d96c667f2acd5bbc5efb08a611912342bfd3827e"
+    }
+  ],
+  "summary": "Field domains only, not row shape, repetition flattening or instance validation.",
+  "title": "getParquetFieldMetadata"
+}

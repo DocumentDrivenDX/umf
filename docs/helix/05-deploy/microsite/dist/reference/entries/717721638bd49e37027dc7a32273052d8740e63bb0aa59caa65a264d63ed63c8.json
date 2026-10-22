@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 18737,
+        "line": 36,
+        "path": "src/model/dataset-values.ts",
+        "sha256": "29f8dfe12f7e57d59320c0d31c78d1439355eac1c809924c80990a805e25478f"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "validateCoreDatasetValues",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(sourceInput: Document, inputInput: CoreDatasetInput): CoreDatasetValueCheck"
+    ]
+  },
+  "id": "[\"api\",\".\",\"validateCoreDatasetValues\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 18737,
+      "line": 36,
+      "path": "src/model/dataset-values.ts",
+      "sha256": "29f8dfe12f7e57d59320c0d31c78d1439355eac1c809924c80990a805e25478f"
+    }
+  ],
+  "summary": "Finite supplied dataset only; no global/native coverage or execution authority.",
+  "title": "validateCoreDatasetValues"
+}

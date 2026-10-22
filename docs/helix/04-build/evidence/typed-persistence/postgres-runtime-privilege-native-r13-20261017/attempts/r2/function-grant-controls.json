@@ -1,0 +1,4232 @@
+{
+  "necessary": [
+    {
+      "function": {
+        "oid": 60,
+        "schema": "pg_catalog",
+        "name": "booleq",
+        "arguments": [
+          {
+            "schema": "pg_catalog",
+            "name": "bool",
+            "oid": 16
+          },
+          {
+            "schema": "pg_catalog",
+            "name": "bool",
+            "oid": 16
+          }
+        ],
+        "result": {
+          "schema": "pg_catalog",
+          "name": "bool",
+          "oid": 16
+        },
+        "kind": "f",
+        "variadicType": null,
+        "plannerSupportOid": 0,
+        "languageOid": 12,
+        "securityDefiner": false,
+        "acl": null,
+        "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+      },
+      "deniedSqlstate": "42501"
+    },
+    {
+      "function": {
+        "oid": 62,
+        "schema": "pg_catalog",
+        "name": "nameeq",
+        "arguments": [
+          {
+            "schema": "pg_catalog",
+            "name": "name",
+            "oid": 19
+          },
+          {
+            "schema": "pg_catalog",
+            "name": "name",
+            "oid": 19
+          }
+        ],
+        "result": {
+          "schema": "pg_catalog",
+          "name": "bool",
+          "oid": 16
+        },
+        "kind": "f",
+        "variadicType": null,
+        "plannerSupportOid": 0,
+        "languageOid": 12,
+        "securityDefiner": false,
+        "acl": null,
+        "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+      },
+      "deniedSqlstate": "42501"
+    },
+    {
+      "function": {
+        "oid": 162,
+        "schema": "pg_catalog",
+        "name": "int24gt",
+        "arguments": [
+          {
+            "schema": "pg_catalog",
+            "name": "int2",
+            "oid": 21
+          },
+          {
+            "schema": "pg_catalog",
+            "name": "int4",
+            "oid": 23
+          }
+        ],
+        "result": {
+          "schema": "pg_catalog",
+          "name": "bool",
+          "oid": 16
+        },
+        "kind": "f",
+        "variadicType": null,
+        "plannerSupportOid": 0,
+        "languageOid": 12,
+        "securityDefiner": false,
+        "acl": null,
+        "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+      },
+      "deniedSqlstate": "42501"
+    },
+    {
+      "function": {
+        "oid": 184,
+        "schema": "pg_catalog",
+        "name": "oideq",
+        "arguments": [
+          {
+            "schema": "pg_catalog",
+            "name": "oid",
+            "oid": 26
+          },
+          {
+            "schema": "pg_catalog",
+            "name": "oid",
+            "oid": 26
+          }
+        ],
+        "result": {
+          "schema": "pg_catalog",
+          "name": "bool",
+          "oid": 16
+        },
+        "kind": "f",
+        "variadicType": null,
+        "plannerSupportOid": 0,
+        "languageOid": 12,
+        "securityDefiner": false,
+        "acl": null,
+        "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+      },
+      "deniedSqlstate": "42501"
+    },
+    {
+      "function": {
+        "oid": 240,
+        "schema": "pg_catalog",
+        "name": "nameeqtext",
+        "arguments": [
+          {
+            "schema": "pg_catalog",
+            "name": "name",
+            "oid": 19
+          },
+          {
+            "schema": "pg_catalog",
+            "name": "text",
+            "oid": 25
+          }
+        ],
+        "result": {
+          "schema": "pg_catalog",
+          "name": "bool",
+          "oid": 16
+        },
+        "kind": "f",
+        "variadicType": null,
+        "plannerSupportOid": 0,
+        "languageOid": 12,
+        "securityDefiner": false,
+        "acl": null,
+        "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+      },
+      "deniedSqlstate": "42501"
+    },
+    {
+      "function": {
+        "oid": 313,
+        "schema": "pg_catalog",
+        "name": "int4",
+        "arguments": [
+          {
+            "schema": "pg_catalog",
+            "name": "int2",
+            "oid": 21
+          }
+        ],
+        "result": {
+          "schema": "pg_catalog",
+          "name": "int4",
+          "oid": 23
+        },
+        "kind": "f",
+        "variadicType": null,
+        "plannerSupportOid": 0,
+        "languageOid": 12,
+        "securityDefiner": false,
+        "acl": null,
+        "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+      },
+      "deniedSqlstate": "42501"
+    },
+    {
+      "function": {
+        "oid": 406,
+        "schema": "pg_catalog",
+        "name": "text",
+        "arguments": [
+          {
+            "schema": "pg_catalog",
+            "name": "name",
+            "oid": 19
+          }
+        ],
+        "result": {
+          "schema": "pg_catalog",
+          "name": "text",
+          "oid": 25
+        },
+        "kind": "f",
+        "variadicType": null,
+        "plannerSupportOid": 0,
+        "languageOid": 12,
+        "securityDefiner": false,
+        "acl": null,
+        "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+      },
+      "deniedSqlstate": "42501"
+    },
+    {
+      "function": {
+        "oid": 480,
+        "schema": "pg_catalog",
+        "name": "int4",
+        "arguments": [
+          {
+            "schema": "pg_catalog",
+            "name": "int8",
+            "oid": 20
+          }
+        ],
+        "result": {
+          "schema": "pg_catalog",
+          "name": "int4",
+          "oid": 23
+        },
+        "kind": "f",
+        "variadicType": null,
+        "plannerSupportOid": 0,
+        "languageOid": 12,
+        "securityDefiner": false,
+        "acl": null,
+        "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+      },
+      "deniedSqlstate": "42501"
+    },
+    {
+      "function": {
+        "oid": 481,
+        "schema": "pg_catalog",
+        "name": "int8",
+        "arguments": [
+          {
+            "schema": "pg_catalog",
+            "name": "int4",
+            "oid": 23
+          }
+        ],
+        "result": {
+          "schema": "pg_catalog",
+          "name": "int8",
+          "oid": 20
+        },
+        "kind": "f",
+        "variadicType": null,
+        "plannerSupportOid": 0,
+        "languageOid": 12,
+        "securityDefiner": false,
+        "acl": null,
+        "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+      },
+      "deniedSqlstate": "42501"
+    },
+    {
+      "function": {
+        "oid": 742,
+        "schema": "pg_catalog",
+        "name": "text_gt",
+        "arguments": [
+          {
+            "schema": "pg_catalog",
+            "name": "text",
+            "oid": 25
+          },
+          {
+            "schema": "pg_catalog",
+            "name": "text",
+            "oid": 25
+          }
+        ],
+        "result": {
+          "schema": "pg_catalog",
+          "name": "bool",
+          "oid": 16
+        },
+        "kind": "f",
+        "variadicType": null,
+        "plannerSupportOid": 0,
+        "languageOid": 12,
+        "securityDefiner": false,
+        "acl": null,
+        "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+      },
+      "deniedSqlstate": "42501"
+    },
+    {
+      "function": {
+        "oid": 754,
+        "schema": "pg_catalog",
+        "name": "int8",
+        "arguments": [
+          {
+            "schema": "pg_catalog",
+            "name": "int2",
+            "oid": 21
+          }
+        ],
+        "result": {
+          "schema": "pg_catalog",
+          "name": "int8",
+          "oid": 20
+        },
+        "kind": "f",
+        "variadicType": null,
+        "plannerSupportOid": 0,
+        "languageOid": 12,
+        "securityDefiner": false,
+        "acl": null,
+        "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+      },
+      "deniedSqlstate": "42501"
+    },
+    {
+      "function": {
+        "oid": 861,
+        "schema": "pg_catalog",
+        "name": "current_database",
+        "arguments": [],
+        "result": {
+          "schema": "pg_catalog",
+          "name": "name",
+          "oid": 19
+        },
+        "kind": "f",
+        "variadicType": null,
+        "plannerSupportOid": 0,
+        "languageOid": 12,
+        "securityDefiner": false,
+        "acl": null,
+        "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+      },
+      "deniedSqlstate": "42501"
+    },
+    {
+      "function": {
+        "oid": 1258,
+        "schema": "pg_catalog",
+        "name": "textcat",
+        "arguments": [
+          {
+            "schema": "pg_catalog",
+            "name": "text",
+            "oid": 25
+          },
+          {
+            "schema": "pg_catalog",
+            "name": "text",
+            "oid": 25
+          }
+        ],
+        "result": {
+          "schema": "pg_catalog",
+          "name": "text",
+          "oid": 25
+        },
+        "kind": "f",
+        "variadicType": null,
+        "plannerSupportOid": 0,
+        "languageOid": 12,
+        "securityDefiner": false,
+        "acl": null,
+        "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+      },
+      "deniedSqlstate": "42501"
+    },
+    {
+      "function": {
+        "oid": 1275,
+        "schema": "pg_catalog",
+        "name": "int84mi",
+        "arguments": [
+          {
+            "schema": "pg_catalog",
+            "name": "int8",
+            "oid": 20
+          },
+          {
+            "schema": "pg_catalog",
+            "name": "int4",
+            "oid": 23
+          }
+        ],
+        "result": {
+          "schema": "pg_catalog",
+          "name": "int8",
+          "oid": 20
+        },
+        "kind": "f",
+        "variadicType": null,
+        "plannerSupportOid": 0,
+        "languageOid": 12,
+        "securityDefiner": false,
+        "acl": null,
+        "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+      },
+      "deniedSqlstate": "42501"
+    },
+    {
+      "function": {
+        "oid": 1282,
+        "schema": "pg_catalog",
+        "name": "quote_ident",
+        "arguments": [
+          {
+            "schema": "pg_catalog",
+            "name": "text",
+            "oid": 25
+          }
+        ],
+        "result": {
+          "schema": "pg_catalog",
+          "name": "text",
+          "oid": 25
+        },
+        "kind": "f",
+        "variadicType": null,
+        "plannerSupportOid": 0,
+        "languageOid": 12,
+        "securityDefiner": false,
+        "acl": null,
+        "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+      },
+      "deniedSqlstate": "42501"
+    },
+    {
+      "function": {
+        "oid": 1403,
+        "schema": "pg_catalog",
+        "name": "current_schemas",
+        "arguments": [
+          {
+            "schema": "pg_catalog",
+            "name": "bool",
+            "oid": 16
+          }
+        ],
+        "result": {
+          "schema": "pg_catalog",
+          "name": "_name",
+          "oid": 1003
+        },
+        "kind": "f",
+        "variadicType": null,
+        "plannerSupportOid": 0,
+        "languageOid": 12,
+        "securityDefiner": false,
+        "acl": null,
+        "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+      },
+      "deniedSqlstate": "42501"
+    },
+    {
+      "function": {
+        "oid": 1860,
+        "schema": "pg_catalog",
+        "name": "int82le",
+        "arguments": [
+          {
+            "schema": "pg_catalog",
+            "name": "int8",
+            "oid": 20
+          },
+          {
+            "schema": "pg_catalog",
+            "name": "int2",
+            "oid": 21
+          }
+        ],
+        "result": {
+          "schema": "pg_catalog",
+          "name": "bool",
+          "oid": 16
+        },
+        "kind": "f",
+        "variadicType": null,
+        "plannerSupportOid": 0,
+        "languageOid": 12,
+        "securityDefiner": false,
+        "acl": null,
+        "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+      },
+      "deniedSqlstate": "42501"
+    },
+    {
+      "function": {
+        "oid": 2078,
+        "schema": "pg_catalog",
+        "name": "set_config",
+        "arguments": [
+          {
+            "schema": "pg_catalog",
+            "name": "text",
+            "oid": 25
+          },
+          {
+            "schema": "pg_catalog",
+            "name": "text",
+            "oid": 25
+          },
+          {
+            "schema": "pg_catalog",
+            "name": "bool",
+            "oid": 16
+          }
+        ],
+        "result": {
+          "schema": "pg_catalog",
+          "name": "text",
+          "oid": 25
+        },
+        "kind": "f",
+        "variadicType": null,
+        "plannerSupportOid": 0,
+        "languageOid": 12,
+        "securityDefiner": false,
+        "acl": null,
+        "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+      },
+      "deniedSqlstate": "42501"
+    },
+    {
+      "function": {
+        "oid": 2331,
+        "schema": "pg_catalog",
+        "name": "unnest",
+        "arguments": [
+          {
+            "schema": "pg_catalog",
+            "name": "anyarray",
+            "oid": 2277
+          }
+        ],
+        "result": {
+          "schema": "pg_catalog",
+          "name": "anyelement",
+          "oid": 2283
+        },
+        "kind": "f",
+        "variadicType": null,
+        "plannerSupportOid": 3996,
+        "languageOid": 12,
+        "securityDefiner": false,
+        "acl": null,
+        "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+      },
+      "deniedSqlstate": "42501"
+    },
+    {
+      "function": {
+        "oid": 2706,
+        "schema": "pg_catalog",
+        "name": "pg_has_role",
+        "arguments": [
+          {
+            "schema": "pg_catalog",
+            "name": "name",
+            "oid": 19
+          },
+          {
+            "schema": "pg_catalog",
+            "name": "oid",
+            "oid": 26
+          },
+          {
+            "schema": "pg_catalog",
+            "name": "text",
+            "oid": 25
+          }
+        ],
+        "result": {
+          "schema": "pg_catalog",
+          "name": "bool",
+          "oid": 16
+        },
+        "kind": "f",
+        "variadicType": null,
+        "plannerSupportOid": 0,
+        "languageOid": 12,
+        "securityDefiner": false,
+        "acl": null,
+        "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+      },
+      "deniedSqlstate": "42501"
+    },
+    {
+      "function": {
+        "oid": 3267,
+        "schema": "pg_catalog",
+        "name": "jsonb_agg",
+        "arguments": [
+          {
+            "schema": "pg_catalog",
+            "name": "anyelement",
+            "oid": 2283
+          }
+        ],
+        "result": {
+          "schema": "pg_catalog",
+          "name": "jsonb",
+          "oid": 3802
+        },
+        "kind": "a",
+        "variadicType": null,
+        "plannerSupportOid": 0,
+        "languageOid": 12,
+        "securityDefiner": false,
+        "acl": null,
+        "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+      },
+      "deniedSqlstate": "42501"
+    },
+    {
+      "function": {
+        "oid": 3271,
+        "schema": "pg_catalog",
+        "name": "jsonb_build_array",
+        "arguments": [
+          {
+            "schema": "pg_catalog",
+            "name": "any",
+            "oid": 2276
+          }
+        ],
+        "result": {
+          "schema": "pg_catalog",
+          "name": "jsonb",
+          "oid": 3802
+        },
+        "kind": "f",
+        "variadicType": {
+          "schema": "pg_catalog",
+          "name": "any",
+          "oid": 2276
+        },
+        "plannerSupportOid": 0,
+        "languageOid": 12,
+        "securityDefiner": false,
+        "acl": null,
+        "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+      },
+      "deniedSqlstate": "42501"
+    },
+    {
+      "function": {
+        "oid": 3273,
+        "schema": "pg_catalog",
+        "name": "jsonb_build_object",
+        "arguments": [
+          {
+            "schema": "pg_catalog",
+            "name": "any",
+            "oid": 2276
+          }
+        ],
+        "result": {
+          "schema": "pg_catalog",
+          "name": "jsonb",
+          "oid": 3802
+        },
+        "kind": "f",
+        "variadicType": {
+          "schema": "pg_catalog",
+          "name": "any",
+          "oid": 2276
+        },
+        "plannerSupportOid": 0,
+        "languageOid": 12,
+        "securityDefiner": false,
+        "acl": null,
+        "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+      },
+      "deniedSqlstate": "42501"
+    },
+    {
+      "function": {
+        "oid": 3441,
+        "schema": "pg_catalog",
+        "name": "pg_control_system",
+        "arguments": [],
+        "result": {
+          "schema": "pg_catalog",
+          "name": "record",
+          "oid": 2249
+        },
+        "kind": "f",
+        "variadicType": null,
+        "plannerSupportOid": 0,
+        "languageOid": 12,
+        "securityDefiner": false,
+        "acl": null,
+        "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+      },
+      "deniedSqlstate": "42501"
+    },
+    {
+      "function": {
+        "oid": 3495,
+        "schema": "pg_catalog",
+        "name": "to_regclass",
+        "arguments": [
+          {
+            "schema": "pg_catalog",
+            "name": "text",
+            "oid": 25
+          }
+        ],
+        "result": {
+          "schema": "pg_catalog",
+          "name": "regclass",
+          "oid": 2205
+        },
+        "kind": "f",
+        "variadicType": null,
+        "plannerSupportOid": 0,
+        "languageOid": 12,
+        "securityDefiner": false,
+        "acl": null,
+        "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+      },
+      "deniedSqlstate": "42501"
+    },
+    {
+      "function": {
+        "oid": 3787,
+        "schema": "pg_catalog",
+        "name": "to_jsonb",
+        "arguments": [
+          {
+            "schema": "pg_catalog",
+            "name": "anyelement",
+            "oid": 2283
+          }
+        ],
+        "result": {
+          "schema": "pg_catalog",
+          "name": "jsonb",
+          "oid": 3802
+        },
+        "kind": "f",
+        "variadicType": null,
+        "plannerSupportOid": 0,
+        "languageOid": 12,
+        "securityDefiner": false,
+        "acl": null,
+        "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+      },
+      "deniedSqlstate": "42501"
+    }
+  ],
+  "implementationReferencesNotDirectGrantRequirements": [
+    {
+      "oid": 31,
+      "schema": "pg_catalog",
+      "name": "byteaout",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "bytea",
+          "oid": 17
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "cstring",
+        "oid": 2275
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 33,
+      "schema": "pg_catalog",
+      "name": "charout",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "char",
+          "oid": 18
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "cstring",
+        "oid": 2275
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 34,
+      "schema": "pg_catalog",
+      "name": "namein",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "cstring",
+          "oid": 2275
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "name",
+        "oid": 19
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 35,
+      "schema": "pg_catalog",
+      "name": "nameout",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "name",
+          "oid": 19
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "cstring",
+        "oid": 2275
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 38,
+      "schema": "pg_catalog",
+      "name": "int2in",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "cstring",
+          "oid": 2275
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "int2",
+        "oid": 21
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 39,
+      "schema": "pg_catalog",
+      "name": "int2out",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "int2",
+          "oid": 21
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "cstring",
+        "oid": 2275
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 40,
+      "schema": "pg_catalog",
+      "name": "int2vectorin",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "cstring",
+          "oid": 2275
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "int2vector",
+        "oid": 22
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 41,
+      "schema": "pg_catalog",
+      "name": "int2vectorout",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "int2vector",
+          "oid": 22
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "cstring",
+        "oid": 2275
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 42,
+      "schema": "pg_catalog",
+      "name": "int4in",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "cstring",
+          "oid": 2275
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "int4",
+        "oid": 23
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 43,
+      "schema": "pg_catalog",
+      "name": "int4out",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "int4",
+          "oid": 23
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "cstring",
+        "oid": 2275
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 44,
+      "schema": "pg_catalog",
+      "name": "regprocin",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "cstring",
+          "oid": 2275
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "regproc",
+        "oid": 24
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 45,
+      "schema": "pg_catalog",
+      "name": "regprocout",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "regproc",
+          "oid": 24
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "cstring",
+        "oid": 2275
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 46,
+      "schema": "pg_catalog",
+      "name": "textin",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "cstring",
+          "oid": 2275
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "text",
+        "oid": 25
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 47,
+      "schema": "pg_catalog",
+      "name": "textout",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "text",
+          "oid": 25
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "cstring",
+        "oid": 2275
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 50,
+      "schema": "pg_catalog",
+      "name": "xidin",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "cstring",
+          "oid": 2275
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "xid",
+        "oid": 28
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 51,
+      "schema": "pg_catalog",
+      "name": "xidout",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "xid",
+          "oid": 28
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "cstring",
+        "oid": 2275
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 54,
+      "schema": "pg_catalog",
+      "name": "oidvectorin",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "cstring",
+          "oid": 2275
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "oidvector",
+        "oid": 30
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 55,
+      "schema": "pg_catalog",
+      "name": "oidvectorout",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "oidvector",
+          "oid": 30
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "cstring",
+        "oid": 2275
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 63,
+      "schema": "pg_catalog",
+      "name": "int2eq",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "int2",
+          "oid": 21
+        },
+        {
+          "schema": "pg_catalog",
+          "name": "int2",
+          "oid": 21
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "bool",
+        "oid": 16
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 64,
+      "schema": "pg_catalog",
+      "name": "int2lt",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "int2",
+          "oid": 21
+        },
+        {
+          "schema": "pg_catalog",
+          "name": "int2",
+          "oid": 21
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "bool",
+        "oid": 16
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 65,
+      "schema": "pg_catalog",
+      "name": "int4eq",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "int4",
+          "oid": 23
+        },
+        {
+          "schema": "pg_catalog",
+          "name": "int4",
+          "oid": 23
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "bool",
+        "oid": 16
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 66,
+      "schema": "pg_catalog",
+      "name": "int4lt",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "int4",
+          "oid": 23
+        },
+        {
+          "schema": "pg_catalog",
+          "name": "int4",
+          "oid": 23
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "bool",
+        "oid": 16
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 67,
+      "schema": "pg_catalog",
+      "name": "texteq",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "text",
+          "oid": 25
+        },
+        {
+          "schema": "pg_catalog",
+          "name": "text",
+          "oid": 25
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "bool",
+        "oid": 16
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 109,
+      "schema": "pg_catalog",
+      "name": "unknownin",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "cstring",
+          "oid": 2275
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "unknown",
+        "oid": 705
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 110,
+      "schema": "pg_catalog",
+      "name": "unknownout",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "unknown",
+          "oid": 705
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "cstring",
+        "oid": 2275
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 195,
+      "schema": "pg_catalog",
+      "name": "pg_node_tree_in",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "cstring",
+          "oid": 2275
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "pg_node_tree",
+        "oid": 194
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 196,
+      "schema": "pg_catalog",
+      "name": "pg_node_tree_out",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "pg_node_tree",
+          "oid": 194
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "cstring",
+        "oid": 2275
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 197,
+      "schema": "pg_catalog",
+      "name": "pg_node_tree_recv",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "internal",
+          "oid": 2281
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "pg_node_tree",
+        "oid": 194
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 198,
+      "schema": "pg_catalog",
+      "name": "pg_node_tree_send",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "pg_node_tree",
+          "oid": 194
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "bytea",
+        "oid": 17
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 200,
+      "schema": "pg_catalog",
+      "name": "float4in",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "cstring",
+          "oid": 2275
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "float4",
+        "oid": 700
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 201,
+      "schema": "pg_catalog",
+      "name": "float4out",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "float4",
+          "oid": 700
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "cstring",
+        "oid": 2275
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 350,
+      "schema": "pg_catalog",
+      "name": "btint2cmp",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "int2",
+          "oid": 21
+        },
+        {
+          "schema": "pg_catalog",
+          "name": "int2",
+          "oid": 21
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "int4",
+        "oid": 23
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 351,
+      "schema": "pg_catalog",
+      "name": "btint4cmp",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "int4",
+          "oid": 23
+        },
+        {
+          "schema": "pg_catalog",
+          "name": "int4",
+          "oid": 23
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "int4",
+        "oid": 23
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 356,
+      "schema": "pg_catalog",
+      "name": "btoidcmp",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "oid",
+          "oid": 26
+        },
+        {
+          "schema": "pg_catalog",
+          "name": "oid",
+          "oid": 26
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "int4",
+        "oid": 23
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 360,
+      "schema": "pg_catalog",
+      "name": "bttextcmp",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "text",
+          "oid": 25
+        },
+        {
+          "schema": "pg_catalog",
+          "name": "text",
+          "oid": 25
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "int4",
+        "oid": 23
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 460,
+      "schema": "pg_catalog",
+      "name": "int8in",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "cstring",
+          "oid": 2275
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "int8",
+        "oid": 20
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 461,
+      "schema": "pg_catalog",
+      "name": "int8out",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "int8",
+          "oid": 20
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "cstring",
+        "oid": 2275
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 467,
+      "schema": "pg_catalog",
+      "name": "int8eq",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "int8",
+          "oid": 20
+        },
+        {
+          "schema": "pg_catalog",
+          "name": "int8",
+          "oid": 20
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "bool",
+        "oid": 16
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 469,
+      "schema": "pg_catalog",
+      "name": "int8lt",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "int8",
+          "oid": 20
+        },
+        {
+          "schema": "pg_catalog",
+          "name": "int8",
+          "oid": 20
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "bool",
+        "oid": 16
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 716,
+      "schema": "pg_catalog",
+      "name": "oidlt",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "oid",
+          "oid": 26
+        },
+        {
+          "schema": "pg_catalog",
+          "name": "oid",
+          "oid": 26
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "bool",
+        "oid": 16
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 740,
+      "schema": "pg_catalog",
+      "name": "text_lt",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "text",
+          "oid": 25
+        },
+        {
+          "schema": "pg_catalog",
+          "name": "text",
+          "oid": 25
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "bool",
+        "oid": 16
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 750,
+      "schema": "pg_catalog",
+      "name": "array_in",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "cstring",
+          "oid": 2275
+        },
+        {
+          "schema": "pg_catalog",
+          "name": "oid",
+          "oid": 26
+        },
+        {
+          "schema": "pg_catalog",
+          "name": "int4",
+          "oid": 23
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "anyarray",
+        "oid": 2277
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 751,
+      "schema": "pg_catalog",
+      "name": "array_out",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "anyarray",
+          "oid": 2277
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "cstring",
+        "oid": 2275
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 842,
+      "schema": "pg_catalog",
+      "name": "btint8cmp",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "int8",
+          "oid": 20
+        },
+        {
+          "schema": "pg_catalog",
+          "name": "int8",
+          "oid": 20
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "int4",
+        "oid": 23
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 1031,
+      "schema": "pg_catalog",
+      "name": "aclitemin",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "cstring",
+          "oid": 2275
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "aclitem",
+        "oid": 1033
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 1032,
+      "schema": "pg_catalog",
+      "name": "aclitemout",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "aclitem",
+          "oid": 1033
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "cstring",
+        "oid": 2275
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 1242,
+      "schema": "pg_catalog",
+      "name": "boolin",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "cstring",
+          "oid": 2275
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "bool",
+        "oid": 16
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 1243,
+      "schema": "pg_catalog",
+      "name": "boolout",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "bool",
+          "oid": 16
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "cstring",
+        "oid": 2275
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 1244,
+      "schema": "pg_catalog",
+      "name": "byteain",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "cstring",
+          "oid": 2275
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "bytea",
+        "oid": 17
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 1245,
+      "schema": "pg_catalog",
+      "name": "charin",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "cstring",
+          "oid": 2275
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "char",
+        "oid": 18
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 1287,
+      "schema": "pg_catalog",
+      "name": "oid",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "int8",
+          "oid": 20
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "oid",
+        "oid": 26
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 1798,
+      "schema": "pg_catalog",
+      "name": "oidin",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "cstring",
+          "oid": 2275
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "oid",
+        "oid": 26
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 1799,
+      "schema": "pg_catalog",
+      "name": "oidout",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "oid",
+          "oid": 26
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "cstring",
+        "oid": 2275
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 2218,
+      "schema": "pg_catalog",
+      "name": "regclassin",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "cstring",
+          "oid": 2275
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "regclass",
+        "oid": 2205
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 2219,
+      "schema": "pg_catalog",
+      "name": "regclassout",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "regclass",
+          "oid": 2205
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "cstring",
+        "oid": 2275
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 2290,
+      "schema": "pg_catalog",
+      "name": "record_in",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "cstring",
+          "oid": 2275
+        },
+        {
+          "schema": "pg_catalog",
+          "name": "oid",
+          "oid": 26
+        },
+        {
+          "schema": "pg_catalog",
+          "name": "int4",
+          "oid": 23
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "record",
+        "oid": 2249
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 2291,
+      "schema": "pg_catalog",
+      "name": "record_out",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "record",
+          "oid": 2249
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "cstring",
+        "oid": 2275
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 2292,
+      "schema": "pg_catalog",
+      "name": "cstring_in",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "cstring",
+          "oid": 2275
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "cstring",
+        "oid": 2275
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 2293,
+      "schema": "pg_catalog",
+      "name": "cstring_out",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "cstring",
+          "oid": 2275
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "cstring",
+        "oid": 2275
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 2294,
+      "schema": "pg_catalog",
+      "name": "any_in",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "cstring",
+          "oid": 2275
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "any",
+        "oid": 2276
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 2295,
+      "schema": "pg_catalog",
+      "name": "any_out",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "any",
+          "oid": 2276
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "cstring",
+        "oid": 2275
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 2296,
+      "schema": "pg_catalog",
+      "name": "anyarray_in",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "cstring",
+          "oid": 2275
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "anyarray",
+        "oid": 2277
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 2297,
+      "schema": "pg_catalog",
+      "name": "anyarray_out",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "anyarray",
+          "oid": 2277
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "cstring",
+        "oid": 2275
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 2298,
+      "schema": "pg_catalog",
+      "name": "void_in",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "cstring",
+          "oid": 2275
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "void",
+        "oid": 2278
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 2299,
+      "schema": "pg_catalog",
+      "name": "void_out",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "void",
+          "oid": 2278
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "cstring",
+        "oid": 2275
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 2304,
+      "schema": "pg_catalog",
+      "name": "internal_in",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "cstring",
+          "oid": 2275
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "internal",
+        "oid": 2281
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 2305,
+      "schema": "pg_catalog",
+      "name": "internal_out",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "internal",
+          "oid": 2281
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "cstring",
+        "oid": 2275
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 2312,
+      "schema": "pg_catalog",
+      "name": "anyelement_in",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "cstring",
+          "oid": 2275
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "anyelement",
+        "oid": 2283
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 2313,
+      "schema": "pg_catalog",
+      "name": "anyelement_out",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "anyelement",
+          "oid": 2283
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "cstring",
+        "oid": 2275
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 2400,
+      "schema": "pg_catalog",
+      "name": "array_recv",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "internal",
+          "oid": 2281
+        },
+        {
+          "schema": "pg_catalog",
+          "name": "oid",
+          "oid": 26
+        },
+        {
+          "schema": "pg_catalog",
+          "name": "int4",
+          "oid": 23
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "anyarray",
+        "oid": 2277
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 2401,
+      "schema": "pg_catalog",
+      "name": "array_send",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "anyarray",
+          "oid": 2277
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "bytea",
+        "oid": 17
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 2402,
+      "schema": "pg_catalog",
+      "name": "record_recv",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "internal",
+          "oid": 2281
+        },
+        {
+          "schema": "pg_catalog",
+          "name": "oid",
+          "oid": 26
+        },
+        {
+          "schema": "pg_catalog",
+          "name": "int4",
+          "oid": 23
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "record",
+        "oid": 2249
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 2403,
+      "schema": "pg_catalog",
+      "name": "record_send",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "record",
+          "oid": 2249
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "bytea",
+        "oid": 17
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 2404,
+      "schema": "pg_catalog",
+      "name": "int2recv",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "internal",
+          "oid": 2281
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "int2",
+        "oid": 21
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 2405,
+      "schema": "pg_catalog",
+      "name": "int2send",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "int2",
+          "oid": 21
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "bytea",
+        "oid": 17
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 2406,
+      "schema": "pg_catalog",
+      "name": "int4recv",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "internal",
+          "oid": 2281
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "int4",
+        "oid": 23
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 2407,
+      "schema": "pg_catalog",
+      "name": "int4send",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "int4",
+          "oid": 23
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "bytea",
+        "oid": 17
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 2408,
+      "schema": "pg_catalog",
+      "name": "int8recv",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "internal",
+          "oid": 2281
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "int8",
+        "oid": 20
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 2409,
+      "schema": "pg_catalog",
+      "name": "int8send",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "int8",
+          "oid": 20
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "bytea",
+        "oid": 17
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 2410,
+      "schema": "pg_catalog",
+      "name": "int2vectorrecv",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "internal",
+          "oid": 2281
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "int2vector",
+        "oid": 22
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 2411,
+      "schema": "pg_catalog",
+      "name": "int2vectorsend",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "int2vector",
+          "oid": 22
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "bytea",
+        "oid": 17
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 2412,
+      "schema": "pg_catalog",
+      "name": "bytearecv",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "internal",
+          "oid": 2281
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "bytea",
+        "oid": 17
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 2413,
+      "schema": "pg_catalog",
+      "name": "byteasend",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "bytea",
+          "oid": 17
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "bytea",
+        "oid": 17
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 2414,
+      "schema": "pg_catalog",
+      "name": "textrecv",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "internal",
+          "oid": 2281
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "text",
+        "oid": 25
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 2415,
+      "schema": "pg_catalog",
+      "name": "textsend",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "text",
+          "oid": 25
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "bytea",
+        "oid": 17
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 2416,
+      "schema": "pg_catalog",
+      "name": "unknownrecv",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "internal",
+          "oid": 2281
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "unknown",
+        "oid": 705
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 2417,
+      "schema": "pg_catalog",
+      "name": "unknownsend",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "unknown",
+          "oid": 705
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "bytea",
+        "oid": 17
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 2418,
+      "schema": "pg_catalog",
+      "name": "oidrecv",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "internal",
+          "oid": 2281
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "oid",
+        "oid": 26
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 2419,
+      "schema": "pg_catalog",
+      "name": "oidsend",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "oid",
+          "oid": 26
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "bytea",
+        "oid": 17
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 2420,
+      "schema": "pg_catalog",
+      "name": "oidvectorrecv",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "internal",
+          "oid": 2281
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "oidvector",
+        "oid": 30
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 2421,
+      "schema": "pg_catalog",
+      "name": "oidvectorsend",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "oidvector",
+          "oid": 30
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "bytea",
+        "oid": 17
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 2422,
+      "schema": "pg_catalog",
+      "name": "namerecv",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "internal",
+          "oid": 2281
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "name",
+        "oid": 19
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 2423,
+      "schema": "pg_catalog",
+      "name": "namesend",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "name",
+          "oid": 19
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "bytea",
+        "oid": 17
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 2424,
+      "schema": "pg_catalog",
+      "name": "float4recv",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "internal",
+          "oid": 2281
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "float4",
+        "oid": 700
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 2425,
+      "schema": "pg_catalog",
+      "name": "float4send",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "float4",
+          "oid": 700
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "bytea",
+        "oid": 17
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 2434,
+      "schema": "pg_catalog",
+      "name": "charrecv",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "internal",
+          "oid": 2281
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "char",
+        "oid": 18
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 2435,
+      "schema": "pg_catalog",
+      "name": "charsend",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "char",
+          "oid": 18
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "bytea",
+        "oid": 17
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 2436,
+      "schema": "pg_catalog",
+      "name": "boolrecv",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "internal",
+          "oid": 2281
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "bool",
+        "oid": 16
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 2437,
+      "schema": "pg_catalog",
+      "name": "boolsend",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "bool",
+          "oid": 16
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "bytea",
+        "oid": 17
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 2440,
+      "schema": "pg_catalog",
+      "name": "xidrecv",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "internal",
+          "oid": 2281
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "xid",
+        "oid": 28
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 2441,
+      "schema": "pg_catalog",
+      "name": "xidsend",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "xid",
+          "oid": 28
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "bytea",
+        "oid": 17
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 2444,
+      "schema": "pg_catalog",
+      "name": "regprocrecv",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "internal",
+          "oid": 2281
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "regproc",
+        "oid": 24
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 2445,
+      "schema": "pg_catalog",
+      "name": "regprocsend",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "regproc",
+          "oid": 24
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "bytea",
+        "oid": 17
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 2452,
+      "schema": "pg_catalog",
+      "name": "regclassrecv",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "internal",
+          "oid": 2281
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "regclass",
+        "oid": 2205
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 2453,
+      "schema": "pg_catalog",
+      "name": "regclasssend",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "regclass",
+          "oid": 2205
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "bytea",
+        "oid": 17
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 2500,
+      "schema": "pg_catalog",
+      "name": "cstring_recv",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "internal",
+          "oid": 2281
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "cstring",
+        "oid": 2275
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 2501,
+      "schema": "pg_catalog",
+      "name": "cstring_send",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "cstring",
+          "oid": 2275
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "bytea",
+        "oid": 17
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 2502,
+      "schema": "pg_catalog",
+      "name": "anyarray_recv",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "internal",
+          "oid": 2281
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "anyarray",
+        "oid": 2277
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 2503,
+      "schema": "pg_catalog",
+      "name": "anyarray_send",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "anyarray",
+          "oid": 2277
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "bytea",
+        "oid": 17
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 3120,
+      "schema": "pg_catalog",
+      "name": "void_recv",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "internal",
+          "oid": 2281
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "void",
+        "oid": 2278
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 3121,
+      "schema": "pg_catalog",
+      "name": "void_send",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "void",
+          "oid": 2278
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "bytea",
+        "oid": 17
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 3129,
+      "schema": "pg_catalog",
+      "name": "btint2sortsupport",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "internal",
+          "oid": 2281
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "void",
+        "oid": 2278
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 3130,
+      "schema": "pg_catalog",
+      "name": "btint4sortsupport",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "internal",
+          "oid": 2281
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "void",
+        "oid": 2278
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 3131,
+      "schema": "pg_catalog",
+      "name": "btint8sortsupport",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "internal",
+          "oid": 2281
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "void",
+        "oid": 2278
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 3134,
+      "schema": "pg_catalog",
+      "name": "btoidsortsupport",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "internal",
+          "oid": 2281
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "void",
+        "oid": 2278
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 3255,
+      "schema": "pg_catalog",
+      "name": "bttextsortsupport",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "internal",
+          "oid": 2281
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "void",
+        "oid": 2278
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 3265,
+      "schema": "pg_catalog",
+      "name": "jsonb_agg_transfn",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "internal",
+          "oid": 2281
+        },
+        {
+          "schema": "pg_catalog",
+          "name": "anyelement",
+          "oid": 2283
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "internal",
+        "oid": 2281
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 3266,
+      "schema": "pg_catalog",
+      "name": "jsonb_agg_finalfn",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "internal",
+          "oid": 2281
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "jsonb",
+        "oid": 3802
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 3803,
+      "schema": "pg_catalog",
+      "name": "jsonb_send",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "jsonb",
+          "oid": 3802
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "bytea",
+        "oid": 17
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 3804,
+      "schema": "pg_catalog",
+      "name": "jsonb_out",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "jsonb",
+          "oid": 3802
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "cstring",
+        "oid": 2275
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 3805,
+      "schema": "pg_catalog",
+      "name": "jsonb_recv",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "internal",
+          "oid": 2281
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "jsonb",
+        "oid": 3802
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 3806,
+      "schema": "pg_catalog",
+      "name": "jsonb_in",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "cstring",
+          "oid": 2275
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "jsonb",
+        "oid": 3802
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 3816,
+      "schema": "pg_catalog",
+      "name": "array_typanalyze",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "internal",
+          "oid": 2281
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "bool",
+        "oid": 16
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 3996,
+      "schema": "pg_catalog",
+      "name": "array_unnest_support",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "internal",
+          "oid": 2281
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "internal",
+        "oid": 2281
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 4126,
+      "schema": "pg_catalog",
+      "name": "in_range",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "int8",
+          "oid": 20
+        },
+        {
+          "schema": "pg_catalog",
+          "name": "int8",
+          "oid": 20
+        },
+        {
+          "schema": "pg_catalog",
+          "name": "int8",
+          "oid": 20
+        },
+        {
+          "schema": "pg_catalog",
+          "name": "bool",
+          "oid": 16
+        },
+        {
+          "schema": "pg_catalog",
+          "name": "bool",
+          "oid": 16
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "bool",
+        "oid": 16
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 4128,
+      "schema": "pg_catalog",
+      "name": "in_range",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "int4",
+          "oid": 23
+        },
+        {
+          "schema": "pg_catalog",
+          "name": "int4",
+          "oid": 23
+        },
+        {
+          "schema": "pg_catalog",
+          "name": "int4",
+          "oid": 23
+        },
+        {
+          "schema": "pg_catalog",
+          "name": "bool",
+          "oid": 16
+        },
+        {
+          "schema": "pg_catalog",
+          "name": "bool",
+          "oid": 16
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "bool",
+        "oid": 16
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 4132,
+      "schema": "pg_catalog",
+      "name": "in_range",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "int2",
+          "oid": 21
+        },
+        {
+          "schema": "pg_catalog",
+          "name": "int2",
+          "oid": 21
+        },
+        {
+          "schema": "pg_catalog",
+          "name": "int2",
+          "oid": 21
+        },
+        {
+          "schema": "pg_catalog",
+          "name": "bool",
+          "oid": 16
+        },
+        {
+          "schema": "pg_catalog",
+          "name": "bool",
+          "oid": 16
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "bool",
+        "oid": 16
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 5050,
+      "schema": "pg_catalog",
+      "name": "btvarstrequalimage",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "oid",
+          "oid": 26
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "bool",
+        "oid": 16
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 5051,
+      "schema": "pg_catalog",
+      "name": "btequalimage",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "oid",
+          "oid": 26
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "bool",
+        "oid": 16
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 6098,
+      "schema": "pg_catalog",
+      "name": "jsonb_subscript_handler",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "internal",
+          "oid": 2281
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "internal",
+        "oid": 2281
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 6179,
+      "schema": "pg_catalog",
+      "name": "array_subscript_handler",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "internal",
+          "oid": 2281
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "internal",
+        "oid": 2281
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 6380,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 6180,
+      "schema": "pg_catalog",
+      "name": "raw_array_subscript_handler",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "internal",
+          "oid": 2281
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "internal",
+        "oid": 2281
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 6380,
+      "schema": "pg_catalog",
+      "name": "array_subscript_handler_support",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "internal",
+          "oid": 2281
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "internal",
+        "oid": 2281
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 6402,
+      "schema": "pg_catalog",
+      "name": "btint2skipsupport",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "internal",
+          "oid": 2281
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "void",
+        "oid": 2278
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 6403,
+      "schema": "pg_catalog",
+      "name": "btint4skipsupport",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "internal",
+          "oid": 2281
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "void",
+        "oid": 2278
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 6404,
+      "schema": "pg_catalog",
+      "name": "btint8skipsupport",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "internal",
+          "oid": 2281
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "void",
+        "oid": 2278
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    },
+    {
+      "oid": 6405,
+      "schema": "pg_catalog",
+      "name": "btoidskipsupport",
+      "arguments": [
+        {
+          "schema": "pg_catalog",
+          "name": "internal",
+          "oid": 2281
+        }
+      ],
+      "result": {
+        "schema": "pg_catalog",
+        "name": "void",
+        "oid": 2278
+      },
+      "kind": "f",
+      "variadicType": null,
+      "plannerSupportOid": 0,
+      "languageOid": 12,
+      "securityDefiner": false,
+      "acl": null,
+      "origin": "analyzed call/operator/cast or explicitly labeled internal implementation reference"
+    }
+  ]
+}

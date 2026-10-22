@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
+import {CURRENT_CORE_VERSION} from '../generated/core-model';
 import {Kind,parse,print} from 'graphql';
 import {copyJson} from '../model/json';
 import {UmfError,pointer,type Document,type Json,type Diagnostic} from '../model/types';
@@ -8,7 +10,7 @@ import {importGraphqlSchema,exportGraphqlSchema,getGraphqlAst} from '../adapters
 import {importRdfNQuads,exportRdfNQuads,getRdfQuads} from '../adapters/rdf';
 import {importLinkmlDocument,exportLinkmlDocument,getLinkmlDocumentNode,inspectLinkmlDocument} from '../adapters/linkml';
 import {createValidator} from '../validation/schema';
-import legacy from '../../spec/core/schema.json';import fields from '../../spec/core/field-document.schema.json';import nullability from '../../spec/core/nullability-document.schema.json';import cardinality from '../../spec/core/cardinality-document.schema.json';import facets from '../../spec/core/facet-document.schema.json';import keys from '../../spec/core/key-document.schema.json';import relationships from '../../spec/core/relationship-document.schema.json';import authorSchema from '../../spec/core/relationship-operation.schema.json';
+import legacy from '../../spec/core/schema.json';import authorSchema from '../../spec/core/relationship-operation.schema.json';
 import schema from '../../spec/core/relationship-extras.schema.json';
 export {default as relationshipExtrasSchema} from '../../spec/core/relationship-extras.schema.json';
 export type RelationshipExtraSystem='graphql'|'rdf'|'linkml';
@@ -26,7 +28,7 @@ interface Loss {path:string;value:Json;outcome:'approximated'|'not-expressible'|
 interface BaseReceipt {version:'1.0.0';source:Document;target?:Document;binding:string;outcome:'approximated'|'not-expressible'|'unknown';residuals:Loss[];diagnostics:Diagnostic[]}
 export interface RelationshipExtraClassification extends BaseReceipt {operation:'classify-relationship-extra';status:'classified'|'blocked';request:RelationshipExtraClassificationRequest;observations:RelationshipExtraObservation[]}
 export interface RelationshipExtraProjection extends BaseReceipt {operation:'project-relationship-extra';status:'projected'|'blocked';author:CoreRelationshipDeclaration;request:RelationshipExtraRequest;nativeArchive?:RelationshipExtraArchive;mappings:{idealPath:string;nativePath:string;outcome:'approximated';provenance:'explicit-author-declaration'}[]}
-const validator=createValidator(false);for(const s of [legacy,fields,nullability,cardinality,facets,keys,relationships,authorSchema])validator.addSchema(s);
+const validator=createValidator(false);for(const s of [legacy,authorSchema])validator.addSchema(s);
 const check=validator.compile(schema),projectionRequest=validator.compile({$ref:schema.$id+'#/$defs/projectionRequest'}),classificationRequest=validator.compile({$ref:schema.$id+'#/$defs/classificationRequest'});
 const bindings={graphql:'graphql-js-17.0.2_graphql-core-3.2.12_schema-sdl',rdf:'rdf11-nquads_rdflib-7.6.0_owl-union',linkml:'linkml-metamodel-1.11.0_runtime-1.11.0rc2'} as const;
 const rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#',rdfs='http://www.w3.org/2000/01/rdf-schema#',owl='http://www.w3.org/2002/07/owl#';
@@ -83,7 +85,7 @@ export function classifyRelationshipExtra(input:Document,options:RelationshipExt
 export function projectRelationshipToExtra(input:Document,authorInput:CoreRelationshipDeclaration,options:RelationshipExtraRequest):RelationshipExtraProjection{
  const source=copyJson(input) as unknown as Document,author=copyJson(authorInput) as unknown as CoreRelationshipDeclaration,request=copyJson(options) as unknown as RelationshipExtraRequest;
  if(!projectionRequest(request))fail('Invalid complete relationship extras policy: '+JSON.stringify(projectionRequest.errors));
- if(source.umf!=='0.7.0'||!validateDocument(source).valid||author.operation!=='declare-core-relationship')fail('Valid authored core 0.7.0 relationship required');
+ if(source.umf!==CURRENT_CORE_VERSION||!validateDocument(source).valid||author.operation!=='declare-core-relationship')fail('Valid authored core 0.10.0 relationship required');
  verifyCoreRelationshipOperation(author,author.target);
  if(author.target.id!==source.id||author.identity.module!==request.relationship.module||author.request.id!==request.relationship.id)fail('Mismatched author identity');
  const current=lookupCoreRelationship(source,request.relationship),prior=lookupCoreRelationship(author.target,request.relationship),rel=current.relationship;

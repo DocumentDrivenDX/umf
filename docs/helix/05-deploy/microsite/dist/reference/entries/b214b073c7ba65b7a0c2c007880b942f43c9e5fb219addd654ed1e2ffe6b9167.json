@@ -1,0 +1,329 @@
+{
+  "data": {
+    "pointer": "",
+    "profileVersions": [],
+    "references": [
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/native-json.schema.json\",\"\"]",
+        "target": "urn:umf:native-json:0.1.0"
+      }
+    ],
+    "role": "other",
+    "schemaPath": "spec/core/postgresql-key-catalog-correlation.schema.json",
+    "sourceData": {
+      "kind": "object",
+      "members": {
+        "$id": {
+          "kind": "string",
+          "value": "urn:umf:core:postgresql-key-catalog-correlation:1.0.0"
+        },
+        "$schema": {
+          "kind": "string",
+          "value": "https://json-schema.org/draft/2020-12/schema"
+        },
+        "additionalProperties": {
+          "kind": "boolean",
+          "value": false
+        },
+        "properties": {
+          "kind": "object",
+          "members": {
+            "authenticated": {
+              "kind": "object",
+              "members": {
+                "const": {
+                  "kind": "boolean",
+                  "value": false
+                }
+              }
+            },
+            "idealEqualityVerified": {
+              "kind": "object",
+              "members": {
+                "const": {
+                  "kind": "boolean",
+                  "value": false
+                }
+              }
+            },
+            "matches": {
+              "kind": "object",
+              "members": {
+                "items": {
+                  "kind": "object",
+                  "members": {
+                    "additionalProperties": {
+                      "kind": "boolean",
+                      "value": false
+                    },
+                    "properties": {
+                      "kind": "object",
+                      "members": {
+                        "componentPaths": {
+                          "kind": "object",
+                          "members": {
+                            "items": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "items": [
+                                    {
+                                      "kind": "string",
+                                      "value": "string"
+                                    },
+                                    {
+                                      "kind": "string",
+                                      "value": "null"
+                                    }
+                                  ],
+                                  "kind": "array"
+                                }
+                              }
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "array"
+                            }
+                          }
+                        },
+                        "identity": {
+                          "kind": "object",
+                          "members": {
+                            "additionalProperties": {
+                              "kind": "boolean",
+                              "value": false
+                            },
+                            "properties": {
+                              "kind": "object",
+                              "members": {
+                                "index": {
+                                  "kind": "object",
+                                  "members": {
+                                    "minLength": {
+                                      "kind": "number",
+                                      "value": "1"
+                                    },
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "string"
+                                    }
+                                  }
+                                },
+                                "schema": {
+                                  "kind": "object",
+                                  "members": {
+                                    "minLength": {
+                                      "kind": "number",
+                                      "value": "1"
+                                    },
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "string"
+                                    }
+                                  }
+                                },
+                                "table": {
+                                  "kind": "object",
+                                  "members": {
+                                    "minLength": {
+                                      "kind": "number",
+                                      "value": "1"
+                                    },
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "string"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "required": {
+                              "items": [
+                                {
+                                  "kind": "string",
+                                  "value": "schema"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "table"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "index"
+                                }
+                              ],
+                              "kind": "array"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "object"
+                            }
+                          }
+                        },
+                        "indexPath": {
+                          "kind": "object",
+                          "members": {
+                            "minLength": {
+                              "kind": "number",
+                              "value": "1"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "string"
+                            }
+                          }
+                        },
+                        "relationPath": {
+                          "kind": "object",
+                          "members": {
+                            "minLength": {
+                              "kind": "number",
+                              "value": "1"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "string"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "required": {
+                      "items": [
+                        {
+                          "kind": "string",
+                          "value": "identity"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "relationPath"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "indexPath"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "componentPaths"
+                        }
+                      ],
+                      "kind": "array"
+                    },
+                    "type": {
+                      "kind": "string",
+                      "value": "object"
+                    }
+                  }
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "array"
+                }
+              }
+            },
+            "nativeCatalog": {
+              "kind": "object",
+              "members": {
+                "minLength": {
+                  "kind": "number",
+                  "value": "1"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "string"
+                }
+              }
+            },
+            "nativeSupplement": {
+              "kind": "object",
+              "members": {
+                "minLength": {
+                  "kind": "number",
+                  "value": "1"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "string"
+                }
+              }
+            },
+            "root": {
+              "kind": "object",
+              "members": {
+                "$ref": {
+                  "kind": "string",
+                  "value": "urn:umf:native-json:0.1.0"
+                }
+              }
+            },
+            "sameSnapshotVerified": {
+              "kind": "object",
+              "members": {
+                "const": {
+                  "kind": "boolean",
+                  "value": false
+                }
+              }
+            }
+          }
+        },
+        "required": {
+          "items": [
+            {
+              "kind": "string",
+              "value": "nativeSupplement"
+            },
+            {
+              "kind": "string",
+              "value": "root"
+            },
+            {
+              "kind": "string",
+              "value": "nativeCatalog"
+            },
+            {
+              "kind": "string",
+              "value": "matches"
+            },
+            {
+              "kind": "string",
+              "value": "sameSnapshotVerified"
+            },
+            {
+              "kind": "string",
+              "value": "authenticated"
+            },
+            {
+              "kind": "string",
+              "value": "idealEqualityVerified"
+            }
+          ],
+          "kind": "array"
+        },
+        "title": {
+          "kind": "string",
+          "value": "PostgreSQL Key catalog correlation result; consistency only"
+        },
+        "type": {
+          "kind": "string",
+          "value": "object"
+        }
+      }
+    }
+  },
+  "id": "[\"schema\",\"spec/core/postgresql-key-catalog-correlation.schema.json\",\"\"]",
+  "kind": "schema",
+  "links": [
+    "[\"schema\",\"spec/core/native-json.schema.json\",\"\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 2108,
+      "path": "spec/core/postgresql-key-catalog-correlation.schema.json",
+      "sha256": "96e6d77ad1dbc7701b201ffd38e21cf09d0ba24232030a7e366718f8e00e5ba4"
+    }
+  ],
+  "summary": "spec/core/postgresql-key-catalog-correlation.schema.json",
+  "title": "PostgreSQL Key catalog correlation result; consistency only"
+}

@@ -1,0 +1,50 @@
+{
+  "data": {
+    "conflicts": [],
+    "correspondence": "unassessed",
+    "declarations": [
+      {
+        "bytes": 4401,
+        "path": "spec/extensions/parquet-facets/package.json",
+        "sha256": "2805d389a01e6556f7ff615a948b586f0991a50bba5af40ad7ff0c94d70144f8"
+      }
+    ],
+    "evidence": [],
+    "operation": {
+      "apiNames": [],
+      "coreProfiles": [],
+      "extensionVersions": [],
+      "fixturePaths": [],
+      "id": "umf.parquet.facets@1.0.0:import",
+      "kind": "import",
+      "limitations": [
+        "Recorded scope only; native equivalence and production adoption are separate."
+      ],
+      "runtime": {
+        "availability": "host-only",
+        "profileId": "umf.parquet.facets@1.0.0:import",
+        "requirements": [
+          "Native runtime / original qualification harness; not executed by this page."
+        ]
+      },
+      "sourceSystem": "Parquet · parquet-format 219e3f12a62f9476e830c21e26d030d231f7c017 / PyArrow 21.0.0",
+      "subset": "Explicit present non-null physical leaf declarations; native bytes, container context and unknown metadata retained; input conversion and enforcement remain separate",
+      "targetSystem": "UMF",
+      "title": "umf.parquet.facets · import"
+    }
+  },
+  "id": "[\"integration\",\"umf.parquet.facets@1.0.0:import\"]",
+  "kind": "integration",
+  "links": [
+    "[\"extension\",\"umf.parquet.facets\",\"1.0.0\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 134795,
+      "path": "docs/helix/05-deploy/reference/operations.json",
+      "sha256": "793743bbca36e56e90e82df5ef0408b628c434e58cb68aea4d6486349be78e61"
+    }
+  ],
+  "summary": "Explicit present non-null physical leaf declarations; native bytes, container context and unknown metadata retained; input conversion and enforcement remain separate",
+  "title": "umf.parquet.facets · import"
+}

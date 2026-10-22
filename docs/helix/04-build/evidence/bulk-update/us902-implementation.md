@@ -1,0 +1,3 @@
+# US-902 portable integration evidence — 2026-10-15
+
+The earlier plan implementation has been restored against UMF main f1f635a9. Public model preparation, plan inspection and capability assessment preserve original actions0.1/core0.8 semantics. The [browser receipt](us902-browser.json) records the actual built ESM/Chromium replay. Final Bun/type/source review evidence is retained with the US-903 construction receipt. A newly generated producer build identifies current bytes; it does not qualify historical native enrollment or rebind an earlier producer pin. Native source/selection/authorization/guard/seal/queue/effect execution and the live demonstration remain open.

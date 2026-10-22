@@ -1,0 +1,30 @@
+{
+    "version": "1.1.414",
+    "time": "1792086745979",
+    "generalDiagnostics": [
+        {
+            "file": "/Users/erik/.codex/worktrees/39bf/umf/docs/helix/04-build/evidence/typed-persistence/dsl-typing-spike/compatibility/negative/replay_executor.py",
+            "severity": "error",
+            "message": "Argument of type \"ActionExecutor\" cannot be assigned to parameter \"executor\" of type \"ReplayingActionExecutor\" in function \"__init__\"\n  \"ActionExecutor\" is not assignable to \"ReplayingActionExecutor\"",
+            "range": {
+                "start": {
+                    "line": 6,
+                    "character": 17
+                },
+                "end": {
+                    "line": 6,
+                    "character": 33
+                }
+            },
+            "rule": "reportArgumentType"
+        }
+    ],
+    "summary": {
+        "filesAnalyzed": 1,
+        "errorCount": 1,
+        "warningCount": 0,
+        "informationCount": 0,
+        "timeInSec": 0.272
+    }
+}
+

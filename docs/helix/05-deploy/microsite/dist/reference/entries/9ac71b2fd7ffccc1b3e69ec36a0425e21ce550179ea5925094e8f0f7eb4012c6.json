@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 4495,
+        "line": 19,
+        "path": "src/extensions/actions/types.ts",
+        "sha256": "4cd5eb6a0bab3a17bb6834efcf7724d5c981e67cc252e3ba8965aadd4ad67c68"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "Action",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface Action {\n id:string;name:string;description:string;parameters:ActionParameter[];outputs:ActionParameter[];\n preconditions:ActionCondition[];postconditions:ActionCondition[];reads:ActionFrame[];writes:ActionFrame[];\n binding:ActionBinding;failures:{code:string;message:string;retryable:boolean;[key:string]:unknown}[];\n authorization:ActionAuthorization;attribution:{subject:'person-required';[key:string]:unknown}|{subject:'actor-profile';profile:ActionProfileIdentity;[key:string]:unknown};\n atomicity:'single-store';idempotency:'caller-key-optional';result:{identities:'created-and-changed';version:'store-opaque';receipt:'read-at-least';[key:string]:unknown};\n dddOperation?:{module:string;element:string;operation:string;[key:string]:unknown};[key:string]:unknown;\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"Action\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 4495,
+      "line": 19,
+      "path": "src/extensions/actions/types.ts",
+      "sha256": "4cd5eb6a0bab3a17bb6834efcf7724d5c981e67cc252e3ba8965aadd4ad67c68"
+    }
+  ],
+  "summary": "Type declaration · src/extensions/actions/types.ts",
+  "title": "Action"
+}

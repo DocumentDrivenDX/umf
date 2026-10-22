@@ -1,0 +1,30 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"ActionBusinessState\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ActionFrameState\"]"
+      ],
+      "name": "frames",
+      "optional": false,
+      "type": "Record<string, ActionFrameState>"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "links",
+      "optional": false,
+      "type": "{ relationship: { module: string; relationship: string; }; sourceFrame: string; targetFrame: string; }[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "ActionBusinessState is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "ActionBusinessState"
+}

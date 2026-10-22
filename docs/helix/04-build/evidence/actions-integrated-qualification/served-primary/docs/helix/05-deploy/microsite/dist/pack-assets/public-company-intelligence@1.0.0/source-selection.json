@@ -1,0 +1,1441 @@
+{
+  "version": "1.0.0",
+  "window": {
+    "start": "2025-10-01",
+    "end": "2026-09-30"
+  },
+  "selection_basis": "Explicit cross-sector research selection; no S&P membership claim.",
+  "inputs": [
+    {
+      "id": "submissions-0000320193",
+      "kind": "submissions",
+      "cik": "0000320193",
+      "reference": "sources/scoped-submissions-0000320193.json",
+      "url": "https://data.sec.gov/submissions/CIK0000320193.json",
+      "sha256": "ae9a98edca5e16fda1ebfa0d1c0fafbed5d0b8c82213bd8ed69f2995e52e4e7f",
+      "retrieved_at": "2026-10-09",
+      "upstream": {
+        "id": "full-submissions-0000320193",
+        "reference": "https://data.sec.gov/submissions/CIK0000320193.json",
+        "sha256": "2821703cf04e1138923243a87cc5148673feb9d3792a5b6a7747d1e1a093bf7f",
+        "bytes": 163882
+      },
+      "selection": [
+        "8-K",
+        "8-K/A"
+      ],
+      "row_ordinals": [
+        22,
+        28,
+        39,
+        43,
+        61,
+        70,
+        75,
+        76,
+        81
+      ]
+    },
+    {
+      "id": "companyfacts-0000320193",
+      "kind": "companyfacts",
+      "cik": "0000320193",
+      "reference": "sources/scoped-companyfacts-0000320193.json",
+      "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000320193.json",
+      "sha256": "b167332cd618cac95ded66c8624018ab2c79f88e48a01307bd9f03a34d54f18e",
+      "retrieved_at": "2026-10-09",
+      "upstream": {
+        "id": "full-companyfacts-0000320193",
+        "reference": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000320193.json",
+        "sha256": "73a86c6aedc31f77cac2ea4df5f80f0b3bd7e6eb58bb4e01444fbedf3afb9c43",
+        "bytes": 3789099
+      },
+      "selection": [
+        "CashAndCashEquivalentsAtCarryingValue",
+        "LongTermDebtCurrent",
+        "LongTermDebtNoncurrent",
+        "Revenues",
+        "RevenueFromContractWithCustomerExcludingAssessedTax"
+      ]
+    },
+    {
+      "id": "submissions-0000789019",
+      "kind": "submissions",
+      "cik": "0000789019",
+      "reference": "sources/scoped-submissions-0000789019.json",
+      "url": "https://data.sec.gov/submissions/CIK0000789019.json",
+      "sha256": "23242a35ac52beede33e6fc05eb3464a5fffc32c51cde7c99050749484eaa174",
+      "retrieved_at": "2026-10-09",
+      "upstream": {
+        "id": "full-submissions-0000789019",
+        "reference": "https://data.sec.gov/submissions/CIK0000789019.json",
+        "sha256": "2484a2a3b5677d892a1b25af573ce4eda7b6f449f5eda41bac6b3f106dc3139c",
+        "bytes": 185250
+      },
+      "selection": [
+        "8-K",
+        "8-K/A"
+      ],
+      "row_ordinals": [
+        34,
+        49,
+        82,
+        92,
+        96,
+        133,
+        152,
+        186
+      ]
+    },
+    {
+      "id": "companyfacts-0000789019",
+      "kind": "companyfacts",
+      "cik": "0000789019",
+      "reference": "sources/scoped-companyfacts-0000789019.json",
+      "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000789019.json",
+      "sha256": "8d1cd8a31f0fd5c51c512cc49661368dd48f46fb604ba3805792a34b5f451484",
+      "retrieved_at": "2026-10-09",
+      "upstream": {
+        "id": "full-companyfacts-0000789019",
+        "reference": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000789019.json",
+        "sha256": "f8aae2965b20ad0df44bdf7ccbedf797d275b6b8dc030154a7a311361bb7246f",
+        "bytes": 4881196
+      },
+      "selection": [
+        "CashAndCashEquivalentsAtCarryingValue",
+        "LongTermDebtCurrent",
+        "LongTermDebtNoncurrent",
+        "Revenues",
+        "RevenueFromContractWithCustomerExcludingAssessedTax"
+      ]
+    },
+    {
+      "id": "submissions-0001652044",
+      "kind": "submissions",
+      "cik": "0001652044",
+      "reference": "sources/scoped-submissions-0001652044.json",
+      "url": "https://data.sec.gov/submissions/CIK0001652044.json",
+      "sha256": "a43093ebdf10d4e7e1200403c9ca7f5839da4e166acf95bf55024a8299827282",
+      "retrieved_at": "2026-10-09",
+      "upstream": {
+        "id": "full-submissions-0001652044",
+        "reference": "https://data.sec.gov/submissions/CIK0001652044.json",
+        "sha256": "9434407b197d6322de4bece8ad3b69459c8d6ddf3a68526b4b22b02e8175d33c",
+        "bytes": 152415
+      },
+      "selection": [
+        "8-K",
+        "8-K/A"
+      ],
+      "row_ordinals": [
+        33,
+        55,
+        93,
+        97,
+        98,
+        100,
+        123,
+        133,
+        151,
+        167,
+        169,
+        204,
+        233,
+        248,
+        318,
+        333
+      ]
+    },
+    {
+      "id": "companyfacts-0001652044",
+      "kind": "companyfacts",
+      "cik": "0001652044",
+      "reference": "sources/scoped-companyfacts-0001652044.json",
+      "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001652044.json",
+      "sha256": "883bede25ae63274a1cb8a11a1b5b25353f742b8c43bb1c7ccda58a3ed5939b1",
+      "retrieved_at": "2026-10-09",
+      "upstream": {
+        "id": "full-companyfacts-0001652044",
+        "reference": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001652044.json",
+        "sha256": "a017f26ee88cb4a639d1c1ddb06d53b4afe22f0ac89cabec7cd67c88919fe1c5",
+        "bytes": 3164517
+      },
+      "selection": [
+        "CashAndCashEquivalentsAtCarryingValue",
+        "LongTermDebtCurrent",
+        "LongTermDebtNoncurrent",
+        "Revenues",
+        "RevenueFromContractWithCustomerExcludingAssessedTax"
+      ]
+    },
+    {
+      "id": "submissions-0001018724",
+      "kind": "submissions",
+      "cik": "0001018724",
+      "reference": "sources/scoped-submissions-0001018724.json",
+      "url": "https://data.sec.gov/submissions/CIK0001018724.json",
+      "sha256": "780da3aed69e0592f8ee372345fbf10ff36df71169aac48ef4517d985907bc19",
+      "retrieved_at": "2026-10-09",
+      "upstream": {
+        "id": "full-submissions-0001018724",
+        "reference": "https://data.sec.gov/submissions/CIK0001018724.json",
+        "sha256": "1f5bb6be4033e2378bfa0d14e0d9276a08d8dfb070b263f59ca0e77d68ced058",
+        "bytes": 159904
+      },
+      "selection": [
+        "8-K",
+        "8-K/A"
+      ],
+      "row_ordinals": [
+        4,
+        9,
+        41,
+        42,
+        47,
+        49,
+        60,
+        85,
+        94,
+        101,
+        108,
+        109,
+        117,
+        140,
+        154,
+        177
+      ]
+    },
+    {
+      "id": "companyfacts-0001018724",
+      "kind": "companyfacts",
+      "cik": "0001018724",
+      "reference": "sources/scoped-companyfacts-0001018724.json",
+      "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001018724.json",
+      "sha256": "e5e9cfe06cfa4209848b3fa9648372b75c7f98bd1e314f4ef106abfcc10330e9",
+      "retrieved_at": "2026-10-09",
+      "upstream": {
+        "id": "full-companyfacts-0001018724",
+        "reference": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001018724.json",
+        "sha256": "7549fb68446eee40e1f50a166fa06b2d2ee6349e07c8553a4828757e032d3cd4",
+        "bytes": 4478611
+      },
+      "selection": [
+        "CashAndCashEquivalentsAtCarryingValue",
+        "LongTermDebtCurrent",
+        "LongTermDebtNoncurrent",
+        "Revenues",
+        "RevenueFromContractWithCustomerExcludingAssessedTax"
+      ]
+    },
+    {
+      "id": "submissions-0001326801",
+      "kind": "submissions",
+      "cik": "0001326801",
+      "reference": "sources/scoped-submissions-0001326801.json",
+      "url": "https://data.sec.gov/submissions/CIK0001326801.json",
+      "sha256": "36b845367a08d657f3b73ae41a05259a29fa697350df78d5e9d63e784871f3df",
+      "retrieved_at": "2026-10-09",
+      "upstream": {
+        "id": "full-submissions-0001326801",
+        "reference": "https://data.sec.gov/submissions/CIK0001326801.json",
+        "sha256": "ffa346d3218c358a538c06c856bc758642c4065e8a0fd0d4477aee6a71d905a9",
+        "bytes": 157388
+      },
+      "selection": [
+        "8-K",
+        "8-K/A"
+      ],
+      "row_ordinals": [
+        48,
+        77,
+        112,
+        122,
+        135,
+        195,
+        204,
+        220,
+        227,
+        273,
+        282
+      ]
+    },
+    {
+      "id": "companyfacts-0001326801",
+      "kind": "companyfacts",
+      "cik": "0001326801",
+      "reference": "sources/scoped-companyfacts-0001326801.json",
+      "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001326801.json",
+      "sha256": "f2add1b99b078c2211eed766e266c5c04ceb419093a099efffa79ed56e9a7026",
+      "retrieved_at": "2026-10-09",
+      "upstream": {
+        "id": "full-companyfacts-0001326801",
+        "reference": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001326801.json",
+        "sha256": "7518e76d6dac2d016e1a3d1dec1cc55ff9ea3bdd58a151b16fcaa067a6c9d94e",
+        "bytes": 2746680
+      },
+      "selection": [
+        "CashAndCashEquivalentsAtCarryingValue",
+        "LongTermDebtCurrent",
+        "LongTermDebtNoncurrent",
+        "Revenues",
+        "RevenueFromContractWithCustomerExcludingAssessedTax"
+      ]
+    },
+    {
+      "id": "submissions-0001045810",
+      "kind": "submissions",
+      "cik": "0001045810",
+      "reference": "sources/scoped-submissions-0001045810.json",
+      "url": "https://data.sec.gov/submissions/CIK0001045810.json",
+      "sha256": "363fb7ff17aacb99453d1f952a11f816347063a604d8a72167b9e7aa53cdeb05",
+      "retrieved_at": "2026-10-09",
+      "upstream": {
+        "id": "full-submissions-0001045810",
+        "reference": "https://data.sec.gov/submissions/CIK0001045810.json",
+        "sha256": "163eaadd6981af5f889928aaa7868486c1bb7a2e6d3564dace3d8c5b487274c8",
+        "bytes": 159938
+      },
+      "selection": [
+        "8-K",
+        "8-K/A"
+      ],
+      "row_ordinals": [
+        14,
+        21,
+        23,
+        30,
+        31,
+        50,
+        61,
+        69,
+        71,
+        95,
+        102,
+        110,
+        141
+      ]
+    },
+    {
+      "id": "companyfacts-0001045810",
+      "kind": "companyfacts",
+      "cik": "0001045810",
+      "reference": "sources/scoped-companyfacts-0001045810.json",
+      "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001045810.json",
+      "sha256": "326fdaeb054eced726d98f6752042b58ab791fcc7818b3244fb9854cad6b391e",
+      "retrieved_at": "2026-10-09",
+      "upstream": {
+        "id": "full-companyfacts-0001045810",
+        "reference": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001045810.json",
+        "sha256": "19ef503a5770f5660964b3c3aea6937579d9b359da344afe6a9adf59c63d26ff",
+        "bytes": 4092966
+      },
+      "selection": [
+        "CashAndCashEquivalentsAtCarryingValue",
+        "LongTermDebtCurrent",
+        "LongTermDebtNoncurrent",
+        "Revenues",
+        "RevenueFromContractWithCustomerExcludingAssessedTax"
+      ]
+    },
+    {
+      "id": "submissions-0000019617",
+      "kind": "submissions",
+      "cik": "0000019617",
+      "reference": "sources/scoped-submissions-0000019617.json",
+      "url": "https://data.sec.gov/submissions/CIK0000019617.json",
+      "sha256": "415c34a24fd5dd01b38b258c36b5b0a522f4ae105cb21455f9888718f8f8306b",
+      "retrieved_at": "2026-10-09",
+      "upstream": {
+        "id": "full-submissions-0000019617",
+        "reference": "https://data.sec.gov/submissions/CIK0000019617.json",
+        "sha256": "b614df84adb3dbba87f64167e1e034a0e224ebafd175d915e9879c07eb42d1a2",
+        "bytes": 4655647
+      },
+      "selection": [
+        "8-K",
+        "8-K/A"
+      ],
+      "row_ordinals": [
+        5796,
+        5797,
+        6511,
+        6520,
+        7838,
+        7860,
+        7861,
+        9342,
+        10006,
+        10253,
+        11258,
+        12441,
+        12482,
+        13157,
+        13167,
+        17140,
+        18260,
+        19573,
+        19596,
+        20258,
+        20279,
+        22320,
+        25664,
+        26203,
+        26222
+      ]
+    },
+    {
+      "id": "companyfacts-0000019617",
+      "kind": "companyfacts",
+      "cik": "0000019617",
+      "reference": "sources/scoped-companyfacts-0000019617.json",
+      "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000019617.json",
+      "sha256": "14c8fc55eab69e78869f87a1cf1b34006de39a604dd0c0abdb1333691a2dfe94",
+      "retrieved_at": "2026-10-09",
+      "upstream": {
+        "id": "full-companyfacts-0000019617",
+        "reference": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000019617.json",
+        "sha256": "e4e9d0af2dcb5d685d3f8cee366b234dd5d4546cd67c010e1390307e0a87fa8f",
+        "bytes": 7978740
+      },
+      "selection": [
+        "CashAndCashEquivalentsAtCarryingValue",
+        "LongTermDebtCurrent",
+        "LongTermDebtNoncurrent",
+        "Revenues",
+        "RevenueFromContractWithCustomerExcludingAssessedTax"
+      ]
+    },
+    {
+      "id": "submissions-0001403161",
+      "kind": "submissions",
+      "cik": "0001403161",
+      "reference": "sources/scoped-submissions-0001403161.json",
+      "url": "https://data.sec.gov/submissions/CIK0001403161.json",
+      "sha256": "730609349cc3f48fc22ba10fc413b474d9c48fb45ec11d233db7fce057f0c089",
+      "retrieved_at": "2026-10-09",
+      "upstream": {
+        "id": "full-submissions-0001403161",
+        "reference": "https://data.sec.gov/submissions/CIK0001403161.json",
+        "sha256": "7f985aa8d9b9b7171d7784aa41af99770be5bc86afc2b1d508aa977f5aa0dc18",
+        "bytes": 159205
+      },
+      "selection": [
+        "8-K",
+        "8-K/A"
+      ],
+      "row_ordinals": [
+        2,
+        18,
+        19,
+        26,
+        31,
+        33,
+        39,
+        52,
+        58,
+        59,
+        64,
+        75,
+        80,
+        81,
+        107,
+        113
+      ]
+    },
+    {
+      "id": "companyfacts-0001403161",
+      "kind": "companyfacts",
+      "cik": "0001403161",
+      "reference": "sources/scoped-companyfacts-0001403161.json",
+      "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001403161.json",
+      "sha256": "36e96b05d889e8d4c7218c0f77c5e708b9d9318fa2e3645070e11a6b715eab55",
+      "retrieved_at": "2026-10-09",
+      "upstream": {
+        "id": "full-companyfacts-0001403161",
+        "reference": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001403161.json",
+        "sha256": "df3caf7c5667296569fc3074ce2ff13629c9a555184a06c5ea9925b43e63971d",
+        "bytes": 3564517
+      },
+      "selection": [
+        "CashAndCashEquivalentsAtCarryingValue",
+        "LongTermDebtCurrent",
+        "LongTermDebtNoncurrent",
+        "Revenues",
+        "RevenueFromContractWithCustomerExcludingAssessedTax"
+      ]
+    },
+    {
+      "id": "submissions-0000070858",
+      "kind": "submissions",
+      "cik": "0000070858",
+      "reference": "sources/scoped-submissions-0000070858.json",
+      "url": "https://data.sec.gov/submissions/CIK0000070858.json",
+      "sha256": "2f6a1d0994110bfd7ce75aea41be2a8f250e4268b6e7bc5b732dc22d21e47061",
+      "retrieved_at": "2026-10-09",
+      "upstream": {
+        "id": "full-submissions-0000070858",
+        "reference": "https://data.sec.gov/submissions/CIK0000070858.json",
+        "sha256": "65fd24b6c2c5feedffd25ca609c67462a813aae8b99dcbb5f8d779e311c33527",
+        "bytes": 1778294
+      },
+      "selection": [
+        "8-K",
+        "8-K/A"
+      ],
+      "row_ordinals": [
+        2585,
+        2849,
+        4836,
+        5588,
+        7347,
+        8519,
+        8657,
+        9765,
+        11318,
+        11391
+      ]
+    },
+    {
+      "id": "companyfacts-0000070858",
+      "kind": "companyfacts",
+      "cik": "0000070858",
+      "reference": "sources/scoped-companyfacts-0000070858.json",
+      "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000070858.json",
+      "sha256": "9ff3d39322d6f53d963dcb363912505248251f1bcd57fc52304b71ae0a559159",
+      "retrieved_at": "2026-10-09",
+      "upstream": {
+        "id": "full-companyfacts-0000070858",
+        "reference": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000070858.json",
+        "sha256": "a19e195ef148b3b7ced44a7a7cecad1bb4af7f9aefd534ef968108d594110c1e",
+        "bytes": 6888180
+      },
+      "selection": [
+        "CashAndCashEquivalentsAtCarryingValue",
+        "LongTermDebtCurrent",
+        "LongTermDebtNoncurrent",
+        "Revenues",
+        "RevenueFromContractWithCustomerExcludingAssessedTax"
+      ]
+    },
+    {
+      "id": "submissions-0000034088",
+      "kind": "submissions",
+      "cik": "0000034088",
+      "reference": "sources/scoped-submissions-0000034088.json",
+      "url": "https://data.sec.gov/submissions/CIK0000034088.json",
+      "sha256": "94f0f718dd75429a9880bcd656c7939b2aa9b2010d8adb23c204ae2b516812d8",
+      "retrieved_at": "2026-10-09",
+      "upstream": {
+        "id": "full-submissions-0000034088",
+        "reference": "https://data.sec.gov/submissions/CIK0000034088.json",
+        "sha256": "c86c3d1c16e5ac086be3ac2f5eaedbb3c2891ac3127a10d2566b0049cbde82df",
+        "bytes": 162387
+      },
+      "selection": [
+        "8-K",
+        "8-K/A"
+      ],
+      "row_ordinals": [
+        10,
+        12,
+        25,
+        27,
+        34,
+        35,
+        44,
+        52,
+        53,
+        72,
+        88,
+        89,
+        95,
+        97,
+        98
+      ]
+    },
+    {
+      "id": "companyfacts-0000034088",
+      "kind": "companyfacts",
+      "cik": "0000034088",
+      "reference": "sources/scoped-companyfacts-0000034088.json",
+      "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000034088.json",
+      "sha256": "a8a5b18cc9d69f7b628a3ece31136d443e5058ac0527f502b5b2ab1fbb9d2382",
+      "retrieved_at": "2026-10-09",
+      "upstream": {
+        "id": "full-companyfacts-0000034088",
+        "reference": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000034088.json",
+        "sha256": "9b95535419e5662e3deed01de803e83deead477a4c81316e1c45186368fdd8b8",
+        "bytes": 3122723
+      },
+      "selection": [
+        "CashAndCashEquivalentsAtCarryingValue",
+        "LongTermDebtCurrent",
+        "LongTermDebtNoncurrent",
+        "Revenues",
+        "RevenueFromContractWithCustomerExcludingAssessedTax"
+      ]
+    },
+    {
+      "id": "submissions-0000093410",
+      "kind": "submissions",
+      "cik": "0000093410",
+      "reference": "sources/scoped-submissions-0000093410.json",
+      "url": "https://data.sec.gov/submissions/CIK0000093410.json",
+      "sha256": "3552ee095d3d24090fab1e92c95a0808a4669d9bdc247872a5ca44516a25953a",
+      "retrieved_at": "2026-10-09",
+      "upstream": {
+        "id": "full-submissions-0000093410",
+        "reference": "https://data.sec.gov/submissions/CIK0000093410.json",
+        "sha256": "1c2aca29a8206b7438c67cb04be68ca883e69f85a97fd8993d52546f8aefb40b",
+        "bytes": 157573
+      },
+      "selection": [
+        "8-K",
+        "8-K/A"
+      ],
+      "row_ordinals": [
+        22,
+        38,
+        39,
+        49,
+        51,
+        60,
+        121,
+        124,
+        129,
+        147,
+        148,
+        151,
+        165,
+        166
+      ]
+    },
+    {
+      "id": "companyfacts-0000093410",
+      "kind": "companyfacts",
+      "cik": "0000093410",
+      "reference": "sources/scoped-companyfacts-0000093410.json",
+      "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000093410.json",
+      "sha256": "15e64ce1eb1346c333c70129a35dab17a560cdd3f915088fc6c2a3a4f0daf9ea",
+      "retrieved_at": "2026-10-09",
+      "upstream": {
+        "id": "full-companyfacts-0000093410",
+        "reference": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000093410.json",
+        "sha256": "c09b160603412cb45acf1bb9bf3732e531dedfb548afa0e275fd8aefd7ab397e",
+        "bytes": 4810683
+      },
+      "selection": [
+        "CashAndCashEquivalentsAtCarryingValue",
+        "LongTermDebtCurrent",
+        "LongTermDebtNoncurrent",
+        "Revenues",
+        "RevenueFromContractWithCustomerExcludingAssessedTax"
+      ]
+    },
+    {
+      "id": "submissions-0000200406",
+      "kind": "submissions",
+      "cik": "0000200406",
+      "reference": "sources/scoped-submissions-0000200406.json",
+      "url": "https://data.sec.gov/submissions/CIK0000200406.json",
+      "sha256": "284cf5141a7f297bffbdca691642ad75dd84656bf23e9f4d879a948beb9782e7",
+      "retrieved_at": "2026-10-09",
+      "upstream": {
+        "id": "full-submissions-0000200406",
+        "reference": "https://data.sec.gov/submissions/CIK0000200406.json",
+        "sha256": "269cec583b49d64b87a61196490d6d2a685ce697346269d4d1f8fe9d673fbfb6",
+        "bytes": 154758
+      },
+      "selection": [
+        "8-K",
+        "8-K/A"
+      ],
+      "row_ordinals": [
+        16,
+        17,
+        18,
+        22,
+        34,
+        47,
+        101,
+        117
+      ]
+    },
+    {
+      "id": "companyfacts-0000200406",
+      "kind": "companyfacts",
+      "cik": "0000200406",
+      "reference": "sources/scoped-companyfacts-0000200406.json",
+      "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000200406.json",
+      "sha256": "43585e3225dcf635096fdbd03a29337d60a152092b31a999add042759538ae40",
+      "retrieved_at": "2026-10-09",
+      "upstream": {
+        "id": "full-companyfacts-0000200406",
+        "reference": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000200406.json",
+        "sha256": "7141c0c988fa1d30f779687b4c78ab561e19aa5990a58ad86a66467d0a783980",
+        "bytes": 4168526
+      },
+      "selection": [
+        "CashAndCashEquivalentsAtCarryingValue",
+        "LongTermDebtCurrent",
+        "LongTermDebtNoncurrent",
+        "Revenues",
+        "RevenueFromContractWithCustomerExcludingAssessedTax"
+      ]
+    },
+    {
+      "id": "submissions-0001318605",
+      "kind": "submissions",
+      "cik": "0001318605",
+      "reference": "sources/scoped-submissions-0001318605.json",
+      "url": "https://data.sec.gov/submissions/CIK0001318605.json",
+      "sha256": "1758dd251f83c40cddd35653249fe4e2d0177bdc2b47fb31fe7ae2ea4ed10577",
+      "retrieved_at": "2026-10-09",
+      "upstream": {
+        "id": "full-submissions-0001318605",
+        "reference": "https://data.sec.gov/submissions/CIK0001318605.json",
+        "sha256": "76ef728de78f5a7048154847052d1be4b76d32be9e790f57d8ce14a026be6c3a",
+        "bytes": 161958
+      },
+      "selection": [
+        "8-K",
+        "8-K/A"
+      ],
+      "row_ordinals": [
+        1,
+        5,
+        6,
+        22,
+        24,
+        33,
+        37,
+        47,
+        65,
+        82
+      ]
+    },
+    {
+      "id": "companyfacts-0001318605",
+      "kind": "companyfacts",
+      "cik": "0001318605",
+      "reference": "sources/scoped-companyfacts-0001318605.json",
+      "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001318605.json",
+      "sha256": "3e28dcd7f8aff8ec28ee37709242f023cf7d3a93e666baf163d2e1188832213c",
+      "retrieved_at": "2026-10-09",
+      "upstream": {
+        "id": "full-companyfacts-0001318605",
+        "reference": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001318605.json",
+        "sha256": "d0c2b9288d027a6d735039a6fe874a348b65a7fdbc6c133130666c777c885204",
+        "bytes": 3641344
+      },
+      "selection": [
+        "CashAndCashEquivalentsAtCarryingValue",
+        "LongTermDebtCurrent",
+        "LongTermDebtNoncurrent",
+        "Revenues",
+        "RevenueFromContractWithCustomerExcludingAssessedTax"
+      ]
+    },
+    {
+      "id": "submissions-0000731766",
+      "kind": "submissions",
+      "cik": "0000731766",
+      "reference": "sources/scoped-submissions-0000731766.json",
+      "url": "https://data.sec.gov/submissions/CIK0000731766.json",
+      "sha256": "ebde0f5eb2e898714e23e932dd7343871e1b10f1003f907340dbc98b8a311524",
+      "retrieved_at": "2026-10-09",
+      "upstream": {
+        "id": "full-submissions-0000731766",
+        "reference": "https://data.sec.gov/submissions/CIK0000731766.json",
+        "sha256": "94fb1cf4af39ab0f3b8370f724bb74cf918a0ab597b245e96dc9925f63ab1a5b",
+        "bytes": 157723
+      },
+      "selection": [
+        "8-K",
+        "8-K/A"
+      ],
+      "row_ordinals": [
+        23,
+        32,
+        58,
+        62,
+        69,
+        97,
+        99,
+        107,
+        118,
+        119,
+        146,
+        147,
+        149,
+        151
+      ]
+    },
+    {
+      "id": "companyfacts-0000731766",
+      "kind": "companyfacts",
+      "cik": "0000731766",
+      "reference": "sources/scoped-companyfacts-0000731766.json",
+      "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000731766.json",
+      "sha256": "c104867239d2d8f5f7e224181f3a411663cea7c89c5778756b80e6965d379a9e",
+      "retrieved_at": "2026-10-09",
+      "upstream": {
+        "id": "full-companyfacts-0000731766",
+        "reference": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000731766.json",
+        "sha256": "6c9dff59732b7c597542b2d5eadaae0313ca0de03defdba2c00203e693632d76",
+        "bytes": 4384010
+      },
+      "selection": [
+        "CashAndCashEquivalentsAtCarryingValue",
+        "LongTermDebtCurrent",
+        "LongTermDebtNoncurrent",
+        "Revenues",
+        "RevenueFromContractWithCustomerExcludingAssessedTax"
+      ]
+    },
+    {
+      "id": "submissions-0000080424",
+      "kind": "submissions",
+      "cik": "0000080424",
+      "reference": "sources/scoped-submissions-0000080424.json",
+      "url": "https://data.sec.gov/submissions/CIK0000080424.json",
+      "sha256": "07ff1572f3b69f5d4f54fc2fbc7fb4774212feb960d703b6181b96b0d15843ea",
+      "retrieved_at": "2026-10-09",
+      "upstream": {
+        "id": "full-submissions-0000080424",
+        "reference": "https://data.sec.gov/submissions/CIK0000080424.json",
+        "sha256": "0830f11b13de75ab5a8ab636c01c5a474d8fee43052e2dcba3542c59825dd7b2",
+        "bytes": 160368
+      },
+      "selection": [
+        "8-K",
+        "8-K/A"
+      ],
+      "row_ordinals": [
+        95,
+        96,
+        97,
+        98,
+        112,
+        113,
+        114,
+        141,
+        142,
+        143,
+        144,
+        168,
+        171,
+        185,
+        186,
+        187,
+        202
+      ]
+    },
+    {
+      "id": "companyfacts-0000080424",
+      "kind": "companyfacts",
+      "cik": "0000080424",
+      "reference": "sources/scoped-companyfacts-0000080424.json",
+      "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000080424.json",
+      "sha256": "684af7aae862e51273e0f7e208a2fdb0d0bd2c4d8163b9f36b829af230de5410",
+      "retrieved_at": "2026-10-09",
+      "upstream": {
+        "id": "full-companyfacts-0000080424",
+        "reference": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000080424.json",
+        "sha256": "606ad7056b611e91cfab9f7568b747404405772add188600efa5ccda5824f3d8",
+        "bytes": 3911151
+      },
+      "selection": [
+        "CashAndCashEquivalentsAtCarryingValue",
+        "LongTermDebtCurrent",
+        "LongTermDebtNoncurrent",
+        "Revenues",
+        "RevenueFromContractWithCustomerExcludingAssessedTax"
+      ]
+    },
+    {
+      "id": "submissions-0000021344",
+      "kind": "submissions",
+      "cik": "0000021344",
+      "reference": "sources/scoped-submissions-0000021344.json",
+      "url": "https://data.sec.gov/submissions/CIK0000021344.json",
+      "sha256": "dd7e725e266e8f8c4a87abf8049fa9d65a6ce80df3e9364ceb80f45ada8bec3f",
+      "retrieved_at": "2026-10-09",
+      "upstream": {
+        "id": "full-submissions-0000021344",
+        "reference": "https://data.sec.gov/submissions/CIK0000021344.json",
+        "sha256": "8591f2d5a02913481a2bc76458ab5c905f94e72f0856a18b6fa57e3f46235e39",
+        "bytes": 159098
+      },
+      "selection": [
+        "8-K",
+        "8-K/A"
+      ],
+      "row_ordinals": [
+        18,
+        19,
+        20,
+        41,
+        44,
+        116,
+        118,
+        121,
+        122,
+        137,
+        140
+      ]
+    },
+    {
+      "id": "companyfacts-0000021344",
+      "kind": "companyfacts",
+      "cik": "0000021344",
+      "reference": "sources/scoped-companyfacts-0000021344.json",
+      "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000021344.json",
+      "sha256": "77cb38e294580a96060a6b54b010ec4ceb6229742fdd0eea07f9a445e593c64c",
+      "retrieved_at": "2026-10-09",
+      "upstream": {
+        "id": "full-companyfacts-0000021344",
+        "reference": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000021344.json",
+        "sha256": "53d363a9aa3071406cda9857654358f4dca42e174a1defb8cc1ce9ad2a4c9e40",
+        "bytes": 5028478
+      },
+      "selection": [
+        "CashAndCashEquivalentsAtCarryingValue",
+        "LongTermDebtCurrent",
+        "LongTermDebtNoncurrent",
+        "Revenues",
+        "RevenueFromContractWithCustomerExcludingAssessedTax"
+      ]
+    },
+    {
+      "id": "submissions-0000858877",
+      "kind": "submissions",
+      "cik": "0000858877",
+      "reference": "sources/scoped-submissions-0000858877.json",
+      "url": "https://data.sec.gov/submissions/CIK0000858877.json",
+      "sha256": "82ba1846612be59cdeb265e2de4aa5f5bbe12c343a895825de6503b22b03f809",
+      "retrieved_at": "2026-10-09",
+      "upstream": {
+        "id": "full-submissions-0000858877",
+        "reference": "https://data.sec.gov/submissions/CIK0000858877.json",
+        "sha256": "e5b71737d6042c04e57d335d1e3c746bcd07a2495b75b087b6d177768d29a392",
+        "bytes": 158439
+      },
+      "selection": [
+        "8-K",
+        "8-K/A"
+      ],
+      "row_ordinals": [
+        40,
+        74,
+        82,
+        88,
+        121,
+        139,
+        176,
+        182
+      ]
+    },
+    {
+      "id": "companyfacts-0000858877",
+      "kind": "companyfacts",
+      "cik": "0000858877",
+      "reference": "sources/scoped-companyfacts-0000858877.json",
+      "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000858877.json",
+      "sha256": "d7d4007df8495ac605ca303f83b9b80094375858caf592ef8583c1bf4a6155bd",
+      "retrieved_at": "2026-10-09",
+      "upstream": {
+        "id": "full-companyfacts-0000858877",
+        "reference": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000858877.json",
+        "sha256": "f9f6cfb3c04bb8102552f121868831471a474165074ccc7c539f6f80f19d1b99",
+        "bytes": 6172548
+      },
+      "selection": [
+        "CashAndCashEquivalentsAtCarryingValue",
+        "LongTermDebtCurrent",
+        "LongTermDebtNoncurrent",
+        "Revenues",
+        "RevenueFromContractWithCustomerExcludingAssessedTax"
+      ]
+    },
+    {
+      "id": "submissions-0000063908",
+      "kind": "submissions",
+      "cik": "0000063908",
+      "reference": "sources/scoped-submissions-0000063908.json",
+      "url": "https://data.sec.gov/submissions/CIK0000063908.json",
+      "sha256": "d25c95ac3af1b6338338f55c250cedbd1fd1c603a8837c7cf6a1431d11743a5a",
+      "retrieved_at": "2026-10-09",
+      "upstream": {
+        "id": "full-submissions-0000063908",
+        "reference": "https://data.sec.gov/submissions/CIK0000063908.json",
+        "sha256": "5ca5bd9a4dbc4878d898899a2ae41a8da1a0a42e24fc280a7f84e47f126f454e",
+        "bytes": 158068
+      },
+      "selection": [
+        "8-K",
+        "8-K/A"
+      ],
+      "row_ordinals": [
+        3,
+        8,
+        9,
+        21,
+        25,
+        34,
+        62,
+        65,
+        92
+      ]
+    },
+    {
+      "id": "companyfacts-0000063908",
+      "kind": "companyfacts",
+      "cik": "0000063908",
+      "reference": "sources/scoped-companyfacts-0000063908.json",
+      "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000063908.json",
+      "sha256": "532501bf4f450b93b59d1b7dfcaf99e89d275be97c0c03923504576d042fc21a",
+      "retrieved_at": "2026-10-09",
+      "upstream": {
+        "id": "full-companyfacts-0000063908",
+        "reference": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000063908.json",
+        "sha256": "0394e814d75510be107679b026e2df6e5d02d4f2029166911aa4924f9556681f",
+        "bytes": 3579350
+      },
+      "selection": [
+        "CashAndCashEquivalentsAtCarryingValue",
+        "LongTermDebtCurrent",
+        "LongTermDebtNoncurrent",
+        "Revenues",
+        "RevenueFromContractWithCustomerExcludingAssessedTax"
+      ]
+    },
+    {
+      "id": "submissions-0000040545",
+      "kind": "submissions",
+      "cik": "0000040545",
+      "reference": "sources/scoped-submissions-0000040545.json",
+      "url": "https://data.sec.gov/submissions/CIK0000040545.json",
+      "sha256": "0928c760b53fa5899d44e30b7c08afa710383c13a5d1f3aa19a23de837a40b1d",
+      "retrieved_at": "2026-10-09",
+      "upstream": {
+        "id": "full-submissions-0000040545",
+        "reference": "https://data.sec.gov/submissions/CIK0000040545.json",
+        "sha256": "ef3b1c78870ba9b87b5b7e92f92a4a34eceea3c11f8f5c1e5b076d2a59aab718",
+        "bytes": 166923
+      },
+      "selection": [
+        "8-K",
+        "8-K/A"
+      ],
+      "row_ordinals": [
+        3,
+        4,
+        14,
+        19,
+        20,
+        24,
+        43,
+        75,
+        76,
+        89,
+        92
+      ]
+    },
+    {
+      "id": "companyfacts-0000040545",
+      "kind": "companyfacts",
+      "cik": "0000040545",
+      "reference": "sources/scoped-companyfacts-0000040545.json",
+      "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000040545.json",
+      "sha256": "57cdc49ae02302ec4f58bcce151d33bdc0a96a73c2c159b0880bd2a395091a69",
+      "retrieved_at": "2026-10-09",
+      "upstream": {
+        "id": "full-companyfacts-0000040545",
+        "reference": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000040545.json",
+        "sha256": "8c18acb17bbe0760fae6205c5df75b805480c58d4d1dbbabeba206d9ca36e1e3",
+        "bytes": 6101059
+      },
+      "selection": [
+        "CashAndCashEquivalentsAtCarryingValue",
+        "LongTermDebtCurrent",
+        "LongTermDebtNoncurrent",
+        "Revenues",
+        "RevenueFromContractWithCustomerExcludingAssessedTax"
+      ]
+    },
+    {
+      "id": "submissions-0000886982",
+      "kind": "submissions",
+      "cik": "0000886982",
+      "reference": "sources/scoped-submissions-0000886982.json",
+      "url": "https://data.sec.gov/submissions/CIK0000886982.json",
+      "sha256": "26a7c5c5bee3b74807688067f10ee262656ac727869dc5f721d56b7be11e5912",
+      "retrieved_at": "2026-10-09",
+      "upstream": {
+        "id": "full-submissions-0000886982",
+        "reference": "https://data.sec.gov/submissions/CIK0000886982.json",
+        "sha256": "6f95f2c0dfee7988b5473323662e24b9afffeed83b476ea1440540042cdcfd3e",
+        "bytes": 2611283
+      },
+      "selection": [
+        "8-K",
+        "8-K/A"
+      ],
+      "row_ordinals": [
+        2359,
+        3159,
+        3343,
+        3461,
+        3699,
+        4522,
+        5247,
+        6592,
+        7332,
+        8061,
+        8409,
+        10238,
+        10747,
+        11973,
+        12625,
+        13148,
+        13261,
+        13433,
+        13593,
+        16180,
+        16426
+      ]
+    },
+    {
+      "id": "companyfacts-0000886982",
+      "kind": "companyfacts",
+      "cik": "0000886982",
+      "reference": "sources/scoped-companyfacts-0000886982.json",
+      "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000886982.json",
+      "sha256": "5faa2e6d090bbea8b801a31f5bab8d478ecec791e9374ccaf25ba30d633271d3",
+      "retrieved_at": "2026-10-09",
+      "upstream": {
+        "id": "full-companyfacts-0000886982",
+        "reference": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000886982.json",
+        "sha256": "1c11e703efb2c23b1403b0cc65d6565fdc1e926e1cf6ee005d04cf9cc428f20f",
+        "bytes": 6001801
+      },
+      "selection": [
+        "CashAndCashEquivalentsAtCarryingValue",
+        "LongTermDebtCurrent",
+        "LongTermDebtNoncurrent",
+        "Revenues",
+        "RevenueFromContractWithCustomerExcludingAssessedTax"
+      ]
+    },
+    {
+      "id": "submissions-0000831001",
+      "kind": "submissions",
+      "cik": "0000831001",
+      "reference": "sources/scoped-submissions-0000831001.json",
+      "url": "https://data.sec.gov/submissions/CIK0000831001.json",
+      "sha256": "5091ea543e692302b2498c7beaadfba9eb5109e29e7b44942ca6c0f6fca08383",
+      "retrieved_at": "2026-10-09",
+      "upstream": {
+        "id": "full-submissions-0000831001",
+        "reference": "https://data.sec.gov/submissions/CIK0000831001.json",
+        "sha256": "c71861d6bd301d0ce6c1cff23eb1474de66240ca31c25f5055ecf6348964f39f",
+        "bytes": 2348496
+      },
+      "selection": [
+        "8-K",
+        "8-K/A"
+      ],
+      "row_ordinals": [
+        683,
+        3528,
+        5742,
+        7074,
+        7253,
+        9521,
+        9524,
+        9858,
+        10690,
+        10763,
+        11124,
+        11408,
+        11872,
+        12805,
+        12820,
+        13245
+      ]
+    },
+    {
+      "id": "companyfacts-0000831001",
+      "kind": "companyfacts",
+      "cik": "0000831001",
+      "reference": "sources/scoped-companyfacts-0000831001.json",
+      "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000831001.json",
+      "sha256": "27e7b61d9596fc95be0a3aa5e5a380dde0f0e387888c6928b475d53af6509bc8",
+      "retrieved_at": "2026-10-09",
+      "upstream": {
+        "id": "full-companyfacts-0000831001",
+        "reference": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000831001.json",
+        "sha256": "62b4f569a7426a758480e6918a9762aee95ec91f8aaf2cd2deb71cca457948b3",
+        "bytes": 8896058
+      },
+      "selection": [
+        "CashAndCashEquivalentsAtCarryingValue",
+        "LongTermDebtCurrent",
+        "LongTermDebtNoncurrent",
+        "Revenues",
+        "RevenueFromContractWithCustomerExcludingAssessedTax"
+      ]
+    },
+    {
+      "id": "submissions-0001067983",
+      "kind": "submissions",
+      "cik": "0001067983",
+      "reference": "sources/scoped-submissions-0001067983.json",
+      "url": "https://data.sec.gov/submissions/CIK0001067983.json",
+      "sha256": "6da871065d2f0409a04544959cc851554e3c20772e9ef66d1369528773f929cb",
+      "retrieved_at": "2026-10-09",
+      "upstream": {
+        "id": "full-submissions-0001067983",
+        "reference": "https://data.sec.gov/submissions/CIK0001067983.json",
+        "sha256": "ab313de3258a0251e6f41c0398573a0c5a94618fd2f67b9cf1d136f3eaad9da2",
+        "bytes": 161248
+      },
+      "selection": [
+        "8-K",
+        "8-K/A"
+      ],
+      "row_ordinals": [
+        14,
+        45,
+        51,
+        62,
+        64,
+        74,
+        76,
+        77,
+        91,
+        95
+      ]
+    },
+    {
+      "id": "companyfacts-0001067983",
+      "kind": "companyfacts",
+      "cik": "0001067983",
+      "reference": "sources/scoped-companyfacts-0001067983.json",
+      "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001067983.json",
+      "sha256": "9050ab48c8662566ffc23a2a0687fc1b4ff5de82b5c6fb9eb275bb40e1a7c98f",
+      "retrieved_at": "2026-10-09",
+      "upstream": {
+        "id": "full-companyfacts-0001067983",
+        "reference": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001067983.json",
+        "sha256": "3fef3a683cac2db4c08b6811eb74cfe84d3a81984524dc1104ea4fcbcba4ce1d",
+        "bytes": 2798312
+      },
+      "selection": [
+        "CashAndCashEquivalentsAtCarryingValue",
+        "LongTermDebtCurrent",
+        "LongTermDebtNoncurrent",
+        "Revenues",
+        "RevenueFromContractWithCustomerExcludingAssessedTax"
+      ]
+    },
+    {
+      "id": "submissions-0001108524",
+      "kind": "submissions",
+      "cik": "0001108524",
+      "reference": "sources/scoped-submissions-0001108524.json",
+      "url": "https://data.sec.gov/submissions/CIK0001108524.json",
+      "sha256": "e6a2bbb729c624741906dc934d0cbe3cb6a0f06d3e55688937253259dcb9eddc",
+      "retrieved_at": "2026-10-09",
+      "upstream": {
+        "id": "full-submissions-0001108524",
+        "reference": "https://data.sec.gov/submissions/CIK0001108524.json",
+        "sha256": "a17395341045ab4f90af3c9a631da7a393704f21c22074ffc5d64b6d1c73f719",
+        "bytes": 156325
+      },
+      "selection": [
+        "8-K",
+        "8-K/A"
+      ],
+      "row_ordinals": [
+        5,
+        11,
+        16,
+        28,
+        38,
+        40,
+        42,
+        74,
+        75,
+        77,
+        80,
+        82,
+        120,
+        135,
+        153
+      ]
+    },
+    {
+      "id": "companyfacts-0001108524",
+      "kind": "companyfacts",
+      "cik": "0001108524",
+      "reference": "sources/scoped-companyfacts-0001108524.json",
+      "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001108524.json",
+      "sha256": "4ef6d4192c5964cd1bc60f5158d227be5a60457a670e479ec742a1332c9bbf47",
+      "retrieved_at": "2026-10-09",
+      "upstream": {
+        "id": "full-companyfacts-0001108524",
+        "reference": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001108524.json",
+        "sha256": "c36bddafd22061dfe573fa22199074d882196f6667cf641eb30c8cec5a340ae5",
+        "bytes": 4729214
+      },
+      "selection": [
+        "CashAndCashEquivalentsAtCarryingValue",
+        "LongTermDebtCurrent",
+        "LongTermDebtNoncurrent",
+        "Revenues",
+        "RevenueFromContractWithCustomerExcludingAssessedTax"
+      ]
+    },
+    {
+      "id": "submissions-0000004962",
+      "kind": "submissions",
+      "cik": "0000004962",
+      "reference": "sources/scoped-submissions-0000004962.json",
+      "url": "https://data.sec.gov/submissions/CIK0000004962.json",
+      "sha256": "3fd08f1e186117f2bdbef85d8ec3be74f908414818332de92d92d5152cb8bd65",
+      "retrieved_at": "2026-10-09",
+      "upstream": {
+        "id": "full-submissions-0000004962",
+        "reference": "https://data.sec.gov/submissions/CIK0000004962.json",
+        "sha256": "da953532f1c70b6894790bb609ced7c937bdc5ca90a0ceec78d996404ee724ec",
+        "bytes": 159155
+      },
+      "selection": [
+        "8-K",
+        "8-K/A"
+      ],
+      "row_ordinals": [
+        11,
+        14,
+        15,
+        20,
+        23,
+        24,
+        33,
+        38,
+        40,
+        44,
+        51,
+        59,
+        61,
+        67,
+        68,
+        82,
+        86,
+        87,
+        90,
+        95,
+        124,
+        125,
+        135,
+        138,
+        151,
+        158,
+        159
+      ]
+    },
+    {
+      "id": "companyfacts-0000004962",
+      "kind": "companyfacts",
+      "cik": "0000004962",
+      "reference": "sources/scoped-companyfacts-0000004962.json",
+      "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000004962.json",
+      "sha256": "ca5aae9506442a20cbe660225c7de4a85558ce9078196130368a33edc715e3bd",
+      "retrieved_at": "2026-10-09",
+      "upstream": {
+        "id": "full-companyfacts-0000004962",
+        "reference": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000004962.json",
+        "sha256": "8fe514defe349eb117b04523e2e5371387cef70748eabd0445040fe0a9f4840f",
+        "bytes": 4775600
+      },
+      "selection": [
+        "CashAndCashEquivalentsAtCarryingValue",
+        "LongTermDebtCurrent",
+        "LongTermDebtNoncurrent",
+        "Revenues",
+        "RevenueFromContractWithCustomerExcludingAssessedTax"
+      ]
+    },
+    {
+      "id": "submissions-0000077476",
+      "kind": "submissions",
+      "cik": "0000077476",
+      "reference": "sources/scoped-submissions-0000077476.json",
+      "url": "https://data.sec.gov/submissions/CIK0000077476.json",
+      "sha256": "bed966e1217ad4ed0c219b2cd65795d3dc8d37ef927fa68d1c923bdd1bea5bc6",
+      "retrieved_at": "2026-10-09",
+      "upstream": {
+        "id": "full-submissions-0000077476",
+        "reference": "https://data.sec.gov/submissions/CIK0000077476.json",
+        "sha256": "1e91c4847dc7e570398a5ae8e06d3a2826657a5216b9c5dd10f194da4924cc5d",
+        "bytes": 162762
+      },
+      "selection": [
+        "8-K",
+        "8-K/A"
+      ],
+      "row_ordinals": [
+        16,
+        21,
+        30,
+        33,
+        37,
+        65,
+        69,
+        72,
+        73,
+        81
+      ]
+    },
+    {
+      "id": "companyfacts-0000077476",
+      "kind": "companyfacts",
+      "cik": "0000077476",
+      "reference": "sources/scoped-companyfacts-0000077476.json",
+      "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000077476.json",
+      "sha256": "ecd53c2d7e026dc939e8358d6772519ec2a79220eb8be9f882752eee689a2e46",
+      "retrieved_at": "2026-10-09",
+      "upstream": {
+        "id": "full-companyfacts-0000077476",
+        "reference": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000077476.json",
+        "sha256": "c35234bfb4a1fe24cc1f3b47bdf61f7a46833428dc27070af7e8ca449a94a025",
+        "bytes": 5004921
+      },
+      "selection": [
+        "CashAndCashEquivalentsAtCarryingValue",
+        "LongTermDebtCurrent",
+        "LongTermDebtNoncurrent",
+        "Revenues",
+        "RevenueFromContractWithCustomerExcludingAssessedTax"
+      ]
+    }
+  ],
+  "document_retrieval": {
+    "status": "unavailable",
+    "http_status": 403,
+    "scope": "All 25 selected original 8-K document requests; no original narrative bytes bundled."
+  },
+  "financial_scope": {
+    "tags": [
+      "CashAndCashEquivalentsAtCarryingValue",
+      "LongTermDebtCurrent",
+      "LongTermDebtNoncurrent",
+      "Revenues",
+      "RevenueFromContractWithCustomerExcludingAssessedTax"
+    ],
+    "method": "Exact numeric-token JSON projection; all metadata and observations of selected concepts retained. Full response pins are reference-only."
+  },
+  "submission_scope": "Exact recent-array 8-K/8-K/A window selection; all root metadata and selected row columns retained. Original ordinal mapping is in source-selection.json. Full responses are reference-only."
+}

@@ -3,7 +3,7 @@
     {
       "system": "tablespec",
       "source": {
-        "umf": "0.1.0",
+        "umf": "0.10.0",
         "id": "tablespec",
         "vocabularies": {
           "umf.tablespec": {
@@ -256,9 +256,9 @@
       },
       "result": {
         "scope": "core-elements",
-        "referenceScope": "explicit-core-references",
+        "referenceScope": "explicit-core-references-item-types-members-and-keys",
         "source": {
-          "umf": "0.1.0",
+          "umf": "0.10.0",
           "id": "tablespec",
           "vocabularies": {
             "umf.tablespec": {
@@ -536,13 +536,16 @@
             "includedBy": "match"
           }
         ],
-        "boundaryReferences": []
+        "boundaryReferences": [],
+        "boundaryItemTypes": [],
+        "boundaryMembers": [],
+        "boundaryKeyFields": []
       }
     },
     {
       "system": "postgresql",
       "source": {
-        "umf": "0.1.0",
+        "umf": "0.10.0",
         "id": "postgresql",
         "vocabularies": {
           "umf.postgresql.catalog": {
@@ -14103,9 +14106,9 @@
       },
       "result": {
         "scope": "core-elements",
-        "referenceScope": "explicit-core-references",
+        "referenceScope": "explicit-core-references-item-types-members-and-keys",
         "source": {
-          "umf": "0.1.0",
+          "umf": "0.10.0",
           "id": "postgresql",
           "vocabularies": {
             "umf.postgresql.catalog": {
@@ -27690,13 +27693,16 @@
             "includedBy": "match"
           }
         ],
-        "boundaryReferences": []
+        "boundaryReferences": [],
+        "boundaryItemTypes": [],
+        "boundaryMembers": [],
+        "boundaryKeyFields": []
       }
     },
     {
       "system": "sqlserver",
       "source": {
-        "umf": "0.1.0",
+        "umf": "0.10.0",
         "id": "sqlserver",
         "vocabularies": {
           "umf.sqlserver": {
@@ -30646,9 +30652,9 @@
       },
       "result": {
         "scope": "core-elements",
-        "referenceScope": "explicit-core-references",
+        "referenceScope": "explicit-core-references-item-types-members-and-keys",
         "source": {
-          "umf": "0.1.0",
+          "umf": "0.10.0",
           "id": "sqlserver",
           "vocabularies": {
             "umf.sqlserver": {
@@ -33622,13 +33628,16 @@
             "includedBy": "match"
           }
         ],
-        "boundaryReferences": []
+        "boundaryReferences": [],
+        "boundaryItemTypes": [],
+        "boundaryMembers": [],
+        "boundaryKeyFields": []
       }
     },
     {
       "system": "avro",
       "source": {
-        "umf": "0.1.0",
+        "umf": "0.10.0",
         "id": "avro",
         "vocabularies": {
           "umf.avro": {
@@ -33706,9 +33715,9 @@
       },
       "result": {
         "scope": "core-elements",
-        "referenceScope": "explicit-core-references",
+        "referenceScope": "explicit-core-references-item-types-members-and-keys",
         "source": {
-          "umf": "0.1.0",
+          "umf": "0.10.0",
           "id": "avro",
           "vocabularies": {
             "umf.avro": {
@@ -33810,13 +33819,16 @@
             "includedBy": "match"
           }
         ],
-        "boundaryReferences": []
+        "boundaryReferences": [],
+        "boundaryItemTypes": [],
+        "boundaryMembers": [],
+        "boundaryKeyFields": []
       }
     },
     {
       "system": "parquet",
       "source": {
-        "umf": "0.1.0",
+        "umf": "0.10.0",
         "id": "parquet",
         "vocabularies": {
           "umf.parquet": {
@@ -33994,9 +34006,9 @@
       },
       "result": {
         "scope": "core-elements",
-        "referenceScope": "explicit-core-references",
+        "referenceScope": "explicit-core-references-item-types-members-and-keys",
         "source": {
-          "umf": "0.1.0",
+          "umf": "0.10.0",
           "id": "parquet",
           "vocabularies": {
             "umf.parquet": {
@@ -34198,7 +34210,10 @@
             "includedBy": "match"
           }
         ],
-        "boundaryReferences": []
+        "boundaryReferences": [],
+        "boundaryItemTypes": [],
+        "boundaryMembers": [],
+        "boundaryKeyFields": []
       }
     }
   ]

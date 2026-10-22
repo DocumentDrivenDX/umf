@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {renderTree} from '../../model/native-json';
 import {UmfError,type Document} from '../../model/types';
 import {getBinding,type BindingFieldRef} from '../../extensions/binding';

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 4360,
+        "line": 11,
+        "path": "src/projections/typespec-json-schema.ts",
+        "sha256": "62fe7ec8e1f8472b1f377e92ce76bc956f1ca15f3185f9b8ecc641243c3929b8"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "projectTypeSpecToJsonSchema",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(source: Document, input: TypeSpecJsonSchemaPolicy): Promise<{ status: \"blocked\" | \"projected\"; source: Document; policy: TypeSpecJsonSchemaPolicy; complete: false; emission: { status: \"blocked\" | \"empty\" | \"emitted\"; source: Document; emitter: string; policy: { options: JsonObject; }; compilation: { compiler: string; libraries: { [x: string]: string; }; valid: boolean; complete: false; diagnostics: { file?: string; start?: number; end?: number; code: string; severity: DiagnosticSeverity; message: string; }[]; limitations: string[]; }; files: Record<string, string>; complete: false; limitations: string[]; }; issues: ProjectionIssue[]; resources: { file: string; retrievalUri: string; }[]; target?: Document; }>"
+    ]
+  },
+  "id": "[\"api\",\".\",\"projectTypeSpecToJsonSchema\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 4360,
+      "line": 11,
+      "path": "src/projections/typespec-json-schema.ts",
+      "sha256": "62fe7ec8e1f8472b1f377e92ce76bc956f1ca15f3185f9b8ecc641243c3929b8"
+    }
+  ],
+  "summary": "Materialize native output with its dependencies; no claim of source-domain equivalence.",
+  "title": "projectTypeSpecToJsonSchema"
+}

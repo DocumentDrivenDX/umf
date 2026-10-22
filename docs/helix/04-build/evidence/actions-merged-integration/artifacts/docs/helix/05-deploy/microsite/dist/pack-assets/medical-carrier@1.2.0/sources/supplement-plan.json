@@ -1,0 +1,13 @@
+{
+  "resourceType": "InsurancePlan",
+  "id": "plan",
+  "status": "active",
+  "name": "Fabricated benefit plan",
+  "ownedBy": {
+    "reference": "Organization/payer"
+  },
+  "period": {
+    "start": "2026-01-01",
+    "end": "2026-12-31"
+  }
+}

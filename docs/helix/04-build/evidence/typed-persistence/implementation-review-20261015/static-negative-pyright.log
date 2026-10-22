@@ -1,0 +1,8 @@
+/private/tmp/typed-sdk-reviewed-generated-final/negative.py
+  /private/tmp/typed-sdk-reviewed-generated-final/negative.py:5:5 - error: Return type is unknown (reportUnknownParameterType)
+  /private/tmp/typed-sdk-reviewed-generated-final/negative.py:6:12 - error: Return type is unknown (reportUnknownVariableType)
+  /private/tmp/typed-sdk-reviewed-generated-final/negative.py:6:33 - error: No parameter named "ammount" (reportCallIssue)
+  /private/tmp/typed-sdk-reviewed-generated-final/negative.py:9:33 - error: Operator "==" not supported for types "Column[Order, str]" and "Column[Customer, str]" (reportOperatorIssue)
+  /private/tmp/typed-sdk-reviewed-generated-final/negative.py:9:33 - error: Argument type is unknown
+    Argument corresponds to parameter "preds" in function "filter" (reportUnknownArgumentType)
+5 errors, 0 warnings, 0 informations

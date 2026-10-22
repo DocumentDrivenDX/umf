@@ -1,0 +1,33 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
+// Generated from spec/metamodel/umf.yaml; model 1e406ee49b0c4c08b8eb996bb1fcb6e96fa8d6f4673f0877aa1800986b2dbbce; compiler 166001c4ab23db9aabedaf51aa215d3ed390e8b2974fc3bd09147de098209242
+export const CURRENT_CORE_VERSION="0.10.0" as const;
+export {default as coreSchema} from '../../spec/core/schema.json';
+export {default as semanticTypeReferenceSchema} from '../../spec/core/semantic-type-reference.schema.json';
+export {default as extensionPackageSchema} from '../../spec/core/extension-package.schema.json';
+export {default as coreConstraints} from '../../spec/metamodel/generated/core-constraints.json';
+export {default as domainPolicy} from '../../spec/metamodel/generated/domain-policy.json';
+export const coreVocabulary=Object.freeze({"scalarType":Object.freeze(["boolean","integer","decimal","float","string","binary","date","time","timestamp","bits128","uuid"] as const),"kind":Object.freeze(["field","record","group"] as const),"nullability":Object.freeze(["required","absent-allowed","unspecified"] as const),"cardinality":Object.freeze(["one","array","map","unspecified"] as const)});
+export type Json=null|boolean|number|string|Json[]|{[key:string]:Json};
+export type Id = string;
+export type Version = string;
+export type KnownScalarType = "boolean" | "integer" | "decimal" | "float" | "string" | "binary" | "date" | "time" | "timestamp" | "bits128" | "uuid";
+export type ScalarType = KnownScalarType | string & unknown;
+export type Extensions = {[key:string]:Json};
+export type Reference = {"role":Id;"module":Id;"element":Id;[key:string]:unknown;};
+export type Element = {"id":Id;"name"?:string;"description"?:string;"scalarType"?:ScalarType;"extensions":Extensions;"references"?:(Reference)[];"kind"?:string;"nullability"?:string;"cardinality"?:string;"itemType"?:CoreItemTypeReference;"facets"?:Facets;"members"?:(KeyFieldReference)[];"keys"?:(Key)[];"title"?:string;"aliases"?:(string)[];"examples"?:(Literal)[];"allowedValues"?:(Literal)[];"default"?:{"value":Literal;"on":"missing" | "null" | "missing-or-null";[key:string]:unknown;};"semanticTypes"?:(CoreSemanticTypeReference)[];[key:string]:unknown;};
+export type Module = {"id":Id;"namespace":string;"elements":(Element)[];"extensions"?:Extensions;"relationships"?:(Relationship)[];"title"?:string;"aliases"?:(string)[];[key:string]:unknown;};
+export type KnownElementKind = "field" | "record" | "group";
+export type KnownNullability = "required" | "absent-allowed" | "unspecified";
+export type KnownCardinality = "one" | "array" | "map" | "unspecified";
+export type CoreItemTypeReference = {"module":Id;"element":Id;[key:string]:unknown;};
+export type Facets = {"length"?:{"min"?:number;"max"?:number;"unit":string;[key:string]:unknown;};"precision"?:number;"scale"?:number;"integerWidth"?:{"bits":number;"signed":boolean;[key:string]:unknown;};"collectionSize"?:{"min"?:number;"max"?:number;[key:string]:unknown;};"range"?:{"min"?:Literal;"max"?:Literal;"minInclusive"?:boolean;"maxInclusive"?:boolean;[key:string]:unknown;};[key:string]:unknown;};
+export type KeyFieldReference = {"module":Id;"element":Id;[key:string]:unknown;};
+export type Key = {"id":Id;"name":Id;"fields":(KeyFieldReference)[];"primary"?:boolean;[key:string]:unknown;};
+export type RelationshipEndpoint = {"module":Id;"element":Id;[key:string]:unknown;};
+export type RelationshipTarget = {"module":Id;"element":Id;"key":Id;[key:string]:unknown;};
+export type RelationshipMultiplicity = {"min":number;"max":number | "*";[key:string]:unknown;};
+export type Relationship = {"id":Id;"name":Id;"source":(RelationshipEndpoint)[];"target":(RelationshipTarget)[];"sourceMultiplicity":RelationshipMultiplicity;"targetMultiplicity":RelationshipMultiplicity;"targetLifecycle":string;"directed":boolean;"inverse"?:Id;"associationRecord"?:RelationshipEndpoint;[key:string]:unknown;};
+export type Literal = null | {"boolean":boolean;} | {"integerToken":string;} | {"decimalToken":string;} | {"string":string;} | {"binaryHex":string;} | {"floatToken":string;} | {"date":string;} | {"time":string;} | {"timestamp":string;} | {"array":(Literal)[];} | {"map":{[key:string]:Literal;};} | {"bits128Hex":string;} | {"uuid":string;};
+export type CoreSemanticTypeReference = {"vocabulary":string;"version":string;"term":string;[key:string]:unknown;};
+export type ExtensionPackage = {"id":string;"version":string;"coreVersion":"0.10.0";"description":string;"schema":{[key:string]:unknown;} | boolean;"semantics":string;"scopes":("document" | "module" | "element")[];"capabilities":{"validation":"structural" | "semantic";"directions":("import" | "export")[];"evidence":(string)[];"native"?:{"system":string;"version":string;"subset":string;[key:string]:unknown;};[key:string]:unknown;};[key:string]:unknown;};
+export type Document = {"umf":"0.10.0";"id":Id;"vocabularies":{[key:string]:{"version":Version;[key:string]:unknown;};};"modules":(Module)[];"extensions"?:Extensions;"title"?:string;"aliases"?:(string)[];[key:string]:unknown;};

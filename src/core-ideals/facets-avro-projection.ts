@@ -1,10 +1,13 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
+import {CURRENT_CORE_VERSION} from '../generated/core-model';
+import {historicalCoreFacetPatch} from '../model/facets';
 import {copyJson} from '../model/json';
 import {UmfError,pointer,type Document,type Json,type Diagnostic} from '../model/types';
 import {verifyCoreFacetDeclaration,inspectCoreFacets,type CoreFacetDeclaration,type CoreFacetPatch} from '../model/facets';
 import {verifyCoreKindDeclaration,type CoreKindDeclaration} from '../model/field-kind';
 import {avroCarriers} from './avro-carriers';
 import {createValidator} from '../validation/schema';
-import legacy from '../../spec/core/schema.json';import fields from '../../spec/core/field-document.schema.json';import availability from '../../spec/core/nullability-document.schema.json';import containers from '../../spec/core/cardinality-document.schema.json';import facets from '../../spec/core/facet-document.schema.json';import facetAuthor from '../../spec/core/facet-operation.schema.json';import kindAuthor from '../../spec/core/kind-operation-v4.schema.json';
+import legacy from '../../spec/core/schema.json';import facetAuthor from '../../spec/core/facet-operation-v3.schema.json';import kindAuthor from '../../spec/core/kind-operation-v6.schema.json';
 import schema from '../../spec/core/facets-avro-projection.schema.json';
 export {default as facetsAvroProjectionSchema} from '../../spec/core/facets-avro-projection.schema.json';
 const families={boolean:'boolean',int:'integer',long:'integer',float:'float',double:'float',bytes:'binary',string:'string',fixed:'binary','decimal-bytes':'decimal','decimal-fixed':'decimal',date:'date','time-millis':'time','time-micros':'time','timestamp-millis':'timestamp','timestamp-micros':'timestamp','local-timestamp-micros':'timestamp'} as const;
@@ -18,7 +21,7 @@ export interface FacetsAvroProjection {
  mapping:{origin:'authored';idealPath:string;nativePath:'/fields/0/type';facets:CoreFacetPatch;encoding:FacetsAvroRequest['encoding'];profile:FacetsAvroRequest['profile'];outcome:Outcome};
  residuals:{path:string;value:Json;reason:string;outcome:Exclude<Outcome,'exact'>;recovery:typeof recovery}[];
 }
-const validator=createValidator();for(const s of [legacy,fields,availability,containers,facets,facetAuthor,kindAuthor])validator.addSchema(s);
+const validator=createValidator();for(const s of [legacy,facetAuthor,kindAuthor])validator.addSchema(s);
 const check=validator.compile(schema),checkRequest=validator.compile(schema.properties.request);
 const canonical=(v:Json):string=>Array.isArray(v)?'['+v.map(canonical).join(',')+']':v!==null&&typeof v==='object'?'{'+Object.keys(v).sort().map(k=>JSON.stringify(k)+':'+canonical(v[k]!)).join(',')+'}':JSON.stringify(v);
 /** Project verified ideal assertions; custom metadata never becomes an implicit validator. */
@@ -27,7 +30,7 @@ export function projectFacetsToAvro(input:Author,options:FacetsAvroRequest):Face
  if(!checkRequest(request))throw new UmfError('FACETS_AVRO_REQUEST',JSON.stringify(checkRequest.errors));
  const author=copied?.operation==='declare-core-facets'?verifyCoreFacetDeclaration(copied,copied.target):verifyCoreKindDeclaration(copied as CoreKindDeclaration,copied?.target);
  const source=copyJson(author.target) as unknown as Document;
- if(source.umf!=='0.5.0')throw new UmfError('FACETS_AVRO_VERSION','Explicit core 0.5.0 declaration required');
+ if(source.umf!==CURRENT_CORE_VERSION)throw new UmfError('FACETS_AVRO_VERSION','Current core 0.10.0 declaration required');
  const mi=source.modules.findIndex(m=>m.id===author.identity.module),module=source.modules[mi]!,ei=module.elements.findIndex(e=>e.id===author.identity.element),element=module.elements[ei]!,path=`/modules/${mi}/elements/${ei}`;
  if(element.kind!=='field')throw new UmfError('FACETS_AVRO_FIELD','Selected author must identify a Field');
  const result:FacetsAvroProjection={operation:'project-facets-avro',version:'1.0.0',status:'projected',source,author,request,binding,mapping:{origin:'authored',idealPath:path+'/facets',nativePath:'/fields/0/type',facets:{},encoding:request.encoding,profile:request.profile,outcome:'exact'},residuals:[],diagnostics:[]};
@@ -46,7 +49,7 @@ export function projectFacetsToAvro(input:Author,options:FacetsAvroRequest):Face
  let intended:CoreFacetPatch={};
  if(author.operation==='declare-core-facets'){
   const meaning=inspectCoreFacets(source,author.identity).meaning;
-  if(meaning.state==='known'||meaning.state==='partial'){intended=meaning.interpreted;if(meaning.state==='partial')loss(path+'/facets',meaning.facets,'Unknown facet qualifiers remain attached; no native interpretation is fabricated');}
+  if(meaning.state==='known'||meaning.state==='partial'){intended=historicalCoreFacetPatch(meaning.interpreted);if(meaning.state==='partial')loss(path+'/facets',meaning.facets,'Unknown facet qualifiers remain attached; no native interpretation is fabricated');}
  }else if(element.facets!==undefined)loss(path+'/facets',element.facets,'A Field-kind receipt does not establish authorship of facet members');
  const fixed=request.nativeType==='fixed'||request.nativeType==='decimal-fixed',decimal=request.nativeType==='decimal-bytes'||request.nativeType==='decimal-fixed';
  if(fixed&&(request.fixedSize!>4096||request.fixedName===request.recordName))block('/request',request,'Fixed carrier exceeds the 4096-byte execution profile or collides with the record name');

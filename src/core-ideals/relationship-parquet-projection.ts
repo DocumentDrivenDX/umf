@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
+import {CURRENT_CORE_VERSION} from '../generated/core-model';
 import {copyJson} from '../model/json';
 import {UmfError,type Document,type Json,type Diagnostic} from '../model/types';
 import {lookupCoreRelationship,verifyCoreRelationshipOperation,type CoreRelationshipDeclaration,type CoreRelationshipIdentity} from '../model/relationships';
@@ -8,7 +10,7 @@ import {exportParquetCapture} from '../adapters/parquet';
 import {importParquetSchema} from '../adapters/parquet/field-metadata';
 import {buildParquetRelationshipCarrier,type ParquetRelationshipCarrier} from './relationship-parquet-carrier';
 import {createValidator} from '../validation/schema';
-import legacy from '../../spec/core/schema.json';import fields from '../../spec/core/field-document.schema.json';import nullability from '../../spec/core/nullability-document.schema.json';import cardinality from '../../spec/core/cardinality-document.schema.json';import facets from '../../spec/core/facet-document.schema.json';import keys from '../../spec/core/key-document.schema.json';import relationships from '../../spec/core/relationship-document.schema.json';import authorSchema from '../../spec/core/relationship-operation.schema.json';
+import legacy from '../../spec/core/schema.json';import authorSchema from '../../spec/core/relationship-operation.schema.json';
 import schema from '../../spec/core/relationship-parquet-projection.schema.json';
 export {default as relationshipParquetProjectionSchema} from '../../spec/core/relationship-parquet-projection.schema.json';
 export interface RelationshipParquetRequest extends Omit<ParquetRelationshipCarrier,'components'> {id:string;profile:'target-key-record';relationship:CoreRelationshipIdentity;mode:'strict'|'report';components:(ParquetRelationshipCarrier['components'][number]&{targetField:RelationshipEndpoint})[]}
@@ -20,7 +22,7 @@ export interface RelationshipParquetProjection {
  mappings:{idealPath:string;nativePath:string;outcome:'approximated';targetKey:string;componentPaths:string[]}[];
  residuals:{path:string;value:Json;outcome:'unknown'|'not-expressible'|'approximated';reason:string;recovery:typeof recovery}[];diagnostics:Diagnostic[];
 }
-const validator=createValidator(false);for(const s of [legacy,fields,nullability,cardinality,facets,keys,relationships,authorSchema])validator.addSchema(s);
+const validator=createValidator(false);for(const s of [legacy,authorSchema])validator.addSchema(s);
 const check=validator.compile(schema),requestCheck=validator.compile(schema.properties.request);
 const canonical=(v:Json):string=>Array.isArray(v)?'['+v.map(canonical).join(',')+']':v!==null&&typeof v==='object'?'{'+Object.keys(v).sort().map(k=>JSON.stringify(k)+':'+canonical(v[k]!)).join(',')+'}':JSON.stringify(v);
 const same=(a:unknown,b:unknown)=>canonical(copyJson(a))===canonical(copyJson(b));
@@ -30,7 +32,7 @@ function locate(d:Document,ref:RelationshipEndpoint){const mi=d.modules.findInde
 export function projectRelationshipToParquet(input:Document,authorInput:CoreRelationshipDeclaration,options:RelationshipParquetRequest):RelationshipParquetProjection {
  const source=copyJson(input) as unknown as Document,author=copyJson(authorInput) as unknown as CoreRelationshipDeclaration,request=copyJson(options) as unknown as RelationshipParquetRequest;
  if(!requestCheck(request))throw new UmfError('RELATIONSHIP_PARQUET_REQUEST',JSON.stringify(requestCheck.errors));
- if(source.umf!=='0.7.0'||!validateDocument(source).valid)throw new UmfError('RELATIONSHIP_PARQUET_SOURCE','Valid core 0.7.0 required');
+ if(source.umf!==CURRENT_CORE_VERSION||!validateDocument(source).valid)throw new UmfError('RELATIONSHIP_PARQUET_SOURCE','Valid core 0.10.0 required');
  if(author.operation!=='declare-core-relationship')throw new UmfError('RELATIONSHIP_PARQUET_AUTHOR','Expected explicit relationship declaration');
  verifyCoreRelationshipOperation(author,author.target);
  if(author.target.id!==source.id||author.identity.module!==request.relationship.module||author.request.id!==request.relationship.id)throw new UmfError('RELATIONSHIP_PARQUET_AUTHOR','Mismatched author identity');

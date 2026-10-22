@@ -1,0 +1,11 @@
+test('caller-visible schema mutations do not change internal0.9 validators or codec inventory',()=>{
+ const docSchema:any=u.coreBit128DocumentSchema,tupleSchema:any=u.coreBit128KeyTupleSchema;
+ const originalVersion=docSchema.properties.umf.const,originalProfile=tupleSchema.properties.profile.enum[1];
+ try{
+  docSchema.properties.umf.const='caller-mutated';tupleSchema.properties.profile.enum[1]='caller-mutated';
+  const d=uuidDocument();expect(u.validateDocument(d).valid).toBe(true);expect(u.inspectCoreElementKind(d,FIELD).meaning.state).toBe('known');
+  expect(u.encodeCoreKeyTuple(d,{module:'m',element:'record',key:'id'},[{uuid:UUID}],{profile:'umf-key-tuple-v2'}).version).toBe('4.0.0');
+  expect(()=>{(u.SCALAR_TYPES_V09 as any).push('caller-mutated');}).toThrow();
+  expect(()=>{(u.SCALAR_TYPES as any).push('uuid');}).toThrow();
+ }finally{docSchema.properties.umf.const=originalVersion;tupleSchema.properties.profile.enum[1]=originalProfile;}
+});

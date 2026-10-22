@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 10672,
+        "line": 33,
+        "path": "src/core-ideals/cardinality-postgresql.ts",
+        "sha256": "8624729e3e4a4761c06957adb6d1ce137db425877db15d65f3571ca5fbd46727"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "classifyPostgresqlCardinality",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: Document, options: PostgresqlCardinalityRequest): PostgresqlCardinalityClassification"
+    ]
+  },
+  "id": "[\"api\",\".\",\"classifyPostgresqlCardinality\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 10672,
+      "line": 33,
+      "path": "src/core-ideals/cardinality-postgresql.ts",
+      "sha256": "8624729e3e4a4761c06957adb6d1ce137db425877db15d65f3571ca5fbd46727"
+    }
+  ],
+  "summary": "Classify declared column shape only. Retain vector/item/runtime refinements in the native archive.",
+  "title": "classifyPostgresqlCardinality"
+}

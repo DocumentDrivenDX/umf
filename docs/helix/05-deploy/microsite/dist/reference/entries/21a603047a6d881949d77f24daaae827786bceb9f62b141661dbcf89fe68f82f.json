@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 4372,
+        "line": 25,
+        "path": "src/projections/bit128-model.ts",
+        "sha256": "10f9bbd6ecef4dcc40c2a8994e272fdab1a3413433d1860043aa6cd154f47e8a"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "projectBit128Model",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(bindingInput: Document, sourceInput: Document, lossPolicy: \"strict\" | \"report\"): Bit128ModelProjection"
+    ]
+  },
+  "id": "[\"api\",\".\",\"projectBit128Model\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 4372,
+      "line": 25,
+      "path": "src/projections/bit128-model.ts",
+      "sha256": "10f9bbd6ecef4dcc40c2a8994e272fdab1a3413433d1860043aa6cd154f47e8a"
+    }
+  ],
+  "summary": "Complete declared128-bit Record models. Unsupported meanings block or remain explicit residuals.",
+  "title": "projectBit128Model"
+}

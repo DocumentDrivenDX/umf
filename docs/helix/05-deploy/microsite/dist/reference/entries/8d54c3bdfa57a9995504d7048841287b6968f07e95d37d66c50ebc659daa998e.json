@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 3095,
+        "line": 12,
+        "path": "src/validation/schema.ts",
+        "sha256": "ccebcd833b25b6520ee03cdbc1d3d84a6f9705960f7691963c1360402d695e90"
+      }
+    ],
+    "entrypoint": "./loader-contract",
+    "exportName": "createValidator",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(strict?: boolean): Ajv2020"
+    ]
+  },
+  "id": "[\"api\",\"./loader-contract\",\"createValidator\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 3095,
+      "line": 12,
+      "path": "src/validation/schema.ts",
+      "sha256": "ccebcd833b25b6520ee03cdbc1d3d84a6f9705960f7691963c1360402d695e90"
+    }
+  ],
+  "summary": "Public export · src/validation/schema.ts",
+  "title": "createValidator"
+}

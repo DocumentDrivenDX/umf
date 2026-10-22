@@ -1,0 +1,1376 @@
+{
+  "format": "umf.domain-graph",
+  "version": "1.0.0",
+  "schema": {
+    "id": "urn:umf:domain:energy",
+    "revision": "1.0.0",
+    "sha256": "6695d52e527bbde2682aaa9c1bddfc1314193e114f765e450a169c7113feeff6"
+  },
+  "qualification": "Schema-targeted candidate. Values retain CSV lexical text, not UMF canonical Value carriers or native storage IDs. No graph consumer acceptance or OWL reasoning.",
+  "pack": {
+    "id": "energy",
+    "version": "1.0.0",
+    "sha256": "038a91d10c3d9e2da113ad95014ac23abca9229f6a46b0ed191a6a73b54996e5"
+  },
+  "source_metadata": {
+    "scenario_replay_output": {
+      "data_kind": "fabricated",
+      "generator": {
+        "id": "tablespec.scenario-replay",
+        "version": "1.0.0"
+      },
+      "kind": "synthetic",
+      "parameters": {
+        "components": 1,
+        "seed": 42
+      },
+      "provenance": {
+        "source_ids": [
+          "template_channels",
+          "template_interval_gaps",
+          "template_interval_readings",
+          "template_meters",
+          "template_outages",
+          "template_service_relationships",
+          "template_sites",
+          "template_tariffs",
+          "template_utility_assets"
+        ],
+        "transformations": [
+          "Trusted independent-component replay with consistent identity remapping; source values unchanged."
+        ]
+      }
+    },
+    "template_channels": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "1c7ba63cedb4cb2554de54795759f19dcd8499c7cd0fef0386ba33b5deb9030e"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/channels.csv",
+      "revision": "1.0.0"
+    },
+    "template_interval_gaps": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "540f0ab7894596a6c0aba7f1f7e604d0d4744fa0fcc9d2a485cecb761ddb2658"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/interval_gaps.csv",
+      "revision": "1.0.0"
+    },
+    "template_interval_readings": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "0aab2d64e2d965a9864424c330631bdb5c256ec7d0cda04d3ace73ef69087d0c"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/interval_readings.csv",
+      "revision": "1.0.0"
+    },
+    "template_meters": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "4d28767004a998d1655b645f8f90a8b589ef0f869097ff0b3e7c088177b04d32"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/meters.csv",
+      "revision": "1.0.0"
+    },
+    "template_outages": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "4f858204d4e0aa337acd5d60fdc8ed88e690fe302cf3cd751a1515f148bd47b9"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/outages.csv",
+      "revision": "1.0.0"
+    },
+    "template_service_relationships": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "6697acf5ea831d08363c943dd730b78a1ad81755953e83ed3a657f67f6dc0089"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/service_relationships.csv",
+      "revision": "1.0.0"
+    },
+    "template_sites": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "c81ff38173513948def362ece7d304dd0c63cab762dadbe228d41e9c063da296"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/sites.csv",
+      "revision": "1.0.0"
+    },
+    "template_tariffs": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "f1f7ac99291b3e7788bd27cc025b7551b77c528ed091f753533f45b651207eb0"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/tariffs.csv",
+      "revision": "1.0.0"
+    },
+    "template_utility_assets": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "55686daf97cce06fb26b08152b2c64ccc570a902feea93ab57dd3da09900547c"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/utility_assets.csv",
+      "revision": "1.0.0"
+    }
+  },
+  "source_bindings": [
+    {
+      "role": "rows",
+      "schema_id": "sites",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "utility_assets",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "meters",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "channels",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "interval_readings",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "interval_gaps",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "tariffs",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "outages",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "service_relationships",
+      "source_id": "scenario_replay_output"
+    }
+  ],
+  "run": {
+    "components": 1,
+    "generator": {
+      "id": "tablespec.scenario-replay",
+      "version": "1.0.0"
+    },
+    "input_hashes": {
+      "template_channels": {
+        "algorithm": "sha256",
+        "value": "1c7ba63cedb4cb2554de54795759f19dcd8499c7cd0fef0386ba33b5deb9030e"
+      },
+      "template_interval_gaps": {
+        "algorithm": "sha256",
+        "value": "540f0ab7894596a6c0aba7f1f7e604d0d4744fa0fcc9d2a485cecb761ddb2658"
+      },
+      "template_interval_readings": {
+        "algorithm": "sha256",
+        "value": "0aab2d64e2d965a9864424c330631bdb5c256ec7d0cda04d3ace73ef69087d0c"
+      },
+      "template_meters": {
+        "algorithm": "sha256",
+        "value": "4d28767004a998d1655b645f8f90a8b589ef0f869097ff0b3e7c088177b04d32"
+      },
+      "template_outages": {
+        "algorithm": "sha256",
+        "value": "4f858204d4e0aa337acd5d60fdc8ed88e690fe302cf3cd751a1515f148bd47b9"
+      },
+      "template_service_relationships": {
+        "algorithm": "sha256",
+        "value": "6697acf5ea831d08363c943dd730b78a1ad81755953e83ed3a657f67f6dc0089"
+      },
+      "template_sites": {
+        "algorithm": "sha256",
+        "value": "c81ff38173513948def362ece7d304dd0c63cab762dadbe228d41e9c063da296"
+      },
+      "template_tariffs": {
+        "algorithm": "sha256",
+        "value": "f1f7ac99291b3e7788bd27cc025b7551b77c528ed091f753533f45b651207eb0"
+      },
+      "template_utility_assets": {
+        "algorithm": "sha256",
+        "value": "55686daf97cce06fb26b08152b2c64ccc570a902feea93ab57dd3da09900547c"
+      }
+    },
+    "origin": "synthetic",
+    "scale": "small",
+    "schema_hashes": {
+      "ontology.json": "6695d52e527bbde2682aaa9c1bddfc1314193e114f765e450a169c7113feeff6",
+      "umf/channels.json": "ad9f9dd8f9dae2af48c27a69201d3e59f4ef7cf9dde89078a2e8f2a02a264ab2",
+      "umf/interval_gaps.json": "dcae1f8c2d0c740ead108338944e76396d73d27be664272d9307e49e611f5454",
+      "umf/interval_readings.json": "590ed1c5a6cdb069ebc558e6bfb07f8f9db15022e3c13c7f6d97f5f30a395c5f",
+      "umf/meters.json": "c657e5d2809ac77396598033e41d741210a15cf543eb877c0fa2f645e2da92c8",
+      "umf/outages.json": "594132f2adc1fb3c8d9d753a2767a0ae255937f7ee2f9c3ae2ed3914d58598ba",
+      "umf/service_relationships.json": "08207b00766568cc84842a648d9fd99b6eac436a87c0396636efb89234ab307d",
+      "umf/sites.json": "db50f431991b640f3a698bcea0e14de60ce73647a16f4e4cc6a5c2691a10cdd9",
+      "umf/tariffs.json": "f0386ea3898521fa7972b8ece39dd584c02515de4c15b87c82f1e2ee7974e2e6",
+      "umf/utility_assets.json": "5c0586d9c3864700848dfa79c84099aeaf6c2906a87100ff5e07802c61f0f29b"
+    },
+    "seed": 42,
+    "source_pack": {
+      "id": "energy",
+      "sha256": "038a91d10c3d9e2da113ad95014ac23abca9229f6a46b0ed191a6a73b54996e5",
+      "version": "1.0.0"
+    }
+  },
+  "dataset": {
+    "archive_sha256": "355ec1ae93121d56f9c4deb195c8036119930a14b6740abea7d57a46a542810e",
+    "origin": "synthetic",
+    "seed": 42
+  },
+  "objects": [
+    {
+      "key": "[\"urn:umf:domain:energy\",\"domain\",\"sites\",[\"[42,0,\\\"S1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:energy",
+        "module": "domain",
+        "element": "sites"
+      },
+      "values": {
+        "sites.id": "[42,0,\"S1\"]",
+        "sites.name": "Synthetic substation"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:energy\",\"domain\",\"utility_assets\",[\"[42,0,\\\"A1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:energy",
+        "module": "domain",
+        "element": "utility_assets"
+      },
+      "values": {
+        "utility_assets.id": "[42,0,\"A1\"]",
+        "utility_assets.site_id": "[42,0,\"S1\"]",
+        "utility_assets.parent_id": null,
+        "utility_assets.kind": "transformer"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:energy\",\"domain\",\"utility_assets\",[\"[42,0,\\\"A2\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:energy",
+        "module": "domain",
+        "element": "utility_assets"
+      },
+      "values": {
+        "utility_assets.id": "[42,0,\"A2\"]",
+        "utility_assets.site_id": "[42,0,\"S1\"]",
+        "utility_assets.parent_id": "[42,0,\"A1\"]",
+        "utility_assets.kind": "feeder"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:energy\",\"domain\",\"meters\",[\"[42,0,\\\"M1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:energy",
+        "module": "domain",
+        "element": "meters"
+      },
+      "values": {
+        "meters.id": "[42,0,\"M1\"]",
+        "meters.asset_id": "[42,0,\"A2\"]",
+        "meters.name": "Old meter",
+        "meters.valid_from": "2026-01-01",
+        "meters.valid_to": "2026-01-15"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:energy\",\"domain\",\"meters\",[\"[42,0,\\\"M2\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:energy",
+        "module": "domain",
+        "element": "meters"
+      },
+      "values": {
+        "meters.id": "[42,0,\"M2\"]",
+        "meters.asset_id": "[42,0,\"A2\"]",
+        "meters.name": "Replacement meter",
+        "meters.valid_from": "2026-01-16",
+        "meters.valid_to": "2026-01-30"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:energy\",\"domain\",\"channels\",[\"[42,0,\\\"C1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:energy",
+        "module": "domain",
+        "element": "channels"
+      },
+      "values": {
+        "channels.id": "[42,0,\"C1\"]",
+        "channels.meter_id": "[42,0,\"M1\"]",
+        "channels.property": "energy",
+        "channels.unit": "kW.h",
+        "channels.reading_kind": "cumulative"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:energy\",\"domain\",\"channels\",[\"[42,0,\\\"C2\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:energy",
+        "module": "domain",
+        "element": "channels"
+      },
+      "values": {
+        "channels.id": "[42,0,\"C2\"]",
+        "channels.meter_id": "[42,0,\"M2\"]",
+        "channels.property": "energy",
+        "channels.unit": "kW.h",
+        "channels.reading_kind": "cumulative"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings\",[\"[42,0,\\\"R1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:energy",
+        "module": "domain",
+        "element": "interval_readings"
+      },
+      "values": {
+        "interval_readings.id": "[42,0,\"R1\"]",
+        "interval_readings.channel_id": "[42,0,\"C1\"]",
+        "interval_readings.event_time": "2026-01-01T10:00Z",
+        "interval_readings.value": "1E+2"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings\",[\"[42,0,\\\"R2\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:energy",
+        "module": "domain",
+        "element": "interval_readings"
+      },
+      "values": {
+        "interval_readings.id": "[42,0,\"R2\"]",
+        "interval_readings.channel_id": "[42,0,\"C1\"]",
+        "interval_readings.event_time": "2026-01-01T11:00Z",
+        "interval_readings.value": "5"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings\",[\"[42,0,\\\"D2\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:energy",
+        "module": "domain",
+        "element": "interval_readings"
+      },
+      "values": {
+        "interval_readings.id": "[42,0,\"D2\"]",
+        "interval_readings.channel_id": "[42,0,\"C1\"]",
+        "interval_readings.event_time": "2026-01-02T10:00Z",
+        "interval_readings.value": "2"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings\",[\"[42,0,\\\"D3\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:energy",
+        "module": "domain",
+        "element": "interval_readings"
+      },
+      "values": {
+        "interval_readings.id": "[42,0,\"D3\"]",
+        "interval_readings.channel_id": "[42,0,\"C1\"]",
+        "interval_readings.event_time": "2026-01-03T10:00Z",
+        "interval_readings.value": "3"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings\",[\"[42,0,\\\"D4\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:energy",
+        "module": "domain",
+        "element": "interval_readings"
+      },
+      "values": {
+        "interval_readings.id": "[42,0,\"D4\"]",
+        "interval_readings.channel_id": "[42,0,\"C1\"]",
+        "interval_readings.event_time": "2026-01-04T10:00Z",
+        "interval_readings.value": "4"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings\",[\"[42,0,\\\"D5\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:energy",
+        "module": "domain",
+        "element": "interval_readings"
+      },
+      "values": {
+        "interval_readings.id": "[42,0,\"D5\"]",
+        "interval_readings.channel_id": "[42,0,\"C1\"]",
+        "interval_readings.event_time": "2026-01-05T10:00Z",
+        "interval_readings.value": "5"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings\",[\"[42,0,\\\"D6\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:energy",
+        "module": "domain",
+        "element": "interval_readings"
+      },
+      "values": {
+        "interval_readings.id": "[42,0,\"D6\"]",
+        "interval_readings.channel_id": "[42,0,\"C1\"]",
+        "interval_readings.event_time": "2026-01-06T10:00Z",
+        "interval_readings.value": "6"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings\",[\"[42,0,\\\"D7\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:energy",
+        "module": "domain",
+        "element": "interval_readings"
+      },
+      "values": {
+        "interval_readings.id": "[42,0,\"D7\"]",
+        "interval_readings.channel_id": "[42,0,\"C1\"]",
+        "interval_readings.event_time": "2026-01-07T10:00Z",
+        "interval_readings.value": "7"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings\",[\"[42,0,\\\"D8\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:energy",
+        "module": "domain",
+        "element": "interval_readings"
+      },
+      "values": {
+        "interval_readings.id": "[42,0,\"D8\"]",
+        "interval_readings.channel_id": "[42,0,\"C1\"]",
+        "interval_readings.event_time": "2026-01-08T10:00Z",
+        "interval_readings.value": "8"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings\",[\"[42,0,\\\"D9\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:energy",
+        "module": "domain",
+        "element": "interval_readings"
+      },
+      "values": {
+        "interval_readings.id": "[42,0,\"D9\"]",
+        "interval_readings.channel_id": "[42,0,\"C1\"]",
+        "interval_readings.event_time": "2026-01-09T10:00Z",
+        "interval_readings.value": "9"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings\",[\"[42,0,\\\"D10\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:energy",
+        "module": "domain",
+        "element": "interval_readings"
+      },
+      "values": {
+        "interval_readings.id": "[42,0,\"D10\"]",
+        "interval_readings.channel_id": "[42,0,\"C1\"]",
+        "interval_readings.event_time": "2026-01-10T10:00Z",
+        "interval_readings.value": "1E+1"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings\",[\"[42,0,\\\"D11\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:energy",
+        "module": "domain",
+        "element": "interval_readings"
+      },
+      "values": {
+        "interval_readings.id": "[42,0,\"D11\"]",
+        "interval_readings.channel_id": "[42,0,\"C1\"]",
+        "interval_readings.event_time": "2026-01-11T10:00Z",
+        "interval_readings.value": "11"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings\",[\"[42,0,\\\"D12\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:energy",
+        "module": "domain",
+        "element": "interval_readings"
+      },
+      "values": {
+        "interval_readings.id": "[42,0,\"D12\"]",
+        "interval_readings.channel_id": "[42,0,\"C1\"]",
+        "interval_readings.event_time": "2026-01-12T10:00Z",
+        "interval_readings.value": "12"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings\",[\"[42,0,\\\"D13\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:energy",
+        "module": "domain",
+        "element": "interval_readings"
+      },
+      "values": {
+        "interval_readings.id": "[42,0,\"D13\"]",
+        "interval_readings.channel_id": "[42,0,\"C1\"]",
+        "interval_readings.event_time": "2026-01-13T10:00Z",
+        "interval_readings.value": "13"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings\",[\"[42,0,\\\"D14\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:energy",
+        "module": "domain",
+        "element": "interval_readings"
+      },
+      "values": {
+        "interval_readings.id": "[42,0,\"D14\"]",
+        "interval_readings.channel_id": "[42,0,\"C1\"]",
+        "interval_readings.event_time": "2026-01-14T10:00Z",
+        "interval_readings.value": "14"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings\",[\"[42,0,\\\"D15\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:energy",
+        "module": "domain",
+        "element": "interval_readings"
+      },
+      "values": {
+        "interval_readings.id": "[42,0,\"D15\"]",
+        "interval_readings.channel_id": "[42,0,\"C1\"]",
+        "interval_readings.event_time": "2026-01-15T10:00Z",
+        "interval_readings.value": "15"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings\",[\"[42,0,\\\"D16\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:energy",
+        "module": "domain",
+        "element": "interval_readings"
+      },
+      "values": {
+        "interval_readings.id": "[42,0,\"D16\"]",
+        "interval_readings.channel_id": "[42,0,\"C2\"]",
+        "interval_readings.event_time": "2026-01-16T10:00Z",
+        "interval_readings.value": "16"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings\",[\"[42,0,\\\"D17\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:energy",
+        "module": "domain",
+        "element": "interval_readings"
+      },
+      "values": {
+        "interval_readings.id": "[42,0,\"D17\"]",
+        "interval_readings.channel_id": "[42,0,\"C2\"]",
+        "interval_readings.event_time": "2026-01-17T10:00Z",
+        "interval_readings.value": "17"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings\",[\"[42,0,\\\"D18\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:energy",
+        "module": "domain",
+        "element": "interval_readings"
+      },
+      "values": {
+        "interval_readings.id": "[42,0,\"D18\"]",
+        "interval_readings.channel_id": "[42,0,\"C2\"]",
+        "interval_readings.event_time": "2026-01-18T10:00Z",
+        "interval_readings.value": "18"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings\",[\"[42,0,\\\"D19\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:energy",
+        "module": "domain",
+        "element": "interval_readings"
+      },
+      "values": {
+        "interval_readings.id": "[42,0,\"D19\"]",
+        "interval_readings.channel_id": "[42,0,\"C2\"]",
+        "interval_readings.event_time": "2026-01-19T10:00Z",
+        "interval_readings.value": "19"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings\",[\"[42,0,\\\"D20\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:energy",
+        "module": "domain",
+        "element": "interval_readings"
+      },
+      "values": {
+        "interval_readings.id": "[42,0,\"D20\"]",
+        "interval_readings.channel_id": "[42,0,\"C2\"]",
+        "interval_readings.event_time": "2026-01-20T10:00Z",
+        "interval_readings.value": null
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings\",[\"[42,0,\\\"D21\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:energy",
+        "module": "domain",
+        "element": "interval_readings"
+      },
+      "values": {
+        "interval_readings.id": "[42,0,\"D21\"]",
+        "interval_readings.channel_id": "[42,0,\"C2\"]",
+        "interval_readings.event_time": "2026-01-21T10:00Z",
+        "interval_readings.value": "21"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings\",[\"[42,0,\\\"D22\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:energy",
+        "module": "domain",
+        "element": "interval_readings"
+      },
+      "values": {
+        "interval_readings.id": "[42,0,\"D22\"]",
+        "interval_readings.channel_id": "[42,0,\"C2\"]",
+        "interval_readings.event_time": "2026-01-22T10:00Z",
+        "interval_readings.value": "22"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings\",[\"[42,0,\\\"D23\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:energy",
+        "module": "domain",
+        "element": "interval_readings"
+      },
+      "values": {
+        "interval_readings.id": "[42,0,\"D23\"]",
+        "interval_readings.channel_id": "[42,0,\"C2\"]",
+        "interval_readings.event_time": "2026-01-23T10:00Z",
+        "interval_readings.value": "23"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings\",[\"[42,0,\\\"D24\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:energy",
+        "module": "domain",
+        "element": "interval_readings"
+      },
+      "values": {
+        "interval_readings.id": "[42,0,\"D24\"]",
+        "interval_readings.channel_id": "[42,0,\"C2\"]",
+        "interval_readings.event_time": "2026-01-24T10:00Z",
+        "interval_readings.value": "24"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings\",[\"[42,0,\\\"D25\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:energy",
+        "module": "domain",
+        "element": "interval_readings"
+      },
+      "values": {
+        "interval_readings.id": "[42,0,\"D25\"]",
+        "interval_readings.channel_id": "[42,0,\"C2\"]",
+        "interval_readings.event_time": "2026-01-25T10:00Z",
+        "interval_readings.value": "25"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings\",[\"[42,0,\\\"D26\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:energy",
+        "module": "domain",
+        "element": "interval_readings"
+      },
+      "values": {
+        "interval_readings.id": "[42,0,\"D26\"]",
+        "interval_readings.channel_id": "[42,0,\"C2\"]",
+        "interval_readings.event_time": "2026-01-26T10:00Z",
+        "interval_readings.value": "26"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings\",[\"[42,0,\\\"D27\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:energy",
+        "module": "domain",
+        "element": "interval_readings"
+      },
+      "values": {
+        "interval_readings.id": "[42,0,\"D27\"]",
+        "interval_readings.channel_id": "[42,0,\"C2\"]",
+        "interval_readings.event_time": "2026-01-27T10:00Z",
+        "interval_readings.value": "27"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings\",[\"[42,0,\\\"D28\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:energy",
+        "module": "domain",
+        "element": "interval_readings"
+      },
+      "values": {
+        "interval_readings.id": "[42,0,\"D28\"]",
+        "interval_readings.channel_id": "[42,0,\"C2\"]",
+        "interval_readings.event_time": "2026-01-28T10:00Z",
+        "interval_readings.value": "28"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings\",[\"[42,0,\\\"D29\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:energy",
+        "module": "domain",
+        "element": "interval_readings"
+      },
+      "values": {
+        "interval_readings.id": "[42,0,\"D29\"]",
+        "interval_readings.channel_id": "[42,0,\"C2\"]",
+        "interval_readings.event_time": "2026-01-29T10:00Z",
+        "interval_readings.value": "29"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings\",[\"[42,0,\\\"D30\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:energy",
+        "module": "domain",
+        "element": "interval_readings"
+      },
+      "values": {
+        "interval_readings.id": "[42,0,\"D30\"]",
+        "interval_readings.channel_id": "[42,0,\"C2\"]",
+        "interval_readings.event_time": "2026-01-30T10:00Z",
+        "interval_readings.value": "3E+1"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:energy\",\"domain\",\"interval_gaps\",[\"[42,0,\\\"G1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:energy",
+        "module": "domain",
+        "element": "interval_gaps"
+      },
+      "values": {
+        "interval_gaps.id": "[42,0,\"G1\"]",
+        "interval_gaps.reading_id": "[42,0,\"D20\"]",
+        "interval_gaps.outage_id": "[42,0,\"O1\"]",
+        "interval_gaps.reason": "outage"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:energy\",\"domain\",\"tariffs\",[\"[42,0,\\\"T1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:energy",
+        "module": "domain",
+        "element": "tariffs"
+      },
+      "values": {
+        "tariffs.id": "[42,0,\"T1\"]",
+        "tariffs.unit": "kW.h",
+        "tariffs.price": "0.2",
+        "tariffs.currency": "USD"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:energy\",\"domain\",\"outages\",[\"[42,0,\\\"O1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:energy",
+        "module": "domain",
+        "element": "outages"
+      },
+      "values": {
+        "outages.id": "[42,0,\"O1\"]",
+        "outages.asset_id": "[42,0,\"A2\"]",
+        "outages.starts": "2026-01-20T00:00Z",
+        "outages.ends": "2026-01-20T23:59Z"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:energy\",\"domain\",\"service_relationships\",[\"[42,0,\\\"SR1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:energy",
+        "module": "domain",
+        "element": "service_relationships"
+      },
+      "values": {
+        "service_relationships.id": "[42,0,\"SR1\"]",
+        "service_relationships.site_id": "[42,0,\"S1\"]",
+        "service_relationships.tariff_id": "[42,0,\"T1\"]",
+        "service_relationships.valid_from": "2026-01-01",
+        "service_relationships.valid_to": null
+      }
+    }
+  ],
+  "edges": [
+    {
+      "key": "[\"urn:umf:domain:energy\",\"domain\",\"utility_assets.site_id\",\"[\\\"urn:umf:domain:energy\\\",\\\"domain\\\",\\\"utility_assets\\\",[\\\"[42,0,\\\\\\\"A1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:energy\\\",\\\"domain\\\",\\\"sites\\\",[\\\"[42,0,\\\\\\\"S1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:energy",
+        "module": "domain",
+        "id": "utility_assets.site_id"
+      },
+      "source": "[\"urn:umf:domain:energy\",\"domain\",\"utility_assets\",[\"[42,0,\\\"A1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:energy\",\"domain\",\"sites\",[\"[42,0,\\\"S1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:energy\",\"domain\",\"utility_assets.site_id\",\"[\\\"urn:umf:domain:energy\\\",\\\"domain\\\",\\\"utility_assets\\\",[\\\"[42,0,\\\\\\\"A2\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:energy\\\",\\\"domain\\\",\\\"sites\\\",[\\\"[42,0,\\\\\\\"S1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:energy",
+        "module": "domain",
+        "id": "utility_assets.site_id"
+      },
+      "source": "[\"urn:umf:domain:energy\",\"domain\",\"utility_assets\",[\"[42,0,\\\"A2\\\"]\"]]",
+      "target": "[\"urn:umf:domain:energy\",\"domain\",\"sites\",[\"[42,0,\\\"S1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:energy\",\"domain\",\"utility_assets.parent_id\",\"[\\\"urn:umf:domain:energy\\\",\\\"domain\\\",\\\"utility_assets\\\",[\\\"[42,0,\\\\\\\"A2\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:energy\\\",\\\"domain\\\",\\\"utility_assets\\\",[\\\"[42,0,\\\\\\\"A1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:energy",
+        "module": "domain",
+        "id": "utility_assets.parent_id"
+      },
+      "source": "[\"urn:umf:domain:energy\",\"domain\",\"utility_assets\",[\"[42,0,\\\"A2\\\"]\"]]",
+      "target": "[\"urn:umf:domain:energy\",\"domain\",\"utility_assets\",[\"[42,0,\\\"A1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:energy\",\"domain\",\"meters.asset_id\",\"[\\\"urn:umf:domain:energy\\\",\\\"domain\\\",\\\"meters\\\",[\\\"[42,0,\\\\\\\"M1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:energy\\\",\\\"domain\\\",\\\"utility_assets\\\",[\\\"[42,0,\\\\\\\"A2\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:energy",
+        "module": "domain",
+        "id": "meters.asset_id"
+      },
+      "source": "[\"urn:umf:domain:energy\",\"domain\",\"meters\",[\"[42,0,\\\"M1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:energy\",\"domain\",\"utility_assets\",[\"[42,0,\\\"A2\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:energy\",\"domain\",\"meters.asset_id\",\"[\\\"urn:umf:domain:energy\\\",\\\"domain\\\",\\\"meters\\\",[\\\"[42,0,\\\\\\\"M2\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:energy\\\",\\\"domain\\\",\\\"utility_assets\\\",[\\\"[42,0,\\\\\\\"A2\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:energy",
+        "module": "domain",
+        "id": "meters.asset_id"
+      },
+      "source": "[\"urn:umf:domain:energy\",\"domain\",\"meters\",[\"[42,0,\\\"M2\\\"]\"]]",
+      "target": "[\"urn:umf:domain:energy\",\"domain\",\"utility_assets\",[\"[42,0,\\\"A2\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:energy\",\"domain\",\"channels.meter_id\",\"[\\\"urn:umf:domain:energy\\\",\\\"domain\\\",\\\"channels\\\",[\\\"[42,0,\\\\\\\"C1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:energy\\\",\\\"domain\\\",\\\"meters\\\",[\\\"[42,0,\\\\\\\"M1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:energy",
+        "module": "domain",
+        "id": "channels.meter_id"
+      },
+      "source": "[\"urn:umf:domain:energy\",\"domain\",\"channels\",[\"[42,0,\\\"C1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:energy\",\"domain\",\"meters\",[\"[42,0,\\\"M1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:energy\",\"domain\",\"channels.meter_id\",\"[\\\"urn:umf:domain:energy\\\",\\\"domain\\\",\\\"channels\\\",[\\\"[42,0,\\\\\\\"C2\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:energy\\\",\\\"domain\\\",\\\"meters\\\",[\\\"[42,0,\\\\\\\"M2\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:energy",
+        "module": "domain",
+        "id": "channels.meter_id"
+      },
+      "source": "[\"urn:umf:domain:energy\",\"domain\",\"channels\",[\"[42,0,\\\"C2\\\"]\"]]",
+      "target": "[\"urn:umf:domain:energy\",\"domain\",\"meters\",[\"[42,0,\\\"M2\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings.channel_id\",\"[\\\"urn:umf:domain:energy\\\",\\\"domain\\\",\\\"interval_readings\\\",[\\\"[42,0,\\\\\\\"R1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:energy\\\",\\\"domain\\\",\\\"channels\\\",[\\\"[42,0,\\\\\\\"C1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:energy",
+        "module": "domain",
+        "id": "interval_readings.channel_id"
+      },
+      "source": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings\",[\"[42,0,\\\"R1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:energy\",\"domain\",\"channels\",[\"[42,0,\\\"C1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings.channel_id\",\"[\\\"urn:umf:domain:energy\\\",\\\"domain\\\",\\\"interval_readings\\\",[\\\"[42,0,\\\\\\\"R2\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:energy\\\",\\\"domain\\\",\\\"channels\\\",[\\\"[42,0,\\\\\\\"C1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:energy",
+        "module": "domain",
+        "id": "interval_readings.channel_id"
+      },
+      "source": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings\",[\"[42,0,\\\"R2\\\"]\"]]",
+      "target": "[\"urn:umf:domain:energy\",\"domain\",\"channels\",[\"[42,0,\\\"C1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings.channel_id\",\"[\\\"urn:umf:domain:energy\\\",\\\"domain\\\",\\\"interval_readings\\\",[\\\"[42,0,\\\\\\\"D2\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:energy\\\",\\\"domain\\\",\\\"channels\\\",[\\\"[42,0,\\\\\\\"C1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:energy",
+        "module": "domain",
+        "id": "interval_readings.channel_id"
+      },
+      "source": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings\",[\"[42,0,\\\"D2\\\"]\"]]",
+      "target": "[\"urn:umf:domain:energy\",\"domain\",\"channels\",[\"[42,0,\\\"C1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings.channel_id\",\"[\\\"urn:umf:domain:energy\\\",\\\"domain\\\",\\\"interval_readings\\\",[\\\"[42,0,\\\\\\\"D3\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:energy\\\",\\\"domain\\\",\\\"channels\\\",[\\\"[42,0,\\\\\\\"C1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:energy",
+        "module": "domain",
+        "id": "interval_readings.channel_id"
+      },
+      "source": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings\",[\"[42,0,\\\"D3\\\"]\"]]",
+      "target": "[\"urn:umf:domain:energy\",\"domain\",\"channels\",[\"[42,0,\\\"C1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings.channel_id\",\"[\\\"urn:umf:domain:energy\\\",\\\"domain\\\",\\\"interval_readings\\\",[\\\"[42,0,\\\\\\\"D4\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:energy\\\",\\\"domain\\\",\\\"channels\\\",[\\\"[42,0,\\\\\\\"C1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:energy",
+        "module": "domain",
+        "id": "interval_readings.channel_id"
+      },
+      "source": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings\",[\"[42,0,\\\"D4\\\"]\"]]",
+      "target": "[\"urn:umf:domain:energy\",\"domain\",\"channels\",[\"[42,0,\\\"C1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings.channel_id\",\"[\\\"urn:umf:domain:energy\\\",\\\"domain\\\",\\\"interval_readings\\\",[\\\"[42,0,\\\\\\\"D5\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:energy\\\",\\\"domain\\\",\\\"channels\\\",[\\\"[42,0,\\\\\\\"C1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:energy",
+        "module": "domain",
+        "id": "interval_readings.channel_id"
+      },
+      "source": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings\",[\"[42,0,\\\"D5\\\"]\"]]",
+      "target": "[\"urn:umf:domain:energy\",\"domain\",\"channels\",[\"[42,0,\\\"C1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings.channel_id\",\"[\\\"urn:umf:domain:energy\\\",\\\"domain\\\",\\\"interval_readings\\\",[\\\"[42,0,\\\\\\\"D6\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:energy\\\",\\\"domain\\\",\\\"channels\\\",[\\\"[42,0,\\\\\\\"C1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:energy",
+        "module": "domain",
+        "id": "interval_readings.channel_id"
+      },
+      "source": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings\",[\"[42,0,\\\"D6\\\"]\"]]",
+      "target": "[\"urn:umf:domain:energy\",\"domain\",\"channels\",[\"[42,0,\\\"C1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings.channel_id\",\"[\\\"urn:umf:domain:energy\\\",\\\"domain\\\",\\\"interval_readings\\\",[\\\"[42,0,\\\\\\\"D7\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:energy\\\",\\\"domain\\\",\\\"channels\\\",[\\\"[42,0,\\\\\\\"C1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:energy",
+        "module": "domain",
+        "id": "interval_readings.channel_id"
+      },
+      "source": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings\",[\"[42,0,\\\"D7\\\"]\"]]",
+      "target": "[\"urn:umf:domain:energy\",\"domain\",\"channels\",[\"[42,0,\\\"C1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings.channel_id\",\"[\\\"urn:umf:domain:energy\\\",\\\"domain\\\",\\\"interval_readings\\\",[\\\"[42,0,\\\\\\\"D8\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:energy\\\",\\\"domain\\\",\\\"channels\\\",[\\\"[42,0,\\\\\\\"C1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:energy",
+        "module": "domain",
+        "id": "interval_readings.channel_id"
+      },
+      "source": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings\",[\"[42,0,\\\"D8\\\"]\"]]",
+      "target": "[\"urn:umf:domain:energy\",\"domain\",\"channels\",[\"[42,0,\\\"C1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings.channel_id\",\"[\\\"urn:umf:domain:energy\\\",\\\"domain\\\",\\\"interval_readings\\\",[\\\"[42,0,\\\\\\\"D9\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:energy\\\",\\\"domain\\\",\\\"channels\\\",[\\\"[42,0,\\\\\\\"C1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:energy",
+        "module": "domain",
+        "id": "interval_readings.channel_id"
+      },
+      "source": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings\",[\"[42,0,\\\"D9\\\"]\"]]",
+      "target": "[\"urn:umf:domain:energy\",\"domain\",\"channels\",[\"[42,0,\\\"C1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings.channel_id\",\"[\\\"urn:umf:domain:energy\\\",\\\"domain\\\",\\\"interval_readings\\\",[\\\"[42,0,\\\\\\\"D10\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:energy\\\",\\\"domain\\\",\\\"channels\\\",[\\\"[42,0,\\\\\\\"C1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:energy",
+        "module": "domain",
+        "id": "interval_readings.channel_id"
+      },
+      "source": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings\",[\"[42,0,\\\"D10\\\"]\"]]",
+      "target": "[\"urn:umf:domain:energy\",\"domain\",\"channels\",[\"[42,0,\\\"C1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings.channel_id\",\"[\\\"urn:umf:domain:energy\\\",\\\"domain\\\",\\\"interval_readings\\\",[\\\"[42,0,\\\\\\\"D11\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:energy\\\",\\\"domain\\\",\\\"channels\\\",[\\\"[42,0,\\\\\\\"C1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:energy",
+        "module": "domain",
+        "id": "interval_readings.channel_id"
+      },
+      "source": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings\",[\"[42,0,\\\"D11\\\"]\"]]",
+      "target": "[\"urn:umf:domain:energy\",\"domain\",\"channels\",[\"[42,0,\\\"C1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings.channel_id\",\"[\\\"urn:umf:domain:energy\\\",\\\"domain\\\",\\\"interval_readings\\\",[\\\"[42,0,\\\\\\\"D12\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:energy\\\",\\\"domain\\\",\\\"channels\\\",[\\\"[42,0,\\\\\\\"C1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:energy",
+        "module": "domain",
+        "id": "interval_readings.channel_id"
+      },
+      "source": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings\",[\"[42,0,\\\"D12\\\"]\"]]",
+      "target": "[\"urn:umf:domain:energy\",\"domain\",\"channels\",[\"[42,0,\\\"C1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings.channel_id\",\"[\\\"urn:umf:domain:energy\\\",\\\"domain\\\",\\\"interval_readings\\\",[\\\"[42,0,\\\\\\\"D13\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:energy\\\",\\\"domain\\\",\\\"channels\\\",[\\\"[42,0,\\\\\\\"C1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:energy",
+        "module": "domain",
+        "id": "interval_readings.channel_id"
+      },
+      "source": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings\",[\"[42,0,\\\"D13\\\"]\"]]",
+      "target": "[\"urn:umf:domain:energy\",\"domain\",\"channels\",[\"[42,0,\\\"C1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings.channel_id\",\"[\\\"urn:umf:domain:energy\\\",\\\"domain\\\",\\\"interval_readings\\\",[\\\"[42,0,\\\\\\\"D14\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:energy\\\",\\\"domain\\\",\\\"channels\\\",[\\\"[42,0,\\\\\\\"C1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:energy",
+        "module": "domain",
+        "id": "interval_readings.channel_id"
+      },
+      "source": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings\",[\"[42,0,\\\"D14\\\"]\"]]",
+      "target": "[\"urn:umf:domain:energy\",\"domain\",\"channels\",[\"[42,0,\\\"C1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings.channel_id\",\"[\\\"urn:umf:domain:energy\\\",\\\"domain\\\",\\\"interval_readings\\\",[\\\"[42,0,\\\\\\\"D15\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:energy\\\",\\\"domain\\\",\\\"channels\\\",[\\\"[42,0,\\\\\\\"C1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:energy",
+        "module": "domain",
+        "id": "interval_readings.channel_id"
+      },
+      "source": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings\",[\"[42,0,\\\"D15\\\"]\"]]",
+      "target": "[\"urn:umf:domain:energy\",\"domain\",\"channels\",[\"[42,0,\\\"C1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings.channel_id\",\"[\\\"urn:umf:domain:energy\\\",\\\"domain\\\",\\\"interval_readings\\\",[\\\"[42,0,\\\\\\\"D16\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:energy\\\",\\\"domain\\\",\\\"channels\\\",[\\\"[42,0,\\\\\\\"C2\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:energy",
+        "module": "domain",
+        "id": "interval_readings.channel_id"
+      },
+      "source": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings\",[\"[42,0,\\\"D16\\\"]\"]]",
+      "target": "[\"urn:umf:domain:energy\",\"domain\",\"channels\",[\"[42,0,\\\"C2\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings.channel_id\",\"[\\\"urn:umf:domain:energy\\\",\\\"domain\\\",\\\"interval_readings\\\",[\\\"[42,0,\\\\\\\"D17\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:energy\\\",\\\"domain\\\",\\\"channels\\\",[\\\"[42,0,\\\\\\\"C2\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:energy",
+        "module": "domain",
+        "id": "interval_readings.channel_id"
+      },
+      "source": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings\",[\"[42,0,\\\"D17\\\"]\"]]",
+      "target": "[\"urn:umf:domain:energy\",\"domain\",\"channels\",[\"[42,0,\\\"C2\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings.channel_id\",\"[\\\"urn:umf:domain:energy\\\",\\\"domain\\\",\\\"interval_readings\\\",[\\\"[42,0,\\\\\\\"D18\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:energy\\\",\\\"domain\\\",\\\"channels\\\",[\\\"[42,0,\\\\\\\"C2\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:energy",
+        "module": "domain",
+        "id": "interval_readings.channel_id"
+      },
+      "source": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings\",[\"[42,0,\\\"D18\\\"]\"]]",
+      "target": "[\"urn:umf:domain:energy\",\"domain\",\"channels\",[\"[42,0,\\\"C2\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings.channel_id\",\"[\\\"urn:umf:domain:energy\\\",\\\"domain\\\",\\\"interval_readings\\\",[\\\"[42,0,\\\\\\\"D19\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:energy\\\",\\\"domain\\\",\\\"channels\\\",[\\\"[42,0,\\\\\\\"C2\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:energy",
+        "module": "domain",
+        "id": "interval_readings.channel_id"
+      },
+      "source": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings\",[\"[42,0,\\\"D19\\\"]\"]]",
+      "target": "[\"urn:umf:domain:energy\",\"domain\",\"channels\",[\"[42,0,\\\"C2\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings.channel_id\",\"[\\\"urn:umf:domain:energy\\\",\\\"domain\\\",\\\"interval_readings\\\",[\\\"[42,0,\\\\\\\"D20\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:energy\\\",\\\"domain\\\",\\\"channels\\\",[\\\"[42,0,\\\\\\\"C2\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:energy",
+        "module": "domain",
+        "id": "interval_readings.channel_id"
+      },
+      "source": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings\",[\"[42,0,\\\"D20\\\"]\"]]",
+      "target": "[\"urn:umf:domain:energy\",\"domain\",\"channels\",[\"[42,0,\\\"C2\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings.channel_id\",\"[\\\"urn:umf:domain:energy\\\",\\\"domain\\\",\\\"interval_readings\\\",[\\\"[42,0,\\\\\\\"D21\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:energy\\\",\\\"domain\\\",\\\"channels\\\",[\\\"[42,0,\\\\\\\"C2\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:energy",
+        "module": "domain",
+        "id": "interval_readings.channel_id"
+      },
+      "source": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings\",[\"[42,0,\\\"D21\\\"]\"]]",
+      "target": "[\"urn:umf:domain:energy\",\"domain\",\"channels\",[\"[42,0,\\\"C2\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings.channel_id\",\"[\\\"urn:umf:domain:energy\\\",\\\"domain\\\",\\\"interval_readings\\\",[\\\"[42,0,\\\\\\\"D22\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:energy\\\",\\\"domain\\\",\\\"channels\\\",[\\\"[42,0,\\\\\\\"C2\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:energy",
+        "module": "domain",
+        "id": "interval_readings.channel_id"
+      },
+      "source": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings\",[\"[42,0,\\\"D22\\\"]\"]]",
+      "target": "[\"urn:umf:domain:energy\",\"domain\",\"channels\",[\"[42,0,\\\"C2\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings.channel_id\",\"[\\\"urn:umf:domain:energy\\\",\\\"domain\\\",\\\"interval_readings\\\",[\\\"[42,0,\\\\\\\"D23\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:energy\\\",\\\"domain\\\",\\\"channels\\\",[\\\"[42,0,\\\\\\\"C2\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:energy",
+        "module": "domain",
+        "id": "interval_readings.channel_id"
+      },
+      "source": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings\",[\"[42,0,\\\"D23\\\"]\"]]",
+      "target": "[\"urn:umf:domain:energy\",\"domain\",\"channels\",[\"[42,0,\\\"C2\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings.channel_id\",\"[\\\"urn:umf:domain:energy\\\",\\\"domain\\\",\\\"interval_readings\\\",[\\\"[42,0,\\\\\\\"D24\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:energy\\\",\\\"domain\\\",\\\"channels\\\",[\\\"[42,0,\\\\\\\"C2\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:energy",
+        "module": "domain",
+        "id": "interval_readings.channel_id"
+      },
+      "source": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings\",[\"[42,0,\\\"D24\\\"]\"]]",
+      "target": "[\"urn:umf:domain:energy\",\"domain\",\"channels\",[\"[42,0,\\\"C2\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings.channel_id\",\"[\\\"urn:umf:domain:energy\\\",\\\"domain\\\",\\\"interval_readings\\\",[\\\"[42,0,\\\\\\\"D25\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:energy\\\",\\\"domain\\\",\\\"channels\\\",[\\\"[42,0,\\\\\\\"C2\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:energy",
+        "module": "domain",
+        "id": "interval_readings.channel_id"
+      },
+      "source": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings\",[\"[42,0,\\\"D25\\\"]\"]]",
+      "target": "[\"urn:umf:domain:energy\",\"domain\",\"channels\",[\"[42,0,\\\"C2\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings.channel_id\",\"[\\\"urn:umf:domain:energy\\\",\\\"domain\\\",\\\"interval_readings\\\",[\\\"[42,0,\\\\\\\"D26\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:energy\\\",\\\"domain\\\",\\\"channels\\\",[\\\"[42,0,\\\\\\\"C2\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:energy",
+        "module": "domain",
+        "id": "interval_readings.channel_id"
+      },
+      "source": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings\",[\"[42,0,\\\"D26\\\"]\"]]",
+      "target": "[\"urn:umf:domain:energy\",\"domain\",\"channels\",[\"[42,0,\\\"C2\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings.channel_id\",\"[\\\"urn:umf:domain:energy\\\",\\\"domain\\\",\\\"interval_readings\\\",[\\\"[42,0,\\\\\\\"D27\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:energy\\\",\\\"domain\\\",\\\"channels\\\",[\\\"[42,0,\\\\\\\"C2\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:energy",
+        "module": "domain",
+        "id": "interval_readings.channel_id"
+      },
+      "source": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings\",[\"[42,0,\\\"D27\\\"]\"]]",
+      "target": "[\"urn:umf:domain:energy\",\"domain\",\"channels\",[\"[42,0,\\\"C2\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings.channel_id\",\"[\\\"urn:umf:domain:energy\\\",\\\"domain\\\",\\\"interval_readings\\\",[\\\"[42,0,\\\\\\\"D28\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:energy\\\",\\\"domain\\\",\\\"channels\\\",[\\\"[42,0,\\\\\\\"C2\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:energy",
+        "module": "domain",
+        "id": "interval_readings.channel_id"
+      },
+      "source": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings\",[\"[42,0,\\\"D28\\\"]\"]]",
+      "target": "[\"urn:umf:domain:energy\",\"domain\",\"channels\",[\"[42,0,\\\"C2\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings.channel_id\",\"[\\\"urn:umf:domain:energy\\\",\\\"domain\\\",\\\"interval_readings\\\",[\\\"[42,0,\\\\\\\"D29\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:energy\\\",\\\"domain\\\",\\\"channels\\\",[\\\"[42,0,\\\\\\\"C2\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:energy",
+        "module": "domain",
+        "id": "interval_readings.channel_id"
+      },
+      "source": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings\",[\"[42,0,\\\"D29\\\"]\"]]",
+      "target": "[\"urn:umf:domain:energy\",\"domain\",\"channels\",[\"[42,0,\\\"C2\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings.channel_id\",\"[\\\"urn:umf:domain:energy\\\",\\\"domain\\\",\\\"interval_readings\\\",[\\\"[42,0,\\\\\\\"D30\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:energy\\\",\\\"domain\\\",\\\"channels\\\",[\\\"[42,0,\\\\\\\"C2\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:energy",
+        "module": "domain",
+        "id": "interval_readings.channel_id"
+      },
+      "source": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings\",[\"[42,0,\\\"D30\\\"]\"]]",
+      "target": "[\"urn:umf:domain:energy\",\"domain\",\"channels\",[\"[42,0,\\\"C2\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:energy\",\"domain\",\"interval_gaps.reading_id\",\"[\\\"urn:umf:domain:energy\\\",\\\"domain\\\",\\\"interval_gaps\\\",[\\\"[42,0,\\\\\\\"G1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:energy\\\",\\\"domain\\\",\\\"interval_readings\\\",[\\\"[42,0,\\\\\\\"D20\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:energy",
+        "module": "domain",
+        "id": "interval_gaps.reading_id"
+      },
+      "source": "[\"urn:umf:domain:energy\",\"domain\",\"interval_gaps\",[\"[42,0,\\\"G1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:energy\",\"domain\",\"interval_readings\",[\"[42,0,\\\"D20\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:energy\",\"domain\",\"interval_gaps.outage_id\",\"[\\\"urn:umf:domain:energy\\\",\\\"domain\\\",\\\"interval_gaps\\\",[\\\"[42,0,\\\\\\\"G1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:energy\\\",\\\"domain\\\",\\\"outages\\\",[\\\"[42,0,\\\\\\\"O1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:energy",
+        "module": "domain",
+        "id": "interval_gaps.outage_id"
+      },
+      "source": "[\"urn:umf:domain:energy\",\"domain\",\"interval_gaps\",[\"[42,0,\\\"G1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:energy\",\"domain\",\"outages\",[\"[42,0,\\\"O1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:energy\",\"domain\",\"outages.asset_id\",\"[\\\"urn:umf:domain:energy\\\",\\\"domain\\\",\\\"outages\\\",[\\\"[42,0,\\\\\\\"O1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:energy\\\",\\\"domain\\\",\\\"utility_assets\\\",[\\\"[42,0,\\\\\\\"A2\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:energy",
+        "module": "domain",
+        "id": "outages.asset_id"
+      },
+      "source": "[\"urn:umf:domain:energy\",\"domain\",\"outages\",[\"[42,0,\\\"O1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:energy\",\"domain\",\"utility_assets\",[\"[42,0,\\\"A2\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:energy\",\"domain\",\"service_relationships.site_id\",\"[\\\"urn:umf:domain:energy\\\",\\\"domain\\\",\\\"service_relationships\\\",[\\\"[42,0,\\\\\\\"SR1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:energy\\\",\\\"domain\\\",\\\"sites\\\",[\\\"[42,0,\\\\\\\"S1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:energy",
+        "module": "domain",
+        "id": "service_relationships.site_id"
+      },
+      "source": "[\"urn:umf:domain:energy\",\"domain\",\"service_relationships\",[\"[42,0,\\\"SR1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:energy\",\"domain\",\"sites\",[\"[42,0,\\\"S1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:energy\",\"domain\",\"service_relationships.tariff_id\",\"[\\\"urn:umf:domain:energy\\\",\\\"domain\\\",\\\"service_relationships\\\",[\\\"[42,0,\\\\\\\"SR1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:energy\\\",\\\"domain\\\",\\\"tariffs\\\",[\\\"[42,0,\\\\\\\"T1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:energy",
+        "module": "domain",
+        "id": "service_relationships.tariff_id"
+      },
+      "source": "[\"urn:umf:domain:energy\",\"domain\",\"service_relationships\",[\"[42,0,\\\"SR1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:energy\",\"domain\",\"tariffs\",[\"[42,0,\\\"T1\\\"]\"]]"
+    }
+  ]
+}

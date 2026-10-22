@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 3759,
+        "line": 17,
+        "path": "src/adapters/arrow/capture.ts",
+        "sha256": "6e8e973d07e8b3ad2f7796d68d9b08ccd637e10d2a52f08a4562b37e0aecb231"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "captureArrowIpc",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(bytes: Uint8Array<ArrayBufferLike>, options: { id: string; }): Document"
+    ]
+  },
+  "id": "[\"api\",\".\",\"captureArrowIpc\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 3759,
+      "line": 17,
+      "path": "src/adapters/arrow/capture.ts",
+      "sha256": "6e8e973d07e8b3ad2f7796d68d9b08ccd637e10d2a52f08a4562b37e0aecb231"
+    }
+  ],
+  "summary": "Accepts even empty or invalid native input so decode failure cannot lose source.",
+  "title": "captureArrowIpc"
+}

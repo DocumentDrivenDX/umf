@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 9440,
+        "line": 45,
+        "path": "src/model/keys.ts",
+        "sha256": "1db47232b3abfccf2674530e8cce2503901119f15c80d3e6ca929a7e492258ec"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "lookupCoreKey",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: Document, identityInput: CoreKeyIdentity): CoreKeyLookup"
+    ]
+  },
+  "id": "[\"api\",\".\",\"lookupCoreKey\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 9440,
+      "line": 45,
+      "path": "src/model/keys.ts",
+      "sha256": "1db47232b3abfccf2674530e8cce2503901119f15c80d3e6ca929a7e492258ec"
+    }
+  ],
+  "summary": "Public export · src/model/keys.ts",
+  "title": "lookupCoreKey"
+}

@@ -1,0 +1,30 @@
+{
+  "scope": "declaration inspection only; nativeQualified=false",
+  "baseCommit": "2cb873ab5",
+  "core": "0.10.0",
+  "vocabulary": "umf.tables/0.1.0 candidate",
+  "profile": "postgresql18/0.1 candidate",
+  "focusedTests": {
+    "passed": 85,
+    "failed": 0,
+    "assertions": 5003
+  },
+  "browser": {
+    "passed": 14,
+    "report": "declaration-browser.json"
+  },
+  "typescript": [
+    "tsconfig.json passed",
+    "tsconfig.tools.json passed"
+  ],
+  "boundaries": "7 pure browser modules and 9 negative controls",
+  "nativeDeploymentQualified": false,
+  "clientGeneration": "selected lifecycle source and dependent actions explicitly refuse pending qualification",
+  "remaining": [
+    "DDL/RLS/grants generation and catalog verification",
+    "forward migration and retirement execution",
+    "Weft table vocabulary admission and mutation lowering",
+    "generated lifecycle methods and native acceptance",
+    "release cohort and consumer acceptance"
+  ]
+}

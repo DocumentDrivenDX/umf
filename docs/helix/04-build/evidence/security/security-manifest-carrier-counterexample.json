@@ -1,0 +1,28 @@
+{
+  "status": "counterexample-reproduced",
+  "command": [
+    "env",
+    "PATH=/private/tmp/weft-toolchain/rustup/toolchains/1.90.0-aarch64-apple-darwin/bin:/usr/bin:/bin",
+    "CARGO_HOME=/private/tmp/weft-toolchain/cargo",
+    "CARGO_TARGET_DIR=/private/tmp/umf-security-weft-bridge-target",
+    "cargo",
+    "test",
+    "--offline",
+    "--locked",
+    "-p",
+    "weft-core",
+    "--test",
+    "security_admission",
+    "security_manifest_positional_struct_carriers_refuse_before_registration",
+    "--",
+    "--nocapture"
+  ],
+  "exitCode": 101,
+  "sourceDigests": {
+    "/Users/erik/Projects/weft/crates/weft-core/src/security_backend.rs": "10316659dc527ac9f9fe859447d600c61fc093cf4770b63eafde8e8b4240e77b",
+    "/Users/erik/Projects/weft/crates/weft-core/tests/security_admission.rs": "e09aa94b974c582fbf82f939827958cc6f1cbf33cc26eaf90b57b808591cdc90"
+  },
+  "stdout": "\nrunning 1 test\ntest security_manifest_positional_struct_carriers_refuse_before_registration ... FAILED\n\nfailures:\n\nfailures:\n    security_manifest_positional_struct_carriers_refuse_before_registration\n\ntest result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 60 filtered out; finished in 0.04s\n\n",
+  "stderr": "warning: unexpected `cfg` condition value: `128`\n   --> vendor/ahash/src/fallback_hash.rs:164:11\n    |\n164 |     #[cfg(target_pointer_width = \"128\")]\n    |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    |\n    = note: expected values for `target_pointer_width` are: `16`, `32`, and `64`\n    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration\n    = note: `#[warn(unexpected_cfgs)]` on by default\n\nwarning: unexpected `cfg` condition name: `fuzzing`\n  --> vendor/ahash/src/random_state.rs:48:58\n   |\n48 |     if #[cfg(all(feature = \"compile-time-rng\", any(test, fuzzing)))] {\n   |                                                          ^^^^^^^\n   |\n   = help: expected names are: `docsrs`, `feature`, `folded_multiply`, `specialize`, and `test` and 31 more\n   = help: consider using a Cargo feature instead\n   = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:\n            [lints.rust]\n            unexpected_cfgs = { level = \"warn\", check-cfg = ['cfg(fuzzing)'] }\n   = help: or consider adding `println!(\"cargo::rustc-check-cfg=cfg(fuzzing)\");` to the top of the `build.rs`\n   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration\n\nwarning: unexpected `cfg` condition name: `fuzzing`\n  --> vendor/ahash/src/random_state.rs:68:54\n   |\n68 |     } else if #[cfg(all(feature = \"runtime-rng\", not(fuzzing)))] {\n   |                                                      ^^^^^^^\n   |\n   = help: consider using a Cargo feature instead\n   = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:\n            [lints.rust]\n            unexpected_cfgs = { level = \"warn\", check-cfg = ['cfg(fuzzing)'] }\n   = help: or consider adding `println!(\"cargo::rustc-check-cfg=cfg(fuzzing)\");` to the top of the `build.rs`\n   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration\n\nwarning: methods `read_u128x2`, `read_u128x4`, `read_last_u16`, `read_last_u128x2`, and `read_last_u128x4` are never used\n  --> vendor/ahash/src/convert.rs:69:8\n   |\n64 | pub(crate) trait ReadFromSlice {\n   |                  ------------- methods in this trait\n...\n69 |     fn read_u128x2(&self) -> ([u128; 2], &[u8]);\n   |        ^^^^^^^^^^^\n70 |     fn read_u128x4(&self) -> ([u128; 4], &[u8]);\n   |        ^^^^^^^^^^^\n71 |     fn read_last_u16(&self) -> u16;\n   |        ^^^^^^^^^^^^^\n...\n75 |     fn read_last_u128x2(&self) -> [u128; 2];\n   |        ^^^^^^^^^^^^^^^^\n76 |     fn read_last_u128x4(&self) -> [u128; 4];\n   |        ^^^^^^^^^^^^^^^^\n   |\n   = note: `#[warn(dead_code)]` on by default\n\nwarning: `ahash` (lib) generated 4 warnings\nwarning: `ahash` (lib) generated 4 warnings (4 duplicates)\nwarning: method `finish` is never used\n   --> crates/weft-core/src/syntax.rs:243:19\n    |\n206 | impl Parser {\n    | ----------- method in this implementation\n...\n243 |     pub(crate) fn finish(&mut self) -> Result<()> {\n    |                   ^^^^^^\n    |\n    = note: `#[warn(dead_code)]` on by default\n\nwarning: `weft-core` (lib) generated 1 warning\n   Compiling weft-core v0.1.0 (/Users/erik/Projects/weft/crates/weft-core)\n    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.25s\n     Running tests/security_admission.rs (/private/tmp/umf-security-weft-bridge-target/debug/deps/security_admission-3dcb7b58c58e7685)\n\nthread 'security_manifest_positional_struct_carriers_refuse_before_registration' panicked at crates/weft-core/tests/security_admission.rs:521:2:\nAccepted positional carriers: [\"manifest\", \"source\", \"target\", \"capability\", \"language\", \"obligation\"]\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace\nerror: test failed, to rerun pass `-p weft-core --test security_admission`\n",
+  "scope": "Historical pre-fix actual security registration parser counterexample; no backend dispatch or native qualification."
+}

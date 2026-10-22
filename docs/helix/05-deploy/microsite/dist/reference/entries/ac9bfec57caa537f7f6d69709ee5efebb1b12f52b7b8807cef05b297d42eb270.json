@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 3175,
+        "line": 29,
+        "path": "src/extensions/actions/plan-types.ts",
+        "sha256": "94cd1d2105c503b66eadb99b4fd45013c57c93b3235cbe5d6dbd512cd0a35c68"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "ActionPlanAssessment",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface ActionPlanAssessment {compatible:boolean;executionVerified:false;obligations:{id:string;status:'supported'|'unsupported'|'unknown';evidence:string[]}[];diagnostics:ActionPlanDiagnostic[]}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"ActionPlanAssessment\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 3175,
+      "line": 29,
+      "path": "src/extensions/actions/plan-types.ts",
+      "sha256": "94cd1d2105c503b66eadb99b4fd45013c57c93b3235cbe5d6dbd512cd0a35c68"
+    }
+  ],
+  "summary": "Type declaration · src/extensions/actions/plan-types.ts",
+  "title": "ActionPlanAssessment"
+}

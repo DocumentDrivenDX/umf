@@ -1,0 +1,50 @@
+{
+  "data": {
+    "conflicts": [],
+    "correspondence": "unassessed",
+    "declarations": [
+      {
+        "bytes": 3738,
+        "path": "spec/extensions/parquet-keys/package.json",
+        "sha256": "07ded1b736567f80875a44756ef1d7172b804d088d94da622deaed6f8fed619b"
+      }
+    ],
+    "evidence": [],
+    "operation": {
+      "apiNames": [],
+      "coreProfiles": [],
+      "extensionVersions": [],
+      "fixturePaths": [],
+      "id": "umf.parquet.keys@1.0.0:export",
+      "kind": "export",
+      "limitations": [
+        "Recorded scope only; native equivalence and production adoption are separate."
+      ],
+      "runtime": {
+        "availability": "host-only",
+        "profileId": "umf.parquet.keys@1.0.0:export",
+        "requirements": [
+          "Native runtime / original qualification harness; not executed by this page."
+        ]
+      },
+      "sourceSystem": "Apache Parquet / PyArrow · PyArrow 21.0.0 / parquet-format 219e3f12a62f9476e830c21e26d030d231f7c017",
+      "subset": "Physical schema observations with original file bytes; no collection uniqueness, authored identity inference, page validation or native equivalence",
+      "targetSystem": "Apache Parquet / PyArrow · PyArrow 21.0.0 / parquet-format 219e3f12a62f9476e830c21e26d030d231f7c017",
+      "title": "umf.parquet.keys · export"
+    }
+  },
+  "id": "[\"integration\",\"umf.parquet.keys@1.0.0:export\"]",
+  "kind": "integration",
+  "links": [
+    "[\"extension\",\"umf.parquet.keys\",\"1.0.0\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 134795,
+      "path": "docs/helix/05-deploy/reference/operations.json",
+      "sha256": "793743bbca36e56e90e82df5ef0408b628c434e58cb68aea4d6486349be78e61"
+    }
+  ],
+  "summary": "Physical schema observations with original file bytes; no collection uniqueness, authored identity inference, page validation or native equivalence",
+  "title": "umf.parquet.keys · export"
+}

@@ -1,29 +1,43 @@
-"""Keep canonical schemas available when building a wheel from an sdist."""
+# SPDX-License-Identifier: MIT OR Apache-2.0
+"""Include only the current generated UMF authority in the Python wheel."""
 
 from pathlib import Path
 
 from hatchling.builders.hooks.plugin.interface import BuildHookInterface
 
+CORE_RESOURCES = (
+    "schema.json",
+    "semantic-type-reference.schema.json",
+    "extension-package.schema.json",
+)
+
 
 class CustomBuildHook(BuildHookInterface):
     def initialize(self, version, build_data):
-        if self.target_name == "wheel":
-            local = Path(self.root) / "spec/core"
-            source = local if local.exists() else Path(self.root).parent / "spec/core"
-            if not source.is_dir():
-                raise FileNotFoundError("Canonical UMF schemas are missing")
-            build_data["force_include"][str(source)] = "umf/spec/core"
+        # The sdist target already includes canonical spec/ paths. Wheel-only
+        # destinations must not replace those paths when packaging the sdist.
+        if self.target_name != "wheel":
+            return
+        package_root = Path(self.root)
+        repository = package_root if (package_root / "spec/core").is_dir() else package_root.parent
+        core = repository / "spec/core"
+        for name in CORE_RESOURCES:
+            source = core / name
+            if not source.is_file():
+                raise FileNotFoundError(f"Current generated UMF schema is missing: {name}")
+            build_data["force_include"][str(source)] = f"umf/spec/core/{name}"
 
-            extension = source.parent / "extensions/domain-pack"
-            if not extension.is_dir():
-                raise FileNotFoundError("Canonical domain-pack schema is missing")
-            build_data["force_include"][str(extension)] = (
-                "umf/spec/extensions/domain-pack"
-            )
+        generated = repository / "spec/metamodel/generated"
+        required = ("core-constraints.json", "domain-policy.json", "python-shapes.json", "manifest.json")
+        for name in required:
+            if not (generated / name).is_file():
+                raise FileNotFoundError(f"Generated UMF resource is missing: {name}")
+        build_data["force_include"][str(generated)] = "umf/spec/metamodel/generated"
 
-            data_source = source.parent / "extensions/dataset-source"
-            if not data_source.is_dir():
-                raise FileNotFoundError("Canonical dataset-source schema is missing")
-            build_data["force_include"][str(data_source)] = (
-                "umf/spec/extensions/dataset-source"
-            )
+        for path, name in (
+            (repository / "spec/extensions/domain-pack/schema.json", "domain-pack"),
+            (repository / "spec/extensions/dataset-source/schema.json", "dataset-source"),
+        ):
+            if not path.is_file():
+                raise FileNotFoundError(f"Canonical {name} schema is missing")
+            build_data["force_include"][str(path)] = f"umf/spec/extensions/{name}/schema.json"

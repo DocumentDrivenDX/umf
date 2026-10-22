@@ -1,0 +1,11 @@
+{
+  "sameDiagnosticMultiset": true,
+  "baselineCount": 40,
+  "candidateCount": 40,
+  "new": [],
+  "removed": [],
+  "baseline": "c042a13e88d51d52a810149f6e407da3eaef0cd2",
+  "candidate": "f58deb12",
+  "command": "/private/tmp/sdk-r25-r22-314-env/bin/mypy --cache-dir <separate writable cache> python/umf_access/src/umf_access/postgres_read.py python/umf_access/src/umf_access/postgres_search.py",
+  "scope": "Direct two-module invocation with transitive imports; not the governed positive-client release checker command"
+}

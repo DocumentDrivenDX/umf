@@ -1,0 +1,2358 @@
+{
+  "status": "scoped-native-checks-passed",
+  "runId": "61a4b228-9f59-48a1-8ba4-b34cd82720e0",
+  "sourcePins": {
+    "tools/security/truss-native-membership-probe.py": "2158a3d4e7bbb8364be72d5de3c5c9d27278bd5bc416c20cdd89b6a702a37c2a",
+    "tests/security/native/truss-layout-source-epoch-0.16.sql": "dd46a1f5d38efebb96c1123b78c47cd018d223cdb2192976cedb8f3eebb4d85f",
+    "tests/security/native/truss-graph-membership-overlay.sql": "30b88772b0352baaf9b9daeee7152254229b05839f9278a6ea064f064cb47fbf",
+    "tests/security/native/pg-raw-membership-oracle.json": "1b04b8a2fe0de4f72ca2926398ff2717909bdbdee9d53e4284e4f4bd2fc5acee",
+    "docs/helix/03-test/security/cases.json": "37308740d5d8b57f6f4647c1a44feee71cbfde02d8f5bee1334299654a610ba9",
+    "/Users/erik/Projects/truss/docs/helix/04-build/evidence/source-epoch-layout-0.16.owner-export.sql": "dd46a1f5d38efebb96c1123b78c47cd018d223cdb2192976cedb8f3eebb4d85f"
+  },
+  "seedSha256": "e6c4c867be7c4d8f469b7ca0a17b59996e09d4e0c86246ab7a6f3882745e67d0",
+  "engine": {
+    "number": "170009",
+    "build": "PostgreSQL 17.9 (Debian 17.9-1.pgdg13+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"
+  },
+  "imageId": "sha256:2a0d0fe14825b0939f78a8cad5cd4e6aa68bf94d0e5dd96e24b6d23af4315545",
+  "observations": [
+    {
+      "id": "engine",
+      "expected": "170009",
+      "observed": "170009"
+    },
+    {
+      "id": "umf_sec_alice:query-success",
+      "expected": "00000",
+      "observed": "00000"
+    },
+    {
+      "id": "umf_sec_alice:native-ordinary",
+      "expected": {
+        "user": "umf_sec_alice",
+        "super": "off",
+        "bypass": false
+      },
+      "observed": {
+        "user": "umf_sec_alice",
+        "super": "off",
+        "bypass": false
+      }
+    },
+    {
+      "id": "umf_sec_alice:query-success",
+      "expected": "00000",
+      "observed": "00000"
+    },
+    {
+      "id": "umf_sec_alice:shared-oracle",
+      "expected": [
+        [
+          "RA",
+          "A-only"
+        ],
+        [
+          "RAB",
+          "multiple-owners"
+        ]
+      ],
+      "observed": [
+        [
+          "RA",
+          "A-only"
+        ],
+        [
+          "RAB",
+          "multiple-owners"
+        ]
+      ]
+    },
+    {
+      "id": "umf_sec_alice:query-success",
+      "expected": "00000",
+      "observed": "00000"
+    },
+    {
+      "id": "umf_sec_alice:direct-rls-identities",
+      "expected": [
+        1,
+        2
+      ],
+      "observed": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": "umf_sec_alice:query-success",
+      "expected": "00000",
+      "observed": "00000"
+    },
+    {
+      "id": "umf_sec_alice:direct-rls-types",
+      "expected": [
+        3,
+        3
+      ],
+      "observed": [
+        3,
+        3
+      ]
+    },
+    {
+      "id": "umf_sec_alice:query-success",
+      "expected": "00000",
+      "observed": "00000"
+    },
+    {
+      "id": "umf_sec_alice:count",
+      "expected": 2,
+      "observed": 2
+    },
+    {
+      "id": "umf_sec_alice:denied:property-bag",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "umf_sec_alice:no-output:property-bag",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "umf_sec_alice:denied:retained",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "umf_sec_alice:no-output:retained",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "umf_sec_alice:denied:hidden-edges",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "umf_sec_alice:no-output:hidden-edges",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "umf_sec_alice:denied:write",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "umf_sec_alice:no-output:write",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "umf_sec_alice:denied:owner-transition",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "umf_sec_alice:no-output:owner-transition",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "umf_sec_alice:denied:subject-lookup",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "umf_sec_alice:no-output:subject-lookup",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "umf_sec_bob:query-success",
+      "expected": "00000",
+      "observed": "00000"
+    },
+    {
+      "id": "umf_sec_bob:native-ordinary",
+      "expected": {
+        "user": "umf_sec_bob",
+        "super": "off",
+        "bypass": false
+      },
+      "observed": {
+        "user": "umf_sec_bob",
+        "super": "off",
+        "bypass": false
+      }
+    },
+    {
+      "id": "umf_sec_bob:query-success",
+      "expected": "00000",
+      "observed": "00000"
+    },
+    {
+      "id": "umf_sec_bob:shared-oracle",
+      "expected": [
+        [
+          "RAB",
+          "multiple-owners"
+        ],
+        [
+          "RB",
+          "B-only"
+        ]
+      ],
+      "observed": [
+        [
+          "RAB",
+          "multiple-owners"
+        ],
+        [
+          "RB",
+          "B-only"
+        ]
+      ]
+    },
+    {
+      "id": "umf_sec_bob:query-success",
+      "expected": "00000",
+      "observed": "00000"
+    },
+    {
+      "id": "umf_sec_bob:direct-rls-identities",
+      "expected": [
+        2,
+        3
+      ],
+      "observed": [
+        2,
+        3
+      ]
+    },
+    {
+      "id": "umf_sec_bob:query-success",
+      "expected": "00000",
+      "observed": "00000"
+    },
+    {
+      "id": "umf_sec_bob:direct-rls-types",
+      "expected": [
+        3,
+        3
+      ],
+      "observed": [
+        3,
+        3
+      ]
+    },
+    {
+      "id": "umf_sec_bob:query-success",
+      "expected": "00000",
+      "observed": "00000"
+    },
+    {
+      "id": "umf_sec_bob:count",
+      "expected": 2,
+      "observed": 2
+    },
+    {
+      "id": "umf_sec_bob:denied:property-bag",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "umf_sec_bob:no-output:property-bag",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "umf_sec_bob:denied:retained",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "umf_sec_bob:no-output:retained",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "umf_sec_bob:denied:hidden-edges",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "umf_sec_bob:no-output:hidden-edges",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "umf_sec_bob:denied:write",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "umf_sec_bob:no-output:write",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "umf_sec_bob:denied:owner-transition",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "umf_sec_bob:no-output:owner-transition",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "umf_sec_bob:denied:subject-lookup",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "umf_sec_bob:no-output:subject-lookup",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "umf_sec_outsider:query-success",
+      "expected": "00000",
+      "observed": "00000"
+    },
+    {
+      "id": "umf_sec_outsider:native-ordinary",
+      "expected": {
+        "user": "umf_sec_outsider",
+        "super": "off",
+        "bypass": false
+      },
+      "observed": {
+        "user": "umf_sec_outsider",
+        "super": "off",
+        "bypass": false
+      }
+    },
+    {
+      "id": "umf_sec_outsider:query-success",
+      "expected": "00000",
+      "observed": "00000"
+    },
+    {
+      "id": "umf_sec_outsider:shared-oracle",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "umf_sec_outsider:query-success",
+      "expected": "00000",
+      "observed": "00000"
+    },
+    {
+      "id": "umf_sec_outsider:direct-rls-identities",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "umf_sec_outsider:query-success",
+      "expected": "00000",
+      "observed": "00000"
+    },
+    {
+      "id": "umf_sec_outsider:direct-rls-types",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "umf_sec_outsider:query-success",
+      "expected": "00000",
+      "observed": "00000"
+    },
+    {
+      "id": "umf_sec_outsider:count",
+      "expected": 0,
+      "observed": 0
+    },
+    {
+      "id": "umf_sec_outsider:denied:property-bag",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "umf_sec_outsider:no-output:property-bag",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "umf_sec_outsider:denied:retained",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "umf_sec_outsider:no-output:retained",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "umf_sec_outsider:denied:hidden-edges",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "umf_sec_outsider:no-output:hidden-edges",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "umf_sec_outsider:denied:write",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "umf_sec_outsider:no-output:write",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "umf_sec_outsider:denied:owner-transition",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "umf_sec_outsider:no-output:owner-transition",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "umf_sec_outsider:denied:subject-lookup",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "umf_sec_outsider:no-output:subject-lookup",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "ordinary-edge-insert-denied",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "reversed-endpoint-existing-objects",
+      "expected": 2,
+      "observed": 2
+    },
+    {
+      "id": "reversed-endpoint-no-index-collision",
+      "expected": 0,
+      "observed": 0
+    },
+    {
+      "id": "native-reversed-endpoint-fk",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "inactive:one-erased-guard",
+      "expected": 1,
+      "observed": 1
+    },
+    {
+      "id": "inactive:changed",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "umf_sec_alice:query-success",
+      "expected": "00000",
+      "observed": "00000"
+    },
+    {
+      "id": "inactive:complete-counterexample",
+      "expected": [
+        [
+          "RA",
+          "A-only"
+        ],
+        [
+          "RAB",
+          "multiple-owners"
+        ],
+        [
+          "RB",
+          "B-only"
+        ]
+      ],
+      "observed": [
+        [
+          "RA",
+          "A-only"
+        ],
+        [
+          "RAB",
+          "multiple-owners"
+        ],
+        [
+          "RB",
+          "B-only"
+        ]
+      ]
+    },
+    {
+      "id": "umf_sec_alice:query-success",
+      "expected": "00000",
+      "observed": "00000"
+    },
+    {
+      "id": "inactive:restored:umf_sec_alice",
+      "expected": [
+        [
+          "RA",
+          "A-only"
+        ],
+        [
+          "RAB",
+          "multiple-owners"
+        ]
+      ],
+      "observed": [
+        [
+          "RA",
+          "A-only"
+        ],
+        [
+          "RAB",
+          "multiple-owners"
+        ]
+      ]
+    },
+    {
+      "id": "umf_sec_bob:query-success",
+      "expected": "00000",
+      "observed": "00000"
+    },
+    {
+      "id": "inactive:restored:umf_sec_bob",
+      "expected": [
+        [
+          "RAB",
+          "multiple-owners"
+        ],
+        [
+          "RB",
+          "B-only"
+        ]
+      ],
+      "observed": [
+        [
+          "RAB",
+          "multiple-owners"
+        ],
+        [
+          "RB",
+          "B-only"
+        ]
+      ]
+    },
+    {
+      "id": "umf_sec_outsider:query-success",
+      "expected": "00000",
+      "observed": "00000"
+    },
+    {
+      "id": "inactive:restored:umf_sec_outsider",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "ownership-relationship:one-erased-guard",
+      "expected": 1,
+      "observed": 1
+    },
+    {
+      "id": "ownership-relationship:changed",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "umf_sec_alice:query-success",
+      "expected": "00000",
+      "observed": "00000"
+    },
+    {
+      "id": "ownership-relationship:complete-counterexample",
+      "expected": [
+        [
+          "RA",
+          "A-only"
+        ],
+        [
+          "RAB",
+          "multiple-owners"
+        ],
+        [
+          "RD",
+          "unassigned-sibling"
+        ]
+      ],
+      "observed": [
+        [
+          "RA",
+          "A-only"
+        ],
+        [
+          "RAB",
+          "multiple-owners"
+        ],
+        [
+          "RD",
+          "unassigned-sibling"
+        ]
+      ]
+    },
+    {
+      "id": "umf_sec_alice:query-success",
+      "expected": "00000",
+      "observed": "00000"
+    },
+    {
+      "id": "ownership-relationship:restored:umf_sec_alice",
+      "expected": [
+        [
+          "RA",
+          "A-only"
+        ],
+        [
+          "RAB",
+          "multiple-owners"
+        ]
+      ],
+      "observed": [
+        [
+          "RA",
+          "A-only"
+        ],
+        [
+          "RAB",
+          "multiple-owners"
+        ]
+      ]
+    },
+    {
+      "id": "umf_sec_bob:query-success",
+      "expected": "00000",
+      "observed": "00000"
+    },
+    {
+      "id": "ownership-relationship:restored:umf_sec_bob",
+      "expected": [
+        [
+          "RAB",
+          "multiple-owners"
+        ],
+        [
+          "RB",
+          "B-only"
+        ]
+      ],
+      "observed": [
+        [
+          "RAB",
+          "multiple-owners"
+        ],
+        [
+          "RB",
+          "B-only"
+        ]
+      ]
+    },
+    {
+      "id": "umf_sec_outsider:query-success",
+      "expected": "00000",
+      "observed": "00000"
+    },
+    {
+      "id": "ownership-relationship:restored:umf_sec_outsider",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "assignment-relationship:one-erased-guard",
+      "expected": 1,
+      "observed": 1
+    },
+    {
+      "id": "assignment-relationship:changed",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "umf_sec_alice:query-success",
+      "expected": "00000",
+      "observed": "00000"
+    },
+    {
+      "id": "assignment-relationship:complete-counterexample",
+      "expected": [
+        [
+          "RA",
+          "A-only"
+        ],
+        [
+          "RAB",
+          "multiple-owners"
+        ],
+        [
+          "RD",
+          "unassigned-sibling"
+        ]
+      ],
+      "observed": [
+        [
+          "RA",
+          "A-only"
+        ],
+        [
+          "RAB",
+          "multiple-owners"
+        ],
+        [
+          "RD",
+          "unassigned-sibling"
+        ]
+      ]
+    },
+    {
+      "id": "umf_sec_alice:query-success",
+      "expected": "00000",
+      "observed": "00000"
+    },
+    {
+      "id": "assignment-relationship:restored:umf_sec_alice",
+      "expected": [
+        [
+          "RA",
+          "A-only"
+        ],
+        [
+          "RAB",
+          "multiple-owners"
+        ]
+      ],
+      "observed": [
+        [
+          "RA",
+          "A-only"
+        ],
+        [
+          "RAB",
+          "multiple-owners"
+        ]
+      ]
+    },
+    {
+      "id": "umf_sec_bob:query-success",
+      "expected": "00000",
+      "observed": "00000"
+    },
+    {
+      "id": "assignment-relationship:restored:umf_sec_bob",
+      "expected": [
+        [
+          "RAB",
+          "multiple-owners"
+        ],
+        [
+          "RB",
+          "B-only"
+        ]
+      ],
+      "observed": [
+        [
+          "RAB",
+          "multiple-owners"
+        ],
+        [
+          "RB",
+          "B-only"
+        ]
+      ]
+    },
+    {
+      "id": "umf_sec_outsider:query-success",
+      "expected": "00000",
+      "observed": "00000"
+    },
+    {
+      "id": "assignment-relationship:restored:umf_sec_outsider",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "root-type-erasure-changes-original",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "umf_sec_alice:query-success",
+      "expected": "00000",
+      "observed": "00000"
+    },
+    {
+      "id": "root-type-erasure-exposes-other-types",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "umf_sec_alice:query-success",
+      "expected": "00000",
+      "observed": "00000"
+    },
+    {
+      "id": "root-type-restored:umf_sec_alice",
+      "expected": [
+        [
+          "RA",
+          "A-only"
+        ],
+        [
+          "RAB",
+          "multiple-owners"
+        ]
+      ],
+      "observed": [
+        [
+          "RA",
+          "A-only"
+        ],
+        [
+          "RAB",
+          "multiple-owners"
+        ]
+      ]
+    },
+    {
+      "id": "umf_sec_alice:query-success",
+      "expected": "00000",
+      "observed": "00000"
+    },
+    {
+      "id": "root-type-restored-direct:umf_sec_alice",
+      "expected": [
+        3,
+        3
+      ],
+      "observed": [
+        3,
+        3
+      ]
+    },
+    {
+      "id": "umf_sec_bob:query-success",
+      "expected": "00000",
+      "observed": "00000"
+    },
+    {
+      "id": "root-type-restored:umf_sec_bob",
+      "expected": [
+        [
+          "RAB",
+          "multiple-owners"
+        ],
+        [
+          "RB",
+          "B-only"
+        ]
+      ],
+      "observed": [
+        [
+          "RAB",
+          "multiple-owners"
+        ],
+        [
+          "RB",
+          "B-only"
+        ]
+      ]
+    },
+    {
+      "id": "umf_sec_bob:query-success",
+      "expected": "00000",
+      "observed": "00000"
+    },
+    {
+      "id": "root-type-restored-direct:umf_sec_bob",
+      "expected": [
+        3,
+        3
+      ],
+      "observed": [
+        3,
+        3
+      ]
+    },
+    {
+      "id": "umf_sec_outsider:query-success",
+      "expected": "00000",
+      "observed": "00000"
+    },
+    {
+      "id": "root-type-restored:umf_sec_outsider",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "umf_sec_outsider:query-success",
+      "expected": "00000",
+      "observed": "00000"
+    },
+    {
+      "id": "root-type-restored-direct:umf_sec_outsider",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "nonempty-resources:missing:refused:projection",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "nonempty-resources:missing:no-output:projection",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "nonempty-resources:missing:uniform-message:projection",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "nonempty-resources:missing:refused:count",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "nonempty-resources:missing:no-output:count",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "nonempty-resources:missing:uniform-message:count",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "nonempty-resources:missing:unevaluated:false-filter",
+      "expected": "00000",
+      "observed": "00000"
+    },
+    {
+      "id": "nonempty-resources:missing:unevaluated-no-output:false-filter",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "nonempty-resources:missing:unevaluated:zero-limit",
+      "expected": "00000",
+      "observed": "00000"
+    },
+    {
+      "id": "nonempty-resources:missing:unevaluated-no-output:zero-limit",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "nonempty-resources:ambiguous:refused:projection",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "nonempty-resources:ambiguous:no-output:projection",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "nonempty-resources:ambiguous:uniform-message:projection",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "nonempty-resources:ambiguous:refused:count",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "nonempty-resources:ambiguous:no-output:count",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "nonempty-resources:ambiguous:uniform-message:count",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "nonempty-resources:ambiguous:unevaluated:false-filter",
+      "expected": "00000",
+      "observed": "00000"
+    },
+    {
+      "id": "nonempty-resources:ambiguous:unevaluated-no-output:false-filter",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "nonempty-resources:ambiguous:unevaluated:zero-limit",
+      "expected": "00000",
+      "observed": "00000"
+    },
+    {
+      "id": "nonempty-resources:ambiguous:unevaluated-no-output:zero-limit",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "umf_sec_alice:query-success",
+      "expected": "00000",
+      "observed": "00000"
+    },
+    {
+      "id": "nonempty-resources:binding-restored:umf_sec_alice",
+      "expected": [
+        [
+          "RA",
+          "A-only"
+        ],
+        [
+          "RAB",
+          "multiple-owners"
+        ]
+      ],
+      "observed": [
+        [
+          "RA",
+          "A-only"
+        ],
+        [
+          "RAB",
+          "multiple-owners"
+        ]
+      ]
+    },
+    {
+      "id": "umf_sec_bob:query-success",
+      "expected": "00000",
+      "observed": "00000"
+    },
+    {
+      "id": "nonempty-resources:binding-restored:umf_sec_bob",
+      "expected": [
+        [
+          "RAB",
+          "multiple-owners"
+        ],
+        [
+          "RB",
+          "B-only"
+        ]
+      ],
+      "observed": [
+        [
+          "RAB",
+          "multiple-owners"
+        ],
+        [
+          "RB",
+          "B-only"
+        ]
+      ]
+    },
+    {
+      "id": "umf_sec_outsider:query-success",
+      "expected": "00000",
+      "observed": "00000"
+    },
+    {
+      "id": "nonempty-resources:binding-restored:umf_sec_outsider",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "zero-native-resources",
+      "expected": 0,
+      "observed": 0
+    },
+    {
+      "id": "empty-resources:missing:refused:projection",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "empty-resources:missing:no-output:projection",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "empty-resources:missing:uniform-message:projection",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "empty-resources:missing:refused:count",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "empty-resources:missing:no-output:count",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "empty-resources:missing:uniform-message:count",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "empty-resources:missing:unevaluated:false-filter",
+      "expected": "00000",
+      "observed": "00000"
+    },
+    {
+      "id": "empty-resources:missing:unevaluated-no-output:false-filter",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "empty-resources:missing:unevaluated:zero-limit",
+      "expected": "00000",
+      "observed": "00000"
+    },
+    {
+      "id": "empty-resources:missing:unevaluated-no-output:zero-limit",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "preflight-erasure-one-occurrence",
+      "expected": 1,
+      "observed": 1
+    },
+    {
+      "id": "umf_sec_alice:query-success",
+      "expected": "00000",
+      "observed": "00000"
+    },
+    {
+      "id": "preflight-erasure-missing-binding-empty-result",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "umf_sec_alice:query-success",
+      "expected": "00000",
+      "observed": "00000"
+    },
+    {
+      "id": "preflight-erasure-missing-binding-zero-count",
+      "expected": 0,
+      "observed": 0
+    },
+    {
+      "id": "preflight-restored-empty-missing:refused:projection",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "preflight-restored-empty-missing:no-output:projection",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "preflight-restored-empty-missing:uniform-message:projection",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "preflight-restored-empty-missing:refused:count",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "preflight-restored-empty-missing:no-output:count",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "preflight-restored-empty-missing:uniform-message:count",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "preflight-restored-empty-missing:unevaluated:false-filter",
+      "expected": "00000",
+      "observed": "00000"
+    },
+    {
+      "id": "preflight-restored-empty-missing:unevaluated-no-output:false-filter",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "preflight-restored-empty-missing:unevaluated:zero-limit",
+      "expected": "00000",
+      "observed": "00000"
+    },
+    {
+      "id": "preflight-restored-empty-missing:unevaluated-no-output:zero-limit",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "empty-resources:ambiguous:refused:projection",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "empty-resources:ambiguous:no-output:projection",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "empty-resources:ambiguous:uniform-message:projection",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "empty-resources:ambiguous:refused:count",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "empty-resources:ambiguous:no-output:count",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "empty-resources:ambiguous:uniform-message:count",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "empty-resources:ambiguous:unevaluated:false-filter",
+      "expected": "00000",
+      "observed": "00000"
+    },
+    {
+      "id": "empty-resources:ambiguous:unevaluated-no-output:false-filter",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "empty-resources:ambiguous:unevaluated:zero-limit",
+      "expected": "00000",
+      "observed": "00000"
+    },
+    {
+      "id": "empty-resources:ambiguous:unevaluated-no-output:zero-limit",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "umf_sec_alice:query-success",
+      "expected": "00000",
+      "observed": "00000"
+    },
+    {
+      "id": "valid-binding-empty-collection",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "umf_sec_alice:query-success",
+      "expected": "00000",
+      "observed": "00000"
+    },
+    {
+      "id": "empty-resources:binding-restored:umf_sec_alice",
+      "expected": [
+        [
+          "RA",
+          "A-only"
+        ],
+        [
+          "RAB",
+          "multiple-owners"
+        ]
+      ],
+      "observed": [
+        [
+          "RA",
+          "A-only"
+        ],
+        [
+          "RAB",
+          "multiple-owners"
+        ]
+      ]
+    },
+    {
+      "id": "umf_sec_bob:query-success",
+      "expected": "00000",
+      "observed": "00000"
+    },
+    {
+      "id": "empty-resources:binding-restored:umf_sec_bob",
+      "expected": [
+        [
+          "RAB",
+          "multiple-owners"
+        ],
+        [
+          "RB",
+          "B-only"
+        ]
+      ],
+      "observed": [
+        [
+          "RAB",
+          "multiple-owners"
+        ],
+        [
+          "RB",
+          "B-only"
+        ]
+      ]
+    },
+    {
+      "id": "umf_sec_outsider:query-success",
+      "expected": "00000",
+      "observed": "00000"
+    },
+    {
+      "id": "empty-resources:binding-restored:umf_sec_outsider",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "umf_sec_alice:query-success",
+      "expected": "00000",
+      "observed": "00000"
+    },
+    {
+      "id": "foreign-type-same-login-is-not-staff",
+      "expected": [
+        [
+          "RA",
+          "A-only"
+        ],
+        [
+          "RAB",
+          "multiple-owners"
+        ]
+      ],
+      "observed": [
+        [
+          "RA",
+          "A-only"
+        ],
+        [
+          "RAB",
+          "multiple-owners"
+        ]
+      ]
+    },
+    {
+      "id": "umf_sec_alice:query-success",
+      "expected": "00000",
+      "observed": "00000"
+    },
+    {
+      "id": "unique-binding-erasure-ambiguous-permits",
+      "expected": [
+        [
+          "RA",
+          "A-only"
+        ],
+        [
+          "RAB",
+          "multiple-owners"
+        ]
+      ],
+      "observed": [
+        [
+          "RA",
+          "A-only"
+        ],
+        [
+          "RAB",
+          "multiple-owners"
+        ]
+      ]
+    },
+    {
+      "id": "unique-binding-restored-ambiguous:refused:projection",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "unique-binding-restored-ambiguous:no-output:projection",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "unique-binding-restored-ambiguous:uniform-message:projection",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "unique-binding-restored-ambiguous:refused:count",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "unique-binding-restored-ambiguous:no-output:count",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "unique-binding-restored-ambiguous:uniform-message:count",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "unique-binding-restored-ambiguous:unevaluated:false-filter",
+      "expected": "00000",
+      "observed": "00000"
+    },
+    {
+      "id": "unique-binding-restored-ambiguous:unevaluated-no-output:false-filter",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "unique-binding-restored-ambiguous:unevaluated:zero-limit",
+      "expected": "00000",
+      "observed": "00000"
+    },
+    {
+      "id": "unique-binding-restored-ambiguous:unevaluated-no-output:zero-limit",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "umf_sec_alice:query-success",
+      "expected": "00000",
+      "observed": "00000"
+    },
+    {
+      "id": "final-binding-restored:umf_sec_alice",
+      "expected": [
+        [
+          "RA",
+          "A-only"
+        ],
+        [
+          "RAB",
+          "multiple-owners"
+        ]
+      ],
+      "observed": [
+        [
+          "RA",
+          "A-only"
+        ],
+        [
+          "RAB",
+          "multiple-owners"
+        ]
+      ]
+    },
+    {
+      "id": "umf_sec_bob:query-success",
+      "expected": "00000",
+      "observed": "00000"
+    },
+    {
+      "id": "final-binding-restored:umf_sec_bob",
+      "expected": [
+        [
+          "RAB",
+          "multiple-owners"
+        ],
+        [
+          "RB",
+          "B-only"
+        ]
+      ],
+      "observed": [
+        [
+          "RAB",
+          "multiple-owners"
+        ],
+        [
+          "RB",
+          "B-only"
+        ]
+      ]
+    },
+    {
+      "id": "umf_sec_outsider:query-success",
+      "expected": "00000",
+      "observed": "00000"
+    },
+    {
+      "id": "final-binding-restored:umf_sec_outsider",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "true:query-success",
+      "expected": "00000",
+      "observed": "00000"
+    },
+    {
+      "id": "typed-login-native-ordinary",
+      "expected": {
+        "user": "true",
+        "super": "off",
+        "bypass": false
+      },
+      "observed": {
+        "user": "true",
+        "super": "off",
+        "bypass": false
+      }
+    },
+    {
+      "id": "boolean-login-is-not-string-binding",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "boolean-login-refusal-no-output",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "typed-login-guard-single-occurrence",
+      "expected": 1,
+      "observed": 1
+    },
+    {
+      "id": "true:query-success",
+      "expected": "00000",
+      "observed": "00000"
+    },
+    {
+      "id": "typed-login-erasure-coerces-boolean",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "typed-login-restored-refuses-boolean",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "typed-login-restored-no-output",
+      "expected": [],
+      "observed": []
+    },
+    {
+      "id": "true:query-success",
+      "expected": "00000",
+      "observed": "00000"
+    },
+    {
+      "id": "actual-string-login-is-valid-empty",
+      "expected": [],
+      "observed": []
+    }
+  ],
+  "transcripts": [
+    {
+      "actor": "umf_sec_alice",
+      "sql": "SELECT json_build_object('user',session_user,'super',current_setting('is_superuser'),'bypass',(SELECT rolbypassrls FROM pg_roles WHERE rolname=session_user))",
+      "sqlstate": "00000",
+      "stdout": [
+        "{\"user\" : \"umf_sec_alice\", \"super\" : \"off\", \"bypass\" : false}"
+      ],
+      "stderr": ""
+    },
+    {
+      "actor": "umf_sec_alice",
+      "sql": "SELECT COALESCE(json_agg(json_build_array(resource_id,value) ORDER BY resource_id COLLATE \"C\"),'[]'::json) FROM truss.security_resources()",
+      "sqlstate": "00000",
+      "stdout": [
+        "[[\"RA\", \"A-only\"], [\"RAB\", \"multiple-owners\"]]"
+      ],
+      "stderr": ""
+    },
+    {
+      "actor": "umf_sec_alice",
+      "sql": "SELECT COALESCE(json_agg(id ORDER BY id),'[]'::json) FROM truss.object",
+      "sqlstate": "00000",
+      "stdout": [
+        "[1, 2]"
+      ],
+      "stderr": ""
+    },
+    {
+      "actor": "umf_sec_alice",
+      "sql": "SELECT COALESCE(json_agg(type_id ORDER BY id),'[]'::json) FROM truss.object",
+      "sqlstate": "00000",
+      "stdout": [
+        "[3, 3]"
+      ],
+      "stderr": ""
+    },
+    {
+      "actor": "umf_sec_alice",
+      "sql": "SELECT to_json(count(*)) FROM truss.security_resources()",
+      "sqlstate": "00000",
+      "stdout": [
+        "2"
+      ],
+      "stderr": ""
+    },
+    {
+      "actor": "umf_sec_alice",
+      "sql": "SELECT props FROM truss.object",
+      "sqlstate": "42501",
+      "stdout": [],
+      "stderr": "ERROR:  permission denied for table object\n"
+    },
+    {
+      "actor": "umf_sec_alice",
+      "sql": "SELECT retained FROM truss.object",
+      "sqlstate": "42501",
+      "stdout": [],
+      "stderr": "ERROR:  permission denied for table object\n"
+    },
+    {
+      "actor": "umf_sec_alice",
+      "sql": "SELECT * FROM truss.edge",
+      "sqlstate": "42501",
+      "stdout": [],
+      "stderr": "ERROR:  permission denied for table edge\n"
+    },
+    {
+      "actor": "umf_sec_alice",
+      "sql": "DELETE FROM truss.object",
+      "sqlstate": "42501",
+      "stdout": [],
+      "stderr": "ERROR:  permission denied for table object\n"
+    },
+    {
+      "actor": "umf_sec_alice",
+      "sql": "SET ROLE umf_graph_guardian",
+      "sqlstate": "42501",
+      "stdout": [],
+      "stderr": "ERROR:  permission denied to set role \"umf_graph_guardian\"\n"
+    },
+    {
+      "actor": "umf_sec_alice",
+      "sql": "SELECT truss.security_subject()",
+      "sqlstate": "42501",
+      "stdout": [],
+      "stderr": "ERROR:  permission denied for function security_subject\n"
+    },
+    {
+      "actor": "umf_sec_bob",
+      "sql": "SELECT json_build_object('user',session_user,'super',current_setting('is_superuser'),'bypass',(SELECT rolbypassrls FROM pg_roles WHERE rolname=session_user))",
+      "sqlstate": "00000",
+      "stdout": [
+        "{\"user\" : \"umf_sec_bob\", \"super\" : \"off\", \"bypass\" : false}"
+      ],
+      "stderr": ""
+    },
+    {
+      "actor": "umf_sec_bob",
+      "sql": "SELECT COALESCE(json_agg(json_build_array(resource_id,value) ORDER BY resource_id COLLATE \"C\"),'[]'::json) FROM truss.security_resources()",
+      "sqlstate": "00000",
+      "stdout": [
+        "[[\"RAB\", \"multiple-owners\"], [\"RB\", \"B-only\"]]"
+      ],
+      "stderr": ""
+    },
+    {
+      "actor": "umf_sec_bob",
+      "sql": "SELECT COALESCE(json_agg(id ORDER BY id),'[]'::json) FROM truss.object",
+      "sqlstate": "00000",
+      "stdout": [
+        "[2, 3]"
+      ],
+      "stderr": ""
+    },
+    {
+      "actor": "umf_sec_bob",
+      "sql": "SELECT COALESCE(json_agg(type_id ORDER BY id),'[]'::json) FROM truss.object",
+      "sqlstate": "00000",
+      "stdout": [
+        "[3, 3]"
+      ],
+      "stderr": ""
+    },
+    {
+      "actor": "umf_sec_bob",
+      "sql": "SELECT to_json(count(*)) FROM truss.security_resources()",
+      "sqlstate": "00000",
+      "stdout": [
+        "2"
+      ],
+      "stderr": ""
+    },
+    {
+      "actor": "umf_sec_bob",
+      "sql": "SELECT props FROM truss.object",
+      "sqlstate": "42501",
+      "stdout": [],
+      "stderr": "ERROR:  permission denied for table object\n"
+    },
+    {
+      "actor": "umf_sec_bob",
+      "sql": "SELECT retained FROM truss.object",
+      "sqlstate": "42501",
+      "stdout": [],
+      "stderr": "ERROR:  permission denied for table object\n"
+    },
+    {
+      "actor": "umf_sec_bob",
+      "sql": "SELECT * FROM truss.edge",
+      "sqlstate": "42501",
+      "stdout": [],
+      "stderr": "ERROR:  permission denied for table edge\n"
+    },
+    {
+      "actor": "umf_sec_bob",
+      "sql": "DELETE FROM truss.object",
+      "sqlstate": "42501",
+      "stdout": [],
+      "stderr": "ERROR:  permission denied for table object\n"
+    },
+    {
+      "actor": "umf_sec_bob",
+      "sql": "SET ROLE umf_graph_guardian",
+      "sqlstate": "42501",
+      "stdout": [],
+      "stderr": "ERROR:  permission denied to set role \"umf_graph_guardian\"\n"
+    },
+    {
+      "actor": "umf_sec_bob",
+      "sql": "SELECT truss.security_subject()",
+      "sqlstate": "42501",
+      "stdout": [],
+      "stderr": "ERROR:  permission denied for function security_subject\n"
+    },
+    {
+      "actor": "umf_sec_outsider",
+      "sql": "SELECT json_build_object('user',session_user,'super',current_setting('is_superuser'),'bypass',(SELECT rolbypassrls FROM pg_roles WHERE rolname=session_user))",
+      "sqlstate": "00000",
+      "stdout": [
+        "{\"user\" : \"umf_sec_outsider\", \"super\" : \"off\", \"bypass\" : false}"
+      ],
+      "stderr": ""
+    },
+    {
+      "actor": "umf_sec_outsider",
+      "sql": "SELECT COALESCE(json_agg(json_build_array(resource_id,value) ORDER BY resource_id COLLATE \"C\"),'[]'::json) FROM truss.security_resources()",
+      "sqlstate": "00000",
+      "stdout": [
+        "[]"
+      ],
+      "stderr": ""
+    },
+    {
+      "actor": "umf_sec_outsider",
+      "sql": "SELECT COALESCE(json_agg(id ORDER BY id),'[]'::json) FROM truss.object",
+      "sqlstate": "00000",
+      "stdout": [
+        "[]"
+      ],
+      "stderr": ""
+    },
+    {
+      "actor": "umf_sec_outsider",
+      "sql": "SELECT COALESCE(json_agg(type_id ORDER BY id),'[]'::json) FROM truss.object",
+      "sqlstate": "00000",
+      "stdout": [
+        "[]"
+      ],
+      "stderr": ""
+    },
+    {
+      "actor": "umf_sec_outsider",
+      "sql": "SELECT to_json(count(*)) FROM truss.security_resources()",
+      "sqlstate": "00000",
+      "stdout": [
+        "0"
+      ],
+      "stderr": ""
+    },
+    {
+      "actor": "umf_sec_outsider",
+      "sql": "SELECT props FROM truss.object",
+      "sqlstate": "42501",
+      "stdout": [],
+      "stderr": "ERROR:  permission denied for table object\n"
+    },
+    {
+      "actor": "umf_sec_outsider",
+      "sql": "SELECT retained FROM truss.object",
+      "sqlstate": "42501",
+      "stdout": [],
+      "stderr": "ERROR:  permission denied for table object\n"
+    },
+    {
+      "actor": "umf_sec_outsider",
+      "sql": "SELECT * FROM truss.edge",
+      "sqlstate": "42501",
+      "stdout": [],
+      "stderr": "ERROR:  permission denied for table edge\n"
+    },
+    {
+      "actor": "umf_sec_outsider",
+      "sql": "DELETE FROM truss.object",
+      "sqlstate": "42501",
+      "stdout": [],
+      "stderr": "ERROR:  permission denied for table object\n"
+    },
+    {
+      "actor": "umf_sec_outsider",
+      "sql": "SET ROLE umf_graph_guardian",
+      "sqlstate": "42501",
+      "stdout": [],
+      "stderr": "ERROR:  permission denied to set role \"umf_graph_guardian\"\n"
+    },
+    {
+      "actor": "umf_sec_outsider",
+      "sql": "SELECT truss.security_subject()",
+      "sqlstate": "42501",
+      "stdout": [],
+      "stderr": "ERROR:  permission denied for function security_subject\n"
+    },
+    {
+      "actor": "umf_sec_alice",
+      "sql": "INSERT INTO truss.edge(rel_type_id,source_id,source_type,target_id,target_type,rev) VALUES (11,3,2,2,1,0)",
+      "sqlstate": "42501",
+      "stdout": [],
+      "stderr": "ERROR:  permission denied for table edge\n"
+    },
+    {
+      "actor": "excluded-installer",
+      "sql": "reversed declared endpoint roles",
+      "stdout": "STATE 23503\n",
+      "stderr": "ERROR:  23503: insert or update on table \"edge\" violates foreign key constraint \"edge_endpoint_types_fk\"\nDETAIL:  Key (rel_type_id, source_type, target_type)=(11, 2, 1) is not present in table \"rel_endpoint\".\nSCHEMA NAME:  truss\nTABLE NAME:  edge\nCONSTRAINT NAME:  edge_endpoint_types_fk\nLOCATION:  ri_ReportViolation, ri_triggers.c:2599\n"
+    },
+    {
+      "actor": "umf_sec_alice",
+      "sql": "SELECT COALESCE(json_agg(json_build_array(resource_id,value) ORDER BY resource_id COLLATE \"C\"),'[]'::json) FROM truss.security_resources()",
+      "sqlstate": "00000",
+      "stdout": [
+        "[[\"RA\", \"A-only\"], [\"RAB\", \"multiple-owners\"], [\"RB\", \"B-only\"]]"
+      ],
+      "stderr": ""
+    },
+    {
+      "actor": "umf_sec_alice",
+      "sql": "SELECT COALESCE(json_agg(json_build_array(resource_id,value) ORDER BY resource_id COLLATE \"C\"),'[]'::json) FROM truss.security_resources()",
+      "sqlstate": "00000",
+      "stdout": [
+        "[[\"RA\", \"A-only\"], [\"RAB\", \"multiple-owners\"]]"
+      ],
+      "stderr": ""
+    },
+    {
+      "actor": "umf_sec_bob",
+      "sql": "SELECT COALESCE(json_agg(json_build_array(resource_id,value) ORDER BY resource_id COLLATE \"C\"),'[]'::json) FROM truss.security_resources()",
+      "sqlstate": "00000",
+      "stdout": [
+        "[[\"RAB\", \"multiple-owners\"], [\"RB\", \"B-only\"]]"
+      ],
+      "stderr": ""
+    },
+    {
+      "actor": "umf_sec_outsider",
+      "sql": "SELECT COALESCE(json_agg(json_build_array(resource_id,value) ORDER BY resource_id COLLATE \"C\"),'[]'::json) FROM truss.security_resources()",
+      "sqlstate": "00000",
+      "stdout": [
+        "[]"
+      ],
+      "stderr": ""
+    },
+    {
+      "actor": "umf_sec_alice",
+      "sql": "SELECT COALESCE(json_agg(json_build_array(resource_id,value) ORDER BY resource_id COLLATE \"C\"),'[]'::json) FROM truss.security_resources()",
+      "sqlstate": "00000",
+      "stdout": [
+        "[[\"RA\", \"A-only\"], [\"RAB\", \"multiple-owners\"], [\"RD\", \"unassigned-sibling\"]]"
+      ],
+      "stderr": ""
+    },
+    {
+      "actor": "umf_sec_alice",
+      "sql": "SELECT COALESCE(json_agg(json_build_array(resource_id,value) ORDER BY resource_id COLLATE \"C\"),'[]'::json) FROM truss.security_resources()",
+      "sqlstate": "00000",
+      "stdout": [
+        "[[\"RA\", \"A-only\"], [\"RAB\", \"multiple-owners\"]]"
+      ],
+      "stderr": ""
+    },
+    {
+      "actor": "umf_sec_bob",
+      "sql": "SELECT COALESCE(json_agg(json_build_array(resource_id,value) ORDER BY resource_id COLLATE \"C\"),'[]'::json) FROM truss.security_resources()",
+      "sqlstate": "00000",
+      "stdout": [
+        "[[\"RAB\", \"multiple-owners\"], [\"RB\", \"B-only\"]]"
+      ],
+      "stderr": ""
+    },
+    {
+      "actor": "umf_sec_outsider",
+      "sql": "SELECT COALESCE(json_agg(json_build_array(resource_id,value) ORDER BY resource_id COLLATE \"C\"),'[]'::json) FROM truss.security_resources()",
+      "sqlstate": "00000",
+      "stdout": [
+        "[]"
+      ],
+      "stderr": ""
+    },
+    {
+      "actor": "umf_sec_alice",
+      "sql": "SELECT COALESCE(json_agg(json_build_array(resource_id,value) ORDER BY resource_id COLLATE \"C\"),'[]'::json) FROM truss.security_resources()",
+      "sqlstate": "00000",
+      "stdout": [
+        "[[\"RA\", \"A-only\"], [\"RAB\", \"multiple-owners\"], [\"RD\", \"unassigned-sibling\"]]"
+      ],
+      "stderr": ""
+    },
+    {
+      "actor": "umf_sec_alice",
+      "sql": "SELECT COALESCE(json_agg(json_build_array(resource_id,value) ORDER BY resource_id COLLATE \"C\"),'[]'::json) FROM truss.security_resources()",
+      "sqlstate": "00000",
+      "stdout": [
+        "[[\"RA\", \"A-only\"], [\"RAB\", \"multiple-owners\"]]"
+      ],
+      "stderr": ""
+    },
+    {
+      "actor": "umf_sec_bob",
+      "sql": "SELECT COALESCE(json_agg(json_build_array(resource_id,value) ORDER BY resource_id COLLATE \"C\"),'[]'::json) FROM truss.security_resources()",
+      "sqlstate": "00000",
+      "stdout": [
+        "[[\"RAB\", \"multiple-owners\"], [\"RB\", \"B-only\"]]"
+      ],
+      "stderr": ""
+    },
+    {
+      "actor": "umf_sec_outsider",
+      "sql": "SELECT COALESCE(json_agg(json_build_array(resource_id,value) ORDER BY resource_id COLLATE \"C\"),'[]'::json) FROM truss.security_resources()",
+      "sqlstate": "00000",
+      "stdout": [
+        "[]"
+      ],
+      "stderr": ""
+    },
+    {
+      "actor": "umf_sec_alice",
+      "sql": "SELECT COALESCE(json_agg(json_build_array(id,type_id) ORDER BY type_id,id),'[]'::json) FROM truss.object",
+      "sqlstate": "00000",
+      "stdout": [
+        "[[1, 1], [2, 1], [1, 2], [2, 2], [1, 3], [2, 3], [1, 4]]"
+      ],
+      "stderr": ""
+    },
+    {
+      "actor": "umf_sec_alice",
+      "sql": "SELECT COALESCE(json_agg(json_build_array(resource_id,value) ORDER BY resource_id COLLATE \"C\"),'[]'::json) FROM truss.security_resources()",
+      "sqlstate": "00000",
+      "stdout": [
+        "[[\"RA\", \"A-only\"], [\"RAB\", \"multiple-owners\"]]"
+      ],
+      "stderr": ""
+    },
+    {
+      "actor": "umf_sec_alice",
+      "sql": "SELECT COALESCE(json_agg(type_id ORDER BY id),'[]'::json) FROM truss.object",
+      "sqlstate": "00000",
+      "stdout": [
+        "[3, 3]"
+      ],
+      "stderr": ""
+    },
+    {
+      "actor": "umf_sec_bob",
+      "sql": "SELECT COALESCE(json_agg(json_build_array(resource_id,value) ORDER BY resource_id COLLATE \"C\"),'[]'::json) FROM truss.security_resources()",
+      "sqlstate": "00000",
+      "stdout": [
+        "[[\"RAB\", \"multiple-owners\"], [\"RB\", \"B-only\"]]"
+      ],
+      "stderr": ""
+    },
+    {
+      "actor": "umf_sec_bob",
+      "sql": "SELECT COALESCE(json_agg(type_id ORDER BY id),'[]'::json) FROM truss.object",
+      "sqlstate": "00000",
+      "stdout": [
+        "[3, 3]"
+      ],
+      "stderr": ""
+    },
+    {
+      "actor": "umf_sec_outsider",
+      "sql": "SELECT COALESCE(json_agg(json_build_array(resource_id,value) ORDER BY resource_id COLLATE \"C\"),'[]'::json) FROM truss.security_resources()",
+      "sqlstate": "00000",
+      "stdout": [
+        "[]"
+      ],
+      "stderr": ""
+    },
+    {
+      "actor": "umf_sec_outsider",
+      "sql": "SELECT COALESCE(json_agg(type_id ORDER BY id),'[]'::json) FROM truss.object",
+      "sqlstate": "00000",
+      "stdout": [
+        "[]"
+      ],
+      "stderr": ""
+    },
+    {
+      "actor": "umf_sec_alice",
+      "sql": "SELECT * FROM truss.security_resources()",
+      "sqlstate": "42501",
+      "stdout": [],
+      "stderr": "ERROR:  Security principal binding refused\nCONTEXT:  PL/pgSQL function truss.security_subject() line 8 at RAISE\nSQL statement \"SELECT truss.security_subject()\"\nPL/pgSQL function truss.security_resources() line 4 at PERFORM\n"
+    },
+    {
+      "actor": "umf_sec_alice",
+      "sql": "SELECT count(*) FROM truss.security_resources()",
+      "sqlstate": "42501",
+      "stdout": [],
+      "stderr": "ERROR:  Security principal binding refused\nCONTEXT:  PL/pgSQL function truss.security_subject() line 8 at RAISE\nSQL statement \"SELECT truss.security_subject()\"\nPL/pgSQL function truss.security_resources() line 4 at PERFORM\n"
+    },
+    {
+      "actor": "umf_sec_alice",
+      "sql": "SELECT * FROM truss.security_resources() WHERE false",
+      "sqlstate": "00000",
+      "stdout": [],
+      "stderr": ""
+    },
+    {
+      "actor": "umf_sec_alice",
+      "sql": "SELECT * FROM truss.security_resources() LIMIT 0",
+      "sqlstate": "00000",
+      "stdout": [],
+      "stderr": ""
+    },
+    {
+      "actor": "umf_sec_alice",
+      "sql": "SELECT * FROM truss.security_resources()",
+      "sqlstate": "42501",
+      "stdout": [],
+      "stderr": "ERROR:  Security principal binding refused\nCONTEXT:  PL/pgSQL function truss.security_subject() line 8 at RAISE\nSQL statement \"SELECT truss.security_subject()\"\nPL/pgSQL function truss.security_resources() line 4 at PERFORM\n"
+    },
+    {
+      "actor": "umf_sec_alice",
+      "sql": "SELECT count(*) FROM truss.security_resources()",
+      "sqlstate": "42501",
+      "stdout": [],
+      "stderr": "ERROR:  Security principal binding refused\nCONTEXT:  PL/pgSQL function truss.security_subject() line 8 at RAISE\nSQL statement \"SELECT truss.security_subject()\"\nPL/pgSQL function truss.security_resources() line 4 at PERFORM\n"
+    },
+    {
+      "actor": "umf_sec_alice",
+      "sql": "SELECT * FROM truss.security_resources() WHERE false",
+      "sqlstate": "00000",
+      "stdout": [],
+      "stderr": ""
+    },
+    {
+      "actor": "umf_sec_alice",
+      "sql": "SELECT * FROM truss.security_resources() LIMIT 0",
+      "sqlstate": "00000",
+      "stdout": [],
+      "stderr": ""
+    },
+    {
+      "actor": "umf_sec_alice",
+      "sql": "SELECT COALESCE(json_agg(json_build_array(resource_id,value) ORDER BY resource_id COLLATE \"C\"),'[]'::json) FROM truss.security_resources()",
+      "sqlstate": "00000",
+      "stdout": [
+        "[[\"RA\", \"A-only\"], [\"RAB\", \"multiple-owners\"]]"
+      ],
+      "stderr": ""
+    },
+    {
+      "actor": "umf_sec_bob",
+      "sql": "SELECT COALESCE(json_agg(json_build_array(resource_id,value) ORDER BY resource_id COLLATE \"C\"),'[]'::json) FROM truss.security_resources()",
+      "sqlstate": "00000",
+      "stdout": [
+        "[[\"RAB\", \"multiple-owners\"], [\"RB\", \"B-only\"]]"
+      ],
+      "stderr": ""
+    },
+    {
+      "actor": "umf_sec_outsider",
+      "sql": "SELECT COALESCE(json_agg(json_build_array(resource_id,value) ORDER BY resource_id COLLATE \"C\"),'[]'::json) FROM truss.security_resources()",
+      "sqlstate": "00000",
+      "stdout": [
+        "[]"
+      ],
+      "stderr": ""
+    },
+    {
+      "actor": "umf_sec_alice",
+      "sql": "SELECT * FROM truss.security_resources()",
+      "sqlstate": "42501",
+      "stdout": [],
+      "stderr": "ERROR:  Security principal binding refused\nCONTEXT:  PL/pgSQL function truss.security_subject() line 8 at RAISE\nSQL statement \"SELECT truss.security_subject()\"\nPL/pgSQL function truss.security_resources() line 4 at PERFORM\n"
+    },
+    {
+      "actor": "umf_sec_alice",
+      "sql": "SELECT count(*) FROM truss.security_resources()",
+      "sqlstate": "42501",
+      "stdout": [],
+      "stderr": "ERROR:  Security principal binding refused\nCONTEXT:  PL/pgSQL function truss.security_subject() line 8 at RAISE\nSQL statement \"SELECT truss.security_subject()\"\nPL/pgSQL function truss.security_resources() line 4 at PERFORM\n"
+    },
+    {
+      "actor": "umf_sec_alice",
+      "sql": "SELECT * FROM truss.security_resources() WHERE false",
+      "sqlstate": "00000",
+      "stdout": [],
+      "stderr": ""
+    },
+    {
+      "actor": "umf_sec_alice",
+      "sql": "SELECT * FROM truss.security_resources() LIMIT 0",
+      "sqlstate": "00000",
+      "stdout": [],
+      "stderr": ""
+    },
+    {
+      "actor": "umf_sec_alice",
+      "sql": "SELECT COALESCE(json_agg(json_build_array(resource_id,value) ORDER BY resource_id COLLATE \"C\"),'[]'::json) FROM truss.security_resources()",
+      "sqlstate": "00000",
+      "stdout": [
+        "[]"
+      ],
+      "stderr": ""
+    },
+    {
+      "actor": "umf_sec_alice",
+      "sql": "SELECT to_json(count(*)) FROM truss.security_resources()",
+      "sqlstate": "00000",
+      "stdout": [
+        "0"
+      ],
+      "stderr": ""
+    },
+    {
+      "actor": "umf_sec_alice",
+      "sql": "SELECT * FROM truss.security_resources()",
+      "sqlstate": "42501",
+      "stdout": [],
+      "stderr": "ERROR:  Security principal binding refused\nCONTEXT:  PL/pgSQL function truss.security_subject() line 8 at RAISE\nSQL statement \"SELECT truss.security_subject()\"\nPL/pgSQL function truss.security_resources() line 4 at PERFORM\n"
+    },
+    {
+      "actor": "umf_sec_alice",
+      "sql": "SELECT count(*) FROM truss.security_resources()",
+      "sqlstate": "42501",
+      "stdout": [],
+      "stderr": "ERROR:  Security principal binding refused\nCONTEXT:  PL/pgSQL function truss.security_subject() line 8 at RAISE\nSQL statement \"SELECT truss.security_subject()\"\nPL/pgSQL function truss.security_resources() line 4 at PERFORM\n"
+    },
+    {
+      "actor": "umf_sec_alice",
+      "sql": "SELECT * FROM truss.security_resources() WHERE false",
+      "sqlstate": "00000",
+      "stdout": [],
+      "stderr": ""
+    },
+    {
+      "actor": "umf_sec_alice",
+      "sql": "SELECT * FROM truss.security_resources() LIMIT 0",
+      "sqlstate": "00000",
+      "stdout": [],
+      "stderr": ""
+    },
+    {
+      "actor": "umf_sec_alice",
+      "sql": "SELECT * FROM truss.security_resources()",
+      "sqlstate": "42501",
+      "stdout": [],
+      "stderr": "ERROR:  Security principal binding refused\nCONTEXT:  PL/pgSQL function truss.security_subject() line 8 at RAISE\nSQL statement \"SELECT truss.security_subject()\"\nPL/pgSQL function truss.security_resources() line 4 at PERFORM\n"
+    },
+    {
+      "actor": "umf_sec_alice",
+      "sql": "SELECT count(*) FROM truss.security_resources()",
+      "sqlstate": "42501",
+      "stdout": [],
+      "stderr": "ERROR:  Security principal binding refused\nCONTEXT:  PL/pgSQL function truss.security_subject() line 8 at RAISE\nSQL statement \"SELECT truss.security_subject()\"\nPL/pgSQL function truss.security_resources() line 4 at PERFORM\n"
+    },
+    {
+      "actor": "umf_sec_alice",
+      "sql": "SELECT * FROM truss.security_resources() WHERE false",
+      "sqlstate": "00000",
+      "stdout": [],
+      "stderr": ""
+    },
+    {
+      "actor": "umf_sec_alice",
+      "sql": "SELECT * FROM truss.security_resources() LIMIT 0",
+      "sqlstate": "00000",
+      "stdout": [],
+      "stderr": ""
+    },
+    {
+      "actor": "umf_sec_alice",
+      "sql": "SELECT COALESCE(json_agg(json_build_array(resource_id,value) ORDER BY resource_id COLLATE \"C\"),'[]'::json) FROM truss.security_resources()",
+      "sqlstate": "00000",
+      "stdout": [
+        "[]"
+      ],
+      "stderr": ""
+    },
+    {
+      "actor": "umf_sec_alice",
+      "sql": "SELECT COALESCE(json_agg(json_build_array(resource_id,value) ORDER BY resource_id COLLATE \"C\"),'[]'::json) FROM truss.security_resources()",
+      "sqlstate": "00000",
+      "stdout": [
+        "[[\"RA\", \"A-only\"], [\"RAB\", \"multiple-owners\"]]"
+      ],
+      "stderr": ""
+    },
+    {
+      "actor": "umf_sec_bob",
+      "sql": "SELECT COALESCE(json_agg(json_build_array(resource_id,value) ORDER BY resource_id COLLATE \"C\"),'[]'::json) FROM truss.security_resources()",
+      "sqlstate": "00000",
+      "stdout": [
+        "[[\"RAB\", \"multiple-owners\"], [\"RB\", \"B-only\"]]"
+      ],
+      "stderr": ""
+    },
+    {
+      "actor": "umf_sec_outsider",
+      "sql": "SELECT COALESCE(json_agg(json_build_array(resource_id,value) ORDER BY resource_id COLLATE \"C\"),'[]'::json) FROM truss.security_resources()",
+      "sqlstate": "00000",
+      "stdout": [
+        "[]"
+      ],
+      "stderr": ""
+    },
+    {
+      "actor": "umf_sec_alice",
+      "sql": "SELECT COALESCE(json_agg(json_build_array(resource_id,value) ORDER BY resource_id COLLATE \"C\"),'[]'::json) FROM truss.security_resources()",
+      "sqlstate": "00000",
+      "stdout": [
+        "[[\"RA\", \"A-only\"], [\"RAB\", \"multiple-owners\"]]"
+      ],
+      "stderr": ""
+    },
+    {
+      "actor": "umf_sec_alice",
+      "sql": "SELECT COALESCE(json_agg(json_build_array(resource_id,value) ORDER BY resource_id COLLATE \"C\"),'[]'::json) FROM truss.security_resources()",
+      "sqlstate": "00000",
+      "stdout": [
+        "[[\"RA\", \"A-only\"], [\"RAB\", \"multiple-owners\"]]"
+      ],
+      "stderr": ""
+    },
+    {
+      "actor": "umf_sec_alice",
+      "sql": "SELECT * FROM truss.security_resources()",
+      "sqlstate": "42501",
+      "stdout": [],
+      "stderr": "ERROR:  Security principal binding refused\nCONTEXT:  PL/pgSQL function truss.security_subject() line 8 at RAISE\nSQL statement \"SELECT truss.security_subject()\"\nPL/pgSQL function truss.security_resources() line 4 at PERFORM\n"
+    },
+    {
+      "actor": "umf_sec_alice",
+      "sql": "SELECT count(*) FROM truss.security_resources()",
+      "sqlstate": "42501",
+      "stdout": [],
+      "stderr": "ERROR:  Security principal binding refused\nCONTEXT:  PL/pgSQL function truss.security_subject() line 8 at RAISE\nSQL statement \"SELECT truss.security_subject()\"\nPL/pgSQL function truss.security_resources() line 4 at PERFORM\n"
+    },
+    {
+      "actor": "umf_sec_alice",
+      "sql": "SELECT * FROM truss.security_resources() WHERE false",
+      "sqlstate": "00000",
+      "stdout": [],
+      "stderr": ""
+    },
+    {
+      "actor": "umf_sec_alice",
+      "sql": "SELECT * FROM truss.security_resources() LIMIT 0",
+      "sqlstate": "00000",
+      "stdout": [],
+      "stderr": ""
+    },
+    {
+      "actor": "umf_sec_alice",
+      "sql": "SELECT COALESCE(json_agg(json_build_array(resource_id,value) ORDER BY resource_id COLLATE \"C\"),'[]'::json) FROM truss.security_resources()",
+      "sqlstate": "00000",
+      "stdout": [
+        "[[\"RA\", \"A-only\"], [\"RAB\", \"multiple-owners\"]]"
+      ],
+      "stderr": ""
+    },
+    {
+      "actor": "umf_sec_bob",
+      "sql": "SELECT COALESCE(json_agg(json_build_array(resource_id,value) ORDER BY resource_id COLLATE \"C\"),'[]'::json) FROM truss.security_resources()",
+      "sqlstate": "00000",
+      "stdout": [
+        "[[\"RAB\", \"multiple-owners\"], [\"RB\", \"B-only\"]]"
+      ],
+      "stderr": ""
+    },
+    {
+      "actor": "umf_sec_outsider",
+      "sql": "SELECT COALESCE(json_agg(json_build_array(resource_id,value) ORDER BY resource_id COLLATE \"C\"),'[]'::json) FROM truss.security_resources()",
+      "sqlstate": "00000",
+      "stdout": [
+        "[]"
+      ],
+      "stderr": ""
+    },
+    {
+      "actor": "true",
+      "sql": "SELECT json_build_object('user',session_user,'super',current_setting('is_superuser'),'bypass',(SELECT rolbypassrls FROM pg_roles WHERE rolname=session_user))",
+      "sqlstate": "00000",
+      "stdout": [
+        "{\"user\" : \"true\", \"super\" : \"off\", \"bypass\" : false}"
+      ],
+      "stderr": ""
+    },
+    {
+      "actor": "true",
+      "sql": "SELECT * FROM truss.security_resources()",
+      "sqlstate": "42501",
+      "stdout": [],
+      "stderr": "ERROR:  Security principal binding refused\nCONTEXT:  PL/pgSQL function truss.security_subject() line 8 at RAISE\nSQL statement \"SELECT truss.security_subject()\"\nPL/pgSQL function truss.security_resources() line 4 at PERFORM\n"
+    },
+    {
+      "actor": "true",
+      "sql": "SELECT COALESCE(json_agg(json_build_array(resource_id,value) ORDER BY resource_id COLLATE \"C\"),'[]'::json) FROM truss.security_resources()",
+      "sqlstate": "00000",
+      "stdout": [
+        "[]"
+      ],
+      "stderr": ""
+    },
+    {
+      "actor": "true",
+      "sql": "SELECT * FROM truss.security_resources()",
+      "sqlstate": "42501",
+      "stdout": [],
+      "stderr": "ERROR:  Security principal binding refused\nCONTEXT:  PL/pgSQL function truss.security_subject() line 8 at RAISE\nSQL statement \"SELECT truss.security_subject()\"\nPL/pgSQL function truss.security_resources() line 4 at PERFORM\n"
+    },
+    {
+      "actor": "true",
+      "sql": "SELECT COALESCE(json_agg(json_build_array(resource_id,value) ORDER BY resource_id COLLATE \"C\"),'[]'::json) FROM truss.security_resources()",
+      "sqlstate": "00000",
+      "stdout": [
+        "[]"
+      ],
+      "stderr": ""
+    }
+  ],
+  "scope": "Exact review-only Truss source-epoch0.16 DDL; synthetic fixed numeric field/type/relationship mapping; independent raw oracle actor rows. Ordinary SCRAM actors, overlapping typed storage IDs inserted by excluded installer (not admitted Truss allocation), hidden bag/retained/edges denied, typed endpoint FK and individually erased active/ownership-relationship/assignment-relationship/root-type controls. Excluded NOLOGIN table owner bypasses RLS for fixed definer projections. Explicit synthetic outsider Staff is authentication-only with no assignments. Mandatory unique Staff preflight refuses missing/ambiguous bindings on evaluated projection/count even with zero Resources; unevaluated false-filter/LIMIT0 yields no output and is not an admitted operation. Native login true refuses Boolean true and accepts string true; erasing JSON string guard admits the Boolean. Unique-binding erasure permits ambiguous Alice; erasing only projection preflight turns missing binding with zero Resources into successful empty/count-zero instead of refusal. No Weft lowering, accepted catalog, canonical business-key binding, general authenticated Staff binding/source freshness, force-RLS owner protection, general query/disclosure, authenticated installation/source-cut, current-authority drain or complete native diagnostics closure. No original acceptance case promotion."
+}

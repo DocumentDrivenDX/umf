@@ -1,0 +1,825 @@
+{
+  "checks": [
+    {
+      "id": "intrinsic-entity-term-browser-controls",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-pg-raw-persistent-drain-component.json",
+      "status": "passed"
+    },
+    {
+      "id": "persistent-native-consumer-failure-coverage",
+      "status": "passed"
+    },
+    {
+      "id": "persistent-installed-routine-source-coverage",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-owner-semantic-allocation-astra-review.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-owner-semantic-allocation-formal.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-weft-semantic-allocation.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-owner-obligation-source-correspondence-astra-review.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-obligation-source-correspondence-formal.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-owner-obligation-projection-astra-review.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-weft-obligation-projection.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-obligation-projection-formal.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-owner-obligation-custody-astra-review.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-obligation-custody-formal.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-owner-record-homes-astra-review.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-record-home-shape-astra-review.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-record-home-correspondence-astra-review.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-record-home-shape-execution.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-record-home-correspondence-formal.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-owner-semantic-coverage-astra-review.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-capability-bundle-coverage-formal.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-capability-bundle-coverage-astra-review.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-security-manifest-carrier-astra-review.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-pg-owner-fact-selection.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-owner-fact-bridge-astra-review.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-truss-graph-condition-input.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-candidate-rule-decision-proof-input.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-candidate-rule-decision-sql-formal.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-candidate-disclosure-fold-formal.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-candidate-scalar-guard-formal.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-candidate-numeric-rational-oracle.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-candidate-typed-fold-formal.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-truss-candidate-condition-native.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-truss-candidate-condition-browser.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-truss-candidate-condition.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-truss-candidate-endpoint-browser.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-original-graph-ir-formal.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-association-transport-formal.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-formal.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-semantic.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-browser.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-native.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-lifecycle.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-epoch.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-databricks-actors.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-pg-driver.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-weft-version.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-weft-admission.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-weft-handoff.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-logic-browser.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-components.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-pg-private-diagnostics.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-pg-raw-scale.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-pg-mask-query.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-pg-compiler-keys.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-mask-query-formal.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-hash-key-formal.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-write-fold-formal.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-field-write-fold-formal.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-pg-raw-field-write-component.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-pg-raw-drain-component.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-persistent-publication-formal.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-publication-custody-browser.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-multipublisher-custody-formal.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-publisher-state-formal.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-formal-replay-audit.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-pg-raw-write-component.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-truss-principal.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-truss-private-principal.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-truss-subject.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-truss-policy-lowering.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-truss-predicate-browser.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-truss-existence-truth.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-existence-truth-formal.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-truss-type-selection.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-type-selection-formal.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-truss-native-key.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-truss-native-key-browser.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-type-key-formal.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-truss-key-transport.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-truss-key-transport-browser.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-namespace-canonical-oracle.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-truss-key-namespace-replay.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-truss-key-namespace-browser.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-namespace-native-domain-formal.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-gate-receipt-regression.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-scoped-composition-formal.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-existence-unbounded-formal.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-original-source-completeness-formal.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-typed-source-completeness-formal.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-graph-key-correspondence-formal.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-carrier-error-isolation-formal.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-publication-drain-formal.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-publication-retirement-formal.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-weft-original-use.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-truss-original-use.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-truss-original-use-browser.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-truss-query-typed-readiness.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-truss-graph-correspondence-readiness.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-truss-source-completeness-browser.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-truss-key-namespace.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-pg-raw-identity-component.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-truss-stored-key-replay.json",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-truss-stored-key-browser.json",
+      "status": "passed"
+    },
+    {
+      "id": "conditional-obligation-custody-laws",
+      "status": "passed"
+    },
+    {
+      "id": "conditional-owner-semantic-allocation-laws",
+      "status": "passed"
+    },
+    {
+      "id": "private-owner-semantic-allocation-regressions",
+      "status": "passed"
+    },
+    {
+      "id": "independent-owner-semantic-allocation-review",
+      "status": "passed"
+    },
+    {
+      "id": "conditional-obligation-source-correspondence-laws",
+      "status": "passed"
+    },
+    {
+      "id": "independent-obligation-source-correspondence-review",
+      "status": "passed"
+    },
+    {
+      "id": "conditional-obligation-projection-laws",
+      "status": "passed"
+    },
+    {
+      "id": "private-obligation-projection-regressions",
+      "status": "passed"
+    },
+    {
+      "id": "independent-obligation-projection-review",
+      "status": "passed"
+    },
+    {
+      "id": "independent-obligation-custody-review",
+      "status": "passed"
+    },
+    {
+      "id": "independent-owner-record-home-correspondence",
+      "status": "passed"
+    },
+    {
+      "id": "record-home-shape-only-controls",
+      "status": "passed"
+    },
+    {
+      "id": "independent-record-home-shape-review",
+      "status": "passed"
+    },
+    {
+      "id": "conditional-record-home-correspondence-laws",
+      "status": "passed"
+    },
+    {
+      "id": "independent-record-home-correspondence-review",
+      "status": "passed"
+    },
+    {
+      "id": "conditional-capability-bundle-laws",
+      "status": "passed"
+    },
+    {
+      "id": "owner-private-semantic-coverage-review",
+      "status": "passed"
+    },
+    {
+      "id": "component-command-results",
+      "status": "passed"
+    },
+    {
+      "id": "actual-association-transport-proof",
+      "status": "passed"
+    },
+    {
+      "id": "draft-association-browser-results",
+      "status": "passed"
+    },
+    {
+      "id": "draft-relationship-browser-results",
+      "status": "passed"
+    },
+    {
+      "id": "draft-relationship-selector-analysis",
+      "status": "passed"
+    },
+    {
+      "id": "original-graph-compiler-source-refusal",
+      "status": "passed"
+    },
+    {
+      "id": "actual-rule-decision-parser-bridge",
+      "status": "passed"
+    },
+    {
+      "id": "actual-rule-decision-sql-refinement",
+      "status": "passed"
+    },
+    {
+      "id": "candidate-unbounded-disclosure-algebra-proof",
+      "status": "passed"
+    },
+    {
+      "id": "candidate-unbounded-scalar-preflight-proof",
+      "status": "passed"
+    },
+    {
+      "id": "independent-finite-numeric-rational-oracle",
+      "status": "passed"
+    },
+    {
+      "id": "candidate-unbounded-typed-fold-proof-results",
+      "status": "passed"
+    },
+    {
+      "id": "policy-activation-conditional-proof-results",
+      "status": "passed"
+    },
+    {
+      "id": "native-activation-rollback-component",
+      "status": "passed"
+    },
+    {
+      "id": "native-activation-serialized-predecessor",
+      "status": "passed"
+    },
+    {
+      "id": "native-activation-profile-drift-boundary",
+      "status": "passed"
+    },
+    {
+      "id": "native-activation-current-cut-isolation",
+      "status": "passed"
+    },
+    {
+      "id": "native-activation-catalog-writer-counterexample",
+      "status": "passed"
+    },
+    {
+      "id": "native-activation-enforced-routine-writer-guard",
+      "status": "passed"
+    },
+    {
+      "id": "native-compiler-refusal-preserves-protection",
+      "status": "passed"
+    },
+    {
+      "id": "owner-backed-native-graph-candidate-stage",
+      "status": "passed"
+    },
+    {
+      "id": "original-compiler-native-graph-condition-binding",
+      "status": "passed"
+    },
+    {
+      "id": "candidate-graph-source-browser-correspondence",
+      "status": "passed"
+    },
+    {
+      "id": "stored-key-graph-candidate-composition",
+      "status": "passed"
+    },
+    {
+      "id": "graph-locator-browser-candidate-results",
+      "status": "passed"
+    },
+    {
+      "id": "graph-endpoint-qualified-proof-results",
+      "status": "passed"
+    },
+    {
+      "id": "draft-original-field-disclosure-results",
+      "status": "passed"
+    },
+    {
+      "id": "draft-truss-condition-native-results",
+      "status": "passed"
+    },
+    {
+      "id": "draft-truss-condition-browser-results",
+      "status": "passed"
+    },
+    {
+      "id": "draft-truss-condition-lowering-results",
+      "status": "passed"
+    },
+    {
+      "id": "draft-original-scalar-condition-lowering",
+      "status": "passed"
+    },
+    {
+      "id": "draft-original-exact-integer-condition-lowering",
+      "status": "passed"
+    },
+    {
+      "id": "draft-original-decimal-binary-boolean-lowering",
+      "status": "passed"
+    },
+    {
+      "id": "draft-original-whole-condition-domain-guards",
+      "status": "passed"
+    },
+    {
+      "id": "draft-original-rule-truth-fold",
+      "status": "passed"
+    },
+    {
+      "id": "draft-truss-endpoint-mapping-results",
+      "status": "passed"
+    },
+    {
+      "id": "original-graph-ir-qualified-proof-results",
+      "status": "passed"
+    },
+    {
+      "id": "formal-replay-audit-coverage-results",
+      "status": "passed"
+    },
+    {
+      "id": "multipublisher-custody-qualified-proof-results",
+      "status": "passed"
+    },
+    {
+      "id": "publication-custody-browser-results",
+      "status": "passed"
+    },
+    {
+      "id": "publisher-state-qualified-proof-results",
+      "status": "passed"
+    },
+    {
+      "id": "current-executed-managed-source-bindings-B02",
+      "status": "passed"
+    },
+    {
+      "id": "current-executed-managed-source-bindings-B11",
+      "status": "passed"
+    },
+    {
+      "id": "current-executed-managed-source-bindings-B15",
+      "status": "passed"
+    },
+    {
+      "id": "current-executed-managed-source-bindings-truss-native-key",
+      "status": "passed"
+    },
+    {
+      "id": "current-B16-executed-adapter-dependency-binding",
+      "status": "passed"
+    },
+    {
+      "id": "current-B13-executed-adapter-dependency-binding",
+      "status": "passed"
+    },
+    {
+      "id": "all-28-criteria-allocated-to-132-required-cases",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-gate-plan-and-tooling",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-case-S01",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-case-S02",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-case-S03",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-case-S04",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-case-S05",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-case-S06",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-case-S07",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-case-S08",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-case-S09",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-case-S10",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-case-S11",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-case-S12",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-case-pg-raw.B01",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-case-pg-raw.B02",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-case-pg-raw.B03",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-case-pg-raw.B04",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-case-pg-raw.B05",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-case-pg-raw.B06",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-case-pg-raw.B07",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-case-pg-raw.B11",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-case-pg-raw.B13",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-case-pg-raw.B14",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-case-pg-raw.B15",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-case-pg-raw.B16",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-case-pg-raw.L01",
+      "status": "passed"
+    },
+    {
+      "id": "fresh-case-pg-raw.L02",
+      "status": "passed"
+    },
+    {
+      "id": "owner-security-protocol-transport-only",
+      "status": "passed"
+    }
+  ],
+  "scope": "Current retained source freshness, allocation and managed-source execution metadata correspondence within trusted reviewed runners; no source authentication, semantic completeness or native deployment acceptance",
+  "productionAcceptance": "open",
+  "requiredCases": 132,
+  "allocatedCriteria": 28,
+  "passingFreshCases": [
+    "S01",
+    "S02",
+    "S03",
+    "S04",
+    "S05",
+    "S06",
+    "S07",
+    "S08",
+    "S09",
+    "S10",
+    "S11",
+    "S12",
+    "pg-raw.B01",
+    "pg-raw.B02",
+    "pg-raw.B03",
+    "pg-raw.B04",
+    "pg-raw.B05",
+    "pg-raw.B06",
+    "pg-raw.B07",
+    "pg-raw.B11",
+    "pg-raw.B13",
+    "pg-raw.B14",
+    "pg-raw.B15",
+    "pg-raw.B16",
+    "pg-raw.L01",
+    "pg-raw.L02"
+  ],
+  "sourceDigest": "c08cb3f19988a86ef423adb8c265355409fe0167876b95d702df7d6759e7c824"
+}

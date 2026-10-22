@@ -1,0 +1,82 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"ParquetSchemaInspection\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "status",
+      "optional": false,
+      "type": "\"blocked\" | \"checked\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ParquetSchemaNode\"]"
+      ],
+      "name": "tree",
+      "optional": true,
+      "type": "ParquetSchemaNode"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ParquetSchemaLeaf\"]"
+      ],
+      "name": "leaves",
+      "optional": true,
+      "type": "ParquetSchemaLeaf[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "source",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Diagnostic\"]"
+      ],
+      "name": "diagnostics",
+      "optional": false,
+      "type": "Diagnostic[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "complete",
+      "optional": false,
+      "type": "false"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Json\"]"
+      ],
+      "name": "metadata",
+      "optional": true,
+      "type": "Json"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ParquetWireValue\"]"
+      ],
+      "name": "wire",
+      "optional": true,
+      "type": "ParquetWireValue"
+    }
+  ],
+  "parameters": [],
+  "purpose": "ParquetSchemaInspection is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "ParquetSchemaInspection"
+}

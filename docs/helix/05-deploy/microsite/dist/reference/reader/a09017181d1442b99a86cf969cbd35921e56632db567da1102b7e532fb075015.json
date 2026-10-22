@@ -1,0 +1,58 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"CoreReferenceLink\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "index",
+      "optional": false,
+      "type": "number"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "path",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "reference",
+      "optional": false,
+      "type": "Reference"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreReferenceLinkIdentity\"]"
+      ],
+      "name": "target",
+      "optional": false,
+      "type": "{ identity: CoreReferenceLinkIdentity; path: string; kind?: string; }"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "uninterpretedPaths",
+      "optional": false,
+      "type": "string[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "typeAssertion",
+      "optional": false,
+      "type": "\"unverified\""
+    }
+  ],
+  "parameters": [],
+  "purpose": "CoreReferenceLink is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "CoreReferenceLink"
+}

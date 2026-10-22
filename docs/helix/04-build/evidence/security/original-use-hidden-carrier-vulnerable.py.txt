@@ -1,0 +1,168 @@
+"""Original compiler key/native layout witness; no full backend qualification."""
+import hashlib,json,os,uuid
+from pathlib import Path
+runner=Path('tests/security/native/pg-raw-membership.py')
+os.environ['UMF_SECURITY_CASE_ID']='pg-raw.B01'
+os.environ['UMF_SECURITY_RUN_ID']=str(uuid.uuid4())
+# Reuse only reviewed fixture setup/connection helpers, not model-provided code.
+source_bytes=runner.read_bytes();source=source_bytes.decode('utf-8')
+marker='receipt=None\ntry:\n'
+if source.count(marker)!=1:raise RuntimeError('Reviewed fixture helper boundary changed')
+prefix=source.split(marker)[0]
+context={'__name__':'fixture_helpers'}
+exec(compile(prefix,str(runner),'exec'),context)
+run_id=context['run_id'];name=context['name'];command=context['command'];require=context['require'];sql=context['sql'];value=context['value']
+sources={str(p):hashlib.sha256(p.read_bytes()).hexdigest() for p in [Path(__file__),runner,Path('tests/security/native/pg-raw-membership.sql'),Path('tools/security/truss-original-use.ts'),Path('/Users/erik/Projects/truss/packages/postgresql/src/security-query-use.ts'),Path('/Users/erik/Projects/truss/packages/postgresql/src/security-predicate.ts'),Path('docs/helix/04-build/evidence/security/weft-original-use.json')]}
+if sources[str(runner)]!=hashlib.sha256(source_bytes).hexdigest():raise RuntimeError('Fixture source changed before capture')
+observations=[];receipt=None
+try:
+ names=require(command(['docker','container','ls','-a','--format','{{.Names}}'])).splitlines()
+ if name in names:raise RuntimeError('Refusing preexisting fixture')
+ context['creation_attempted']=True
+ context['container']=require(command(['docker','run','-d','--name',name,'--label','umf.security.run='+run_id,'-e','POSTGRES_HOST_AUTH_METHOD=scram-sha-256','-e','POSTGRES_INITDB_ARGS=--auth-host=scram-sha-256 --auth-local=trust','-e','POSTGRES_PASSWORD','postgres:17.9'],env={**os.environ,'POSTGRES_PASSWORD':context['credentials']['postgres']}))
+ import time
+ deadline=time.monotonic()+25
+ while command(['docker','exec',context['container'],'pg_isready','-h','127.0.0.1','-U','postgres'],timeout=3).returncode:
+  if time.monotonic()>deadline:raise TimeoutError('Readiness deadline')
+  time.sleep(.1)
+ require(sql(Path('tests/security/native/pg-raw-membership.sql').read_text()))
+ for actor in context['oracle']['actors']:require(sql("ALTER ROLE "+actor+" PASSWORD '"+context['credentials'][actor]+"';"))
+ version=value("SELECT json_build_object('version',version(),'number',current_setting('server_version_num'));")
+ if version['number']!='170009':raise RuntimeError('Unqualified engine version')
+
+ import copy,subprocess
+ foundation=json.loads(Path('docs/helix/04-build/evidence/security/weft-original-use.json').read_text())
+ for p,h in foundation['sourceDigests'].items():
+  if hashlib.sha256(Path(p).read_bytes()).hexdigest()!=h:raise RuntimeError('Original query owner source changed')
+ binary='/private/tmp/umf-security-weft-bridge-target/debug/examples/security_mapping_handoff'
+ def check(id,expected,observed):
+  observations.append({'id':id,'expected':expected,'observed':observed})
+  if expected!=observed:raise RuntimeError('Original native query use differs: '+json.dumps(observations[-1]))
+ require(sql("INSERT INTO security_raw.employee VALUES('Outsider','umf_sec_outsider');"))
+ # Strict native integer extraction; no JS number conversion or implicit decimal
+ # coercion, and no ordinary access to this routine or original source view.
+ require(sql("""SET ROLE umf_sec_guardian;
+ CREATE FUNCTION security_raw.original_salary(bag jsonb) RETURNS bigint LANGUAGE plpgsql IMMUTABLE SET search_path=pg_catalog AS $component$
+ DECLARE token text; BEGIN
+ IF pg_catalog.jsonb_typeof(bag->'salary') IS DISTINCT FROM 'number' THEN RAISE EXCEPTION 'Unsupported original carrier'; END IF;
+ token:=bag->>'salary';
+ IF token !~ '^(0|-?[1-9][0-9]*)$' THEN RAISE EXCEPTION 'Unsupported original carrier'; END IF;
+ IF token::numeric < -9223372036854775808::numeric OR token::numeric > 9223372036854775807::numeric THEN RAISE EXCEPTION 'Unsupported original carrier'; END IF;
+ RETURN token::bigint; END $component$;
+ REVOKE ALL ON FUNCTION security_raw.original_salary(jsonb) FROM PUBLIC;
+ CREATE VIEW security_raw.original_salary_source WITH(security_barrier=true) AS SELECT r.id,security_raw.original_salary(p.bag) AS salary FROM security_raw.resource r JOIN security_raw.resource_private_carrier p ON p.resource_id=r.id;
+ REVOKE ALL ON security_raw.original_salary_source FROM PUBLIC; RESET ROLE;"""))
+ expected={'predicate':[['RAB']],'order':[['RA'],['RAB']],'group':[['1'],['1']],'join':[['RA'],['RAB']],'aggregate':[['433']]}
+ programs=[];read_installed=False
+ for original in foundation['artifacts'][:5]:
+  for empty in [False,True]:
+   artifact=copy.deepcopy(original);id=artifact['id']+('-empty' if empty else '')
+   if empty:
+    source=artifact['request']['sql']
+    if artifact['id']=='predicate':source=source.replace('333','999')
+    elif ' ORDER BY ' in source:source=source.replace(' ORDER BY '," WHERE r.resourceId='missing' ORDER BY ")
+    elif ' GROUP BY ' in source:source=source.replace(' GROUP BY '," WHERE r.resourceId='missing' GROUP BY ")
+    else:source+=" WHERE r.resourceId='missing'"
+    artifact['request']['sql']=source
+   replay=subprocess.run([binary],input=json.dumps(artifact['request']),capture_output=True,text=True,timeout=10)
+   if replay.returncode or replay.stderr:raise RuntimeError('Original native query owner refused: '+replay.stderr)
+   artifact['handoff']=json.loads(replay.stdout)
+   if not empty:check(id+':original-owner-correspondence',original['handoff'],artifact['handoff'])
+   packet={'artifact':artifact,'expectedProfileSha256':original['handoff']['profile']['sha256']}
+   program=json.loads(require(command(['bun','tools/security/truss-original-use.ts'],input=json.dumps(packet))))
+   check(id+':bound-original-action',['querySalary'],program['originalActions'])
+   if not read_installed:
+    if '$component$' in program['readPredicate']:raise RuntimeError('Unsafe fixture delimiter')
+    require(sql('SET ROLE umf_sec_guardian; CREATE OR REPLACE FUNCTION security_raw.allowed(resource_id text) RETURNS boolean LANGUAGE SQL STABLE SECURITY DEFINER SET search_path=pg_catalog AS $component$ SELECT '+program['readPredicate']+' $component$; RESET ROLE;'))
+    read_installed=True
+   if any('$component$' in v for v in [program['sql'],*program['admission']]):raise RuntimeError('Unsafe fixture delimiter')
+   fields=','.join('q."'+c+'"::text' for c in program['outputColumns'])
+   body='BEGIN '+''.join("IF ("+guard+") IS NOT TRUE THEN RAISE EXCEPTION 'Original query use unavailable' USING ERRCODE='42501'; END IF; " for guard in program['admission'])+" IF ("+program['collectionReady']+") IS NOT TRUE THEN RAISE EXCEPTION 'Original source unavailable' USING ERRCODE='42501'; END IF; RETURN (SELECT coalesce(pg_catalog.jsonb_agg(pg_catalog.jsonb_build_array("+fields+")),'[]'::jsonb) FROM ("+program['sql']+") q); EXCEPTION WHEN OTHERS THEN RAISE EXCEPTION 'Original query unavailable' USING ERRCODE='42501'; END"
+   routine='query_'+id.replace('-','_')
+   require(sql('SET ROLE umf_sec_guardian; CREATE FUNCTION security_raw.'+routine+'() RETURNS jsonb LANGUAGE plpgsql STABLE SECURITY DEFINER SET search_path=pg_catalog AS $component$ '+body+' $component$; REVOKE ALL ON FUNCTION security_raw.'+routine+'() FROM PUBLIC; GRANT EXECUTE ON FUNCTION security_raw.'+routine+'() TO umf_sec_alice,umf_sec_bob,umf_sec_outsider; RESET ROLE;'))
+   metadata=value("SELECT pg_catalog.json_build_object('owner',r.rolname,'ownerSuper',r.rolsuper,'ownerBypass',r.rolbypassrls,'definer',p.prosecdef,'stable',p.provolatile='s','config',p.proconfig,'publicExecute',EXISTS(SELECT 1 FROM pg_catalog.aclexplode(coalesce(p.proacl,pg_catalog.acldefault('f',p.proowner))) acl WHERE acl.grantee=0 AND acl.privilege_type='EXECUTE')) FROM pg_catalog.pg_proc p JOIN pg_catalog.pg_roles r ON r.oid=p.proowner WHERE p.oid='security_raw."+routine+"()'::pg_catalog.regprocedure")
+   check(id+':native-protected-routine',{'owner':'umf_sec_guardian','ownerSuper':False,'ownerBypass':False,'definer':True,'stable':True,'config':['search_path=pg_catalog'],'publicExecute':False},metadata)
+   observed=value('SELECT security_raw.'+routine+'()','umf_sec_alice');want=([[None]] if artifact['id']=='aggregate' else []) if empty else expected[artifact['id']]
+   if artifact['id']=='join':observed.sort()
+   check(id+':ordinary-original-authorized',want,observed)
+   for actor in ['umf_sec_bob','umf_sec_outsider']:
+    result=sql('\\set VERBOSITY verbose\nSELECT security_raw.'+routine+'()',actor)
+    check(id+':'+actor+':preflight-refuses',True,result.returncode!=0 and not result.stdout.strip() and '42501' in result.stderr)
+   programs.append({'id':id,'artifact':artifact,'program':program,'routine':routine})
+ # A missing required carrier must refuse the whole request, even when the
+ # application predicates produce no rows. RLS protects hidden root candidates.
+ require(sql("CREATE TABLE security_raw.carrier_backup AS SELECT * FROM security_raw.resource_private_carrier WHERE resource_id='RAB'; DELETE FROM security_raw.resource_private_carrier WHERE resource_id='RAB';"))
+ for installed in programs:
+  result=sql('\\set VERBOSITY verbose\nSELECT security_raw.'+installed['routine']+'()','umf_sec_alice')
+  check(installed['id']+':missing-required-original-source-refuses',True,result.returncode!=0 and not result.stdout.strip() and '42501' in result.stderr)
+ require(sql('INSERT INTO security_raw.resource_private_carrier SELECT * FROM security_raw.carrier_backup; DROP TABLE security_raw.carrier_backup;'))
+ check('restored-original-aggregate',[['433']],value('SELECT security_raw.query_aggregate()','umf_sec_alice'))
+ require(sql("CREATE TABLE security_raw.carrier_backup AS SELECT * FROM security_raw.resource_private_carrier WHERE resource_id='RB'; DELETE FROM security_raw.resource_private_carrier WHERE resource_id='RB';"))
+ check('hidden-unreadable-source-does-not-change-eligible-query',[['433']],value('SELECT security_raw.query_aggregate()','umf_sec_alice'))
+ require(sql('INSERT INTO security_raw.resource_private_carrier SELECT * FROM security_raw.carrier_backup; DROP TABLE security_raw.carrier_backup;'))
+ # Invalid eligible original carriers must refuse before empty application
+ # queries too. Native cast diagnostics are normalized at the private boundary.
+ require(sql("CREATE TABLE security_raw.carrier_backup AS SELECT * FROM security_raw.resource_private_carrier WHERE resource_id='RAB';"))
+ for label,carrier in [('null',None),('text','PRIVATE_CARRIER_SENTINEL'),('fraction',1.5),('overflow',9223372036854775808),('object',{'PRIVATE_CARRIER_SENTINEL':True})]:
+  payload=json.dumps({'salary':carrier},ensure_ascii=False).replace("'","''")
+  require(sql("UPDATE security_raw.resource_private_carrier SET bag='"+payload+"'::jsonb WHERE resource_id='RAB';"))
+  for installed in programs:
+   result=sql('\\set VERBOSITY verbose\nSELECT security_raw.'+installed['routine']+'()','umf_sec_alice')
+   check(installed['id']+':invalid-'+label+'-carrier-private-refusal',True,result.returncode!=0 and not result.stdout.strip() and '42501' in result.stderr and 'PRIVATE_CARRIER_SENTINEL' not in result.stderr and 'invalid input syntax' not in result.stderr and 'out of range' not in result.stderr)
+ require(sql("UPDATE security_raw.resource_private_carrier p SET bag=b.bag FROM security_raw.carrier_backup b WHERE p.resource_id=b.resource_id; DROP TABLE security_raw.carrier_backup;"))
+ check('restored-after-malformed-original-aggregate',[['433']],value('SELECT security_raw.query_aggregate()','umf_sec_alice'))
+ # Change only unreadable RB: all five operator outputs and their empty
+ # variants must be observationally unchanged, including strict getter errors.
+ require(sql("CREATE TABLE security_raw.carrier_backup AS SELECT * FROM security_raw.resource_private_carrier WHERE resource_id='RB';"))
+ for label,carrier in [('null',None),('text','PRIVATE_HIDDEN_SENTINEL'),('fraction',1.5),('overflow',9223372036854775808),('object',{'PRIVATE_HIDDEN_SENTINEL':True})]:
+  payload=json.dumps({'salary':carrier},ensure_ascii=False).replace("'","''")
+  require(sql("UPDATE security_raw.resource_private_carrier SET bag='"+payload+"'::jsonb WHERE resource_id='RB';"))
+  for installed in programs:
+   result=sql('SELECT security_raw.'+installed['routine']+'()','umf_sec_alice')
+   observed=json.loads(require(result))
+   operator=installed['artifact']['id'];empty=installed['id'].endswith('-empty')
+   want=([[None]] if operator=='aggregate' else []) if empty else expected[operator]
+   if operator=='join':observed.sort()
+   check(installed['id']+':hidden-invalid-'+label+'-unchanged',want,observed)
+   check(installed['id']+':hidden-invalid-'+label+'-no-diagnostics',True,not result.stderr.strip())
+ require(sql("UPDATE security_raw.resource_private_carrier p SET bag=b.bag FROM security_raw.carrier_backup b WHERE p.resource_id=b.resource_id; DROP TABLE security_raw.carrier_backup;"))
+ check('restored-after-hidden-malformed-original-aggregate',[['433']],value('SELECT security_raw.query_aggregate()','umf_sec_alice'))
+ # Simulate duplicate native carrier projection without disabling base keys.
+ # This is authored owner drift, not evidence of issuer/current-epoch detection.
+ base_view="SELECT r.id,security_raw.original_salary(p.bag) AS salary FROM security_raw.resource r JOIN security_raw.resource_private_carrier p ON p.resource_id=r.id"
+ def replace_view(duplicate=None):
+  statement=base_view if duplicate is None else base_view+" UNION ALL "+base_view+" WHERE r.id='"+duplicate+"'"
+  require(sql("SET ROLE umf_sec_guardian; CREATE OR REPLACE VIEW security_raw.original_salary_source WITH(security_barrier=true) AS "+statement+"; RESET ROLE;"))
+ replace_view('RAB')
+ for installed in programs:
+  result=sql('\\set VERBOSITY verbose\nSELECT security_raw.'+installed['routine']+'()','umf_sec_alice')
+  check(installed['id']+':duplicate-original-carrier-refuses',True,result.returncode!=0 and not result.stdout.strip() and '42501' in result.stderr)
+ replace_view()
+ check('restored-after-duplicate-original-aggregate',[['433']],value('SELECT security_raw.query_aggregate()','umf_sec_alice'))
+ replace_view('RB')
+ check('hidden-duplicate-does-not-change-eligible-query',[['433']],value('SELECT security_raw.query_aggregate()','umf_sec_alice'))
+ replace_view()
+ check('restored-after-hidden-duplicate-original-aggregate',[['433']],value('SELECT security_raw.query_aggregate()','umf_sec_alice'))
+ # A broadly permitted unrelated action cannot replace the captured profile.
+ changed=foundation['artifacts'][-1]
+ result=command(['bun','tools/security/truss-original-use.ts'],input=json.dumps({'artifact':changed,'expectedProfileSha256':foundation['artifacts'][0]['handoff']['profile']['sha256']}))
+ check('separate-unrelated-profile-refused-before-native-install',True,result.returncode!=0 and not result.stdout.strip())
+ for actor in context['oracle']['actors']:
+  for source in ['SELECT salary FROM security_raw.original_salary_source','SELECT bag FROM security_raw.resource_private_carrier']:
+   result=sql('\\set VERBOSITY verbose\n'+source,actor);check(actor+':original-source-private:'+source,True,result.returncode!=0 and not result.stdout.strip() and '42501' in result.stderr)
+ if any(hashlib.sha256(Path(p).read_bytes()).hexdigest()!=d for p,d in sources.items()):raise RuntimeError('Native query use source changed')
+ receipt={'status':'passed','sourceDigests':sources,'engine':version,'runId':run_id,'observations':observations,'programs':programs,'scope':'Actual original owner query-use/profile/IR to portable Truss finite native application lowering and private definer routines on PostgreSQL 17.9 raw fixture. Compiler-derived read membership plus independently bound resource-independent original-value action precedes query even for empty results. Exact native signed64 source and lexical output, private source views/carriers and unrelated profile refusal. This is inspection-owner, fixed authored source/role cut evidence, not public compiler activation, authenticated issuer/current-authority guards, complete privacy closure, arbitrary expressions/history, protected property projection or full B08/graph backend acceptance.'}
+
+finally:
+ container=context.get('container')
+ if container is None and context.get('creation_attempted'):
+  listing=require(command(['docker','container','ls','-a','--format','{{.ID}} {{.Names}}']))
+  matches=[line.split()[0] for line in listing.splitlines() if len(line.split())==2 and line.split()[1]==name]
+  if len(matches)>1:raise RuntimeError('Ambiguous fixture ownership')
+  if matches:container=matches[0]
+ if container:
+  if require(command(['docker','inspect','--format','{{index .Config.Labels "umf.security.run"}}',container]))!=run_id:raise RuntimeError('Fixture ownership differs')
+  require(command(['docker','rm','-f',container]))
+if receipt is None:raise RuntimeError('Missing counterexample evidence')
+Path('docs/helix/04-build/evidence/security/truss-original-use.json').write_text(json.dumps(receipt,indent=2)+'\n')
+print(json.dumps({'status':receipt['status'],'observations':len(observations),'scope':receipt['scope']}))

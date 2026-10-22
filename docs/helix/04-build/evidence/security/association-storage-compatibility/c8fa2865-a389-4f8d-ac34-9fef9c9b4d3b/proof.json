@@ -1,0 +1,209 @@
+{
+  "status": "pass",
+  "z3Version": "4.15.4",
+  "sourceSha256": {
+    "/Users/erik/.codex/worktrees/security-main-integration/umf/tools/security/prove-association-storage-compatibility.py": "8eeebe28d8d530ec9c86630de97d1b3788ef5586865ca64d44b985c698e493c0",
+    "/Users/erik/.codex/worktrees/security-main-integration/umf/docs/helix/02-design/contracts/security-association-binding.proposal.md": "afcbf18dc909fe69193a01631c55daf6869a17f80bab1a7926d80881f085e25e",
+    "/Users/erik/.codex/worktrees/security-main-integration/umf/docs/helix/04-build/evidence/security/weft-handoff.json": "c1427f66eaba7726c5d4eaa0df09460f448db09c8e2188963d0271d2a313689b",
+    "/Users/erik/.codex/worktrees/security-main-integration/umf/docs/helix/02-design/contracts/CONTRACT-063-security-enforcement.md": "634f3d1d456b81616f4e0f7ecab4d57424dec430de1d6882f8886a593145c341"
+  },
+  "originalAssociations": [
+    {
+      "type": {
+        "documentId": "domain",
+        "moduleId": "m",
+        "elementId": "Ownership"
+      },
+      "keyId": "pk",
+      "fields": [
+        {
+          "ref": {
+            "documentId": "domain",
+            "moduleId": "m",
+            "elementId": "ownerResource"
+          },
+          "protection": "unprotected"
+        },
+        {
+          "ref": {
+            "documentId": "domain",
+            "moduleId": "m",
+            "elementId": "ownerProject"
+          },
+          "protection": "unprotected"
+        }
+      ],
+      "endpoints": [
+        {
+          "role": "resource",
+          "target": {
+            "documentId": "domain",
+            "moduleId": "m",
+            "elementId": "Resource"
+          },
+          "fields": [
+            {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "ownerResource"
+            }
+          ]
+        },
+        {
+          "role": "project",
+          "target": {
+            "documentId": "domain",
+            "moduleId": "m",
+            "elementId": "Project"
+          },
+          "fields": [
+            {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "ownerProject"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": {
+        "documentId": "domain",
+        "moduleId": "m",
+        "elementId": "Assignment"
+      },
+      "keyId": "pk",
+      "fields": [
+        {
+          "ref": {
+            "documentId": "domain",
+            "moduleId": "m",
+            "elementId": "assignmentStaff"
+          },
+          "protection": "unprotected"
+        },
+        {
+          "ref": {
+            "documentId": "domain",
+            "moduleId": "m",
+            "elementId": "assignmentProject"
+          },
+          "protection": "unprotected"
+        },
+        {
+          "ref": {
+            "documentId": "domain",
+            "moduleId": "m",
+            "elementId": "active"
+          },
+          "protection": "unprotected"
+        }
+      ],
+      "endpoints": [
+        {
+          "role": "staff",
+          "target": {
+            "documentId": "domain",
+            "moduleId": "m",
+            "elementId": "Staff"
+          },
+          "fields": [
+            {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "assignmentStaff"
+            }
+          ]
+        },
+        {
+          "role": "project",
+          "target": {
+            "documentId": "domain",
+            "moduleId": "m",
+            "elementId": "Project"
+          },
+          "fields": [
+            {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "assignmentProject"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "observations": [
+    {
+      "id": "all-count-preservation-forbids-inferred-restriction",
+      "expected": "unsat",
+      "observed": "unsat",
+      "formulaSha256": "5b6d9a646dbe710f1b8c199f8d6f173d20552cd2b4979e8c452a3351412810fb",
+      "model": null
+    },
+    {
+      "id": "explicit-unrestricted-storage-preserves-all-counts",
+      "expected": "unsat",
+      "observed": "unsat",
+      "formulaSha256": "ebfd5d7fa2628c5eb85f56cb9aa28b271670db4b5ed64ebd2165748a80904aaa",
+      "model": null
+    },
+    {
+      "id": "valid-unrestricted-nonempty-population",
+      "expected": "sat",
+      "observed": "sat",
+      "formulaSha256": "27d7a43335db109cc9787feda2d621808d3273b732a7aa5f282cb7ded92f076e",
+      "model": "[participation_count = 1]"
+    },
+    {
+      "id": "inferred-finite-maximum-loses-valid-population",
+      "expected": "sat",
+      "observed": "sat",
+      "formulaSha256": "28a86dfcc40a23ff048892d3f7536690233dbdf4eb5941ea4484d5a1d2907c7b",
+      "model": "[participation_count = 1, physical_maximum = 0]"
+    },
+    {
+      "id": "inferred-positive-minimum-loses-valid-empty-population",
+      "expected": "sat",
+      "observed": "sat",
+      "formulaSha256": "22613f9063a927fa88f721e817e0624253d258f5ce261e123233bad22d9076ba",
+      "model": "[physical_minimum = 1, participation_count = 0]"
+    },
+    {
+      "id": "explicit-either-orientation-preserves-same-witness-predicate",
+      "expected": "unsat",
+      "observed": "unsat",
+      "formulaSha256": "a4df0ee773eca1489f7275375636e279d9c00d10fb5b85ced198ff41394822e6",
+      "model": null
+    },
+    {
+      "id": "staff-source-positive",
+      "expected": "sat",
+      "observed": "sat",
+      "formulaSha256": "376f08837939aaa74b84644f1eb6371289c8c99ebb0739dafc2cf8e33186c21f",
+      "model": "[source_is_project = False,\n same_witness_active = True,\n source_matches_requested_key = True,\n target_is_project = True,\n target_is_staff = False,\n source_is_staff = True,\n target_matches_requested_key = True]"
+    },
+    {
+      "id": "project-source-positive",
+      "expected": "sat",
+      "observed": "sat",
+      "formulaSha256": "043b762a532d96ed843842eed1b1da636fcff03ba544a105a507da72c01d4dd2",
+      "model": "[source_is_project = True,\n same_witness_active = True,\n source_matches_requested_key = True,\n target_is_project = False,\n target_is_staff = True,\n source_is_staff = False,\n target_matches_requested_key = True]"
+    },
+    {
+      "id": "assuming-array-order-is-native-direction-loses-valid-witness",
+      "expected": "sat",
+      "observed": "sat",
+      "formulaSha256": "402765a11442698ebf56591cfe24ffac18cf010d206e4b580dc1a2f6b6c08051",
+      "model": "[source_is_project = True,\n same_witness_active = True,\n source_matches_requested_key = True,\n target_is_project = False,\n source_is_staff = False,\n target_is_staff = True,\n target_matches_requested_key = True]"
+    }
+  ],
+  "scope": "Conditional abstract natural-count compatibility and exact binary role-orientation laws",
+  "limitations": [
+    "No native SQL or compiler semantics extraction/refinement",
+    "Logical count domain is all nonnegative integers when this profile has no semantic participation bounds",
+    "Role/key/attribute correspondence and same witness are premises, not authenticated fact coverage",
+    "No lifecycle, issuer, current-cut, canonical key encoding or publication theorem"
+  ],
+  "acceptancePromoted": false
+}

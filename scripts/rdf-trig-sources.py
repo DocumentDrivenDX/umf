@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 import hashlib,json,shutil,subprocess,sys
 from pathlib import Path
 from urllib.parse import urljoin

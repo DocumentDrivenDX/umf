@@ -1,10 +1,13 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
+import {relationshipCurrentBase} from '../../scripts/core-ideals/relationship-current-base';
 
 const corpus=await Bun.file('fixtures/relationship/authored/corpus.json').json();
 
-test('@covers US-045-AC2: keyed authored shape corpus uses exact owned endpoint and target Key IDs',()=>{
- const module=corpus.base.modules[0],elements=new Map(module.elements.map((element:any)=>[element.id,element]));
- const records=module.elements.filter((element:any)=>element.kind==='record');
+test('@covers US-045-AC2: current keyed authored shape base uses exact owned endpoint and target Key IDs',()=>{
+ const base=relationshipCurrentBase(),module=base.modules[0]!,elements=new Map<string,any>(module.elements.map(element=>[element.id,element]));
+ expect(corpus.base.umf).toBe('0.6.0');expect(base.umf).toBe('0.10.0');
+ const records=module.elements.filter((element:any)=>element.kind==='record') as any[];
  expect(records).toHaveLength(9);
  const fieldOwners=new Set<string>();
  for(const record of records){

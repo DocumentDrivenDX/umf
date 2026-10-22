@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {copyJson} from '../model/json';
 import {UmfError,SCALAR_TYPES,type Document,type Json,type Cardinality,type ScalarType} from '../model/types';
 import {inspectParquetContainers,type ParquetContainer} from '../adapters/parquet/containers';
@@ -51,7 +52,7 @@ export function inspectParquetCardinalityShape(source:Document,index:number):Par
     }
    }else if(Object.hasOwn(fragment,'type')){
     row.shape='one';row.role='scalar';
-    if(SCALAR_TYPES.includes(native.element.scalarType as ScalarType))row.scalarType=native.element.scalarType as ScalarType;
+    if((SCALAR_TYPES as readonly string[]).includes(native.element.scalarType as string))row.scalarType=native.element.scalarType as ScalarType;
    }else if(annotation)loss('Annotated group has no established record/container interpretation');
    else{row.shape='one';row.role='record';row.recordMembers=node.children.map(c=>c.index);}
    if(hasUnknown(fragment))loss('Unknown native schema content remains uninterpreted');

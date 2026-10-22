@@ -1,7 +1,8 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {describe,expect,test} from 'bun:test';
-import {classifyTableSpecKeys,verifyTableSpecKeyClassification,recoverTableSpecKeySource,tableSpecKeysPackage,TABLESPEC_KEYS_EXTENSION} from '../../src/core-ideals/key-tablespec';
-import {importTableSpec,importTableSpecBundle} from '../../src/adapters/tablespec';
-import {readJsonValue,writeJsonValue} from '../../src/model/serialization';
+import {classifyTableSpecKeys, verifyTableSpecKeyClassification, recoverTableSpecKeySource, tableSpecKeysPackage, TABLESPEC_KEYS_EXTENSION} from '../../src/core-ideals/key-tablespec';
+import {importTableSpec, importTableSpecBundle} from '../../src/adapters/tablespec';
+import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
 import {copyJson} from '../../src/model/json';
 import {Registry} from '../../src/registry/registry';
 import {validateDocument} from '../../src/validation/document';
@@ -37,8 +38,8 @@ describe('TableSpec Key native declarations',()=>{
   const files={'table.yaml':'version: "1.0"\ntable_name: Keys\nprimary_key: [id]\ncolumns: [{name: shadowed, data_type: TEXT}]\n','columns/id.yaml':'column: {name: id, data_type: INTEGER}\n','notes.txt':'Uninterpreted sidecar\n'};
   const split=classifyTableSpecKeys(importTableSpecBundle(files,{id:'split'}),request);expect(recoverTableSpecKeySource(split,split.target!)).toEqual(files);
  });
- test('authored keys and unknown qualifiers in core 0.6 stay untouched',()=>{
-  const doc=imported({primary_key:['id']});doc.umf='0.6.0';const field=doc.modules[0]!.elements[0]!;Object.assign(field,{kind:'field',nullability:'required',cardinality:'one'});
+ test('authored keys and unknown qualifiers in current core stay untouched',()=>{
+  const doc=imported({primary_key:['id']});const field=doc.modules[0]!.elements[0]!;Object.assign(field,{kind:'field',nullability:'required',cardinality:'one'});
   doc.modules.push({id:'authored',namespace:'authored',elements:[{id:'record',kind:'record',members:[{module:'table',element:'column:0',future:'opaque'}],keys:[{id:'author-key',name:'Authored',fields:[{module:'table',element:'column:0'}],future:{x:true}}],extensions:{}}]});
   const r=classifyTableSpecKeys(doc,request);expect(r.target!.modules).toEqual(doc.modules);expect(recoverTableSpecKeySource(r,r.target!)).toBe(source({primary_key:['id']}));
  });

@@ -1,0 +1,116 @@
+bun test v1.4.2 (744846f84)
+
+tests/core/key-ideals.test.ts:
+(pass) candidate Key checks membership, primary/alternate identities and component equality [84.53ms]
+(pass) key schema leaves cross-reference semantics to validator; old profiles stay opaque [14.06ms]
+(pass) key candidate never invokes getters and retains path-qualified unknowns [0.43ms]
+
+tests/core/facet-authoring.test.ts:
+(pass) authored facet groups have copied provenance, exact declared bounds and verifiable JSON/YAML receipts [19.81ms]
+(pass) facet updates retain unknown groups and nested qualifiers; unknown units stay uninterpreted [0.73ms]
+(pass) invalid facet patches, conflicts, legacy authoring and hostile inputs refuse without mutation [2.86ms]
+(pass) stale, forged and cross-document facet receipts cannot confer author provenance [1.06ms]
+
+tests/core/key-transition.test.ts:
+(pass) explicit Key migration archives all element collisions without adopting author intent [48.08ms]
+(pass) rollback restores exact old content and separately retains later key assertions and native edits [5.33ms]
+(pass) forged receipts, wrong identities/versions and invalid current key meaning reject atomically [5.50ms]
+(pass) no-collision migration and copy discipline preserve opaque scopes without getters [0.77ms]
+
+tests/core/facet-ideals.test.ts:
+(pass) candidate facet semantics check families, roles, shape, pairs and qualified unknowns [14.91ms]
+(pass) candidate JSON Schema documents structural limits; semantic comparison remains explicit [1.48ms]
+(pass) facet tokens are checked before conversion; unsafe numbers and accessors refuse atomically [1.16ms]
+
+tests/core/key-tuple.test.ts:
+(pass) key tuple vectors and domain boundaries produce exact frames or atomic refusals [67.25ms]
+(pass) stable key ID survives name/list changes while retained receipts detect stale context [0.96ms]
+(pass) tuple verification rejects forged and nonminimal frames and altered retained inputs [1.31ms]
+(pass) unknown relevant qualifiers block and unrelated native extension content survives [1.45ms]
+(pass) shortest length/count framing and no getter evaluation [6.37ms]
+(pass) resource bounds and a bad later component refuse the whole tuple [3.80ms]
+(pass) current document context and result schema reject prior versions without downgrading [1.41ms]
+
+tests/core/prepared-inspection.test.ts:
+(pass) prepared selectors exactly match ordinary core meanings for every fixture element [92.22ms]
+(pass) unknown Key qualifiers and facet assertions remain partial with exact retained paths [6.94ms]
+(pass) caller and result mutations cannot alter the owned snapshot or later meanings [4.15ms]
+(pass) preparation and selectors refuse invalid sources and malformed or unresolved identities [4.45ms]
+(pass) preparation retains JSON safety guards without executing caller accessors [3.28ms]
+
+tests/core/facet-schema-properties.test.ts:
+(pass) original0.8 facet inspection covers exact new bounds and older groups without authoring [30.23ms]
+(pass) original0.8 facet unknown qualifiers and units stay scoped; interpretations are isolated [2.00ms]
+(pass) historical projection bridge snapshots and validates its public input [0.10ms]
+
+tests/core/schema-properties.test.ts:
+(pass) CONTRACT-049 schema properties > valid [1.25ms]
+(pass) CONTRACT-049 schema properties > duplicate-equal-integers [0.70ms]
+(pass) CONTRACT-049 schema properties > duplicate-equal-decimals [0.64ms]
+(pass) CONTRACT-049 schema properties > duplicate-equal-binary [0.49ms]
+(pass) CONTRACT-049 schema properties > invalid-default-domain [0.48ms]
+(pass) CONTRACT-049 schema properties > default-not-in-set [0.48ms]
+(pass) CONTRACT-049 schema properties > fractional-integer [0.42ms]
+(pass) CONTRACT-049 schema properties > decimal-rounding [0.60ms]
+(pass) CONTRACT-049 schema properties > collection-size [0.58ms]
+(pass) CONTRACT-049 schema properties > min-length [0.45ms]
+(pass) CONTRACT-049 schema properties > surrogate [0.39ms]
+(pass) CONTRACT-049 schema properties > empty-range [0.52ms]
+(pass) CONTRACT-049 schema properties > unpaired-flag [0.46ms]
+(pass) CONTRACT-049 schema properties > inverted-length [0.47ms]
+(pass) CONTRACT-049 schema properties > inverted-size [0.43ms]
+(pass) CONTRACT-049 schema properties > collection-bound-on-scalar [0.52ms]
+(pass) CONTRACT-049 schema properties > range-on-string [0.47ms]
+(pass) CONTRACT-049 schema properties > unknown-default-behavior [0.15ms]
+(pass) CONTRACT-049 schema properties > null-numeric-bound [0.56ms]
+(pass) CONTRACT-049 schema properties > unknown-facet-inverted-range [0.43ms]
+(pass) CONTRACT-049 schema properties > empty-discrete-integer-range [0.68ms]
+(pass) CONTRACT-049 schema properties > empty-discrete-decimal-range [0.67ms]
+(pass) CONTRACT-049 schema properties > signed8-min-domain-extreme-exclusive [0.22ms]
+(pass) CONTRACT-049 schema properties > signed8-min-domain-extreme-inclusive [0.10ms]
+(pass) CONTRACT-049 schema properties > signed8-max-domain-extreme-exclusive [0.12ms]
+(pass) CONTRACT-049 schema properties > signed8-max-domain-extreme-inclusive [0.09ms]
+(pass) CONTRACT-049 schema properties > unsigned8-min-domain-extreme-exclusive [0.08ms]
+(pass) CONTRACT-049 schema properties > unsigned8-min-domain-extreme-inclusive [0.08ms]
+(pass) CONTRACT-049 schema properties > unsigned8-max-domain-extreme-exclusive [0.07ms]
+(pass) CONTRACT-049 schema properties > unsigned8-max-domain-extreme-inclusive [0.06ms]
+(pass) CONTRACT-049 schema properties > decimal-scale0-min-domain-extreme-exclusive [0.10ms]
+(pass) CONTRACT-049 schema properties > decimal-scale0-min-domain-extreme-inclusive [0.07ms]
+(pass) CONTRACT-049 schema properties > decimal-scale0-max-domain-extreme-exclusive [0.07ms]
+(pass) CONTRACT-049 schema properties > decimal-scale0-max-domain-extreme-inclusive [0.06ms]
+(pass) CONTRACT-049 schema properties > decimal-scale2-min-domain-extreme-exclusive [0.08ms]
+(pass) CONTRACT-049 schema properties > decimal-scale2-min-domain-extreme-inclusive [0.06ms]
+(pass) CONTRACT-049 schema properties > decimal-scale2-max-domain-extreme-exclusive [0.06ms]
+(pass) CONTRACT-049 schema properties > decimal-scale2-max-domain-extreme-inclusive [0.06ms]
+(pass) CONTRACT-049 schema properties > public JSON/YAML round trips and input copy isolation [5.32ms]
+(pass) CONTRACT-049 schema properties > document/module metadata do not change IDs [3.20ms]
+(pass) CONTRACT-049 schema properties > value properties are refused on non-Field elements [2.48ms]
+(pass) CONTRACT-049 schema properties > defaults distinguish missing, null and present without mutation [6.44ms]
+(pass) CONTRACT-049 schema properties > exact numeric values, range boundaries and Unicode units [2.66ms]
+(pass) CONTRACT-049 schema properties > minimum-only length, zero-sized collections and maps [1.49ms]
+(pass) CONTRACT-049 schema properties > unknown unrelated content survives; relevant qualifiers refuse [3.23ms]
+(pass) CONTRACT-049 schema properties > legacy collisions archived, rollback retains subsequent assertions [5.90ms]
+(pass) CONTRACT-049 schema properties > 0.8.0 metadata selection follows item types and retains new properties [1.02ms]
+(pass) CONTRACT-049 schema properties > zero maximum lengths, absolute tokens and known default preservation [5.92ms]
+(pass) CONTRACT-049 schema properties > hostile accessors are never executed [0.05ms]
+(pass) CONTRACT-049 schema properties > legacy lookalikes stay unknown and need explicit migration [0.34ms]
+
+tests/core/key-operations.test.ts:
+(pass) original0.8 Key inspection and lookup retain unknown qualifiers and scoped authoring [11.46ms]
+(pass) public Key authoring, inspection and stable lookup preserve copied source and both serializations [18.08ms]
+(pass) key updates retain identity and unknowns, reject tuple changes and implicit primary demotion [7.69ms]
+(pass) operation verification rejects forged/stale context and old profiles remain opaque [4.99ms]
+(pass) 0.6.0 core operations use new receipts and refuse changes invalidating keys [32.56ms]
+(pass) Key selection reports explicit member/component boundaries and traverses by identity [4.38ms]
+(pass) 0.6.0 extension validators receive the actual key-bearing document and can reject it [9.71ms]
+(pass) member traversal terminates on cycles and component order cannot change under a stable key ID [3.25ms]
+
+tests/core/facet-transition.test.ts:
+(pass) explicit facet migration archives every legacy collision and recovers it through both serializations [46.91ms]
+(pass) rollback restores the original without reinterpreting later bounds; forged receipts and wrong versions refuse [3.63ms]
+(pass) 0.5.0 document validation and selection preserve item facets, availability, unknowns and boundaries [2.35ms]
+
+ 90 pass
+ 0 fail
+ 2357 expect() calls
+Ran 90 tests across 10 files. [4.51s]

@@ -1,14 +1,16 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {createHash} from 'node:crypto';
-import {importSqlServerCatalog,getSqlServerColumnMetadata,parseNativeJson} from '../../src';
+import {importSqlServerCatalog, getSqlServerColumnMetadata, parseNativeJson} from '../../src';
 import {inspectSqlServerFacetType as inspect} from '../../src/adapters/sqlserver/facet-type';
 const proof=await Bun.file('fixtures/validation/facets-sqlserver-discovery-native.json').json();
 const source=importSqlServerCatalog(proof.sourceText,{id:'sqlserver-facets'}),columns=getSqlServerColumnMetadata(source);
 const column=(table:string,name='value')=>columns.find(c=>c.table.name===table&&c.element.name===name)!.nativeColumn;
 const result=(id:string)=>proof.cases.find((r:any)=>r.id===id).actual;
 test('pinned native discovery preserves exact outputs and current inputs',async()=>{
+ const history=await Bun.file('docs/helix/04-build/evidence/metamodel-authority/history/manifest.json').json();
  expect(proof.serverVersion).toBe('16.0.4295.3');expect(proof.observational).toBe(false);expect(proof.serializationRecoveries).toBe(2);expect(proof.columns).toBe(37);expect(proof.cases.length).toBe(86);
- for(const [path,sha] of Object.entries(proof.sha256 as Record<string,string>))expect(createHash('sha256').update(new Uint8Array(await Bun.file(path).arrayBuffer())).digest('hex')).toBe(sha);
+ for(const [path,sha] of Object.entries(proof.sha256 as Record<string,string>)){const archived=history.entries.find((entry:any)=>entry.path===path)?.archive;const source=archived??path;expect(createHash('sha256').update(new Uint8Array(await Bun.file(source).arrayBuffer())).digest('hex'),path).toBe(sha);}
  for(const row of proof.cases){expect(row.actual.error,row.id).toBe(row.error);expect(row.actual.value,row.id).toBe(row.expected);}
  expect(result('decimal-checked-still-rounds').value).toBe('1.24');
  expect(result('roundabort-warnings-OFF-ON-OFF')).toMatchObject({error:0,value:null});

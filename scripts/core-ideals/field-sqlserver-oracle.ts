@@ -1,5 +1,6 @@
-import {classifySqlServerRecord,recoverSqlServerRecordCapture,upgradeFieldEnvelope,classifySqlServerField,recoverSqlServerFieldCapture,readJsonValue,writeJsonValue,copyJson} from '../../src';
-import {importSqlServerCatalog,exportSqlServerCatalog,getSqlServerColumnMetadata,readDocument,writeDocument} from '../../src';
+// SPDX-License-Identifier: MIT OR Apache-2.0
+import {classifySqlServerRecord, recoverSqlServerRecordCapture, classifySqlServerField, recoverSqlServerFieldCapture, readJsonValue, writeJsonValue, copyJson} from '../../src';
+import {importSqlServerCatalog, exportSqlServerCatalog, getSqlServerColumnMetadata, readDocument, writeDocument} from '../../src';
 const image='mcr.microsoft.com/mssql/server@sha256:4402d880dd4c34bfa7d8705e56a86cd6c88da80a1f6bbbe741f999e76264a090',name='umf-sqlserver-'+crypto.randomUUID(),password='Umf!'+crypto.randomUUID()+'A9';
 async function run(args:string[],input?:string){const p=Bun.spawn(args,{stdin:input===undefined?'ignore':new Blob([input]),stdout:'pipe',stderr:'pipe'});const [out,err,code]=await Promise.all([new Response(p.stdout).text(),new Response(p.stderr).text(),p.exited]);if(code)throw Error(err||out||'Process failed');return out;}
 let created=false,sqlcmd='/opt/mssql-tools18/bin/sqlcmd';
@@ -24,7 +25,7 @@ try{
  const version=view.filter(c=>c.element.name==='version_stamp');if(version.length!==2||version.some(c=>c.element.scalarType!=='binary'))throw Error('Rowversion classification differs');
  const behavior=JSON.parse((await sql('umf_source',`SET NOCOUNT ON; INSERT INTO sales.Types(flag,ordinary,amount) VALUES (1,5,0); DECLARE @old binary(8)=(SELECT version_stamp FROM sales.Types); UPDATE sales.Types SET ordinary=6; SELECT CONVERT(nvarchar(128),id) AS exactIdentity,computed,CONVERT(bit,CASE WHEN version_stamp<>@old THEN 1 ELSE 0 END) AS rowversionChanged,DATALENGTH(version_stamp) AS rowversionBytes FROM sales.Types FOR JSON PATH,WITHOUT_ARRAY_WRAPPER;`)).split(/\r?\n/).join('').trim());
  if(behavior.exactIdentity!=='9007199254740993'||behavior.computed!==7||!behavior.rowversionChanged||behavior.rowversionBytes!==8)throw Error('Native behavior differs');
- const fields=upgradeFieldEnvelope(doc).target,rows=[];
+ const fields=doc,rows=[];
  for(const column of view){const result=classifySqlServerField(fields,{column:column.path,nativeSource:source,mode:'strict'});if(!result.target)throw Error('Native field blocked');
   for(const format of ['json','yaml'] as const){const receipt=readJsonValue(writeJsonValue(copyJson(result),format),format) as unknown as typeof result;if(recoverSqlServerFieldCapture(receipt,receipt.target!)!==source)throw Error('Native capture lost');}
   rows.push({path:column.path,name:column.element.name,table:column.table,scalarType:column.element.scalarType??null});

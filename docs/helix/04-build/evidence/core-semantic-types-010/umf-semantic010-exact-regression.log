@@ -1,0 +1,710 @@
+{"testProcess":"tests/bit128.test.ts","command":["/Users/erik/.bun/install/cache/@oven/bun-darwin-aarch64@1.4.2@@@1/bin/bun","test","--timeout","30000","./tests/bit128.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/bit128.test.ts:
+(pass) all bit positions, sign boundaries and seeded values match independent Python oracle [6.00ms]
+(pass) strict grammar, bounds, two-complement ordering, forged snapshots and accessors [0.29ms]
+(pass) byte bridge checks intrinsic length before copying and never invokes user iterators [0.04ms]
+
+ 3 pass
+ 0 fail
+ 4702 expect() calls
+Ran 3 tests across 1 file. [4.04s]
+{"testProcess":"tests/bit128.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":4702,"completeSummary":true,"logSha256":"830b5d5fa12654fe0fd359c4e76b028068987536deb0b5834e0b6ad7ee1cb599"}
+{"testProcess":"tests/consumers/orders.test.ts","command":["/Users/erik/.bun/install/cache/@oven/bun-darwin-aarch64@1.4.2@@@1/bin/bun","test","--timeout","30000","./tests/consumers/orders.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/consumers/orders.test.ts:
+(pass) CONTRACT-036 seven authored consumers retain mixed native context across both UMF formats [1494.30ms]
+(pass) CONTRACT-036 executable row transform rejects loss, coercion and overflow; snapshots remain isolated [140.03ms]
+(pass) CONTRACT-036 safe native metadata edits propagate while inconsistent sources fail [459.37ms]
+
+ 3 pass
+ 0 fail
+ 59 expect() calls
+Ran 3 tests across 1 file. [5.47s]
+{"testProcess":"tests/consumers/orders.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":59,"completeSummary":true,"logSha256":"999dee9ea792fb7ec4f8869ee48258314d219d3e15d0ea5a5f301e5449c507d1"}
+{"testProcess":"tests/consumers/projection-boundaries.test.ts","command":["/Users/erik/.bun/install/cache/@oven/bun-darwin-aarch64@1.4.2@@@1/bin/bun","test","--timeout","30000","./tests/consumers/projection-boundaries.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/consumers/projection-boundaries.test.ts:
+(pass) Priority projection identifier policies require absolute end in runtime and published schemas [52.09ms]
+(pass) CONTRACT-038 missing decimal scale is distinct from null and logical annotations require exact strings [654.04ms]
+
+ 2 pass
+ 0 fail
+ 153 expect() calls
+Ran 2 tests across 1 file. [4.41s]
+{"testProcess":"tests/consumers/projection-boundaries.test.ts","exitCode":0,"pass":2,"fail":0,"assertions":153,"completeSummary":true,"logSha256":"633a6ef1513bfc5092c8eb48cb93a373134bda8ba53582463d01c229cabd1871"}
+{"testProcess":"tests/consumers/tablespec-chain.test.ts","command":["/Users/erik/.bun/install/cache/@oven/bun-darwin-aarch64@1.4.2@@@1/bin/bun","test","--timeout","30000","./tests/consumers/tablespec-chain.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/consumers/tablespec-chain.test.ts:
+(pass) CONTRACT-039 priority-system chains retain native source, every stage and qualified diagnostics [1662.87ms]
+(pass) CONTRACT-039 blocked stages retain evidence without exposing a partial final target [835.01ms]
+
+ 2 pass
+ 0 fail
+ 99 expect() calls
+Ran 2 tests across 1 file. [6.10s]
+{"testProcess":"tests/consumers/tablespec-chain.test.ts","exitCode":0,"pass":2,"fail":0,"assertions":99,"completeSummary":true,"logSha256":"33a27c2d9c0370ac610738ace9830a1dc8a3742bfddadd30bbb64ad09e6d32e5"}
+{"testProcess":"tests/core-uuid-key.test.ts","command":["/Users/erik/.bun/install/cache/@oven/bun-darwin-aarch64@1.4.2@@@1/bin/bun","test","--timeout","30000","./tests/core-uuid-key.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/core-uuid-key.test.ts:
+(pass) versioned tuples match independent oracle and reject old codec, stale or forged framing [68.77ms]
+
+ 1 pass
+ 0 fail
+ 397 expect() calls
+Ran 1 test across 1 file. [3.67s]
+{"testProcess":"tests/core-uuid-key.test.ts","exitCode":0,"pass":1,"fail":0,"assertions":397,"completeSummary":true,"logSha256":"5fdd601b8ca4868dedd5b24a0313f64c81cec7b283e50c8a00379e7a449525bf"}
+{"testProcess":"tests/core-uuid-transition.test.ts","command":["/Users/erik/.bun/install/cache/@oven/bun-darwin-aarch64@1.4.2@@@1/bin/bun","test","--timeout","30000","./tests/core-uuid-transition.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/core-uuid-transition.test.ts:
+(pass) explicit collision adoption, exact rollback and unrelated unknown preservation [8.01ms]
+(pass) structural source with unknown UUID key equality can be adopted explicitly, without adopting unrelated errors [1.35ms]
+
+ 2 pass
+ 0 fail
+ 11 expect() calls
+Ran 2 tests across 1 file. [3.52s]
+{"testProcess":"tests/core-uuid-transition.test.ts","exitCode":0,"pass":2,"fail":0,"assertions":11,"completeSummary":true,"logSha256":"ea515cf65deae691112020d2c41223f950345291651b9e7946b19507aeabfbf2"}
+{"testProcess":"tests/core-uuid.test.ts","command":["/Users/erik/.bun/install/cache/@oven/bun-darwin-aarch64@1.4.2@@@1/bin/bun","test","--timeout","30000","./tests/core-uuid.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/core-uuid.test.ts:
+(pass) version-scoped validation, copied authoring, allowed values, defaults and serialization [25.80ms]
+(pass) current metadata inspectors, selection, containers and unknown refinement boundaries [11.38ms]
+(pass) explicit Field-domain authoring preserves the source and validates collisions [0.86ms]
+(pass) extension validators receive actual0.9 UUID semantics, not the structural compatibility view [8.13ms]
+(pass) caller-visible schema mutations do not change internal0.9 validators or codec inventory [2.62ms]
+(pass) signed and unsigned integer128 keep mathematical equality and lossless bigint context [1.51ms]
+
+ 6 pass
+ 0 fail
+ 52 expect() calls
+Ran 6 tests across 1 file. [3.79s]
+{"testProcess":"tests/core-uuid.test.ts","exitCode":0,"pass":6,"fail":0,"assertions":52,"completeSummary":true,"logSha256":"df6f0fc3c8768aec89c2e3ceada0a88a21bf272b1d7b2d0e37d737aaeb0ed454"}
+{"testProcess":"tests/core/cardinality-ideals.test.ts","command":["/Users/erik/.bun/install/cache/@oven/bun-darwin-aarch64@1.4.2@@@1/bin/bun","test","--timeout","30000","./tests/core/cardinality-ideals.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/core/cardinality-ideals.test.ts:
+(pass) Cardinality is explicit Field meaning with independent item/value references and availability [19.93ms]
+(pass) containers cannot acquire scalar labels; invalid roles, labels and item links refuse atomically [1.59ms]
+(pass) unknown cardinality and recursive/cross-module item definitions remain copied and recoverable [1.85ms]
+(pass) legacy cardinality and itemType stay opaque; transition archives both even when they look valid [37.88ms]
+(pass) rollback retains later assertions separately and refuses forged receipts or changed identities [0.86ms]
+
+ 5 pass
+ 0 fail
+ 377 expect() calls
+Ran 5 tests across 1 file. [353.00ms]
+{"testProcess":"tests/core/cardinality-ideals.test.ts","exitCode":0,"pass":5,"fail":0,"assertions":377,"completeSummary":true,"logSha256":"c428e1243338d9e7b78c4784cf34c45f4422d3780d3a98471694e1403c1ff44b"}
+{"testProcess":"tests/core/cardinality-operations.test.ts","command":["/Users/erik/.bun/install/cache/@oven/bun-darwin-aarch64@1.4.2@@@1/bin/bun","test","--timeout","30000","./tests/core/cardinality-operations.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/core/cardinality-operations.test.ts:
+(pass) original0.8 cardinality inspection retains shape and item references without authoring admission [9.98ms]
+(pass) authored Cardinality and item meaning survive serialized verified receipts without source mutation [25.34ms]
+(pass) item omission preserves meaning; explicit set or clear retains previous meaning in archived source [0.69ms]
+(pass) legacy, missing, unknown and inapplicable Cardinality inspections never infer native meaning [7.37ms]
+(pass) invalid requests and item/scalar conflicts fail atomically; no getters execute [0.36ms]
+(pass) forged or stale author receipts cannot confer provenance [1.68ms]
+
+ 6 pass
+ 0 fail
+ 159 expect() calls
+Ran 6 tests across 1 file. [388.00ms]
+{"testProcess":"tests/core/cardinality-operations.test.ts","exitCode":0,"pass":6,"fail":0,"assertions":159,"completeSummary":true,"logSha256":"b1b7546f5b55d9f34bd14f2eab95ab9bfb68c2ad648b84f89c5ac31e538920d7"}
+{"testProcess":"tests/core/core.test.ts","command":["/Users/erik/.bun/install/cache/@oven/bun-darwin-aarch64@1.4.2@@@1/bin/bun","test","--timeout","30000","./tests/core/core.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/core/core.test.ts:
+(pass) US-001-AC1: JSON and YAML retain unknown extension and core fields without claiming understanding [7.94ms]
+(pass) US-001-AC2: names in independent contexts coexist; identity and references are checked [15.23ms]
+(pass) US-001-AC2: native semantics are not inferred by extension structural validation [5.27ms]
+(pass) US-001-AC2: undeclared versions, duplicate registration, invalid schema and scope fail explicitly [8.10ms]
+(pass) US-001-AC3: safe edits are atomic, checked and reflected in both serializations [6.81ms]
+(pass) US-001-AC3: unknown dependencies block edits even if the edited extension is known [3.41ms]
+(pass) US-001-AC2: validator exceptions never become successful validation [3.18ms]
+(pass) US-001-AC4: duplicate keys and non-JSON YAML are rejected [1.11ms]
+(pass) US-001-AC4: numeric boundaries fail instead of rounding and interoperable decimals survive [0.67ms]
+(pass) US-001-AC4: non-JSON programmatic values cannot disappear during serialization [0.13ms]
+(pass) US-001-AC4: dangerous property names are retained as data, never inherited behavior [0.27ms]
+(pass) US-001-AC4: document depth and size limits fail explicitly [0.36ms]
+(pass) US-001-AC1: generated unknown content survives repeated portable serialization [45.61ms]
+(pass) registry captures a frozen copy, independent of subsequent package edits [7.44ms]
+(pass) published minimal document fixture validates with independent namespaces and references [0.75ms]
+(pass) US-001-AC1: YAML preserves long leading-indented multiline native comments [0.30ms]
+(pass) US-001-AC2: JSON equality handles reference objects and method-like data keys safely [4.73ms]
+
+ 17 pass
+ 0 fail
+ 183 expect() calls
+Ran 17 tests across 1 file. [3.67s]
+{"testProcess":"tests/core/core.test.ts","exitCode":0,"pass":17,"fail":0,"assertions":183,"completeSummary":true,"logSha256":"a2b56e674ef20610a007bf294d821d70a07276fdaa65fd39c6e7d9bdbe69ca50"}
+{"testProcess":"tests/core/deep-json-equality.test.ts","command":["/Users/erik/.bun/install/cache/@oven/bun-darwin-aarch64@1.4.2@@@1/bin/bun","test","--timeout","30000","./tests/core/deep-json-equality.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/core/deep-json-equality.test.ts:
+(pass) deep JSON const/enum/unique comparisons avoid exponential string escaping [4.30ms]
+(pass) deep unknown native content survives TableSpec receipt verification [81.06ms]
+(pass) deep unrelated metadata survives authored TableSpec projection and exact ideal recovery [57.73ms]
+
+ 3 pass
+ 0 fail
+ 10 expect() calls
+Ran 3 tests across 1 file. [580.00ms]
+{"testProcess":"tests/core/deep-json-equality.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":10,"completeSummary":true,"logSha256":"9966f7ebf2546b2428ab36bfa52c9462cd3ba34972e704671adb7555ccb7cd89"}
+{"testProcess":"tests/core/facet-authoring.test.ts","command":["/Users/erik/.bun/install/cache/@oven/bun-darwin-aarch64@1.4.2@@@1/bin/bun","test","--timeout","30000","./tests/core/facet-authoring.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/core/facet-authoring.test.ts:
+(pass) authored facet groups have copied provenance, exact declared bounds and verifiable JSON/YAML receipts [34.01ms]
+(pass) facet updates retain unknown groups and nested qualifiers; unknown units stay uninterpreted [0.75ms]
+(pass) invalid facet patches, conflicts, legacy authoring and hostile inputs refuse without mutation [2.92ms]
+(pass) stale, forged and cross-document facet receipts cannot confer author provenance [0.87ms]
+
+ 4 pass
+ 0 fail
+ 94 expect() calls
+Ran 4 tests across 1 file. [3.51s]
+{"testProcess":"tests/core/facet-authoring.test.ts","exitCode":0,"pass":4,"fail":0,"assertions":94,"completeSummary":true,"logSha256":"66bbef50dad1a20b812d136211380d24292f87b9af80df832c5372cd8f41915d"}
+{"testProcess":"tests/core/facet-ideals.test.ts","command":["/Users/erik/.bun/install/cache/@oven/bun-darwin-aarch64@1.4.2@@@1/bin/bun","test","--timeout","30000","./tests/core/facet-ideals.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/core/facet-ideals.test.ts:
+(pass) candidate facet semantics check families, roles, shape, pairs and qualified unknowns [30.14ms]
+(pass) candidate JSON Schema documents structural limits; semantic comparison remains explicit [2.83ms]
+(pass) facet tokens are checked before conversion; unsafe numbers and accessors refuse atomically [1.22ms]
+
+ 3 pass
+ 0 fail
+ 887 expect() calls
+Ran 3 tests across 1 file. [312.00ms]
+{"testProcess":"tests/core/facet-ideals.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":887,"completeSummary":true,"logSha256":"26c8b5361262f4f253ffb99334ffbcb72af95bffa2dbcc994bff11cbc63a3317"}
+{"testProcess":"tests/core/facet-schema-properties.test.ts","command":["/Users/erik/.bun/install/cache/@oven/bun-darwin-aarch64@1.4.2@@@1/bin/bun","test","--timeout","30000","./tests/core/facet-schema-properties.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/core/facet-schema-properties.test.ts:
+(pass) original0.8 facet inspection covers exact new bounds and older groups without authoring [36.27ms]
+(pass) original0.8 facet unknown qualifiers and units stay scoped; interpretations are isolated [1.64ms]
+(pass) historical projection bridge snapshots and validates its public input [0.08ms]
+
+ 3 pass
+ 0 fail
+ 61 expect() calls
+Ran 3 tests across 1 file. [325.00ms]
+{"testProcess":"tests/core/facet-schema-properties.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":61,"completeSummary":true,"logSha256":"680077d310eb8f7c55dd8c2f610cc271f94579e2c34e04dea2fcd94e7b0cd88a"}
+{"testProcess":"tests/core/facet-transition.test.ts","command":["/Users/erik/.bun/install/cache/@oven/bun-darwin-aarch64@1.4.2@@@1/bin/bun","test","--timeout","30000","./tests/core/facet-transition.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/core/facet-transition.test.ts:
+(pass) explicit facet migration archives every legacy collision and recovers it through both serializations [49.74ms]
+(pass) rollback restores the original without reinterpreting later bounds; forged receipts and wrong versions refuse [5.45ms]
+(pass) 0.5.0 document validation and selection preserve item facets, availability, unknowns and boundaries [6.03ms]
+
+ 3 pass
+ 0 fail
+ 135 expect() calls
+Ran 3 tests across 1 file. [3.65s]
+{"testProcess":"tests/core/facet-transition.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":135,"completeSummary":true,"logSha256":"38a4295c5ee34496afd3ab59afb79659aeaa28f576ded02871512af65e3d7a85"}
+{"testProcess":"tests/core/field-ideals.test.ts","command":["/Users/erik/.bun/install/cache/@oven/bun-darwin-aarch64@1.4.2@@@1/bin/bun","test","--timeout","30000","./tests/core/field-ideals.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/core/field-ideals.test.ts:
+(pass) field kinds are explicit; missing kind is never inferred from scalar family [11.59ms]
+(pass) legacy collisions stay opaque, including names that are now known [7.11ms]
+(pass) new profile refuses malformed kinds and structured scalar claims atomically [1.42ms]
+(pass) unknown future kind and other open metadata survive without semantic completion [1.16ms]
+(pass) future envelope versions and unsafe getter inputs cannot be interpreted [0.15ms]
+
+ 5 pass
+ 0 fail
+ 136 expect() calls
+Ran 5 tests across 1 file. [317.00ms]
+{"testProcess":"tests/core/field-ideals.test.ts","exitCode":0,"pass":5,"fail":0,"assertions":136,"completeSummary":true,"logSha256":"c17f21081370084336f43dfa9ad34cf9e77da795b052ea91c02d86b7b981d1cf"}
+{"testProcess":"tests/core/field-kind.test.ts","command":["/Users/erik/.bun/install/cache/@oven/bun-darwin-aarch64@1.4.2@@@1/bin/bun","test","--timeout","30000","./tests/core/field-kind.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/core/field-kind.test.ts:
+(pass) original0.8 kind inspection use the exact7.0 result contract [10.46ms]
+(pass) kind lookup separates legacy, unknown, missing and defined roles without inventing provenance [20.80ms]
+(pass) author provenance survives serialization, verification and rollback without claiming native meaning [9.68ms]
+(pass) authoring blocks unknown meaning, legacy versions and structured/scalar conflicts atomically [0.34ms]
+(pass) provenance verification rejects forged paths, altered assertions and stale native or unrelated content [3.03ms]
+
+ 5 pass
+ 0 fail
+ 138 expect() calls
+Ran 5 tests across 1 file. [410.00ms]
+{"testProcess":"tests/core/field-kind.test.ts","exitCode":0,"pass":5,"fail":0,"assertions":138,"completeSummary":true,"logSha256":"5c2ef47d7994a28cc1548c644c85a438ddd1089895f05245064ba6c87cc2f7e2"}
+{"testProcess":"tests/core/field-transition.test.ts","command":["/Users/erik/.bun/install/cache/@oven/bun-darwin-aarch64@1.4.2@@@1/bin/bun","test","--timeout","30000","./tests/core/field-transition.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/core/field-transition.test.ts:
+(pass) upgrade explicitly archives every legacy collision and preserves all other metadata [2.19ms]
+(pass) serialized receipts support exact model rollback while retaining later assertions and native edits [15.28ms]
+(pass) tampered or stale receipts fail without overwriting source or edited model [1.91ms]
+(pass) null, method-like names, unknown content, and malformed inputs retain copy safety [1.83ms]
+
+ 4 pass
+ 0 fail
+ 51 expect() calls
+Ran 4 tests across 1 file. [318.00ms]
+{"testProcess":"tests/core/field-transition.test.ts","exitCode":0,"pass":4,"fail":0,"assertions":51,"completeSummary":true,"logSha256":"01ac3375637efc1e2746481d86e3becf4939ba2b3f50bc2a9ccdd0cd3ca25110"}
+{"testProcess":"tests/core/javascript-numeric.test.ts","command":["/Users/erik/.bun/install/cache/@oven/bun-darwin-aarch64@1.4.2@@@1/bin/bun","test","--timeout","30000","./tests/core/javascript-numeric.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/core/javascript-numeric.test.ts:
+(pass) safe integer admission and bigint boundaries [11.18ms]
+(pass) decimal admission uses exact binary value rather than shortest spelling [0.21ms]
+(pass) constructor retains spelling and refuses malformed and over-limit input [0.35ms]
+(pass) declared decimals, exclusions, unknown qualifiers and JSON/YAML carriers [12.01ms]
+
+ 4 pass
+ 0 fail
+ 77 expect() calls
+Ran 4 tests across 1 file. [3.79s]
+{"testProcess":"tests/core/javascript-numeric.test.ts","exitCode":0,"pass":4,"fail":0,"assertions":77,"completeSummary":true,"logSha256":"1818c8141f7f45e46b4a18095e08164c0af2f4c217f4a2fc1767686150102c3e"}
+{"testProcess":"tests/core/json-array-carriers.test.ts","command":["/Users/erik/.bun/install/cache/@oven/bun-darwin-aarch64@1.4.2@@@1/bin/bun","test","--timeout","30000","./tests/core/json-array-carriers.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/core/json-array-carriers.test.ts:
+(pass) sparse arrays cannot substitute a digit-only ordinary property for an indexed value [0.31ms]
+(pass) dense ordered JSON arrays preserve null, exact token strings and unknown object keys [0.07ms]
+(pass) JSON conformance ignores builtin prototype choice but detects every represented-value mutation [6.08ms]
+
+ 3 pass
+ 0 fail
+ 19 expect() calls
+Ran 3 tests across 1 file. [12.00ms]
+{"testProcess":"tests/core/json-array-carriers.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":19,"completeSummary":true,"logSha256":"f0850bc40c951b621c234f15ee0372b5774e0d5e636d6e039c516d761bf8c809"}
+{"testProcess":"tests/core/key-ideals.test.ts","command":["/Users/erik/.bun/install/cache/@oven/bun-darwin-aarch64@1.4.2@@@1/bin/bun","test","--timeout","30000","./tests/core/key-ideals.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/core/key-ideals.test.ts:
+(pass) candidate Key checks membership, primary/alternate identities and component equality [71.82ms]
+(pass) key schema leaves cross-reference semantics to validator; old profiles stay opaque [13.28ms]
+(pass) key candidate never invokes getters and retains path-qualified unknowns [0.30ms]
+
+ 3 pass
+ 0 fail
+ 375 expect() calls
+Ran 3 tests across 1 file. [373.00ms]
+{"testProcess":"tests/core/key-ideals.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":375,"completeSummary":true,"logSha256":"c410b85fa016b7d460f9255496113541c4cf486939ed0f68a46dfc7ce75f77e6"}
+{"testProcess":"tests/core/key-operations.test.ts","command":["/Users/erik/.bun/install/cache/@oven/bun-darwin-aarch64@1.4.2@@@1/bin/bun","test","--timeout","30000","./tests/core/key-operations.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/core/key-operations.test.ts:
+(pass) original0.8 Key inspection and lookup retain unknown qualifiers and scoped authoring [25.55ms]
+(pass) public Key authoring, inspection and stable lookup preserve copied source and both serializations [32.53ms]
+(pass) key updates retain identity and unknowns, reject tuple changes and implicit primary demotion [6.82ms]
+(pass) operation verification rejects forged/stale context and old profiles remain opaque [4.14ms]
+(pass) 0.6.0 core operations use new receipts and refuse changes invalidating keys [44.17ms]
+(pass) Key selection reports explicit member/component boundaries and traverses by identity [4.89ms]
+(pass) 0.6.0 extension validators receive the actual key-bearing document and can reject it [12.19ms]
+(pass) member traversal terminates on cycles and component order cannot change under a stable key ID [3.29ms]
+
+ 8 pass
+ 0 fail
+ 97 expect() calls
+Ran 8 tests across 1 file. [3.78s]
+{"testProcess":"tests/core/key-operations.test.ts","exitCode":0,"pass":8,"fail":0,"assertions":97,"completeSummary":true,"logSha256":"2c1f4e5be91acf95871624802f00307a0786fe1c9f85b6de315c64188c897f8e"}
+{"testProcess":"tests/core/key-transition.test.ts","command":["/Users/erik/.bun/install/cache/@oven/bun-darwin-aarch64@1.4.2@@@1/bin/bun","test","--timeout","30000","./tests/core/key-transition.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/core/key-transition.test.ts:
+(pass) explicit Key migration archives all element collisions without adopting author intent [79.36ms]
+(pass) rollback restores exact old content and separately retains later key assertions and native edits [6.13ms]
+(pass) forged receipts, wrong identities/versions and invalid current key meaning reject atomically [10.60ms]
+(pass) no-collision migration and copy discipline preserve opaque scopes without getters [2.08ms]
+
+ 4 pass
+ 0 fail
+ 269 expect() calls
+Ran 4 tests across 1 file. [430.00ms]
+{"testProcess":"tests/core/key-transition.test.ts","exitCode":0,"pass":4,"fail":0,"assertions":269,"completeSummary":true,"logSha256":"8cab4447ac2b789b605591487f3da3fc2505ad8ba01cbf4385bcdcb44ab4aa54"}
+{"testProcess":"tests/core/key-tuple.test.ts","command":["/Users/erik/.bun/install/cache/@oven/bun-darwin-aarch64@1.4.2@@@1/bin/bun","test","--timeout","30000","./tests/core/key-tuple.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/core/key-tuple.test.ts:
+(pass) key tuple vectors and domain boundaries produce exact frames or atomic refusals [98.55ms]
+(pass) stable key ID survives name/list changes while retained receipts detect stale context [0.89ms]
+(pass) tuple verification rejects forged and nonminimal frames and altered retained inputs [1.39ms]
+(pass) unknown relevant qualifiers block and unrelated native extension content survives [0.92ms]
+(pass) shortest length/count framing and no getter evaluation [7.82ms]
+(pass) resource bounds and a bad later component refuse the whole tuple [3.22ms]
+(pass) current document context and result schema reject prior versions without downgrading [0.88ms]
+
+ 7 pass
+ 0 fail
+ 247 expect() calls
+Ran 7 tests across 1 file. [415.00ms]
+{"testProcess":"tests/core/key-tuple.test.ts","exitCode":0,"pass":7,"fail":0,"assertions":247,"completeSummary":true,"logSha256":"f4ced1433d009953edda20dbb8f77a2a2f2cb61429891b797ffbc1de7624857d"}
+{"testProcess":"tests/core/native-json.test.ts","command":["/Users/erik/.bun/install/cache/@oven/bun-darwin-aarch64@1.4.2@@@1/bin/bun","test","--timeout","30000","./tests/core/native-json.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/core/native-json.test.ts:
+(pass) CONTRACT-001: shared exact JSON tree is representation-identical across three extensions [11.62ms]
+(pass) US-024-AC4: explicit YAML 1.1 preserves underscored boundaries without changing the default profile [0.71ms]
+(pass) US-024-AC4: date-only string projection is explicit and does not admit general timestamps [0.20ms]
+(pass) US-024-AC4: PyYAML boolean vocabulary leaves single-letter axis names unchanged [0.25ms]
+
+ 4 pass
+ 0 fail
+ 16 expect() calls
+Ran 4 tests across 1 file. [184.00ms]
+{"testProcess":"tests/core/native-json.test.ts","exitCode":0,"pass":4,"fail":0,"assertions":16,"completeSummary":true,"logSha256":"2dcdd587132f37eecb71c2714317bf23ff40d612ea3999255b1e22f376da612d"}
+{"testProcess":"tests/core/nullability-authoring.test.ts","command":["/Users/erik/.bun/install/cache/@oven/bun-darwin-aarch64@1.4.2@@@1/bin/bun","test","--timeout","30000","./tests/core/nullability-authoring.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/core/nullability-authoring.test.ts:
+(pass) inspection distinguishes legacy, absent, inapplicable, known and unknown without inventing provenance [3.89ms]
+(pass) authored availability has exact identity/provenance and survives JSON/YAML without claiming native absence meaning [16.60ms]
+(pass) unknown assertions, non-fields, wrong versions and invalid identities refuse instead of overwriting intent [0.44ms]
+(pass) tampered and stale receipts refuse; migration rollback retains new authored assertions [2.56ms]
+
+ 4 pass
+ 0 fail
+ 49 expect() calls
+Ran 4 tests across 1 file. [387.00ms]
+{"testProcess":"tests/core/nullability-authoring.test.ts","exitCode":0,"pass":4,"fail":0,"assertions":49,"completeSummary":true,"logSha256":"cbfbcedadd0388891c18f99689ad70ee12b606381d4d64c84bd85732242bba1c"}
+{"testProcess":"tests/core/nullability-ideals.test.ts","command":["/Users/erik/.bun/install/cache/@oven/bun-darwin-aarch64@1.4.2@@@1/bin/bun","test","--timeout","30000","./tests/core/nullability-ideals.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/core/nullability-ideals.test.ts:
+(pass) explicit nullability requires a Field and survives both formats without native interpretation [10.03ms]
+(pass) missing availability does not inherit native nullable flags or defaults [0.82ms]
+(pass) older envelopes preserve all colliding nullability values as opaque content [10.79ms]
+(pass) unknown availability is retained, but malformed values and non-Field use fail atomically [0.96ms]
+(pass) unsafe getters and unsupported future versions cannot be interpreted [0.13ms]
+
+ 5 pass
+ 0 fail
+ 140 expect() calls
+Ran 5 tests across 1 file. [288.00ms]
+{"testProcess":"tests/core/nullability-ideals.test.ts","exitCode":0,"pass":5,"fail":0,"assertions":140,"completeSummary":true,"logSha256":"08027ac9c94c91cbaaa7588c40f02420d25051deab56e9b00a104075cf59ed26"}
+{"testProcess":"tests/core/nullability-schema-properties.test.ts","command":["/Users/erik/.bun/install/cache/@oven/bun-darwin-aarch64@1.4.2@@@1/bin/bun","test","--timeout","30000","./tests/core/nullability-schema-properties.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/core/nullability-schema-properties.test.ts:
+(pass) original0.8 nullability distinguishes declared, unknown, missing and inapplicable meanings [9.04ms]
+
+ 1 pass
+ 0 fail
+ 20 expect() calls
+Ran 1 test across 1 file. [302.00ms]
+{"testProcess":"tests/core/nullability-schema-properties.test.ts","exitCode":0,"pass":1,"fail":0,"assertions":20,"completeSummary":true,"logSha256":"b4d4b5f0e95c2a8b17bdc6b5cc6f12a4288d942936cd078a05ec393ce84be25d"}
+{"testProcess":"tests/core/nullability-transition.test.ts","command":["/Users/erik/.bun/install/cache/@oven/bun-darwin-aarch64@1.4.2@@@1/bin/bun","test","--timeout","30000","./tests/core/nullability-transition.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/core/nullability-transition.test.ts:
+(pass) explicit upgrade archives every old label and preserves roles, native refinements and references [2.44ms]
+(pass) both receipt formats roll back original model while retaining subsequent availability and native edits [15.38ms]
+(pass) null, empty, known, future and method-like collisions remain recoverable [5.31ms]
+(pass) forged receipts, wrong identity, wrong versions and malformed current states refuse atomically [2.02ms]
+(pass) 0.1.0 requires the Field transition first and the inverse chain preserves both collisions [2.02ms]
+(pass) getter inputs are refused without invoking artifact code [0.04ms]
+
+ 6 pass
+ 0 fail
+ 61 expect() calls
+Ran 6 tests across 1 file. [311.00ms]
+{"testProcess":"tests/core/nullability-transition.test.ts","exitCode":0,"pass":6,"fail":0,"assertions":61,"completeSummary":true,"logSha256":"a540701e653d4638b7098c67f2ae655f0884cca188bfb88dfdcd3a2fa6eb078e"}
+{"testProcess":"tests/core/prepared-inspection.test.ts","command":["/Users/erik/.bun/install/cache/@oven/bun-darwin-aarch64@1.4.2@@@1/bin/bun","test","--timeout","30000","./tests/core/prepared-inspection.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/core/prepared-inspection.test.ts:
+(pass) prepared selectors exactly match ordinary core meanings for every fixture element [97.58ms]
+(pass) unknown Key qualifiers and facet assertions remain partial with exact retained paths [7.07ms]
+(pass) caller and result mutations cannot alter the owned snapshot or later meanings [4.48ms]
+(pass) preparation and selectors refuse invalid sources and malformed or unresolved identities [6.08ms]
+(pass) preparation retains JSON safety guards without executing caller accessors [3.14ms]
+
+ 5 pass
+ 0 fail
+ 103 expect() calls
+Ran 5 tests across 1 file. [3.69s]
+{"testProcess":"tests/core/prepared-inspection.test.ts","exitCode":0,"pass":5,"fail":0,"assertions":103,"completeSummary":true,"logSha256":"3d499f1364e7cdeb48344eff13a515831730a4c33130bc3ab9260976e3f2d63f"}
+{"testProcess":"tests/core/read-only-result-schemas.test.ts","command":["/Users/erik/.bun/install/cache/@oven/bun-darwin-aarch64@1.4.2@@@1/bin/bun","test","--timeout","30000","./tests/core/read-only-result-schemas.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/core/read-only-result-schemas.test.ts:
+(pass) original0.8 read-only Key and relationship result schemas refuse legacy meaning [34.58ms]
+
+ 1 pass
+ 0 fail
+ 4 expect() calls
+Ran 1 test across 1 file. [405.00ms]
+{"testProcess":"tests/core/read-only-result-schemas.test.ts","exitCode":0,"pass":1,"fail":0,"assertions":4,"completeSummary":true,"logSha256":"5453d95e930a28e8a00480da050e679649c76fc612c3f852e1db3afd72ff312a"}
+{"testProcess":"tests/core/relationship-ideal.test.ts","command":["/Users/erik/.bun/install/cache/@oven/bun-darwin-aarch64@1.4.2@@@1/bin/bun","test","--timeout","30000","./tests/core/relationship-ideal.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/core/relationship-ideal.test.ts:
+(pass) relationship candidate resolves keyed endpoints, participation, lifecycle and reified identity [183.45ms]
+(pass) old relationship-shaped unknown members remain opaque and candidate does not infer associations [2.34ms]
+(pass) candidate retains unknown meanings and rejects accessors and cyclic input without evaluation [1.23ms]
+
+ 3 pass
+ 0 fail
+ 255 expect() calls
+Ran 3 tests across 1 file. [464.00ms]
+{"testProcess":"tests/core/relationship-ideal.test.ts","exitCode":0,"pass":3,"fail":0,"assertions":255,"completeSummary":true,"logSha256":"e134027d49be985c27c467e3c7c2c2fbd77111e6ecb8ca597e0e634df683b319"}
+{"testProcess":"tests/core/relationship-operations.test.ts","command":["/Users/erik/.bun/install/cache/@oven/bun-darwin-aarch64@1.4.2@@@1/bin/bun","test","--timeout","30000","./tests/core/relationship-operations.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/core/relationship-operations.test.ts:
+(pass) original0.8 relationship inspection and lookup retain unknown lifecycle and endpoint qualifiers [21.85ms]
+(pass) candidate authoring and stable lookup expose all authored shapes with verified serialized receipts [390.74ms]
+(pass) rename and endpoint set reorder preserve stable identity and every unknown qualifier [3.52ms]
+(pass) existing IDs cannot move to different endpoint keys, directions or association Records [5.00ms]
+(pass) legacy values remain inspectable without authoring and future lifecycle stays uninterpreted [4.05ms]
+(pass) receipt recomputation, current context and input copying reject forgeries and getters [7.70ms]
+
+ 6 pass
+ 0 fail
+ 177 expect() calls
+Ran 6 tests across 1 file. [776.00ms]
+{"testProcess":"tests/core/relationship-operations.test.ts","exitCode":0,"pass":6,"fail":0,"assertions":177,"completeSummary":true,"logSha256":"03e7634f8fcb697f35c273d95f0238c61ee0f2dc4d717168d96e5a7be8aa1dc7"}
+{"testProcess":"tests/core/relationship-public.test.ts","command":["/Users/erik/.bun/install/cache/@oven/bun-darwin-aarch64@1.4.2@@@1/bin/bun","test","--timeout","30000","./tests/core/relationship-public.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/core/relationship-public.test.ts:
+(pass) public 0.7.0 validation and document serialization retain authored relationships and reject broken targets [23.73ms]
+(pass) earlier core operations use 0.7.0 receipts and refuse edits invalidating keyed endpoints [105.03ms]
+(pass) 0.7.0 element selection retains full relationship context and the explicitly declared element traversal scope [0.89ms]
+(pass) extension semantic validators receive the actual relationship-bearing 0.7.0 document [3.33ms]
+
+ 4 pass
+ 0 fail
+ 36 expect() calls
+Ran 4 tests across 1 file. [3.74s]
+{"testProcess":"tests/core/relationship-public.test.ts","exitCode":0,"pass":4,"fail":0,"assertions":36,"completeSummary":true,"logSha256":"ba98b57c7bbc1b81c463a79bff58563ba291eb233cb956ddc994fb2d6b6426b4"}
+{"testProcess":"tests/core/relationship-selection.test.ts","command":["/Users/erik/.bun/install/cache/@oven/bun-darwin-aarch64@1.4.2@@@1/bin/bun","test","--timeout","30000","./tests/core/relationship-selection.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/core/relationship-selection.test.ts:
+(pass) authored relationship selection resolves exact endpoint and alternate-key metadata with full source recovery [94.67ms]
+(pass) filters use exact stable identities, set intersection and empty-filter semantics [8.01ms]
+(pass) navigation is presentation metadata and retains undirected, inverse and association distinctions [2.26ms]
+(pass) selection refuses legacy inputs and invalid filters without executing getters [3.46ms]
+
+ 4 pass
+ 0 fail
+ 149 expect() calls
+Ran 4 tests across 1 file. [3.75s]
+{"testProcess":"tests/core/relationship-selection.test.ts","exitCode":0,"pass":4,"fail":0,"assertions":149,"completeSummary":true,"logSha256":"6933add9c5b7b9d1b5de1b7eaa52b536964f203982b6034578ae942c87236fed"}
+{"testProcess":"tests/core/relationship-transition.test.ts","command":["/Users/erik/.bun/install/cache/@oven/bun-darwin-aarch64@1.4.2@@@1/bin/bun","test","--timeout","30000","./tests/core/relationship-transition.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/core/relationship-transition.test.ts:
+(pass) explicit 0.6 to 0.7 transition archives every module collision without interpreting it [147.95ms]
+(pass) rollback restores original envelope and retains new assertions and native edits in its source [24.61ms]
+(pass) forged receipts, invalid current meaning and mismatched document identities reject [21.54ms]
+(pass) transition functions reject accessors without evaluating them [0.98ms]
+
+ 4 pass
+ 0 fail
+ 107 expect() calls
+Ran 4 tests across 1 file. [492.00ms]
+{"testProcess":"tests/core/relationship-transition.test.ts","exitCode":0,"pass":4,"fail":0,"assertions":107,"completeSummary":true,"logSha256":"153b0b48318b274e564e0f02faec9639901b7d59bd94facbf455af76181fe107"}
+{"testProcess":"tests/core/scalar.test.ts","command":["/Users/erik/.bun/install/cache/@oven/bun-darwin-aarch64@1.4.2@@@1/bin/bun","test","--timeout","30000","./tests/core/scalar.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/core/scalar.test.ts:
+(pass) CONTRACT-001 scalar families are interpreted core metadata and survive both formats [9.41ms]
+(pass) CONTRACT-001 unknown scalar families remain recoverable and explicitly incomplete [0.75ms]
+
+ 2 pass
+ 0 fail
+ 13 expect() calls
+Ran 2 tests across 1 file. [3.67s]
+{"testProcess":"tests/core/scalar.test.ts","exitCode":0,"pass":2,"fail":0,"assertions":13,"completeSummary":true,"logSha256":"7abf0bad2764e73db5a596d37eabbabb0823d9f6ba232c369811043310445418"}
+{"testProcess":"tests/core/schema-properties-review.test.ts","command":["/Users/erik/.bun/install/cache/@oven/bun-darwin-aarch64@1.4.2@@@1/bin/bun","test","--timeout","30000","./tests/core/schema-properties-review.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/core/schema-properties-review.test.ts:
+(pass) extension validators receive complete isolated 0.8.0 context at every scope [14.01ms]
+(pass) nullable numeric Fields reject null bounds without throwing [2.70ms]
+(pass) unknown facets cannot bypass known range validation [1.66ms]
+(pass) integer and fixed-scale ranges reject empty discrete intervals [5.33ms]
+(pass) single exclusive bounds reject integer and decimal domain extrema [29.77ms]
+(pass) range emptiness checks do not expand enormous numeric domains [0.77ms]
+(pass) value and default APIs reject identity accessors without invoking them [0.18ms]
+(pass) explicit malformed facet patches reject atomically [10.41ms]
+(pass) unknown length units remain incomplete and block extension edits for every bound shape [5.44ms]
+
+ 9 pass
+ 0 fail
+ 356 expect() calls
+Ran 9 tests across 1 file. [3.72s]
+{"testProcess":"tests/core/schema-properties-review.test.ts","exitCode":0,"pass":9,"fail":0,"assertions":356,"completeSummary":true,"logSha256":"d9530e5350abf03bfc669516c54c57690e482d42560f9fd0856c687445564398"}
+{"testProcess":"tests/core/schema-properties.test.ts","command":["/Users/erik/.bun/install/cache/@oven/bun-darwin-aarch64@1.4.2@@@1/bin/bun","test","--timeout","30000","./tests/core/schema-properties.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/core/schema-properties.test.ts:
+(pass) CONTRACT-049 schema properties > valid [8.09ms]
+(pass) CONTRACT-049 schema properties > duplicate-equal-integers [0.78ms]
+(pass) CONTRACT-049 schema properties > duplicate-equal-decimals [0.62ms]
+(pass) CONTRACT-049 schema properties > duplicate-equal-binary [0.51ms]
+(pass) CONTRACT-049 schema properties > invalid-default-domain [0.52ms]
+(pass) CONTRACT-049 schema properties > default-not-in-set [0.52ms]
+(pass) CONTRACT-049 schema properties > fractional-integer [0.55ms]
+(pass) CONTRACT-049 schema properties > decimal-rounding [0.65ms]
+(pass) CONTRACT-049 schema properties > collection-size [0.62ms]
+(pass) CONTRACT-049 schema properties > min-length [0.87ms]
+(pass) CONTRACT-049 schema properties > surrogate [0.59ms]
+(pass) CONTRACT-049 schema properties > empty-range [0.75ms]
+(pass) CONTRACT-049 schema properties > unpaired-flag [0.51ms]
+(pass) CONTRACT-049 schema properties > inverted-length [0.77ms]
+(pass) CONTRACT-049 schema properties > inverted-size [0.53ms]
+(pass) CONTRACT-049 schema properties > collection-bound-on-scalar [2.68ms]
+(pass) CONTRACT-049 schema properties > range-on-string [1.08ms]
+(pass) CONTRACT-049 schema properties > unknown-default-behavior [0.18ms]
+(pass) CONTRACT-049 schema properties > null-numeric-bound [0.89ms]
+(pass) CONTRACT-049 schema properties > unknown-facet-inverted-range [0.59ms]
+(pass) CONTRACT-049 schema properties > empty-discrete-integer-range [0.60ms]
+(pass) CONTRACT-049 schema properties > empty-discrete-decimal-range [0.66ms]
+(pass) CONTRACT-049 schema properties > signed8-min-domain-extreme-exclusive [0.19ms]
+(pass) CONTRACT-049 schema properties > signed8-min-domain-extreme-inclusive [0.09ms]
+(pass) CONTRACT-049 schema properties > signed8-max-domain-extreme-exclusive [0.11ms]
+(pass) CONTRACT-049 schema properties > signed8-max-domain-extreme-inclusive [0.11ms]
+(pass) CONTRACT-049 schema properties > unsigned8-min-domain-extreme-exclusive [0.09ms]
+(pass) CONTRACT-049 schema properties > unsigned8-min-domain-extreme-inclusive [0.08ms]
+(pass) CONTRACT-049 schema properties > unsigned8-max-domain-extreme-exclusive [0.10ms]
+(pass) CONTRACT-049 schema properties > unsigned8-max-domain-extreme-inclusive [0.08ms]
+(pass) CONTRACT-049 schema properties > decimal-scale0-min-domain-extreme-exclusive [0.11ms]
+(pass) CONTRACT-049 schema properties > decimal-scale0-min-domain-extreme-inclusive [0.07ms]
+(pass) CONTRACT-049 schema properties > decimal-scale0-max-domain-extreme-exclusive [0.09ms]
+(pass) CONTRACT-049 schema properties > decimal-scale0-max-domain-extreme-inclusive [0.09ms]
+(pass) CONTRACT-049 schema properties > decimal-scale2-min-domain-extreme-exclusive [0.09ms]
+(pass) CONTRACT-049 schema properties > decimal-scale2-min-domain-extreme-inclusive [0.09ms]
+(pass) CONTRACT-049 schema properties > decimal-scale2-max-domain-extreme-exclusive [0.10ms]
+(pass) CONTRACT-049 schema properties > decimal-scale2-max-domain-extreme-inclusive [0.08ms]
+(pass) CONTRACT-049 schema properties > public JSON/YAML round trips and input copy isolation [17.22ms]
+(pass) CONTRACT-049 schema properties > document/module metadata do not change IDs [3.14ms]
+(pass) CONTRACT-049 schema properties > value properties are refused on non-Field elements [2.66ms]
+(pass) CONTRACT-049 schema properties > defaults distinguish missing, null and present without mutation [7.16ms]
+(pass) CONTRACT-049 schema properties > exact numeric values, range boundaries and Unicode units [2.59ms]
+(pass) CONTRACT-049 schema properties > minimum-only length, zero-sized collections and maps [1.12ms]
+(pass) CONTRACT-049 schema properties > unknown unrelated content survives; relevant qualifiers refuse [2.67ms]
+(pass) CONTRACT-049 schema properties > legacy collisions archived, rollback retains subsequent assertions [4.67ms]
+(pass) CONTRACT-049 schema properties > 0.8.0 metadata selection follows item types and retains new properties [0.84ms]
+(pass) CONTRACT-049 schema properties > zero maximum lengths, absolute tokens and known default preservation [5.26ms]
+(pass) CONTRACT-049 schema properties > hostile accessors are never executed [0.10ms]
+(pass) CONTRACT-049 schema properties > legacy lookalikes stay unknown and need explicit migration [0.52ms]
+
+ 50 pass
+ 0 fail
+ 89 expect() calls
+Ran 50 tests across 1 file. [3.59s]
+{"testProcess":"tests/core/schema-properties.test.ts","exitCode":0,"pass":50,"fail":0,"assertions":89,"completeSummary":true,"logSha256":"1de14ca38bcbfc49e28270084c99e3f5a0650ac214431c2f1bd43ce35c006eec"}
+{"testProcess":"tests/core/selection.test.ts","command":["/Users/erik/.bun/install/cache/@oven/bun-darwin-aarch64@1.4.2@@@1/bin/bun","test","--timeout","30000","./tests/core/selection.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/core/selection.test.ts:
+(pass) CONTRACT-001 selection preserves distinct contexts, core reference boundaries, cycles and unknown meaning [12.36ms]
+(pass) CONTRACT-001 malformed queries and unresolved core sources fail without invoking accessors [87.19ms]
+(pass) CONTRACT-001 callers can supply semantic validation without confusing selection with native dependency discovery [8.14ms]
+(pass) CONTRACT-001 shared scalar selection keeps native recoveries intact across the five priority systems [720.79ms]
+
+ 4 pass
+ 0 fail
+ 63 expect() calls
+Ran 4 tests across 1 file. [4.42s]
+{"testProcess":"tests/core/selection.test.ts","exitCode":0,"pass":4,"fail":0,"assertions":63,"completeSummary":true,"logSha256":"51c5bc1e3a401aee04d9a4d1ef364a6260285ae8339cb83b1af698a08d0a3727"}
+{"testProcess":"tests/ddd/profile.test.ts","command":["/Users/erik/.bun/install/cache/@oven/bun-darwin-aarch64@1.4.2@@@1/bin/bun","test","--timeout","30000","./tests/ddd/profile.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/ddd/profile.test.ts:
+(pass) US-005-AC1: complete DDD profile survives JSON/YAML with distinct contexts and opaque invariants [148.29ms]
+(pass) US-005-AC2: semantic boundary corruptions fail independently of structural validity [229.74ms]
+(pass) US-005-AC3: unknown content and unproven equivalence survive but block conservative edits [68.26ms]
+(pass) US-005-AC4: fully understood semantic edits are atomic and do not change physical meaning [39.77ms]
+
+ 4 pass
+ 0 fail
+ 57 expect() calls
+Ran 4 tests across 1 file. [4.20s]
+{"testProcess":"tests/ddd/profile.test.ts","exitCode":0,"pass":4,"fail":0,"assertions":57,"completeSummary":true,"logSha256":"d8061d5b6d42e1667f559ce82e9dfb492e87836028ad1e3f106c4d2ba0c60d5a"}
+{"testProcess":"tests/semantic-types/composition.test.ts","command":["/Users/erik/.bun/install/cache/@oven/bun-darwin-aarch64@1.4.2@@@1/bin/bun","test","--timeout","30000","./tests/semantic-types/composition.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/semantic-types/composition.test.ts:
+(pass) core010 preserves UUID and bits128 constraints across explicit upgrade and edited rollback [40.88ms]
+(pass) core010 selection retains member and Key traversal with composed typed literals [37.28ms]
+(pass) older models require staged migration and opaque current090 semantic fields are archived [2.43ms]
+(pass) historical semantic1 receipts and unexpanded authoring profiles refuse explicitly [4.95ms]
+(pass) published core090 UUID and prior schema bytes remain unchanged [0.53ms]
+
+ 5 pass
+ 0 fail
+ 35 expect() calls
+Ran 5 tests across 1 file. [448.00ms]
+{"testProcess":"tests/semantic-types/composition.test.ts","exitCode":0,"pass":5,"fail":0,"assertions":35,"completeSummary":true,"logSha256":"476b2292897ca0486c62bf991adc0cb75b2a14d320d1091a8170fc27273547d9"}
+{"testProcess":"tests/semantic-types/core.test.ts","command":["/Users/erik/.bun/install/cache/@oven/bun-darwin-aarch64@1.4.2@@@1/bin/bun","test","--timeout","30000","./tests/semantic-types/core.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/semantic-types/core.test.ts:
+(pass) core reference structure is independent of extension registration, with inherited validation [19.10ms]
+(pass) legacy lookalikes remain opaque and copied in every old profile [9.80ms]
+(pass) declared references, native metadata and unknown qualifiers survive both formats and copied reads [13.04ms]
+(pass) extension semantic validators observe the complete 0.10.0 source [13.90ms]
+(pass) copy-on-write declarations, clearing, exact identity, and verified stale refusal [16.40ms]
+(pass) value evaluation requires explicit exact implementations and combines all checks [1.08ms]
+(pass) upgrade archives every legacy collision, keeps native context, and verifies both formats [11.58ms]
+(pass) prototype conversion is opt-in and refuses collisions, unknown annotation meanings and wrong profiles [2.74ms]
+(pass) getter inputs reject without execution [0.16ms]
+(pass) bare core references need no extension declaration, and release spellings are literal identities [0.46ms]
+(pass) published corpus agrees with authored structural and inherited-semantic outcomes [9.43ms]
+(pass) invalid rollback sources, malformed receipts and unsafe policy inputs reject [1.90ms]
+(pass) core declarations preserve an actual pinned TableSpec source through explicit migration and native export [3228.29ms]
+(pass) core and prototype extension meanings that disagree are reported, agreeing ones are not [2.80ms]
+(pass) 0.10.0 diagnostics do not describe the document as 0.8.0 [0.26ms]
+(pass) 0.8.0 schema-property authoring APIs reject 0.10.0 documents (documented limit) [0.27ms]
+
+ 16 pass
+ 0 fail
+ 155 expect() calls
+Ran 16 tests across 1 file. [3.68s]
+{"testProcess":"tests/semantic-types/core.test.ts","exitCode":0,"pass":16,"fail":0,"assertions":155,"completeSummary":true,"logSha256":"aaa872ffde2b6bcd9dead7e53032d23368bc18d71440f6d7e12645defef9f1a8"}
+{"testProcess":"tests/semantic-types/semantic-types.test.ts","command":["/Users/erik/.bun/install/cache/@oven/bun-darwin-aarch64@1.4.2@@@1/bin/bun","test","--timeout","30000","./tests/semantic-types/semantic-types.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/semantic-types/semantic-types.test.ts:
+(pass) exact vocabulary and version identities never fall back [0.49ms]
+(pass) value checks keep null and explicit invalidity; definitions and values are isolated [0.12ms]
+(pass) unknown qualifiers prevent validator execution [0.04ms]
+(pass) throwing and malformed validators cannot establish validity [0.10ms]
+(pass) a thrown validator error reports its message without establishing validity [0.02ms]
+(pass) malformed identities and registration definitions reject [0.04ms]
+(pass) annotations preserve native and unknown content in both serializations and copied access [35.28ms]
+(pass) wrong scopes, malformed payloads and unavailable profile reject [13.22ms]
+(pass) copy-on-write authoring preserves context and refuses profile overwrite [11.16ms]
+(pass) public package mutation cannot weaken the original prototype registry schema [5.31ms]
+
+ 10 pass
+ 0 fail
+ 43 expect() calls
+Ran 10 tests across 1 file. [357.00ms]
+{"testProcess":"tests/semantic-types/semantic-types.test.ts","exitCode":0,"pass":10,"fail":0,"assertions":43,"completeSummary":true,"logSha256":"2964622d942c9352f40207420f23c01f353b61c1f2b69a40d5b6b5496b059cc1"}
+{"testProcess":"tests/uuid.test.ts","command":["/Users/erik/.bun/install/cache/@oven/bun-darwin-aarch64@1.4.2@@@1/bin/bun","test","--timeout","30000","./tests/uuid.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/uuid.test.ts:
+(pass) UUID identity preserves every layout and original spelling without generation claims [1.97ms]
+(pass) no implicit syntax, truncation, rewriting or forged UUID snapshot [0.09ms]
+
+ 2 pass
+ 0 fail
+ 1564 expect() calls
+Ran 2 tests across 1 file. [3.57s]
+{"testProcess":"tests/uuid.test.ts","exitCode":0,"pass":2,"fail":0,"assertions":1564,"completeSummary":true,"logSha256":"a155d3d42074c6620fded807b3f6a7166a9ca4714f5cb3a195cfd9b3105d1b40"}
+
+ 255 pass
+ 0 fail
+ 12280 expect() calls
+Ran 255 tests across 45 files. [96.57s]

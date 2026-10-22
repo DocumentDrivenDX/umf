@@ -1,0 +1,16 @@
+{
+  "alternatives": [
+    "{ index: number; kind: \"list\"; nullable: boolean; repeatedIndex: number; elementIndex: number; elementNullable: boolean; layout: \"two-level\" | \"three-level\"; }",
+    "{ index: number; kind: \"map\"; nullable: boolean; repeatedIndex: number; keyIndex: number; valueIndex?: number; valueNullable: boolean; duplicateKeys: \"last-value\"; }"
+  ],
+  "authored": false,
+  "id": "[\"api\",\".\",\"ParquetContainer\"]",
+  "kind": "Type alias",
+  "members": [],
+  "parameters": [],
+  "purpose": "ParquetContainer is a type alias in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "ParquetContainer"
+}

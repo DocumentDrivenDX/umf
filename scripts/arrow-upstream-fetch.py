@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Fetch the entire pinned upstream IPC integration subtree, without cherry-picking cases."""
 import json,urllib.request,hashlib,concurrent.futures
 from pathlib import Path

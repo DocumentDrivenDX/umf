@@ -1,0 +1,116 @@
+{
+  "data": {
+    "extensionId": "umf.parquet.nullability",
+    "manifest": {
+      "capabilities": {
+        "directions": [
+          "import"
+        ],
+        "evidence": [
+          "tests/core-ideals/nullability-parquet.test.ts",
+          "fixtures/validation/nullability-parquet-native.json"
+        ],
+        "native": {
+          "subset": "Checked physical leaf availability with row or repeated-element context; no writer-input, Arrow or logical-type equivalence",
+          "system": "Parquet",
+          "version": "parquet-format@219e3f12a62f9476e830c21e26d030d231f7c017"
+        },
+        "validation": "structural"
+      },
+      "coreVersion": "0.10.0",
+      "description": "Retained physical presence context for Parquet leaf availability; original bytes and Arrow metadata remain authoritative",
+      "id": "umf.parquet.nullability",
+      "schema": {
+        "$id": "urn:umf:parquet:nullability-binding:1.0.0",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "properties": {
+          "binding": {
+            "const": {
+              "id": "umf.parquet.nullability",
+              "version": "1.0.0"
+            }
+          },
+          "carrier": {
+            "enum": [
+              "definition-level",
+              "unresolved"
+            ]
+          },
+          "contextIndex": {
+            "minimum": 0,
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "interpretation": {
+            "enum": [
+              "declared",
+              "unknown",
+              "unsupported"
+            ]
+          },
+          "nativePath": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "origin": {
+            "const": "classified"
+          },
+          "repetitionLevel": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "scope": {
+            "enum": [
+              "row-leaf-value",
+              "repeated-element-value",
+              "write-input",
+              "unresolved"
+            ]
+          }
+        },
+        "required": [
+          "origin",
+          "binding",
+          "scope",
+          "carrier",
+          "interpretation",
+          "nativePath",
+          "contextIndex",
+          "repetitionLevel"
+        ],
+        "title": "Retained Parquet physical availability scope",
+        "type": "object"
+      },
+      "scopes": [
+        "element"
+      ],
+      "semantics": "CONTRACT-040 and TD-041; core 0.3.0 operation requires explicit Field kind. Row context includes optional ancestors; repeated-element context assumes the selected repeated entry exists. No scalar cardinality or input validation is implied.",
+      "version": "1.0.0"
+    },
+    "registration": {
+      "apiIds": [],
+      "coreProfiles": [],
+      "mode": "unmapped"
+    },
+    "schemaId": "[\"schema\",\"spec/extensions/parquet-nullability/schema.json\",\"\"]",
+    "version": "1.0.0"
+  },
+  "id": "[\"extension\",\"umf.parquet.nullability\",\"1.0.0\"]",
+  "kind": "extension",
+  "links": [
+    "[\"guide\",\"extensions\"]",
+    "[\"schema\",\"spec/extensions/parquet-nullability/schema.json\",\"\"]",
+    "[\"integration\",\"umf.parquet.nullability@1.0.0:import\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 2327,
+      "path": "spec/extensions/parquet-nullability/package.json",
+      "sha256": "d3d3757f0f1ec5473a2b8526bedaa79ea4a6f60cefe0b367d5c202eedc70e760"
+    }
+  ],
+  "summary": "Retained physical presence context for Parquet leaf availability; original bytes and Arrow metadata remain authoritative",
+  "title": "umf.parquet.nullability · 1.0.0"
+}

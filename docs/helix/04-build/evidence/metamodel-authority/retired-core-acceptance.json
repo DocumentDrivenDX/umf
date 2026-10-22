@@ -1,0 +1,59 @@
+{
+  "profile": "umf.retired-core-acceptance/1",
+  "criteria": [
+    {
+      "criterion": "US-040-AC10",
+      "status": "REVIEWED_EXCEPTION",
+      "evidence": [
+        "docs/helix/02-design/adr/ADR-005-authoritative-metamodel.md",
+        "docs/helix/04-build/evidence/metamodel-authority/retirement-ledger.json"
+      ],
+      "rationale": "ADR-005 retires historical core upgrade/rollback support. Original criterion and evidence remain historical; current citations do not establish legacy migration support. Current unknown-content preservation and collision refusal remain required under CONTRACT-080 and US-089."
+    },
+    {
+      "criterion": "US-041-AC10",
+      "status": "REVIEWED_EXCEPTION",
+      "evidence": [
+        "docs/helix/02-design/adr/ADR-005-authoritative-metamodel.md",
+        "docs/helix/04-build/evidence/metamodel-authority/retirement-ledger.json"
+      ],
+      "rationale": "ADR-005 retires historical core upgrade/rollback support. Original criterion and evidence remain historical; current citations do not establish legacy migration support. Current unknown-content preservation and collision refusal remain required under CONTRACT-080 and US-089."
+    },
+    {
+      "criterion": "US-042-AC10",
+      "status": "REVIEWED_EXCEPTION",
+      "evidence": [
+        "docs/helix/02-design/adr/ADR-005-authoritative-metamodel.md",
+        "docs/helix/04-build/evidence/metamodel-authority/retirement-ledger.json"
+      ],
+      "rationale": "ADR-005 retires historical core upgrade/rollback support. Original criterion and evidence remain historical; current citations do not establish legacy migration support. Current unknown-content preservation and collision refusal remain required under CONTRACT-080 and US-089."
+    },
+    {
+      "criterion": "US-043-AC10",
+      "status": "REVIEWED_EXCEPTION",
+      "evidence": [
+        "docs/helix/02-design/adr/ADR-005-authoritative-metamodel.md",
+        "docs/helix/04-build/evidence/metamodel-authority/retirement-ledger.json"
+      ],
+      "rationale": "ADR-005 retires historical core upgrade/rollback support. Original criterion and evidence remain historical; current citations do not establish legacy migration support. Current unknown-content preservation and collision refusal remain required under CONTRACT-080 and US-089."
+    },
+    {
+      "criterion": "US-044-AC10",
+      "status": "REVIEWED_EXCEPTION",
+      "evidence": [
+        "docs/helix/02-design/adr/ADR-005-authoritative-metamodel.md",
+        "docs/helix/04-build/evidence/metamodel-authority/retirement-ledger.json"
+      ],
+      "rationale": "ADR-005 retires historical core upgrade/rollback support. Original criterion and evidence remain historical; current citations do not establish legacy migration support. Current unknown-content preservation and collision refusal remain required under CONTRACT-080 and US-089."
+    },
+    {
+      "criterion": "US-045-AC10",
+      "status": "REVIEWED_EXCEPTION",
+      "evidence": [
+        "docs/helix/02-design/adr/ADR-005-authoritative-metamodel.md",
+        "docs/helix/04-build/evidence/metamodel-authority/retirement-ledger.json"
+      ],
+      "rationale": "ADR-005 retires historical core upgrade/rollback support. Original criterion and evidence remain historical; current citations do not establish legacy migration support. Current unknown-content preservation and collision refusal remain required under CONTRACT-080 and US-089."
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "alternatives": [
+    "null",
+    "{ boolean: boolean; }",
+    "{ integerToken: string; }",
+    "{ decimalToken: string; }",
+    "{ string: string; }",
+    "{ binaryHex: string; }",
+    "{ floatToken: string; }",
+    "{ date: string; }",
+    "{ time: string; }",
+    "{ timestamp: string; }",
+    "{ array: (CoreLiteral)[]; }",
+    "{ map: { [key: string]: CoreLiteral; }; }",
+    "{ bits128Hex: string; }",
+    "{ uuid: string; }",
+    "{ group: { field: { module: string; element: string; }; value: ModelLiteral; }[]; }",
+    "{ array: ModelLiteral[]; }",
+    "{ map: { [key: string]: ModelLiteral; }; }"
+  ],
+  "authored": false,
+  "id": "[\"api\",\".\",\"ModelLiteral\"]",
+  "kind": "Type alias",
+  "members": [],
+  "parameters": [],
+  "purpose": "ModelLiteral is a type alias in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "ModelLiteral"
+}

@@ -1,4 +1,7 @@
-export const keyCandidate = ():any => ({umf:'0.6.0',id:'keys',vocabularies:{future:{version:'1.0.0'}},extensions:{future:{untouched:['9007199254740993',null]}},modules:[{id:'m',namespace:'sales',elements:[
+// SPDX-License-Identifier: MIT OR Apache-2.0
+import {CURRENT_CORE_VERSION} from '../src/model/types';
+// Synthetic current-core input for key semantic validation cases.
+export const keyCandidate = ():any => ({umf:CURRENT_CORE_VERSION,id:'keys',vocabularies:{future:{version:'1.0.0'}},extensions:{future:{untouched:['9007199254740993',null]}},modules:[{id:'m',namespace:'sales',elements:[
  {id:'Order',kind:'record',members:[{module:'m',element:'id'},{module:'m',element:'number'}],keys:[{id:'pk',name:'Order ID',primary:true,fields:[{module:'m',element:'id'}]},{id:'alternate',name:'Order number',fields:[{module:'m',element:'number'}]}],extensions:{}},
  {id:'id',kind:'field',scalarType:'integer',nullability:'required',cardinality:'one',extensions:{}},
  {id:'number',kind:'field',scalarType:'string',nullability:'required',cardinality:'one',extensions:{}},
@@ -19,15 +22,15 @@ export function keyCases(){
  add('same-key-id-in-other-record',(d,r)=>d.modules.push({id:'support',namespace:'support',elements:JSON.parse(JSON.stringify(d.modules[0].elements)).map((e:any)=>{for(const ref of e.members??[])ref.module='support';for(const k of e.keys??[])for(const ref of k.fields)ref.module='support';return e;})}),true);
  for(const family of ['boolean','binary','decimal'])add('allowed-'+family,(_,r,f)=>{f.scalarType=family;if(family==='decimal')f.facets={precision:5,scale:2};},true);
  add('composite-key',(_,r)=>{r.keys=[{id:'composite',name:'Composite',fields:[...r.members]}];},true);
- add('empty-keys',(_,r)=>r.keys=[],false,'KEY_STRUCTURE');
- add('empty-components',(_,r)=>r.keys[0].fields=[],false,'KEY_STRUCTURE');
- add('missing-id',(_,r)=>delete r.keys[0].id,false,'KEY_STRUCTURE');
- add('missing-name',(_,r)=>delete r.keys[0].name,false,'KEY_STRUCTURE');
- add('empty-name',(_,r)=>r.keys[0].name='',false,'KEY_STRUCTURE');
- add('string-primary',(_,r)=>r.keys[0].primary='true',false,'KEY_STRUCTURE');
- add('non-record-keys',(_,r)=>r.kind='group',false,'KEY_STRUCTURE');
- add('non-record-members',(_,r)=>{delete r.keys;r.kind='field';},false,'KEY_STRUCTURE');
- add('missing-members',(_,r)=>delete r.members,false,'KEY_STRUCTURE');
+ add('empty-keys',(_,r)=>r.keys=[],false,'SEMANTIC_TYPE_STRUCTURE');
+ add('empty-components',(_,r)=>r.keys[0].fields=[],false,'SEMANTIC_TYPE_STRUCTURE');
+ add('missing-id',(_,r)=>delete r.keys[0].id,false,'SEMANTIC_TYPE_STRUCTURE');
+ add('missing-name',(_,r)=>delete r.keys[0].name,false,'SEMANTIC_TYPE_STRUCTURE');
+ add('empty-name',(_,r)=>r.keys[0].name='',false,'SEMANTIC_TYPE_STRUCTURE');
+ add('string-primary',(_,r)=>r.keys[0].primary='true',false,'SEMANTIC_TYPE_STRUCTURE');
+ add('non-record-keys',(_,r)=>r.kind='group',false,'SEMANTIC_TYPE_STRUCTURE');
+ add('non-record-members',(_,r)=>{delete r.keys;r.kind='field';},false,'SEMANTIC_TYPE_STRUCTURE');
+ add('missing-members',(_,r)=>delete r.members,false,'SEMANTIC_TYPE_STRUCTURE');
  add('duplicate-id',(_,r)=>r.keys[1].id=r.keys[0].id,false,'KEY_DUPLICATE_ID');
  add('duplicate-name',(_,r)=>r.keys[1].name=r.keys[0].name,false,'KEY_DUPLICATE_NAME');
  add('multiple-primary',(_,r)=>r.keys[1].primary=true,false,'KEY_PRIMARY_COUNT');
@@ -45,6 +48,6 @@ export function keyCases(){
  add('record-valued-field',(_,r,f)=>{delete f.scalarType;f.references=[{role:'record-type',module:'m',element:'Order'}];},false,'KEY_EQUALITY');
  add('unqualified-decimal',(_,r,f)=>f.scalarType='decimal',false,'KEY_DECIMAL_DOMAIN');
  add('invalid-decimal-scale',(_,r,f)=>{f.scalarType='decimal';f.facets={precision:2,scale:3};},false,'FACET_SCALE');
- add('legacy-profile',d=>d.umf='0.5.0',false,'KEY_STRUCTURE');
+ add('legacy-profile',d=>d.umf='0.5.0',false,'SEMANTIC_TYPE_STRUCTURE');
  return rows;
 }

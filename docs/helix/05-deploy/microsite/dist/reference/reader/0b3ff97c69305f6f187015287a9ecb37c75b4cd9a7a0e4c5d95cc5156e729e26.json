@@ -1,0 +1,44 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"CoreKeyRequest\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "id",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "name",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreRecordIdentity\"]"
+      ],
+      "name": "fields",
+      "optional": false,
+      "type": "CoreRecordIdentity[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "primary",
+      "optional": true,
+      "type": "boolean"
+    }
+  ],
+  "parameters": [],
+  "purpose": "CoreKeyRequest is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "CoreKeyRequest"
+}

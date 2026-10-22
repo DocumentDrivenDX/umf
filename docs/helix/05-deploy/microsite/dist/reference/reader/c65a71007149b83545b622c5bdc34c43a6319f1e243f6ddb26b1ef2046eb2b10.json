@@ -1,0 +1,81 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"CoreCompactRecordValueCheck\"]",
+  "kind": "Type alias",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "version",
+      "optional": false,
+      "type": "\"1.0.0\" | \"2.0.0\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreRecordValueIdentity\"]",
+        "[\"api\",\".\",\"Validation\"]"
+      ],
+      "name": "fields",
+      "optional": false,
+      "type": "{ field: CoreRecordValueIdentity; state: \"absent\" | \"present\"; validation: Validation; }[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Validation\"]"
+      ],
+      "name": "validation",
+      "optional": false,
+      "type": "Validation"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreRecordFieldValue\"]"
+      ],
+      "name": "values",
+      "optional": false,
+      "type": "CoreRecordFieldValue[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "operation",
+      "optional": false,
+      "type": "\"validate-core-record-values\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CoreRecordValueIdentity\"]"
+      ],
+      "name": "identity",
+      "optional": false,
+      "type": "CoreRecordValueIdentity"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Validation\"]"
+      ],
+      "name": "documentValidation",
+      "optional": false,
+      "type": "Validation"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "sourceRef",
+      "optional": false,
+      "type": "\"#/source\""
+    }
+  ],
+  "parameters": [],
+  "purpose": "CoreCompactRecordValueCheck is a type alias in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "CoreCompactRecordValueCheck"
+}

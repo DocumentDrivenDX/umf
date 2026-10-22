@@ -1,0 +1,26 @@
+{
+  "status": "passed",
+  "runs": [
+    {
+      "label": "host-tests",
+      "command": [
+        "bun",
+        "test",
+        "tests/security-query-carrier-domains.test.ts",
+        "tests/security-graph-source.test.ts"
+      ],
+      "exitCode": 0,
+      "logSha256": "7cc6a54a66c021c21205a31d92cd0d14944229adb085e20e9c9ca5ac662f38c0"
+    },
+    {
+      "label": "strict-security-typecheck",
+      "command": [
+        "bun",
+        "scripts/typecheck-security.ts"
+      ],
+      "exitCode": 0,
+      "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "scope": "Targeted host regression and all security-module strict typecheck; not full backend qualification"
+}

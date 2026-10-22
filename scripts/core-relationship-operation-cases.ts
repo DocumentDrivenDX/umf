@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {relationshipCases} from './core-relationship-cases';
 import type {CoreRelationshipRequest} from '../src/model/relationships';
 export function relationshipRequest(r:any):CoreRelationshipRequest {

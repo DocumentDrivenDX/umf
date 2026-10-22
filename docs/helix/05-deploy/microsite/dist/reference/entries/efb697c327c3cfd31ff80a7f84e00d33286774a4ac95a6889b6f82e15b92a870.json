@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 7603,
+        "line": 28,
+        "path": "src/core-ideals/cardinality-parquet.ts",
+        "sha256": "735f70ed570f457e8fd8ce84d606dbd8d2ea89bfdc1fb3556613962b2d330631"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "classifyParquetCardinality",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: Document, options: ParquetCardinalityRequest): ParquetCardinalityClassification"
+    ]
+  },
+  "id": "[\"api\",\".\",\"classifyParquetCardinality\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 7603,
+      "line": 28,
+      "path": "src/core-ideals/cardinality-parquet.ts",
+      "sha256": "735f70ed570f457e8fd8ce84d606dbd8d2ea89bfdc1fb3556613962b2d330631"
+    }
+  ],
+  "summary": "Publish logical Fields while retaining the physical archive and all existing meaning.",
+  "title": "classifyParquetCardinality"
+}

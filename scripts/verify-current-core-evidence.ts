@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Verify current proof integrity without rerunning unchanged native recovery matrices. */
 import {verifyFieldEvidence} from './core-ideals/field-conformance';
 import {verifyNullabilityEvidence} from './core-ideals/nullability-conformance';

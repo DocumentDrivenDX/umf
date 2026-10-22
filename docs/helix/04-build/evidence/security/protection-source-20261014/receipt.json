@@ -1,0 +1,33 @@
+{
+  "status": "B-SFP-001-source-foundation-in-progress",
+  "sourceHashes": {
+    "src/extensions/security/protection/source.ts": "43cff8c0f539879b5b5c9f2d17aa17da57af24f806303251ed42c4664d6341bb",
+    "tools/security/protection-boundary.ts": "deabc28a4d27dff28cce2fdad3ad455518118453e63d13b910e5d3570763fd10",
+    "tools/security/protection-source-browser.ts": "7e293835a368d12d969400f2cc5fb4bf4b03197b54d5a483a45fc63dd2e086b2",
+    "tests/security/protection/source.test.ts": "d9387e2dd89993fa7a4455733142b2e1761d56f72ccd32b94216fc6a1ddacb94",
+    "tsconfig.tools.json": "4c8fbd505fa1d263d096630e663e8d52627b3f4bca58223e88151826360fc74f"
+  },
+  "files": {
+    "source.log": "09b5915e4f8f4490b4966f130f6dff8c00404c5b2ace142300e9495b142d05ea",
+    "browser.log": "f0e955a068d293634c2b336a3c1dbc57b7dc4a45f1d6fcf17968b2ea5f5997e2",
+    "typecheck.log": "79026c23638c604d4c76d405715bad40f28a56044d20bc97ba3114137511fcbd",
+    "security-regression.log": "f93552d0e743c90b2a139e6399350f1b60f4f48ab34646f75b0d239e2918f80a",
+    "browser.json": "8fe73b123596f7636b4cebbaf51ed7a09a095f3a7113cc72d3c62991e5cebe1c",
+    "source-before.log": "c5fa8b71b9dae78e5fcc839a95f40d869139895d5fa1779d8aaae92acd9abca0"
+  },
+  "verification": {
+    "sourceAndBoundaryTests": 2,
+    "securityRegressionTests": 139,
+    "strictLibraryAndToolTypechecks": "passed",
+    "chromium": "153.0.8010.12"
+  },
+  "scope": "Internal bounded JSON/YAML protection source preservation, conservative import/name controls and real browser parity for these read/write operations.",
+  "limits": [
+    "No protection package/schema, catalog inspector/require API or transform interpretation/evaluation.",
+    "No public SDK registration or backend/security admission.",
+    "Source guard is conservative and finite; it does not prove arbitrary JavaScript noninterference or complete transitive runtime provenance.",
+    "Initial boundary harness failed on unavailable TypeScript7 compiler API; retained and corrected to Bun import scanning.",
+    "S13-S25 allocation/runners and remaining B-SFP-001 work remain required.",
+    "Existing full gate is historical at its pins; changed governing contract text requires a fresh gate, not substitution from this139-test suite."
+  ]
+}

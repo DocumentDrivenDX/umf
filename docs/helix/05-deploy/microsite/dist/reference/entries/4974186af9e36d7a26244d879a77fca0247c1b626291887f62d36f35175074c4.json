@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 2052,
+        "line": 8,
+        "path": "src/adapters/owl/declarations.ts",
+        "sha256": "8ffa93b3defcc0c3a664328d09661475b66902f10746a06dedd921f14ec4cf4c"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "OwlDeclarationView",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface OwlDeclarationView {\n profile:'owl-declarations-1';complete:false;source:Document;blankNodeScope:string;\n declarations:OwlDeclaration[];anonymousTypeAssertions:OwlDeclaration[];\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"OwlDeclarationView\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 2052,
+      "line": 8,
+      "path": "src/adapters/owl/declarations.ts",
+      "sha256": "8ffa93b3defcc0c3a664328d09661475b66902f10746a06dedd921f14ec4cf4c"
+    }
+  ],
+  "summary": "Type declaration · src/adapters/owl/declarations.ts",
+  "title": "OwlDeclarationView"
+}

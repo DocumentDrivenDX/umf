@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 6310,
+        "line": 12,
+        "path": "src/extensions/security/protection/domains.ts",
+        "sha256": "3f378a1563145eadaec218bfc4c639caac29442ea5c0885564a4670ffbed372d"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "ProtectionCoreClosure",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface ProtectionCoreClosure {\n pins:{documentId:string;revision:string}[];\n documents:{revision:string;document:Document}[];\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"ProtectionCoreClosure\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 6310,
+      "line": 12,
+      "path": "src/extensions/security/protection/domains.ts",
+      "sha256": "3f378a1563145eadaec218bfc4c639caac29442ea5c0885564a4670ffbed372d"
+    }
+  ],
+  "summary": "Type declaration · src/extensions/security/protection/domains.ts",
+  "title": "ProtectionCoreClosure"
+}

@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"verifyTableSpecRelationshipClassification\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"TableSpecRelationshipClassification\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "TableSpecRelationshipClassification"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "current",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "Check retained input consistency, not authenticity or runtime enforcement.",
+  "related": [],
+  "returns": "TableSpecRelationshipClassification",
+  "task": "Other APIs",
+  "type": "(input: TableSpecRelationshipClassification, current: Document) => TableSpecRelationshipClassification"
+}

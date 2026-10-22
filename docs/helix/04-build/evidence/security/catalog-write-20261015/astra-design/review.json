@@ -1,0 +1,27 @@
+{
+  "status": "design-reviewed-with-explicit-preimplementation-obligations",
+  "baseline": "aa997a81fa44cbb9b90ada2c4f2d9e8a53e7a293",
+  "reviewedAtUtc": "2026-10-15T07:18:56.709848+00:00",
+  "scope": "Read-only source/contract design review. No implementation, native or browser execution qualification. No S24/S25 promotion.",
+  "criticalDesignGaps": [
+    "Auxiliary association Record changes cannot bypass Field read/blind/vault guards.",
+    "Comparison needs exact complete mutation-source coverage, not only action-scoped coverage.",
+    "Subject fact values and target/inventory correspondence must be preserved.",
+    "CRUD/ownership/policy purpose compatibility requires explicit contract refinement, not inference."
+  ],
+  "sourcePins": {
+    "src/extensions/security/write.ts": "bd7475dd43d42407e8900136c9dc5647195c9e02cdaa0d1d5b65bd83d196dee0",
+    "src/extensions/security/catalog-runtime-candidate.ts": "79a540bdd6b4c6952fd0272af368186e5ffd8bf47d600add68e22d078cd8ed83",
+    "src/extensions/security/catalog-program-candidate.ts": "7539321d7651e31f0c10b3bed6f027d27bac4527589d33bb71e924b8e1719086",
+    "src/extensions/security/dependencies.ts": "a94e291f78ad38dfdc73b7b03fb7f7ed7547dd3adb678040e952be71e3e8f2c7",
+    "src/extensions/security/action-purpose-declarations.ts": "b49c8de2407a6c26b850595dc267e600f1c1def030cc2606ea7cc6cd2e5cdf6e",
+    "tests/security/write.test.ts": "0c21b7384d725aa6b615e529ad476f391f66877b455520656c0a329cdf8c7817",
+    "tests/security/write-fixture.ts": "61c6729514bdaf6ecc6be6daeb18b0938aba48bd80d90440d05f389e8269fc36",
+    "docs/helix/02-design/contracts/CONTRACT-062-security-semantics.md": "2c0d71bf9177a43cab652a5a24639b9bf3f41d1031c118714e1ca5de78e6482b",
+    "docs/helix/03-test/security/cases.json": "83b26af6e7e3814f342f5ad66c03df3b0544b64bd2bc784507e1e5e4af5acf1c",
+    "docs/helix/04-build/security-field-protection-plan.md": "aae3ef29107657f90983db135226235aa42ef6fe29ac72eeec156075100a9441"
+  },
+  "reviewSha256": "1e8558625a3acf6ae04d27e9999335a5388ae9fb6888d6215825aa7c56b42abe",
+  "sourceChanges": false,
+  "testsRun": false
+}

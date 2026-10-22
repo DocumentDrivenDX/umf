@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Verify selected exact declarations and native archive recovery, not data-row semantics."""
 import json,hashlib,runpy
 from pathlib import Path

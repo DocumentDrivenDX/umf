@@ -1,0 +1,21 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"prepareCoreKeyTuples\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "input",
+      "optional": false,
+      "type": "unknown"
+    }
+  ],
+  "purpose": "Reuse declaration validation for one immutable source, never authorization.",
+  "related": [],
+  "returns": "PreparedCoreKeyTuples",
+  "task": "Inspect and select",
+  "type": "(input: unknown) => PreparedCoreKeyTuples"
+}

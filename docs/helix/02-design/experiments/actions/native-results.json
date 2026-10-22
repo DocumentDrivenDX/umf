@@ -1,0 +1,1846 @@
+{
+  "profile": "actions-feasibility-1",
+  "python": "3.9.6 (default, Aug 25 2026, 21:26:21) \n[Clang 21.0.0 (clang-2100.3.34.2)]",
+  "postgresql": "17.9 (Debian 17.9-1.pgdg13+1)",
+  "historyCount": 22,
+  "passed": 22,
+  "mutationCount": 5,
+  "mutantsRejected": 5,
+  "sources": {
+    "store.sql": "c65580829a52c762c84f3b7d45a964ef8bf335e5ef90b5cf0c0ae8bca292af3d",
+    "native.py": "534696e5b2877bb5fcb40dae536cd174cdf85084c4e157677922243fe0f9d4f0",
+    "histories.json": "b54be45efb4d2f172f1d06942ee3a4915fc7de3d57d0033c978ec9f03f57feb2"
+  },
+  "limits": [
+    "Synthetic grants, no real authentication",
+    "Read projection copies consistent same-store prefix; no warehouse integration",
+    "Lost acknowledgement injected after confirmed native commit; no real network partition",
+    "Bounded integer/string-key profile, not a public UMF executor"
+  ],
+  "results": [
+    {
+      "id": "H01",
+      "variant": "",
+      "pass": true,
+      "failures": [],
+      "observations": [
+        {
+          "request": "a",
+          "observed": {
+            "noOp": false,
+            "status": "committed",
+            "receipt": {
+              "store": "isolated-postgresql",
+              "tenant": "t1",
+              "watermark": 1
+            },
+            "version": 1,
+            "identities": [
+              "o1"
+            ]
+          },
+          "returnedPayload": {
+            "noOp": false,
+            "status": "committed",
+            "receipt": {
+              "store": "isolated-postgresql",
+              "tenant": "t1",
+              "watermark": 1
+            },
+            "version": 1,
+            "identities": [
+              "o1"
+            ]
+          },
+          "start": 0.600598041,
+          "end": 0.649446791,
+          "processExit": 0
+        }
+      ],
+      "state": {
+        "tenants": {
+          "t1": {
+            "stock": 1,
+            "resourceVersion": 0,
+            "version": 1,
+            "orders": 1,
+            "events": 1,
+            "outcomeRecords": 1,
+            "links": 2,
+            "untouched": true,
+            "orderStates": {
+              "o1": "created"
+            }
+          }
+        }
+      },
+      "deliveries": 0
+    },
+    {
+      "id": "H02",
+      "variant": "",
+      "pass": true,
+      "failures": [],
+      "observations": [
+        {
+          "request": "a",
+          "observed": {
+            "noOp": false,
+            "status": "committed",
+            "receipt": {
+              "store": "isolated-postgresql",
+              "tenant": "t1",
+              "watermark": 1
+            },
+            "version": 1,
+            "identities": [
+              "o1"
+            ]
+          },
+          "returnedPayload": {
+            "noOp": false,
+            "status": "committed",
+            "receipt": {
+              "store": "isolated-postgresql",
+              "tenant": "t1",
+              "watermark": 1
+            },
+            "version": 1,
+            "identities": [
+              "o1"
+            ]
+          },
+          "start": 1.191479333,
+          "end": 1.23812925,
+          "processExit": 0
+        }
+      ],
+      "state": {
+        "tenants": {
+          "t1": {
+            "stock": 0,
+            "resourceVersion": 1,
+            "version": 1,
+            "orders": 1,
+            "events": 1,
+            "outcomeRecords": 1,
+            "links": 0,
+            "untouched": true,
+            "orderStates": {
+              "o1": "reserved"
+            }
+          }
+        }
+      },
+      "deliveries": 0
+    },
+    {
+      "id": "H03",
+      "variant": "",
+      "pass": true,
+      "failures": [],
+      "observations": [
+        {
+          "request": "a",
+          "observed": {
+            "noOp": false,
+            "status": "committed",
+            "receipt": {
+              "store": "isolated-postgresql",
+              "tenant": "t1",
+              "watermark": 1
+            },
+            "version": 1,
+            "identities": [
+              "o1"
+            ]
+          },
+          "returnedPayload": {
+            "noOp": false,
+            "status": "committed",
+            "receipt": {
+              "store": "isolated-postgresql",
+              "tenant": "t1",
+              "watermark": 1
+            },
+            "version": 1,
+            "identities": [
+              "o1"
+            ]
+          },
+          "start": 1.77434225,
+          "end": 1.822610708,
+          "processExit": 0
+        }
+      ],
+      "state": {
+        "tenants": {
+          "t1": {
+            "stock": 1,
+            "resourceVersion": 0,
+            "version": 1,
+            "orders": 1,
+            "events": 1,
+            "outcomeRecords": 1,
+            "links": 0,
+            "untouched": true,
+            "orderStates": {
+              "o1": "approved"
+            }
+          }
+        }
+      },
+      "deliveries": 0
+    },
+    {
+      "id": "H04",
+      "variant": "",
+      "pass": true,
+      "failures": [],
+      "observations": [
+        {
+          "request": "a",
+          "observed": {
+            "code": "INSUFFICIENT",
+            "status": "rejected"
+          },
+          "returnedPayload": {
+            "code": "INSUFFICIENT",
+            "status": "rejected"
+          },
+          "start": 2.297876875,
+          "end": 2.342116708,
+          "processExit": 0
+        }
+      ],
+      "state": {
+        "tenants": {
+          "t1": {
+            "stock": 1,
+            "resourceVersion": 0,
+            "version": 0,
+            "orders": 0,
+            "events": 0,
+            "outcomeRecords": 1,
+            "links": 0,
+            "untouched": true,
+            "orderStates": null
+          }
+        }
+      },
+      "deliveries": 0
+    },
+    {
+      "id": "H05",
+      "variant": "",
+      "pass": true,
+      "failures": [],
+      "observations": [
+        {
+          "request": "a",
+          "observed": {
+            "noOp": false,
+            "status": "committed",
+            "receipt": {
+              "store": "isolated-postgresql",
+              "tenant": "t1",
+              "watermark": 1
+            },
+            "version": 1,
+            "identities": [
+              "o1"
+            ]
+          },
+          "returnedPayload": {
+            "noOp": false,
+            "status": "committed",
+            "receipt": {
+              "store": "isolated-postgresql",
+              "tenant": "t1",
+              "watermark": 1
+            },
+            "version": 1,
+            "identities": [
+              "o1"
+            ]
+          },
+          "start": 2.817178375,
+          "end": 2.86414925,
+          "processExit": 0
+        },
+        {
+          "request": "a",
+          "observed": {
+            "noOp": false,
+            "status": "committed",
+            "receipt": {
+              "store": "isolated-postgresql",
+              "tenant": "t1",
+              "watermark": 1
+            },
+            "version": 1,
+            "identities": [
+              "o1"
+            ]
+          },
+          "returnedPayload": {
+            "noOp": false,
+            "status": "committed",
+            "receipt": {
+              "store": "isolated-postgresql",
+              "tenant": "t1",
+              "watermark": 1
+            },
+            "version": 1,
+            "identities": [
+              "o1"
+            ]
+          },
+          "start": 2.8642135,
+          "end": 2.910972166,
+          "processExit": 0
+        }
+      ],
+      "state": {
+        "tenants": {
+          "t1": {
+            "stock": 0,
+            "resourceVersion": 1,
+            "version": 1,
+            "orders": 1,
+            "events": 1,
+            "outcomeRecords": 1,
+            "links": 0,
+            "untouched": true,
+            "orderStates": {
+              "o1": "reserved"
+            }
+          }
+        }
+      },
+      "deliveries": 0
+    },
+    {
+      "id": "H06",
+      "variant": "",
+      "pass": true,
+      "failures": [],
+      "observations": [
+        {
+          "request": "a",
+          "observed": {
+            "status": "indeterminate"
+          },
+          "returnedPayload": {
+            "noOp": false,
+            "status": "committed",
+            "receipt": {
+              "store": "isolated-postgresql",
+              "tenant": "t1",
+              "watermark": 1
+            },
+            "version": 1,
+            "identities": [
+              "o1"
+            ]
+          },
+          "start": 3.386236791,
+          "end": 3.4374815,
+          "processExit": 0
+        },
+        {
+          "request": "b",
+          "observed": {
+            "code": "TOKEN_REUSE",
+            "status": "conflict"
+          },
+          "returnedPayload": {
+            "code": "TOKEN_REUSE",
+            "status": "conflict"
+          },
+          "start": 3.486619791,
+          "end": 3.536647875,
+          "processExit": 0
+        },
+        {
+          "request": "a",
+          "observed": {
+            "noOp": false,
+            "status": "committed",
+            "receipt": {
+              "store": "isolated-postgresql",
+              "tenant": "t1",
+              "watermark": 1
+            },
+            "version": 1,
+            "identities": [
+              "o1"
+            ]
+          },
+          "returnedPayload": {
+            "noOp": false,
+            "status": "committed",
+            "receipt": {
+              "store": "isolated-postgresql",
+              "tenant": "t1",
+              "watermark": 1
+            },
+            "version": 1,
+            "identities": [
+              "o1"
+            ]
+          },
+          "start": 3.536692791,
+          "end": 3.585646833,
+          "processExit": 0
+        }
+      ],
+      "state": {
+        "tenants": {
+          "t1": {
+            "stock": 1,
+            "resourceVersion": 1,
+            "version": 1,
+            "orders": 1,
+            "events": 1,
+            "outcomeRecords": 1,
+            "links": 0,
+            "untouched": true,
+            "orderStates": {
+              "o1": "reserved"
+            }
+          }
+        }
+      },
+      "deliveries": 0
+    },
+    {
+      "id": "H07",
+      "variant": "",
+      "pass": true,
+      "failures": [],
+      "observations": [
+        {
+          "request": "a",
+          "observed": {
+            "noOp": false,
+            "status": "committed",
+            "receipt": {
+              "store": "isolated-postgresql",
+              "tenant": "t1",
+              "watermark": 1
+            },
+            "version": 1,
+            "identities": [
+              "o1"
+            ]
+          },
+          "returnedPayload": {
+            "noOp": false,
+            "status": "committed",
+            "receipt": {
+              "store": "isolated-postgresql",
+              "tenant": "t1",
+              "watermark": 1
+            },
+            "version": 1,
+            "identities": [
+              "o1"
+            ]
+          },
+          "start": 4.09118325,
+          "end": 4.136959416,
+          "processExit": 0
+        },
+        {
+          "request": "b",
+          "observed": {
+            "code": "TOKEN_REUSE",
+            "status": "conflict"
+          },
+          "returnedPayload": {
+            "code": "TOKEN_REUSE",
+            "status": "conflict"
+          },
+          "start": 4.1370135,
+          "end": 4.18488125,
+          "processExit": 0
+        }
+      ],
+      "state": {
+        "tenants": {
+          "t1": {
+            "stock": 0,
+            "resourceVersion": 1,
+            "version": 1,
+            "orders": 1,
+            "events": 1,
+            "outcomeRecords": 1,
+            "links": 0,
+            "untouched": true,
+            "orderStates": {
+              "o1": "reserved"
+            }
+          }
+        }
+      },
+      "deliveries": 0
+    },
+    {
+      "id": "H08",
+      "variant": "",
+      "pass": true,
+      "failures": [],
+      "observations": [
+        {
+          "request": "a",
+          "observed": {
+            "noOp": false,
+            "status": "committed",
+            "receipt": {
+              "store": "isolated-postgresql",
+              "tenant": "t1",
+              "watermark": 1
+            },
+            "version": 1,
+            "identities": [
+              "o1"
+            ]
+          },
+          "returnedPayload": {
+            "noOp": false,
+            "status": "committed",
+            "receipt": {
+              "store": "isolated-postgresql",
+              "tenant": "t1",
+              "watermark": 1
+            },
+            "version": 1,
+            "identities": [
+              "o1"
+            ]
+          },
+          "start": 4.732246125,
+          "end": 4.780684708,
+          "processExit": 0
+        },
+        {
+          "request": "a",
+          "observed": {
+            "code": "AUTHORIZATION",
+            "status": "denied"
+          },
+          "returnedPayload": {
+            "code": "AUTHORIZATION",
+            "status": "denied"
+          },
+          "start": 4.8297285,
+          "end": 4.874952291,
+          "processExit": 0
+        }
+      ],
+      "state": {
+        "tenants": {
+          "t1": {
+            "stock": 0,
+            "resourceVersion": 1,
+            "version": 1,
+            "orders": 1,
+            "events": 1,
+            "outcomeRecords": 1,
+            "links": 0,
+            "untouched": true,
+            "orderStates": {
+              "o1": "reserved"
+            }
+          }
+        }
+      },
+      "deliveries": 0
+    },
+    {
+      "id": "H09",
+      "variant": "",
+      "pass": true,
+      "failures": [],
+      "observations": [
+        {
+          "request": "a",
+          "observed": {
+            "status": "failed",
+            "code": "EXECUTION_ROLLED_BACK"
+          },
+          "returnedPayload": null,
+          "start": 5.381481625,
+          "end": 5.434100666,
+          "processExit": 3
+        }
+      ],
+      "state": {
+        "tenants": {
+          "t1": {
+            "stock": 1,
+            "resourceVersion": 0,
+            "version": 0,
+            "orders": 0,
+            "events": 0,
+            "outcomeRecords": 0,
+            "links": 0,
+            "untouched": true,
+            "orderStates": null
+          }
+        }
+      },
+      "deliveries": 0
+    },
+    {
+      "id": "H10",
+      "variant": "",
+      "pass": true,
+      "failures": [],
+      "observations": [
+        {
+          "request": "a",
+          "observed": {
+            "noOp": false,
+            "status": "committed",
+            "receipt": {
+              "store": "isolated-postgresql",
+              "tenant": "t1",
+              "watermark": 1
+            },
+            "version": 1,
+            "identities": [
+              "o1"
+            ]
+          },
+          "returnedPayload": {
+            "noOp": false,
+            "status": "committed",
+            "receipt": {
+              "store": "isolated-postgresql",
+              "tenant": "t1",
+              "watermark": 1
+            },
+            "version": 1,
+            "identities": [
+              "o1"
+            ]
+          },
+          "start": 5.983839625,
+          "end": 6.294499541,
+          "processExit": 0
+        },
+        {
+          "request": "b",
+          "observed": {
+            "code": "INSUFFICIENT",
+            "status": "rejected"
+          },
+          "returnedPayload": {
+            "code": "INSUFFICIENT",
+            "status": "rejected"
+          },
+          "start": 5.98268225,
+          "end": 6.556139041,
+          "processExit": 0
+        }
+      ],
+      "state": {
+        "tenants": {
+          "t1": {
+            "stock": 0,
+            "resourceVersion": 1,
+            "version": 1,
+            "orders": 1,
+            "events": 1,
+            "outcomeRecords": 2,
+            "links": 0,
+            "untouched": true,
+            "orderStates": {
+              "o1": "reserved"
+            }
+          }
+        }
+      },
+      "deliveries": 0
+    },
+    {
+      "id": "H11",
+      "variant": "",
+      "pass": true,
+      "failures": [],
+      "observations": [
+        {
+          "request": "a",
+          "observed": {
+            "noOp": false,
+            "status": "committed",
+            "receipt": {
+              "store": "isolated-postgresql",
+              "tenant": "t1",
+              "watermark": 1
+            },
+            "version": 1,
+            "identities": [
+              "o1"
+            ]
+          },
+          "returnedPayload": {
+            "noOp": false,
+            "status": "committed",
+            "receipt": {
+              "store": "isolated-postgresql",
+              "tenant": "t1",
+              "watermark": 1
+            },
+            "version": 1,
+            "identities": [
+              "o1"
+            ]
+          },
+          "start": 7.094415375,
+          "end": 7.413564083,
+          "processExit": 0
+        },
+        {
+          "request": "a",
+          "observed": {
+            "noOp": false,
+            "status": "committed",
+            "receipt": {
+              "store": "isolated-postgresql",
+              "tenant": "t1",
+              "watermark": 1
+            },
+            "version": 1,
+            "identities": [
+              "o1"
+            ]
+          },
+          "returnedPayload": {
+            "noOp": false,
+            "status": "committed",
+            "receipt": {
+              "store": "isolated-postgresql",
+              "tenant": "t1",
+              "watermark": 1
+            },
+            "version": 1,
+            "identities": [
+              "o1"
+            ]
+          },
+          "start": 7.094361083,
+          "end": 7.412801583,
+          "processExit": 0
+        }
+      ],
+      "state": {
+        "tenants": {
+          "t1": {
+            "stock": 0,
+            "resourceVersion": 1,
+            "version": 1,
+            "orders": 1,
+            "events": 1,
+            "outcomeRecords": 1,
+            "links": 0,
+            "untouched": true,
+            "orderStates": {
+              "o1": "reserved"
+            }
+          }
+        }
+      },
+      "deliveries": 0
+    },
+    {
+      "id": "H12",
+      "variant": "",
+      "pass": true,
+      "failures": [],
+      "observations": [
+        {
+          "request": "a",
+          "observed": {
+            "code": "EXPECTED_VERSION",
+            "status": "conflict"
+          },
+          "returnedPayload": {
+            "code": "EXPECTED_VERSION",
+            "status": "conflict"
+          },
+          "start": 7.977135416,
+          "end": 8.029077875,
+          "processExit": 0
+        }
+      ],
+      "state": {
+        "tenants": {
+          "t1": {
+            "stock": 1,
+            "resourceVersion": 0,
+            "version": 0,
+            "orders": 0,
+            "events": 0,
+            "outcomeRecords": 1,
+            "links": 0,
+            "untouched": true,
+            "orderStates": null
+          }
+        }
+      },
+      "deliveries": 0
+    },
+    {
+      "id": "H13",
+      "variant": "",
+      "pass": true,
+      "failures": [],
+      "observations": [
+        {
+          "request": "a",
+          "observed": {
+            "noOp": false,
+            "status": "committed",
+            "receipt": {
+              "store": "isolated-postgresql",
+              "tenant": "t1",
+              "watermark": 1
+            },
+            "version": 1,
+            "identities": [
+              "o1"
+            ]
+          },
+          "returnedPayload": {
+            "noOp": false,
+            "status": "committed",
+            "receipt": {
+              "store": "isolated-postgresql",
+              "tenant": "t1",
+              "watermark": 1
+            },
+            "version": 1,
+            "identities": [
+              "o1"
+            ]
+          },
+          "start": 8.536948791,
+          "end": 8.586376,
+          "processExit": 0
+        },
+        {
+          "observed": {
+            "status": "pending",
+            "watermark": 0,
+            "orders": null
+          },
+          "returnedPayload": null
+        },
+        {
+          "observed": {
+            "status": "visible",
+            "watermark": 1,
+            "orders": {
+              "o1": "reserved"
+            }
+          },
+          "returnedPayload": null
+        }
+      ],
+      "state": {
+        "tenants": {
+          "t1": {
+            "stock": 0,
+            "resourceVersion": 1,
+            "version": 1,
+            "orders": 1,
+            "events": 1,
+            "outcomeRecords": 1,
+            "links": 0,
+            "untouched": true,
+            "orderStates": {
+              "o1": "reserved"
+            }
+          }
+        }
+      },
+      "deliveries": 0
+    },
+    {
+      "id": "H14",
+      "variant": "",
+      "pass": true,
+      "failures": [],
+      "observations": [
+        {
+          "request": "a",
+          "observed": {
+            "code": "AUTHORIZATION",
+            "status": "denied"
+          },
+          "returnedPayload": {
+            "code": "AUTHORIZATION",
+            "status": "denied"
+          },
+          "start": 9.235966541,
+          "end": 9.284563625,
+          "processExit": 0
+        }
+      ],
+      "state": {
+        "tenants": {
+          "t1": {
+            "stock": 1,
+            "resourceVersion": 0,
+            "version": 0,
+            "orders": 0,
+            "events": 0,
+            "outcomeRecords": 0,
+            "links": 0,
+            "untouched": true,
+            "orderStates": null
+          }
+        }
+      },
+      "deliveries": 0
+    },
+    {
+      "id": "H15",
+      "variant": "",
+      "pass": true,
+      "failures": [],
+      "observations": [
+        {
+          "request": "a",
+          "observed": {
+            "status": "failed",
+            "code": "EXECUTION_ROLLED_BACK"
+          },
+          "returnedPayload": null,
+          "start": 9.798543,
+          "end": 9.847724958,
+          "processExit": 3
+        }
+      ],
+      "state": {
+        "tenants": {
+          "t1": {
+            "stock": 1,
+            "resourceVersion": 0,
+            "version": 0,
+            "orders": 0,
+            "events": 0,
+            "outcomeRecords": 0,
+            "links": 0,
+            "untouched": true,
+            "orderStates": null
+          }
+        }
+      },
+      "deliveries": 0
+    },
+    {
+      "id": "H16",
+      "variant": "",
+      "pass": true,
+      "failures": [],
+      "observations": [
+        {
+          "request": "a",
+          "observed": {
+            "noOp": false,
+            "status": "committed",
+            "receipt": {
+              "store": "isolated-postgresql",
+              "tenant": "t1",
+              "watermark": 1
+            },
+            "version": 1,
+            "identities": [
+              "o1"
+            ]
+          },
+          "returnedPayload": {
+            "noOp": false,
+            "status": "committed",
+            "receipt": {
+              "store": "isolated-postgresql",
+              "tenant": "t1",
+              "watermark": 1
+            },
+            "version": 1,
+            "identities": [
+              "o1"
+            ]
+          },
+          "start": 10.561959458,
+          "end": 10.608517666,
+          "processExit": 0
+        },
+        {
+          "request": "a",
+          "observed": {
+            "code": "TOKEN_EXPIRED",
+            "status": "expired"
+          },
+          "returnedPayload": {
+            "code": "TOKEN_EXPIRED",
+            "status": "expired"
+          },
+          "start": 10.653656916,
+          "end": 10.698667125,
+          "processExit": 0
+        }
+      ],
+      "state": {
+        "tenants": {
+          "t1": {
+            "stock": 0,
+            "resourceVersion": 1,
+            "version": 1,
+            "orders": 1,
+            "events": 1,
+            "outcomeRecords": 1,
+            "links": 0,
+            "untouched": true,
+            "orderStates": {
+              "o1": "reserved"
+            }
+          }
+        }
+      },
+      "deliveries": 0
+    },
+    {
+      "id": "H17",
+      "variant": "",
+      "pass": true,
+      "failures": [],
+      "observations": [
+        {
+          "request": "a",
+          "observed": {
+            "noOp": false,
+            "status": "committed",
+            "receipt": {
+              "store": "isolated-postgresql",
+              "tenant": "t1",
+              "watermark": 1
+            },
+            "version": 1,
+            "identities": [
+              "o1"
+            ]
+          },
+          "returnedPayload": {
+            "noOp": false,
+            "status": "committed",
+            "receipt": {
+              "store": "isolated-postgresql",
+              "tenant": "t1",
+              "watermark": 1
+            },
+            "version": 1,
+            "identities": [
+              "o1"
+            ]
+          },
+          "start": 11.181761708,
+          "end": 11.576692,
+          "processExit": 0
+        }
+      ],
+      "state": {
+        "tenants": {
+          "t1": {
+            "stock": 0,
+            "resourceVersion": 1,
+            "version": 1,
+            "orders": 1,
+            "events": 1,
+            "outcomeRecords": 1,
+            "links": 0,
+            "untouched": true,
+            "orderStates": {
+              "o1": "reserved"
+            }
+          }
+        }
+      },
+      "deliveries": 2
+    },
+    {
+      "id": "H18",
+      "variant": "",
+      "pass": true,
+      "failures": [],
+      "observations": [
+        {
+          "request": "a",
+          "observed": {
+            "code": "INSUFFICIENT",
+            "status": "rejected"
+          },
+          "returnedPayload": {
+            "code": "INSUFFICIENT",
+            "status": "rejected"
+          },
+          "start": 12.719821625,
+          "end": 12.766792666,
+          "processExit": 0
+        },
+        {
+          "request": "a",
+          "observed": {
+            "code": "INSUFFICIENT",
+            "status": "rejected"
+          },
+          "returnedPayload": {
+            "code": "INSUFFICIENT",
+            "status": "rejected"
+          },
+          "start": 12.814952166,
+          "end": 12.866511791,
+          "processExit": 0
+        },
+        {
+          "request": "b",
+          "observed": {
+            "code": "TOKEN_REUSE",
+            "status": "conflict"
+          },
+          "returnedPayload": {
+            "code": "TOKEN_REUSE",
+            "status": "conflict"
+          },
+          "start": 12.866563708,
+          "end": 12.911381416,
+          "processExit": 0
+        }
+      ],
+      "state": {
+        "tenants": {
+          "t1": {
+            "stock": 3,
+            "resourceVersion": 1,
+            "version": 0,
+            "orders": 0,
+            "events": 0,
+            "outcomeRecords": 1,
+            "links": 0,
+            "untouched": true,
+            "orderStates": null
+          }
+        }
+      },
+      "deliveries": 0
+    },
+    {
+      "id": "H19",
+      "variant": "",
+      "pass": true,
+      "failures": [],
+      "observations": [
+        {
+          "request": "a",
+          "observed": {
+            "noOp": false,
+            "status": "committed",
+            "receipt": {
+              "store": "isolated-postgresql",
+              "tenant": "t1",
+              "watermark": 1
+            },
+            "version": 1,
+            "identities": [
+              "o1"
+            ]
+          },
+          "returnedPayload": {
+            "noOp": false,
+            "status": "committed",
+            "receipt": {
+              "store": "isolated-postgresql",
+              "tenant": "t1",
+              "watermark": 1
+            },
+            "version": 1,
+            "identities": [
+              "o1"
+            ]
+          },
+          "start": 13.452734916,
+          "end": 13.497895833,
+          "processExit": 0
+        },
+        {
+          "request": "a",
+          "observed": {
+            "noOp": false,
+            "status": "committed",
+            "receipt": {
+              "store": "isolated-postgresql",
+              "tenant": "t1",
+              "watermark": 1
+            },
+            "version": 1,
+            "identities": [
+              "o1"
+            ]
+          },
+          "returnedPayload": {
+            "noOp": false,
+            "status": "committed",
+            "receipt": {
+              "store": "isolated-postgresql",
+              "tenant": "t1",
+              "watermark": 1
+            },
+            "version": 1,
+            "identities": [
+              "o1"
+            ]
+          },
+          "start": 13.497948125,
+          "end": 13.543850666,
+          "processExit": 0
+        },
+        {
+          "request": "b",
+          "observed": {
+            "noOp": true,
+            "status": "committed",
+            "receipt": {
+              "store": "isolated-postgresql",
+              "tenant": "t1",
+              "watermark": 1
+            },
+            "version": 1,
+            "identities": [
+              "o1"
+            ]
+          },
+          "returnedPayload": {
+            "noOp": true,
+            "status": "committed",
+            "receipt": {
+              "store": "isolated-postgresql",
+              "tenant": "t1",
+              "watermark": 1
+            },
+            "version": 1,
+            "identities": [
+              "o1"
+            ]
+          },
+          "start": 13.543902041,
+          "end": 13.588928791,
+          "processExit": 0
+        }
+      ],
+      "state": {
+        "tenants": {
+          "t1": {
+            "stock": 1,
+            "resourceVersion": 0,
+            "version": 1,
+            "orders": 1,
+            "events": 1,
+            "outcomeRecords": 2,
+            "links": 0,
+            "untouched": true,
+            "orderStates": {
+              "o1": "approved"
+            }
+          }
+        }
+      },
+      "deliveries": 0
+    },
+    {
+      "id": "H20",
+      "variant": "",
+      "pass": true,
+      "failures": [],
+      "observations": [
+        {
+          "request": "a",
+          "observed": {
+            "noOp": false,
+            "status": "committed",
+            "receipt": {
+              "store": "isolated-postgresql",
+              "tenant": "t1",
+              "watermark": 1
+            },
+            "version": 1,
+            "identities": [
+              "o1"
+            ]
+          },
+          "returnedPayload": {
+            "noOp": false,
+            "status": "committed",
+            "receipt": {
+              "store": "isolated-postgresql",
+              "tenant": "t1",
+              "watermark": 1
+            },
+            "version": 1,
+            "identities": [
+              "o1"
+            ]
+          },
+          "start": 14.865968291,
+          "end": 15.239265875,
+          "processExit": 0
+        },
+        {
+          "request": "b",
+          "observed": {
+            "noOp": false,
+            "status": "committed",
+            "receipt": {
+              "store": "isolated-postgresql",
+              "tenant": "t2",
+              "watermark": 1
+            },
+            "version": 1,
+            "identities": [
+              "o1"
+            ]
+          },
+          "returnedPayload": {
+            "noOp": false,
+            "status": "committed",
+            "receipt": {
+              "store": "isolated-postgresql",
+              "tenant": "t2",
+              "watermark": 1
+            },
+            "version": 1,
+            "identities": [
+              "o1"
+            ]
+          },
+          "start": 15.239320416,
+          "end": 15.286482208,
+          "processExit": 0
+        }
+      ],
+      "state": {
+        "tenants": {
+          "t1": {
+            "stock": 0,
+            "resourceVersion": 1,
+            "version": 1,
+            "orders": 1,
+            "events": 1,
+            "outcomeRecords": 1,
+            "links": 0,
+            "untouched": true,
+            "orderStates": {
+              "o1": "reserved"
+            }
+          },
+          "t2": {
+            "stock": 0,
+            "resourceVersion": 1,
+            "version": 1,
+            "orders": 1,
+            "events": 1,
+            "outcomeRecords": 1,
+            "links": 0,
+            "untouched": true,
+            "orderStates": {
+              "o1": "reserved"
+            }
+          }
+        }
+      },
+      "deliveries": 0
+    },
+    {
+      "id": "H21",
+      "variant": "",
+      "pass": true,
+      "failures": [],
+      "observations": [
+        {
+          "request": "a",
+          "observed": {
+            "code": "REVISION",
+            "status": "unsupported"
+          },
+          "returnedPayload": {
+            "code": "REVISION",
+            "status": "unsupported"
+          },
+          "start": 15.808847666,
+          "end": 15.855952625,
+          "processExit": 0
+        }
+      ],
+      "state": {
+        "tenants": {
+          "t1": {
+            "stock": 1,
+            "resourceVersion": 0,
+            "version": 0,
+            "orders": 0,
+            "events": 0,
+            "outcomeRecords": 0,
+            "links": 0,
+            "untouched": true,
+            "orderStates": null
+          }
+        }
+      },
+      "deliveries": 0
+    },
+    {
+      "id": "H22",
+      "variant": "",
+      "pass": true,
+      "failures": [],
+      "observations": [
+        {
+          "request": "a",
+          "observed": {
+            "code": "EXPECTED_VERSION",
+            "status": "conflict"
+          },
+          "returnedPayload": {
+            "code": "EXPECTED_VERSION",
+            "status": "conflict"
+          },
+          "start": 16.51885725,
+          "end": 16.565286708,
+          "processExit": 0
+        },
+        {
+          "request": "b",
+          "observed": {
+            "noOp": false,
+            "status": "committed",
+            "receipt": {
+              "store": "isolated-postgresql",
+              "tenant": "t1",
+              "watermark": 1
+            },
+            "version": 1,
+            "identities": [
+              "o1"
+            ]
+          },
+          "returnedPayload": {
+            "noOp": false,
+            "status": "committed",
+            "receipt": {
+              "store": "isolated-postgresql",
+              "tenant": "t1",
+              "watermark": 1
+            },
+            "version": 1,
+            "identities": [
+              "o1"
+            ]
+          },
+          "start": 16.565334041,
+          "end": 16.610901833,
+          "processExit": 0
+        }
+      ],
+      "state": {
+        "tenants": {
+          "t1": {
+            "stock": 2,
+            "resourceVersion": 2,
+            "version": 1,
+            "orders": 1,
+            "events": 1,
+            "outcomeRecords": 2,
+            "links": 0,
+            "untouched": true,
+            "orderStates": {
+              "o1": "reserved"
+            }
+          }
+        }
+      },
+      "deliveries": 0
+    }
+  ],
+  "mutations": [
+    {
+      "id": "H06",
+      "variant": "revision-namespace",
+      "pass": false,
+      "failures": [
+        "statuses ['indeterminate', 'failed', 'committed'] != ['indeterminate', 'conflict', 'committed']"
+      ],
+      "observations": [
+        {
+          "request": "a",
+          "observed": {
+            "status": "indeterminate"
+          },
+          "returnedPayload": {
+            "noOp": false,
+            "status": "committed",
+            "receipt": {
+              "store": "isolated-postgresql",
+              "tenant": "t1",
+              "watermark": 1
+            },
+            "version": 1,
+            "identities": [
+              "o1"
+            ]
+          },
+          "start": 17.830066208,
+          "end": 17.911821333,
+          "processExit": 0
+        },
+        {
+          "request": "b",
+          "observed": {
+            "status": "failed",
+            "code": "EXECUTION_ROLLED_BACK"
+          },
+          "returnedPayload": null,
+          "start": 17.962597166,
+          "end": 18.006752333,
+          "processExit": 3
+        },
+        {
+          "request": "a",
+          "observed": {
+            "noOp": false,
+            "status": "committed",
+            "receipt": {
+              "store": "isolated-postgresql",
+              "tenant": "t1",
+              "watermark": 1
+            },
+            "version": 1,
+            "identities": [
+              "o1"
+            ]
+          },
+          "returnedPayload": {
+            "noOp": false,
+            "status": "committed",
+            "receipt": {
+              "store": "isolated-postgresql",
+              "tenant": "t1",
+              "watermark": 1
+            },
+            "version": 1,
+            "identities": [
+              "o1"
+            ]
+          },
+          "start": 18.006783666,
+          "end": 18.054914375,
+          "processExit": 0
+        }
+      ],
+      "state": {
+        "tenants": {
+          "t1": {
+            "stock": 1,
+            "resourceVersion": 1,
+            "version": 1,
+            "orders": 1,
+            "events": 1,
+            "outcomeRecords": 1,
+            "links": 0,
+            "untouched": true,
+            "orderStates": {
+              "o1": "reserved"
+            }
+          }
+        }
+      },
+      "deliveries": 0
+    },
+    {
+      "id": "H08",
+      "variant": "stale-auth",
+      "pass": false,
+      "failures": [
+        "statuses ['committed', 'committed'] != ['committed', 'denied']"
+      ],
+      "observations": [
+        {
+          "request": "a",
+          "observed": {
+            "noOp": false,
+            "status": "committed",
+            "receipt": {
+              "store": "isolated-postgresql",
+              "tenant": "t1",
+              "watermark": 1
+            },
+            "version": 1,
+            "identities": [
+              "o1"
+            ]
+          },
+          "returnedPayload": {
+            "noOp": false,
+            "status": "committed",
+            "receipt": {
+              "store": "isolated-postgresql",
+              "tenant": "t1",
+              "watermark": 1
+            },
+            "version": 1,
+            "identities": [
+              "o1"
+            ]
+          },
+          "start": 18.581754333,
+          "end": 18.631949375,
+          "processExit": 0
+        },
+        {
+          "request": "a",
+          "observed": {
+            "noOp": false,
+            "status": "committed",
+            "receipt": {
+              "store": "isolated-postgresql",
+              "tenant": "t1",
+              "watermark": 1
+            },
+            "version": 1,
+            "identities": [
+              "o1"
+            ]
+          },
+          "returnedPayload": {
+            "noOp": false,
+            "status": "committed",
+            "receipt": {
+              "store": "isolated-postgresql",
+              "tenant": "t1",
+              "watermark": 1
+            },
+            "version": 1,
+            "identities": [
+              "o1"
+            ]
+          },
+          "start": 18.678918625,
+          "end": 18.722351458,
+          "processExit": 0
+        }
+      ],
+      "state": {
+        "tenants": {
+          "t1": {
+            "stock": 0,
+            "resourceVersion": 1,
+            "version": 1,
+            "orders": 1,
+            "events": 1,
+            "outcomeRecords": 1,
+            "links": 0,
+            "untouched": true,
+            "orderStates": {
+              "o1": "reserved"
+            }
+          }
+        }
+      },
+      "deliveries": 0
+    },
+    {
+      "id": "H09",
+      "variant": "missing-rollback",
+      "pass": false,
+      "failures": [
+        "stock: 0 != 1"
+      ],
+      "observations": [
+        {
+          "request": "a",
+          "observed": {
+            "code": "EXECUTION",
+            "status": "failed"
+          },
+          "returnedPayload": {
+            "code": "EXECUTION",
+            "status": "failed"
+          },
+          "start": 19.293542791,
+          "end": 19.36261975,
+          "processExit": 0
+        }
+      ],
+      "state": {
+        "tenants": {
+          "t1": {
+            "stock": 0,
+            "resourceVersion": 1,
+            "version": 0,
+            "orders": 0,
+            "events": 0,
+            "outcomeRecords": 0,
+            "links": 0,
+            "untouched": true,
+            "orderStates": null
+          }
+        }
+      },
+      "deliveries": 0
+    },
+    {
+      "id": "H13",
+      "variant": "premature-visible",
+      "pass": false,
+      "failures": [
+        "statuses ['committed', 'visible', 'visible'] != ['committed', 'pending', 'visible']"
+      ],
+      "observations": [
+        {
+          "request": "a",
+          "observed": {
+            "noOp": false,
+            "status": "committed",
+            "receipt": {
+              "store": "isolated-postgresql",
+              "tenant": "t1",
+              "watermark": 1
+            },
+            "version": 1,
+            "identities": [
+              "o1"
+            ]
+          },
+          "returnedPayload": {
+            "noOp": false,
+            "status": "committed",
+            "receipt": {
+              "store": "isolated-postgresql",
+              "tenant": "t1",
+              "watermark": 1
+            },
+            "version": 1,
+            "identities": [
+              "o1"
+            ]
+          },
+          "start": 20.079928625,
+          "end": 20.138822083,
+          "processExit": 0
+        },
+        {
+          "observed": {
+            "status": "visible",
+            "watermark": 0,
+            "orders": {}
+          },
+          "returnedPayload": null
+        },
+        {
+          "observed": {
+            "status": "visible",
+            "watermark": 1,
+            "orders": {
+              "o1": "reserved"
+            }
+          },
+          "returnedPayload": null
+        }
+      ],
+      "state": {
+        "tenants": {
+          "t1": {
+            "stock": 0,
+            "resourceVersion": 1,
+            "version": 1,
+            "orders": 1,
+            "events": 1,
+            "outcomeRecords": 1,
+            "links": 0,
+            "untouched": true,
+            "orderStates": {
+              "o1": "reserved"
+            }
+          }
+        }
+      },
+      "deliveries": 0
+    },
+    {
+      "id": "H15",
+      "variant": "frame-bypass",
+      "pass": false,
+      "failures": [
+        "statuses ['committed'] != ['failed']",
+        "stock: 0 != 1",
+        "orders: 1 != 0",
+        "events: 1 != 0",
+        "untouched: False != True"
+      ],
+      "observations": [
+        {
+          "request": "a",
+          "observed": {
+            "noOp": false,
+            "status": "committed",
+            "receipt": {
+              "store": "isolated-postgresql",
+              "tenant": "t1",
+              "watermark": 1
+            },
+            "version": 1,
+            "identities": [
+              "o1"
+            ]
+          },
+          "returnedPayload": {
+            "noOp": false,
+            "status": "committed",
+            "receipt": {
+              "store": "isolated-postgresql",
+              "tenant": "t1",
+              "watermark": 1
+            },
+            "version": 1,
+            "identities": [
+              "o1"
+            ]
+          },
+          "start": 20.8992255,
+          "end": 20.948900041,
+          "processExit": 0
+        }
+      ],
+      "state": {
+        "tenants": {
+          "t1": {
+            "stock": 0,
+            "resourceVersion": 1,
+            "version": 1,
+            "orders": 1,
+            "events": 1,
+            "outcomeRecords": 1,
+            "links": 0,
+            "untouched": false,
+            "orderStates": {
+              "o1": "reserved"
+            }
+          }
+        }
+      },
+      "deliveries": 0
+    }
+  ]
+}

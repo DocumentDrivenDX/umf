@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Independent runtime process (GraphQL-core is a GraphQL.js port, not unrelated lineage)."""
 import json
 from pathlib import Path

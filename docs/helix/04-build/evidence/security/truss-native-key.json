@@ -1,0 +1,2855 @@
+{
+  "status": "passed",
+  "runId": "7aeebe39-03f9-4072-8f96-8c1fa268dc8c",
+  "sourceDigests": {
+    "/Users/erik/.codex/worktrees/1598/umf/tools/security/truss-native-key-probe.py": "50e57364b657182785205dd5312dab1c4c58764f4a5c618a0d2cddd1c49bf61e",
+    "tests/security/native/pg-raw-membership.py": "19a062f5cb18532b9da3925d6444faa78f2a92c2bfe8bfaedfd78887ef9d29ab",
+    "tests/security/native/pg-raw-membership.sql": "ac5640077786e81b80e536acc7c5d89d8f6747e1d8f425f17c4e3dfc3b37daf6",
+    "tools/security/pg-compiler-keys.py": "b2e294ca2696c5c8810f6131d04c3bf4779565d0cf76e7510849076e8a34283e",
+    "tools/security/truss-native-key.ts": "e32b2d521250b007b984360b26dfeea743cce51c6433cc48e3b5a8c721275b36",
+    "/Users/erik/Projects/truss/packages/postgresql/src/security-native-key.ts": "0190bf385159decd0e5e89340936a2e324bff9a5f6291791a492caa6226c1d51",
+    "/Users/erik/Projects/truss/packages/postgresql/src/security-predicate.ts": "cd04f93e2b79da2767428a990262421612df1fe74187a75b57cd8b0e323b0207",
+    "/Users/erik/Projects/truss/packages/postgresql/src/security-graph-source.ts": "c5732745038b27d0f7c54adead5e5c090a9855053161f720c0f962a7095cdc27",
+    "tools/security/reviewed-python.py": "cc729c9ce790f74f2ca587a7a8d6840570aff8e62252de25f0dc1f2b01a6463e",
+    "tools/security/pg-association.py": "6981b4fd266ca0d3e537e487bf6759d132a8fc4927d43806c0517093b570c5da",
+    "docs/helix/04-build/evidence/security/weft-handoff.json": "c1427f66eaba7726c5d4eaa0df09460f448db09c8e2188963d0271d2a313689b",
+    "docs/helix/04-build/evidence/security/truss-policy-lowering.json": "cefa252439ec7f11c160e36b3b0dbfcfcb6e40ecded457ce94223f9b953f2cc5",
+    "/private/tmp/umf-security-weft-bridge-target/debug/examples/security_mapping_handoff": "10ed6eeaf06b2f687cf2716a14d2792badd39109d4dfeed762c43e88f09a2ca6"
+  },
+  "versions": {
+    "postgresql": {
+      "version": "PostgreSQL 17.9 (Debian 17.9-1.pgdg13+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+      "number": "170009"
+    },
+    "imageId": "sha256:2a0d0fe14825b0939f78a8cad5cd4e6aa68bf94d0e5dd96e24b6d23af4315545"
+  },
+  "observations": [
+    {
+      "id": "original-source-native-typed-key-correspondence",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "all-malformed-key-catalog-controls-refuse",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "missing-type-source",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "duplicate-type-source",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "changed-source-pin",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "swapped-type-tags",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "reversed-key-components",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "predicate-key-column-mismatch",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "extra-primary-key-column",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "missing-primary-type-prefix",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "nullable-type-column",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "text-encoded-type-column",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "nullable-key",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "nondeterministic-key",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "malformed-logical-facets",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "malformed-native-primary-flag",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "logical-key-domain-mismatch",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "incomplete-source-key-set",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "wrong-catalog",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "unqualified-engine",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "qualified-emission-after-key-correspondence",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "same-key-different-type-native-rows",
+      "expected": 3,
+      "observed": 3
+    },
+    {
+      "id": "same-endpoints-different-association-native-rows",
+      "expected": 2,
+      "observed": 2
+    },
+    {
+      "id": "reversed-native-composite-key:native-refusal",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "reversed-native-composite-key:no-sql-emission",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "explicit-native-order-preserves-logical-order",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "explicit-native-order-preserves-predicate",
+      "expected": "(($2 OPERATOR(pg_catalog.=) E'3'::pg_catalog.int4) IS TRUE AND ((TRUE) IS TRUE) AND ((CASE WHEN EXISTS(SELECT 1 FROM \"shared_component\".\"association\" AS \"association_0\" WHERE (\"association_0\".\"type_id\" OPERATOR(pg_catalog.=) E'12'::pg_catalog.int4) AND ((((\"association_0\".\"source_key\" OPERATOR(pg_catalog.=) $1)) AND (CASE WHEN EXISTS(SELECT 1 FROM \"shared_component\".\"association\" AS \"association_1\" WHERE (\"association_1\".\"type_id\" OPERATOR(pg_catalog.=) E'11'::pg_catalog.int4) AND ((((\"association_1\".\"source_key\" OPERATOR(pg_catalog.=) (SELECT \"subject_row\".\"id\" FROM \"shared_component\".\"entity\" AS \"subject_row\" WHERE \"subject_row\".\"native_login\" OPERATOR(pg_catalog.=) SESSION_USER::pg_catalog.text AND (\"subject_row\".\"type_id\" OPERATOR(pg_catalog.=) E'1'::pg_catalog.int4)))) AND ((\"association_1\".\"target_key\" OPERATOR(pg_catalog.=) \"association_0\".\"target_key\")) AND ((\"association_1\".\"active\" OPERATOR(pg_catalog.=) TRUE)))) IS TRUE) THEN TRUE WHEN EXISTS(SELECT 1 FROM \"shared_component\".\"association\" AS \"association_1\" WHERE (\"association_1\".\"type_id\" OPERATOR(pg_catalog.=) E'11'::pg_catalog.int4) AND ((((\"association_1\".\"source_key\" OPERATOR(pg_catalog.=) (SELECT \"subject_row\".\"id\" FROM \"shared_component\".\"entity\" AS \"subject_row\" WHERE \"subject_row\".\"native_login\" OPERATOR(pg_catalog.=) SESSION_USER::pg_catalog.text AND (\"subject_row\".\"type_id\" OPERATOR(pg_catalog.=) E'1'::pg_catalog.int4)))) AND ((\"association_1\".\"target_key\" OPERATOR(pg_catalog.=) \"association_0\".\"target_key\")) AND ((\"association_1\".\"active\" OPERATOR(pg_catalog.=) TRUE)))) IS NULL) THEN NULL::pg_catalog.bool ELSE FALSE END))) IS TRUE) THEN TRUE WHEN EXISTS(SELECT 1 FROM \"shared_component\".\"association\" AS \"association_0\" WHERE (\"association_0\".\"type_id\" OPERATOR(pg_catalog.=) E'12'::pg_catalog.int4) AND ((((\"association_0\".\"source_key\" OPERATOR(pg_catalog.=) $1)) AND (CASE WHEN EXISTS(SELECT 1 FROM \"shared_component\".\"association\" AS \"association_1\" WHERE (\"association_1\".\"type_id\" OPERATOR(pg_catalog.=) E'11'::pg_catalog.int4) AND ((((\"association_1\".\"source_key\" OPERATOR(pg_catalog.=) (SELECT \"subject_row\".\"id\" FROM \"shared_component\".\"entity\" AS \"subject_row\" WHERE \"subject_row\".\"native_login\" OPERATOR(pg_catalog.=) SESSION_USER::pg_catalog.text AND (\"subject_row\".\"type_id\" OPERATOR(pg_catalog.=) E'1'::pg_catalog.int4)))) AND ((\"association_1\".\"target_key\" OPERATOR(pg_catalog.=) \"association_0\".\"target_key\")) AND ((\"association_1\".\"active\" OPERATOR(pg_catalog.=) TRUE)))) IS TRUE) THEN TRUE WHEN EXISTS(SELECT 1 FROM \"shared_component\".\"association\" AS \"association_1\" WHERE (\"association_1\".\"type_id\" OPERATOR(pg_catalog.=) E'11'::pg_catalog.int4) AND ((((\"association_1\".\"source_key\" OPERATOR(pg_catalog.=) (SELECT \"subject_row\".\"id\" FROM \"shared_component\".\"entity\" AS \"subject_row\" WHERE \"subject_row\".\"native_login\" OPERATOR(pg_catalog.=) SESSION_USER::pg_catalog.text AND (\"subject_row\".\"type_id\" OPERATOR(pg_catalog.=) E'1'::pg_catalog.int4)))) AND ((\"association_1\".\"target_key\" OPERATOR(pg_catalog.=) \"association_0\".\"target_key\")) AND ((\"association_1\".\"active\" OPERATOR(pg_catalog.=) TRUE)))) IS NULL) THEN NULL::pg_catalog.bool ELSE FALSE END))) IS NULL) THEN NULL::pg_catalog.bool ELSE FALSE END)) IS TRUE)",
+      "observed": "(($2 OPERATOR(pg_catalog.=) E'3'::pg_catalog.int4) IS TRUE AND ((TRUE) IS TRUE) AND ((CASE WHEN EXISTS(SELECT 1 FROM \"shared_component\".\"association\" AS \"association_0\" WHERE (\"association_0\".\"type_id\" OPERATOR(pg_catalog.=) E'12'::pg_catalog.int4) AND ((((\"association_0\".\"source_key\" OPERATOR(pg_catalog.=) $1)) AND (CASE WHEN EXISTS(SELECT 1 FROM \"shared_component\".\"association\" AS \"association_1\" WHERE (\"association_1\".\"type_id\" OPERATOR(pg_catalog.=) E'11'::pg_catalog.int4) AND ((((\"association_1\".\"source_key\" OPERATOR(pg_catalog.=) (SELECT \"subject_row\".\"id\" FROM \"shared_component\".\"entity\" AS \"subject_row\" WHERE \"subject_row\".\"native_login\" OPERATOR(pg_catalog.=) SESSION_USER::pg_catalog.text AND (\"subject_row\".\"type_id\" OPERATOR(pg_catalog.=) E'1'::pg_catalog.int4)))) AND ((\"association_1\".\"target_key\" OPERATOR(pg_catalog.=) \"association_0\".\"target_key\")) AND ((\"association_1\".\"active\" OPERATOR(pg_catalog.=) TRUE)))) IS TRUE) THEN TRUE WHEN EXISTS(SELECT 1 FROM \"shared_component\".\"association\" AS \"association_1\" WHERE (\"association_1\".\"type_id\" OPERATOR(pg_catalog.=) E'11'::pg_catalog.int4) AND ((((\"association_1\".\"source_key\" OPERATOR(pg_catalog.=) (SELECT \"subject_row\".\"id\" FROM \"shared_component\".\"entity\" AS \"subject_row\" WHERE \"subject_row\".\"native_login\" OPERATOR(pg_catalog.=) SESSION_USER::pg_catalog.text AND (\"subject_row\".\"type_id\" OPERATOR(pg_catalog.=) E'1'::pg_catalog.int4)))) AND ((\"association_1\".\"target_key\" OPERATOR(pg_catalog.=) \"association_0\".\"target_key\")) AND ((\"association_1\".\"active\" OPERATOR(pg_catalog.=) TRUE)))) IS NULL) THEN NULL::pg_catalog.bool ELSE FALSE END))) IS TRUE) THEN TRUE WHEN EXISTS(SELECT 1 FROM \"shared_component\".\"association\" AS \"association_0\" WHERE (\"association_0\".\"type_id\" OPERATOR(pg_catalog.=) E'12'::pg_catalog.int4) AND ((((\"association_0\".\"source_key\" OPERATOR(pg_catalog.=) $1)) AND (CASE WHEN EXISTS(SELECT 1 FROM \"shared_component\".\"association\" AS \"association_1\" WHERE (\"association_1\".\"type_id\" OPERATOR(pg_catalog.=) E'11'::pg_catalog.int4) AND ((((\"association_1\".\"source_key\" OPERATOR(pg_catalog.=) (SELECT \"subject_row\".\"id\" FROM \"shared_component\".\"entity\" AS \"subject_row\" WHERE \"subject_row\".\"native_login\" OPERATOR(pg_catalog.=) SESSION_USER::pg_catalog.text AND (\"subject_row\".\"type_id\" OPERATOR(pg_catalog.=) E'1'::pg_catalog.int4)))) AND ((\"association_1\".\"target_key\" OPERATOR(pg_catalog.=) \"association_0\".\"target_key\")) AND ((\"association_1\".\"active\" OPERATOR(pg_catalog.=) TRUE)))) IS TRUE) THEN TRUE WHEN EXISTS(SELECT 1 FROM \"shared_component\".\"association\" AS \"association_1\" WHERE (\"association_1\".\"type_id\" OPERATOR(pg_catalog.=) E'11'::pg_catalog.int4) AND ((((\"association_1\".\"source_key\" OPERATOR(pg_catalog.=) (SELECT \"subject_row\".\"id\" FROM \"shared_component\".\"entity\" AS \"subject_row\" WHERE \"subject_row\".\"native_login\" OPERATOR(pg_catalog.=) SESSION_USER::pg_catalog.text AND (\"subject_row\".\"type_id\" OPERATOR(pg_catalog.=) E'1'::pg_catalog.int4)))) AND ((\"association_1\".\"target_key\" OPERATOR(pg_catalog.=) \"association_0\".\"target_key\")) AND ((\"association_1\".\"active\" OPERATOR(pg_catalog.=) TRUE)))) IS NULL) THEN NULL::pg_catalog.bool ELSE FALSE END))) IS NULL) THEN NULL::pg_catalog.bool ELSE FALSE END)) IS TRUE)"
+    },
+    {
+      "id": "reversed-native-composite-key:exact-restored-admission",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "varchar-native-key-domain:native-refusal",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "varchar-native-key-domain:no-sql-emission",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "varchar-native-key-domain:exact-restored-admission",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "wrong-original-native-type:native-refusal",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "wrong-original-native-type:no-sql-emission",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "wrong-original-native-type:exact-restored-admission",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "changed-original-native-source:native-refusal",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "changed-original-native-source:no-sql-emission",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "changed-original-native-source:exact-restored-admission",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "type-last-native-key-refuses-prior-mapping",
+      "expected": false,
+      "observed": false
+    },
+    {
+      "id": "explicit-type-last-native-key-correspondence",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "explicit-type-last-predicate-byte-correspondence",
+      "expected": "(($2 OPERATOR(pg_catalog.=) E'3'::pg_catalog.int4) IS TRUE AND ((TRUE) IS TRUE) AND ((CASE WHEN EXISTS(SELECT 1 FROM \"shared_component\".\"association\" AS \"association_0\" WHERE (\"association_0\".\"type_id\" OPERATOR(pg_catalog.=) E'12'::pg_catalog.int4) AND ((((\"association_0\".\"source_key\" OPERATOR(pg_catalog.=) $1)) AND (CASE WHEN EXISTS(SELECT 1 FROM \"shared_component\".\"association\" AS \"association_1\" WHERE (\"association_1\".\"type_id\" OPERATOR(pg_catalog.=) E'11'::pg_catalog.int4) AND ((((\"association_1\".\"source_key\" OPERATOR(pg_catalog.=) (SELECT \"subject_row\".\"id\" FROM \"shared_component\".\"entity\" AS \"subject_row\" WHERE \"subject_row\".\"native_login\" OPERATOR(pg_catalog.=) SESSION_USER::pg_catalog.text AND (\"subject_row\".\"type_id\" OPERATOR(pg_catalog.=) E'1'::pg_catalog.int4)))) AND ((\"association_1\".\"target_key\" OPERATOR(pg_catalog.=) \"association_0\".\"target_key\")) AND ((\"association_1\".\"active\" OPERATOR(pg_catalog.=) TRUE)))) IS TRUE) THEN TRUE WHEN EXISTS(SELECT 1 FROM \"shared_component\".\"association\" AS \"association_1\" WHERE (\"association_1\".\"type_id\" OPERATOR(pg_catalog.=) E'11'::pg_catalog.int4) AND ((((\"association_1\".\"source_key\" OPERATOR(pg_catalog.=) (SELECT \"subject_row\".\"id\" FROM \"shared_component\".\"entity\" AS \"subject_row\" WHERE \"subject_row\".\"native_login\" OPERATOR(pg_catalog.=) SESSION_USER::pg_catalog.text AND (\"subject_row\".\"type_id\" OPERATOR(pg_catalog.=) E'1'::pg_catalog.int4)))) AND ((\"association_1\".\"target_key\" OPERATOR(pg_catalog.=) \"association_0\".\"target_key\")) AND ((\"association_1\".\"active\" OPERATOR(pg_catalog.=) TRUE)))) IS NULL) THEN NULL::pg_catalog.bool ELSE FALSE END))) IS TRUE) THEN TRUE WHEN EXISTS(SELECT 1 FROM \"shared_component\".\"association\" AS \"association_0\" WHERE (\"association_0\".\"type_id\" OPERATOR(pg_catalog.=) E'12'::pg_catalog.int4) AND ((((\"association_0\".\"source_key\" OPERATOR(pg_catalog.=) $1)) AND (CASE WHEN EXISTS(SELECT 1 FROM \"shared_component\".\"association\" AS \"association_1\" WHERE (\"association_1\".\"type_id\" OPERATOR(pg_catalog.=) E'11'::pg_catalog.int4) AND ((((\"association_1\".\"source_key\" OPERATOR(pg_catalog.=) (SELECT \"subject_row\".\"id\" FROM \"shared_component\".\"entity\" AS \"subject_row\" WHERE \"subject_row\".\"native_login\" OPERATOR(pg_catalog.=) SESSION_USER::pg_catalog.text AND (\"subject_row\".\"type_id\" OPERATOR(pg_catalog.=) E'1'::pg_catalog.int4)))) AND ((\"association_1\".\"target_key\" OPERATOR(pg_catalog.=) \"association_0\".\"target_key\")) AND ((\"association_1\".\"active\" OPERATOR(pg_catalog.=) TRUE)))) IS TRUE) THEN TRUE WHEN EXISTS(SELECT 1 FROM \"shared_component\".\"association\" AS \"association_1\" WHERE (\"association_1\".\"type_id\" OPERATOR(pg_catalog.=) E'11'::pg_catalog.int4) AND ((((\"association_1\".\"source_key\" OPERATOR(pg_catalog.=) (SELECT \"subject_row\".\"id\" FROM \"shared_component\".\"entity\" AS \"subject_row\" WHERE \"subject_row\".\"native_login\" OPERATOR(pg_catalog.=) SESSION_USER::pg_catalog.text AND (\"subject_row\".\"type_id\" OPERATOR(pg_catalog.=) E'1'::pg_catalog.int4)))) AND ((\"association_1\".\"target_key\" OPERATOR(pg_catalog.=) \"association_0\".\"target_key\")) AND ((\"association_1\".\"active\" OPERATOR(pg_catalog.=) TRUE)))) IS NULL) THEN NULL::pg_catalog.bool ELSE FALSE END))) IS NULL) THEN NULL::pg_catalog.bool ELSE FALSE END)) IS TRUE)",
+      "observed": "(($2 OPERATOR(pg_catalog.=) E'3'::pg_catalog.int4) IS TRUE AND ((TRUE) IS TRUE) AND ((CASE WHEN EXISTS(SELECT 1 FROM \"shared_component\".\"association\" AS \"association_0\" WHERE (\"association_0\".\"type_id\" OPERATOR(pg_catalog.=) E'12'::pg_catalog.int4) AND ((((\"association_0\".\"source_key\" OPERATOR(pg_catalog.=) $1)) AND (CASE WHEN EXISTS(SELECT 1 FROM \"shared_component\".\"association\" AS \"association_1\" WHERE (\"association_1\".\"type_id\" OPERATOR(pg_catalog.=) E'11'::pg_catalog.int4) AND ((((\"association_1\".\"source_key\" OPERATOR(pg_catalog.=) (SELECT \"subject_row\".\"id\" FROM \"shared_component\".\"entity\" AS \"subject_row\" WHERE \"subject_row\".\"native_login\" OPERATOR(pg_catalog.=) SESSION_USER::pg_catalog.text AND (\"subject_row\".\"type_id\" OPERATOR(pg_catalog.=) E'1'::pg_catalog.int4)))) AND ((\"association_1\".\"target_key\" OPERATOR(pg_catalog.=) \"association_0\".\"target_key\")) AND ((\"association_1\".\"active\" OPERATOR(pg_catalog.=) TRUE)))) IS TRUE) THEN TRUE WHEN EXISTS(SELECT 1 FROM \"shared_component\".\"association\" AS \"association_1\" WHERE (\"association_1\".\"type_id\" OPERATOR(pg_catalog.=) E'11'::pg_catalog.int4) AND ((((\"association_1\".\"source_key\" OPERATOR(pg_catalog.=) (SELECT \"subject_row\".\"id\" FROM \"shared_component\".\"entity\" AS \"subject_row\" WHERE \"subject_row\".\"native_login\" OPERATOR(pg_catalog.=) SESSION_USER::pg_catalog.text AND (\"subject_row\".\"type_id\" OPERATOR(pg_catalog.=) E'1'::pg_catalog.int4)))) AND ((\"association_1\".\"target_key\" OPERATOR(pg_catalog.=) \"association_0\".\"target_key\")) AND ((\"association_1\".\"active\" OPERATOR(pg_catalog.=) TRUE)))) IS NULL) THEN NULL::pg_catalog.bool ELSE FALSE END))) IS TRUE) THEN TRUE WHEN EXISTS(SELECT 1 FROM \"shared_component\".\"association\" AS \"association_0\" WHERE (\"association_0\".\"type_id\" OPERATOR(pg_catalog.=) E'12'::pg_catalog.int4) AND ((((\"association_0\".\"source_key\" OPERATOR(pg_catalog.=) $1)) AND (CASE WHEN EXISTS(SELECT 1 FROM \"shared_component\".\"association\" AS \"association_1\" WHERE (\"association_1\".\"type_id\" OPERATOR(pg_catalog.=) E'11'::pg_catalog.int4) AND ((((\"association_1\".\"source_key\" OPERATOR(pg_catalog.=) (SELECT \"subject_row\".\"id\" FROM \"shared_component\".\"entity\" AS \"subject_row\" WHERE \"subject_row\".\"native_login\" OPERATOR(pg_catalog.=) SESSION_USER::pg_catalog.text AND (\"subject_row\".\"type_id\" OPERATOR(pg_catalog.=) E'1'::pg_catalog.int4)))) AND ((\"association_1\".\"target_key\" OPERATOR(pg_catalog.=) \"association_0\".\"target_key\")) AND ((\"association_1\".\"active\" OPERATOR(pg_catalog.=) TRUE)))) IS TRUE) THEN TRUE WHEN EXISTS(SELECT 1 FROM \"shared_component\".\"association\" AS \"association_1\" WHERE (\"association_1\".\"type_id\" OPERATOR(pg_catalog.=) E'11'::pg_catalog.int4) AND ((((\"association_1\".\"source_key\" OPERATOR(pg_catalog.=) (SELECT \"subject_row\".\"id\" FROM \"shared_component\".\"entity\" AS \"subject_row\" WHERE \"subject_row\".\"native_login\" OPERATOR(pg_catalog.=) SESSION_USER::pg_catalog.text AND (\"subject_row\".\"type_id\" OPERATOR(pg_catalog.=) E'1'::pg_catalog.int4)))) AND ((\"association_1\".\"target_key\" OPERATOR(pg_catalog.=) \"association_0\".\"target_key\")) AND ((\"association_1\".\"active\" OPERATOR(pg_catalog.=) TRUE)))) IS NULL) THEN NULL::pg_catalog.bool ELSE FALSE END))) IS NULL) THEN NULL::pg_catalog.bool ELSE FALSE END)) IS TRUE)"
+    },
+    {
+      "id": "native-inventory-exact-restoration",
+      "expected": {
+        "engine": "170009",
+        "tables": [
+          {
+            "home": {
+              "catalog": "postgres",
+              "schema": "shared_component",
+              "table": "entity"
+            },
+            "columns": [
+              {
+                "name": "type_id",
+                "type": "integer",
+                "notNull": true,
+                "deterministic": true
+              },
+              {
+                "name": "id",
+                "type": "text",
+                "notNull": true,
+                "deterministic": true
+              },
+              {
+                "name": "native_login",
+                "type": "text",
+                "notNull": false,
+                "deterministic": true
+              }
+            ],
+            "keys": [
+              {
+                "primary": true,
+                "validated": true,
+                "columns": [
+                  "type_id",
+                  "id"
+                ]
+              }
+            ],
+            "foreignKeys": [],
+            "typeSources": [
+              {
+                "type": {
+                  "documentId": "domain",
+                  "moduleId": "m",
+                  "elementId": "Staff"
+                },
+                "column": "type_id",
+                "value": "1",
+                "sourcePin": {
+                  "documentId": "domain",
+                  "revision": "schema-natural-1",
+                  "umfVersion": "0.8.0",
+                  "sha256": "bb6a609480975f782bea1a8d6cae9e0623218a8711a7cba1669353ea8ef3962a"
+                }
+              },
+              {
+                "type": {
+                  "documentId": "domain",
+                  "moduleId": "m",
+                  "elementId": "Project"
+                },
+                "column": "type_id",
+                "value": "2",
+                "sourcePin": {
+                  "documentId": "domain",
+                  "revision": "schema-natural-1",
+                  "umfVersion": "0.8.0",
+                  "sha256": "bb6a609480975f782bea1a8d6cae9e0623218a8711a7cba1669353ea8ef3962a"
+                }
+              },
+              {
+                "type": {
+                  "documentId": "domain",
+                  "moduleId": "m",
+                  "elementId": "Resource"
+                },
+                "column": "type_id",
+                "value": "3",
+                "sourcePin": {
+                  "documentId": "domain",
+                  "revision": "schema-natural-1",
+                  "umfVersion": "0.8.0",
+                  "sha256": "bb6a609480975f782bea1a8d6cae9e0623218a8711a7cba1669353ea8ef3962a"
+                }
+              }
+            ]
+          },
+          {
+            "home": {
+              "catalog": "postgres",
+              "schema": "shared_component",
+              "table": "association"
+            },
+            "columns": [
+              {
+                "name": "type_id",
+                "type": "integer",
+                "notNull": true,
+                "deterministic": true
+              },
+              {
+                "name": "source_key",
+                "type": "text",
+                "notNull": true,
+                "deterministic": true
+              },
+              {
+                "name": "target_key",
+                "type": "text",
+                "notNull": true,
+                "deterministic": true
+              },
+              {
+                "name": "active",
+                "type": "boolean",
+                "notNull": true,
+                "deterministic": true
+              }
+            ],
+            "keys": [
+              {
+                "primary": true,
+                "validated": true,
+                "columns": [
+                  "type_id",
+                  "source_key",
+                  "target_key"
+                ]
+              }
+            ],
+            "foreignKeys": [],
+            "typeSources": [
+              {
+                "type": {
+                  "documentId": "domain",
+                  "moduleId": "m",
+                  "elementId": "Assignment"
+                },
+                "column": "type_id",
+                "value": "11",
+                "sourcePin": {
+                  "documentId": "domain",
+                  "revision": "schema-natural-1",
+                  "umfVersion": "0.8.0",
+                  "sha256": "bb6a609480975f782bea1a8d6cae9e0623218a8711a7cba1669353ea8ef3962a"
+                }
+              },
+              {
+                "type": {
+                  "documentId": "domain",
+                  "moduleId": "m",
+                  "elementId": "Ownership"
+                },
+                "column": "type_id",
+                "value": "12",
+                "sourcePin": {
+                  "documentId": "domain",
+                  "revision": "schema-natural-1",
+                  "umfVersion": "0.8.0",
+                  "sha256": "bb6a609480975f782bea1a8d6cae9e0623218a8711a7cba1669353ea8ef3962a"
+                }
+              }
+            ]
+          },
+          {
+            "home": {
+              "catalog": "postgres",
+              "schema": "shared_component",
+              "table": "type_binding"
+            },
+            "columns": [
+              {
+                "name": "type_id",
+                "type": "integer",
+                "notNull": true,
+                "deterministic": true
+              },
+              {
+                "name": "document_id",
+                "type": "text",
+                "notNull": true,
+                "deterministic": true
+              },
+              {
+                "name": "module_id",
+                "type": "text",
+                "notNull": true,
+                "deterministic": true
+              },
+              {
+                "name": "element_id",
+                "type": "text",
+                "notNull": true,
+                "deterministic": true
+              },
+              {
+                "name": "column_name",
+                "type": "text",
+                "notNull": true,
+                "deterministic": true
+              },
+              {
+                "name": "home_schema",
+                "type": "text",
+                "notNull": true,
+                "deterministic": true
+              },
+              {
+                "name": "home_table",
+                "type": "text",
+                "notNull": true,
+                "deterministic": true
+              },
+              {
+                "name": "revision",
+                "type": "text",
+                "notNull": true,
+                "deterministic": true
+              },
+              {
+                "name": "umf_version",
+                "type": "text",
+                "notNull": true,
+                "deterministic": true
+              },
+              {
+                "name": "source_sha256",
+                "type": "text",
+                "notNull": true,
+                "deterministic": true
+              }
+            ],
+            "keys": [
+              {
+                "primary": true,
+                "validated": true,
+                "columns": [
+                  "type_id"
+                ]
+              }
+            ],
+            "foreignKeys": [],
+            "typeSources": []
+          }
+        ]
+      },
+      "observed": {
+        "engine": "170009",
+        "tables": [
+          {
+            "home": {
+              "catalog": "postgres",
+              "schema": "shared_component",
+              "table": "entity"
+            },
+            "columns": [
+              {
+                "name": "type_id",
+                "type": "integer",
+                "notNull": true,
+                "deterministic": true
+              },
+              {
+                "name": "id",
+                "type": "text",
+                "notNull": true,
+                "deterministic": true
+              },
+              {
+                "name": "native_login",
+                "type": "text",
+                "notNull": false,
+                "deterministic": true
+              }
+            ],
+            "keys": [
+              {
+                "primary": true,
+                "validated": true,
+                "columns": [
+                  "type_id",
+                  "id"
+                ]
+              }
+            ],
+            "foreignKeys": [],
+            "typeSources": [
+              {
+                "type": {
+                  "documentId": "domain",
+                  "moduleId": "m",
+                  "elementId": "Staff"
+                },
+                "column": "type_id",
+                "value": "1",
+                "sourcePin": {
+                  "documentId": "domain",
+                  "revision": "schema-natural-1",
+                  "umfVersion": "0.8.0",
+                  "sha256": "bb6a609480975f782bea1a8d6cae9e0623218a8711a7cba1669353ea8ef3962a"
+                }
+              },
+              {
+                "type": {
+                  "documentId": "domain",
+                  "moduleId": "m",
+                  "elementId": "Project"
+                },
+                "column": "type_id",
+                "value": "2",
+                "sourcePin": {
+                  "documentId": "domain",
+                  "revision": "schema-natural-1",
+                  "umfVersion": "0.8.0",
+                  "sha256": "bb6a609480975f782bea1a8d6cae9e0623218a8711a7cba1669353ea8ef3962a"
+                }
+              },
+              {
+                "type": {
+                  "documentId": "domain",
+                  "moduleId": "m",
+                  "elementId": "Resource"
+                },
+                "column": "type_id",
+                "value": "3",
+                "sourcePin": {
+                  "documentId": "domain",
+                  "revision": "schema-natural-1",
+                  "umfVersion": "0.8.0",
+                  "sha256": "bb6a609480975f782bea1a8d6cae9e0623218a8711a7cba1669353ea8ef3962a"
+                }
+              }
+            ]
+          },
+          {
+            "home": {
+              "catalog": "postgres",
+              "schema": "shared_component",
+              "table": "association"
+            },
+            "columns": [
+              {
+                "name": "type_id",
+                "type": "integer",
+                "notNull": true,
+                "deterministic": true
+              },
+              {
+                "name": "source_key",
+                "type": "text",
+                "notNull": true,
+                "deterministic": true
+              },
+              {
+                "name": "target_key",
+                "type": "text",
+                "notNull": true,
+                "deterministic": true
+              },
+              {
+                "name": "active",
+                "type": "boolean",
+                "notNull": true,
+                "deterministic": true
+              }
+            ],
+            "keys": [
+              {
+                "primary": true,
+                "validated": true,
+                "columns": [
+                  "type_id",
+                  "source_key",
+                  "target_key"
+                ]
+              }
+            ],
+            "foreignKeys": [],
+            "typeSources": [
+              {
+                "type": {
+                  "documentId": "domain",
+                  "moduleId": "m",
+                  "elementId": "Assignment"
+                },
+                "column": "type_id",
+                "value": "11",
+                "sourcePin": {
+                  "documentId": "domain",
+                  "revision": "schema-natural-1",
+                  "umfVersion": "0.8.0",
+                  "sha256": "bb6a609480975f782bea1a8d6cae9e0623218a8711a7cba1669353ea8ef3962a"
+                }
+              },
+              {
+                "type": {
+                  "documentId": "domain",
+                  "moduleId": "m",
+                  "elementId": "Ownership"
+                },
+                "column": "type_id",
+                "value": "12",
+                "sourcePin": {
+                  "documentId": "domain",
+                  "revision": "schema-natural-1",
+                  "umfVersion": "0.8.0",
+                  "sha256": "bb6a609480975f782bea1a8d6cae9e0623218a8711a7cba1669353ea8ef3962a"
+                }
+              }
+            ]
+          },
+          {
+            "home": {
+              "catalog": "postgres",
+              "schema": "shared_component",
+              "table": "type_binding"
+            },
+            "columns": [
+              {
+                "name": "type_id",
+                "type": "integer",
+                "notNull": true,
+                "deterministic": true
+              },
+              {
+                "name": "document_id",
+                "type": "text",
+                "notNull": true,
+                "deterministic": true
+              },
+              {
+                "name": "module_id",
+                "type": "text",
+                "notNull": true,
+                "deterministic": true
+              },
+              {
+                "name": "element_id",
+                "type": "text",
+                "notNull": true,
+                "deterministic": true
+              },
+              {
+                "name": "column_name",
+                "type": "text",
+                "notNull": true,
+                "deterministic": true
+              },
+              {
+                "name": "home_schema",
+                "type": "text",
+                "notNull": true,
+                "deterministic": true
+              },
+              {
+                "name": "home_table",
+                "type": "text",
+                "notNull": true,
+                "deterministic": true
+              },
+              {
+                "name": "revision",
+                "type": "text",
+                "notNull": true,
+                "deterministic": true
+              },
+              {
+                "name": "umf_version",
+                "type": "text",
+                "notNull": true,
+                "deterministic": true
+              },
+              {
+                "name": "source_sha256",
+                "type": "text",
+                "notNull": true,
+                "deterministic": true
+              }
+            ],
+            "keys": [
+              {
+                "primary": true,
+                "validated": true,
+                "columns": [
+                  "type_id"
+                ]
+              }
+            ],
+            "foreignKeys": [],
+            "typeSources": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "same-owner-module-original-raw-key-correspondence",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "raw-key-refusal-controls",
+      "expected": true,
+      "observed": true
+    },
+    {
+      "id": "raw-original-predicate-byte-correspondence",
+      "expected": "(((TRUE) IS TRUE) AND ((CASE WHEN EXISTS(SELECT 1 FROM \"security_raw\".\"m2m_resource_project\" AS \"association_0\" WHERE ((((\"association_0\".\"resource_id\" OPERATOR(pg_catalog.=) $1)) AND (CASE WHEN EXISTS(SELECT 1 FROM \"security_raw\".\"m2m_employee_project\" AS \"association_1\" WHERE ((((\"association_1\".\"employee_id\" OPERATOR(pg_catalog.=) (SELECT \"subject_row\".\"id\" FROM \"security_raw\".\"employee\" AS \"subject_row\" WHERE \"subject_row\".\"native_login\" OPERATOR(pg_catalog.=) SESSION_USER::pg_catalog.text))) AND ((\"association_1\".\"project_id\" OPERATOR(pg_catalog.=) \"association_0\".\"project_id\")) AND ((\"association_1\".\"active\" OPERATOR(pg_catalog.=) TRUE)))) IS TRUE) THEN TRUE WHEN EXISTS(SELECT 1 FROM \"security_raw\".\"m2m_employee_project\" AS \"association_1\" WHERE ((((\"association_1\".\"employee_id\" OPERATOR(pg_catalog.=) (SELECT \"subject_row\".\"id\" FROM \"security_raw\".\"employee\" AS \"subject_row\" WHERE \"subject_row\".\"native_login\" OPERATOR(pg_catalog.=) SESSION_USER::pg_catalog.text))) AND ((\"association_1\".\"project_id\" OPERATOR(pg_catalog.=) \"association_0\".\"project_id\")) AND ((\"association_1\".\"active\" OPERATOR(pg_catalog.=) TRUE)))) IS NULL) THEN NULL::pg_catalog.bool ELSE FALSE END))) IS TRUE) THEN TRUE WHEN EXISTS(SELECT 1 FROM \"security_raw\".\"m2m_resource_project\" AS \"association_0\" WHERE ((((\"association_0\".\"resource_id\" OPERATOR(pg_catalog.=) $1)) AND (CASE WHEN EXISTS(SELECT 1 FROM \"security_raw\".\"m2m_employee_project\" AS \"association_1\" WHERE ((((\"association_1\".\"employee_id\" OPERATOR(pg_catalog.=) (SELECT \"subject_row\".\"id\" FROM \"security_raw\".\"employee\" AS \"subject_row\" WHERE \"subject_row\".\"native_login\" OPERATOR(pg_catalog.=) SESSION_USER::pg_catalog.text))) AND ((\"association_1\".\"project_id\" OPERATOR(pg_catalog.=) \"association_0\".\"project_id\")) AND ((\"association_1\".\"active\" OPERATOR(pg_catalog.=) TRUE)))) IS TRUE) THEN TRUE WHEN EXISTS(SELECT 1 FROM \"security_raw\".\"m2m_employee_project\" AS \"association_1\" WHERE ((((\"association_1\".\"employee_id\" OPERATOR(pg_catalog.=) (SELECT \"subject_row\".\"id\" FROM \"security_raw\".\"employee\" AS \"subject_row\" WHERE \"subject_row\".\"native_login\" OPERATOR(pg_catalog.=) SESSION_USER::pg_catalog.text))) AND ((\"association_1\".\"project_id\" OPERATOR(pg_catalog.=) \"association_0\".\"project_id\")) AND ((\"association_1\".\"active\" OPERATOR(pg_catalog.=) TRUE)))) IS NULL) THEN NULL::pg_catalog.bool ELSE FALSE END))) IS NULL) THEN NULL::pg_catalog.bool ELSE FALSE END)) IS TRUE)",
+      "observed": "(((TRUE) IS TRUE) AND ((CASE WHEN EXISTS(SELECT 1 FROM \"security_raw\".\"m2m_resource_project\" AS \"association_0\" WHERE ((((\"association_0\".\"resource_id\" OPERATOR(pg_catalog.=) $1)) AND (CASE WHEN EXISTS(SELECT 1 FROM \"security_raw\".\"m2m_employee_project\" AS \"association_1\" WHERE ((((\"association_1\".\"employee_id\" OPERATOR(pg_catalog.=) (SELECT \"subject_row\".\"id\" FROM \"security_raw\".\"employee\" AS \"subject_row\" WHERE \"subject_row\".\"native_login\" OPERATOR(pg_catalog.=) SESSION_USER::pg_catalog.text))) AND ((\"association_1\".\"project_id\" OPERATOR(pg_catalog.=) \"association_0\".\"project_id\")) AND ((\"association_1\".\"active\" OPERATOR(pg_catalog.=) TRUE)))) IS TRUE) THEN TRUE WHEN EXISTS(SELECT 1 FROM \"security_raw\".\"m2m_employee_project\" AS \"association_1\" WHERE ((((\"association_1\".\"employee_id\" OPERATOR(pg_catalog.=) (SELECT \"subject_row\".\"id\" FROM \"security_raw\".\"employee\" AS \"subject_row\" WHERE \"subject_row\".\"native_login\" OPERATOR(pg_catalog.=) SESSION_USER::pg_catalog.text))) AND ((\"association_1\".\"project_id\" OPERATOR(pg_catalog.=) \"association_0\".\"project_id\")) AND ((\"association_1\".\"active\" OPERATOR(pg_catalog.=) TRUE)))) IS NULL) THEN NULL::pg_catalog.bool ELSE FALSE END))) IS TRUE) THEN TRUE WHEN EXISTS(SELECT 1 FROM \"security_raw\".\"m2m_resource_project\" AS \"association_0\" WHERE ((((\"association_0\".\"resource_id\" OPERATOR(pg_catalog.=) $1)) AND (CASE WHEN EXISTS(SELECT 1 FROM \"security_raw\".\"m2m_employee_project\" AS \"association_1\" WHERE ((((\"association_1\".\"employee_id\" OPERATOR(pg_catalog.=) (SELECT \"subject_row\".\"id\" FROM \"security_raw\".\"employee\" AS \"subject_row\" WHERE \"subject_row\".\"native_login\" OPERATOR(pg_catalog.=) SESSION_USER::pg_catalog.text))) AND ((\"association_1\".\"project_id\" OPERATOR(pg_catalog.=) \"association_0\".\"project_id\")) AND ((\"association_1\".\"active\" OPERATOR(pg_catalog.=) TRUE)))) IS TRUE) THEN TRUE WHEN EXISTS(SELECT 1 FROM \"security_raw\".\"m2m_employee_project\" AS \"association_1\" WHERE ((((\"association_1\".\"employee_id\" OPERATOR(pg_catalog.=) (SELECT \"subject_row\".\"id\" FROM \"security_raw\".\"employee\" AS \"subject_row\" WHERE \"subject_row\".\"native_login\" OPERATOR(pg_catalog.=) SESSION_USER::pg_catalog.text))) AND ((\"association_1\".\"project_id\" OPERATOR(pg_catalog.=) \"association_0\".\"project_id\")) AND ((\"association_1\".\"active\" OPERATOR(pg_catalog.=) TRUE)))) IS NULL) THEN NULL::pg_catalog.bool ELSE FALSE END))) IS NULL) THEN NULL::pg_catalog.bool ELSE FALSE END)) IS TRUE)"
+    }
+  ],
+  "nativeInventory": {
+    "engine": "170009",
+    "tables": [
+      {
+        "home": {
+          "catalog": "postgres",
+          "schema": "shared_component",
+          "table": "entity"
+        },
+        "columns": [
+          {
+            "name": "type_id",
+            "type": "integer",
+            "notNull": true,
+            "deterministic": true
+          },
+          {
+            "name": "id",
+            "type": "text",
+            "notNull": true,
+            "deterministic": true
+          },
+          {
+            "name": "native_login",
+            "type": "text",
+            "notNull": false,
+            "deterministic": true
+          }
+        ],
+        "keys": [
+          {
+            "primary": true,
+            "validated": true,
+            "columns": [
+              "type_id",
+              "id"
+            ]
+          }
+        ],
+        "foreignKeys": [],
+        "typeSources": [
+          {
+            "type": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "Staff"
+            },
+            "column": "type_id",
+            "value": "1",
+            "sourcePin": {
+              "documentId": "domain",
+              "revision": "schema-natural-1",
+              "umfVersion": "0.8.0",
+              "sha256": "bb6a609480975f782bea1a8d6cae9e0623218a8711a7cba1669353ea8ef3962a"
+            }
+          },
+          {
+            "type": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "Project"
+            },
+            "column": "type_id",
+            "value": "2",
+            "sourcePin": {
+              "documentId": "domain",
+              "revision": "schema-natural-1",
+              "umfVersion": "0.8.0",
+              "sha256": "bb6a609480975f782bea1a8d6cae9e0623218a8711a7cba1669353ea8ef3962a"
+            }
+          },
+          {
+            "type": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "Resource"
+            },
+            "column": "type_id",
+            "value": "3",
+            "sourcePin": {
+              "documentId": "domain",
+              "revision": "schema-natural-1",
+              "umfVersion": "0.8.0",
+              "sha256": "bb6a609480975f782bea1a8d6cae9e0623218a8711a7cba1669353ea8ef3962a"
+            }
+          }
+        ]
+      },
+      {
+        "home": {
+          "catalog": "postgres",
+          "schema": "shared_component",
+          "table": "association"
+        },
+        "columns": [
+          {
+            "name": "type_id",
+            "type": "integer",
+            "notNull": true,
+            "deterministic": true
+          },
+          {
+            "name": "source_key",
+            "type": "text",
+            "notNull": true,
+            "deterministic": true
+          },
+          {
+            "name": "target_key",
+            "type": "text",
+            "notNull": true,
+            "deterministic": true
+          },
+          {
+            "name": "active",
+            "type": "boolean",
+            "notNull": true,
+            "deterministic": true
+          }
+        ],
+        "keys": [
+          {
+            "primary": true,
+            "validated": true,
+            "columns": [
+              "type_id",
+              "source_key",
+              "target_key"
+            ]
+          }
+        ],
+        "foreignKeys": [],
+        "typeSources": [
+          {
+            "type": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "Assignment"
+            },
+            "column": "type_id",
+            "value": "11",
+            "sourcePin": {
+              "documentId": "domain",
+              "revision": "schema-natural-1",
+              "umfVersion": "0.8.0",
+              "sha256": "bb6a609480975f782bea1a8d6cae9e0623218a8711a7cba1669353ea8ef3962a"
+            }
+          },
+          {
+            "type": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "Ownership"
+            },
+            "column": "type_id",
+            "value": "12",
+            "sourcePin": {
+              "documentId": "domain",
+              "revision": "schema-natural-1",
+              "umfVersion": "0.8.0",
+              "sha256": "bb6a609480975f782bea1a8d6cae9e0623218a8711a7cba1669353ea8ef3962a"
+            }
+          }
+        ]
+      },
+      {
+        "home": {
+          "catalog": "postgres",
+          "schema": "shared_component",
+          "table": "type_binding"
+        },
+        "columns": [
+          {
+            "name": "type_id",
+            "type": "integer",
+            "notNull": true,
+            "deterministic": true
+          },
+          {
+            "name": "document_id",
+            "type": "text",
+            "notNull": true,
+            "deterministic": true
+          },
+          {
+            "name": "module_id",
+            "type": "text",
+            "notNull": true,
+            "deterministic": true
+          },
+          {
+            "name": "element_id",
+            "type": "text",
+            "notNull": true,
+            "deterministic": true
+          },
+          {
+            "name": "column_name",
+            "type": "text",
+            "notNull": true,
+            "deterministic": true
+          },
+          {
+            "name": "home_schema",
+            "type": "text",
+            "notNull": true,
+            "deterministic": true
+          },
+          {
+            "name": "home_table",
+            "type": "text",
+            "notNull": true,
+            "deterministic": true
+          },
+          {
+            "name": "revision",
+            "type": "text",
+            "notNull": true,
+            "deterministic": true
+          },
+          {
+            "name": "umf_version",
+            "type": "text",
+            "notNull": true,
+            "deterministic": true
+          },
+          {
+            "name": "source_sha256",
+            "type": "text",
+            "notNull": true,
+            "deterministic": true
+          }
+        ],
+        "keys": [
+          {
+            "primary": true,
+            "validated": true,
+            "columns": [
+              "type_id"
+            ]
+          }
+        ],
+        "foreignKeys": [],
+        "typeSources": []
+      }
+    ]
+  },
+  "executedManagedSourceDigests": {
+    "tools/security/reviewed-python.py": "cc729c9ce790f74f2ca587a7a8d6840570aff8e62252de25f0dc1f2b01a6463e",
+    "tools/security/pg-association.py": "6981b4fd266ca0d3e537e487bf6759d132a8fc4927d43806c0517093b570c5da"
+  },
+  "resolvedInput": {
+    "declarations": [
+      {
+        "target": {
+          "documentId": "domain",
+          "elementId": "Assignment",
+          "moduleId": "m"
+        },
+        "keyId": "pk",
+        "fields": [
+          {
+            "ref": {
+              "documentId": "domain",
+              "elementId": "assignmentStaff",
+              "moduleId": "m"
+            },
+            "domain": {
+              "scalarType": "string",
+              "nullability": "required",
+              "cardinality": "one",
+              "facets": {},
+              "allowedValues": null
+            }
+          },
+          {
+            "ref": {
+              "documentId": "domain",
+              "elementId": "assignmentProject",
+              "moduleId": "m"
+            },
+            "domain": {
+              "scalarType": "string",
+              "nullability": "required",
+              "cardinality": "one",
+              "facets": {},
+              "allowedValues": null
+            }
+          }
+        ]
+      },
+      {
+        "target": {
+          "documentId": "domain",
+          "elementId": "Ownership",
+          "moduleId": "m"
+        },
+        "keyId": "pk",
+        "fields": [
+          {
+            "ref": {
+              "documentId": "domain",
+              "elementId": "ownerResource",
+              "moduleId": "m"
+            },
+            "domain": {
+              "scalarType": "string",
+              "nullability": "required",
+              "cardinality": "one",
+              "facets": {},
+              "allowedValues": null
+            }
+          },
+          {
+            "ref": {
+              "documentId": "domain",
+              "elementId": "ownerProject",
+              "moduleId": "m"
+            },
+            "domain": {
+              "scalarType": "string",
+              "nullability": "required",
+              "cardinality": "one",
+              "facets": {},
+              "allowedValues": null
+            }
+          }
+        ]
+      },
+      {
+        "target": {
+          "documentId": "domain",
+          "elementId": "Project",
+          "moduleId": "m"
+        },
+        "keyId": "pk",
+        "fields": [
+          {
+            "ref": {
+              "documentId": "domain",
+              "elementId": "projectId",
+              "moduleId": "m"
+            },
+            "domain": {
+              "scalarType": "string",
+              "nullability": "required",
+              "cardinality": "one",
+              "facets": {},
+              "allowedValues": null
+            }
+          }
+        ]
+      },
+      {
+        "target": {
+          "documentId": "domain",
+          "elementId": "Resource",
+          "moduleId": "m"
+        },
+        "keyId": "pk",
+        "fields": [
+          {
+            "ref": {
+              "documentId": "domain",
+              "elementId": "resourceId",
+              "moduleId": "m"
+            },
+            "domain": {
+              "scalarType": "string",
+              "nullability": "required",
+              "cardinality": "one",
+              "facets": {},
+              "allowedValues": null
+            }
+          }
+        ]
+      },
+      {
+        "target": {
+          "documentId": "domain",
+          "elementId": "Staff",
+          "moduleId": "m"
+        },
+        "keyId": "pk",
+        "fields": [
+          {
+            "ref": {
+              "documentId": "domain",
+              "elementId": "staffId",
+              "moduleId": "m"
+            },
+            "domain": {
+              "scalarType": "string",
+              "nullability": "required",
+              "cardinality": "one",
+              "facets": {},
+              "allowedValues": null
+            }
+          }
+        ]
+      },
+      {
+        "target": {
+          "documentId": "domain",
+          "elementId": "Assignment",
+          "moduleId": "m"
+        },
+        "keyId": "pk",
+        "fields": [
+          {
+            "ref": {
+              "documentId": "domain",
+              "elementId": "assignmentStaff",
+              "moduleId": "m"
+            },
+            "domain": {
+              "scalarType": "string",
+              "nullability": "required",
+              "cardinality": "one",
+              "facets": {},
+              "allowedValues": null
+            }
+          },
+          {
+            "ref": {
+              "documentId": "domain",
+              "elementId": "assignmentProject",
+              "moduleId": "m"
+            },
+            "domain": {
+              "scalarType": "string",
+              "nullability": "required",
+              "cardinality": "one",
+              "facets": {},
+              "allowedValues": null
+            }
+          }
+        ]
+      },
+      {
+        "target": {
+          "documentId": "domain",
+          "elementId": "Ownership",
+          "moduleId": "m"
+        },
+        "keyId": "pk",
+        "fields": [
+          {
+            "ref": {
+              "documentId": "domain",
+              "elementId": "ownerResource",
+              "moduleId": "m"
+            },
+            "domain": {
+              "scalarType": "string",
+              "nullability": "required",
+              "cardinality": "one",
+              "facets": {},
+              "allowedValues": null
+            }
+          },
+          {
+            "ref": {
+              "documentId": "domain",
+              "elementId": "ownerProject",
+              "moduleId": "m"
+            },
+            "domain": {
+              "scalarType": "string",
+              "nullability": "required",
+              "cardinality": "one",
+              "facets": {},
+              "allowedValues": null
+            }
+          }
+        ]
+      },
+      {
+        "target": {
+          "documentId": "domain",
+          "elementId": "Project",
+          "moduleId": "m"
+        },
+        "keyId": "pk",
+        "fields": [
+          {
+            "ref": {
+              "documentId": "domain",
+              "elementId": "projectId",
+              "moduleId": "m"
+            },
+            "domain": {
+              "scalarType": "string",
+              "nullability": "required",
+              "cardinality": "one",
+              "facets": {},
+              "allowedValues": null
+            }
+          }
+        ]
+      },
+      {
+        "target": {
+          "documentId": "domain",
+          "elementId": "Resource",
+          "moduleId": "m"
+        },
+        "keyId": "pk",
+        "fields": [
+          {
+            "ref": {
+              "documentId": "domain",
+              "elementId": "resourceId",
+              "moduleId": "m"
+            },
+            "domain": {
+              "scalarType": "string",
+              "nullability": "required",
+              "cardinality": "one",
+              "facets": {},
+              "allowedValues": null
+            }
+          }
+        ]
+      },
+      {
+        "target": {
+          "documentId": "domain",
+          "elementId": "Staff",
+          "moduleId": "m"
+        },
+        "keyId": "pk",
+        "fields": [
+          {
+            "ref": {
+              "documentId": "domain",
+              "elementId": "staffId",
+              "moduleId": "m"
+            },
+            "domain": {
+              "scalarType": "string",
+              "nullability": "required",
+              "cardinality": "one",
+              "facets": {},
+              "allowedValues": null
+            }
+          }
+        ]
+      }
+    ],
+    "types": [
+      {
+        "type": {
+          "documentId": "domain",
+          "moduleId": "m",
+          "elementId": "Staff"
+        },
+        "keyId": "pk",
+        "keyFields": [
+          {
+            "ref": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "staffId"
+            },
+            "column": "id"
+          }
+        ],
+        "fields": [
+          {
+            "ref": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "staffId"
+            },
+            "column": "id"
+          }
+        ],
+        "home": {
+          "schema": "shared_component",
+          "table": "entity"
+        },
+        "discriminator": {
+          "column": "type_id",
+          "carrier": "int4",
+          "value": "1"
+        },
+        "endpoints": null
+      },
+      {
+        "type": {
+          "documentId": "domain",
+          "moduleId": "m",
+          "elementId": "Project"
+        },
+        "keyId": "pk",
+        "keyFields": [
+          {
+            "ref": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "projectId"
+            },
+            "column": "id"
+          }
+        ],
+        "fields": [
+          {
+            "ref": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "projectId"
+            },
+            "column": "id"
+          }
+        ],
+        "home": {
+          "schema": "shared_component",
+          "table": "entity"
+        },
+        "discriminator": {
+          "column": "type_id",
+          "carrier": "int4",
+          "value": "2"
+        },
+        "endpoints": null
+      },
+      {
+        "type": {
+          "documentId": "domain",
+          "moduleId": "m",
+          "elementId": "Resource"
+        },
+        "keyId": "pk",
+        "keyFields": [
+          {
+            "ref": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "resourceId"
+            },
+            "column": "id"
+          }
+        ],
+        "fields": [
+          {
+            "ref": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "resourceId"
+            },
+            "column": "id"
+          }
+        ],
+        "home": {
+          "schema": "shared_component",
+          "table": "entity"
+        },
+        "discriminator": {
+          "column": "type_id",
+          "carrier": "int4",
+          "value": "3"
+        },
+        "endpoints": null
+      },
+      {
+        "type": {
+          "documentId": "domain",
+          "moduleId": "m",
+          "elementId": "Ownership"
+        },
+        "keyId": "pk",
+        "keyFields": [
+          {
+            "ref": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "ownerResource"
+            },
+            "column": "source_key"
+          },
+          {
+            "ref": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "ownerProject"
+            },
+            "column": "target_key"
+          }
+        ],
+        "fields": [
+          {
+            "ref": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "ownerResource"
+            },
+            "column": "source_key"
+          },
+          {
+            "ref": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "ownerProject"
+            },
+            "column": "target_key"
+          }
+        ],
+        "home": {
+          "schema": "shared_component",
+          "table": "association"
+        },
+        "discriminator": {
+          "column": "type_id",
+          "carrier": "int4",
+          "value": "12"
+        },
+        "endpoints": [
+          {
+            "role": "resource",
+            "target": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "Resource"
+            },
+            "fields": [
+              {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "ownerResource"
+              }
+            ]
+          },
+          {
+            "role": "project",
+            "target": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "Project"
+            },
+            "fields": [
+              {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "ownerProject"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": {
+          "documentId": "domain",
+          "moduleId": "m",
+          "elementId": "Assignment"
+        },
+        "keyId": "pk",
+        "keyFields": [
+          {
+            "ref": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "assignmentStaff"
+            },
+            "column": "source_key"
+          },
+          {
+            "ref": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "assignmentProject"
+            },
+            "column": "target_key"
+          }
+        ],
+        "fields": [
+          {
+            "ref": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "assignmentStaff"
+            },
+            "column": "source_key"
+          },
+          {
+            "ref": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "assignmentProject"
+            },
+            "column": "target_key"
+          },
+          {
+            "ref": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "active"
+            },
+            "column": "active"
+          }
+        ],
+        "home": {
+          "schema": "shared_component",
+          "table": "association"
+        },
+        "discriminator": {
+          "column": "type_id",
+          "carrier": "int4",
+          "value": "11"
+        },
+        "endpoints": [
+          {
+            "role": "staff",
+            "target": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "Staff"
+            },
+            "fields": [
+              {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "assignmentStaff"
+              }
+            ]
+          },
+          {
+            "role": "project",
+            "target": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "Project"
+            },
+            "fields": [
+              {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "assignmentProject"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "catalog": "postgres",
+    "modelPins": [
+      {
+        "documentId": "domain",
+        "revision": "schema-natural-1",
+        "sha256": "bb6a609480975f782bea1a8d6cae9e0623218a8711a7cba1669353ea8ef3962a",
+        "umfVersion": "0.8.0"
+      }
+    ],
+    "inventory": {
+      "engine": "170009",
+      "tables": [
+        {
+          "home": {
+            "catalog": "postgres",
+            "schema": "shared_component",
+            "table": "entity"
+          },
+          "columns": [
+            {
+              "name": "type_id",
+              "type": "integer",
+              "notNull": true,
+              "deterministic": true
+            },
+            {
+              "name": "id",
+              "type": "text",
+              "notNull": true,
+              "deterministic": true
+            },
+            {
+              "name": "native_login",
+              "type": "text",
+              "notNull": false,
+              "deterministic": true
+            }
+          ],
+          "keys": [
+            {
+              "primary": true,
+              "validated": true,
+              "columns": [
+                "type_id",
+                "id"
+              ]
+            }
+          ],
+          "foreignKeys": [],
+          "typeSources": [
+            {
+              "type": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "Staff"
+              },
+              "column": "type_id",
+              "value": "1",
+              "sourcePin": {
+                "documentId": "domain",
+                "revision": "schema-natural-1",
+                "umfVersion": "0.8.0",
+                "sha256": "bb6a609480975f782bea1a8d6cae9e0623218a8711a7cba1669353ea8ef3962a"
+              }
+            },
+            {
+              "type": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "Project"
+              },
+              "column": "type_id",
+              "value": "2",
+              "sourcePin": {
+                "documentId": "domain",
+                "revision": "schema-natural-1",
+                "umfVersion": "0.8.0",
+                "sha256": "bb6a609480975f782bea1a8d6cae9e0623218a8711a7cba1669353ea8ef3962a"
+              }
+            },
+            {
+              "type": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "Resource"
+              },
+              "column": "type_id",
+              "value": "3",
+              "sourcePin": {
+                "documentId": "domain",
+                "revision": "schema-natural-1",
+                "umfVersion": "0.8.0",
+                "sha256": "bb6a609480975f782bea1a8d6cae9e0623218a8711a7cba1669353ea8ef3962a"
+              }
+            }
+          ]
+        },
+        {
+          "home": {
+            "catalog": "postgres",
+            "schema": "shared_component",
+            "table": "association"
+          },
+          "columns": [
+            {
+              "name": "type_id",
+              "type": "integer",
+              "notNull": true,
+              "deterministic": true
+            },
+            {
+              "name": "source_key",
+              "type": "text",
+              "notNull": true,
+              "deterministic": true
+            },
+            {
+              "name": "target_key",
+              "type": "text",
+              "notNull": true,
+              "deterministic": true
+            },
+            {
+              "name": "active",
+              "type": "boolean",
+              "notNull": true,
+              "deterministic": true
+            }
+          ],
+          "keys": [
+            {
+              "primary": true,
+              "validated": true,
+              "columns": [
+                "type_id",
+                "source_key",
+                "target_key"
+              ]
+            }
+          ],
+          "foreignKeys": [],
+          "typeSources": [
+            {
+              "type": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "Assignment"
+              },
+              "column": "type_id",
+              "value": "11",
+              "sourcePin": {
+                "documentId": "domain",
+                "revision": "schema-natural-1",
+                "umfVersion": "0.8.0",
+                "sha256": "bb6a609480975f782bea1a8d6cae9e0623218a8711a7cba1669353ea8ef3962a"
+              }
+            },
+            {
+              "type": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "Ownership"
+              },
+              "column": "type_id",
+              "value": "12",
+              "sourcePin": {
+                "documentId": "domain",
+                "revision": "schema-natural-1",
+                "umfVersion": "0.8.0",
+                "sha256": "bb6a609480975f782bea1a8d6cae9e0623218a8711a7cba1669353ea8ef3962a"
+              }
+            }
+          ]
+        },
+        {
+          "home": {
+            "catalog": "postgres",
+            "schema": "shared_component",
+            "table": "type_binding"
+          },
+          "columns": [
+            {
+              "name": "type_id",
+              "type": "integer",
+              "notNull": true,
+              "deterministic": true
+            },
+            {
+              "name": "document_id",
+              "type": "text",
+              "notNull": true,
+              "deterministic": true
+            },
+            {
+              "name": "module_id",
+              "type": "text",
+              "notNull": true,
+              "deterministic": true
+            },
+            {
+              "name": "element_id",
+              "type": "text",
+              "notNull": true,
+              "deterministic": true
+            },
+            {
+              "name": "column_name",
+              "type": "text",
+              "notNull": true,
+              "deterministic": true
+            },
+            {
+              "name": "home_schema",
+              "type": "text",
+              "notNull": true,
+              "deterministic": true
+            },
+            {
+              "name": "home_table",
+              "type": "text",
+              "notNull": true,
+              "deterministic": true
+            },
+            {
+              "name": "revision",
+              "type": "text",
+              "notNull": true,
+              "deterministic": true
+            },
+            {
+              "name": "umf_version",
+              "type": "text",
+              "notNull": true,
+              "deterministic": true
+            },
+            {
+              "name": "source_sha256",
+              "type": "text",
+              "notNull": true,
+              "deterministic": true
+            }
+          ],
+          "keys": [
+            {
+              "primary": true,
+              "validated": true,
+              "columns": [
+                "type_id"
+              ]
+            }
+          ],
+          "foreignKeys": [],
+          "typeSources": []
+        }
+      ]
+    }
+  },
+  "rawResolvedInput": {
+    "declarations": [
+      {
+        "target": {
+          "documentId": "domain",
+          "elementId": "Assignment",
+          "moduleId": "m"
+        },
+        "keyId": "pk",
+        "fields": [
+          {
+            "ref": {
+              "documentId": "domain",
+              "elementId": "assignmentStaff",
+              "moduleId": "m"
+            },
+            "domain": {
+              "scalarType": "string",
+              "nullability": "required",
+              "cardinality": "one",
+              "facets": {},
+              "allowedValues": null
+            }
+          },
+          {
+            "ref": {
+              "documentId": "domain",
+              "elementId": "assignmentProject",
+              "moduleId": "m"
+            },
+            "domain": {
+              "scalarType": "string",
+              "nullability": "required",
+              "cardinality": "one",
+              "facets": {},
+              "allowedValues": null
+            }
+          }
+        ]
+      },
+      {
+        "target": {
+          "documentId": "domain",
+          "elementId": "Ownership",
+          "moduleId": "m"
+        },
+        "keyId": "pk",
+        "fields": [
+          {
+            "ref": {
+              "documentId": "domain",
+              "elementId": "ownerResource",
+              "moduleId": "m"
+            },
+            "domain": {
+              "scalarType": "string",
+              "nullability": "required",
+              "cardinality": "one",
+              "facets": {},
+              "allowedValues": null
+            }
+          },
+          {
+            "ref": {
+              "documentId": "domain",
+              "elementId": "ownerProject",
+              "moduleId": "m"
+            },
+            "domain": {
+              "scalarType": "string",
+              "nullability": "required",
+              "cardinality": "one",
+              "facets": {},
+              "allowedValues": null
+            }
+          }
+        ]
+      },
+      {
+        "target": {
+          "documentId": "domain",
+          "elementId": "Project",
+          "moduleId": "m"
+        },
+        "keyId": "pk",
+        "fields": [
+          {
+            "ref": {
+              "documentId": "domain",
+              "elementId": "projectId",
+              "moduleId": "m"
+            },
+            "domain": {
+              "scalarType": "string",
+              "nullability": "required",
+              "cardinality": "one",
+              "facets": {},
+              "allowedValues": null
+            }
+          }
+        ]
+      },
+      {
+        "target": {
+          "documentId": "domain",
+          "elementId": "Resource",
+          "moduleId": "m"
+        },
+        "keyId": "pk",
+        "fields": [
+          {
+            "ref": {
+              "documentId": "domain",
+              "elementId": "resourceId",
+              "moduleId": "m"
+            },
+            "domain": {
+              "scalarType": "string",
+              "nullability": "required",
+              "cardinality": "one",
+              "facets": {},
+              "allowedValues": null
+            }
+          }
+        ]
+      },
+      {
+        "target": {
+          "documentId": "domain",
+          "elementId": "Staff",
+          "moduleId": "m"
+        },
+        "keyId": "pk",
+        "fields": [
+          {
+            "ref": {
+              "documentId": "domain",
+              "elementId": "staffId",
+              "moduleId": "m"
+            },
+            "domain": {
+              "scalarType": "string",
+              "nullability": "required",
+              "cardinality": "one",
+              "facets": {},
+              "allowedValues": null
+            }
+          }
+        ]
+      },
+      {
+        "target": {
+          "documentId": "domain",
+          "elementId": "Assignment",
+          "moduleId": "m"
+        },
+        "keyId": "pk",
+        "fields": [
+          {
+            "ref": {
+              "documentId": "domain",
+              "elementId": "assignmentStaff",
+              "moduleId": "m"
+            },
+            "domain": {
+              "scalarType": "string",
+              "nullability": "required",
+              "cardinality": "one",
+              "facets": {},
+              "allowedValues": null
+            }
+          },
+          {
+            "ref": {
+              "documentId": "domain",
+              "elementId": "assignmentProject",
+              "moduleId": "m"
+            },
+            "domain": {
+              "scalarType": "string",
+              "nullability": "required",
+              "cardinality": "one",
+              "facets": {},
+              "allowedValues": null
+            }
+          }
+        ]
+      },
+      {
+        "target": {
+          "documentId": "domain",
+          "elementId": "Ownership",
+          "moduleId": "m"
+        },
+        "keyId": "pk",
+        "fields": [
+          {
+            "ref": {
+              "documentId": "domain",
+              "elementId": "ownerResource",
+              "moduleId": "m"
+            },
+            "domain": {
+              "scalarType": "string",
+              "nullability": "required",
+              "cardinality": "one",
+              "facets": {},
+              "allowedValues": null
+            }
+          },
+          {
+            "ref": {
+              "documentId": "domain",
+              "elementId": "ownerProject",
+              "moduleId": "m"
+            },
+            "domain": {
+              "scalarType": "string",
+              "nullability": "required",
+              "cardinality": "one",
+              "facets": {},
+              "allowedValues": null
+            }
+          }
+        ]
+      },
+      {
+        "target": {
+          "documentId": "domain",
+          "elementId": "Project",
+          "moduleId": "m"
+        },
+        "keyId": "pk",
+        "fields": [
+          {
+            "ref": {
+              "documentId": "domain",
+              "elementId": "projectId",
+              "moduleId": "m"
+            },
+            "domain": {
+              "scalarType": "string",
+              "nullability": "required",
+              "cardinality": "one",
+              "facets": {},
+              "allowedValues": null
+            }
+          }
+        ]
+      },
+      {
+        "target": {
+          "documentId": "domain",
+          "elementId": "Resource",
+          "moduleId": "m"
+        },
+        "keyId": "pk",
+        "fields": [
+          {
+            "ref": {
+              "documentId": "domain",
+              "elementId": "resourceId",
+              "moduleId": "m"
+            },
+            "domain": {
+              "scalarType": "string",
+              "nullability": "required",
+              "cardinality": "one",
+              "facets": {},
+              "allowedValues": null
+            }
+          }
+        ]
+      },
+      {
+        "target": {
+          "documentId": "domain",
+          "elementId": "Staff",
+          "moduleId": "m"
+        },
+        "keyId": "pk",
+        "fields": [
+          {
+            "ref": {
+              "documentId": "domain",
+              "elementId": "staffId",
+              "moduleId": "m"
+            },
+            "domain": {
+              "scalarType": "string",
+              "nullability": "required",
+              "cardinality": "one",
+              "facets": {},
+              "allowedValues": null
+            }
+          }
+        ]
+      }
+    ],
+    "types": [
+      {
+        "type": {
+          "documentId": "domain",
+          "moduleId": "m",
+          "elementId": "Staff"
+        },
+        "keyId": "pk",
+        "keyFields": [
+          {
+            "ref": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "staffId"
+            },
+            "column": "id"
+          }
+        ],
+        "fields": [
+          {
+            "ref": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "staffId"
+            },
+            "column": "id"
+          }
+        ],
+        "home": {
+          "schema": "security_raw",
+          "table": "employee"
+        },
+        "endpoints": null
+      },
+      {
+        "type": {
+          "documentId": "domain",
+          "moduleId": "m",
+          "elementId": "Project"
+        },
+        "keyId": "pk",
+        "keyFields": [
+          {
+            "ref": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "projectId"
+            },
+            "column": "id"
+          }
+        ],
+        "fields": [
+          {
+            "ref": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "projectId"
+            },
+            "column": "id"
+          }
+        ],
+        "home": {
+          "schema": "security_raw",
+          "table": "project"
+        },
+        "endpoints": null
+      },
+      {
+        "type": {
+          "documentId": "domain",
+          "moduleId": "m",
+          "elementId": "Resource"
+        },
+        "keyId": "pk",
+        "keyFields": [
+          {
+            "ref": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "resourceId"
+            },
+            "column": "id"
+          }
+        ],
+        "fields": [
+          {
+            "ref": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "resourceId"
+            },
+            "column": "id"
+          }
+        ],
+        "home": {
+          "schema": "security_raw",
+          "table": "resource"
+        },
+        "endpoints": null
+      },
+      {
+        "type": {
+          "documentId": "domain",
+          "moduleId": "m",
+          "elementId": "Ownership"
+        },
+        "keyId": "pk",
+        "keyFields": [
+          {
+            "ref": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "ownerResource"
+            },
+            "column": "resource_id"
+          },
+          {
+            "ref": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "ownerProject"
+            },
+            "column": "project_id"
+          }
+        ],
+        "fields": [
+          {
+            "ref": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "ownerResource"
+            },
+            "column": "resource_id"
+          },
+          {
+            "ref": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "ownerProject"
+            },
+            "column": "project_id"
+          }
+        ],
+        "home": {
+          "schema": "security_raw",
+          "table": "m2m_resource_project"
+        },
+        "endpoints": [
+          {
+            "role": "resource",
+            "target": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "Resource"
+            },
+            "fields": [
+              {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "ownerResource"
+              }
+            ]
+          },
+          {
+            "role": "project",
+            "target": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "Project"
+            },
+            "fields": [
+              {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "ownerProject"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": {
+          "documentId": "domain",
+          "moduleId": "m",
+          "elementId": "Assignment"
+        },
+        "keyId": "pk",
+        "keyFields": [
+          {
+            "ref": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "assignmentStaff"
+            },
+            "column": "employee_id"
+          },
+          {
+            "ref": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "assignmentProject"
+            },
+            "column": "project_id"
+          }
+        ],
+        "fields": [
+          {
+            "ref": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "assignmentStaff"
+            },
+            "column": "employee_id"
+          },
+          {
+            "ref": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "assignmentProject"
+            },
+            "column": "project_id"
+          },
+          {
+            "ref": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "active"
+            },
+            "column": "active"
+          }
+        ],
+        "home": {
+          "schema": "security_raw",
+          "table": "m2m_employee_project"
+        },
+        "endpoints": [
+          {
+            "role": "staff",
+            "target": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "Staff"
+            },
+            "fields": [
+              {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "assignmentStaff"
+              }
+            ]
+          },
+          {
+            "role": "project",
+            "target": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "Project"
+            },
+            "fields": [
+              {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "assignmentProject"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "catalog": "postgres",
+    "modelPins": [
+      {
+        "documentId": "domain",
+        "revision": "schema-natural-1",
+        "sha256": "bb6a609480975f782bea1a8d6cae9e0623218a8711a7cba1669353ea8ef3962a",
+        "umfVersion": "0.8.0"
+      }
+    ],
+    "inventory": {
+      "engine": "170009",
+      "tables": [
+        {
+          "home": {
+            "catalog": "postgres",
+            "schema": "security_raw",
+            "table": "company"
+          },
+          "columns": [
+            {
+              "name": "id",
+              "type": "text",
+              "notNull": true,
+              "deterministic": true
+            }
+          ],
+          "keys": [
+            {
+              "primary": true,
+              "validated": true,
+              "columns": [
+                "id"
+              ]
+            }
+          ],
+          "foreignKeys": []
+        },
+        {
+          "home": {
+            "catalog": "postgres",
+            "schema": "security_raw",
+            "table": "employee"
+          },
+          "columns": [
+            {
+              "name": "id",
+              "type": "text",
+              "notNull": true,
+              "deterministic": true
+            },
+            {
+              "name": "native_login",
+              "type": "text",
+              "notNull": true,
+              "deterministic": true
+            }
+          ],
+          "keys": [
+            {
+              "primary": false,
+              "validated": true,
+              "columns": [
+                "native_login"
+              ]
+            },
+            {
+              "primary": true,
+              "validated": true,
+              "columns": [
+                "id"
+              ]
+            }
+          ],
+          "foreignKeys": []
+        },
+        {
+          "home": {
+            "catalog": "postgres",
+            "schema": "security_raw",
+            "table": "m2m_employee_project"
+          },
+          "columns": [
+            {
+              "name": "employee_id",
+              "type": "text",
+              "notNull": true,
+              "deterministic": true
+            },
+            {
+              "name": "project_id",
+              "type": "text",
+              "notNull": true,
+              "deterministic": true
+            },
+            {
+              "name": "active",
+              "type": "boolean",
+              "notNull": true,
+              "deterministic": true
+            }
+          ],
+          "keys": [
+            {
+              "primary": true,
+              "validated": true,
+              "columns": [
+                "employee_id",
+                "project_id"
+              ]
+            }
+          ],
+          "foreignKeys": [
+            {
+              "validated": true,
+              "deferrable": false,
+              "update": "a",
+              "delete": "a",
+              "columns": [
+                "employee_id"
+              ],
+              "target": {
+                "catalog": "postgres",
+                "schema": "security_raw",
+                "table": "employee"
+              },
+              "targetColumns": [
+                "id"
+              ],
+              "triggers": [
+                "O",
+                "O",
+                "O",
+                "O"
+              ]
+            },
+            {
+              "validated": true,
+              "deferrable": false,
+              "update": "a",
+              "delete": "a",
+              "columns": [
+                "project_id"
+              ],
+              "target": {
+                "catalog": "postgres",
+                "schema": "security_raw",
+                "table": "project"
+              },
+              "targetColumns": [
+                "id"
+              ],
+              "triggers": [
+                "O",
+                "O",
+                "O",
+                "O"
+              ]
+            }
+          ]
+        },
+        {
+          "home": {
+            "catalog": "postgres",
+            "schema": "security_raw",
+            "table": "m2m_resource_project"
+          },
+          "columns": [
+            {
+              "name": "resource_id",
+              "type": "text",
+              "notNull": true,
+              "deterministic": true
+            },
+            {
+              "name": "project_id",
+              "type": "text",
+              "notNull": true,
+              "deterministic": true
+            }
+          ],
+          "keys": [
+            {
+              "primary": true,
+              "validated": true,
+              "columns": [
+                "resource_id",
+                "project_id"
+              ]
+            }
+          ],
+          "foreignKeys": [
+            {
+              "validated": true,
+              "deferrable": false,
+              "update": "a",
+              "delete": "a",
+              "columns": [
+                "project_id"
+              ],
+              "target": {
+                "catalog": "postgres",
+                "schema": "security_raw",
+                "table": "project"
+              },
+              "targetColumns": [
+                "id"
+              ],
+              "triggers": [
+                "O",
+                "O",
+                "O",
+                "O"
+              ]
+            },
+            {
+              "validated": true,
+              "deferrable": false,
+              "update": "a",
+              "delete": "a",
+              "columns": [
+                "resource_id"
+              ],
+              "target": {
+                "catalog": "postgres",
+                "schema": "security_raw",
+                "table": "resource"
+              },
+              "targetColumns": [
+                "id"
+              ],
+              "triggers": [
+                "O",
+                "O",
+                "O",
+                "O"
+              ]
+            }
+          ]
+        },
+        {
+          "home": {
+            "catalog": "postgres",
+            "schema": "security_raw",
+            "table": "project"
+          },
+          "columns": [
+            {
+              "name": "id",
+              "type": "text",
+              "notNull": true,
+              "deterministic": true
+            },
+            {
+              "name": "company_id",
+              "type": "text",
+              "notNull": true,
+              "deterministic": true
+            }
+          ],
+          "keys": [
+            {
+              "primary": true,
+              "validated": true,
+              "columns": [
+                "id"
+              ]
+            }
+          ],
+          "foreignKeys": [
+            {
+              "validated": true,
+              "deferrable": false,
+              "update": "a",
+              "delete": "a",
+              "columns": [
+                "company_id"
+              ],
+              "target": {
+                "catalog": "postgres",
+                "schema": "security_raw",
+                "table": "company"
+              },
+              "targetColumns": [
+                "id"
+              ],
+              "triggers": [
+                "O",
+                "O",
+                "O",
+                "O"
+              ]
+            }
+          ]
+        },
+        {
+          "home": {
+            "catalog": "postgres",
+            "schema": "security_raw",
+            "table": "resource"
+          },
+          "columns": [
+            {
+              "name": "id",
+              "type": "text",
+              "notNull": true,
+              "deterministic": true
+            },
+            {
+              "name": "value",
+              "type": "text",
+              "notNull": true,
+              "deterministic": true
+            }
+          ],
+          "keys": [
+            {
+              "primary": true,
+              "validated": true,
+              "columns": [
+                "id"
+              ]
+            }
+          ],
+          "foreignKeys": []
+        },
+        {
+          "home": {
+            "catalog": "postgres",
+            "schema": "security_raw",
+            "table": "resource_child_carrier"
+          },
+          "columns": [
+            {
+              "name": "resource_id",
+              "type": "text",
+              "notNull": true,
+              "deterministic": true
+            },
+            {
+              "name": "private_value",
+              "type": "text",
+              "notNull": true,
+              "deterministic": true
+            }
+          ],
+          "keys": [
+            {
+              "primary": true,
+              "validated": true,
+              "columns": [
+                "resource_id"
+              ]
+            }
+          ],
+          "foreignKeys": [
+            {
+              "validated": true,
+              "deferrable": false,
+              "update": "a",
+              "delete": "a",
+              "columns": [
+                "resource_id"
+              ],
+              "target": {
+                "catalog": "postgres",
+                "schema": "security_raw",
+                "table": "resource"
+              },
+              "targetColumns": [
+                "id"
+              ],
+              "triggers": [
+                "O",
+                "O",
+                "O",
+                "O"
+              ]
+            }
+          ]
+        },
+        {
+          "home": {
+            "catalog": "postgres",
+            "schema": "security_raw",
+            "table": "resource_private_carrier"
+          },
+          "columns": [
+            {
+              "name": "resource_id",
+              "type": "text",
+              "notNull": true,
+              "deterministic": true
+            },
+            {
+              "name": "bag",
+              "type": "jsonb",
+              "notNull": true,
+              "deterministic": true
+            },
+            {
+              "name": "retained",
+              "type": "bytea",
+              "notNull": true,
+              "deterministic": true
+            }
+          ],
+          "keys": [
+            {
+              "primary": true,
+              "validated": true,
+              "columns": [
+                "resource_id"
+              ]
+            }
+          ],
+          "foreignKeys": [
+            {
+              "validated": true,
+              "deferrable": false,
+              "update": "a",
+              "delete": "a",
+              "columns": [
+                "resource_id"
+              ],
+              "target": {
+                "catalog": "postgres",
+                "schema": "security_raw",
+                "table": "resource"
+              },
+              "targetColumns": [
+                "id"
+              ],
+              "triggers": [
+                "O",
+                "O",
+                "O",
+                "O"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "predicate": "(($2 OPERATOR(pg_catalog.=) E'3'::pg_catalog.int4) IS TRUE AND ((TRUE) IS TRUE) AND ((CASE WHEN EXISTS(SELECT 1 FROM \"shared_component\".\"association\" AS \"association_0\" WHERE (\"association_0\".\"type_id\" OPERATOR(pg_catalog.=) E'12'::pg_catalog.int4) AND ((((\"association_0\".\"source_key\" OPERATOR(pg_catalog.=) $1)) AND (CASE WHEN EXISTS(SELECT 1 FROM \"shared_component\".\"association\" AS \"association_1\" WHERE (\"association_1\".\"type_id\" OPERATOR(pg_catalog.=) E'11'::pg_catalog.int4) AND ((((\"association_1\".\"source_key\" OPERATOR(pg_catalog.=) (SELECT \"subject_row\".\"id\" FROM \"shared_component\".\"entity\" AS \"subject_row\" WHERE \"subject_row\".\"native_login\" OPERATOR(pg_catalog.=) SESSION_USER::pg_catalog.text AND (\"subject_row\".\"type_id\" OPERATOR(pg_catalog.=) E'1'::pg_catalog.int4)))) AND ((\"association_1\".\"target_key\" OPERATOR(pg_catalog.=) \"association_0\".\"target_key\")) AND ((\"association_1\".\"active\" OPERATOR(pg_catalog.=) TRUE)))) IS TRUE) THEN TRUE WHEN EXISTS(SELECT 1 FROM \"shared_component\".\"association\" AS \"association_1\" WHERE (\"association_1\".\"type_id\" OPERATOR(pg_catalog.=) E'11'::pg_catalog.int4) AND ((((\"association_1\".\"source_key\" OPERATOR(pg_catalog.=) (SELECT \"subject_row\".\"id\" FROM \"shared_component\".\"entity\" AS \"subject_row\" WHERE \"subject_row\".\"native_login\" OPERATOR(pg_catalog.=) SESSION_USER::pg_catalog.text AND (\"subject_row\".\"type_id\" OPERATOR(pg_catalog.=) E'1'::pg_catalog.int4)))) AND ((\"association_1\".\"target_key\" OPERATOR(pg_catalog.=) \"association_0\".\"target_key\")) AND ((\"association_1\".\"active\" OPERATOR(pg_catalog.=) TRUE)))) IS NULL) THEN NULL::pg_catalog.bool ELSE FALSE END))) IS TRUE) THEN TRUE WHEN EXISTS(SELECT 1 FROM \"shared_component\".\"association\" AS \"association_0\" WHERE (\"association_0\".\"type_id\" OPERATOR(pg_catalog.=) E'12'::pg_catalog.int4) AND ((((\"association_0\".\"source_key\" OPERATOR(pg_catalog.=) $1)) AND (CASE WHEN EXISTS(SELECT 1 FROM \"shared_component\".\"association\" AS \"association_1\" WHERE (\"association_1\".\"type_id\" OPERATOR(pg_catalog.=) E'11'::pg_catalog.int4) AND ((((\"association_1\".\"source_key\" OPERATOR(pg_catalog.=) (SELECT \"subject_row\".\"id\" FROM \"shared_component\".\"entity\" AS \"subject_row\" WHERE \"subject_row\".\"native_login\" OPERATOR(pg_catalog.=) SESSION_USER::pg_catalog.text AND (\"subject_row\".\"type_id\" OPERATOR(pg_catalog.=) E'1'::pg_catalog.int4)))) AND ((\"association_1\".\"target_key\" OPERATOR(pg_catalog.=) \"association_0\".\"target_key\")) AND ((\"association_1\".\"active\" OPERATOR(pg_catalog.=) TRUE)))) IS TRUE) THEN TRUE WHEN EXISTS(SELECT 1 FROM \"shared_component\".\"association\" AS \"association_1\" WHERE (\"association_1\".\"type_id\" OPERATOR(pg_catalog.=) E'11'::pg_catalog.int4) AND ((((\"association_1\".\"source_key\" OPERATOR(pg_catalog.=) (SELECT \"subject_row\".\"id\" FROM \"shared_component\".\"entity\" AS \"subject_row\" WHERE \"subject_row\".\"native_login\" OPERATOR(pg_catalog.=) SESSION_USER::pg_catalog.text AND (\"subject_row\".\"type_id\" OPERATOR(pg_catalog.=) E'1'::pg_catalog.int4)))) AND ((\"association_1\".\"target_key\" OPERATOR(pg_catalog.=) \"association_0\".\"target_key\")) AND ((\"association_1\".\"active\" OPERATOR(pg_catalog.=) TRUE)))) IS NULL) THEN NULL::pg_catalog.bool ELSE FALSE END))) IS NULL) THEN NULL::pg_catalog.bool ELSE FALSE END)) IS TRUE)",
+  "scope": "Actual portable Truss native key correspondence on original actual Rust source/handoff and original PostgreSQL 17.9 int4 typed TEXT-key/native catalog projection. Synthetic type catalog/fact homes are not installed Truss graph business-key/property/endpoint/current-state storage. Exact trusted catalog/inventory cut and truthful original source observations remain premises; no issuer authentication, FK/endpoint proof, full graph/profile/authority/guard/privacy qualification or required backend case."
+}

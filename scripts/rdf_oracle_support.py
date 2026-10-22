@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """RDF 1.1 comparison helpers; do not enable RDFLib literal normalization."""
 import rdflib
 rdflib.NORMALIZE_LITERALS=False

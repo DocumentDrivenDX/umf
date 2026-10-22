@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 11556,
+        "line": 64,
+        "path": "src/adapters/shacl/index.ts",
+        "sha256": "c4a764f7c265d1c8ca0fb568e47d5e14eb94b5427e2b6fe67e68357827401107"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "evaluateShaclPropertyPath",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(shapes: Document, shape: RdfNode, data: Document, focus: Value): Value[]"
+    ]
+  },
+  "id": "[\"api\",\".\",\"evaluateShaclPropertyPath\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 11556,
+      "line": 64,
+      "path": "src/adapters/shacl/index.ts",
+      "sha256": "c4a764f7c265d1c8ca0fb568e47d5e14eb94b5427e2b6fe67e68357827401107"
+    }
+  ],
+  "summary": "Focus blank labels are local to data. Named datasets require explicit graph selection before this call.",
+  "title": "evaluateShaclPropertyPath"
+}

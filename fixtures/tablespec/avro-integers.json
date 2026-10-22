@@ -4,7 +4,7 @@
       "result": {
         "status": "blocked",
         "source": {
-          "umf": "0.1.0",
+          "umf": "0.10.0",
           "id": "precision1.0000000000000000001",
           "vocabularies": {
             "umf.tablespec": {
@@ -134,7 +134,7 @@
       "result": {
         "status": "blocked",
         "source": {
-          "umf": "0.1.0",
+          "umf": "0.10.0",
           "id": "precision1e-400",
           "vocabularies": {
             "umf.tablespec": {
@@ -264,7 +264,7 @@
       "result": {
         "status": "blocked",
         "source": {
-          "umf": "0.1.0",
+          "umf": "0.10.0",
           "id": "precision9007199254740993",
           "vocabularies": {
             "umf.tablespec": {
@@ -394,7 +394,7 @@
       "result": {
         "status": "blocked",
         "source": {
-          "umf": "0.1.0",
+          "umf": "0.10.0",
           "id": "precision-0",
           "vocabularies": {
             "umf.tablespec": {
@@ -524,7 +524,7 @@
       "result": {
         "status": "blocked",
         "source": {
-          "umf": "0.1.0",
+          "umf": "0.10.0",
           "id": "scale1.0000000000000000001",
           "vocabularies": {
             "umf.tablespec": {
@@ -654,7 +654,7 @@
       "result": {
         "status": "blocked",
         "source": {
-          "umf": "0.1.0",
+          "umf": "0.10.0",
           "id": "scale1e-400",
           "vocabularies": {
             "umf.tablespec": {
@@ -784,7 +784,7 @@
       "result": {
         "status": "blocked",
         "source": {
-          "umf": "0.1.0",
+          "umf": "0.10.0",
           "id": "scale9007199254740993",
           "vocabularies": {
             "umf.tablespec": {
@@ -914,7 +914,7 @@
       "result": {
         "status": "blocked",
         "source": {
-          "umf": "0.1.0",
+          "umf": "0.10.0",
           "id": "scale-0",
           "vocabularies": {
             "umf.tablespec": {
@@ -1044,7 +1044,7 @@
       "result": {
         "status": "blocked",
         "source": {
-          "umf": "0.1.0",
+          "umf": "0.10.0",
           "id": "dimension1.0000000000000000001",
           "vocabularies": {
             "umf.tablespec": {
@@ -1170,7 +1170,7 @@
       "result": {
         "status": "blocked",
         "source": {
-          "umf": "0.1.0",
+          "umf": "0.10.0",
           "id": "dimension1e-400",
           "vocabularies": {
             "umf.tablespec": {
@@ -1296,7 +1296,7 @@
       "result": {
         "status": "blocked",
         "source": {
-          "umf": "0.1.0",
+          "umf": "0.10.0",
           "id": "dimension9007199254740993",
           "vocabularies": {
             "umf.tablespec": {
@@ -1422,7 +1422,7 @@
       "result": {
         "status": "blocked",
         "source": {
-          "umf": "0.1.0",
+          "umf": "0.10.0",
           "id": "dimension-0",
           "vocabularies": {
             "umf.tablespec": {
@@ -1548,7 +1548,7 @@
       "result": {
         "status": "projected",
         "source": {
-          "umf": "0.1.0",
+          "umf": "0.10.0",
           "id": "exact",
           "vocabularies": {
             "umf.tablespec": {
@@ -1692,7 +1692,7 @@
         ],
         "nativeSchema": "{\n  \"type\": \"record\",\n  \"name\": \"Record\",\n  \"namespace\": \"example\",\n  \"fields\": [\n    {\n      \"name\": \"n\",\n      \"type\": {\n        \"type\": \"bytes\",\n        \"logicalType\": \"decimal\",\n        \"precision\": 8,\n        \"scale\": 1\n      }\n    }\n  ]\n}\n",
         "target": {
-          "umf": "0.1.0",
+          "umf": "0.10.0",
           "id": "target",
           "vocabularies": {
             "umf.avro": {

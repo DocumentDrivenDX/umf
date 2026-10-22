@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 6870,
+        "line": 9,
+        "path": "src/model/semantic-types.ts",
+        "sha256": "cee78fcebbdaeeffc573ad75b6e6aa586603eaa3401fca96f8f1d3dd4bb2962f"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "CoreSemanticTypeMeaning",
+    "runtime": "type-only",
+    "signatureText": [
+      "export type CoreSemanticTypeMeaning={state:'missing'}|{state:'declared';types:CoreSemanticTypeReference[]};"
+    ]
+  },
+  "id": "[\"api\",\".\",\"CoreSemanticTypeMeaning\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 6870,
+      "line": 9,
+      "path": "src/model/semantic-types.ts",
+      "sha256": "cee78fcebbdaeeffc573ad75b6e6aa586603eaa3401fca96f8f1d3dd4bb2962f"
+    }
+  ],
+  "summary": "Type declaration · src/model/semantic-types.ts",
+  "title": "CoreSemanticTypeMeaning"
+}

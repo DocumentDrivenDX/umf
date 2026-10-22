@@ -1,8 +1,9 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {importPostgresqlCatalogCapture,getPostgresqlColumnMetadata,upgradeFieldEnvelope,upgradeNullabilityEnvelope,upgradeCardinalityEnvelope,readJsonValue,writeJsonValue,copyJson,declareCoreCardinality} from '../../src';
-import {classifyPostgresqlCardinality,recoverPostgresqlCardinalitySource,verifyPostgresqlCardinalityClassification} from '../../src/core-ideals/cardinality-postgresql';
+import {importPostgresqlCatalogCapture, getPostgresqlColumnMetadata, readJsonValue, writeJsonValue, copyJson, declareCoreCardinality} from '../../src';
+import {classifyPostgresqlCardinality, recoverPostgresqlCardinalitySource, verifyPostgresqlCardinalityClassification} from '../../src/core-ideals/cardinality-postgresql';
 const fixture=await Bun.file('fixtures/validation/cardinality-postgresql-catalog-native.json').json();
-function input(){const source=upgradeCardinalityEnvelope(upgradeNullabilityEnvelope(upgradeFieldEnvelope(importPostgresqlCatalogCapture(fixture.captureSource,{id:'classification'})).target).target).target;for(const e of source.modules.find(m=>m.id==='postgresql.columns')!.elements)e.kind='field';return source;}
+function input(){const source=importPostgresqlCatalogCapture(fixture.captureSource,{id:'classification'});for(const e of source.modules.find(m=>m.id==='postgresql.columns')!.elements)e.kind='field';return source;}
 test('all observed native shapes retain paired archives through report classification and serialized recovery',()=>{
  for(const c of getPostgresqlColumnMetadata(input())){
   const source=input(),request={column:c.path,nativeSource:fixture.captureSource,supplement:JSON.stringify(fixture.supplement),mode:'report' as const,profile:'stored-value' as const};
@@ -28,7 +29,7 @@ test('a matched basic scalar declaration classifies exactly without asserting it
  column.type='integer';column.nativeType={schema:'pg_catalog',name:'int4',kind:'b',category:'N',dimensions:0,modifier:-1};
  supplement.columns.find((c:any)=>c.relation==='json_values').type={schema:'pg_catalog',name:'int4'};
  const nativeSource=JSON.stringify(capture);
- const source=upgradeCardinalityEnvelope(upgradeNullabilityEnvelope(upgradeFieldEnvelope(importPostgresqlCatalogCapture(nativeSource,{id:'scalar-unit'})).target).target).target;
+ const source=importPostgresqlCatalogCapture(nativeSource,{id:'scalar-unit'});
  const selected=getPostgresqlColumnMetadata(source).find(c=>c.relation.name==='json_values')!;
  source.modules.find(m=>m.id==='postgresql.columns')!.elements.find(e=>e.id===selected.path)!.kind='field';
  const r=classifyPostgresqlCardinality(source,{column:selected.path,nativeSource,supplement:JSON.stringify(supplement),mode:'strict',profile:'stored-value'});

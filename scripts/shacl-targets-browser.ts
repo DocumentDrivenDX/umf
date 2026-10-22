@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {chromium} from 'playwright';
 const matrix=await Bun.file('fixtures/shacl/target-results.json').json();for(const c of matrix.cases){c.raw=await Bun.file(c.shapes).text();c.dataRaw=await Bun.file(c.data).text();}
 const built=await Bun.build({entrypoints:['src/index.ts'],outdir:'.cache/shacl-targets-browser',naming:'umf.js',target:'browser',format:'esm'});if(!built.success)throw Error(built.logs.join('\n'));

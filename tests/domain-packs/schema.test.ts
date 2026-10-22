@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
 import {generateDomainPackSchema} from '../../src/domain-packs/schema';
 import schema from '../../spec/extensions/domain-pack/schema.json';
@@ -13,7 +14,7 @@ test('canonical pack schema is reproducible and registered without executable ge
  const pack={id:'legal',version:'1.0.0',generator:{id:'tablespec.legal',version:'1.0.0'},
  domain_types:{client_name:{description:'Fabricated client',sample_generation:{method:'generate_client_name'},future:{retained:true}}},
  schemas:[{id:'clients',format:'tablespec',reference:'clients.json'}],future:{retained:true}};
- const document:Document={umf:'0.8.0',id:'sample-pack',vocabularies:{'umf.domain-pack':{version:'1.0.0'}},modules:[],extensions:{'umf.domain-pack':pack}};
+ const document:Document={umf:'0.10.0',id:'sample-pack',vocabularies:{'umf.domain-pack':{version:'1.0.0'}},modules:[],extensions:{'umf.domain-pack':pack}};
  expect(validateDocument(document,registry).valid).toBe(true);
  for(const format of ['json','yaml'] as const)expect(readDocument(writeDocument(document,format),format)).toEqual(document);
  for(const invalid of [{...pack,version:'latest'},{...pack,generator:{id:'x'}},{...pack,domain_types:{'invalid/name':{}}}]){
@@ -23,7 +24,7 @@ test('canonical pack schema is reproducible and registered without executable ge
 
 test('external, published synthetic and mixed source metadata remain distinct',()=>{
  const registry=new Registry().register(manifest as ExtensionPackage);
- const document:Document={umf:'0.8.0',id:'external-pack',vocabularies:{'umf.domain-pack':{version:'1.0.0'}},modules:[],extensions:{'umf.domain-pack':{
+ const document:Document={umf:'0.10.0',id:'external-pack',vocabularies:{'umf.domain-pack':{version:'1.0.0'}},modules:[],extensions:{'umf.domain-pack':{
   id:'ecology',version:'1.0.0',domain_types:{observation:{}},
   sources:{measurements:{kind:'external',data_kind:'observed',reference:'https://example.invalid/observations.csv',format:'csv',revision:'release-1',license:{redistribution:'unknown'},future:{retained:true}},
    official_fixture:{kind:'external',data_kind:'fabricated',reference:'official-fixture.csv',format:'csv',license:{redistribution:'restricted'}},
@@ -33,6 +34,6 @@ test('external, published synthetic and mixed source metadata remain distinct',(
  }}};
  expect(validateDocument(document,registry).valid).toBe(true);
  for(const format of ['json','yaml'] as const)expect(readDocument(writeDocument(document,format),format)).toEqual(document);
- const broken={umf:'0.8.0',id:'broken',vocabularies:document.vocabularies,modules:[],extensions:{'umf.domain-pack':{id:'x',version:'1.0.0',domain_types:{observation:{}},sources:{x:{kind:'external',data_kind:'unknown'}}}}};
+ const broken={umf:'0.10.0',id:'broken',vocabularies:document.vocabularies,modules:[],extensions:{'umf.domain-pack':{id:'x',version:'1.0.0',domain_types:{observation:{}},sources:{x:{kind:'external',data_kind:'unknown'}}}}};
  expect(validateDocument(broken,registry).valid).toBe(false);
 });

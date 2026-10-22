@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 // RFC 3987 section 2.2 component grammar. Validation never normalizes an IRI.
 const ucs='\\u00a0-\\ud7ff\\uf900-\\ufdcf\\ufdf0-\\uffef'+Array.from({length:13},(_,i)=>`\\u{${((i+1)*0x10000).toString(16)}}-\\u{${((i+1)*0x10000+0xfffd).toString(16)}}`).join('')+'\\u{e1000}-\\u{efffd}';
 const unreserved=`A-Za-z0-9._~${ucs}\\-`,sub="!$&'()*+,;=",atom=`(?:[${unreserved}${sub}]|%[0-9A-Fa-f]{2})`;

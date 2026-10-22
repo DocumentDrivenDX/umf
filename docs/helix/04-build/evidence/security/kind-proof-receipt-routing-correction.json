@@ -1,0 +1,17 @@
+{
+  "status": "corrected-with-actual-distinct-producer-reruns",
+  "misplacedReceiptSha256": "3d4bbef641308a96b8691ceffa64cc23d168f923213cc6a1f7832122c624a590",
+  "misplacedBytesPreservedAt": "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/archive/misrouted-kind-proof-3d4bbef641308a96b8691ceffa64cc23d168f923213cc6a1f7832122c624a590.json",
+  "priorSourceDemandBytes": [
+    {
+      "path": "/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/archive/kind-completeness-formal-afd2ad4dfac5ecda25016bee210e322943b30e5c5d6b60060de05280c0f01501.json",
+      "sha256": "afd2ad4dfac5ecda25016bee210e322943b30e5c5d6b60060de05280c0f01501",
+      "actualRole": "prior source-demand proof accidentally archived with kind prefix"
+    }
+  ],
+  "action": "Corrected kind producer path; actual kind and source-demand producer execution follows. No repinning or acceptance promotion.",
+  "regenerated": {
+    "kindLaws": 3,
+    "sourceDemandLaws": 5
+  }
+}

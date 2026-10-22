@@ -1,0 +1,42 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"CoreKeyDefinition\"]",
+  "kind": "Type alias",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "id",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "name",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "fields",
+      "optional": false,
+      "type": "KeyFieldReference[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "primary",
+      "optional": true,
+      "type": "boolean"
+    }
+  ],
+  "parameters": [],
+  "purpose": "CoreKeyDefinition is a type alias in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "Key"
+}

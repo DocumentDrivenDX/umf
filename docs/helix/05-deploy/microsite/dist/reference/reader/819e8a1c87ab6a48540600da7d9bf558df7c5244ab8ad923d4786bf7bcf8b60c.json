@@ -1,0 +1,30 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"importRelationshipExtraArchive\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"RelationshipExtraArchive\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "RelationshipExtraArchive"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "id",
+      "optional": false,
+      "type": "string"
+    }
+  ],
+  "purpose": "importRelationshipExtraArchive accepts input, id and returns Document.",
+  "related": [],
+  "returns": "Document",
+  "task": "Import and export",
+  "type": "(input: RelationshipExtraArchive, id: string) => Document"
+}

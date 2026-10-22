@@ -1,0 +1,46 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"DeltaScalarConversion\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "row",
+      "optional": false,
+      "type": "number"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "path",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ParquetTypedValue\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "ParquetTypedValue"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"NativeJson\"]"
+      ],
+      "name": "output",
+      "optional": false,
+      "type": "NativeJson"
+    }
+  ],
+  "parameters": [],
+  "purpose": "DeltaScalarConversion is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "DeltaScalarConversion"
+}

@@ -1,0 +1,1170 @@
+{
+  "id": "false-sum",
+  "scope": "Actual compiler metadata and original UMF computation over supplied immutable fixture cut; no native admission",
+  "packet": {
+    "authority": false,
+    "binding": {
+      "backendId": "weft.postgresql.current-read-candidate",
+      "backendVersion": "0.4-candidate",
+      "sha256": "b19ccc285f876ebe467f609b3fb1d1b9a1c6aed65f8e4a83bb35dbc357602921",
+      "source": {
+        "documentId": "fixture-live-original-integer-sum-pg",
+        "revision": "sum-materialization-r1"
+      },
+      "targetProfile": "pg18.6-current-sum/0.4-candidate"
+    },
+    "capabilities": [
+      "live-original-integer-sum"
+    ],
+    "designationSha256": "fada63d5e46276b54d9be68bbaf52d567159b738d374a5eae510b7e45f2a4fbb",
+    "modelPins": [
+      {
+        "documentId": "domain",
+        "revision": "query-value-core-r1",
+        "sha256": "efa88c4ee1af9cd8252a3aa4f5d0c70dcdaf6660962b3d98ae18c77d4b2baa6a",
+        "umfVersion": "0.8.0"
+      }
+    ],
+    "operations": [
+      {
+        "boolean": false,
+        "direction": null,
+        "kind": "boolean",
+        "operands": [],
+        "operator": null,
+        "outputType": null,
+        "path": "filters/0"
+      },
+      {
+        "boolean": null,
+        "direction": null,
+        "kind": "sum",
+        "operands": [
+          {
+            "input": {
+              "identity": {
+                "documentId": "domain",
+                "element": "salary",
+                "module": "m",
+                "revision": "query-value-core-r1"
+              },
+              "kind": "field",
+              "logicalType": {
+                "facets": {
+                  "integerWidth": {
+                    "bits": 64,
+                    "signed": true
+                  }
+                },
+                "family": "integer",
+                "nullable": false
+              },
+              "originalAction": "query-original-salary-sum",
+              "scan": "s0"
+            },
+            "path": "outputs/0/argument"
+          }
+        ],
+        "operator": "aggregate",
+        "outputType": {
+          "facets": {},
+          "family": "integer",
+          "nullable": true
+        },
+        "path": "outputs/0"
+      }
+    ],
+    "primaryAction": "read",
+    "projections": [],
+    "routes": [
+      {
+        "field": {
+          "documentId": "domain",
+          "elementId": "salary",
+          "moduleId": "m"
+        },
+        "operation": "sum",
+        "operator": "aggregate",
+        "path": "outputs/0/argument",
+        "required": [
+          "nullity"
+        ],
+        "scan": "s0",
+        "type": {
+          "documentId": "domain",
+          "elementId": "Resource",
+          "moduleId": "m"
+        }
+      }
+    ],
+    "scans": [
+      {
+        "record": {
+          "documentId": "domain",
+          "element": "Resource",
+          "module": "m",
+          "revision": "query-value-core-r1"
+        },
+        "scan": "s0",
+        "type": {
+          "documentId": "domain",
+          "elementId": "Resource",
+          "moduleId": "m"
+        }
+      }
+    ],
+    "securityReady": false,
+    "sourceRequestSha256": "df32f1674ecd675aa361f020d0f99ed32897c0f087cfd03e62190bdad60baee1",
+    "sources": [
+      {
+        "identity": {
+          "documentId": "project-access",
+          "revision": "integer-sum-policy-r1"
+        },
+        "role": "policy",
+        "sha256": "aac0db3af437dc12a66ee560048ff56a17f626878c35282178169ff6bc1c234a"
+      },
+      {
+        "identity": {
+          "documentId": "domain",
+          "revision": "integer-sum-ontology-r1"
+        },
+        "role": "ontology",
+        "sha256": "a30154769f8bdbf1d7704a1adf457135c0db534c3bc0623671424970960de05f"
+      },
+      {
+        "identity": {
+          "documentId": "stored",
+          "revision": "integer-sum-catalog-r1"
+        },
+        "role": "catalog",
+        "sha256": "1803b1cc4c124b92a2656eb9c369c1df6b964b521c3f2cfaf63bfa2df6862f44"
+      },
+      {
+        "identity": {
+          "documentId": "owner",
+          "revision": "integer-sum-owner-r1"
+        },
+        "role": "owner",
+        "sha256": "117509c21be8e105c19f028a57cd681975c172089b7cb1072e891dd2e65a72f6"
+      }
+    ],
+    "version": "weft.current-query.native-input/0.2-candidate"
+  },
+  "designation": {
+    "authority": false,
+    "binding": {
+      "backendId": "weft.postgresql.current-read-candidate",
+      "backendVersion": "0.4-candidate",
+      "sha256": "b19ccc285f876ebe467f609b3fb1d1b9a1c6aed65f8e4a83bb35dbc357602921",
+      "source": {
+        "documentId": "fixture-live-original-integer-sum-pg",
+        "revision": "sum-materialization-r1"
+      },
+      "targetProfile": "pg18.6-current-sum/0.4-candidate"
+    },
+    "capabilities": [
+      "live-original-integer-sum"
+    ],
+    "modelPins": [
+      {
+        "documentId": "domain",
+        "revision": "query-value-core-r1",
+        "sha256": "efa88c4ee1af9cd8252a3aa4f5d0c70dcdaf6660962b3d98ae18c77d4b2baa6a",
+        "umfVersion": "0.8.0"
+      }
+    ],
+    "originalActionRequiredPurpose": "original-authorized",
+    "primaryAction": "read",
+    "primaryActionRequiredPurpose": "read",
+    "securityReady": false,
+    "sourceProfileJson": "{\"version\":\"weft.current-query.designation-profile/0.2-candidate\",\"id\":\"weft-live-original-integer-sum-actions\",\"revision\":\"live-original-integer-sum-designation-r1\",\"modelPins\":[{\"documentId\":\"domain\",\"revision\":\"query-value-core-r1\",\"umfVersion\":\"0.8.0\",\"sha256\":\"efa88c4ee1af9cd8252a3aa4f5d0c70dcdaf6660962b3d98ae18c77d4b2baa6a\"}],\"sources\":[{\"role\":\"policy\",\"identity\":{\"documentId\":\"project-access\",\"revision\":\"integer-sum-policy-r1\"},\"sha256\":\"aac0db3af437dc12a66ee560048ff56a17f626878c35282178169ff6bc1c234a\"},{\"role\":\"ontology\",\"identity\":{\"documentId\":\"domain\",\"revision\":\"integer-sum-ontology-r1\"},\"sha256\":\"a30154769f8bdbf1d7704a1adf457135c0db534c3bc0623671424970960de05f\"},{\"role\":\"catalog\",\"identity\":{\"documentId\":\"stored\",\"revision\":\"integer-sum-catalog-r1\"},\"sha256\":\"1803b1cc4c124b92a2656eb9c369c1df6b964b521c3f2cfaf63bfa2df6862f44\"},{\"role\":\"owner\",\"identity\":{\"documentId\":\"owner\",\"revision\":\"integer-sum-owner-r1\"},\"sha256\":\"117509c21be8e105c19f028a57cd681975c172089b7cb1072e891dd2e65a72f6\"}],\"binding\":{\"backendId\":\"weft.postgresql.current-read-candidate\",\"backendVersion\":\"0.4-candidate\",\"targetProfile\":\"pg18.6-current-sum/0.4-candidate\",\"source\":{\"documentId\":\"fixture-live-original-integer-sum-pg\",\"revision\":\"sum-materialization-r1\"},\"sha256\":\"b19ccc285f876ebe467f609b3fb1d1b9a1c6aed65f8e4a83bb35dbc357602921\"},\"targets\":[{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Resource\"}],\"primaryAction\":\"read\",\"bindings\":[{\"target\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Resource\"},\"field\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"salary\"},\"operator\":\"predicate\",\"operation\":\"equal\",\"originalAction\":\"query-original-salary-predicate\"},{\"target\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Resource\"},\"field\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"token\"},\"operator\":\"order\",\"operation\":\"order\",\"originalAction\":\"query-original-token-order\"},{\"target\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Resource\"},\"field\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"salary\"},\"operator\":\"aggregate\",\"operation\":\"sum\",\"originalAction\":\"query-original-salary-sum\"}],\"capabilities\":[\"live-original-integer-sum\"]}",
+    "sourceProfileSha256": "b030853041b1360657f52167a3cb073ddeab7c6d012b7a216eb39f1dbeb9f168",
+    "sourceRequestSha256": "df32f1674ecd675aa361f020d0f99ed32897c0f087cfd03e62190bdad60baee1",
+    "sources": [
+      {
+        "identity": {
+          "documentId": "project-access",
+          "revision": "integer-sum-policy-r1"
+        },
+        "role": "policy",
+        "sha256": "aac0db3af437dc12a66ee560048ff56a17f626878c35282178169ff6bc1c234a"
+      },
+      {
+        "identity": {
+          "documentId": "domain",
+          "revision": "integer-sum-ontology-r1"
+        },
+        "role": "ontology",
+        "sha256": "a30154769f8bdbf1d7704a1adf457135c0db534c3bc0623671424970960de05f"
+      },
+      {
+        "identity": {
+          "documentId": "stored",
+          "revision": "integer-sum-catalog-r1"
+        },
+        "role": "catalog",
+        "sha256": "1803b1cc4c124b92a2656eb9c369c1df6b964b521c3f2cfaf63bfa2df6862f44"
+      },
+      {
+        "identity": {
+          "documentId": "owner",
+          "revision": "integer-sum-owner-r1"
+        },
+        "role": "owner",
+        "sha256": "117509c21be8e105c19f028a57cd681975c172089b7cb1072e891dd2e65a72f6"
+      }
+    ],
+    "unresolved": [
+      "UMF whole-source semantic admission",
+      "joint ontology/catalog query modes",
+      "per-occurrence effective value and paired native scope",
+      "authenticated native source/caller/current authority and guarded release"
+    ],
+    "uses": [
+      {
+        "field": {
+          "documentId": "domain",
+          "elementId": "salary",
+          "moduleId": "m"
+        },
+        "fieldIdentity": {
+          "documentId": "domain",
+          "element": "salary",
+          "module": "m",
+          "revision": "query-value-core-r1"
+        },
+        "operation": "sum",
+        "operator": "aggregate",
+        "originalAction": "query-original-salary-sum",
+        "path": "outputs/0/argument",
+        "scan": "s0",
+        "target": {
+          "documentId": "domain",
+          "elementId": "Resource",
+          "moduleId": "m"
+        }
+      }
+    ],
+    "version": "weft.current-query.designation/0.2-candidate"
+  },
+  "inspection": {
+    "kind": "routes-inspected",
+    "requestId": "inspect",
+    "sourceReceipt": "5117640871db74a630e40e47dd86063a2d8515e8cba8fd428e1b924356085c6c",
+    "routeResults": [
+      {
+        "id": "route0",
+        "result": {
+          "status": "inspected",
+          "complete": false,
+          "authority": false,
+          "use": {
+            "field": {
+              "documentId": "domain",
+              "elementId": "salary",
+              "moduleId": "m"
+            },
+            "operation": "sum",
+            "operator": "aggregate",
+            "path": "outputs/0/argument",
+            "required": [
+              "nullity"
+            ],
+            "scan": "s0",
+            "type": {
+              "documentId": "domain",
+              "elementId": "Resource",
+              "moduleId": "m"
+            }
+          },
+          "sources": {
+            "policy": {
+              "id": "project-access",
+              "revision": "integer-sum-policy-r1"
+            },
+            "ontology": {
+              "documentId": "domain",
+              "revision": "integer-sum-ontology-r1"
+            },
+            "catalog": {
+              "id": "stored",
+              "revision": "integer-sum-catalog-r1"
+            },
+            "owner": {
+              "id": "owner",
+              "revision": "integer-sum-owner-r1"
+            },
+            "readAction": "read",
+            "baseConstraints": [
+              {
+                "source": "ontology",
+                "mode": "original-authorized"
+              }
+            ],
+            "originalLiveField": {
+              "documentId": "domain",
+              "elementId": "salary",
+              "moduleId": "m"
+            },
+            "storageEffect": "canonical"
+          },
+          "domains": [
+            {
+              "field": {
+                "documentId": "domain",
+                "elementId": "salary",
+                "moduleId": "m"
+              },
+              "identity": {
+                "documentId": "domain",
+                "revision": "query-value-core-r1",
+                "module": "m",
+                "element": "salary"
+              },
+              "element": {
+                "id": "salary",
+                "kind": "field",
+                "scalarType": "integer",
+                "nullability": "required",
+                "cardinality": "one",
+                "extensions": {},
+                "name": "salary",
+                "facets": {
+                  "integerWidth": {
+                    "bits": 64,
+                    "signed": true
+                  }
+                }
+              }
+            },
+            {
+              "field": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "salaryMaskLabel"
+              },
+              "identity": {
+                "documentId": "domain",
+                "revision": "query-value-core-r1",
+                "module": "m",
+                "element": "salaryMaskLabel"
+              },
+              "element": {
+                "id": "salaryMaskLabel",
+                "kind": "field",
+                "name": "SalaryMaskLabel",
+                "scalarType": "string",
+                "nullability": "required",
+                "cardinality": "one",
+                "extensions": {}
+              }
+            }
+          ],
+          "transforms": [
+            {
+              "index": 1,
+              "declaration": {
+                "id": "salary-label",
+                "version": "1",
+                "kind": "mask",
+                "function": "constant",
+                "inputDomain": {
+                  "documentId": "domain",
+                  "moduleId": "m",
+                  "elementId": "salary"
+                },
+                "outputDomain": {
+                  "documentId": "domain",
+                  "moduleId": "m",
+                  "elementId": "salaryMaskLabel"
+                },
+                "determinism": "deterministic",
+                "reversibility": "none",
+                "disclosureProfile": [
+                  "equality"
+                ],
+                "queryUse": {
+                  "predicate": "original-authorized",
+                  "order": "prohibited",
+                  "group": "prohibited",
+                  "join": "prohibited",
+                  "aggregate": "original-authorized"
+                },
+                "parameters": [
+                  {
+                    "name": "value",
+                    "field": {
+                      "documentId": "domain",
+                      "moduleId": "m",
+                      "elementId": "salaryMaskLabel"
+                    },
+                    "value": {
+                      "string": "[private]"
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "branches": [
+            {
+              "index": 0,
+              "sourceOccurrences": [
+                {
+                  "ruleIndex": 0,
+                  "ruleId": "reader",
+                  "disclosureIndex": 0,
+                  "disposition": {
+                    "kind": "transformed",
+                    "vocabulary": "umf.security.protection",
+                    "transform": "salary-label",
+                    "version": "1",
+                    "field": {
+                      "documentId": "domain",
+                      "moduleId": "m",
+                      "elementId": "salaryMaskLabel"
+                    }
+                  }
+                }
+              ],
+              "guard": {
+                "readDecision": "permit",
+                "anyActiveContributorGroup": 0,
+                "noActiveGroups": []
+              },
+              "representativeDisposition": {
+                "kind": "transformed",
+                "vocabulary": "umf.security.protection",
+                "transform": "salary-label",
+                "version": "1",
+                "field": {
+                  "documentId": "domain",
+                  "moduleId": "m",
+                  "elementId": "salaryMaskLabel"
+                }
+              },
+              "projection": {
+                "kind": "transformed",
+                "field": {
+                  "documentId": "domain",
+                  "moduleId": "m",
+                  "elementId": "salaryMaskLabel"
+                }
+              },
+              "constraints": [
+                {
+                  "source": "ontology",
+                  "mode": "original-authorized"
+                },
+                {
+                  "source": "read-catalog",
+                  "catalogIndex": 1,
+                  "transform": {
+                    "id": "salary-label",
+                    "version": "1"
+                  },
+                  "mode": "original-authorized",
+                  "properties": {
+                    "status": "requires-original-action",
+                    "effective": [
+                      "equality"
+                    ],
+                    "required": [
+                      "nullity"
+                    ],
+                    "missing": [
+                      "nullity"
+                    ]
+                  }
+                }
+              ],
+              "conflictingModes": false,
+              "status": "requires-original-action",
+              "queryValue": {
+                "origin": "live-field",
+                "field": {
+                  "documentId": "domain",
+                  "elementId": "salary",
+                  "moduleId": "m"
+                }
+              },
+              "requirements": [
+                "exact-weft-issued-designation",
+                "separate-current-action-permission",
+                "present-live-field",
+                "independent-public-projection-admission-if-selected"
+              ]
+            }
+          ],
+          "composition": {
+            "selection": "requires-actual-policy-and-disclosure-fold",
+            "readRuleIndices": [
+              0
+            ],
+            "readConditions": [
+              {
+                "ruleIndex": 0,
+                "ruleId": "reader",
+                "effect": "permit",
+                "condition": {
+                  "op": "literal",
+                  "value": true
+                }
+              },
+              {
+                "ruleIndex": 1,
+                "ruleId": "membership",
+                "effect": "require",
+                "condition": {
+                  "op": "exists",
+                  "association": {
+                    "documentId": "domain",
+                    "moduleId": "m",
+                    "elementId": "Ownership"
+                  },
+                  "as": "o",
+                  "where": {
+                    "op": "and",
+                    "args": [
+                      {
+                        "op": "eq",
+                        "left": {
+                          "kind": "variable",
+                          "name": "o",
+                          "endpoint": "resource"
+                        },
+                        "right": {
+                          "kind": "resource",
+                          "identity": true
+                        }
+                      },
+                      {
+                        "op": "exists",
+                        "association": {
+                          "documentId": "domain",
+                          "moduleId": "m",
+                          "elementId": "Assignment"
+                        },
+                        "as": "a",
+                        "where": {
+                          "op": "and",
+                          "args": [
+                            {
+                              "op": "eq",
+                              "left": {
+                                "kind": "variable",
+                                "name": "a",
+                                "endpoint": "staff"
+                              },
+                              "right": {
+                                "kind": "subject",
+                                "identity": true
+                              }
+                            },
+                            {
+                              "op": "eq",
+                              "left": {
+                                "kind": "variable",
+                                "name": "a",
+                                "endpoint": "project"
+                              },
+                              "right": {
+                                "kind": "variable",
+                                "name": "o",
+                                "endpoint": "project"
+                              }
+                            },
+                            {
+                              "op": "eq",
+                              "left": {
+                                "kind": "variable",
+                                "name": "a",
+                                "field": {
+                                  "documentId": "domain",
+                                  "moduleId": "m",
+                                  "elementId": "active"
+                                }
+                              },
+                              "right": {
+                                "kind": "constant",
+                                "field": {
+                                  "documentId": "domain",
+                                  "moduleId": "m",
+                                  "elementId": "active"
+                                },
+                                "value": {
+                                  "boolean": true
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ],
+            "withholdingDominates": true,
+            "distinctActiveTransforms": "conflict",
+            "originalIsFallback": true,
+            "protectedMissingActiveDisposition": "indeterminate",
+            "absenceIsNotScalarNull": true,
+            "branchActivationUnverified": true,
+            "additionalRequirements": [
+              "actual-compiler-occurrence-and-descriptor-correspondence",
+              "row-read-eligibility",
+              "exact-operand-domain-and-presence-profile",
+              "paired-key-transform-runtime-scope",
+              "native-current-authority-and-guarded-release"
+            ]
+          },
+          "diagnostics": [
+            "Conditional source alternatives only; no active rule, selected branch, scalar availability, injectivity, paired scope, designation, permission or native query admission is established"
+          ]
+        }
+      }
+    ]
+  },
+  "evaluation": {
+    "kind": "evaluation",
+    "requestId": "evaluate",
+    "sourceReceipt": "5117640871db74a630e40e47dd86063a2d8515e8cba8fd428e1b924356085c6c",
+    "batch": {
+      "status": "completed",
+      "complete": false,
+      "authority": false,
+      "operations": [
+        {
+          "id": "s0-rules",
+          "kind": "read-rules",
+          "outcome": {
+            "status": "evaluated",
+            "complete": false,
+            "authority": false,
+            "rows": [
+              {
+                "resource": {
+                  "type": {
+                    "documentId": "domain",
+                    "moduleId": "m",
+                    "elementId": "Resource"
+                  },
+                  "key": [
+                    {
+                      "string": "r1"
+                    }
+                  ]
+                },
+                "decision": "permit",
+                "rules": [
+                  {
+                    "ruleIndex": 0,
+                    "truth": "T"
+                  },
+                  {
+                    "ruleIndex": 1,
+                    "truth": "T"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "s0-cells",
+          "kind": "scan",
+          "outcome": {
+            "status": "rendered",
+            "complete": false,
+            "authority": false,
+            "rows": [
+              []
+            ],
+            "valueProfiles": []
+          }
+        },
+        {
+          "id": "action0",
+          "kind": "action",
+          "outcome": {
+            "status": "evaluated",
+            "complete": false,
+            "authority": false,
+            "rows": [
+              {
+                "decision": "permit",
+                "dispositions": []
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "routeResults": [
+      {
+        "id": "route0",
+        "result": {
+          "status": "evaluated",
+          "complete": false,
+          "authority": false,
+          "plan": {
+            "status": "inspected",
+            "complete": false,
+            "authority": false,
+            "use": {
+              "field": {
+                "documentId": "domain",
+                "elementId": "salary",
+                "moduleId": "m"
+              },
+              "operation": "sum",
+              "operator": "aggregate",
+              "path": "outputs/0/argument",
+              "required": [
+                "nullity"
+              ],
+              "scan": "s0",
+              "type": {
+                "documentId": "domain",
+                "elementId": "Resource",
+                "moduleId": "m"
+              }
+            },
+            "sources": {
+              "policy": {
+                "id": "project-access",
+                "revision": "integer-sum-policy-r1"
+              },
+              "ontology": {
+                "documentId": "domain",
+                "revision": "integer-sum-ontology-r1"
+              },
+              "catalog": {
+                "id": "stored",
+                "revision": "integer-sum-catalog-r1"
+              },
+              "owner": {
+                "id": "owner",
+                "revision": "integer-sum-owner-r1"
+              },
+              "readAction": "read",
+              "baseConstraints": [
+                {
+                  "source": "ontology",
+                  "mode": "original-authorized"
+                }
+              ],
+              "originalLiveField": {
+                "documentId": "domain",
+                "elementId": "salary",
+                "moduleId": "m"
+              },
+              "storageEffect": "canonical"
+            },
+            "domains": [
+              {
+                "field": {
+                  "documentId": "domain",
+                  "elementId": "salary",
+                  "moduleId": "m"
+                },
+                "identity": {
+                  "documentId": "domain",
+                  "revision": "query-value-core-r1",
+                  "module": "m",
+                  "element": "salary"
+                },
+                "element": {
+                  "id": "salary",
+                  "kind": "field",
+                  "scalarType": "integer",
+                  "nullability": "required",
+                  "cardinality": "one",
+                  "extensions": {},
+                  "name": "salary",
+                  "facets": {
+                    "integerWidth": {
+                      "bits": 64,
+                      "signed": true
+                    }
+                  }
+                }
+              },
+              {
+                "field": {
+                  "documentId": "domain",
+                  "moduleId": "m",
+                  "elementId": "salaryMaskLabel"
+                },
+                "identity": {
+                  "documentId": "domain",
+                  "revision": "query-value-core-r1",
+                  "module": "m",
+                  "element": "salaryMaskLabel"
+                },
+                "element": {
+                  "id": "salaryMaskLabel",
+                  "kind": "field",
+                  "name": "SalaryMaskLabel",
+                  "scalarType": "string",
+                  "nullability": "required",
+                  "cardinality": "one",
+                  "extensions": {}
+                }
+              }
+            ],
+            "transforms": [
+              {
+                "index": 1,
+                "declaration": {
+                  "id": "salary-label",
+                  "version": "1",
+                  "kind": "mask",
+                  "function": "constant",
+                  "inputDomain": {
+                    "documentId": "domain",
+                    "moduleId": "m",
+                    "elementId": "salary"
+                  },
+                  "outputDomain": {
+                    "documentId": "domain",
+                    "moduleId": "m",
+                    "elementId": "salaryMaskLabel"
+                  },
+                  "determinism": "deterministic",
+                  "reversibility": "none",
+                  "disclosureProfile": [
+                    "equality"
+                  ],
+                  "queryUse": {
+                    "predicate": "original-authorized",
+                    "order": "prohibited",
+                    "group": "prohibited",
+                    "join": "prohibited",
+                    "aggregate": "original-authorized"
+                  },
+                  "parameters": [
+                    {
+                      "name": "value",
+                      "field": {
+                        "documentId": "domain",
+                        "moduleId": "m",
+                        "elementId": "salaryMaskLabel"
+                      },
+                      "value": {
+                        "string": "[private]"
+                      }
+                    }
+                  ]
+                }
+              }
+            ],
+            "branches": [
+              {
+                "index": 0,
+                "sourceOccurrences": [
+                  {
+                    "ruleIndex": 0,
+                    "ruleId": "reader",
+                    "disclosureIndex": 0,
+                    "disposition": {
+                      "kind": "transformed",
+                      "vocabulary": "umf.security.protection",
+                      "transform": "salary-label",
+                      "version": "1",
+                      "field": {
+                        "documentId": "domain",
+                        "moduleId": "m",
+                        "elementId": "salaryMaskLabel"
+                      }
+                    }
+                  }
+                ],
+                "guard": {
+                  "readDecision": "permit",
+                  "anyActiveContributorGroup": 0,
+                  "noActiveGroups": []
+                },
+                "representativeDisposition": {
+                  "kind": "transformed",
+                  "vocabulary": "umf.security.protection",
+                  "transform": "salary-label",
+                  "version": "1",
+                  "field": {
+                    "documentId": "domain",
+                    "moduleId": "m",
+                    "elementId": "salaryMaskLabel"
+                  }
+                },
+                "projection": {
+                  "kind": "transformed",
+                  "field": {
+                    "documentId": "domain",
+                    "moduleId": "m",
+                    "elementId": "salaryMaskLabel"
+                  }
+                },
+                "constraints": [
+                  {
+                    "source": "ontology",
+                    "mode": "original-authorized"
+                  },
+                  {
+                    "source": "read-catalog",
+                    "catalogIndex": 1,
+                    "transform": {
+                      "id": "salary-label",
+                      "version": "1"
+                    },
+                    "mode": "original-authorized",
+                    "properties": {
+                      "status": "requires-original-action",
+                      "effective": [
+                        "equality"
+                      ],
+                      "required": [
+                        "nullity"
+                      ],
+                      "missing": [
+                        "nullity"
+                      ]
+                    }
+                  }
+                ],
+                "conflictingModes": false,
+                "status": "requires-original-action",
+                "queryValue": {
+                  "origin": "live-field",
+                  "field": {
+                    "documentId": "domain",
+                    "elementId": "salary",
+                    "moduleId": "m"
+                  }
+                },
+                "requirements": [
+                  "exact-weft-issued-designation",
+                  "separate-current-action-permission",
+                  "present-live-field",
+                  "independent-public-projection-admission-if-selected"
+                ]
+              }
+            ],
+            "composition": {
+              "selection": "requires-actual-policy-and-disclosure-fold",
+              "readRuleIndices": [
+                0
+              ],
+              "readConditions": [
+                {
+                  "ruleIndex": 0,
+                  "ruleId": "reader",
+                  "effect": "permit",
+                  "condition": {
+                    "op": "literal",
+                    "value": true
+                  }
+                },
+                {
+                  "ruleIndex": 1,
+                  "ruleId": "membership",
+                  "effect": "require",
+                  "condition": {
+                    "op": "exists",
+                    "association": {
+                      "documentId": "domain",
+                      "moduleId": "m",
+                      "elementId": "Ownership"
+                    },
+                    "as": "o",
+                    "where": {
+                      "op": "and",
+                      "args": [
+                        {
+                          "op": "eq",
+                          "left": {
+                            "kind": "variable",
+                            "name": "o",
+                            "endpoint": "resource"
+                          },
+                          "right": {
+                            "kind": "resource",
+                            "identity": true
+                          }
+                        },
+                        {
+                          "op": "exists",
+                          "association": {
+                            "documentId": "domain",
+                            "moduleId": "m",
+                            "elementId": "Assignment"
+                          },
+                          "as": "a",
+                          "where": {
+                            "op": "and",
+                            "args": [
+                              {
+                                "op": "eq",
+                                "left": {
+                                  "kind": "variable",
+                                  "name": "a",
+                                  "endpoint": "staff"
+                                },
+                                "right": {
+                                  "kind": "subject",
+                                  "identity": true
+                                }
+                              },
+                              {
+                                "op": "eq",
+                                "left": {
+                                  "kind": "variable",
+                                  "name": "a",
+                                  "endpoint": "project"
+                                },
+                                "right": {
+                                  "kind": "variable",
+                                  "name": "o",
+                                  "endpoint": "project"
+                                }
+                              },
+                              {
+                                "op": "eq",
+                                "left": {
+                                  "kind": "variable",
+                                  "name": "a",
+                                  "field": {
+                                    "documentId": "domain",
+                                    "moduleId": "m",
+                                    "elementId": "active"
+                                  }
+                                },
+                                "right": {
+                                  "kind": "constant",
+                                  "field": {
+                                    "documentId": "domain",
+                                    "moduleId": "m",
+                                    "elementId": "active"
+                                  },
+                                  "value": {
+                                    "boolean": true
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+              ],
+              "withholdingDominates": true,
+              "distinctActiveTransforms": "conflict",
+              "originalIsFallback": true,
+              "protectedMissingActiveDisposition": "indeterminate",
+              "absenceIsNotScalarNull": true,
+              "branchActivationUnverified": true,
+              "additionalRequirements": [
+                "actual-compiler-occurrence-and-descriptor-correspondence",
+                "row-read-eligibility",
+                "exact-operand-domain-and-presence-profile",
+                "paired-key-transform-runtime-scope",
+                "native-current-authority-and-guarded-release"
+              ]
+            },
+            "diagnostics": [
+              "Conditional source alternatives only; no active rule, selected branch, scalar availability, injectivity, paired scope, designation, permission or native query admission is established"
+            ]
+          },
+          "rows": [
+            {
+              "resource": {
+                "type": {
+                  "documentId": "domain",
+                  "moduleId": "m",
+                  "elementId": "Resource"
+                },
+                "key": [
+                  {
+                    "string": "r1"
+                  }
+                ]
+              },
+              "readDecision": "permit",
+              "rules": [
+                {
+                  "ruleIndex": 0,
+                  "truth": "T"
+                },
+                {
+                  "ruleIndex": 1,
+                  "truth": "T"
+                }
+              ],
+              "activeBranches": [
+                0
+              ],
+              "selection": "selected"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "operations": [
+    {
+      "id": "s0-rules",
+      "kind": "read-rules",
+      "selection": {
+        "type": {
+          "documentId": "domain",
+          "elementId": "Resource",
+          "moduleId": "m"
+        }
+      }
+    },
+    {
+      "id": "s0-cells",
+      "kind": "scan",
+      "selection": {
+        "type": {
+          "documentId": "domain",
+          "elementId": "Resource",
+          "moduleId": "m"
+        },
+        "fields": []
+      }
+    },
+    {
+      "id": "action0",
+      "kind": "action",
+      "request": {
+        "action": "query-original-salary-sum",
+        "resources": [
+          {
+            "type": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "Resource"
+            },
+            "key": [
+              {
+                "string": "r1"
+              }
+            ]
+          }
+        ],
+        "targets": [
+          {
+            "documentId": "domain",
+            "elementId": "Resource",
+            "moduleId": "m"
+          }
+        ],
+        "fields": []
+      }
+    }
+  ]
+}

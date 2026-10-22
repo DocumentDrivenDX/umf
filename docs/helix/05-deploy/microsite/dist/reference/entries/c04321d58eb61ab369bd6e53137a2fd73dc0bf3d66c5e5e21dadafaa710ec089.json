@@ -1,0 +1,1490 @@
+{
+  "data": {
+    "pointer": "",
+    "profileVersions": [],
+    "references": [
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/projections/postgresql-avro.schema.json\",\"\"]",
+        "target": "urn:umf:projection:postgresql-avro:0.1.0#/properties/policy"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/projections/avro-tablespec.schema.json\",\"\"]",
+        "target": "urn:umf:projection:avro-tablespec:0.1.0#/properties/policy"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/projections/sqlserver-avro.schema.json\",\"\"]",
+        "target": "urn:umf:projection:sqlserver-avro:0.1.0#/properties/policy"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/projections/avro-tablespec.schema.json\",\"\"]",
+        "target": "urn:umf:projection:avro-tablespec:0.1.0#/properties/policy"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/projections/parquet-avro.schema.json\",\"\"]",
+        "target": "urn:umf:projection:parquet-avro:0.1.0#/properties/policy"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/projections/avro-tablespec.schema.json\",\"\"]",
+        "target": "urn:umf:projection:avro-tablespec:0.1.0#/properties/policy"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/projections/postgresql-avro.schema.json\",\"\"]",
+        "target": "urn:umf:projection:postgresql-avro:0.1.0"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/projections/sqlserver-avro.schema.json\",\"\"]",
+        "target": "urn:umf:projection:sqlserver-avro:0.1.0"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/projections/parquet-avro.schema.json\",\"\"]",
+        "target": "urn:umf:projection:parquet-avro:0.1.0"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/projections/avro-tablespec.schema.json\",\"\"]",
+        "target": "urn:umf:projection:avro-tablespec:0.1.0"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/projections/avro-tablespec.schema.json\",\"\"]",
+        "target": "urn:umf:projection:avro-tablespec:0.1.0#/properties/issues/items"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/projections/avro-tablespec.schema.json\",\"\"]",
+        "target": "urn:umf:projection:avro-tablespec:0.1.0#/properties/issues/items"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/projections/postgresql-avro.schema.json\",\"\"]",
+        "target": "urn:umf:projection:postgresql-avro:0.1.0"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/projections/sqlserver-avro.schema.json\",\"\"]",
+        "target": "urn:umf:projection:sqlserver-avro:0.1.0"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/projections/parquet-avro.schema.json\",\"\"]",
+        "target": "urn:umf:projection:parquet-avro:0.1.0"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/projections/postgresql-avro.schema.json\",\"\"]",
+        "target": "urn:umf:projection:postgresql-avro:0.1.0"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/projections/sqlserver-avro.schema.json\",\"\"]",
+        "target": "urn:umf:projection:sqlserver-avro:0.1.0"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/projections/parquet-avro.schema.json\",\"\"]",
+        "target": "urn:umf:projection:parquet-avro:0.1.0"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/projections/avro-tablespec.schema.json\",\"\"]",
+        "target": "urn:umf:projection:avro-tablespec:0.1.0"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/projections/postgresql-avro.schema.json\",\"\"]",
+        "target": "urn:umf:projection:postgresql-avro:0.1.0"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/projections/sqlserver-avro.schema.json\",\"\"]",
+        "target": "urn:umf:projection:sqlserver-avro:0.1.0"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/projections/parquet-avro.schema.json\",\"\"]",
+        "target": "urn:umf:projection:parquet-avro:0.1.0"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/projections/avro-tablespec.schema.json\",\"\"]",
+        "target": "urn:umf:projection:avro-tablespec:0.1.0"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/projections/postgresql-avro.schema.json\",\"\"]",
+        "target": "urn:umf:projection:postgresql-avro:0.1.0"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/projections/sqlserver-avro.schema.json\",\"\"]",
+        "target": "urn:umf:projection:sqlserver-avro:0.1.0"
+      },
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/projections/parquet-avro.schema.json\",\"\"]",
+        "target": "urn:umf:projection:parquet-avro:0.1.0"
+      }
+    ],
+    "role": "operation",
+    "schemaPath": "spec/projections/tablespec-via-avro.schema.json",
+    "sourceData": {
+      "kind": "object",
+      "members": {
+        "$id": {
+          "kind": "string",
+          "value": "urn:umf:projection:tablespec-via-avro:0.1.0"
+        },
+        "$schema": {
+          "kind": "string",
+          "value": "https://json-schema.org/draft/2020-12/schema"
+        },
+        "additionalProperties": {
+          "kind": "boolean",
+          "value": false
+        },
+        "allOf": {
+          "items": [
+            {
+              "kind": "object",
+              "members": {
+                "else": {
+                  "kind": "object",
+                  "members": {
+                    "not": {
+                      "kind": "object",
+                      "members": {
+                        "anyOf": {
+                          "items": [
+                            {
+                              "kind": "object",
+                              "members": {
+                                "properties": {
+                                  "kind": "object",
+                                  "members": {
+                                    "target": {
+                                      "kind": "object",
+                                      "members": {
+                                        "$ref": {
+                                          "kind": "string",
+                                          "value": "urn:umf:core:0.10.0"
+                                        }
+                                      }
+                                    }
+                                  }
+                                },
+                                "required": {
+                                  "items": [
+                                    {
+                                      "kind": "string",
+                                      "value": "target"
+                                    }
+                                  ],
+                                  "kind": "array"
+                                }
+                              }
+                            },
+                            {
+                              "kind": "object",
+                              "members": {
+                                "properties": {
+                                  "kind": "object",
+                                  "members": {
+                                    "nativeSchema": {
+                                      "kind": "object",
+                                      "members": {
+                                        "type": {
+                                          "kind": "string",
+                                          "value": "string"
+                                        }
+                                      }
+                                    }
+                                  }
+                                },
+                                "required": {
+                                  "items": [
+                                    {
+                                      "kind": "string",
+                                      "value": "nativeSchema"
+                                    }
+                                  ],
+                                  "kind": "array"
+                                }
+                              }
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    }
+                  }
+                },
+                "if": {
+                  "kind": "object",
+                  "members": {
+                    "properties": {
+                      "kind": "object",
+                      "members": {
+                        "status": {
+                          "kind": "object",
+                          "members": {
+                            "const": {
+                              "kind": "string",
+                              "value": "projected"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "then": {
+                  "kind": "object",
+                  "members": {
+                    "properties": {
+                      "kind": "object",
+                      "members": {
+                        "nativeSchema": {
+                          "kind": "object",
+                          "members": {
+                            "type": {
+                              "kind": "string",
+                              "value": "string"
+                            }
+                          }
+                        },
+                        "target": {
+                          "kind": "object",
+                          "members": {
+                            "$ref": {
+                              "kind": "string",
+                              "value": "urn:umf:core:0.10.0"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "required": {
+                      "items": [
+                        {
+                          "kind": "string",
+                          "value": "target"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "nativeSchema"
+                        }
+                      ],
+                      "kind": "array"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "kind": "object",
+              "members": {
+                "oneOf": {
+                  "items": [
+                    {
+                      "kind": "object",
+                      "members": {
+                        "properties": {
+                          "kind": "object",
+                          "members": {
+                            "stages": {
+                              "kind": "object",
+                              "members": {
+                                "additionalProperties": {
+                                  "kind": "boolean",
+                                  "value": false
+                                },
+                                "properties": {
+                                  "kind": "object",
+                                  "members": {
+                                    "sourceToAvro": {
+                                      "kind": "object",
+                                      "members": {
+                                        "allOf": {
+                                          "items": [
+                                            {
+                                              "kind": "object",
+                                              "members": {
+                                                "anyOf": {
+                                                  "items": [
+                                                    {
+                                                      "kind": "object",
+                                                      "members": {
+                                                        "$ref": {
+                                                          "kind": "string",
+                                                          "value": "urn:umf:projection:postgresql-avro:0.1.0"
+                                                        }
+                                                      }
+                                                    },
+                                                    {
+                                                      "kind": "object",
+                                                      "members": {
+                                                        "$ref": {
+                                                          "kind": "string",
+                                                          "value": "urn:umf:projection:sqlserver-avro:0.1.0"
+                                                        }
+                                                      }
+                                                    },
+                                                    {
+                                                      "kind": "object",
+                                                      "members": {
+                                                        "$ref": {
+                                                          "kind": "string",
+                                                          "value": "urn:umf:projection:parquet-avro:0.1.0"
+                                                        }
+                                                      }
+                                                    }
+                                                  ],
+                                                  "kind": "array"
+                                                }
+                                              }
+                                            },
+                                            {
+                                              "kind": "object",
+                                              "members": {
+                                                "properties": {
+                                                  "kind": "object",
+                                                  "members": {
+                                                    "status": {
+                                                      "kind": "object",
+                                                      "members": {
+                                                        "const": {
+                                                          "kind": "string",
+                                                          "value": "blocked"
+                                                        }
+                                                      }
+                                                    }
+                                                  }
+                                                },
+                                                "type": {
+                                                  "kind": "string",
+                                                  "value": "object"
+                                                }
+                                              }
+                                            }
+                                          ],
+                                          "kind": "array"
+                                        }
+                                      }
+                                    }
+                                  }
+                                },
+                                "required": {
+                                  "items": [
+                                    {
+                                      "kind": "string",
+                                      "value": "sourceToAvro"
+                                    }
+                                  ],
+                                  "kind": "array"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "object"
+                                }
+                              }
+                            },
+                            "status": {
+                              "kind": "object",
+                              "members": {
+                                "const": {
+                                  "kind": "string",
+                                  "value": "blocked"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "kind": "object",
+                      "members": {
+                        "properties": {
+                          "kind": "object",
+                          "members": {
+                            "stages": {
+                              "kind": "object",
+                              "members": {
+                                "additionalProperties": {
+                                  "kind": "boolean",
+                                  "value": false
+                                },
+                                "properties": {
+                                  "kind": "object",
+                                  "members": {
+                                    "avroToTableSpec": {
+                                      "kind": "object",
+                                      "members": {
+                                        "allOf": {
+                                          "items": [
+                                            {
+                                              "kind": "object",
+                                              "members": {
+                                                "$ref": {
+                                                  "kind": "string",
+                                                  "value": "urn:umf:projection:avro-tablespec:0.1.0"
+                                                }
+                                              }
+                                            },
+                                            {
+                                              "kind": "object",
+                                              "members": {
+                                                "properties": {
+                                                  "kind": "object",
+                                                  "members": {
+                                                    "status": {
+                                                      "kind": "object",
+                                                      "members": {
+                                                        "const": {
+                                                          "kind": "string",
+                                                          "value": "blocked"
+                                                        }
+                                                      }
+                                                    }
+                                                  }
+                                                },
+                                                "type": {
+                                                  "kind": "string",
+                                                  "value": "object"
+                                                }
+                                              }
+                                            }
+                                          ],
+                                          "kind": "array"
+                                        }
+                                      }
+                                    },
+                                    "sourceToAvro": {
+                                      "kind": "object",
+                                      "members": {
+                                        "allOf": {
+                                          "items": [
+                                            {
+                                              "kind": "object",
+                                              "members": {
+                                                "anyOf": {
+                                                  "items": [
+                                                    {
+                                                      "kind": "object",
+                                                      "members": {
+                                                        "$ref": {
+                                                          "kind": "string",
+                                                          "value": "urn:umf:projection:postgresql-avro:0.1.0"
+                                                        }
+                                                      }
+                                                    },
+                                                    {
+                                                      "kind": "object",
+                                                      "members": {
+                                                        "$ref": {
+                                                          "kind": "string",
+                                                          "value": "urn:umf:projection:sqlserver-avro:0.1.0"
+                                                        }
+                                                      }
+                                                    },
+                                                    {
+                                                      "kind": "object",
+                                                      "members": {
+                                                        "$ref": {
+                                                          "kind": "string",
+                                                          "value": "urn:umf:projection:parquet-avro:0.1.0"
+                                                        }
+                                                      }
+                                                    }
+                                                  ],
+                                                  "kind": "array"
+                                                }
+                                              }
+                                            },
+                                            {
+                                              "kind": "object",
+                                              "members": {
+                                                "properties": {
+                                                  "kind": "object",
+                                                  "members": {
+                                                    "status": {
+                                                      "kind": "object",
+                                                      "members": {
+                                                        "const": {
+                                                          "kind": "string",
+                                                          "value": "projected"
+                                                        }
+                                                      }
+                                                    }
+                                                  }
+                                                },
+                                                "type": {
+                                                  "kind": "string",
+                                                  "value": "object"
+                                                }
+                                              }
+                                            }
+                                          ],
+                                          "kind": "array"
+                                        }
+                                      }
+                                    }
+                                  }
+                                },
+                                "required": {
+                                  "items": [
+                                    {
+                                      "kind": "string",
+                                      "value": "sourceToAvro"
+                                    },
+                                    {
+                                      "kind": "string",
+                                      "value": "avroToTableSpec"
+                                    }
+                                  ],
+                                  "kind": "array"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "object"
+                                }
+                              }
+                            },
+                            "status": {
+                              "kind": "object",
+                              "members": {
+                                "const": {
+                                  "kind": "string",
+                                  "value": "blocked"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "kind": "object",
+                      "members": {
+                        "properties": {
+                          "kind": "object",
+                          "members": {
+                            "stages": {
+                              "kind": "object",
+                              "members": {
+                                "additionalProperties": {
+                                  "kind": "boolean",
+                                  "value": false
+                                },
+                                "properties": {
+                                  "kind": "object",
+                                  "members": {
+                                    "avroToTableSpec": {
+                                      "kind": "object",
+                                      "members": {
+                                        "allOf": {
+                                          "items": [
+                                            {
+                                              "kind": "object",
+                                              "members": {
+                                                "$ref": {
+                                                  "kind": "string",
+                                                  "value": "urn:umf:projection:avro-tablespec:0.1.0"
+                                                }
+                                              }
+                                            },
+                                            {
+                                              "kind": "object",
+                                              "members": {
+                                                "properties": {
+                                                  "kind": "object",
+                                                  "members": {
+                                                    "status": {
+                                                      "kind": "object",
+                                                      "members": {
+                                                        "const": {
+                                                          "kind": "string",
+                                                          "value": "projected"
+                                                        }
+                                                      }
+                                                    }
+                                                  }
+                                                },
+                                                "type": {
+                                                  "kind": "string",
+                                                  "value": "object"
+                                                }
+                                              }
+                                            }
+                                          ],
+                                          "kind": "array"
+                                        }
+                                      }
+                                    },
+                                    "sourceToAvro": {
+                                      "kind": "object",
+                                      "members": {
+                                        "allOf": {
+                                          "items": [
+                                            {
+                                              "kind": "object",
+                                              "members": {
+                                                "anyOf": {
+                                                  "items": [
+                                                    {
+                                                      "kind": "object",
+                                                      "members": {
+                                                        "$ref": {
+                                                          "kind": "string",
+                                                          "value": "urn:umf:projection:postgresql-avro:0.1.0"
+                                                        }
+                                                      }
+                                                    },
+                                                    {
+                                                      "kind": "object",
+                                                      "members": {
+                                                        "$ref": {
+                                                          "kind": "string",
+                                                          "value": "urn:umf:projection:sqlserver-avro:0.1.0"
+                                                        }
+                                                      }
+                                                    },
+                                                    {
+                                                      "kind": "object",
+                                                      "members": {
+                                                        "$ref": {
+                                                          "kind": "string",
+                                                          "value": "urn:umf:projection:parquet-avro:0.1.0"
+                                                        }
+                                                      }
+                                                    }
+                                                  ],
+                                                  "kind": "array"
+                                                }
+                                              }
+                                            },
+                                            {
+                                              "kind": "object",
+                                              "members": {
+                                                "properties": {
+                                                  "kind": "object",
+                                                  "members": {
+                                                    "status": {
+                                                      "kind": "object",
+                                                      "members": {
+                                                        "const": {
+                                                          "kind": "string",
+                                                          "value": "projected"
+                                                        }
+                                                      }
+                                                    }
+                                                  }
+                                                },
+                                                "type": {
+                                                  "kind": "string",
+                                                  "value": "object"
+                                                }
+                                              }
+                                            }
+                                          ],
+                                          "kind": "array"
+                                        }
+                                      }
+                                    }
+                                  }
+                                },
+                                "required": {
+                                  "items": [
+                                    {
+                                      "kind": "string",
+                                      "value": "sourceToAvro"
+                                    },
+                                    {
+                                      "kind": "string",
+                                      "value": "avroToTableSpec"
+                                    }
+                                  ],
+                                  "kind": "array"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "object"
+                                }
+                              }
+                            },
+                            "status": {
+                              "kind": "object",
+                              "members": {
+                                "const": {
+                                  "kind": "string",
+                                  "value": "projected"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ],
+                  "kind": "array"
+                }
+              }
+            },
+            {
+              "kind": "object",
+              "members": {
+                "if": {
+                  "kind": "object",
+                  "members": {
+                    "properties": {
+                      "kind": "object",
+                      "members": {
+                        "policy": {
+                          "kind": "object",
+                          "members": {
+                            "properties": {
+                              "kind": "object",
+                              "members": {
+                                "sourceKind": {
+                                  "kind": "object",
+                                  "members": {
+                                    "const": {
+                                      "kind": "string",
+                                      "value": "postgresql"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "object"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "then": {
+                  "kind": "object",
+                  "members": {
+                    "properties": {
+                      "kind": "object",
+                      "members": {
+                        "stages": {
+                          "kind": "object",
+                          "members": {
+                            "properties": {
+                              "kind": "object",
+                              "members": {
+                                "sourceToAvro": {
+                                  "kind": "object",
+                                  "members": {
+                                    "$ref": {
+                                      "kind": "string",
+                                      "value": "urn:umf:projection:postgresql-avro:0.1.0"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "object"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "kind": "object",
+              "members": {
+                "if": {
+                  "kind": "object",
+                  "members": {
+                    "properties": {
+                      "kind": "object",
+                      "members": {
+                        "policy": {
+                          "kind": "object",
+                          "members": {
+                            "properties": {
+                              "kind": "object",
+                              "members": {
+                                "sourceKind": {
+                                  "kind": "object",
+                                  "members": {
+                                    "const": {
+                                      "kind": "string",
+                                      "value": "sqlserver"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "object"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "then": {
+                  "kind": "object",
+                  "members": {
+                    "properties": {
+                      "kind": "object",
+                      "members": {
+                        "stages": {
+                          "kind": "object",
+                          "members": {
+                            "properties": {
+                              "kind": "object",
+                              "members": {
+                                "sourceToAvro": {
+                                  "kind": "object",
+                                  "members": {
+                                    "$ref": {
+                                      "kind": "string",
+                                      "value": "urn:umf:projection:sqlserver-avro:0.1.0"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "object"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "kind": "object",
+              "members": {
+                "if": {
+                  "kind": "object",
+                  "members": {
+                    "properties": {
+                      "kind": "object",
+                      "members": {
+                        "policy": {
+                          "kind": "object",
+                          "members": {
+                            "properties": {
+                              "kind": "object",
+                              "members": {
+                                "sourceKind": {
+                                  "kind": "object",
+                                  "members": {
+                                    "const": {
+                                      "kind": "string",
+                                      "value": "parquet"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "object"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "then": {
+                  "kind": "object",
+                  "members": {
+                    "properties": {
+                      "kind": "object",
+                      "members": {
+                        "stages": {
+                          "kind": "object",
+                          "members": {
+                            "properties": {
+                              "kind": "object",
+                              "members": {
+                                "sourceToAvro": {
+                                  "kind": "object",
+                                  "members": {
+                                    "$ref": {
+                                      "kind": "string",
+                                      "value": "urn:umf:projection:parquet-avro:0.1.0"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "object"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ],
+          "kind": "array"
+        },
+        "properties": {
+          "kind": "object",
+          "members": {
+            "issues": {
+              "kind": "object",
+              "members": {
+                "items": {
+                  "kind": "object",
+                  "members": {
+                    "oneOf": {
+                      "items": [
+                        {
+                          "kind": "object",
+                          "members": {
+                            "additionalProperties": {
+                              "kind": "boolean",
+                              "value": false
+                            },
+                            "properties": {
+                              "kind": "object",
+                              "members": {
+                                "issue": {
+                                  "kind": "object",
+                                  "members": {
+                                    "$ref": {
+                                      "kind": "string",
+                                      "value": "urn:umf:projection:avro-tablespec:0.1.0#/properties/issues/items"
+                                    }
+                                  }
+                                },
+                                "sourceDocumentPath": {
+                                  "kind": "object",
+                                  "members": {
+                                    "const": {
+                                      "kind": "string",
+                                      "value": "/stages/sourceToAvro/source"
+                                    }
+                                  }
+                                },
+                                "stage": {
+                                  "kind": "object",
+                                  "members": {
+                                    "const": {
+                                      "kind": "string",
+                                      "value": "sourceToAvro"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "required": {
+                              "items": [
+                                {
+                                  "kind": "string",
+                                  "value": "stage"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "sourceDocumentPath"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "issue"
+                                }
+                              ],
+                              "kind": "array"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "object"
+                            }
+                          }
+                        },
+                        {
+                          "kind": "object",
+                          "members": {
+                            "additionalProperties": {
+                              "kind": "boolean",
+                              "value": false
+                            },
+                            "properties": {
+                              "kind": "object",
+                              "members": {
+                                "issue": {
+                                  "kind": "object",
+                                  "members": {
+                                    "$ref": {
+                                      "kind": "string",
+                                      "value": "urn:umf:projection:avro-tablespec:0.1.0#/properties/issues/items"
+                                    }
+                                  }
+                                },
+                                "sourceDocumentPath": {
+                                  "kind": "object",
+                                  "members": {
+                                    "const": {
+                                      "kind": "string",
+                                      "value": "/stages/avroToTableSpec/source"
+                                    }
+                                  }
+                                },
+                                "stage": {
+                                  "kind": "object",
+                                  "members": {
+                                    "const": {
+                                      "kind": "string",
+                                      "value": "avroToTableSpec"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "required": {
+                              "items": [
+                                {
+                                  "kind": "string",
+                                  "value": "stage"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "sourceDocumentPath"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "issue"
+                                }
+                              ],
+                              "kind": "array"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "object"
+                            }
+                          }
+                        }
+                      ],
+                      "kind": "array"
+                    }
+                  }
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "array"
+                }
+              }
+            },
+            "nativeSchema": {
+              "kind": "object",
+              "members": {
+                "type": {
+                  "kind": "string",
+                  "value": "string"
+                }
+              }
+            },
+            "policy": {
+              "kind": "object",
+              "members": {
+                "oneOf": {
+                  "items": [
+                    {
+                      "kind": "object",
+                      "members": {
+                        "additionalProperties": {
+                          "kind": "boolean",
+                          "value": false
+                        },
+                        "properties": {
+                          "kind": "object",
+                          "members": {
+                            "sourceKind": {
+                              "kind": "object",
+                              "members": {
+                                "const": {
+                                  "kind": "string",
+                                  "value": "postgresql"
+                                }
+                              }
+                            },
+                            "toAvro": {
+                              "kind": "object",
+                              "members": {
+                                "$ref": {
+                                  "kind": "string",
+                                  "value": "urn:umf:projection:postgresql-avro:0.1.0#/properties/policy"
+                                }
+                              }
+                            },
+                            "toTableSpec": {
+                              "kind": "object",
+                              "members": {
+                                "$ref": {
+                                  "kind": "string",
+                                  "value": "urn:umf:projection:avro-tablespec:0.1.0#/properties/policy"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "required": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "sourceKind"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "toAvro"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "toTableSpec"
+                            }
+                          ],
+                          "kind": "array"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "object"
+                        }
+                      }
+                    },
+                    {
+                      "kind": "object",
+                      "members": {
+                        "additionalProperties": {
+                          "kind": "boolean",
+                          "value": false
+                        },
+                        "properties": {
+                          "kind": "object",
+                          "members": {
+                            "sourceKind": {
+                              "kind": "object",
+                              "members": {
+                                "const": {
+                                  "kind": "string",
+                                  "value": "sqlserver"
+                                }
+                              }
+                            },
+                            "toAvro": {
+                              "kind": "object",
+                              "members": {
+                                "$ref": {
+                                  "kind": "string",
+                                  "value": "urn:umf:projection:sqlserver-avro:0.1.0#/properties/policy"
+                                }
+                              }
+                            },
+                            "toTableSpec": {
+                              "kind": "object",
+                              "members": {
+                                "$ref": {
+                                  "kind": "string",
+                                  "value": "urn:umf:projection:avro-tablespec:0.1.0#/properties/policy"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "required": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "sourceKind"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "toAvro"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "toTableSpec"
+                            }
+                          ],
+                          "kind": "array"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "object"
+                        }
+                      }
+                    },
+                    {
+                      "kind": "object",
+                      "members": {
+                        "additionalProperties": {
+                          "kind": "boolean",
+                          "value": false
+                        },
+                        "properties": {
+                          "kind": "object",
+                          "members": {
+                            "sourceKind": {
+                              "kind": "object",
+                              "members": {
+                                "const": {
+                                  "kind": "string",
+                                  "value": "parquet"
+                                }
+                              }
+                            },
+                            "toAvro": {
+                              "kind": "object",
+                              "members": {
+                                "$ref": {
+                                  "kind": "string",
+                                  "value": "urn:umf:projection:parquet-avro:0.1.0#/properties/policy"
+                                }
+                              }
+                            },
+                            "toTableSpec": {
+                              "kind": "object",
+                              "members": {
+                                "$ref": {
+                                  "kind": "string",
+                                  "value": "urn:umf:projection:avro-tablespec:0.1.0#/properties/policy"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "required": {
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "sourceKind"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "toAvro"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "toTableSpec"
+                            }
+                          ],
+                          "kind": "array"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "object"
+                        }
+                      }
+                    }
+                  ],
+                  "kind": "array"
+                }
+              }
+            },
+            "source": {
+              "kind": "object",
+              "members": {
+                "$ref": {
+                  "kind": "string",
+                  "value": "urn:umf:core:0.10.0"
+                }
+              }
+            },
+            "stages": {
+              "kind": "object",
+              "members": {
+                "additionalProperties": {
+                  "kind": "boolean",
+                  "value": false
+                },
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "avroToTableSpec": {
+                      "kind": "object",
+                      "members": {
+                        "$ref": {
+                          "kind": "string",
+                          "value": "urn:umf:projection:avro-tablespec:0.1.0"
+                        }
+                      }
+                    },
+                    "sourceToAvro": {
+                      "kind": "object",
+                      "members": {
+                        "anyOf": {
+                          "items": [
+                            {
+                              "kind": "object",
+                              "members": {
+                                "$ref": {
+                                  "kind": "string",
+                                  "value": "urn:umf:projection:postgresql-avro:0.1.0"
+                                }
+                              }
+                            },
+                            {
+                              "kind": "object",
+                              "members": {
+                                "$ref": {
+                                  "kind": "string",
+                                  "value": "urn:umf:projection:sqlserver-avro:0.1.0"
+                                }
+                              }
+                            },
+                            {
+                              "kind": "object",
+                              "members": {
+                                "$ref": {
+                                  "kind": "string",
+                                  "value": "urn:umf:projection:parquet-avro:0.1.0"
+                                }
+                              }
+                            }
+                          ],
+                          "kind": "array"
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "sourceToAvro"
+                    }
+                  ],
+                  "kind": "array"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "object"
+                }
+              }
+            },
+            "status": {
+              "kind": "object",
+              "members": {
+                "enum": {
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "blocked"
+                    },
+                    {
+                      "kind": "string",
+                      "value": "projected"
+                    }
+                  ],
+                  "kind": "array"
+                }
+              }
+            },
+            "target": {
+              "kind": "object",
+              "members": {
+                "$ref": {
+                  "kind": "string",
+                  "value": "urn:umf:core:0.10.0"
+                }
+              }
+            }
+          }
+        },
+        "required": {
+          "items": [
+            {
+              "kind": "string",
+              "value": "status"
+            },
+            {
+              "kind": "string",
+              "value": "source"
+            },
+            {
+              "kind": "string",
+              "value": "policy"
+            },
+            {
+              "kind": "string",
+              "value": "stages"
+            },
+            {
+              "kind": "string",
+              "value": "issues"
+            }
+          ],
+          "kind": "array"
+        },
+        "type": {
+          "kind": "string",
+          "value": "object"
+        }
+      }
+    }
+  },
+  "id": "[\"schema\",\"spec/projections/tablespec-via-avro.schema.json\",\"\"]",
+  "kind": "schema",
+  "links": [
+    "[\"schema\",\"spec/core/schema.json\",\"\"]",
+    "[\"schema\",\"spec/projections/avro-tablespec.schema.json\",\"\"]",
+    "[\"schema\",\"spec/projections/parquet-avro.schema.json\",\"\"]",
+    "[\"schema\",\"spec/projections/postgresql-avro.schema.json\",\"\"]",
+    "[\"schema\",\"spec/projections/sqlserver-avro.schema.json\",\"\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 11468,
+      "path": "spec/projections/tablespec-via-avro.schema.json",
+      "sha256": "64186e9cb8d1ddf9f804bc0de452adcb7c5356ebe7184ecfe6ec09a6124f0afa"
+    }
+  ],
+  "summary": "spec/projections/tablespec-via-avro.schema.json",
+  "title": "tablespec-via-avro.schema.json"
+}

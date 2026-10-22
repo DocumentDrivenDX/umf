@@ -1,0 +1,378 @@
+{
+  "data": {
+    "pointer": "",
+    "profileVersions": [],
+    "references": [],
+    "role": "extension-payload",
+    "schemaPath": "spec/extensions/tablespec-keys/schema.json",
+    "sourceData": {
+      "kind": "object",
+      "members": {
+        "$id": {
+          "kind": "string",
+          "value": "urn:umf:tablespec:key-binding:1.0.0"
+        },
+        "$schema": {
+          "kind": "string",
+          "value": "https://json-schema.org/draft/2020-12/schema"
+        },
+        "additionalProperties": {
+          "kind": "boolean",
+          "value": true
+        },
+        "properties": {
+          "kind": "object",
+          "members": {
+            "binding": {
+              "kind": "object",
+              "members": {
+                "const": {
+                  "kind": "object",
+                  "members": {
+                    "id": {
+                      "kind": "string",
+                      "value": "umf.tablespec.keys"
+                    },
+                    "nativeVersion": {
+                      "kind": "string",
+                      "value": "647e8e566ad78b864282ec65c0b0b2237aa63084"
+                    },
+                    "subset": {
+                      "kind": "string",
+                      "value": "Raw primary_key and unique_constraints declarations only; no pipeline enforcement, comparator equivalence, implicit merge-key adoption or authored identity inference"
+                    },
+                    "version": {
+                      "kind": "string",
+                      "value": "1.0.0"
+                    }
+                  }
+                }
+              }
+            },
+            "observations": {
+              "kind": "object",
+              "members": {
+                "items": {
+                  "kind": "object",
+                  "members": {
+                    "additionalProperties": {
+                      "kind": "boolean",
+                      "value": false
+                    },
+                    "properties": {
+                      "kind": "object",
+                      "members": {
+                        "authorIntent": {
+                          "kind": "object",
+                          "members": {
+                            "const": {
+                              "kind": "string",
+                              "value": "unknown"
+                            }
+                          }
+                        },
+                        "basis": {
+                          "kind": "object",
+                          "members": {
+                            "minLength": {
+                              "kind": "number",
+                              "value": "1"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "string"
+                            }
+                          }
+                        },
+                        "columns": {
+                          "kind": "object",
+                          "members": {
+                            "items": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "array"
+                            }
+                          }
+                        },
+                        "enforcement": {
+                          "kind": "object",
+                          "members": {
+                            "const": {
+                              "kind": "string",
+                              "value": "unknown"
+                            }
+                          }
+                        },
+                        "interpretation": {
+                          "kind": "object",
+                          "members": {
+                            "enum": {
+                              "items": [
+                                {
+                                  "kind": "string",
+                                  "value": "declared"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "unknown"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "unsupported"
+                                }
+                              ],
+                              "kind": "array"
+                            }
+                          }
+                        },
+                        "kind": {
+                          "kind": "object",
+                          "members": {
+                            "enum": {
+                              "items": [
+                                {
+                                  "kind": "string",
+                                  "value": "primary"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "alternate"
+                                }
+                              ],
+                              "kind": "array"
+                            }
+                          }
+                        },
+                        "nativePath": {
+                          "kind": "object",
+                          "members": {
+                            "minLength": {
+                              "kind": "number",
+                              "value": "1"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "string"
+                            }
+                          }
+                        },
+                        "resolvedFields": {
+                          "kind": "object",
+                          "members": {
+                            "items": {
+                              "kind": "object",
+                              "members": {
+                                "additionalProperties": {
+                                  "kind": "boolean",
+                                  "value": false
+                                },
+                                "properties": {
+                                  "kind": "object",
+                                  "members": {
+                                    "element": {
+                                      "kind": "object",
+                                      "members": {
+                                        "minLength": {
+                                          "kind": "number",
+                                          "value": "1"
+                                        },
+                                        "type": {
+                                          "kind": "string",
+                                          "value": "string"
+                                        }
+                                      }
+                                    },
+                                    "module": {
+                                      "kind": "object",
+                                      "members": {
+                                        "minLength": {
+                                          "kind": "number",
+                                          "value": "1"
+                                        },
+                                        "type": {
+                                          "kind": "string",
+                                          "value": "string"
+                                        }
+                                      }
+                                    }
+                                  }
+                                },
+                                "required": {
+                                  "items": [
+                                    {
+                                      "kind": "string",
+                                      "value": "module"
+                                    },
+                                    {
+                                      "kind": "string",
+                                      "value": "element"
+                                    }
+                                  ],
+                                  "kind": "array"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "object"
+                                }
+                              }
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "array"
+                            }
+                          }
+                        },
+                        "state": {
+                          "kind": "object",
+                          "members": {
+                            "enum": {
+                              "items": [
+                                {
+                                  "kind": "string",
+                                  "value": "absent"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "empty"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "declared"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "invalid"
+                                }
+                              ],
+                              "kind": "array"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "required": {
+                      "items": [
+                        {
+                          "kind": "string",
+                          "value": "nativePath"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "kind"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "state"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "interpretation"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "columns"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "resolvedFields"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "enforcement"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "authorIntent"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "basis"
+                        }
+                      ],
+                      "kind": "array"
+                    },
+                    "type": {
+                      "kind": "string",
+                      "value": "object"
+                    }
+                  }
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "array"
+                }
+              }
+            },
+            "origin": {
+              "kind": "object",
+              "members": {
+                "const": {
+                  "kind": "string",
+                  "value": "classified"
+                }
+              }
+            },
+            "profile": {
+              "kind": "object",
+              "members": {
+                "const": {
+                  "kind": "string",
+                  "value": "declared-metadata"
+                }
+              }
+            }
+          }
+        },
+        "required": {
+          "items": [
+            {
+              "kind": "string",
+              "value": "origin"
+            },
+            {
+              "kind": "string",
+              "value": "binding"
+            },
+            {
+              "kind": "string",
+              "value": "profile"
+            },
+            {
+              "kind": "string",
+              "value": "observations"
+            }
+          ],
+          "kind": "array"
+        },
+        "title": {
+          "kind": "string",
+          "value": "TableSpec native key observations; not authored identity"
+        },
+        "type": {
+          "kind": "string",
+          "value": "object"
+        }
+      }
+    }
+  },
+  "id": "[\"schema\",\"spec/extensions/tablespec-keys/schema.json\",\"\"]",
+  "kind": "schema",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 2703,
+      "path": "spec/extensions/tablespec-keys/schema.json",
+      "sha256": "afdc2d48f8068953544717001c37c4ee916273cd6c953b8ca8388d038984cd3f"
+    }
+  ],
+  "summary": "spec/extensions/tablespec-keys/schema.json",
+  "title": "TableSpec native key observations; not authored identity"
+}

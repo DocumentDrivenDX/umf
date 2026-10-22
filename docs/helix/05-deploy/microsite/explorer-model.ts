@@ -1,19 +1,24 @@
+import {displayLabel} from './presentation';
 import {readJsonValue} from '../../../../src/model/serialization';
+import {generateArtifactCollectionSchema} from '../../../../src/domain-packs/artifacts';
+import {createValidator} from '../../../../src/validation/schema';
 import {inspectDomainPack} from '../../../../src/domain-packs/profile';
 import {parseNativeJson,parseNativeYaml,renderTree,type NativeJson} from '../../../../src/model/native-json';
 import {importTableSpec,inspectTableSpec} from '../../../../src/adapters/tablespec';
 import {readDocument} from '../../../../src/model/document';
 import {validateDocument} from '../../../../src/validation/document';
 import type {Document} from '../../../../src/model/types';
-export interface SourceArtifact {id:string;reference:string;url:string;format:string;dataKind:string;sha256:string;revision?:string}
-export interface Entry {id:string;title:string;category:string;path:string;text:string;format:'json'|'yaml';pack?:string;description?:string;schemaFormat?:string;packVersion?:string;aliases?:string[];assets?:SourceArtifact[]}
+export type {SourceArtifact,Entry} from '../schema-browser/types';
+import type {Entry} from '../schema-browser/types';
 export interface Definition {key:string;module:string;id:string;title:string;value:Record<string,unknown>;pointer:string}
 export interface Parsed {document?:Document;native?:Record<string,any>;label?:string;definitions:Definition[];diagnostics:string;valid:boolean;complete:boolean}
 export const key=(module:string,id:string)=>JSON.stringify([module,id]);
 export function parseEntry(entry:Entry):Parsed {
+ if(typeof entry.text!=='string')throw Error('Source not loaded');
  const tree=entry.format==='json'?parseNativeJson(entry.text):parseNativeYaml(entry.text);
  const native=nativeView(tree);
  if(!native||typeof native!=='object'||Array.isArray(native))throw new Error('Expected a schema or pack object.');
+ if(entry.schemaFormat==='artifact-collection'){const validate=createValidator().compile(generateArtifactCollectionSchema());if(!validate(readJsonValue(renderTree(tree),'json')))throw Error('Artifact collection metadata refused: '+JSON.stringify(validate.errors));return {native,label:'Artifact collection 1.0.0',definitions:[],valid:true,complete:false,diagnostics:'Declared artifact metadata only. Collection inspection retrieves no originals and certifies no native interpretation.'};}
  if(typeof native.umf!=='string'){
   if(native.table_name&&Array.isArray(native.columns)){
    const document=importTableSpec(entry.text,{id:entry.id,format:entry.format}),checked=inspectTableSpec(document);
@@ -28,7 +33,9 @@ export function parseEntry(entry:Entry):Parsed {
  const definitions=document.modules.flatMap((m,mi)=>m.elements.map((e,ei)=>({key:key(m.id,e.id),module:m.id,id:e.id,title:String(e.title??e.name??e.id),value:e,pointer:`/modules/${mi}/elements/${ei}`})));
  return {document,definitions,valid:checked.valid,complete:checked.complete,diagnostics:checked.diagnostics.map(d=>`${d.severity.toUpperCase()} ${d.code} ${d.path}: ${d.message}`).join('\n')};
 }
-export function matches(entry:Entry,query:string):boolean {return `${entry.title}\n${entry.path}\n${entry.pack??''}\n${entry.text}`.toLowerCase().includes(query.toLowerCase());}
+export function matches(entry:Entry,query:string):boolean {return `${entry.title}\n${displayLabel(entry.title)}\n${entry.path}\n${entry.pack??''}\n${displayLabel(entry.pack??'')}\n${entry.text}`.toLowerCase().includes(query.toLowerCase());}
 
 /** Numeric lexemes remain explicit tokens in the metadata view; source text stays exact. */
 function nativeView(tree:NativeJson):any {switch(tree.kind){case 'number':return {numberToken:tree.value};case 'string':case 'boolean':return tree.value;case 'null':return null;case 'array':return tree.items.map(nativeView);case 'object':return Object.fromEntries(Object.entries(tree.members).map(([k,v])=>[k,nativeView(v)]));}}
+/** Exact source values for structural comparison, independent of core admission. */
+export function sourceValue(entry:Entry){if(typeof entry.text!=='string')throw Error('Source not loaded');return nativeView(entry.format==='json'?parseNativeJson(entry.text):parseNativeYaml(entry.text));}

@@ -1,0 +1,36 @@
+bun test v1.4.2 (43848b5a7)
+
+tests/security/catalog-write.test.ts:
+(pass) catalog transaction guard checks actual normalized original/proposed flat and graph records [108.23ms]
+(pass) masked changes require exact per-Field blind designation and actual grant in every required state [23.18ms]
+(pass) all-state ordinary grants and original visibility remain independently necessary [14.45ms]
+(pass) every changed association Record receives its own Field protections [17.77ms]
+(pass) graph role deltas require the fixed owner anchor and its own ownership grant [32.65ms]
+(pass) opaque IDs never become cross-cut identity while endpoint multiplicity remains visible [11.41ms]
+(pass) complete comparison cuts, Subject/context/profiles and exact mutation inventory cannot be weakened [40.22ms]
+(pass) actual stored output-carrier changes require a present vault action and its grant in every required state [48.44ms]
+(pass) mask equality never substitutes for original visibility and no-op updates invent no Field requirements [10.10ms]
+(pass) whole-cut create proves prior absence and guards every created association Record [9.72ms]
+(pass) both removed and added retargeting anchors must be explicitly checked [10.09ms]
+(pass) ordinary purpose classification cannot be relabelled as other or reused as an implicit blind route [9.12ms]
+(pass) a listed ordinary data mutation cannot rewrite current Subject attributes [3.80ms]
+(pass) unused context and value-profile changes still violate the comparable authority-cut invariant [7.95ms]
+52 | test('unused context and value-profile changes still violate the comparable authority-cut invariant',()=>{
+53 |  const f=catalogWriteFixture();f.closure.documents[0].document.modules[0].elements.push({id:'ctx',kind:'field',scalarType:'integer',cardinality:'one',nullability:'required',extensions:{}});f.ontology.context.push(ref('ctx'));f.request.before.context=[{field:ref('ctx'),value:{integerToken:'1'}}];f.request.after.context=[{field:ref('ctx'),value:{integerToken:'2'}}];expect(run(f).decision).toBe('indeterminate');const g=catalogWriteFixture();g.closure.documents[0].document.modules[0].elements.push({id:'date-dto',kind:'field',scalarType:'date',cardinality:'one',nullability:'required',extensions:{}});g.request.after.valueProfiles=[{field:ref('date-dto'),profile:'umf-gregorian-date/1.0.0'}];expect(run(g).decision).toBe('indeterminate');
+54 | });
+55 | 
+56 | test('known null compares without allowed-value identity and remains distinct from known absence',()=>{
+57 |  const f=catalogWriteFixture();attribute(f,'Resource','optional','boolean',null,null);f.closure.documents[0].document.modules[0].elements.find((e:any)=>e.id==='optional').nullability='absent-allowed';f.ontology.actions.push('write-optional');f.ontology.actionPurposes.push({action:'write-optional',purposes:['field']});f.profile.types.find((p:any)=>p.type.elementId==='Resource').fieldActions.find((p:any)=>p.field.elementId==='optional').action='write-optional';expect(run(f).decision).toBe('permit');const row=f.request.after.facts.find((r:any)=>r.type.elementId==='Resource');row.fields=row.fields.filter((p:any)=>p.field.elementId!=='optional');row.absent.push(ref('optional'));expect(run(f).decision).toBe('deny');
+
+error: expect(received).toBe(expected)
+
+Expected: "permit"
+Received: "indeterminate"
+
+      at <anonymous> (/Users/erik/.codex/worktrees/security-main-integration/umf/tests/security/catalog-write.test.ts:57:488)
+(fail) known null compares without allowed-value identity and remains distinct from known absence [3.58ms]
+
+ 14 pass
+ 1 fail
+ 49 expect() calls
+Ran 15 tests across 1 file. [575.00ms]

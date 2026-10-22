@@ -1,0 +1,414 @@
+{
+  "data": {
+    "extensionId": "umf.binding",
+    "manifest": {
+      "capabilities": {
+        "directions": [],
+        "evidence": [
+          "tests/binding/package.test.ts"
+        ],
+        "validation": "semantic"
+      },
+      "coreVersion": "0.10.0",
+      "description": "Independent target-specific physical binding for a logical UMF document",
+      "id": "umf.binding",
+      "schema": {
+        "$defs": {
+          "elementRef": {
+            "properties": {
+              "element": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "field": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "module": {
+                "minLength": 1,
+                "type": "string"
+              }
+            },
+            "required": [
+              "module",
+              "element"
+            ],
+            "type": "object"
+          },
+          "index": {
+            "properties": {
+              "include": {
+                "items": {
+                  "$ref": "#/$defs/elementRef"
+                },
+                "type": "array"
+              },
+              "kind": {
+                "enum": [
+                  "btree",
+                  "hash",
+                  "gin",
+                  "gist",
+                  "expression",
+                  "partial",
+                  "unique",
+                  "clustering"
+                ]
+              },
+              "name": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "on": {
+                "items": {
+                  "$ref": "#/$defs/indexTarget"
+                },
+                "minItems": 1,
+                "type": "array"
+              },
+              "predicate": {
+                "properties": {
+                  "expression": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "language": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "version": {
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "language",
+                  "version",
+                  "expression"
+                ],
+                "type": "object"
+              },
+              "unique": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "name",
+              "kind",
+              "on",
+              "unique"
+            ],
+            "type": "object"
+          },
+          "indexTarget": {
+            "oneOf": [
+              {
+                "properties": {
+                  "field": {
+                    "$ref": "#/$defs/elementRef"
+                  }
+                },
+                "required": [
+                  "field"
+                ],
+                "type": "object"
+              },
+              {
+                "properties": {
+                  "documentPath": {
+                    "properties": {
+                      "field": {
+                        "$ref": "#/$defs/elementRef"
+                      },
+                      "path": {
+                        "$ref": "#/$defs/path"
+                      }
+                    },
+                    "required": [
+                      "field",
+                      "path"
+                    ],
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "documentPath"
+                ],
+                "type": "object"
+              }
+            ]
+          },
+          "path": {
+            "items": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "minItems": 1,
+            "type": "array"
+          },
+          "relationshipRef": {
+            "properties": {
+              "module": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "name": {
+                "minLength": 1,
+                "type": "string"
+              }
+            },
+            "required": [
+              "module",
+              "name"
+            ],
+            "type": "object"
+          }
+        },
+        "$id": "urn:umf:binding:0.1.0",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "properties": {
+          "elements": {
+            "items": {
+              "properties": {
+                "element": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "module": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "partition": {
+                  "anyOf": [
+                    {
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "table": {
+                  "minLength": 1,
+                  "type": "string"
+                }
+              },
+              "required": [
+                "module",
+                "element"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "fields": {
+            "items": {
+              "allOf": [
+                {
+                  "else": {
+                    "not": {
+                      "anyOf": [
+                        {
+                          "required": [
+                            "documentColumn"
+                          ]
+                        },
+                        {
+                          "required": [
+                            "path"
+                          ]
+                        }
+                      ]
+                    }
+                  },
+                  "if": {
+                    "properties": {
+                      "storage": {
+                        "const": "embedded"
+                      }
+                    },
+                    "required": [
+                      "storage"
+                    ]
+                  },
+                  "then": {
+                    "properties": {
+                      "documentColumn": {
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "path": {
+                        "$ref": "#/$defs/path"
+                      }
+                    },
+                    "required": [
+                      "documentColumn",
+                      "path"
+                    ]
+                  }
+                }
+              ],
+              "properties": {
+                "column": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "documentColumn": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "element": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "field": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "module": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "path": {
+                  "$ref": "#/$defs/path"
+                },
+                "storage": {
+                  "enum": [
+                    "column",
+                    "embedded"
+                  ]
+                }
+              },
+              "required": [
+                "module",
+                "element",
+                "storage"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "indexes": {
+            "items": {
+              "$ref": "#/$defs/index"
+            },
+            "type": "array"
+          },
+          "logical": {
+            "properties": {
+              "coreVersion": {
+                "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)$",
+                "type": "string"
+              },
+              "documentId": {
+                "minLength": 1,
+                "type": "string"
+              }
+            },
+            "required": [
+              "documentId",
+              "coreVersion"
+            ],
+            "type": "object"
+          },
+          "profile": {
+            "const": "umf-binding-1"
+          },
+          "relationships": {
+            "items": {
+              "properties": {
+                "module": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "name": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "storage": {
+                  "enum": [
+                    "edge",
+                    "foreign_key",
+                    "junction",
+                    "inline"
+                  ]
+                }
+              },
+              "required": [
+                "module",
+                "name",
+                "storage"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "target": {
+            "properties": {
+              "subset": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "system": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "version": {
+                "minLength": 1,
+                "type": "string"
+              }
+            },
+            "required": [
+              "system",
+              "version",
+              "subset"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "profile",
+          "logical",
+          "target",
+          "elements",
+          "fields",
+          "relationships",
+          "indexes"
+        ],
+        "title": "UMF physical binding 0.1.0",
+        "type": "object"
+      },
+      "scopes": [
+        "document"
+      ],
+      "semantics": "CONTRACT-042. Layout and index choices are physical only; they never alter logical identity or field meaning. Unknown content remains recoverable. Target support needs separate qualified evidence.",
+      "version": "0.1.0"
+    },
+    "registration": {
+      "apiIds": [
+        "[\"api\",\".\",\"bindingRegistry\"]"
+      ],
+      "coreProfiles": [],
+      "mode": "explicit"
+    },
+    "schemaId": "[\"schema\",\"spec/extensions/binding/schema.json\",\"\"]",
+    "version": "0.1.0"
+  },
+  "id": "[\"extension\",\"umf.binding\",\"0.1.0\"]",
+  "kind": "extension",
+  "links": [
+    "[\"api\",\".\",\"bindingRegistry\"]",
+    "[\"guide\",\"bindings\"]",
+    "[\"schema\",\"spec/extensions/binding/schema.json\",\"\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 8840,
+      "path": "spec/extensions/binding/package.json",
+      "sha256": "f3326533dcf3d2227955bae2261ab005eaf8692e289c7461f2015fd40565a78f"
+    }
+  ],
+  "summary": "Independent target-specific physical binding for a logical UMF document",
+  "title": "umf.binding · 0.1.0"
+}

@@ -1,8 +1,10 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
+import {CURRENT_CORE_VERSION} from '../src/model/types';
 import vectors from '../fixtures/key/tuple-encoding-v1.json';
 export const tupleIdentity={module:'m',element:'record',key:'stable-key'};
 export function tupleDocument(fields:readonly any[]):any{
  const elements=fields.map(f=>{const e:any={...f,kind:'field',nullability:'required',cardinality:'one',extensions:{}};delete e.precision;delete e.scale;if(f.precision!==undefined)e.facets={...f.facets,precision:f.precision,scale:f.scale};return e;});
- return {umf:'0.8.0',id:'tuple',vocabularies:{future:{version:'1.0.0'}},extensions:{future:{native:['retained',null]}},modules:[{id:'m',namespace:'',elements:[{id:'record',kind:'record',members:fields.map(f=>({module:'m',element:f.id})),keys:[{id:'stable-key',name:'Key',fields:fields.map(f=>({module:'m',element:f.id}))}],extensions:{}},...elements]}]};
+ return {umf:CURRENT_CORE_VERSION,id:'tuple',vocabularies:{future:{version:'1.0.0'}},extensions:{future:{native:['retained',null]}},modules:[{id:'m',namespace:'',elements:[{id:'record',kind:'record',members:fields.map(f=>({module:'m',element:f.id})),keys:[{id:'stable-key',name:'Key',fields:fields.map(f=>({module:'m',element:f.id}))}],extensions:{}},...elements]}]};
 }
 export function tupleCases(){
  const rows:any[]=[...vectors.vectors.map(v=>({id:v.id,document:tupleDocument(v.fields),values:v.values,hex:v.expectedHex})),...vectors.refusals.map(v=>({id:v.id,document:tupleDocument(v.fields),values:v.values,error:true}))];

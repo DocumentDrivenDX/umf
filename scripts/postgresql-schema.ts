@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {createHash} from 'node:crypto';
 // The descriptor and codec are pinned; this is a development-only generator.
 import protobuf from '@launchql/protobufjs';

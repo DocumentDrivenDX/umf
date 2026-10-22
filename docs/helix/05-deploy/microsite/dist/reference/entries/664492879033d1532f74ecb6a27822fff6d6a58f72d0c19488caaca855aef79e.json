@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 6795,
+        "line": 11,
+        "path": "src/core-ideals/structured-report.ts",
+        "sha256": "fbd9d03dadf7f02bfff1cb2de447b2ac5072e61784198513bf3efce2d79d1059"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "StructuredClassificationInspection",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface StructuredClassificationInspection {operation:'inspect-structured-classification';version:'1.0.0';status:'classified'|'blocked';receipt:NativeStructuredClassification;nativeContext:{scope:'declared-only';namespaceResolution:'explicit'|'create-schema-context'|'unresolved'}|null;mappings:(NativeStructuredClassification['mappings'][number]&{binding:Binding})[];residuals:{sourcePath:string;sourceValue:Json;targetPath:null;outcome:'unknown';reason:string;binding:Binding;recovery:{strategy:'retained-source-and-receipt';receiptPath:'/receipt/source';instruction:string}}[];diagnostics:Diagnostic[]}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"StructuredClassificationInspection\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 6795,
+      "line": 11,
+      "path": "src/core-ideals/structured-report.ts",
+      "sha256": "fbd9d03dadf7f02bfff1cb2de447b2ac5072e61784198513bf3efce2d79d1059"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/structured-report.ts",
+  "title": "StructuredClassificationInspection"
+}

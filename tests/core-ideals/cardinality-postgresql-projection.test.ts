@@ -1,10 +1,11 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {declareCoreCardinality,type Document} from '../../src';
-import {projectCardinalityToPostgresql,recoverCardinalityFromPostgresql,type CardinalityPostgresqlRequest} from '../../src/core-ideals/cardinality-postgresql-projection';
+import {declareCoreCardinality, type Document} from '../../src';
+import {projectCardinalityToPostgresql, recoverCardinalityFromPostgresql, type CardinalityPostgresqlRequest} from '../../src/core-ideals/cardinality-postgresql-projection';
 import {backend} from '../../native/postgresql/runtime';
 const base={id:'projection',namespace:'public',tableName:'values',columnName:'value',nativeType:'integer',storage:'scalar',requireExactValues:false,mode:'report'} as const;
 function author(shape:'one'|'array'|'map'|'unspecified'){
- const source:Document={umf:'0.4.0',id:'ideal',vocabularies:{},modules:[{id:'m',namespace:'',elements:[{id:'f',kind:'field',extensions:{}}]}]};
+ const source:Document={umf:'0.10.0',id:'ideal',vocabularies:{},modules:[{id:'m',namespace:'',elements:[{id:'f',kind:'field',extensions:{}}]}]};
  return declareCoreCardinality(source,{module:'m',element:'f'},{cardinality:shape});
 }
 test('explicit carriers block losses in strict mode and retain ideal recovery in report mode',async()=>{

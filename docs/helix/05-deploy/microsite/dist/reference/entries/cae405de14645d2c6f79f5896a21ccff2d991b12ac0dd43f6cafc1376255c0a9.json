@@ -1,0 +1,68 @@
+{
+  "data": {
+    "conflicts": [],
+    "correspondence": "unknown",
+    "declarations": [],
+    "evidence": [
+      {
+        "closureComplete": false,
+        "commands": [],
+        "correspondence": "unknown",
+        "id": "json-schema-upstream-record",
+        "inputHashes": [],
+        "limitations": [
+          "Recorded scope only; native equivalence and production adoption are separate.",
+          "Complete tested dependency closure is not recorded; current-source qualification is unknown."
+        ],
+        "outcome": "mixed",
+        "readerId": "json-schema-upstream",
+        "scope": "46 required upstream root files; installed Ajv profile.",
+        "selector": "",
+        "source": {
+          "bytes": 307641,
+          "path": "fixtures/json-schema/upstream-results.json",
+          "sha256": "0303bfc2be8f5bdafef75b215f4ee443264707fa836c43528a329b241195aba8"
+        },
+        "supersedes": [],
+        "versions": {
+          "dialect": "2020-12",
+          "oracle": "Ajv 8.20.0; format assertions disabled; no implicit network"
+        }
+      }
+    ],
+    "operation": {
+      "apiNames": [],
+      "coreProfiles": [],
+      "extensionVersions": [],
+      "fixturePaths": [],
+      "id": "json-schema-upstream",
+      "kind": "round-trip",
+      "limitations": [
+        "Recorded scope only; native equivalence and production adoption are separate."
+      ],
+      "runtime": {
+        "availability": "host-only",
+        "profileId": "json-schema-upstream",
+        "requirements": [
+          "Native runtime / original qualification harness; not executed by this page."
+        ]
+      },
+      "sourceSystem": "JSON Schema Draft 2020-12",
+      "subset": "46 required upstream root files; installed Ajv profile.",
+      "targetSystem": "JSON Schema Draft 2020-12",
+      "title": "JSON Schema · upstream round trips"
+    }
+  },
+  "id": "[\"integration\",\"json-schema-upstream\"]",
+  "kind": "integration",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 134795,
+      "path": "docs/helix/05-deploy/reference/operations.json",
+      "sha256": "793743bbca36e56e90e82df5ef0408b628c434e58cb68aea4d6486349be78e61"
+    }
+  ],
+  "summary": "46 required upstream root files; installed Ajv profile.",
+  "title": "JSON Schema · upstream round trips"
+}

@@ -1,0 +1,68 @@
+{
+  "status": "passed",
+  "solverVersion": "4.15.4",
+  "proofSha256": "d8bc0b507fb38310586e3e03297ae00fc06e8a417164159731f4a07d5cd62fa9",
+  "queries": [
+    {
+      "case": "unique-count-min-selector-preserves-eligibility",
+      "query": "violation",
+      "observed": "unsat"
+    },
+    {
+      "case": "unique-count-min-selector-preserves-eligibility",
+      "query": "positivePopulation",
+      "observed": "sat"
+    },
+    {
+      "case": "unique-count-min-selector-preserves-eligibility",
+      "query": "erasedControl",
+      "observed": "sat"
+    },
+    {
+      "case": "missing-or-ambiguous-refuses-before-output",
+      "query": "violation",
+      "observed": "unsat"
+    },
+    {
+      "case": "missing-or-ambiguous-refuses-before-output",
+      "query": "positivePopulation",
+      "observed": "sat"
+    },
+    {
+      "case": "missing-or-ambiguous-refuses-before-output",
+      "query": "erasedControl",
+      "observed": "sat"
+    },
+    {
+      "case": "empty-resources-do-not-bypass-principal-preflight",
+      "query": "violation",
+      "observed": "unsat"
+    },
+    {
+      "case": "empty-resources-do-not-bypass-principal-preflight",
+      "query": "positivePopulation",
+      "observed": "sat"
+    },
+    {
+      "case": "empty-resources-do-not-bypass-principal-preflight",
+      "query": "erasedControl",
+      "observed": "sat"
+    },
+    {
+      "case": "json-string-tag-required-for-login",
+      "query": "violation",
+      "observed": "unsat"
+    },
+    {
+      "case": "json-string-tag-required-for-login",
+      "query": "positivePopulation",
+      "observed": "sat"
+    },
+    {
+      "case": "json-string-tag-required-for-login",
+      "query": "erasedControl",
+      "observed": "sat"
+    }
+  ],
+  "scope": "Saved pre-solve formula replay; no implementation-refinement proof."
+}

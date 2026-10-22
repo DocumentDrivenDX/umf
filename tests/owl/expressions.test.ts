@@ -1,9 +1,11 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
+import reference from '../../spec/core/semantic-type-reference.schema.json';
 import {test,expect} from 'bun:test';
 import Ajv from 'ajv/dist/2020';
 import {getOwlExpressionView,importOwlTurtle,exportOwlTurtle,writeDocument,readDocument} from '../../src';
 const iri=(name:string)=>({kind:'iri' as const,value:'https://example.org/'+name});
 test('US-029 expression views retain constructor lists and exact restrictions',async()=>{
- const raw=await Bun.file('native/owl/expressions.ttl').text(),doc=importOwlTurtle(raw,{id:'expressions',baseIRI:'https://example.org/',blankNodeScope:'scope'}),ajv=new Ajv({strict:false});ajv.addSchema(await Bun.file('spec/core/schema.json').json());const check=ajv.compile(await Bun.file('spec/extensions/owl/expression-schema.json').json());
+ const raw=await Bun.file('native/owl/expressions.ttl').text(),doc=importOwlTurtle(raw,{id:'expressions',baseIRI:'https://example.org/',blankNodeScope:'scope'}),ajv=new Ajv({strict:false});ajv.addSchema(reference).addSchema(await Bun.file('spec/core/schema.json').json());const check=ajv.compile(await Bun.file('spec/extensions/owl/expression-schema.json').json());
  for(const format of ['json','yaml'] as const){const restored=readDocument(writeDocument(doc,format),format);for(const name of ['and','or','not','enum','dataEnum','notData','inverse','some','all','value','self','cardinality','data','tuple','range']){const v=getOwlExpressionView(restored,iri(name));expect(check(v)).toBe(true);expect(v.complete).toBe(false);expect(v.blankNodeScope).toBe('scope');expect(exportOwlTurtle(v.source)).toBe(raw);expect(v.quadIndexes.length).toBeGreaterThan(0);}
  const union=getOwlExpressionView(restored,iri('or')).expression;expect(union.kind==='unionOf'&&union.members.map(t=>t.value)).toEqual(['https://example.org/A','https://example.org/B','https://example.org/A']);const card=getOwlExpressionView(restored,iri('cardinality')).expression;expect(card.kind==='restriction'&&card.facets[0]!.values[0]!.value).toBe('9007199254740993');const enumeration=getOwlExpressionView(restored,iri('dataEnum')).expression;expect(enumeration.kind==='oneOf'&&enumeration.members.map(t=>t.value)).toEqual(['01','1']);const range=getOwlExpressionView(restored,iri('range')).expression;expect(range.kind==='datatypeRestriction'&&range.facets[0]!.statements[0]!.values[0]!.value).toBe('01');}
 });

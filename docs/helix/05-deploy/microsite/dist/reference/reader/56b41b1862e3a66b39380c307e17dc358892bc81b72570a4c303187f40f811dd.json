@@ -1,0 +1,51 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"GeneralizedRdfQuad\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"GeneralizedRdfNode\"]"
+      ],
+      "name": "subject",
+      "optional": false,
+      "type": "GeneralizedRdfNode"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"GeneralizedRdfNode\"]"
+      ],
+      "name": "predicate",
+      "optional": false,
+      "type": "GeneralizedRdfNode"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"GeneralizedRdfLiteral\"]",
+        "[\"api\",\".\",\"GeneralizedRdfNode\"]"
+      ],
+      "name": "object",
+      "optional": false,
+      "type": "GeneralizedRdfLiteral | GeneralizedRdfNode"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"GeneralizedRdfNode\"]"
+      ],
+      "name": "graph",
+      "optional": false,
+      "type": "GeneralizedRdfNode | { termType: \"DefaultGraph\"; value: \"\"; }"
+    }
+  ],
+  "parameters": [],
+  "purpose": "GeneralizedRdfQuad is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "GeneralizedRdfQuad"
+}

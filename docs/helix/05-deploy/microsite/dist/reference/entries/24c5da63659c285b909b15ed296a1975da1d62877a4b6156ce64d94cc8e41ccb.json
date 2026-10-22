@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 8848,
+        "line": 12,
+        "path": "src/core-ideals/nullability-sqlserver-projection.ts",
+        "sha256": "978f5c18fe9d531f252ef1cc4a0d3799c4bcc732589b7fc9e587a4ac9079e99b"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "NullabilitySqlServerRequest",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface NullabilitySqlServerRequest {id:string;namespace:string;tableName:string;columnName:string;nativeType:keyof typeof carriers;mode:'strict'|'report';scope:'stored-relation'|'query-result'|'write-input'|'unresolved';carrier:'sql-null'|'unresolved'}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"NullabilitySqlServerRequest\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 8848,
+      "line": 12,
+      "path": "src/core-ideals/nullability-sqlserver-projection.ts",
+      "sha256": "978f5c18fe9d531f252ef1cc4a0d3799c4bcc732589b7fc9e587a4ac9079e99b"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/nullability-sqlserver-projection.ts",
+  "title": "NullabilitySqlServerRequest"
+}

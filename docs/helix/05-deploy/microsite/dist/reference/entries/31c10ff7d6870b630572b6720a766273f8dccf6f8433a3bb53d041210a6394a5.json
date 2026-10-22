@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 8267,
+        "line": 54,
+        "path": "src/core-ideals/nullability-parquet-projection.ts",
+        "sha256": "1764b89974dce6f552ccfa8f9bc8dd34f90c98cfb33a534e4574b51c2296deda"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "recoverNullabilityFromParquet",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: NullabilityParquetProjection, nativeBytes: Uint8Array<ArrayBufferLike>): Document"
+    ]
+  },
+  "id": "[\"api\",\".\",\"recoverNullabilityFromParquet\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 8267,
+      "line": 54,
+      "path": "src/core-ideals/nullability-parquet-projection.ts",
+      "sha256": "1764b89974dce6f552ccfa8f9bc8dd34f90c98cfb33a534e4574b51c2296deda"
+    }
+  ],
+  "summary": "Recover retained author meaning only when the receipt and supplied native target still agree.",
+  "title": "recoverNullabilityFromParquet"
+}

@@ -10,7 +10,22 @@
       "created_at": "2026-10-08T04:09:37Z",
       "revoked_at": null,
       "role": "human"
+    },
+    {
+      "key_id": "ed25519:c63e7352e15127ee63b9ae2f071602bb",
+      "alg": "ed25519",
+      "public_key": "lqYBMUWWP78ZQd_6oFX-PO5GKsKrtHMtFy6uPo4bAgU",
+      "created_at": "2026-10-17T20:13:41.692584Z",
+      "revoked_at": null,
+      "role": "build"
     }
   ],
-  "endorsements": []
+  "endorsements": [
+    {
+      "attestation_url": "https://documentdrivendx.github.io/umf/.well-known/innsigle/endorsements/ed25519-c63e7352e15127ee63b9ae2f071602bb.attestation.json",
+      "subject_key_id": "ed25519:c63e7352e15127ee63b9ae2f071602bb",
+      "subject_key_url": "https://documentdrivendx.github.io/umf/.well-known/innsigle/keys.json",
+      "issued_at": "2026-10-17T20:20:28Z"
+    }
+  ]
 }

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
+import {CURRENT_CORE_VERSION} from '../../src/generated/core-model';
 /** Declared tabular-to-core ontology mapping; no graph execution claim. */
 export function ontology(packId:string,specs:any[]){
  const module='domain',elements:any[]=[],relationships:any[]=[];
@@ -11,5 +13,5 @@ export function ontology(packId:string,specs:any[]){
    relationships.push({id:name+'.'+fk.column,name:name+'.'+fk.column,source:[{module,element:name}],target:[{module,element:fk.references_table,key:'identity'}],sourceMultiplicity:{min:0,max:'*'},targetMultiplicity:{min:col.nullable?0:1,max:1},targetLifecycle:'independent',directed:true});
   }
  }
- return {umf:'0.8.0',id:'urn:umf:domain:'+packId,title:packId+' ontology',vocabularies:{},modules:[{id:module,namespace:'urn:umf:domain:'+packId+':',elements,relationships}]};
+ return {umf:CURRENT_CORE_VERSION,id:'urn:umf:domain:'+packId,title:packId+' ontology',vocabularies:{},modules:[{id:module,namespace:'urn:umf:domain:'+packId+':',elements,relationships}]};
 }

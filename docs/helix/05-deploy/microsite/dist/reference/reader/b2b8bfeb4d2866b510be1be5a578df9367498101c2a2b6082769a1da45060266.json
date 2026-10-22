@@ -1,0 +1,23 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"generatePythonClient\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"PythonClientRequest\"]"
+      ],
+      "name": "request",
+      "optional": false,
+      "type": "PythonClientRequest"
+    }
+  ],
+  "purpose": "Pure portable generator: current UMF source -> stdlib-only typed Python requests.",
+  "related": [],
+  "returns": "PythonClientResult",
+  "task": "Other APIs",
+  "type": "(request: PythonClientRequest) => PythonClientResult"
+}

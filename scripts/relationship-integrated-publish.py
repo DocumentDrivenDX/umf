@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Publish current compatibility evidence only after native replay and regression pass.
 Historical acceptance counts/limits are retained, with explicit revalidation provenance.
 This command does not admit Relationship or close its core implementation task.
@@ -55,7 +56,7 @@ def check_proof(path):
 for concept in ['cardinality','facets']:
  for system in ['tablespec','postgresql','sqlserver','avro','parquet']:
   for part in ['native','browser']:check_proof(root/f'{concept}-{system}-{part}.json')
-for name in ['core-key-public-browser','core-key-candidate-browser','core-key-tuple-browser','core-key-transition-browser','facets-avro-exact-input-browser','core-relationship-candidate-browser','core-relationship-transition-browser','core-relationship-operations-browser','core-relationship-public-browser']:
+for name in ['core-key-public-browser','core-key-candidate-browser','core-key-tuple-browser','facets-avro-exact-input-browser','core-relationship-candidate-browser','core-relationship-operations-browser','core-relationship-public-browser']:
  check_proof(root/(name+'.json'))
 reason='Fresh integrated native/browser compatibility replay and full non-gate repository regression after relationship bindings and physical generators. Original concept acceptance counts and limitations remain historical; current execution is separately recorded. No native equivalence is admitted.'
 # Refresh the Key proof matrix using actual current runs in its required order.

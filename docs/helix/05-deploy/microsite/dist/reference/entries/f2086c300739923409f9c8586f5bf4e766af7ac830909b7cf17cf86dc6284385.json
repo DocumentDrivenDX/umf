@@ -1,0 +1,33 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 2368,
+        "line": 1,
+        "path": "spec/extensions/arrow/schema.json",
+        "sha256": "e0d111ebbb39277667ef3e7dace7f1dead9833e2f1e621db5b1354a603889677"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "arrowSchema",
+    "runtime": "unassessed",
+    "signatureText": [
+      "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"$id\": \"urn:umf:arrow:0.1.0\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"profile\": {\n      \"const\": \"arrow-integration-schema\"\n    },\n    \"root\": {\n      \"$ref\": \"#/$defs/node\"\n    }\n  },\n  \"required\": [\n    \"profile\",\n    \"root\"\n  ],\n  \"additionalProperties\": true,\n  \"$defs\": {\n    \"node\": {\n      \"oneOf\": [\n        {\n          \"type\": \"object\",\n          \"required\": [\n            \"kind\"\n          ],\n          \"properties\": {\n            \"kind\": {\n              \"const\": \"null\"\n            }\n          }\n        },\n        {\n          \"type\": \"object\",\n          \"required\": [\n            \"kind\",\n            \"value\"\n          ],\n          \"properties\": {\n            \"kind\": {\n              \"const\": \"boolean\"\n            },\n            \"value\": {\n              \"type\": \"boolean\"\n            }\n          }\n        },\n        {\n          \"type\": \"object\",\n          \"required\": [\n            \"kind\",\n            \"value\"\n          ],\n          \"properties\": {\n            \"kind\": {\n              \"const\": \"string\"\n            },\n            \"value\": {\n              \"type\": \"string\"\n            }\n          }\n        },\n        {\n          \"type\": \"object\",\n          \"required\": [\n            \"kind\",\n            \"value\"\n          ],\n          \"properties\": {\n            \"kind\": {\n              \"const\": \"number\"\n            },\n            \"value\": {\n              \"type\": \"string\",\n              \"pattern\": \"^-?(0|[1-9][0-9]*)(\\\\.[0-9]+)?([eE][+-]?[0-9]+)?$\"\n            }\n          }\n        },\n        {\n          \"type\": \"object\",\n          \"required\": [\n            \"kind\",\n            \"items\"\n          ],\n          \"properties\": {\n            \"kind\": {\n              \"const\": \"array\"\n            },\n            \"items\": {\n              \"type\": \"array\",\n              \"items\": {\n                \"$ref\": \"#/$defs/node\"\n              }\n            }\n          }\n        },\n        {\n          \"type\": \"object\",\n          \"required\": [\n            \"kind\",\n            \"members\"\n          ],\n          \"properties\": {\n            \"kind\": {\n              \"const\": \"object\"\n            },\n            \"members\": {\n              \"type\": \"object\",\n              \"additionalProperties\": {\n                \"$ref\": \"#/$defs/node\"\n              }\n            }\n          }\n        }\n      ]\n    }\n  }\n}\n"
+    ]
+  },
+  "id": "[\"api\",\".\",\"arrowSchema\"]",
+  "kind": "api",
+  "links": [
+    "[\"schema\",\"spec/extensions/arrow/schema.json\",\"\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 2368,
+      "line": 1,
+      "path": "spec/extensions/arrow/schema.json",
+      "sha256": "e0d111ebbb39277667ef3e7dace7f1dead9833e2f1e621db5b1354a603889677"
+    }
+  ],
+  "summary": "Public export · spec/extensions/arrow/schema.json",
+  "title": "arrowSchema"
+}

@@ -1,0 +1,33 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 3442,
+        "line": 1,
+        "path": "spec/extensions/openapi/schema-index.schema.json",
+        "sha256": "e662bdaaf7110ce3e1115a641b281abba5af23c499477dffb75f96450da3656b"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "openapiSchemaIndexSchema",
+    "runtime": "unassessed",
+    "signatureText": [
+      "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"$id\": \"urn:umf:openapi-schema-index:0.1.0\",\n  \"type\": \"object\",\n  \"additionalProperties\": false,\n  \"required\": [\n    \"locations\",\n    \"identifiers\",\n    \"complete\",\n    \"limitations\"\n  ],\n  \"properties\": {\n    \"locations\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"additionalProperties\": false,\n        \"required\": [\n          \"retrievalUri\",\n          \"pointer\",\n          \"baseUri\",\n          \"dialect\"\n        ],\n        \"properties\": {\n          \"retrievalUri\": {\n            \"type\": \"string\"\n          },\n          \"pointer\": {\n            \"type\": \"string\"\n          },\n          \"baseUri\": {\n            \"type\": \"string\"\n          },\n          \"dialect\": {\n            \"type\": \"string\"\n          }\n        }\n      }\n    },\n    \"identifiers\": {\n      \"type\": \"object\",\n      \"additionalProperties\": {\n        \"type\": \"object\",\n        \"additionalProperties\": false,\n        \"required\": [\n          \"retrievalUri\",\n          \"pointer\"\n        ],\n        \"properties\": {\n          \"retrievalUri\": {\n            \"type\": \"string\"\n          },\n          \"pointer\": {\n            \"type\": \"string\"\n          }\n        }\n      }\n    },\n    \"complete\": {\n      \"const\": false\n    },\n    \"limitations\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"string\"\n      },\n      \"minItems\": 1\n    }\n  },\n  \"$defs\": {\n    \"node\": {\n      \"oneOf\": [\n        {\n          \"type\": \"object\",\n          \"required\": [\n            \"kind\"\n          ],\n          \"properties\": {\n            \"kind\": {\n              \"const\": \"null\"\n            }\n          }\n        },\n        {\n          \"type\": \"object\",\n          \"required\": [\n            \"kind\",\n            \"value\"\n          ],\n          \"properties\": {\n            \"kind\": {\n              \"const\": \"boolean\"\n            },\n            \"value\": {\n              \"type\": \"boolean\"\n            }\n          }\n        },\n        {\n          \"type\": \"object\",\n          \"required\": [\n            \"kind\",\n            \"value\"\n          ],\n          \"properties\": {\n            \"kind\": {\n              \"const\": \"string\"\n            },\n            \"value\": {\n              \"type\": \"string\"\n            }\n          }\n        },\n        {\n          \"type\": \"object\",\n          \"required\": [\n            \"kind\",\n            \"value\"\n          ],\n          \"properties\": {\n            \"kind\": {\n              \"const\": \"number\"\n            },\n            \"value\": {\n              \"type\": \"string\",\n              \"pattern\": \"^-?(0|[1-9][0-9]*)(\\\\.[0-9]+)?([eE][+-]?[0-9]+)?$\"\n            }\n          }\n        },\n        {\n          \"type\": \"object\",\n          \"required\": [\n            \"kind\",\n            \"items\"\n          ],\n          \"properties\": {\n            \"kind\": {\n              \"const\": \"array\"\n            },\n            \"items\": {\n              \"type\": \"array\",\n              \"items\": {\n                \"$ref\": \"#/$defs/node\"\n              }\n            }\n          }\n        },\n        {\n          \"type\": \"object\",\n          \"required\": [\n            \"kind\",\n            \"members\"\n          ],\n          \"properties\": {\n            \"kind\": {\n              \"const\": \"object\"\n            },\n            \"members\": {\n              \"type\": \"object\",\n              \"additionalProperties\": {\n                \"$ref\": \"#/$defs/node\"\n              }\n            }\n          }\n        }\n      ]\n    }\n  }\n}\n"
+    ]
+  },
+  "id": "[\"api\",\".\",\"openapiSchemaIndexSchema\"]",
+  "kind": "api",
+  "links": [
+    "[\"schema\",\"spec/extensions/openapi/schema-index.schema.json\",\"\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 3442,
+      "line": 1,
+      "path": "spec/extensions/openapi/schema-index.schema.json",
+      "sha256": "e662bdaaf7110ce3e1115a641b281abba5af23c499477dffb75f96450da3656b"
+    }
+  ],
+  "summary": "Public export · spec/extensions/openapi/schema-index.schema.json",
+  "title": "openapiSchemaIndexSchema"
+}

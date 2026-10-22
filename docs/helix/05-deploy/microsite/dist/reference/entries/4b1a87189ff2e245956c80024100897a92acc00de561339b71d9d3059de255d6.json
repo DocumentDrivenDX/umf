@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 6973,
+        "line": 60,
+        "path": "src/adapters/graphql/index.ts",
+        "sha256": "991af77edfd0bcb1de8b2589af596f7807ea67179da0baf5da6c009aaeb31590"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "importGraphqlSchema",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(text: string, options: { id: string; mode?: \"schema\" | \"fragment\"; }): Document"
+    ]
+  },
+  "id": "[\"api\",\".\",\"importGraphqlSchema\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 6973,
+      "line": 60,
+      "path": "src/adapters/graphql/index.ts",
+      "sha256": "991af77edfd0bcb1de8b2589af596f7807ea67179da0baf5da6c009aaeb31590"
+    }
+  ],
+  "summary": "Public export · src/adapters/graphql/index.ts",
+  "title": "importGraphqlSchema"
+}

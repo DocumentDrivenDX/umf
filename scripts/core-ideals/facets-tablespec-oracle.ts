@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 /** Native checks for both facet directions; complete compatibility refresh still gates binding acceptance. */
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';

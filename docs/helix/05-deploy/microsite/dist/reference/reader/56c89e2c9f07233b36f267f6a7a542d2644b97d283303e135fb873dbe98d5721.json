@@ -1,0 +1,41 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"projectSmithyToJsonSchema\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "source",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SmithyJsonSchemaBackend\"]"
+      ],
+      "name": "backend",
+      "optional": false,
+      "type": "SmithyJsonSchemaBackend"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SmithyJsonSchemaPolicy\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "SmithyJsonSchemaPolicy"
+    }
+  ],
+  "purpose": "Native emission with explicit policy; does not certify Smithy instance or protocol equivalence.",
+  "related": [],
+  "returns": "Promise<SmithyJsonSchemaProjection>",
+  "task": "Import and export",
+  "type": "(source: Document, backend: SmithyJsonSchemaBackend, input: SmithyJsonSchemaPolicy) => Promise<SmithyJsonSchemaProjection>"
+}

@@ -1,0 +1,91 @@
+[
+  {
+    "value": "schema",
+    "pythonType": "str",
+    "dumper": "StrDumperUnknown",
+    "oid": 0,
+    "format": 0,
+    "connectionRole": "inventory_reader",
+    "actualConnectionDumper": "StrDumperUnknown"
+  },
+  {
+    "value": true,
+    "pythonType": "bool",
+    "dumper": "BoolBinaryDumper",
+    "oid": 16,
+    "format": 1,
+    "connectionRole": "inventory_reader",
+    "actualConnectionDumper": "BoolBinaryDumper"
+  },
+  {
+    "value": 123,
+    "pythonType": "int",
+    "dumper": "Int2BinaryDumper",
+    "oid": 21,
+    "format": 1,
+    "connectionRole": "inventory_reader",
+    "actualConnectionDumper": "Int2BinaryDumper"
+  },
+  {
+    "value": 40000,
+    "pythonType": "int",
+    "dumper": "Int4BinaryDumper",
+    "oid": 23,
+    "format": 1,
+    "connectionRole": "inventory_reader",
+    "actualConnectionDumper": "Int4BinaryDumper"
+  },
+  {
+    "value": 4294967295,
+    "pythonType": "int",
+    "dumper": "Int8BinaryDumper",
+    "oid": 20,
+    "format": 1,
+    "connectionRole": "inventory_reader",
+    "actualConnectionDumper": "Int8BinaryDumper"
+  },
+  {
+    "value": [
+      123
+    ],
+    "pythonType": "list",
+    "dumper": "ListDumper",
+    "oid": 1005,
+    "format": 0,
+    "connectionRole": "inventory_reader",
+    "actualConnectionDumper": "ListDumper"
+  },
+  {
+    "value": [
+      40000
+    ],
+    "pythonType": "list",
+    "dumper": "ListDumper",
+    "oid": 1007,
+    "format": 0,
+    "connectionRole": "inventory_reader",
+    "actualConnectionDumper": "ListDumper"
+  },
+  {
+    "value": [
+      4294967295
+    ],
+    "pythonType": "list",
+    "dumper": "ListDumper",
+    "oid": 1016,
+    "format": 0,
+    "connectionRole": "inventory_reader",
+    "actualConnectionDumper": "ListDumper"
+  },
+  {
+    "value": [
+      "schema"
+    ],
+    "pythonType": "list",
+    "dumper": "ListDumper",
+    "oid": 0,
+    "format": 0,
+    "connectionRole": "inventory_reader",
+    "actualConnectionDumper": "ListDumper"
+  }
+]

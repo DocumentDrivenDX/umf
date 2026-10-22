@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"verifySqlServerKeyClassification\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"SqlServerKeyClassification\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "SqlServerKeyClassification"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "current",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "verifySqlServerKeyClassification accepts input, current and returns SqlServerKeyClassification.",
+  "related": [],
+  "returns": "SqlServerKeyClassification",
+  "task": "Other APIs",
+  "type": "(input: SqlServerKeyClassification, current: Document) => SqlServerKeyClassification"
+}

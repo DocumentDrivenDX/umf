@@ -1,0 +1,37 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"AvroRelationshipRequest\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "mode",
+      "optional": false,
+      "type": "\"strict\" | \"report\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "profile",
+      "optional": false,
+      "type": "\"schema-structure\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"AvroRelationshipArchive\"]"
+      ],
+      "name": "nativeSource",
+      "optional": false,
+      "type": "AvroRelationshipArchive"
+    }
+  ],
+  "parameters": [],
+  "purpose": "AvroRelationshipRequest is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "AvroRelationshipRequest"
+}

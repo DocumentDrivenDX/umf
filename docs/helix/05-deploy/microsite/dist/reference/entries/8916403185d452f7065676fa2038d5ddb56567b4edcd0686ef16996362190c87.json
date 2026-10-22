@@ -1,0 +1,18 @@
+{
+  "data": {
+    "body": "\nLogical Field, Record, Key and relationship meanings remain separate from how a target stores, compares or enforces them.\n\nPhysical bindings carry explicit native identities and layouts. A projection can generate reviewable schemas while reporting source constraints that the target cannot express. Retained source is part of recovery; a target-only schema can have less meaning.\n\nTableSpec, PostgreSQL, SQL Server, Avro and Parquet each have distinct qualified subsets. Metadata declarations, native schema acceptance, instance enforcement, native equivalence and downstream consumer adoption are separate observations. Use the integration record matching the precise operation and profile.\n",
+    "relatedIds": []
+  },
+  "id": "[\"guide\",\"bindings\"]",
+  "kind": "guide",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 732,
+      "path": "docs/helix/05-deploy/reference/guides/bindings.md",
+      "sha256": "c6ed23020adade85a611a6d01fe19123f22cea60aef5d398884bdb62511e4716"
+    }
+  ],
+  "summary": "Logical Field, Record, Key and relationship meanings remain separate from how a target stores, compares or enforces them.",
+  "title": "Logical models and physical bindings"
+}

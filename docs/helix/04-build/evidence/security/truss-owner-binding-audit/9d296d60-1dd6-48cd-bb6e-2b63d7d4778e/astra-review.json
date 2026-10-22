@@ -1,0 +1,21 @@
+{
+  "reviewer": "gpt-6-astra",
+  "reasoningEffort": "ultra",
+  "disposition": "Clean within owned SCRAM graph/native and source-audit scope; no remaining landing blocker",
+  "nativeReceiptSha256": "7cbb71735a60b89f622968eb5426ef6457c826f47914f8dfa0b30b8d1dbb5e4b",
+  "formalReceiptSha256": "f52b59906718137e426c9b959e0652159a31a872f486b3a7e036cae3e47d5aec",
+  "ownerAuditSha256": "46a649c19af2f370518c27667e45de4177b59e0b954ba6f4a12426809d938f01",
+  "verified": {
+    "nativeObservations": 147,
+    "nativePins": 14,
+    "formalQueries": 14,
+    "UNSAT": 6,
+    "SAT": 8,
+    "formalPins": 17,
+    "ownerAuditObservations": 14,
+    "ownerAuditPins": 5,
+    "ownerAuditMutationOmissionControls": 5
+  },
+  "acceptancePromoted": false,
+  "limitations": "Actual owned-fixture SCRAM; synthetic mapping/owner/role closure and publication remain open. Audit is actual postvalidation declaration collection and source inspection, not owner validation/native staging/binding authority. No reviewer native execution."
+}

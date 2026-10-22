@@ -1,0 +1,188 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:iceberg:rename-report:0.1.0",
+  "type": "object",
+  "properties": {
+    "complete": {
+      "const": false
+    },
+    "previousSchemaId": {
+      "type": "integer",
+      "minimum": -2147483648,
+      "maximum": 2147483647
+    },
+    "nextSchemaId": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 2147483647
+    },
+    "fieldId": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 2147483647
+    },
+    "oldName": {
+      "type": "string"
+    },
+    "newName": {
+      "type": "string"
+    },
+    "appendedSchemaPath": {
+      "type": "string"
+    },
+    "bindings": {
+      "type": "object",
+      "required": [
+        "status",
+        "complete",
+        "bindings",
+        "diagnostics"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "status": {
+          "enum": [
+            "checked",
+            "blocked"
+          ]
+        },
+        "complete": {
+          "const": false
+        },
+        "bindings": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "fieldPath",
+              "sourcePath",
+              "assessment"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "fieldPath": {
+                "type": "string"
+              },
+              "sourcePath": {
+                "type": "string"
+              },
+              "assessment": {
+                "title": "Iceberg single-source transform type inspection",
+                "type": "object",
+                "required": [
+                  "sourceType",
+                  "transform",
+                  "status",
+                  "complete",
+                  "reason"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                  "sourceType": {
+                    "type": "string"
+                  },
+                  "transform": {
+                    "type": "string"
+                  },
+                  "status": {
+                    "enum": [
+                      "compatible",
+                      "incompatible",
+                      "uninterpreted"
+                    ]
+                  },
+                  "resultType": {
+                    "type": "string"
+                  },
+                  "complete": {
+                    "const": false
+                  },
+                  "reason": {
+                    "type": "string"
+                  }
+                },
+                "allOf": [
+                  {
+                    "if": {
+                      "properties": {
+                        "status": {
+                          "const": "compatible"
+                        }
+                      }
+                    },
+                    "then": {
+                      "properties": {
+                        "resultType": {}
+                      },
+                      "required": [
+                        "resultType"
+                      ]
+                    },
+                    "else": {
+                      "not": {
+                        "properties": {
+                          "resultType": {}
+                        },
+                        "required": [
+                          "resultType"
+                        ]
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "diagnostics": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "code",
+              "path",
+              "message",
+              "severity"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "path": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              },
+              "severity": {
+                "enum": [
+                  "warning",
+                  "error"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "limitations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "complete",
+    "previousSchemaId",
+    "nextSchemaId",
+    "fieldId",
+    "oldName",
+    "newName",
+    "appendedSchemaPath",
+    "bindings",
+    "limitations"
+  ],
+  "additionalProperties": false
+}

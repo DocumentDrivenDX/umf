@@ -1,0 +1,14 @@
+{
+  "printer": "protoprint 1.18.1",
+  "compiler": "protocompile 0.14.1",
+  "oracle": "protoc 36.2; Python protobuf 7.36.2",
+  "roots": [
+    "legacy.proto",
+    "modern.proto",
+    "edition.proto"
+  ],
+  "unchangedNativeDescriptorEquality": true,
+  "editedNativeDescriptorEquality": true,
+  "behaviorChecks": 42,
+  "normalization": "SourceCodeInfo excluded; omitted syntax normalized to proto2; every other descriptor field compared"
+}

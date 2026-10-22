@@ -1,0 +1,79 @@
+{
+  "status": "conditional-logical-runtime-laws",
+  "z3": "4.15.4",
+  "scope": "No executable, native or source-authentication theorem. Arbitrary-population exists laws assume complete identical witnesses and validated scalar F/T/U values. Disposition and budget laws assume faithful source correspondence and precharging. Finite Bun/Chromium oracle and mutation evidence supply separate concrete checks. No total CPU/heap, Cell rendering or write-enforcement proof.",
+  "queries": [
+    {
+      "id": "arbitrary-population-T-dominates-U",
+      "result": "unsat",
+      "expected": "unsat",
+      "smt": "(declare-sort Witness 0)\n(declare-fun truth (Witness) Int)\n(declare-fun present (Witness) Bool)\n(assert (let ((a!1 (forall ((w Witness))\n             (=> (present w) (and (>= (truth w) 0) (<= (truth w) 2)))))\n      (a!2 (exists ((w Witness)) (and (present w) (= (truth w) 2))))\n      (a!3 (exists ((w Witness)) (and (present w) (= (truth w) 1)))))\n  (and a!1 a!2 (distinct (ite a!2 2 (ite a!3 1 0)) 2))))\n",
+      "model": null,
+      "scope": "Assumes complete identical witness population and already validated scalar truth; not executable refinement."
+    },
+    {
+      "id": "arbitrary-population-U-without-T",
+      "result": "unsat",
+      "expected": "unsat",
+      "smt": "(declare-sort Witness 0)\n(declare-fun truth (Witness) Int)\n(declare-fun present (Witness) Bool)\n(assert (let ((a!1 (forall ((w Witness))\n             (=> (present w) (and (>= (truth w) 0) (<= (truth w) 2)))))\n      (a!2 (exists ((w Witness)) (and (present w) (= (truth w) 2))))\n      (a!3 (exists ((w Witness)) (and (present w) (= (truth w) 1)))))\n  (and a!1 (not a!2) a!3 (distinct (ite a!2 2 (ite a!3 1 0)) 1))))\n",
+      "model": null,
+      "scope": "Same assumptions; arbitrary uninterpreted witness population."
+    },
+    {
+      "id": "complete-empty-is-false",
+      "result": "unsat",
+      "expected": "unsat",
+      "smt": "(declare-sort Witness 0)\n(declare-fun truth (Witness) Int)\n(declare-fun present (Witness) Bool)\n(assert (let ((a!1 (exists ((w Witness)) (and (present w) (= (truth w) 2))))\n      (a!2 (exists ((w Witness)) (and (present w) (= (truth w) 1)))))\n  (and (forall ((w Witness)) (not (present w)))\n       (distinct (ite a!1 2 (ite a!2 1 0)) 0))))\n",
+      "model": null,
+      "scope": "Completeness is a premise; no closed-world inference from missing facts."
+    },
+    {
+      "id": "nonempty-T-and-U-population",
+      "result": "sat",
+      "expected": "sat",
+      "smt": "(declare-sort Witness 0)\n(declare-fun truth (Witness) Int)\n(declare-fun present (Witness) Bool)\n(declare-fun b () Witness)\n(declare-fun a () Witness)\n(assert (let ((a!1 (exists ((w Witness)) (and (present w) (= (truth w) 2))))\n      (a!2 (exists ((w Witness)) (and (present w) (= (truth w) 1)))))\n  (and (distinct a b)\n       (present a)\n       (present b)\n       (= (truth a) 2)\n       (= (truth b) 1)\n       (= (ite a!1 2 (ite a!2 1 0)) 2))))\n(model-add b () Witness Witness!val!1)\n(model-add a () Witness Witness!val!0)\n(model-add w!2 () Witness Witness!val!2)\n(model-add truth ((x!1 Witness)) Int (ite (= x!1 Witness!val!1) 1 2))\n(model-add present ((x!1 Witness)) Bool true)\n",
+      "model": "[b = Witness!val!1,\n a = Witness!val!0,\n present = [else -> True],\n truth = [Witness!val!1 -> 1, else -> 2]]",
+      "scope": "Concrete nonvacuity witness, not native/source authenticity."
+    },
+    {
+      "id": "endpoint-completeness-does-not-prove-graph-completeness",
+      "result": "sat",
+      "expected": "sat",
+      "smt": "(declare-fun graphComplete () Bool)\n(declare-fun endpointComplete () Bool)\n(assert (and endpointComplete (not graphComplete)))\n(model-add endpointComplete () Bool true)\n(model-add graphComplete () Bool false)\n",
+      "model": "[graphComplete = False, endpointComplete = True]",
+      "scope": "Independent host coverage attestations require separate admission."
+    },
+    {
+      "id": "withheld-precedes-transform-conflict",
+      "result": "unsat",
+      "expected": "unsat",
+      "smt": "(declare-fun conflict () Bool)\n(declare-fun withheld () Bool)\n(assert (and withheld conflict (distinct (ite withheld 0 (ite conflict 1 2)) 0)))\n",
+      "model": null,
+      "scope": "Conditional disposition selection law; transform execution not modeled."
+    },
+    {
+      "id": "declared-vault-action-is-not-grant",
+      "result": "sat",
+      "expected": "sat",
+      "smt": "(declare-fun granted () Bool)\n(declare-fun declared () Bool)\n(assert (and declared (not granted)))\n(model-add declared () Bool true)\n(model-add granted () Bool false)\n",
+      "model": "[declared = True, granted = False]",
+      "scope": "Independent declaration and authorization predicates."
+    },
+    {
+      "id": "shared-precharged-ledger-does-not-admit-overflow",
+      "result": "unsat",
+      "expected": "unsat",
+      "smt": "(declare-fun limit () Int)\n(declare-fun inc () Int)\n(declare-fun prior () Int)\n(assert (and (>= prior 0)\n     (>= inc 0)\n     (>= limit 0)\n     (<= (+ prior inc) limit)\n     (> (+ prior inc) limit)))\n",
+      "model": null,
+      "scope": "Assumes every modeled traversal contributes a nonnegative charge before work; concrete source controls required."
+    },
+    {
+      "id": "per-field-reset-admits-aggregate-overflow",
+      "result": "sat",
+      "expected": "sat",
+      "smt": "(declare-fun inc () Int)\n(declare-fun limit () Int)\n(declare-fun prior () Int)\n(assert (and (= prior 30000)\n     (= inc 30000)\n     (= limit 50000)\n     (<= prior limit)\n     (<= inc limit)\n     (> (+ prior inc) limit)))\n(model-add inc () Int 30000)\n(model-add limit () Int 50000)\n(model-add prior () Int 30000)\n",
+      "model": "[prior = 30000, limit = 50000, inc = 30000]",
+      "scope": "Negative resource-accounting model."
+    }
+  ]
+}

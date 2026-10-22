@@ -1,0 +1,72 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"AvroRelationshipObservation\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "nativePath",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "kind",
+      "optional": false,
+      "type": "\"array\" | \"record\" | \"map\" | \"named-type-token\" | \"union\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"NativeJson\"]"
+      ],
+      "name": "nativeNode",
+      "optional": false,
+      "type": "NativeJson"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "nameResolution",
+      "optional": false,
+      "type": "\"unverified\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "enforcement",
+      "optional": false,
+      "type": "\"not-expressible\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "authorIntent",
+      "optional": false,
+      "type": "\"unknown\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "provenance",
+      "optional": false,
+      "type": "\"inferred\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "scope",
+      "optional": false,
+      "type": "\"schema-structure\""
+    }
+  ],
+  "parameters": [],
+  "purpose": "AvroRelationshipObservation is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "AvroRelationshipObservation"
+}

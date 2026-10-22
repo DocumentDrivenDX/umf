@@ -1,8 +1,10 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
+import {assertJsonDataEqual} from './json-data-assert';
 /** Native discovery: array layout, domain and JSON boundaries; no binding claim. */
 import assert from 'node:assert/strict';
 import {importPostgresqlCatalogCapture} from '../../src/adapters/postgresql/catalog';
-import {classifyPostgresqlCardinality,recoverPostgresqlCardinalitySource} from '../../src/core-ideals/cardinality-postgresql';
-import {upgradeFieldEnvelope,upgradeNullabilityEnvelope,upgradeCardinalityEnvelope,getPostgresqlColumnMetadata} from '../../src';
+import {classifyPostgresqlCardinality, recoverPostgresqlCardinalitySource} from '../../src/core-ideals/cardinality-postgresql';
+import {getPostgresqlColumnMetadata} from '../../src';
 import {correlatePostgresqlCardinalityCatalog} from '../../src/adapters/postgresql/cardinality-catalog';
 import {createValidator} from '../../src/validation/schema';
 import supplementSchema from '../../spec/extensions/postgresql-catalog/cardinality-v1.schema.json';
@@ -102,13 +104,13 @@ try{
  RETURNING *) SELECT jsonb_build_object('rows',count(*),'i64',max(i64)::text,'f64',max(f64)::text) FROM inserted`));
  assert.equal(scalarBehavior.rows,1);assert.equal(scalarBehavior.i64,'9223372036854775807');assert.equal(scalarBehavior.f64,'1.0000000000000002');
  await sql('INSERT INTO cardinality.scalars DEFAULT VALUES');
- const model=upgradeCardinalityEnvelope(upgradeNullabilityEnvelope(upgradeFieldEnvelope(importPostgresqlCatalogCapture(captureSource,{id:'native-scalar-shapes'})).target).target).target;
+ const model=importPostgresqlCatalogCapture(captureSource,{id:'native-scalar-shapes'});
  for(const e of model.modules.find(m=>m.id==='postgresql.columns')!.elements)e.kind='field';
  const classifications=[];
  for(const c of getPostgresqlColumnMetadata(model).filter(c=>c.relation.name==='scalars')){
   const r=classifyPostgresqlCardinality(model,{column:c.path,nativeSource:captureSource,supplement:JSON.stringify(supplement),mode:'strict',profile:'stored-value'});
   assert.equal(r.status,'classified');assert.equal(r.mapping.cardinality,'one');assert.equal(r.residuals.length,0);
-  assert.deepEqual(recoverPostgresqlCardinalitySource(r,r.target!),{nativeSource:captureSource,supplement:JSON.stringify(supplement)});
+  assertJsonDataEqual(recoverPostgresqlCardinalitySource(r,r.target!),{nativeSource:captureSource,supplement:JSON.stringify(supplement)});
   classifications.push({column:c.element.name,cardinality:r.mapping.cardinality,outcome:r.mapping.outcome});
  }
  assert.equal(classifications.length,18);

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Compare native log-state observations; upstream data/checkpoints are not present."""
 import hashlib,json,tempfile
 from pathlib import Path

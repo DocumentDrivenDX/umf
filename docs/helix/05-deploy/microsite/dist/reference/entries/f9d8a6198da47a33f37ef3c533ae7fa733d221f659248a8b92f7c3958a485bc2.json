@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 14708,
+        "line": 19,
+        "path": "src/core-ideals/key-postgresql-projection.ts",
+        "sha256": "5bdc0f349a3508744c1f12c18dd35c8bef00451210be5d927dd4f4352e266b79"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "KeyPostgresqlProjection",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface KeyPostgresqlProjection {\n operation:'project-keys-postgresql';version:'1.0.0';status:'projected'|'blocked';source:Document;authors:CoreKeyDeclaration[];request:KeyPostgresqlRequest;binding:typeof binding;target?:Document;nativeSql?:string;\n mappings:{keyId:string;keyName:string;idealPath:string;nativePath:string;columns:string[];primary:boolean;constraintName:string;origin:'authored';enforcement:'primary-key-not-null'|'unique-not-null';equality:'exact-on-representable-values'|'unknown';outcome:'not-expressible'}[];\n residuals:{path:string;value:Json;reason:string;outcome:'unknown'|'not-expressible';recovery:typeof recovery}[];diagnostics:Diagnostic[];\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"KeyPostgresqlProjection\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 14708,
+      "line": 19,
+      "path": "src/core-ideals/key-postgresql-projection.ts",
+      "sha256": "5bdc0f349a3508744c1f12c18dd35c8bef00451210be5d927dd4f4352e266b79"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/key-postgresql-projection.ts",
+  "title": "KeyPostgresqlProjection"
+}

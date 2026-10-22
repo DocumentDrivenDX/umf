@@ -1,0 +1,61 @@
+{
+  "id": "umf.metamodel",
+  "version": "1.0.0",
+  "coreVersion": "0.10.0",
+  "description": "Authored UMF language definitions and inert ordered constraints",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "language": {
+        "type": "object"
+      },
+      "constraints": {
+        "type": "object"
+      },
+      "domains": {
+        "type": "object"
+      },
+      "description": {
+        "type": "string"
+      },
+      "definition": {
+        "type": "string"
+      },
+      "shape": {
+        "type": [
+          "object",
+          "boolean"
+        ]
+      },
+      "presence": {
+        "enum": [
+          "required",
+          "optional"
+        ]
+      },
+      "concept": {
+        "type": "string"
+      },
+      "connections": {
+        "type": "array"
+      },
+      "specializes": {
+        "type": "string"
+      },
+      "role": {
+        "type": "string"
+      }
+    },
+    "additionalProperties": false
+  },
+  "semantics": "Closed declarations are interpreted by the independently bounded metamodel compiler; no raw JSON Schema or executable per-rule callbacks are accepted.",
+  "scopes": [
+    "document",
+    "element"
+  ],
+  "capabilities": {
+    "validation": "structural",
+    "directions": [],
+    "evidence": []
+  }
+}

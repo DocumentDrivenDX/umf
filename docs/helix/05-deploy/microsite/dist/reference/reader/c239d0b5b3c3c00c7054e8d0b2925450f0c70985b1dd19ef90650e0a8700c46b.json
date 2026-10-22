@@ -1,0 +1,110 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"PostgresqlDdlKinds\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "operation",
+      "optional": false,
+      "type": "\"classify-postgresql-ddl-record\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "version",
+      "optional": false,
+      "type": "\"1.0.0\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "scope",
+      "optional": false,
+      "type": "\"declared-only\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "status",
+      "optional": false,
+      "type": "\"blocked\" | \"classified\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "source",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "target",
+      "optional": true,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"PostgresqlDdlKindRequest\"]"
+      ],
+      "name": "request",
+      "optional": false,
+      "type": "PostgresqlDdlKindRequest"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "binding",
+      "optional": false,
+      "type": "{ readonly id: \"umf.postgresql.ddl.record\"; readonly version: \"1.0.0\"; readonly nativeVersion: \"17.4\"; readonly subset: \"Explicit CREATE TABLE declaration only; no catalog expansion or statement replay\"; } | { readonly id: \"umf.postgresql.ddl.composite\"; readonly version: \"1.0.0\"; readonly nativeVersion: \"17.4\"; readonly subset: \"Explicit CREATE TYPE AS composite attributes only; no type resolution or statement replay\"; }"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "namespaceResolution",
+      "optional": false,
+      "type": "\"explicit\" | \"create-schema-context\" | \"unresolved\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Json\"]"
+      ],
+      "name": "mappings",
+      "optional": false,
+      "type": "{ origin: \"classified\"; kind: \"field\" | \"record\"; idealPath: string; nativePath: string; nativeFragment: Json; basis: \"checked-raw-column-declaration\" | \"checked-raw-table-declaration\" | \"checked-raw-composite-declaration\"; outcome: \"exact\" | \"unknown\"; }[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Json\"]"
+      ],
+      "name": "residuals",
+      "optional": false,
+      "type": "{ path: string; value: Json; reason: string; recovery: \"Source and native fragments retained; resolve conflict then recompute whole record classification\"; }[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Diagnostic\"]"
+      ],
+      "name": "diagnostics",
+      "optional": false,
+      "type": "Diagnostic[]"
+    }
+  ],
+  "parameters": [],
+  "purpose": "PostgresqlDdlKinds is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "PostgresqlDdlKinds"
+}

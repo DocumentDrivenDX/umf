@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import SHACLValidator from 'rdf-validate-shacl';
 import {Parser,Store} from 'n3';
 import {importShaclTurtle,importRdfTurtle,proposeShaclEngineValidation} from '../src';

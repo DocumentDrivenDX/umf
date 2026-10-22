@@ -1,0 +1,44 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"DddTerm\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "term",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "definition",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "aliases",
+      "optional": true,
+      "type": "string[]"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"DddReference\"]"
+      ],
+      "name": "concept",
+      "optional": true,
+      "type": "DddReference"
+    }
+  ],
+  "parameters": [],
+  "purpose": "DddTerm is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "DddTerm"
+}

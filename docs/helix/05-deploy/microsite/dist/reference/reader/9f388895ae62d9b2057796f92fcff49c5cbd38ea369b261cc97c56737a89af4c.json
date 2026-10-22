@@ -1,0 +1,28 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"truncateGregorianDate\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "token",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "unit",
+      "optional": false,
+      "type": "string"
+    }
+  ],
+  "purpose": "truncateGregorianDate accepts token, unit and returns string.",
+  "related": [],
+  "returns": "string",
+  "task": "Other APIs",
+  "type": "(token: string, unit: string) => string"
+}

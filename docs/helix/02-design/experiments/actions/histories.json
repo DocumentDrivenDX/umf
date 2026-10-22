@@ -1,0 +1,2025 @@
+{
+  "profile": "actions-feasibility-1",
+  "normativeScope": "Selected experimental history expectations, not all-core conformance",
+  "assumptions": [
+    "Authenticated identities simulated by synthetic grant rows",
+    "All mutation and replay operations use one PostgreSQL transaction",
+    "No-key calls, store disaster loss, unbounded liveness and external platform runtimes are excluded",
+    "Projection watermark is explicit synthetic same-store prefix, not warehouse evidence"
+  ],
+  "cases": [
+    {
+      "id": "H01",
+      "scenario": "create-link",
+      "description": "Existing customer and product, untouched sentinel record; create order and two links atomically.",
+      "requirements": [
+        "ACT-03",
+        "ACT-04",
+        "ACT-06"
+      ],
+      "expected": {
+        "statuses": [
+          "committed"
+        ],
+        "orders": 1,
+        "links": 2,
+        "untouched": true
+      },
+      "initialState": {
+        "tenants": {
+          "t1": {
+            "stock": 1,
+            "resourceVersion": 0,
+            "commitVersion": 0,
+            "projectionWatermark": 0,
+            "orders": {},
+            "grants": {
+              "u1": {
+                "kind": "person",
+                "allowed": true
+              }
+            },
+            "sentinel": "untouched",
+            "references": [
+              {
+                "id": "c1",
+                "kind": "customer",
+                "state": "unchanged"
+              },
+              {
+                "id": "p1",
+                "kind": "product",
+                "state": "unchanged"
+              },
+              {
+                "id": "c2",
+                "kind": "customer",
+                "state": "untouched"
+              }
+            ]
+          }
+        }
+      },
+      "requests": [
+        {
+          "id": "a",
+          "tenant": "t1",
+          "actor": "u1",
+          "service": "client-1",
+          "action": "create-link",
+          "token": "key",
+          "revision": "r1",
+          "input": {
+            "order": "o1",
+            "customer": "c1",
+            "product": "p1"
+          },
+          "expectedVersion": null
+        }
+      ],
+      "steps": [
+        {
+          "kind": "invoke",
+          "request": "a"
+        }
+      ],
+      "sameResultPairs": []
+    },
+    {
+      "id": "H02",
+      "scenario": "reserve",
+      "description": "One unit stock/version zero; reserve one with expected version zero.",
+      "requirements": [
+        "ACT-03",
+        "ACT-04",
+        "ACT-06"
+      ],
+      "expected": {
+        "statuses": [
+          "committed"
+        ],
+        "stock": 0,
+        "orders": 1,
+        "events": 1,
+        "outcomeRecords": 1
+      },
+      "initialState": {
+        "tenants": {
+          "t1": {
+            "stock": 1,
+            "resourceVersion": 0,
+            "commitVersion": 0,
+            "projectionWatermark": 0,
+            "orders": {},
+            "grants": {
+              "u1": {
+                "kind": "person",
+                "allowed": true
+              }
+            },
+            "sentinel": "untouched",
+            "references": [
+              {
+                "id": "c1",
+                "kind": "customer",
+                "state": "unchanged"
+              },
+              {
+                "id": "p1",
+                "kind": "product",
+                "state": "unchanged"
+              },
+              {
+                "id": "c2",
+                "kind": "customer",
+                "state": "untouched"
+              }
+            ]
+          }
+        }
+      },
+      "requests": [
+        {
+          "id": "a",
+          "tenant": "t1",
+          "actor": "u1",
+          "service": "client-1",
+          "action": "reserve",
+          "token": "key",
+          "revision": "r1",
+          "input": {
+            "order": "o1",
+            "product": "p1",
+            "quantity": 1
+          },
+          "expectedVersion": 0
+        }
+      ],
+      "steps": [
+        {
+          "kind": "invoke",
+          "request": "a"
+        }
+      ],
+      "sameResultPairs": []
+    },
+    {
+      "id": "H03",
+      "scenario": "approve",
+      "description": "Pending order; approve using handler implementation.",
+      "requirements": [
+        "ACT-03",
+        "ACT-04",
+        "ACT-06"
+      ],
+      "expected": {
+        "statuses": [
+          "committed"
+        ],
+        "status": "approved",
+        "events": 1
+      },
+      "initialState": {
+        "tenants": {
+          "t1": {
+            "stock": 1,
+            "resourceVersion": 0,
+            "commitVersion": 0,
+            "projectionWatermark": 0,
+            "orders": {
+              "o1": "pending"
+            },
+            "grants": {
+              "u1": {
+                "kind": "person",
+                "allowed": true
+              }
+            },
+            "sentinel": "untouched",
+            "references": [
+              {
+                "id": "c1",
+                "kind": "customer",
+                "state": "unchanged"
+              },
+              {
+                "id": "p1",
+                "kind": "product",
+                "state": "unchanged"
+              },
+              {
+                "id": "c2",
+                "kind": "customer",
+                "state": "untouched"
+              }
+            ]
+          }
+        }
+      },
+      "requests": [
+        {
+          "id": "a",
+          "tenant": "t1",
+          "actor": "u1",
+          "service": "client-1",
+          "action": "approve",
+          "token": "key",
+          "revision": "r1",
+          "input": {
+            "order": "o1"
+          },
+          "expectedVersion": null
+        }
+      ],
+      "steps": [
+        {
+          "kind": "invoke",
+          "request": "a"
+        }
+      ],
+      "sameResultPairs": []
+    },
+    {
+      "id": "H04",
+      "scenario": "insufficient",
+      "description": "Reserve two from one; rejection leaves business state/events unchanged.",
+      "requirements": [
+        "ACT-03",
+        "ACT-04",
+        "ACT-06"
+      ],
+      "expected": {
+        "statuses": [
+          "rejected"
+        ],
+        "stock": 1,
+        "orders": 0,
+        "events": 0,
+        "outcomeRecords": 1
+      },
+      "initialState": {
+        "tenants": {
+          "t1": {
+            "stock": 1,
+            "resourceVersion": 0,
+            "commitVersion": 0,
+            "projectionWatermark": 0,
+            "orders": {},
+            "grants": {
+              "u1": {
+                "kind": "person",
+                "allowed": true
+              }
+            },
+            "sentinel": "untouched",
+            "references": [
+              {
+                "id": "c1",
+                "kind": "customer",
+                "state": "unchanged"
+              },
+              {
+                "id": "p1",
+                "kind": "product",
+                "state": "unchanged"
+              },
+              {
+                "id": "c2",
+                "kind": "customer",
+                "state": "untouched"
+              }
+            ]
+          }
+        }
+      },
+      "requests": [
+        {
+          "id": "a",
+          "tenant": "t1",
+          "actor": "u1",
+          "service": "client-1",
+          "action": "reserve",
+          "token": "key",
+          "revision": "r1",
+          "input": {
+            "order": "o1",
+            "product": "p1",
+            "quantity": 2
+          },
+          "expectedVersion": null
+        }
+      ],
+      "steps": [
+        {
+          "kind": "invoke",
+          "request": "a"
+        }
+      ],
+      "sameResultPairs": []
+    },
+    {
+      "id": "H05",
+      "scenario": "duplicate",
+      "description": "Repeat identical request/token/revision; return original terminal result without reevaluation.",
+      "requirements": [
+        "ACT-03",
+        "ACT-04",
+        "ACT-06"
+      ],
+      "expected": {
+        "statuses": [
+          "committed",
+          "committed"
+        ],
+        "stock": 0,
+        "orders": 1,
+        "events": 1
+      },
+      "initialState": {
+        "tenants": {
+          "t1": {
+            "stock": 1,
+            "resourceVersion": 0,
+            "commitVersion": 0,
+            "projectionWatermark": 0,
+            "orders": {},
+            "grants": {
+              "u1": {
+                "kind": "person",
+                "allowed": true
+              }
+            },
+            "sentinel": "untouched",
+            "references": [
+              {
+                "id": "c1",
+                "kind": "customer",
+                "state": "unchanged"
+              },
+              {
+                "id": "p1",
+                "kind": "product",
+                "state": "unchanged"
+              },
+              {
+                "id": "c2",
+                "kind": "customer",
+                "state": "untouched"
+              }
+            ]
+          }
+        }
+      },
+      "requests": [
+        {
+          "id": "a",
+          "tenant": "t1",
+          "actor": "u1",
+          "service": "client-1",
+          "action": "reserve",
+          "token": "key",
+          "revision": "r1",
+          "input": {
+            "order": "o1",
+            "product": "p1",
+            "quantity": 1
+          },
+          "expectedVersion": null
+        }
+      ],
+      "steps": [
+        {
+          "kind": "invoke",
+          "request": "a"
+        },
+        {
+          "kind": "invoke",
+          "request": "a"
+        }
+      ],
+      "sameResultPairs": [
+        [
+          0,
+          1
+        ]
+      ]
+    },
+    {
+      "id": "H06",
+      "scenario": "lost-ack-upgrade",
+      "description": "Two units. Reserve one at r1; lose response after durable commit; activate r2. Same token r2 conflicts; same original r1 request returns original commit. No second reservation. sameResult compares the last replay to the first durable outcome, not the lost client response.",
+      "requirements": [
+        "ACT-03",
+        "ACT-04",
+        "ACT-06"
+      ],
+      "expected": {
+        "statuses": [
+          "indeterminate",
+          "conflict",
+          "committed"
+        ],
+        "stock": 1,
+        "orders": 1,
+        "events": 1
+      },
+      "initialState": {
+        "tenants": {
+          "t1": {
+            "stock": 2,
+            "resourceVersion": 0,
+            "commitVersion": 0,
+            "projectionWatermark": 0,
+            "orders": {},
+            "grants": {
+              "u1": {
+                "kind": "person",
+                "allowed": true
+              }
+            },
+            "sentinel": "untouched",
+            "references": [
+              {
+                "id": "c1",
+                "kind": "customer",
+                "state": "unchanged"
+              },
+              {
+                "id": "p1",
+                "kind": "product",
+                "state": "unchanged"
+              },
+              {
+                "id": "c2",
+                "kind": "customer",
+                "state": "untouched"
+              }
+            ]
+          }
+        }
+      },
+      "requests": [
+        {
+          "id": "a",
+          "tenant": "t1",
+          "actor": "u1",
+          "service": "client-1",
+          "action": "reserve",
+          "token": "key",
+          "revision": "r1",
+          "input": {
+            "order": "o1",
+            "product": "p1",
+            "quantity": 1
+          },
+          "expectedVersion": null
+        },
+        {
+          "id": "b",
+          "tenant": "t1",
+          "actor": "u1",
+          "service": "client-1",
+          "action": "reserve",
+          "token": "key",
+          "revision": "r2",
+          "input": {
+            "order": "o1",
+            "product": "p1",
+            "quantity": 1
+          },
+          "expectedVersion": null
+        }
+      ],
+      "steps": [
+        {
+          "kind": "invoke",
+          "request": "a",
+          "loseAcknowledgement": true
+        },
+        {
+          "kind": "deploy",
+          "tenant": "t1",
+          "action": "reserve",
+          "revision": "r2"
+        },
+        {
+          "kind": "invoke",
+          "request": "b"
+        },
+        {
+          "kind": "invoke",
+          "request": "a"
+        }
+      ],
+      "sameResultPairs": [
+        [
+          0,
+          2
+        ]
+      ]
+    },
+    {
+      "id": "H07",
+      "scenario": "changed-input",
+      "description": "Commit one unit; same token with quantity two conflicts.",
+      "requirements": [
+        "ACT-03",
+        "ACT-04",
+        "ACT-06"
+      ],
+      "expected": {
+        "statuses": [
+          "committed",
+          "conflict"
+        ],
+        "orders": 1,
+        "events": 1
+      },
+      "initialState": {
+        "tenants": {
+          "t1": {
+            "stock": 1,
+            "resourceVersion": 0,
+            "commitVersion": 0,
+            "projectionWatermark": 0,
+            "orders": {},
+            "grants": {
+              "u1": {
+                "kind": "person",
+                "allowed": true
+              }
+            },
+            "sentinel": "untouched",
+            "references": [
+              {
+                "id": "c1",
+                "kind": "customer",
+                "state": "unchanged"
+              },
+              {
+                "id": "p1",
+                "kind": "product",
+                "state": "unchanged"
+              },
+              {
+                "id": "c2",
+                "kind": "customer",
+                "state": "untouched"
+              }
+            ]
+          }
+        }
+      },
+      "requests": [
+        {
+          "id": "a",
+          "tenant": "t1",
+          "actor": "u1",
+          "service": "client-1",
+          "action": "reserve",
+          "token": "key",
+          "revision": "r1",
+          "input": {
+            "order": "o1",
+            "product": "p1",
+            "quantity": 1
+          },
+          "expectedVersion": null
+        },
+        {
+          "id": "b",
+          "tenant": "t1",
+          "actor": "u1",
+          "service": "client-1",
+          "action": "reserve",
+          "token": "key",
+          "revision": "r1",
+          "input": {
+            "order": "o1",
+            "product": "p1",
+            "quantity": 2
+          },
+          "expectedVersion": null
+        }
+      ],
+      "steps": [
+        {
+          "kind": "invoke",
+          "request": "a"
+        },
+        {
+          "kind": "invoke",
+          "request": "b"
+        }
+      ],
+      "sameResultPairs": []
+    },
+    {
+      "id": "H08",
+      "scenario": "revoked-replay",
+      "description": "Commit; revoke principal; same request/token denied without protected result disclosure.",
+      "requirements": [
+        "ACT-03",
+        "ACT-04",
+        "ACT-06"
+      ],
+      "expected": {
+        "statuses": [
+          "committed",
+          "denied"
+        ],
+        "orders": 1,
+        "events": 1
+      },
+      "initialState": {
+        "tenants": {
+          "t1": {
+            "stock": 1,
+            "resourceVersion": 0,
+            "commitVersion": 0,
+            "projectionWatermark": 0,
+            "orders": {},
+            "grants": {
+              "u1": {
+                "kind": "person",
+                "allowed": true
+              }
+            },
+            "sentinel": "untouched",
+            "references": [
+              {
+                "id": "c1",
+                "kind": "customer",
+                "state": "unchanged"
+              },
+              {
+                "id": "p1",
+                "kind": "product",
+                "state": "unchanged"
+              },
+              {
+                "id": "c2",
+                "kind": "customer",
+                "state": "untouched"
+              }
+            ]
+          }
+        }
+      },
+      "requests": [
+        {
+          "id": "a",
+          "tenant": "t1",
+          "actor": "u1",
+          "service": "client-1",
+          "action": "reserve",
+          "token": "key",
+          "revision": "r1",
+          "input": {
+            "order": "o1",
+            "product": "p1",
+            "quantity": 1
+          },
+          "expectedVersion": null
+        }
+      ],
+      "steps": [
+        {
+          "kind": "invoke",
+          "request": "a"
+        },
+        {
+          "kind": "authorize",
+          "tenant": "t1",
+          "actor": "u1",
+          "allowed": false
+        },
+        {
+          "kind": "invoke",
+          "request": "a"
+        }
+      ],
+      "sameResultPairs": []
+    },
+    {
+      "id": "H09",
+      "scenario": "effect-failure",
+      "description": "Inject failure after stock update and before order/outbox/result; roll back all changes.",
+      "requirements": [
+        "ACT-03",
+        "ACT-04",
+        "ACT-06"
+      ],
+      "expected": {
+        "statuses": [
+          "failed"
+        ],
+        "stock": 1,
+        "orders": 0,
+        "events": 0,
+        "outcomeRecords": 0
+      },
+      "initialState": {
+        "tenants": {
+          "t1": {
+            "stock": 1,
+            "resourceVersion": 0,
+            "commitVersion": 0,
+            "projectionWatermark": 0,
+            "orders": {},
+            "grants": {
+              "u1": {
+                "kind": "person",
+                "allowed": true
+              }
+            },
+            "sentinel": "untouched",
+            "references": [
+              {
+                "id": "c1",
+                "kind": "customer",
+                "state": "unchanged"
+              },
+              {
+                "id": "p1",
+                "kind": "product",
+                "state": "unchanged"
+              },
+              {
+                "id": "c2",
+                "kind": "customer",
+                "state": "untouched"
+              }
+            ]
+          }
+        }
+      },
+      "requests": [
+        {
+          "id": "a",
+          "tenant": "t1",
+          "actor": "u1",
+          "service": "client-1",
+          "action": "reserve",
+          "token": "key",
+          "revision": "r1",
+          "input": {
+            "order": "o1",
+            "product": "p1",
+            "quantity": 1
+          },
+          "expectedVersion": null
+        }
+      ],
+      "steps": [
+        {
+          "kind": "invoke",
+          "request": "a",
+          "fault": "after-stock"
+        }
+      ],
+      "sameResultPairs": []
+    },
+    {
+      "id": "H10",
+      "scenario": "concurrent-stock",
+      "description": "Two different tokens concurrently reserve last unit without explicit expected version; one success and one rejection, in either serial order.",
+      "requirements": [
+        "ACT-03",
+        "ACT-04",
+        "ACT-06"
+      ],
+      "expected": {
+        "statuses": [
+          "committed",
+          "rejected"
+        ],
+        "stock": 0,
+        "orders": 1,
+        "events": 1,
+        "statusOrder": "unordered",
+        "outcomeRecords": 2
+      },
+      "initialState": {
+        "tenants": {
+          "t1": {
+            "stock": 1,
+            "resourceVersion": 0,
+            "commitVersion": 0,
+            "projectionWatermark": 0,
+            "orders": {},
+            "grants": {
+              "u1": {
+                "kind": "person",
+                "allowed": true
+              }
+            },
+            "sentinel": "untouched",
+            "references": [
+              {
+                "id": "c1",
+                "kind": "customer",
+                "state": "unchanged"
+              },
+              {
+                "id": "p1",
+                "kind": "product",
+                "state": "unchanged"
+              },
+              {
+                "id": "c2",
+                "kind": "customer",
+                "state": "untouched"
+              }
+            ]
+          }
+        }
+      },
+      "requests": [
+        {
+          "id": "a",
+          "tenant": "t1",
+          "actor": "u1",
+          "service": "client-1",
+          "action": "reserve",
+          "token": "key",
+          "revision": "r1",
+          "input": {
+            "order": "o1",
+            "product": "p1",
+            "quantity": 1
+          },
+          "expectedVersion": null
+        },
+        {
+          "id": "b",
+          "tenant": "t1",
+          "actor": "u1",
+          "service": "client-1",
+          "action": "reserve",
+          "token": "other",
+          "revision": "r1",
+          "input": {
+            "order": "o2",
+            "product": "p1",
+            "quantity": 1
+          },
+          "expectedVersion": null
+        }
+      ],
+      "steps": [
+        {
+          "kind": "concurrent",
+          "requests": [
+            "a",
+            "b"
+          ]
+        }
+      ],
+      "sameResultPairs": []
+    },
+    {
+      "id": "H11",
+      "scenario": "concurrent-token",
+      "description": "Two concurrent identical keyed calls; identical result, one domain mutation.",
+      "requirements": [
+        "ACT-03",
+        "ACT-04",
+        "ACT-06"
+      ],
+      "expected": {
+        "statuses": [
+          "committed",
+          "committed"
+        ],
+        "stock": 0,
+        "orders": 1,
+        "events": 1
+      },
+      "initialState": {
+        "tenants": {
+          "t1": {
+            "stock": 1,
+            "resourceVersion": 0,
+            "commitVersion": 0,
+            "projectionWatermark": 0,
+            "orders": {},
+            "grants": {
+              "u1": {
+                "kind": "person",
+                "allowed": true
+              }
+            },
+            "sentinel": "untouched",
+            "references": [
+              {
+                "id": "c1",
+                "kind": "customer",
+                "state": "unchanged"
+              },
+              {
+                "id": "p1",
+                "kind": "product",
+                "state": "unchanged"
+              },
+              {
+                "id": "c2",
+                "kind": "customer",
+                "state": "untouched"
+              }
+            ]
+          }
+        }
+      },
+      "requests": [
+        {
+          "id": "a",
+          "tenant": "t1",
+          "actor": "u1",
+          "service": "client-1",
+          "action": "reserve",
+          "token": "key",
+          "revision": "r1",
+          "input": {
+            "order": "o1",
+            "product": "p1",
+            "quantity": 1
+          },
+          "expectedVersion": null
+        }
+      ],
+      "steps": [
+        {
+          "kind": "concurrent",
+          "requests": [
+            "a",
+            "a"
+          ]
+        }
+      ],
+      "sameResultPairs": [
+        [
+          0,
+          1
+        ]
+      ]
+    },
+    {
+      "id": "H12",
+      "scenario": "expected-version",
+      "description": "Requested expectedVersion differs from locked resource; terminal conflict without writes. Only the terminal outcome ledger may change.",
+      "requirements": [
+        "ACT-03",
+        "ACT-04",
+        "ACT-06"
+      ],
+      "expected": {
+        "statuses": [
+          "conflict"
+        ],
+        "stock": 1,
+        "orders": 0,
+        "events": 0,
+        "outcomeRecords": 1
+      },
+      "initialState": {
+        "tenants": {
+          "t1": {
+            "stock": 1,
+            "resourceVersion": 0,
+            "commitVersion": 0,
+            "projectionWatermark": 0,
+            "orders": {},
+            "grants": {
+              "u1": {
+                "kind": "person",
+                "allowed": true
+              }
+            },
+            "sentinel": "untouched",
+            "references": [
+              {
+                "id": "c1",
+                "kind": "customer",
+                "state": "unchanged"
+              },
+              {
+                "id": "p1",
+                "kind": "product",
+                "state": "unchanged"
+              },
+              {
+                "id": "c2",
+                "kind": "customer",
+                "state": "untouched"
+              }
+            ]
+          }
+        }
+      },
+      "requests": [
+        {
+          "id": "a",
+          "tenant": "t1",
+          "actor": "u1",
+          "service": "client-1",
+          "action": "reserve",
+          "token": "key",
+          "revision": "r1",
+          "input": {
+            "order": "o1",
+            "product": "p1",
+            "quantity": 1
+          },
+          "expectedVersion": 5
+        }
+      ],
+      "steps": [
+        {
+          "kind": "invoke",
+          "request": "a"
+        }
+      ],
+      "sameResultPairs": []
+    },
+    {
+      "id": "H13",
+      "scenario": "lagging-read",
+      "description": "Commit at watermark one; projection at zero returns pending, after catchup returns visible.",
+      "requirements": [
+        "ACT-03",
+        "ACT-04",
+        "ACT-06"
+      ],
+      "expected": {
+        "statuses": [
+          "committed",
+          "pending",
+          "visible"
+        ],
+        "orders": 1,
+        "events": 1,
+        "visibleOrder": {
+          "id": "o1",
+          "status": "reserved"
+        }
+      },
+      "initialState": {
+        "tenants": {
+          "t1": {
+            "stock": 1,
+            "resourceVersion": 0,
+            "commitVersion": 0,
+            "projectionWatermark": 0,
+            "orders": {},
+            "grants": {
+              "u1": {
+                "kind": "person",
+                "allowed": true
+              }
+            },
+            "sentinel": "untouched",
+            "references": [
+              {
+                "id": "c1",
+                "kind": "customer",
+                "state": "unchanged"
+              },
+              {
+                "id": "p1",
+                "kind": "product",
+                "state": "unchanged"
+              },
+              {
+                "id": "c2",
+                "kind": "customer",
+                "state": "untouched"
+              }
+            ]
+          }
+        }
+      },
+      "requests": [
+        {
+          "id": "a",
+          "tenant": "t1",
+          "actor": "u1",
+          "service": "client-1",
+          "action": "reserve",
+          "token": "key",
+          "revision": "r1",
+          "input": {
+            "order": "o1",
+            "product": "p1",
+            "quantity": 1
+          },
+          "expectedVersion": null
+        }
+      ],
+      "steps": [
+        {
+          "kind": "invoke",
+          "request": "a"
+        },
+        {
+          "kind": "read",
+          "tenant": "t1",
+          "outcome": 0
+        },
+        {
+          "kind": "catchup",
+          "tenant": "t1"
+        },
+        {
+          "kind": "read",
+          "tenant": "t1",
+          "outcome": 0
+        }
+      ],
+      "sameResultPairs": []
+    },
+    {
+      "id": "H14",
+      "scenario": "actor-profile",
+      "description": "Service-only actor against person-required consumer profile is denied.",
+      "requirements": [
+        "ACT-03",
+        "ACT-04",
+        "ACT-06"
+      ],
+      "expected": {
+        "statuses": [
+          "denied"
+        ],
+        "orders": 0,
+        "events": 0
+      },
+      "initialState": {
+        "tenants": {
+          "t1": {
+            "stock": 1,
+            "resourceVersion": 0,
+            "commitVersion": 0,
+            "projectionWatermark": 0,
+            "orders": {},
+            "grants": {
+              "u1": {
+                "kind": "service",
+                "allowed": true
+              }
+            },
+            "sentinel": "untouched",
+            "references": [
+              {
+                "id": "c1",
+                "kind": "customer",
+                "state": "unchanged"
+              },
+              {
+                "id": "p1",
+                "kind": "product",
+                "state": "unchanged"
+              },
+              {
+                "id": "c2",
+                "kind": "customer",
+                "state": "untouched"
+              }
+            ]
+          }
+        }
+      },
+      "requests": [
+        {
+          "id": "a",
+          "tenant": "t1",
+          "actor": "u1",
+          "service": "client-1",
+          "action": "reserve",
+          "token": "key",
+          "revision": "r1",
+          "input": {
+            "order": "o1",
+            "product": "p1",
+            "quantity": 1
+          },
+          "expectedVersion": null
+        }
+      ],
+      "steps": [
+        {
+          "kind": "invoke",
+          "request": "a"
+        }
+      ],
+      "sameResultPairs": []
+    },
+    {
+      "id": "H15",
+      "scenario": "undeclared-write",
+      "description": "Handler attempts sentinel write outside permitted frame; verify before commit and roll back. Observed guarantee is no committed outside-frame change in instrumented tables; attempted-write absence is not claimed.",
+      "requirements": [
+        "ACT-03",
+        "ACT-04",
+        "ACT-06"
+      ],
+      "expected": {
+        "statuses": [
+          "failed"
+        ],
+        "stock": 1,
+        "orders": 0,
+        "events": 0,
+        "untouched": true
+      },
+      "initialState": {
+        "tenants": {
+          "t1": {
+            "stock": 1,
+            "resourceVersion": 0,
+            "commitVersion": 0,
+            "projectionWatermark": 0,
+            "orders": {},
+            "grants": {
+              "u1": {
+                "kind": "person",
+                "allowed": true
+              }
+            },
+            "sentinel": "untouched",
+            "references": [
+              {
+                "id": "c1",
+                "kind": "customer",
+                "state": "unchanged"
+              },
+              {
+                "id": "p1",
+                "kind": "product",
+                "state": "unchanged"
+              },
+              {
+                "id": "c2",
+                "kind": "customer",
+                "state": "untouched"
+              }
+            ]
+          }
+        }
+      },
+      "requests": [
+        {
+          "id": "a",
+          "tenant": "t1",
+          "actor": "u1",
+          "service": "client-1",
+          "action": "reserve",
+          "token": "key",
+          "revision": "r1",
+          "input": {
+            "order": "o1",
+            "product": "p1",
+            "quantity": 1
+          },
+          "expectedVersion": null
+        }
+      ],
+      "steps": [
+        {
+          "kind": "invoke",
+          "request": "a",
+          "fault": "outside-frame"
+        }
+      ],
+      "sameResultPairs": []
+    },
+    {
+      "id": "H16",
+      "scenario": "expired-key",
+      "description": "Commit then explicitly expire retained replay key; retry refuses and never reexecutes.",
+      "requirements": [
+        "ACT-03",
+        "ACT-04",
+        "ACT-06"
+      ],
+      "expected": {
+        "statuses": [
+          "committed",
+          "expired"
+        ],
+        "orders": 1,
+        "events": 1
+      },
+      "initialState": {
+        "tenants": {
+          "t1": {
+            "stock": 1,
+            "resourceVersion": 0,
+            "commitVersion": 0,
+            "projectionWatermark": 0,
+            "orders": {},
+            "grants": {
+              "u1": {
+                "kind": "person",
+                "allowed": true
+              }
+            },
+            "sentinel": "untouched",
+            "references": [
+              {
+                "id": "c1",
+                "kind": "customer",
+                "state": "unchanged"
+              },
+              {
+                "id": "p1",
+                "kind": "product",
+                "state": "unchanged"
+              },
+              {
+                "id": "c2",
+                "kind": "customer",
+                "state": "untouched"
+              }
+            ]
+          }
+        }
+      },
+      "requests": [
+        {
+          "id": "a",
+          "tenant": "t1",
+          "actor": "u1",
+          "service": "client-1",
+          "action": "reserve",
+          "token": "key",
+          "revision": "r1",
+          "input": {
+            "order": "o1",
+            "product": "p1",
+            "quantity": 1
+          },
+          "expectedVersion": null
+        }
+      ],
+      "steps": [
+        {
+          "kind": "invoke",
+          "request": "a"
+        },
+        {
+          "kind": "expire",
+          "request": "a"
+        },
+        {
+          "kind": "invoke",
+          "request": "a"
+        }
+      ],
+      "sameResultPairs": []
+    },
+    {
+      "id": "H17",
+      "scenario": "publication-retry",
+      "description": "Same committed outbox fact is delivered twice; no second domain commit/event record. Exactly-once external delivery is not claimed.",
+      "requirements": [
+        "ACT-03",
+        "ACT-04",
+        "ACT-06"
+      ],
+      "expected": {
+        "statuses": [
+          "committed"
+        ],
+        "orders": 1,
+        "events": 1,
+        "deliveries": 2
+      },
+      "initialState": {
+        "tenants": {
+          "t1": {
+            "stock": 1,
+            "resourceVersion": 0,
+            "commitVersion": 0,
+            "projectionWatermark": 0,
+            "orders": {},
+            "grants": {
+              "u1": {
+                "kind": "person",
+                "allowed": true
+              }
+            },
+            "sentinel": "untouched",
+            "references": [
+              {
+                "id": "c1",
+                "kind": "customer",
+                "state": "unchanged"
+              },
+              {
+                "id": "p1",
+                "kind": "product",
+                "state": "unchanged"
+              },
+              {
+                "id": "c2",
+                "kind": "customer",
+                "state": "untouched"
+              }
+            ]
+          }
+        }
+      },
+      "requests": [
+        {
+          "id": "a",
+          "tenant": "t1",
+          "actor": "u1",
+          "service": "client-1",
+          "action": "reserve",
+          "token": "key",
+          "revision": "r1",
+          "input": {
+            "order": "o1",
+            "product": "p1",
+            "quantity": 1
+          },
+          "expectedVersion": null
+        }
+      ],
+      "steps": [
+        {
+          "kind": "invoke",
+          "request": "a"
+        },
+        {
+          "kind": "deliver",
+          "tenant": "t1"
+        },
+        {
+          "kind": "deliver",
+          "tenant": "t1"
+        }
+      ],
+      "sameResultPairs": []
+    },
+    {
+      "id": "H18",
+      "scenario": "rejected-token-retry",
+      "description": "Insufficient stock is a durable keyed rejection. Replenish then repeat original request/token; return original rejection, no mutation.",
+      "requirements": [
+        "ACT-03",
+        "ACT-04",
+        "ACT-06"
+      ],
+      "expected": {
+        "statuses": [
+          "rejected",
+          "rejected",
+          "conflict"
+        ],
+        "orders": 0,
+        "events": 0,
+        "stock": 3,
+        "outcomeRecords": 1
+      },
+      "initialState": {
+        "tenants": {
+          "t1": {
+            "stock": 1,
+            "resourceVersion": 0,
+            "commitVersion": 0,
+            "projectionWatermark": 0,
+            "orders": {},
+            "grants": {
+              "u1": {
+                "kind": "person",
+                "allowed": true
+              }
+            },
+            "sentinel": "untouched",
+            "references": [
+              {
+                "id": "c1",
+                "kind": "customer",
+                "state": "unchanged"
+              },
+              {
+                "id": "p1",
+                "kind": "product",
+                "state": "unchanged"
+              },
+              {
+                "id": "c2",
+                "kind": "customer",
+                "state": "untouched"
+              }
+            ]
+          }
+        }
+      },
+      "requests": [
+        {
+          "id": "a",
+          "tenant": "t1",
+          "actor": "u1",
+          "service": "client-1",
+          "action": "reserve",
+          "token": "key",
+          "revision": "r1",
+          "input": {
+            "order": "o1",
+            "product": "p1",
+            "quantity": 2
+          },
+          "expectedVersion": null
+        },
+        {
+          "id": "b",
+          "tenant": "t1",
+          "actor": "u1",
+          "service": "client-1",
+          "action": "reserve",
+          "token": "key",
+          "revision": "r1",
+          "input": {
+            "order": "o1",
+            "product": "p1",
+            "quantity": 1
+          },
+          "expectedVersion": null
+        }
+      ],
+      "steps": [
+        {
+          "kind": "invoke",
+          "request": "a"
+        },
+        {
+          "kind": "replenish",
+          "tenant": "t1",
+          "stock": 3
+        },
+        {
+          "kind": "invoke",
+          "request": "a"
+        },
+        {
+          "kind": "invoke",
+          "request": "b"
+        }
+      ],
+      "sameResultPairs": [
+        [
+          0,
+          1
+        ]
+      ]
+    },
+    {
+      "id": "H19",
+      "scenario": "approve-noop",
+      "description": "Approve pending order; same-token retry replays; fresh token against approved order succeeds as no-op. No new domain event or resource version, but a new terminal outcome record.",
+      "requirements": [
+        "ACT-03",
+        "ACT-04",
+        "ACT-06"
+      ],
+      "expected": {
+        "statuses": [
+          "committed",
+          "committed",
+          "committed"
+        ],
+        "status": "approved",
+        "events": 1,
+        "version": 1,
+        "freshNoOp": true,
+        "outcomeRecords": 2
+      },
+      "initialState": {
+        "tenants": {
+          "t1": {
+            "stock": 1,
+            "resourceVersion": 0,
+            "commitVersion": 0,
+            "projectionWatermark": 0,
+            "orders": {
+              "o1": "pending"
+            },
+            "grants": {
+              "u1": {
+                "kind": "person",
+                "allowed": true
+              }
+            },
+            "sentinel": "untouched",
+            "references": [
+              {
+                "id": "c1",
+                "kind": "customer",
+                "state": "unchanged"
+              },
+              {
+                "id": "p1",
+                "kind": "product",
+                "state": "unchanged"
+              },
+              {
+                "id": "c2",
+                "kind": "customer",
+                "state": "untouched"
+              }
+            ]
+          }
+        }
+      },
+      "requests": [
+        {
+          "id": "a",
+          "tenant": "t1",
+          "actor": "u1",
+          "service": "client-1",
+          "action": "approve",
+          "token": "key",
+          "revision": "r1",
+          "input": {
+            "order": "o1"
+          },
+          "expectedVersion": null
+        },
+        {
+          "id": "b",
+          "tenant": "t1",
+          "actor": "u1",
+          "service": "client-1",
+          "action": "approve",
+          "token": "fresh",
+          "revision": "r1",
+          "input": {
+            "order": "o1"
+          },
+          "expectedVersion": null
+        }
+      ],
+      "steps": [
+        {
+          "kind": "invoke",
+          "request": "a"
+        },
+        {
+          "kind": "invoke",
+          "request": "a"
+        },
+        {
+          "kind": "invoke",
+          "request": "b"
+        }
+      ],
+      "sameResultPairs": [
+        [
+          0,
+          1
+        ]
+      ]
+    },
+    {
+      "id": "H20",
+      "scenario": "different-tenant-token",
+      "description": "Same principal/action/key in different tenants; distinct authorized entities and replay scopes.",
+      "requirements": [
+        "ACT-03",
+        "ACT-04",
+        "ACT-06"
+      ],
+      "expected": {
+        "statuses": [
+          "committed",
+          "committed"
+        ],
+        "orders": 2,
+        "events": 2,
+        "tenants": {
+          "t1": {
+            "stock": 0,
+            "orders": 1,
+            "events": 1,
+            "outcomeRecords": 1
+          },
+          "t2": {
+            "stock": 0,
+            "orders": 1,
+            "events": 1,
+            "outcomeRecords": 1
+          }
+        }
+      },
+      "initialState": {
+        "tenants": {
+          "t1": {
+            "stock": 1,
+            "resourceVersion": 0,
+            "commitVersion": 0,
+            "projectionWatermark": 0,
+            "orders": {},
+            "grants": {
+              "u1": {
+                "kind": "person",
+                "allowed": true
+              }
+            },
+            "sentinel": "untouched",
+            "references": [
+              {
+                "id": "c1",
+                "kind": "customer",
+                "state": "unchanged"
+              },
+              {
+                "id": "p1",
+                "kind": "product",
+                "state": "unchanged"
+              },
+              {
+                "id": "c2",
+                "kind": "customer",
+                "state": "untouched"
+              }
+            ]
+          },
+          "t2": {
+            "stock": 1,
+            "resourceVersion": 0,
+            "commitVersion": 0,
+            "projectionWatermark": 0,
+            "orders": {},
+            "grants": {
+              "u1": {
+                "kind": "person",
+                "allowed": true
+              }
+            },
+            "sentinel": "untouched",
+            "references": [
+              {
+                "id": "c1",
+                "kind": "customer",
+                "state": "unchanged"
+              },
+              {
+                "id": "p1",
+                "kind": "product",
+                "state": "unchanged"
+              },
+              {
+                "id": "c2",
+                "kind": "customer",
+                "state": "untouched"
+              }
+            ]
+          }
+        }
+      },
+      "requests": [
+        {
+          "id": "a",
+          "tenant": "t1",
+          "actor": "u1",
+          "service": "client-1",
+          "action": "reserve",
+          "token": "key",
+          "revision": "r1",
+          "input": {
+            "order": "o1",
+            "product": "p1",
+            "quantity": 1
+          },
+          "expectedVersion": null
+        },
+        {
+          "id": "b",
+          "tenant": "t2",
+          "actor": "u1",
+          "service": "client-1",
+          "action": "reserve",
+          "token": "key",
+          "revision": "r1",
+          "input": {
+            "order": "o1",
+            "product": "p1",
+            "quantity": 1
+          },
+          "expectedVersion": null
+        }
+      ],
+      "steps": [
+        {
+          "kind": "invoke",
+          "request": "a"
+        },
+        {
+          "kind": "invoke",
+          "request": "b"
+        }
+      ],
+      "sameResultPairs": []
+    },
+    {
+      "id": "H21",
+      "scenario": "fresh-retired-revision",
+      "description": "Fresh key with retired r1 refuses after r2 deployment; no outcome ledger entry. Existing matching retained r1 outcomes remain replayable as H06 shows.",
+      "requirements": [
+        "ACT-04",
+        "ACT-06"
+      ],
+      "initialState": {
+        "tenants": {
+          "t1": {
+            "stock": 1,
+            "resourceVersion": 0,
+            "commitVersion": 0,
+            "projectionWatermark": 0,
+            "orders": {},
+            "grants": {
+              "u1": {
+                "kind": "person",
+                "allowed": true
+              }
+            },
+            "sentinel": "untouched",
+            "references": [
+              {
+                "id": "c1",
+                "kind": "customer",
+                "state": "unchanged"
+              },
+              {
+                "id": "p1",
+                "kind": "product",
+                "state": "unchanged"
+              },
+              {
+                "id": "c2",
+                "kind": "customer",
+                "state": "untouched"
+              }
+            ]
+          }
+        }
+      },
+      "requests": [
+        {
+          "id": "a",
+          "tenant": "t1",
+          "actor": "u1",
+          "service": "client-1",
+          "action": "reserve",
+          "token": "key",
+          "revision": "r1",
+          "input": {
+            "order": "o1",
+            "product": "p1",
+            "quantity": 1
+          },
+          "expectedVersion": null
+        }
+      ],
+      "steps": [
+        {
+          "kind": "deploy",
+          "tenant": "t1",
+          "action": "reserve",
+          "revision": "r2"
+        },
+        {
+          "kind": "invoke",
+          "request": "a"
+        }
+      ],
+      "sameResultPairs": [],
+      "expected": {
+        "statuses": [
+          "unsupported"
+        ],
+        "stock": 1,
+        "orders": 0,
+        "events": 0,
+        "outcomeRecords": 0
+      }
+    },
+    {
+      "id": "H22",
+      "scenario": "replenishment-version-conflict",
+      "description": "Replenishment increments the resource version. A fresh stale assertion conflicts, while another fresh token with current version commits.",
+      "requirements": [
+        "ACT-03",
+        "ACT-04",
+        "ACT-06"
+      ],
+      "expected": {
+        "statuses": [
+          "conflict",
+          "committed"
+        ],
+        "stock": 2,
+        "resourceVersion": 2,
+        "orders": 1,
+        "events": 1,
+        "outcomeRecords": 2
+      },
+      "initialState": {
+        "tenants": {
+          "t1": {
+            "stock": 1,
+            "resourceVersion": 0,
+            "commitVersion": 0,
+            "projectionWatermark": 0,
+            "orders": {},
+            "grants": {
+              "u1": {
+                "kind": "person",
+                "allowed": true
+              }
+            },
+            "sentinel": "untouched",
+            "references": [
+              {
+                "id": "c1",
+                "kind": "customer",
+                "state": "unchanged"
+              },
+              {
+                "id": "p1",
+                "kind": "product",
+                "state": "unchanged"
+              },
+              {
+                "id": "c2",
+                "kind": "customer",
+                "state": "untouched"
+              }
+            ]
+          }
+        }
+      },
+      "requests": [
+        {
+          "id": "a",
+          "tenant": "t1",
+          "actor": "u1",
+          "service": "client-1",
+          "action": "reserve",
+          "token": "stale",
+          "revision": "r1",
+          "input": {
+            "order": "o1",
+            "product": "p1",
+            "quantity": 1
+          },
+          "expectedVersion": 0
+        },
+        {
+          "id": "b",
+          "tenant": "t1",
+          "actor": "u1",
+          "service": "client-1",
+          "action": "reserve",
+          "token": "current",
+          "revision": "r1",
+          "input": {
+            "order": "o1",
+            "product": "p1",
+            "quantity": 1
+          },
+          "expectedVersion": 1
+        }
+      ],
+      "steps": [
+        {
+          "kind": "replenish",
+          "tenant": "t1",
+          "stock": 3
+        },
+        {
+          "kind": "invoke",
+          "request": "a"
+        },
+        {
+          "kind": "invoke",
+          "request": "b"
+        }
+      ],
+      "sameResultPairs": []
+    }
+  ],
+  "resultEquality": "Exact durable payload including status/code/identities/version/receipt/noOp, not attempt envelope. Hidden first durable result is used for lost acknowledgement.",
+  "precedence": [
+    "Authorize current principal before protected result disclosure",
+    "Look up stable token scope",
+    "Expired retained key refuses before payload comparison",
+    "Compare exact revision/input/expectedVersion on retained result",
+    "Replay matching retained result without handler or precondition evaluation",
+    "For a new key require current deployed revision then evaluate transaction",
+    "Persist admitted terminal business rejection/conflict; injected execution faults roll back ledger"
+  ]
+}

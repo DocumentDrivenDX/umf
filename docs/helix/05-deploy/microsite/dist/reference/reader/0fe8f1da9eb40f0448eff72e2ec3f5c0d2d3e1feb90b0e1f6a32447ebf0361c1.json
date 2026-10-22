@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"validateCsvBooleanLexical\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "sourceInput",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"CsvBooleanLexicalRequest\"]"
+      ],
+      "name": "requestInput",
+      "optional": false,
+      "type": "CsvBooleanLexicalRequest"
+    }
+  ],
+  "purpose": "Explicit source-token conversion only; public Core Field validation owns validity.",
+  "related": [],
+  "returns": "CsvBooleanLexicalReceipt",
+  "task": "Read and validate",
+  "type": "(sourceInput: Document, requestInput: CsvBooleanLexicalRequest) => CsvBooleanLexicalReceipt"
+}

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 // UMF owns schemas; consumers own downloads, parsing and data execution.
 import {mkdir} from 'node:fs/promises';
 import {join} from 'node:path';

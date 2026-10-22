@@ -1,0 +1,175 @@
+{
+  "data": {
+    "extensionId": "umf.postgresql.facets",
+    "manifest": {
+      "capabilities": {
+        "directions": [
+          "import",
+          "export"
+        ],
+        "evidence": [
+          "tests/core-ideals/facets-postgresql.test.ts",
+          "fixtures/validation/facets-postgresql-catalog-evidence.json",
+          "fixtures/validation/facets-postgresql-resolved-native.json",
+          "fixtures/validation/facets-postgresql-classification-browser.json",
+          "tests/core-ideals/facets-postgresql-projection.test.ts",
+          "tests/core-ideals/facets-postgresql-projection-native.test.ts",
+          "spec/core/facets-postgresql-projection.schema.json",
+          "fixtures/validation/facets-postgresql-projection-native.json",
+          "fixtures/validation/facets-postgresql-projection-browser.json"
+        ],
+        "native": {
+          "subset": "Scalar catalog-column facets with explicit stored/new non-null value scope, verified CHECKs and retained native refinements; no native equivalence; authored projection uses explicit checked, type-modifier or carrier-only SQL with resource limits and conversion residuals",
+          "system": "PostgreSQL",
+          "version": "17.4"
+        },
+        "validation": "structural"
+      },
+      "coreVersion": "0.10.0",
+      "description": "PostgreSQL facet classification and authored projection with retained source meaning",
+      "id": "umf.postgresql.facets",
+      "schema": {
+        "$id": "urn:umf:postgresql:facet-binding:1.0.0",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": true,
+        "properties": {
+          "binding": {
+            "const": {
+              "id": "umf.postgresql.facets",
+              "version": "1.0.0"
+            }
+          },
+          "datumFormat": {
+            "enum": [
+              "little-endian-datum64",
+              "unresolved"
+            ]
+          },
+          "nativeSupplement": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "obligation": {
+            "enum": [
+              "value-domain",
+              "exact-input"
+            ]
+          },
+          "observations": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "basis": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "concept": {
+                  "enum": [
+                    "length",
+                    "decimal",
+                    "integerWidth",
+                    "conversion",
+                    "native"
+                  ]
+                },
+                "idealPath": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "interpretation": {
+                  "enum": [
+                    "declared",
+                    "inferred",
+                    "unknown",
+                    "unsupported"
+                  ]
+                },
+                "nativePath": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "outcome": {
+                  "enum": [
+                    "exact",
+                    "approximated",
+                    "not-expressible",
+                    "unknown"
+                  ]
+                }
+              },
+              "required": [
+                "concept",
+                "idealPath",
+                "nativePath",
+                "interpretation",
+                "outcome",
+                "basis"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "origin": {
+            "const": "classified"
+          },
+          "outcome": {
+            "enum": [
+              "exact",
+              "approximated",
+              "not-expressible",
+              "unknown"
+            ]
+          },
+          "profile": {
+            "enum": [
+              "stored-value",
+              "new-value",
+              "unresolved"
+            ]
+          }
+        },
+        "required": [
+          "origin",
+          "nativeSupplement",
+          "binding",
+          "profile",
+          "datumFormat",
+          "obligation",
+          "outcome",
+          "observations"
+        ],
+        "title": "Retained PostgreSQL facet interpretation profile",
+        "type": "object"
+      },
+      "scopes": [
+        "element"
+      ],
+      "semantics": "CONTRACT-040 and TD-043; facet classification and authored projection; strict/report residuals and verified source recovery; full binding acceptance remains gated by the compatibility refresh",
+      "version": "1.0.0"
+    },
+    "registration": {
+      "apiIds": [],
+      "coreProfiles": [],
+      "mode": "unmapped"
+    },
+    "schemaId": "[\"schema\",\"spec/extensions/postgresql-facets/schema.json\",\"\"]",
+    "version": "1.0.0"
+  },
+  "id": "[\"extension\",\"umf.postgresql.facets\",\"1.0.0\"]",
+  "kind": "extension",
+  "links": [
+    "[\"guide\",\"extensions\"]",
+    "[\"schema\",\"spec/extensions/postgresql-facets/schema.json\",\"\"]",
+    "[\"integration\",\"umf.postgresql.facets@1.0.0:import\"]",
+    "[\"integration\",\"umf.postgresql.facets@1.0.0:export\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 4076,
+      "path": "spec/extensions/postgresql-facets/package.json",
+      "sha256": "183011f98327c0af7ab96ac083696cea6546fe3a209f36e5f4e60aca8f5244a4"
+    }
+  ],
+  "summary": "PostgreSQL facet classification and authored projection with retained source meaning",
+  "title": "umf.postgresql.facets · 1.0.0"
+}

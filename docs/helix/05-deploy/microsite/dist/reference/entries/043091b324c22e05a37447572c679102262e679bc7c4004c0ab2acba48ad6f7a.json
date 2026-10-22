@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 6377,
+        "line": 51,
+        "path": "src/core-ideals/tablespec-field.ts",
+        "sha256": "d2b13260266d9a0fdfa91f5854a6659c15fd91a3beadeb38ec4426221fd4f65e"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "verifyTableSpecFieldClassification",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: TableSpecFieldClassification, current: Document): TableSpecFieldClassification"
+    ]
+  },
+  "id": "[\"api\",\".\",\"verifyTableSpecFieldClassification\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 6377,
+      "line": 51,
+      "path": "src/core-ideals/tablespec-field.ts",
+      "sha256": "d2b13260266d9a0fdfa91f5854a6659c15fd91a3beadeb38ec4426221fd4f65e"
+    }
+  ],
+  "summary": "Recompute the native basis and reject classification receipts after any target edit.",
+  "title": "verifyTableSpecFieldClassification"
+}

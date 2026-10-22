@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"projectAvroToJsonSchema\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "source",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"AvroDocumentBindings\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "AvroDocumentBindings"
+    }
+  ],
+  "purpose": "Projects schema shapes; instance encoding is an explicit caller responsibility.",
+  "related": [],
+  "returns": "AvroDocumentProjection",
+  "task": "Import and export",
+  "type": "(source: Document, input: AvroDocumentBindings) => AvroDocumentProjection"
+}

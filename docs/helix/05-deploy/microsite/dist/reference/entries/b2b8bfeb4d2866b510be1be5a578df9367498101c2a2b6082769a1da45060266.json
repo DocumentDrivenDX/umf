@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 15755,
+        "line": 50,
+        "path": "src/access/index.ts",
+        "sha256": "a658a89077e0c80ad517dff1e3512e233d2bdd085a485da01aae216196db03bd"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "generatePythonClient",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(request: PythonClientRequest): PythonClientResult"
+    ]
+  },
+  "id": "[\"api\",\".\",\"generatePythonClient\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 15755,
+      "line": 50,
+      "path": "src/access/index.ts",
+      "sha256": "a658a89077e0c80ad517dff1e3512e233d2bdd085a485da01aae216196db03bd"
+    }
+  ],
+  "summary": "Pure portable generator: current UMF source -> stdlib-only typed Python requests.",
+  "title": "generatePythonClient"
+}

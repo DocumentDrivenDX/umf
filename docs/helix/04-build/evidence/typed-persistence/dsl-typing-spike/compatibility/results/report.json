@@ -1,0 +1,1916 @@
+{
+  "kind": "bounded-compatibility-spike",
+  "timestamp": "2026-10-15T17:52:32.393840+00:00",
+  "sourceSpecificationRevision": "dd7b81f6bb5aa6a08cb97bb8c4882eed683dcaba",
+  "status": "pass",
+  "sliceStatus": "BOUNDED_COMPATIBILITY_ACCEPTED; production replay UNTESTED",
+  "scope": "spike-emitted fixture against exact installed minimal runtime wheel; not production generator/runtime acceptance",
+  "sources": {
+    "README.md": "4d0de46332fc5d6c44682286bbf6ccbd53524f50779b34013a1b852fc4ee991d",
+    "artifacts/umf_access-0.0.0+tp001.spike-py3-none-any.whl": "bafd7e28b4006a7d4c1fbfe49955de2cad15580a6fbe8818009aa2c986e4b5d2",
+    "attempts/README.md": "60c08bd5d8f00e348d5d7939f46f4a112617ffd6c3556ba28ef321eae65093f9",
+    "attempts/first-corrected-installed-wheel-report.json": "029615f71db4bddd88ea3974d16daddbba3f110ab6cd2775e607b37d9ea14deb",
+    "attempts/original-signature-0.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "attempts/original-signature-0.stdout": "5d4b6d285b77932e3d08212c3b4974d0a803f98ec60408ac6ccf6a063fa6c19e",
+    "attempts/original-signature-1.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "attempts/original-signature-1.stdout": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332",
+    "attempts/original-signature-reproduction.json": "a9aae975482c80bd0d9ca4d06a2f003d5e92bebf4902c0ce63b900a343f6762e",
+    "attempts/original_minimal_signature.py": "537cba449315d3415a342ba3d66ba5d5774c314de2f1898db4fc4e03b624904e",
+    "attempts/overload_probe.py": "9959ad10534aac5ffad6d539f4a76d0e94dd39b88990d5d84594dc59dd9a8733",
+    "attempts/red-presence.log": "08f6faae850515ceff3f2a105f3976b362e9a7c614dd46f0b7331501f41f0b09",
+    "attempts/red-static.log": "35c2d7d9206583f30cfe28207fa3fa3a806d80d7083174a9777a8563212bedfa",
+    "calls-template.txt": "63f3da20c729264efa42e1d25fc79823eec5151301ffb6923c686ad011abd182",
+    "emit_fixture.py": "d66707fd254377ac9cc58763bf9f8928cf360e4a1db41bd359ae5dd8a5bef40b",
+    "expected.json": "09448acb5504aa6d1e70e254f21f95f9da779102223b29fa412a22cab02b0798",
+    "findings.md": "cdde6ccac2c080ea6b3e0af12e9ec7000dbd53aff1549038b4bf9c4a300d4ccb",
+    "fixture.json": "471b0d661e90824feafc401c0fbf7656ec7c2c3852a5d349a87cacb3521e26e8",
+    "generated/calls.py": "cac6847fe96e8962814b39a2bccefa66290120d42f09245af349f33faeb0509a",
+    "generated/models.py": "3b40d3a17f3a936db3b5dac9e76e92a0e8b6372bb4f09f64529a16b1dc147932",
+    "mypy.ini": "bcd33df56ddfec8fcd556436f1713490ab0165cabfa36983496ca24b30ef88b8",
+    "negative/call_keyword.py": "7dc3f79fd2c328e698e1c8bdc5d7e48015269dcd746548a00a8938236f3a43ed",
+    "negative/call_missing.py": "33180aded9a4583505005e04e722be44f12f4cd3d6983d20be7f2c4c32779c8f",
+    "negative/call_type.py": "485685808bf175a535ba99dfa1b9eeab664ca058e7dfc2a0c45aa4363806a6a5",
+    "negative/count_iterated.py": "7da6dd45b5b579c77d4d7fa6b24b4f5cf65dd57c6fa072d2b6b9173244b699bb",
+    "negative/first_optional.py": "e261bd22c8af41568abe8140703515243849afa01f8d7677a2ad7b1afb098d6b",
+    "negative/foreign_filter.py": "62cadeaba1519086c899db8d3ef519e212e3e9556b24697a1cfb6f99de4494d8",
+    "negative/foreign_projection.py": "d521120ba6caf3ac03b57a0881c3e73f11b24c364af3cc69744b3059a949ab87",
+    "negative/foreign_select.py": "7daef389ec259ada0bae79941fd9f14d5d1e40dcf6af13366f6c1acf4cff9377",
+    "negative/include_key.py": "e573c5c74cb2dd714986fe5a3f38ef9111d6a19b19dd0e2475274234dce091e1",
+    "negative/ninth_select.py": "dd50ed411ab90d628cde4db4091080d9252e346bb65555fc1b19104c563f1add",
+    "negative/none_is_absent.py": "3d80d10d2340d029d0127a68f334a19336eb37af516ebe1982b245f1a3977418",
+    "negative/nullable_nonnull.py": "ec39308d42c3b426e57dd69ec8e091fda1ee1929f62d185a6f331911ea1627b2",
+    "negative/page_indexed.py": "35ca7228ba500aef4d6b699cc8fc7c3a9f1990758e48f1b95456524f2aca26b9",
+    "negative/page_key.py": "3fbe82028e5e4bcb96accd4ff4ed0fe81fadc7e06d7e2e175048819dcd47e2ec",
+    "negative/patch_keyword.py": "5ad0d59e2555d193c1170f9579631123f8d9dc974f6f4b486479a576cbd484e7",
+    "negative/patch_null.py": "5318480a7a39a7974bca58ebf30867b0f5d24c2091f129f2eca2ee7244ee52de",
+    "negative/ranked_count.py": "88fa2d84a3be5833a8327231b3d081851b62fd80cfd722ae136012b21ce5277e",
+    "negative/ranked_page.py": "c98bc1a02fea82425b0a5b6bf37ce4a8c99e05fc17c5cbc2fcc60615d5747e37",
+    "negative/ranked_update.py": "247f3a040e7358b8af6a0b2b21583f977fb54a73122b61403fcc8f013eda54f5",
+    "negative/replay_executor.py": "7362a006a321262871f0889cac8c8289e776e16413e316b8406b3ed9d762b679",
+    "negative/unknown_column.py": "636cfa31bd028633bcaeac80b07f26d31bfaedd5c35a02d00139946ff64eb3ba",
+    "negative/update_generated.py": "e4733ef731552fc7f18aec47dcb128f7dde8c23d5ff7edc568f9e1bd57286c1f",
+    "negative/update_immutable.py": "19273940e5fde116daec4db7e1661ded383c49504b61350ef3b4cb0552400f0a",
+    "negative/update_unknown.py": "e4b0df204d8f8229bf94ba3ed5af90fa3ccaa6f70a4e826ba43353603c77168a",
+    "negative/update_value.py": "561de59819e08b81d8ad06d93fd360c95214d51671a737d9171b8980bf835692",
+    "negative/when_reserved.py": "fea66793ddaadd2cdb02cc6d5d70162ba1ab38c02ec562d78acf26a1811bc6e5",
+    "negative/wrong_eq.py": "74e3e38af68f7f5bac4549688fc49d0ab873910cce7525bb27053b4bf506c88d",
+    "negative/wrong_ne.py": "ee78dc701e3919d141abf1383acfaa028492e8d92d03677e76b868950eabcb5e",
+    "negative/wrong_operand.py": "d55271cedf689e49e738d7441d82286d1de716d16f0f9b1f318663e519c7b4aa",
+    "negative/wrong_param.py": "c400eeadd72cc862a88c09effa4a6b3c430ba535d6e66a14f2269416508d1be0",
+    "positive.py": "792686511fc59d3b840b7750d55e85b339d7c3eccdc8e26907c97cae80ea343a",
+    "profile.json": "da007b4d97a5e59691f42184848ffa15e02075c8883a38be5150dbac5676c961",
+    "pyrightconfig.json": "6d29a76bbfdca3a3215e1cc7287bf815606598047cab92c26ca7036faa5f17bf",
+    "run.py": "3641db4b4276dcae3808492b94119462a24d7fa8245b30ef71e9e92bf441f4cd",
+    "runtime_fixture.py": "fffcbfa114ed30362b92258a699f873af0360be62df4441c78382d7f02b99f65",
+    "test_emission.py": "a7cac96c2d9bf12d9ea29abfecdc37b808aa822e22819004d9708478e21cd6af",
+    "test_presence.py": "6066990a7ba5106a946361849536a34c3b36f97c188f36358cd49fa3edeb1fa1",
+    "test_profile.py": "564536111c01e0e0cb4fa71c649d860c477e910224f280bfd140ec57013ce9c1"
+  },
+  "governingSources": {
+    "docs/helix/04-build/typed-persistence-design.md": "22c600e8cfb882ec390be9d6278b993000825a107a6c478a3fb7a75917d6aeac",
+    "docs/helix/02-design/contracts/CONTRACT-067-access-sdk-generator.md": "bf0a23ef581592c6b876a5c8d2ec3a288731bc266c82518b1979c4502802f2b2",
+    "docs/helix/02-design/contracts/CONTRACT-068-generated-python-types.md": "38d2b7322252397e41aa24ca6513d50f33903b0a90d111a7e30993fef4fe3dc9",
+    "docs/helix/02-design/contracts/CONTRACT-071-query-command-catalog.md": "28d51f1419e6e249c5baed24b2ccd73fef4f600e356cd12c844497e96c0fe570",
+    "docs/helix/02-design/technical-designs/TD-082-type-checked-query-declarations.md": "b503292f50ea1394bf91f79b1af395cb6753e108f7b5a335da4fde8a3e2f64f6",
+    "docs/helix/04-build/evidence/typed-persistence/b-tp-000/verification.json": "75f30dd9c79da596baa98c71efcd0a9f10109375fcad97bae1d8d0d9b285da26"
+  },
+  "profile": {
+    "checkerPythonTarget": "3.12",
+    "configurationSha256": {
+      "mypy.ini": "bcd33df56ddfec8fcd556436f1713490ab0165cabfa36983496ca24b30ef88b8",
+      "pyrightconfig.json": "6d29a76bbfdca3a3215e1cc7287bf815606598047cab92c26ca7036faa5f17bf"
+    },
+    "dependencies": {
+      "annotated-types": "0.8.0",
+      "ast_serialize": "0.13.0",
+      "librt": "0.16.0",
+      "mypy": "2.4.0",
+      "mypy_extensions": "1.1.0",
+      "nodeenv": "1.11.0",
+      "pathspec": "1.1.1",
+      "pydantic": "2.14.1",
+      "pydantic_core": "2.50.1",
+      "pyright": "1.1.414",
+      "typing-inspection": "0.4.4",
+      "typing_extensions": "4.16.0"
+    },
+    "driversAndPlatforms": {
+      "selected": [],
+      "status": "UNTESTED; no native support claim"
+    },
+    "id": "umf-access-compatibility-fixture",
+    "isolatedEnvironment": "/private/tmp/umf-tp001-compat-env/bin/python",
+    "python": "3.14.8",
+    "runtimeAbi": {
+      "abi": "umf-access-runtime/0.1",
+      "distribution": "umf-access",
+      "scope": "minimal installed spike wheel only; production ABI UNTESTED",
+      "version": "0.0.0+tp001.spike"
+    },
+    "runtimeWheelSha256": "bafd7e28b4006a7d4c1fbfe49955de2cad15580a6fbe8818009aa2c986e4b5d2",
+    "scope": "bounded spike-emitted compatibility fixture with trusted fixed scaffolding; not production ABI qualification",
+    "version": "0.1.0"
+  },
+  "commands": [
+    {
+      "label": "presence",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        ".",
+        "-p",
+        "test_presence.py"
+      ],
+      "exitCode": 0,
+      "passed": true
+    },
+    {
+      "label": "emission-controls",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        ".",
+        "-p",
+        "test_emission.py"
+      ],
+      "exitCode": 0,
+      "passed": true
+    },
+    {
+      "label": "profile-controls",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        ".",
+        "-p",
+        "test_profile.py"
+      ],
+      "exitCode": 0,
+      "passed": true
+    },
+    {
+      "label": "mypy-positive",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-m",
+        "mypy",
+        "--config-file",
+        "mypy.ini",
+        "--output",
+        "json",
+        "generated/models.py",
+        "generated/calls.py",
+        "positive.py"
+      ],
+      "exitCode": 0,
+      "passed": true
+    },
+    {
+      "label": "mypy-call_keyword",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-m",
+        "mypy",
+        "--config-file",
+        "mypy.ini",
+        "--output",
+        "json",
+        "negative/call_keyword.py"
+      ],
+      "exitCode": 1,
+      "passed": true,
+      "expected": [
+        [
+          7,
+          "call-arg"
+        ]
+      ],
+      "observed": [
+        [
+          7,
+          "call-arg"
+        ]
+      ]
+    },
+    {
+      "label": "mypy-call_missing",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-m",
+        "mypy",
+        "--config-file",
+        "mypy.ini",
+        "--output",
+        "json",
+        "negative/call_missing.py"
+      ],
+      "exitCode": 1,
+      "passed": true,
+      "expected": [
+        [
+          7,
+          "call-arg"
+        ]
+      ],
+      "observed": [
+        [
+          7,
+          "call-arg"
+        ]
+      ]
+    },
+    {
+      "label": "mypy-call_type",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-m",
+        "mypy",
+        "--config-file",
+        "mypy.ini",
+        "--output",
+        "json",
+        "negative/call_type.py"
+      ],
+      "exitCode": 1,
+      "passed": true,
+      "expected": [
+        [
+          7,
+          "arg-type"
+        ]
+      ],
+      "observed": [
+        [
+          7,
+          "arg-type"
+        ]
+      ]
+    },
+    {
+      "label": "mypy-count_iterated",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-m",
+        "mypy",
+        "--config-file",
+        "mypy.ini",
+        "--output",
+        "json",
+        "negative/count_iterated.py"
+      ],
+      "exitCode": 1,
+      "passed": true,
+      "expected": [
+        [
+          7,
+          "call-overload"
+        ]
+      ],
+      "observed": [
+        [
+          7,
+          "call-overload"
+        ]
+      ]
+    },
+    {
+      "label": "mypy-first_optional",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-m",
+        "mypy",
+        "--config-file",
+        "mypy.ini",
+        "--output",
+        "json",
+        "negative/first_optional.py"
+      ],
+      "exitCode": 1,
+      "passed": true,
+      "expected": [
+        [
+          7,
+          "union-attr"
+        ]
+      ],
+      "observed": [
+        [
+          7,
+          "union-attr"
+        ]
+      ]
+    },
+    {
+      "label": "mypy-foreign_filter",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-m",
+        "mypy",
+        "--config-file",
+        "mypy.ini",
+        "--output",
+        "json",
+        "negative/foreign_filter.py"
+      ],
+      "exitCode": 1,
+      "passed": true,
+      "expected": [
+        [
+          7,
+          "arg-type"
+        ]
+      ],
+      "observed": [
+        [
+          7,
+          "arg-type"
+        ]
+      ]
+    },
+    {
+      "label": "mypy-foreign_projection",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-m",
+        "mypy",
+        "--config-file",
+        "mypy.ini",
+        "--output",
+        "json",
+        "negative/foreign_projection.py"
+      ],
+      "exitCode": 1,
+      "passed": true,
+      "expected": [
+        [
+          7,
+          "arg-type"
+        ]
+      ],
+      "observed": [
+        [
+          7,
+          "arg-type"
+        ]
+      ]
+    },
+    {
+      "label": "mypy-foreign_select",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-m",
+        "mypy",
+        "--config-file",
+        "mypy.ini",
+        "--output",
+        "json",
+        "negative/foreign_select.py"
+      ],
+      "exitCode": 1,
+      "passed": true,
+      "expected": [
+        [
+          7,
+          "arg-type"
+        ]
+      ],
+      "observed": [
+        [
+          7,
+          "arg-type"
+        ]
+      ]
+    },
+    {
+      "label": "mypy-include_key",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-m",
+        "mypy",
+        "--config-file",
+        "mypy.ini",
+        "--output",
+        "json",
+        "negative/include_key.py"
+      ],
+      "exitCode": 1,
+      "passed": true,
+      "expected": [
+        [
+          7,
+          "assignment"
+        ]
+      ],
+      "observed": [
+        [
+          7,
+          "assignment"
+        ]
+      ]
+    },
+    {
+      "label": "mypy-ninth_select",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-m",
+        "mypy",
+        "--config-file",
+        "mypy.ini",
+        "--output",
+        "json",
+        "negative/ninth_select.py"
+      ],
+      "exitCode": 1,
+      "passed": true,
+      "expected": [
+        [
+          7,
+          "call-overload"
+        ]
+      ],
+      "observed": [
+        [
+          7,
+          "call-overload"
+        ]
+      ]
+    },
+    {
+      "label": "mypy-none_is_absent",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-m",
+        "mypy",
+        "--config-file",
+        "mypy.ini",
+        "--output",
+        "json",
+        "negative/none_is_absent.py"
+      ],
+      "exitCode": 1,
+      "passed": true,
+      "expected": [
+        [
+          7,
+          "arg-type"
+        ]
+      ],
+      "observed": [
+        [
+          7,
+          "arg-type"
+        ]
+      ]
+    },
+    {
+      "label": "mypy-nullable_nonnull",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-m",
+        "mypy",
+        "--config-file",
+        "mypy.ini",
+        "--output",
+        "json",
+        "negative/nullable_nonnull.py"
+      ],
+      "exitCode": 1,
+      "passed": true,
+      "expected": [
+        [
+          7,
+          "arg-type"
+        ]
+      ],
+      "observed": [
+        [
+          7,
+          "arg-type"
+        ]
+      ]
+    },
+    {
+      "label": "mypy-page_indexed",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-m",
+        "mypy",
+        "--config-file",
+        "mypy.ini",
+        "--output",
+        "json",
+        "negative/page_indexed.py"
+      ],
+      "exitCode": 1,
+      "passed": true,
+      "expected": [
+        [
+          7,
+          "index"
+        ]
+      ],
+      "observed": [
+        [
+          7,
+          "index"
+        ]
+      ]
+    },
+    {
+      "label": "mypy-page_key",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-m",
+        "mypy",
+        "--config-file",
+        "mypy.ini",
+        "--output",
+        "json",
+        "negative/page_key.py"
+      ],
+      "exitCode": 1,
+      "passed": true,
+      "expected": [
+        [
+          7,
+          "assignment"
+        ]
+      ],
+      "observed": [
+        [
+          7,
+          "assignment"
+        ]
+      ]
+    },
+    {
+      "label": "mypy-patch_keyword",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-m",
+        "mypy",
+        "--config-file",
+        "mypy.ini",
+        "--output",
+        "json",
+        "negative/patch_keyword.py"
+      ],
+      "exitCode": 1,
+      "passed": true,
+      "expected": [
+        [
+          7,
+          "call-arg"
+        ]
+      ],
+      "observed": [
+        [
+          7,
+          "call-arg"
+        ]
+      ]
+    },
+    {
+      "label": "mypy-patch_null",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-m",
+        "mypy",
+        "--config-file",
+        "mypy.ini",
+        "--output",
+        "json",
+        "negative/patch_null.py"
+      ],
+      "exitCode": 1,
+      "passed": true,
+      "expected": [
+        [
+          7,
+          "arg-type"
+        ]
+      ],
+      "observed": [
+        [
+          7,
+          "arg-type"
+        ]
+      ]
+    },
+    {
+      "label": "mypy-ranked_count",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-m",
+        "mypy",
+        "--config-file",
+        "mypy.ini",
+        "--output",
+        "json",
+        "negative/ranked_count.py"
+      ],
+      "exitCode": 1,
+      "passed": true,
+      "expected": [
+        [
+          7,
+          "attr-defined"
+        ]
+      ],
+      "observed": [
+        [
+          7,
+          "attr-defined"
+        ]
+      ]
+    },
+    {
+      "label": "mypy-ranked_page",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-m",
+        "mypy",
+        "--config-file",
+        "mypy.ini",
+        "--output",
+        "json",
+        "negative/ranked_page.py"
+      ],
+      "exitCode": 1,
+      "passed": true,
+      "expected": [
+        [
+          7,
+          "attr-defined"
+        ]
+      ],
+      "observed": [
+        [
+          7,
+          "attr-defined"
+        ]
+      ]
+    },
+    {
+      "label": "mypy-ranked_update",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-m",
+        "mypy",
+        "--config-file",
+        "mypy.ini",
+        "--output",
+        "json",
+        "negative/ranked_update.py"
+      ],
+      "exitCode": 1,
+      "passed": true,
+      "expected": [
+        [
+          7,
+          "attr-defined"
+        ]
+      ],
+      "observed": [
+        [
+          7,
+          "attr-defined"
+        ]
+      ]
+    },
+    {
+      "label": "mypy-replay_executor",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-m",
+        "mypy",
+        "--config-file",
+        "mypy.ini",
+        "--output",
+        "json",
+        "negative/replay_executor.py"
+      ],
+      "exitCode": 1,
+      "passed": true,
+      "expected": [
+        [
+          7,
+          "arg-type"
+        ]
+      ],
+      "observed": [
+        [
+          7,
+          "arg-type"
+        ]
+      ]
+    },
+    {
+      "label": "mypy-unknown_column",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-m",
+        "mypy",
+        "--config-file",
+        "mypy.ini",
+        "--output",
+        "json",
+        "negative/unknown_column.py"
+      ],
+      "exitCode": 1,
+      "passed": true,
+      "expected": [
+        [
+          7,
+          "attr-defined"
+        ]
+      ],
+      "observed": [
+        [
+          7,
+          "attr-defined"
+        ]
+      ]
+    },
+    {
+      "label": "mypy-update_generated",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-m",
+        "mypy",
+        "--config-file",
+        "mypy.ini",
+        "--output",
+        "json",
+        "negative/update_generated.py"
+      ],
+      "exitCode": 1,
+      "passed": true,
+      "expected": [
+        [
+          7,
+          "call-arg"
+        ]
+      ],
+      "observed": [
+        [
+          7,
+          "call-arg"
+        ]
+      ]
+    },
+    {
+      "label": "mypy-update_immutable",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-m",
+        "mypy",
+        "--config-file",
+        "mypy.ini",
+        "--output",
+        "json",
+        "negative/update_immutable.py"
+      ],
+      "exitCode": 1,
+      "passed": true,
+      "expected": [
+        [
+          7,
+          "call-arg"
+        ]
+      ],
+      "observed": [
+        [
+          7,
+          "call-arg"
+        ]
+      ]
+    },
+    {
+      "label": "mypy-update_unknown",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-m",
+        "mypy",
+        "--config-file",
+        "mypy.ini",
+        "--output",
+        "json",
+        "negative/update_unknown.py"
+      ],
+      "exitCode": 1,
+      "passed": true,
+      "expected": [
+        [
+          7,
+          "call-arg"
+        ]
+      ],
+      "observed": [
+        [
+          7,
+          "call-arg"
+        ]
+      ]
+    },
+    {
+      "label": "mypy-update_value",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-m",
+        "mypy",
+        "--config-file",
+        "mypy.ini",
+        "--output",
+        "json",
+        "negative/update_value.py"
+      ],
+      "exitCode": 1,
+      "passed": true,
+      "expected": [
+        [
+          7,
+          "arg-type"
+        ]
+      ],
+      "observed": [
+        [
+          7,
+          "arg-type"
+        ]
+      ]
+    },
+    {
+      "label": "mypy-when_reserved",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-m",
+        "mypy",
+        "--config-file",
+        "mypy.ini",
+        "--output",
+        "json",
+        "negative/when_reserved.py"
+      ],
+      "exitCode": 1,
+      "passed": true,
+      "expected": [
+        [
+          7,
+          "attr-defined"
+        ]
+      ],
+      "observed": [
+        [
+          7,
+          "attr-defined"
+        ]
+      ]
+    },
+    {
+      "label": "mypy-wrong_eq",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-m",
+        "mypy",
+        "--config-file",
+        "mypy.ini",
+        "--output",
+        "json",
+        "negative/wrong_eq.py"
+      ],
+      "exitCode": 1,
+      "passed": true,
+      "expected": [
+        [
+          7,
+          "arg-type"
+        ]
+      ],
+      "observed": [
+        [
+          7,
+          "arg-type"
+        ]
+      ]
+    },
+    {
+      "label": "mypy-wrong_ne",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-m",
+        "mypy",
+        "--config-file",
+        "mypy.ini",
+        "--output",
+        "json",
+        "negative/wrong_ne.py"
+      ],
+      "exitCode": 1,
+      "passed": true,
+      "expected": [
+        [
+          7,
+          "arg-type"
+        ]
+      ],
+      "observed": [
+        [
+          7,
+          "arg-type"
+        ]
+      ]
+    },
+    {
+      "label": "mypy-wrong_operand",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-m",
+        "mypy",
+        "--config-file",
+        "mypy.ini",
+        "--output",
+        "json",
+        "negative/wrong_operand.py"
+      ],
+      "exitCode": 1,
+      "passed": true,
+      "expected": [
+        [
+          7,
+          "operator"
+        ]
+      ],
+      "observed": [
+        [
+          7,
+          "operator"
+        ]
+      ]
+    },
+    {
+      "label": "mypy-wrong_param",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-m",
+        "mypy",
+        "--config-file",
+        "mypy.ini",
+        "--output",
+        "json",
+        "negative/wrong_param.py"
+      ],
+      "exitCode": 1,
+      "passed": true,
+      "expected": [
+        [
+          7,
+          "operator"
+        ]
+      ],
+      "observed": [
+        [
+          7,
+          "operator"
+        ]
+      ]
+    },
+    {
+      "label": "pyright-positive",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-m",
+        "pyright",
+        "--outputjson",
+        "--pythonpath",
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "--project",
+        "pyrightconfig.json",
+        "generated/models.py",
+        "generated/calls.py",
+        "positive.py"
+      ],
+      "exitCode": 0,
+      "passed": true
+    },
+    {
+      "label": "pyright-call_keyword",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-m",
+        "pyright",
+        "--outputjson",
+        "--pythonpath",
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "--project",
+        "pyrightconfig.json",
+        "negative/call_keyword.py"
+      ],
+      "exitCode": 1,
+      "passed": true,
+      "expected": [
+        [
+          7,
+          "reportCallIssue"
+        ],
+        [
+          7,
+          "reportCallIssue"
+        ]
+      ],
+      "observed": [
+        [
+          7,
+          "reportCallIssue"
+        ],
+        [
+          7,
+          "reportCallIssue"
+        ]
+      ]
+    },
+    {
+      "label": "pyright-call_missing",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-m",
+        "pyright",
+        "--outputjson",
+        "--pythonpath",
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "--project",
+        "pyrightconfig.json",
+        "negative/call_missing.py"
+      ],
+      "exitCode": 1,
+      "passed": true,
+      "expected": [
+        [
+          7,
+          "reportCallIssue"
+        ]
+      ],
+      "observed": [
+        [
+          7,
+          "reportCallIssue"
+        ]
+      ]
+    },
+    {
+      "label": "pyright-call_type",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-m",
+        "pyright",
+        "--outputjson",
+        "--pythonpath",
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "--project",
+        "pyrightconfig.json",
+        "negative/call_type.py"
+      ],
+      "exitCode": 1,
+      "passed": true,
+      "expected": [
+        [
+          7,
+          "reportArgumentType"
+        ]
+      ],
+      "observed": [
+        [
+          7,
+          "reportArgumentType"
+        ]
+      ]
+    },
+    {
+      "label": "pyright-count_iterated",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-m",
+        "pyright",
+        "--outputjson",
+        "--pythonpath",
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "--project",
+        "pyrightconfig.json",
+        "negative/count_iterated.py"
+      ],
+      "exitCode": 1,
+      "passed": true,
+      "expected": [
+        [
+          7,
+          "reportArgumentType"
+        ]
+      ],
+      "observed": [
+        [
+          7,
+          "reportArgumentType"
+        ]
+      ]
+    },
+    {
+      "label": "pyright-first_optional",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-m",
+        "pyright",
+        "--outputjson",
+        "--pythonpath",
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "--project",
+        "pyrightconfig.json",
+        "negative/first_optional.py"
+      ],
+      "exitCode": 1,
+      "passed": true,
+      "expected": [
+        [
+          7,
+          "reportOptionalMemberAccess"
+        ]
+      ],
+      "observed": [
+        [
+          7,
+          "reportOptionalMemberAccess"
+        ]
+      ]
+    },
+    {
+      "label": "pyright-foreign_filter",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-m",
+        "pyright",
+        "--outputjson",
+        "--pythonpath",
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "--project",
+        "pyrightconfig.json",
+        "negative/foreign_filter.py"
+      ],
+      "exitCode": 1,
+      "passed": true,
+      "expected": [
+        [
+          7,
+          "reportArgumentType"
+        ]
+      ],
+      "observed": [
+        [
+          7,
+          "reportArgumentType"
+        ]
+      ]
+    },
+    {
+      "label": "pyright-foreign_projection",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-m",
+        "pyright",
+        "--outputjson",
+        "--pythonpath",
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "--project",
+        "pyrightconfig.json",
+        "negative/foreign_projection.py"
+      ],
+      "exitCode": 1,
+      "passed": true,
+      "expected": [
+        [
+          7,
+          "reportArgumentType"
+        ]
+      ],
+      "observed": [
+        [
+          7,
+          "reportArgumentType"
+        ]
+      ]
+    },
+    {
+      "label": "pyright-foreign_select",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-m",
+        "pyright",
+        "--outputjson",
+        "--pythonpath",
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "--project",
+        "pyrightconfig.json",
+        "negative/foreign_select.py"
+      ],
+      "exitCode": 1,
+      "passed": true,
+      "expected": [
+        [
+          7,
+          "reportArgumentType"
+        ]
+      ],
+      "observed": [
+        [
+          7,
+          "reportArgumentType"
+        ]
+      ]
+    },
+    {
+      "label": "pyright-include_key",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-m",
+        "pyright",
+        "--outputjson",
+        "--pythonpath",
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "--project",
+        "pyrightconfig.json",
+        "negative/include_key.py"
+      ],
+      "exitCode": 1,
+      "passed": true,
+      "expected": [
+        [
+          7,
+          "reportAssignmentType"
+        ]
+      ],
+      "observed": [
+        [
+          7,
+          "reportAssignmentType"
+        ]
+      ]
+    },
+    {
+      "label": "pyright-ninth_select",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-m",
+        "pyright",
+        "--outputjson",
+        "--pythonpath",
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "--project",
+        "pyrightconfig.json",
+        "negative/ninth_select.py"
+      ],
+      "exitCode": 1,
+      "passed": true,
+      "expected": [
+        [
+          7,
+          "reportCallIssue"
+        ]
+      ],
+      "observed": [
+        [
+          7,
+          "reportCallIssue"
+        ]
+      ]
+    },
+    {
+      "label": "pyright-none_is_absent",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-m",
+        "pyright",
+        "--outputjson",
+        "--pythonpath",
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "--project",
+        "pyrightconfig.json",
+        "negative/none_is_absent.py"
+      ],
+      "exitCode": 1,
+      "passed": true,
+      "expected": [
+        [
+          7,
+          "reportArgumentType"
+        ]
+      ],
+      "observed": [
+        [
+          7,
+          "reportArgumentType"
+        ]
+      ]
+    },
+    {
+      "label": "pyright-nullable_nonnull",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-m",
+        "pyright",
+        "--outputjson",
+        "--pythonpath",
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "--project",
+        "pyrightconfig.json",
+        "negative/nullable_nonnull.py"
+      ],
+      "exitCode": 1,
+      "passed": true,
+      "expected": [
+        [
+          7,
+          "reportArgumentType"
+        ]
+      ],
+      "observed": [
+        [
+          7,
+          "reportArgumentType"
+        ]
+      ]
+    },
+    {
+      "label": "pyright-page_indexed",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-m",
+        "pyright",
+        "--outputjson",
+        "--pythonpath",
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "--project",
+        "pyrightconfig.json",
+        "negative/page_indexed.py"
+      ],
+      "exitCode": 1,
+      "passed": true,
+      "expected": [
+        [
+          7,
+          "reportIndexIssue"
+        ]
+      ],
+      "observed": [
+        [
+          7,
+          "reportIndexIssue"
+        ]
+      ]
+    },
+    {
+      "label": "pyright-page_key",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-m",
+        "pyright",
+        "--outputjson",
+        "--pythonpath",
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "--project",
+        "pyrightconfig.json",
+        "negative/page_key.py"
+      ],
+      "exitCode": 1,
+      "passed": true,
+      "expected": [
+        [
+          7,
+          "reportAssignmentType"
+        ]
+      ],
+      "observed": [
+        [
+          7,
+          "reportAssignmentType"
+        ]
+      ]
+    },
+    {
+      "label": "pyright-patch_keyword",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-m",
+        "pyright",
+        "--outputjson",
+        "--pythonpath",
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "--project",
+        "pyrightconfig.json",
+        "negative/patch_keyword.py"
+      ],
+      "exitCode": 1,
+      "passed": true,
+      "expected": [
+        [
+          7,
+          "reportCallIssue"
+        ]
+      ],
+      "observed": [
+        [
+          7,
+          "reportCallIssue"
+        ]
+      ]
+    },
+    {
+      "label": "pyright-patch_null",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-m",
+        "pyright",
+        "--outputjson",
+        "--pythonpath",
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "--project",
+        "pyrightconfig.json",
+        "negative/patch_null.py"
+      ],
+      "exitCode": 1,
+      "passed": true,
+      "expected": [
+        [
+          7,
+          "reportArgumentType"
+        ]
+      ],
+      "observed": [
+        [
+          7,
+          "reportArgumentType"
+        ]
+      ]
+    },
+    {
+      "label": "pyright-ranked_count",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-m",
+        "pyright",
+        "--outputjson",
+        "--pythonpath",
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "--project",
+        "pyrightconfig.json",
+        "negative/ranked_count.py"
+      ],
+      "exitCode": 1,
+      "passed": true,
+      "expected": [
+        [
+          7,
+          "reportUnknownMemberType"
+        ],
+        [
+          7,
+          "reportAttributeAccessIssue"
+        ]
+      ],
+      "observed": [
+        [
+          7,
+          "reportUnknownMemberType"
+        ],
+        [
+          7,
+          "reportAttributeAccessIssue"
+        ]
+      ]
+    },
+    {
+      "label": "pyright-ranked_page",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-m",
+        "pyright",
+        "--outputjson",
+        "--pythonpath",
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "--project",
+        "pyrightconfig.json",
+        "negative/ranked_page.py"
+      ],
+      "exitCode": 1,
+      "passed": true,
+      "expected": [
+        [
+          7,
+          "reportUnknownMemberType"
+        ],
+        [
+          7,
+          "reportAttributeAccessIssue"
+        ]
+      ],
+      "observed": [
+        [
+          7,
+          "reportUnknownMemberType"
+        ],
+        [
+          7,
+          "reportAttributeAccessIssue"
+        ]
+      ]
+    },
+    {
+      "label": "pyright-ranked_update",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-m",
+        "pyright",
+        "--outputjson",
+        "--pythonpath",
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "--project",
+        "pyrightconfig.json",
+        "negative/ranked_update.py"
+      ],
+      "exitCode": 1,
+      "passed": true,
+      "expected": [
+        [
+          7,
+          "reportUnknownMemberType"
+        ],
+        [
+          7,
+          "reportAttributeAccessIssue"
+        ]
+      ],
+      "observed": [
+        [
+          7,
+          "reportUnknownMemberType"
+        ],
+        [
+          7,
+          "reportAttributeAccessIssue"
+        ]
+      ]
+    },
+    {
+      "label": "pyright-replay_executor",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-m",
+        "pyright",
+        "--outputjson",
+        "--pythonpath",
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "--project",
+        "pyrightconfig.json",
+        "negative/replay_executor.py"
+      ],
+      "exitCode": 1,
+      "passed": true,
+      "expected": [
+        [
+          7,
+          "reportArgumentType"
+        ]
+      ],
+      "observed": [
+        [
+          7,
+          "reportArgumentType"
+        ]
+      ]
+    },
+    {
+      "label": "pyright-unknown_column",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-m",
+        "pyright",
+        "--outputjson",
+        "--pythonpath",
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "--project",
+        "pyrightconfig.json",
+        "negative/unknown_column.py"
+      ],
+      "exitCode": 1,
+      "passed": true,
+      "expected": [
+        [
+          7,
+          "reportUnknownMemberType"
+        ],
+        [
+          7,
+          "reportAttributeAccessIssue"
+        ]
+      ],
+      "observed": [
+        [
+          7,
+          "reportUnknownMemberType"
+        ],
+        [
+          7,
+          "reportAttributeAccessIssue"
+        ]
+      ]
+    },
+    {
+      "label": "pyright-update_generated",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-m",
+        "pyright",
+        "--outputjson",
+        "--pythonpath",
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "--project",
+        "pyrightconfig.json",
+        "negative/update_generated.py"
+      ],
+      "exitCode": 1,
+      "passed": true,
+      "expected": [
+        [
+          7,
+          "reportCallIssue"
+        ]
+      ],
+      "observed": [
+        [
+          7,
+          "reportCallIssue"
+        ]
+      ]
+    },
+    {
+      "label": "pyright-update_immutable",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-m",
+        "pyright",
+        "--outputjson",
+        "--pythonpath",
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "--project",
+        "pyrightconfig.json",
+        "negative/update_immutable.py"
+      ],
+      "exitCode": 1,
+      "passed": true,
+      "expected": [
+        [
+          7,
+          "reportCallIssue"
+        ]
+      ],
+      "observed": [
+        [
+          7,
+          "reportCallIssue"
+        ]
+      ]
+    },
+    {
+      "label": "pyright-update_unknown",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-m",
+        "pyright",
+        "--outputjson",
+        "--pythonpath",
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "--project",
+        "pyrightconfig.json",
+        "negative/update_unknown.py"
+      ],
+      "exitCode": 1,
+      "passed": true,
+      "expected": [
+        [
+          7,
+          "reportCallIssue"
+        ]
+      ],
+      "observed": [
+        [
+          7,
+          "reportCallIssue"
+        ]
+      ]
+    },
+    {
+      "label": "pyright-update_value",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-m",
+        "pyright",
+        "--outputjson",
+        "--pythonpath",
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "--project",
+        "pyrightconfig.json",
+        "negative/update_value.py"
+      ],
+      "exitCode": 1,
+      "passed": true,
+      "expected": [
+        [
+          7,
+          "reportArgumentType"
+        ]
+      ],
+      "observed": [
+        [
+          7,
+          "reportArgumentType"
+        ]
+      ]
+    },
+    {
+      "label": "pyright-when_reserved",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-m",
+        "pyright",
+        "--outputjson",
+        "--pythonpath",
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "--project",
+        "pyrightconfig.json",
+        "negative/when_reserved.py"
+      ],
+      "exitCode": 1,
+      "passed": true,
+      "expected": [
+        [
+          7,
+          "reportUnknownMemberType"
+        ],
+        [
+          7,
+          "reportAttributeAccessIssue"
+        ]
+      ],
+      "observed": [
+        [
+          7,
+          "reportUnknownMemberType"
+        ],
+        [
+          7,
+          "reportAttributeAccessIssue"
+        ]
+      ]
+    },
+    {
+      "label": "pyright-wrong_eq",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-m",
+        "pyright",
+        "--outputjson",
+        "--pythonpath",
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "--project",
+        "pyrightconfig.json",
+        "negative/wrong_eq.py"
+      ],
+      "exitCode": 1,
+      "passed": true,
+      "expected": [
+        [
+          7,
+          "reportArgumentType"
+        ]
+      ],
+      "observed": [
+        [
+          7,
+          "reportArgumentType"
+        ]
+      ]
+    },
+    {
+      "label": "pyright-wrong_ne",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-m",
+        "pyright",
+        "--outputjson",
+        "--pythonpath",
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "--project",
+        "pyrightconfig.json",
+        "negative/wrong_ne.py"
+      ],
+      "exitCode": 1,
+      "passed": true,
+      "expected": [
+        [
+          7,
+          "reportArgumentType"
+        ]
+      ],
+      "observed": [
+        [
+          7,
+          "reportArgumentType"
+        ]
+      ]
+    },
+    {
+      "label": "pyright-wrong_operand",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-m",
+        "pyright",
+        "--outputjson",
+        "--pythonpath",
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "--project",
+        "pyrightconfig.json",
+        "negative/wrong_operand.py"
+      ],
+      "exitCode": 1,
+      "passed": true,
+      "expected": [
+        [
+          7,
+          "reportOperatorIssue"
+        ],
+        [
+          7,
+          "reportUnusedExpression"
+        ]
+      ],
+      "observed": [
+        [
+          7,
+          "reportOperatorIssue"
+        ],
+        [
+          7,
+          "reportUnusedExpression"
+        ]
+      ]
+    },
+    {
+      "label": "pyright-wrong_param",
+      "command": [
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "-m",
+        "pyright",
+        "--outputjson",
+        "--pythonpath",
+        "/private/tmp/umf-tp001-compat-env/bin/python",
+        "--project",
+        "pyrightconfig.json",
+        "negative/wrong_param.py"
+      ],
+      "exitCode": 1,
+      "passed": true,
+      "expected": [
+        [
+          7,
+          "reportOperatorIssue"
+        ],
+        [
+          7,
+          "reportUnusedExpression"
+        ]
+      ],
+      "observed": [
+        [
+          7,
+          "reportOperatorIssue"
+        ],
+        [
+          7,
+          "reportUnusedExpression"
+        ]
+      ]
+    }
+  ],
+  "passedCommands": 65,
+  "totalCommands": 65,
+  "remaining": [
+    "Production generator and runtime ABI replay",
+    "Driver/platform and native target qualification"
+  ]
+}

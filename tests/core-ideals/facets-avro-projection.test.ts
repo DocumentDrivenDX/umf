@@ -1,9 +1,10 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import * as u from '../../src';
 import type {FacetsAvroRequest} from '../../src';
 const {projectFacetsToAvro:project,recoverFacetsFromAvro:recover}=u;
 const identity={module:'m',element:'value'};
-function ideal(scalarType:string):u.Document{return {umf:'0.5.0',id:'ideal',vocabularies:{},modules:[{id:'m',namespace:'',elements:[{id:'value',name:'value',kind:'field',cardinality:'one',scalarType,extensions:{}}]}]};}
+function ideal(scalarType:string):u.Document{return {umf:'0.10.0',id:'ideal',vocabularies:{},modules:[{id:'m',namespace:'',elements:[{id:'value',name:'value',kind:'field',cardinality:'one',scalarType,extensions:{}}]}]};}
 const request:FacetsAvroRequest={id:'native',recordName:'Record',namespace:'example',fieldName:'value',nativeType:'int',mode:'strict',encoding:'native-type',profile:'declared-schema',obligation:'value-domain'};
 const author=(family:string,facets:u.CoreFacetPatch)=>u.declareCoreFacets(ideal(family),identity,facets);
 test('authored domains distinguish exact carriers from unenforced approximations',()=>{

@@ -1,0 +1,16 @@
+{
+  "alternatives": [
+    "{ kind: \"native-uuid\" | \"bytes16\" | \"uuid-text\" | \"hex128-text\"; column: string; }",
+    "{ kind: \"words64\"; highColumn: string; lowColumn: string; signed: boolean; }"
+  ],
+  "authored": false,
+  "id": "[\"api\",\".\",\"Bit128Carrier\"]",
+  "kind": "Type alias",
+  "members": [],
+  "parameters": [],
+  "purpose": "Bit128Carrier is a type alias in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "Bit128Carrier"
+}

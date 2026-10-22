@@ -1,0 +1,15 @@
+4 | import {profile,request,mutateSource} from '../tests/compilation/access-fixtures';
+5 | const out=process.argv[2];if(!out)throw new Error('temporary output directory required');
+6 | const bundle=await Bun.build({entrypoints:[new URL('../src/compilation/index.ts',import.meta.url).pathname],target:'browser',format:'esm',outdir:out});
+7 | if(!bundle.success)throw new Error(bundle.logs.join('\n'));
+8 | const modulePath=bundle.outputs[0]!.path;
+9 | const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(req){const path=new URL(req.url).pathname;return path==='/bundle.js'?new Response(Bun.file(modulePath),{headers:{'content-type':'text/javascript'}}):new Response('<script type="module">import * as api from "/bundle.js";window.api=api;</script>',{headers:{'content-type':'text/html'}});}});
+                     ^
+error: Failed to start server. Is port 0 in use?
+ syscall: "listen",
+   errno: 0,
+    code: "EADDRINUSE"
+
+      at /Users/erik/.codex/worktrees/typed-sdk-recovery/umf/scripts/check-access-reporting-browser.ts:9:18
+
+Bun v1.4.2 (macOS arm64)

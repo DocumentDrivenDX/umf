@@ -1,0 +1,20 @@
+{
+  "reviewer": "gpt-6-astra",
+  "reasoningEffort": "ultra",
+  "disposition": "Clean within declared experimental scope; no remaining landing blocker",
+  "nativeReceiptSha256": "108096e8eb0bace54a4ce709cd44e6ef1b995a4aeb52abd7241f3be9576de7db",
+  "formalReceiptSha256": "3d19f2f8481f1ef9cd53acbf8b4e5f0bb5557849dc6bd43152455c3e532bf8de",
+  "verified": {
+    "nativeObservations": 135,
+    "nativePins": 14,
+    "installedRoutines": 9,
+    "corruptionControlGroups": 11,
+    "formalQueries": 14,
+    "UNSAT": 6,
+    "SAT": 8,
+    "formalPins": 17,
+    "alwaysFalseCompositionMutantRejected": true
+  },
+  "limitations": "Conditional graph read-admission evidence; complete mutation coverage, publication safety, SQL/compiler refinement and backend acceptance remain open",
+  "acceptancePromoted": false
+}

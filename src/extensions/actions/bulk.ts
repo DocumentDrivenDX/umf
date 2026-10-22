@@ -1,0 +1,15 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
+import {copyJson} from '../../model/json';
+import {copyFramedJson} from './framed-json';
+import {UmfError} from '../../model/types';
+import type {ActionPlanArtifact,ActionPlanDiagnostic} from './plan-types';
+import {readPlanArtifact,verifyPlanArtifact,scanPlanJson,planError,validatePlanStrings} from './plan-artifacts';
+import {checkBulkOutcome,planUnknownMembers} from './plan-structure';
+export interface BulkOutcomeValidation {valid:boolean;source:ActionPlanArtifact;diagnostics:ActionPlanDiagnostic[]}
+/** Validates result shape only, never verifies original control custody or native execution. */
+export function validateBulkOutcome(input:ActionPlanArtifact):BulkOutcomeValidation {
+ const maximum=100663296,source=readPlanArtifact(input,maximum),diagnostics:ActionPlanDiagnostic[]=[];
+ try {verifyPlanArtifact(source,maximum);if(source.mediaType!=='application/json')planError('PAP_INVALID','JSON result required');scanPlanJson(source.utf8,maximum,1000000);const value=copyFramedJson(JSON.parse(source.utf8));validatePlanStrings(value);if(Object.keys(source).some(k=>!['mediaType','utf8','sha256'].includes(k)))planError('PAP_UNKNOWN','Unknown artifact envelope meaning');if(!checkBulkOutcome(value))planError('PAP_INVALID','Malformed bulk result union');if(value&&typeof value==='object'&&!Array.isArray(value)&&value.status==='committed'){const items=(value as unknown as {items:{ordinal:number;result:{verification:{kind:string;effects?:{effect:string}[];postconditions:{condition:string}[]}}}[]}).items;for(const [index,item] of items.entries()){copyJson(item.result);if(item.ordinal!==items[0]!.ordinal+index)planError('PAP_INVALID','Ordered consecutive item vector required','/items/'+index);const verification=item.result.verification,conditions=verification.postconditions;if(new Set(conditions.map(c=>c.condition)).size!==conditions.length)planError('PAP_INVALID','Duplicate condition verification','/items/'+index+'/result/verification');if(verification.kind==='recipe'&&new Set(verification.effects!.map(e=>e.effect)).size!==verification.effects!.length)planError('PAP_INVALID','Duplicate effect verification','/items/'+index+'/result/verification');}}if(value&&typeof value==='object'&&!Array.isArray(value)&&(value.status==='sealed'||value.status==='review')){const inner=readPlanArtifact((value as unknown as {manifest:ActionPlanArtifact}).manifest,16777216);verifyPlanArtifact(inner,16777216);if(inner.mediaType!=='application/json')planError('PAP_INVALID','JSON manifest result required');if(Object.keys(inner).some(k=>!['mediaType','utf8','sha256'].includes(k)))planError('PAP_UNKNOWN','Unknown manifest artifact meaning');}if(planUnknownMembers(value,'bulk').length)planError('PAP_UNKNOWN','Unknown result meaning');}
+ catch(error){if(!(error instanceof UmfError))throw error;diagnostics.push({code:error.code.startsWith('PAP_')?error.code:error.code==='LIMIT'?'PAP_LIMIT':'PAP_INVALID',path:error.path??'',message:'Original bulk result refused'});}
+ return {valid:diagnostics.length===0,source,diagnostics};
+}

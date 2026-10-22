@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import * as jsonSchemaEmitter from '../../../node_modules/@typespec/json-schema/dist/src/index.js';
 import {LIMITS} from '../../model/json';
 import type {JsonObject} from '../../model/types';

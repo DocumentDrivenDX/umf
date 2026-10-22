@@ -1,12 +1,13 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {copyJson} from '../model/json';
 import {UmfError,pointer,type Document,type Json,type Diagnostic} from '../model/types';
 import {verifyCoreNullabilityDeclaration,type CoreNullabilityDeclaration} from '../model/nullability';
 import {importPostgresqlSql,getPostgresqlSource,type PostgresqlBackend} from '../adapters/postgresql';
 import {createValidator} from '../validation/schema';
 import legacy from '../../spec/core/schema.json';
-import fields from '../../spec/core/field-document.schema.json';
-import kinds from '../../spec/core/nullability-operation.schema.json';
-import availability from '../../spec/core/nullability-document.schema.json';
+
+import kinds from '../../spec/core/nullability-operation-v5.schema.json';
+
 import schema from '../../spec/core/nullability-postgresql-projection.schema.json';
 export {default as nullabilityPostgresqlProjectionSchema} from '../../spec/core/nullability-postgresql-projection.schema.json';
 import {carriers,identifier,literal} from './postgresql-syntax';
@@ -17,7 +18,7 @@ export interface NullabilityPostgresqlProjection {
  mapping:{origin:'authored';nullability:'required'|'absent-allowed'|'unspecified';encoding:'not-null'|'null'|'omitted';scope:NullabilityPostgresqlRequest['scope'];carrier:NullabilityPostgresqlRequest['carrier'];idealPath:string;nativePath:'/stmts/0/stmt/CreateStmt/tableElts/0/ColumnDef';outcome:'exact'|'unknown'|'not-expressible'};
  residuals:{path:string;value:Json;reason:string;outcome:'unknown'|'not-expressible';recovery:'Recover source meaning with retained projection receipt; native-only import does not recover author intent'}[];
 }
-const validator=createValidator();validator.addSchema(legacy);validator.addSchema(fields);validator.addSchema(availability);validator.addSchema(kinds);const check=validator.compile(schema);
+const validator=createValidator();validator.addSchema(legacy);validator.addSchema(kinds);const check=validator.compile(schema);
 const checkRequest=validator.compile({...schema.properties.request});
 export async function projectNullabilityToPostgresql(input:CoreNullabilityDeclaration,options:NullabilityPostgresqlRequest,backend:PostgresqlBackend):Promise<NullabilityPostgresqlProjection> {
  const copied=copyJson(input) as unknown as CoreNullabilityDeclaration;

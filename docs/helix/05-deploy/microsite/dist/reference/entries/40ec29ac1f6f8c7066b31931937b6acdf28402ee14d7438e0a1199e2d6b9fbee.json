@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 17891,
+        "line": 18,
+        "path": "src/core-ideals/facets-tablespec.ts",
+        "sha256": "845cea8250367aa3230ca488b8dde26c4523ac233eade2a7ebb55646b3e4082f"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "TableSpecFacetRequest",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface TableSpecFacetRequest {column:number;mode:'strict'|'report';profile:TableSpecFacetProfile;input:'raw'|'model-normalized';obligation:'value-domain'|'exact-input';author?:CoreFacetDeclaration}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"TableSpecFacetRequest\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 17891,
+      "line": 18,
+      "path": "src/core-ideals/facets-tablespec.ts",
+      "sha256": "845cea8250367aa3230ca488b8dde26c4523ac233eade2a7ebb55646b3e4082f"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/facets-tablespec.ts",
+  "title": "TableSpecFacetRequest"
+}

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 7333,
+        "line": 13,
+        "path": "src/core-ideals/field-tablespec-projection.ts",
+        "sha256": "b7d552d9bfbaecb7dc9c66e796126894170b8ad80725dacdff3b06cb9db674de"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "FieldTableSpecProjection",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface FieldTableSpecProjection {\n operation:'project-field-tablespec';version:'1.0.0';status:'projected'|'blocked';source:Document;author:CoreKindDeclaration;request:FieldTableSpecRequest;target?:Document;binding:typeof binding;diagnostics?:Diagnostic[];\n mapping:{origin:'authored';idealPath:string;nativePath:'/columns/0';outcome:'exact'|'unknown'|'not-expressible'};\n residuals:{path:string;value:Json;reason:string;outcome:'unknown'|'not-expressible';recovery:'Recover source meaning with retained projection receipt; native-only import does not recover author intent'}[];\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"FieldTableSpecProjection\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 7333,
+      "line": 13,
+      "path": "src/core-ideals/field-tablespec-projection.ts",
+      "sha256": "b7d552d9bfbaecb7dc9c66e796126894170b8ad80725dacdff3b06cb9db674de"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/field-tablespec-projection.ts",
+  "title": "FieldTableSpecProjection"
+}

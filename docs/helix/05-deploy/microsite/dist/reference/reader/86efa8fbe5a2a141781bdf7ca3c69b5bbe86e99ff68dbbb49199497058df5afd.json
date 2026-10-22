@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"verifyRelationshipAvroProjection\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"RelationshipAvroProjection\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "RelationshipAvroProjection"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "current",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "Verify retained consistency against a current or freshly imported native document.",
+  "related": [],
+  "returns": "RelationshipAvroProjection",
+  "task": "Other APIs",
+  "type": "(input: RelationshipAvroProjection, current: Document) => RelationshipAvroProjection"
+}

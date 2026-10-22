@@ -1,0 +1,56 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"FieldPostgresqlRequest\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "id",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "namespace",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "tableName",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "columnName",
+      "optional": false,
+      "type": "string"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "nativeType",
+      "optional": false,
+      "type": "\"bigint\" | \"boolean\" | \"date\" | \"integer\" | \"time\" | \"timestamp\" | \"text\" | \"smallint\" | \"numeric\" | \"real\" | \"double precision\" | \"bytea\" | \"time with time zone\" | \"timestamp with time zone\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "mode",
+      "optional": false,
+      "type": "\"strict\" | \"report\""
+    }
+  ],
+  "parameters": [],
+  "purpose": "FieldPostgresqlRequest is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "FieldPostgresqlRequest"
+}

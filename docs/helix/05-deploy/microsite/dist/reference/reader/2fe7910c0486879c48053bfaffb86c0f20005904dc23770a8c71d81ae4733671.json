@@ -1,0 +1,21 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"parseRfc3339ExactInstant\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "token",
+      "optional": false,
+      "type": "string"
+    }
+  ],
+  "purpose": "parseRfc3339ExactInstant accepts token and returns Rfc3339ExactInstant.",
+  "related": [],
+  "returns": "Rfc3339ExactInstant",
+  "task": "Read and validate",
+  "type": "(token: string) => Rfc3339ExactInstant"
+}

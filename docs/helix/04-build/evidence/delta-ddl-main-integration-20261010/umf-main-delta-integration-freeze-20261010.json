@@ -1,0 +1,78 @@
+{
+  "checkout": "/private/tmp/umf-main-delta-integration-20261010",
+  "base": "7fc5726b8752d8f8de6eba21f9d1fbfc6ee7cc53",
+  "sourceCommits": [
+    "fac1497a",
+    "2124b00f",
+    "5154e27e",
+    "3d30a1af",
+    "385c8cf1"
+  ],
+  "conflictsResolved": [
+    "README.md: retain latest Python section and append Delta section",
+    "implementation-plan.md: retain latest main history and append original five iteration records"
+  ],
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 15891,
+      "sha256": "f35afce3e395b1ec810bd6a2fb91432afcc0fbe20100d3665bdb0568db4380c3"
+    },
+    {
+      "path": "docs/helix/02-design/contracts/CONTRACT-050-delta-ddl.md",
+      "bytes": 7425,
+      "sha256": "55b7e16a3a4bacf83547c859a45a2d6b6acc7cc49f1f4bd5947501509b6ca613"
+    },
+    {
+      "path": "docs/helix/04-build/implementation-plan.md",
+      "bytes": 389635,
+      "sha256": "24510311fb955c7244528f85ec9980a92ce67ff2d5b6fa5381fcc990184bc0b0"
+    },
+    {
+      "path": "fixtures/delta/ddl-browser-results.json",
+      "bytes": 499,
+      "sha256": "99179362443d13f37ffc5dd506516122922d3ec47eaad4c24e867ec6bb303f38"
+    },
+    {
+      "path": "scripts/delta-ddl-browser.ts",
+      "bytes": 5297,
+      "sha256": "a2f4bdb16e1ef1d96a97f4adbb1c3a11291e59eb5a4518010adb9e0cc36bdf78"
+    },
+    {
+      "path": "spec/extensions/delta-definition/package.json",
+      "bytes": 2098,
+      "sha256": "21f05eddbff419dd133cec8cd29959042419147564ce7e9b02ed27c27d7a4e81"
+    },
+    {
+      "path": "spec/extensions/delta-definition/schema.json",
+      "bytes": 828,
+      "sha256": "8c2360f5b5c61a0e4e00bf048fae937132f4988bc1bdb472e8784cc5aa019caa"
+    },
+    {
+      "path": "src/adapters/delta/ddl.ts",
+      "bytes": 10468,
+      "sha256": "2491fc7a336d88744dbe981861c5e0a2a38e93ff1171299ac5db9fa6cf08da44"
+    },
+    {
+      "path": "src/index.ts",
+      "bytes": 23115,
+      "sha256": "6094c8bc9ed046802cb374c5eb4fe246b2753870dc5cfd279685cc08d3daffbf"
+    },
+    {
+      "path": "tests/delta/ddl.test.ts",
+      "bytes": 10729,
+      "sha256": "9de8f5a57c8abafe60368bc70239923ee76a3460cc290947f72540ef7b2d448c"
+    }
+  ],
+  "checks": {
+    "focusedDDL": "13 tests,106 assertions,0 failures",
+    "deltaRegression": "55 tests,3098 assertions,0 failures,53.73s",
+    "libraryTypecheck": "exit0",
+    "actualChromium": "9 checks,153.0.8010.12"
+  },
+  "limits": [
+    "No native SQL execution",
+    "No integration commit or push",
+    "Original branch untouched"
+  ]
+}

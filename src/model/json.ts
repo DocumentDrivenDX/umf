@@ -1,11 +1,25 @@
-import { UmfError, type Json, pointer } from './types';
+// SPDX-License-Identifier: MIT OR Apache-2.0
+import {UmfError,pointer} from './errors';
+import type {Json} from './types';
 export const LIMITS = { maxDepth: 128, maxValues: 100_000, maxTextLength: 4_000_000 } as const;
+// Synchronous, isolated invocation scope. Ordinary callers keep the bootstrap bound.
+let catalogDepth=0;
+export function jsonValueLimit():number{return catalogDepth?1_000_000:LIMITS.maxValues;}
+/** Run a synchronous catalog interpretation with its explicitly larger finite value budget. */
+export function withCatalogResourceProfile<T>(work:()=>T):T {
+ catalogDepth++;
+ try {const result=work();if(result&&typeof (result as any).then==='function')throw new UmfError('LIMIT','Catalog resource scope must be synchronous');return result;}
+ finally {catalogDepth--;}
+}
 /** Copy JSON data without invoking getters, toJSON, or custom prototypes. */
-export function copyJson(input: unknown): Json {
+export function copyJson(input: unknown): Json { return copyJsonCharged(input); }
+/** Internal copy hook; public copyJson retains its exact interface. */
+export function copyJsonCharged(input: unknown,charge?:(visits:number)=>void): Json {
   const active = new Set<object>();
   let values = 0;
   function visit(value: unknown, path: string, depth: number): Json {
-    if (++values > LIMITS.maxValues || depth > LIMITS.maxDepth) throw new UmfError('LIMIT', 'JSON structural limit exceeded', path);
+    charge?.(1);
+    if (++values > jsonValueLimit() || depth > LIMITS.maxDepth) throw new UmfError('LIMIT', 'JSON structural limit exceeded', path);
     if (value === null || typeof value === 'string' || typeof value === 'boolean') return value;
     if (typeof value === 'number') {
       if (!Number.isFinite(value) || Object.is(value, -0) || (Number.isInteger(value) && !Number.isSafeInteger(value))) throw new UmfError('NUMBER', 'Number outside the core interoperable numeric profile', path);
@@ -22,7 +36,7 @@ export function copyJson(input: unknown): Json {
     for (const [key, descriptor] of Object.entries(descriptors)) {
       if (Array.isArray(value) && key === 'length') continue;
       if (!descriptor.enumerable || !('value' in descriptor)) throw new UmfError('NON_JSON', 'Hidden fields and accessors cannot be serialized faithfully', path + '/' + pointer(key));
-      if (Array.isArray(value) && !/^(0|[1-9][0-9]*)$/.test(key)) throw new UmfError('NON_JSON', 'Non-index array property', path);
+      if (Array.isArray(value) && (!/^(0|[1-9][0-9]*)$/.test(key) || Number(key) >= 0xffff_ffff || Number(key) >= value.length)) throw new UmfError('NON_JSON', 'Non-index array property', path);
       const item = visit(descriptor.value, path + '/' + pointer(key), depth + 1);
       Object.defineProperty(result, key, { value: item, enumerable: true, writable: true, configurable: true });
     }

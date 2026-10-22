@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 13697,
+        "line": 105,
+        "path": "src/projections/bit128.ts",
+        "sha256": "6d0d33aba20872e1038c5946d8fc3bb1902cbde7d78cd3a1a66d7b7f1d953709"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "classifyBit128NativeType",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: Bit128NativeTypeInput): { source: Bit128NativeTypeInput; scalarType?: \"bits128\" | \"uuid\"; basis: \"native-type-identity\" | \"unclassified\"; }"
+    ]
+  },
+  "id": "[\"api\",\".\",\"classifyBit128NativeType\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 13697,
+      "line": 105,
+      "path": "src/projections/bit128.ts",
+      "sha256": "6d0d33aba20872e1038c5946d8fc3bb1902cbde7d78cd3a1a66d7b7f1d953709"
+    }
+  ],
+  "summary": "Classify only explicit native type identity/annotation; never a name, string value or column pair.",
+  "title": "classifyBit128NativeType"
+}

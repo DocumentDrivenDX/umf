@@ -1,0 +1,42 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"PostgresqlBackend\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "identity",
+      "optional": false,
+      "type": "\"@libpg-query/parser@17.6.10\""
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "parse",
+      "optional": false,
+      "type": "(sql: string) => Promise<unknown>"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "deparse",
+      "optional": false,
+      "type": "(tree: unknown) => Promise<string>"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "codecRoundTrip",
+      "optional": false,
+      "type": "(tree: unknown) => unknown"
+    }
+  ],
+  "parameters": [],
+  "purpose": "PostgresqlBackend is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "PostgresqlBackend"
+}

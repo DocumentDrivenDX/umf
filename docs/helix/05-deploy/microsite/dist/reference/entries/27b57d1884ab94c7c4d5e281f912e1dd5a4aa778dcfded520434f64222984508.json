@@ -1,0 +1,1117 @@
+{
+  "data": {
+    "pointer": "",
+    "profileVersions": [],
+    "references": [
+      {
+        "keyword": "$ref",
+        "resolvedId": "[\"schema\",\"spec/core/schema.json\",\"\"]",
+        "target": "urn:umf:core:0.10.0"
+      }
+    ],
+    "role": "extension-payload",
+    "schemaPath": "spec/extensions/owl/annotations-schema.json",
+    "sourceData": {
+      "kind": "object",
+      "members": {
+        "$id": {
+          "kind": "string",
+          "value": "urn:umf:owl:annotations:0.1.0"
+        },
+        "$schema": {
+          "kind": "string",
+          "value": "https://json-schema.org/draft/2020-12/schema"
+        },
+        "additionalProperties": {
+          "kind": "boolean",
+          "value": false
+        },
+        "properties": {
+          "kind": "object",
+          "members": {
+            "blankNodeScope": {
+              "kind": "object",
+              "members": {
+                "type": {
+                  "kind": "string",
+                  "value": "string"
+                }
+              }
+            },
+            "complete": {
+              "kind": "object",
+              "members": {
+                "const": {
+                  "kind": "boolean",
+                  "value": false
+                }
+              }
+            },
+            "malformed": {
+              "kind": "object",
+              "members": {
+                "items": {
+                  "kind": "object",
+                  "members": {
+                    "oneOf": {
+                      "items": [
+                        {
+                          "kind": "object",
+                          "members": {
+                            "additionalProperties": {
+                              "kind": "boolean",
+                              "value": true
+                            },
+                            "properties": {
+                              "kind": "object",
+                              "members": {
+                                "kind": {
+                                  "kind": "object",
+                                  "members": {
+                                    "const": {
+                                      "kind": "string",
+                                      "value": "iri"
+                                    }
+                                  }
+                                },
+                                "value": {
+                                  "kind": "object",
+                                  "members": {
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "string"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "required": {
+                              "items": [
+                                {
+                                  "kind": "string",
+                                  "value": "kind"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "value"
+                                }
+                              ],
+                              "kind": "array"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "object"
+                            }
+                          }
+                        },
+                        {
+                          "kind": "object",
+                          "members": {
+                            "additionalProperties": {
+                              "kind": "boolean",
+                              "value": true
+                            },
+                            "properties": {
+                              "kind": "object",
+                              "members": {
+                                "kind": {
+                                  "kind": "object",
+                                  "members": {
+                                    "const": {
+                                      "kind": "string",
+                                      "value": "blank"
+                                    }
+                                  }
+                                },
+                                "value": {
+                                  "kind": "object",
+                                  "members": {
+                                    "minLength": {
+                                      "kind": "number",
+                                      "value": "1"
+                                    },
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "string"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "required": {
+                              "items": [
+                                {
+                                  "kind": "string",
+                                  "value": "kind"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "value"
+                                }
+                              ],
+                              "kind": "array"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "object"
+                            }
+                          }
+                        }
+                      ],
+                      "kind": "array"
+                    }
+                  }
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "array"
+                }
+              }
+            },
+            "profile": {
+              "kind": "object",
+              "members": {
+                "const": {
+                  "kind": "string",
+                  "value": "owl-annotations-1"
+                }
+              }
+            },
+            "quadIndex": {
+              "kind": "object",
+              "members": {
+                "minimum": {
+                  "kind": "number",
+                  "value": "0"
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "integer"
+                }
+              }
+            },
+            "records": {
+              "kind": "object",
+              "members": {
+                "items": {
+                  "kind": "object",
+                  "members": {
+                    "additionalProperties": {
+                      "kind": "boolean",
+                      "value": false
+                    },
+                    "properties": {
+                      "kind": "object",
+                      "members": {
+                        "annotationQuadIndexes": {
+                          "kind": "object",
+                          "members": {
+                            "items": {
+                              "kind": "object",
+                              "members": {
+                                "minimum": {
+                                  "kind": "number",
+                                  "value": "0"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "integer"
+                                }
+                              }
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "array"
+                            }
+                          }
+                        },
+                        "assertedQuadIndexes": {
+                          "kind": "object",
+                          "members": {
+                            "items": {
+                              "kind": "object",
+                              "members": {
+                                "minimum": {
+                                  "kind": "number",
+                                  "value": "0"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "integer"
+                                }
+                              }
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "array"
+                            }
+                          }
+                        },
+                        "kind": {
+                          "kind": "object",
+                          "members": {
+                            "enum": {
+                              "items": [
+                                {
+                                  "kind": "string",
+                                  "value": "Axiom"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "Annotation"
+                                }
+                              ],
+                              "kind": "array"
+                            }
+                          }
+                        },
+                        "nested": {
+                          "kind": "object",
+                          "members": {
+                            "items": {
+                              "kind": "object",
+                              "members": {
+                                "oneOf": {
+                                  "items": [
+                                    {
+                                      "kind": "object",
+                                      "members": {
+                                        "additionalProperties": {
+                                          "kind": "boolean",
+                                          "value": true
+                                        },
+                                        "properties": {
+                                          "kind": "object",
+                                          "members": {
+                                            "kind": {
+                                              "kind": "object",
+                                              "members": {
+                                                "const": {
+                                                  "kind": "string",
+                                                  "value": "iri"
+                                                }
+                                              }
+                                            },
+                                            "value": {
+                                              "kind": "object",
+                                              "members": {
+                                                "type": {
+                                                  "kind": "string",
+                                                  "value": "string"
+                                                }
+                                              }
+                                            }
+                                          }
+                                        },
+                                        "required": {
+                                          "items": [
+                                            {
+                                              "kind": "string",
+                                              "value": "kind"
+                                            },
+                                            {
+                                              "kind": "string",
+                                              "value": "value"
+                                            }
+                                          ],
+                                          "kind": "array"
+                                        },
+                                        "type": {
+                                          "kind": "string",
+                                          "value": "object"
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "kind": "object",
+                                      "members": {
+                                        "additionalProperties": {
+                                          "kind": "boolean",
+                                          "value": true
+                                        },
+                                        "properties": {
+                                          "kind": "object",
+                                          "members": {
+                                            "kind": {
+                                              "kind": "object",
+                                              "members": {
+                                                "const": {
+                                                  "kind": "string",
+                                                  "value": "blank"
+                                                }
+                                              }
+                                            },
+                                            "value": {
+                                              "kind": "object",
+                                              "members": {
+                                                "minLength": {
+                                                  "kind": "number",
+                                                  "value": "1"
+                                                },
+                                                "type": {
+                                                  "kind": "string",
+                                                  "value": "string"
+                                                }
+                                              }
+                                            }
+                                          }
+                                        },
+                                        "required": {
+                                          "items": [
+                                            {
+                                              "kind": "string",
+                                              "value": "kind"
+                                            },
+                                            {
+                                              "kind": "string",
+                                              "value": "value"
+                                            }
+                                          ],
+                                          "kind": "array"
+                                        },
+                                        "type": {
+                                          "kind": "string",
+                                          "value": "object"
+                                        }
+                                      }
+                                    }
+                                  ],
+                                  "kind": "array"
+                                }
+                              }
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "array"
+                            }
+                          }
+                        },
+                        "node": {
+                          "kind": "object",
+                          "members": {
+                            "oneOf": {
+                              "items": [
+                                {
+                                  "kind": "object",
+                                  "members": {
+                                    "additionalProperties": {
+                                      "kind": "boolean",
+                                      "value": true
+                                    },
+                                    "properties": {
+                                      "kind": "object",
+                                      "members": {
+                                        "kind": {
+                                          "kind": "object",
+                                          "members": {
+                                            "const": {
+                                              "kind": "string",
+                                              "value": "iri"
+                                            }
+                                          }
+                                        },
+                                        "value": {
+                                          "kind": "object",
+                                          "members": {
+                                            "type": {
+                                              "kind": "string",
+                                              "value": "string"
+                                            }
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "required": {
+                                      "items": [
+                                        {
+                                          "kind": "string",
+                                          "value": "kind"
+                                        },
+                                        {
+                                          "kind": "string",
+                                          "value": "value"
+                                        }
+                                      ],
+                                      "kind": "array"
+                                    },
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "object"
+                                    }
+                                  }
+                                },
+                                {
+                                  "kind": "object",
+                                  "members": {
+                                    "additionalProperties": {
+                                      "kind": "boolean",
+                                      "value": true
+                                    },
+                                    "properties": {
+                                      "kind": "object",
+                                      "members": {
+                                        "kind": {
+                                          "kind": "object",
+                                          "members": {
+                                            "const": {
+                                              "kind": "string",
+                                              "value": "blank"
+                                            }
+                                          }
+                                        },
+                                        "value": {
+                                          "kind": "object",
+                                          "members": {
+                                            "minLength": {
+                                              "kind": "number",
+                                              "value": "1"
+                                            },
+                                            "type": {
+                                              "kind": "string",
+                                              "value": "string"
+                                            }
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "required": {
+                                      "items": [
+                                        {
+                                          "kind": "string",
+                                          "value": "kind"
+                                        },
+                                        {
+                                          "kind": "string",
+                                          "value": "value"
+                                        }
+                                      ],
+                                      "kind": "array"
+                                    },
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "object"
+                                    }
+                                  }
+                                }
+                              ],
+                              "kind": "array"
+                            }
+                          }
+                        },
+                        "target": {
+                          "kind": "object",
+                          "members": {
+                            "additionalProperties": {
+                              "kind": "boolean",
+                              "value": false
+                            },
+                            "properties": {
+                              "kind": "object",
+                              "members": {
+                                "object": {
+                                  "kind": "object",
+                                  "members": {
+                                    "oneOf": {
+                                      "items": [
+                                        {
+                                          "kind": "object",
+                                          "members": {
+                                            "additionalProperties": {
+                                              "kind": "boolean",
+                                              "value": true
+                                            },
+                                            "properties": {
+                                              "kind": "object",
+                                              "members": {
+                                                "kind": {
+                                                  "kind": "object",
+                                                  "members": {
+                                                    "const": {
+                                                      "kind": "string",
+                                                      "value": "iri"
+                                                    }
+                                                  }
+                                                },
+                                                "value": {
+                                                  "kind": "object",
+                                                  "members": {
+                                                    "type": {
+                                                      "kind": "string",
+                                                      "value": "string"
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            },
+                                            "required": {
+                                              "items": [
+                                                {
+                                                  "kind": "string",
+                                                  "value": "kind"
+                                                },
+                                                {
+                                                  "kind": "string",
+                                                  "value": "value"
+                                                }
+                                              ],
+                                              "kind": "array"
+                                            },
+                                            "type": {
+                                              "kind": "string",
+                                              "value": "object"
+                                            }
+                                          }
+                                        },
+                                        {
+                                          "kind": "object",
+                                          "members": {
+                                            "additionalProperties": {
+                                              "kind": "boolean",
+                                              "value": true
+                                            },
+                                            "properties": {
+                                              "kind": "object",
+                                              "members": {
+                                                "kind": {
+                                                  "kind": "object",
+                                                  "members": {
+                                                    "const": {
+                                                      "kind": "string",
+                                                      "value": "blank"
+                                                    }
+                                                  }
+                                                },
+                                                "value": {
+                                                  "kind": "object",
+                                                  "members": {
+                                                    "minLength": {
+                                                      "kind": "number",
+                                                      "value": "1"
+                                                    },
+                                                    "type": {
+                                                      "kind": "string",
+                                                      "value": "string"
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            },
+                                            "required": {
+                                              "items": [
+                                                {
+                                                  "kind": "string",
+                                                  "value": "kind"
+                                                },
+                                                {
+                                                  "kind": "string",
+                                                  "value": "value"
+                                                }
+                                              ],
+                                              "kind": "array"
+                                            },
+                                            "type": {
+                                              "kind": "string",
+                                              "value": "object"
+                                            }
+                                          }
+                                        },
+                                        {
+                                          "kind": "object",
+                                          "members": {
+                                            "additionalProperties": {
+                                              "kind": "boolean",
+                                              "value": true
+                                            },
+                                            "properties": {
+                                              "kind": "object",
+                                              "members": {
+                                                "datatype": {
+                                                  "kind": "object",
+                                                  "members": {
+                                                    "type": {
+                                                      "kind": "string",
+                                                      "value": "string"
+                                                    }
+                                                  }
+                                                },
+                                                "kind": {
+                                                  "kind": "object",
+                                                  "members": {
+                                                    "const": {
+                                                      "kind": "string",
+                                                      "value": "literal"
+                                                    }
+                                                  }
+                                                },
+                                                "language": {
+                                                  "kind": "object",
+                                                  "members": {
+                                                    "pattern": {
+                                                      "kind": "string",
+                                                      "value": "^[a-z]+(?:-[a-z0-9]+)*$"
+                                                    },
+                                                    "type": {
+                                                      "kind": "string",
+                                                      "value": "string"
+                                                    }
+                                                  }
+                                                },
+                                                "value": {
+                                                  "kind": "object",
+                                                  "members": {
+                                                    "type": {
+                                                      "kind": "string",
+                                                      "value": "string"
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            },
+                                            "required": {
+                                              "items": [
+                                                {
+                                                  "kind": "string",
+                                                  "value": "kind"
+                                                },
+                                                {
+                                                  "kind": "string",
+                                                  "value": "value"
+                                                },
+                                                {
+                                                  "kind": "string",
+                                                  "value": "datatype"
+                                                }
+                                              ],
+                                              "kind": "array"
+                                            },
+                                            "type": {
+                                              "kind": "string",
+                                              "value": "object"
+                                            }
+                                          }
+                                        }
+                                      ],
+                                      "kind": "array"
+                                    }
+                                  }
+                                },
+                                "predicate": {
+                                  "kind": "object",
+                                  "members": {
+                                    "additionalProperties": {
+                                      "kind": "boolean",
+                                      "value": true
+                                    },
+                                    "properties": {
+                                      "kind": "object",
+                                      "members": {
+                                        "kind": {
+                                          "kind": "object",
+                                          "members": {
+                                            "const": {
+                                              "kind": "string",
+                                              "value": "iri"
+                                            }
+                                          }
+                                        },
+                                        "value": {
+                                          "kind": "object",
+                                          "members": {
+                                            "type": {
+                                              "kind": "string",
+                                              "value": "string"
+                                            }
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "required": {
+                                      "items": [
+                                        {
+                                          "kind": "string",
+                                          "value": "kind"
+                                        },
+                                        {
+                                          "kind": "string",
+                                          "value": "value"
+                                        }
+                                      ],
+                                      "kind": "array"
+                                    },
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "object"
+                                    }
+                                  }
+                                },
+                                "subject": {
+                                  "kind": "object",
+                                  "members": {
+                                    "oneOf": {
+                                      "items": [
+                                        {
+                                          "kind": "object",
+                                          "members": {
+                                            "additionalProperties": {
+                                              "kind": "boolean",
+                                              "value": true
+                                            },
+                                            "properties": {
+                                              "kind": "object",
+                                              "members": {
+                                                "kind": {
+                                                  "kind": "object",
+                                                  "members": {
+                                                    "const": {
+                                                      "kind": "string",
+                                                      "value": "iri"
+                                                    }
+                                                  }
+                                                },
+                                                "value": {
+                                                  "kind": "object",
+                                                  "members": {
+                                                    "type": {
+                                                      "kind": "string",
+                                                      "value": "string"
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            },
+                                            "required": {
+                                              "items": [
+                                                {
+                                                  "kind": "string",
+                                                  "value": "kind"
+                                                },
+                                                {
+                                                  "kind": "string",
+                                                  "value": "value"
+                                                }
+                                              ],
+                                              "kind": "array"
+                                            },
+                                            "type": {
+                                              "kind": "string",
+                                              "value": "object"
+                                            }
+                                          }
+                                        },
+                                        {
+                                          "kind": "object",
+                                          "members": {
+                                            "additionalProperties": {
+                                              "kind": "boolean",
+                                              "value": true
+                                            },
+                                            "properties": {
+                                              "kind": "object",
+                                              "members": {
+                                                "kind": {
+                                                  "kind": "object",
+                                                  "members": {
+                                                    "const": {
+                                                      "kind": "string",
+                                                      "value": "blank"
+                                                    }
+                                                  }
+                                                },
+                                                "value": {
+                                                  "kind": "object",
+                                                  "members": {
+                                                    "minLength": {
+                                                      "kind": "number",
+                                                      "value": "1"
+                                                    },
+                                                    "type": {
+                                                      "kind": "string",
+                                                      "value": "string"
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            },
+                                            "required": {
+                                              "items": [
+                                                {
+                                                  "kind": "string",
+                                                  "value": "kind"
+                                                },
+                                                {
+                                                  "kind": "string",
+                                                  "value": "value"
+                                                }
+                                              ],
+                                              "kind": "array"
+                                            },
+                                            "type": {
+                                              "kind": "string",
+                                              "value": "object"
+                                            }
+                                          }
+                                        }
+                                      ],
+                                      "kind": "array"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "required": {
+                              "items": [
+                                {
+                                  "kind": "string",
+                                  "value": "subject"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "predicate"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "object"
+                                }
+                              ],
+                              "kind": "array"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "object"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "required": {
+                      "items": [
+                        {
+                          "kind": "string",
+                          "value": "node"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "kind"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "target"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "assertedQuadIndexes"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "annotationQuadIndexes"
+                        },
+                        {
+                          "kind": "string",
+                          "value": "nested"
+                        }
+                      ],
+                      "kind": "array"
+                    },
+                    "type": {
+                      "kind": "string",
+                      "value": "object"
+                    }
+                  }
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "array"
+                }
+              }
+            },
+            "roots": {
+              "kind": "object",
+              "members": {
+                "items": {
+                  "kind": "object",
+                  "members": {
+                    "oneOf": {
+                      "items": [
+                        {
+                          "kind": "object",
+                          "members": {
+                            "additionalProperties": {
+                              "kind": "boolean",
+                              "value": true
+                            },
+                            "properties": {
+                              "kind": "object",
+                              "members": {
+                                "kind": {
+                                  "kind": "object",
+                                  "members": {
+                                    "const": {
+                                      "kind": "string",
+                                      "value": "iri"
+                                    }
+                                  }
+                                },
+                                "value": {
+                                  "kind": "object",
+                                  "members": {
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "string"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "required": {
+                              "items": [
+                                {
+                                  "kind": "string",
+                                  "value": "kind"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "value"
+                                }
+                              ],
+                              "kind": "array"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "object"
+                            }
+                          }
+                        },
+                        {
+                          "kind": "object",
+                          "members": {
+                            "additionalProperties": {
+                              "kind": "boolean",
+                              "value": true
+                            },
+                            "properties": {
+                              "kind": "object",
+                              "members": {
+                                "kind": {
+                                  "kind": "object",
+                                  "members": {
+                                    "const": {
+                                      "kind": "string",
+                                      "value": "blank"
+                                    }
+                                  }
+                                },
+                                "value": {
+                                  "kind": "object",
+                                  "members": {
+                                    "minLength": {
+                                      "kind": "number",
+                                      "value": "1"
+                                    },
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "string"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "required": {
+                              "items": [
+                                {
+                                  "kind": "string",
+                                  "value": "kind"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "value"
+                                }
+                              ],
+                              "kind": "array"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "object"
+                            }
+                          }
+                        }
+                      ],
+                      "kind": "array"
+                    }
+                  }
+                },
+                "type": {
+                  "kind": "string",
+                  "value": "array"
+                }
+              }
+            },
+            "source": {
+              "kind": "object",
+              "members": {
+                "$ref": {
+                  "kind": "string",
+                  "value": "urn:umf:core:0.10.0"
+                }
+              }
+            }
+          }
+        },
+        "required": {
+          "items": [
+            {
+              "kind": "string",
+              "value": "profile"
+            },
+            {
+              "kind": "string",
+              "value": "complete"
+            },
+            {
+              "kind": "string",
+              "value": "source"
+            },
+            {
+              "kind": "string",
+              "value": "blankNodeScope"
+            },
+            {
+              "kind": "string",
+              "value": "quadIndex"
+            },
+            {
+              "kind": "string",
+              "value": "roots"
+            },
+            {
+              "kind": "string",
+              "value": "records"
+            },
+            {
+              "kind": "string",
+              "value": "malformed"
+            }
+          ],
+          "kind": "array"
+        },
+        "type": {
+          "kind": "string",
+          "value": "object"
+        }
+      }
+    }
+  },
+  "id": "[\"schema\",\"spec/extensions/owl/annotations-schema.json\",\"\"]",
+  "kind": "schema",
+  "links": [
+    "[\"schema\",\"spec/core/schema.json\",\"\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 9034,
+      "path": "spec/extensions/owl/annotations-schema.json",
+      "sha256": "124dd4af4cc42169a341570b7818ca5358f5178e98c0b2150c12a6d0e76ae2f2"
+    }
+  ],
+  "summary": "spec/extensions/owl/annotations-schema.json",
+  "title": "annotations-schema.json"
+}

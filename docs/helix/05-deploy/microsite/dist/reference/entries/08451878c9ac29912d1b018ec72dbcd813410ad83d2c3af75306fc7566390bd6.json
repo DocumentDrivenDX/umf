@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 18045,
+        "line": 100,
+        "path": "src/projections/binding-sqlserver/index.ts",
+        "sha256": "658cb772c1320c12ab2a74e8c5157944fecbc1da536fb2d1d21a3e23d06845b6"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "verifyBindingSqlServerProjection",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: SqlServerPhysicalProjection, current: string): SqlServerPhysicalProjection & { [x: string]: {}; }"
+    ]
+  },
+  "id": "[\"api\",\".\",\"verifyBindingSqlServerProjection\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 18045,
+      "line": 100,
+      "path": "src/projections/binding-sqlserver/index.ts",
+      "sha256": "658cb772c1320c12ab2a74e8c5157944fecbc1da536fb2d1d21a3e23d06845b6"
+    }
+  ],
+  "summary": "Public export · src/projections/binding-sqlserver/index.ts",
+  "title": "verifyBindingSqlServerProjection"
+}

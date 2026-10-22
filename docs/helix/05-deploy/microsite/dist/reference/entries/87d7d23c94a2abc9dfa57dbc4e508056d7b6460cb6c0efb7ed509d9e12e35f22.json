@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 12741,
+        "line": 13,
+        "path": "src/core-ideals/facets-avro-projection.ts",
+        "sha256": "abac2c8eb870231cd1ed192e5a4b3800f05af5f0a4955d9ed69d7218f4576dba"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "FacetsAvroRequest",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface FacetsAvroRequest {id:string;recordName:string;namespace:string;fieldName:string;nativeType:keyof typeof families;fixedName?:string;fixedSize?:number;mode:'strict'|'report';encoding:'native-type'|'metadata-only'|'carrier-only';profile:'declared-schema'|'apache-datum-writer'|'fastavro-schemaless-writer';obligation:'value-domain'|'exact-input';}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"FacetsAvroRequest\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 12741,
+      "line": 13,
+      "path": "src/core-ideals/facets-avro-projection.ts",
+      "sha256": "abac2c8eb870231cd1ed192e5a4b3800f05af5f0a4955d9ed69d7218f4576dba"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/facets-avro-projection.ts",
+  "title": "FacetsAvroRequest"
+}

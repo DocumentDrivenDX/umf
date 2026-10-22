@@ -1,0 +1,21 @@
+/** Shape/domain validation of native disclosure only; not authorization. */
+import {decodeSecurityDisclosure} from '../../../src/extensions/security/disclosure';
+import {securityFixture,ref} from '../fixture';
+const {policy,resolution}=securityFixture();
+resolution.documents[0]!.revision='native-disclosure-schema-1';
+resolution.ontology.documents[0]!.revision='native-disclosure-schema-1';
+resolution.ontology.revision='native-disclosure-ontology-1';
+policy.ontology.revision='native-disclosure-ontology-1';
+policy.revision='native-disclosure-policy-1';
+const module=resolution.documents[0]!.document.modules[0]!;
+module.elements.push({id:'note',kind:'field',scalarType:'string',nullability:'absent-allowed',cardinality:'one',extensions:{}});
+const resource=module.elements.find(e=>e.id==='Resource')!;
+(resource.members as {module:string;element:string}[]).push({module:'m',element:'note'});
+resolution.ontology.entities.find(e=>e.type.elementId==='Resource')!.fields.push({ref:ref('note'),protection:'unprotected'});
+const reader=policy.rules.find(r=>r.id==='reader')!;
+const condition={op:'eq' as const,left:{kind:'resource' as const,field:ref('resourceId')},right:{kind:'constant' as const,field:ref('resourceId'),value:{string:'RAB'}}};
+reader.condition={op:'not',arg:condition};
+policy.rules.push({id:'reader-transformed',effect:'permit',actions:['read'],target:[ref('Resource')],condition,disclosure:[{field:ref('salary'),disposition:{kind:'transformed',transform:'constant',version:'0.1.0',field:ref('resourceId'),value:{string:'restricted'}}}]});
+const text=await Bun.stdin.text();
+const batch=decodeSecurityDisclosure(text,policy,resolution);
+process.stdout.write(JSON.stringify(batch));

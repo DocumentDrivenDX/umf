@@ -1,0 +1,32 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"migrateBindingRelationships\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "binding",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "logical",
+      "optional": false,
+      "type": "Document"
+    }
+  ],
+  "purpose": "Explicit, atomic name-to-ID migration against the caller's exact paired model.",
+  "related": [],
+  "returns": "BindingMigrationResult",
+  "task": "Author and edit",
+  "type": "(binding: Document, logical: Document) => BindingMigrationResult"
+}

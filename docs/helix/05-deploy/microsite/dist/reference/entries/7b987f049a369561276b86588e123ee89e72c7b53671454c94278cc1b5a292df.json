@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 3980,
+        "line": 13,
+        "path": "src/adapters/arrow/flatbuffer-model.ts",
+        "sha256": "04e5b3af0ec15dbb18414119cbf0c5b234f4e71456922ea043da1537b0f5c15a"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "importArrowFlatbufferModel",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(text: string, options: { id: string; }): Document"
+    ]
+  },
+  "id": "[\"api\",\".\",\"importArrowFlatbufferModel\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 3980,
+      "line": 13,
+      "path": "src/adapters/arrow/flatbuffer-model.ts",
+      "sha256": "04e5b3af0ec15dbb18414119cbf0c5b234f4e71456922ea043da1537b0f5c15a"
+    }
+  ],
+  "summary": "Imports the documented logical JSON profile, not native FlatBuffers bytes or flatc JSON.",
+  "title": "importArrowFlatbufferModel"
+}

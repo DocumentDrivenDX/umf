@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
+import semanticTypeReferenceSchema from '../../spec/core/semantic-type-reference.schema.json';
 import {test,expect} from 'bun:test';
 import {createHash} from 'node:crypto';
 import Ajv2020 from 'ajv/dist/2020';
@@ -5,7 +7,7 @@ import core from '../../spec/core/schema.json';
 import schema from '../../spec/extensions/jsonld/compaction-schema.json';
 import {equalCompactJsonLdText,equalJsonLdText} from '../../scripts/jsonld-compare';
 import {importJsonLdDocument,exportJsonLdDocument,proposeJsonLdCompaction,proposeJsonLdExpansion,proposeJsonLdNodeEdit,readDocument,writeDocument} from '../../src';
-const validate=new Ajv2020({strict:false,validateFormats:false}).addSchema(core).compile(schema);
+const validate=new Ajv2020({strict:false,validateFormats:false}).addSchema(semanticTypeReferenceSchema).addSchema(core).compile(schema);
 test('US-026-AC9: every pinned compact case, source preservation and explicit corpus discrepancies',async()=>{
  const manifest=await Bun.file('native/jsonld/sources/compact-manifest.jsonld').json(),sources=await Bun.file('native/jsonld/sources/manifest.json').json(),cases=(await Bun.file('fixtures/jsonld/compaction/results.json').json()).cases,oracle=(await Bun.file('fixtures/jsonld/compaction/oracle-results.json').json()).results;
  expect(cases).toHaveLength(246);expect(oracle).toHaveLength(246);expect(cases.map((c:any)=>c.id)).toEqual(manifest.sequence.map((c:any)=>c['@id'].slice(1)));let candidates=0;

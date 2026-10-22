@@ -1,0 +1,37 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"DddService\"]",
+  "kind": "Interface",
+  "members": [
+    {
+      "description": "",
+      "links": [],
+      "name": "kind",
+      "optional": false,
+      "type": "\"domain-service\""
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"DddOperation\"]"
+      ],
+      "name": "operations",
+      "optional": false,
+      "type": "DddOperation[]"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "description",
+      "optional": true,
+      "type": "string"
+    }
+  ],
+  "parameters": [],
+  "purpose": "DddService is a interface in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "DddService"
+}

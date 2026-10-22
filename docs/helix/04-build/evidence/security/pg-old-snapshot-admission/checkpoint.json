@@ -1,0 +1,21 @@
+{
+  "status": "qualified-component-checkpoint",
+  "case": "pg-raw.L06",
+  "covers": [
+    "US-057-AC2"
+  ],
+  "nativeEngine": "PostgreSQL 17.9 /170009",
+  "observations": 58,
+  "transcripts": 48,
+  "sourcePins": 6,
+  "requiredAcceptanceProgress": "26/132 unchanged",
+  "acceptancePromotion": false,
+  "failedAttemptsRetained": 2,
+  "intermediateRunRetained": "development-attempt-3; per-query stderr boundary not yet fenced",
+  "receipts": {
+    "astra-review.json": "f67f8aecd217aaab0746946754985680c33295d4e6c8f81b7861582b1e2f5d47",
+    "native.json": "d328087d3a885575bec6c996d7f596b687ca57bdc52cbd43387dba389a8f1149",
+    "start.json": "321b1c639a3652b25708c138366c79994d8b1afce6d6269c7a798162ea3e290d",
+    "terminal.log": "c2ded91adfc4cc75d86ba634d9afdafdf4d88c4a804c590b1d915ffdb15eaf27"
+  }
+}

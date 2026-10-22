@@ -1,0 +1,54 @@
+{
+  "date": "2026-10-15T01:00:02.741859+00:00",
+  "baseline": "95a8e4b18b8a5a284222af9d13c0d29653846cac",
+  "slice": "B-SFP-001",
+  "status": "in-progress-envelope-component-passed",
+  "sourceDigests": {
+    "src/extensions/security/protection/catalog.ts": "a0588ace10785c807376f05bfb89cb59c34a026c537371a8ff836128d7a64d5b",
+    "spec/extensions/security-protection/schema.json": "d4f7fbb69c2091e504bdf9942f925d52be54ec22f5e61e12f3e1db1d9e5f3d5d",
+    "spec/extensions/security-protection/package.json": "e684074bf5629f58edc9074d2115be11f269b79ebd8e26a42da6c09af4f7624d",
+    "tests/security/protection/catalog.test.ts": "647c2a52adcac5d976ebfc29bb262134c5ea42a73f79adf0dbd323712c6ba5e8",
+    "tools/security/protection-catalog-browser.ts": "434adf5cfa759a17c298b1874025844e9ec4913154096a48e2489a80a5252c76",
+    "tools/security/protection-catalog-controls.py": "87448012df698e69ba8cb8f88a949556cf2f2fcde9da0f94caf051b5d4821696",
+    "tools/security/protection-boundary.ts": "deabc28a4d27dff28cce2fdad3ad455518118453e63d13b910e5d3570763fd10",
+    "src/extensions/security/protection/source.ts": "43cff8c0f539879b5b5c9f2d17aa17da57af24f806303251ed42c4664d6341bb",
+    "docs/helix/02-design/contracts/CONTRACT-062-security-semantics.md": "5a2f6f3f9ca95af8cdde3f933ae19d155b715b08273e0b5430ebcf2d3fc5dbfd"
+  },
+  "verification": {
+    "focusedTests": 6,
+    "securityTests": 137,
+    "typecheck": "passed",
+    "chromiumControls": 13,
+    "isolatedMutationControls": 4,
+    "registeredPackages": 66
+  },
+  "redTestScope": "Initial module absence/import failure only; not a behavioral counterexample. Later isolated mutations exercise behavioral discrimination.",
+  "acceptanceCasesPromoted": [],
+  "formalProofsAdded": [],
+  "limits": [
+    "Envelope and exact transform identity structure only; payload members remain uninterpreted.",
+    "complete is always false and requireProtectionInterpretation always refuses.",
+    "Nested typed parameter/disclosure/custody wire shapes and full domain/query validation remain open.",
+    "No public root export, policy0.2, transform evaluation or native enforcement qualification."
+  ],
+  "independentReview": {
+    "receipt": "astra-review/review.json",
+    "boundedControls": 48,
+    "findings": "none remaining within scaffold scope"
+  },
+  "freshGate": {
+    "required": 158,
+    "criteria": 34,
+    "accepted": 26,
+    "missingBindings": 132,
+    "receipt": "acceptance.json",
+    "newProtectionCasesPromoted": []
+  },
+  "evidenceValidation": {
+    "checks": 202,
+    "failures": 88,
+    "failedIdsEqualRetainedBaseline": true,
+    "baseline": "95a8e4b1",
+    "scope": "Retained baseline comparison; not a pristine baseline reexecution or passing release gate."
+  }
+}

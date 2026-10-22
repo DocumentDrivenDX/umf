@@ -1,0 +1,190 @@
+{
+  "status": "pass",
+  "sourceSha256": {
+    "tools/security/truss-protected-capture-candidate.py": "9bcbede4f7891021a999a2a91ec70655be3241ef63c3546a0d099aaa2adf305e",
+    "tools/security/truss-protected-capture-candidate.sql": "757a960730d581cd0e025f0c04deff1aa57426264055417e8d8cfc8966a15a48",
+    "docs/helix/02-design/contracts/CONTRACT-063-security-enforcement.md": "634f3d1d456b81616f4e0f7ecab4d57424dec430de1d6882f8886a593145c341",
+    "docs/helix/01-frame/user-stories/US-056-security-bindings.md": "c11ecdec8e6b429e7bef2f60d2a9faa42ee0699bc5f0d1627f76d9b486f91171",
+    "/private/tmp/truss-security-main-integration/packages/python/src/truss/_operation_admission.py": "f96462208c14230670370d0b12f9b5d38ef1c20861175bcab8777c2c687dbb30",
+    "/private/tmp/truss-security-main-integration/docs/helix/02-design/adr/ADR-008-trusted-embedding-host.md": "0ce6283047c287d6032b67bf2effbcb108a8321bf9523935d92f6ca598d7d335"
+  },
+  "observations": [
+    {
+      "id": "fixed-server-version",
+      "expected": [
+        [
+          "160015"
+        ]
+      ],
+      "observed": [
+        [
+          "160015"
+        ]
+      ]
+    },
+    {
+      "id": "native-original-actor",
+      "expected": 16385,
+      "observed": 16385
+    },
+    {
+      "id": "forged-public-context",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "copied-public-context-different-connection",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "private-capability-different-connection",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "different-attempt",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "different-input",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "unregistered-wrapper-even-with-private-capability",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "direct-registry-write",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "private-capability-read",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "refusals-have-zero-effects",
+      "expected": [
+        [
+          0
+        ]
+      ],
+      "observed": [
+        [
+          0
+        ]
+      ]
+    },
+    {
+      "id": "host-pre-entry-native-context",
+      "expected": [
+        5,
+        6862,
+        "731",
+        16385,
+        16385
+      ],
+      "observed": [
+        5,
+        6862,
+        "731",
+        16385,
+        16385
+      ]
+    },
+    {
+      "id": "actual-original-effect",
+      "expected": [
+        [
+          1,
+          16385,
+          "6f726967696e616c2073796e74686574696320656666656374"
+        ]
+      ],
+      "observed": [
+        [
+          1,
+          16385,
+          "6f726967696e616c2073796e74686574696320656666656374"
+        ]
+      ]
+    },
+    {
+      "id": "native-one-use-in-same-transaction",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "host-one-use-survives-savepoint-rollback",
+      "expected": 1,
+      "observed": 1
+    },
+    {
+      "id": "rollback-removes-effect",
+      "expected": [
+        [
+          0
+        ]
+      ],
+      "observed": [
+        [
+          0
+        ]
+      ]
+    },
+    {
+      "id": "native-alone-replay-demonstrates-host-requirement",
+      "expected": [
+        [
+          1,
+          16385,
+          "6f726967696e616c2073796e74686574696320656666656374"
+        ]
+      ],
+      "observed": [
+        [
+          1,
+          16385,
+          "6f726967696e616c2073796e74686574696320656666656374"
+        ]
+      ]
+    },
+    {
+      "id": "private-capability-new-transaction",
+      "expected": "42501",
+      "observed": "42501"
+    },
+    {
+      "id": "final-zero-committed-effects",
+      "expected": [
+        [
+          0
+        ]
+      ],
+      "observed": [
+        [
+          0
+        ]
+      ]
+    }
+  ],
+  "nativeTuple": {
+    "postgresql": "16.15",
+    "pgserver": "0.1.4+truss.pg16.15",
+    "pg8000": "1.31.5"
+  },
+  "scope": "Experimental registrar-issued private capability plus exact trusted-host dispatch and original one-use admission custody",
+  "limitations": [
+    "Synthetic local trust authentication; no production authenticated subject or current owner authority",
+    "Registrar is trusted and independently privileged; random capability is private, never public input or retained receipt content",
+    "Native consumption rolls back: direct replay after savepoint rollback succeeds; only the composed host restriction prevents resubmission",
+    "No SET ROLE profile, general callable closure, full current-cut/publication protocol or Truss semantic bodies"
+  ],
+  "PA02Complete": false,
+  "acceptancePromoted": false
+}

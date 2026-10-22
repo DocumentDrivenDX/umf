@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 const text={type:'string',minLength:1},nullableText={type:['string','null']},bool={type:'boolean'},integer={type:'integer',minimum:0,maximum:Number.MAX_SAFE_INTEGER};
 const object=(properties:Record<string,unknown>)=>({type:'object',additionalProperties:true,required:Object.keys(properties),properties});
 const nullable=(schema:unknown)=>({anyOf:[{type:'null'},schema]});

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
 import {relationshipCandidate,relationshipCases} from '../../scripts/core-relationship-cases';
 import {validateRelationshipCandidate} from '../../src/validation/relationships';
@@ -14,13 +15,16 @@ test('relationship candidate resolves keyed endpoints, participation, lifecycle 
   for(const format of ['json','yaml'] as const){const recovered=readJsonValue(writeJsonValue(row.document,format),format);expect(recovered).toEqual(before);expect(validateRelationshipCandidate(recovered)).toEqual(r);}
  }
 });
-// @covers US-045-AC3 (legacy interpretation only; migration is separately tested)
-test('old relationship-shaped unknown members remain opaque and candidate does not infer associations',()=>{
- const d=relationshipCandidate();d.umf='0.6.0';d.modules[0].relationships={opaque:['not an assertion']};
+// @covers US-045-AC3 (unknown extension content remains opaque)
+test('relationship-shaped extension members remain opaque and candidate does not infer associations',()=>{
+ const d=relationshipCandidate();d.modules[0].relationships=[];d.modules[0].extensions={};
+ d.modules[0].extensions.future={relationships:{opaque:['not an assertion']}};
+ d.modules[0].elements[0].references=[{role:'relationship',module:'m',element:'Customer'}];
  expect(validateDocument(d).valid).toBe(true);
- expect(validateRelationshipCandidate(d).valid).toBe(false);
- delete d.modules[0].relationships;d.umf='0.7.0';d.modules[0].elements[0].references=[{role:'relationship',module:'m',element:'Customer'}];
- expect(validateRelationshipCandidate(d).valid).toBe(true);expect(d.modules[0].relationships).toBeUndefined();
+ expect(validateRelationshipCandidate(d).valid).toBe(true);
+ expect(d.modules[0].relationships).toEqual([]);
+ const retired=relationshipCandidate();retired.umf='0.7.0';
+ expect(validateRelationshipCandidate(retired).valid).toBe(false);
 });
 test('candidate retains unknown meanings and rejects accessors and cyclic input without evaluation',()=>{
  const future=relationshipCases().find(r=>r.id==='future-qualifiers')!;

@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 17985,
+        "line": 28,
+        "path": "src/core-ideals/facets-postgresql.ts",
+        "sha256": "f5f7c509c676445e6f2c064551316096747ecae9be2147959f78cf395c9379b1"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "PostgresqlFacetClassification",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface PostgresqlFacetClassification {\n operation:'classify-postgresql-facets';version:'1.0.0';status:'classified'|'blocked';outcome:Outcome;source:Document;target?:Document;request:PostgresqlFacetRequest;binding:typeof binding;\n mapping:{origin:'classified';idealPath:string;nativePath:string;nativeFragment:NativeJson;facets:CoreFacetPatch;observations:Observation[]};\n residuals:{path:string;targetPath:string|null;value:Json;reason:string;outcome:Exclude<Outcome,'exact'>;binding:typeof binding;recovery:typeof recovery}[];diagnostics:Diagnostic[];\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"PostgresqlFacetClassification\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 17985,
+      "line": 28,
+      "path": "src/core-ideals/facets-postgresql.ts",
+      "sha256": "f5f7c509c676445e6f2c064551316096747ecae9be2147959f78cf395c9379b1"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/facets-postgresql.ts",
+  "title": "PostgresqlFacetClassification"
+}

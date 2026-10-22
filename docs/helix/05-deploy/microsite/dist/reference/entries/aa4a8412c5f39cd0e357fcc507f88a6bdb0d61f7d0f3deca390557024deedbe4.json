@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 10705,
+        "line": 86,
+        "path": "src/extensions/binding/bit128.ts",
+        "sha256": "b335e8db71b682abb6098b776d5b3985e18a5acb504da267ee063aa7cddac7de"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "encodeBit128CarrierValue",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(binding: Document, logical: Document, identity: { module: string; element: string; }, literal: Literal): Record<string, string | null>"
+    ]
+  },
+  "id": "[\"api\",\".\",\"encodeBit128CarrierValue\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 10705,
+      "line": 86,
+      "path": "src/extensions/binding/bit128.ts",
+      "sha256": "b335e8db71b682abb6098b776d5b3985e18a5acb504da267ee063aa7cddac7de"
+    }
+  ],
+  "summary": "Pure carrier values only; does not execute a database or establish constraints.",
+  "title": "encodeBit128CarrierValue"
+}

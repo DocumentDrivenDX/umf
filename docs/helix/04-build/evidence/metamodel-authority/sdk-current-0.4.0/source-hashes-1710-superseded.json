@@ -1,0 +1,80 @@
+{
+  "algorithm": "sha256",
+  "files": [
+    {
+      "path": "package.json",
+      "bytes": 4945,
+      "sha256": "0f2fbad15164863a446e5090bebafbfdebddfcb1fc32de00d1327c1c6f580080"
+    },
+    {
+      "path": "bun.lock",
+      "bytes": 58621,
+      "sha256": "35d4053486465fc2d59a5fb6b91084968ebf3a4b9697ec01a053be55aa03df04"
+    },
+    {
+      "path": "scripts/package-sdk.py",
+      "bytes": 2178,
+      "sha256": "b06cf488add1cdbb6a1aedc5eb6bbcdf028f5a0976e8ccdcc5b04ede76fa8c92"
+    },
+    {
+      "path": "scripts/package-sdk.ts",
+      "bytes": 2059,
+      "sha256": "f4e7c96794d0057e176a9aab46ba25d407812276a3d21b79871e3238a3407be4"
+    },
+    {
+      "path": "scripts/check-core-authority.ts",
+      "bytes": 19178,
+      "sha256": "65806bde837c3a4f5dd15813de303a0eb7cc25a78cf3c5767ae6af52eb95a770"
+    },
+    {
+      "path": "scripts/build.ts",
+      "bytes": 923,
+      "sha256": "194f93c4ae9d6b4ac00c76c1b9577209bc34a430298e045ed870c8bdaa8d10a9"
+    },
+    {
+      "path": "scripts/build-protobuf.ts",
+      "bytes": 2727,
+      "sha256": "b4f07410eca713513561018bd38084667d45c338066a780d34d6bc3e3397dfd0"
+    },
+    {
+      "path": "scripts/build-postgresql.ts",
+      "bytes": 441,
+      "sha256": "15827860f2ed377740bbcf124ffbbfdaad12f43320b75265e2d716278b78b10e"
+    },
+    {
+      "path": "src/index.ts",
+      "bytes": 31132,
+      "sha256": "c02a73ee76fb10097f9de6f047fb1dd6f27ee828f5e9369cc4595c9f167300a9"
+    },
+    {
+      "path": "src/domain-packs/loader-contract.ts",
+      "bytes": 334,
+      "sha256": "904f1bfb385e5fcb62851ceba73fd5f3a4ae1d13b351e08b73a10e12a5fc9334"
+    },
+    {
+      "path": "spec/metamodel/umf.yaml",
+      "bytes": 179719,
+      "sha256": "1e406ee49b0c4c08b8eb996bb1fcb6e96fa8d6f4673f0877aa1800986b2dbbce"
+    },
+    {
+      "path": "spec/metamodel/generated/core-constraints.json",
+      "bytes": 190252,
+      "sha256": "e7b2f551aef9f771a61fdc4b2cc203dbb6430b89c6cd8eb4873704d9920b6020"
+    },
+    {
+      "path": "spec/metamodel/generated/domain-policy.json",
+      "bytes": 14016,
+      "sha256": "f9ff3c8f5bfcc43664609bd72ce77fc6e0073cdea929fcc44c88bd969f8f3ee8"
+    },
+    {
+      "path": "spec/metamodel/generated/python-shapes.json",
+      "bytes": 75560,
+      "sha256": "21c050210aecf48541a00923419940c61ef05d00f331e9bc4d32916fdc70c647"
+    },
+    {
+      "path": "spec/core/schema.json",
+      "bytes": 34651,
+      "sha256": "58d8de05c1f684017e8c426aae934c37485ee4728e9d9c1b5e743ada02a154d7"
+    }
+  ]
+}

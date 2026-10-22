@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 14292,
+        "line": 44,
+        "path": "src/extensions/actions/expression.ts",
+        "sha256": "d75694336d0a377c13d8f783fd3cf5d7a66a2a8e2b8bc869203af105b2745676"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "compileActionRule",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(documentInput: Document, actionInput: Action, ruleInput: ActionRule, phase: ActionRulePhase): CompiledActionRule"
+    ]
+  },
+  "id": "[\"api\",\".\",\"compileActionRule\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 14292,
+      "line": 44,
+      "path": "src/extensions/actions/expression.ts",
+      "sha256": "d75694336d0a377c13d8f783fd3cf5d7a66a2a8e2b8bc869203af105b2745676"
+    }
+  ],
+  "summary": "Public export · src/extensions/actions/expression.ts",
+  "title": "compileActionRule"
+}

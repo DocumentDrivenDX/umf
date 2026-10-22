@@ -63,6 +63,24 @@ projections rather than prohibit UMF from defining author intent.
   representations, not additional core scalar families. Database transport and
   storage codecs remain in Truss/Weft. CONTRACT-049 defines the bounded API.
 
+## IDEAL-09: Exact 128-bit and UUID values
+
+Owner direction, 2026-10-15: authors and consumers must use first-class opaque
+128-bit and UUID domains without choosing a storage layout. Integer width facets
+continue to express signed/unsigned 128-bit arithmetic domains. Exact values,
+bit equality, schema literals, defaults, allowed values and keys must work in the
+new explicitly versioned core profile. Unknown relevant qualifiers block
+interpretation; unknown/native content remains recoverable.
+
+Native UUID, fixed bytes, canonical strings and ordered pairs of 64-bit integers
+are supported design choices, with target-qualified loss, equality, ordering,
+constraint and atomicity obligations. A fallback string must retain UUID logical
+meaning. No pair of unrelated integer columns is inferred to be a UUID.
+[SD-005](../../02-design/solution-designs/SD-005-128-bit-uuid.md) selects the approach;
+[CONTRACT-076](../../02-design/contracts/CONTRACT-076-128-bit-uuid.md) owns exact surfaces.
+Core admission, five-priority-system delivery and downstream adoption retain
+separate evidence gates; this requirement does not declare implementation support.
+
 ## User Stories
 
 US-040 field, US-041 nullability, US-042 cardinality, US-043 facets, US-044 key
@@ -140,3 +158,27 @@ text; ideal admission and all-five delivery stay open), and temporal value meani
 patterns require a declared language and interpretation status. The overloaded
 source field has no direct core-promotion path. This requirement does not place
 new concepts into IDEAL-01's ordered delivery or admit a new core version.
+
+## Semantic-type restoration — owner direction, 2026-10-17
+
+The owner authorizes a new core0.10.0 pointing profile over the existing core0.9.0
+UUID/128-bit profile. This deliberately resolves the historical semantic branch's
+conflicting core0.9.0 allocation; it does not redefine already published schemas.
+
+- SEM-01: metadata consumers can declare and inspect exact vocabulary/release/term
+  references independently of extension registration or an installed validator.
+- SEM-02: term resolution and value checks use only explicitly installed exact
+  implementations; missing/unknown meaning remains incomplete, with no fetching.
+- SEM-03: UUID/128-bit literals, prior value constraints and unknown/native content
+  survive validation and JSON/YAML recovery in the composed envelope.
+- SEM-04: upgrading core0.9.0 archives opaque semanticTypes collisions; optional
+  prototype conversion is explicit and cannot erase unknown wrapper content.
+- SEM-05: verified rollback restores the exact original core0.9.0 document while
+  retaining subsequent core0.10.0 edits separately.
+- SEM-06: browser-compatible metadata selection preserves the full source; native
+  delivery and unsupported version-specific authoring remain explicitly gated.
+
+[US-090](../user-stories/US-090-core-semantic-types.md) owns the user journey;
+[CONTRACT-078](../../02-design/contracts/CONTRACT-078-semantic-types.md) owns the
+new profile. The historical semantic1.0 receipts are not reinterpreted as UUID
+core0.9 or as semantic2.0 receipts. Original source remains in recovery bundles.

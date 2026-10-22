@@ -1,0 +1,697 @@
+{
+  "scope": "Actual worker catalog/action/read-grant, original Weft materialization and UMF manifest, keyed seal/replay/reopen recovery; public atomic load/replay/readback",
+  "assetPrefix": "/example/truss/",
+  "chromium": "153.0.8010.12",
+  "bundle": {
+    "manifestSha256": "1d8b6668d0e7596139b522e0cdc1829b06a2b26bc1e39bf8af4677c59465f387",
+    "providerSha256": "1a6f849ffd60af5510badb5ce018bfb5276d7dd70718d53ae83cbf40d2f3b809"
+  },
+  "first": {
+    "outcome": "available",
+    "info": {
+      "origin": "http://127.0.0.1:60371",
+      "profile": "truss-browser-layout/0.1",
+      "storeId": "e7e537c5-b88c-40c1-9f01-fcd771fcfc63",
+      "namespace": "truss-browser:lifecycle-basic",
+      "incarnation": "c6eb88e0-0b91-4505-9508-3c1b8c7f42c9",
+      "layoutSha256": "c203d09418fb4eddda829d791dda11c20341227c2d1d82e86d4c24afda5e7294"
+    }
+  },
+  "forged": {
+    "outcome": "refused"
+  },
+  "second": {
+    "outcome": "unavailable",
+    "reason": "store_in_use"
+  },
+  "takeover": {
+    "outcome": "available",
+    "info": {
+      "origin": "http://127.0.0.1:60371",
+      "profile": "truss-browser-layout/0.1",
+      "storeId": "e7e537c5-b88c-40c1-9f01-fcd771fcfc63",
+      "namespace": "truss-browser:lifecycle-basic",
+      "incarnation": "c6eb88e0-0b91-4505-9508-3c1b8c7f42c9",
+      "layoutSha256": "c203d09418fb4eddda829d791dda11c20341227c2d1d82e86d4c24afda5e7294"
+    }
+  },
+  "reopened": {
+    "outcome": "available",
+    "info": {
+      "origin": "http://127.0.0.1:60371",
+      "profile": "truss-browser-layout/0.1",
+      "storeId": "e7e537c5-b88c-40c1-9f01-fcd771fcfc63",
+      "namespace": "truss-browser:lifecycle-basic",
+      "incarnation": "c6eb88e0-0b91-4505-9508-3c1b8c7f42c9",
+      "layoutSha256": "c203d09418fb4eddda829d791dda11c20341227c2d1d82e86d4c24afda5e7294"
+    }
+  },
+  "staleGuard": {
+    "result": {
+      "status": "conflict",
+      "job": {
+        "namespace": "e7e537c5-b88c-40c1-9f01-fcd771fcfc63",
+        "id": "9caffea9-f722-436e-92ac-46e3b1d65d6b"
+      },
+      "batch": 0,
+      "code": "PAP_GUARD",
+      "item": 1
+    },
+    "recoveredByteEqual": true,
+    "firstItemUnchanged": true
+  },
+  "noOp": {
+    "results": [
+      {
+        "status": "committed",
+        "job": {
+          "namespace": "e7e537c5-b88c-40c1-9f01-fcd771fcfc63",
+          "id": "66902d99-17b2-4689-8d8d-188524757751"
+        },
+        "batch": 0,
+        "manifestSha256": "a9f295abc93f5d98446ed6cba7a348b6c07342de55498aca6a02355d907e39c1",
+        "items": [
+          {
+            "ordinal": 0,
+            "result": {
+              "status": "committed",
+              "token": "pap1/e7e537c5-b88c-40c1-9f01-fcd771fcfc63/66902d99-17b2-4689-8d8d-188524757751/0/0",
+              "noOp": true,
+              "identity": {
+                "id": "1",
+                "typeId": "1"
+              },
+              "version": "2",
+              "changes": [],
+              "verification": {
+                "profile": "truss-browser-set-verification/0.1",
+                "requiredEffects": true,
+                "frame": true,
+                "keysUnchanged": true
+              }
+            }
+          },
+          {
+            "ordinal": 1,
+            "result": {
+              "status": "committed",
+              "token": "pap1/e7e537c5-b88c-40c1-9f01-fcd771fcfc63/66902d99-17b2-4689-8d8d-188524757751/0/1",
+              "noOp": true,
+              "identity": {
+                "id": "2",
+                "typeId": "1"
+              },
+              "version": "2",
+              "changes": [],
+              "verification": {
+                "profile": "truss-browser-set-verification/0.1",
+                "requiredEffects": true,
+                "frame": true,
+                "keysUnchanged": true
+              }
+            }
+          }
+        ],
+        "receipt": {
+          "mediaType": "application/json",
+          "utf8": "{\"profile\":\"truss-browser-batch-receipt/0.1\",\"storeId\":\"e7e537c5-b88c-40c1-9f01-fcd771fcfc63\",\"incarnation\":\"c6eb88e0-0b91-4505-9508-3c1b8c7f42c9\",\"job\":{\"namespace\":\"e7e537c5-b88c-40c1-9f01-fcd771fcfc63\",\"id\":\"66902d99-17b2-4689-8d8d-188524757751\"},\"batch\":0,\"manifestSha256\":\"a9f295abc93f5d98446ed6cba7a348b6c07342de55498aca6a02355d907e39c1\",\"writerXid\":\"775\",\"journal\":[],\"items\":[{\"ordinal\":0,\"result\":{\"status\":\"committed\",\"token\":\"pap1/e7e537c5-b88c-40c1-9f01-fcd771fcfc63/66902d99-17b2-4689-8d8d-188524757751/0/0\",\"noOp\":true,\"identity\":{\"id\":\"1\",\"typeId\":\"1\"},\"version\":\"2\",\"changes\":[],\"verification\":{\"profile\":\"truss-browser-set-verification/0.1\",\"requiredEffects\":true,\"frame\":true,\"keysUnchanged\":true}}},{\"ordinal\":1,\"result\":{\"status\":\"committed\",\"token\":\"pap1/e7e537c5-b88c-40c1-9f01-fcd771fcfc63/66902d99-17b2-4689-8d8d-188524757751/0/1\",\"noOp\":true,\"identity\":{\"id\":\"2\",\"typeId\":\"1\"},\"version\":\"2\",\"changes\":[],\"verification\":{\"profile\":\"truss-browser-set-verification/0.1\",\"requiredEffects\":true,\"frame\":true,\"keysUnchanged\":true}}}]}",
+          "sha256": "81348372d329b29434d42e9bc19c906f38329c8a51cf496d9ca598295f238f3f"
+        }
+      },
+      {
+        "status": "committed",
+        "job": {
+          "namespace": "e7e537c5-b88c-40c1-9f01-fcd771fcfc63",
+          "id": "66902d99-17b2-4689-8d8d-188524757751"
+        },
+        "batch": 1,
+        "manifestSha256": "a9f295abc93f5d98446ed6cba7a348b6c07342de55498aca6a02355d907e39c1",
+        "items": [
+          {
+            "ordinal": 2,
+            "result": {
+              "status": "committed",
+              "token": "pap1/e7e537c5-b88c-40c1-9f01-fcd771fcfc63/66902d99-17b2-4689-8d8d-188524757751/1/2",
+              "noOp": true,
+              "identity": {
+                "id": "3",
+                "typeId": "1"
+              },
+              "version": "2",
+              "changes": [],
+              "verification": {
+                "profile": "truss-browser-set-verification/0.1",
+                "requiredEffects": true,
+                "frame": true,
+                "keysUnchanged": true
+              }
+            }
+          }
+        ],
+        "receipt": {
+          "mediaType": "application/json",
+          "utf8": "{\"profile\":\"truss-browser-batch-receipt/0.1\",\"storeId\":\"e7e537c5-b88c-40c1-9f01-fcd771fcfc63\",\"incarnation\":\"c6eb88e0-0b91-4505-9508-3c1b8c7f42c9\",\"job\":{\"namespace\":\"e7e537c5-b88c-40c1-9f01-fcd771fcfc63\",\"id\":\"66902d99-17b2-4689-8d8d-188524757751\"},\"batch\":1,\"manifestSha256\":\"a9f295abc93f5d98446ed6cba7a348b6c07342de55498aca6a02355d907e39c1\",\"writerXid\":\"778\",\"journal\":[],\"items\":[{\"ordinal\":2,\"result\":{\"status\":\"committed\",\"token\":\"pap1/e7e537c5-b88c-40c1-9f01-fcd771fcfc63/66902d99-17b2-4689-8d8d-188524757751/1/2\",\"noOp\":true,\"identity\":{\"id\":\"3\",\"typeId\":\"1\"},\"version\":\"2\",\"changes\":[],\"verification\":{\"profile\":\"truss-browser-set-verification/0.1\",\"requiredEffects\":true,\"frame\":true,\"keysUnchanged\":true}}}]}",
+          "sha256": "88232383da47e13f48db466f062f9c132e4e9fce82dcc73eea9b58cc57b8cab7"
+        }
+      }
+    ],
+    "unchanged": true
+  },
+  "atomicRollback": {
+    "result": {
+      "status": "failed",
+      "job": {
+        "namespace": "e7e537c5-b88c-40c1-9f01-fcd771fcfc63",
+        "id": "d5a7012e-3f6c-49b9-9f67-34acfceae943"
+      },
+      "batch": 0,
+      "code": "BATCH_ROLLED_BACK"
+    },
+    "recoveredByteEqual": true,
+    "unchanged": true,
+    "state": {
+      "state": {
+        "job": {
+          "id": "d5a7012e-3f6c-49b9-9f67-34acfceae943",
+          "namespace": "e7e537c5-b88c-40c1-9f01-fcd771fcfc63"
+        },
+        "stop": {
+          "code": "BATCH_ROLLED_BACK",
+          "batch": 0
+        },
+        "status": "stopped",
+        "nextBatch": 0,
+        "manifestSha256": "4328d5c0b1579f62f1af96b2b303a77c24655ded7ac68958ba348e42a8eb6e51",
+        "unresolvedBatch": null,
+        "committedBatches": 0
+      },
+      "manifest": {
+        "mediaType": "application/json",
+        "utf8": "{\"action\":{\"documentSha256\":\"b8ce3cfe76eeda7c1531b2bbf8aba121c9d9614800ff1f3301f853c048516f27\",\"invocation\":{\"id\":\"umf.actions.local-tx\",\"version\":\"1\"},\"target\":{\"action\":\"set-name-local\",\"module\":\"sales\",\"revision\":\"b8ce3cfe76eeda7c1531b2bbf8aba121c9d9614800ff1f3301f853c048516f27\"}},\"basis\":{\"cut\":\"1:779:46c23afd66f0861f2f30542f174b7db38ba1aae76ee9a0b3de34a6739c8ca52b\",\"epoch\":\"c6eb88e0-0b91-4505-9508-3c1b8c7f42c9\",\"profile\":{\"id\":\"truss-browser-store-cut\",\"version\":\"1\"},\"selectionSha256\":\"07070a99c7b9e8442b476af15ca07b4cfc34d893da7b99b456284110831a3a95\",\"store\":\"e7e537c5-b88c-40c1-9f01-fcd771fcfc63\"},\"batches\":[{\"count\":2,\"ordinal\":0,\"start\":0},{\"count\":1,\"ordinal\":1,\"start\":2}],\"items\":[{\"entity\":{\"components\":[{\"string\":\"bar\"}],\"key\":{\"element\":\"products\",\"key\":\"pk\",\"module\":\"sales\"}},\"expectedVersions\":[{\"frame\":\"customer-write\",\"version\":\"2\"}],\"guard\":{\"epoch\":\"c6eb88e0-0b91-4505-9508-3c1b8c7f42c9\",\"identity\":\"1\",\"profile\":{\"id\":\"truss-browser-object-version\",\"version\":\"1\"},\"store\":\"e7e537c5-b88c-40c1-9f01-fcd771fcfc63\",\"version\":\"2\"},\"inputs\":{\"name-value\":{\"string\":\"Fail\"},\"products\":{\"components\":[{\"string\":\"bar\"}],\"key\":{\"element\":\"products\",\"key\":\"pk\",\"module\":\"sales\"}}},\"ordinal\":0},{\"entity\":{\"components\":[{\"string\":\"baz\"}],\"key\":{\"element\":\"products\",\"key\":\"pk\",\"module\":\"sales\"}},\"expectedVersions\":[{\"frame\":\"customer-write\",\"version\":\"2\"}],\"guard\":{\"epoch\":\"c6eb88e0-0b91-4505-9508-3c1b8c7f42c9\",\"identity\":\"2\",\"profile\":{\"id\":\"truss-browser-object-version\",\"version\":\"1\"},\"store\":\"e7e537c5-b88c-40c1-9f01-fcd771fcfc63\",\"version\":\"2\"},\"inputs\":{\"name-value\":{\"string\":\"Fail\"},\"products\":{\"components\":[{\"string\":\"baz\"}],\"key\":{\"element\":\"products\",\"key\":\"pk\",\"module\":\"sales\"}}},\"ordinal\":1},{\"entity\":{\"components\":[{\"string\":\"qux\"}],\"key\":{\"element\":\"products\",\"key\":\"pk\",\"module\":\"sales\"}},\"expectedVersions\":[{\"frame\":\"customer-write\",\"version\":\"2\"}],\"guard\":{\"epoch\":\"c6eb88e0-0b91-4505-9508-3c1b8c7f42c9\",\"identity\":\"3\",\"profile\":{\"id\":\"truss-browser-object-version\",\"version\":\"1\"},\"store\":\"e7e537c5-b88c-40c1-9f01-fcd771fcfc63\",\"version\":\"2\"},\"inputs\":{\"name-value\":{\"string\":\"Fail\"},\"products\":{\"components\":[{\"string\":\"qux\"}],\"key\":{\"element\":\"products\",\"key\":\"pk\",\"module\":\"sales\"}}},\"ordinal\":2}],\"plan\":{\"mediaType\":\"application/json\",\"sha256\":\"9ecb240326abe64dfa61af6b8ebe1483d44cc5e7325b6303e6947f2e5e1d0197\",\"utf8\":\"{\\\"action\\\":{\\\"documentSha256\\\":\\\"b8ce3cfe76eeda7c1531b2bbf8aba121c9d9614800ff1f3301f853c048516f27\\\",\\\"identity\\\":{\\\"action\\\":\\\"set-name-local\\\",\\\"module\\\":\\\"sales\\\"},\\\"invocation\\\":{\\\"id\\\":\\\"umf.actions.local-tx\\\",\\\"version\\\":\\\"1\\\"}},\\\"execution\\\":{\\\"atomicity\\\":\\\"batch\\\",\\\"batchSize\\\":2,\\\"conflict\\\":\\\"stop\\\",\\\"partition\\\":\\\"manifest-order\\\",\\\"selection\\\":\\\"frozen\\\"},\\\"inputs\\\":{\\\"assignments\\\":[{\\\"field\\\":{\\\"element\\\":\\\"product-name\\\",\\\"module\\\":\\\"sales\\\"},\\\"input\\\":\\\"name-value\\\",\\\"value\\\":{\\\"string\\\":\\\"Fail\\\"}}],\\\"entityParameter\\\":\\\"products\\\"},\\\"limits\\\":{\\\"maxItems\\\":10,\\\"maxManifestBytes\\\":16777216},\\\"model\\\":{\\\"documentId\\\":\\\"product-local-action-demo\\\",\\\"revision\\\":\\\"b8ce3cfe76eeda7c1531b2bbf8aba121c9d9614800ff1f3301f853c048516f27\\\",\\\"sha256\\\":\\\"b8ce3cfe76eeda7c1531b2bbf8aba121c9d9614800ff1f3301f853c048516f27\\\",\\\"umfVersion\\\":\\\"0.8.0\\\"},\\\"protocol\\\":\\\"umf.actions.plan/1\\\",\\\"selection\\\":{\\\"artifact\\\":{\\\"mediaType\\\":\\\"application/json\\\",\\\"sha256\\\":\\\"07070a99c7b9e8442b476af15ca07b4cfc34d893da7b99b456284110831a3a95\\\",\\\"utf8\\\":\\\"{\\\\\\\"key\\\\\\\":{\\\\\\\"element\\\\\\\":\\\\\\\"products\\\\\\\",\\\\\\\"key\\\\\\\":\\\\\\\"pk\\\\\\\",\\\\\\\"module\\\\\\\":\\\\\\\"sales\\\\\\\"},\\\\\\\"predicate\\\\\\\":{\\\\\\\"compare\\\\\\\":{\\\\\\\"field\\\\\\\":{\\\\\\\"element\\\\\\\":\\\\\\\"product-name\\\\\\\",\\\\\\\"module\\\\\\\":\\\\\\\"sales\\\\\\\"},\\\\\\\"op\\\\\\\":\\\\\\\"eq\\\\\\\",\\\\\\\"value\\\\\\\":{\\\\\\\"string\\\\\\\":\\\\\\\"Bulk\\\\\\\"}}},\\\\\\\"protocol\\\\\\\":\\\\\\\"weft.update-selection/1\\\\\\\",\\\\\\\"record\\\\\\\":{\\\\\\\"element\\\\\\\":\\\\\\\"products\\\\\\\",\\\\\\\"module\\\\\\\":\\\\\\\"sales\\\\\\\"}}\\\"},\\\"dependencies\\\":[{\\\"element\\\":\\\"product-name\\\",\\\"module\\\":\\\"sales\\\"}],\\\"profile\\\":{\\\"id\\\":\\\"weft.update-selection\\\",\\\"version\\\":\\\"1\\\"}},\\\"source\\\":{\\\"mediaType\\\":\\\"application/json\\\",\\\"sha256\\\":\\\"5d10c56b115459de49cb6c2810369800ba06b26ce1c851fa1a94513bff8c2a99\\\",\\\"utf8\\\":\\\"{\\\\\\\"dialect\\\\\\\":\\\\\\\"weft-mutation/0.1.0\\\\\\\",\\\\\\\"parameters\\\\\\\":{},\\\\\\\"sql\\\\\\\":\\\\\\\"UPDATE products SET name='Fail' WHERE name='Bulk'\\\\\\\"}\\\"},\\\"target\\\":{\\\"element\\\":\\\"products\\\",\\\"key\\\":\\\"pk\\\",\\\"module\\\":\\\"sales\\\"}}\"},\"protocol\":\"umf.actions.manifest/1\"}",
+        "sha256": "4328d5c0b1579f62f1af96b2b303a77c24655ded7ac68958ba348e42a8eb6e51"
+      }
+    }
+  },
+  "execution": {
+    "first": {
+      "status": "committed",
+      "job": {
+        "namespace": "e7e537c5-b88c-40c1-9f01-fcd771fcfc63",
+        "id": "51ca40d8-ef5a-4f82-8586-043ad19ba3bd"
+      },
+      "batch": 0,
+      "manifestSha256": "a4188f96fd5812a8ca46492f705569239634b9d2f12210e331e6f1626519fd89",
+      "items": [
+        {
+          "ordinal": 0,
+          "result": {
+            "status": "committed",
+            "token": "pap1/e7e537c5-b88c-40c1-9f01-fcd771fcfc63/51ca40d8-ef5a-4f82-8586-043ad19ba3bd/0/0",
+            "noOp": false,
+            "identity": {
+              "id": "1",
+              "typeId": "1"
+            },
+            "version": "2",
+            "changes": [
+              {
+                "propertyId": "2",
+                "before": {
+                  "string": "Sample"
+                },
+                "after": {
+                  "string": "Bulk"
+                }
+              }
+            ],
+            "verification": {
+              "profile": "truss-browser-set-verification/0.1",
+              "requiredEffects": true,
+              "frame": true,
+              "keysUnchanged": true
+            }
+          }
+        },
+        {
+          "ordinal": 1,
+          "result": {
+            "status": "committed",
+            "token": "pap1/e7e537c5-b88c-40c1-9f01-fcd771fcfc63/51ca40d8-ef5a-4f82-8586-043ad19ba3bd/0/1",
+            "noOp": false,
+            "identity": {
+              "id": "2",
+              "typeId": "1"
+            },
+            "version": "2",
+            "changes": [
+              {
+                "propertyId": "2",
+                "before": {
+                  "string": "Sample"
+                },
+                "after": {
+                  "string": "Bulk"
+                }
+              }
+            ],
+            "verification": {
+              "profile": "truss-browser-set-verification/0.1",
+              "requiredEffects": true,
+              "frame": true,
+              "keysUnchanged": true
+            }
+          }
+        }
+      ],
+      "receipt": {
+        "mediaType": "application/json",
+        "utf8": "{\"profile\":\"truss-browser-batch-receipt/0.1\",\"storeId\":\"e7e537c5-b88c-40c1-9f01-fcd771fcfc63\",\"incarnation\":\"c6eb88e0-0b91-4505-9508-3c1b8c7f42c9\",\"job\":{\"namespace\":\"e7e537c5-b88c-40c1-9f01-fcd771fcfc63\",\"id\":\"51ca40d8-ef5a-4f82-8586-043ad19ba3bd\"},\"batch\":0,\"manifestSha256\":\"a4188f96fd5812a8ca46492f705569239634b9d2f12210e331e6f1626519fd89\",\"writerXid\":\"766\",\"journal\":[\"5\",\"6\"],\"items\":[{\"ordinal\":0,\"result\":{\"status\":\"committed\",\"token\":\"pap1/e7e537c5-b88c-40c1-9f01-fcd771fcfc63/51ca40d8-ef5a-4f82-8586-043ad19ba3bd/0/0\",\"noOp\":false,\"identity\":{\"id\":\"1\",\"typeId\":\"1\"},\"version\":\"2\",\"changes\":[{\"propertyId\":\"2\",\"before\":{\"string\":\"Sample\"},\"after\":{\"string\":\"Bulk\"}}],\"verification\":{\"profile\":\"truss-browser-set-verification/0.1\",\"requiredEffects\":true,\"frame\":true,\"keysUnchanged\":true}}},{\"ordinal\":1,\"result\":{\"status\":\"committed\",\"token\":\"pap1/e7e537c5-b88c-40c1-9f01-fcd771fcfc63/51ca40d8-ef5a-4f82-8586-043ad19ba3bd/0/1\",\"noOp\":false,\"identity\":{\"id\":\"2\",\"typeId\":\"1\"},\"version\":\"2\",\"changes\":[{\"propertyId\":\"2\",\"before\":{\"string\":\"Sample\"},\"after\":{\"string\":\"Bulk\"}}],\"verification\":{\"profile\":\"truss-browser-set-verification/0.1\",\"requiredEffects\":true,\"frame\":true,\"keysUnchanged\":true}}}]}",
+        "sha256": "6c6e1251c0f1268cdec9578888717ebf49020ecd2dab59938c63c4c644d997e6"
+      }
+    },
+    "second": {
+      "status": "committed",
+      "job": {
+        "namespace": "e7e537c5-b88c-40c1-9f01-fcd771fcfc63",
+        "id": "51ca40d8-ef5a-4f82-8586-043ad19ba3bd"
+      },
+      "batch": 1,
+      "manifestSha256": "a4188f96fd5812a8ca46492f705569239634b9d2f12210e331e6f1626519fd89",
+      "items": [
+        {
+          "ordinal": 2,
+          "result": {
+            "status": "committed",
+            "token": "pap1/e7e537c5-b88c-40c1-9f01-fcd771fcfc63/51ca40d8-ef5a-4f82-8586-043ad19ba3bd/1/2",
+            "noOp": false,
+            "identity": {
+              "id": "3",
+              "typeId": "1"
+            },
+            "version": "2",
+            "changes": [
+              {
+                "propertyId": "2",
+                "before": {
+                  "string": "Sample"
+                },
+                "after": {
+                  "string": "Bulk"
+                }
+              }
+            ],
+            "verification": {
+              "profile": "truss-browser-set-verification/0.1",
+              "requiredEffects": true,
+              "frame": true,
+              "keysUnchanged": true
+            }
+          }
+        }
+      ],
+      "receipt": {
+        "mediaType": "application/json",
+        "utf8": "{\"profile\":\"truss-browser-batch-receipt/0.1\",\"storeId\":\"e7e537c5-b88c-40c1-9f01-fcd771fcfc63\",\"incarnation\":\"c6eb88e0-0b91-4505-9508-3c1b8c7f42c9\",\"job\":{\"namespace\":\"e7e537c5-b88c-40c1-9f01-fcd771fcfc63\",\"id\":\"51ca40d8-ef5a-4f82-8586-043ad19ba3bd\"},\"batch\":1,\"manifestSha256\":\"a4188f96fd5812a8ca46492f705569239634b9d2f12210e331e6f1626519fd89\",\"writerXid\":\"769\",\"journal\":[\"34\"],\"items\":[{\"ordinal\":2,\"result\":{\"status\":\"committed\",\"token\":\"pap1/e7e537c5-b88c-40c1-9f01-fcd771fcfc63/51ca40d8-ef5a-4f82-8586-043ad19ba3bd/1/2\",\"noOp\":false,\"identity\":{\"id\":\"3\",\"typeId\":\"1\"},\"version\":\"2\",\"changes\":[{\"propertyId\":\"2\",\"before\":{\"string\":\"Sample\"},\"after\":{\"string\":\"Bulk\"}}],\"verification\":{\"profile\":\"truss-browser-set-verification/0.1\",\"requiredEffects\":true,\"frame\":true,\"keysUnchanged\":true}}}]}",
+        "sha256": "750a1d2115fbb63b82574fb23e2698a0e0e02dca09627480ad9e81bd649966ae"
+      }
+    },
+    "replayedByteEqual": true,
+    "recoveredByteEqual": true,
+    "finalState": {
+      "state": {
+        "job": {
+          "id": "51ca40d8-ef5a-4f82-8586-043ad19ba3bd",
+          "namespace": "e7e537c5-b88c-40c1-9f01-fcd771fcfc63"
+        },
+        "stop": null,
+        "status": "completed",
+        "nextBatch": 2,
+        "manifestSha256": "a4188f96fd5812a8ca46492f705569239634b9d2f12210e331e6f1626519fd89",
+        "unresolvedBatch": null,
+        "committedBatches": 2
+      },
+      "manifest": {
+        "mediaType": "application/json",
+        "utf8": "{\"action\":{\"documentSha256\":\"b8ce3cfe76eeda7c1531b2bbf8aba121c9d9614800ff1f3301f853c048516f27\",\"invocation\":{\"id\":\"umf.actions.local-tx\",\"version\":\"1\"},\"target\":{\"action\":\"set-name-local\",\"module\":\"sales\",\"revision\":\"b8ce3cfe76eeda7c1531b2bbf8aba121c9d9614800ff1f3301f853c048516f27\"}},\"basis\":{\"cut\":\"1:756:46c23afd66f0861f2f30542f174b7db38ba1aae76ee9a0b3de34a6739c8ca52b\",\"epoch\":\"c6eb88e0-0b91-4505-9508-3c1b8c7f42c9\",\"profile\":{\"id\":\"truss-browser-store-cut\",\"version\":\"1\"},\"selectionSha256\":\"acbe50c3d290115ca64ae7891a93ba6e1f9dd2f6c1ed78f1e7a7b2e123b3ab84\",\"store\":\"e7e537c5-b88c-40c1-9f01-fcd771fcfc63\"},\"batches\":[{\"count\":2,\"ordinal\":0,\"start\":0},{\"count\":1,\"ordinal\":1,\"start\":2}],\"items\":[{\"entity\":{\"components\":[{\"string\":\"bar\"}],\"key\":{\"element\":\"products\",\"key\":\"pk\",\"module\":\"sales\"}},\"expectedVersions\":[{\"frame\":\"customer-write\",\"version\":\"1\"}],\"guard\":{\"epoch\":\"c6eb88e0-0b91-4505-9508-3c1b8c7f42c9\",\"identity\":\"1\",\"profile\":{\"id\":\"truss-browser-object-version\",\"version\":\"1\"},\"store\":\"e7e537c5-b88c-40c1-9f01-fcd771fcfc63\",\"version\":\"1\"},\"inputs\":{\"name-value\":{\"string\":\"Bulk\"},\"products\":{\"components\":[{\"string\":\"bar\"}],\"key\":{\"element\":\"products\",\"key\":\"pk\",\"module\":\"sales\"}}},\"ordinal\":0},{\"entity\":{\"components\":[{\"string\":\"baz\"}],\"key\":{\"element\":\"products\",\"key\":\"pk\",\"module\":\"sales\"}},\"expectedVersions\":[{\"frame\":\"customer-write\",\"version\":\"1\"}],\"guard\":{\"epoch\":\"c6eb88e0-0b91-4505-9508-3c1b8c7f42c9\",\"identity\":\"2\",\"profile\":{\"id\":\"truss-browser-object-version\",\"version\":\"1\"},\"store\":\"e7e537c5-b88c-40c1-9f01-fcd771fcfc63\",\"version\":\"1\"},\"inputs\":{\"name-value\":{\"string\":\"Bulk\"},\"products\":{\"components\":[{\"string\":\"baz\"}],\"key\":{\"element\":\"products\",\"key\":\"pk\",\"module\":\"sales\"}}},\"ordinal\":1},{\"entity\":{\"components\":[{\"string\":\"qux\"}],\"key\":{\"element\":\"products\",\"key\":\"pk\",\"module\":\"sales\"}},\"expectedVersions\":[{\"frame\":\"customer-write\",\"version\":\"1\"}],\"guard\":{\"epoch\":\"c6eb88e0-0b91-4505-9508-3c1b8c7f42c9\",\"identity\":\"3\",\"profile\":{\"id\":\"truss-browser-object-version\",\"version\":\"1\"},\"store\":\"e7e537c5-b88c-40c1-9f01-fcd771fcfc63\",\"version\":\"1\"},\"inputs\":{\"name-value\":{\"string\":\"Bulk\"},\"products\":{\"components\":[{\"string\":\"qux\"}],\"key\":{\"element\":\"products\",\"key\":\"pk\",\"module\":\"sales\"}}},\"ordinal\":2}],\"plan\":{\"mediaType\":\"application/json\",\"sha256\":\"c4a434683409851178579261f6d9800ba20f0211fcccb309c15fed513ad2f587\",\"utf8\":\"{\\\"action\\\":{\\\"documentSha256\\\":\\\"b8ce3cfe76eeda7c1531b2bbf8aba121c9d9614800ff1f3301f853c048516f27\\\",\\\"identity\\\":{\\\"action\\\":\\\"set-name-local\\\",\\\"module\\\":\\\"sales\\\"},\\\"invocation\\\":{\\\"id\\\":\\\"umf.actions.local-tx\\\",\\\"version\\\":\\\"1\\\"}},\\\"execution\\\":{\\\"atomicity\\\":\\\"batch\\\",\\\"batchSize\\\":2,\\\"conflict\\\":\\\"stop\\\",\\\"partition\\\":\\\"manifest-order\\\",\\\"selection\\\":\\\"frozen\\\"},\\\"inputs\\\":{\\\"assignments\\\":[{\\\"field\\\":{\\\"element\\\":\\\"product-name\\\",\\\"module\\\":\\\"sales\\\"},\\\"input\\\":\\\"name-value\\\",\\\"value\\\":{\\\"string\\\":\\\"Bulk\\\"}}],\\\"entityParameter\\\":\\\"products\\\"},\\\"limits\\\":{\\\"maxItems\\\":10,\\\"maxManifestBytes\\\":16777216},\\\"model\\\":{\\\"documentId\\\":\\\"product-local-action-demo\\\",\\\"revision\\\":\\\"b8ce3cfe76eeda7c1531b2bbf8aba121c9d9614800ff1f3301f853c048516f27\\\",\\\"sha256\\\":\\\"b8ce3cfe76eeda7c1531b2bbf8aba121c9d9614800ff1f3301f853c048516f27\\\",\\\"umfVersion\\\":\\\"0.8.0\\\"},\\\"protocol\\\":\\\"umf.actions.plan/1\\\",\\\"selection\\\":{\\\"artifact\\\":{\\\"mediaType\\\":\\\"application/json\\\",\\\"sha256\\\":\\\"acbe50c3d290115ca64ae7891a93ba6e1f9dd2f6c1ed78f1e7a7b2e123b3ab84\\\",\\\"utf8\\\":\\\"{\\\\\\\"key\\\\\\\":{\\\\\\\"element\\\\\\\":\\\\\\\"products\\\\\\\",\\\\\\\"key\\\\\\\":\\\\\\\"pk\\\\\\\",\\\\\\\"module\\\\\\\":\\\\\\\"sales\\\\\\\"},\\\\\\\"predicate\\\\\\\":{\\\\\\\"compare\\\\\\\":{\\\\\\\"field\\\\\\\":{\\\\\\\"element\\\\\\\":\\\\\\\"product-name\\\\\\\",\\\\\\\"module\\\\\\\":\\\\\\\"sales\\\\\\\"},\\\\\\\"op\\\\\\\":\\\\\\\"eq\\\\\\\",\\\\\\\"value\\\\\\\":{\\\\\\\"string\\\\\\\":\\\\\\\"Sample\\\\\\\"}}},\\\\\\\"protocol\\\\\\\":\\\\\\\"weft.update-selection/1\\\\\\\",\\\\\\\"record\\\\\\\":{\\\\\\\"element\\\\\\\":\\\\\\\"products\\\\\\\",\\\\\\\"module\\\\\\\":\\\\\\\"sales\\\\\\\"}}\\\"},\\\"dependencies\\\":[{\\\"element\\\":\\\"product-name\\\",\\\"module\\\":\\\"sales\\\"}],\\\"profile\\\":{\\\"id\\\":\\\"weft.update-selection\\\",\\\"version\\\":\\\"1\\\"}},\\\"source\\\":{\\\"mediaType\\\":\\\"application/json\\\",\\\"sha256\\\":\\\"a6399dc37a07720d12a3bee9a2f2016066bdb5dd4e9da75ced3c32bc90af4f2f\\\",\\\"utf8\\\":\\\"{\\\\\\\"dialect\\\\\\\":\\\\\\\"weft-mutation/0.1.0\\\\\\\",\\\\\\\"parameters\\\\\\\":{},\\\\\\\"sql\\\\\\\":\\\\\\\"UPDATE products SET name='Bulk' WHERE name='Sample'\\\\\\\"}\\\"},\\\"target\\\":{\\\"element\\\":\\\"products\\\",\\\"key\\\":\\\"pk\\\",\\\"module\\\":\\\"sales\\\"}}\"},\"protocol\":\"umf.actions.manifest/1\"}",
+        "sha256": "a4188f96fd5812a8ca46492f705569239634b9d2f12210e331e6f1626519fd89"
+      }
+    },
+    "finalObjects": [
+      {
+        "id": "1",
+        "typeId": "1",
+        "version": "2",
+        "fields": [
+          {
+            "module": "sales",
+            "field": "product-id",
+            "value": "bar"
+          },
+          {
+            "module": "sales",
+            "field": "product-name",
+            "value": "Bulk"
+          }
+        ]
+      },
+      {
+        "id": "2",
+        "typeId": "1",
+        "version": "2",
+        "fields": [
+          {
+            "module": "sales",
+            "field": "product-id",
+            "value": "baz"
+          },
+          {
+            "module": "sales",
+            "field": "product-name",
+            "value": "Bulk"
+          }
+        ]
+      },
+      {
+        "id": "3",
+        "typeId": "1",
+        "version": "2",
+        "fields": [
+          {
+            "module": "sales",
+            "field": "product-id",
+            "value": "qux"
+          },
+          {
+            "module": "sales",
+            "field": "product-name",
+            "value": "Bulk"
+          }
+        ]
+      },
+      {
+        "id": "4",
+        "typeId": "1",
+        "version": "1",
+        "fields": [
+          {
+            "module": "sales",
+            "field": "product-id",
+            "value": "spare"
+          },
+          {
+            "module": "sales",
+            "field": "product-name",
+            "value": "Untouched"
+          }
+        ]
+      }
+    ]
+  },
+  "claim": {
+    "result": {
+      "status": "claimed",
+      "job": {
+        "namespace": "e7e537c5-b88c-40c1-9f01-fcd771fcfc63",
+        "id": "51ca40d8-ef5a-4f82-8586-043ad19ba3bd"
+      },
+      "batch": 0,
+      "fence": "1",
+      "leaseUntil": "2026-10-15T18:41:20.927000Z"
+    },
+    "replayedByteEqual": true,
+    "recoveredByteEqual": true,
+    "competingClaim": {
+      "status": "unsupported",
+      "code": "PAP_FENCE"
+    }
+  },
+  "submit": {
+    "result": {
+      "status": "submitted",
+      "state": {
+        "status": "queued",
+        "job": {
+          "namespace": "e7e537c5-b88c-40c1-9f01-fcd771fcfc63",
+          "id": "51ca40d8-ef5a-4f82-8586-043ad19ba3bd"
+        },
+        "manifestSha256": "a4188f96fd5812a8ca46492f705569239634b9d2f12210e331e6f1626519fd89",
+        "nextBatch": 0,
+        "committedBatches": 0,
+        "unresolvedBatch": null,
+        "stop": null
+      }
+    },
+    "replayedByteEqual": true,
+    "recoveredByteEqual": true,
+    "sameJob": true,
+    "controlConflict": "conflict",
+    "secondGenuineSealSameJob": true,
+    "refusalReplayedByteEqual": true
+  },
+  "load": {
+    "outcome": "public_objects_loaded",
+    "loaded": {
+      "outcome": "loaded",
+      "request": {
+        "requestKey": "initial-products",
+        "attempt": "load-1"
+      },
+      "objects": [
+        {
+          "id": "1",
+          "typeId": "1",
+          "version": "1"
+        },
+        {
+          "id": "2",
+          "typeId": "1",
+          "version": "1"
+        },
+        {
+          "id": "3",
+          "typeId": "1",
+          "version": "1"
+        },
+        {
+          "id": "4",
+          "typeId": "1",
+          "version": "1"
+        }
+      ],
+      "journal": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ]
+    },
+    "replayedByteEqual": true,
+    "duplicate": "failure",
+    "read": [
+      {
+        "id": "1",
+        "typeId": "1",
+        "version": "1",
+        "fields": [
+          {
+            "module": "sales",
+            "field": "product-id",
+            "value": "bar"
+          },
+          {
+            "module": "sales",
+            "field": "product-name",
+            "value": "Sample"
+          }
+        ]
+      },
+      {
+        "id": "2",
+        "typeId": "1",
+        "version": "1",
+        "fields": [
+          {
+            "module": "sales",
+            "field": "product-id",
+            "value": "baz"
+          },
+          {
+            "module": "sales",
+            "field": "product-name",
+            "value": "Sample"
+          }
+        ]
+      },
+      {
+        "id": "3",
+        "typeId": "1",
+        "version": "1",
+        "fields": [
+          {
+            "module": "sales",
+            "field": "product-id",
+            "value": "qux"
+          },
+          {
+            "module": "sales",
+            "field": "product-name",
+            "value": "Sample"
+          }
+        ]
+      },
+      {
+        "id": "4",
+        "typeId": "1",
+        "version": "1",
+        "fields": [
+          {
+            "module": "sales",
+            "field": "product-id",
+            "value": "spare"
+          },
+          {
+            "module": "sales",
+            "field": "product-name",
+            "value": "Untouched"
+          }
+        ]
+      }
+    ],
+    "recoveredByteEqual": true,
+    "physical": {
+      "objects": "4",
+      "keys": "4",
+      "reservations": "4",
+      "journal": "8",
+      "generation": "1",
+      "exact": true
+    }
+  },
+  "materialization": {
+    "count": 3,
+    "batches": [
+      {
+        "count": 2,
+        "ordinal": 0,
+        "start": 0
+      },
+      {
+        "count": 1,
+        "ordinal": 1,
+        "start": 2
+      }
+    ],
+    "planSha256": "c4a434683409851178579261f6d9800ba20f0211fcccb309c15fed513ad2f587",
+    "manifestSha256": "a4188f96fd5812a8ca46492f705569239634b9d2f12210e331e6f1626519fd89",
+    "keys": [
+      "bar",
+      "baz",
+      "qux"
+    ],
+    "forgedGrant": "refused"
+  },
+  "seal": {
+    "reference": {
+      "profile": "truss-browser-seal-reference/0.1",
+      "storeId": "e7e537c5-b88c-40c1-9f01-fcd771fcfc63",
+      "incarnation": "c6eb88e0-0b91-4505-9508-3c1b8c7f42c9",
+      "requestKey": "basic-seal",
+      "attempt": "attempt-1",
+      "manifestSha256": "a4188f96fd5812a8ca46492f705569239634b9d2f12210e331e6f1626519fd89",
+      "planSha256": "c4a434683409851178579261f6d9800ba20f0211fcccb309c15fed513ad2f587",
+      "modelSha256": "b8ce3cfe76eeda7c1531b2bbf8aba121c9d9614800ff1f3301f853c048516f27"
+    },
+    "receipt": {
+      "mediaType": "application/json",
+      "utf8": "{\"profile\":\"truss-browser-seal-receipt/0.1\",\"reference\":{\"profile\":\"truss-browser-seal-reference/0.1\",\"storeId\":\"e7e537c5-b88c-40c1-9f01-fcd771fcfc63\",\"incarnation\":\"c6eb88e0-0b91-4505-9508-3c1b8c7f42c9\",\"requestKey\":\"basic-seal\",\"attempt\":\"attempt-1\",\"manifestSha256\":\"a4188f96fd5812a8ca46492f705569239634b9d2f12210e331e6f1626519fd89\",\"planSha256\":\"c4a434683409851178579261f6d9800ba20f0211fcccb309c15fed513ad2f587\",\"modelSha256\":\"b8ce3cfe76eeda7c1531b2bbf8aba121c9d9614800ff1f3301f853c048516f27\"},\"inputSha256\":\"367075c372f54a0a8f25279d930b62d7bc03761fc53e51692dac82f8b902bbd7\",\"writerXid\":\"757\",\"manifestSha256\":\"a4188f96fd5812a8ca46492f705569239634b9d2f12210e331e6f1626519fd89\"}",
+      "sha256": "a790380693471ff1ca6b3a7e055c9dd416972e21e3ef3b799f83bbca08d03e3e"
+    },
+    "replayedByteEqual": true,
+    "recoveredByteEqual": true,
+    "conflict": "conflict",
+    "missing": "unresolved"
+  },
+  "action": {
+    "registered": {
+      "outcome": "action_registered",
+      "modelSha256": "b8ce3cfe76eeda7c1531b2bbf8aba121c9d9614800ff1f3301f853c048516f27",
+      "preparationSha256": "6f5e69462c327da970f07ca1f6253dbacc4db0badf1335b7d91e3f38eb67ad40",
+      "declaration": {
+        "profile": {
+          "id": "umf.actions.local-store-read",
+          "version": "1"
+        },
+        "target": {
+          "element": "products",
+          "key": "pk",
+          "module": "sales"
+        },
+        "fields": [
+          {
+            "module": "sales",
+            "element": "product-id"
+          },
+          {
+            "module": "sales",
+            "element": "product-name"
+          }
+        ],
+        "view": "complete-canonical-target-population",
+        "disposition": "original"
+      },
+      "opaque": true
+    },
+    "forged": {
+      "outcome": "refused"
+    },
+    "previousOpen": "previous_action_refused",
+    "reissued": "action_registered"
+  },
+  "catalog": {
+    "registration": "registered",
+    "retry": "unchanged",
+    "revision": "1",
+    "sourceSha256": "b8ce3cfe76eeda7c1531b2bbf8aba121c9d9614800ff1f3301f853c048516f27",
+    "types": [
+      {
+        "typeId": "1",
+        "moduleId": "sales",
+        "recordId": "products",
+        "documentId": "product-local-action-demo",
+        "lineageHex": "74727573732d63616e6f6e6963616c2f302e312e300a74727573732d747970652d6c696e656167652f302e312e300a5b2270726f647563742d6c6f63616c2d616374696f6e2d64656d6f222c2273616c6573222c2270726f6475637473225d",
+        "lineageProfile": "truss-type-lineage/0.1.0"
+      }
+    ],
+    "properties": [
+      {
+        "name": "id",
+        "typeId": "1",
+        "fieldId": "product-id",
+        "moduleId": "sales",
+        "propertyId": "1"
+      },
+      {
+        "name": "name",
+        "typeId": "1",
+        "fieldId": "product-name",
+        "moduleId": "sales",
+        "propertyId": "2"
+      }
+    ],
+    "keys": [
+      {
+        "keyId": "pk",
+        "typeId": "1",
+        "primary": true,
+        "keyNumber": "1",
+        "propertyIds": [
+          "1"
+        ]
+      }
+    ],
+    "changeCount": 3
+  },
+  "actionExecution": true,
+  "selectionReadGrant": true,
+  "crashRecovery": false
+}

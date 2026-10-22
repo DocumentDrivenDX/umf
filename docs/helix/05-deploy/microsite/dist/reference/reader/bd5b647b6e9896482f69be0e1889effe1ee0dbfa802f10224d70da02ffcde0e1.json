@@ -1,0 +1,21 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"requireDomainPackProfile\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "input",
+      "optional": false,
+      "type": "unknown"
+    }
+  ],
+  "purpose": "requireDomainPackProfile accepts input and returns { valid: boolean; complete: boolean; diagnostics: string[]; }.",
+  "related": [],
+  "returns": "{ valid: boolean; complete: boolean; diagnostics: string[]; }",
+  "task": "Other APIs",
+  "type": "(input: unknown) => { valid: boolean; complete: boolean; diagnostics: string[]; }"
+}

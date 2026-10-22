@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {copyJson} from '../model/json';
 import {UmfError,pointer,type Document,type Json,type Diagnostic} from '../model/types';
 import {verifyCoreKindDeclaration,type CoreKindDeclaration} from '../model/field-kind';
@@ -5,12 +6,12 @@ import {importPostgresqlSql,getPostgresqlSource,type PostgresqlBackend} from '..
 import {carriers,identifier,literal} from './postgresql-syntax';
 import {type FieldPostgresqlRequest,type FieldPostgresqlProjection} from './field-postgresql-projection';
 import {createValidator} from '../validation/schema';
-import legacy from '../../spec/core/schema.json';import fields from '../../spec/core/field-document.schema.json';import kinds from '../../spec/core/kind-operation.schema.json';import schema from '../../spec/core/record-postgresql-projection.schema.json';
+import legacy from '../../spec/core/schema.json';import kinds from '../../spec/core/kind-operation-v6.schema.json';import schema from '../../spec/core/record-postgresql-projection.schema.json';
 export {default as recordPostgresqlProjectionSchema} from '../../spec/core/record-postgresql-projection.schema.json';
 export interface RecordPostgresqlRequest {id:string;namespace:string;tableName:string;mode:'strict'|'report';fields:{author:CoreKindDeclaration;columnName:string;nativeType:FieldPostgresqlRequest['nativeType']}[]}
 const binding={id:'umf.core.record.postgresql',version:'1.0.0',nativeVersion:'17.4',subset:'Authored record with explicit pg_catalog field carriers; no value-domain or execution equivalence'} as const;
 export interface RecordPostgresqlProjection {operation:'project-record-postgresql';version:'1.0.0';status:'projected'|'blocked';source:Document;author:CoreKindDeclaration;request:RecordPostgresqlRequest;binding:typeof binding;target?:Document;nativeSql?:string;mappings:{origin:'authored';kind:'record'|'field';idealPath:string;nativePath:string;outcome:'exact'|'unknown'|'not-expressible'}[];residuals:FieldPostgresqlProjection['residuals'];diagnostics:Diagnostic[]}
-const validator=createValidator();validator.addSchema(legacy);validator.addSchema(fields);validator.addSchema(kinds);const check=validator.compile(schema),checkRequest=validator.compile(schema.properties.request);
+const validator=createValidator();validator.addSchema(legacy);validator.addSchema(kinds);const check=validator.compile(schema),checkRequest=validator.compile(schema.properties.request);
 export async function projectRecordToPostgresql(input:CoreKindDeclaration,options:RecordPostgresqlRequest,backend:PostgresqlBackend):Promise<RecordPostgresqlProjection> {
  const copied=copyJson(input) as unknown as CoreKindDeclaration,author=verifyCoreKindDeclaration(copied,copied.target),source=copyJson(author.target) as unknown as Document,request=copyJson(options) as unknown as RecordPostgresqlRequest;
  if(!checkRequest(request))throw new UmfError('RECORD_POSTGRESQL_REQUEST',JSON.stringify(checkRequest.errors));

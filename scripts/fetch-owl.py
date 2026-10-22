@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 from pathlib import Path
 from urllib.request import urlopen
 import hashlib,html,json,re

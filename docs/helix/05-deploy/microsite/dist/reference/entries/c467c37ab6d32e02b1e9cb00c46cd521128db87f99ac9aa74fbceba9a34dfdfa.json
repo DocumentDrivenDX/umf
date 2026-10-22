@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 8803,
+        "line": 11,
+        "path": "src/core-ideals/nullability-tablespec-projection.ts",
+        "sha256": "49bf5ea8e0debc912d6472e5034bb1060cfae4f034e48c0c28df176523c92b92"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "NullabilityTableSpecRequest",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface NullabilityTableSpecRequest {id:string;tableName:string;columnName:string;nativeType:'BOOLEAN'|'INTEGER'|'DECIMAL'|'FLOAT'|'TEXT'|'VARCHAR'|'CHAR'|'DATE'|'DATETIME'|'TIMESTAMP';mode:'strict'|'report';profile:'runtime-model'|'checked-schema'|'unresolved';context:string|null;carrier:'null-value'|'unresolved'}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"NullabilityTableSpecRequest\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 8803,
+      "line": 11,
+      "path": "src/core-ideals/nullability-tablespec-projection.ts",
+      "sha256": "49bf5ea8e0debc912d6472e5034bb1060cfae4f034e48c0c28df176523c92b92"
+    }
+  ],
+  "summary": "Type declaration · src/core-ideals/nullability-tablespec-projection.ts",
+  "title": "NullabilityTableSpecRequest"
+}

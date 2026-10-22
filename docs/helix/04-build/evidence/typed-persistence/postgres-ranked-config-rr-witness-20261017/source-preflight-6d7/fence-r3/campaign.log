@@ -1,0 +1,8 @@
+{"status": "fail", "checks": 3, "ownedServerStopped": true}
+Traceback (most recent call last):
+  File "/private/tmp/pg-final-fence-source-preflight-r3.py", line 32, in <module>
+    admin.execute('ALTER VIEW native_fence.ts_catalog_lock SET(security_invoker=true)');reader.execute('BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY');reader.execute("SET LOCAL statement_timeout='5000ms'");reader.execute(fence['lockSql']);assert read(guard)==[(False,)];reader.execute('ROLLBACK');admin.execute('ALTER VIEW native_fence.ts_catalog_lock RESET(security_invoker)');result['checks'].append({'kind':'native-view-option-drift-refused-restored'})
+                                                                                                                                                                                                                 ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/sdk-privilege-r24-weft-r20-env/lib/python3.14/site-packages/psycopg/connection.py", line 304, in execute
+    raise ex.with_traceback(None)
+psycopg.errors.InsufficientPrivilege: permission denied for table pg_ts_config

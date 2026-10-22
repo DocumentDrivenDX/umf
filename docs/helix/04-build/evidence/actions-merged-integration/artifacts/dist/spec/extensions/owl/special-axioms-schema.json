@@ -1,0 +1,655 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:owl:special-axioms:0.1.0",
+  "type": "object",
+  "properties": {
+    "profile": {
+      "const": "owl-special-axioms-1"
+    },
+    "complete": {
+      "const": false
+    },
+    "source": {
+      "$ref": "urn:umf:core:0.1.0"
+    },
+    "blankNodeScope": {
+      "type": "string"
+    },
+    "axioms": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "const": "negativePropertyAssertion"
+              },
+              "node": {
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "const": "iri"
+                      },
+                      "value": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "value"
+                    ],
+                    "additionalProperties": true
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "const": "blank"
+                      },
+                      "value": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "value"
+                    ],
+                    "additionalProperties": true
+                  }
+                ]
+              },
+              "sourceIndividual": {
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "const": "iri"
+                      },
+                      "value": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "value"
+                    ],
+                    "additionalProperties": true
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "const": "blank"
+                      },
+                      "value": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "value"
+                    ],
+                    "additionalProperties": true
+                  }
+                ]
+              },
+              "assertionProperty": {
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "const": "iri"
+                      },
+                      "value": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "value"
+                    ],
+                    "additionalProperties": true
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "const": "blank"
+                      },
+                      "value": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "value"
+                    ],
+                    "additionalProperties": true
+                  }
+                ]
+              },
+              "target": {
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "const": "iri"
+                      },
+                      "value": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "value"
+                    ],
+                    "additionalProperties": true
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "const": "blank"
+                      },
+                      "value": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "value"
+                    ],
+                    "additionalProperties": true
+                  }
+                ]
+              },
+              "targetKind": {
+                "const": "individual"
+              },
+              "quadIndexes": {
+                "type": "array",
+                "items": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              }
+            },
+            "required": [
+              "kind",
+              "node",
+              "sourceIndividual",
+              "assertionProperty",
+              "target",
+              "targetKind",
+              "quadIndexes"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "const": "negativePropertyAssertion"
+              },
+              "node": {
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "const": "iri"
+                      },
+                      "value": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "value"
+                    ],
+                    "additionalProperties": true
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "const": "blank"
+                      },
+                      "value": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "value"
+                    ],
+                    "additionalProperties": true
+                  }
+                ]
+              },
+              "sourceIndividual": {
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "const": "iri"
+                      },
+                      "value": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "value"
+                    ],
+                    "additionalProperties": true
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "const": "blank"
+                      },
+                      "value": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "value"
+                    ],
+                    "additionalProperties": true
+                  }
+                ]
+              },
+              "assertionProperty": {
+                "type": "object",
+                "properties": {
+                  "kind": {
+                    "const": "iri"
+                  },
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "value"
+                ],
+                "additionalProperties": true
+              },
+              "target": {
+                "allOf": [
+                  {
+                    "oneOf": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "kind": {
+                            "const": "iri"
+                          },
+                          "value": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "kind",
+                          "value"
+                        ],
+                        "additionalProperties": true
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "kind": {
+                            "const": "blank"
+                          },
+                          "value": {
+                            "type": "string",
+                            "minLength": 1
+                          }
+                        },
+                        "required": [
+                          "kind",
+                          "value"
+                        ],
+                        "additionalProperties": true
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "kind": {
+                            "const": "literal"
+                          },
+                          "value": {
+                            "type": "string"
+                          },
+                          "datatype": {
+                            "type": "string"
+                          },
+                          "language": {
+                            "type": "string",
+                            "pattern": "^[a-z]+(?:-[a-z0-9]+)*$"
+                          }
+                        },
+                        "required": [
+                          "kind",
+                          "value",
+                          "datatype"
+                        ],
+                        "additionalProperties": true
+                      }
+                    ]
+                  },
+                  {
+                    "properties": {
+                      "kind": {
+                        "const": "literal"
+                      }
+                    }
+                  }
+                ]
+              },
+              "targetKind": {
+                "const": "value"
+              },
+              "quadIndexes": {
+                "type": "array",
+                "items": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              }
+            },
+            "required": [
+              "kind",
+              "node",
+              "sourceIndividual",
+              "assertionProperty",
+              "target",
+              "targetKind",
+              "quadIndexes"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "const": "allDifferent"
+              },
+              "node": {
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "const": "iri"
+                      },
+                      "value": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "value"
+                    ],
+                    "additionalProperties": true
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "const": "blank"
+                      },
+                      "value": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "value"
+                    ],
+                    "additionalProperties": true
+                  }
+                ]
+              },
+              "members": {
+                "type": "array",
+                "minItems": 2,
+                "items": {
+                  "oneOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "kind": {
+                          "const": "iri"
+                        },
+                        "value": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "kind",
+                        "value"
+                      ],
+                      "additionalProperties": true
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "kind": {
+                          "const": "blank"
+                        },
+                        "value": {
+                          "type": "string",
+                          "minLength": 1
+                        }
+                      },
+                      "required": [
+                        "kind",
+                        "value"
+                      ],
+                      "additionalProperties": true
+                    }
+                  ]
+                }
+              },
+              "memberPredicate": {
+                "enum": [
+                  "members",
+                  "distinctMembers"
+                ]
+              },
+              "quadIndexes": {
+                "type": "array",
+                "items": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              }
+            },
+            "required": [
+              "kind",
+              "node",
+              "members",
+              "memberPredicate",
+              "quadIndexes"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "enum": [
+                  "allDisjointClasses",
+                  "allDisjointProperties"
+                ]
+              },
+              "node": {
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "const": "iri"
+                      },
+                      "value": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "value"
+                    ],
+                    "additionalProperties": true
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "const": "blank"
+                      },
+                      "value": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "value"
+                    ],
+                    "additionalProperties": true
+                  }
+                ]
+              },
+              "members": {
+                "type": "array",
+                "minItems": 2,
+                "items": {
+                  "oneOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "kind": {
+                          "const": "iri"
+                        },
+                        "value": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "kind",
+                        "value"
+                      ],
+                      "additionalProperties": true
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "kind": {
+                          "const": "blank"
+                        },
+                        "value": {
+                          "type": "string",
+                          "minLength": 1
+                        }
+                      },
+                      "required": [
+                        "kind",
+                        "value"
+                      ],
+                      "additionalProperties": true
+                    }
+                  ]
+                }
+              },
+              "memberPredicate": {
+                "const": "members"
+              },
+              "quadIndexes": {
+                "type": "array",
+                "items": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              }
+            },
+            "required": [
+              "kind",
+              "node",
+              "members",
+              "memberPredicate",
+              "quadIndexes"
+            ],
+            "additionalProperties": false
+          }
+        ]
+      }
+    },
+    "malformed": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "const": "iri"
+              },
+              "value": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "kind",
+              "value"
+            ],
+            "additionalProperties": true
+          },
+          {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "const": "blank"
+              },
+              "value": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "kind",
+              "value"
+            ],
+            "additionalProperties": true
+          }
+        ]
+      }
+    }
+  },
+  "required": [
+    "profile",
+    "complete",
+    "source",
+    "blankNodeScope",
+    "axioms",
+    "malformed"
+  ],
+  "additionalProperties": false
+}

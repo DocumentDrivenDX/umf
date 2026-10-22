@@ -1,0 +1,34 @@
+bun test v1.4.2 (744846f84)
+
+tests/reference/reference.test.ts:
+(pass) every extension version and its exact manifest/schema are present [1196.22ms]
+(pass) all schema files and exact core profiles are accounted for [632.73ms]
+(pass) every emitted record validates, resolves its joins and matches signed-manifest asset closure [11993.27ms]
+(pass) real independent oracle failures and qualified priority results remain separate [7.87ms]
+(pass) source hash changes and missing dependency closures cannot become current evidence [0.12ms]
+(pass) ambient distribution artifacts never enter evidence observations [3.09ms]
+(pass) conflicting observations and supersession cycles refuse optimistic aggregation [0.42ms]
+(pass) schema comparison is structural, bounded and preserves exact token spelling [0.38ms]
+(pass) exclusions require an existing source and nonempty reason [0.12ms]
+(pass) public Bun runtime preserves unknown payload, validates current core and refuses unsafe input [25.72ms]
+(pass) boundary checker rejects actual forbidden source and import cycle injections [191.98ms]
+(pass) a second isolated generation matches; drift check refuses tampering without rewriting [97186.70ms]
+(pass) reference manifest retains every Protobuf notice producer input [6.22ms]
+(pass) reference renderer candidate arguments reject missing, repeated and unknown options [0.58ms]
+
+tests/reference/self-model.test.ts:
+(pass) US-089-AC17: reference reads authored current model and verifies compiler provenance [121.15ms]
+(pass) US-089-AC17: the reference consumes authored Record members and Field shapes, never reverse-extracts schema fragments [0.21ms]
+(pass) US-089-AC18: graph uses one node per authored Record and Field and refuses unresolved members [1.88ms]
+
+tests/reference/reader.test.ts:
+(pass) latest uses numeric core versions and preserves conditional, open and recursive meaning [7.98ms]
+(pass) reader census, exact API kind, examples and member documentation are emitted [5.38ms]
+(pass) complete schema examples reject invalid item/container shapes and usage snippets execute [4.53ms]
+(pass) the generated YAML example preserves all JSON example values [2.76ms]
+(pass) workbench formatting retains edited values and refuses silent loss [7.83ms]
+
+ 22 pass
+ 0 fail
+ 13295 expect() calls
+Ran 22 tests across 3 files. [120.14s]

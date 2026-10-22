@@ -96,6 +96,32 @@ proves a PostgreSQL, Avro or Iceberg migration safe.
   outcomes remain separate native-oracle evidence, not claims derived from this
   ideal-level report.
 
+## Field migration acceptance
+
+The 2026-10-21 owner request adds the following outcome requirements, detailed
+in [SD-007](../../02-design/solution-designs/SD-007-schema-migrations.md).
+
+- **US-051-AC11:** Given `Person(name)` and an added optional `birthday: date`,
+  planning identifies the new stable Field, its physical absence binding and
+  existing-row behavior; unsupported backends retain the complete blocked intent.
+- **US-051-AC12:** Given an added required birthday or optional-to-required
+  change, a literal or explicit backfill can satisfy existing rows only after
+  complete target validation and protection against concurrent violations.
+  A future-write default alone never discharges the historical-data obligation.
+- **US-051-AC13:** Given a removed birthday, planning reports dependent schema,
+  bindings, clients, operations and policies, requires explicit disposition,
+  and distinguishes retirement, retained values and approved physical purge.
+- **US-051-AC14:** Given a birthday type change, planning requires a qualified
+  preservation rule or explicit conversion, validates target constraints, and
+  refuses unapproved rounding, truncation, timezone inference or rejected rows.
+- **US-051-AC15:** Given drift, stale approval, concurrent writes/migrators,
+  cancellation or a lost commit response, the host prevents premature activation
+  and can determine the recorded state or report an unknown outcome; resume
+  cannot repeat non-idempotent work or invent data rollback.
+- **US-051-AC16:** Given an atomic, staged or immutable-publication backend,
+  the same intent produces a capability-qualified plan or explicit refusal.
+  Bun/Chromium planning parity and native data-execution acceptance are separate.
+
 ## Edge Cases and Dependencies
 
 Compare nullable/absent and empty values distinctly. An added required field,
@@ -104,11 +130,17 @@ can affect references even if it relaxes a uniqueness assertion. Changes involvi
 unspecified semantics or unknown extensions remain unknown. No open-world or
 closed-world record policy is inferred from an added or removed element.
 
-CONTRACT-045 revision identity and US-050 must precede implementation. The
+CONTRACT-045 revision identity and US-050 must precede cross-document comparator
+implementation. The
 ordered core ideals and their current support gates remain independent; this
 story may compare an assertion only when its exact version/profile is understood.
-This story is explicitly deferred until US-050 passes its design, test and
-implementation gates. The product owner retains FR-18/FR-19 and this story in
+AC1–10 are deferred until US-050 passes its design, test and implementation gates. The product owner retains FR-18/FR-19 and this story in
 product scope, and must select its release boundary and first comparison subset
 after reviewing US-050 evidence. CONTRACT-046 remains a design proposal; no core
 schema or source change is authorized by it.
+
+AC11–16 can be designed against the existing exact-source single-document table
+profile before cross-document revision support. Their implementation first needs
+the contract, technical-design and story-test allocations in the migration build
+plan. AC1–10 retain their US-050 dependency. This story authorizes no implicit
+core revision fields or widening of CONTRACT-058's preservation profile.

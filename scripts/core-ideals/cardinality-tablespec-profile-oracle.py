@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
 """Assert pinned native declaration and generated-schema boundaries before UMF binding work."""
 import os,sys,json,hashlib,runpy,importlib.metadata
 from pathlib import Path

@@ -1,3 +1,7 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
+import {CURRENT_CORE_VERSION} from '../../generated/core-model';
+import {inspectBit128Binding} from './bit128';
+export * from './bit128';
 import stableManifest from '../../../spec/extensions/binding-stable/package.json';
 import manifest from '../../../spec/extensions/binding/package.json';
 import {Registry} from '../../registry/registry';
@@ -120,6 +124,7 @@ export function inspectBinding(binding:Document,logical:Document):Validation{
     if(!(error instanceof UmfError))throw error;
     return {valid:false,complete:false,diagnostics:[{code:error.code,path:error.path,message:error.message,severity:'error'}]};
   }
+  if(binding.vocabularies?.['umf.binding']?.version==='0.3.0')return inspectBit128Binding(binding,logical);
   const base=validateDocument(binding,bindingRegistry());
   if(!base.valid)return base;
   const diagnostics=[...base.diagnostics];
@@ -142,7 +147,7 @@ export function inspectBinding(binding:Document,logical:Document):Validation{
       const module=logical.modules.find(m=>m.id===row.module);
       const relationships=(module as {relationships?:{id?:string;name:string}[]}|undefined)?.relationships;
       const matches=Array.isArray(relationships)?relationships.filter(r=>payload.profile==='umf-binding-2'?'id'in row&&r.id===row.id:'name'in row&&r.name===row.name):[];
-      if((payload.profile==='umf-binding-2'&&logical.umf!=='0.7.0')||matches.length!==1)add('BINDING_REFERENCE',`/extensions/umf.binding/relationships/${index}`,'Missing authored relationship');
+      if((payload.profile==='umf-binding-2'&&logical.umf!==CURRENT_CORE_VERSION)||matches.length!==1)add('BINDING_REFERENCE',`/extensions/umf.binding/relationships/${index}`,'Missing authored relationship');
     }
   }
   return {valid:!diagnostics.some(d=>d.severity==='error'),complete:diagnostics.length===0,diagnostics};
@@ -156,14 +161,17 @@ export function readBindingDocument(text:string,logical:Document,format:'json'|'
 }
 
 export function writeBindingDocument(binding:Document,logical:Document,format:'json'|'yaml'='yaml'):string{
+  binding=copyJson(binding) as unknown as Document;logical=copyJson(logical) as unknown as Document;
   const checked=inspectBinding(binding,logical);
   if(!checked.valid)throw new UmfError('BINDING_DOCUMENT',JSON.stringify(checked.diagnostics));
   return writeDocument(binding,format);
 }
 
 export function getBinding(binding:Document,logical:Document):BindingPayload{
+  binding=copyJson(binding) as unknown as Document;logical=copyJson(logical) as unknown as Document;
   const checked=inspectBinding(binding,logical);
   if(!checked.valid)throw new UmfError('BINDING_DOCUMENT',JSON.stringify(checked.diagnostics));
+  if(binding.vocabularies[BINDING_EXTENSION]?.version==='0.3.0')throw new UmfError('BINDING_PROFILE','Legacy native generators do not admit scalar-carrier bindings');
   return copyJson(binding.extensions![BINDING_EXTENSION]) as unknown as BindingPayload;
 }
 
@@ -223,7 +231,7 @@ export function migrateBindingRelationships(binding:Document,logical:Document):B
   const original=copyJson(binding) as unknown as Document;
   const model=copyJson(logical) as unknown as Document;
   const payload=getBinding(original,model);
-  if(payload.profile!=='umf-binding-1'||original.vocabularies[BINDING_EXTENSION]?.version!=='0.1.0'||model.umf!=='0.7.0')throw new UmfError('BINDING_MIGRATION','Migration requires binding 0.1.0 and the paired relationship core 0.7.0 model');
+  if(payload.profile!=='umf-binding-1'||original.vocabularies[BINDING_EXTENSION]?.version!=='0.1.0'||model.umf!==CURRENT_CORE_VERSION)throw new UmfError('BINDING_MIGRATION','Migration requires binding 0.1.0 and the paired relationship core 0.10.0 model');
   const mappings:BindingMigrationReceipt['mappings']=[];
   const document=copyJson(original) as unknown as Document;
   const next=document.extensions![BINDING_EXTENSION] as unknown as BindingPayload;

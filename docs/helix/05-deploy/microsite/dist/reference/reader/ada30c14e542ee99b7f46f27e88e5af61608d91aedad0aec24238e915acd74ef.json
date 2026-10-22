@@ -1,0 +1,28 @@
+{
+  "alternatives": [],
+  "authored": true,
+  "id": "[\"api\",\".\",\"importTableSpecBundle\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [],
+      "name": "files",
+      "optional": false,
+      "type": "Record<string, string>"
+    },
+    {
+      "description": "",
+      "links": [],
+      "name": "options",
+      "optional": false,
+      "type": "{ id: string; }"
+    }
+  ],
+  "purpose": "Captures all files; the metadata view does not execute loader migrations.",
+  "related": [],
+  "returns": "Document",
+  "task": "Import and export",
+  "type": "(files: Record<string, string>, options: { id: string; }) => Document"
+}

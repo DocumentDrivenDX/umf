@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 9284,
+        "line": 70,
+        "path": "src/core-ideals/parquet-record.ts",
+        "sha256": "84a26a073ecf1536574e9579c290b56bd14f4b174ae0d29ca1fd4dc065459a33"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "recoverParquetRecordBytes",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: ParquetRecordClassification, current: Document): Uint8Array<ArrayBufferLike>"
+    ]
+  },
+  "id": "[\"api\",\".\",\"recoverParquetRecordBytes\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 9284,
+      "line": 70,
+      "path": "src/core-ideals/parquet-record.ts",
+      "sha256": "84a26a073ecf1536574e9579c290b56bd14f4b174ae0d29ca1fd4dc065459a33"
+    }
+  ],
+  "summary": "Public export · src/core-ideals/parquet-record.ts",
+  "title": "recoverParquetRecordBytes"
+}

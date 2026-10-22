@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 14668,
+        "line": 134,
+        "path": "src/core-ideals/facets-sqlserver-projection.ts",
+        "sha256": "636acf528c880835e7d64dc7e56f7029afca20f5e8530a66c4005046ad5d8bf3"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "recoverFacetsFromSqlServer",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: FacetsSqlServerProjection, nativeText: string): Document"
+    ]
+  },
+  "id": "[\"api\",\".\",\"recoverFacetsFromSqlServer\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 14668,
+      "line": 134,
+      "path": "src/core-ideals/facets-sqlserver-projection.ts",
+      "sha256": "636acf528c880835e7d64dc7e56f7029afca20f5e8530a66c4005046ad5d8bf3"
+    }
+  ],
+  "summary": "Verify the entire operation and exact native text before recovering retained ideal meaning.",
+  "title": "recoverFacetsFromSqlServer"
+}

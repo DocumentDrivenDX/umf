@@ -1,0 +1,67 @@
+{
+  "data": {
+    "conflicts": [],
+    "correspondence": "unknown",
+    "declarations": [],
+    "evidence": [
+      {
+        "closureComplete": false,
+        "commands": [],
+        "correspondence": "unknown",
+        "id": "json-schema-python-record",
+        "inputHashes": [],
+        "limitations": [
+          "Recorded scope only; native equivalence and production adoption are separate.",
+          "Complete tested dependency closure is not recorded; current-source qualification is unknown."
+        ],
+        "outcome": "mixed",
+        "readerId": "json-schema-python",
+        "scope": "Recorded exact Decimal/Fraction corpus with individual failures retained.",
+        "selector": "",
+        "source": {
+          "bytes": 52728,
+          "path": "fixtures/json-schema/python-oracle-results.json",
+          "sha256": "03cccb65d00518232aed3a730314288edd101cb8f616752772c62f6ef92214eb"
+        },
+        "supersedes": [],
+        "versions": {
+          "oracle": "{\"jsonschema\":\"4.26.0\",\"referencing\":\"0.37.0\",\"simplejson\":\"4.1.2\",\"numericProfile\":\"Exact Decimal decoding; mathematical integer type check; Fraction multipleOf\",\"dialectProfile\":\"Custom metaschema validation-vocabulary selection; Python regex limitations reported\"}"
+        }
+      }
+    ],
+    "operation": {
+      "apiNames": [],
+      "coreProfiles": [],
+      "extensionVersions": [],
+      "fixturePaths": [],
+      "id": "json-schema-python",
+      "kind": "validation",
+      "limitations": [
+        "Recorded scope only; native equivalence and production adoption are separate."
+      ],
+      "runtime": {
+        "availability": "host-only",
+        "profileId": "json-schema-python",
+        "requirements": [
+          "Native runtime / original qualification harness; not executed by this page."
+        ]
+      },
+      "sourceSystem": "Python jsonschema",
+      "subset": "Recorded exact Decimal/Fraction corpus with individual failures retained.",
+      "targetSystem": "Python jsonschema",
+      "title": "JSON Schema · independent exact numeric oracle"
+    }
+  },
+  "id": "[\"integration\",\"json-schema-python\"]",
+  "kind": "integration",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 134795,
+      "path": "docs/helix/05-deploy/reference/operations.json",
+      "sha256": "793743bbca36e56e90e82df5ef0408b628c434e58cb68aea4d6486349be78e61"
+    }
+  ],
+  "summary": "Recorded exact Decimal/Fraction corpus with individual failures retained.",
+  "title": "JSON Schema · independent exact numeric oracle"
+}

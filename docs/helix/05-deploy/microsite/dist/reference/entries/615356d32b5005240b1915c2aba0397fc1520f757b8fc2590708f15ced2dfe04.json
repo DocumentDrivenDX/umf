@@ -1,0 +1,189 @@
+{
+  "data": {
+    "extensionId": "umf.avro.facets",
+    "manifest": {
+      "capabilities": {
+        "directions": [
+          "import",
+          "export"
+        ],
+        "evidence": [
+          "tests/core-ideals/facets-avro.test.ts",
+          "fixtures/validation/facets-avro-discovery-native.json",
+          "fixtures/validation/facets-avro-selection-native.json",
+          "tests/core-ideals/facets-avro-projection.test.ts",
+          "fixtures/validation/facets-avro-projection-native.json"
+        ],
+        "native": {
+          "subset": "Selected present non-null scalar declarations with retained unions, named dependencies and explicit Apache Python 1.12.0/fastavro 1.12.2 writer limitations; no native equivalence",
+          "system": "Avro",
+          "version": "1.12.0"
+        },
+        "validation": "structural"
+      },
+      "coreVersion": "0.10.0",
+      "description": "Avro scalar facet classification and authored projection with retained native semantics",
+      "id": "umf.avro.facets",
+      "schema": {
+        "$id": "urn:umf:avro:facet-binding:1.0.0",
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": true,
+        "properties": {
+          "binding": {
+            "const": {
+              "id": "umf.avro.facets",
+              "version": "1.0.0"
+            }
+          },
+          "location": {
+            "additionalProperties": false,
+            "properties": {
+              "dependencyId": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "path": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "path"
+            ],
+            "type": "object"
+          },
+          "obligation": {
+            "enum": [
+              "value-domain",
+              "exact-input"
+            ]
+          },
+          "observations": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "basis": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "concept": {
+                  "enum": [
+                    "length",
+                    "decimal",
+                    "integerWidth",
+                    "conversion",
+                    "native"
+                  ]
+                },
+                "idealPath": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "interpretation": {
+                  "enum": [
+                    "declared",
+                    "inferred",
+                    "unknown",
+                    "unsupported"
+                  ]
+                },
+                "location": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "dependencyId": {
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "path": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "path"
+                  ],
+                  "type": "object"
+                },
+                "outcome": {
+                  "enum": [
+                    "exact",
+                    "approximated",
+                    "not-expressible",
+                    "unknown"
+                  ]
+                }
+              },
+              "required": [
+                "concept",
+                "idealPath",
+                "location",
+                "interpretation",
+                "outcome",
+                "basis"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "origin": {
+            "const": "classified"
+          },
+          "outcome": {
+            "enum": [
+              "exact",
+              "approximated",
+              "not-expressible",
+              "unknown"
+            ]
+          },
+          "profile": {
+            "enum": [
+              "declared-schema",
+              "apache-datum-writer",
+              "fastavro-schemaless-writer",
+              "unresolved"
+            ]
+          }
+        },
+        "required": [
+          "origin",
+          "location",
+          "binding",
+          "profile",
+          "obligation",
+          "outcome",
+          "observations"
+        ],
+        "title": "Retained Avro facet interpretation profile",
+        "type": "object"
+      },
+      "scopes": [
+        "element"
+      ],
+      "semantics": "CONTRACT-040 and TD-043; profile-qualified facet classification; declaration meaning is separate from native enforcement; classification and authored projection are experimental; binding qualification is recorded separately in versioned acceptance evidence",
+      "version": "1.0.0"
+    },
+    "registration": {
+      "apiIds": [],
+      "coreProfiles": [],
+      "mode": "unmapped"
+    },
+    "schemaId": "[\"schema\",\"spec/extensions/avro-facets/schema.json\",\"\"]",
+    "version": "1.0.0"
+  },
+  "id": "[\"extension\",\"umf.avro.facets\",\"1.0.0\"]",
+  "kind": "extension",
+  "links": [
+    "[\"guide\",\"extensions\"]",
+    "[\"schema\",\"spec/extensions/avro-facets/schema.json\",\"\"]",
+    "[\"integration\",\"umf.avro.facets@1.0.0:import\"]",
+    "[\"integration\",\"umf.avro.facets@1.0.0:export\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 4202,
+      "path": "spec/extensions/avro-facets/package.json",
+      "sha256": "e028099e1ba1d6c1fc584444d302f165184469acbcaf69990073c178a433d313"
+    }
+  ],
+  "summary": "Avro scalar facet classification and authored projection with retained native semantics",
+  "title": "umf.avro.facets · 1.0.0"
+}

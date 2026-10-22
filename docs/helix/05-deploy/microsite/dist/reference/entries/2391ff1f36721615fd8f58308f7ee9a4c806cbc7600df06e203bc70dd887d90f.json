@@ -1,0 +1,36 @@
+{
+  "data": {
+    "apiIds": [],
+    "expected": {
+      "bytes": 103,
+      "path": "docs/helix/05-deploy/reference/examples/expected.json",
+      "sha256": "7ea4708756f2ab539e0acf22175e625e65cd5ccd25c8fdbc1579b79472d1d821"
+    },
+    "guideIds": [
+      "[\"guide\",\"concepts\"]"
+    ],
+    "inputs": [
+      {
+        "bytes": 4279,
+        "path": "docs/helix/05-deploy/reference/examples/uuid.json",
+        "sha256": "ad643abd8c4c07b0762582a05088d202d1503979aa5b3f4565fa37f04d203e3b"
+      }
+    ],
+    "operationId": "core-validate"
+  },
+  "id": "[\"example\",\"core-current\"]",
+  "kind": "example",
+  "links": [
+    "[\"guide\",\"concepts\"]",
+    "[\"integration\",\"core-validate\"]"
+  ],
+  "sources": [
+    {
+      "bytes": 4279,
+      "path": "docs/helix/05-deploy/reference/examples/uuid.json",
+      "sha256": "ad643abd8c4c07b0762582a05088d202d1503979aa5b3f4565fa37f04d203e3b"
+    }
+  ],
+  "summary": "Validate a core document",
+  "title": "core current"
+}

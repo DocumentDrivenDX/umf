@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 2577,
+        "line": 6,
+        "path": "src/adapters/typespec/emission.ts",
+        "sha256": "d8800e76dbc37880c5ab71d99237bfe78462670e8ac4966d902c6b2bd55d96c8"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "emitTypeSpecJsonSchema",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(document: Document, input: { options: JsonObject; }): Promise<{ status: \"blocked\" | \"empty\" | \"emitted\"; source: Document; emitter: string; policy: { options: JsonObject; }; compilation: { compiler: string; libraries: { [x: string]: string; }; valid: boolean; complete: false; diagnostics: { file?: string; start?: number; end?: number; code: string; severity: DiagnosticSeverity; message: string; }[]; limitations: string[]; }; files: Record<string, string>; complete: false; limitations: string[]; }>"
+    ]
+  },
+  "id": "[\"api\",\".\",\"emitTypeSpecJsonSchema\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 2577,
+      "line": 6,
+      "path": "src/adapters/typespec/emission.ts",
+      "sha256": "d8800e76dbc37880c5ab71d99237bfe78462670e8ac4966d902c6b2bd55d96c8"
+    }
+  ],
+  "summary": "Native emitter output is evidence for a projection, not a lossless type-model conversion.",
+  "title": "emitTypeSpecJsonSchema"
+}

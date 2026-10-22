@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 8525,
+        "line": 56,
+        "path": "src/core-ideals/nullability-avro-projection.ts",
+        "sha256": "f6f55a0934e6d3896337640e1d7dcf0c479f1d1deee3ba4c1bd84bb8d76f4218"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "recoverNullabilityFromAvro",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(input: NullabilityAvroProjection, nativeText: string): Document"
+    ]
+  },
+  "id": "[\"api\",\".\",\"recoverNullabilityFromAvro\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 8525,
+      "line": 56,
+      "path": "src/core-ideals/nullability-avro-projection.ts",
+      "sha256": "f6f55a0934e6d3896337640e1d7dcf0c479f1d1deee3ba4c1bd84bb8d76f4218"
+    }
+  ],
+  "summary": "Recover retained author meaning only when the receipt and supplied native target still agree.",
+  "title": "recoverNullabilityFromAvro"
+}

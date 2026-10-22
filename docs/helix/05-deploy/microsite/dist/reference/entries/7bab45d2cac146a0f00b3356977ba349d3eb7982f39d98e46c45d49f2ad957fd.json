@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 9174,
+        "line": 64,
+        "path": "src/adapters/arrow/index.ts",
+        "sha256": "04d89c91b454256e286a8b53bd0c95859541292e950ecace5334b3563028af51"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "proposeArrowNodeEdit",
+    "runtime": "unassessed",
+    "signatureText": [
+      "(document: Document, path: string, text: string): { document: Document; validation: Validation; }"
+    ]
+  },
+  "id": "[\"api\",\".\",\"proposeArrowNodeEdit\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 9174,
+      "line": 64,
+      "path": "src/adapters/arrow/index.ts",
+      "sha256": "04d89c91b454256e286a8b53bd0c95859541292e950ecace5334b3563028af51"
+    }
+  ],
+  "summary": "Public export · src/adapters/arrow/index.ts",
+  "title": "proposeArrowNodeEdit"
+}

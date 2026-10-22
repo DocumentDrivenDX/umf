@@ -1,0 +1,30 @@
+{
+  "reviewer": "gpt-6-astra ultra",
+  "mode": "read-only",
+  "sourcePins": {
+    "tools/security/pg-routine-custody.py": "2c4aa144f13dd5fdb0ceaf84faa18ea2c8ba46a4df47c79575764717c82e23b0",
+    "tools/security/pg-routine-drift-probe.py": "3e50a19c2a6c2ed04c59049e3a13d120f7c6cae4fc2a1d4deae3102089612e45",
+    "tools/security/pg-routine-custody.test.py": "f8d248a864f857bda0ff8904d8cac12b1f5cef60211fc1f6511cf552ede0c52c"
+  },
+  "receiptSha256": "32e26dad3f4ffc569b8c7e15538a0c466f2959bd6c5e8bbb86cad073e99d5978",
+  "findingsImplemented": [
+    "Route all checks through actual guarded_execute; guard-erasure control must actually dispatch.",
+    "Ensure session cleanup failures cannot skip owned label-checked container removal.",
+    "Retain full positive trace, exact private OID and hash.",
+    "Use authenticated TCP readiness instead of local initialization-server readiness.",
+    "Bind canonical executed __file__/argv before freezing/acquisition."
+  ],
+  "finalResult": "No remaining actionable findings under the stated ten-field native JSON/trusted-installer premise.",
+  "independentEvidenceAudit": {
+    "observations": 72,
+    "zeroDispatchRefusals": 18,
+    "samePidChecks": 18,
+    "restoredPreparedResults": 18,
+    "sourcePinsMatch": 5,
+    "traceBytes": 97695,
+    "privateOid": 16417,
+    "exactRelidMatches": 6,
+    "traceSha256": "e123e22a82a0a34e89c13f2a59b3fab989267ba37e276ab05203a3e1f5f4ac35"
+  },
+  "scope": "No native/Cargo/test execution by reviewer. B10 remains counterexample-found; no authentication, atomic check-to-use protection, complete dependency coverage or original case promotion."
+}

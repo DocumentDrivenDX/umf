@@ -1,0 +1,172 @@
+{
+  "review": "Astra Ultra independent P07 native SECURITY LABEL archive review",
+  "createdUtc": "2026-10-15T13:27:24.592709+00:00",
+  "disposition": "No remaining blocking finding within the fixed P07 component scope; clear for fresh original governed-case qualification.",
+  "acceptanceReceipt": false,
+  "casePromotedByReviewer": null,
+  "repository": "/Users/erik/.codex/worktrees/security-main-integration/umf",
+  "sourcePins": {
+    "bun.lock": "35d4053486465fc2d59a5fb6b91084968ebf3a4b9697ec01a053be55aa03df04",
+    "package.json": "e82680c3e3eacd083bf2555b1605a60ff4cd65dc59288256ad0bc1e8f811afc1",
+    "spec/core/cardinality-document.schema.json": "56f45315a2a0e0377f2418913b01d5d23e4d495f5841ba64a7d9584fd5cc35a9",
+    "spec/core/extension-package.schema.json": "fe26a341e31ee0ef9433411122dbb43c5c809037bc96e277ec046b145221e794",
+    "spec/core/facet-document.schema.json": "db4945cbe9faae8101096ef5fe57dedbd4efa5eb8b82277d0bf181a72f525ecb",
+    "spec/core/field-document.schema.json": "1c8cabaa17e7dbcd4b5cd51fdf26c69e8db3de1511ac825952a11d9ad02411bc",
+    "spec/core/key-document.schema.json": "2957e2ca8b0b800ad0e52a53e5cb1f053519c415aaed834f7fe650d21aeae4bf",
+    "spec/core/nullability-document.schema.json": "eaaf77c2f22370335baeb49daed162e31cf84b0b6493633960025785d0bf0156",
+    "spec/core/relationship-document.schema.json": "1ba5a38f95e135c3d4e6757259e6c7c75edb9aaa3fff98931f92e1890ded450d",
+    "spec/core/schema.json": "59fa4e6964d9b3f1f264d103784484402b756a7e0d1b896b2a5bedd559814b19",
+    "spec/extensions/security-protection/package.json": "df3dbb7faa2df45dc395caeb829340e84deb4dfd4f1940c2f6dd846aa9d55e1f",
+    "src/extensions/security/protection/catalog.ts": "92804f3d6a91b91dc95b6e1b42e5d7de5f9850cc19449d4c7700d62595c829d3",
+    "src/extensions/security/protection/source.ts": "43cff8c0f539879b5b5c9f2d17aa17da57af24f806303251ed42c4664d6341bb",
+    "src/model/json.ts": "c58fac512cbbea7746f4a6cb0119ac13c8bad4ebf769c7bfc48c30b1b80d5cf5",
+    "src/model/schema-literals.ts": "ade564372bfd387bfe6d3d4a7c20a6517562f0a9d235743a5622bcbba54fe89d",
+    "src/model/serialization.ts": "235407a33795c78badb334f66c6131f64d3364503e3c871723d0dd518bc2e28c",
+    "src/model/types.ts": "54f4e6df10f7f358e81fbb637fe39869df077f82751aa6221b3532e3c9167785",
+    "src/validation/internal-schema.ts": "a027a6dcadc37ca0f6c137b87bce9f39e7a16765e633a35555e32c7680a51ad4",
+    "src/validation/schema.ts": "6878a3c2ff056e8ab6b10c1bfe5135e775d17d9d0e8a341d49a9e04bc24a2681",
+    "tests/security/native/pg18-mask-write.sql": "d2cae9e03e30c484863756c9ca6f9b4cef5afa4118d18b81647b1bb254b3d376",
+    "tests/security/native/pg18-native-archive-cli.ts": "cb52a7559849e1abba66b509c0d2e68bff1a9e891afe66da157a7a6440586d38",
+    "tests/security/native/pg18-native-archive-oracle.py": "c9a74d92b880d4003a2e8c00cde75e7ea8dc2491eff4e171b8a0789ae7892add",
+    "tests/security/native/pg18-native-archive.py": "5f10fa630abe8b63d77e683b80729435d74f69036c0efbed7c2f12df982dafe2",
+    "tests/security/native/pg18-native-archive.ts": "286f38d72137b130a37106a7caf3b1eeefb03582a6031b647b76b6b31015efcd",
+    "tests/security/native/pg18-native-archive-corpus.ts": "35e2414388ceda29d720f642830a6c4905946dc4e028f34d6c99e1d93d72f695",
+    "tools/security/protection-native-archive-browser.ts": "724151fd04db7202295cdc76508f9ac780552e97be11d2af6fcbda390f2b3c9a"
+  },
+  "governingPins": {
+    "docs/helix/02-design/technical-designs/TD-056-security-bindings.md": "4c97ed5ee57a73d2a84e5dba1be11894e484bd076e837475691fffd4e5600bb3",
+    "docs/helix/03-test/test-plans/STP-056-security-bindings.md": "8538841a7b3b27fd6c4ad6404f3199e5d9d4230767a6faeddf00ed617cab6591",
+    "docs/helix/03-test/security/cases.json": "7d72499628e0a718af81916d094dfc49e7f6a9aaf5d52e309fc2a718b14b799a",
+    "docs/helix/04-build/security-field-protection-plan.md": "2685dee5265b77449c787b0209c75de6c8ac4349199492902bfb100f98a811a2"
+  },
+  "currentComparedSourceChanges": {
+    "tests/security/native/pg18-native-archive.py": {
+      "component": "5f10fa630abe8b63d77e683b80729435d74f69036c0efbed7c2f12df982dafe2",
+      "current": "c9d624b276573c7dc3e5b335f9d14f249e794071f55f3fc0a96ad389a715ea6b"
+    }
+  },
+  "componentSources": {
+    "initial": "initial-source-pins.json",
+    "hardenedPreDdl": "source-final-pins.json",
+    "final": "source-ddl-final-pins.json"
+  },
+  "finalIndependentEvidence": {
+    "native": {
+      "file": "native-ddl-final.json",
+      "sha256": "eb42c89391f274a3ad624ae55d7786b34d1352e1a08b2ad9fd7e985e4b3a9a0f",
+      "observations": 45,
+      "reportedPreCleanupElapsedSeconds": 22.574628458,
+      "cleanup": {
+        "containerAbsent": true,
+        "volumesAbsent": true
+      },
+      "repoSourcePins": 24,
+      "selectedRuntimePins": 772,
+      "image": "sha256:cedfa32f762df460091ae5b0f71a96cf21ea6300c51ff1390ea020dded778d8a",
+      "engine": {
+        "number": "180006",
+        "version": "PostgreSQL 18.6 (Debian 18.6-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+        "extension": "3.2.3",
+        "preload": "anon",
+        "encoding": "UTF8"
+      }
+    },
+    "browser": {
+      "file": "browser-ddl-final.json",
+      "sha256": "18f72bdc5651e7c23fc1d883cf174f17039e20eed8334db21b4fd6aa5ab30624",
+      "controls": 103,
+      "browser": "153.0.8010.12",
+      "parity": "Actual Bun/Chromium equal",
+      "nativeReceiptSha256": "eb42c89391f274a3ad624ae55d7786b34d1352e1a08b2ad9fd7e985e4b3a9a0f",
+      "sourcesUnchanged": true,
+      "pageErrors": [],
+      "externalRequests": 0
+    },
+    "captureControls": {
+      "file": "capture-controls-ddl-final.json",
+      "passed": 26,
+      "total": 26
+    },
+    "diagnosticControls": {
+      "file": "diagnostic-controls-ddl-final.json",
+      "passed": 16,
+      "total": 16,
+      "method": "Original refused function AST against completed-process fixtures; positive permission error plus malformed outputs"
+    },
+    "nativeWeakeningControls": {
+      "hardenedPreDdl": {
+        "file": "mutations/results.json",
+        "detected": 5,
+        "source": "source-final-pins.json"
+      },
+      "finalDdl": {
+        "file": "ddl-profile-final/results.json",
+        "detected": 2,
+        "source": "source-ddl-final-pins.json"
+      },
+      "allOwnedCleanupVerified": true
+    },
+    "bindingReview": {
+      "file": "binding-review.json",
+      "passed": 17,
+      "total": 17,
+      "method": "Private mechanical patch application; native functions/CAPTURE unchanged; all immutable P07 and other157 case records exact",
+      "governedRunnerSha256": "c9d624b276573c7dc3e5b335f9d14f249e794071f55f3fc0a96ad389a715ea6b"
+    }
+  },
+  "correctedFindings": [
+    {
+      "id": "capture-native-identity-shape",
+      "before": "Nine malformed controls survived among26; boolean/float counts and malformed matched database identity.",
+      "after": "Final26/26 passed with native/reordered-row positives."
+    },
+    {
+      "id": "protected-profile-acl-role-custody",
+      "before": "Actual granted column read and SET owner path leaked canonical100 while all45 original checks still passed (47 with independent probes).",
+      "after": "Expanded selected state includes column ACL/schema/routine owners and all role flags/memberships; actual weakening detected."
+    },
+    {
+      "id": "protected-profile-trigger-inheritance",
+      "before": "Actual dormant trigger or empty inherited child each left45 original checks passing (46 with independent native count).",
+      "after": "Final selected state includes triggers, inheritance both endpoints, rewrite rules and relation identity. Both original controls now detected."
+    },
+    {
+      "id": "browser-source-network-custody",
+      "before": "Only after-run pins, any loopback origin and no pageerror inventory.",
+      "after": "Before/after native-common exact source pins, exact origin and page errors checked;103actual controls pass."
+    }
+  ],
+  "caseAssessment": {
+    "id": "pg-raw.P07",
+    "assertion": "PostgreSQL Anonymizer SECURITY LABEL masking rules present in the fixture are preserved as native archive, never interpreted as protection or permission; interpretation refuses; the receipt lists the obligation as unverified and the admitted profile is unchanged.",
+    "covers": [
+      "US-056-AC7"
+    ],
+    "timeoutMs": 60000,
+    "assertionUnchanged": true,
+    "fullAssertionComponentEvidence": "Real native populations and fixture labels preserved through original source/catalog APIs; actual interpretation refuses; obligation stays unverified; selected admitted native profile/business state compared before labels and after archive/refusal, with actual ordinary denial/DTO and excluded canonical positive.",
+    "governedGate": "Not independently executed in this packet. Binding reviewed; parent fresh gate must decide acceptance."
+  },
+  "limits": [
+    "Exact Dalibo immutable image / PostgreSQL18.6 / Anonymizer3.2.3 fixture only; no promotion of other engine versions or cases.",
+    "Native label archive is opaque data. Provider masking evaluation, actual label expression execution and dynamic masking enforcement are not qualified. Ordinary session masking is observed off; native207 label does not replace admitted0.",
+    "Selected native protected-profile comparisons are finite custody observations, not arbitrary external routine/extension dependency, DDL lifetime, role revocation or complete reachable-route closure.",
+    "Fresh excluded administrator bootstrap, genuine engine/library/binary sources and selected runtime remain premises. No native issuer, compiler, query-action lineage, permission or whole-backend authority is conferred.",
+    "No P03/B08 or production Truss/Ashlar admission follows. No new public API/compiler/schema was introduced by this component.",
+    "Seven mutation detections have explicitly separate source stages; earlier five are not represented as reruns on the final DDL bytes.",
+    "Source pins are selected actual import/runtime closures, not a hermetic operating-system/browser dependency theorem.",
+    "Native elapsed field is captured before cleanup; original60s whole-case deadline is verified by the separate governed gate.",
+    "No solver proof is claimed. Finite actual observations and meaningful source weakenings establish only the stated component behavior."
+  ],
+  "historicalEvidence": [
+    "native-initial.json",
+    "capture-controls-initial.json",
+    "profile-drift-before-fix/receipt.json",
+    "native-final.json",
+    "browser-final.json",
+    "ddl-profile-before-fix/results.json",
+    "ddl-final-cwd-setup-failure.log",
+    "ddl-profile-final-generator-setup-failure.log"
+  ],
+  "rootSourceEditsByReviewer": false
+}

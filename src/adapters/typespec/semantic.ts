@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
 import {getTypeName,getSourceLocation,getDoc,type Type,type Value} from '@typespec/compiler';
 import {copyJson,LIMITS} from '../../model/json';
 import {UmfError,type Document,type Json} from '../../model/types';

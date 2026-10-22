@@ -1,0 +1,20 @@
+{
+  "profile": "umf.browser-producer-repair/1",
+  "originalRevision": "f35f761891e76284489806b3ca881e5ba3bf5a7f",
+  "originalRecordedInputsVerified": 1214,
+  "originalInputMismatches": 0,
+  "originalLockUnchanged": true,
+  "originalExactRuntimeMatch": false,
+  "originalSetupFailures": [
+    "Bun1.4.2 frozen installation refused lock drift",
+    "Bun1.3.14 frozen installation refused package declaration/lock drift"
+  ],
+  "replayDependencies": "direct copy of installed integrity-pinned dependencies; all original recorded input hashes verified",
+  "patch": "1.1.1 disables identifier minification and freezes64packagevalidatorprofile",
+  "twoCompleteBuildManifestsEqual": true,
+  "otherProducerRootRuntimeBytesEqual": true,
+  "cleanLinuxRuntimeBytesEqual": true,
+  "runtime": "Bun1.3.14",
+  "linuxImage": "sha256:e10577f0db68676a7024391c6e5cb4b879ebd17188ab750cf10024a6d700e5c4",
+  "published": false
+}

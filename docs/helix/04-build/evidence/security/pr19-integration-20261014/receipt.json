@@ -1,0 +1,35 @@
+{
+  "baseline": "7bc3465224cd5e4952ff504a422f8396c25aa5c4",
+  "mergedPR": 19,
+  "sourceDigests": {
+    "docs/helix/02-design/contracts/CONTRACT-062-security-semantics.md": "eb0e2d1930d9f713afdb60b0fdb081045947ef5465c439182f2ee5c6335a9ca2",
+    "docs/helix/02-design/contracts/CONTRACT-063-security-enforcement.md": "a2ef9ce52ce65db723ae89a10b7c1d207a278b2ea6e9e3bb903713abb3e988b3",
+    "docs/helix/03-test/security/cases.json": "bcf10fb94a4b954c10d3c44abcf070cfc81e1542f57ee0b4f208ad2478ad480d"
+  },
+  "securityUnitTests": {
+    "passed": 131,
+    "failed": 0
+  },
+  "conditionalProofs": 20,
+  "nativeTruss": {
+    "passed": 1,
+    "seconds": 36.457,
+    "version": "PostgreSQL18.6",
+    "scope": "Fixed authored relationship fixture; original ordinary-role/private-broker path; no complete backend acceptance"
+  },
+  "newProtectionSemantics": "proposed and unimplemented",
+  "requiredCases": 145,
+  "productionAcceptance": "open",
+  "strictTypecheck": "passed",
+  "freshGate": {
+    "requiredCases": 145,
+    "executed": 26,
+    "accepted": 25,
+    "missingBindings": 119,
+    "formalEnvironmentFailure": "S12; separate pinned-interpreter replay passed; gate result unchanged"
+  },
+  "evidenceAudit": {
+    "checks": 202,
+    "failures": 88
+  }
+}

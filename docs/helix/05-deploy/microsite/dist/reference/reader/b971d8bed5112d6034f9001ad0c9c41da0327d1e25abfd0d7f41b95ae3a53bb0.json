@@ -1,0 +1,13 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"PARQUET_PAGE_LIMITS\"]",
+  "kind": "Constant",
+  "members": [],
+  "parameters": [],
+  "purpose": "PARQUET_PAGE_LIMITS is a constant in Other APIs. Its exact structure is documented below.",
+  "related": [],
+  "returns": "",
+  "task": "Other APIs",
+  "type": "{ readonly headerBytes: 65536; readonly pages: 10000; readonly pageBytes: number; readonly totalBytes: number; readonly pageValues: 100000; readonly totalValues: 1000000; readonly rows: 10000; }"
+}

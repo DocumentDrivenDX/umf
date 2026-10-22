@@ -1,0 +1,25 @@
+{
+  "status": "passed",
+  "covers": [
+    "US-055-AC10"
+  ],
+  "scope": "ProjectRead/composition spike, not full policy language",
+  "browser": "148.0.7778.96",
+  "bun": "1.4.2",
+  "externalRequests": 0,
+  "observed": {
+    "corpus": {
+      "cases": 10368,
+      "mismatches": 0
+    },
+    "hostGlobals": [],
+    "protectedDefault": "indeterminate",
+    "privateField": {
+      "disposition": "withheld"
+    }
+  },
+  "sourceDigests": {
+    "docs/helix/02-design/spikes/security/model.ts": "bdb9f362402744ce08b67142271ede4a996db20f7de48682ddfa5eba1895faaf",
+    "docs/helix/02-design/spikes/security/browser.ts": "614267cd28a1f5bf85921b1d3ba6734e2d8ae4619d380ba51ffd9e223aa7cd71"
+  }
+}

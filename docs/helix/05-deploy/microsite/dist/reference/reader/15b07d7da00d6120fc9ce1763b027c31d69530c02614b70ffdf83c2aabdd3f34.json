@@ -1,0 +1,41 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"verifyDddPostgresqlProjection\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"DddPostgresqlProjection\"]"
+      ],
+      "name": "input",
+      "optional": false,
+      "type": "DddPostgresqlProjection"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "current",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"PostgresqlBackend\"]"
+      ],
+      "name": "backend",
+      "optional": false,
+      "type": "PostgresqlBackend"
+    }
+  ],
+  "purpose": "verifyDddPostgresqlProjection accepts input, current, backend and returns Promise<DddPostgresqlProjection>.",
+  "related": [],
+  "returns": "Promise<DddPostgresqlProjection>",
+  "task": "Other APIs",
+  "type": "(input: DddPostgresqlProjection, current: Document, backend: PostgresqlBackend) => Promise<DddPostgresqlProjection>"
+}

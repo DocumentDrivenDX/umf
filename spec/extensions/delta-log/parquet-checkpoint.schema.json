@@ -25,7 +25,7 @@
           "type": "string"
         },
         "source": {
-          "$ref": "urn:umf:core:0.1.0"
+          "$ref": "urn:umf:core:0.10.0"
         }
       },
       "required": [
@@ -43,7 +43,7 @@
             "type": "string"
           },
           "source": {
-            "$ref": "urn:umf:core:0.1.0"
+            "$ref": "urn:umf:core:0.10.0"
           }
         },
         "required": [
@@ -62,7 +62,7 @@
             "type": "string"
           },
           "source": {
-            "$ref": "urn:umf:core:0.1.0"
+            "$ref": "urn:umf:core:0.10.0"
           }
         },
         "required": [
@@ -180,7 +180,7 @@
       "type": "object",
       "properties": {
         "source": {
-          "$ref": "urn:umf:core:0.1.0"
+          "$ref": "urn:umf:core:0.10.0"
         },
         "status": {
           "enum": [
@@ -222,7 +222,7 @@
           }
         },
         "log": {
-          "$ref": "urn:umf:core:0.1.0"
+          "$ref": "urn:umf:core:0.10.0"
         },
         "actions": {
           "type": "array",
@@ -2484,7 +2484,7 @@
                 "type": "string"
               },
               "source": {
-                "$ref": "urn:umf:core:0.1.0"
+                "$ref": "urn:umf:core:0.10.0"
               }
             },
             "required": [
@@ -2501,7 +2501,7 @@
               "type": "string"
             },
             "source": {
-              "$ref": "urn:umf:core:0.1.0"
+              "$ref": "urn:umf:core:0.10.0"
             }
           },
           "required": [
@@ -2778,7 +2778,7 @@
                 "type": "string"
               },
               "source": {
-                "$ref": "urn:umf:core:0.1.0"
+                "$ref": "urn:umf:core:0.10.0"
               }
             },
             "required": [
@@ -2795,7 +2795,7 @@
               "type": "string"
             },
             "source": {
-              "$ref": "urn:umf:core:0.1.0"
+              "$ref": "urn:umf:core:0.10.0"
             }
           },
           "required": [
@@ -2929,7 +2929,7 @@
                 "type": "string"
               },
               "source": {
-                "$ref": "urn:umf:core:0.1.0"
+                "$ref": "urn:umf:core:0.10.0"
               }
             },
             "required": [
@@ -2946,7 +2946,7 @@
               "type": "string"
             },
             "source": {
-              "$ref": "urn:umf:core:0.1.0"
+              "$ref": "urn:umf:core:0.10.0"
             }
           },
           "required": [

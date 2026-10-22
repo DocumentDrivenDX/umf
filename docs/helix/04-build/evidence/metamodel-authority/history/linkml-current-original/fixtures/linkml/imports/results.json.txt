@@ -1,0 +1,2832 @@
+{
+  "cases": [
+    {
+      "id": "diamond",
+      "sources": [
+        {
+          "key": "root",
+          "text": "{\"id\":\"https://example.org/root\",\"name\":\"root\",\"imports\":[\"left\",\"right\"]}"
+        },
+        {
+          "key": "left",
+          "text": "{\"id\":\"https://example.org/left\",\"name\":\"left\",\"imports\":[\"shared\"]}"
+        },
+        {
+          "key": "right",
+          "text": "{\"id\":\"https://example.org/right\",\"name\":\"right\",\"imports\":[\"shared\"]}"
+        },
+        {
+          "key": "shared",
+          "text": "{\"id\":\"https://example.org/shared\",\"name\":\"shared\",\"imports\":[]}"
+        },
+        {
+          "key": "unused",
+          "text": "{\"id\":\"https://example.org/unused\",\"name\":\"unused\",\"imports\":[]}"
+        }
+      ],
+      "context": {
+        "entry": "root",
+        "schemas": [
+          {
+            "key": "root",
+            "document": {
+              "umf": "0.1.0",
+              "id": "root",
+              "vocabularies": {
+                "umf.linkml": {
+                  "version": "0.1.0"
+                }
+              },
+              "modules": [
+                {
+                  "id": "schema",
+                  "namespace": "",
+                  "elements": [
+                    {
+                      "id": "schema",
+                      "extensions": {
+                        "umf.linkml": {
+                          "profile": "linkml-json-yaml",
+                          "metamodelVersion": "1.11.0",
+                          "root": {
+                            "kind": "object",
+                            "members": {
+                              "id": {
+                                "kind": "string",
+                                "value": "https://example.org/root"
+                              },
+                              "name": {
+                                "kind": "string",
+                                "value": "root"
+                              },
+                              "imports": {
+                                "kind": "array",
+                                "items": [
+                                  {
+                                    "kind": "string",
+                                    "value": "left"
+                                  },
+                                  {
+                                    "kind": "string",
+                                    "value": "right"
+                                  }
+                                ]
+                              }
+                            }
+                          },
+                          "originalSource": "{\"id\":\"https://example.org/root\",\"name\":\"root\",\"imports\":[\"left\",\"right\"]}",
+                          "originalFormat": "json"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "key": "left",
+            "document": {
+              "umf": "0.1.0",
+              "id": "left",
+              "vocabularies": {
+                "umf.linkml": {
+                  "version": "0.1.0"
+                }
+              },
+              "modules": [
+                {
+                  "id": "schema",
+                  "namespace": "",
+                  "elements": [
+                    {
+                      "id": "schema",
+                      "extensions": {
+                        "umf.linkml": {
+                          "profile": "linkml-json-yaml",
+                          "metamodelVersion": "1.11.0",
+                          "root": {
+                            "kind": "object",
+                            "members": {
+                              "id": {
+                                "kind": "string",
+                                "value": "https://example.org/left"
+                              },
+                              "name": {
+                                "kind": "string",
+                                "value": "left"
+                              },
+                              "imports": {
+                                "kind": "array",
+                                "items": [
+                                  {
+                                    "kind": "string",
+                                    "value": "shared"
+                                  }
+                                ]
+                              }
+                            }
+                          },
+                          "originalSource": "{\"id\":\"https://example.org/left\",\"name\":\"left\",\"imports\":[\"shared\"]}",
+                          "originalFormat": "json"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "key": "right",
+            "document": {
+              "umf": "0.1.0",
+              "id": "right",
+              "vocabularies": {
+                "umf.linkml": {
+                  "version": "0.1.0"
+                }
+              },
+              "modules": [
+                {
+                  "id": "schema",
+                  "namespace": "",
+                  "elements": [
+                    {
+                      "id": "schema",
+                      "extensions": {
+                        "umf.linkml": {
+                          "profile": "linkml-json-yaml",
+                          "metamodelVersion": "1.11.0",
+                          "root": {
+                            "kind": "object",
+                            "members": {
+                              "id": {
+                                "kind": "string",
+                                "value": "https://example.org/right"
+                              },
+                              "name": {
+                                "kind": "string",
+                                "value": "right"
+                              },
+                              "imports": {
+                                "kind": "array",
+                                "items": [
+                                  {
+                                    "kind": "string",
+                                    "value": "shared"
+                                  }
+                                ]
+                              }
+                            }
+                          },
+                          "originalSource": "{\"id\":\"https://example.org/right\",\"name\":\"right\",\"imports\":[\"shared\"]}",
+                          "originalFormat": "json"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "key": "shared",
+            "document": {
+              "umf": "0.1.0",
+              "id": "shared",
+              "vocabularies": {
+                "umf.linkml": {
+                  "version": "0.1.0"
+                }
+              },
+              "modules": [
+                {
+                  "id": "schema",
+                  "namespace": "",
+                  "elements": [
+                    {
+                      "id": "schema",
+                      "extensions": {
+                        "umf.linkml": {
+                          "profile": "linkml-json-yaml",
+                          "metamodelVersion": "1.11.0",
+                          "root": {
+                            "kind": "object",
+                            "members": {
+                              "id": {
+                                "kind": "string",
+                                "value": "https://example.org/shared"
+                              },
+                              "name": {
+                                "kind": "string",
+                                "value": "shared"
+                              },
+                              "imports": {
+                                "kind": "array",
+                                "items": []
+                              }
+                            }
+                          },
+                          "originalSource": "{\"id\":\"https://example.org/shared\",\"name\":\"shared\",\"imports\":[]}",
+                          "originalFormat": "json"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "key": "unused",
+            "document": {
+              "umf": "0.1.0",
+              "id": "unused",
+              "vocabularies": {
+                "umf.linkml": {
+                  "version": "0.1.0"
+                }
+              },
+              "modules": [
+                {
+                  "id": "schema",
+                  "namespace": "",
+                  "elements": [
+                    {
+                      "id": "schema",
+                      "extensions": {
+                        "umf.linkml": {
+                          "profile": "linkml-json-yaml",
+                          "metamodelVersion": "1.11.0",
+                          "root": {
+                            "kind": "object",
+                            "members": {
+                              "id": {
+                                "kind": "string",
+                                "value": "https://example.org/unused"
+                              },
+                              "name": {
+                                "kind": "string",
+                                "value": "unused"
+                              },
+                              "imports": {
+                                "kind": "array",
+                                "items": []
+                              }
+                            }
+                          },
+                          "originalSource": "{\"id\":\"https://example.org/unused\",\"name\":\"unused\",\"imports\":[]}",
+                          "originalFormat": "json"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ],
+        "bindings": [
+          {
+            "from": "root",
+            "import": "left",
+            "target": "left"
+          },
+          {
+            "from": "root",
+            "import": "right",
+            "target": "right"
+          },
+          {
+            "from": "left",
+            "import": "shared",
+            "target": "shared"
+          },
+          {
+            "from": "right",
+            "import": "shared",
+            "target": "shared"
+          }
+        ]
+      },
+      "reports": [
+        {
+          "format": "json",
+          "report": {
+            "context": {
+              "entry": "root",
+              "schemas": [
+                {
+                  "key": "root",
+                  "document": {
+                    "umf": "0.1.0",
+                    "id": "root",
+                    "vocabularies": {
+                      "umf.linkml": {
+                        "version": "0.1.0"
+                      }
+                    },
+                    "modules": [
+                      {
+                        "id": "schema",
+                        "namespace": "",
+                        "elements": [
+                          {
+                            "id": "schema",
+                            "extensions": {
+                              "umf.linkml": {
+                                "profile": "linkml-json-yaml",
+                                "metamodelVersion": "1.11.0",
+                                "root": {
+                                  "kind": "object",
+                                  "members": {
+                                    "id": {
+                                      "kind": "string",
+                                      "value": "https://example.org/root"
+                                    },
+                                    "name": {
+                                      "kind": "string",
+                                      "value": "root"
+                                    },
+                                    "imports": {
+                                      "kind": "array",
+                                      "items": [
+                                        {
+                                          "kind": "string",
+                                          "value": "left"
+                                        },
+                                        {
+                                          "kind": "string",
+                                          "value": "right"
+                                        }
+                                      ]
+                                    }
+                                  }
+                                },
+                                "originalSource": "{\"id\":\"https://example.org/root\",\"name\":\"root\",\"imports\":[\"left\",\"right\"]}",
+                                "originalFormat": "json"
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                },
+                {
+                  "key": "left",
+                  "document": {
+                    "umf": "0.1.0",
+                    "id": "left",
+                    "vocabularies": {
+                      "umf.linkml": {
+                        "version": "0.1.0"
+                      }
+                    },
+                    "modules": [
+                      {
+                        "id": "schema",
+                        "namespace": "",
+                        "elements": [
+                          {
+                            "id": "schema",
+                            "extensions": {
+                              "umf.linkml": {
+                                "profile": "linkml-json-yaml",
+                                "metamodelVersion": "1.11.0",
+                                "root": {
+                                  "kind": "object",
+                                  "members": {
+                                    "id": {
+                                      "kind": "string",
+                                      "value": "https://example.org/left"
+                                    },
+                                    "name": {
+                                      "kind": "string",
+                                      "value": "left"
+                                    },
+                                    "imports": {
+                                      "kind": "array",
+                                      "items": [
+                                        {
+                                          "kind": "string",
+                                          "value": "shared"
+                                        }
+                                      ]
+                                    }
+                                  }
+                                },
+                                "originalSource": "{\"id\":\"https://example.org/left\",\"name\":\"left\",\"imports\":[\"shared\"]}",
+                                "originalFormat": "json"
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                },
+                {
+                  "key": "right",
+                  "document": {
+                    "umf": "0.1.0",
+                    "id": "right",
+                    "vocabularies": {
+                      "umf.linkml": {
+                        "version": "0.1.0"
+                      }
+                    },
+                    "modules": [
+                      {
+                        "id": "schema",
+                        "namespace": "",
+                        "elements": [
+                          {
+                            "id": "schema",
+                            "extensions": {
+                              "umf.linkml": {
+                                "profile": "linkml-json-yaml",
+                                "metamodelVersion": "1.11.0",
+                                "root": {
+                                  "kind": "object",
+                                  "members": {
+                                    "id": {
+                                      "kind": "string",
+                                      "value": "https://example.org/right"
+                                    },
+                                    "name": {
+                                      "kind": "string",
+                                      "value": "right"
+                                    },
+                                    "imports": {
+                                      "kind": "array",
+                                      "items": [
+                                        {
+                                          "kind": "string",
+                                          "value": "shared"
+                                        }
+                                      ]
+                                    }
+                                  }
+                                },
+                                "originalSource": "{\"id\":\"https://example.org/right\",\"name\":\"right\",\"imports\":[\"shared\"]}",
+                                "originalFormat": "json"
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                },
+                {
+                  "key": "shared",
+                  "document": {
+                    "umf": "0.1.0",
+                    "id": "shared",
+                    "vocabularies": {
+                      "umf.linkml": {
+                        "version": "0.1.0"
+                      }
+                    },
+                    "modules": [
+                      {
+                        "id": "schema",
+                        "namespace": "",
+                        "elements": [
+                          {
+                            "id": "schema",
+                            "extensions": {
+                              "umf.linkml": {
+                                "profile": "linkml-json-yaml",
+                                "metamodelVersion": "1.11.0",
+                                "root": {
+                                  "kind": "object",
+                                  "members": {
+                                    "id": {
+                                      "kind": "string",
+                                      "value": "https://example.org/shared"
+                                    },
+                                    "name": {
+                                      "kind": "string",
+                                      "value": "shared"
+                                    },
+                                    "imports": {
+                                      "kind": "array",
+                                      "items": []
+                                    }
+                                  }
+                                },
+                                "originalSource": "{\"id\":\"https://example.org/shared\",\"name\":\"shared\",\"imports\":[]}",
+                                "originalFormat": "json"
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                },
+                {
+                  "key": "unused",
+                  "document": {
+                    "umf": "0.1.0",
+                    "id": "unused",
+                    "vocabularies": {
+                      "umf.linkml": {
+                        "version": "0.1.0"
+                      }
+                    },
+                    "modules": [
+                      {
+                        "id": "schema",
+                        "namespace": "",
+                        "elements": [
+                          {
+                            "id": "schema",
+                            "extensions": {
+                              "umf.linkml": {
+                                "profile": "linkml-json-yaml",
+                                "metamodelVersion": "1.11.0",
+                                "root": {
+                                  "kind": "object",
+                                  "members": {
+                                    "id": {
+                                      "kind": "string",
+                                      "value": "https://example.org/unused"
+                                    },
+                                    "name": {
+                                      "kind": "string",
+                                      "value": "unused"
+                                    },
+                                    "imports": {
+                                      "kind": "array",
+                                      "items": []
+                                    }
+                                  }
+                                },
+                                "originalSource": "{\"id\":\"https://example.org/unused\",\"name\":\"unused\",\"imports\":[]}",
+                                "originalFormat": "json"
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              ],
+              "bindings": [
+                {
+                  "from": "root",
+                  "import": "left",
+                  "target": "left"
+                },
+                {
+                  "from": "root",
+                  "import": "right",
+                  "target": "right"
+                },
+                {
+                  "from": "left",
+                  "import": "shared",
+                  "target": "shared"
+                },
+                {
+                  "from": "right",
+                  "import": "shared",
+                  "target": "shared"
+                }
+              ]
+            },
+            "status": "resolved",
+            "complete": false,
+            "nodes": [
+              "root",
+              "left",
+              "right",
+              "shared"
+            ],
+            "edges": [
+              {
+                "from": "root",
+                "import": "left",
+                "path": "/imports/0",
+                "target": "left"
+              },
+              {
+                "from": "root",
+                "import": "right",
+                "path": "/imports/1",
+                "target": "right"
+              },
+              {
+                "from": "left",
+                "import": "shared",
+                "path": "/imports/0",
+                "target": "shared"
+              },
+              {
+                "from": "right",
+                "import": "shared",
+                "path": "/imports/0",
+                "target": "shared"
+              }
+            ],
+            "diagnostics": [
+              {
+                "code": "LINKML_CONTEXT",
+                "path": "/schemas/0/document",
+                "severity": "warning",
+                "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+              },
+              {
+                "code": "LINKML_CONTEXT",
+                "path": "/schemas/1/document",
+                "severity": "warning",
+                "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+              },
+              {
+                "code": "LINKML_CONTEXT",
+                "path": "/schemas/2/document",
+                "severity": "warning",
+                "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+              },
+              {
+                "code": "LINKML_CONTEXT",
+                "path": "/schemas/3/document",
+                "severity": "warning",
+                "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+              },
+              {
+                "code": "LINKML_IMPORT_CONTEXT",
+                "path": "",
+                "severity": "warning",
+                "message": "Reachability under explicit bindings only. Declared edge occurrences/order retained; no URI/CURIE resolution, merge precedence, induced schema, cycle legality or instance validation is inferred."
+              }
+            ]
+          }
+        },
+        {
+          "format": "yaml",
+          "report": {
+            "context": {
+              "entry": "root",
+              "schemas": [
+                {
+                  "key": "root",
+                  "document": {
+                    "umf": "0.1.0",
+                    "id": "root",
+                    "vocabularies": {
+                      "umf.linkml": {
+                        "version": "0.1.0"
+                      }
+                    },
+                    "modules": [
+                      {
+                        "id": "schema",
+                        "namespace": "",
+                        "elements": [
+                          {
+                            "id": "schema",
+                            "extensions": {
+                              "umf.linkml": {
+                                "profile": "linkml-json-yaml",
+                                "metamodelVersion": "1.11.0",
+                                "root": {
+                                  "kind": "object",
+                                  "members": {
+                                    "id": {
+                                      "kind": "string",
+                                      "value": "https://example.org/root"
+                                    },
+                                    "name": {
+                                      "kind": "string",
+                                      "value": "root"
+                                    },
+                                    "imports": {
+                                      "kind": "array",
+                                      "items": [
+                                        {
+                                          "kind": "string",
+                                          "value": "left"
+                                        },
+                                        {
+                                          "kind": "string",
+                                          "value": "right"
+                                        }
+                                      ]
+                                    }
+                                  }
+                                },
+                                "originalSource": "{\"id\":\"https://example.org/root\",\"name\":\"root\",\"imports\":[\"left\",\"right\"]}",
+                                "originalFormat": "json"
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                },
+                {
+                  "key": "left",
+                  "document": {
+                    "umf": "0.1.0",
+                    "id": "left",
+                    "vocabularies": {
+                      "umf.linkml": {
+                        "version": "0.1.0"
+                      }
+                    },
+                    "modules": [
+                      {
+                        "id": "schema",
+                        "namespace": "",
+                        "elements": [
+                          {
+                            "id": "schema",
+                            "extensions": {
+                              "umf.linkml": {
+                                "profile": "linkml-json-yaml",
+                                "metamodelVersion": "1.11.0",
+                                "root": {
+                                  "kind": "object",
+                                  "members": {
+                                    "id": {
+                                      "kind": "string",
+                                      "value": "https://example.org/left"
+                                    },
+                                    "name": {
+                                      "kind": "string",
+                                      "value": "left"
+                                    },
+                                    "imports": {
+                                      "kind": "array",
+                                      "items": [
+                                        {
+                                          "kind": "string",
+                                          "value": "shared"
+                                        }
+                                      ]
+                                    }
+                                  }
+                                },
+                                "originalSource": "{\"id\":\"https://example.org/left\",\"name\":\"left\",\"imports\":[\"shared\"]}",
+                                "originalFormat": "json"
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                },
+                {
+                  "key": "right",
+                  "document": {
+                    "umf": "0.1.0",
+                    "id": "right",
+                    "vocabularies": {
+                      "umf.linkml": {
+                        "version": "0.1.0"
+                      }
+                    },
+                    "modules": [
+                      {
+                        "id": "schema",
+                        "namespace": "",
+                        "elements": [
+                          {
+                            "id": "schema",
+                            "extensions": {
+                              "umf.linkml": {
+                                "profile": "linkml-json-yaml",
+                                "metamodelVersion": "1.11.0",
+                                "root": {
+                                  "kind": "object",
+                                  "members": {
+                                    "id": {
+                                      "kind": "string",
+                                      "value": "https://example.org/right"
+                                    },
+                                    "name": {
+                                      "kind": "string",
+                                      "value": "right"
+                                    },
+                                    "imports": {
+                                      "kind": "array",
+                                      "items": [
+                                        {
+                                          "kind": "string",
+                                          "value": "shared"
+                                        }
+                                      ]
+                                    }
+                                  }
+                                },
+                                "originalSource": "{\"id\":\"https://example.org/right\",\"name\":\"right\",\"imports\":[\"shared\"]}",
+                                "originalFormat": "json"
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                },
+                {
+                  "key": "shared",
+                  "document": {
+                    "umf": "0.1.0",
+                    "id": "shared",
+                    "vocabularies": {
+                      "umf.linkml": {
+                        "version": "0.1.0"
+                      }
+                    },
+                    "modules": [
+                      {
+                        "id": "schema",
+                        "namespace": "",
+                        "elements": [
+                          {
+                            "id": "schema",
+                            "extensions": {
+                              "umf.linkml": {
+                                "profile": "linkml-json-yaml",
+                                "metamodelVersion": "1.11.0",
+                                "root": {
+                                  "kind": "object",
+                                  "members": {
+                                    "id": {
+                                      "kind": "string",
+                                      "value": "https://example.org/shared"
+                                    },
+                                    "name": {
+                                      "kind": "string",
+                                      "value": "shared"
+                                    },
+                                    "imports": {
+                                      "kind": "array",
+                                      "items": []
+                                    }
+                                  }
+                                },
+                                "originalSource": "{\"id\":\"https://example.org/shared\",\"name\":\"shared\",\"imports\":[]}",
+                                "originalFormat": "json"
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                },
+                {
+                  "key": "unused",
+                  "document": {
+                    "umf": "0.1.0",
+                    "id": "unused",
+                    "vocabularies": {
+                      "umf.linkml": {
+                        "version": "0.1.0"
+                      }
+                    },
+                    "modules": [
+                      {
+                        "id": "schema",
+                        "namespace": "",
+                        "elements": [
+                          {
+                            "id": "schema",
+                            "extensions": {
+                              "umf.linkml": {
+                                "profile": "linkml-json-yaml",
+                                "metamodelVersion": "1.11.0",
+                                "root": {
+                                  "kind": "object",
+                                  "members": {
+                                    "id": {
+                                      "kind": "string",
+                                      "value": "https://example.org/unused"
+                                    },
+                                    "name": {
+                                      "kind": "string",
+                                      "value": "unused"
+                                    },
+                                    "imports": {
+                                      "kind": "array",
+                                      "items": []
+                                    }
+                                  }
+                                },
+                                "originalSource": "{\"id\":\"https://example.org/unused\",\"name\":\"unused\",\"imports\":[]}",
+                                "originalFormat": "json"
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              ],
+              "bindings": [
+                {
+                  "from": "root",
+                  "import": "left",
+                  "target": "left"
+                },
+                {
+                  "from": "root",
+                  "import": "right",
+                  "target": "right"
+                },
+                {
+                  "from": "left",
+                  "import": "shared",
+                  "target": "shared"
+                },
+                {
+                  "from": "right",
+                  "import": "shared",
+                  "target": "shared"
+                }
+              ]
+            },
+            "status": "resolved",
+            "complete": false,
+            "nodes": [
+              "root",
+              "left",
+              "right",
+              "shared"
+            ],
+            "edges": [
+              {
+                "from": "root",
+                "import": "left",
+                "path": "/imports/0",
+                "target": "left"
+              },
+              {
+                "from": "root",
+                "import": "right",
+                "path": "/imports/1",
+                "target": "right"
+              },
+              {
+                "from": "left",
+                "import": "shared",
+                "path": "/imports/0",
+                "target": "shared"
+              },
+              {
+                "from": "right",
+                "import": "shared",
+                "path": "/imports/0",
+                "target": "shared"
+              }
+            ],
+            "diagnostics": [
+              {
+                "code": "LINKML_CONTEXT",
+                "path": "/schemas/0/document",
+                "severity": "warning",
+                "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+              },
+              {
+                "code": "LINKML_CONTEXT",
+                "path": "/schemas/1/document",
+                "severity": "warning",
+                "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+              },
+              {
+                "code": "LINKML_CONTEXT",
+                "path": "/schemas/2/document",
+                "severity": "warning",
+                "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+              },
+              {
+                "code": "LINKML_CONTEXT",
+                "path": "/schemas/3/document",
+                "severity": "warning",
+                "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+              },
+              {
+                "code": "LINKML_IMPORT_CONTEXT",
+                "path": "",
+                "severity": "warning",
+                "message": "Reachability under explicit bindings only. Declared edge occurrences/order retained; no URI/CURIE resolution, merge precedence, induced schema, cycle legality or instance validation is inferred."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "cycle-repeat",
+      "sources": [
+        {
+          "key": "root",
+          "text": "{\"id\":\"https://example.org/root\",\"name\":\"root\",\"imports\":[\"left\",\"left\"]}"
+        },
+        {
+          "key": "left",
+          "text": "{\"id\":\"https://example.org/left\",\"name\":\"left\",\"imports\":[\"root\"]}"
+        }
+      ],
+      "context": {
+        "entry": "root",
+        "schemas": [
+          {
+            "key": "root",
+            "document": {
+              "umf": "0.1.0",
+              "id": "root",
+              "vocabularies": {
+                "umf.linkml": {
+                  "version": "0.1.0"
+                }
+              },
+              "modules": [
+                {
+                  "id": "schema",
+                  "namespace": "",
+                  "elements": [
+                    {
+                      "id": "schema",
+                      "extensions": {
+                        "umf.linkml": {
+                          "profile": "linkml-json-yaml",
+                          "metamodelVersion": "1.11.0",
+                          "root": {
+                            "kind": "object",
+                            "members": {
+                              "id": {
+                                "kind": "string",
+                                "value": "https://example.org/root"
+                              },
+                              "name": {
+                                "kind": "string",
+                                "value": "root"
+                              },
+                              "imports": {
+                                "kind": "array",
+                                "items": [
+                                  {
+                                    "kind": "string",
+                                    "value": "left"
+                                  },
+                                  {
+                                    "kind": "string",
+                                    "value": "left"
+                                  }
+                                ]
+                              }
+                            }
+                          },
+                          "originalSource": "{\"id\":\"https://example.org/root\",\"name\":\"root\",\"imports\":[\"left\",\"left\"]}",
+                          "originalFormat": "json"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "key": "left",
+            "document": {
+              "umf": "0.1.0",
+              "id": "left",
+              "vocabularies": {
+                "umf.linkml": {
+                  "version": "0.1.0"
+                }
+              },
+              "modules": [
+                {
+                  "id": "schema",
+                  "namespace": "",
+                  "elements": [
+                    {
+                      "id": "schema",
+                      "extensions": {
+                        "umf.linkml": {
+                          "profile": "linkml-json-yaml",
+                          "metamodelVersion": "1.11.0",
+                          "root": {
+                            "kind": "object",
+                            "members": {
+                              "id": {
+                                "kind": "string",
+                                "value": "https://example.org/left"
+                              },
+                              "name": {
+                                "kind": "string",
+                                "value": "left"
+                              },
+                              "imports": {
+                                "kind": "array",
+                                "items": [
+                                  {
+                                    "kind": "string",
+                                    "value": "root"
+                                  }
+                                ]
+                              }
+                            }
+                          },
+                          "originalSource": "{\"id\":\"https://example.org/left\",\"name\":\"left\",\"imports\":[\"root\"]}",
+                          "originalFormat": "json"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ],
+        "bindings": [
+          {
+            "from": "root",
+            "import": "left",
+            "target": "left"
+          },
+          {
+            "from": "left",
+            "import": "root",
+            "target": "root"
+          }
+        ]
+      },
+      "reports": [
+        {
+          "format": "json",
+          "report": {
+            "context": {
+              "entry": "root",
+              "schemas": [
+                {
+                  "key": "root",
+                  "document": {
+                    "umf": "0.1.0",
+                    "id": "root",
+                    "vocabularies": {
+                      "umf.linkml": {
+                        "version": "0.1.0"
+                      }
+                    },
+                    "modules": [
+                      {
+                        "id": "schema",
+                        "namespace": "",
+                        "elements": [
+                          {
+                            "id": "schema",
+                            "extensions": {
+                              "umf.linkml": {
+                                "profile": "linkml-json-yaml",
+                                "metamodelVersion": "1.11.0",
+                                "root": {
+                                  "kind": "object",
+                                  "members": {
+                                    "id": {
+                                      "kind": "string",
+                                      "value": "https://example.org/root"
+                                    },
+                                    "name": {
+                                      "kind": "string",
+                                      "value": "root"
+                                    },
+                                    "imports": {
+                                      "kind": "array",
+                                      "items": [
+                                        {
+                                          "kind": "string",
+                                          "value": "left"
+                                        },
+                                        {
+                                          "kind": "string",
+                                          "value": "left"
+                                        }
+                                      ]
+                                    }
+                                  }
+                                },
+                                "originalSource": "{\"id\":\"https://example.org/root\",\"name\":\"root\",\"imports\":[\"left\",\"left\"]}",
+                                "originalFormat": "json"
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                },
+                {
+                  "key": "left",
+                  "document": {
+                    "umf": "0.1.0",
+                    "id": "left",
+                    "vocabularies": {
+                      "umf.linkml": {
+                        "version": "0.1.0"
+                      }
+                    },
+                    "modules": [
+                      {
+                        "id": "schema",
+                        "namespace": "",
+                        "elements": [
+                          {
+                            "id": "schema",
+                            "extensions": {
+                              "umf.linkml": {
+                                "profile": "linkml-json-yaml",
+                                "metamodelVersion": "1.11.0",
+                                "root": {
+                                  "kind": "object",
+                                  "members": {
+                                    "id": {
+                                      "kind": "string",
+                                      "value": "https://example.org/left"
+                                    },
+                                    "name": {
+                                      "kind": "string",
+                                      "value": "left"
+                                    },
+                                    "imports": {
+                                      "kind": "array",
+                                      "items": [
+                                        {
+                                          "kind": "string",
+                                          "value": "root"
+                                        }
+                                      ]
+                                    }
+                                  }
+                                },
+                                "originalSource": "{\"id\":\"https://example.org/left\",\"name\":\"left\",\"imports\":[\"root\"]}",
+                                "originalFormat": "json"
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              ],
+              "bindings": [
+                {
+                  "from": "root",
+                  "import": "left",
+                  "target": "left"
+                },
+                {
+                  "from": "left",
+                  "import": "root",
+                  "target": "root"
+                }
+              ]
+            },
+            "status": "resolved",
+            "complete": false,
+            "nodes": [
+              "root",
+              "left"
+            ],
+            "edges": [
+              {
+                "from": "root",
+                "import": "left",
+                "path": "/imports/0",
+                "target": "left"
+              },
+              {
+                "from": "root",
+                "import": "left",
+                "path": "/imports/1",
+                "target": "left"
+              },
+              {
+                "from": "left",
+                "import": "root",
+                "path": "/imports/0",
+                "target": "root"
+              }
+            ],
+            "diagnostics": [
+              {
+                "code": "LINKML_CONTEXT",
+                "path": "/schemas/0/document",
+                "severity": "warning",
+                "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+              },
+              {
+                "code": "LINKML_CONTEXT",
+                "path": "/schemas/1/document",
+                "severity": "warning",
+                "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+              },
+              {
+                "code": "LINKML_IMPORT_CONTEXT",
+                "path": "",
+                "severity": "warning",
+                "message": "Reachability under explicit bindings only. Declared edge occurrences/order retained; no URI/CURIE resolution, merge precedence, induced schema, cycle legality or instance validation is inferred."
+              }
+            ]
+          }
+        },
+        {
+          "format": "yaml",
+          "report": {
+            "context": {
+              "entry": "root",
+              "schemas": [
+                {
+                  "key": "root",
+                  "document": {
+                    "umf": "0.1.0",
+                    "id": "root",
+                    "vocabularies": {
+                      "umf.linkml": {
+                        "version": "0.1.0"
+                      }
+                    },
+                    "modules": [
+                      {
+                        "id": "schema",
+                        "namespace": "",
+                        "elements": [
+                          {
+                            "id": "schema",
+                            "extensions": {
+                              "umf.linkml": {
+                                "profile": "linkml-json-yaml",
+                                "metamodelVersion": "1.11.0",
+                                "root": {
+                                  "kind": "object",
+                                  "members": {
+                                    "id": {
+                                      "kind": "string",
+                                      "value": "https://example.org/root"
+                                    },
+                                    "name": {
+                                      "kind": "string",
+                                      "value": "root"
+                                    },
+                                    "imports": {
+                                      "kind": "array",
+                                      "items": [
+                                        {
+                                          "kind": "string",
+                                          "value": "left"
+                                        },
+                                        {
+                                          "kind": "string",
+                                          "value": "left"
+                                        }
+                                      ]
+                                    }
+                                  }
+                                },
+                                "originalSource": "{\"id\":\"https://example.org/root\",\"name\":\"root\",\"imports\":[\"left\",\"left\"]}",
+                                "originalFormat": "json"
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                },
+                {
+                  "key": "left",
+                  "document": {
+                    "umf": "0.1.0",
+                    "id": "left",
+                    "vocabularies": {
+                      "umf.linkml": {
+                        "version": "0.1.0"
+                      }
+                    },
+                    "modules": [
+                      {
+                        "id": "schema",
+                        "namespace": "",
+                        "elements": [
+                          {
+                            "id": "schema",
+                            "extensions": {
+                              "umf.linkml": {
+                                "profile": "linkml-json-yaml",
+                                "metamodelVersion": "1.11.0",
+                                "root": {
+                                  "kind": "object",
+                                  "members": {
+                                    "id": {
+                                      "kind": "string",
+                                      "value": "https://example.org/left"
+                                    },
+                                    "name": {
+                                      "kind": "string",
+                                      "value": "left"
+                                    },
+                                    "imports": {
+                                      "kind": "array",
+                                      "items": [
+                                        {
+                                          "kind": "string",
+                                          "value": "root"
+                                        }
+                                      ]
+                                    }
+                                  }
+                                },
+                                "originalSource": "{\"id\":\"https://example.org/left\",\"name\":\"left\",\"imports\":[\"root\"]}",
+                                "originalFormat": "json"
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              ],
+              "bindings": [
+                {
+                  "from": "root",
+                  "import": "left",
+                  "target": "left"
+                },
+                {
+                  "from": "left",
+                  "import": "root",
+                  "target": "root"
+                }
+              ]
+            },
+            "status": "resolved",
+            "complete": false,
+            "nodes": [
+              "root",
+              "left"
+            ],
+            "edges": [
+              {
+                "from": "root",
+                "import": "left",
+                "path": "/imports/0",
+                "target": "left"
+              },
+              {
+                "from": "root",
+                "import": "left",
+                "path": "/imports/1",
+                "target": "left"
+              },
+              {
+                "from": "left",
+                "import": "root",
+                "path": "/imports/0",
+                "target": "root"
+              }
+            ],
+            "diagnostics": [
+              {
+                "code": "LINKML_CONTEXT",
+                "path": "/schemas/0/document",
+                "severity": "warning",
+                "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+              },
+              {
+                "code": "LINKML_CONTEXT",
+                "path": "/schemas/1/document",
+                "severity": "warning",
+                "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+              },
+              {
+                "code": "LINKML_IMPORT_CONTEXT",
+                "path": "",
+                "severity": "warning",
+                "message": "Reachability under explicit bindings only. Declared edge occurrences/order retained; no URI/CURIE resolution, merge precedence, induced schema, cycle legality or instance validation is inferred."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "missing",
+      "sources": [
+        {
+          "key": "root",
+          "text": "{\"id\":\"https://example.org/root\",\"name\":\"root\",\"imports\":[\"missing\"]}"
+        }
+      ],
+      "context": {
+        "entry": "root",
+        "schemas": [
+          {
+            "key": "root",
+            "document": {
+              "umf": "0.1.0",
+              "id": "root",
+              "vocabularies": {
+                "umf.linkml": {
+                  "version": "0.1.0"
+                }
+              },
+              "modules": [
+                {
+                  "id": "schema",
+                  "namespace": "",
+                  "elements": [
+                    {
+                      "id": "schema",
+                      "extensions": {
+                        "umf.linkml": {
+                          "profile": "linkml-json-yaml",
+                          "metamodelVersion": "1.11.0",
+                          "root": {
+                            "kind": "object",
+                            "members": {
+                              "id": {
+                                "kind": "string",
+                                "value": "https://example.org/root"
+                              },
+                              "name": {
+                                "kind": "string",
+                                "value": "root"
+                              },
+                              "imports": {
+                                "kind": "array",
+                                "items": [
+                                  {
+                                    "kind": "string",
+                                    "value": "missing"
+                                  }
+                                ]
+                              }
+                            }
+                          },
+                          "originalSource": "{\"id\":\"https://example.org/root\",\"name\":\"root\",\"imports\":[\"missing\"]}",
+                          "originalFormat": "json"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ],
+        "bindings": []
+      },
+      "reports": [
+        {
+          "format": "json",
+          "report": {
+            "context": {
+              "entry": "root",
+              "schemas": [
+                {
+                  "key": "root",
+                  "document": {
+                    "umf": "0.1.0",
+                    "id": "root",
+                    "vocabularies": {
+                      "umf.linkml": {
+                        "version": "0.1.0"
+                      }
+                    },
+                    "modules": [
+                      {
+                        "id": "schema",
+                        "namespace": "",
+                        "elements": [
+                          {
+                            "id": "schema",
+                            "extensions": {
+                              "umf.linkml": {
+                                "profile": "linkml-json-yaml",
+                                "metamodelVersion": "1.11.0",
+                                "root": {
+                                  "kind": "object",
+                                  "members": {
+                                    "id": {
+                                      "kind": "string",
+                                      "value": "https://example.org/root"
+                                    },
+                                    "name": {
+                                      "kind": "string",
+                                      "value": "root"
+                                    },
+                                    "imports": {
+                                      "kind": "array",
+                                      "items": [
+                                        {
+                                          "kind": "string",
+                                          "value": "missing"
+                                        }
+                                      ]
+                                    }
+                                  }
+                                },
+                                "originalSource": "{\"id\":\"https://example.org/root\",\"name\":\"root\",\"imports\":[\"missing\"]}",
+                                "originalFormat": "json"
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              ],
+              "bindings": []
+            },
+            "status": "blocked",
+            "complete": false,
+            "nodes": [
+              "root"
+            ],
+            "edges": [
+              {
+                "from": "root",
+                "import": "missing",
+                "path": "/imports/0"
+              }
+            ],
+            "diagnostics": [
+              {
+                "code": "LINKML_CONTEXT",
+                "path": "/schemas/0/document",
+                "severity": "warning",
+                "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+              },
+              {
+                "code": "LINKML_IMPORT_UNRESOLVED",
+                "path": "/schemas/0/document/imports/0",
+                "message": "No supplied binding for \"missing\"",
+                "severity": "error"
+              },
+              {
+                "code": "LINKML_IMPORT_CONTEXT",
+                "path": "",
+                "severity": "warning",
+                "message": "Reachability under explicit bindings only. Declared edge occurrences/order retained; no URI/CURIE resolution, merge precedence, induced schema, cycle legality or instance validation is inferred."
+              }
+            ]
+          }
+        },
+        {
+          "format": "yaml",
+          "report": {
+            "context": {
+              "entry": "root",
+              "schemas": [
+                {
+                  "key": "root",
+                  "document": {
+                    "umf": "0.1.0",
+                    "id": "root",
+                    "vocabularies": {
+                      "umf.linkml": {
+                        "version": "0.1.0"
+                      }
+                    },
+                    "modules": [
+                      {
+                        "id": "schema",
+                        "namespace": "",
+                        "elements": [
+                          {
+                            "id": "schema",
+                            "extensions": {
+                              "umf.linkml": {
+                                "profile": "linkml-json-yaml",
+                                "metamodelVersion": "1.11.0",
+                                "root": {
+                                  "kind": "object",
+                                  "members": {
+                                    "id": {
+                                      "kind": "string",
+                                      "value": "https://example.org/root"
+                                    },
+                                    "name": {
+                                      "kind": "string",
+                                      "value": "root"
+                                    },
+                                    "imports": {
+                                      "kind": "array",
+                                      "items": [
+                                        {
+                                          "kind": "string",
+                                          "value": "missing"
+                                        }
+                                      ]
+                                    }
+                                  }
+                                },
+                                "originalSource": "{\"id\":\"https://example.org/root\",\"name\":\"root\",\"imports\":[\"missing\"]}",
+                                "originalFormat": "json"
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              ],
+              "bindings": []
+            },
+            "status": "blocked",
+            "complete": false,
+            "nodes": [
+              "root"
+            ],
+            "edges": [
+              {
+                "from": "root",
+                "import": "missing",
+                "path": "/imports/0"
+              }
+            ],
+            "diagnostics": [
+              {
+                "code": "LINKML_CONTEXT",
+                "path": "/schemas/0/document",
+                "severity": "warning",
+                "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+              },
+              {
+                "code": "LINKML_IMPORT_UNRESOLVED",
+                "path": "/schemas/0/document/imports/0",
+                "message": "No supplied binding for \"missing\"",
+                "severity": "error"
+              },
+              {
+                "code": "LINKML_IMPORT_CONTEXT",
+                "path": "",
+                "severity": "warning",
+                "message": "Reachability under explicit bindings only. Declared edge occurrences/order retained; no URI/CURIE resolution, merge precedence, induced schema, cycle legality or instance validation is inferred."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "scoped",
+      "sources": [
+        {
+          "key": "root",
+          "text": "{\"id\":\"https://example.org/root\",\"name\":\"root\",\"imports\":[\"left\",\"right\"]}"
+        },
+        {
+          "key": "left",
+          "text": "{\"id\":\"https://example.org/left\",\"name\":\"left\",\"imports\":[\"common\"]}"
+        },
+        {
+          "key": "right",
+          "text": "{\"id\":\"https://example.org/right\",\"name\":\"right\",\"imports\":[\"common\"]}"
+        },
+        {
+          "key": "a",
+          "text": "{\"id\":\"https://example.org/a\",\"name\":\"a\",\"imports\":[]}"
+        },
+        {
+          "key": "b",
+          "text": "{\"id\":\"https://example.org/b\",\"name\":\"b\",\"imports\":[]}"
+        }
+      ],
+      "context": {
+        "entry": "root",
+        "schemas": [
+          {
+            "key": "root",
+            "document": {
+              "umf": "0.1.0",
+              "id": "root",
+              "vocabularies": {
+                "umf.linkml": {
+                  "version": "0.1.0"
+                }
+              },
+              "modules": [
+                {
+                  "id": "schema",
+                  "namespace": "",
+                  "elements": [
+                    {
+                      "id": "schema",
+                      "extensions": {
+                        "umf.linkml": {
+                          "profile": "linkml-json-yaml",
+                          "metamodelVersion": "1.11.0",
+                          "root": {
+                            "kind": "object",
+                            "members": {
+                              "id": {
+                                "kind": "string",
+                                "value": "https://example.org/root"
+                              },
+                              "name": {
+                                "kind": "string",
+                                "value": "root"
+                              },
+                              "imports": {
+                                "kind": "array",
+                                "items": [
+                                  {
+                                    "kind": "string",
+                                    "value": "left"
+                                  },
+                                  {
+                                    "kind": "string",
+                                    "value": "right"
+                                  }
+                                ]
+                              }
+                            }
+                          },
+                          "originalSource": "{\"id\":\"https://example.org/root\",\"name\":\"root\",\"imports\":[\"left\",\"right\"]}",
+                          "originalFormat": "json"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "key": "left",
+            "document": {
+              "umf": "0.1.0",
+              "id": "left",
+              "vocabularies": {
+                "umf.linkml": {
+                  "version": "0.1.0"
+                }
+              },
+              "modules": [
+                {
+                  "id": "schema",
+                  "namespace": "",
+                  "elements": [
+                    {
+                      "id": "schema",
+                      "extensions": {
+                        "umf.linkml": {
+                          "profile": "linkml-json-yaml",
+                          "metamodelVersion": "1.11.0",
+                          "root": {
+                            "kind": "object",
+                            "members": {
+                              "id": {
+                                "kind": "string",
+                                "value": "https://example.org/left"
+                              },
+                              "name": {
+                                "kind": "string",
+                                "value": "left"
+                              },
+                              "imports": {
+                                "kind": "array",
+                                "items": [
+                                  {
+                                    "kind": "string",
+                                    "value": "common"
+                                  }
+                                ]
+                              }
+                            }
+                          },
+                          "originalSource": "{\"id\":\"https://example.org/left\",\"name\":\"left\",\"imports\":[\"common\"]}",
+                          "originalFormat": "json"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "key": "right",
+            "document": {
+              "umf": "0.1.0",
+              "id": "right",
+              "vocabularies": {
+                "umf.linkml": {
+                  "version": "0.1.0"
+                }
+              },
+              "modules": [
+                {
+                  "id": "schema",
+                  "namespace": "",
+                  "elements": [
+                    {
+                      "id": "schema",
+                      "extensions": {
+                        "umf.linkml": {
+                          "profile": "linkml-json-yaml",
+                          "metamodelVersion": "1.11.0",
+                          "root": {
+                            "kind": "object",
+                            "members": {
+                              "id": {
+                                "kind": "string",
+                                "value": "https://example.org/right"
+                              },
+                              "name": {
+                                "kind": "string",
+                                "value": "right"
+                              },
+                              "imports": {
+                                "kind": "array",
+                                "items": [
+                                  {
+                                    "kind": "string",
+                                    "value": "common"
+                                  }
+                                ]
+                              }
+                            }
+                          },
+                          "originalSource": "{\"id\":\"https://example.org/right\",\"name\":\"right\",\"imports\":[\"common\"]}",
+                          "originalFormat": "json"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "key": "a",
+            "document": {
+              "umf": "0.1.0",
+              "id": "a",
+              "vocabularies": {
+                "umf.linkml": {
+                  "version": "0.1.0"
+                }
+              },
+              "modules": [
+                {
+                  "id": "schema",
+                  "namespace": "",
+                  "elements": [
+                    {
+                      "id": "schema",
+                      "extensions": {
+                        "umf.linkml": {
+                          "profile": "linkml-json-yaml",
+                          "metamodelVersion": "1.11.0",
+                          "root": {
+                            "kind": "object",
+                            "members": {
+                              "id": {
+                                "kind": "string",
+                                "value": "https://example.org/a"
+                              },
+                              "name": {
+                                "kind": "string",
+                                "value": "a"
+                              },
+                              "imports": {
+                                "kind": "array",
+                                "items": []
+                              }
+                            }
+                          },
+                          "originalSource": "{\"id\":\"https://example.org/a\",\"name\":\"a\",\"imports\":[]}",
+                          "originalFormat": "json"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "key": "b",
+            "document": {
+              "umf": "0.1.0",
+              "id": "b",
+              "vocabularies": {
+                "umf.linkml": {
+                  "version": "0.1.0"
+                }
+              },
+              "modules": [
+                {
+                  "id": "schema",
+                  "namespace": "",
+                  "elements": [
+                    {
+                      "id": "schema",
+                      "extensions": {
+                        "umf.linkml": {
+                          "profile": "linkml-json-yaml",
+                          "metamodelVersion": "1.11.0",
+                          "root": {
+                            "kind": "object",
+                            "members": {
+                              "id": {
+                                "kind": "string",
+                                "value": "https://example.org/b"
+                              },
+                              "name": {
+                                "kind": "string",
+                                "value": "b"
+                              },
+                              "imports": {
+                                "kind": "array",
+                                "items": []
+                              }
+                            }
+                          },
+                          "originalSource": "{\"id\":\"https://example.org/b\",\"name\":\"b\",\"imports\":[]}",
+                          "originalFormat": "json"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ],
+        "bindings": [
+          {
+            "from": "root",
+            "import": "left",
+            "target": "left"
+          },
+          {
+            "from": "root",
+            "import": "right",
+            "target": "right"
+          },
+          {
+            "from": "left",
+            "import": "common",
+            "target": "a"
+          },
+          {
+            "from": "right",
+            "import": "common",
+            "target": "b"
+          }
+        ]
+      },
+      "reports": [
+        {
+          "format": "json",
+          "report": {
+            "context": {
+              "entry": "root",
+              "schemas": [
+                {
+                  "key": "root",
+                  "document": {
+                    "umf": "0.1.0",
+                    "id": "root",
+                    "vocabularies": {
+                      "umf.linkml": {
+                        "version": "0.1.0"
+                      }
+                    },
+                    "modules": [
+                      {
+                        "id": "schema",
+                        "namespace": "",
+                        "elements": [
+                          {
+                            "id": "schema",
+                            "extensions": {
+                              "umf.linkml": {
+                                "profile": "linkml-json-yaml",
+                                "metamodelVersion": "1.11.0",
+                                "root": {
+                                  "kind": "object",
+                                  "members": {
+                                    "id": {
+                                      "kind": "string",
+                                      "value": "https://example.org/root"
+                                    },
+                                    "name": {
+                                      "kind": "string",
+                                      "value": "root"
+                                    },
+                                    "imports": {
+                                      "kind": "array",
+                                      "items": [
+                                        {
+                                          "kind": "string",
+                                          "value": "left"
+                                        },
+                                        {
+                                          "kind": "string",
+                                          "value": "right"
+                                        }
+                                      ]
+                                    }
+                                  }
+                                },
+                                "originalSource": "{\"id\":\"https://example.org/root\",\"name\":\"root\",\"imports\":[\"left\",\"right\"]}",
+                                "originalFormat": "json"
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                },
+                {
+                  "key": "left",
+                  "document": {
+                    "umf": "0.1.0",
+                    "id": "left",
+                    "vocabularies": {
+                      "umf.linkml": {
+                        "version": "0.1.0"
+                      }
+                    },
+                    "modules": [
+                      {
+                        "id": "schema",
+                        "namespace": "",
+                        "elements": [
+                          {
+                            "id": "schema",
+                            "extensions": {
+                              "umf.linkml": {
+                                "profile": "linkml-json-yaml",
+                                "metamodelVersion": "1.11.0",
+                                "root": {
+                                  "kind": "object",
+                                  "members": {
+                                    "id": {
+                                      "kind": "string",
+                                      "value": "https://example.org/left"
+                                    },
+                                    "name": {
+                                      "kind": "string",
+                                      "value": "left"
+                                    },
+                                    "imports": {
+                                      "kind": "array",
+                                      "items": [
+                                        {
+                                          "kind": "string",
+                                          "value": "common"
+                                        }
+                                      ]
+                                    }
+                                  }
+                                },
+                                "originalSource": "{\"id\":\"https://example.org/left\",\"name\":\"left\",\"imports\":[\"common\"]}",
+                                "originalFormat": "json"
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                },
+                {
+                  "key": "right",
+                  "document": {
+                    "umf": "0.1.0",
+                    "id": "right",
+                    "vocabularies": {
+                      "umf.linkml": {
+                        "version": "0.1.0"
+                      }
+                    },
+                    "modules": [
+                      {
+                        "id": "schema",
+                        "namespace": "",
+                        "elements": [
+                          {
+                            "id": "schema",
+                            "extensions": {
+                              "umf.linkml": {
+                                "profile": "linkml-json-yaml",
+                                "metamodelVersion": "1.11.0",
+                                "root": {
+                                  "kind": "object",
+                                  "members": {
+                                    "id": {
+                                      "kind": "string",
+                                      "value": "https://example.org/right"
+                                    },
+                                    "name": {
+                                      "kind": "string",
+                                      "value": "right"
+                                    },
+                                    "imports": {
+                                      "kind": "array",
+                                      "items": [
+                                        {
+                                          "kind": "string",
+                                          "value": "common"
+                                        }
+                                      ]
+                                    }
+                                  }
+                                },
+                                "originalSource": "{\"id\":\"https://example.org/right\",\"name\":\"right\",\"imports\":[\"common\"]}",
+                                "originalFormat": "json"
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                },
+                {
+                  "key": "a",
+                  "document": {
+                    "umf": "0.1.0",
+                    "id": "a",
+                    "vocabularies": {
+                      "umf.linkml": {
+                        "version": "0.1.0"
+                      }
+                    },
+                    "modules": [
+                      {
+                        "id": "schema",
+                        "namespace": "",
+                        "elements": [
+                          {
+                            "id": "schema",
+                            "extensions": {
+                              "umf.linkml": {
+                                "profile": "linkml-json-yaml",
+                                "metamodelVersion": "1.11.0",
+                                "root": {
+                                  "kind": "object",
+                                  "members": {
+                                    "id": {
+                                      "kind": "string",
+                                      "value": "https://example.org/a"
+                                    },
+                                    "name": {
+                                      "kind": "string",
+                                      "value": "a"
+                                    },
+                                    "imports": {
+                                      "kind": "array",
+                                      "items": []
+                                    }
+                                  }
+                                },
+                                "originalSource": "{\"id\":\"https://example.org/a\",\"name\":\"a\",\"imports\":[]}",
+                                "originalFormat": "json"
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                },
+                {
+                  "key": "b",
+                  "document": {
+                    "umf": "0.1.0",
+                    "id": "b",
+                    "vocabularies": {
+                      "umf.linkml": {
+                        "version": "0.1.0"
+                      }
+                    },
+                    "modules": [
+                      {
+                        "id": "schema",
+                        "namespace": "",
+                        "elements": [
+                          {
+                            "id": "schema",
+                            "extensions": {
+                              "umf.linkml": {
+                                "profile": "linkml-json-yaml",
+                                "metamodelVersion": "1.11.0",
+                                "root": {
+                                  "kind": "object",
+                                  "members": {
+                                    "id": {
+                                      "kind": "string",
+                                      "value": "https://example.org/b"
+                                    },
+                                    "name": {
+                                      "kind": "string",
+                                      "value": "b"
+                                    },
+                                    "imports": {
+                                      "kind": "array",
+                                      "items": []
+                                    }
+                                  }
+                                },
+                                "originalSource": "{\"id\":\"https://example.org/b\",\"name\":\"b\",\"imports\":[]}",
+                                "originalFormat": "json"
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              ],
+              "bindings": [
+                {
+                  "from": "root",
+                  "import": "left",
+                  "target": "left"
+                },
+                {
+                  "from": "root",
+                  "import": "right",
+                  "target": "right"
+                },
+                {
+                  "from": "left",
+                  "import": "common",
+                  "target": "a"
+                },
+                {
+                  "from": "right",
+                  "import": "common",
+                  "target": "b"
+                }
+              ]
+            },
+            "status": "resolved",
+            "complete": false,
+            "nodes": [
+              "root",
+              "left",
+              "right",
+              "a",
+              "b"
+            ],
+            "edges": [
+              {
+                "from": "root",
+                "import": "left",
+                "path": "/imports/0",
+                "target": "left"
+              },
+              {
+                "from": "root",
+                "import": "right",
+                "path": "/imports/1",
+                "target": "right"
+              },
+              {
+                "from": "left",
+                "import": "common",
+                "path": "/imports/0",
+                "target": "a"
+              },
+              {
+                "from": "right",
+                "import": "common",
+                "path": "/imports/0",
+                "target": "b"
+              }
+            ],
+            "diagnostics": [
+              {
+                "code": "LINKML_CONTEXT",
+                "path": "/schemas/0/document",
+                "severity": "warning",
+                "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+              },
+              {
+                "code": "LINKML_CONTEXT",
+                "path": "/schemas/1/document",
+                "severity": "warning",
+                "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+              },
+              {
+                "code": "LINKML_CONTEXT",
+                "path": "/schemas/2/document",
+                "severity": "warning",
+                "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+              },
+              {
+                "code": "LINKML_CONTEXT",
+                "path": "/schemas/3/document",
+                "severity": "warning",
+                "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+              },
+              {
+                "code": "LINKML_CONTEXT",
+                "path": "/schemas/4/document",
+                "severity": "warning",
+                "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+              },
+              {
+                "code": "LINKML_IMPORT_CONTEXT",
+                "path": "",
+                "severity": "warning",
+                "message": "Reachability under explicit bindings only. Declared edge occurrences/order retained; no URI/CURIE resolution, merge precedence, induced schema, cycle legality or instance validation is inferred."
+              }
+            ]
+          }
+        },
+        {
+          "format": "yaml",
+          "report": {
+            "context": {
+              "entry": "root",
+              "schemas": [
+                {
+                  "key": "root",
+                  "document": {
+                    "umf": "0.1.0",
+                    "id": "root",
+                    "vocabularies": {
+                      "umf.linkml": {
+                        "version": "0.1.0"
+                      }
+                    },
+                    "modules": [
+                      {
+                        "id": "schema",
+                        "namespace": "",
+                        "elements": [
+                          {
+                            "id": "schema",
+                            "extensions": {
+                              "umf.linkml": {
+                                "profile": "linkml-json-yaml",
+                                "metamodelVersion": "1.11.0",
+                                "root": {
+                                  "kind": "object",
+                                  "members": {
+                                    "id": {
+                                      "kind": "string",
+                                      "value": "https://example.org/root"
+                                    },
+                                    "name": {
+                                      "kind": "string",
+                                      "value": "root"
+                                    },
+                                    "imports": {
+                                      "kind": "array",
+                                      "items": [
+                                        {
+                                          "kind": "string",
+                                          "value": "left"
+                                        },
+                                        {
+                                          "kind": "string",
+                                          "value": "right"
+                                        }
+                                      ]
+                                    }
+                                  }
+                                },
+                                "originalSource": "{\"id\":\"https://example.org/root\",\"name\":\"root\",\"imports\":[\"left\",\"right\"]}",
+                                "originalFormat": "json"
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                },
+                {
+                  "key": "left",
+                  "document": {
+                    "umf": "0.1.0",
+                    "id": "left",
+                    "vocabularies": {
+                      "umf.linkml": {
+                        "version": "0.1.0"
+                      }
+                    },
+                    "modules": [
+                      {
+                        "id": "schema",
+                        "namespace": "",
+                        "elements": [
+                          {
+                            "id": "schema",
+                            "extensions": {
+                              "umf.linkml": {
+                                "profile": "linkml-json-yaml",
+                                "metamodelVersion": "1.11.0",
+                                "root": {
+                                  "kind": "object",
+                                  "members": {
+                                    "id": {
+                                      "kind": "string",
+                                      "value": "https://example.org/left"
+                                    },
+                                    "name": {
+                                      "kind": "string",
+                                      "value": "left"
+                                    },
+                                    "imports": {
+                                      "kind": "array",
+                                      "items": [
+                                        {
+                                          "kind": "string",
+                                          "value": "common"
+                                        }
+                                      ]
+                                    }
+                                  }
+                                },
+                                "originalSource": "{\"id\":\"https://example.org/left\",\"name\":\"left\",\"imports\":[\"common\"]}",
+                                "originalFormat": "json"
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                },
+                {
+                  "key": "right",
+                  "document": {
+                    "umf": "0.1.0",
+                    "id": "right",
+                    "vocabularies": {
+                      "umf.linkml": {
+                        "version": "0.1.0"
+                      }
+                    },
+                    "modules": [
+                      {
+                        "id": "schema",
+                        "namespace": "",
+                        "elements": [
+                          {
+                            "id": "schema",
+                            "extensions": {
+                              "umf.linkml": {
+                                "profile": "linkml-json-yaml",
+                                "metamodelVersion": "1.11.0",
+                                "root": {
+                                  "kind": "object",
+                                  "members": {
+                                    "id": {
+                                      "kind": "string",
+                                      "value": "https://example.org/right"
+                                    },
+                                    "name": {
+                                      "kind": "string",
+                                      "value": "right"
+                                    },
+                                    "imports": {
+                                      "kind": "array",
+                                      "items": [
+                                        {
+                                          "kind": "string",
+                                          "value": "common"
+                                        }
+                                      ]
+                                    }
+                                  }
+                                },
+                                "originalSource": "{\"id\":\"https://example.org/right\",\"name\":\"right\",\"imports\":[\"common\"]}",
+                                "originalFormat": "json"
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                },
+                {
+                  "key": "a",
+                  "document": {
+                    "umf": "0.1.0",
+                    "id": "a",
+                    "vocabularies": {
+                      "umf.linkml": {
+                        "version": "0.1.0"
+                      }
+                    },
+                    "modules": [
+                      {
+                        "id": "schema",
+                        "namespace": "",
+                        "elements": [
+                          {
+                            "id": "schema",
+                            "extensions": {
+                              "umf.linkml": {
+                                "profile": "linkml-json-yaml",
+                                "metamodelVersion": "1.11.0",
+                                "root": {
+                                  "kind": "object",
+                                  "members": {
+                                    "id": {
+                                      "kind": "string",
+                                      "value": "https://example.org/a"
+                                    },
+                                    "name": {
+                                      "kind": "string",
+                                      "value": "a"
+                                    },
+                                    "imports": {
+                                      "kind": "array",
+                                      "items": []
+                                    }
+                                  }
+                                },
+                                "originalSource": "{\"id\":\"https://example.org/a\",\"name\":\"a\",\"imports\":[]}",
+                                "originalFormat": "json"
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                },
+                {
+                  "key": "b",
+                  "document": {
+                    "umf": "0.1.0",
+                    "id": "b",
+                    "vocabularies": {
+                      "umf.linkml": {
+                        "version": "0.1.0"
+                      }
+                    },
+                    "modules": [
+                      {
+                        "id": "schema",
+                        "namespace": "",
+                        "elements": [
+                          {
+                            "id": "schema",
+                            "extensions": {
+                              "umf.linkml": {
+                                "profile": "linkml-json-yaml",
+                                "metamodelVersion": "1.11.0",
+                                "root": {
+                                  "kind": "object",
+                                  "members": {
+                                    "id": {
+                                      "kind": "string",
+                                      "value": "https://example.org/b"
+                                    },
+                                    "name": {
+                                      "kind": "string",
+                                      "value": "b"
+                                    },
+                                    "imports": {
+                                      "kind": "array",
+                                      "items": []
+                                    }
+                                  }
+                                },
+                                "originalSource": "{\"id\":\"https://example.org/b\",\"name\":\"b\",\"imports\":[]}",
+                                "originalFormat": "json"
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              ],
+              "bindings": [
+                {
+                  "from": "root",
+                  "import": "left",
+                  "target": "left"
+                },
+                {
+                  "from": "root",
+                  "import": "right",
+                  "target": "right"
+                },
+                {
+                  "from": "left",
+                  "import": "common",
+                  "target": "a"
+                },
+                {
+                  "from": "right",
+                  "import": "common",
+                  "target": "b"
+                }
+              ]
+            },
+            "status": "resolved",
+            "complete": false,
+            "nodes": [
+              "root",
+              "left",
+              "right",
+              "a",
+              "b"
+            ],
+            "edges": [
+              {
+                "from": "root",
+                "import": "left",
+                "path": "/imports/0",
+                "target": "left"
+              },
+              {
+                "from": "root",
+                "import": "right",
+                "path": "/imports/1",
+                "target": "right"
+              },
+              {
+                "from": "left",
+                "import": "common",
+                "path": "/imports/0",
+                "target": "a"
+              },
+              {
+                "from": "right",
+                "import": "common",
+                "path": "/imports/0",
+                "target": "b"
+              }
+            ],
+            "diagnostics": [
+              {
+                "code": "LINKML_CONTEXT",
+                "path": "/schemas/0/document",
+                "severity": "warning",
+                "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+              },
+              {
+                "code": "LINKML_CONTEXT",
+                "path": "/schemas/1/document",
+                "severity": "warning",
+                "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+              },
+              {
+                "code": "LINKML_CONTEXT",
+                "path": "/schemas/2/document",
+                "severity": "warning",
+                "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+              },
+              {
+                "code": "LINKML_CONTEXT",
+                "path": "/schemas/3/document",
+                "severity": "warning",
+                "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+              },
+              {
+                "code": "LINKML_CONTEXT",
+                "path": "/schemas/4/document",
+                "severity": "warning",
+                "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+              },
+              {
+                "code": "LINKML_IMPORT_CONTEXT",
+                "path": "",
+                "severity": "warning",
+                "message": "Reachability under explicit bindings only. Declared edge occurrences/order retained; no URI/CURIE resolution, merge precedence, induced schema, cycle legality or instance validation is inferred."
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

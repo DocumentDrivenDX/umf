@@ -1,0 +1,78 @@
+{"testProcess":"tests/domain-packs/schema-browser-site-parity.test.ts","command":["/private/tmp/claude-501/-Users-erik-Projects-hohfeld--claude-worktrees-helix-bootstrap-setup-f77e53/2ceb1cef-019c-4f51-98fb-7d3b8a77c49e/scratchpad/bun142/bun-darwin-aarch64/bun","test","--timeout","30000","./tests/domain-packs/schema-browser-site-parity.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/domain-packs/schema-browser-site-parity.test.ts:
+(pass) site verifies the complete package and removes the old root renderer while keeping current host assets [139.03ms]
+(pass) site rejects empty package inventories and altered package bytes [22.07ms]
+
+ 2 pass
+ 0 fail
+ 23 expect() calls
+Ran 2 tests across 1 file. [180.00ms]
+{"testProcess":"tests/domain-packs/schema-browser-site-parity.test.ts","exitCode":0,"pass":2,"fail":0,"assertions":23,"completeSummary":true,"logSha256":"903b0948602e476dfd4eb96f6d05eabf7dfb11aaf6b8656fa30f73f4854c63fa"}
+{"testProcess":"tests/reference/reader.test.ts","command":["/private/tmp/claude-501/-Users-erik-Projects-hohfeld--claude-worktrees-helix-bootstrap-setup-f77e53/2ceb1cef-019c-4f51-98fb-7d3b8a77c49e/scratchpad/bun142/bun-darwin-aarch64/bun","test","--timeout","30000","./tests/reference/reader.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/reference/reader.test.ts:
+(pass) latest uses numeric core versions and preserves conditional, open and recursive meaning [7.47ms]
+(pass) reader census, exact API kind, examples and member documentation are emitted [24.40ms]
+(pass) complete schema examples reject invalid item/container shapes and usage snippets execute [3.14ms]
+(pass) the generated YAML example preserves all JSON example values [3.20ms]
+(pass) workbench formatting retains edited values and refuses silent loss [12.88ms]
+
+ 5 pass
+ 0 fail
+ 55 expect() calls
+Ran 5 tests across 1 file. [5.55s]
+{"testProcess":"tests/reference/reader.test.ts","exitCode":0,"pass":5,"fail":0,"assertions":55,"completeSummary":true,"logSha256":"71e259525cd3e4656a81a24f8e83c2b96a3c796dd04819ad4ada383d5a13779a"}
+{"testProcess":"tests/reference/reference.test.ts","command":["/private/tmp/claude-501/-Users-erik-Projects-hohfeld--claude-worktrees-helix-bootstrap-setup-f77e53/2ceb1cef-019c-4f51-98fb-7d3b8a77c49e/scratchpad/bun142/bun-darwin-aarch64/bun","test","--timeout","30000","./tests/reference/reference.test.ts"]}
+bun test v1.4.2 (744846f84)
+
+tests/reference/reference.test.ts:
+(pass) every extension version and its exact manifest/schema are present [43.73ms]
+(pass) all schema files and exact core profiles are accounted for [188.76ms]
+(pass) every emitted record validates, resolves its joins and matches signed-manifest asset closure [4005.50ms]
+(pass) real independent oracle failures and qualified priority results remain separate [3.90ms]
+(pass) source hash changes and missing dependency closures cannot become current evidence [0.10ms]
+(pass) ambient distribution artifacts never enter evidence observations [0.93ms]
+(pass) conflicting observations and supersession cycles refuse optimistic aggregation [0.32ms]
+(pass) schema comparison is structural, bounded and preserves exact token spelling [0.32ms]
+(pass) exclusions require an existing source and nonempty reason [0.08ms]
+(pass) public Bun runtime preserves unknown payload, validates current core and refuses unsafe input [16.18ms]
+(pass) boundary checker rejects actual forbidden source and import cycle injections [113.78ms]
+ 97 | 
+ 98 | // @covers US-089-AC10
+ 99 | test('a second isolated generation matches; drift check refuses tampering without rewriting',async()=>{
+100 |  const manifest=await Bun.file(join(dist,'manifest.json')).text();
+101 |  const check=()=>{const child=Bun.spawn(['bun','scripts/reference/build.ts','--check',...(process.env.UMF_REFERENCE_CANDIDATE?['--candidate',process.env.UMF_REFERENCE_CANDIDATE]:[])],{cwd:root,stdout:'pipe',stderr:'pipe'});return Promise.all([child.exited,new Response(child.stderr).text(),new Response(child.stdout).text()]);};
+102 |  const good=await check();if(good[0]!==0)throw Error(String(good[1]));expect(await Bun.file(join(dist,'manifest.json')).text()).toBe(manifest);
+                                                     ^
+error: 74 |  await bounded([...originals],async([hash,bytes])=>{await Bun.write(join(stage,'sources',hash),bytes);});
+75 |  const outputs=await bounded(await files(stage),async path=>{const bytes=await Bun.file(join(stage,path)).bytes();return {path,sha256:sha(bytes),bytes:bytes.length};});
+76 |  const manifest={profile:'umf.reference.manifest/1',inputs:inputList,outputs,inputDigest};await validate('manifest',manifest);const manifestBytes=json(manifest);await Bun.write(join(stage,'manifest.json'),manifestBytes);
+77 |  const integrity={script:'sha256-'+Buffer.from(sha(await Bun.file(join(stage,'assets/reference.js')).bytes()),'hex').toString('base64'),style:'sha256-'+Buffer.from(sha(await Bun.file(join(stage,'assets/reference.css')).bytes()),'hex').toString('base64')};
+78 |  for(const view of views)await Bun.write(join(stage,view+'.html'),render(view,entries,sha(manifestBytes),integrity));
+79 |  const expected=await files(stage),actual=await files(output);if(check){if(canonical(expected)!==canonical(actual))throw Error('REFERENCE_DRIFT output membership');await bounded(expected,async path=>{if(sha(await Bun.file(join(stage,path)).bytes())!==sha(await Bun.file(join(output,path)).bytes()))throw Error('REFERENCE_DRIFT '+path);});}
+                                                                                                                                                                                                                                                                                                                     ^
+error: REFERENCE_DRIFT api.html
+      at /Users/erik/.codex/worktrees/d8be/umf/scripts/reference/build.ts:79:305
+      at bounded (/Users/erik/.codex/worktrees/d8be/umf/scripts/reference/build.ts:26:183)
+
+Bun v1.4.2 (macOS arm64)
+
+      at <anonymous> (/Users/erik/.codex/worktrees/d8be/umf/tests/reference/reference.test.ts:102:48)
+(fail) a second isolated generation matches; drift check refuses tampering without rewriting [35248.57ms]
+(pass) reference manifest retains every Protobuf notice producer input [4.59ms]
+(pass) reference renderer candidate arguments reject missing, repeated and unknown options [0.24ms]
+
+ 13 pass
+ 1 fail
+ 13215 expect() calls
+Ran 14 tests across 1 file. [45.41s]
+{"testProcess":"tests/reference/reference.test.ts","exitCode":1,"pass":13,"fail":1,"assertions":13215,"completeSummary":true,"logSha256":"c40ac7a8abe5cfff1b4ceb55db3e77f3754386dfbd1874ba3d268f9a4dc87ecc"}
+Complete test file failed or terminated: tests/reference/reference.test.ts
+
+ 20 pass
+ 1 fail
+ 13293 expect() calls
+Ran 21 tests across 3 files. [51.20s]

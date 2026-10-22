@@ -1,0 +1,31 @@
+{
+  "data": {
+    "declarations": [
+      {
+        "bytes": 22416,
+        "line": 26,
+        "path": "src/extensions/binding/index.ts",
+        "sha256": "d2e3a4d9dfef6f392a08fa4331a815cc8ad80c611f5f95511c2cbbd98a26c94b"
+      }
+    ],
+    "entrypoint": ".",
+    "exportName": "BindingPayload",
+    "runtime": "type-only",
+    "signatureText": [
+      "export interface BindingPayload {\n  profile:'umf-binding-1'|'umf-binding-2';\n  logical:{documentId:string;coreVersion:string};\n  target:{system:string;version:string;subset:string};\n  elements:BindingElement[];\n  fields:BindingField[];\n  relationships:(BindingRelationship|StableBindingRelationship)[];\n  indexes:BindingIndex[];\n  [key:string]:unknown;\n}"
+    ]
+  },
+  "id": "[\"api\",\".\",\"BindingPayload\"]",
+  "kind": "api",
+  "links": [],
+  "sources": [
+    {
+      "bytes": 22416,
+      "line": 26,
+      "path": "src/extensions/binding/index.ts",
+      "sha256": "d2e3a4d9dfef6f392a08fa4331a815cc8ad80c611f5f95511c2cbbd98a26c94b"
+    }
+  ],
+  "summary": "Type declaration · src/extensions/binding/index.ts",
+  "title": "BindingPayload"
+}

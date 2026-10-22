@@ -1,0 +1,50 @@
+{
+  "alternatives": [],
+  "authored": false,
+  "id": "[\"api\",\".\",\"editAction\"]",
+  "kind": "Function",
+  "members": [],
+  "parameters": [
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Document\"]"
+      ],
+      "name": "sourceInput",
+      "optional": false,
+      "type": "Document"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"ActionIdentity\"]"
+      ],
+      "name": "identity",
+      "optional": false,
+      "type": "ActionIdentity"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Action\"]"
+      ],
+      "name": "replacementInput",
+      "optional": false,
+      "type": "Action"
+    },
+    {
+      "description": "",
+      "links": [
+        "[\"api\",\".\",\"Registry\"]"
+      ],
+      "name": "registry",
+      "optional": false,
+      "type": "Registry"
+    }
+  ],
+  "purpose": "editAction accepts sourceInput, identity, replacementInput, registry and returns Document.",
+  "related": [],
+  "returns": "Document",
+  "task": "Author and edit",
+  "type": "(sourceInput: Document, identity: ActionIdentity, replacementInput: Action, registry: Registry) => Document"
+}
