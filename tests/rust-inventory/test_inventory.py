@@ -26,7 +26,11 @@ class InventoryDependencyTests(unittest.TestCase):
             unrelated = root / "python/example/src/pkg/unused.py"
             for path in (manifest, entrypoint, unrelated):
                 path.parent.mkdir(parents=True, exist_ok=True)
-            manifest.write_text('[project.scripts]\n"example-cli" = "pkg.cli:main"\n"external" = "other.cli:main"\n', encoding="utf-8")
+            manifest.write_text(
+                '[project.scripts]\n"example-cli" = "pkg.cli:main.run"\n'
+                '"external" = "other.cli:main"\n"no-callable" = "pkg.cli"\n'
+                '"empty-callable" = "pkg.cli:"\n"empty-module" = ":main"\n'
+                '"extra-target" = "pkg.cli:main unexpected"\n', encoding="utf-8")
             with patch.object(MODULE, "ROOT", root):
                 roots = MODULE.python_console_entrypoint_roots([manifest], [entrypoint, unrelated])
             self.assertEqual({"python/example/src/pkg/cli.py": {"project.scripts:example-cli (python/example/pyproject.toml)"}}, roots)
@@ -35,21 +39,41 @@ class InventoryDependencyTests(unittest.TestCase):
     def test_workflow_unittest_discovery_activates_only_matching_files_under_declared_start(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory).resolve()
-            workflow = root / ".github/workflows/optional.yml"
             selected = root / "tests/lifecycle/test_parser.py"
             another = root / "tests/lifecycle/test_other.py"
             outside = root / "tests/other/test_parser.py"
-            for path in (workflow, selected, another, outside):
+            for path in (selected, another, outside):
                 path.parent.mkdir(parents=True, exist_ok=True)
-            workflow.write_text(
-                "run: python -m unittest discover -s tests/lifecycle -p test_parser.py\n"
-                "run: python -m unittest tests.not_discovery\n", encoding="utf-8")
+            workflow_runs = {".github/workflows/optional.yml": [
+                "python -m unittest discover -s tests/lifecycle -p test_parser.py",
+                "python -m unittest tests.not_discovery",
+            ]}
             with patch.object(MODULE, "ROOT", root):
-                roots = MODULE.workflow_unittest_discovery_roots([workflow], [selected, another, outside])
+                roots = MODULE.workflow_unittest_discovery_roots(workflow_runs, [selected, another, outside])
             self.assertEqual({"tests/lifecycle/test_parser.py": {
                 "workflow:.github/workflows/optional.yml unittest discover -s tests/lifecycle -p test_parser.py"}}, roots)
             self.assertNotIn("tests/lifecycle/test_other.py", roots)
             self.assertNotIn("tests/other/test_parser.py", roots)
+
+    def test_workflow_unittest_discovery_ignores_comments_help_malformed_and_broad_flags(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory).resolve()
+            selected = root / "tests/lifecycle/test_parser.py"
+            for path in (selected,):
+                path.parent.mkdir(parents=True, exist_ok=True)
+            workflow_runs = {".github/workflows/optional.yml": [
+                "# python -m unittest discover -s tests/lifecycle -p test_parser.py",
+                "python -m unittest discover --help",
+                "python -m unittest discover -s",
+                "python -m unittest discover -p test_parser.py",
+                "python -m unittest discover -s . -p test_parser.py",
+                "python -m unittest discover -s ../outside -p test_parser.py",
+                "python -m unittest discover -s tests/lifecycle -p '*.py'",
+                "python -m unittest discover -s tests/lifecycle -p test_parser.py --unknown",
+            ]}
+            with patch.object(MODULE, "ROOT", root):
+                roots = MODULE.workflow_unittest_discovery_roots(workflow_runs, [selected])
+            self.assertEqual({}, roots)
 
     def test_rust_input_identity_covers_embedded_data_but_excludes_artifacts(self):
         import tempfile

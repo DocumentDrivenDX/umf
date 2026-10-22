@@ -420,9 +420,12 @@ def python_console_entrypoint_roots(pyprojects: list[Path], source_paths: list[P
                 continue
             # Only map standard module:callable entry points. Dynamic import
             # syntax remains visible in the manifest but is not guessed here.
-            module = target.partition(":")[0]
-            if not re.fullmatch(r"[A-Za-z_]\w*(?:\.[A-Za-z_]\w*)*", module):
+            target_match = re.fullmatch(
+                r"([A-Za-z_]\w*(?:\.[A-Za-z_]\w*)*):([A-Za-z_]\w*(?:\.[A-Za-z_]\w*)*)",
+                target, flags=re.ASCII)
+            if not target_match:
                 continue
+            module = target_match.group(1)
             module_path = source_root.joinpath(*module.split(".")).with_suffix(".py").resolve()
             if module_path in authored:
                 roots.setdefault(rel(module_path), set()).add(
@@ -430,56 +433,61 @@ def python_console_entrypoint_roots(pyprojects: list[Path], source_paths: list[P
     return roots
 
 
-def workflow_unittest_discovery_roots(activation_files: list[Path], source_paths: list[Path]) -> dict[str, set[str]]:
+def workflow_unittest_discovery_roots(workflow_runs: dict[str, list[str]], source_paths: list[Path]) -> dict[str, set[str]]:
     """Resolve bounded `python -m unittest discover -s DIR -p PATTERN` roots."""
     authored = [path.resolve() for path in source_paths]
     roots: dict[str, set[str]] = {}
-    command_pattern = re.compile(
-        r"(?m)(?:^|[\s;&|])python(?:3(?:\.\d+)?)?\s+(?:-I\s+)?-m\s+unittest\s+discover\b([^\n;&|]*)")
-    for workflow in activation_files:
-        if ".github/workflows" not in workflow.as_posix():
+    for workflow, run_values in workflow_runs.items():
+        if ".github/workflows/" not in workflow:
             continue
-        source = text(workflow)
-        for match in command_pattern.finditer(source):
-            try:
-                arguments = shlex.split(match.group(1))
-            except ValueError:
-                continue
-            start = "."
-            pattern = "test*.py"
-            index = 0
-            while index < len(arguments):
-                token = arguments[index]
-                if token in {"-s", "--start-directory", "-p", "--pattern"}:
-                    if index + 1 >= len(arguments):
+        for run_value in run_values:
+            for command in run_value.splitlines():
+                try:
+                    tokens = shlex.split(command, comments=True)
+                except ValueError:
+                    break
+                if not tokens or not re.fullmatch(r"python(?:3(?:\.\d+)?)?", tokens[0], flags=re.ASCII):
+                    continue
+                index = 1
+                if index < len(tokens) and tokens[index] == "-I":
+                    index += 1
+                if tokens[index:index + 3] != ["-m", "unittest", "discover"]:
+                    continue
+                arguments = tokens[index + 3:]
+                start = None
+                pattern = None
+                index = 0
+                while index < len(arguments):
+                    token = arguments[index]
+                    if token not in {"-s", "--start-directory", "-p", "--pattern"} or index + 1 >= len(arguments):
                         break
                     value = arguments[index + 1]
                     if token in {"-s", "--start-directory"}:
+                        if start is not None:
+                            break
                         start = value
                     else:
+                        if pattern is not None:
+                            break
                         pattern = value
                     index += 2
+                if index != len(arguments) or start is None or pattern is None:
                     continue
-                if token.startswith("--start-directory="):
-                    start = token.partition("=")[2]
-                elif token.startswith("--pattern="):
-                    pattern = token.partition("=")[2]
-                elif token.startswith("-s") and len(token) > 2:
-                    start = token[2:]
-                elif token.startswith("-p") and len(token) > 2:
-                    pattern = token[2:]
-                index += 1
-            start_path = (ROOT / start).resolve()
-            if ROOT not in start_path.parents and start_path != ROOT:
-                continue
-            evidence = f"workflow:{rel(workflow)} unittest discover -s {start} -p {pattern}"
-            for candidate in authored:
-                try:
-                    candidate.relative_to(start_path)
-                except ValueError:
+                if Path(start).is_absolute() or ".." in Path(start).parts or not start.strip() or Path(start) == Path("."):
                     continue
-                if fnmatch.fnmatchcase(candidate.name, pattern):
-                    roots.setdefault(rel(candidate), set()).add(evidence)
+                if Path(pattern).name != pattern or not pattern.strip() or pattern in {"*", "*.py"}:
+                    continue
+                start_path = (ROOT / start).resolve()
+                if ROOT not in start_path.parents and start_path != ROOT:
+                    continue
+                evidence = f"workflow:{workflow} unittest discover -s {start} -p {pattern}"
+                for candidate in authored:
+                    try:
+                        candidate.relative_to(start_path)
+                    except ValueError:
+                        continue
+                    if fnmatch.fnmatchcase(candidate.name, pattern):
+                        roots.setdefault(rel(candidate), set()).add(evidence)
     return roots
 
 
@@ -654,7 +662,7 @@ def main() -> int:
     root_activation_evidence: dict[str, set[str]] = {}
     python_manifests = sorted((ROOT / "python").glob("*/pyproject.toml"))
     python_entrypoints = python_console_entrypoint_roots(python_manifests, all_script_paths)
-    unittest_discovery = workflow_unittest_discovery_roots(activation_files, all_script_paths)
+    unittest_discovery = workflow_unittest_discovery_roots(ts_capture.get("workflowRuns", {}), all_script_paths)
     for activated in (python_entrypoints, unittest_discovery):
         for path, evidence in activated.items():
             roots.add(path)
