@@ -51,9 +51,12 @@ implementation-plan evidence remains scoped to the artifacts it actually tested.
 
 ### R2 current status
 
-R2 implementation is under final source and installed-artifact review. It is not
-complete until the current source passes the full gate, Sol approves, and the PR
-merges. Earlier counts and failures below are dated implementation checkpoints;
+R2 production implementation is checkpointed at `a1eb5d627`. Independent Sol
+review has closed the known source findings; 206 workspace tests, 67 compiler
+tests / 478 assertions and real Chromium 139 core plus 70,542 regex comparisons
+pass with depth/resource controls. Installed-artifact qualification and final
+overall review remain open. R2 is not complete until the full gate passes and the
+PR merges. Earlier counts and failures below are dated implementation checkpoints;
 they do not supersede the final qualification receipt. Main is integrated through
 `53de049136c7e41b482d1a73665d031cd5fbaec6` (PR41); refresh before merging.
 
@@ -216,7 +219,8 @@ its own qualification and support statement.
 ### Milestone A: Python packages have no V8 requirement
 
 All active Python package imports, public operations and CLI entrypoints work
-without a JS engine, including all five `umf_codegen` dispatch operations. New
+without a JS engine, including all seven current `umf_codegen` dispatch operations
+(the original five plus change discovery and row-scope normalization). New
 wheels contain neither MiniRacer nor embedded generator JS; dependency/binary
 inspection and clean installed execution confirm that. Generated clients remain
 stdlib-only. Rust CLI runs its qualified operations on a machine/container without

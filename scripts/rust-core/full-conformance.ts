@@ -179,7 +179,8 @@ async function git(args: string[]) {
 }
 
 function findBinary(directory: string, pattern: RegExp): string {
-  const found = readdirSync(directory).map((name) => join(directory, name)).find((name) => pattern.test(name));
+  const entry = readdirSync(directory).find((name) => pattern.test(name));
+  const found = entry === undefined ? undefined : join(directory, entry);
   if (!found) throw new Error(`Expected build artifact matching ${pattern} under ${directory}`);
   return found;
 }
