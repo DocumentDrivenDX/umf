@@ -6,14 +6,14 @@ import {compileTableMigration,discoverTableMigrationChanges} from '../../src/tab
 
 const ref=(element:string)=>({module:'demo',element});
 const configuration={module:'demo',schema:'g01_native',ownerRole:'g01_owner',personRole:'g01_person',batchRole:'g01_batch',groupRoles:{}};
-function source(rows:{id:string;owner:string;summary?:string}[],withFillCommand=true,maxRows=100,valueKind:'text'|'date'|'clock'='text',constraintKind?:'check'|'unique'|'foreignKey'){
+function source(rows:{id:string;owner:string;summary?:string|null}[],withFillCommand=true,maxRows=100,valueKind:'text'|'date'|'clock'='text',constraintKind?:'check'|'unique'|'foreignKey',futureDefault=false){
  const doc=structuredClone(fixture) as any,module=doc.modules[0]!,payload=module.extensions['umf.tables'];
  const scalarType=valueKind==='date'?'date':valueKind==='clock'?'timestamp':'string';
  const nativeType=valueKind==='date'?{kind:'date'}:valueKind==='clock'?{kind:'timestamptz'}:{kind:'text'};
  const value=valueKind==='date'?{kind:'literal',value:{date:'2026-10-22'}}:valueKind==='clock'?{kind:'currentTimestamp'}:{kind:'literal',value:{string:'filled'}};
  module.elements.push({id:'summary',kind:'field',scalarType,cardinality:'one',nullability:'absent-allowed',extensions:{}});
  module.elements.find((item:any)=>item.id==='Note')!.members.push(ref('summary'));
- payload.tables[0]!.columns.push({field:ref('summary'),name:'summary',nativeType});
+ payload.tables[0]!.columns.push({field:ref('summary'),name:'summary',nativeType,...(futureDefault?{default:{kind:'literal',value:{string:'future'}}}:{})});
  if(constraintKind==='check')payload.tables[0]!.checks.push({id:'summary_not_filled',name:'summary_not_filled',expression:{op:'ne',left:{op:'field',field:ref('summary')},right:{op:'literal',value:{string:'filled'}}}});
  if(constraintKind==='unique')payload.tables[0]!.indexes.push({id:'summary_unique',name:'summary_unique',fields:[ref('summary')],unique:true,include:[]});
  if(constraintKind==='foreignKey')payload.tables[0]!.foreignKeys.push({id:'summary_fk',name:'summary_fk',fields:[ref('summary')],target:{record:ref('Note'),key:'primary'},onUpdate:'restrict',onDelete:'restrict',deferrable:false});
@@ -30,6 +30,7 @@ const scenarios=[
  {id:'clock-unknown-commit',rows:[{id:'a',owner:'g01_alice'}],expected:[['a','__transaction_clock__']],valueKind:'clock'},
  {id:'paired-finalize-retry',rows:[{id:'a',owner:'g01_alice'}],expected:[['a','filled']]},
  {id:'date-literal',rows:[{id:'a',owner:'g01_alice'}],expected:[['a','2026-10-22']],valueKind:'date'},
+ {id:'future-default-preserved',rows:[{id:'a',owner:'g01_alice',summary:null},{id:'b',owner:'g01_bob',summary:null}],expected:[['a','filled'],['b','filled']],futureDefault:true},
  {id:'paired-not-null-failure-rollback',rows:[{id:'a',owner:'g01_alice'},{id:'b',owner:'g01_bob'}],expected:[['a',null],['b',null]],expectedFailure:'native-not-null-violation'},
  {id:'check-violation-rollback',rows:[{id:'a',owner:'g01_alice'},{id:'b',owner:'g01_bob'}],expected:[['a',null],['b',null]],expectedFailure:'native-constraint-violation',constraintKind:'check'},
  {id:'unique-key-violation-rollback',rows:[{id:'a',owner:'g01_alice'},{id:'b',owner:'g01_bob'}],expected:[['a',null],['b',null]],expectedFailure:'native-constraint-violation',constraintKind:'unique'},
@@ -39,7 +40,8 @@ const scenarios=[
 const cases=scenarios.map((scenario,index)=>{
  const valueKind=('valueKind' in scenario?scenario.valueKind:'text') as 'text'|'date'|'clock';
  const constraintKind=('constraintKind' in scenario?scenario.constraintKind:undefined) as 'check'|'unique'|'foreignKey'|undefined;
- const previous=deployed(source(scenario.rows,false,100,valueKind,constraintKind)),nextSource=JSON.parse(deployed(source(scenario.rows,true,'maxRows' in scenario?scenario.maxRows:100,valueKind,constraintKind)).source.utf8);
+ const futureDefault='futureDefault' in scenario&&scenario.futureDefault===true;
+ const previous=deployed(source(scenario.rows,false,100,valueKind,constraintKind,futureDefault)),nextSource=JSON.parse(deployed(source(scenario.rows,true,'maxRows' in scenario?scenario.maxRows:100,valueKind,constraintKind,futureDefault)).source.utf8);
  nextSource.modules[0]!.elements.find((item:any)=>item.id==='summary')!.nullability='required';
  const next=deployed(nextSource),candidate=discoverTableMigrationChanges(previous,next).find(item=>item.kind==='tighten-not-null');
  if(!candidate)throw Error('G01 native tighten marker missing: '+scenario.id);

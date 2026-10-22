@@ -177,6 +177,7 @@ with psycopg.connect(args.dsn,autocommit=True) as admin:
                         connection.execute(sql.SQL('INSERT INTO {} (id,owner,summary) VALUES (%s,%s,%s)').format(sql.Identifier(cfg['schema'],'notes')),(row['id'],row['owner'],row['summary']))
                     else:
                         connection.execute(sql.SQL('INSERT INTO {} (id,owner) VALUES (%s,%s)').format(sql.Identifier(cfg['schema'],'notes')),(row['id'],row['owner']))
+                initial_default=connection.execute("SELECT column_default FROM information_schema.columns WHERE table_schema=%s AND table_name='notes' AND column_name='summary'",(cfg['schema'],)).fetchone()
                 next_bundle=bundle(case['source'],cfg)
                 result=compile_table_migration(migration_id=case['plan']['id'],predecessor={'id':initial['id'],'digest':initial['digest']},previous_bundle=initial_bundle,next_bundle=next_bundle,options=case['plan']['options'])
                 assert result['status']=='compiled',result
@@ -214,7 +215,9 @@ with psycopg.connect(args.dsn,autocommit=True) as admin:
                         constraint_kind=case['id'].split('-')[0] if case['id'].startswith('check-') else 'unique' if case['id'].startswith('unique-') else 'foreignKey'
                         check(case['id']+'-source-declared-native-constraint-failed-in-backfill',observations.get('nativeSqlstate')==sqlstates[constraint_kind] and observations.get('nativeDataStepId')==plan['steps'][0]['id'] and observations.get('dataStepAttempt')==plan['steps'][0]['id'])
                     else:
-                        check(case['id']+'-exact-effect-bound-reached-after-native-update',observations.get('boundError')=='backfill-effect-bound' and observations.get('dataStepId')==plan['steps'][0]['id'] and observations.get('rowsAfterRejectedBound')==[('a','filled'),('b','filled')])
+                        bound_reached=observations.get('nativeSqlstate')=='22012' and observations.get('nativeDataStepId')==plan['steps'][0]['id'] and observations.get('dataStepAttempt')==plan['steps'][0]['id']
+                        if not bound_reached:print(f'bounded-effect observations: {observations!r}',flush=True)
+                        check(case['id']+'-native-row-bound-guard-failed-inside-dispatched-data-step',bound_reached)
                     connection.execute('RESET ROLE')
                     rows=connection.execute(sql.SQL('SELECT id,summary FROM {} ORDER BY id').format(sql.Identifier(cfg['schema'],'notes'))).fetchall()
                     check(case['id']+'-paired-fill-and-tighten-roll-back-together',rows==[tuple(row) for row in case['expectedRows']])
@@ -280,7 +283,10 @@ with psycopg.connect(args.dsn,autocommit=True) as admin:
                 nullability=connection.execute("SELECT is_nullable FROM information_schema.columns WHERE table_schema=%s AND table_name='notes' AND column_name='summary'",(cfg['schema'],)).fetchone()
                 check(case['id']+'-native-column-is-required-after-pair',nullability==('NO',))
                 default=connection.execute("SELECT column_default FROM information_schema.columns WHERE table_schema=%s AND table_name='notes' AND column_name='summary'",(cfg['schema'],)).fetchone()
-                check(case['id']+'-historical-fill-does-not-create-a-future-default',default==(None,))
+                check(case['id']+'-historical-fill-preserves-future-default',default==initial_default)
+                if case['id']=='future-default-preserved':
+                    future=connection.execute(sql.SQL('INSERT INTO {} (id,owner) VALUES (%s,%s) RETURNING summary').format(sql.Identifier(cfg['schema'],'notes')),('future-default-row','g01_alice')).fetchone()
+                    check(case['id']+'-future-omitted-value-still-uses-original-default',future==('future',))
                 connection.execute(sql.SQL('SET ROLE {}').format(sql.Identifier('g01_alice')))
                 try:connection.execute(sql.SQL('INSERT INTO {} (id,owner,summary) VALUES (%s,%s,NULL)').format(sql.Identifier(cfg['schema'],'notes')),('blocked-'+case['id'],'g01_alice'))
                 except psycopg.errors.NotNullViolation:check(case['id']+'-second-session-null-writer-rejected',True)
