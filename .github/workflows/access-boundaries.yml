@@ -141,15 +141,32 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest]
+        include:
+          - os: ubuntu-24.04
+            architecture: x86_64
+            mini-racer-platform: linux-x86_64-glibc-2.27+
+            python-version: '3.11'
+          - os: ubuntu-24.04
+            architecture: x86_64
+            mini-racer-platform: linux-x86_64-glibc-2.27+
+            python-version: '3.14'
+          - os: macos-14
+            architecture: arm64
+            mini-racer-platform: macos-11+-arm64
+            python-version: '3.11'
+          - os: macos-14
+            architecture: arm64
+            mini-racer-platform: macos-11+-arm64
+            python-version: '3.14'
     steps:
       - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version: 1.4.3
       - uses: actions/setup-python@v5
+        id: setup-python
         with:
-          python-version: '3.11'
+          python-version: ${{ matrix.python-version }}
       - run: bun install --frozen-lockfile
       - run: bun test tests/compilation/codegen-gzip.test.ts
       - run: bun scripts/build-codegen.ts --check
@@ -163,43 +180,73 @@ jobs:
       - run: bun scripts/row-scope-codegen-corpus.ts /tmp/umf-row-scope-codegen-corpus.json
       - name: Build wheel through the self-contained source distribution
         run: python -m build python/umf_codegen --outdir /tmp/umf-codegen-wheels
-      - run: python -m pip install /tmp/umf-codegen-wheels/*.whl
+      - run: bun scripts/codegen-corpus.ts /tmp/umf-codegen-corpus.json
+      - run: bun scripts/table-deployment-corpus.ts /tmp/umf-deployment-corpus.json
+      - run: bun scripts/table-migration-corpus.ts /tmp/umf-migration-corpus.json
+      - run: bun scripts/table-reviewed-changes-corpus.ts /tmp/umf-reviewed-changes-corpus.json
+      - name: Acquire and verify the exact mini-racer platform wheel
+        run: |
+          python -m pip download --no-deps --only-binary=:all: --dest /tmp/mini-racer-wheelhouse mini-racer==0.14.1
+          python -I tests/codegen/verify_mini_racer_wheel.py \
+            --wheelhouse /tmp/mini-racer-wheelhouse \
+            --pins docs/helix/04-build/evidence/praxis-embedder/mini-racer-wheel-pins.json \
+            --expected-platform '${{ matrix.mini-racer-platform }}'
+      - name: Install exact local wheels into a clean environment
+        run: |
+          python -m venv /tmp/umf-codegen-installed
+          /tmp/umf-codegen-installed/bin/python -m pip --isolated install \
+            --disable-pip-version-check --no-cache-dir --no-index --no-deps \
+            /tmp/mini-racer-wheelhouse/*.whl /tmp/umf-codegen-wheels/*.whl
+          /tmp/umf-codegen-installed/bin/python -I -m pip check
       - name: Installed row_scope normalizer parity
         run: >-
-          python -I tests/codegen/row_scope_probe.py
-          --corpus /tmp/umf-row-scope-codegen-corpus.json
-      - run: bun scripts/codegen-corpus.ts /tmp/umf-codegen-corpus.json
+          /tmp/umf-codegen-installed/bin/python -I tests/codegen/row_scope_probe.py
+          --corpus /tmp/umf-row-scope-codegen-corpus.json > /tmp/umf-row-scope-report.json
       - name: Installed generator parity without external JavaScript processes
         run: >-
-          python -I tests/codegen/installed_probe.py
+          /tmp/umf-codegen-installed/bin/python -I tests/codegen/installed_probe.py
           --corpus /tmp/umf-codegen-corpus.json --report /tmp/umf-codegen-report.json
-      - run: bun scripts/table-deployment-corpus.ts /tmp/umf-deployment-corpus.json
       - name: Installed original deployment compiler and tamper controls
         run: >-
-          python -I tests/codegen/deployment_probe.py
+          /tmp/umf-codegen-installed/bin/python -I tests/codegen/deployment_probe.py
           --corpus /tmp/umf-deployment-corpus.json --report /tmp/umf-deployment-python.json
-      - run: bun scripts/table-migration-corpus.ts /tmp/umf-migration-corpus.json
       - name: Installed original migration compiler and rehashed tamper controls
         run: >-
-          python -I tests/codegen/migration_probe.py
+          /tmp/umf-codegen-installed/bin/python -I tests/codegen/migration_probe.py
           --corpus /tmp/umf-migration-corpus.json --report /tmp/umf-migration-python.json
-      - run: bun scripts/table-reviewed-changes-corpus.ts /tmp/umf-reviewed-changes-corpus.json
       - name: Installed reviewed-change discovery parity and source-forgery refusals
         run: >-
-          python -I tests/codegen/reviewed_changes_probe.py
-          --corpus /tmp/umf-reviewed-changes-corpus.json
+          /tmp/umf-codegen-installed/bin/python -I tests/codegen/reviewed_changes_probe.py
+          --corpus /tmp/umf-reviewed-changes-corpus.json > /tmp/umf-reviewed-changes-python.json
+      - name: Verify matrix cell and write immutable receipt
+        run: >-
+          /tmp/umf-codegen-installed/bin/python -I tests/codegen/matrix_receipt.py
+          --wheelhouse /tmp/mini-racer-wheelhouse
+          --pins docs/helix/04-build/evidence/praxis-embedder/mini-racer-wheel-pins.json
+          --corpus /tmp/umf-codegen-corpus.json
+          --generator-report /tmp/umf-codegen-report.json
+          --row-scope-report /tmp/umf-row-scope-report.json
+          --deployment-report /tmp/umf-deployment-python.json
+          --migration-report /tmp/umf-migration-python.json
+          --reviewed-report /tmp/umf-reviewed-changes-python.json
+          --expected-os '${{ matrix.os }}'
+          --expected-arch '${{ matrix.architecture }}'
+          --expected-python '${{ matrix.python-version }}'
+          --source-commit '${{ github.sha }}'
+          --report /tmp/umf-codegen-matrix-receipt.json
+      - name: Verify the lock-driven offline mirror and refusal controls
+        run: python tests/codegen/test_package_mirror.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: codegen-${{ matrix.os }}
-          path: /tmp/umf-codegen-report.json
-      - uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: deployment-python-${{ matrix.os }}
+          name: codegen-${{ matrix.os }}-py${{ matrix.python-version }}
           path: |
+            /tmp/umf-codegen-matrix-receipt.json
+            /tmp/umf-codegen-report.json
+            /tmp/umf-row-scope-report.json
             /tmp/umf-deployment-python.json
             /tmp/umf-migration-python.json
+            /tmp/umf-reviewed-changes-python.json
 
 
   native-sessions:
