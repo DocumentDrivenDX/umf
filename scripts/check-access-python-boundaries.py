@@ -82,6 +82,9 @@ def check(root: Path) -> int:
     def edge(name: str, target: str, member: str = "") -> None:
         path = modules[name]
         source_owner = owner(name)
+        if name == 'umf_access.lifecycle.sql_containment' and not (
+                target in {'collections.abc', 'dataclasses', 'hashlib', 'json', 'typing', '__future__'}):
+            fail(path, 'HOST', 'containment admission is pure; parser and I/O belong to explicit adapters')
         if target == "umf_access" or target.startswith("umf_access."):
             if target not in modules:
                 fail(path, "UNRESOLVED", target)
@@ -128,7 +131,9 @@ def check(root: Path) -> int:
                               and target == 'pglast.parser' and member == 'parse_sql_json')
         if package not in permitted and not spark_error and not typing_backport and not psycopg2_cursor and not table_read_compiler and not seed_compiler and not containment_parser:
             fail(path, "DEPENDENCY", f"{target} outside approved imports for {source_owner}")
-        if package in {"importlib", "runpy"} and not (source_owner == "build" and target in {"importlib", "importlib.metadata"}):
+        metadata_pin = (name == 'umf_access.lifecycle.sql_containment_parser'
+                        and target == 'importlib.metadata' and member in {'version', 'PackageNotFoundError'})
+        if package in {"importlib", "runpy"} and not (source_owner == "build" and target in {"importlib", "importlib.metadata"}) and not metadata_pin:
             fail(path, "DYNAMIC", "dynamic loading module")
         if source_owner in {"foundation", "dsl", "runtime", "conformance"} and package in {"os", "socket", "urllib", "http", "ftplib", "subprocess", "pathlib", "io", "shutil"}:
             fail(path, "HOST", f"host I/O module {package} is outside pure SDK boundary")
