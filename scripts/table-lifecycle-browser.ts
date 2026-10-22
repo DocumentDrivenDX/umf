@@ -13,6 +13,7 @@ import {temporalSource} from '../tests/unified/table-temporal-fixture';
 import {snapshotSource} from '../tests/unified/table-snapshot-fixture';
 import {relatedSource} from '../tests/unified/table-related-fixture';
 import {domainSource} from '../tests/unified/table-domain-fixture';
+import {legalDomainAuthoringSource} from '../tests/unified/legal-domain-authoring-fixture';
 import fixture from '../tests/binding/fixtures/table-lifecycle-note.json';
 const built=await Bun.build({entrypoints:['src/index.ts'],target:'browser',format:'esm',minify:true});
 if(!built.success)throw new Error('Table lifecycle browser build failed: '+built.logs.join('\n'));
@@ -25,6 +26,8 @@ temporal.modules[0].extensions['umf.tables'].tables[0].columns.find((c:any)=>c.n
 const temporalExpected={deployment:compileTableDeployment({text:JSON.stringify(temporal),configuration}),client:generatePythonClient({text:JSON.stringify(temporal),package:'temporal_demo'})};
 const domains=domainSource();
 const domainExpected={deployment:compileTableDeployment({text:JSON.stringify(domains),configuration}),client:generatePythonClient({text:JSON.stringify(domains),package:'domain_demo'})};
+const legalDomains=legalDomainAuthoringSource(),legalDomainConfiguration={...configuration,module:'legal_lifecycle',schema:'legal_domain_demo',groupRoles:{billing_admin:'legal_domain_billing'}};
+const legalDomainExpected={deployment:compileTableDeployment({text:JSON.stringify(legalDomains),configuration:legalDomainConfiguration}),client:generatePythonClient({text:JSON.stringify(legalDomains),package:'legal_domain_demo'})};
 const deployment=JSON.stringify(compileTableDeployment({text:JSON.stringify(fixture),configuration}));
 const migration=JSON.stringify(compileTableMigration({id:'001',predecessor:null,previous:null,next:JSON.parse(deployment).bundle}));
 const nextDeployment=compileTableDeployment({text:JSON.stringify(appendedTableSource()),configuration});
@@ -84,7 +87,7 @@ try{
  const page=await browser.newPage(),origin='http://127.0.0.1:'+server.port,externalRequests:string[]=[];
  page.on('request',r=>{if(!r.url().startsWith(origin+'/'))externalRequests.push(r.url());});await page.goto(origin);
  const result=await (page as any).evaluate(async (args:any)=>{
-  const {fixture,expected,configuration,deployment,migration,forwardRequest,forward,operationSource,operationExpected,operationClient,temporal,temporalExpected,domains,domainExpected,evolutions,related,legal,legalConfiguration,legalMigrationExpected,reviewedChangesCases,rowScopeInput,rowScopeContext,rowScopeExpected,g01Request,g01Expected}=args;
+  const {fixture,expected,configuration,deployment,migration,forwardRequest,forward,operationSource,operationExpected,operationClient,temporal,temporalExpected,domains,domainExpected,legalDomains,legalDomainConfiguration,legalDomainExpected,evolutions,related,legal,legalConfiguration,legalMigrationExpected,reviewedChangesCases,rowScopeInput,rowScopeContext,rowScopeExpected,g01Request,g01Expected}=args;
   const path='/umf.js',u=await import(path);let assertions=0;
 
   const check=(value:boolean)=>{assertions++;if(!value)throw new Error('Browser table declaration assertion '+assertions);};
@@ -100,6 +103,8 @@ try{
   check(JSON.stringify(u.generatePythonClient({text:JSON.stringify(temporal),package:'temporal_demo'}))===JSON.stringify(temporalExpected.client));
   check(JSON.stringify(u.compileTableDeployment({text:JSON.stringify(domains),configuration}))===JSON.stringify(domainExpected.deployment));
   check(JSON.stringify(u.generatePythonClient({text:JSON.stringify(domains),package:'domain_demo'}))===JSON.stringify(domainExpected.client));
+  check(JSON.stringify(u.compileTableDeployment({text:JSON.stringify(legalDomains),configuration:legalDomainConfiguration}))===JSON.stringify(legalDomainExpected.deployment));
+  check(JSON.stringify(u.generatePythonClient({text:JSON.stringify(legalDomains),package:'legal_domain_demo'}))===JSON.stringify(legalDomainExpected.client));
   const operations=u.inspectTableLifecycle(operationSource);
   check(JSON.stringify(operations)===operationExpected);check(operations.complete&&!operations.nativeQualified);
   const changedOperation=structuredClone(operationSource) as any;
@@ -169,7 +174,7 @@ try{
    legalPrevious=generated.bundle;legalPredecessor={id:result.plan.id,digest:result.plan.digest};
   }
   return {assertions,metadataParity:true,deploymentParity:true,migrationParity:true,nativeQualificationClaimed:false,nodeGlobalsAbsent:true};
- },{fixture,expected,configuration,deployment,migration,forwardRequest,forward,operationSource,operationExpected,operationClient,temporal,temporalExpected,domains,domainExpected,evolutions,related,legal,legalConfiguration,legalMigrationExpected,reviewedChangesCases,rowScopeInput,rowScopeContext,rowScopeExpected,g01Request,g01Expected});
+ },{fixture,expected,configuration,deployment,migration,forwardRequest,forward,operationSource,operationExpected,operationClient,temporal,temporalExpected,domains,domainExpected,legalDomains,legalDomainConfiguration,legalDomainExpected,evolutions,related,legal,legalConfiguration,legalMigrationExpected,reviewedChangesCases,rowScopeInput,rowScopeContext,rowScopeExpected,g01Request,g01Expected});
  if(externalRequests.length)throw new Error('Table inspection caused an external request');
  const sources=['src/table-authoring/row-scope.ts','src/table-migration/options.ts','src/table-migration/reviewed.ts','src/table-migration/phases.ts','src/table-migration/phases-options.ts','tests/lifecycle/legal-fixture.ts','src/table-deployment/domains.ts','tests/unified/table-domain-fixture.ts','src/extensions/tables/temporal.ts','src/table-deployment/temporal.ts','tests/unified/table-temporal-fixture.ts','src/access/index.ts','src/access/table-client.ts','src/access/table-runtime.ts','src/access/types.ts','src/access/python-runtime.ts','src/index.ts','src/table-migration/index.ts','spec/extensions/tables/migration.schema.json','spec/extensions/tables/migration-0.3.schema.json','scripts/table-lifecycle-browser.ts','tests/unified/table-migration-fixture.ts','tests/binding/fixtures/table-lifecycle-note.json','spec/extensions/tables/schema.json','spec/extensions/tables/operation.schema.json','tests/unified/table-operation-fixture.ts','spec/extensions/tables/package.json','spec/extensions/tables/deployment.schema.json',...['types','context','expressions','columns','policies','seeds','operations','index'].map(n=>'src/extensions/tables/'+n+'.ts'),...['types','configuration','sql','policies','ddl','index'].map(n=>'src/table-deployment/'+n+'.ts')];
  const sourceHashes=Object.fromEntries(await Promise.all(sources.map(async p=>[p,createHash('sha256').update(new Uint8Array(await Bun.file(p).arrayBuffer())).digest('hex')])));

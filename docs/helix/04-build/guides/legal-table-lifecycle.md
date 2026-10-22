@@ -101,6 +101,31 @@ evidence does not qualify managed Praxis/Lakebase or another storage backend.
 The fixed administrative metadata view is separate from author-supplied stored
 SQL. Direct SQL outside the lifecycle clients remains under host custody.
 
+## Canonical domain authoring
+
+Use the existing core forms for documented table domains; no table-specific
+shorthand is needed. Put human-readable text in the record or Field `description`.
+Deployment emits escaped `COMMENT ON TABLE` and `COMMENT ON COLUMN` statements,
+and catalog verification compares the resulting comments with the authored
+source. Removing a previously present description in a successor clears the
+native comment.
+
+For a finite string domain, use a nonempty `allowedValues` array of typed scalar
+literals on the Field. For a bounded numeric value, use typed `facets.range`
+`min`/`max` literals and the explicit `minInclusive`/`maxInclusive` flags where
+the default inclusive bounds are not intended. These declarations become
+deterministic PostgreSQL `CHECK` constraints and the same generated Python model
+validates the corresponding enum/range. A nullable Field remains nullable:
+ordinary SQL `NULL` satisfies these membership and range checks, while present
+values outside the declared set or interval fail. Keep type precision and scale
+consistent with the native numeric declaration. Unsupported or unknown domain
+facets should produce a located refusal rather than be silently ignored.
+
+The synthetic `legalDomainAuthoringSource()` fixture layers these declarations
+on a clone of the legal source. It deliberately exercises quoted text, a
+backslash and a newline in comments, a nullable enum, and an exclusive numeric
+upper bound without changing bootstrap or history fixtures.
+
 ## Validation and remaining limits
 
 The migration implementation plan tracks residuals MIG-G01 through MIG-G11 in
