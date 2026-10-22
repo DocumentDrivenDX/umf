@@ -102,9 +102,18 @@ def _history_rows(connection: Any, schema: str) -> list[dict[str, Any]]:
 def _verify_installed(connection: Any, entry: dict[str, Any], person_roles: tuple[str, ...],
                       statement_timeout_ms: int, lock_timeout_ms: int) -> None:
     source = entry['plan']['next']
+    approval_profile = entry['plan'].get('approvalProfile')
+    selected_profile = None
+    if entry['plan'].get('version') == 'umf.table-migration/0.3':
+        from .approval import APPROVAL_PROFILE, _verify_approval_relation
+
+        if approval_profile != APPROVAL_PROFILE or not _verify_approval_relation(connection, source):
+            raise CatalogError('approval-catalog-mismatch')
+        selected_profile = APPROVAL_PROFILE
     verify_native_catalog(connection,source,statement_timeout_ms=statement_timeout_ms,lock_timeout_ms=lock_timeout_ms)
     verify_native_privileges(connection,source,person_roles=person_roles,
-                             statement_timeout_ms=statement_timeout_ms,lock_timeout_ms=lock_timeout_ms)
+                             statement_timeout_ms=statement_timeout_ms,lock_timeout_ms=lock_timeout_ms,
+                             _approval_profile=selected_profile)
     if _capture_witness(connection,source) != entry['witness']:
         raise CatalogError('installed-generation-mismatch')
 
@@ -196,8 +205,16 @@ FROM pg_catalog.pg_namespace n WHERE n.nspname=%s""",(schema,))
             _create_head_view(connection,source)
             _create_outcomes(connection,source)
         verify_native_catalog(connection,source,statement_timeout_ms=statement_timeout_ms,lock_timeout_ms=lock_timeout_ms)
+        approval_profile = source_plan.get('approvalProfile')
+        if approval_profile is not None:
+            from .approval import APPROVAL_PROFILE
+
+            if (source_plan.get('version') != 'umf.table-migration/0.3'
+                    or approval_profile != APPROVAL_PROFILE):
+                raise CatalogError('approval-catalog-mismatch')
         verify_native_privileges(connection,source,person_roles=person_roles,
-                                 statement_timeout_ms=statement_timeout_ms,lock_timeout_ms=lock_timeout_ms)
+                                 statement_timeout_ms=statement_timeout_ms,lock_timeout_ms=lock_timeout_ms,
+                                 _approval_profile=approval_profile)
         # Phased plans include their typed seed execution as an ordered phase
         # with a durable prefix receipt. Reapplying seeds during publication
         # would repeat committed data effects after a recovery boundary.

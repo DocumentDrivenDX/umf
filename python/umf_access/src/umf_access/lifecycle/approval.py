@@ -56,7 +56,13 @@ _APPROVAL_STATE = """SELECT c.relkind,c.relpersistence,r.rolname,c.relrowsecurit
 c.relispartition,c.relhassubclass,c.relhasrules,c.relreplident,
 EXISTS(SELECT FROM pg_catalog.pg_trigger t WHERE t.tgrelid=c.oid AND NOT t.tgisinternal),
 EXISTS(SELECT FROM pg_catalog.pg_inherits i WHERE i.inhrelid=c.oid),
-EXISTS(SELECT FROM pg_catalog.pg_policy p WHERE p.polrelid=c.oid),r.oid,c.oid,c.relam
+EXISTS(SELECT FROM pg_catalog.pg_policy p WHERE p.polrelid=c.oid),r.oid,c.oid,c.relam,
+EXISTS(SELECT FROM pg_catalog.pg_depend d WHERE d.refclassid='pg_catalog.pg_class'::pg_catalog.regclass
+AND d.refobjid=c.oid AND NOT (d.classid='pg_catalog.pg_class'::pg_catalog.regclass
+AND EXISTS(SELECT FROM pg_catalog.pg_class dep WHERE dep.oid=d.objid AND dep.relkind='i'
+AND dep.relnamespace=c.relnamespace)) AND NOT (d.classid='pg_catalog.pg_constraint'::pg_catalog.regclass
+AND EXISTS(SELECT FROM pg_catalog.pg_constraint k WHERE k.oid=d.objid AND k.conrelid=c.oid))
+AND d.deptype NOT IN ('i','a'))
 FROM pg_catalog.pg_class c JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace
 JOIN pg_catalog.pg_roles r ON r.oid=c.relowner WHERE n.nspname=%s AND c.relname=%s"""
 
@@ -214,6 +220,8 @@ def _verify_approval_relation(connection: Any, source: dict[str, Any], *,
     if tuple(state[:12]) != ("r", "p", owner, False, False, False, False, False,
                             "d", False, False, False):
         raise CatalogError("approval-catalog-mismatch")
+    if state[15:] != (False,):
+        raise CatalogError("approval-catalog-mismatch")
     owner_id, relation_id = state[12:14]
     heap_id = _one(connection, "SELECT oid FROM pg_catalog.pg_am WHERE amname='heap'")[0]
     if state[14] != heap_id:
@@ -242,6 +250,59 @@ LATERAL pg_catalog.aclexplode(a.attacl) x WHERE a.attrelid=%s""", (relation_id,)
         raise CatalogError("approval-catalog-mismatch")
     _execute(connection, "DROP TABLE " + _q(schema) + "." + _q(temporary))
     return True
+
+
+def _approval_shape(connection: Any, source: dict[str, Any]) -> dict[str, Any]:
+    """Return read-only native shape after the trusted scratch-schema proof."""
+    from .catalog import _COLUMNS, _CONSTRAINTS, _INDEXES
+
+    schema, relation = source["configuration"]["schema"], APPROVAL_PROFILE["relation"]
+    if not _verify_approval_relation(connection, source):
+        raise CatalogError("approval-catalog-mismatch")
+    state = _one(connection, _APPROVAL_STATE, (schema, relation))
+    if state is None:
+        raise CatalogError("approval-catalog-mismatch")
+    relation_oid = state[13]
+    table_acl = _all(connection, """SELECT x.grantor,x.grantee,x.privilege_type,x.is_grantable
+FROM pg_catalog.pg_class c,LATERAL pg_catalog.aclexplode(COALESCE(c.relacl,pg_catalog.acldefault('r',c.relowner))) x
+WHERE c.oid=%s ORDER BY 1,2,3,4""", (relation_oid,))
+    column_acl = _all(connection, """SELECT a.attname,x.grantor,x.grantee,x.privilege_type,x.is_grantable
+FROM pg_catalog.pg_attribute a,LATERAL pg_catalog.aclexplode(a.attacl) x
+WHERE a.attrelid=%s ORDER BY 1,2,3,4,5""", (relation_oid,))
+    return {
+        "state": list(state),
+        "columns": _all(connection, _COLUMNS, (schema, relation)),
+        "constraints": _all(connection, _CONSTRAINTS, (schema, relation)),
+        "indexes": _all(connection, _INDEXES, (schema, relation)),
+        "tableAcl": table_acl,
+        "columnAcl": column_acl,
+    }
+
+
+def _approval_shape_steps(schema: str):
+    """Read-only pg_catalog observer for ordinary generated head clients."""
+    from .catalog import _COLUMNS, _CONSTRAINTS, _INDEXES
+    from .probe import _Query
+
+    relation = APPROVAL_PROFILE["relation"]
+    state = yield _Query("one", _APPROVAL_STATE, (schema, relation))
+    if state is None:
+        raise CatalogError("approval-catalog-mismatch")
+    relation_oid = state[13]
+    table_acl = yield _Query("all", """SELECT x.grantor,x.grantee,x.privilege_type,x.is_grantable
+FROM pg_catalog.pg_class c,LATERAL pg_catalog.aclexplode(COALESCE(c.relacl,pg_catalog.acldefault('r',c.relowner))) x
+WHERE c.oid=%s ORDER BY 1,2,3,4""", (relation_oid,))
+    column_acl = yield _Query("all", """SELECT a.attname,x.grantor,x.grantee,x.privilege_type,x.is_grantable
+FROM pg_catalog.pg_attribute a,LATERAL pg_catalog.aclexplode(a.attacl) x
+WHERE a.attrelid=%s ORDER BY 1,2,3,4,5""", (relation_oid,))
+    return {
+        "state": list(state),
+        "columns": (yield _Query("all", _COLUMNS, (schema, relation))),
+        "constraints": (yield _Query("all", _CONSTRAINTS, (schema, relation))),
+        "indexes": (yield _Query("all", _INDEXES, (schema, relation))),
+        "tableAcl": table_acl,
+        "columnAcl": column_acl,
+    }
 
 
 def _record_approval(connection: Any, source: dict[str, Any], binding: ApprovalBinding, *,

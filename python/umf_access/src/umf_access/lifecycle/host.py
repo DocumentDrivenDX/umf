@@ -273,7 +273,8 @@ class PsycopgMigrationHost:
                         statement_timeout_ms=self._statement_timeout_ms,
                         lock_timeout_ms=self._lock_timeout_ms):
                     _verify_predecessor_metadata(self._connection, plan,
-                                                 self._person_roles)
+                                                 self._person_roles,
+                                                 expected_head=request.expected_head)
                     _verify_approval_relation(self._connection, plan["next"],
                                               create=True)
                     receipt = _record_approval(
@@ -331,22 +332,38 @@ class _PsycopgLease:
             history = _history_rows(self.connection, self.schema)
             if not history:
                 raise CatalogError("ledger-history-missing")
+            matches = [entry for entry in history
+                       if entry["plan"]["id"] == request.plan["id"]]
+            if matches:
+                match = matches[0]
+                prior_head = history[match["position"] - 2]["entryDigest"] if match["position"] > 1 else None
+                if (len(matches) != 1 or match["plan"]["digest"] != request.plan["digest"]
+                        or match.get("fileDigest") != request.file_digest
+                        or prior_head != request.expected_head
+                        or history[-1]["plan"]["toBundleDigest"] != self.bundle["bundleDigest"]):
+                    raise CatalogError("ledger-digest-conflict")
+                _verify_installed(self.connection, history[-1], self.host._person_roles,
+                                  self.host._statement_timeout_ms,
+                                  self.host._lock_timeout_ms)
+                return
+
             latest = history[-1]
-            if ((latest["entryDigest"] != request.expected_head
+            if (latest["entryDigest"] != request.expected_head
                     or request.plan["predecessor"] != {
                         "id": latest["plan"]["id"],
                         "digest": latest["plan"]["digest"]}
-                    or latest["plan"]["toBundleDigest"] != request.plan["fromBundleDigest"])
-                    and not any(entry["plan"]["digest"] == request.plan["digest"]
-                                and entry.get("fileDigest") == request.file_digest
-                                for entry in history)):
-                # Exact replay is handled from immutable history separately.
+                    or latest["plan"]["toBundleDigest"] != request.plan["fromBundleDigest"]
+                    or request.plan["previous"] != latest["plan"]["next"]):
                 raise CatalogError("ledger-head-mismatch")
-            _verify_installed(self.connection, latest, self.host._person_roles,
-                              self.host._statement_timeout_ms,
-                              self.host._lock_timeout_ms)
-            _verify_predecessor_metadata(self.connection, request.plan,
-                                         self.host._person_roles)
+            if request.plan.get("version") == "umf.table-migration/0.3":
+                _verify_transition_predecessor(self, request, latest, history)
+            else:
+                _verify_installed(self.connection, latest, self.host._person_roles,
+                                  self.host._statement_timeout_ms,
+                                  self.host._lock_timeout_ms)
+                _verify_predecessor_metadata(self.connection, request.plan,
+                                             self.host._person_roles,
+                                             expected_head=request.expected_head)
 
     def read_progress(self, binding: ApprovalBinding) -> PhaseReceipt | None:
         from .catalog import _installation
@@ -600,6 +617,7 @@ class _PsycopgLease:
     def observe_final_publication(self, request: MigrationRequest,
                                   approval: ApprovalReceipt) -> dict[str, Any] | None:
         from .catalog import _installation
+        from .head import _issue_reference
         from .ledger import _history_rows, _verify_installed
         from .ledger_schema import _verify_history_schema
 
@@ -631,6 +649,8 @@ class _PsycopgLease:
                     "headDigest": history[-1]["entryDigest"],
                     "generation": len(history),
                     "installedBundleDigest": self.bundle["bundleDigest"],
+                    "installationReference": _issue_reference(
+                        self.connection, self.bundle, history[-1]),
                     "commitResponsibility": "adapter"}
 
     def _verify_bound_approval(self, binding: ApprovalBinding | None = None) -> None:
@@ -976,13 +996,31 @@ def _receipt_row(plan: dict[str, Any], expected_head: str | None,
 
 
 def _verify_predecessor_metadata(connection: Any, plan: dict[str, Any],
-                                 person_roles: tuple[str, ...]) -> None:
+                                 person_roles: tuple[str, ...], *,
+                                 expected_head: str | None = None) -> None:
+    from .approval import APPROVAL_PROFILE, _verify_approval_relation
     from .catalog import _all, verify_native_catalog
     from .head_view import HEAD
+    from .ledger import _history_rows
     from .ledger_schema import HISTORY, _verify_history_schema
     from .outcome_schema import OUTCOMES, _verify_outcomes
     from .phase_fence import _verify_phase_head
     from .privileges import verify_native_privileges
+
+    selected_profile = None
+    if plan.get("approvalProfile") is not None:
+        if (plan.get("version") != "umf.table-migration/0.3"
+                or plan.get("approvalProfile") != APPROVAL_PROFILE
+                or plan.get("previous") is None
+                or type(expected_head) is not str):
+            raise CatalogError("approval-catalog-mismatch")
+        history = _history_rows(connection, plan["previous"]["configuration"]["schema"])
+        if (not history or history[-1]["entryDigest"] != expected_head
+                or plan["previous"] != history[-1]["plan"]["next"]
+                or plan["predecessor"] != {"id":history[-1]["plan"]["id"],
+                                            "digest":history[-1]["plan"]["digest"]}):
+            raise CatalogError("ledger-head-mismatch")
+        selected_profile = APPROVAL_PROFILE
 
     source = plan["previous"] or plan["next"]
     schema = source["configuration"]["schema"]
@@ -990,7 +1028,11 @@ def _verify_predecessor_metadata(connection: Any, plan: dict[str, Any],
             or not _verify_outcomes(connection, source)):
         raise CatalogError("ledger-history-missing")
     verify_native_catalog(connection, source)
-    verify_native_privileges(connection, source, person_roles=person_roles)
+    approval_present = False
+    if selected_profile is not None:
+        approval_present = _verify_approval_relation(connection, source)
+    verify_native_privileges(connection, source, person_roles=person_roles,
+                             _approval_profile=selected_profile)
     _verify_phase_head(connection, source)
     rows = _all(connection, "SELECT c.relname,c.relkind FROM pg_catalog.pg_class c "
         "JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace "
@@ -999,16 +1041,72 @@ def _verify_predecessor_metadata(connection: Any, plan: dict[str, Any],
     allowed = {table["name"]: "r" for table in source["expectedCatalog"]["tables"]}
     allowed.update({HISTORY: "r", OUTCOMES: "r", HEAD: "v"})
     from .progress import PROGRESS, _verify_progress_schema
-    allowed.update({"umf_lifecycle_approvals": "r"})
+    if approval_present:
+        allowed[APPROVAL_PROFILE["relation"]] = "r"
     if _verify_progress_schema(connection, plan["next"]):
         allowed[PROGRESS] = "r"
     if any((name not in allowed)
            or (name in allowed and kind != allowed[name]) for name, kind in rows):
         raise CatalogError("progress-inventory-mismatch")
-    if "umf_lifecycle_approvals" in {name for name, _ in rows}:
-        from .approval import _verify_approval_relation
+    if (APPROVAL_PROFILE["relation"] in {name for name, _ in rows}
+            and not approval_present):
+        raise CatalogError("progress-inventory-mismatch")
 
-        _verify_approval_relation(connection, plan["next"])
+
+def _verify_transition_predecessor(lease: _PsycopgLease,
+                                   request: MigrationRequest,
+                                   latest: dict[str, Any],
+                                   history: list[dict[str, Any]]) -> None:
+    """Admit only the exact 0.3 predecessor transition or its receipt prefix."""
+    from .approval import APPROVAL_PROFILE
+    from .catalog import _installation
+    from .mixed import (
+        _lock_phase_tables,
+        _verify_mixed_prefix,
+        _verify_phase_execution_boundary,
+    )
+    from .progress import (
+        _assert_progress_binding,
+        _progress_rows,
+        _verify_progress_schema,
+    )
+
+    plan = request.plan
+    if (plan.get("version") != "umf.table-migration/0.3"
+            or plan.get("approvalProfile") != APPROVAL_PROFILE
+            or plan.get("previous") != latest["plan"]["next"]
+            or latest["entryDigest"] != request.expected_head
+            or plan["predecessor"] != {"id":latest["plan"]["id"],
+                                       "digest":latest["plan"]["digest"]}):
+        raise CatalogError("approval-catalog-mismatch")
+    source = plan["next"]
+    schema = source["configuration"]["schema"]
+    with _installation(lease.connection, source,
+            statement_timeout_ms=lease.host._statement_timeout_ms,
+            lock_timeout_ms=lease.host._lock_timeout_ms):
+        progress_present = _verify_progress_schema(lease.connection, source)
+        if progress_present:
+            rows = _progress_rows(lease.connection, schema)
+            if len(rows) != 1 or lease.binding is None:
+                raise CatalogError("progress-state-mismatch")
+            row = rows[0]
+            _assert_progress_binding(row, migration_id=plan["id"],
+                plan_digest=plan["digest"], expected_head=request.expected_head,
+                file_digest=request.file_digest)
+            receipt = _phase_receipt(row)
+            receipt.verify(plan["phases"], plan)
+            _lock_phase_tables(lease.connection, plan)
+            _verify_phase_execution_boundary(lease.connection, plan,
+                                             lease.host._person_roles)
+            _verify_mixed_prefix(lease.connection, plan, row)
+            return
+
+        _verify_predecessor_metadata(lease.connection, plan,
+            lease.host._person_roles, expected_head=request.expected_head)
+        from .witness import _capture_witness
+
+        if _capture_witness(lease.connection, latest["plan"]["next"]) != latest["witness"]:
+            raise CatalogError("installed-generation-mismatch")
 
 
 def _verify_approval_available(connection: Any, bundle: dict[str, Any]) -> None:
