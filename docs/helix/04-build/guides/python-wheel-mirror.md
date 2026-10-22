@@ -33,6 +33,16 @@ license files, and overwrite. This command records a candidate inventory; it doe
 not make it approved. The builder refuses an unresolved template or a wheelhouse
 that differs by even one file or hash.
 
+The `python-codegen` CI matrix performs acquisition per exact runner cell.
+`tests/codegen/acquire_offline_cohort.py` builds `umf-access` and `umf-codegen`
+from the checked-out commit, verifies the immutable UMF core and Weft release
+wheels, acquires the pinned binary-only PyPI closure, compares each PyPI wheel
+with that release's JSON SHA-256, and captures an 18-wheel lock for the cell.
+The lock, generated template, mirror manifest and installed receipt are uploaded
+together. The receipt's actual OS identity is authoritative; a machine with a
+different OS release cannot stand in for an intended CI cell. Review all four
+receipts before recording a four-cell support claim.
+
 Build a fresh static mirror only from the reviewed lock:
 
 ```sh

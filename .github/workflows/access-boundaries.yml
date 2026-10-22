@@ -145,18 +145,30 @@ jobs:
           - os: ubuntu-24.04
             architecture: x86_64
             mini-racer-platform: linux-x86_64-glibc-2.27+
+            weft-wheel-filename: weft_sql-0.4.49-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+            weft-wheel-url: https://github.com/DocumentDrivenDX/weft/releases/download/v0.4.49/weft_sql-0.4.49-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+            weft-wheel-sha256: 8ca1625249c1d3bed20864dfd71481d8b956b3901ffdc619fc3ec4a1a473be9c
             python-version: '3.11'
           - os: ubuntu-24.04
             architecture: x86_64
             mini-racer-platform: linux-x86_64-glibc-2.27+
+            weft-wheel-filename: weft_sql-0.4.49-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+            weft-wheel-url: https://github.com/DocumentDrivenDX/weft/releases/download/v0.4.49/weft_sql-0.4.49-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+            weft-wheel-sha256: 8ca1625249c1d3bed20864dfd71481d8b956b3901ffdc619fc3ec4a1a473be9c
             python-version: '3.14'
           - os: macos-14
             architecture: arm64
             mini-racer-platform: macos-11+-arm64
+            weft-wheel-filename: weft_sql-0.4.49-cp39-abi3-macosx_11_0_arm64.whl
+            weft-wheel-url: https://github.com/DocumentDrivenDX/weft/releases/download/v0.4.49/weft_sql-0.4.49-cp39-abi3-macosx_11_0_arm64.whl
+            weft-wheel-sha256: 695e12867dfcffedb0e4bde7fa571835ebd43fd1c06b0d775b1abecb45ffa117
             python-version: '3.11'
           - os: macos-14
             architecture: arm64
             mini-racer-platform: macos-11+-arm64
+            weft-wheel-filename: weft_sql-0.4.49-cp39-abi3-macosx_11_0_arm64.whl
+            weft-wheel-url: https://github.com/DocumentDrivenDX/weft/releases/download/v0.4.49/weft_sql-0.4.49-cp39-abi3-macosx_11_0_arm64.whl
+            weft-wheel-sha256: 695e12867dfcffedb0e4bde7fa571835ebd43fd1c06b0d775b1abecb45ffa117
             python-version: '3.14'
     steps:
       - uses: actions/checkout@v4
@@ -236,6 +248,26 @@ jobs:
           --report /tmp/umf-codegen-matrix-receipt.json
       - name: Verify the lock-driven offline mirror and refusal controls
         run: python tests/codegen/test_package_mirror.py
+      - name: Acquire and freeze the exact 18-wheel installed cohort for this cell
+        run: >-
+          python tests/codegen/acquire_offline_cohort.py
+          --output-dir /tmp/umf-full-cohort
+          --source-commit '${{ github.sha }}'
+          --expected-os '${{ matrix.os }}'
+          --expected-architecture '${{ matrix.architecture }}'
+          --expected-python '${{ matrix.python-version }}'
+          --weft-wheel-url '${{ matrix.weft-wheel-url }}'
+          --weft-wheel-filename '${{ matrix.weft-wheel-filename }}'
+          --weft-wheel-sha256 '${{ matrix.weft-wheel-sha256 }}'
+          --mini-racer-wheel /tmp/mini-racer-wheelhouse/*.whl
+      - name: Install and exercise the complete locked mirror with OS network denial
+        run: >-
+          python -I tests/codegen/offline_mirror_probe.py
+          --wheelhouse /tmp/umf-full-cohort/wheelhouse
+          --lock /tmp/umf-full-cohort/cohort.lock.json
+          --mirror /tmp/umf-full-cohort/mirror
+          --generator-corpus /tmp/umf-codegen-corpus.json
+          --report /tmp/umf-full-cohort/offline-mirror-receipt.json
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -247,6 +279,10 @@ jobs:
             /tmp/umf-deployment-python.json
             /tmp/umf-migration-python.json
             /tmp/umf-reviewed-changes-python.json
+            /tmp/umf-full-cohort/cohort.lock.json
+            /tmp/umf-full-cohort/cohort-template.json
+            /tmp/umf-full-cohort/mirror/manifest.json
+            /tmp/umf-full-cohort/offline-mirror-receipt.json
 
 
   native-sessions:

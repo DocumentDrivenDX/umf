@@ -11,6 +11,7 @@ import platform
 import subprocess
 import tempfile
 import venv
+import shutil
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -38,6 +39,9 @@ try:
 except RuntimeError as error:
     raise SystemExit(str(error)) from None
 manifest = MIRROR.build_mirror(args.lock, args.wheelhouse, args.mirror)
+expected_versions = {item['distribution']: item['version'] for item in lock['packages']}
+if len(expected_versions) != 18 or manifest['wheelCount'] < 18:
+    raise SystemExit(f'Expected all 18 locked packages and at least one wheel each; got {len(expected_versions)}/{manifest["wheelCount"]}')
 
 with tempfile.TemporaryDirectory(prefix='umf-offline-mirror-') as directory:
     # macOS commonly exposes TMPDIR through a symlinked /var/folders alias;
@@ -60,6 +64,43 @@ with tempfile.TemporaryDirectory(prefix='umf-offline-mirror-') as directory:
                            check=False, text=True, capture_output=True)
     if check.returncode:
         raise SystemExit('Installed dependency closure is inconsistent:\n' + check.stdout + check.stderr)
+
+    # A complete install is not enough: prove that the mirror itself refuses
+    # missing and altered bytes with the same network-denial boundary active.
+    missing_mirror = work / 'missing-mirror'
+    shutil.copytree(args.mirror, missing_mirror)
+    missing_file = next((missing_mirror / 'files').glob('*.whl'))
+    missing_file.unlink()
+    missing_env = work / 'missing-venv'
+    venv.EnvBuilder(with_pip=True).create(missing_env)
+    missing_python = missing_env / ('Scripts/python.exe' if os.name == 'nt' else 'bin/python')
+    missing_install = subprocess.run(
+        network_prefix + [str(missing_python), '-I', '-m', 'pip', '--isolated', 'install',
+         '--disable-pip-version-check', '--no-cache-dir', '--only-binary=:all:', '--require-hashes',
+         '--index-url', (missing_mirror / 'simple').as_uri(), '-r', str(missing_mirror / 'requirements.lock')],
+        check=False, text=True, capture_output=True,
+    )
+    missing_diagnostic = (missing_install.stdout + missing_install.stderr).lower()
+    if missing_install.returncode == 0 or not any(token in missing_diagnostic for token in ('not found', 'no matching distribution', '404', 'no such file')):
+        raise SystemExit('Removing a required wheel did not produce a missing-artifact refusal under network denial')
+
+    tampered_mirror = work / 'tampered-mirror'
+    shutil.copytree(args.mirror, tampered_mirror)
+    tampered_file = next((tampered_mirror / 'files').glob('*.whl'))
+    with tampered_file.open('ab') as stream:
+        stream.write(b'UMF-OFFLINE-MIRROR-TAMPER')
+    tampered_env = work / 'tampered-venv'
+    venv.EnvBuilder(with_pip=True).create(tampered_env)
+    tampered_python = tampered_env / ('Scripts/python.exe' if os.name == 'nt' else 'bin/python')
+    tampered_install = subprocess.run(
+        network_prefix + [str(tampered_python), '-I', '-m', 'pip', '--isolated', 'install',
+         '--disable-pip-version-check', '--no-cache-dir', '--only-binary=:all:', '--require-hashes',
+         '--index-url', (tampered_mirror / 'simple').as_uri(), '-r', str(tampered_mirror / 'requirements.lock')],
+        check=False, text=True, capture_output=True,
+    )
+    tampered_diagnostic = (tampered_install.stdout + tampered_install.stderr).lower()
+    if tampered_install.returncode == 0 or 'hash' not in tampered_diagnostic:
+        raise SystemExit('Altering a required wheel did not produce a hash refusal under network denial')
 
     corpus = json.loads(args.generator_corpus.read_text(encoding='utf-8'))
     if not corpus:
@@ -129,9 +170,13 @@ with tempfile.TemporaryDirectory(prefix='umf-offline-mirror-') as directory:
 
     versions = subprocess.run(
         network_prefix + [str(python), '-I', '-c',
-         "import importlib.metadata,json; print(json.dumps({d:importlib.metadata.version(d) for d in ('umf-access','umf-codegen','umf-core','weft-sql','mini-racer')}))"],
+         'import importlib.metadata,json,sys; print(json.dumps({d:importlib.metadata.version(d) for d in json.loads(sys.argv[1])}))',
+         json.dumps(expected_versions)],
         check=True, text=True, capture_output=True,
     )
+    observed_versions = json.loads(versions.stdout)
+    if observed_versions != expected_versions:
+        raise SystemExit('Installed full-stack distribution versions differ from the 18-package lock')
     receipt = {
         'profile': 'umf-offline-mirror-installed/1',
         'cell': {'os': cell['os'], 'architecture': cell['architecture'], 'libc': cell['libc'],
@@ -143,11 +188,13 @@ with tempfile.TemporaryDirectory(prefix='umf-offline-mirror-') as directory:
         'install': {'indexScheme': 'file', 'pipIsolated': True, 'cache': 'disabled',
                     'sourceBuilds': 'forbidden', 'requireHashes': True, 'dependencyCheck': 'passed',
                     'networkIsolation': isolation_name},
-        'installedVersions': json.loads(versions.stdout),
+        'installedVersions': observed_versions,
         'probes': {
             'umf-codegen-generate': 'passed', 'umf-codegen-check': 'passed',
             'umf-table-check': 'passed', 'umf-table-new': 'passed',
             'umf-table-apply': 'approval-required before connection',
+            'missing-wheel': 'refused under OS network denial',
+            'tampered-wheel': 'refused under OS network denial',
         },
         'status': 'passed',
     }
