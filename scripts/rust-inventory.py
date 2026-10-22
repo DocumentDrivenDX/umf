@@ -8,10 +8,12 @@ scripts/rust-inventory.py --check. Never regenerate using an older parser.
 from __future__ import annotations
 
 import ast
+import fnmatch
 import hashlib
 import json
 import os
 import re
+import shlex
 import subprocess
 import sys
 if sys.version_info >= (3, 11):
@@ -403,6 +405,84 @@ def rust_build_inputs() -> list[dict[str, object]]:
             for path in tracked_or_existing(inputs)]
 
 
+def python_console_entrypoint_roots(pyprojects: list[Path], source_paths: list[Path]) -> dict[str, set[str]]:
+    """Resolve declared Python console scripts to their authored module files."""
+    authored = {path.resolve() for path in source_paths}
+    roots: dict[str, set[str]] = {}
+    for manifest in pyprojects:
+        data = tomllib.loads(text(manifest))
+        scripts = data.get("project", {}).get("scripts", {})
+        if not isinstance(scripts, dict):
+            continue
+        source_root = manifest.parent / "src"
+        for command, target in scripts.items():
+            if not isinstance(command, str) or not isinstance(target, str):
+                continue
+            # Only map standard module:callable entry points. Dynamic import
+            # syntax remains visible in the manifest but is not guessed here.
+            module = target.partition(":")[0]
+            if not re.fullmatch(r"[A-Za-z_]\w*(?:\.[A-Za-z_]\w*)*", module):
+                continue
+            module_path = source_root.joinpath(*module.split(".")).with_suffix(".py").resolve()
+            if module_path in authored:
+                roots.setdefault(rel(module_path), set()).add(
+                    f"project.scripts:{command} ({rel(manifest)})")
+    return roots
+
+
+def workflow_unittest_discovery_roots(activation_files: list[Path], source_paths: list[Path]) -> dict[str, set[str]]:
+    """Resolve bounded `python -m unittest discover -s DIR -p PATTERN` roots."""
+    authored = [path.resolve() for path in source_paths]
+    roots: dict[str, set[str]] = {}
+    command_pattern = re.compile(
+        r"(?m)(?:^|[\s;&|])python(?:3(?:\.\d+)?)?\s+(?:-I\s+)?-m\s+unittest\s+discover\b([^\n;&|]*)")
+    for workflow in activation_files:
+        if ".github/workflows" not in workflow.as_posix():
+            continue
+        source = text(workflow)
+        for match in command_pattern.finditer(source):
+            try:
+                arguments = shlex.split(match.group(1))
+            except ValueError:
+                continue
+            start = "."
+            pattern = "test*.py"
+            index = 0
+            while index < len(arguments):
+                token = arguments[index]
+                if token in {"-s", "--start-directory", "-p", "--pattern"}:
+                    if index + 1 >= len(arguments):
+                        break
+                    value = arguments[index + 1]
+                    if token in {"-s", "--start-directory"}:
+                        start = value
+                    else:
+                        pattern = value
+                    index += 2
+                    continue
+                if token.startswith("--start-directory="):
+                    start = token.partition("=")[2]
+                elif token.startswith("--pattern="):
+                    pattern = token.partition("=")[2]
+                elif token.startswith("-s") and len(token) > 2:
+                    start = token[2:]
+                elif token.startswith("-p") and len(token) > 2:
+                    pattern = token[2:]
+                index += 1
+            start_path = (ROOT / start).resolve()
+            if ROOT not in start_path.parents and start_path != ROOT:
+                continue
+            evidence = f"workflow:{rel(workflow)} unittest discover -s {start} -p {pattern}"
+            for candidate in authored:
+                try:
+                    candidate.relative_to(start_path)
+                except ValueError:
+                    continue
+                if fnmatch.fnmatchcase(candidate.name, pattern):
+                    roots.setdefault(rel(candidate), set()).add(evidence)
+    return roots
+
+
 def rust_module_record(path: Path) -> dict[str, object]:
     source = text(path)
     p = rel(path)
@@ -571,6 +651,14 @@ def main() -> int:
     activation_files = [ROOT / "package.json", *sorted((ROOT / ".github/workflows").glob("*.yml")), ROOT / ".githooks/pre-commit"]
     activation_text = "\n".join(text(p) for p in activation_files if p.exists())
     roots = set()
+    root_activation_evidence: dict[str, set[str]] = {}
+    python_manifests = sorted((ROOT / "python").glob("*/pyproject.toml"))
+    python_entrypoints = python_console_entrypoint_roots(python_manifests, all_script_paths)
+    unittest_discovery = workflow_unittest_discovery_roots(activation_files, all_script_paths)
+    for activated in (python_entrypoints, unittest_discovery):
+        for path, evidence in activated.items():
+            roots.add(path)
+            root_activation_evidence.setdefault(path, set()).update(evidence)
     # Capture executable first-party paths mentioned by package scripts, workflow commands and hooks.
     for match in re.findall(r"(?:scripts|tests|tools|python|bindings|docs/helix/05-deploy/schema-browser)/[A-Za-z0-9_./-]+\.(?:ts|py|js|mjs|cjs)", activation_text):
         candidate = match.removeprefix("./")
@@ -618,7 +706,7 @@ def main() -> int:
         active = p in reachable
         disposition, obligation = script_disposition(p, active)
         scripts.append({"path": p, "language": path.suffix.lstrip("."), "sha256": sha(path.read_bytes()), "bytes": path.stat().st_size,
-                        "active": active, "activationEvidence": sorted(set(active_matches + internal_matches + (["transitive-import-closure"] if active and not active_matches else []))),
+                        "active": active, "activationEvidence": sorted(set(active_matches + internal_matches + list(root_activation_evidence.get(p, set())) + (["transitive-import-closure"] if active and not active_matches and p not in root_activation_evidence else []))),
                         "algorithmSymbols": algorithm_names(path, source),
                         "disposition": disposition, "migrationObligation": obligation})
     pyprojects = []
