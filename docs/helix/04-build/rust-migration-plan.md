@@ -52,7 +52,7 @@ implementation-plan evidence remains scoped to the artifacts it actually tested.
 ### R2 current status
 
 R2 implementation and local installed-artifact qualification are complete at
-`7c2842dd68e66c06c5e4b22e8857e465b8efd561`. The clean source closure passes the
+`475b5d3d6b722ab73a17f77410eddb91ce45e056`. The clean source closure passes the
 full production gate: both original and offline sdist-rebuilt Python wheels,
 packed Node/Bun, empty-PATH Rust CLI, and actual Chromium default/feature WASM.
 All comparisons report zero mismatches. Native workspace: 214 tests; compiler:

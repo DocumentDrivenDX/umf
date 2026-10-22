@@ -167,12 +167,12 @@
   "capture": {
     "inventoryFormat": "0.2",
     "inventoryScript": "scripts/rust-inventory.py",
-    "sourceCohortSha256": "7d6e061644ccb00077daee3a3b03e2157005de50fd91657a9971eea15d6d4dd1",
+    "sourceCohortSha256": "eacd94309562a21f3e19dd6b2f31cfcc1433d1b3eb79dfb80431210a0dae3870",
     "typescriptApi": "5.9.3"
   },
   "counts": {
     "activeScriptFiles": 301,
-    "algorithmSymbols": 9753,
+    "algorithmSymbols": 9757,
     "pythonModules": 98,
     "rustBuildInputs": 73,
     "rustModules": 80,
@@ -31519,12 +31519,12 @@
         "sourceClosure",
         "walk"
       ],
-      "bytes": 59120,
+      "bytes": 59275,
       "disposition": "active-host-tooling-algorithm",
       "language": "ts",
       "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
       "path": "scripts/rust-core/full-conformance.ts",
-      "sha256": "8adf621099f9ca5720643e32e1c135ddfeb79cb35e0b6fd569733bd6407ab63c"
+      "sha256": "d36ef46dc590346173d4bd59898bdb9a3d9be9f61f12633384850e9a55a2d584"
     },
     {
       "activationEvidence": [],
@@ -31659,7 +31659,10 @@
         "add",
         "algorithm_names",
         "bun_closure",
+        "compact_json",
         "dependency_disposition",
+        "json_differences",
+        "json_pointer_escape",
         "main",
         "module_record",
         "py_symbols",
@@ -31671,16 +31674,17 @@
         "script_disposition",
         "sha",
         "source_disposition",
+        "stale_inventory_diagnostics",
         "text",
         "tracked_or_existing",
         "ts_symbols"
       ],
-      "bytes": 39482,
+      "bytes": 43556,
       "disposition": "active-host-tooling-algorithm",
       "language": "py",
       "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
       "path": "scripts/rust-inventory.py",
-      "sha256": "27ff795ef0473d235b98ce02b34f31c4e64aca2dc1de4c5add4936d27c607209"
+      "sha256": "7e9c6f143d5bf391432b94a1dc10fd92474988969f78a816ae39c329ca871556"
     },
     {
       "activationEvidence": [],
@@ -36010,12 +36014,12 @@
         "rejects",
         "run"
       ],
-      "bytes": 16656,
+      "bytes": 17637,
       "disposition": "test-oracle-fixture-algorithm",
       "language": "ts",
       "migrationObligation": "Active only where activation evidence says so; test/oracle logic is evidence and not an implementation port by default",
       "path": "tests/compilation/boundaries.test.ts",
-      "sha256": "7b530fad171484c1bb75de45a2ce66d24738132f39f8a80ccc9ae4810ae6d00c"
+      "sha256": "ce9258692c0c5420b6eb6f86013cc4e97a9802a56f387e050bba0fe814fcfbfe"
     },
     {
       "activationEvidence": [

@@ -1,0 +1,39 @@
+{
+  "capturedAt": "2026-10-22T09:07:17.424647+00:00",
+  "checks": {
+    "hookFixture": {
+      "assertions": 176,
+      "review": "sol-r2-ci-delivery-batch-review.json",
+      "status": "pass",
+      "tests": 24
+    },
+    "migrationBoundaries": {
+      "argv": [
+        "bun",
+        "run",
+        "check:rust-boundaries"
+      ],
+      "checkedSourceModules": 578,
+      "exitCode": 0,
+      "findings": 0,
+      "log": "ci-delivery-boundaries.log",
+      "sha256": "47c4cb3fd8e75e8ecab9885a301c17c411f3f195cf47ad8ed239ebb343fca19f",
+      "tests": 15
+    },
+    "workflowLintAndQuotedPaths": {
+      "review": "sol-r2-ci-delivery-batch-review.json",
+      "status": "pass"
+    }
+  },
+  "inventorySha256": "6b4ef203b4a6c3a3e3008d1bc32ee194ae0bdf03464f2579a789b6c4f56e860e",
+  "profile": "umf.r2-ci-delivery-preflight/1",
+  "scope": "No Rust runtime, resources or expected outcomes changed. Inventory capture and stale refusal stay intact; added diagnostics expose CI drift rather than normalize it.",
+  "sourceHashes": {
+    ".github/workflows/python.yml": "871d265f04ef61f2b6b10a6e6df73b731716c174d241f0927a21b326b24b7efd",
+    ".github/workflows/rust-core.yml": "0de6c861e74539792183ae9b34be41afea2dbb875e392cf8990e4546eff0d0c9",
+    "scripts/rust-core/full-conformance.ts": "d36ef46dc590346173d4bd59898bdb9a3d9be9f61f12633384850e9a55a2d584",
+    "scripts/rust-inventory.py": "7e9c6f143d5bf391432b94a1dc10fd92474988969f78a816ae39c329ca871556",
+    "tests/compilation/boundaries.test.ts": "ce9258692c0c5420b6eb6f86013cc4e97a9802a56f387e050bba0fe814fcfbfe"
+  },
+  "status": "local preflight passes; Linux inventory root cause awaits diagnostic run"
+}

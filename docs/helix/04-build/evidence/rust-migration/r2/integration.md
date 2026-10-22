@@ -107,8 +107,8 @@ predecessor receipts are not regenerated to match the candidate.
 ## Final local qualification
 
 The [production-host receipt](production-host-qualification.json) passes from
-clean commit `7c2842dd68e66c06c5e4b22e8857e465b8efd561`. Its 439 source-file hashes form
-closure `81ee3b24a1aac55ca87d572ce5cd7f36b74ce2843550b52049cdacca9757c6a1`; the closure is identical
+clean commit `475b5d3d6b722ab73a17f77410eddb91ce45e056`. Its 439 source-file hashes form
+closure `22484d89ffdeaa6a754dac1afa024c1962fbf0e130bf6b815b5ca1d32e994307`; the closure is identical
 before and after the run. The [raw integrated log](production-host-qualification.log)
 and individual reports retain commands, versions, counts and observations.
 
@@ -143,7 +143,7 @@ separate default/feature WASM loader sizes are in the production-host receipt.
 | Default browser WASM | 3,642,217 |
 | Python wheel | 1,968,645 |
 | Python source archive | 2,222,170 |
-| Wheel rebuilt from archive | 1,969,269 |
+| Wheel rebuilt from archive | 1,969,270 |
 
 The [native benchmark](native-admission-validation-benchmark.json) measures a
 500-call complete-validation batch at 34.429 calls/s and admission copying at
@@ -191,3 +191,13 @@ projection from identity, meter owned work before allocation, and repeat the
 unchanged stack controls after evaluator-state changes. For later slices, run
 every installed comparator end to end before the all-host gate and verify
 lossless comparison representations and receipt-field ownership independently.
+
+
+CI delivery preflight repairs runner-context placement, exact Python provisioning
+through uv with absolute interpreter paths, isolated Rust toolchain state, and
+the hook integration fixture. CI writes receipts to a fresh job-local path; a
+failed job cannot upload the committed local receipt as a new witness. The
+[reviewed preflight](ci-delivery-preflight.json) retains all gates. Linux inventory
+drift remains a delivery condition; bounded JSON Pointer diagnostics preserve the
+stale refusal and will identify the underlying field. The current local runtime
+qualification precedes these CI-only/tool-diagnostic repairs.

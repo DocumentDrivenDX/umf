@@ -27,6 +27,89 @@ def sha(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
 
 
+def json_pointer_escape(component: str) -> str:
+    return component.replace("~", "~0").replace("/", "~1")
+
+
+def json_differences(expected: object, actual: object, pointer: str = ""):
+    """Yield leaf-level JSON differences with RFC 6901 paths."""
+    if isinstance(expected, dict) and isinstance(actual, dict):
+        for key in sorted(expected.keys() | actual.keys()):
+            path = f"{pointer}/{json_pointer_escape(str(key))}"
+            if key not in expected:
+                yield path, "<missing>", actual[key]
+            elif key not in actual:
+                yield path, expected[key], "<missing>"
+            else:
+                yield from json_differences(expected[key], actual[key], path)
+        return
+    if isinstance(expected, list) and isinstance(actual, list):
+        for index in range(max(len(expected), len(actual))):
+            path = f"{pointer}/{index}"
+            if index >= len(expected):
+                yield path, "<missing>", actual[index]
+            elif index >= len(actual):
+                yield path, expected[index], "<missing>"
+            else:
+                yield from json_differences(expected[index], actual[index], path)
+        return
+    if expected != actual:
+        yield pointer or "", expected, actual
+
+
+def compact_json(value: object, limit: int = 180) -> str:
+    rendered = json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
+    if len(rendered) > limit:
+        return rendered[:limit - 3] + "..."
+    return rendered
+
+
+def stale_inventory_diagnostics(expected: object, actual: object, limit: int = 10) -> list[str]:
+    """Summarize differing sections and a bounded set of exact field changes."""
+    lines = []
+    sections = []
+    if isinstance(expected, dict) and isinstance(actual, dict):
+        sections = sorted(key for key in expected.keys() | actual.keys()
+                          if expected.get(key, object()) != actual.get(key, object()))
+        lines.append("Differing top-level sections: " + (", ".join(sections) if sections else "none (serialized form only)"))
+
+    # Reserve one entry for each changed top-level section before filling the
+    # remaining budget. A large early section must not hide all other drift.
+    shown = []
+    for section in sections:
+        expected_has = section in expected
+        actual_has = section in actual
+        if not expected_has:
+            shown.append((f"/{json_pointer_escape(str(section))}", "<missing>", actual[section]))
+        elif not actual_has:
+            shown.append((f"/{json_pointer_escape(str(section))}", expected[section], "<missing>"))
+        else:
+            for difference in json_differences(expected[section], actual[section], f"/{json_pointer_escape(str(section))}"):
+                shown.append(difference)
+                break
+
+    if len(shown) > limit:
+        shown = shown[:limit]
+    selected = {(pointer, compact_json(old), compact_json(new)) for pointer, old, new in shown}
+    has_more = False
+    for difference in json_differences(expected, actual):
+        identity = (difference[0], compact_json(difference[1]), compact_json(difference[2]))
+        if identity in selected:
+            continue
+        if len(shown) == limit:
+            has_more = True
+            break
+        shown.append(difference)
+        selected.add(identity)
+    for pointer, old, new in shown:
+        lines.append(f"  {pointer}: expected {compact_json(old)}; actual {compact_json(new)}")
+    if has_more:
+        lines.append(f"  ... additional differences omitted (showing first {limit})")
+    elif not shown:
+        lines.append("  Parsed JSON values are equal; serialized representation differs.")
+    return lines
+
+
 def text(path: Path) -> str:
     return path.read_text(encoding="utf-8", errors="replace")
 
@@ -526,6 +609,13 @@ def main() -> int:
         current = OUT.read_text() if OUT.exists() else ""
         if current != payload:
             print(f"Rust inventory is stale: {OUT}", file=sys.stderr)
+            try:
+                expected = json.loads(current)
+                actual = json.loads(payload)
+                for line in stale_inventory_diagnostics(expected, actual):
+                    print(line, file=sys.stderr)
+            except json.JSONDecodeError as error:
+                print(f"Could not compare inventory JSON: {error}", file=sys.stderr)
             return 1
         print(f"Rust inventory current: {len(modules)} source modules; {sum(s['active'] for s in scripts)} active scripts")
         return 0

@@ -10,7 +10,9 @@ import {delimiter, dirname, join, relative, resolve, sep} from 'node:path';
 const root = resolve(import.meta.dir, '../..');
 const fixture = resolve(root, 'docs/helix/04-build/evidence/rust-migration/r2/baseline-current-conformance.json');
 const evidence = resolve(root, 'docs/helix/04-build/evidence/rust-migration/r2');
-const receiptPath = resolve(evidence, 'production-host-qualification.json');
+const receiptPath = process.env.UMF_R2_QUALIFICATION_PATH
+  ? resolve(root, process.env.UMF_R2_QUALIFICATION_PATH)
+  : resolve(evidence, 'production-host-qualification.json');
 function resolveTool(override: string | undefined, names: string[], extra: string[] = []): string {
   const directories = (process.env.PATH ?? '').split(delimiter).filter(Boolean);
   const candidates = override
@@ -892,6 +894,7 @@ try {
       resourceProfile: 'cooperative host controls exercised; HardIsolated remains refused before work',
     },
   };
+  await mkdir(dirname(receiptPath), {recursive: true});
   const tempReceipt = `${receiptPath}.tmp`;
   await writeFile(tempReceipt, `${JSON.stringify(receipt, null, 2)}\n`, {flag: 'w'});
   await rm(receiptPath, {force: true});

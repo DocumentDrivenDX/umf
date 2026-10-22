@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import { describe, expect, test } from "bun:test";
-import { mkdtempSync, mkdirSync, writeFileSync, rmSync, copyFileSync, symlinkSync, chmodSync } from "node:fs";
+import { mkdtempSync, mkdirSync, writeFileSync, readFileSync, rmSync, copyFileSync, symlinkSync, chmodSync } from "node:fs";
 import { join } from "node:path";
 import { tmpdir } from "node:os";
 
@@ -206,6 +206,19 @@ test("local command and installed pre-commit hook reject real violations", () =>
   try {
     for (const directory of ["scripts", ".githooks", "src/compilation/ir", "python/umf_access/dsl"]) mkdirSync(join(fixture, directory), { recursive: true });
     for (const path of ["package.json", ".githooks/pre-commit", "scripts/check-compilation-boundaries.ts", "scripts/check-access-python-boundaries.py"]) copyFileSync(join(root, path), join(fixture, path));
+    const packageJson = JSON.parse(readFileSync(join(fixture, "package.json"), "utf8"));
+    packageJson.scripts["check:rust-boundaries"] = "python3 scripts/check-rust-boundaries-fixture.py";
+    writeFileSync(join(fixture, "package.json"), JSON.stringify(packageJson, null, 2));
+    writeFileSync(join(fixture, "scripts/check-rust-boundaries-fixture.py"), [
+      "from pathlib import Path",
+      "import sys",
+      "sentinel = Path('.rust-boundary-violation')",
+      "if sentinel.exists():",
+      "    print('RUST_FIXTURE_BOUNDARY: controlled violation', file=sys.stderr)",
+      "    raise SystemExit(1)",
+      "print('RUST_FIXTURE_BOUNDARY: clean control')",
+      "",
+    ].join("\n"));
     symlinkSync(join(root, "node_modules"), join(fixture, "node_modules"));
     chmodSync(join(fixture, ".githooks/pre-commit"), 0o755);
     writeFileSync(join(fixture, "src/compilation/ir/index.ts"), "export type Value = string;");
@@ -226,5 +239,9 @@ test("local command and installed pre-commit hook reject real violations", () =>
       expect(rejected.stderr.toString()).toContain("HOST");
       writeFileSync(join(fixture, path), reset);
     }
+    writeFileSync(join(fixture, ".rust-boundary-violation"), "controlled violation\n");
+    const rustRejected = run(commit);
+    expect(rustRejected.exitCode).toBe(1);
+    expect(rustRejected.stderr.toString()).toContain("RUST_FIXTURE_BOUNDARY: controlled violation");
   } finally { rmSync(fixture, { recursive: true, force: true }); }
 }, 15000);
