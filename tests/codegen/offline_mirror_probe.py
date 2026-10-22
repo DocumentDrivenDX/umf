@@ -40,7 +40,10 @@ except RuntimeError as error:
 manifest = MIRROR.build_mirror(args.lock, args.wheelhouse, args.mirror)
 
 with tempfile.TemporaryDirectory(prefix='umf-offline-mirror-') as directory:
-    work = Path(directory)
+    # macOS commonly exposes TMPDIR through a symlinked /var/folders alias;
+    # package writers reject symlink ancestors to prevent path substitution.
+    # Resolve our private disposable workspace instead of weakening that guard.
+    work = Path(directory).resolve()
     environment = work / 'venv'
     venv.EnvBuilder(with_pip=True).create(environment)
     python = environment / ('Scripts/python.exe' if os.name == 'nt' else 'bin/python')
