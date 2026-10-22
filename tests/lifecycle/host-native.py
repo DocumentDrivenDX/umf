@@ -154,6 +154,58 @@ def main() -> int:
                     raise RuntimeError("approval-row-access-granted")
                 connection.execute("RESET ROLE")
 
+            _set_role(connection, configuration["ownerRole"])
+
+            # A command-only source update has no native DDL phases. Publish
+            # its history atomically without creating progress or fencing the
+            # already-valid head, then replay the older applied migration and
+            # require the current installation reference.
+            command_document = json.loads(successor["source"]["utf8"])
+            commands = command_document["modules"][0]["extensions"]["umf.tables"]["commands"]
+            additional_command = json.loads(json.dumps(commands[0]))
+            additional_command["id"] = "fill_summary_again"
+            commands.append(additional_command)
+            command_bundle = _bundle(json.dumps(command_document, separators=(",", ":")),
+                                     configuration)
+            command_compilation = compile_table_migration(
+                migration_id="u5-" + suffix + "-003",
+                previous_bundle=successor,
+                next_bundle=command_bundle,
+                predecessor={"id": plan["id"], "digest": plan["digest"]},
+                options={"version": "umf.table-migration-options/0.3",
+                         "backfills": [], "concurrentIndexes": [],
+                         "reviewedChanges": [], "validations": []})
+            if command_compilation["status"] != "compiled":
+                raise RuntimeError("command-only-plan-compile-failed")
+            command_plan = command_compilation["plan"]
+            if command_plan["steps"] or command_plan["phases"]:
+                raise RuntimeError("command-only-plan-not-empty")
+            command_file_digest = hashlib.sha256(
+                json.dumps(command_plan, sort_keys=True).encode()).hexdigest()
+            command_approval = host.record_approval(
+                MigrationRequest(command_plan, result["headDigest"], command_file_digest),
+                decision="approved", qualification_profile=qualification_profile,
+                evidence_digest=evidence_digest)
+            command_result = apply_migration_on_host(
+                host, command_plan, expected_head=result["headDigest"],
+                file_digest=command_file_digest,
+                qualification_profile=qualification_profile,
+                evidence_digest=evidence_digest,
+                approval_id=command_approval.receipt_id)
+            if (command_result["status"] != "committed"
+                    or command_result["generation"] != result["generation"] + 1):
+                raise RuntimeError("command-only-publication-failed")
+            old_replay = apply_migration_on_host(
+                host, plan, expected_head=initial["headDigest"], file_digest=file_digest,
+                qualification_profile=qualification_profile,
+                evidence_digest=evidence_digest, approval_id=approval.receipt_id)
+            reference = command_result["installationReference"]
+            successor = command_bundle
+            if (old_replay["status"] != "already-applied"
+                    or old_replay["installationReference"] != reference
+                    or old_replay["generation"] != command_result["generation"]):
+                raise RuntimeError("historical-replay-current-reference-failed")
+
             with tempfile.TemporaryDirectory(prefix="umf-u5-generated-") as directory:
                 package_name = "u5_generated_" + suffix
                 generated = generate_python_client(
@@ -206,10 +258,15 @@ def main() -> int:
                 "fileDigest": file_digest,
                 "approvalBindingDigest": approval.binding_digest,
                 "approvalDecider": approval.decider,
-                "generation": result["generation"],
+                "generation": command_result["generation"],
                 "referenceVersion": reference["version"],
-                "approvalPlanDigestMatches": reference["approvalPlanDigest"] == plan["digest"],
+                "approvalPlanDigestMatches": reference["approvalPlanDigest"] == command_plan["digest"],
                 "replayStatus": replay["status"],
+                "historicalReplayStatus": old_replay["status"],
+                "commandOnlyPlanDigest": command_plan["digest"],
+                "commandOnlyPhaseCount": len(command_plan["phases"]),
+                "historicalReplayReturnsCurrentReference": (
+                    old_replay["installationReference"] == reference),
                 "audiences": {
                     name: {"rowCount": len(rows), "headObserved": bool(head_observations[name]),
                           "approvalReadDenied": True}

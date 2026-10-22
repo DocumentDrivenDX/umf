@@ -6,8 +6,8 @@ import hashlib
 import json
 import re
 
-from .catalog import CatalogError, _all, _execute, _installation, _one, _q
 from .approval import APPROVAL_PROFILE, _verify_approval_relation
+from .catalog import CatalogError, _all, _execute, _installation, _one, _q
 from .concurrent import _index_state
 from .head_view import HEAD
 from .ledger import (
@@ -160,7 +160,8 @@ def _lock_phase_tables(connection, plan):
             _execute(connection, 'LOCK TABLE '+_q(schema)+'.'+_q(table['name'])+' IN ACCESS EXCLUSIVE MODE')
 
 
-def _verify_phase_execution_boundary(connection, plan, person_roles):
+def _verify_phase_execution_boundary(connection, plan, person_roles, *,
+                                     progress_required=True):
     """Recheck source-independent execution and authority boundaries under locks.
 
     The phase witness binds the intentional partial source prefix. This check
@@ -171,10 +172,12 @@ def _verify_phase_execution_boundary(connection, plan, person_roles):
     bundle = plan['next']
     schema = bundle['configuration']['schema']
     cfg = bundle['configuration']
-    _verify_mixed_metadata_inventory(connection, plan)
+    _verify_mixed_metadata_inventory(connection, plan,
+                                     progress_required=progress_required)
     _verify_history_schema(connection, bundle)
     _verify_outcomes(connection, bundle)
-    _verify_progress_schema(connection, bundle)
+    if progress_required:
+        _verify_progress_schema(connection, bundle)
     _verify_phase_head(connection, bundle)
     relation_ids = []
     for table in bundle['expectedCatalog']['tables']:

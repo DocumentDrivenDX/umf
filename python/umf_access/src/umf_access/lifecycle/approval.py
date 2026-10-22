@@ -139,7 +139,7 @@ class ApprovalBinding:
     def as_json(self) -> dict[str, Any]:
         if (type(self.migration_id) is not str or not self.migration_id
                 or not isinstance(self.target, TargetIdentity)
-                or type(self.phase_digests) is not tuple or not self.phase_digests
+                or type(self.phase_digests) is not tuple
                 or type(self.qualification_profile) is not str or not self.qualification_profile):
             raise CatalogError("approval-binding-invalid")
         return {

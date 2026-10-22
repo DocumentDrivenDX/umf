@@ -146,7 +146,8 @@ def _apply_table_migration(connection,plan,*,approved_digest,expected_head,perso
     concurrent = any(step['transaction'] == 'forbidden' for step in source_plan['steps'])
     if concurrent and not prebuilt_indexes and not phases_applied:
         raise CatalogError('nontransactional-runner-required')
-    if phases_applied and not source_plan.get('phases'):
+    if (phases_applied and not source_plan.get('phases')
+            and source_plan.get('steps')):
         raise CatalogError('mixed-phase-profile')
     if prebuilt_indexes and (not concurrent or any(step['kind'] != 'index' for step in source_plan['steps'])):
         raise CatalogError('index-phase-profile')
@@ -241,7 +242,7 @@ def _finalize_phased_migration(connection,plan,*,approved_digest,expected_head,p
                                statement_timeout_ms=30_000,lock_timeout_ms=5_000,file_digest=None):
     """Publish history after the mixed runner has durably completed every phase."""
     source_plan = _verified_plan(plan)
-    if not source_plan.get('phases'):
+    if (not source_plan.get('phases') and source_plan.get('steps')):
         raise CatalogError('mixed-phase-profile')
     return _apply_table_migration(connection,source_plan,approved_digest=approved_digest,
         expected_head=expected_head,person_roles=person_roles,

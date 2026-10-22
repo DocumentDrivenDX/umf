@@ -339,8 +339,7 @@ class _PsycopgLease:
                 prior_head = history[match["position"] - 2]["entryDigest"] if match["position"] > 1 else None
                 if (len(matches) != 1 or match["plan"]["digest"] != request.plan["digest"]
                         or match.get("fileDigest") != request.file_digest
-                        or prior_head != request.expected_head
-                        or history[-1]["plan"]["toBundleDigest"] != self.bundle["bundleDigest"]):
+                        or prior_head != request.expected_head):
                     raise CatalogError("ledger-digest-conflict")
                 _verify_installed(self.connection, history[-1], self.host._person_roles,
                                   self.host._statement_timeout_ms,
@@ -587,24 +586,50 @@ class _PsycopgLease:
         if binding is None:
             raise CatalogError("approval-binding-invalid")
         approval.verify(binding)
-        rows = self.read_progress(binding)
-        if rows is None or rows.phase_index != len(self.plan["phases"]):
+        phases = self.plan["phases"]
+        rows = self.read_progress(binding) if phases else None
+        if phases and (rows is None or rows.phase_index != len(phases)):
             raise CatalogError("progress-phase-mismatch")
-        rows.verify(self.plan["phases"], self.plan)
+        if phases:
+            rows.verify(phases, self.plan)
         with self.host._atomic(), _installation(
                 self.connection, self.bundle,
                 statement_timeout_ms=self.host._statement_timeout_ms,
                 lock_timeout_ms=self.host._lock_timeout_ms):
             self._verify_bound_approval(binding)
-            _verify_phase_head(self.connection, self.bundle)
-            if _capture_witness(self.connection, self.bundle) != rows.prefix_witness:
-                raise CatalogError("progress-prefix-mismatch")
-            _verify_mixed_metadata_inventory(self.connection, self.plan)
-            if not _verify_progress_schema(self.connection, self.bundle):
+            if phases:
+                _verify_phase_head(self.connection, self.bundle)
+                if _capture_witness(self.connection, self.bundle) != rows.prefix_witness:
+                    raise CatalogError("progress-prefix-mismatch")
+            else:
+                from .ledger import _history_rows
+                from .mixed import (
+                    _lock_phase_tables,
+                    _verify_mixed_metadata_inventory,
+                    _verify_phase_execution_boundary,
+                )
+                from .progress import _verify_progress_schema
+                from .witness import _capture_witness
+
+                if _verify_progress_schema(self.connection, self.bundle):
+                    raise CatalogError("progress-state-mismatch")
+                _lock_phase_tables(self.connection, self.plan)
+                _verify_phase_execution_boundary(self.connection, self.plan,
+                                                 self.host._person_roles,
+                                                 progress_required=False)
+                history = _history_rows(self.connection, self.schema)
+                if (not history or history[-1]["entryDigest"] != request.expected_head
+                        or _capture_witness(self.connection, self.bundle)
+                        != history[-1]["witness"]):
+                    raise CatalogError("installed-generation-mismatch")
+            _verify_mixed_metadata_inventory(self.connection, self.plan,
+                                             progress_required=bool(phases))
+            if phases and not _verify_progress_schema(self.connection, self.bundle):
                 raise CatalogError("progress-state-mismatch")
             _head_grants(self.connection, self.bundle, True)
-            _delete_progress(self.connection, self.schema, self.plan["id"])
-            _drop_progress(self.connection, self.schema)
+            if phases:
+                _delete_progress(self.connection, self.schema, self.plan["id"])
+                _drop_progress(self.connection, self.schema)
             result = _finalize_phased_migration(
                 self.connection, self.plan, approved_digest=self.plan["digest"],
                 expected_head=request.expected_head,
@@ -638,19 +663,19 @@ class _PsycopgLease:
             match = matches[0]
             prior_head = history[match["position"] - 2]["entryDigest"] if match["position"] > 1 else None
             if (match.get("fileDigest") != request.file_digest
-                    or prior_head != request.expected_head
-                    or history[-1]["plan"]["toBundleDigest"] != self.bundle["bundleDigest"]):
+                    or prior_head != request.expected_head):
                 raise CatalogError("ledger-digest-conflict")
             _verify_installed(self.connection, history[-1], self.host._person_roles,
                               self.host._statement_timeout_ms,
                               self.host._lock_timeout_ms)
+            current_bundle = history[-1]["plan"]["next"]
             return {"status": "already-applied", "migrationId": self.plan["id"],
                     "entryDigest": match["entryDigest"],
                     "headDigest": history[-1]["entryDigest"],
                     "generation": len(history),
-                    "installedBundleDigest": self.bundle["bundleDigest"],
+                    "installedBundleDigest": current_bundle["bundleDigest"],
                     "installationReference": _issue_reference(
-                        self.connection, self.bundle, history[-1]),
+                        self.connection, current_bundle, history[-1]),
                     "commitResponsibility": "adapter"}
 
     def _verify_bound_approval(self, binding: ApprovalBinding | None = None) -> None:
@@ -824,6 +849,14 @@ def apply_migration_on_host(host: MigrationHost, plan: dict[str, Any], *,
         published = lease.observe_final_publication(request, approval)
         if published is not None:
             return published
+        if not phases:
+            try:
+                return lease.finalize(request, approval)
+            except HostOutcomeUnknown:
+                observed = lease.observe_final_publication(request, approval)
+                if observed is None:
+                    raise CatalogError("migration-outcome-unknown-observe-history") from None
+                return observed
         receipt = lease.read_progress(binding)
         if receipt is None:
             initial = PhaseReceipt(0, hashlib.sha256(b"").hexdigest(), (),

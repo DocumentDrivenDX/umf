@@ -79,7 +79,14 @@ def _verified_phases(plan: dict[str, Any]) -> list[dict[str, Any]]:
     else:
         raise CatalogError('mixed-phase-profile')
     if (profile != expected_profile
-            or type(phases) is not list or not phases or type(plan.get('steps')) is not list):
+            or type(phases) is not list or type(plan.get('steps')) is not list):
+        raise CatalogError('mixed-phase-profile')
+    if not phases:
+        # A v0.3 source-only plan can have no native operations (for example,
+        # an added typed command). It publishes through the host's atomic
+        # no-effect finalizer and must not create a progress relation.
+        if options_version == 'umf.table-migration-options/0.3' and not plan['steps']:
+            return phases
         raise CatalogError('mixed-phase-profile')
     by_id = {step.get('id'): step for step in plan['steps'] if type(step) is dict}
     if len(by_id) != len(plan['steps']):
@@ -115,10 +122,10 @@ def _verified_phases(plan: dict[str, Any]) -> list[dict[str, Any]]:
                 expected_kind.append('seed')
             else:
                 expected_kind.append('transaction')
-        if (len(set(expected_kind)) != 1 or expected_kind[0] != phase['kind']
-                or phase['kind'] != 'transaction' and len(selected) != 1):
-            if phase['kind'] != 'backfill-tighten' or not allow_backfill_tighten:
-                raise CatalogError('mixed-phase-profile')
+        if ((len(set(expected_kind)) != 1 or expected_kind[0] != phase['kind']
+                or phase['kind'] != 'transaction' and len(selected) != 1)
+                and (phase['kind'] != 'backfill-tighten' or not allow_backfill_tighten)):
+            raise CatalogError('mixed-phase-profile')
         if phase['kind'] == 'backfill-tighten':
             if not allow_backfill_tighten or len(selected) != 2:
                 raise CatalogError('mixed-phase-profile')
