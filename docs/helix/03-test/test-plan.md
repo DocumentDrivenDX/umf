@@ -3354,3 +3354,29 @@ the new local tests add a small Python process, while Chromium reuses its curren
 single browser session. Exact timings belong in execution evidence.
 Linux wheel/interpreter qualification (US-092 AC16), link projections and real-host
 conformance are separately required before those support claims are published.
+
+## Shared Rust migration verification
+
+ADR-006 and [the migration plan](../04-build/rust-migration-plan.md) add two
+separate delivery gates: V8-free installed Python/CLI execution, then complete
+Rust ownership of shared executable semantics. Use Cargo unit/integration tests,
+installed Python and Node/Bun tests, and actual Chromium against the distributed
+WASM artifact. Retain current native oracle gates for every migrated family.
+CI cost and performance budgets require R0/R1 measurements; they are unknown.
+
+Primary verification allocations:
+
+| Requirement class | Primary layer | Proof |
+| --- | --- | --- |
+| Exact numbers/text, model rules, diagnostics, unknown retention | Rust contract/integration | Frozen expected vectors and mutation controls, including UTF-16/lone surrogates and duplicate-key/YAML admission |
+| Binding admission, callbacks, lifetime, cancellation and capacity | Cross-runtime integration | Same cases through native Rust/Python/Node/Bun/Chromium with original-source callbacks and no conversion loss |
+| V8 removal and package delivery | Installed package E2E | Complete five-operation codegen surface, fresh wheels and native CLI with JS engines unavailable; dependency/binary inspection, no downloads or fallback |
+| Single-source authority and retirement | Boundary/build | Deterministic model outputs; closed operation/module census, generated provenance, forbidden import/engine controls |
+| Native adapters, projections and consumer bridges | Independent native E2E | Both relevant recovery directions, exact loss reports and genuine driver/consumer behavior from migrated installed artifacts |
+
+Old/new differential parity complements frozen contract expectations and native
+oracles; it cannot establish correctness alone. Keep existing expected refusals,
+independent disagreements and held native scopes explicit. Diagnostic, generated
+byte, hash-preimage and receipt-format differences require classified corrections
+and downstream verifier replay. The detailed migration gates remain in the build
+plan until R0/R1 freezes exact implementation commands and interfaces.

@@ -1,0 +1,45 @@
+{
+  "id": "R2-SOL-PYTHON-SCHEMA-YIELD-BOUNDARIES-PROFILES-001",
+  "source": "origin/main 53de049136c7e41b482d1a73665d031cd5fbaec6",
+  "jsonschema": "4.26.0",
+  "basePython": "3.11.17",
+  "scope": "All 226 schema-instance cases, including one native schema admission refusal, and 675 method observations are equal as JSON values across CPython 3.11.17, 3.12.15 and 3.13.16. This includes ordered keyword/path prefixes and arithmetic exception class/messages. Immutable 3.11 fixtures are shared expected semantic records; candidate native arithmetic exceptions use the separately approved stable Rust error mapping.",
+  "captureMethod": "Each interpreter loads unchanged predecessor schemas.py/json.py via an isolated package shell, skipping unrelated package __init__/Pydantic imports; pure Python jsonschema dependencies are shared from the local cache and rpds matches the interpreter minor. No candidate outputs enter the oracle.",
+  "profiles": [
+    {
+      "python": "3.12.15",
+      "executable": "/Users/erik/.local/share/uv/python/cpython-3.12.15-macos-aarch64-none/bin/python3.12",
+      "executableSha256": "fe5e57e7f0dc374654e314d4e8f20cf2a345bda8a4e03032046f407027628a32",
+      "captures": [
+        {
+          "fixture": "sol-python-schema-yield-boundaries-predecessor.json",
+          "fixtureSha256": "5db4e1f0b5dab27d4c2ba39f7b53907e1570dff9be7f63dfb19a8d23fe9f28cf",
+          "generatorSha256": "542a60d098cde9a2cff94680f6a20a74d588710cebb45810c14e979f203750f1",
+          "cases": 226,
+          "methodObservations": 675,
+          "completeRecordsEqual": true,
+          "captureSha256": "f220312e4dc0fff87ff54b518f83e3de0cdbc6ced5594a5c9bfed30e2913f182",
+          "capturePath": "/private/tmp/umf-sol-python-schema-yield-boundaries-3.12.15.json"
+        }
+      ]
+    },
+    {
+      "python": "3.13.16",
+      "executable": "/Users/erik/.local/share/uv/python/cpython-3.13.16-macos-aarch64-none/bin/python3.13",
+      "executableSha256": "b898474cdfda938c1dd25af22d1b066d4808ba8b7e2d14e20033781d7787f87f",
+      "captures": [
+        {
+          "fixture": "sol-python-schema-yield-boundaries-predecessor.json",
+          "fixtureSha256": "5db4e1f0b5dab27d4c2ba39f7b53907e1570dff9be7f63dfb19a8d23fe9f28cf",
+          "generatorSha256": "542a60d098cde9a2cff94680f6a20a74d588710cebb45810c14e979f203750f1",
+          "cases": 226,
+          "methodObservations": 675,
+          "completeRecordsEqual": true,
+          "captureSha256": "fb1a237dd547a2d4a62a35cd376eefff2def55c5ce5e48dd94143976cdc9a32b",
+          "capturePath": "/private/tmp/umf-sol-python-schema-yield-boundaries-3.13.16.json"
+        }
+      ]
+    }
+  ],
+  "overallR2Approved": false
+}

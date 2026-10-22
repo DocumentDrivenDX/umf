@@ -1,0 +1,8093 @@
+{
+  "profile": "umf.r2-sol-python-schema-error-metadata/1",
+  "python": "3.11.17",
+  "jsonschema": "4.26.0",
+  "schemaSourceSha256": "22f02d6a6903b8804a1d504b0b6f232872aa564bc20e77933c880a4f9016a402",
+  "scope": "Only fields already exposed by the consumer facade: keyword, validator_value, instance, instance path and schema path. Source recipes preserve Python int/float and code points. Boolean-schema keyword/validator_value are genuinely None; reference display paths do not identify the original root rule value. No full jsonschema exception API identity claim.",
+  "cases": [
+    {
+      "id": "draft0-ref-type",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                45,
+                48,
+                51,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                35
+              ]
+            }
+          ],
+          [
+            "definitions",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "target",
+                  {
+                    "kind": "object",
+                    "members": [
+                      [
+                        "type",
+                        {
+                          "kind": "string",
+                          "points": [
+                            110,
+                            117,
+                            109,
+                            98,
+                            101,
+                            114
+                          ]
+                        }
+                      ]
+                    ]
+                  }
+                ]
+              ]
+            }
+          ],
+          [
+            "$ref",
+            {
+              "kind": "string",
+              "points": [
+                35,
+                47,
+                100,
+                101,
+                102,
+                105,
+                110,
+                105,
+                116,
+                105,
+                111,
+                110,
+                115,
+                47,
+                116,
+                97,
+                114,
+                103,
+                101,
+                116
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"definitions\":{\"target\":{\"type\":\"number\"}},\"$ref\":\"#/definitions/target\"}",
+      "instanceRecipe": {
+        "kind": "string",
+        "points": [
+          98,
+          97,
+          100
+        ]
+      },
+      "errors": [
+        {
+          "keyword": "type",
+          "validatorValue": {
+            "kind": "string",
+            "points": [
+              110,
+              117,
+              109,
+              98,
+              101,
+              114
+            ]
+          },
+          "instance": {
+            "kind": "string",
+            "points": [
+              98,
+              97,
+              100
+            ]
+          },
+          "instancePath": [],
+          "schemaPath": [
+            "type"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "draft0-ref-pattern-explicit-pair",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                45,
+                48,
+                51,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                35
+              ]
+            }
+          ],
+          [
+            "definitions",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "target",
+                  {
+                    "kind": "object",
+                    "members": [
+                      [
+                        "pattern",
+                        {
+                          "kind": "string",
+                          "points": [
+                            94,
+                            55296,
+                            56320,
+                            36
+                          ]
+                        }
+                      ]
+                    ]
+                  }
+                ]
+              ]
+            }
+          ],
+          [
+            "$ref",
+            {
+              "kind": "string",
+              "points": [
+                35,
+                47,
+                100,
+                101,
+                102,
+                105,
+                110,
+                105,
+                116,
+                105,
+                111,
+                110,
+                115,
+                47,
+                116,
+                97,
+                114,
+                103,
+                101,
+                116
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"definitions\":{\"target\":{\"pattern\":\"^\\ud800\\udc00$\"}},\"$ref\":\"#/definitions/target\"}",
+      "instanceRecipe": {
+        "kind": "string",
+        "points": [
+          98,
+          97,
+          100
+        ]
+      },
+      "errors": [
+        {
+          "keyword": "pattern",
+          "validatorValue": {
+            "kind": "string",
+            "points": [
+              94,
+              55296,
+              56320,
+              36
+            ]
+          },
+          "instance": {
+            "kind": "string",
+            "points": [
+              98,
+              97,
+              100
+            ]
+          },
+          "instancePath": [],
+          "schemaPath": [
+            "pattern"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "draft0-ref-enum-source-kind",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                45,
+                48,
+                51,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                35
+              ]
+            }
+          ],
+          [
+            "definitions",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "target",
+                  {
+                    "kind": "object",
+                    "members": [
+                      [
+                        "enum",
+                        {
+                          "kind": "array",
+                          "items": [
+                            {
+                              "kind": "float",
+                              "bits": "3ff0000000000000"
+                            },
+                            {
+                              "kind": "object",
+                              "members": [
+                                [
+                                  "token",
+                                  {
+                                    "kind": "string",
+                                    "points": [
+                                      55296,
+                                      56320
+                                    ]
+                                  }
+                                ]
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    ]
+                  }
+                ]
+              ]
+            }
+          ],
+          [
+            "$ref",
+            {
+              "kind": "string",
+              "points": [
+                35,
+                47,
+                100,
+                101,
+                102,
+                105,
+                110,
+                105,
+                116,
+                105,
+                111,
+                110,
+                115,
+                47,
+                116,
+                97,
+                114,
+                103,
+                101,
+                116
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"definitions\":{\"target\":{\"enum\":[1.0,{\"token\":\"\\ud800\\udc00\"}]}},\"$ref\":\"#/definitions/target\"}",
+      "instanceRecipe": {
+        "kind": "integer",
+        "decimal": "0"
+      },
+      "errors": [
+        {
+          "keyword": "enum",
+          "validatorValue": {
+            "kind": "array",
+            "items": [
+              {
+                "kind": "float",
+                "bits": "3ff0000000000000"
+              },
+              {
+                "kind": "object",
+                "members": [
+                  [
+                    "token",
+                    {
+                      "kind": "string",
+                      "points": [
+                        55296,
+                        56320
+                      ]
+                    }
+                  ]
+                ]
+              }
+            ]
+          },
+          "instance": {
+            "kind": "integer",
+            "decimal": "0"
+          },
+          "instancePath": [],
+          "schemaPath": [
+            "enum"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "draft0-nested-ref-type",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                45,
+                48,
+                51,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                35
+              ]
+            }
+          ],
+          [
+            "definitions",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "target",
+                  {
+                    "kind": "object",
+                    "members": [
+                      [
+                        "type",
+                        {
+                          "kind": "string",
+                          "points": [
+                            110,
+                            117,
+                            109,
+                            98,
+                            101,
+                            114
+                          ]
+                        }
+                      ]
+                    ]
+                  }
+                ]
+              ]
+            }
+          ],
+          [
+            "properties",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "x",
+                  {
+                    "kind": "object",
+                    "members": [
+                      [
+                        "$ref",
+                        {
+                          "kind": "string",
+                          "points": [
+                            35,
+                            47,
+                            100,
+                            101,
+                            102,
+                            105,
+                            110,
+                            105,
+                            116,
+                            105,
+                            111,
+                            110,
+                            115,
+                            47,
+                            116,
+                            97,
+                            114,
+                            103,
+                            101,
+                            116
+                          ]
+                        }
+                      ]
+                    ]
+                  }
+                ]
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"definitions\":{\"target\":{\"type\":\"number\"}},\"properties\":{\"x\":{\"$ref\":\"#/definitions/target\"}}}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "x",
+            {
+              "kind": "string",
+              "points": [
+                98,
+                97,
+                100
+              ]
+            }
+          ]
+        ]
+      },
+      "errors": [
+        {
+          "keyword": "type",
+          "validatorValue": {
+            "kind": "string",
+            "points": [
+              110,
+              117,
+              109,
+              98,
+              101,
+              114
+            ]
+          },
+          "instance": {
+            "kind": "string",
+            "points": [
+              98,
+              97,
+              100
+            ]
+          },
+          "instancePath": [
+            "x"
+          ],
+          "schemaPath": [
+            "properties",
+            "x",
+            "type"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "draft0-array-type-rule",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                45,
+                48,
+                51,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                35
+              ]
+            }
+          ],
+          [
+            "type",
+            {
+              "kind": "array",
+              "items": [
+                {
+                  "kind": "string",
+                  "points": [
+                    110,
+                    117,
+                    109,
+                    98,
+                    101,
+                    114
+                  ]
+                },
+                {
+                  "kind": "string",
+                  "points": [
+                    115,
+                    116,
+                    114,
+                    105,
+                    110,
+                    103
+                  ]
+                }
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"type\":[\"number\",\"string\"]}",
+      "instanceRecipe": {
+        "kind": "null"
+      },
+      "errors": [
+        {
+          "keyword": "type",
+          "validatorValue": {
+            "kind": "array",
+            "items": [
+              {
+                "kind": "string",
+                "points": [
+                  110,
+                  117,
+                  109,
+                  98,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "string",
+                "points": [
+                  115,
+                  116,
+                  114,
+                  105,
+                  110,
+                  103
+                ]
+              }
+            ]
+          },
+          "instance": {
+            "kind": "null"
+          },
+          "instancePath": [],
+          "schemaPath": [
+            "type"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "draft0-additional-properties-false",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                45,
+                48,
+                51,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                35
+              ]
+            }
+          ],
+          [
+            "additionalProperties",
+            {
+              "kind": "boolean",
+              "value": false
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"additionalProperties\":false}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "x",
+            {
+              "kind": "integer",
+              "decimal": "0"
+            }
+          ]
+        ]
+      },
+      "errors": [
+        {
+          "keyword": "additionalProperties",
+          "validatorValue": {
+            "kind": "boolean",
+            "value": false
+          },
+          "instance": {
+            "kind": "object",
+            "members": [
+              [
+                "x",
+                {
+                  "kind": "integer",
+                  "decimal": "0"
+                }
+              ]
+            ]
+          },
+          "instancePath": [],
+          "schemaPath": [
+            "additionalProperties"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "draft0-anyof-rule-value",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                45,
+                48,
+                51,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                35
+              ]
+            }
+          ],
+          [
+            "anyOf",
+            {
+              "kind": "array",
+              "items": [
+                {
+                  "kind": "object",
+                  "members": [
+                    [
+                      "type",
+                      {
+                        "kind": "string",
+                        "points": [
+                          115,
+                          116,
+                          114,
+                          105,
+                          110,
+                          103
+                        ]
+                      }
+                    ]
+                  ]
+                },
+                {
+                  "kind": "object",
+                  "members": [
+                    [
+                      "type",
+                      {
+                        "kind": "string",
+                        "points": [
+                          110,
+                          117,
+                          109,
+                          98,
+                          101,
+                          114
+                        ]
+                      }
+                    ]
+                  ]
+                }
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"anyOf\":[{\"type\":\"string\"},{\"type\":\"number\"}]}",
+      "instanceRecipe": {
+        "kind": "null"
+      },
+      "errors": []
+    },
+    {
+      "id": "draft0-mincontains-float-kind",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                45,
+                48,
+                51,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                35
+              ]
+            }
+          ],
+          [
+            "contains",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "const",
+                  {
+                    "kind": "integer",
+                    "decimal": "1"
+                  }
+                ]
+              ]
+            }
+          ],
+          [
+            "minContains",
+            {
+              "kind": "float",
+              "bits": "4008000000000000"
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"contains\":{\"const\":1},\"minContains\":3.0}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "integer",
+            "decimal": "1"
+          },
+          {
+            "kind": "integer",
+            "decimal": "0"
+          }
+        ]
+      },
+      "errors": []
+    },
+    {
+      "id": "draft0-maxcontains-float-kind",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                45,
+                48,
+                51,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                35
+              ]
+            }
+          ],
+          [
+            "contains",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "type",
+                  {
+                    "kind": "string",
+                    "points": [
+                      110,
+                      117,
+                      109,
+                      98,
+                      101,
+                      114
+                    ]
+                  }
+                ]
+              ]
+            }
+          ],
+          [
+            "maxContains",
+            {
+              "kind": "float",
+              "bits": "0000000000000000"
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"contains\":{\"type\":\"number\"},\"maxContains\":0.0}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "integer",
+            "decimal": "1"
+          }
+        ]
+      },
+      "errors": []
+    },
+    {
+      "id": "draft0-nested-false-schema",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                45,
+                48,
+                51,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                35
+              ]
+            }
+          ],
+          [
+            "allOf",
+            {
+              "kind": "array",
+              "items": [
+                {
+                  "kind": "boolean",
+                  "value": false
+                }
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"allOf\":[false]}",
+      "instanceRecipe": {
+        "kind": "integer",
+        "decimal": "0"
+      },
+      "errors": []
+    },
+    {
+      "id": "draft1-ref-type",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                45,
+                48,
+                52,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                35
+              ]
+            }
+          ],
+          [
+            "definitions",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "target",
+                  {
+                    "kind": "object",
+                    "members": [
+                      [
+                        "type",
+                        {
+                          "kind": "string",
+                          "points": [
+                            110,
+                            117,
+                            109,
+                            98,
+                            101,
+                            114
+                          ]
+                        }
+                      ]
+                    ]
+                  }
+                ]
+              ]
+            }
+          ],
+          [
+            "$ref",
+            {
+              "kind": "string",
+              "points": [
+                35,
+                47,
+                100,
+                101,
+                102,
+                105,
+                110,
+                105,
+                116,
+                105,
+                111,
+                110,
+                115,
+                47,
+                116,
+                97,
+                114,
+                103,
+                101,
+                116
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"definitions\":{\"target\":{\"type\":\"number\"}},\"$ref\":\"#/definitions/target\"}",
+      "instanceRecipe": {
+        "kind": "string",
+        "points": [
+          98,
+          97,
+          100
+        ]
+      },
+      "errors": [
+        {
+          "keyword": "type",
+          "validatorValue": {
+            "kind": "string",
+            "points": [
+              110,
+              117,
+              109,
+              98,
+              101,
+              114
+            ]
+          },
+          "instance": {
+            "kind": "string",
+            "points": [
+              98,
+              97,
+              100
+            ]
+          },
+          "instancePath": [],
+          "schemaPath": [
+            "type"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "draft1-ref-pattern-explicit-pair",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                45,
+                48,
+                52,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                35
+              ]
+            }
+          ],
+          [
+            "definitions",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "target",
+                  {
+                    "kind": "object",
+                    "members": [
+                      [
+                        "pattern",
+                        {
+                          "kind": "string",
+                          "points": [
+                            94,
+                            55296,
+                            56320,
+                            36
+                          ]
+                        }
+                      ]
+                    ]
+                  }
+                ]
+              ]
+            }
+          ],
+          [
+            "$ref",
+            {
+              "kind": "string",
+              "points": [
+                35,
+                47,
+                100,
+                101,
+                102,
+                105,
+                110,
+                105,
+                116,
+                105,
+                111,
+                110,
+                115,
+                47,
+                116,
+                97,
+                114,
+                103,
+                101,
+                116
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"definitions\":{\"target\":{\"pattern\":\"^\\ud800\\udc00$\"}},\"$ref\":\"#/definitions/target\"}",
+      "instanceRecipe": {
+        "kind": "string",
+        "points": [
+          98,
+          97,
+          100
+        ]
+      },
+      "errors": [
+        {
+          "keyword": "pattern",
+          "validatorValue": {
+            "kind": "string",
+            "points": [
+              94,
+              55296,
+              56320,
+              36
+            ]
+          },
+          "instance": {
+            "kind": "string",
+            "points": [
+              98,
+              97,
+              100
+            ]
+          },
+          "instancePath": [],
+          "schemaPath": [
+            "pattern"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "draft1-ref-enum-source-kind",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                45,
+                48,
+                52,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                35
+              ]
+            }
+          ],
+          [
+            "definitions",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "target",
+                  {
+                    "kind": "object",
+                    "members": [
+                      [
+                        "enum",
+                        {
+                          "kind": "array",
+                          "items": [
+                            {
+                              "kind": "float",
+                              "bits": "3ff0000000000000"
+                            },
+                            {
+                              "kind": "object",
+                              "members": [
+                                [
+                                  "token",
+                                  {
+                                    "kind": "string",
+                                    "points": [
+                                      55296,
+                                      56320
+                                    ]
+                                  }
+                                ]
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    ]
+                  }
+                ]
+              ]
+            }
+          ],
+          [
+            "$ref",
+            {
+              "kind": "string",
+              "points": [
+                35,
+                47,
+                100,
+                101,
+                102,
+                105,
+                110,
+                105,
+                116,
+                105,
+                111,
+                110,
+                115,
+                47,
+                116,
+                97,
+                114,
+                103,
+                101,
+                116
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"definitions\":{\"target\":{\"enum\":[1.0,{\"token\":\"\\ud800\\udc00\"}]}},\"$ref\":\"#/definitions/target\"}",
+      "instanceRecipe": {
+        "kind": "integer",
+        "decimal": "0"
+      },
+      "errors": [
+        {
+          "keyword": "enum",
+          "validatorValue": {
+            "kind": "array",
+            "items": [
+              {
+                "kind": "float",
+                "bits": "3ff0000000000000"
+              },
+              {
+                "kind": "object",
+                "members": [
+                  [
+                    "token",
+                    {
+                      "kind": "string",
+                      "points": [
+                        55296,
+                        56320
+                      ]
+                    }
+                  ]
+                ]
+              }
+            ]
+          },
+          "instance": {
+            "kind": "integer",
+            "decimal": "0"
+          },
+          "instancePath": [],
+          "schemaPath": [
+            "enum"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "draft1-nested-ref-type",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                45,
+                48,
+                52,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                35
+              ]
+            }
+          ],
+          [
+            "definitions",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "target",
+                  {
+                    "kind": "object",
+                    "members": [
+                      [
+                        "type",
+                        {
+                          "kind": "string",
+                          "points": [
+                            110,
+                            117,
+                            109,
+                            98,
+                            101,
+                            114
+                          ]
+                        }
+                      ]
+                    ]
+                  }
+                ]
+              ]
+            }
+          ],
+          [
+            "properties",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "x",
+                  {
+                    "kind": "object",
+                    "members": [
+                      [
+                        "$ref",
+                        {
+                          "kind": "string",
+                          "points": [
+                            35,
+                            47,
+                            100,
+                            101,
+                            102,
+                            105,
+                            110,
+                            105,
+                            116,
+                            105,
+                            111,
+                            110,
+                            115,
+                            47,
+                            116,
+                            97,
+                            114,
+                            103,
+                            101,
+                            116
+                          ]
+                        }
+                      ]
+                    ]
+                  }
+                ]
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"definitions\":{\"target\":{\"type\":\"number\"}},\"properties\":{\"x\":{\"$ref\":\"#/definitions/target\"}}}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "x",
+            {
+              "kind": "string",
+              "points": [
+                98,
+                97,
+                100
+              ]
+            }
+          ]
+        ]
+      },
+      "errors": [
+        {
+          "keyword": "type",
+          "validatorValue": {
+            "kind": "string",
+            "points": [
+              110,
+              117,
+              109,
+              98,
+              101,
+              114
+            ]
+          },
+          "instance": {
+            "kind": "string",
+            "points": [
+              98,
+              97,
+              100
+            ]
+          },
+          "instancePath": [
+            "x"
+          ],
+          "schemaPath": [
+            "properties",
+            "x",
+            "type"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "draft1-array-type-rule",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                45,
+                48,
+                52,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                35
+              ]
+            }
+          ],
+          [
+            "type",
+            {
+              "kind": "array",
+              "items": [
+                {
+                  "kind": "string",
+                  "points": [
+                    110,
+                    117,
+                    109,
+                    98,
+                    101,
+                    114
+                  ]
+                },
+                {
+                  "kind": "string",
+                  "points": [
+                    115,
+                    116,
+                    114,
+                    105,
+                    110,
+                    103
+                  ]
+                }
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":[\"number\",\"string\"]}",
+      "instanceRecipe": {
+        "kind": "null"
+      },
+      "errors": [
+        {
+          "keyword": "type",
+          "validatorValue": {
+            "kind": "array",
+            "items": [
+              {
+                "kind": "string",
+                "points": [
+                  110,
+                  117,
+                  109,
+                  98,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "string",
+                "points": [
+                  115,
+                  116,
+                  114,
+                  105,
+                  110,
+                  103
+                ]
+              }
+            ]
+          },
+          "instance": {
+            "kind": "null"
+          },
+          "instancePath": [],
+          "schemaPath": [
+            "type"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "draft1-additional-properties-false",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                45,
+                48,
+                52,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                35
+              ]
+            }
+          ],
+          [
+            "additionalProperties",
+            {
+              "kind": "boolean",
+              "value": false
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"additionalProperties\":false}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "x",
+            {
+              "kind": "integer",
+              "decimal": "0"
+            }
+          ]
+        ]
+      },
+      "errors": [
+        {
+          "keyword": "additionalProperties",
+          "validatorValue": {
+            "kind": "boolean",
+            "value": false
+          },
+          "instance": {
+            "kind": "object",
+            "members": [
+              [
+                "x",
+                {
+                  "kind": "integer",
+                  "decimal": "0"
+                }
+              ]
+            ]
+          },
+          "instancePath": [],
+          "schemaPath": [
+            "additionalProperties"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "draft1-anyof-rule-value",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                45,
+                48,
+                52,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                35
+              ]
+            }
+          ],
+          [
+            "anyOf",
+            {
+              "kind": "array",
+              "items": [
+                {
+                  "kind": "object",
+                  "members": [
+                    [
+                      "type",
+                      {
+                        "kind": "string",
+                        "points": [
+                          115,
+                          116,
+                          114,
+                          105,
+                          110,
+                          103
+                        ]
+                      }
+                    ]
+                  ]
+                },
+                {
+                  "kind": "object",
+                  "members": [
+                    [
+                      "type",
+                      {
+                        "kind": "string",
+                        "points": [
+                          110,
+                          117,
+                          109,
+                          98,
+                          101,
+                          114
+                        ]
+                      }
+                    ]
+                  ]
+                }
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"anyOf\":[{\"type\":\"string\"},{\"type\":\"number\"}]}",
+      "instanceRecipe": {
+        "kind": "null"
+      },
+      "errors": [
+        {
+          "keyword": "anyOf",
+          "validatorValue": {
+            "kind": "array",
+            "items": [
+              {
+                "kind": "object",
+                "members": [
+                  [
+                    "type",
+                    {
+                      "kind": "string",
+                      "points": [
+                        115,
+                        116,
+                        114,
+                        105,
+                        110,
+                        103
+                      ]
+                    }
+                  ]
+                ]
+              },
+              {
+                "kind": "object",
+                "members": [
+                  [
+                    "type",
+                    {
+                      "kind": "string",
+                      "points": [
+                        110,
+                        117,
+                        109,
+                        98,
+                        101,
+                        114
+                      ]
+                    }
+                  ]
+                ]
+              }
+            ]
+          },
+          "instance": {
+            "kind": "null"
+          },
+          "instancePath": [],
+          "schemaPath": [
+            "anyOf"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "draft1-mincontains-float-kind",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                45,
+                48,
+                52,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                35
+              ]
+            }
+          ],
+          [
+            "contains",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "const",
+                  {
+                    "kind": "integer",
+                    "decimal": "1"
+                  }
+                ]
+              ]
+            }
+          ],
+          [
+            "minContains",
+            {
+              "kind": "float",
+              "bits": "4008000000000000"
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"contains\":{\"const\":1},\"minContains\":3.0}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "integer",
+            "decimal": "1"
+          },
+          {
+            "kind": "integer",
+            "decimal": "0"
+          }
+        ]
+      },
+      "errors": []
+    },
+    {
+      "id": "draft1-maxcontains-float-kind",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                45,
+                48,
+                52,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                35
+              ]
+            }
+          ],
+          [
+            "contains",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "type",
+                  {
+                    "kind": "string",
+                    "points": [
+                      110,
+                      117,
+                      109,
+                      98,
+                      101,
+                      114
+                    ]
+                  }
+                ]
+              ]
+            }
+          ],
+          [
+            "maxContains",
+            {
+              "kind": "float",
+              "bits": "0000000000000000"
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"contains\":{\"type\":\"number\"},\"maxContains\":0.0}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "integer",
+            "decimal": "1"
+          }
+        ]
+      },
+      "errors": []
+    },
+    {
+      "id": "draft1-nested-false-schema",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                45,
+                48,
+                52,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                35
+              ]
+            }
+          ],
+          [
+            "allOf",
+            {
+              "kind": "array",
+              "items": [
+                {
+                  "kind": "boolean",
+                  "value": false
+                }
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"allOf\":[false]}",
+      "instanceRecipe": {
+        "kind": "integer",
+        "decimal": "0"
+      },
+      "schemaError": {
+        "type": "SchemaError",
+        "message": "False is not of type 'object'\n\nFailed validating 'type' in metaschema['properties']['allOf']['items']:\n    {'id': 'http://json-schema.org/draft-04/schema#',\n     '$schema': 'http://json-schema.org/draft-04/schema#',\n     'description': 'Core schema meta-schema',\n     'definitions': {'schemaArray': {'type': 'array',\n                                     'minItems': 1,\n                                     'items': {'$ref': '#'}},\n                     'positiveInteger': {'type': 'integer', 'minimum': 0},\n                     'positiveIntegerDefault0': {'allOf': [{'$ref': '#/definitions/positiveInteger'},\n                                                           {'default': 0}]},\n                     'simpleTypes': {'enum': ['array',\n                                              'boolean',\n                                              'integer',\n                                              'null',\n                                              'number',\n                                              'object',\n                                              'string']},\n                     'stringArray': {'type': 'array',\n                                     'items': {'type': 'string'},\n                                     'minItems': 1,\n                                     'uniqueItems': True}},\n     'type': 'object',\n     'properties': {'id': {'type': 'string'},\n                    '$schema': {'type': 'string'},\n                    'title': {'type': 'string'},\n                    'description': {'type': 'string'},\n                    'default': {},\n                    'multipleOf': {'type': 'number',\n                                   'minimum': 0,\n                                   'exclusiveMinimum': True},\n                    'maximum': {'type': 'number'},\n                    'exclusiveMaximum': {'type': 'boolean',\n                                         'default': False},\n                    'minimum': {'type': 'number'},\n                    'exclusiveMinimum': {'type': 'boolean',\n                                         'default': False},\n                    'maxLength': {'$ref': '#/definitions/positiveInteger'},\n                    'minLength': {'$ref': '#/definitions/positiveIntegerDefault0'},\n                    'pattern': {'type': 'string', 'format': 'regex'},\n                    'additionalItems': {'anyOf': [{'type': 'boolean'},\n                                                  {'$ref': '#'}],\n                                        'default': {}},\n                    'items': {'anyOf': [{'$ref': '#'},\n                                        {'$ref': '#/definitions/schemaArray'}],\n                              'default': {}},\n                    'maxItems': {'$ref': '#/definitions/positiveInteger'},\n                    'minItems': {'$ref': '#/definitions/positiveIntegerDefault0'},\n                    'uniqueItems': {'type': 'boolean', 'default': False},\n                    'maxProperties': {'$ref': '#/definitions/positiveInteger'},\n                    'minProperties': {'$ref': '#/definitions/positiveIntegerDefault0'},\n                    'required': {'$ref': '#/definitions/stringArray'},\n                    'additionalProperties': {'anyOf': [{'type': 'boolean'},\n                                                       {'$ref': '#'}],\n                                             'default': {}},\n                    'definitions': {'type': 'object',\n                                    'additionalProperties': {'$ref': '#'},\n                                    'default': {}},\n                    'properties': {'type': 'object',\n                                   'additionalProperties': {'$ref': '#'},\n                                   'default': {}},\n                    'patternProperties': {'type': 'object',\n                                          'additionalProperties': {'$ref': '#'},\n                                          'default': {}},\n                    'dependencies': {'type': 'object',\n                                     'additionalProperties': {'anyOf': [{'$ref': '#'},\n                                                                        {'$ref': '#/definitions/stringArray'}]}},\n                    'enum': {'type': 'array',\n                             'minItems': 1,\n                             'uniqueItems': True},\n                    'type': {'anyOf': [{'$ref': '#/definitions/simpleTypes'},\n                                       {'type': 'array',\n                                        'items': {'$ref': '#/definitions/simpleTypes'},\n                                        'minItems': 1,\n                                        'uniqueItems': True}]},\n                    'format': {'type': 'string'},\n                    'allOf': {'$ref': '#/definitions/schemaArray'},\n                    'anyOf': {'$ref': '#/definitions/schemaArray'},\n                    'oneOf': {'$ref': '#/definitions/schemaArray'},\n                    'not': {'$ref': '#'}},\n     'dependencies': {'exclusiveMaximum': ['maximum'],\n                      'exclusiveMinimum': ['minimum']},\n     'default': {}}\n\nOn schema['allOf'][0]:\n    False"
+      }
+    },
+    {
+      "id": "draft2-ref-type",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                45,
+                48,
+                54,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                35
+              ]
+            }
+          ],
+          [
+            "definitions",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "target",
+                  {
+                    "kind": "object",
+                    "members": [
+                      [
+                        "type",
+                        {
+                          "kind": "string",
+                          "points": [
+                            110,
+                            117,
+                            109,
+                            98,
+                            101,
+                            114
+                          ]
+                        }
+                      ]
+                    ]
+                  }
+                ]
+              ]
+            }
+          ],
+          [
+            "$ref",
+            {
+              "kind": "string",
+              "points": [
+                35,
+                47,
+                100,
+                101,
+                102,
+                105,
+                110,
+                105,
+                116,
+                105,
+                111,
+                110,
+                115,
+                47,
+                116,
+                97,
+                114,
+                103,
+                101,
+                116
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"definitions\":{\"target\":{\"type\":\"number\"}},\"$ref\":\"#/definitions/target\"}",
+      "instanceRecipe": {
+        "kind": "string",
+        "points": [
+          98,
+          97,
+          100
+        ]
+      },
+      "errors": [
+        {
+          "keyword": "type",
+          "validatorValue": {
+            "kind": "string",
+            "points": [
+              110,
+              117,
+              109,
+              98,
+              101,
+              114
+            ]
+          },
+          "instance": {
+            "kind": "string",
+            "points": [
+              98,
+              97,
+              100
+            ]
+          },
+          "instancePath": [],
+          "schemaPath": [
+            "type"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "draft2-ref-pattern-explicit-pair",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                45,
+                48,
+                54,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                35
+              ]
+            }
+          ],
+          [
+            "definitions",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "target",
+                  {
+                    "kind": "object",
+                    "members": [
+                      [
+                        "pattern",
+                        {
+                          "kind": "string",
+                          "points": [
+                            94,
+                            55296,
+                            56320,
+                            36
+                          ]
+                        }
+                      ]
+                    ]
+                  }
+                ]
+              ]
+            }
+          ],
+          [
+            "$ref",
+            {
+              "kind": "string",
+              "points": [
+                35,
+                47,
+                100,
+                101,
+                102,
+                105,
+                110,
+                105,
+                116,
+                105,
+                111,
+                110,
+                115,
+                47,
+                116,
+                97,
+                114,
+                103,
+                101,
+                116
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"definitions\":{\"target\":{\"pattern\":\"^\\ud800\\udc00$\"}},\"$ref\":\"#/definitions/target\"}",
+      "instanceRecipe": {
+        "kind": "string",
+        "points": [
+          98,
+          97,
+          100
+        ]
+      },
+      "errors": [
+        {
+          "keyword": "pattern",
+          "validatorValue": {
+            "kind": "string",
+            "points": [
+              94,
+              55296,
+              56320,
+              36
+            ]
+          },
+          "instance": {
+            "kind": "string",
+            "points": [
+              98,
+              97,
+              100
+            ]
+          },
+          "instancePath": [],
+          "schemaPath": [
+            "pattern"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "draft2-ref-enum-source-kind",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                45,
+                48,
+                54,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                35
+              ]
+            }
+          ],
+          [
+            "definitions",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "target",
+                  {
+                    "kind": "object",
+                    "members": [
+                      [
+                        "enum",
+                        {
+                          "kind": "array",
+                          "items": [
+                            {
+                              "kind": "float",
+                              "bits": "3ff0000000000000"
+                            },
+                            {
+                              "kind": "object",
+                              "members": [
+                                [
+                                  "token",
+                                  {
+                                    "kind": "string",
+                                    "points": [
+                                      55296,
+                                      56320
+                                    ]
+                                  }
+                                ]
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    ]
+                  }
+                ]
+              ]
+            }
+          ],
+          [
+            "$ref",
+            {
+              "kind": "string",
+              "points": [
+                35,
+                47,
+                100,
+                101,
+                102,
+                105,
+                110,
+                105,
+                116,
+                105,
+                111,
+                110,
+                115,
+                47,
+                116,
+                97,
+                114,
+                103,
+                101,
+                116
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"definitions\":{\"target\":{\"enum\":[1.0,{\"token\":\"\\ud800\\udc00\"}]}},\"$ref\":\"#/definitions/target\"}",
+      "instanceRecipe": {
+        "kind": "integer",
+        "decimal": "0"
+      },
+      "errors": [
+        {
+          "keyword": "enum",
+          "validatorValue": {
+            "kind": "array",
+            "items": [
+              {
+                "kind": "float",
+                "bits": "3ff0000000000000"
+              },
+              {
+                "kind": "object",
+                "members": [
+                  [
+                    "token",
+                    {
+                      "kind": "string",
+                      "points": [
+                        55296,
+                        56320
+                      ]
+                    }
+                  ]
+                ]
+              }
+            ]
+          },
+          "instance": {
+            "kind": "integer",
+            "decimal": "0"
+          },
+          "instancePath": [],
+          "schemaPath": [
+            "enum"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "draft2-nested-ref-type",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                45,
+                48,
+                54,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                35
+              ]
+            }
+          ],
+          [
+            "definitions",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "target",
+                  {
+                    "kind": "object",
+                    "members": [
+                      [
+                        "type",
+                        {
+                          "kind": "string",
+                          "points": [
+                            110,
+                            117,
+                            109,
+                            98,
+                            101,
+                            114
+                          ]
+                        }
+                      ]
+                    ]
+                  }
+                ]
+              ]
+            }
+          ],
+          [
+            "properties",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "x",
+                  {
+                    "kind": "object",
+                    "members": [
+                      [
+                        "$ref",
+                        {
+                          "kind": "string",
+                          "points": [
+                            35,
+                            47,
+                            100,
+                            101,
+                            102,
+                            105,
+                            110,
+                            105,
+                            116,
+                            105,
+                            111,
+                            110,
+                            115,
+                            47,
+                            116,
+                            97,
+                            114,
+                            103,
+                            101,
+                            116
+                          ]
+                        }
+                      ]
+                    ]
+                  }
+                ]
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"definitions\":{\"target\":{\"type\":\"number\"}},\"properties\":{\"x\":{\"$ref\":\"#/definitions/target\"}}}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "x",
+            {
+              "kind": "string",
+              "points": [
+                98,
+                97,
+                100
+              ]
+            }
+          ]
+        ]
+      },
+      "errors": [
+        {
+          "keyword": "type",
+          "validatorValue": {
+            "kind": "string",
+            "points": [
+              110,
+              117,
+              109,
+              98,
+              101,
+              114
+            ]
+          },
+          "instance": {
+            "kind": "string",
+            "points": [
+              98,
+              97,
+              100
+            ]
+          },
+          "instancePath": [
+            "x"
+          ],
+          "schemaPath": [
+            "properties",
+            "x",
+            "type"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "draft2-array-type-rule",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                45,
+                48,
+                54,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                35
+              ]
+            }
+          ],
+          [
+            "type",
+            {
+              "kind": "array",
+              "items": [
+                {
+                  "kind": "string",
+                  "points": [
+                    110,
+                    117,
+                    109,
+                    98,
+                    101,
+                    114
+                  ]
+                },
+                {
+                  "kind": "string",
+                  "points": [
+                    115,
+                    116,
+                    114,
+                    105,
+                    110,
+                    103
+                  ]
+                }
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"type\":[\"number\",\"string\"]}",
+      "instanceRecipe": {
+        "kind": "null"
+      },
+      "errors": [
+        {
+          "keyword": "type",
+          "validatorValue": {
+            "kind": "array",
+            "items": [
+              {
+                "kind": "string",
+                "points": [
+                  110,
+                  117,
+                  109,
+                  98,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "string",
+                "points": [
+                  115,
+                  116,
+                  114,
+                  105,
+                  110,
+                  103
+                ]
+              }
+            ]
+          },
+          "instance": {
+            "kind": "null"
+          },
+          "instancePath": [],
+          "schemaPath": [
+            "type"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "draft2-additional-properties-false",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                45,
+                48,
+                54,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                35
+              ]
+            }
+          ],
+          [
+            "additionalProperties",
+            {
+              "kind": "boolean",
+              "value": false
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"additionalProperties\":false}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "x",
+            {
+              "kind": "integer",
+              "decimal": "0"
+            }
+          ]
+        ]
+      },
+      "errors": [
+        {
+          "keyword": "additionalProperties",
+          "validatorValue": {
+            "kind": "boolean",
+            "value": false
+          },
+          "instance": {
+            "kind": "object",
+            "members": [
+              [
+                "x",
+                {
+                  "kind": "integer",
+                  "decimal": "0"
+                }
+              ]
+            ]
+          },
+          "instancePath": [],
+          "schemaPath": [
+            "additionalProperties"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "draft2-anyof-rule-value",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                45,
+                48,
+                54,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                35
+              ]
+            }
+          ],
+          [
+            "anyOf",
+            {
+              "kind": "array",
+              "items": [
+                {
+                  "kind": "object",
+                  "members": [
+                    [
+                      "type",
+                      {
+                        "kind": "string",
+                        "points": [
+                          115,
+                          116,
+                          114,
+                          105,
+                          110,
+                          103
+                        ]
+                      }
+                    ]
+                  ]
+                },
+                {
+                  "kind": "object",
+                  "members": [
+                    [
+                      "type",
+                      {
+                        "kind": "string",
+                        "points": [
+                          110,
+                          117,
+                          109,
+                          98,
+                          101,
+                          114
+                        ]
+                      }
+                    ]
+                  ]
+                }
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"anyOf\":[{\"type\":\"string\"},{\"type\":\"number\"}]}",
+      "instanceRecipe": {
+        "kind": "null"
+      },
+      "errors": [
+        {
+          "keyword": "anyOf",
+          "validatorValue": {
+            "kind": "array",
+            "items": [
+              {
+                "kind": "object",
+                "members": [
+                  [
+                    "type",
+                    {
+                      "kind": "string",
+                      "points": [
+                        115,
+                        116,
+                        114,
+                        105,
+                        110,
+                        103
+                      ]
+                    }
+                  ]
+                ]
+              },
+              {
+                "kind": "object",
+                "members": [
+                  [
+                    "type",
+                    {
+                      "kind": "string",
+                      "points": [
+                        110,
+                        117,
+                        109,
+                        98,
+                        101,
+                        114
+                      ]
+                    }
+                  ]
+                ]
+              }
+            ]
+          },
+          "instance": {
+            "kind": "null"
+          },
+          "instancePath": [],
+          "schemaPath": [
+            "anyOf"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "draft2-mincontains-float-kind",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                45,
+                48,
+                54,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                35
+              ]
+            }
+          ],
+          [
+            "contains",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "const",
+                  {
+                    "kind": "integer",
+                    "decimal": "1"
+                  }
+                ]
+              ]
+            }
+          ],
+          [
+            "minContains",
+            {
+              "kind": "float",
+              "bits": "4008000000000000"
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"contains\":{\"const\":1},\"minContains\":3.0}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "integer",
+            "decimal": "1"
+          },
+          {
+            "kind": "integer",
+            "decimal": "0"
+          }
+        ]
+      },
+      "errors": []
+    },
+    {
+      "id": "draft2-maxcontains-float-kind",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                45,
+                48,
+                54,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                35
+              ]
+            }
+          ],
+          [
+            "contains",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "type",
+                  {
+                    "kind": "string",
+                    "points": [
+                      110,
+                      117,
+                      109,
+                      98,
+                      101,
+                      114
+                    ]
+                  }
+                ]
+              ]
+            }
+          ],
+          [
+            "maxContains",
+            {
+              "kind": "float",
+              "bits": "0000000000000000"
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"contains\":{\"type\":\"number\"},\"maxContains\":0.0}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "integer",
+            "decimal": "1"
+          }
+        ]
+      },
+      "errors": []
+    },
+    {
+      "id": "draft2-nested-false-schema",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                45,
+                48,
+                54,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                35
+              ]
+            }
+          ],
+          [
+            "allOf",
+            {
+              "kind": "array",
+              "items": [
+                {
+                  "kind": "boolean",
+                  "value": false
+                }
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"allOf\":[false]}",
+      "instanceRecipe": {
+        "kind": "integer",
+        "decimal": "0"
+      },
+      "errors": [
+        {
+          "keyword": null,
+          "validatorValue": {
+            "kind": "null"
+          },
+          "instance": {
+            "kind": "integer",
+            "decimal": "0"
+          },
+          "instancePath": [],
+          "schemaPath": [
+            "allOf"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "draft3-ref-type",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                45,
+                48,
+                55,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                35
+              ]
+            }
+          ],
+          [
+            "definitions",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "target",
+                  {
+                    "kind": "object",
+                    "members": [
+                      [
+                        "type",
+                        {
+                          "kind": "string",
+                          "points": [
+                            110,
+                            117,
+                            109,
+                            98,
+                            101,
+                            114
+                          ]
+                        }
+                      ]
+                    ]
+                  }
+                ]
+              ]
+            }
+          ],
+          [
+            "$ref",
+            {
+              "kind": "string",
+              "points": [
+                35,
+                47,
+                100,
+                101,
+                102,
+                105,
+                110,
+                105,
+                116,
+                105,
+                111,
+                110,
+                115,
+                47,
+                116,
+                97,
+                114,
+                103,
+                101,
+                116
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"definitions\":{\"target\":{\"type\":\"number\"}},\"$ref\":\"#/definitions/target\"}",
+      "instanceRecipe": {
+        "kind": "string",
+        "points": [
+          98,
+          97,
+          100
+        ]
+      },
+      "errors": [
+        {
+          "keyword": "type",
+          "validatorValue": {
+            "kind": "string",
+            "points": [
+              110,
+              117,
+              109,
+              98,
+              101,
+              114
+            ]
+          },
+          "instance": {
+            "kind": "string",
+            "points": [
+              98,
+              97,
+              100
+            ]
+          },
+          "instancePath": [],
+          "schemaPath": [
+            "type"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "draft3-ref-pattern-explicit-pair",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                45,
+                48,
+                55,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                35
+              ]
+            }
+          ],
+          [
+            "definitions",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "target",
+                  {
+                    "kind": "object",
+                    "members": [
+                      [
+                        "pattern",
+                        {
+                          "kind": "string",
+                          "points": [
+                            94,
+                            55296,
+                            56320,
+                            36
+                          ]
+                        }
+                      ]
+                    ]
+                  }
+                ]
+              ]
+            }
+          ],
+          [
+            "$ref",
+            {
+              "kind": "string",
+              "points": [
+                35,
+                47,
+                100,
+                101,
+                102,
+                105,
+                110,
+                105,
+                116,
+                105,
+                111,
+                110,
+                115,
+                47,
+                116,
+                97,
+                114,
+                103,
+                101,
+                116
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"definitions\":{\"target\":{\"pattern\":\"^\\ud800\\udc00$\"}},\"$ref\":\"#/definitions/target\"}",
+      "instanceRecipe": {
+        "kind": "string",
+        "points": [
+          98,
+          97,
+          100
+        ]
+      },
+      "errors": [
+        {
+          "keyword": "pattern",
+          "validatorValue": {
+            "kind": "string",
+            "points": [
+              94,
+              55296,
+              56320,
+              36
+            ]
+          },
+          "instance": {
+            "kind": "string",
+            "points": [
+              98,
+              97,
+              100
+            ]
+          },
+          "instancePath": [],
+          "schemaPath": [
+            "pattern"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "draft3-ref-enum-source-kind",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                45,
+                48,
+                55,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                35
+              ]
+            }
+          ],
+          [
+            "definitions",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "target",
+                  {
+                    "kind": "object",
+                    "members": [
+                      [
+                        "enum",
+                        {
+                          "kind": "array",
+                          "items": [
+                            {
+                              "kind": "float",
+                              "bits": "3ff0000000000000"
+                            },
+                            {
+                              "kind": "object",
+                              "members": [
+                                [
+                                  "token",
+                                  {
+                                    "kind": "string",
+                                    "points": [
+                                      55296,
+                                      56320
+                                    ]
+                                  }
+                                ]
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    ]
+                  }
+                ]
+              ]
+            }
+          ],
+          [
+            "$ref",
+            {
+              "kind": "string",
+              "points": [
+                35,
+                47,
+                100,
+                101,
+                102,
+                105,
+                110,
+                105,
+                116,
+                105,
+                111,
+                110,
+                115,
+                47,
+                116,
+                97,
+                114,
+                103,
+                101,
+                116
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"definitions\":{\"target\":{\"enum\":[1.0,{\"token\":\"\\ud800\\udc00\"}]}},\"$ref\":\"#/definitions/target\"}",
+      "instanceRecipe": {
+        "kind": "integer",
+        "decimal": "0"
+      },
+      "errors": [
+        {
+          "keyword": "enum",
+          "validatorValue": {
+            "kind": "array",
+            "items": [
+              {
+                "kind": "float",
+                "bits": "3ff0000000000000"
+              },
+              {
+                "kind": "object",
+                "members": [
+                  [
+                    "token",
+                    {
+                      "kind": "string",
+                      "points": [
+                        55296,
+                        56320
+                      ]
+                    }
+                  ]
+                ]
+              }
+            ]
+          },
+          "instance": {
+            "kind": "integer",
+            "decimal": "0"
+          },
+          "instancePath": [],
+          "schemaPath": [
+            "enum"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "draft3-nested-ref-type",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                45,
+                48,
+                55,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                35
+              ]
+            }
+          ],
+          [
+            "definitions",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "target",
+                  {
+                    "kind": "object",
+                    "members": [
+                      [
+                        "type",
+                        {
+                          "kind": "string",
+                          "points": [
+                            110,
+                            117,
+                            109,
+                            98,
+                            101,
+                            114
+                          ]
+                        }
+                      ]
+                    ]
+                  }
+                ]
+              ]
+            }
+          ],
+          [
+            "properties",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "x",
+                  {
+                    "kind": "object",
+                    "members": [
+                      [
+                        "$ref",
+                        {
+                          "kind": "string",
+                          "points": [
+                            35,
+                            47,
+                            100,
+                            101,
+                            102,
+                            105,
+                            110,
+                            105,
+                            116,
+                            105,
+                            111,
+                            110,
+                            115,
+                            47,
+                            116,
+                            97,
+                            114,
+                            103,
+                            101,
+                            116
+                          ]
+                        }
+                      ]
+                    ]
+                  }
+                ]
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"definitions\":{\"target\":{\"type\":\"number\"}},\"properties\":{\"x\":{\"$ref\":\"#/definitions/target\"}}}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "x",
+            {
+              "kind": "string",
+              "points": [
+                98,
+                97,
+                100
+              ]
+            }
+          ]
+        ]
+      },
+      "errors": [
+        {
+          "keyword": "type",
+          "validatorValue": {
+            "kind": "string",
+            "points": [
+              110,
+              117,
+              109,
+              98,
+              101,
+              114
+            ]
+          },
+          "instance": {
+            "kind": "string",
+            "points": [
+              98,
+              97,
+              100
+            ]
+          },
+          "instancePath": [
+            "x"
+          ],
+          "schemaPath": [
+            "properties",
+            "x",
+            "type"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "draft3-array-type-rule",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                45,
+                48,
+                55,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                35
+              ]
+            }
+          ],
+          [
+            "type",
+            {
+              "kind": "array",
+              "items": [
+                {
+                  "kind": "string",
+                  "points": [
+                    110,
+                    117,
+                    109,
+                    98,
+                    101,
+                    114
+                  ]
+                },
+                {
+                  "kind": "string",
+                  "points": [
+                    115,
+                    116,
+                    114,
+                    105,
+                    110,
+                    103
+                  ]
+                }
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"type\":[\"number\",\"string\"]}",
+      "instanceRecipe": {
+        "kind": "null"
+      },
+      "errors": [
+        {
+          "keyword": "type",
+          "validatorValue": {
+            "kind": "array",
+            "items": [
+              {
+                "kind": "string",
+                "points": [
+                  110,
+                  117,
+                  109,
+                  98,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "string",
+                "points": [
+                  115,
+                  116,
+                  114,
+                  105,
+                  110,
+                  103
+                ]
+              }
+            ]
+          },
+          "instance": {
+            "kind": "null"
+          },
+          "instancePath": [],
+          "schemaPath": [
+            "type"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "draft3-additional-properties-false",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                45,
+                48,
+                55,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                35
+              ]
+            }
+          ],
+          [
+            "additionalProperties",
+            {
+              "kind": "boolean",
+              "value": false
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"additionalProperties\":false}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "x",
+            {
+              "kind": "integer",
+              "decimal": "0"
+            }
+          ]
+        ]
+      },
+      "errors": [
+        {
+          "keyword": "additionalProperties",
+          "validatorValue": {
+            "kind": "boolean",
+            "value": false
+          },
+          "instance": {
+            "kind": "object",
+            "members": [
+              [
+                "x",
+                {
+                  "kind": "integer",
+                  "decimal": "0"
+                }
+              ]
+            ]
+          },
+          "instancePath": [],
+          "schemaPath": [
+            "additionalProperties"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "draft3-anyof-rule-value",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                45,
+                48,
+                55,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                35
+              ]
+            }
+          ],
+          [
+            "anyOf",
+            {
+              "kind": "array",
+              "items": [
+                {
+                  "kind": "object",
+                  "members": [
+                    [
+                      "type",
+                      {
+                        "kind": "string",
+                        "points": [
+                          115,
+                          116,
+                          114,
+                          105,
+                          110,
+                          103
+                        ]
+                      }
+                    ]
+                  ]
+                },
+                {
+                  "kind": "object",
+                  "members": [
+                    [
+                      "type",
+                      {
+                        "kind": "string",
+                        "points": [
+                          110,
+                          117,
+                          109,
+                          98,
+                          101,
+                          114
+                        ]
+                      }
+                    ]
+                  ]
+                }
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"anyOf\":[{\"type\":\"string\"},{\"type\":\"number\"}]}",
+      "instanceRecipe": {
+        "kind": "null"
+      },
+      "errors": [
+        {
+          "keyword": "anyOf",
+          "validatorValue": {
+            "kind": "array",
+            "items": [
+              {
+                "kind": "object",
+                "members": [
+                  [
+                    "type",
+                    {
+                      "kind": "string",
+                      "points": [
+                        115,
+                        116,
+                        114,
+                        105,
+                        110,
+                        103
+                      ]
+                    }
+                  ]
+                ]
+              },
+              {
+                "kind": "object",
+                "members": [
+                  [
+                    "type",
+                    {
+                      "kind": "string",
+                      "points": [
+                        110,
+                        117,
+                        109,
+                        98,
+                        101,
+                        114
+                      ]
+                    }
+                  ]
+                ]
+              }
+            ]
+          },
+          "instance": {
+            "kind": "null"
+          },
+          "instancePath": [],
+          "schemaPath": [
+            "anyOf"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "draft3-mincontains-float-kind",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                45,
+                48,
+                55,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                35
+              ]
+            }
+          ],
+          [
+            "contains",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "const",
+                  {
+                    "kind": "integer",
+                    "decimal": "1"
+                  }
+                ]
+              ]
+            }
+          ],
+          [
+            "minContains",
+            {
+              "kind": "float",
+              "bits": "4008000000000000"
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"contains\":{\"const\":1},\"minContains\":3.0}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "integer",
+            "decimal": "1"
+          },
+          {
+            "kind": "integer",
+            "decimal": "0"
+          }
+        ]
+      },
+      "errors": []
+    },
+    {
+      "id": "draft3-maxcontains-float-kind",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                45,
+                48,
+                55,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                35
+              ]
+            }
+          ],
+          [
+            "contains",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "type",
+                  {
+                    "kind": "string",
+                    "points": [
+                      110,
+                      117,
+                      109,
+                      98,
+                      101,
+                      114
+                    ]
+                  }
+                ]
+              ]
+            }
+          ],
+          [
+            "maxContains",
+            {
+              "kind": "float",
+              "bits": "0000000000000000"
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"contains\":{\"type\":\"number\"},\"maxContains\":0.0}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "integer",
+            "decimal": "1"
+          }
+        ]
+      },
+      "errors": []
+    },
+    {
+      "id": "draft3-nested-false-schema",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                45,
+                48,
+                55,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                35
+              ]
+            }
+          ],
+          [
+            "allOf",
+            {
+              "kind": "array",
+              "items": [
+                {
+                  "kind": "boolean",
+                  "value": false
+                }
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"allOf\":[false]}",
+      "instanceRecipe": {
+        "kind": "integer",
+        "decimal": "0"
+      },
+      "errors": [
+        {
+          "keyword": null,
+          "validatorValue": {
+            "kind": "null"
+          },
+          "instance": {
+            "kind": "integer",
+            "decimal": "0"
+          },
+          "instancePath": [],
+          "schemaPath": [
+            "allOf"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "draft4-ref-type",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                115,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                47,
+                50,
+                48,
+                49,
+                57,
+                45,
+                48,
+                57,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97
+              ]
+            }
+          ],
+          [
+            "definitions",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "target",
+                  {
+                    "kind": "object",
+                    "members": [
+                      [
+                        "type",
+                        {
+                          "kind": "string",
+                          "points": [
+                            110,
+                            117,
+                            109,
+                            98,
+                            101,
+                            114
+                          ]
+                        }
+                      ]
+                    ]
+                  }
+                ]
+              ]
+            }
+          ],
+          [
+            "$ref",
+            {
+              "kind": "string",
+              "points": [
+                35,
+                47,
+                100,
+                101,
+                102,
+                105,
+                110,
+                105,
+                116,
+                105,
+                111,
+                110,
+                115,
+                47,
+                116,
+                97,
+                114,
+                103,
+                101,
+                116
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"definitions\":{\"target\":{\"type\":\"number\"}},\"$ref\":\"#/definitions/target\"}",
+      "instanceRecipe": {
+        "kind": "string",
+        "points": [
+          98,
+          97,
+          100
+        ]
+      },
+      "errors": [
+        {
+          "keyword": "type",
+          "validatorValue": {
+            "kind": "string",
+            "points": [
+              110,
+              117,
+              109,
+              98,
+              101,
+              114
+            ]
+          },
+          "instance": {
+            "kind": "string",
+            "points": [
+              98,
+              97,
+              100
+            ]
+          },
+          "instancePath": [],
+          "schemaPath": [
+            "type"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "draft4-ref-pattern-explicit-pair",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                115,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                47,
+                50,
+                48,
+                49,
+                57,
+                45,
+                48,
+                57,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97
+              ]
+            }
+          ],
+          [
+            "definitions",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "target",
+                  {
+                    "kind": "object",
+                    "members": [
+                      [
+                        "pattern",
+                        {
+                          "kind": "string",
+                          "points": [
+                            94,
+                            55296,
+                            56320,
+                            36
+                          ]
+                        }
+                      ]
+                    ]
+                  }
+                ]
+              ]
+            }
+          ],
+          [
+            "$ref",
+            {
+              "kind": "string",
+              "points": [
+                35,
+                47,
+                100,
+                101,
+                102,
+                105,
+                110,
+                105,
+                116,
+                105,
+                111,
+                110,
+                115,
+                47,
+                116,
+                97,
+                114,
+                103,
+                101,
+                116
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"definitions\":{\"target\":{\"pattern\":\"^\\ud800\\udc00$\"}},\"$ref\":\"#/definitions/target\"}",
+      "instanceRecipe": {
+        "kind": "string",
+        "points": [
+          98,
+          97,
+          100
+        ]
+      },
+      "errors": [
+        {
+          "keyword": "pattern",
+          "validatorValue": {
+            "kind": "string",
+            "points": [
+              94,
+              55296,
+              56320,
+              36
+            ]
+          },
+          "instance": {
+            "kind": "string",
+            "points": [
+              98,
+              97,
+              100
+            ]
+          },
+          "instancePath": [],
+          "schemaPath": [
+            "pattern"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "draft4-ref-enum-source-kind",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                115,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                47,
+                50,
+                48,
+                49,
+                57,
+                45,
+                48,
+                57,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97
+              ]
+            }
+          ],
+          [
+            "definitions",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "target",
+                  {
+                    "kind": "object",
+                    "members": [
+                      [
+                        "enum",
+                        {
+                          "kind": "array",
+                          "items": [
+                            {
+                              "kind": "float",
+                              "bits": "3ff0000000000000"
+                            },
+                            {
+                              "kind": "object",
+                              "members": [
+                                [
+                                  "token",
+                                  {
+                                    "kind": "string",
+                                    "points": [
+                                      55296,
+                                      56320
+                                    ]
+                                  }
+                                ]
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    ]
+                  }
+                ]
+              ]
+            }
+          ],
+          [
+            "$ref",
+            {
+              "kind": "string",
+              "points": [
+                35,
+                47,
+                100,
+                101,
+                102,
+                105,
+                110,
+                105,
+                116,
+                105,
+                111,
+                110,
+                115,
+                47,
+                116,
+                97,
+                114,
+                103,
+                101,
+                116
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"definitions\":{\"target\":{\"enum\":[1.0,{\"token\":\"\\ud800\\udc00\"}]}},\"$ref\":\"#/definitions/target\"}",
+      "instanceRecipe": {
+        "kind": "integer",
+        "decimal": "0"
+      },
+      "errors": [
+        {
+          "keyword": "enum",
+          "validatorValue": {
+            "kind": "array",
+            "items": [
+              {
+                "kind": "float",
+                "bits": "3ff0000000000000"
+              },
+              {
+                "kind": "object",
+                "members": [
+                  [
+                    "token",
+                    {
+                      "kind": "string",
+                      "points": [
+                        55296,
+                        56320
+                      ]
+                    }
+                  ]
+                ]
+              }
+            ]
+          },
+          "instance": {
+            "kind": "integer",
+            "decimal": "0"
+          },
+          "instancePath": [],
+          "schemaPath": [
+            "enum"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "draft4-nested-ref-type",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                115,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                47,
+                50,
+                48,
+                49,
+                57,
+                45,
+                48,
+                57,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97
+              ]
+            }
+          ],
+          [
+            "definitions",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "target",
+                  {
+                    "kind": "object",
+                    "members": [
+                      [
+                        "type",
+                        {
+                          "kind": "string",
+                          "points": [
+                            110,
+                            117,
+                            109,
+                            98,
+                            101,
+                            114
+                          ]
+                        }
+                      ]
+                    ]
+                  }
+                ]
+              ]
+            }
+          ],
+          [
+            "properties",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "x",
+                  {
+                    "kind": "object",
+                    "members": [
+                      [
+                        "$ref",
+                        {
+                          "kind": "string",
+                          "points": [
+                            35,
+                            47,
+                            100,
+                            101,
+                            102,
+                            105,
+                            110,
+                            105,
+                            116,
+                            105,
+                            111,
+                            110,
+                            115,
+                            47,
+                            116,
+                            97,
+                            114,
+                            103,
+                            101,
+                            116
+                          ]
+                        }
+                      ]
+                    ]
+                  }
+                ]
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"definitions\":{\"target\":{\"type\":\"number\"}},\"properties\":{\"x\":{\"$ref\":\"#/definitions/target\"}}}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "x",
+            {
+              "kind": "string",
+              "points": [
+                98,
+                97,
+                100
+              ]
+            }
+          ]
+        ]
+      },
+      "errors": [
+        {
+          "keyword": "type",
+          "validatorValue": {
+            "kind": "string",
+            "points": [
+              110,
+              117,
+              109,
+              98,
+              101,
+              114
+            ]
+          },
+          "instance": {
+            "kind": "string",
+            "points": [
+              98,
+              97,
+              100
+            ]
+          },
+          "instancePath": [
+            "x"
+          ],
+          "schemaPath": [
+            "properties",
+            "x",
+            "type"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "draft4-array-type-rule",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                115,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                47,
+                50,
+                48,
+                49,
+                57,
+                45,
+                48,
+                57,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97
+              ]
+            }
+          ],
+          [
+            "type",
+            {
+              "kind": "array",
+              "items": [
+                {
+                  "kind": "string",
+                  "points": [
+                    110,
+                    117,
+                    109,
+                    98,
+                    101,
+                    114
+                  ]
+                },
+                {
+                  "kind": "string",
+                  "points": [
+                    115,
+                    116,
+                    114,
+                    105,
+                    110,
+                    103
+                  ]
+                }
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"type\":[\"number\",\"string\"]}",
+      "instanceRecipe": {
+        "kind": "null"
+      },
+      "errors": [
+        {
+          "keyword": "type",
+          "validatorValue": {
+            "kind": "array",
+            "items": [
+              {
+                "kind": "string",
+                "points": [
+                  110,
+                  117,
+                  109,
+                  98,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "string",
+                "points": [
+                  115,
+                  116,
+                  114,
+                  105,
+                  110,
+                  103
+                ]
+              }
+            ]
+          },
+          "instance": {
+            "kind": "null"
+          },
+          "instancePath": [],
+          "schemaPath": [
+            "type"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "draft4-additional-properties-false",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                115,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                47,
+                50,
+                48,
+                49,
+                57,
+                45,
+                48,
+                57,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97
+              ]
+            }
+          ],
+          [
+            "additionalProperties",
+            {
+              "kind": "boolean",
+              "value": false
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"additionalProperties\":false}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "x",
+            {
+              "kind": "integer",
+              "decimal": "0"
+            }
+          ]
+        ]
+      },
+      "errors": [
+        {
+          "keyword": "additionalProperties",
+          "validatorValue": {
+            "kind": "boolean",
+            "value": false
+          },
+          "instance": {
+            "kind": "object",
+            "members": [
+              [
+                "x",
+                {
+                  "kind": "integer",
+                  "decimal": "0"
+                }
+              ]
+            ]
+          },
+          "instancePath": [],
+          "schemaPath": [
+            "additionalProperties"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "draft4-anyof-rule-value",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                115,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                47,
+                50,
+                48,
+                49,
+                57,
+                45,
+                48,
+                57,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97
+              ]
+            }
+          ],
+          [
+            "anyOf",
+            {
+              "kind": "array",
+              "items": [
+                {
+                  "kind": "object",
+                  "members": [
+                    [
+                      "type",
+                      {
+                        "kind": "string",
+                        "points": [
+                          115,
+                          116,
+                          114,
+                          105,
+                          110,
+                          103
+                        ]
+                      }
+                    ]
+                  ]
+                },
+                {
+                  "kind": "object",
+                  "members": [
+                    [
+                      "type",
+                      {
+                        "kind": "string",
+                        "points": [
+                          110,
+                          117,
+                          109,
+                          98,
+                          101,
+                          114
+                        ]
+                      }
+                    ]
+                  ]
+                }
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"anyOf\":[{\"type\":\"string\"},{\"type\":\"number\"}]}",
+      "instanceRecipe": {
+        "kind": "null"
+      },
+      "errors": [
+        {
+          "keyword": "anyOf",
+          "validatorValue": {
+            "kind": "array",
+            "items": [
+              {
+                "kind": "object",
+                "members": [
+                  [
+                    "type",
+                    {
+                      "kind": "string",
+                      "points": [
+                        115,
+                        116,
+                        114,
+                        105,
+                        110,
+                        103
+                      ]
+                    }
+                  ]
+                ]
+              },
+              {
+                "kind": "object",
+                "members": [
+                  [
+                    "type",
+                    {
+                      "kind": "string",
+                      "points": [
+                        110,
+                        117,
+                        109,
+                        98,
+                        101,
+                        114
+                      ]
+                    }
+                  ]
+                ]
+              }
+            ]
+          },
+          "instance": {
+            "kind": "null"
+          },
+          "instancePath": [],
+          "schemaPath": [
+            "anyOf"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "draft4-mincontains-float-kind",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                115,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                47,
+                50,
+                48,
+                49,
+                57,
+                45,
+                48,
+                57,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97
+              ]
+            }
+          ],
+          [
+            "contains",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "const",
+                  {
+                    "kind": "integer",
+                    "decimal": "1"
+                  }
+                ]
+              ]
+            }
+          ],
+          [
+            "minContains",
+            {
+              "kind": "float",
+              "bits": "4008000000000000"
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"contains\":{\"const\":1},\"minContains\":3.0}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "integer",
+            "decimal": "1"
+          },
+          {
+            "kind": "integer",
+            "decimal": "0"
+          }
+        ]
+      },
+      "errors": [
+        {
+          "keyword": "minContains",
+          "validatorValue": {
+            "kind": "float",
+            "bits": "4008000000000000"
+          },
+          "instance": {
+            "kind": "array",
+            "items": [
+              {
+                "kind": "integer",
+                "decimal": "1"
+              },
+              {
+                "kind": "integer",
+                "decimal": "0"
+              }
+            ]
+          },
+          "instancePath": [],
+          "schemaPath": [
+            "contains"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "draft4-maxcontains-float-kind",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                115,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                47,
+                50,
+                48,
+                49,
+                57,
+                45,
+                48,
+                57,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97
+              ]
+            }
+          ],
+          [
+            "contains",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "type",
+                  {
+                    "kind": "string",
+                    "points": [
+                      110,
+                      117,
+                      109,
+                      98,
+                      101,
+                      114
+                    ]
+                  }
+                ]
+              ]
+            }
+          ],
+          [
+            "maxContains",
+            {
+              "kind": "float",
+              "bits": "0000000000000000"
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"contains\":{\"type\":\"number\"},\"maxContains\":0.0}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "integer",
+            "decimal": "1"
+          }
+        ]
+      },
+      "errors": [
+        {
+          "keyword": "maxContains",
+          "validatorValue": {
+            "kind": "float",
+            "bits": "0000000000000000"
+          },
+          "instance": {
+            "kind": "array",
+            "items": [
+              {
+                "kind": "integer",
+                "decimal": "1"
+              }
+            ]
+          },
+          "instancePath": [],
+          "schemaPath": [
+            "contains"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "draft4-nested-false-schema",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                115,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                47,
+                50,
+                48,
+                49,
+                57,
+                45,
+                48,
+                57,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97
+              ]
+            }
+          ],
+          [
+            "allOf",
+            {
+              "kind": "array",
+              "items": [
+                {
+                  "kind": "boolean",
+                  "value": false
+                }
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"allOf\":[false]}",
+      "instanceRecipe": {
+        "kind": "integer",
+        "decimal": "0"
+      },
+      "errors": [
+        {
+          "keyword": null,
+          "validatorValue": {
+            "kind": "null"
+          },
+          "instance": {
+            "kind": "integer",
+            "decimal": "0"
+          },
+          "instancePath": [],
+          "schemaPath": [
+            "allOf"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "draft5-ref-type",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                115,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                47,
+                50,
+                48,
+                50,
+                48,
+                45,
+                49,
+                50,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97
+              ]
+            }
+          ],
+          [
+            "definitions",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "target",
+                  {
+                    "kind": "object",
+                    "members": [
+                      [
+                        "type",
+                        {
+                          "kind": "string",
+                          "points": [
+                            110,
+                            117,
+                            109,
+                            98,
+                            101,
+                            114
+                          ]
+                        }
+                      ]
+                    ]
+                  }
+                ]
+              ]
+            }
+          ],
+          [
+            "$ref",
+            {
+              "kind": "string",
+              "points": [
+                35,
+                47,
+                100,
+                101,
+                102,
+                105,
+                110,
+                105,
+                116,
+                105,
+                111,
+                110,
+                115,
+                47,
+                116,
+                97,
+                114,
+                103,
+                101,
+                116
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"definitions\":{\"target\":{\"type\":\"number\"}},\"$ref\":\"#/definitions/target\"}",
+      "instanceRecipe": {
+        "kind": "string",
+        "points": [
+          98,
+          97,
+          100
+        ]
+      },
+      "errors": [
+        {
+          "keyword": "type",
+          "validatorValue": {
+            "kind": "string",
+            "points": [
+              110,
+              117,
+              109,
+              98,
+              101,
+              114
+            ]
+          },
+          "instance": {
+            "kind": "string",
+            "points": [
+              98,
+              97,
+              100
+            ]
+          },
+          "instancePath": [],
+          "schemaPath": [
+            "type"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "draft5-ref-pattern-explicit-pair",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                115,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                47,
+                50,
+                48,
+                50,
+                48,
+                45,
+                49,
+                50,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97
+              ]
+            }
+          ],
+          [
+            "definitions",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "target",
+                  {
+                    "kind": "object",
+                    "members": [
+                      [
+                        "pattern",
+                        {
+                          "kind": "string",
+                          "points": [
+                            94,
+                            55296,
+                            56320,
+                            36
+                          ]
+                        }
+                      ]
+                    ]
+                  }
+                ]
+              ]
+            }
+          ],
+          [
+            "$ref",
+            {
+              "kind": "string",
+              "points": [
+                35,
+                47,
+                100,
+                101,
+                102,
+                105,
+                110,
+                105,
+                116,
+                105,
+                111,
+                110,
+                115,
+                47,
+                116,
+                97,
+                114,
+                103,
+                101,
+                116
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"definitions\":{\"target\":{\"pattern\":\"^\\ud800\\udc00$\"}},\"$ref\":\"#/definitions/target\"}",
+      "instanceRecipe": {
+        "kind": "string",
+        "points": [
+          98,
+          97,
+          100
+        ]
+      },
+      "errors": [
+        {
+          "keyword": "pattern",
+          "validatorValue": {
+            "kind": "string",
+            "points": [
+              94,
+              55296,
+              56320,
+              36
+            ]
+          },
+          "instance": {
+            "kind": "string",
+            "points": [
+              98,
+              97,
+              100
+            ]
+          },
+          "instancePath": [],
+          "schemaPath": [
+            "pattern"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "draft5-ref-enum-source-kind",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                115,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                47,
+                50,
+                48,
+                50,
+                48,
+                45,
+                49,
+                50,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97
+              ]
+            }
+          ],
+          [
+            "definitions",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "target",
+                  {
+                    "kind": "object",
+                    "members": [
+                      [
+                        "enum",
+                        {
+                          "kind": "array",
+                          "items": [
+                            {
+                              "kind": "float",
+                              "bits": "3ff0000000000000"
+                            },
+                            {
+                              "kind": "object",
+                              "members": [
+                                [
+                                  "token",
+                                  {
+                                    "kind": "string",
+                                    "points": [
+                                      55296,
+                                      56320
+                                    ]
+                                  }
+                                ]
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    ]
+                  }
+                ]
+              ]
+            }
+          ],
+          [
+            "$ref",
+            {
+              "kind": "string",
+              "points": [
+                35,
+                47,
+                100,
+                101,
+                102,
+                105,
+                110,
+                105,
+                116,
+                105,
+                111,
+                110,
+                115,
+                47,
+                116,
+                97,
+                114,
+                103,
+                101,
+                116
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"definitions\":{\"target\":{\"enum\":[1.0,{\"token\":\"\\ud800\\udc00\"}]}},\"$ref\":\"#/definitions/target\"}",
+      "instanceRecipe": {
+        "kind": "integer",
+        "decimal": "0"
+      },
+      "errors": [
+        {
+          "keyword": "enum",
+          "validatorValue": {
+            "kind": "array",
+            "items": [
+              {
+                "kind": "float",
+                "bits": "3ff0000000000000"
+              },
+              {
+                "kind": "object",
+                "members": [
+                  [
+                    "token",
+                    {
+                      "kind": "string",
+                      "points": [
+                        55296,
+                        56320
+                      ]
+                    }
+                  ]
+                ]
+              }
+            ]
+          },
+          "instance": {
+            "kind": "integer",
+            "decimal": "0"
+          },
+          "instancePath": [],
+          "schemaPath": [
+            "enum"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "draft5-nested-ref-type",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                115,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                47,
+                50,
+                48,
+                50,
+                48,
+                45,
+                49,
+                50,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97
+              ]
+            }
+          ],
+          [
+            "definitions",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "target",
+                  {
+                    "kind": "object",
+                    "members": [
+                      [
+                        "type",
+                        {
+                          "kind": "string",
+                          "points": [
+                            110,
+                            117,
+                            109,
+                            98,
+                            101,
+                            114
+                          ]
+                        }
+                      ]
+                    ]
+                  }
+                ]
+              ]
+            }
+          ],
+          [
+            "properties",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "x",
+                  {
+                    "kind": "object",
+                    "members": [
+                      [
+                        "$ref",
+                        {
+                          "kind": "string",
+                          "points": [
+                            35,
+                            47,
+                            100,
+                            101,
+                            102,
+                            105,
+                            110,
+                            105,
+                            116,
+                            105,
+                            111,
+                            110,
+                            115,
+                            47,
+                            116,
+                            97,
+                            114,
+                            103,
+                            101,
+                            116
+                          ]
+                        }
+                      ]
+                    ]
+                  }
+                ]
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"definitions\":{\"target\":{\"type\":\"number\"}},\"properties\":{\"x\":{\"$ref\":\"#/definitions/target\"}}}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "x",
+            {
+              "kind": "string",
+              "points": [
+                98,
+                97,
+                100
+              ]
+            }
+          ]
+        ]
+      },
+      "errors": [
+        {
+          "keyword": "type",
+          "validatorValue": {
+            "kind": "string",
+            "points": [
+              110,
+              117,
+              109,
+              98,
+              101,
+              114
+            ]
+          },
+          "instance": {
+            "kind": "string",
+            "points": [
+              98,
+              97,
+              100
+            ]
+          },
+          "instancePath": [
+            "x"
+          ],
+          "schemaPath": [
+            "properties",
+            "x",
+            "type"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "draft5-array-type-rule",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                115,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                47,
+                50,
+                48,
+                50,
+                48,
+                45,
+                49,
+                50,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97
+              ]
+            }
+          ],
+          [
+            "type",
+            {
+              "kind": "array",
+              "items": [
+                {
+                  "kind": "string",
+                  "points": [
+                    110,
+                    117,
+                    109,
+                    98,
+                    101,
+                    114
+                  ]
+                },
+                {
+                  "kind": "string",
+                  "points": [
+                    115,
+                    116,
+                    114,
+                    105,
+                    110,
+                    103
+                  ]
+                }
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":[\"number\",\"string\"]}",
+      "instanceRecipe": {
+        "kind": "null"
+      },
+      "errors": [
+        {
+          "keyword": "type",
+          "validatorValue": {
+            "kind": "array",
+            "items": [
+              {
+                "kind": "string",
+                "points": [
+                  110,
+                  117,
+                  109,
+                  98,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "string",
+                "points": [
+                  115,
+                  116,
+                  114,
+                  105,
+                  110,
+                  103
+                ]
+              }
+            ]
+          },
+          "instance": {
+            "kind": "null"
+          },
+          "instancePath": [],
+          "schemaPath": [
+            "type"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "draft5-additional-properties-false",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                115,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                47,
+                50,
+                48,
+                50,
+                48,
+                45,
+                49,
+                50,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97
+              ]
+            }
+          ],
+          [
+            "additionalProperties",
+            {
+              "kind": "boolean",
+              "value": false
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"additionalProperties\":false}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "x",
+            {
+              "kind": "integer",
+              "decimal": "0"
+            }
+          ]
+        ]
+      },
+      "errors": [
+        {
+          "keyword": "additionalProperties",
+          "validatorValue": {
+            "kind": "boolean",
+            "value": false
+          },
+          "instance": {
+            "kind": "object",
+            "members": [
+              [
+                "x",
+                {
+                  "kind": "integer",
+                  "decimal": "0"
+                }
+              ]
+            ]
+          },
+          "instancePath": [],
+          "schemaPath": [
+            "additionalProperties"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "draft5-anyof-rule-value",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                115,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                47,
+                50,
+                48,
+                50,
+                48,
+                45,
+                49,
+                50,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97
+              ]
+            }
+          ],
+          [
+            "anyOf",
+            {
+              "kind": "array",
+              "items": [
+                {
+                  "kind": "object",
+                  "members": [
+                    [
+                      "type",
+                      {
+                        "kind": "string",
+                        "points": [
+                          115,
+                          116,
+                          114,
+                          105,
+                          110,
+                          103
+                        ]
+                      }
+                    ]
+                  ]
+                },
+                {
+                  "kind": "object",
+                  "members": [
+                    [
+                      "type",
+                      {
+                        "kind": "string",
+                        "points": [
+                          110,
+                          117,
+                          109,
+                          98,
+                          101,
+                          114
+                        ]
+                      }
+                    ]
+                  ]
+                }
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"anyOf\":[{\"type\":\"string\"},{\"type\":\"number\"}]}",
+      "instanceRecipe": {
+        "kind": "null"
+      },
+      "errors": [
+        {
+          "keyword": "anyOf",
+          "validatorValue": {
+            "kind": "array",
+            "items": [
+              {
+                "kind": "object",
+                "members": [
+                  [
+                    "type",
+                    {
+                      "kind": "string",
+                      "points": [
+                        115,
+                        116,
+                        114,
+                        105,
+                        110,
+                        103
+                      ]
+                    }
+                  ]
+                ]
+              },
+              {
+                "kind": "object",
+                "members": [
+                  [
+                    "type",
+                    {
+                      "kind": "string",
+                      "points": [
+                        110,
+                        117,
+                        109,
+                        98,
+                        101,
+                        114
+                      ]
+                    }
+                  ]
+                ]
+              }
+            ]
+          },
+          "instance": {
+            "kind": "null"
+          },
+          "instancePath": [],
+          "schemaPath": [
+            "anyOf"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "draft5-mincontains-float-kind",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                115,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                47,
+                50,
+                48,
+                50,
+                48,
+                45,
+                49,
+                50,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97
+              ]
+            }
+          ],
+          [
+            "contains",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "const",
+                  {
+                    "kind": "integer",
+                    "decimal": "1"
+                  }
+                ]
+              ]
+            }
+          ],
+          [
+            "minContains",
+            {
+              "kind": "float",
+              "bits": "4008000000000000"
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"contains\":{\"const\":1},\"minContains\":3.0}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "integer",
+            "decimal": "1"
+          },
+          {
+            "kind": "integer",
+            "decimal": "0"
+          }
+        ]
+      },
+      "errors": [
+        {
+          "keyword": "minContains",
+          "validatorValue": {
+            "kind": "float",
+            "bits": "4008000000000000"
+          },
+          "instance": {
+            "kind": "array",
+            "items": [
+              {
+                "kind": "integer",
+                "decimal": "1"
+              },
+              {
+                "kind": "integer",
+                "decimal": "0"
+              }
+            ]
+          },
+          "instancePath": [],
+          "schemaPath": [
+            "contains"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "draft5-maxcontains-float-kind",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                115,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                47,
+                50,
+                48,
+                50,
+                48,
+                45,
+                49,
+                50,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97
+              ]
+            }
+          ],
+          [
+            "contains",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "type",
+                  {
+                    "kind": "string",
+                    "points": [
+                      110,
+                      117,
+                      109,
+                      98,
+                      101,
+                      114
+                    ]
+                  }
+                ]
+              ]
+            }
+          ],
+          [
+            "maxContains",
+            {
+              "kind": "float",
+              "bits": "0000000000000000"
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"contains\":{\"type\":\"number\"},\"maxContains\":0.0}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "integer",
+            "decimal": "1"
+          }
+        ]
+      },
+      "errors": [
+        {
+          "keyword": "maxContains",
+          "validatorValue": {
+            "kind": "float",
+            "bits": "0000000000000000"
+          },
+          "instance": {
+            "kind": "array",
+            "items": [
+              {
+                "kind": "integer",
+                "decimal": "1"
+              }
+            ]
+          },
+          "instancePath": [],
+          "schemaPath": [
+            "contains"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "draft5-nested-false-schema",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                115,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                47,
+                50,
+                48,
+                50,
+                48,
+                45,
+                49,
+                50,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97
+              ]
+            }
+          ],
+          [
+            "allOf",
+            {
+              "kind": "array",
+              "items": [
+                {
+                  "kind": "boolean",
+                  "value": false
+                }
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"allOf\":[false]}",
+      "instanceRecipe": {
+        "kind": "integer",
+        "decimal": "0"
+      },
+      "errors": [
+        {
+          "keyword": null,
+          "validatorValue": {
+            "kind": "null"
+          },
+          "instance": {
+            "kind": "integer",
+            "decimal": "0"
+          },
+          "instancePath": [],
+          "schemaPath": [
+            "allOf"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "default-root-false",
+      "schemaRecipe": {
+        "kind": "boolean",
+        "value": false
+      },
+      "schemaText": "false",
+      "instanceRecipe": {
+        "kind": "integer",
+        "decimal": "0"
+      },
+      "errors": [
+        {
+          "keyword": null,
+          "validatorValue": {
+            "kind": "null"
+          },
+          "instance": {
+            "kind": "integer",
+            "decimal": "0"
+          },
+          "instancePath": [],
+          "schemaPath": []
+        }
+      ]
+    },
+    {
+      "id": "default-root-true",
+      "schemaRecipe": {
+        "kind": "boolean",
+        "value": true
+      },
+      "schemaText": "true",
+      "instanceRecipe": {
+        "kind": "integer",
+        "decimal": "0"
+      },
+      "errors": []
+    },
+    {
+      "id": "draft3-implicit-required",
+      "schemaRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "$schema",
+            {
+              "kind": "string",
+              "points": [
+                104,
+                116,
+                116,
+                112,
+                58,
+                47,
+                47,
+                106,
+                115,
+                111,
+                110,
+                45,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                46,
+                111,
+                114,
+                103,
+                47,
+                100,
+                114,
+                97,
+                102,
+                116,
+                45,
+                48,
+                51,
+                47,
+                115,
+                99,
+                104,
+                101,
+                109,
+                97,
+                35
+              ]
+            }
+          ],
+          [
+            "properties",
+            {
+              "kind": "object",
+              "members": [
+                [
+                  "x",
+                  {
+                    "kind": "object",
+                    "members": [
+                      [
+                        "required",
+                        {
+                          "kind": "boolean",
+                          "value": true
+                        }
+                      ]
+                    ]
+                  }
+                ]
+              ]
+            }
+          ]
+        ]
+      },
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"properties\":{\"x\":{\"required\":true}}}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": []
+      },
+      "errors": [
+        {
+          "keyword": "required",
+          "validatorValue": {
+            "kind": "boolean",
+            "value": true
+          },
+          "instance": {
+            "kind": "object",
+            "members": []
+          },
+          "instancePath": [
+            "x"
+          ],
+          "schemaPath": [
+            "properties",
+            "x",
+            "required"
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "profile": "umf.r2-independent-serialization-null-tag-review/1",
+  "capturedAt": "2026-10-22T08:26:27.852878+00:00",
+  "reviewer": "Independent Sol reviewer (/root/sol_r2_final_review)",
+  "scope": "Harness-only exact Python None tag spelling canonicalization. Production core, frozen fixtures, and approved NEL correction unchanged.",
+  "script": {
+    "path": "scripts/rust-core/python-serialization-conformance.py",
+    "sha256": "8ab6a3d78bee5710d0fc342b0995dfa98988fa0c42008413026f2736de78235a"
+  },
+  "core": {
+    "path": "crates/umf-core/src/schema.rs",
+    "sha256": "d54a65813299792cf0d6fb55d33648744395cde9b3a0623d7d6ea158f2d49813"
+  },
+  "change": "Only exact {kind:NoneType,value:null} maps to {kind:null}; recursive list items and dictionary keys/values receive the same projection. Exact canonical null tags are validated. Malformed aliases refuse.",
+  "independentControls": {
+    "execution": "AST-extracted exact current canonical_tagged/from_tagged/tagged/text functions.",
+    "exactNullPositiveControls": 2,
+    "nonAliasPreservationControls": 5,
+    "preservedTags": [
+      "bool false",
+      "integer zero",
+      "negative-zero float bits",
+      "raw surrogate and astral text codepoints",
+      "unknown tag"
+    ],
+    "recursiveListAndDictionaryKeyValueProjection": "pass",
+    "extraFieldsOutsideNullTagsPreserved": "pass",
+    "expectedInputUnmodified": "pass",
+    "malformedNullTagRefusals": 8,
+    "malformedControls": "Four malformed null/NoneType spellings each refused by canonical_tagged and from_tagged.",
+    "frozenFixtureAndNELSelectorChanges": "none in reviewed diff"
+  },
+  "installedResult": {
+    "path": "/private/tmp/umf-r2-sol-serialization-installed.json",
+    "sha256": "e4898006a0f701e58719469496ed21d33fe976895223b539af719a74f2429f58",
+    "profile": "umf.r2.python-serialization-conformance/1",
+    "pythonMinor": 11,
+    "oracleCount": 18,
+    "cases": 1742,
+    "passed": 1742,
+    "failed": 0
+  },
+  "approval": {
+    "narrowCheckpointApproved": true,
+    "overallR2Approved": false,
+    "conditions": [
+      "Reviewed script hash remains unchanged",
+      "Fresh committed-source full installed artifact gate passes",
+      "Final CI and merge review complete"
+    ],
+    "archiveRebuildQualification": "Pending later artifact gate; not claimed by this source review."
+  }
+}

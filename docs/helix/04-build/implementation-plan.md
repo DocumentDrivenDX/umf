@@ -13219,3 +13219,13 @@ passes dependency admission and31 installed Truss component controls. Historical
 core0.10.0 assets are reused byte-for-byte. The [release notes](../05-deploy/sdk-release-notes-0.5.3.md)
 retain outstanding support limits; final release assets carry exact qualification
 and checksums. Hosted Linux checks remain a gate for the release commit.
+
+## Shared Rust execution and Python V8 removal
+
+The [Rust migration plan](rust-migration-plan.md) sequences ADR-006: operation and
+dependency census, exact representation/binding spike, metamodel/core port,
+generation/deployment/migration port, V8-free installed Python/native CLI,
+remaining adapters/access integration and final Node/Bun/browser cutover. Its
+Milestones A and B separate Python engine independence from complete Rust shared
+ownership. Historical execution evidence here retains its original source scope;
+no migration slice is qualified by this planning pointer.

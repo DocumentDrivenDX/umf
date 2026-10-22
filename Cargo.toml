@@ -1,0 +1,16 @@
+[workspace]
+resolver = "2"
+members = [
+  "crates/umf-core",
+  "crates/umf-core-wire",
+  "bindings/core/python",
+  "bindings/core/node",
+  "bindings/core/wasm",
+  "crates/umf-metamodel",
+  "crates/umf-cli",
+  "crates/rust-spike-core",
+  "crates/rust-spike-cli",
+  "bindings/rust-spike/python",
+  "bindings/rust-spike/node",
+  "bindings/rust-spike/wasm",
+]

@@ -1,0 +1,172 @@
+{
+  "id": "R2-SOL-PYTHON-RESOURCE-IMPLEMENTATION-001",
+  "status": "Implementation handoff; no self-approval or overall R2 completion. Separate independent source review and committed-source all-host artifacts remain required.",
+  "implementationFallback": "Root authorized Sol implementation after assigned Luna model failed at capacity. Source ownership schema.rs plus native tests only.",
+  "sources": {
+    "crates/umf-core/src/schema.rs": "d54a65813299792cf0d6fb55d33648744395cde9b3a0623d7d6ea158f2d49813",
+    "crates/umf-core/tests/schema_python_recursive_resource_scope.rs": "d39aaf10a6d7f55f905f617d51c632aea0ad52a1926079513b682f514669bcc3"
+  },
+  "representationDecision": {
+    "path": "sol-python-resource-identity-representation.json",
+    "sha256": "7d657027d557ad143e8e057c0b9821909f641deedd85ff554ce0700a4712265f"
+  },
+  "changes": [
+    "Bind references against the actual nearest recognized source resource, preserving exact Python codepoints and opaque reached reference identity.",
+    "Keep native per-dialect resource child catalogs, active legacy ids except same-object ref siblings, and accepted trailing empty fragments.",
+    "Separate recursive-reference lookup history from dynamic-anchor scopes; record only reference lookups, retain unanchored barriers, select nearest-to-outer native history.",
+    "Use raw-u32 private URI identity and native ASCII structural URI join operations. Python diagnostic UTF-16 paths are display-only. Named anchors resolve source-preserving locators; dynamic scope carries immutable owned-tree node identity.",
+    "Context admits URI/root/path/history copies, lookup/common-prefix comparison, binding traversal, scope matching and local-reference gate paths before work/allocation. No private source-text cap.",
+    "Separate static and dynamic reference helpers to keep recursive debug frames within unchanged 2 MiB stack controls."
+  ],
+  "fixtures": [
+    {
+      "path": "sol-python-recursive-resource-scope-predecessor.json",
+      "sha256": "c67b6602a40235a9202a00082949e6a9a8af3db1aee614110275afb303de9b15",
+      "cases": 89,
+      "methodObservations": 255
+    },
+    {
+      "path": "sol-python-resource-identity-companion-predecessor.json",
+      "sha256": "75f772e29f3776969739c423c98b722f9597895bd6e2c215e4fe7f7c3fc44609",
+      "cases": 114,
+      "methodObservations": 342
+    },
+    {
+      "path": "sol-python-resource-anchor-companion-predecessor.json",
+      "sha256": "ba8357b3d85b64edefea6f57b3ca91872ef8053d3182406ee7543af5bbd2f2d5",
+      "cases": 24,
+      "methodObservations": 72
+    },
+    {
+      "path": "sol-python-resource-uri-operations-predecessor.json",
+      "sha256": "e79cdee8693892517cc372f9b5b05d902199e78b734175bf10359baadeabfae9",
+      "cases": 24,
+      "methodObservations": 72
+    }
+  ],
+  "additionalNativeUriOperations": 140,
+  "oraclePolicy": "All predecessor fixtures immutable, independently captured before corresponding fixes; exact profiles 3.11.17/3.12.15/3.13.16 with plain jsonschema4.26.0 and no optional URI format validators. No semantic correction introduced by this batch. Four existing constructor refusals are mapped narrowly to SCHEMA_REF_UNRESOLVED.",
+  "stdlibUriOracles": [
+    {
+      "python": "3.11.17",
+      "module": "/Users/erik/.local/share/uv/python/cpython-3.11.17-macos-aarch64-none/lib/python3.11/urllib/parse.py",
+      "moduleSha256": "16d609efe91f08901df42c3176a6046e34e97fd39813954871d5a16e89e6b454",
+      "urljoinSourceSha256": "6a10de0d00dd5ac62be848df4f23c985d9cccbb36d61e5422d56d58362af4f29"
+    },
+    {
+      "python": "3.12.15",
+      "module": "/Users/erik/.local/share/uv/python/cpython-3.12.15-macos-aarch64-none/lib/python3.12/urllib/parse.py",
+      "moduleSha256": "e6af7f475262f1de335bb2e41e26adb94d6103977cf5fe1ddc430dc6a3b1623f",
+      "urljoinSourceSha256": "6a10de0d00dd5ac62be848df4f23c985d9cccbb36d61e5422d56d58362af4f29"
+    },
+    {
+      "python": "3.13.16",
+      "module": "/Users/erik/.local/share/uv/python/cpython-3.13.16-macos-aarch64-none/lib/python3.13/urllib/parse.py",
+      "moduleSha256": "491b233e8d87a2ab73964afff029717177d53ad8def328ed9b00575db983da27",
+      "urljoinSourceSha256": "6a10de0d00dd5ac62be848df4f23c985d9cccbb36d61e5422d56d58362af4f29"
+    }
+  ],
+  "attribution": "The raw-codepoint URI helper is an algorithmic port of the qualified CPython urllib.parse URI operations. Root notified to carry the PSF source/license notice in the production source closure; existing fixture PSF-LICENSE.txt is available.",
+  "qualification": {
+    "command": "env PATH=/opt/homebrew/opt/rustup/bin:/opt/homebrew/bin:/usr/bin:/bin RUSTUP_TOOLCHAIN=1.90.0 cargo test --offline --locked --workspace",
+    "exitCode": 0,
+    "passed": 214,
+    "failed": 0,
+    "ignored": 0,
+    "resultSuites": 45,
+    "log": "/private/tmp/umf-r2-resource-final-workspace.log",
+    "logSha256": "6666cef19d16839c8ec35f33b1ee46a7fcd650ceaf0b670db67c58dacd2e81d8",
+    "includes": [
+      "All retained native schema32, ordered/annotation/reference/metadata/path/arithmetic corpora",
+      "Resource89+identity114+anchor24+container24 native methods and140 native URI operations",
+      "Work-denial controls for long URI join and common-prefix comparison",
+      "Ordinary/annotation/helper recursion at2MiB with depth128 accepted and129 refused",
+      "R1 regressions, vendor5 lib controls, metamodel and core-wire/native bridge tests"
+    ]
+  },
+  "frames": {
+    "schemaSha256": "d54a65813299792cf0d6fb55d33648744395cde9b3a0623d7d6ea158f2d49813",
+    "target": "macOS arm64 debug, full workspace feature union; default 2MiB controls unchanged",
+    "executable": "target/debug/deps/schema_helper_stack-938a018a8d3ae13e",
+    "executableSha256": "5a52244313b7e51501a5fc33d9f70827702b79600e99a14289f081f167fd72b9",
+    "frames": [
+      {
+        "symbol": "__ZN8umf_core6schema14CompiledSchema24visit_python_annotations17hea33f773bca09e3cE",
+        "prologueStackBytes": 2896
+      },
+      {
+        "symbol": "__ZN8umf_core6schema14CompiledSchema24visit_python_annotations17hf2c959c99473db72E",
+        "prologueStackBytes": 2896
+      },
+      {
+        "symbol": "__ZN8umf_core6schema14CompiledSchema4eval17h013d4adb3e43ebcaE",
+        "prologueStackBytes": 1760
+      },
+      {
+        "symbol": "__ZN8umf_core6schema14CompiledSchema4eval17hcc25c64a7d1ede31E",
+        "prologueStackBytes": 1760
+      },
+      {
+        "symbol": "__ZN8umf_core6schema14CompiledSchema23eval_keyword_references17ha3a17a0b8d9ddc87E",
+        "prologueStackBytes": 512
+      },
+      {
+        "symbol": "__ZN8umf_core6schema14CompiledSchema23eval_keyword_references17hed227bf80e589019E",
+        "prologueStackBytes": 512
+      },
+      {
+        "symbol": "__ZN8umf_core6schema14CompiledSchema21eval_static_reference17hcb630355d253d1a1E",
+        "prologueStackBytes": 6432
+      },
+      {
+        "symbol": "__ZN8umf_core6schema14CompiledSchema21eval_static_reference17hf5a9f42a8624e3cbE",
+        "prologueStackBytes": 6432
+      },
+      {
+        "symbol": "__ZN8umf_core6schema14CompiledSchema22eval_dynamic_reference17h0ed7a41dcbca53ffE",
+        "prologueStackBytes": 9760
+      },
+      {
+        "symbol": "__ZN8umf_core6schema14CompiledSchema22eval_dynamic_reference17hb0a6aef4832f433cE",
+        "prologueStackBytes": 9760
+      },
+      {
+        "symbol": "__ZN8umf_core6schema14CompiledSchema18eval_keyword_items17h47a7a23392d9b8bbE",
+        "prologueStackBytes": 3328
+      },
+      {
+        "symbol": "__ZN8umf_core6schema14CompiledSchema18eval_keyword_items17hf9eea0cbc7f42f7bE",
+        "prologueStackBytes": 3328
+      },
+      {
+        "symbol": "__ZN8umf_core6schema14CompiledSchema24eval_keyword_combinators17h2c7cf62f90a3cc70E",
+        "prologueStackBytes": 13456
+      },
+      {
+        "symbol": "__ZN8umf_core6schema14CompiledSchema24eval_keyword_combinators17h6cdb6da3868c85eaE",
+        "prologueStackBytes": 13456
+      },
+      {
+        "symbol": "__ZN8umf_core6schema14CompiledSchema10eval_inner17h09ee35a48fd92713E",
+        "prologueStackBytes": 3360
+      },
+      {
+        "symbol": "__ZN8umf_core6schema14CompiledSchema10eval_inner17ha6dec9d0f34e9cd0E",
+        "prologueStackBytes": 3360
+      },
+      {
+        "symbol": "__ZN8umf_core6schema14CompiledSchema17finish_eval_inner17h959ad27a4f8ad014E",
+        "prologueStackBytes": 6784
+      },
+      {
+        "symbol": "__ZN8umf_core6schema14CompiledSchema17finish_eval_inner17ha73ec09f27263434E",
+        "prologueStackBytes": 6784
+      }
+    ]
+  },
+  "remaining": [
+    "Separate independent reviewer source attestation",
+    "Clean committed-source full host installed gate including official4995 and schema admission9282, arithmetic2586, ordered/reference/resource methods, default+feature real Chromium WASM, source closure and zero mismatches",
+    "Root licensing attribution housekeeping stated above; no production source edits planned by implementation owner"
+  ]
+}

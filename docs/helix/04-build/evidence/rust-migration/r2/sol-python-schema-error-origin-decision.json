@@ -1,0 +1,34 @@
+{
+  "id": "R2-SOL-PYTHON-SCHEMA-ERROR-ORIGIN-001",
+  "status": "reviewed-production-decision",
+  "approval": "Root approved explicit trusted Python rule metadata, optional native keyword and source-preserving validator_value. Root requested subject-origin preservation after display-path ambiguity was independently confirmed.",
+  "overallR2Approved": false,
+  "scope": "Already exposed compiled Python consumer error fields: validator, validator_value, instance, instance path and schema path. Strict core fallback remains a separately qualified profile.",
+  "evidence": {
+    "sol-python-schema-error-metadata-predecessor.json": "3ef0d7b544aebcccdd800749741c68b8587defcb82165c71abd491e551dcf4d3",
+    "sol-python-schema-error-metadata-profiles.json": "b58b03cb6fd663a46bda628e0cd9deaebd58e30b44c1019d72ba4b8818106ee8",
+    "sol-python-schema-error-subjects-predecessor.json": "e93bac66f68c16acef799beec894638bf8733d8107347f2e062dd075de7f13b1",
+    "sol-python-schema-error-subjects-profiles.json": "1bf717f7063da9fe4a7b3b1bef312acca0a02d59be91ffdc522ae5999fdbfe45"
+  },
+  "requiredSemantics": [
+    "Preserve native display paths even when they do not locate the original root schema rule or actual subject.",
+    "A referenced type error can have schemaPath [type] and validator_value number even when the original root contains only a reference. Carry the actual keyword rule from trusted Rust construction.",
+    "Boolean false-schema errors have native validator None and validator_value None. Other false aggregate keyword errors, such as Draft2020 items:false, retain their own keyword/value/subject.",
+    "A propertyNames error has the actual property name as error.instance despite empty display instancePath. A direct nested false-schema error can similarly have child instance9 despite empty display path. Carry physical subject origin independently.",
+    "Preserve Python integer versus float numeric kind and exact source code points in rule values and evaluated subjects."
+  ],
+  "internalApi": {
+    "pythonKeyword": "Option<PyText>; None for genuine native boolean-schema errors. Keep the ordinary ECMA StructuralError keyword representation unchanged.",
+    "validatorValue": "Source-preserving PythonConsumerValue from the actual keyword rule, with explicit bound override for min/maxContains and child required:true in Draft3. Native None is represented as Python Null.",
+    "subjectOrigin": "Trusted physicalInstancePath plus optional instanceOverride for ephemeral subjects, or an equivalent shared immutable source-view locator. Keep native display instancePath separate. Field presence distinguishes an override whose value is None from no override.",
+    "binding": "Typed PyO3 result carries explicit rule/subject metadata. Compiled consumer facade consumes it; no heuristic re-traversal from display schemaPath or instancePath. Public Diagnostic, Value and closed generic wire remain unchanged.",
+    "ownership": "Prefer shared owned source snapshots, borrowed views or small overrides. Do not deep-copy the complete root instance per error or the complete schema per node solely to preserve metadata."
+  },
+  "resourceRequirements": [
+    "Use caller Context before rule/subject/path/message/keyword projection, metadata buffers, annotation key materialization and dynamic-scope copies.",
+    "Use existing source-origin maps to reconstruct source rules without losing explicit surrogate-pair versus astral identity or numeric kind.",
+    "No 4M private-copy cap and no ordinary structural re-admission of internal wrappers. Operational errors propagate; they are never reclassified as validation errors or deferred arithmetic failures."
+  ],
+  "qualification": "Only the exposed fields listed here are qualified. Exact native exception class/message identity and the entire jsonschema exception API are not claimed. Existing normalized Rust validation envelope is retained.",
+  "verificationStatus": "All frozen native metadata and subject records independently match CPython3.11.17/3.12.15/3.13.16 with jsonschema4.26.0. Production implementation and coherent native/installed verification pending."
+}

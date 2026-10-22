@@ -1,0 +1,13 @@
+{
+  "id": "R2-SOL-PYTHON-RESOURCE-IDENTITY-REPRESENTATION-001",
+  "supersedesRepresentationOnly": "R2-SOL-PYTHON-RESOURCE-IDENTITY-001",
+  "choice": "Private PythonResourceUri owns exact native u32 codepoints, retaining lone surrogates, explicit surrogate pairs, astral scalars, and all literal marker text distinctly. No escape codec is required. Public values, admission, diagnostics and wire stay unchanged.",
+  "operations": "ASCII URI delimiters, scheme checks, relative join and dot-segment operations act structurally on u32 slices; immutable resource locators select actual schema nodes. Bound local pointers and anchors use source codepoints. Diagnostic UTF-16 materialization is one-way and never used for identity or lookup.",
+  "resources": "Context admits owned URI/path/history/root-map copies and common-prefix comparisons before work/allocation. No private source-text cap.",
+  "qualification": {
+    "original89": "c67b6602a40235a9202a00082949e6a9a8af3db1aee614110275afb303de9b15",
+    "identity114": "75f772e29f3776969739c423c98b722f9597895bd6e2c215e4fe7f7c3fc44609",
+    "anchor24": "ba8357b3d85b64edefea6f57b3ca91872ef8053d3182406ee7543af5bbd2f2d5"
+  },
+  "approval": "Root approved raw-PyText private URI option from original plan, 2026-10-22. Implementation fallback authorized after Luna model capacity failure. Independent review and committed artifact gates remain pending."
+}

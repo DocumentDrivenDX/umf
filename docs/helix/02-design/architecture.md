@@ -126,7 +126,7 @@ database, cloud runtime, or network registry is required by the brief.
 
 | Unit | Technology Direction | Responsibility | Boundary |
 | --- | --- | --- | --- |
-| UMF library/tooling | TypeScript compiled to JavaScript; JSON-compatible values; YAML authoring | Model access, operations, diagnostics | Browser-compatible dependencies and packaged vocabularies; host I/O stays outside the library |
+| UMF shared engine and tooling | Rust engine, native CLI/Python/Node/Bun bindings and browser WASM under ADR-006; current TS engine migrates by qualified operation family | Model access, operations, diagnostics and generation | Generated metamodel rules; host I/O outside core; explicit native capability dependencies |
 | Vocabulary packages | JSON Schema structural definitions plus semantic specifications | Versions, validation, capabilities, fixtures | Package metadata is data; it does not authorize code execution |
 | Native adapters | Selected ecosystem parsers/compiler APIs | Import/export through native semantic representations | Native output must pass native validation |
 | Conformance harness | Bun test runner; separate browser execution and pinned native oracles | Round-trip and projection evidence | Evidence generation is separate from support declarations |
@@ -492,7 +492,7 @@ resource limits and transparent expensive operations remain required.
 
 | Decision | Status | Rationale | Follow-up |
 | --- | --- | --- | --- |
-| Browser execution; TypeScript compiled to JavaScript by default | Browser target required by owner on 2026-09-20; TypeScript preferred | Simple implementation; high performance is not a primary driver | Pin browser/tool versions; verify browser round trips; consider WASM per adapter |
+| Shared Rust execution with browser WASM | ADR-006 supersedes the TypeScript engine preference; browser target remains required | One engine for CLI, Python and Node/Bun with no Python V8 requirement | Qualify bindings, browser loading and every ported native subset before cutover |
 | Bun development and testing runtime | Accepted in ADR-002 | Explicit owner direction | Pin Bun and dependencies; retain independent browser/type-check gates |
 | Small core plus versioned semantic vocabularies | Implemented envelopes and packages | Preserve multiple native semantic systems | Retain distinct admission, delivery and equivalence gates |
 | YAML-first, JSON-compatible bootstrap | Accepted direction in ADR-001 | Preserve human interchange and existing approach | Specify serialization edge cases |
@@ -649,8 +649,9 @@ Unknown third-party redistribution rights block full source export.
 
 FR-52 to FR-55 and FEAT-028 to FEAT-031 add a schema-first Python data access SDK.
 [ADR-004](adr/ADR-004-typed-data-access-sdk.md) records the decision. Stage one is
-a TypeScript generator in this package (ADR-002 unchanged); stage two and the
-runtime are a new Python distribution, `umf_access`, in this repository. Weft owns
+currently a TypeScript generator, migrating to the shared Rust engine under
+ADR-006; `umf_access` supplies Python host integration and existing compatibility
+surfaces in this repository. Weft owns
 all SQL lowering; Truss and Ashlar own their adapters.
 [Design entry point](../04-build/typed-persistence-design.md).
 
@@ -856,3 +857,51 @@ and seeds, codegen compiler functions only in the explicit CLI/prefix preparatio
 and leaves portable application clients unchanged. Existing negative controls
 remain required. Generic host-applier and mixed-phase profiles are revision2
 next-release work; no adapter-independent native guarantee follows here.
+
+## Shared Rust engine target
+
+[ADR-006](adr/ADR-006-shared-rust-implementation.md) governs the target structure.
+Earlier TypeScript/Python module inventories describe existing implementation and
+migration inputs. The authored metamodel stays authoritative; shared compiler and
+execution mechanics move to Rust. Host wrappers and generated clients retain
+language ergonomics. Browser JavaScript loads Rust WebAssembly (WASM); Bun remains
+the JavaScript development/test host. No existing native qualification transfers
+without a replay against the new implementation.
+
+```mermaid
+flowchart BT
+    Model[Authored UMF metamodel] --> Compiler[Rust model compiler]
+    Compiler --> Data[Generated schemas, shapes and inert rules]
+    Data --> Engine[Rust shared engine]
+    Engine --> CLI[Native Rust CLI]
+    Engine --> Python[Python native binding]
+    Engine --> Node[Node and Bun native binding]
+    Engine --> Browser[Browser WASM binding]
+    Engine --> Generation[Generated Python and TypeScript clients]
+    Generation --> Transport[Consumer transport and execution]
+```
+
+Proposed modules below are target ownership, not established crate names or an
+already enforced boundary. R0/R1 freezes their public API and dependency map.
+
+| Module | Responsibility | Permitted dependencies | Forbidden dependencies |
+| --- | --- | --- | --- |
+| `crates/umf-core` | Exact representation, model admission, registry, rule/literal kernels, serialization and operations | Generated inert rules/data, portable libraries and trusted capability interfaces | Host runtimes, filesystem/network/process, DB drivers, compiler bootstrap |
+| `crates/umf-metamodel` | Independent bounded model parser/compiler, generated schema/type/rule outputs | Closed compiler vocabulary and portable representation primitives | Generated document validator during bootstrap; authored schema rules as authority |
+| `crates/umf-compiler` | Access generation, compilation IR/emission, bundles, deployment/migration planning | Core public API, generated data, explicit external compiler capabilities | Host I/O, consumer storage/authorization, reimplementation of Weft SQL semantics |
+| `crates/umf-adapters` | Extension/native profiles and directed projections, partitioned by dependency family | Core public APIs, declared feature-gated native libraries/capabilities | Binding runtimes, undeclared network/process fallback, hidden JS execution |
+| `crates/umf-cli` | Commands, filesystem, atomic output/check, process/resource boundary | Public engine/compiler/adapter APIs and host services | Separate semantic kernels or hidden Python/JS engine dependency |
+| `bindings/{python,node,wasm}` | Native loading, exact host admission, exceptions, callbacks, lifecycle and typed presentation | Public Rust APIs and host runtime adapters | Duplicate validation/projection/generation semantics or direct consumer storage |
+
+Construction policy: CLI/bindings assemble explicit registries and capabilities;
+core never discovers plugins from artifact data. Weft owns SQL lowering; driver,
+authorization and transaction capabilities remain with consumers. Python host
+connections and async behavior use thin explicit glue. Generated clients remain
+stdlib-only and call injected bindings, independently of the Rust distribution.
+
+The proposed `bun run check:rust-boundaries` combines Cargo/cross-language graph
+checks with existing boundary checks, with allowed/forbidden controls and CI wiring
+before semantic ports. It is a planning requirement. Loading APIs, exact string
+carriers, callbacks, resource isolation and platform ABI choices remain R1 outputs.
+The [migration plan](../04-build/rust-migration-plan.md) owns sequencing, qualified
+cutovers, retirement census and completion evidence.

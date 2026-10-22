@@ -1,0 +1,20 @@
+[package]
+name = "umf-rust-spike-wasm"
+version = "0.1.0"
+edition = "2021"
+license = "MIT OR Apache-2.0"
+publish = false
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+wasm-bindgen = "=0.2.100"
+js-sys = "=0.3.77"
+serde_json = { version = "=1.0.140", features = ["arbitrary_precision"] }
+umf-rust-spike-core = { path = "../../../crates/rust-spike-core" }
+
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+# jsonschema's ahash dependency uses getrandom; WASM must explicitly select
+# the browser JavaScript backend rather than native entropy.
+getrandom = { version = "=0.3.4", features = ["wasm_js"] }

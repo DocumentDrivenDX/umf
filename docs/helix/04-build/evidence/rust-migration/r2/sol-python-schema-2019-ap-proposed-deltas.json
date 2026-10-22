@@ -1,0 +1,495 @@
+{
+  "status": "proposal-not-yet-approved",
+  "cases": [
+    {
+      "id": "draft4-up-ap-predicate",
+      "methods": [
+        "is_valid",
+        "validate",
+        "iterate"
+      ],
+      "before": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "unevaluatedProperties",
+            "instancePath": [],
+            "schemaPath": [
+              "unevaluatedProperties"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "arithmetic-error",
+          "type": "ValueError",
+          "message": "cannot convert float NaN to integer",
+          "prefix": [
+            {
+              "keyword": "unevaluatedProperties",
+              "instancePath": [],
+              "schemaPath": [
+                "unevaluatedProperties"
+              ]
+            },
+            {
+              "keyword": "type",
+              "instancePath": [],
+              "schemaPath": [
+                "type"
+              ]
+            }
+          ]
+        }
+      },
+      "after": {
+        "is_valid": {
+          "status": "arithmetic-error",
+          "type": "ValueError",
+          "message": "cannot convert float NaN to integer"
+        },
+        "validate": {
+          "status": "arithmetic-error",
+          "type": "ValueError",
+          "message": "cannot convert float NaN to integer"
+        },
+        "iterate": {
+          "status": "arithmetic-error",
+          "type": "ValueError",
+          "message": "cannot convert float NaN to integer",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft4-ap-empty-rule",
+      "methods": [
+        "is_valid",
+        "validate",
+        "iterate"
+      ],
+      "before": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "unevaluatedProperties",
+            "instancePath": [],
+            "schemaPath": [
+              "unevaluatedProperties"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "unevaluatedProperties",
+              "instancePath": [],
+              "schemaPath": [
+                "unevaluatedProperties"
+              ]
+            }
+          ]
+        }
+      },
+      "after": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft4-ap-valid-extra",
+      "methods": [
+        "is_valid",
+        "validate",
+        "iterate"
+      ],
+      "before": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "unevaluatedProperties",
+            "instancePath": [],
+            "schemaPath": [
+              "unevaluatedProperties"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "unevaluatedProperties",
+              "instancePath": [],
+              "schemaPath": [
+                "unevaluatedProperties"
+              ]
+            }
+          ]
+        }
+      },
+      "after": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft4-ap-valid-before-type",
+      "methods": [
+        "validate",
+        "iterate"
+      ],
+      "before": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "unevaluatedProperties",
+            "instancePath": [],
+            "schemaPath": [
+              "unevaluatedProperties"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "unevaluatedProperties",
+              "instancePath": [],
+              "schemaPath": [
+                "unevaluatedProperties"
+              ]
+            },
+            {
+              "keyword": "type",
+              "instancePath": [],
+              "schemaPath": [
+                "type"
+              ]
+            }
+          ]
+        }
+      },
+      "after": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [],
+            "schemaPath": [
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [],
+              "schemaPath": [
+                "type"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft4-ap-pattern-exclusion",
+      "methods": [
+        "is_valid",
+        "validate",
+        "iterate"
+      ],
+      "before": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "unevaluatedProperties",
+            "instancePath": [],
+            "schemaPath": [
+              "unevaluatedProperties"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "unevaluatedProperties",
+              "instancePath": [],
+              "schemaPath": [
+                "unevaluatedProperties"
+              ]
+            }
+          ]
+        }
+      },
+      "after": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft4-ap-declared-exclusion",
+      "methods": [
+        "validate",
+        "iterate"
+      ],
+      "before": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "unevaluatedProperties",
+            "instancePath": [],
+            "schemaPath": [
+              "unevaluatedProperties"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "unevaluatedProperties",
+              "instancePath": [],
+              "schemaPath": [
+                "unevaluatedProperties"
+              ]
+            },
+            {
+              "keyword": "type",
+              "instancePath": [
+                "foo"
+              ],
+              "schemaPath": [
+                "properties",
+                "foo",
+                "type"
+              ]
+            }
+          ]
+        }
+      },
+      "after": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [
+              "foo"
+            ],
+            "schemaPath": [
+              "properties",
+              "foo",
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [
+                "foo"
+              ],
+              "schemaPath": [
+                "properties",
+                "foo",
+                "type"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft4-ap-rule-member-collision",
+      "methods": [
+        "validate",
+        "iterate"
+      ],
+      "before": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [
+              "type"
+            ],
+            "schemaPath": [
+              "additionalProperties",
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [
+                "type"
+              ],
+              "schemaPath": [
+                "additionalProperties",
+                "type"
+              ]
+            }
+          ]
+        }
+      },
+      "after": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "unevaluatedProperties",
+            "instancePath": [],
+            "schemaPath": [
+              "unevaluatedProperties"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "unevaluatedProperties",
+              "instancePath": [],
+              "schemaPath": [
+                "unevaluatedProperties"
+              ]
+            },
+            {
+              "keyword": "type",
+              "instancePath": [
+                "type"
+              ],
+              "schemaPath": [
+                "additionalProperties",
+                "type"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft4-ap-original-correction001",
+      "methods": [
+        "is_valid",
+        "validate",
+        "iterate"
+      ],
+      "before": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "unevaluatedProperties",
+            "instancePath": [],
+            "schemaPath": [
+              "unevaluatedProperties"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "unevaluatedProperties",
+              "instancePath": [],
+              "schemaPath": [
+                "unevaluatedProperties"
+              ]
+            }
+          ]
+        }
+      },
+      "after": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    }
+  ]
+}

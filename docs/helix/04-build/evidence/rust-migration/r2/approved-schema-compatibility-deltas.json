@@ -1,0 +1,42 @@
+{
+  "profile": "umf.reviewed-compatibility-correction/1",
+  "decisionId": "R2-SOL-CORRECTION-001",
+  "reviewer": "Sol independent review (/root/sol_r2_review)",
+  "decision": "approved-target-valid-true",
+  "scope": {
+    "draft": "draft2019-09",
+    "file": "unevaluatedProperties.json",
+    "group": 6,
+    "case": 1,
+    "description": "with additional properties"
+  },
+  "source": {
+    "suiteCommit": "89e83a74014617ffbe79a56d83d14d054cd11417",
+    "suiteFileSha256": "8bdc7eae5874859f5b3652376222e8a0e17be9c5865b50ddc3d99d5dcf77c5ad",
+    "frozenPredecessorOutcomesSha256": "1101e9354b319469e70f094c97e61496298fd6b9c8300ae198247e18e0674cfc",
+    "specification": "https://json-schema.org/draft/2019-09/json-schema-core#rfc.section.9.3.2.3"
+  },
+  "schema": {
+    "$schema": "https://json-schema.org/draft/2019-09/schema",
+    "type": "object",
+    "properties": {
+      "foo": {
+        "type": "string"
+      }
+    },
+    "additionalProperties": {
+      "type": "string"
+    },
+    "unevaluatedProperties": false
+  },
+  "instance": {
+    "foo": "foo",
+    "bar": "bar"
+  },
+  "frozenPredecessorValid": false,
+  "officialSuiteValid": true,
+  "approvedTargetValid": true,
+  "rationale": "additionalProperties validates bar against its string subschema and annotates bar as evaluated. unevaluatedProperties:false applies only to names absent from adjacent properties/patternProperties/additionalProperties annotations, so this instance is valid. Preserving the predecessor false result would reproduce its annotation-collection bug.",
+  "governance": "STP-091 explicitly requires reviewed correction of existing Python profile bugs; this approves only this named semantic delta.",
+  "qualification": "This is an independent semantic decision, not a claim that the final candidate implementation or installed cohort has passed. The frozen baseline is unchanged."
+}

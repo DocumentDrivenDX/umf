@@ -1,0 +1,20 @@
+[package]
+name = "umf-core"
+version = "0.1.0"
+edition = "2021"
+license = "MIT OR Apache-2.0"
+publish = false
+
+[lib]
+name = "umf_core"
+path = "src/lib.rs"
+
+[dependencies]
+num-bigint = "=0.4.8"
+num-traits = "=0.2.19"
+ryu-js = "=1.0.3"
+regress = { version = "=0.12.0", features = ["utf16"] }
+saphyr-parser = { path = "vendor/saphyr-parser" }
+
+[dev-dependencies]
+serde_json = "=1.0.140"

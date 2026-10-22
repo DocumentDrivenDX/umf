@@ -931,3 +931,15 @@ retry. Consumers may build generated code into their package digest without
 checking it into source control. The shared wire contract and effective limits
 must be inspectable by transport implementers. Platform availability and byte
 reproducibility require separately identified installation/parity evidence.
+
+## Shared implementation delivery — owner direction, 2026-10-21
+
+Under FR-39 and official Python support, Python packages must run their supported
+operations without V8 or another JavaScript engine. Provide a native Rust CLI and
+Python and Node/Bun wrappers over shared executable semantics. Preserve existing
+browser processing, exact/unknown content and explicitly qualified native support.
+Generated table/ontology clients retain the stdlib-only requirement of FR-56.
+[ADR-006](../02-design/adr/ADR-006-shared-rust-implementation.md) records the Rust
+single-source approach; the [migration plan](../04-build/rust-migration-plan.md)
+separates V8 removal from complete shared-engine migration. Implementation and
+release qualification require execution of their gates.

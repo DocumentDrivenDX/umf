@@ -1,0 +1,49 @@
+{
+  "id": "R2-SOL-PYTHON-SCHEMA-EVALUATION-ORDER-001",
+  "status": "reviewed-production-decision",
+  "overallR2Approved": false,
+  "scope": "Python consumer schema evaluation methods and generic interpreter branch control; ordinary Value/wire/resource admission unchanged",
+  "oracle": {
+    "revision": "53de049136c7e41b482d1a73665d031cd5fbaec6",
+    "python": "3.11.17",
+    "jsonschema": "4.26.0",
+    "schemaSourceSha256": "22f02d6a6903b8804a1d504b0b6f232872aa564bc20e77933c880a4f9016a402"
+  },
+  "fixtures": {
+    "sol-python-schema-evaluation-order-predecessor.json": {
+      "sha256": "48a2324dc5e3bba1a351940e49cdf79c73a3ec64d423c19250bed7460d42be95",
+      "cases": 792,
+      "methodObservations": 2376
+    },
+    "sol-python-schema-evaluation-order-ordinary-predecessor.json": {
+      "sha256": "e105e9423dfb899ba2d19cd3622bbd62f66a89052f8c68e61e7146f71f1556f6",
+      "cases": 264,
+      "methodObservations": 792
+    }
+  },
+  "api": {
+    "rust": "PythonCompiledSchema::evaluate(instance, mode, ctx) -> Result<PythonSchemaEvaluation, EngineError>",
+    "result": "PythonSchemaEvaluation { errors, terminal_error }",
+    "modes": {
+      "FirstError": "Stop at the first publicly surfaced validation error; use for is_valid and validate and native predicate subcalls. Never execute an unneeded later arithmetic operation.",
+      "AllErrors": "Collect ordered publicly yieldable error prefix. Preserve an approved PYTHON_SCHEMA_ARITHMETIC terminal error after that prefix."
+    },
+    "operationalErrors": "LIMIT, cancellation, deadline, clock, meter and other operational failures remain outer Err and always propagate. They are never deferred or converted to validation false.",
+    "pythonFacade": "iter_errors returns a generator without evaluating at construction. On iteration, yield native-ordered public diagnostics, then raise the deferred approved arithmetic UmfCoreError when reached. validate raises the first _NativeSchemaError or arithmetic UmfCoreError; is_valid returns false at the first validation error."
+  },
+  "combinatorRules": [
+    "anyOf and oneOf buffer candidate descend errors internally; they do not expose those candidate diagnostics as the public prefix. Preserve native first-success and remaining-predicate behavior.",
+    "allOf, properties and items propagate publicly yieldable child errors in order before a later arithmetic failure.",
+    "not, if and contains use native first-error predicate behavior; do not globally suppress arithmetic errors merely because some branch was invalid.",
+    "unevaluatedProperties/items annotation collection can require evaluating branches beyond the first successful anyOf. Preserve this native behavior; no blanket anyOf branch suppression.",
+    "Preserve declared dialect keyword identity, including Draft3 divisibleBy diagnostic keyword and schema path."
+  ],
+  "compatibilityQualification": "Native arithmetic exception classes/messages remain immutable oracle provenance. Candidate arithmetic errors follow R2-SOL-PYTHON-SCHEMA-ARITHMETIC-001 stable PYTHON_SCHEMA_ARITHMETIC/UmfCoreError mapping. Existing candidate normalized validation error envelope is retained; keyword and native code-point instance/schema paths preserve their meaning.",
+  "implementationRequirements": [
+    "Use one generic Rust evaluator and explicit evaluation modes; no Python/JavaScript semantic fallback.",
+    "Preserve trusted source-origin metadata in diagnostics and deferred errors.",
+    "Meter owned prefix/error copies and branch buffers before allocation and keep operation controls within Rust.",
+    "Do not change any frozen predecessor expected records."
+  ],
+  "verificationStatus": "Source-confirmed eager evaluation regression; owner implementation and fresh native/installed method comparator pending."
+}

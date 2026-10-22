@@ -1,0 +1,281 @@
+{
+  "profile": "umf.sol-exact-coefficient-boundaries/1",
+  "qualification": "Exact retained TypeScript coefficient algorithm and fault reasons on ordinary owned textual numeric carriers. Input token is not serialized source; coefficient expansion/result bound remains unchanged.",
+  "generatorSha256": "c4f0b6495c990f8b7be24f2a5f3cb2dc3289d48b4cf6069e5e4180b25c6a784e",
+  "reference": {
+    "runtime": "Bun 1.4.3",
+    "literalKernelSha256": "0fffe57279a745891f4cbbd33eb1296a34bfcb083bd8e05a3ff7a7b8048db071"
+  },
+  "cases": [
+    {
+      "id": "zero-long-fraction",
+      "prefix": "0.",
+      "repeat": "0",
+      "count": 4000000,
+      "suffix": "",
+      "scale": 0,
+      "inputUtf16Units": 4000002,
+      "inputUtf8Sha256": "6d03efbf3a205b5878cfc9a0eaa6c4f933be735ce52460aa6bddbf92a43a3d9a",
+      "predecessor": {
+        "status": "coefficient",
+        "decimal": "0"
+      }
+    },
+    {
+      "id": "shrink-long-coefficient",
+      "prefix": "1",
+      "repeat": "0",
+      "count": 4000000,
+      "suffix": "e-4000000",
+      "scale": 0,
+      "inputUtf16Units": 4000010,
+      "inputUtf8Sha256": "7342b1e822ae024577a8b3a8ac7d9201f0f4489d2e7544ad28b7859117d7a935",
+      "predecessor": {
+        "status": "coefficient",
+        "decimal": "1"
+      }
+    },
+    {
+      "id": "literal-2",
+      "token": "0e9999999999999999999999999999999999999999",
+      "scale": 0,
+      "inputUtf16Units": 42,
+      "inputUtf8Sha256": "f0dd3f5e13a6177329bc31c5c49b2a9cd3d6e573d46935c17f28c69817729894",
+      "predecessor": {
+        "status": "coefficient",
+        "decimal": "0"
+      }
+    },
+    {
+      "id": "literal-3",
+      "token": "-0e-9999999999999999999999999999999999999999",
+      "scale": 0,
+      "inputUtf16Units": 44,
+      "inputUtf8Sha256": "1864f7d5b4bc3ce74bef596640a46464c38174f93f8b1f68ef70aaddb49f00d3",
+      "predecessor": {
+        "status": "coefficient",
+        "decimal": "0"
+      }
+    },
+    {
+      "id": "literal-4",
+      "token": "0.000e+9999999999999999999999999999999999999999",
+      "scale": 0,
+      "inputUtf16Units": 47,
+      "inputUtf8Sha256": "a4710dcc4340efefdb1d05c4f584a11cd325a08a615ca82e97923bb71ad00ce0",
+      "predecessor": {
+        "status": "coefficient",
+        "decimal": "0"
+      }
+    },
+    {
+      "id": "literal-5",
+      "token": "0e99999999999999999999",
+      "scale": 0,
+      "inputUtf16Units": 22,
+      "inputUtf8Sha256": "825685eb42890e6cef111ef0ba4b7e7a2274989210187a35895bf0979ba4e24a",
+      "predecessor": {
+        "status": "coefficient",
+        "decimal": "0"
+      }
+    },
+    {
+      "id": "literal-6",
+      "token": "1e99999999999999999999",
+      "scale": 0,
+      "inputUtf16Units": 22,
+      "inputUtf8Sha256": "0474c14fa7150bb7d031c505b5c512f4577563d3f9e28b41af49397a8a298ad3",
+      "predecessor": {
+        "status": "error",
+        "reason": "numeric-resource",
+        "name": "Error",
+        "message": "numeric-resource"
+      }
+    },
+    {
+      "id": "literal-7",
+      "token": "1e-99999999999999999999",
+      "scale": 0,
+      "inputUtf16Units": 23,
+      "inputUtf8Sha256": "457f4b2d726a65f8c1e8f31cb85e871090d992f2e978e7d4dcafbf096aaa9857",
+      "predecessor": {
+        "status": "error",
+        "reason": "numeric-rounding",
+        "name": "Error",
+        "message": "numeric-rounding"
+      }
+    },
+    {
+      "id": "literal-8",
+      "token": "1e+99999999999999999999",
+      "scale": 0,
+      "inputUtf16Units": 23,
+      "inputUtf8Sha256": "b2b320ad1fbdd894d3d5909d26eb323d33acfb25bbdc1fc49296bd00e9de3da9",
+      "predecessor": {
+        "status": "error",
+        "reason": "numeric-resource",
+        "name": "Error",
+        "message": "numeric-resource"
+      }
+    },
+    {
+      "id": "literal-9",
+      "token": "1e9223372036854775808",
+      "scale": 0,
+      "inputUtf16Units": 21,
+      "inputUtf8Sha256": "e156045a8e8c9791cf231b3afba49bf6fc4c5e4aa3b56324e556ae4cee163517",
+      "predecessor": {
+        "status": "error",
+        "reason": "numeric-resource",
+        "name": "Error",
+        "message": "numeric-resource"
+      }
+    },
+    {
+      "id": "literal-10",
+      "token": "1e-9223372036854775809",
+      "scale": 0,
+      "inputUtf16Units": 22,
+      "inputUtf8Sha256": "8994d32e9563cccb59968fd997e3a2931c397038a054650ac231ce8d0a9bf1c5",
+      "predecessor": {
+        "status": "error",
+        "reason": "numeric-rounding",
+        "name": "Error",
+        "message": "numeric-rounding"
+      }
+    },
+    {
+      "id": "literal-11",
+      "token": "1e00000000000000000000000000000001",
+      "scale": 0,
+      "inputUtf16Units": 34,
+      "inputUtf8Sha256": "bc5c68d1fea7c1967e68a984e8aca43107497c867d8a89f5012788db4b5089b0",
+      "predecessor": {
+        "status": "coefficient",
+        "decimal": "10"
+      }
+    },
+    {
+      "id": "literal-12",
+      "token": "1e000000000000000000000000000000001",
+      "scale": 0,
+      "inputUtf16Units": 35,
+      "inputUtf8Sha256": "86d86d30f65e478b78e514302625ef8d9830caef007d8d2629520f98ade14477",
+      "predecessor": {
+        "status": "error",
+        "reason": "numeric-exponent",
+        "name": "Error",
+        "message": "numeric-exponent"
+      }
+    },
+    {
+      "id": "literal-13",
+      "token": "0e000000000000000000000000000000000",
+      "scale": 0,
+      "inputUtf16Units": 35,
+      "inputUtf8Sha256": "3a6bf28e6fc74aa8c60654d872b8d42049adc8f3ad33e6cc8501e90712f8d32d",
+      "predecessor": {
+        "status": "coefficient",
+        "decimal": "0"
+      }
+    },
+    {
+      "id": "literal-14",
+      "token": "1e",
+      "scale": 0,
+      "inputUtf16Units": 2,
+      "inputUtf8Sha256": "a8196a36f4d736a540dff9a8a00387111ff0133f9848f4e149118092ac712426",
+      "predecessor": {
+        "status": "error",
+        "reason": "numeric-token",
+        "name": "Error",
+        "message": "numeric-token"
+      }
+    },
+    {
+      "id": "literal-15",
+      "token": "0e",
+      "scale": 0,
+      "inputUtf16Units": 2,
+      "inputUtf8Sha256": "340792a7a42feffabbddc144fe4059013ff8af265ca9c3337933e0b633569367",
+      "predecessor": {
+        "status": "error",
+        "reason": "numeric-token",
+        "name": "Error",
+        "message": "numeric-token"
+      }
+    },
+    {
+      "id": "literal-16",
+      "token": "0e+",
+      "scale": 0,
+      "inputUtf16Units": 3,
+      "inputUtf8Sha256": "f30ae36e1f3d7f18f9b999f80d6f36020cefe1a1ebbf00723f57c80104c37abd",
+      "predecessor": {
+        "status": "error",
+        "reason": "numeric-token",
+        "name": "Error",
+        "message": "numeric-token"
+      }
+    },
+    {
+      "id": "literal-17",
+      "token": "0.0e-",
+      "scale": 0,
+      "inputUtf16Units": 5,
+      "inputUtf8Sha256": "9dfdf92c81bbd4f8bfabaf161fe90286706f52ded0f48fe5fb12e5d9a5f6e5c0",
+      "predecessor": {
+        "status": "error",
+        "reason": "numeric-token",
+        "name": "Error",
+        "message": "numeric-token"
+      }
+    },
+    {
+      "id": "literal-18",
+      "token": "-0",
+      "scale": 0,
+      "inputUtf16Units": 2,
+      "inputUtf8Sha256": "ed79f26d03f412bde3db206601a698e0bb451bea9e3cc25289636ac17ea74b0a",
+      "predecessor": {
+        "status": "coefficient",
+        "decimal": "0"
+      }
+    },
+    {
+      "id": "literal-19",
+      "token": "0e-1",
+      "scale": 0,
+      "inputUtf16Units": 4,
+      "inputUtf8Sha256": "c68eb4d16700b01a24a5116c2922d44c9bf456a5e6c3da0fe00684d7309e5e18",
+      "predecessor": {
+        "status": "coefficient",
+        "decimal": "0"
+      }
+    },
+    {
+      "id": "literal-20",
+      "token": "1.00e2",
+      "scale": 0,
+      "inputUtf16Units": 6,
+      "inputUtf8Sha256": "6f674103a3337a9eb418cdb2558c717061282f4345ece1178a153617896f6dcd",
+      "predecessor": {
+        "status": "coefficient",
+        "decimal": "100"
+      }
+    },
+    {
+      "id": "literal-21",
+      "token": "1.00e-2",
+      "scale": 0,
+      "inputUtf16Units": 7,
+      "inputUtf8Sha256": "fdc3944a97b6df5e941c0095b0a9f20ba4e4090548effe105d483f318fb02862",
+      "predecessor": {
+        "status": "error",
+        "reason": "numeric-rounding",
+        "name": "Error",
+        "message": "numeric-rounding"
+      }
+    }
+  ]
+}

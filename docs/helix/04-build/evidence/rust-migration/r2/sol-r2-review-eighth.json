@@ -1,0 +1,169 @@
+{
+  "profile": "umf.sol-r2-independent-review/8",
+  "reviewer": "Sol independent review (/root/sol_r2_review)",
+  "status": "owner-fixes-and-final-cohort-verification-pending",
+  "overallR2Approved": false,
+  "frozenIndependentControls": {
+    "sol-runtime-operators-predecessor.json": {
+      "sha256": "89c680033d94381a98202c7119f8241468d4f0f984d88a2ecddd130c23aaa2b1",
+      "observations": 6271,
+      "candidateUsedForOracle": false
+    },
+    "sol-runtime-operator-edges-predecessor.json": {
+      "sha256": "56aa4908719056b6aa2709ed1725bc5a66084c80677c6ec128877d30aecb4615",
+      "observations": 2619,
+      "candidateUsedForOracle": false
+    },
+    "sol-ecma-coercion-predecessor.json": {
+      "sha256": "c518c65daf75c96ad194af7334d8ee6d799802ecfc1a92b5d002da22c458f829",
+      "observations": 1548,
+      "candidateUsedForOracle": false
+    },
+    "sol-python-yaml-profile-edges-predecessor.json": {
+      "sha256": "66d00348b678c4f395be6c2ef92979dd5de19297ddf7cbcfb6d8827dc76d9afd",
+      "observations": 486,
+      "candidateUsedForOracle": false
+    },
+    "sol-python-yaml-break-context-predecessor.json": {
+      "sha256": "6b326e3becc8800cd95f16d400c28064b8de4278afecda07f8b0de3bb25bdd34",
+      "observations": 2124,
+      "candidateUsedForOracle": false
+    },
+    "sol-python-yaml-directive-predecessor.json": {
+      "sha256": "73aa8fd919c672b0dfa2c86414b32f48384fb944d7c3613c7e1dbfe95d48a84f",
+      "observations": 174,
+      "candidateUsedForOracle": false
+    },
+    "sol-python-yaml-directive-tail-predecessor.json": {
+      "sha256": "4aa5a0f37566e337d56df4cbfc00c1e739338bb52d8fa8f74cd008891574d126",
+      "observations": 48,
+      "candidateUsedForOracle": false
+    },
+    "sol-runtime-text-resource-predecessor.json": {
+      "sha256": "2470d7b2ea023e0feebec141778d2ec338038d93cc2935e70f2e36eb7562aff7",
+      "observations": 3,
+      "candidateUsedForOracle": false
+    },
+    "sol-exact-coefficient-predecessor.json": {
+      "sha256": "6d8164922722a277bf5cce3a07ed1789541de254bce00e32aba2f991a5da3c13",
+      "observations": 22,
+      "candidateUsedForOracle": false
+    }
+  },
+  "decisions": {
+    "privateObjectProvenance": {
+      "path": "sol-runtime-object-provenance-decision.json",
+      "sha256": "2391c9c98a1f7eca1d81dad6c5eb3fcdd689d164b061bbd84a533b1f762a68ba",
+      "id": "R2-SOL-RUNTIME-OBJECT-PROVENANCE-001",
+      "approval": "Approved private Rust provenance + stable CONSTRAINT_COERCION refusal mapping; no overall R2 approval."
+    },
+    "textBudgetBoundary": {
+      "confirmedByRoot": true,
+      "rule": "4M applies actual JSON/YAML read source and serialized writes only. Copied/computed VM strings, diagnostics, private canonical strings, registry/schema text copies and wire transport have no new4M field ceiling. Exact work/allocations remain caller Context admitted. Coefficient expansion/result retains separate4M digit bound.",
+      "notACompatibilityCorrection": true
+    }
+  },
+  "independentResults": {
+    "ordinaryRuntime6271": {
+      "cases": 6271,
+      "mismatches": 0,
+      "outputSha256": "ae7cfd4bd3b028394017e85cf5b938f74eb982507122c5f360aab03822d8772a",
+      "probeBinarySha256": "8750328555dfee2992ae7397975aae67cc17d8f14ce3abcf0bd6620ea2a2970b",
+      "includes": "Synthetic trusted PyText origins on callback diagnostics; public output compared exactly. Full origin assertions are separate."
+    },
+    "runtimeEdge2619EarlierCohort": {
+      "cases": 2619,
+      "mismatches": 390,
+      "outputSha256": "8542db67cc42a2d6c1912cf84924041b90a9c88e9b577948dc0b051747c48189",
+      "remainingOwnerReported": "Owner reports all2619 pass after CopiedObject, own length, undefined-sort and mixed-flatten fixes; independent final-cohort rerun pending."
+    },
+    "ecmaPrimitive1548": {
+      "cases": 1548,
+      "mismatches": 0,
+      "probe": "/tmp/umf-sol-ecma-coercion.rs",
+      "qualification": "Comparisons against exact expected f64 (NaN vs0 unordered). Negative-zero sign additionally checked by native module unit test."
+    },
+    "publicConstraintAdmissionEarlierCohort": {
+      "probe": "/tmp/umf-sol-public-constraints-admission.rs",
+      "probeSha256": "e757d758813056ec3b910a09c0d81ccffdb1a3a194ed9c14a1aa0a569f36c0d3",
+      "observations": [
+        "NaN document copy_json refusedNUMBER but public execute_constraints returnedOk([]).",
+        "Depth129 document copy_json refusedLIMIT but execute_constraints returnedOk([]).",
+        "NaN policy copy_json refusedNUMBER but execute_constraints returnedOk([])."
+      ],
+      "ownerSourceFix": "Public wrappers now admit independently copied document/policy and eagerly prepare optional literal policy; private admitted interpreter used after Engine admission. Final rerun pending."
+    }
+  },
+  "sourceReviewFindingsAndClosures": [
+    {
+      "area": "Shared YAML scanner",
+      "finding": "Normal unknown-directive grammar, NEL-only anchor termination, timestamp implicit-key tag grammar, EOF and LS/PS plain/quoted/folded behavior, reserved tail raw-read and buffered-input refill.",
+      "ownerReported": "B now reports all5226 native serializer observations and both scanner constructors pass; final source/default-profile/vendor5+ tests review pending.",
+      "architecture": "One vendored shared scanner with immutable trusted profile; no source-rewrite heuristics. Four upstream license texts retained."
+    },
+    {
+      "area": "Generic Runtime semantic uniformity",
+      "finding": "Missing/Map canonical behavior, primitive coercion, string property restrictions, copied-object provenance, own length, undefined-sort and mixed array flatten, literal-policy generic projection.",
+      "ownerReported": "Both runtime matrices8890 pass; new common wire-dispatcher139 corpus now being run after residual Json-only literal policy projection fix."
+    },
+    {
+      "area": "Python text/path origins",
+      "finding": "Materialize only trusted source-path fragments, preserve arbitrary literal/callback/URI prefixes; pointer/canonical/concat require origin-aware text sinks; registry schema prefix constructor cannot attach one global trusted flag to mixed text.",
+      "ownerReported": "Contextual PyText sinks and registry constructor companion implemented; final independent source and installed PyO3 checks pending."
+    },
+    {
+      "area": "Public Rust Value admission",
+      "finding": "Public constraint and literal APIs must admit rawValue inputs; private already-admitted helpers preserve derived wrapper limits and avoid new text caps. Optional literal policy eagerly checked even empty program.",
+      "ownerReported": "Public and crate-private split implemented; unused contextless schema_resources snapshot removed."
+    },
+    {
+      "area": "Private text resource caps",
+      "finding": "VM concat/pointer and registry/schema/wire/engine field copies wrongly used source text limit; numeric token input wrongly capped despite shrinking/zero coefficient result.",
+      "ownerReported": "C VM/engine/wire caps fixed; B registry/schema/literal caps and frozen22 arithmetic semantics fixed; final global callsite audit pending."
+    },
+    {
+      "area": "Coefficient arithmetic semantics/resources",
+      "finding": "Zero shortcut must precede exponent length/conversion; bounded32-character exponent requires BigInt not i64; decimal parse/format requires chunk/limb work before opaque calls.",
+      "ownerReported": "B implemented22 frozen controls plus quadratic parse/format precharge.",
+      "stillOpenAtNotification": [
+        "numeric_interval second parse_bound engine failures must propagate, not become diagnostics.",
+        "numeric_interval field/facet deep copies, abs and interval arithmetic must be admitted before copies.",
+        "policy_error requires caller Context before arbitrary model text cloning/replacement."
+      ]
+    },
+    {
+      "area": "Contextual diagnostic/canonical construction",
+      "finding": "Model-owned code/message/path copies require per-invocation Context, not late charge after allocation.",
+      "stillOpenAtNotification": [
+        "C model_diag and extension_errors child path constructors require pre-copy admission.",
+        "Engine structural diagnostic constructor clones need same review.",
+        "Canonical key comparator must charge before shared-prefix scan; text clones/sinks/order buffers need preadmission."
+      ]
+    },
+    {
+      "area": "Compiler provenance",
+      "finding": "workspaceClosure included ignored native.node binary in generated manifest, and would include generated wasm/pkg; clean clone/other platform differs.",
+      "ownerReported": "Root filtered generated native binding artifacts/pkg and added actual file insertion parity test; execution/final regen pending."
+    }
+  ],
+  "sourceHashesAtCheckpoint": {
+    "crates/umf-core/src/constraints.rs": "6af2ed7ca8ac44a5a2969ba59b6353629cd68240df5d6fe1c03af26f0c717b89",
+    "crates/umf-core/src/literal.rs": "b1fb772d837e554fffe7e6168e32936e6af539af72eff8ff65a8cccca8136370",
+    "crates/umf-core/src/ecma_coercion.rs": "56d09421b383b983b2c4c5b3dc33c7945cb42b70c81c8b9ab9c86a7fc58ff63c",
+    "crates/umf-core/src/serialization.rs": "b8a1558c7b0f05d79fbc9c67545bca41d4a8dbac0a1812f83b515bb85d93204a",
+    "crates/umf-core/src/engine.rs": "f97444078504b8f68f5c80826ad5c802730a92ed116d50d9d6d78e858991c204",
+    "crates/umf-core/src/schema.rs": "780683d4a2d024465d9e53ab4344065f816eb7e321e400c06b3dfc988b3bd172",
+    "crates/umf-core/src/registry.rs": "a1b3d45c8433738e0be993f0409a65f6f4239754f6564cb18ffe25dd8c0f28f6",
+    "crates/umf-core/vendor/saphyr-parser/src/scanner.rs": "0cb241f09c75d694c5a5e558e1dbd32ebe621dbacbd3bc332e6f91f209ff11bb",
+    "crates/umf-core-wire/src/lib.rs": "15bea6cf0ef01207d548fed2ec95d0694734ca61bd833429c1c93bbb2dc76eea",
+    "scripts/metamodel/build.ts": "7fca29a8c84df0fb5d6411c41c175c1883b12e1202f8036c7800982a9597b4a6",
+    "scripts/metamodel/rust.ts": "031e3f2fc9c8846ae4bc749cd3abfcdd40f00416d6e6a72b87e4abdd237ba8bf"
+  },
+  "finalGate": [
+    "B/C report final contextual resource helpers coherent and all unit/native source controls pass.",
+    "Root formats nonvendor/nongenerated Rust and regenerates canonical11 outputs.",
+    "Independent review/rerun on exact source hashes and native binaries; no intermediate binary source attestation claim.",
+    "Fresh installed Python/Node/Bun/native CLI/default and feature real-browser WASM receipts tied to same final source/artifact cohort.",
+    "Full required CI/static/boundary/inventory/type/bootstrap checks before final R2 approval/PR/merge."
+  ]
+}

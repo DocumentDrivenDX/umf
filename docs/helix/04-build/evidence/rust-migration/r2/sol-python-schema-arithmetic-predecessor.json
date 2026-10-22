@@ -1,0 +1,8110 @@
+{
+  "python": "3.11.17",
+  "jsonschema": "4.26.0",
+  "schemaSourceSha256": "22f02d6a6903b8804a1d504b0b6f232872aa564bc20e77933c880a4f9016a402",
+  "profile": "umf.r2-sol-python-schema-arithmetic/1",
+  "instanceRecipes": {
+    "nan": {
+      "kind": "float",
+      "bits": "7ff8000000000000"
+    },
+    "inf": {
+      "kind": "float",
+      "bits": "7ff0000000000000"
+    },
+    "-inf": {
+      "kind": "float",
+      "bits": "fff0000000000000"
+    },
+    "large-float": {
+      "kind": "float",
+      "bits": "7fe1ccf385ebc8a0"
+    },
+    "large-int": {
+      "kind": "int",
+      "decimal": "179769313486231590772930519078902473361797697894230657273430081157732675805500963132708477322407536021120113879871393357658789768814416622492847430639474124377767893424865485276302219601246094119453082952085005768838150682342462881473913110540827237163350510684586298239947245938479716304835356329624224137216"
+    },
+    "negative-large-int": {
+      "kind": "int",
+      "decimal": "-179769313486231590772930519078902473361797697894230657273430081157732675805500963132708477322407536021120113879871393357658789768814416622492847430639474124377767893424865485276302219601246094119453082952085005768838150682342462881473913110540827237163350510684586298239947245938479716304835356329624224137216"
+    },
+    "zero": {
+      "kind": "int",
+      "decimal": "0"
+    },
+    "negative-zero": {
+      "kind": "float",
+      "bits": "8000000000000000"
+    },
+    "half": {
+      "kind": "float",
+      "bits": "3fe0000000000000"
+    }
+  },
+  "cases": [
+    {
+      "id": "draft0-rule0-nan",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "type": "number"
+      },
+      "instance": "nan",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft0-rule0-inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "type": "number"
+      },
+      "instance": "inf",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft0-rule0--inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "type": "number"
+      },
+      "instance": "-inf",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft0-rule0-large-float",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "type": "number"
+      },
+      "instance": "large-float",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft0-rule0-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "type": "number"
+      },
+      "instance": "large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft0-rule0-negative-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "type": "number"
+      },
+      "instance": "negative-large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft0-rule0-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "type": "number"
+      },
+      "instance": "zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft0-rule0-negative-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "type": "number"
+      },
+      "instance": "negative-zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft0-rule0-half",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "type": "number"
+      },
+      "instance": "half",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft0-rule1-nan",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "type": "integer"
+      },
+      "instance": "nan",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft0-rule1-inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "type": "integer"
+      },
+      "instance": "inf",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft0-rule1--inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "type": "integer"
+      },
+      "instance": "-inf",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft0-rule1-large-float",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "type": "integer"
+      },
+      "instance": "large-float",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft0-rule1-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "type": "integer"
+      },
+      "instance": "large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft0-rule1-negative-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "type": "integer"
+      },
+      "instance": "negative-large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft0-rule1-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "type": "integer"
+      },
+      "instance": "zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft0-rule1-negative-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "type": "integer"
+      },
+      "instance": "negative-zero",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft0-rule1-half",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "type": "integer"
+      },
+      "instance": "half",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft0-rule2-nan",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "minimum": 0
+      },
+      "instance": "nan",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft0-rule2-inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "minimum": 0
+      },
+      "instance": "inf",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft0-rule2--inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "minimum": 0
+      },
+      "instance": "-inf",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft0-rule2-large-float",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "minimum": 0
+      },
+      "instance": "large-float",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft0-rule2-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "minimum": 0
+      },
+      "instance": "large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft0-rule2-negative-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "minimum": 0
+      },
+      "instance": "negative-large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft0-rule2-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "minimum": 0
+      },
+      "instance": "zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft0-rule2-negative-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "minimum": 0
+      },
+      "instance": "negative-zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft0-rule2-half",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "minimum": 0
+      },
+      "instance": "half",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft0-rule3-nan",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "maximum": 0
+      },
+      "instance": "nan",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft0-rule3-inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "maximum": 0
+      },
+      "instance": "inf",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft0-rule3--inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "maximum": 0
+      },
+      "instance": "-inf",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft0-rule3-large-float",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "maximum": 0
+      },
+      "instance": "large-float",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft0-rule3-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "maximum": 0
+      },
+      "instance": "large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft0-rule3-negative-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "maximum": 0
+      },
+      "instance": "negative-large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft0-rule3-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "maximum": 0
+      },
+      "instance": "zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft0-rule3-negative-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "maximum": 0
+      },
+      "instance": "negative-zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft0-rule3-half",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "maximum": 0
+      },
+      "instance": "half",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft0-rule4-nan",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "exclusiveMinimum": true,
+        "minimum": 0
+      },
+      "instance": "nan",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft0-rule4-inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "exclusiveMinimum": true,
+        "minimum": 0
+      },
+      "instance": "inf",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft0-rule4--inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "exclusiveMinimum": true,
+        "minimum": 0
+      },
+      "instance": "-inf",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft0-rule4-large-float",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "exclusiveMinimum": true,
+        "minimum": 0
+      },
+      "instance": "large-float",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft0-rule4-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "exclusiveMinimum": true,
+        "minimum": 0
+      },
+      "instance": "large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft0-rule4-negative-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "exclusiveMinimum": true,
+        "minimum": 0
+      },
+      "instance": "negative-large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft0-rule4-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "exclusiveMinimum": true,
+        "minimum": 0
+      },
+      "instance": "zero",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft0-rule4-negative-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "exclusiveMinimum": true,
+        "minimum": 0
+      },
+      "instance": "negative-zero",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft0-rule4-half",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "exclusiveMinimum": true,
+        "minimum": 0
+      },
+      "instance": "half",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft0-rule5-nan",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "exclusiveMaximum": true,
+        "maximum": 0
+      },
+      "instance": "nan",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft0-rule5-inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "exclusiveMaximum": true,
+        "maximum": 0
+      },
+      "instance": "inf",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft0-rule5--inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "exclusiveMaximum": true,
+        "maximum": 0
+      },
+      "instance": "-inf",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft0-rule5-large-float",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "exclusiveMaximum": true,
+        "maximum": 0
+      },
+      "instance": "large-float",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft0-rule5-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "exclusiveMaximum": true,
+        "maximum": 0
+      },
+      "instance": "large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft0-rule5-negative-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "exclusiveMaximum": true,
+        "maximum": 0
+      },
+      "instance": "negative-large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft0-rule5-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "exclusiveMaximum": true,
+        "maximum": 0
+      },
+      "instance": "zero",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft0-rule5-negative-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "exclusiveMaximum": true,
+        "maximum": 0
+      },
+      "instance": "negative-zero",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft0-rule5-half",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "exclusiveMaximum": true,
+        "maximum": 0
+      },
+      "instance": "half",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft0-rule6-nan",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "divisibleBy": 1
+      },
+      "instance": "nan",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft0-rule6-inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "divisibleBy": 1
+      },
+      "instance": "inf",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft0-rule6--inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "divisibleBy": 1
+      },
+      "instance": "-inf",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft0-rule6-large-float",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "divisibleBy": 1
+      },
+      "instance": "large-float",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft0-rule6-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "divisibleBy": 1
+      },
+      "instance": "large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft0-rule6-negative-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "divisibleBy": 1
+      },
+      "instance": "negative-large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft0-rule6-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "divisibleBy": 1
+      },
+      "instance": "zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft0-rule6-negative-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "divisibleBy": 1
+      },
+      "instance": "negative-zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft0-rule6-half",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "divisibleBy": 1
+      },
+      "instance": "half",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft0-rule7-nan",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "divisibleBy": 0.5
+      },
+      "instance": "nan",
+      "outcome": {
+        "status": "instance-error",
+        "type": "ValueError",
+        "message": "cannot convert float NaN to integer"
+      }
+    },
+    {
+      "id": "draft0-rule7-inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "divisibleBy": 0.5
+      },
+      "instance": "inf",
+      "outcome": {
+        "status": "instance-error",
+        "type": "OverflowError",
+        "message": "cannot convert Infinity to integer ratio"
+      }
+    },
+    {
+      "id": "draft0-rule7--inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "divisibleBy": 0.5
+      },
+      "instance": "-inf",
+      "outcome": {
+        "status": "instance-error",
+        "type": "OverflowError",
+        "message": "cannot convert Infinity to integer ratio"
+      }
+    },
+    {
+      "id": "draft0-rule7-large-float",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "divisibleBy": 0.5
+      },
+      "instance": "large-float",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft0-rule7-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "divisibleBy": 0.5
+      },
+      "instance": "large-int",
+      "outcome": {
+        "status": "instance-error",
+        "type": "OverflowError",
+        "message": "int too large to convert to float"
+      }
+    },
+    {
+      "id": "draft0-rule7-negative-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "divisibleBy": 0.5
+      },
+      "instance": "negative-large-int",
+      "outcome": {
+        "status": "instance-error",
+        "type": "OverflowError",
+        "message": "int too large to convert to float"
+      }
+    },
+    {
+      "id": "draft0-rule7-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "divisibleBy": 0.5
+      },
+      "instance": "zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft0-rule7-negative-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "divisibleBy": 0.5
+      },
+      "instance": "negative-zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft0-rule7-half",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "divisibleBy": 0.5
+      },
+      "instance": "half",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft0-rule8-nan",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "divisibleBy": 0.1
+      },
+      "instance": "nan",
+      "outcome": {
+        "status": "instance-error",
+        "type": "ValueError",
+        "message": "cannot convert float NaN to integer"
+      }
+    },
+    {
+      "id": "draft0-rule8-inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "divisibleBy": 0.1
+      },
+      "instance": "inf",
+      "outcome": {
+        "status": "instance-error",
+        "type": "OverflowError",
+        "message": "cannot convert Infinity to integer ratio"
+      }
+    },
+    {
+      "id": "draft0-rule8--inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "divisibleBy": 0.1
+      },
+      "instance": "-inf",
+      "outcome": {
+        "status": "instance-error",
+        "type": "OverflowError",
+        "message": "cannot convert Infinity to integer ratio"
+      }
+    },
+    {
+      "id": "draft0-rule8-large-float",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "divisibleBy": 0.1
+      },
+      "instance": "large-float",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft0-rule8-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "divisibleBy": 0.1
+      },
+      "instance": "large-int",
+      "outcome": {
+        "status": "instance-error",
+        "type": "OverflowError",
+        "message": "int too large to convert to float"
+      }
+    },
+    {
+      "id": "draft0-rule8-negative-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "divisibleBy": 0.1
+      },
+      "instance": "negative-large-int",
+      "outcome": {
+        "status": "instance-error",
+        "type": "OverflowError",
+        "message": "int too large to convert to float"
+      }
+    },
+    {
+      "id": "draft0-rule8-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "divisibleBy": 0.1
+      },
+      "instance": "zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft0-rule8-negative-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "divisibleBy": 0.1
+      },
+      "instance": "negative-zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft0-rule8-half",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "divisibleBy": 0.1
+      },
+      "instance": "half",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft0-rule9-nan",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "divisibleBy": 1e-308
+      },
+      "instance": "nan",
+      "outcome": {
+        "status": "instance-error",
+        "type": "ValueError",
+        "message": "cannot convert float NaN to integer"
+      }
+    },
+    {
+      "id": "draft0-rule9-inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "divisibleBy": 1e-308
+      },
+      "instance": "inf",
+      "outcome": {
+        "status": "instance-error",
+        "type": "OverflowError",
+        "message": "cannot convert Infinity to integer ratio"
+      }
+    },
+    {
+      "id": "draft0-rule9--inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "divisibleBy": 1e-308
+      },
+      "instance": "-inf",
+      "outcome": {
+        "status": "instance-error",
+        "type": "OverflowError",
+        "message": "cannot convert Infinity to integer ratio"
+      }
+    },
+    {
+      "id": "draft0-rule9-large-float",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "divisibleBy": 1e-308
+      },
+      "instance": "large-float",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft0-rule9-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "divisibleBy": 1e-308
+      },
+      "instance": "large-int",
+      "outcome": {
+        "status": "instance-error",
+        "type": "OverflowError",
+        "message": "int too large to convert to float"
+      }
+    },
+    {
+      "id": "draft0-rule9-negative-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "divisibleBy": 1e-308
+      },
+      "instance": "negative-large-int",
+      "outcome": {
+        "status": "instance-error",
+        "type": "OverflowError",
+        "message": "int too large to convert to float"
+      }
+    },
+    {
+      "id": "draft0-rule9-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "divisibleBy": 1e-308
+      },
+      "instance": "zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft0-rule9-negative-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "divisibleBy": 1e-308
+      },
+      "instance": "negative-zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft0-rule9-half",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "divisibleBy": 1e-308
+      },
+      "instance": "half",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft0-rule10-nan",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "const": 0
+      },
+      "instance": "nan",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft0-rule10-inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "const": 0
+      },
+      "instance": "inf",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft0-rule10--inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "const": 0
+      },
+      "instance": "-inf",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft0-rule10-large-float",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "const": 0
+      },
+      "instance": "large-float",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft0-rule10-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "const": 0
+      },
+      "instance": "large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft0-rule10-negative-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "const": 0
+      },
+      "instance": "negative-large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft0-rule10-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "const": 0
+      },
+      "instance": "zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft0-rule10-negative-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "const": 0
+      },
+      "instance": "negative-zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft0-rule10-half",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "const": 0
+      },
+      "instance": "half",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft0-rule11-nan",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "enum": [
+          0,
+          1
+        ]
+      },
+      "instance": "nan",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft0-rule11-inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "enum": [
+          0,
+          1
+        ]
+      },
+      "instance": "inf",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft0-rule11--inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "enum": [
+          0,
+          1
+        ]
+      },
+      "instance": "-inf",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft0-rule11-large-float",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "enum": [
+          0,
+          1
+        ]
+      },
+      "instance": "large-float",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft0-rule11-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "enum": [
+          0,
+          1
+        ]
+      },
+      "instance": "large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft0-rule11-negative-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "enum": [
+          0,
+          1
+        ]
+      },
+      "instance": "negative-large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft0-rule11-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "enum": [
+          0,
+          1
+        ]
+      },
+      "instance": "zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft0-rule11-negative-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "enum": [
+          0,
+          1
+        ]
+      },
+      "instance": "negative-zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft0-rule11-half",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "enum": [
+          0,
+          1
+        ]
+      },
+      "instance": "half",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft1-rule0-nan",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "type": "number"
+      },
+      "instance": "nan",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft1-rule0-inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "type": "number"
+      },
+      "instance": "inf",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft1-rule0--inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "type": "number"
+      },
+      "instance": "-inf",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft1-rule0-large-float",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "type": "number"
+      },
+      "instance": "large-float",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft1-rule0-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "type": "number"
+      },
+      "instance": "large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft1-rule0-negative-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "type": "number"
+      },
+      "instance": "negative-large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft1-rule0-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "type": "number"
+      },
+      "instance": "zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft1-rule0-negative-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "type": "number"
+      },
+      "instance": "negative-zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft1-rule0-half",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "type": "number"
+      },
+      "instance": "half",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft1-rule1-nan",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "type": "integer"
+      },
+      "instance": "nan",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft1-rule1-inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "type": "integer"
+      },
+      "instance": "inf",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft1-rule1--inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "type": "integer"
+      },
+      "instance": "-inf",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft1-rule1-large-float",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "type": "integer"
+      },
+      "instance": "large-float",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft1-rule1-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "type": "integer"
+      },
+      "instance": "large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft1-rule1-negative-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "type": "integer"
+      },
+      "instance": "negative-large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft1-rule1-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "type": "integer"
+      },
+      "instance": "zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft1-rule1-negative-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "type": "integer"
+      },
+      "instance": "negative-zero",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft1-rule1-half",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "type": "integer"
+      },
+      "instance": "half",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft1-rule2-nan",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "minimum": 0
+      },
+      "instance": "nan",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft1-rule2-inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "minimum": 0
+      },
+      "instance": "inf",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft1-rule2--inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "minimum": 0
+      },
+      "instance": "-inf",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft1-rule2-large-float",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "minimum": 0
+      },
+      "instance": "large-float",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft1-rule2-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "minimum": 0
+      },
+      "instance": "large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft1-rule2-negative-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "minimum": 0
+      },
+      "instance": "negative-large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft1-rule2-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "minimum": 0
+      },
+      "instance": "zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft1-rule2-negative-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "minimum": 0
+      },
+      "instance": "negative-zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft1-rule2-half",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "minimum": 0
+      },
+      "instance": "half",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft1-rule3-nan",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "maximum": 0
+      },
+      "instance": "nan",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft1-rule3-inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "maximum": 0
+      },
+      "instance": "inf",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft1-rule3--inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "maximum": 0
+      },
+      "instance": "-inf",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft1-rule3-large-float",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "maximum": 0
+      },
+      "instance": "large-float",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft1-rule3-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "maximum": 0
+      },
+      "instance": "large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft1-rule3-negative-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "maximum": 0
+      },
+      "instance": "negative-large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft1-rule3-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "maximum": 0
+      },
+      "instance": "zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft1-rule3-negative-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "maximum": 0
+      },
+      "instance": "negative-zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft1-rule3-half",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "maximum": 0
+      },
+      "instance": "half",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft1-rule4-nan",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "exclusiveMinimum": true,
+        "minimum": 0
+      },
+      "instance": "nan",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft1-rule4-inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "exclusiveMinimum": true,
+        "minimum": 0
+      },
+      "instance": "inf",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft1-rule4--inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "exclusiveMinimum": true,
+        "minimum": 0
+      },
+      "instance": "-inf",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft1-rule4-large-float",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "exclusiveMinimum": true,
+        "minimum": 0
+      },
+      "instance": "large-float",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft1-rule4-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "exclusiveMinimum": true,
+        "minimum": 0
+      },
+      "instance": "large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft1-rule4-negative-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "exclusiveMinimum": true,
+        "minimum": 0
+      },
+      "instance": "negative-large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft1-rule4-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "exclusiveMinimum": true,
+        "minimum": 0
+      },
+      "instance": "zero",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft1-rule4-negative-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "exclusiveMinimum": true,
+        "minimum": 0
+      },
+      "instance": "negative-zero",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft1-rule4-half",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "exclusiveMinimum": true,
+        "minimum": 0
+      },
+      "instance": "half",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft1-rule5-nan",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "exclusiveMaximum": true,
+        "maximum": 0
+      },
+      "instance": "nan",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft1-rule5-inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "exclusiveMaximum": true,
+        "maximum": 0
+      },
+      "instance": "inf",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft1-rule5--inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "exclusiveMaximum": true,
+        "maximum": 0
+      },
+      "instance": "-inf",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft1-rule5-large-float",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "exclusiveMaximum": true,
+        "maximum": 0
+      },
+      "instance": "large-float",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft1-rule5-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "exclusiveMaximum": true,
+        "maximum": 0
+      },
+      "instance": "large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft1-rule5-negative-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "exclusiveMaximum": true,
+        "maximum": 0
+      },
+      "instance": "negative-large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft1-rule5-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "exclusiveMaximum": true,
+        "maximum": 0
+      },
+      "instance": "zero",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft1-rule5-negative-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "exclusiveMaximum": true,
+        "maximum": 0
+      },
+      "instance": "negative-zero",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft1-rule5-half",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "exclusiveMaximum": true,
+        "maximum": 0
+      },
+      "instance": "half",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft1-rule6-nan",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "multipleOf": 1
+      },
+      "instance": "nan",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft1-rule6-inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "multipleOf": 1
+      },
+      "instance": "inf",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft1-rule6--inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "multipleOf": 1
+      },
+      "instance": "-inf",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft1-rule6-large-float",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "multipleOf": 1
+      },
+      "instance": "large-float",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft1-rule6-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "multipleOf": 1
+      },
+      "instance": "large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft1-rule6-negative-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "multipleOf": 1
+      },
+      "instance": "negative-large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft1-rule6-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "multipleOf": 1
+      },
+      "instance": "zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft1-rule6-negative-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "multipleOf": 1
+      },
+      "instance": "negative-zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft1-rule6-half",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "multipleOf": 1
+      },
+      "instance": "half",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft1-rule7-nan",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "multipleOf": 0.5
+      },
+      "instance": "nan",
+      "outcome": {
+        "status": "instance-error",
+        "type": "ValueError",
+        "message": "cannot convert float NaN to integer"
+      }
+    },
+    {
+      "id": "draft1-rule7-inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "multipleOf": 0.5
+      },
+      "instance": "inf",
+      "outcome": {
+        "status": "instance-error",
+        "type": "OverflowError",
+        "message": "cannot convert Infinity to integer ratio"
+      }
+    },
+    {
+      "id": "draft1-rule7--inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "multipleOf": 0.5
+      },
+      "instance": "-inf",
+      "outcome": {
+        "status": "instance-error",
+        "type": "OverflowError",
+        "message": "cannot convert Infinity to integer ratio"
+      }
+    },
+    {
+      "id": "draft1-rule7-large-float",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "multipleOf": 0.5
+      },
+      "instance": "large-float",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft1-rule7-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "multipleOf": 0.5
+      },
+      "instance": "large-int",
+      "outcome": {
+        "status": "instance-error",
+        "type": "OverflowError",
+        "message": "int too large to convert to float"
+      }
+    },
+    {
+      "id": "draft1-rule7-negative-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "multipleOf": 0.5
+      },
+      "instance": "negative-large-int",
+      "outcome": {
+        "status": "instance-error",
+        "type": "OverflowError",
+        "message": "int too large to convert to float"
+      }
+    },
+    {
+      "id": "draft1-rule7-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "multipleOf": 0.5
+      },
+      "instance": "zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft1-rule7-negative-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "multipleOf": 0.5
+      },
+      "instance": "negative-zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft1-rule7-half",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "multipleOf": 0.5
+      },
+      "instance": "half",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft1-rule8-nan",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "multipleOf": 0.1
+      },
+      "instance": "nan",
+      "outcome": {
+        "status": "instance-error",
+        "type": "ValueError",
+        "message": "cannot convert float NaN to integer"
+      }
+    },
+    {
+      "id": "draft1-rule8-inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "multipleOf": 0.1
+      },
+      "instance": "inf",
+      "outcome": {
+        "status": "instance-error",
+        "type": "OverflowError",
+        "message": "cannot convert Infinity to integer ratio"
+      }
+    },
+    {
+      "id": "draft1-rule8--inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "multipleOf": 0.1
+      },
+      "instance": "-inf",
+      "outcome": {
+        "status": "instance-error",
+        "type": "OverflowError",
+        "message": "cannot convert Infinity to integer ratio"
+      }
+    },
+    {
+      "id": "draft1-rule8-large-float",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "multipleOf": 0.1
+      },
+      "instance": "large-float",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft1-rule8-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "multipleOf": 0.1
+      },
+      "instance": "large-int",
+      "outcome": {
+        "status": "instance-error",
+        "type": "OverflowError",
+        "message": "int too large to convert to float"
+      }
+    },
+    {
+      "id": "draft1-rule8-negative-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "multipleOf": 0.1
+      },
+      "instance": "negative-large-int",
+      "outcome": {
+        "status": "instance-error",
+        "type": "OverflowError",
+        "message": "int too large to convert to float"
+      }
+    },
+    {
+      "id": "draft1-rule8-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "multipleOf": 0.1
+      },
+      "instance": "zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft1-rule8-negative-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "multipleOf": 0.1
+      },
+      "instance": "negative-zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft1-rule8-half",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "multipleOf": 0.1
+      },
+      "instance": "half",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft1-rule9-nan",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "multipleOf": 1e-308
+      },
+      "instance": "nan",
+      "outcome": {
+        "status": "instance-error",
+        "type": "ValueError",
+        "message": "cannot convert float NaN to integer"
+      }
+    },
+    {
+      "id": "draft1-rule9-inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "multipleOf": 1e-308
+      },
+      "instance": "inf",
+      "outcome": {
+        "status": "instance-error",
+        "type": "OverflowError",
+        "message": "cannot convert Infinity to integer ratio"
+      }
+    },
+    {
+      "id": "draft1-rule9--inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "multipleOf": 1e-308
+      },
+      "instance": "-inf",
+      "outcome": {
+        "status": "instance-error",
+        "type": "OverflowError",
+        "message": "cannot convert Infinity to integer ratio"
+      }
+    },
+    {
+      "id": "draft1-rule9-large-float",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "multipleOf": 1e-308
+      },
+      "instance": "large-float",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft1-rule9-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "multipleOf": 1e-308
+      },
+      "instance": "large-int",
+      "outcome": {
+        "status": "instance-error",
+        "type": "OverflowError",
+        "message": "int too large to convert to float"
+      }
+    },
+    {
+      "id": "draft1-rule9-negative-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "multipleOf": 1e-308
+      },
+      "instance": "negative-large-int",
+      "outcome": {
+        "status": "instance-error",
+        "type": "OverflowError",
+        "message": "int too large to convert to float"
+      }
+    },
+    {
+      "id": "draft1-rule9-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "multipleOf": 1e-308
+      },
+      "instance": "zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft1-rule9-negative-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "multipleOf": 1e-308
+      },
+      "instance": "negative-zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft1-rule9-half",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "multipleOf": 1e-308
+      },
+      "instance": "half",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft1-rule10-nan",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "const": 0
+      },
+      "instance": "nan",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft1-rule10-inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "const": 0
+      },
+      "instance": "inf",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft1-rule10--inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "const": 0
+      },
+      "instance": "-inf",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft1-rule10-large-float",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "const": 0
+      },
+      "instance": "large-float",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft1-rule10-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "const": 0
+      },
+      "instance": "large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft1-rule10-negative-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "const": 0
+      },
+      "instance": "negative-large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft1-rule10-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "const": 0
+      },
+      "instance": "zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft1-rule10-negative-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "const": 0
+      },
+      "instance": "negative-zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft1-rule10-half",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "const": 0
+      },
+      "instance": "half",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft1-rule11-nan",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "enum": [
+          0,
+          1
+        ]
+      },
+      "instance": "nan",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft1-rule11-inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "enum": [
+          0,
+          1
+        ]
+      },
+      "instance": "inf",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft1-rule11--inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "enum": [
+          0,
+          1
+        ]
+      },
+      "instance": "-inf",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft1-rule11-large-float",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "enum": [
+          0,
+          1
+        ]
+      },
+      "instance": "large-float",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft1-rule11-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "enum": [
+          0,
+          1
+        ]
+      },
+      "instance": "large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft1-rule11-negative-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "enum": [
+          0,
+          1
+        ]
+      },
+      "instance": "negative-large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft1-rule11-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "enum": [
+          0,
+          1
+        ]
+      },
+      "instance": "zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft1-rule11-negative-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "enum": [
+          0,
+          1
+        ]
+      },
+      "instance": "negative-zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft1-rule11-half",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "enum": [
+          0,
+          1
+        ]
+      },
+      "instance": "half",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft2-rule0-nan",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "type": "number"
+      },
+      "instance": "nan",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft2-rule0-inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "type": "number"
+      },
+      "instance": "inf",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft2-rule0--inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "type": "number"
+      },
+      "instance": "-inf",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft2-rule0-large-float",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "type": "number"
+      },
+      "instance": "large-float",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft2-rule0-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "type": "number"
+      },
+      "instance": "large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft2-rule0-negative-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "type": "number"
+      },
+      "instance": "negative-large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft2-rule0-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "type": "number"
+      },
+      "instance": "zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft2-rule0-negative-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "type": "number"
+      },
+      "instance": "negative-zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft2-rule0-half",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "type": "number"
+      },
+      "instance": "half",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft2-rule1-nan",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "type": "integer"
+      },
+      "instance": "nan",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft2-rule1-inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "type": "integer"
+      },
+      "instance": "inf",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft2-rule1--inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "type": "integer"
+      },
+      "instance": "-inf",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft2-rule1-large-float",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "type": "integer"
+      },
+      "instance": "large-float",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft2-rule1-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "type": "integer"
+      },
+      "instance": "large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft2-rule1-negative-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "type": "integer"
+      },
+      "instance": "negative-large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft2-rule1-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "type": "integer"
+      },
+      "instance": "zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft2-rule1-negative-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "type": "integer"
+      },
+      "instance": "negative-zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft2-rule1-half",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "type": "integer"
+      },
+      "instance": "half",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft2-rule2-nan",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "minimum": 0
+      },
+      "instance": "nan",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft2-rule2-inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "minimum": 0
+      },
+      "instance": "inf",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft2-rule2--inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "minimum": 0
+      },
+      "instance": "-inf",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft2-rule2-large-float",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "minimum": 0
+      },
+      "instance": "large-float",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft2-rule2-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "minimum": 0
+      },
+      "instance": "large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft2-rule2-negative-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "minimum": 0
+      },
+      "instance": "negative-large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft2-rule2-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "minimum": 0
+      },
+      "instance": "zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft2-rule2-negative-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "minimum": 0
+      },
+      "instance": "negative-zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft2-rule2-half",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "minimum": 0
+      },
+      "instance": "half",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft2-rule3-nan",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "maximum": 0
+      },
+      "instance": "nan",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft2-rule3-inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "maximum": 0
+      },
+      "instance": "inf",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft2-rule3--inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "maximum": 0
+      },
+      "instance": "-inf",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft2-rule3-large-float",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "maximum": 0
+      },
+      "instance": "large-float",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft2-rule3-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "maximum": 0
+      },
+      "instance": "large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft2-rule3-negative-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "maximum": 0
+      },
+      "instance": "negative-large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft2-rule3-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "maximum": 0
+      },
+      "instance": "zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft2-rule3-negative-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "maximum": 0
+      },
+      "instance": "negative-zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft2-rule3-half",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "maximum": 0
+      },
+      "instance": "half",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft2-rule4-nan",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "exclusiveMinimum": 0
+      },
+      "instance": "nan",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft2-rule4-inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "exclusiveMinimum": 0
+      },
+      "instance": "inf",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft2-rule4--inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "exclusiveMinimum": 0
+      },
+      "instance": "-inf",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft2-rule4-large-float",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "exclusiveMinimum": 0
+      },
+      "instance": "large-float",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft2-rule4-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "exclusiveMinimum": 0
+      },
+      "instance": "large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft2-rule4-negative-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "exclusiveMinimum": 0
+      },
+      "instance": "negative-large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft2-rule4-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "exclusiveMinimum": 0
+      },
+      "instance": "zero",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft2-rule4-negative-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "exclusiveMinimum": 0
+      },
+      "instance": "negative-zero",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft2-rule4-half",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "exclusiveMinimum": 0
+      },
+      "instance": "half",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft2-rule5-nan",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "exclusiveMaximum": 0
+      },
+      "instance": "nan",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft2-rule5-inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "exclusiveMaximum": 0
+      },
+      "instance": "inf",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft2-rule5--inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "exclusiveMaximum": 0
+      },
+      "instance": "-inf",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft2-rule5-large-float",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "exclusiveMaximum": 0
+      },
+      "instance": "large-float",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft2-rule5-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "exclusiveMaximum": 0
+      },
+      "instance": "large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft2-rule5-negative-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "exclusiveMaximum": 0
+      },
+      "instance": "negative-large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft2-rule5-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "exclusiveMaximum": 0
+      },
+      "instance": "zero",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft2-rule5-negative-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "exclusiveMaximum": 0
+      },
+      "instance": "negative-zero",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft2-rule5-half",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "exclusiveMaximum": 0
+      },
+      "instance": "half",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft2-rule6-nan",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "multipleOf": 1
+      },
+      "instance": "nan",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft2-rule6-inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "multipleOf": 1
+      },
+      "instance": "inf",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft2-rule6--inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "multipleOf": 1
+      },
+      "instance": "-inf",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft2-rule6-large-float",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "multipleOf": 1
+      },
+      "instance": "large-float",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft2-rule6-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "multipleOf": 1
+      },
+      "instance": "large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft2-rule6-negative-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "multipleOf": 1
+      },
+      "instance": "negative-large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft2-rule6-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "multipleOf": 1
+      },
+      "instance": "zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft2-rule6-negative-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "multipleOf": 1
+      },
+      "instance": "negative-zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft2-rule6-half",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "multipleOf": 1
+      },
+      "instance": "half",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft2-rule7-nan",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "multipleOf": 0.5
+      },
+      "instance": "nan",
+      "outcome": {
+        "status": "instance-error",
+        "type": "ValueError",
+        "message": "cannot convert float NaN to integer"
+      }
+    },
+    {
+      "id": "draft2-rule7-inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "multipleOf": 0.5
+      },
+      "instance": "inf",
+      "outcome": {
+        "status": "instance-error",
+        "type": "OverflowError",
+        "message": "cannot convert Infinity to integer ratio"
+      }
+    },
+    {
+      "id": "draft2-rule7--inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "multipleOf": 0.5
+      },
+      "instance": "-inf",
+      "outcome": {
+        "status": "instance-error",
+        "type": "OverflowError",
+        "message": "cannot convert Infinity to integer ratio"
+      }
+    },
+    {
+      "id": "draft2-rule7-large-float",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "multipleOf": 0.5
+      },
+      "instance": "large-float",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft2-rule7-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "multipleOf": 0.5
+      },
+      "instance": "large-int",
+      "outcome": {
+        "status": "instance-error",
+        "type": "OverflowError",
+        "message": "int too large to convert to float"
+      }
+    },
+    {
+      "id": "draft2-rule7-negative-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "multipleOf": 0.5
+      },
+      "instance": "negative-large-int",
+      "outcome": {
+        "status": "instance-error",
+        "type": "OverflowError",
+        "message": "int too large to convert to float"
+      }
+    },
+    {
+      "id": "draft2-rule7-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "multipleOf": 0.5
+      },
+      "instance": "zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft2-rule7-negative-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "multipleOf": 0.5
+      },
+      "instance": "negative-zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft2-rule7-half",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "multipleOf": 0.5
+      },
+      "instance": "half",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft2-rule8-nan",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "multipleOf": 0.1
+      },
+      "instance": "nan",
+      "outcome": {
+        "status": "instance-error",
+        "type": "ValueError",
+        "message": "cannot convert float NaN to integer"
+      }
+    },
+    {
+      "id": "draft2-rule8-inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "multipleOf": 0.1
+      },
+      "instance": "inf",
+      "outcome": {
+        "status": "instance-error",
+        "type": "OverflowError",
+        "message": "cannot convert Infinity to integer ratio"
+      }
+    },
+    {
+      "id": "draft2-rule8--inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "multipleOf": 0.1
+      },
+      "instance": "-inf",
+      "outcome": {
+        "status": "instance-error",
+        "type": "OverflowError",
+        "message": "cannot convert Infinity to integer ratio"
+      }
+    },
+    {
+      "id": "draft2-rule8-large-float",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "multipleOf": 0.1
+      },
+      "instance": "large-float",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft2-rule8-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "multipleOf": 0.1
+      },
+      "instance": "large-int",
+      "outcome": {
+        "status": "instance-error",
+        "type": "OverflowError",
+        "message": "int too large to convert to float"
+      }
+    },
+    {
+      "id": "draft2-rule8-negative-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "multipleOf": 0.1
+      },
+      "instance": "negative-large-int",
+      "outcome": {
+        "status": "instance-error",
+        "type": "OverflowError",
+        "message": "int too large to convert to float"
+      }
+    },
+    {
+      "id": "draft2-rule8-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "multipleOf": 0.1
+      },
+      "instance": "zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft2-rule8-negative-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "multipleOf": 0.1
+      },
+      "instance": "negative-zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft2-rule8-half",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "multipleOf": 0.1
+      },
+      "instance": "half",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft2-rule9-nan",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "multipleOf": 1e-308
+      },
+      "instance": "nan",
+      "outcome": {
+        "status": "instance-error",
+        "type": "ValueError",
+        "message": "cannot convert float NaN to integer"
+      }
+    },
+    {
+      "id": "draft2-rule9-inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "multipleOf": 1e-308
+      },
+      "instance": "inf",
+      "outcome": {
+        "status": "instance-error",
+        "type": "OverflowError",
+        "message": "cannot convert Infinity to integer ratio"
+      }
+    },
+    {
+      "id": "draft2-rule9--inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "multipleOf": 1e-308
+      },
+      "instance": "-inf",
+      "outcome": {
+        "status": "instance-error",
+        "type": "OverflowError",
+        "message": "cannot convert Infinity to integer ratio"
+      }
+    },
+    {
+      "id": "draft2-rule9-large-float",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "multipleOf": 1e-308
+      },
+      "instance": "large-float",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft2-rule9-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "multipleOf": 1e-308
+      },
+      "instance": "large-int",
+      "outcome": {
+        "status": "instance-error",
+        "type": "OverflowError",
+        "message": "int too large to convert to float"
+      }
+    },
+    {
+      "id": "draft2-rule9-negative-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "multipleOf": 1e-308
+      },
+      "instance": "negative-large-int",
+      "outcome": {
+        "status": "instance-error",
+        "type": "OverflowError",
+        "message": "int too large to convert to float"
+      }
+    },
+    {
+      "id": "draft2-rule9-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "multipleOf": 1e-308
+      },
+      "instance": "zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft2-rule9-negative-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "multipleOf": 1e-308
+      },
+      "instance": "negative-zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft2-rule9-half",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "multipleOf": 1e-308
+      },
+      "instance": "half",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft2-rule10-nan",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "const": 0
+      },
+      "instance": "nan",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft2-rule10-inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "const": 0
+      },
+      "instance": "inf",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft2-rule10--inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "const": 0
+      },
+      "instance": "-inf",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft2-rule10-large-float",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "const": 0
+      },
+      "instance": "large-float",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft2-rule10-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "const": 0
+      },
+      "instance": "large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft2-rule10-negative-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "const": 0
+      },
+      "instance": "negative-large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft2-rule10-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "const": 0
+      },
+      "instance": "zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft2-rule10-negative-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "const": 0
+      },
+      "instance": "negative-zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft2-rule10-half",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "const": 0
+      },
+      "instance": "half",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft2-rule11-nan",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "enum": [
+          0,
+          1
+        ]
+      },
+      "instance": "nan",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft2-rule11-inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "enum": [
+          0,
+          1
+        ]
+      },
+      "instance": "inf",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft2-rule11--inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "enum": [
+          0,
+          1
+        ]
+      },
+      "instance": "-inf",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft2-rule11-large-float",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "enum": [
+          0,
+          1
+        ]
+      },
+      "instance": "large-float",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft2-rule11-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "enum": [
+          0,
+          1
+        ]
+      },
+      "instance": "large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft2-rule11-negative-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "enum": [
+          0,
+          1
+        ]
+      },
+      "instance": "negative-large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft2-rule11-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "enum": [
+          0,
+          1
+        ]
+      },
+      "instance": "zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft2-rule11-negative-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "enum": [
+          0,
+          1
+        ]
+      },
+      "instance": "negative-zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft2-rule11-half",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-06/schema#",
+        "enum": [
+          0,
+          1
+        ]
+      },
+      "instance": "half",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft3-rule0-nan",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "type": "number"
+      },
+      "instance": "nan",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft3-rule0-inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "type": "number"
+      },
+      "instance": "inf",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft3-rule0--inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "type": "number"
+      },
+      "instance": "-inf",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft3-rule0-large-float",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "type": "number"
+      },
+      "instance": "large-float",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft3-rule0-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "type": "number"
+      },
+      "instance": "large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft3-rule0-negative-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "type": "number"
+      },
+      "instance": "negative-large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft3-rule0-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "type": "number"
+      },
+      "instance": "zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft3-rule0-negative-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "type": "number"
+      },
+      "instance": "negative-zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft3-rule0-half",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "type": "number"
+      },
+      "instance": "half",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft3-rule1-nan",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "type": "integer"
+      },
+      "instance": "nan",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft3-rule1-inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "type": "integer"
+      },
+      "instance": "inf",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft3-rule1--inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "type": "integer"
+      },
+      "instance": "-inf",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft3-rule1-large-float",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "type": "integer"
+      },
+      "instance": "large-float",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft3-rule1-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "type": "integer"
+      },
+      "instance": "large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft3-rule1-negative-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "type": "integer"
+      },
+      "instance": "negative-large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft3-rule1-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "type": "integer"
+      },
+      "instance": "zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft3-rule1-negative-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "type": "integer"
+      },
+      "instance": "negative-zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft3-rule1-half",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "type": "integer"
+      },
+      "instance": "half",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft3-rule2-nan",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "minimum": 0
+      },
+      "instance": "nan",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft3-rule2-inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "minimum": 0
+      },
+      "instance": "inf",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft3-rule2--inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "minimum": 0
+      },
+      "instance": "-inf",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft3-rule2-large-float",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "minimum": 0
+      },
+      "instance": "large-float",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft3-rule2-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "minimum": 0
+      },
+      "instance": "large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft3-rule2-negative-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "minimum": 0
+      },
+      "instance": "negative-large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft3-rule2-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "minimum": 0
+      },
+      "instance": "zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft3-rule2-negative-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "minimum": 0
+      },
+      "instance": "negative-zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft3-rule2-half",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "minimum": 0
+      },
+      "instance": "half",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft3-rule3-nan",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "maximum": 0
+      },
+      "instance": "nan",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft3-rule3-inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "maximum": 0
+      },
+      "instance": "inf",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft3-rule3--inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "maximum": 0
+      },
+      "instance": "-inf",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft3-rule3-large-float",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "maximum": 0
+      },
+      "instance": "large-float",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft3-rule3-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "maximum": 0
+      },
+      "instance": "large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft3-rule3-negative-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "maximum": 0
+      },
+      "instance": "negative-large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft3-rule3-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "maximum": 0
+      },
+      "instance": "zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft3-rule3-negative-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "maximum": 0
+      },
+      "instance": "negative-zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft3-rule3-half",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "maximum": 0
+      },
+      "instance": "half",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft3-rule4-nan",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "exclusiveMinimum": 0
+      },
+      "instance": "nan",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft3-rule4-inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "exclusiveMinimum": 0
+      },
+      "instance": "inf",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft3-rule4--inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "exclusiveMinimum": 0
+      },
+      "instance": "-inf",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft3-rule4-large-float",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "exclusiveMinimum": 0
+      },
+      "instance": "large-float",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft3-rule4-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "exclusiveMinimum": 0
+      },
+      "instance": "large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft3-rule4-negative-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "exclusiveMinimum": 0
+      },
+      "instance": "negative-large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft3-rule4-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "exclusiveMinimum": 0
+      },
+      "instance": "zero",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft3-rule4-negative-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "exclusiveMinimum": 0
+      },
+      "instance": "negative-zero",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft3-rule4-half",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "exclusiveMinimum": 0
+      },
+      "instance": "half",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft3-rule5-nan",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "exclusiveMaximum": 0
+      },
+      "instance": "nan",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft3-rule5-inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "exclusiveMaximum": 0
+      },
+      "instance": "inf",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft3-rule5--inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "exclusiveMaximum": 0
+      },
+      "instance": "-inf",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft3-rule5-large-float",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "exclusiveMaximum": 0
+      },
+      "instance": "large-float",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft3-rule5-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "exclusiveMaximum": 0
+      },
+      "instance": "large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft3-rule5-negative-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "exclusiveMaximum": 0
+      },
+      "instance": "negative-large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft3-rule5-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "exclusiveMaximum": 0
+      },
+      "instance": "zero",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft3-rule5-negative-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "exclusiveMaximum": 0
+      },
+      "instance": "negative-zero",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft3-rule5-half",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "exclusiveMaximum": 0
+      },
+      "instance": "half",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft3-rule6-nan",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "multipleOf": 1
+      },
+      "instance": "nan",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft3-rule6-inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "multipleOf": 1
+      },
+      "instance": "inf",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft3-rule6--inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "multipleOf": 1
+      },
+      "instance": "-inf",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft3-rule6-large-float",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "multipleOf": 1
+      },
+      "instance": "large-float",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft3-rule6-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "multipleOf": 1
+      },
+      "instance": "large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft3-rule6-negative-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "multipleOf": 1
+      },
+      "instance": "negative-large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft3-rule6-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "multipleOf": 1
+      },
+      "instance": "zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft3-rule6-negative-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "multipleOf": 1
+      },
+      "instance": "negative-zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft3-rule6-half",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "multipleOf": 1
+      },
+      "instance": "half",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft3-rule7-nan",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "multipleOf": 0.5
+      },
+      "instance": "nan",
+      "outcome": {
+        "status": "instance-error",
+        "type": "ValueError",
+        "message": "cannot convert float NaN to integer"
+      }
+    },
+    {
+      "id": "draft3-rule7-inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "multipleOf": 0.5
+      },
+      "instance": "inf",
+      "outcome": {
+        "status": "instance-error",
+        "type": "OverflowError",
+        "message": "cannot convert Infinity to integer ratio"
+      }
+    },
+    {
+      "id": "draft3-rule7--inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "multipleOf": 0.5
+      },
+      "instance": "-inf",
+      "outcome": {
+        "status": "instance-error",
+        "type": "OverflowError",
+        "message": "cannot convert Infinity to integer ratio"
+      }
+    },
+    {
+      "id": "draft3-rule7-large-float",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "multipleOf": 0.5
+      },
+      "instance": "large-float",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft3-rule7-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "multipleOf": 0.5
+      },
+      "instance": "large-int",
+      "outcome": {
+        "status": "instance-error",
+        "type": "OverflowError",
+        "message": "int too large to convert to float"
+      }
+    },
+    {
+      "id": "draft3-rule7-negative-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "multipleOf": 0.5
+      },
+      "instance": "negative-large-int",
+      "outcome": {
+        "status": "instance-error",
+        "type": "OverflowError",
+        "message": "int too large to convert to float"
+      }
+    },
+    {
+      "id": "draft3-rule7-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "multipleOf": 0.5
+      },
+      "instance": "zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft3-rule7-negative-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "multipleOf": 0.5
+      },
+      "instance": "negative-zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft3-rule7-half",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "multipleOf": 0.5
+      },
+      "instance": "half",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft3-rule8-nan",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "multipleOf": 0.1
+      },
+      "instance": "nan",
+      "outcome": {
+        "status": "instance-error",
+        "type": "ValueError",
+        "message": "cannot convert float NaN to integer"
+      }
+    },
+    {
+      "id": "draft3-rule8-inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "multipleOf": 0.1
+      },
+      "instance": "inf",
+      "outcome": {
+        "status": "instance-error",
+        "type": "OverflowError",
+        "message": "cannot convert Infinity to integer ratio"
+      }
+    },
+    {
+      "id": "draft3-rule8--inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "multipleOf": 0.1
+      },
+      "instance": "-inf",
+      "outcome": {
+        "status": "instance-error",
+        "type": "OverflowError",
+        "message": "cannot convert Infinity to integer ratio"
+      }
+    },
+    {
+      "id": "draft3-rule8-large-float",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "multipleOf": 0.1
+      },
+      "instance": "large-float",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft3-rule8-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "multipleOf": 0.1
+      },
+      "instance": "large-int",
+      "outcome": {
+        "status": "instance-error",
+        "type": "OverflowError",
+        "message": "int too large to convert to float"
+      }
+    },
+    {
+      "id": "draft3-rule8-negative-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "multipleOf": 0.1
+      },
+      "instance": "negative-large-int",
+      "outcome": {
+        "status": "instance-error",
+        "type": "OverflowError",
+        "message": "int too large to convert to float"
+      }
+    },
+    {
+      "id": "draft3-rule8-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "multipleOf": 0.1
+      },
+      "instance": "zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft3-rule8-negative-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "multipleOf": 0.1
+      },
+      "instance": "negative-zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft3-rule8-half",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "multipleOf": 0.1
+      },
+      "instance": "half",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft3-rule9-nan",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "multipleOf": 1e-308
+      },
+      "instance": "nan",
+      "outcome": {
+        "status": "instance-error",
+        "type": "ValueError",
+        "message": "cannot convert float NaN to integer"
+      }
+    },
+    {
+      "id": "draft3-rule9-inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "multipleOf": 1e-308
+      },
+      "instance": "inf",
+      "outcome": {
+        "status": "instance-error",
+        "type": "OverflowError",
+        "message": "cannot convert Infinity to integer ratio"
+      }
+    },
+    {
+      "id": "draft3-rule9--inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "multipleOf": 1e-308
+      },
+      "instance": "-inf",
+      "outcome": {
+        "status": "instance-error",
+        "type": "OverflowError",
+        "message": "cannot convert Infinity to integer ratio"
+      }
+    },
+    {
+      "id": "draft3-rule9-large-float",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "multipleOf": 1e-308
+      },
+      "instance": "large-float",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft3-rule9-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "multipleOf": 1e-308
+      },
+      "instance": "large-int",
+      "outcome": {
+        "status": "instance-error",
+        "type": "OverflowError",
+        "message": "int too large to convert to float"
+      }
+    },
+    {
+      "id": "draft3-rule9-negative-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "multipleOf": 1e-308
+      },
+      "instance": "negative-large-int",
+      "outcome": {
+        "status": "instance-error",
+        "type": "OverflowError",
+        "message": "int too large to convert to float"
+      }
+    },
+    {
+      "id": "draft3-rule9-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "multipleOf": 1e-308
+      },
+      "instance": "zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft3-rule9-negative-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "multipleOf": 1e-308
+      },
+      "instance": "negative-zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft3-rule9-half",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "multipleOf": 1e-308
+      },
+      "instance": "half",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft3-rule10-nan",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "const": 0
+      },
+      "instance": "nan",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft3-rule10-inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "const": 0
+      },
+      "instance": "inf",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft3-rule10--inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "const": 0
+      },
+      "instance": "-inf",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft3-rule10-large-float",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "const": 0
+      },
+      "instance": "large-float",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft3-rule10-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "const": 0
+      },
+      "instance": "large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft3-rule10-negative-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "const": 0
+      },
+      "instance": "negative-large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft3-rule10-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "const": 0
+      },
+      "instance": "zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft3-rule10-negative-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "const": 0
+      },
+      "instance": "negative-zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft3-rule10-half",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "const": 0
+      },
+      "instance": "half",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft3-rule11-nan",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "enum": [
+          0,
+          1
+        ]
+      },
+      "instance": "nan",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft3-rule11-inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "enum": [
+          0,
+          1
+        ]
+      },
+      "instance": "inf",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft3-rule11--inf",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "enum": [
+          0,
+          1
+        ]
+      },
+      "instance": "-inf",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft3-rule11-large-float",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "enum": [
+          0,
+          1
+        ]
+      },
+      "instance": "large-float",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft3-rule11-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "enum": [
+          0,
+          1
+        ]
+      },
+      "instance": "large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft3-rule11-negative-large-int",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "enum": [
+          0,
+          1
+        ]
+      },
+      "instance": "negative-large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft3-rule11-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "enum": [
+          0,
+          1
+        ]
+      },
+      "instance": "zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft3-rule11-negative-zero",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "enum": [
+          0,
+          1
+        ]
+      },
+      "instance": "negative-zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft3-rule11-half",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "enum": [
+          0,
+          1
+        ]
+      },
+      "instance": "half",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft4-rule0-nan",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "type": "number"
+      },
+      "instance": "nan",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft4-rule0-inf",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "type": "number"
+      },
+      "instance": "inf",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft4-rule0--inf",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "type": "number"
+      },
+      "instance": "-inf",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft4-rule0-large-float",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "type": "number"
+      },
+      "instance": "large-float",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft4-rule0-large-int",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "type": "number"
+      },
+      "instance": "large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft4-rule0-negative-large-int",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "type": "number"
+      },
+      "instance": "negative-large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft4-rule0-zero",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "type": "number"
+      },
+      "instance": "zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft4-rule0-negative-zero",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "type": "number"
+      },
+      "instance": "negative-zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft4-rule0-half",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "type": "number"
+      },
+      "instance": "half",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft4-rule1-nan",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "type": "integer"
+      },
+      "instance": "nan",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft4-rule1-inf",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "type": "integer"
+      },
+      "instance": "inf",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft4-rule1--inf",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "type": "integer"
+      },
+      "instance": "-inf",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft4-rule1-large-float",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "type": "integer"
+      },
+      "instance": "large-float",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft4-rule1-large-int",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "type": "integer"
+      },
+      "instance": "large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft4-rule1-negative-large-int",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "type": "integer"
+      },
+      "instance": "negative-large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft4-rule1-zero",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "type": "integer"
+      },
+      "instance": "zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft4-rule1-negative-zero",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "type": "integer"
+      },
+      "instance": "negative-zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft4-rule1-half",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "type": "integer"
+      },
+      "instance": "half",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft4-rule2-nan",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "minimum": 0
+      },
+      "instance": "nan",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft4-rule2-inf",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "minimum": 0
+      },
+      "instance": "inf",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft4-rule2--inf",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "minimum": 0
+      },
+      "instance": "-inf",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft4-rule2-large-float",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "minimum": 0
+      },
+      "instance": "large-float",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft4-rule2-large-int",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "minimum": 0
+      },
+      "instance": "large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft4-rule2-negative-large-int",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "minimum": 0
+      },
+      "instance": "negative-large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft4-rule2-zero",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "minimum": 0
+      },
+      "instance": "zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft4-rule2-negative-zero",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "minimum": 0
+      },
+      "instance": "negative-zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft4-rule2-half",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "minimum": 0
+      },
+      "instance": "half",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft4-rule3-nan",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "maximum": 0
+      },
+      "instance": "nan",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft4-rule3-inf",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "maximum": 0
+      },
+      "instance": "inf",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft4-rule3--inf",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "maximum": 0
+      },
+      "instance": "-inf",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft4-rule3-large-float",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "maximum": 0
+      },
+      "instance": "large-float",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft4-rule3-large-int",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "maximum": 0
+      },
+      "instance": "large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft4-rule3-negative-large-int",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "maximum": 0
+      },
+      "instance": "negative-large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft4-rule3-zero",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "maximum": 0
+      },
+      "instance": "zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft4-rule3-negative-zero",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "maximum": 0
+      },
+      "instance": "negative-zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft4-rule3-half",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "maximum": 0
+      },
+      "instance": "half",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft4-rule4-nan",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "exclusiveMinimum": 0
+      },
+      "instance": "nan",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft4-rule4-inf",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "exclusiveMinimum": 0
+      },
+      "instance": "inf",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft4-rule4--inf",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "exclusiveMinimum": 0
+      },
+      "instance": "-inf",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft4-rule4-large-float",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "exclusiveMinimum": 0
+      },
+      "instance": "large-float",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft4-rule4-large-int",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "exclusiveMinimum": 0
+      },
+      "instance": "large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft4-rule4-negative-large-int",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "exclusiveMinimum": 0
+      },
+      "instance": "negative-large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft4-rule4-zero",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "exclusiveMinimum": 0
+      },
+      "instance": "zero",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft4-rule4-negative-zero",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "exclusiveMinimum": 0
+      },
+      "instance": "negative-zero",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft4-rule4-half",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "exclusiveMinimum": 0
+      },
+      "instance": "half",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft4-rule5-nan",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "exclusiveMaximum": 0
+      },
+      "instance": "nan",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft4-rule5-inf",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "exclusiveMaximum": 0
+      },
+      "instance": "inf",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft4-rule5--inf",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "exclusiveMaximum": 0
+      },
+      "instance": "-inf",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft4-rule5-large-float",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "exclusiveMaximum": 0
+      },
+      "instance": "large-float",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft4-rule5-large-int",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "exclusiveMaximum": 0
+      },
+      "instance": "large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft4-rule5-negative-large-int",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "exclusiveMaximum": 0
+      },
+      "instance": "negative-large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft4-rule5-zero",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "exclusiveMaximum": 0
+      },
+      "instance": "zero",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft4-rule5-negative-zero",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "exclusiveMaximum": 0
+      },
+      "instance": "negative-zero",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft4-rule5-half",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "exclusiveMaximum": 0
+      },
+      "instance": "half",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft4-rule6-nan",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "multipleOf": 1
+      },
+      "instance": "nan",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft4-rule6-inf",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "multipleOf": 1
+      },
+      "instance": "inf",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft4-rule6--inf",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "multipleOf": 1
+      },
+      "instance": "-inf",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft4-rule6-large-float",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "multipleOf": 1
+      },
+      "instance": "large-float",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft4-rule6-large-int",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "multipleOf": 1
+      },
+      "instance": "large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft4-rule6-negative-large-int",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "multipleOf": 1
+      },
+      "instance": "negative-large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft4-rule6-zero",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "multipleOf": 1
+      },
+      "instance": "zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft4-rule6-negative-zero",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "multipleOf": 1
+      },
+      "instance": "negative-zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft4-rule6-half",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "multipleOf": 1
+      },
+      "instance": "half",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft4-rule7-nan",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "multipleOf": 0.5
+      },
+      "instance": "nan",
+      "outcome": {
+        "status": "instance-error",
+        "type": "ValueError",
+        "message": "cannot convert float NaN to integer"
+      }
+    },
+    {
+      "id": "draft4-rule7-inf",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "multipleOf": 0.5
+      },
+      "instance": "inf",
+      "outcome": {
+        "status": "instance-error",
+        "type": "OverflowError",
+        "message": "cannot convert Infinity to integer ratio"
+      }
+    },
+    {
+      "id": "draft4-rule7--inf",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "multipleOf": 0.5
+      },
+      "instance": "-inf",
+      "outcome": {
+        "status": "instance-error",
+        "type": "OverflowError",
+        "message": "cannot convert Infinity to integer ratio"
+      }
+    },
+    {
+      "id": "draft4-rule7-large-float",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "multipleOf": 0.5
+      },
+      "instance": "large-float",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft4-rule7-large-int",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "multipleOf": 0.5
+      },
+      "instance": "large-int",
+      "outcome": {
+        "status": "instance-error",
+        "type": "OverflowError",
+        "message": "int too large to convert to float"
+      }
+    },
+    {
+      "id": "draft4-rule7-negative-large-int",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "multipleOf": 0.5
+      },
+      "instance": "negative-large-int",
+      "outcome": {
+        "status": "instance-error",
+        "type": "OverflowError",
+        "message": "int too large to convert to float"
+      }
+    },
+    {
+      "id": "draft4-rule7-zero",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "multipleOf": 0.5
+      },
+      "instance": "zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft4-rule7-negative-zero",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "multipleOf": 0.5
+      },
+      "instance": "negative-zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft4-rule7-half",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "multipleOf": 0.5
+      },
+      "instance": "half",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft4-rule8-nan",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "multipleOf": 0.1
+      },
+      "instance": "nan",
+      "outcome": {
+        "status": "instance-error",
+        "type": "ValueError",
+        "message": "cannot convert float NaN to integer"
+      }
+    },
+    {
+      "id": "draft4-rule8-inf",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "multipleOf": 0.1
+      },
+      "instance": "inf",
+      "outcome": {
+        "status": "instance-error",
+        "type": "OverflowError",
+        "message": "cannot convert Infinity to integer ratio"
+      }
+    },
+    {
+      "id": "draft4-rule8--inf",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "multipleOf": 0.1
+      },
+      "instance": "-inf",
+      "outcome": {
+        "status": "instance-error",
+        "type": "OverflowError",
+        "message": "cannot convert Infinity to integer ratio"
+      }
+    },
+    {
+      "id": "draft4-rule8-large-float",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "multipleOf": 0.1
+      },
+      "instance": "large-float",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft4-rule8-large-int",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "multipleOf": 0.1
+      },
+      "instance": "large-int",
+      "outcome": {
+        "status": "instance-error",
+        "type": "OverflowError",
+        "message": "int too large to convert to float"
+      }
+    },
+    {
+      "id": "draft4-rule8-negative-large-int",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "multipleOf": 0.1
+      },
+      "instance": "negative-large-int",
+      "outcome": {
+        "status": "instance-error",
+        "type": "OverflowError",
+        "message": "int too large to convert to float"
+      }
+    },
+    {
+      "id": "draft4-rule8-zero",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "multipleOf": 0.1
+      },
+      "instance": "zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft4-rule8-negative-zero",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "multipleOf": 0.1
+      },
+      "instance": "negative-zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft4-rule8-half",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "multipleOf": 0.1
+      },
+      "instance": "half",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft4-rule9-nan",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "multipleOf": 1e-308
+      },
+      "instance": "nan",
+      "outcome": {
+        "status": "instance-error",
+        "type": "ValueError",
+        "message": "cannot convert float NaN to integer"
+      }
+    },
+    {
+      "id": "draft4-rule9-inf",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "multipleOf": 1e-308
+      },
+      "instance": "inf",
+      "outcome": {
+        "status": "instance-error",
+        "type": "OverflowError",
+        "message": "cannot convert Infinity to integer ratio"
+      }
+    },
+    {
+      "id": "draft4-rule9--inf",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "multipleOf": 1e-308
+      },
+      "instance": "-inf",
+      "outcome": {
+        "status": "instance-error",
+        "type": "OverflowError",
+        "message": "cannot convert Infinity to integer ratio"
+      }
+    },
+    {
+      "id": "draft4-rule9-large-float",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "multipleOf": 1e-308
+      },
+      "instance": "large-float",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft4-rule9-large-int",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "multipleOf": 1e-308
+      },
+      "instance": "large-int",
+      "outcome": {
+        "status": "instance-error",
+        "type": "OverflowError",
+        "message": "int too large to convert to float"
+      }
+    },
+    {
+      "id": "draft4-rule9-negative-large-int",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "multipleOf": 1e-308
+      },
+      "instance": "negative-large-int",
+      "outcome": {
+        "status": "instance-error",
+        "type": "OverflowError",
+        "message": "int too large to convert to float"
+      }
+    },
+    {
+      "id": "draft4-rule9-zero",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "multipleOf": 1e-308
+      },
+      "instance": "zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft4-rule9-negative-zero",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "multipleOf": 1e-308
+      },
+      "instance": "negative-zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft4-rule9-half",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "multipleOf": 1e-308
+      },
+      "instance": "half",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft4-rule10-nan",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "const": 0
+      },
+      "instance": "nan",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft4-rule10-inf",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "const": 0
+      },
+      "instance": "inf",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft4-rule10--inf",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "const": 0
+      },
+      "instance": "-inf",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft4-rule10-large-float",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "const": 0
+      },
+      "instance": "large-float",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft4-rule10-large-int",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "const": 0
+      },
+      "instance": "large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft4-rule10-negative-large-int",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "const": 0
+      },
+      "instance": "negative-large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft4-rule10-zero",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "const": 0
+      },
+      "instance": "zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft4-rule10-negative-zero",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "const": 0
+      },
+      "instance": "negative-zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft4-rule10-half",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "const": 0
+      },
+      "instance": "half",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft4-rule11-nan",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "enum": [
+          0,
+          1
+        ]
+      },
+      "instance": "nan",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft4-rule11-inf",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "enum": [
+          0,
+          1
+        ]
+      },
+      "instance": "inf",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft4-rule11--inf",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "enum": [
+          0,
+          1
+        ]
+      },
+      "instance": "-inf",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft4-rule11-large-float",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "enum": [
+          0,
+          1
+        ]
+      },
+      "instance": "large-float",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft4-rule11-large-int",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "enum": [
+          0,
+          1
+        ]
+      },
+      "instance": "large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft4-rule11-negative-large-int",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "enum": [
+          0,
+          1
+        ]
+      },
+      "instance": "negative-large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft4-rule11-zero",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "enum": [
+          0,
+          1
+        ]
+      },
+      "instance": "zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft4-rule11-negative-zero",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "enum": [
+          0,
+          1
+        ]
+      },
+      "instance": "negative-zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft4-rule11-half",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2019-09/schema",
+        "enum": [
+          0,
+          1
+        ]
+      },
+      "instance": "half",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft5-rule0-nan",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "number"
+      },
+      "instance": "nan",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft5-rule0-inf",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "number"
+      },
+      "instance": "inf",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft5-rule0--inf",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "number"
+      },
+      "instance": "-inf",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft5-rule0-large-float",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "number"
+      },
+      "instance": "large-float",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft5-rule0-large-int",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "number"
+      },
+      "instance": "large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft5-rule0-negative-large-int",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "number"
+      },
+      "instance": "negative-large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft5-rule0-zero",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "number"
+      },
+      "instance": "zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft5-rule0-negative-zero",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "number"
+      },
+      "instance": "negative-zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft5-rule0-half",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "number"
+      },
+      "instance": "half",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft5-rule1-nan",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "integer"
+      },
+      "instance": "nan",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft5-rule1-inf",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "integer"
+      },
+      "instance": "inf",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft5-rule1--inf",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "integer"
+      },
+      "instance": "-inf",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft5-rule1-large-float",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "integer"
+      },
+      "instance": "large-float",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft5-rule1-large-int",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "integer"
+      },
+      "instance": "large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft5-rule1-negative-large-int",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "integer"
+      },
+      "instance": "negative-large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft5-rule1-zero",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "integer"
+      },
+      "instance": "zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft5-rule1-negative-zero",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "integer"
+      },
+      "instance": "negative-zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft5-rule1-half",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "integer"
+      },
+      "instance": "half",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft5-rule2-nan",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "minimum": 0
+      },
+      "instance": "nan",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft5-rule2-inf",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "minimum": 0
+      },
+      "instance": "inf",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft5-rule2--inf",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "minimum": 0
+      },
+      "instance": "-inf",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft5-rule2-large-float",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "minimum": 0
+      },
+      "instance": "large-float",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft5-rule2-large-int",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "minimum": 0
+      },
+      "instance": "large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft5-rule2-negative-large-int",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "minimum": 0
+      },
+      "instance": "negative-large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft5-rule2-zero",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "minimum": 0
+      },
+      "instance": "zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft5-rule2-negative-zero",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "minimum": 0
+      },
+      "instance": "negative-zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft5-rule2-half",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "minimum": 0
+      },
+      "instance": "half",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft5-rule3-nan",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "maximum": 0
+      },
+      "instance": "nan",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft5-rule3-inf",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "maximum": 0
+      },
+      "instance": "inf",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft5-rule3--inf",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "maximum": 0
+      },
+      "instance": "-inf",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft5-rule3-large-float",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "maximum": 0
+      },
+      "instance": "large-float",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft5-rule3-large-int",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "maximum": 0
+      },
+      "instance": "large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft5-rule3-negative-large-int",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "maximum": 0
+      },
+      "instance": "negative-large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft5-rule3-zero",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "maximum": 0
+      },
+      "instance": "zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft5-rule3-negative-zero",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "maximum": 0
+      },
+      "instance": "negative-zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft5-rule3-half",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "maximum": 0
+      },
+      "instance": "half",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft5-rule4-nan",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "exclusiveMinimum": 0
+      },
+      "instance": "nan",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft5-rule4-inf",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "exclusiveMinimum": 0
+      },
+      "instance": "inf",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft5-rule4--inf",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "exclusiveMinimum": 0
+      },
+      "instance": "-inf",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft5-rule4-large-float",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "exclusiveMinimum": 0
+      },
+      "instance": "large-float",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft5-rule4-large-int",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "exclusiveMinimum": 0
+      },
+      "instance": "large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft5-rule4-negative-large-int",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "exclusiveMinimum": 0
+      },
+      "instance": "negative-large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft5-rule4-zero",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "exclusiveMinimum": 0
+      },
+      "instance": "zero",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft5-rule4-negative-zero",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "exclusiveMinimum": 0
+      },
+      "instance": "negative-zero",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft5-rule4-half",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "exclusiveMinimum": 0
+      },
+      "instance": "half",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft5-rule5-nan",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "exclusiveMaximum": 0
+      },
+      "instance": "nan",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft5-rule5-inf",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "exclusiveMaximum": 0
+      },
+      "instance": "inf",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft5-rule5--inf",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "exclusiveMaximum": 0
+      },
+      "instance": "-inf",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft5-rule5-large-float",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "exclusiveMaximum": 0
+      },
+      "instance": "large-float",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft5-rule5-large-int",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "exclusiveMaximum": 0
+      },
+      "instance": "large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft5-rule5-negative-large-int",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "exclusiveMaximum": 0
+      },
+      "instance": "negative-large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft5-rule5-zero",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "exclusiveMaximum": 0
+      },
+      "instance": "zero",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft5-rule5-negative-zero",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "exclusiveMaximum": 0
+      },
+      "instance": "negative-zero",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft5-rule5-half",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "exclusiveMaximum": 0
+      },
+      "instance": "half",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft5-rule6-nan",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "multipleOf": 1
+      },
+      "instance": "nan",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft5-rule6-inf",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "multipleOf": 1
+      },
+      "instance": "inf",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft5-rule6--inf",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "multipleOf": 1
+      },
+      "instance": "-inf",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft5-rule6-large-float",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "multipleOf": 1
+      },
+      "instance": "large-float",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft5-rule6-large-int",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "multipleOf": 1
+      },
+      "instance": "large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft5-rule6-negative-large-int",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "multipleOf": 1
+      },
+      "instance": "negative-large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft5-rule6-zero",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "multipleOf": 1
+      },
+      "instance": "zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft5-rule6-negative-zero",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "multipleOf": 1
+      },
+      "instance": "negative-zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft5-rule6-half",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "multipleOf": 1
+      },
+      "instance": "half",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft5-rule7-nan",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "multipleOf": 0.5
+      },
+      "instance": "nan",
+      "outcome": {
+        "status": "instance-error",
+        "type": "ValueError",
+        "message": "cannot convert float NaN to integer"
+      }
+    },
+    {
+      "id": "draft5-rule7-inf",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "multipleOf": 0.5
+      },
+      "instance": "inf",
+      "outcome": {
+        "status": "instance-error",
+        "type": "OverflowError",
+        "message": "cannot convert Infinity to integer ratio"
+      }
+    },
+    {
+      "id": "draft5-rule7--inf",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "multipleOf": 0.5
+      },
+      "instance": "-inf",
+      "outcome": {
+        "status": "instance-error",
+        "type": "OverflowError",
+        "message": "cannot convert Infinity to integer ratio"
+      }
+    },
+    {
+      "id": "draft5-rule7-large-float",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "multipleOf": 0.5
+      },
+      "instance": "large-float",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft5-rule7-large-int",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "multipleOf": 0.5
+      },
+      "instance": "large-int",
+      "outcome": {
+        "status": "instance-error",
+        "type": "OverflowError",
+        "message": "int too large to convert to float"
+      }
+    },
+    {
+      "id": "draft5-rule7-negative-large-int",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "multipleOf": 0.5
+      },
+      "instance": "negative-large-int",
+      "outcome": {
+        "status": "instance-error",
+        "type": "OverflowError",
+        "message": "int too large to convert to float"
+      }
+    },
+    {
+      "id": "draft5-rule7-zero",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "multipleOf": 0.5
+      },
+      "instance": "zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft5-rule7-negative-zero",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "multipleOf": 0.5
+      },
+      "instance": "negative-zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft5-rule7-half",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "multipleOf": 0.5
+      },
+      "instance": "half",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft5-rule8-nan",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "multipleOf": 0.1
+      },
+      "instance": "nan",
+      "outcome": {
+        "status": "instance-error",
+        "type": "ValueError",
+        "message": "cannot convert float NaN to integer"
+      }
+    },
+    {
+      "id": "draft5-rule8-inf",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "multipleOf": 0.1
+      },
+      "instance": "inf",
+      "outcome": {
+        "status": "instance-error",
+        "type": "OverflowError",
+        "message": "cannot convert Infinity to integer ratio"
+      }
+    },
+    {
+      "id": "draft5-rule8--inf",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "multipleOf": 0.1
+      },
+      "instance": "-inf",
+      "outcome": {
+        "status": "instance-error",
+        "type": "OverflowError",
+        "message": "cannot convert Infinity to integer ratio"
+      }
+    },
+    {
+      "id": "draft5-rule8-large-float",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "multipleOf": 0.1
+      },
+      "instance": "large-float",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft5-rule8-large-int",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "multipleOf": 0.1
+      },
+      "instance": "large-int",
+      "outcome": {
+        "status": "instance-error",
+        "type": "OverflowError",
+        "message": "int too large to convert to float"
+      }
+    },
+    {
+      "id": "draft5-rule8-negative-large-int",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "multipleOf": 0.1
+      },
+      "instance": "negative-large-int",
+      "outcome": {
+        "status": "instance-error",
+        "type": "OverflowError",
+        "message": "int too large to convert to float"
+      }
+    },
+    {
+      "id": "draft5-rule8-zero",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "multipleOf": 0.1
+      },
+      "instance": "zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft5-rule8-negative-zero",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "multipleOf": 0.1
+      },
+      "instance": "negative-zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft5-rule8-half",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "multipleOf": 0.1
+      },
+      "instance": "half",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft5-rule9-nan",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "multipleOf": 1e-308
+      },
+      "instance": "nan",
+      "outcome": {
+        "status": "instance-error",
+        "type": "ValueError",
+        "message": "cannot convert float NaN to integer"
+      }
+    },
+    {
+      "id": "draft5-rule9-inf",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "multipleOf": 1e-308
+      },
+      "instance": "inf",
+      "outcome": {
+        "status": "instance-error",
+        "type": "OverflowError",
+        "message": "cannot convert Infinity to integer ratio"
+      }
+    },
+    {
+      "id": "draft5-rule9--inf",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "multipleOf": 1e-308
+      },
+      "instance": "-inf",
+      "outcome": {
+        "status": "instance-error",
+        "type": "OverflowError",
+        "message": "cannot convert Infinity to integer ratio"
+      }
+    },
+    {
+      "id": "draft5-rule9-large-float",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "multipleOf": 1e-308
+      },
+      "instance": "large-float",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft5-rule9-large-int",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "multipleOf": 1e-308
+      },
+      "instance": "large-int",
+      "outcome": {
+        "status": "instance-error",
+        "type": "OverflowError",
+        "message": "int too large to convert to float"
+      }
+    },
+    {
+      "id": "draft5-rule9-negative-large-int",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "multipleOf": 1e-308
+      },
+      "instance": "negative-large-int",
+      "outcome": {
+        "status": "instance-error",
+        "type": "OverflowError",
+        "message": "int too large to convert to float"
+      }
+    },
+    {
+      "id": "draft5-rule9-zero",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "multipleOf": 1e-308
+      },
+      "instance": "zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft5-rule9-negative-zero",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "multipleOf": 1e-308
+      },
+      "instance": "negative-zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft5-rule9-half",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "multipleOf": 1e-308
+      },
+      "instance": "half",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft5-rule10-nan",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "const": 0
+      },
+      "instance": "nan",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft5-rule10-inf",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "const": 0
+      },
+      "instance": "inf",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft5-rule10--inf",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "const": 0
+      },
+      "instance": "-inf",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft5-rule10-large-float",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "const": 0
+      },
+      "instance": "large-float",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft5-rule10-large-int",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "const": 0
+      },
+      "instance": "large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft5-rule10-negative-large-int",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "const": 0
+      },
+      "instance": "negative-large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft5-rule10-zero",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "const": 0
+      },
+      "instance": "zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft5-rule10-negative-zero",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "const": 0
+      },
+      "instance": "negative-zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft5-rule10-half",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "const": 0
+      },
+      "instance": "half",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft5-rule11-nan",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "enum": [
+          0,
+          1
+        ]
+      },
+      "instance": "nan",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft5-rule11-inf",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "enum": [
+          0,
+          1
+        ]
+      },
+      "instance": "inf",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft5-rule11--inf",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "enum": [
+          0,
+          1
+        ]
+      },
+      "instance": "-inf",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft5-rule11-large-float",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "enum": [
+          0,
+          1
+        ]
+      },
+      "instance": "large-float",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft5-rule11-large-int",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "enum": [
+          0,
+          1
+        ]
+      },
+      "instance": "large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft5-rule11-negative-large-int",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "enum": [
+          0,
+          1
+        ]
+      },
+      "instance": "negative-large-int",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    },
+    {
+      "id": "draft5-rule11-zero",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "enum": [
+          0,
+          1
+        ]
+      },
+      "instance": "zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft5-rule11-negative-zero",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "enum": [
+          0,
+          1
+        ]
+      },
+      "instance": "negative-zero",
+      "outcome": {
+        "status": "validity",
+        "valid": true
+      }
+    },
+    {
+      "id": "draft5-rule11-half",
+      "schema": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "enum": [
+          0,
+          1
+        ]
+      },
+      "instance": "half",
+      "outcome": {
+        "status": "validity",
+        "valid": false
+      }
+    }
+  ]
+}

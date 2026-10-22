@@ -88,7 +88,8 @@ weakened backend guarantees.
 
 ## Concern Impact
 
-Retain ADR-002 for the TypeScript generator and browser execution. Generated
+ADR-006 moves shared generation/execution to Rust; ADR-002 retains Bun for
+JavaScript tooling and real-browser verification. Generated
 Python is stdlib-only; backend drivers and compiler/runtime packages belong to
 consumer bindings. Exact values, unknown-content preservation and consumer-owned
 execution remain requirements. This replaces the earlier public requirement for

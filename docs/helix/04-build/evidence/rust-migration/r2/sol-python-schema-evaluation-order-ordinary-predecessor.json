@@ -1,0 +1,7530 @@
+{
+  "profile": "umf.r2-sol-python-schema-evaluation-order-ordinary/1",
+  "python": "3.11.17",
+  "jsonschema": "4.26.0",
+  "schemaSourceSha256": "22f02d6a6903b8804a1d504b0b6f232872aa564bc20e77933c880a4f9016a402",
+  "instanceValues": {
+    "nonmultiple": {
+      "kind": "float",
+      "bits": "3fd3333333333333"
+    },
+    "othertext": {
+      "kind": "string",
+      "value": "y"
+    }
+  },
+  "cases": [
+    {
+      "id": "draft0-fail-arith-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"type\":\"string\",\"divisibleBy\":0.5}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [],
+            "schemaPath": [
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [],
+              "schemaPath": [
+                "type"
+              ]
+            },
+            {
+              "keyword": "divisibleBy",
+              "instancePath": [],
+              "schemaPath": [
+                "divisibleBy"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft0-fail-arith-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"type\":\"string\",\"divisibleBy\":0.5}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft0-arith-fail-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"divisibleBy\":0.5,\"type\":\"string\"}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "divisibleBy",
+            "instancePath": [],
+            "schemaPath": [
+              "divisibleBy"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "divisibleBy",
+              "instancePath": [],
+              "schemaPath": [
+                "divisibleBy"
+              ]
+            },
+            {
+              "keyword": "type",
+              "instancePath": [],
+              "schemaPath": [
+                "type"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft0-arith-fail-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"divisibleBy\":0.5,\"type\":\"string\"}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft0-enum-arith-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"enum\":[\"x\"],\"divisibleBy\":0.5}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "enum",
+            "instancePath": [],
+            "schemaPath": [
+              "enum"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "enum",
+              "instancePath": [],
+              "schemaPath": [
+                "enum"
+              ]
+            },
+            {
+              "keyword": "divisibleBy",
+              "instancePath": [],
+              "schemaPath": [
+                "divisibleBy"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft0-enum-arith-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"enum\":[\"x\"],\"divisibleBy\":0.5}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "enum",
+            "instancePath": [],
+            "schemaPath": [
+              "enum"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "enum",
+              "instancePath": [],
+              "schemaPath": [
+                "enum"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft0-arith-enum-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"divisibleBy\":0.5,\"enum\":[\"x\"]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "divisibleBy",
+            "instancePath": [],
+            "schemaPath": [
+              "divisibleBy"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "divisibleBy",
+              "instancePath": [],
+              "schemaPath": [
+                "divisibleBy"
+              ]
+            },
+            {
+              "keyword": "enum",
+              "instancePath": [],
+              "schemaPath": [
+                "enum"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft0-arith-enum-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"divisibleBy\":0.5,\"enum\":[\"x\"]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "enum",
+            "instancePath": [],
+            "schemaPath": [
+              "enum"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "enum",
+              "instancePath": [],
+              "schemaPath": [
+                "enum"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft0-allOf-fail-arith-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"allOf\":[{\"type\":\"string\"},{\"divisibleBy\":0.5}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft0-allOf-fail-arith-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"allOf\":[{\"type\":\"string\"},{\"divisibleBy\":0.5}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft0-allOf-arith-fail-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"allOf\":[{\"divisibleBy\":0.5},{\"type\":\"string\"}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft0-allOf-arith-fail-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"allOf\":[{\"divisibleBy\":0.5},{\"type\":\"string\"}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft0-allOf-combined-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"allOf\":[{\"type\":\"string\",\"divisibleBy\":0.5},{}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft0-allOf-combined-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"allOf\":[{\"type\":\"string\",\"divisibleBy\":0.5},{}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft0-anyOf-valid-arith-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"anyOf\":[{},{\"divisibleBy\":0.5}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft0-anyOf-valid-arith-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"anyOf\":[{},{\"divisibleBy\":0.5}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft0-anyOf-arith-valid-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"anyOf\":[{\"divisibleBy\":0.5},{}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft0-anyOf-arith-valid-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"anyOf\":[{\"divisibleBy\":0.5},{}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft0-anyOf-combined-valid-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"anyOf\":[{\"type\":\"string\",\"divisibleBy\":0.5},{}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft0-anyOf-combined-valid-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"anyOf\":[{\"type\":\"string\",\"divisibleBy\":0.5},{}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft0-anyOf-valid-combined-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"anyOf\":[{},{\"type\":\"string\",\"divisibleBy\":0.5}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft0-anyOf-valid-combined-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"anyOf\":[{},{\"type\":\"string\",\"divisibleBy\":0.5}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft0-oneOf-valid-arith-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"oneOf\":[{},{\"divisibleBy\":0.5}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft0-oneOf-valid-arith-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"oneOf\":[{},{\"divisibleBy\":0.5}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft0-oneOf-combined-valid-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"oneOf\":[{\"type\":\"string\",\"divisibleBy\":0.5},{}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft0-oneOf-combined-valid-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"oneOf\":[{\"type\":\"string\",\"divisibleBy\":0.5},{}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft0-not-fail-arith-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"not\":{\"type\":\"string\",\"divisibleBy\":0.5}}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft0-not-fail-arith-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"not\":{\"type\":\"string\",\"divisibleBy\":0.5}}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft0-not-arith-fail-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"not\":{\"divisibleBy\":0.5,\"type\":\"string\"}}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft0-not-arith-fail-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"not\":{\"divisibleBy\":0.5,\"type\":\"string\"}}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft0-if-fail-arith-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"if\":{\"type\":\"string\",\"divisibleBy\":0.5},\"then\":{\"divisibleBy\":0.5},\"else\":{}}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft0-if-fail-arith-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"if\":{\"type\":\"string\",\"divisibleBy\":0.5},\"then\":{\"divisibleBy\":0.5},\"else\":{}}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft0-if-arith-fail-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"if\":{\"divisibleBy\":0.5,\"type\":\"string\"},\"then\":{\"divisibleBy\":0.5},\"else\":{}}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft0-if-arith-fail-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"if\":{\"divisibleBy\":0.5,\"type\":\"string\"},\"then\":{\"divisibleBy\":0.5},\"else\":{}}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft0-contains-fail-arith-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"contains\":{\"type\":\"string\",\"divisibleBy\":0.5}}",
+      "instanceRecipe": {
+        "shape": "array",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft0-contains-fail-arith-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"contains\":{\"type\":\"string\",\"divisibleBy\":0.5}}",
+      "instanceRecipe": {
+        "shape": "array",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft0-contains-arith-fail-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"contains\":{\"divisibleBy\":0.5,\"type\":\"string\"}}",
+      "instanceRecipe": {
+        "shape": "array",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft0-contains-arith-fail-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"contains\":{\"divisibleBy\":0.5,\"type\":\"string\"}}",
+      "instanceRecipe": {
+        "shape": "array",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft0-properties-fail-arith-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"properties\":{\"x\":{\"type\":\"string\",\"divisibleBy\":0.5}}}",
+      "instanceRecipe": {
+        "shape": "object",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [
+              "x"
+            ],
+            "schemaPath": [
+              "properties",
+              "x",
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [
+                "x"
+              ],
+              "schemaPath": [
+                "properties",
+                "x",
+                "type"
+              ]
+            },
+            {
+              "keyword": "divisibleBy",
+              "instancePath": [
+                "x"
+              ],
+              "schemaPath": [
+                "properties",
+                "x",
+                "divisibleBy"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft0-properties-fail-arith-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"properties\":{\"x\":{\"type\":\"string\",\"divisibleBy\":0.5}}}",
+      "instanceRecipe": {
+        "shape": "object",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft0-items-fail-arith-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"items\":{\"type\":\"string\",\"divisibleBy\":0.5}}",
+      "instanceRecipe": {
+        "shape": "array",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [
+              0
+            ],
+            "schemaPath": [
+              "items",
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [
+                0
+              ],
+              "schemaPath": [
+                "items",
+                "type"
+              ]
+            },
+            {
+              "keyword": "divisibleBy",
+              "instancePath": [
+                0
+              ],
+              "schemaPath": [
+                "items",
+                "divisibleBy"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft0-items-fail-arith-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"items\":{\"type\":\"string\",\"divisibleBy\":0.5}}",
+      "instanceRecipe": {
+        "shape": "array",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft0-anyOf-unevaluated-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"anyOf\":[{},{\"properties\":{\"x\":{\"divisibleBy\":0.5}}}],\"unevaluatedProperties\":false}",
+      "instanceRecipe": {
+        "shape": "object",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft0-anyOf-unevaluated-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"anyOf\":[{},{\"properties\":{\"x\":{\"divisibleBy\":0.5}}}],\"unevaluatedProperties\":false}",
+      "instanceRecipe": {
+        "shape": "object",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft1-fail-arith-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"string\",\"multipleOf\":0.5}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [],
+            "schemaPath": [
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [],
+              "schemaPath": [
+                "type"
+              ]
+            },
+            {
+              "keyword": "multipleOf",
+              "instancePath": [],
+              "schemaPath": [
+                "multipleOf"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft1-fail-arith-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"string\",\"multipleOf\":0.5}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft1-arith-fail-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"multipleOf\":0.5,\"type\":\"string\"}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "multipleOf",
+            "instancePath": [],
+            "schemaPath": [
+              "multipleOf"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "multipleOf",
+              "instancePath": [],
+              "schemaPath": [
+                "multipleOf"
+              ]
+            },
+            {
+              "keyword": "type",
+              "instancePath": [],
+              "schemaPath": [
+                "type"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft1-arith-fail-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"multipleOf\":0.5,\"type\":\"string\"}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft1-enum-arith-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"enum\":[\"x\"],\"multipleOf\":0.5}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "enum",
+            "instancePath": [],
+            "schemaPath": [
+              "enum"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "enum",
+              "instancePath": [],
+              "schemaPath": [
+                "enum"
+              ]
+            },
+            {
+              "keyword": "multipleOf",
+              "instancePath": [],
+              "schemaPath": [
+                "multipleOf"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft1-enum-arith-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"enum\":[\"x\"],\"multipleOf\":0.5}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "enum",
+            "instancePath": [],
+            "schemaPath": [
+              "enum"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "enum",
+              "instancePath": [],
+              "schemaPath": [
+                "enum"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft1-arith-enum-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"multipleOf\":0.5,\"enum\":[\"x\"]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "multipleOf",
+            "instancePath": [],
+            "schemaPath": [
+              "multipleOf"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "multipleOf",
+              "instancePath": [],
+              "schemaPath": [
+                "multipleOf"
+              ]
+            },
+            {
+              "keyword": "enum",
+              "instancePath": [],
+              "schemaPath": [
+                "enum"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft1-arith-enum-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"multipleOf\":0.5,\"enum\":[\"x\"]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "enum",
+            "instancePath": [],
+            "schemaPath": [
+              "enum"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "enum",
+              "instancePath": [],
+              "schemaPath": [
+                "enum"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft1-allOf-fail-arith-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"allOf\":[{\"type\":\"string\"},{\"multipleOf\":0.5}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [],
+            "schemaPath": [
+              "allOf",
+              0,
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [],
+              "schemaPath": [
+                "allOf",
+                0,
+                "type"
+              ]
+            },
+            {
+              "keyword": "multipleOf",
+              "instancePath": [],
+              "schemaPath": [
+                "allOf",
+                1,
+                "multipleOf"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft1-allOf-fail-arith-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"allOf\":[{\"type\":\"string\"},{\"multipleOf\":0.5}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft1-allOf-arith-fail-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"allOf\":[{\"multipleOf\":0.5},{\"type\":\"string\"}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "multipleOf",
+            "instancePath": [],
+            "schemaPath": [
+              "allOf",
+              0,
+              "multipleOf"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "multipleOf",
+              "instancePath": [],
+              "schemaPath": [
+                "allOf",
+                0,
+                "multipleOf"
+              ]
+            },
+            {
+              "keyword": "type",
+              "instancePath": [],
+              "schemaPath": [
+                "allOf",
+                1,
+                "type"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft1-allOf-arith-fail-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"allOf\":[{\"multipleOf\":0.5},{\"type\":\"string\"}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft1-allOf-combined-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"allOf\":[{\"type\":\"string\",\"multipleOf\":0.5},{}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [],
+            "schemaPath": [
+              "allOf",
+              0,
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [],
+              "schemaPath": [
+                "allOf",
+                0,
+                "type"
+              ]
+            },
+            {
+              "keyword": "multipleOf",
+              "instancePath": [],
+              "schemaPath": [
+                "allOf",
+                0,
+                "multipleOf"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft1-allOf-combined-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"allOf\":[{\"type\":\"string\",\"multipleOf\":0.5},{}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft1-anyOf-valid-arith-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"anyOf\":[{},{\"multipleOf\":0.5}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft1-anyOf-valid-arith-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"anyOf\":[{},{\"multipleOf\":0.5}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft1-anyOf-arith-valid-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"anyOf\":[{\"multipleOf\":0.5},{}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft1-anyOf-arith-valid-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"anyOf\":[{\"multipleOf\":0.5},{}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft1-anyOf-combined-valid-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"anyOf\":[{\"type\":\"string\",\"multipleOf\":0.5},{}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft1-anyOf-combined-valid-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"anyOf\":[{\"type\":\"string\",\"multipleOf\":0.5},{}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft1-anyOf-valid-combined-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"anyOf\":[{},{\"type\":\"string\",\"multipleOf\":0.5}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft1-anyOf-valid-combined-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"anyOf\":[{},{\"type\":\"string\",\"multipleOf\":0.5}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft1-oneOf-valid-arith-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"oneOf\":[{},{\"multipleOf\":0.5}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft1-oneOf-valid-arith-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"oneOf\":[{},{\"multipleOf\":0.5}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "oneOf",
+            "instancePath": [],
+            "schemaPath": [
+              "oneOf"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "oneOf",
+              "instancePath": [],
+              "schemaPath": [
+                "oneOf"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft1-oneOf-combined-valid-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"oneOf\":[{\"type\":\"string\",\"multipleOf\":0.5},{}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft1-oneOf-combined-valid-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"oneOf\":[{\"type\":\"string\",\"multipleOf\":0.5},{}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "oneOf",
+            "instancePath": [],
+            "schemaPath": [
+              "oneOf"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "oneOf",
+              "instancePath": [],
+              "schemaPath": [
+                "oneOf"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft1-not-fail-arith-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"not\":{\"type\":\"string\",\"multipleOf\":0.5}}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft1-not-fail-arith-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"not\":{\"type\":\"string\",\"multipleOf\":0.5}}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "not",
+            "instancePath": [],
+            "schemaPath": [
+              "not"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "not",
+              "instancePath": [],
+              "schemaPath": [
+                "not"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft1-not-arith-fail-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"not\":{\"multipleOf\":0.5,\"type\":\"string\"}}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft1-not-arith-fail-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"not\":{\"multipleOf\":0.5,\"type\":\"string\"}}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "not",
+            "instancePath": [],
+            "schemaPath": [
+              "not"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "not",
+              "instancePath": [],
+              "schemaPath": [
+                "not"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft1-if-fail-arith-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"if\":{\"type\":\"string\",\"multipleOf\":0.5},\"then\":{\"multipleOf\":0.5},\"else\":{}}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft1-if-fail-arith-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"if\":{\"type\":\"string\",\"multipleOf\":0.5},\"then\":{\"multipleOf\":0.5},\"else\":{}}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft1-if-arith-fail-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"if\":{\"multipleOf\":0.5,\"type\":\"string\"},\"then\":{\"multipleOf\":0.5},\"else\":{}}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft1-if-arith-fail-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"if\":{\"multipleOf\":0.5,\"type\":\"string\"},\"then\":{\"multipleOf\":0.5},\"else\":{}}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft1-contains-fail-arith-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"contains\":{\"type\":\"string\",\"multipleOf\":0.5}}",
+      "instanceRecipe": {
+        "shape": "array",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft1-contains-fail-arith-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"contains\":{\"type\":\"string\",\"multipleOf\":0.5}}",
+      "instanceRecipe": {
+        "shape": "array",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft1-contains-arith-fail-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"contains\":{\"multipleOf\":0.5,\"type\":\"string\"}}",
+      "instanceRecipe": {
+        "shape": "array",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft1-contains-arith-fail-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"contains\":{\"multipleOf\":0.5,\"type\":\"string\"}}",
+      "instanceRecipe": {
+        "shape": "array",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft1-properties-fail-arith-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"properties\":{\"x\":{\"type\":\"string\",\"multipleOf\":0.5}}}",
+      "instanceRecipe": {
+        "shape": "object",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [
+              "x"
+            ],
+            "schemaPath": [
+              "properties",
+              "x",
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [
+                "x"
+              ],
+              "schemaPath": [
+                "properties",
+                "x",
+                "type"
+              ]
+            },
+            {
+              "keyword": "multipleOf",
+              "instancePath": [
+                "x"
+              ],
+              "schemaPath": [
+                "properties",
+                "x",
+                "multipleOf"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft1-properties-fail-arith-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"properties\":{\"x\":{\"type\":\"string\",\"multipleOf\":0.5}}}",
+      "instanceRecipe": {
+        "shape": "object",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft1-items-fail-arith-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"items\":{\"type\":\"string\",\"multipleOf\":0.5}}",
+      "instanceRecipe": {
+        "shape": "array",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [
+              0
+            ],
+            "schemaPath": [
+              "items",
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [
+                0
+              ],
+              "schemaPath": [
+                "items",
+                "type"
+              ]
+            },
+            {
+              "keyword": "multipleOf",
+              "instancePath": [
+                0
+              ],
+              "schemaPath": [
+                "items",
+                "multipleOf"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft1-items-fail-arith-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"items\":{\"type\":\"string\",\"multipleOf\":0.5}}",
+      "instanceRecipe": {
+        "shape": "array",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft1-anyOf-unevaluated-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"anyOf\":[{},{\"properties\":{\"x\":{\"multipleOf\":0.5}}}],\"unevaluatedProperties\":false}",
+      "instanceRecipe": {
+        "shape": "object",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft1-anyOf-unevaluated-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"anyOf\":[{},{\"properties\":{\"x\":{\"multipleOf\":0.5}}}],\"unevaluatedProperties\":false}",
+      "instanceRecipe": {
+        "shape": "object",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft2-fail-arith-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"type\":\"string\",\"multipleOf\":0.5}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [],
+            "schemaPath": [
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [],
+              "schemaPath": [
+                "type"
+              ]
+            },
+            {
+              "keyword": "multipleOf",
+              "instancePath": [],
+              "schemaPath": [
+                "multipleOf"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft2-fail-arith-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"type\":\"string\",\"multipleOf\":0.5}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft2-arith-fail-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"multipleOf\":0.5,\"type\":\"string\"}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "multipleOf",
+            "instancePath": [],
+            "schemaPath": [
+              "multipleOf"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "multipleOf",
+              "instancePath": [],
+              "schemaPath": [
+                "multipleOf"
+              ]
+            },
+            {
+              "keyword": "type",
+              "instancePath": [],
+              "schemaPath": [
+                "type"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft2-arith-fail-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"multipleOf\":0.5,\"type\":\"string\"}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft2-enum-arith-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"enum\":[\"x\"],\"multipleOf\":0.5}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "enum",
+            "instancePath": [],
+            "schemaPath": [
+              "enum"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "enum",
+              "instancePath": [],
+              "schemaPath": [
+                "enum"
+              ]
+            },
+            {
+              "keyword": "multipleOf",
+              "instancePath": [],
+              "schemaPath": [
+                "multipleOf"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft2-enum-arith-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"enum\":[\"x\"],\"multipleOf\":0.5}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "enum",
+            "instancePath": [],
+            "schemaPath": [
+              "enum"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "enum",
+              "instancePath": [],
+              "schemaPath": [
+                "enum"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft2-arith-enum-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"multipleOf\":0.5,\"enum\":[\"x\"]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "multipleOf",
+            "instancePath": [],
+            "schemaPath": [
+              "multipleOf"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "multipleOf",
+              "instancePath": [],
+              "schemaPath": [
+                "multipleOf"
+              ]
+            },
+            {
+              "keyword": "enum",
+              "instancePath": [],
+              "schemaPath": [
+                "enum"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft2-arith-enum-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"multipleOf\":0.5,\"enum\":[\"x\"]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "enum",
+            "instancePath": [],
+            "schemaPath": [
+              "enum"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "enum",
+              "instancePath": [],
+              "schemaPath": [
+                "enum"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft2-allOf-fail-arith-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"allOf\":[{\"type\":\"string\"},{\"multipleOf\":0.5}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [],
+            "schemaPath": [
+              "allOf",
+              0,
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [],
+              "schemaPath": [
+                "allOf",
+                0,
+                "type"
+              ]
+            },
+            {
+              "keyword": "multipleOf",
+              "instancePath": [],
+              "schemaPath": [
+                "allOf",
+                1,
+                "multipleOf"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft2-allOf-fail-arith-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"allOf\":[{\"type\":\"string\"},{\"multipleOf\":0.5}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft2-allOf-arith-fail-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"allOf\":[{\"multipleOf\":0.5},{\"type\":\"string\"}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "multipleOf",
+            "instancePath": [],
+            "schemaPath": [
+              "allOf",
+              0,
+              "multipleOf"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "multipleOf",
+              "instancePath": [],
+              "schemaPath": [
+                "allOf",
+                0,
+                "multipleOf"
+              ]
+            },
+            {
+              "keyword": "type",
+              "instancePath": [],
+              "schemaPath": [
+                "allOf",
+                1,
+                "type"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft2-allOf-arith-fail-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"allOf\":[{\"multipleOf\":0.5},{\"type\":\"string\"}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft2-allOf-combined-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"allOf\":[{\"type\":\"string\",\"multipleOf\":0.5},{}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [],
+            "schemaPath": [
+              "allOf",
+              0,
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [],
+              "schemaPath": [
+                "allOf",
+                0,
+                "type"
+              ]
+            },
+            {
+              "keyword": "multipleOf",
+              "instancePath": [],
+              "schemaPath": [
+                "allOf",
+                0,
+                "multipleOf"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft2-allOf-combined-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"allOf\":[{\"type\":\"string\",\"multipleOf\":0.5},{}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft2-anyOf-valid-arith-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"anyOf\":[{},{\"multipleOf\":0.5}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft2-anyOf-valid-arith-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"anyOf\":[{},{\"multipleOf\":0.5}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft2-anyOf-arith-valid-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"anyOf\":[{\"multipleOf\":0.5},{}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft2-anyOf-arith-valid-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"anyOf\":[{\"multipleOf\":0.5},{}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft2-anyOf-combined-valid-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"anyOf\":[{\"type\":\"string\",\"multipleOf\":0.5},{}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft2-anyOf-combined-valid-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"anyOf\":[{\"type\":\"string\",\"multipleOf\":0.5},{}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft2-anyOf-valid-combined-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"anyOf\":[{},{\"type\":\"string\",\"multipleOf\":0.5}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft2-anyOf-valid-combined-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"anyOf\":[{},{\"type\":\"string\",\"multipleOf\":0.5}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft2-oneOf-valid-arith-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"oneOf\":[{},{\"multipleOf\":0.5}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft2-oneOf-valid-arith-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"oneOf\":[{},{\"multipleOf\":0.5}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "oneOf",
+            "instancePath": [],
+            "schemaPath": [
+              "oneOf"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "oneOf",
+              "instancePath": [],
+              "schemaPath": [
+                "oneOf"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft2-oneOf-combined-valid-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"oneOf\":[{\"type\":\"string\",\"multipleOf\":0.5},{}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft2-oneOf-combined-valid-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"oneOf\":[{\"type\":\"string\",\"multipleOf\":0.5},{}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "oneOf",
+            "instancePath": [],
+            "schemaPath": [
+              "oneOf"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "oneOf",
+              "instancePath": [],
+              "schemaPath": [
+                "oneOf"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft2-not-fail-arith-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"not\":{\"type\":\"string\",\"multipleOf\":0.5}}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft2-not-fail-arith-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"not\":{\"type\":\"string\",\"multipleOf\":0.5}}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "not",
+            "instancePath": [],
+            "schemaPath": [
+              "not"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "not",
+              "instancePath": [],
+              "schemaPath": [
+                "not"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft2-not-arith-fail-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"not\":{\"multipleOf\":0.5,\"type\":\"string\"}}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft2-not-arith-fail-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"not\":{\"multipleOf\":0.5,\"type\":\"string\"}}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "not",
+            "instancePath": [],
+            "schemaPath": [
+              "not"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "not",
+              "instancePath": [],
+              "schemaPath": [
+                "not"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft2-if-fail-arith-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"if\":{\"type\":\"string\",\"multipleOf\":0.5},\"then\":{\"multipleOf\":0.5},\"else\":{}}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft2-if-fail-arith-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"if\":{\"type\":\"string\",\"multipleOf\":0.5},\"then\":{\"multipleOf\":0.5},\"else\":{}}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft2-if-arith-fail-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"if\":{\"multipleOf\":0.5,\"type\":\"string\"},\"then\":{\"multipleOf\":0.5},\"else\":{}}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft2-if-arith-fail-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"if\":{\"multipleOf\":0.5,\"type\":\"string\"},\"then\":{\"multipleOf\":0.5},\"else\":{}}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft2-contains-fail-arith-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"contains\":{\"type\":\"string\",\"multipleOf\":0.5}}",
+      "instanceRecipe": {
+        "shape": "array",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "contains",
+            "instancePath": [],
+            "schemaPath": [
+              "contains"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "contains",
+              "instancePath": [],
+              "schemaPath": [
+                "contains"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft2-contains-fail-arith-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"contains\":{\"type\":\"string\",\"multipleOf\":0.5}}",
+      "instanceRecipe": {
+        "shape": "array",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft2-contains-arith-fail-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"contains\":{\"multipleOf\":0.5,\"type\":\"string\"}}",
+      "instanceRecipe": {
+        "shape": "array",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "contains",
+            "instancePath": [],
+            "schemaPath": [
+              "contains"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "contains",
+              "instancePath": [],
+              "schemaPath": [
+                "contains"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft2-contains-arith-fail-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"contains\":{\"multipleOf\":0.5,\"type\":\"string\"}}",
+      "instanceRecipe": {
+        "shape": "array",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft2-properties-fail-arith-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"properties\":{\"x\":{\"type\":\"string\",\"multipleOf\":0.5}}}",
+      "instanceRecipe": {
+        "shape": "object",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [
+              "x"
+            ],
+            "schemaPath": [
+              "properties",
+              "x",
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [
+                "x"
+              ],
+              "schemaPath": [
+                "properties",
+                "x",
+                "type"
+              ]
+            },
+            {
+              "keyword": "multipleOf",
+              "instancePath": [
+                "x"
+              ],
+              "schemaPath": [
+                "properties",
+                "x",
+                "multipleOf"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft2-properties-fail-arith-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"properties\":{\"x\":{\"type\":\"string\",\"multipleOf\":0.5}}}",
+      "instanceRecipe": {
+        "shape": "object",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft2-items-fail-arith-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"items\":{\"type\":\"string\",\"multipleOf\":0.5}}",
+      "instanceRecipe": {
+        "shape": "array",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [
+              0
+            ],
+            "schemaPath": [
+              "items",
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [
+                0
+              ],
+              "schemaPath": [
+                "items",
+                "type"
+              ]
+            },
+            {
+              "keyword": "multipleOf",
+              "instancePath": [
+                0
+              ],
+              "schemaPath": [
+                "items",
+                "multipleOf"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft2-items-fail-arith-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"items\":{\"type\":\"string\",\"multipleOf\":0.5}}",
+      "instanceRecipe": {
+        "shape": "array",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft2-anyOf-unevaluated-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"anyOf\":[{},{\"properties\":{\"x\":{\"multipleOf\":0.5}}}],\"unevaluatedProperties\":false}",
+      "instanceRecipe": {
+        "shape": "object",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft2-anyOf-unevaluated-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"anyOf\":[{},{\"properties\":{\"x\":{\"multipleOf\":0.5}}}],\"unevaluatedProperties\":false}",
+      "instanceRecipe": {
+        "shape": "object",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft3-fail-arith-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"type\":\"string\",\"multipleOf\":0.5}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [],
+            "schemaPath": [
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [],
+              "schemaPath": [
+                "type"
+              ]
+            },
+            {
+              "keyword": "multipleOf",
+              "instancePath": [],
+              "schemaPath": [
+                "multipleOf"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft3-fail-arith-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"type\":\"string\",\"multipleOf\":0.5}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft3-arith-fail-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"multipleOf\":0.5,\"type\":\"string\"}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "multipleOf",
+            "instancePath": [],
+            "schemaPath": [
+              "multipleOf"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "multipleOf",
+              "instancePath": [],
+              "schemaPath": [
+                "multipleOf"
+              ]
+            },
+            {
+              "keyword": "type",
+              "instancePath": [],
+              "schemaPath": [
+                "type"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft3-arith-fail-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"multipleOf\":0.5,\"type\":\"string\"}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft3-enum-arith-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"enum\":[\"x\"],\"multipleOf\":0.5}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "enum",
+            "instancePath": [],
+            "schemaPath": [
+              "enum"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "enum",
+              "instancePath": [],
+              "schemaPath": [
+                "enum"
+              ]
+            },
+            {
+              "keyword": "multipleOf",
+              "instancePath": [],
+              "schemaPath": [
+                "multipleOf"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft3-enum-arith-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"enum\":[\"x\"],\"multipleOf\":0.5}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "enum",
+            "instancePath": [],
+            "schemaPath": [
+              "enum"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "enum",
+              "instancePath": [],
+              "schemaPath": [
+                "enum"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft3-arith-enum-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"multipleOf\":0.5,\"enum\":[\"x\"]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "multipleOf",
+            "instancePath": [],
+            "schemaPath": [
+              "multipleOf"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "multipleOf",
+              "instancePath": [],
+              "schemaPath": [
+                "multipleOf"
+              ]
+            },
+            {
+              "keyword": "enum",
+              "instancePath": [],
+              "schemaPath": [
+                "enum"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft3-arith-enum-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"multipleOf\":0.5,\"enum\":[\"x\"]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "enum",
+            "instancePath": [],
+            "schemaPath": [
+              "enum"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "enum",
+              "instancePath": [],
+              "schemaPath": [
+                "enum"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft3-allOf-fail-arith-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"allOf\":[{\"type\":\"string\"},{\"multipleOf\":0.5}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [],
+            "schemaPath": [
+              "allOf",
+              0,
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [],
+              "schemaPath": [
+                "allOf",
+                0,
+                "type"
+              ]
+            },
+            {
+              "keyword": "multipleOf",
+              "instancePath": [],
+              "schemaPath": [
+                "allOf",
+                1,
+                "multipleOf"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft3-allOf-fail-arith-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"allOf\":[{\"type\":\"string\"},{\"multipleOf\":0.5}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft3-allOf-arith-fail-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"allOf\":[{\"multipleOf\":0.5},{\"type\":\"string\"}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "multipleOf",
+            "instancePath": [],
+            "schemaPath": [
+              "allOf",
+              0,
+              "multipleOf"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "multipleOf",
+              "instancePath": [],
+              "schemaPath": [
+                "allOf",
+                0,
+                "multipleOf"
+              ]
+            },
+            {
+              "keyword": "type",
+              "instancePath": [],
+              "schemaPath": [
+                "allOf",
+                1,
+                "type"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft3-allOf-arith-fail-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"allOf\":[{\"multipleOf\":0.5},{\"type\":\"string\"}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft3-allOf-combined-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"allOf\":[{\"type\":\"string\",\"multipleOf\":0.5},{}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [],
+            "schemaPath": [
+              "allOf",
+              0,
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [],
+              "schemaPath": [
+                "allOf",
+                0,
+                "type"
+              ]
+            },
+            {
+              "keyword": "multipleOf",
+              "instancePath": [],
+              "schemaPath": [
+                "allOf",
+                0,
+                "multipleOf"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft3-allOf-combined-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"allOf\":[{\"type\":\"string\",\"multipleOf\":0.5},{}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft3-anyOf-valid-arith-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"anyOf\":[{},{\"multipleOf\":0.5}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft3-anyOf-valid-arith-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"anyOf\":[{},{\"multipleOf\":0.5}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft3-anyOf-arith-valid-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"anyOf\":[{\"multipleOf\":0.5},{}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft3-anyOf-arith-valid-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"anyOf\":[{\"multipleOf\":0.5},{}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft3-anyOf-combined-valid-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"anyOf\":[{\"type\":\"string\",\"multipleOf\":0.5},{}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft3-anyOf-combined-valid-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"anyOf\":[{\"type\":\"string\",\"multipleOf\":0.5},{}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft3-anyOf-valid-combined-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"anyOf\":[{},{\"type\":\"string\",\"multipleOf\":0.5}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft3-anyOf-valid-combined-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"anyOf\":[{},{\"type\":\"string\",\"multipleOf\":0.5}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft3-oneOf-valid-arith-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"oneOf\":[{},{\"multipleOf\":0.5}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft3-oneOf-valid-arith-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"oneOf\":[{},{\"multipleOf\":0.5}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "oneOf",
+            "instancePath": [],
+            "schemaPath": [
+              "oneOf"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "oneOf",
+              "instancePath": [],
+              "schemaPath": [
+                "oneOf"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft3-oneOf-combined-valid-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"oneOf\":[{\"type\":\"string\",\"multipleOf\":0.5},{}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft3-oneOf-combined-valid-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"oneOf\":[{\"type\":\"string\",\"multipleOf\":0.5},{}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "oneOf",
+            "instancePath": [],
+            "schemaPath": [
+              "oneOf"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "oneOf",
+              "instancePath": [],
+              "schemaPath": [
+                "oneOf"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft3-not-fail-arith-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"not\":{\"type\":\"string\",\"multipleOf\":0.5}}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft3-not-fail-arith-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"not\":{\"type\":\"string\",\"multipleOf\":0.5}}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "not",
+            "instancePath": [],
+            "schemaPath": [
+              "not"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "not",
+              "instancePath": [],
+              "schemaPath": [
+                "not"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft3-not-arith-fail-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"not\":{\"multipleOf\":0.5,\"type\":\"string\"}}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft3-not-arith-fail-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"not\":{\"multipleOf\":0.5,\"type\":\"string\"}}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "not",
+            "instancePath": [],
+            "schemaPath": [
+              "not"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "not",
+              "instancePath": [],
+              "schemaPath": [
+                "not"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft3-if-fail-arith-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"if\":{\"type\":\"string\",\"multipleOf\":0.5},\"then\":{\"multipleOf\":0.5},\"else\":{}}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft3-if-fail-arith-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"if\":{\"type\":\"string\",\"multipleOf\":0.5},\"then\":{\"multipleOf\":0.5},\"else\":{}}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft3-if-arith-fail-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"if\":{\"multipleOf\":0.5,\"type\":\"string\"},\"then\":{\"multipleOf\":0.5},\"else\":{}}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft3-if-arith-fail-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"if\":{\"multipleOf\":0.5,\"type\":\"string\"},\"then\":{\"multipleOf\":0.5},\"else\":{}}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft3-contains-fail-arith-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"contains\":{\"type\":\"string\",\"multipleOf\":0.5}}",
+      "instanceRecipe": {
+        "shape": "array",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "contains",
+            "instancePath": [],
+            "schemaPath": [
+              "contains"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "contains",
+              "instancePath": [],
+              "schemaPath": [
+                "contains"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft3-contains-fail-arith-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"contains\":{\"type\":\"string\",\"multipleOf\":0.5}}",
+      "instanceRecipe": {
+        "shape": "array",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft3-contains-arith-fail-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"contains\":{\"multipleOf\":0.5,\"type\":\"string\"}}",
+      "instanceRecipe": {
+        "shape": "array",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "contains",
+            "instancePath": [],
+            "schemaPath": [
+              "contains"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "contains",
+              "instancePath": [],
+              "schemaPath": [
+                "contains"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft3-contains-arith-fail-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"contains\":{\"multipleOf\":0.5,\"type\":\"string\"}}",
+      "instanceRecipe": {
+        "shape": "array",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft3-properties-fail-arith-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"properties\":{\"x\":{\"type\":\"string\",\"multipleOf\":0.5}}}",
+      "instanceRecipe": {
+        "shape": "object",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [
+              "x"
+            ],
+            "schemaPath": [
+              "properties",
+              "x",
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [
+                "x"
+              ],
+              "schemaPath": [
+                "properties",
+                "x",
+                "type"
+              ]
+            },
+            {
+              "keyword": "multipleOf",
+              "instancePath": [
+                "x"
+              ],
+              "schemaPath": [
+                "properties",
+                "x",
+                "multipleOf"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft3-properties-fail-arith-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"properties\":{\"x\":{\"type\":\"string\",\"multipleOf\":0.5}}}",
+      "instanceRecipe": {
+        "shape": "object",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft3-items-fail-arith-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"items\":{\"type\":\"string\",\"multipleOf\":0.5}}",
+      "instanceRecipe": {
+        "shape": "array",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [
+              0
+            ],
+            "schemaPath": [
+              "items",
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [
+                0
+              ],
+              "schemaPath": [
+                "items",
+                "type"
+              ]
+            },
+            {
+              "keyword": "multipleOf",
+              "instancePath": [
+                0
+              ],
+              "schemaPath": [
+                "items",
+                "multipleOf"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft3-items-fail-arith-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"items\":{\"type\":\"string\",\"multipleOf\":0.5}}",
+      "instanceRecipe": {
+        "shape": "array",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft3-anyOf-unevaluated-nonmultiple",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"anyOf\":[{},{\"properties\":{\"x\":{\"multipleOf\":0.5}}}],\"unevaluatedProperties\":false}",
+      "instanceRecipe": {
+        "shape": "object",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft3-anyOf-unevaluated-othertext",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"anyOf\":[{},{\"properties\":{\"x\":{\"multipleOf\":0.5}}}],\"unevaluatedProperties\":false}",
+      "instanceRecipe": {
+        "shape": "object",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft4-fail-arith-nonmultiple",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"type\":\"string\",\"multipleOf\":0.5}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [],
+            "schemaPath": [
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [],
+              "schemaPath": [
+                "type"
+              ]
+            },
+            {
+              "keyword": "multipleOf",
+              "instancePath": [],
+              "schemaPath": [
+                "multipleOf"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft4-fail-arith-othertext",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"type\":\"string\",\"multipleOf\":0.5}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft4-arith-fail-nonmultiple",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"multipleOf\":0.5,\"type\":\"string\"}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "multipleOf",
+            "instancePath": [],
+            "schemaPath": [
+              "multipleOf"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "multipleOf",
+              "instancePath": [],
+              "schemaPath": [
+                "multipleOf"
+              ]
+            },
+            {
+              "keyword": "type",
+              "instancePath": [],
+              "schemaPath": [
+                "type"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft4-arith-fail-othertext",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"multipleOf\":0.5,\"type\":\"string\"}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft4-enum-arith-nonmultiple",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"enum\":[\"x\"],\"multipleOf\":0.5}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "enum",
+            "instancePath": [],
+            "schemaPath": [
+              "enum"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "enum",
+              "instancePath": [],
+              "schemaPath": [
+                "enum"
+              ]
+            },
+            {
+              "keyword": "multipleOf",
+              "instancePath": [],
+              "schemaPath": [
+                "multipleOf"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft4-enum-arith-othertext",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"enum\":[\"x\"],\"multipleOf\":0.5}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "enum",
+            "instancePath": [],
+            "schemaPath": [
+              "enum"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "enum",
+              "instancePath": [],
+              "schemaPath": [
+                "enum"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft4-arith-enum-nonmultiple",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"multipleOf\":0.5,\"enum\":[\"x\"]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "multipleOf",
+            "instancePath": [],
+            "schemaPath": [
+              "multipleOf"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "multipleOf",
+              "instancePath": [],
+              "schemaPath": [
+                "multipleOf"
+              ]
+            },
+            {
+              "keyword": "enum",
+              "instancePath": [],
+              "schemaPath": [
+                "enum"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft4-arith-enum-othertext",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"multipleOf\":0.5,\"enum\":[\"x\"]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "enum",
+            "instancePath": [],
+            "schemaPath": [
+              "enum"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "enum",
+              "instancePath": [],
+              "schemaPath": [
+                "enum"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft4-allOf-fail-arith-nonmultiple",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"allOf\":[{\"type\":\"string\"},{\"multipleOf\":0.5}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [],
+            "schemaPath": [
+              "allOf",
+              0,
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [],
+              "schemaPath": [
+                "allOf",
+                0,
+                "type"
+              ]
+            },
+            {
+              "keyword": "multipleOf",
+              "instancePath": [],
+              "schemaPath": [
+                "allOf",
+                1,
+                "multipleOf"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft4-allOf-fail-arith-othertext",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"allOf\":[{\"type\":\"string\"},{\"multipleOf\":0.5}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft4-allOf-arith-fail-nonmultiple",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"allOf\":[{\"multipleOf\":0.5},{\"type\":\"string\"}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "multipleOf",
+            "instancePath": [],
+            "schemaPath": [
+              "allOf",
+              0,
+              "multipleOf"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "multipleOf",
+              "instancePath": [],
+              "schemaPath": [
+                "allOf",
+                0,
+                "multipleOf"
+              ]
+            },
+            {
+              "keyword": "type",
+              "instancePath": [],
+              "schemaPath": [
+                "allOf",
+                1,
+                "type"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft4-allOf-arith-fail-othertext",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"allOf\":[{\"multipleOf\":0.5},{\"type\":\"string\"}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft4-allOf-combined-nonmultiple",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"allOf\":[{\"type\":\"string\",\"multipleOf\":0.5},{}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [],
+            "schemaPath": [
+              "allOf",
+              0,
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [],
+              "schemaPath": [
+                "allOf",
+                0,
+                "type"
+              ]
+            },
+            {
+              "keyword": "multipleOf",
+              "instancePath": [],
+              "schemaPath": [
+                "allOf",
+                0,
+                "multipleOf"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft4-allOf-combined-othertext",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"allOf\":[{\"type\":\"string\",\"multipleOf\":0.5},{}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft4-anyOf-valid-arith-nonmultiple",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"anyOf\":[{},{\"multipleOf\":0.5}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft4-anyOf-valid-arith-othertext",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"anyOf\":[{},{\"multipleOf\":0.5}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft4-anyOf-arith-valid-nonmultiple",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"anyOf\":[{\"multipleOf\":0.5},{}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft4-anyOf-arith-valid-othertext",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"anyOf\":[{\"multipleOf\":0.5},{}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft4-anyOf-combined-valid-nonmultiple",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"anyOf\":[{\"type\":\"string\",\"multipleOf\":0.5},{}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft4-anyOf-combined-valid-othertext",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"anyOf\":[{\"type\":\"string\",\"multipleOf\":0.5},{}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft4-anyOf-valid-combined-nonmultiple",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"anyOf\":[{},{\"type\":\"string\",\"multipleOf\":0.5}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft4-anyOf-valid-combined-othertext",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"anyOf\":[{},{\"type\":\"string\",\"multipleOf\":0.5}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft4-oneOf-valid-arith-nonmultiple",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"oneOf\":[{},{\"multipleOf\":0.5}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft4-oneOf-valid-arith-othertext",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"oneOf\":[{},{\"multipleOf\":0.5}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "oneOf",
+            "instancePath": [],
+            "schemaPath": [
+              "oneOf"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "oneOf",
+              "instancePath": [],
+              "schemaPath": [
+                "oneOf"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft4-oneOf-combined-valid-nonmultiple",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"oneOf\":[{\"type\":\"string\",\"multipleOf\":0.5},{}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft4-oneOf-combined-valid-othertext",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"oneOf\":[{\"type\":\"string\",\"multipleOf\":0.5},{}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "oneOf",
+            "instancePath": [],
+            "schemaPath": [
+              "oneOf"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "oneOf",
+              "instancePath": [],
+              "schemaPath": [
+                "oneOf"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft4-not-fail-arith-nonmultiple",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"not\":{\"type\":\"string\",\"multipleOf\":0.5}}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft4-not-fail-arith-othertext",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"not\":{\"type\":\"string\",\"multipleOf\":0.5}}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "not",
+            "instancePath": [],
+            "schemaPath": [
+              "not"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "not",
+              "instancePath": [],
+              "schemaPath": [
+                "not"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft4-not-arith-fail-nonmultiple",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"not\":{\"multipleOf\":0.5,\"type\":\"string\"}}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft4-not-arith-fail-othertext",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"not\":{\"multipleOf\":0.5,\"type\":\"string\"}}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "not",
+            "instancePath": [],
+            "schemaPath": [
+              "not"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "not",
+              "instancePath": [],
+              "schemaPath": [
+                "not"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft4-if-fail-arith-nonmultiple",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"if\":{\"type\":\"string\",\"multipleOf\":0.5},\"then\":{\"multipleOf\":0.5},\"else\":{}}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft4-if-fail-arith-othertext",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"if\":{\"type\":\"string\",\"multipleOf\":0.5},\"then\":{\"multipleOf\":0.5},\"else\":{}}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft4-if-arith-fail-nonmultiple",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"if\":{\"multipleOf\":0.5,\"type\":\"string\"},\"then\":{\"multipleOf\":0.5},\"else\":{}}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft4-if-arith-fail-othertext",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"if\":{\"multipleOf\":0.5,\"type\":\"string\"},\"then\":{\"multipleOf\":0.5},\"else\":{}}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft4-contains-fail-arith-nonmultiple",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"contains\":{\"type\":\"string\",\"multipleOf\":0.5}}",
+      "instanceRecipe": {
+        "shape": "array",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "contains",
+            "instancePath": [],
+            "schemaPath": [
+              "contains"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "contains",
+              "instancePath": [],
+              "schemaPath": [
+                "contains"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft4-contains-fail-arith-othertext",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"contains\":{\"type\":\"string\",\"multipleOf\":0.5}}",
+      "instanceRecipe": {
+        "shape": "array",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft4-contains-arith-fail-nonmultiple",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"contains\":{\"multipleOf\":0.5,\"type\":\"string\"}}",
+      "instanceRecipe": {
+        "shape": "array",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "contains",
+            "instancePath": [],
+            "schemaPath": [
+              "contains"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "contains",
+              "instancePath": [],
+              "schemaPath": [
+                "contains"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft4-contains-arith-fail-othertext",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"contains\":{\"multipleOf\":0.5,\"type\":\"string\"}}",
+      "instanceRecipe": {
+        "shape": "array",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft4-properties-fail-arith-nonmultiple",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"properties\":{\"x\":{\"type\":\"string\",\"multipleOf\":0.5}}}",
+      "instanceRecipe": {
+        "shape": "object",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [
+              "x"
+            ],
+            "schemaPath": [
+              "properties",
+              "x",
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [
+                "x"
+              ],
+              "schemaPath": [
+                "properties",
+                "x",
+                "type"
+              ]
+            },
+            {
+              "keyword": "multipleOf",
+              "instancePath": [
+                "x"
+              ],
+              "schemaPath": [
+                "properties",
+                "x",
+                "multipleOf"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft4-properties-fail-arith-othertext",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"properties\":{\"x\":{\"type\":\"string\",\"multipleOf\":0.5}}}",
+      "instanceRecipe": {
+        "shape": "object",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft4-items-fail-arith-nonmultiple",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"items\":{\"type\":\"string\",\"multipleOf\":0.5}}",
+      "instanceRecipe": {
+        "shape": "array",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [
+              0
+            ],
+            "schemaPath": [
+              "items",
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [
+                0
+              ],
+              "schemaPath": [
+                "items",
+                "type"
+              ]
+            },
+            {
+              "keyword": "multipleOf",
+              "instancePath": [
+                0
+              ],
+              "schemaPath": [
+                "items",
+                "multipleOf"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft4-items-fail-arith-othertext",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"items\":{\"type\":\"string\",\"multipleOf\":0.5}}",
+      "instanceRecipe": {
+        "shape": "array",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft4-anyOf-unevaluated-nonmultiple",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"anyOf\":[{},{\"properties\":{\"x\":{\"multipleOf\":0.5}}}],\"unevaluatedProperties\":false}",
+      "instanceRecipe": {
+        "shape": "object",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "unevaluatedProperties",
+            "instancePath": [],
+            "schemaPath": [
+              "unevaluatedProperties"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "unevaluatedProperties",
+              "instancePath": [],
+              "schemaPath": [
+                "unevaluatedProperties"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft4-anyOf-unevaluated-othertext",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"anyOf\":[{},{\"properties\":{\"x\":{\"multipleOf\":0.5}}}],\"unevaluatedProperties\":false}",
+      "instanceRecipe": {
+        "shape": "object",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft5-fail-arith-nonmultiple",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"string\",\"multipleOf\":0.5}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [],
+            "schemaPath": [
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [],
+              "schemaPath": [
+                "type"
+              ]
+            },
+            {
+              "keyword": "multipleOf",
+              "instancePath": [],
+              "schemaPath": [
+                "multipleOf"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft5-fail-arith-othertext",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"string\",\"multipleOf\":0.5}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft5-arith-fail-nonmultiple",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"multipleOf\":0.5,\"type\":\"string\"}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "multipleOf",
+            "instancePath": [],
+            "schemaPath": [
+              "multipleOf"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "multipleOf",
+              "instancePath": [],
+              "schemaPath": [
+                "multipleOf"
+              ]
+            },
+            {
+              "keyword": "type",
+              "instancePath": [],
+              "schemaPath": [
+                "type"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft5-arith-fail-othertext",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"multipleOf\":0.5,\"type\":\"string\"}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft5-enum-arith-nonmultiple",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"enum\":[\"x\"],\"multipleOf\":0.5}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "enum",
+            "instancePath": [],
+            "schemaPath": [
+              "enum"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "enum",
+              "instancePath": [],
+              "schemaPath": [
+                "enum"
+              ]
+            },
+            {
+              "keyword": "multipleOf",
+              "instancePath": [],
+              "schemaPath": [
+                "multipleOf"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft5-enum-arith-othertext",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"enum\":[\"x\"],\"multipleOf\":0.5}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "enum",
+            "instancePath": [],
+            "schemaPath": [
+              "enum"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "enum",
+              "instancePath": [],
+              "schemaPath": [
+                "enum"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft5-arith-enum-nonmultiple",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"multipleOf\":0.5,\"enum\":[\"x\"]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "multipleOf",
+            "instancePath": [],
+            "schemaPath": [
+              "multipleOf"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "multipleOf",
+              "instancePath": [],
+              "schemaPath": [
+                "multipleOf"
+              ]
+            },
+            {
+              "keyword": "enum",
+              "instancePath": [],
+              "schemaPath": [
+                "enum"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft5-arith-enum-othertext",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"multipleOf\":0.5,\"enum\":[\"x\"]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "enum",
+            "instancePath": [],
+            "schemaPath": [
+              "enum"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "enum",
+              "instancePath": [],
+              "schemaPath": [
+                "enum"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft5-allOf-fail-arith-nonmultiple",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"allOf\":[{\"type\":\"string\"},{\"multipleOf\":0.5}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [],
+            "schemaPath": [
+              "allOf",
+              0,
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [],
+              "schemaPath": [
+                "allOf",
+                0,
+                "type"
+              ]
+            },
+            {
+              "keyword": "multipleOf",
+              "instancePath": [],
+              "schemaPath": [
+                "allOf",
+                1,
+                "multipleOf"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft5-allOf-fail-arith-othertext",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"allOf\":[{\"type\":\"string\"},{\"multipleOf\":0.5}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft5-allOf-arith-fail-nonmultiple",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"allOf\":[{\"multipleOf\":0.5},{\"type\":\"string\"}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "multipleOf",
+            "instancePath": [],
+            "schemaPath": [
+              "allOf",
+              0,
+              "multipleOf"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "multipleOf",
+              "instancePath": [],
+              "schemaPath": [
+                "allOf",
+                0,
+                "multipleOf"
+              ]
+            },
+            {
+              "keyword": "type",
+              "instancePath": [],
+              "schemaPath": [
+                "allOf",
+                1,
+                "type"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft5-allOf-arith-fail-othertext",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"allOf\":[{\"multipleOf\":0.5},{\"type\":\"string\"}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft5-allOf-combined-nonmultiple",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"allOf\":[{\"type\":\"string\",\"multipleOf\":0.5},{}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [],
+            "schemaPath": [
+              "allOf",
+              0,
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [],
+              "schemaPath": [
+                "allOf",
+                0,
+                "type"
+              ]
+            },
+            {
+              "keyword": "multipleOf",
+              "instancePath": [],
+              "schemaPath": [
+                "allOf",
+                0,
+                "multipleOf"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft5-allOf-combined-othertext",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"allOf\":[{\"type\":\"string\",\"multipleOf\":0.5},{}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft5-anyOf-valid-arith-nonmultiple",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"anyOf\":[{},{\"multipleOf\":0.5}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft5-anyOf-valid-arith-othertext",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"anyOf\":[{},{\"multipleOf\":0.5}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft5-anyOf-arith-valid-nonmultiple",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"anyOf\":[{\"multipleOf\":0.5},{}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft5-anyOf-arith-valid-othertext",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"anyOf\":[{\"multipleOf\":0.5},{}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft5-anyOf-combined-valid-nonmultiple",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"anyOf\":[{\"type\":\"string\",\"multipleOf\":0.5},{}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft5-anyOf-combined-valid-othertext",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"anyOf\":[{\"type\":\"string\",\"multipleOf\":0.5},{}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft5-anyOf-valid-combined-nonmultiple",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"anyOf\":[{},{\"type\":\"string\",\"multipleOf\":0.5}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft5-anyOf-valid-combined-othertext",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"anyOf\":[{},{\"type\":\"string\",\"multipleOf\":0.5}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft5-oneOf-valid-arith-nonmultiple",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"oneOf\":[{},{\"multipleOf\":0.5}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft5-oneOf-valid-arith-othertext",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"oneOf\":[{},{\"multipleOf\":0.5}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "oneOf",
+            "instancePath": [],
+            "schemaPath": [
+              "oneOf"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "oneOf",
+              "instancePath": [],
+              "schemaPath": [
+                "oneOf"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft5-oneOf-combined-valid-nonmultiple",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"oneOf\":[{\"type\":\"string\",\"multipleOf\":0.5},{}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft5-oneOf-combined-valid-othertext",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"oneOf\":[{\"type\":\"string\",\"multipleOf\":0.5},{}]}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "oneOf",
+            "instancePath": [],
+            "schemaPath": [
+              "oneOf"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "oneOf",
+              "instancePath": [],
+              "schemaPath": [
+                "oneOf"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft5-not-fail-arith-nonmultiple",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"not\":{\"type\":\"string\",\"multipleOf\":0.5}}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft5-not-fail-arith-othertext",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"not\":{\"type\":\"string\",\"multipleOf\":0.5}}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "not",
+            "instancePath": [],
+            "schemaPath": [
+              "not"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "not",
+              "instancePath": [],
+              "schemaPath": [
+                "not"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft5-not-arith-fail-nonmultiple",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"not\":{\"multipleOf\":0.5,\"type\":\"string\"}}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft5-not-arith-fail-othertext",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"not\":{\"multipleOf\":0.5,\"type\":\"string\"}}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "not",
+            "instancePath": [],
+            "schemaPath": [
+              "not"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "not",
+              "instancePath": [],
+              "schemaPath": [
+                "not"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft5-if-fail-arith-nonmultiple",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"if\":{\"type\":\"string\",\"multipleOf\":0.5},\"then\":{\"multipleOf\":0.5},\"else\":{}}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft5-if-fail-arith-othertext",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"if\":{\"type\":\"string\",\"multipleOf\":0.5},\"then\":{\"multipleOf\":0.5},\"else\":{}}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft5-if-arith-fail-nonmultiple",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"if\":{\"multipleOf\":0.5,\"type\":\"string\"},\"then\":{\"multipleOf\":0.5},\"else\":{}}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft5-if-arith-fail-othertext",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"if\":{\"multipleOf\":0.5,\"type\":\"string\"},\"then\":{\"multipleOf\":0.5},\"else\":{}}",
+      "instanceRecipe": {
+        "shape": "scalar",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft5-contains-fail-arith-nonmultiple",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"contains\":{\"type\":\"string\",\"multipleOf\":0.5}}",
+      "instanceRecipe": {
+        "shape": "array",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "contains",
+            "instancePath": [],
+            "schemaPath": [
+              "contains"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "contains",
+              "instancePath": [],
+              "schemaPath": [
+                "contains"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft5-contains-fail-arith-othertext",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"contains\":{\"type\":\"string\",\"multipleOf\":0.5}}",
+      "instanceRecipe": {
+        "shape": "array",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft5-contains-arith-fail-nonmultiple",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"contains\":{\"multipleOf\":0.5,\"type\":\"string\"}}",
+      "instanceRecipe": {
+        "shape": "array",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "contains",
+            "instancePath": [],
+            "schemaPath": [
+              "contains"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "contains",
+              "instancePath": [],
+              "schemaPath": [
+                "contains"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft5-contains-arith-fail-othertext",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"contains\":{\"multipleOf\":0.5,\"type\":\"string\"}}",
+      "instanceRecipe": {
+        "shape": "array",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft5-properties-fail-arith-nonmultiple",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"properties\":{\"x\":{\"type\":\"string\",\"multipleOf\":0.5}}}",
+      "instanceRecipe": {
+        "shape": "object",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [
+              "x"
+            ],
+            "schemaPath": [
+              "properties",
+              "x",
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [
+                "x"
+              ],
+              "schemaPath": [
+                "properties",
+                "x",
+                "type"
+              ]
+            },
+            {
+              "keyword": "multipleOf",
+              "instancePath": [
+                "x"
+              ],
+              "schemaPath": [
+                "properties",
+                "x",
+                "multipleOf"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft5-properties-fail-arith-othertext",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"properties\":{\"x\":{\"type\":\"string\",\"multipleOf\":0.5}}}",
+      "instanceRecipe": {
+        "shape": "object",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft5-items-fail-arith-nonmultiple",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"items\":{\"type\":\"string\",\"multipleOf\":0.5}}",
+      "instanceRecipe": {
+        "shape": "array",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [
+              0
+            ],
+            "schemaPath": [
+              "items",
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [
+                0
+              ],
+              "schemaPath": [
+                "items",
+                "type"
+              ]
+            },
+            {
+              "keyword": "multipleOf",
+              "instancePath": [
+                0
+              ],
+              "schemaPath": [
+                "items",
+                "multipleOf"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft5-items-fail-arith-othertext",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"items\":{\"type\":\"string\",\"multipleOf\":0.5}}",
+      "instanceRecipe": {
+        "shape": "array",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft5-anyOf-unevaluated-nonmultiple",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"anyOf\":[{},{\"properties\":{\"x\":{\"multipleOf\":0.5}}}],\"unevaluatedProperties\":false}",
+      "instanceRecipe": {
+        "shape": "object",
+        "value": "nonmultiple"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "unevaluatedProperties",
+            "instancePath": [],
+            "schemaPath": [
+              "unevaluatedProperties"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "unevaluatedProperties",
+              "instancePath": [],
+              "schemaPath": [
+                "unevaluatedProperties"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft5-anyOf-unevaluated-othertext",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"anyOf\":[{},{\"properties\":{\"x\":{\"multipleOf\":0.5}}}],\"unevaluatedProperties\":false}",
+      "instanceRecipe": {
+        "shape": "object",
+        "value": "othertext"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    }
+  ]
+}
