@@ -9,11 +9,11 @@ import importlib.util
 import json
 import os
 import subprocess
-import sys
 import tempfile
 import venv
 import zipfile
 from pathlib import Path
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[2]
 SPEC = importlib.util.spec_from_file_location('python_package_mirror', ROOT / 'scripts/python-package-mirror.py')
@@ -90,10 +90,25 @@ def main() -> None:
             ],
             'optionalProfiles': {'optional-parser': {'includedInDefaultMirror': False, 'license': 'separate qualification'}},
         }), encoding='utf-8')
-        if MIRROR.runner_identity()['system'] == 'Darwin':
+        macos_14 = {
+            'os': 'macos-14', 'architecture': 'arm64',
+            'libc': 'not applicable', 'python': '3.11',
+        }
+        with patch.object(MIRROR, 'runner_identity', return_value={
+            'system': 'Darwin', 'architecture': 'arm64', 'macVersion': '14.6.1',
+        }):
+            assert MIRROR.select_runner_cell([macos_14], '3.11') == macos_14
+        with patch.object(MIRROR, 'runner_identity', return_value={
+            'system': 'Darwin', 'architecture': 'arm64', 'macVersion': '27.0',
+        }):
             assert MIRROR.select_runner_cell([{
-                'os': 'macos-14', 'architecture': 'arm64', 'libc': 'not applicable', 'python': '3.11',
-            }], '3.11') is None, 'a local macOS release outside 14 must not satisfy the macos-14 cell'
+                **macos_14,
+            }], '3.11') is None, 'macOS 27 must not satisfy a macos-14 cell'
+        with patch.object(MIRROR, 'runner_identity', return_value={
+            'system': 'Linux', 'architecture': 'arm64', 'macVersion': '14.6.1',
+        }):
+            assert MIRROR.select_runner_cell([macos_14], '3.11') is None, (
+                'a macOS version string must not make a non-Darwin host match a macOS cell')
         lock = root / 'wheel-lock.json'
         result = MIRROR.capture_lock(template, wheelhouse, lock)
         assert result['status'] == 'locked' and len(result['wheels']) == 2
@@ -146,7 +161,7 @@ def main() -> None:
         venv.EnvBuilder(with_pip=True).create(environment)
         python = environment / ('Scripts/python.exe' if os.name == 'nt' else 'bin/python')
         file_index = mirror_path.joinpath('simple').as_uri()
-        network_prefix, isolation_name = MIRROR.network_isolation_prefix()
+        network_prefix, _isolation_name = MIRROR.network_isolation_prefix()
         install = run(network_prefix + [
             str(python), '-I', '-m', 'pip', '--isolated', 'install',
             '--disable-pip-version-check', '--no-cache-dir', '--only-binary=:all:',
