@@ -23,8 +23,9 @@ parser.add_argument('--fixture',type=Path,default=Path('/private/tmp/umf-g02-der
 parser.add_argument('--report',type=Path,required=True)
 args=parser.parse_args()
 fixture=json.loads(args.fixture.read_text())
-assert fixture['version']=='umf.praxis.g02-derived-fill-native-fixture/1'
+assert fixture['version'] in ('umf.praxis.g02-derived-fill-native-fixture/1','umf.praxis.g02-null-semantics-native-fixture/1')
 checks=[]
+compile_only=[]
 def check(name,condition):
     assert condition,name
     checks.append(name)
@@ -33,6 +34,21 @@ def bundle(source,cfg):
     result=compile_table_deployment(text,configuration=cfg)
     assert result['status']=='compiled',result
     return result['bundle']
+
+# These controls exercise carrier inference only; they must be refused before
+# migration planning or any database side effect. Keep them in the same native
+# qualification runner so the report binds the installed compiler used for the
+# accepted row-expression cases below.
+for control in fixture.get('compileOnlyControls',[]):
+    source=control['source']
+    text=source['utf8'] if isinstance(source,dict) and set(source)=={'format','utf8'} else json.dumps(source,separators=(',',':'))
+    result=compile_table_deployment(text,configuration=fixture['configuration'])
+    diagnostics=result.get('diagnostics',[])
+    if control['expected']=='compiled':
+        check(control['id']+'-compatible-carrier-accepted',result.get('status')=='compiled')
+    else:
+        check(control['id']+'-wrong-intrinsic-carrier-refused',result.get('status')!='compiled' and any(item.get('code')=='TABLES_OPERATION_DOMAIN' for item in diagnostics))
+    compile_only.append({'id':control['id'],'expected':control['expected'],'status':result.get('status'),'diagnostics':diagnostics})
 
 with psycopg.connect(args.dsn,autocommit=True) as admin:
     server=admin.execute('SELECT pg_catalog.version()').fetchone()[0]
@@ -51,7 +67,8 @@ with psycopg.connect(args.dsn,autocommit=True) as admin:
             dsn=conninfo.make_conninfo(args.dsn,dbname=db)
             with psycopg.connect(dsn,autocommit=True) as connection:
                 connection.execute(sql.SQL('CREATE SCHEMA {} AUTHORIZATION {}').format(sql.Identifier(cfg['schema']),sql.Identifier(owner)))
-                initial_bundle=bundle(fixture['initialSource'],cfg)
+                initial_source=case['initialSource'] if 'initialSource' in case else fixture['initialSource']
+                initial_bundle=bundle(initial_source,cfg)
                 initial_result=compile_table_migration(migration_id=case['id']+'-001',predecessor=None,previous_bundle=None,next_bundle=initial_bundle)
                 assert initial_result['status']=='compiled',initial_result
                 initial=initial_result['plan']
@@ -60,11 +77,17 @@ with psycopg.connect(args.dsn,autocommit=True) as admin:
                     connection.execute('SET LOCAL search_path=pg_catalog')
                     installed=apply_table_migration(connection,initial,approved_digest=initial['digest'],expected_head=None,person_roles=individuals)
                 for row in case['initialRows']:
-                    connection.execute(sql.SQL('INSERT INTO {} (id,owner,amount,tax) VALUES (%s,%s,%s,%s)').format(sql.Identifier(cfg['schema'],'notes')),
-                                       (row['id'],row['owner'],row['amount'],row['tax']))
-                next_bundle=bundle(fixture['source'],cfg)
-                compiled=compile_table_migration(migration_id=fixture['plan']['id'],predecessor={'id':initial['id'],'digest':initial['digest']},
-                    previous_bundle=initial_bundle,next_bundle=next_bundle,options=fixture['plan']['options'])
+                    if 'total' in row:
+                        connection.execute(sql.SQL('INSERT INTO {} (id,owner,amount,tax,total) VALUES (%s,%s,%s,%s,%s)').format(sql.Identifier(cfg['schema'],'notes')),
+                                           (row['id'],row['owner'],row['amount'],row['tax'],row['total']))
+                    else:
+                        connection.execute(sql.SQL('INSERT INTO {} (id,owner,amount,tax) VALUES (%s,%s,%s,%s)').format(sql.Identifier(cfg['schema'],'notes')),
+                                           (row['id'],row['owner'],row['amount'],row['tax']))
+                case_source=case['source'] if 'source' in case else fixture['source']
+                case_plan=case['plan'] if 'plan' in case else fixture['plan']
+                next_bundle=bundle(case_source,cfg)
+                compiled=compile_table_migration(migration_id=case_plan['id'],predecessor={'id':initial['id'],'digest':initial['digest']},
+                    previous_bundle=initial_bundle,next_bundle=next_bundle,options=case_plan['options'])
                 assert compiled['status']=='compiled',compiled
                 plan=compiled['plan'];assert plan['version']=='umf.table-migration/0.4'
                 assert plan['executionProfile']['version']=='umf.table-migration-execution/0.3'
@@ -84,10 +107,13 @@ with psycopg.connect(args.dsn,autocommit=True) as admin:
                     else:
                         raise AssertionError('NULL derived result unexpectedly committed')
                     connection.execute('RESET ROLE')
-                    unchanged=connection.execute(sql.SQL('SELECT id,amount::pg_catalog.text,tax FROM {} ORDER BY id').format(sql.Identifier(cfg['schema'],'notes'))).fetchall()
-                    check(case['id']+'-all-data-and-add-fill-tighten-phase-rolled-back',unchanged==[(row['id'],row['amount'],row['tax']) for row in case['initialRows']])
+                    has_existing_target=any('total' in row for row in case['initialRows'])
+                    projection='id,amount::pg_catalog.text,tax,total::pg_catalog.text' if has_existing_target else 'id,amount::pg_catalog.text,tax'
+                    unchanged=connection.execute(sql.SQL('SELECT '+projection+' FROM {} ORDER BY id').format(sql.Identifier(cfg['schema'],'notes'))).fetchall()
+                    expected_unchanged=[(row['id'],row['amount'],row['tax'],row['total']) if has_existing_target else (row['id'],row['amount'],row['tax']) for row in case['initialRows']]
+                    check(case['id']+'-all-data-and-derived-phase-rolled-back',unchanged==expected_unchanged)
                     exists=connection.execute("SELECT EXISTS(SELECT FROM information_schema.columns WHERE table_schema=%s AND table_name='notes' AND column_name='total')",(cfg['schema'],)).fetchone()[0]
-                    check(case['id']+'-appended-column-rolled-back',exists is False)
+                    check(case['id']+'-new-column-rolled-back',exists is has_existing_target)
                     continue
                 applied=apply_migration_on_host(host,plan,expected_head=head,file_digest=file_digest,qualification_profile='postgresql18/0.1',evidence_digest=evidence_digest,approval_id=approval.receipt_id)
                 check(case['id']+'-public-host-committed',applied['status']=='committed' and applied['generation']==2)
@@ -104,5 +130,5 @@ with psycopg.connect(args.dsn,autocommit=True) as admin:
         finally:
             if made_db:admin.execute(sql.SQL('DROP DATABASE {} WITH (FORCE)').format(sql.Identifier(db)))
             for role in reversed(made_roles):admin.execute(sql.SQL('DROP ROLE {}').format(sql.Identifier(role)))
-args.report.write_text(json.dumps({'server':server,'cases':len(fixture['cases']),'checks':checks},indent=2)+'\n')
-print(json.dumps({'cases':len(fixture['cases']),'checks':checks},separators=(',',':')))
+args.report.write_text(json.dumps({'server':server,'cases':len(fixture['cases']),'compileOnlyControls':compile_only,'checks':checks},indent=2)+'\n')
+print(json.dumps({'cases':len(fixture['cases']),'compileOnlyControls':compile_only,'checks':checks},separators=(',',':')))

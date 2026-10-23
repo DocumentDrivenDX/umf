@@ -1,0 +1,51 @@
+{
+  "status": "checkpoint; final current-head checks required after predicate-domain correction",
+  "policy": "Use one explicit PR event/run per required workflow at the exact final source SHA; never infer approval from duplicate names, cancellation, or a previous head.",
+  "cancelRequested": {
+    "umfDuplicatePushRuns": [
+      40012163802,
+      40012163771,
+      40012163863,
+      40012163833,
+      40012163812,
+      40012163829
+    ],
+    "weftDuplicatePushRuns": [
+      40012272508,
+      40014221661
+    ],
+    "weftSupersededBuildOnlyRun": [
+      40012339395
+    ],
+    "weftSupersededPRRuns": [
+      40012339524,
+      40012338923
+    ]
+  },
+  "retainedForSourceReview": {
+    "umfPRRuns": [
+      40012221576,
+      40012221638,
+      40012221600,
+      40012221605,
+      40012221525,
+      40012221770,
+      40012221554
+    ],
+    "weftPRRuns": [
+      40012339524,
+      40012338923,
+      40012338941
+    ]
+  },
+  "reason": "Duplicate push events were redundant with the complete PR event set. The build-only run was superseded by confirmed compiler corrections before publication. Evidence remains retained; final gating still requires passing checks.",
+  "alreadyCancelledSupersededPRRuns": [
+    40012338941
+  ],
+  "preliminaryPassingRuns": {
+    "weftSource": "54a8af9d02827cce85374db56e9cd50fbb7de97c",
+    "sharedCompiler": 40014225359,
+    "nativeTableOperations": 40014225595,
+    "linuxBuildOnly": 40014233937
+  }
+}

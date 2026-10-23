@@ -1,0 +1,65 @@
+{
+  "evidenceId": "mig-g02-sdk-installed-0.5.6-candidate-005",
+  "scope": "Fresh installed UMF SDK archive smoke/conformance only; no publication or native execution qualification",
+  "version": "0.5.6",
+  "packageName": "@umf/core",
+  "bun": "1.4.3",
+  "commands": [
+    "bun scripts/build-codegen.ts",
+    "bun run build:sdk",
+    "TMPDIR=/private/tmp bun scripts/test-sdk-install.ts"
+  ],
+  "workingDirectory": "/Users/erik/.codex/worktrees/eb69/umf",
+  "artifact": {
+    "path": "/private/tmp/umf-g02-sdk-005/umf-sdk-0.5.6.tgz",
+    "sha256": "00a1775b0c29cc8ecc50fc16d45a66280190f4e8cc09e9408f9fa8fa1166e1d3",
+    "bytes": 30425326
+  },
+  "installedCheck": {
+    "log": "/Users/erik/.codex/worktrees/eb69/umf/docs/helix/04-build/evidence/mig-g02/sdk-0.5.6/installed-check.log",
+    "logSha256": "54d7001590fac73a68d330d8c95390e9b8018ad9ea4636ecaad88b53bcc2a829",
+    "result": "passed",
+    "distributionFiles": 1754,
+    "conformanceCases": 139,
+    "singleInstall": true,
+    "bundledActions": true,
+    "loaderEntrypoint": true,
+    "unifiedGenerator": true,
+    "opaqueMeaningRemainsUnchecked": true,
+    "installWarning": "Bun reported one blocked postinstall; the installed SDK checks completed successfully."
+  },
+  "sourceInputs": {
+    "package.json": {
+      "sha256": "031bdb38c663c33804c02de06906c9c4fdd7bbf32728204cd4c8d30959c324ed",
+      "bytes": 5380
+    },
+    "scripts/build-codegen.ts": {
+      "sha256": "aa0854e148e47b6f0d5e385841a2d602155db2dc0a1f3cb8901f55b217bdcd9b",
+      "bytes": 5038
+    },
+    "scripts/package-sdk.ts": {
+      "sha256": "87005ad8320eccddcdff62621f39a39a03a83a9e180a17e87c436a574790d250",
+      "bytes": 2130
+    },
+    "scripts/test-sdk-install.ts": {
+      "sha256": "ea44304fcbaa89d6df8f2b551260ebb63812d2099a1f07cf7de3367b31a0278e",
+      "bytes": 3644
+    },
+    "src/extensions/tables/row-expressions.ts": {
+      "sha256": "464f6fdc0b8f92ad931b4135ad1679717f148704aeaa338e2a8dc73a4501f122",
+      "bytes": 21846
+    },
+    "python/umf_codegen/src/umf_codegen/_assets/generator.js.gz": {
+      "sha256": "1f768f05af00398201c963ca4195c2159b49334027eabe472ee89c69eb11e87a",
+      "bytes": 789145
+    },
+    "python/umf_codegen/src/umf_codegen/_assets/manifest.json": {
+      "sha256": "8a6756e13f108cc45ce167afd7eb1850e98cb26c18b86e152fd9c89c61596df3",
+      "bytes": 31131
+    },
+    "python/umf_codegen/src/umf_codegen/_release.py": {
+      "sha256": "5ecf2f82f5478de5476509b26c6f56858bd420770c0551f9542c1a451c809178",
+      "bytes": 170
+    }
+  }
+}

@@ -1,11 +1,11 @@
 {
-  "phase": "D2-D4 implemented; D5 adversarial review and candidate005 rebuild active",
+  "phase": "D5 adversarial review corrections; candidate007 native qualification active; Weft predicate-domain parity correction pending",
   "baseCommit": "009c042545a17b49ea857eff22d0fcf3fd71ef44",
   "designReviewerThread": "01a1605c-de92-72c0-afcd-0498b7422c1c",
   "governingInputs": [
     {
       "path": "docs/helix/02-design/contracts/CONTRACT-081-table-lifecycle.md",
-      "sha256": "c40fd3305c072772d79707368496f669e9dd09e0f1ce3a96f0cc7be7d684cf4f"
+      "sha256": "bc6373ccc72452174caa941e01edcab0fa0bfbbeed8bde4f2682e40026492574"
     },
     {
       "path": "docs/helix/02-design/solution-designs/SD-007-schema-migrations.md",
@@ -32,7 +32,7 @@
   },
   "noPraxisChanges": true,
   "nativeFeasibility": "5 temporary-table guard cases pass; not implementation qualification",
-  "remaining": "Finish candidate005 fixes and coherent browser/installed/native/WASM qualification; obtain independent source/release review; pin Weft upstream schema to immutable UMF commit; build platform cohort, required CI, merge, release, fresh postverify. Praxis excluded.",
+  "remaining": "Correct Weft .2 predicate Field-literal admission without changing .1; freeze and qualify fresh native/WASM/platform artifacts; finish independent source/native review; publish Weft only after passing gates; integrate UMF cohort and final CI, review, merge/release and fresh postverify. No Praxis changes.",
   "decisions": [
     "Append target CHECKs must permit NULL staging or refuse",
     "New .2 text literals reject NUL/unpaired surrogates",
@@ -46,12 +46,30 @@
   },
   "candidateState": {
     "004": "Preliminary immutable artifacts/browser receipt only; superseded for final qualification after source-review fixes",
-    "005": "Building: restored existing .3/.4 host target binding, dispatch add-target verifier, exact numeric budget and raw literal byte parity fixes under review"
+    "005": "Superseded for final qualification: exponent cancellation, intrinsic NULL carrier and NULL-safe conditional comparison findings fixed in source",
+    "006": "Preliminary: 31-case native/WASM parity, primary 20 native cases and three fault scenarios passed. Superseded for final qualification by early UMF JSON-source refusal and pending Weft predicate-domain correction.",
+    "007": "UMF JSON-source admission correction built; installed SDK and Chromium 203 assertions passed; primary native/fault rerun active. Weft006 binary remains preliminary: required NULL and enum-outside predicate literals accepted where UMF refuses."
   },
   "verificationLimits": [
     "Independent PostgreSQL 18.6 positive/negative domain and atomic commit-loss cases passed on preliminary003; final frozen cohort rerun pending",
     "004 Chromium: 52 G02 assertions/155 total, Bun parity, no network; no native/WASM qualification inferred",
     "Primary fault evidence is being strengthened with DBAPI observer active throughout every recovery and generated person/batch access proof",
     "Local Docker broad wrapper blocked before tests by credential helper; no passing broad result claimed"
+  ],
+  "sourceCheckpoints": {
+    "umfInitial": "8a79d269e648f17ae1e24841ebc02b5f17020973",
+    "weftInitial": "1639d43fce681480a722eb3447b32837585ba42b",
+    "weftNumericNullFix": "54a8af9d02827cce85374db56e9cd50fbb7de97c",
+    "umfNullCarrierFix": "76ff1cc787cc5d9b3970ab287832176bed7839a2",
+    "umfJsonSourceAdmission": "04097327ead1977c320be33d0d1abd85e6e0225a"
+  },
+  "openFindings": [
+    {
+      "id": "G02-predicate-field-literals",
+      "status": "Luna implementation assigned; design reviewer notified",
+      "reproduction": "/private/tmp/g02-predicate-domain-probe.py",
+      "report": "/private/tmp/g02-predicate-domain-probe.json",
+      "observed": "UMF refuses required-field NULL and enum-outside conditional literals; Weft006 compiles. Check all comparison and IN literals against input Field semantics, preserving .2 decoded payload bounds and frozen .1."
+    }
   ]
 }

@@ -1,0 +1,153 @@
+{
+  "evidenceId": "mig-g02-weft-wasm-chromium-005-extended",
+  "scope": "Real Chromium parity of actual Weft wasm-bindgen WASM with native PostgreSQL compiler output; no database execution qualification",
+  "weftCheckout": "/private/tmp/weft-mig-g02",
+  "weftHead": "b59938f4671e1aa9bd99941f233a8d83e1b576d7",
+  "toolchain": {
+    "rustc": "1.90.0",
+    "wasm_bindgen": "0.2.105",
+    "chromium": "153.0.8010.12"
+  },
+  "commands": [
+    "CARGO_TARGET_DIR=/private/tmp/umf-g02-weft-wasm-target CARGO_HOME=/Users/erik/.cargo RUSTC=/Users/erik/.rustup/toolchains/1.90.0-aarch64-apple-darwin/bin/rustc /Users/erik/.rustup/toolchains/1.90.0-aarch64-apple-darwin/bin/cargo build --locked --offline -p weft-postgresql --example compile_table_operation",
+    "CARGO_TARGET_DIR=/private/tmp/umf-g02-weft-wasm-target CARGO_HOME=/Users/erik/.cargo RUSTC=/Users/erik/.rustup/toolchains/1.90.0-aarch64-apple-darwin/bin/rustc /Users/erik/.rustup/toolchains/1.90.0-aarch64-apple-darwin/bin/cargo build --locked --offline -p weft-wasm --features raw-postgresql-reads --target wasm32-unknown-unknown",
+    "/private/tmp/weft-table-operation-wasm-tooling/bin/wasm-bindgen --target web --out-dir /private/tmp/umf-g02-weft-wasm-target/web /private/tmp/umf-g02-weft-wasm-target/wasm32-unknown-unknown/debug/weft_wasm.wasm",
+    "python3 /private/tmp/umf-g02-weft-wasm-target/build_g02_browser_corpus.py",
+    "WEFT_PLAYWRIGHT_MODULE=/Users/erik/.codex/worktrees/eb69/umf/node_modules/playwright/index.mjs node tests/raw-postgresql/table-operation-browser.mjs /private/tmp/umf-g02-weft-wasm-target/g02-browser-cases-extended.json /private/tmp/umf-g02-weft-wasm-target/web /private/tmp/umf-g02-weft-wasm-target/g02-browser-report-005-extended.json"
+  ],
+  "caseCoverage": [
+    "field-copy",
+    "literal",
+    "concat",
+    "coalesce",
+    "add",
+    "subtract",
+    "multiply",
+    "conditional.eq",
+    "conditional.in",
+    "decimal 1e-1000 bound",
+    "fractional-to-integer refusal",
+    "self-reference refusal",
+    "raw literal 1 MiB accepted",
+    "raw literal 1 MiB + 1 refused"
+  ],
+  "browserResult": {
+    "cases": 14,
+    "allNativeWasmEqual": true,
+    "tamperControls": 1,
+    "invalidUnicodeTransportControls": 2,
+    "nodeProcess": false,
+    "require": false,
+    "nativeExecutionQualified": false
+  },
+  "sourceInputs": {
+    "crates/weft-core/src/table_operation/row_expression.rs": {
+      "sha256": "0f9d092e40fdabf70bffb5757e01021d791bbb5b27a0a5f371c354c2e5e1fe71",
+      "bytes": 27666,
+      "purpose": "G02 row-expression static admission and literal limits"
+    },
+    "crates/weft-core/src/table_operation/schema.rs": {
+      "sha256": "e80c3a2c32330e6c7d77949b839f56304e8b44390fd78017c8e9c4759e0f1cd7",
+      "bytes": 2585,
+      "purpose": "operation 0.2 schema selection"
+    },
+    "crates/weft-core/src/table_operation/validation.rs": {
+      "sha256": "dbcc1638e606d263946d12d5ad04c0330a1c93b1cbf8677dc3d1d30cd4e99955",
+      "bytes": 18704,
+      "purpose": "closed G02 admission"
+    },
+    "crates/weft-postgresql/src/table_operation.rs": {
+      "sha256": "105be1eb2e80da58cea33aff8ddc2c1ad42c12cd1be39fc42130c55ab38b32d7",
+      "bytes": 37987,
+      "purpose": "PostgreSQL G02 row expression lowering"
+    },
+    "crates/weft-postgresql/tests/table_operation.rs": {
+      "sha256": "7a11f647dd3f21ac53c28bb4f3df2db56e5ef86acf21d0f8d106c8773b2f3210",
+      "bytes": 47973,
+      "purpose": "native semantic and guard tests"
+    },
+    "crates/weft-wasm/src/lib.rs": {
+      "sha256": "04d786f9adb2f3cdaf03f38d3106cbd6bc2ad7e13f4eaea458a10988518ae103",
+      "bytes": 18275,
+      "purpose": "wasm-bindgen table operation API"
+    },
+    "spec/upstream/umf-table-operation-0.2.schema.json": {
+      "sha256": "5634f932533cebb972ba27b96d60802e2bc4f154cc1ef65b2d4c25cecfe3351e",
+      "bytes": 9101,
+      "purpose": "UMF schema snapshot"
+    },
+    "spec/upstream/umf-table-operation-0.2.source.json": {
+      "sha256": "6b3c49c15cc71e510e1bc7dfc19b0bfa19b709972752e0983928605acb06d89c",
+      "bytes": 370,
+      "purpose": "schema authority record"
+    },
+    "Cargo.lock": {
+      "sha256": "a44853f6a873d724f38c38f933f69ada23384974bb2bc1207d048e25d03349a9",
+      "bytes": 28742,
+      "purpose": "locked Rust dependency graph"
+    },
+    "rust-toolchain.toml": {
+      "sha256": "41ffa816f9f3929eee58730344f11d341b50fb15ac1f3850a7b9ff4205831e14",
+      "bytes": 113,
+      "purpose": "Rust toolchain pin"
+    },
+    "tests/raw-postgresql/table-operation-browser.mjs": {
+      "sha256": "743ff751adbf306ad02eaa26b9310170d4fcc9e12a9f30135910772a882be7ff",
+      "bytes": 4414,
+      "purpose": "real Chromium parity harness"
+    }
+  },
+  "artifacts": {
+    "raw_wasm": {
+      "path": "/private/tmp/umf-g02-weft-wasm-target/wasm32-unknown-unknown/debug/weft_wasm.wasm",
+      "sha256": "52e49f5c90b96dc22b6ed6c7f383f788888a03ee488436a2f228db10ea780620",
+      "bytes": 288161815
+    },
+    "browser_wasm": {
+      "path": "/private/tmp/umf-g02-weft-wasm-target/web/weft_wasm_bg.wasm",
+      "sha256": "b2493de749910e4618c0c17f65c0a8149a70e3ea6c29cd788cd544ec00c22c67",
+      "bytes": 49301714
+    },
+    "wasm_bindgen_js": {
+      "path": "/private/tmp/umf-g02-weft-wasm-target/web/weft_wasm.js",
+      "sha256": "c3c3b25d6a7f996bdc82e2dfb6defc3f9250e1977f24c9454bdd209164a63be2",
+      "bytes": 27452
+    },
+    "browser_report": {
+      "path": "/private/tmp/umf-g02-weft-wasm-target/g02-browser-report-005-extended.json",
+      "sha256": "b32ba1f7173520995128c8cf5f8909de80da2940e46e7837dc8c69c2ad057b3c",
+      "bytes": 3996
+    },
+    "request_corpus": {
+      "path": "/private/tmp/umf-g02-weft-wasm-target/g02-browser-cases-extended.json",
+      "sha256": "83743608ed7ee29b32469e14c6786c1028d7094ee435b0c5d18599353e6fd10f",
+      "bytes": 7885540
+    },
+    "native_case_generator": {
+      "path": "/private/tmp/umf-g02-weft-wasm-target/build_g02_browser_corpus.py",
+      "sha256": "19e86be2fafd41802b2d5f9214a407ccac1af5ae95d3e2dc94a9ebe995ea3940",
+      "bytes": 5302
+    },
+    "evidence/build_g02_browser_corpus.py": {
+      "path": "/Users/erik/.codex/worktrees/eb69/umf/docs/helix/04-build/evidence/mig-g02/weft-wasm-005/build_g02_browser_corpus.py",
+      "sha256": "19e86be2fafd41802b2d5f9214a407ccac1af5ae95d3e2dc94a9ebe995ea3940",
+      "bytes": 5302
+    },
+    "evidence/table-operation-browser.mjs": {
+      "path": "/Users/erik/.codex/worktrees/eb69/umf/docs/helix/04-build/evidence/mig-g02/weft-wasm-005/table-operation-browser.mjs",
+      "sha256": "743ff751adbf306ad02eaa26b9310170d4fcc9e12a9f30135910772a882be7ff",
+      "bytes": 4414
+    },
+    "evidence/browser-report.json": {
+      "path": "/Users/erik/.codex/worktrees/eb69/umf/docs/helix/04-build/evidence/mig-g02/weft-wasm-005/browser-report.json",
+      "sha256": "b32ba1f7173520995128c8cf5f8909de80da2940e46e7837dc8c69c2ad057b3c",
+      "bytes": 3996
+    },
+    "evidence/g02-browser-cases.json.gz": {
+      "path": "/Users/erik/.codex/worktrees/eb69/umf/docs/helix/04-build/evidence/mig-g02/weft-wasm-005/g02-browser-cases.json.gz",
+      "sha256": "9935481f6c8069bb26d9e0d31ac51b6b2e148688b5bdf5a9197db9eee21797b4",
+      "bytes": 45983
+    }
+  },
+  "limits": "The browser WASM compilation must not be confused with a database run, transaction/locking qualification, or native execution authority."
+}

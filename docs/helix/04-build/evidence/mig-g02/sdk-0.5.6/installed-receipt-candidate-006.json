@@ -1,0 +1,74 @@
+{
+  "evidenceId": "mig-g02-sdk-installed-0.5.6-candidate-006",
+  "scope": "Fresh installed UMF SDK archive smoke/conformance only; no publication or native execution qualification",
+  "version": "0.5.6",
+  "packageName": "@umf/core",
+  "bun": "1.4.3",
+  "commands": [
+    "bun run build:sdk",
+    "TMPDIR=/private/tmp bun scripts/test-sdk-install.ts"
+  ],
+  "workingDirectory": "/Users/erik/.codex/worktrees/eb69/umf",
+  "artifact": {
+    "path": "/private/tmp/umf-g02-candidate-006-artifacts/umf-sdk-0.5.6.tgz",
+    "sha256": "a3d09988eac12526f1f50ed882cf42616b74dcaf8cfaa74b772b9cb34b42bcc3",
+    "bytes": 30425465
+  },
+  "installedCheck": {
+    "log": {
+      "path": "/Users/erik/.codex/worktrees/eb69/umf/docs/helix/04-build/evidence/mig-g02/sdk-0.5.6/installed-check-candidate-006.log",
+      "sha256": "d7625d5e23c3c7267e22ccfac80c43827d314d4c2ac9cd106ec99d47529b233b",
+      "bytes": 550
+    },
+    "result": "passed",
+    "distributionFiles": 1754,
+    "conformanceCases": 139,
+    "singleInstall": true,
+    "bundledActions": true,
+    "loaderEntrypoint": true,
+    "unifiedGenerator": true,
+    "opaqueMeaningRemainsUnchecked": true,
+    "installWarning": "Bun reported one blocked postinstall; the installed SDK checks completed successfully."
+  },
+  "sourceCheckpoint": "76ff1cc787cc5d9b3970ab287832176bed7839a2",
+  "sourceTreeDirty": true,
+  "sourceInputs": {
+    "package.json": {
+      "path": "/Users/erik/.codex/worktrees/eb69/umf/package.json",
+      "sha256": "031bdb38c663c33804c02de06906c9c4fdd7bbf32728204cd4c8d30959c324ed",
+      "bytes": 5380
+    },
+    "scripts/package-sdk.ts": {
+      "path": "/Users/erik/.codex/worktrees/eb69/umf/scripts/package-sdk.ts",
+      "sha256": "87005ad8320eccddcdff62621f39a39a03a83a9e180a17e87c436a574790d250",
+      "bytes": 2130
+    },
+    "scripts/test-sdk-install.ts": {
+      "path": "/Users/erik/.codex/worktrees/eb69/umf/scripts/test-sdk-install.ts",
+      "sha256": "ea44304fcbaa89d6df8f2b551260ebb63812d2099a1f07cf7de3367b31a0278e",
+      "bytes": 3644
+    },
+    "src/extensions/tables/row-expressions.ts": {
+      "path": "/Users/erik/.codex/worktrees/eb69/umf/src/extensions/tables/row-expressions.ts",
+      "sha256": "a6451b025f7c99281f7ec5eaee7247aab6e11edaadb02f0d4f639898ae74a7b8",
+      "bytes": 22221
+    },
+    "python/umf_codegen/src/umf_codegen/_assets/generator.js.gz": {
+      "path": "/Users/erik/.codex/worktrees/eb69/umf/python/umf_codegen/src/umf_codegen/_assets/generator.js.gz",
+      "sha256": "1e0b2a9730d60a0a18c8f1940779ddcd90a3218532215ac756b6e694df62710e",
+      "bytes": 789287
+    },
+    "python/umf_codegen/src/umf_codegen/_assets/manifest.json": {
+      "path": "/Users/erik/.codex/worktrees/eb69/umf/python/umf_codegen/src/umf_codegen/_assets/manifest.json",
+      "sha256": "6edad4bc64981d13da820dcca4a59d5ef828315032939be9e4fb1f16f6644ca7",
+      "bytes": 31131
+    },
+    "python/umf_codegen/src/umf_codegen/_release.py": {
+      "path": "/Users/erik/.codex/worktrees/eb69/umf/python/umf_codegen/src/umf_codegen/_release.py",
+      "sha256": "682572f68cdd9735048cd327881fc8d2d46c6811fd949ceab2a24857d65d644e",
+      "bytes": 170
+    }
+  },
+  "finalSourceCheckpoint": "76ff1cc787cc5d9b3970ab287832176bed7839a2",
+  "buildSourceCheckpointExplanation": "The archive was built from the then-dirty source state at sourceCheckpoint. Root subsequently committed these same package inputs at finalSourceCheckpoint; recorded source hashes identify the exact inputs."
+}
