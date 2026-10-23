@@ -161,6 +161,21 @@ fn lone_surrogate_payload_and_archive_keys_keep_exact_utf16_paths() {
 }
 
 #[test]
+fn source_archive_accepts_nonempty_lone_surrogate_compiler_identity() {
+    let compiler = Utf16::new(vec![b'c' as u16, 0xd800]);
+    let archive = object_utf16(vec![
+        (Utf16::from("role"), Value::string_utf8("original")),
+        (Utf16::from("compiler"), Value::String(compiler)),
+        (Utf16::from("files"), object(vec![("root.proto", Value::string_utf8("syntax = 'proto3';"))])),
+        (Utf16::from("roots"), Value::Array(vec![Value::string_utf8("root.proto")])),
+    ]);
+    let result = inspect_protobuf_document(&document(node(vec![], vec![]), vec![("sourceArchive", archive)]), &mut Context::ordinary()).unwrap();
+    assert!(result.valid);
+    assert!(!result.complete);
+    assert_eq!(result.diagnostics.last().unwrap().code, Utf16::from("PROTOBUF_COMPILER_REQUIRED"));
+}
+
+#[test]
 fn lone_surrogate_descriptor_field_key_keeps_unknown_diagnostic_path() {
     let surrogate = Utf16::new(vec![0xd800]);
     let child = node(vec![], vec![unknown(50_000, 0, "01")]);

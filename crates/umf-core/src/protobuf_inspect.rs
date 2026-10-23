@@ -111,7 +111,7 @@ fn inspect_archive(archive: &Value, path: &Utf16, diagnostics: &mut Vec<Diagnost
         }
     }
     let mut valid = string_is(get(fields, "role"), "original")
-        && get(fields, "compiler").and_then(string).is_some_and(|s| !s.is_empty());
+        && matches!(get(fields, "compiler"), Some(Value::String(identity)) if !identity.is_empty());
     if let Some(files) = get(fields, "files").and_then(object) {
         for (_, source) in files {
             context.charge_work(1, path.clone())?;
@@ -119,13 +119,13 @@ fn inspect_archive(archive: &Value, path: &Utf16, diagnostics: &mut Vec<Diagnost
         }
     } else { valid = false; }
     if let Some(roots) = get(fields, "roots").and_then(array) {
-        let mut seen = HashSet::<String>::new();
+        let mut seen = HashSet::<Utf16>::new();
         valid &= !roots.is_empty();
         for root in roots {
             context.charge_work(1, path.clone())?;
-            let Some(value) = string(root) else { valid = false; continue };
+            let Value::String(value) = root else { valid = false; continue };
             context.charge_work(value.len(), path.clone())?;
-            if value.is_empty() || !seen.insert(value) { valid = false; }
+            if value.is_empty() || !seen.insert(value.clone()) { valid = false; }
         }
     } else { valid = false; }
     if !valid {

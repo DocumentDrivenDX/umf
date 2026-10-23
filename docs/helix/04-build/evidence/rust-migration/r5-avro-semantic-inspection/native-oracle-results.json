@@ -1,0 +1,98 @@
+{
+  "profile": "r5-avro-semantic-inspection/native-oracle/1.0.0",
+  "versions": {
+    "apacheAvroPython": "1.12.0",
+    "fastavro": "1.12.2"
+  },
+  "observations": [
+    {
+      "case": "recursive-cross-dependency-reference",
+      "input": "original-input",
+      "sourceSha256": {
+        "dependency": "4459dc57f5223ab4ddc7c76f941e87c10c2bddcb5a581ed39b06cf7640994e80",
+        "root": "19d46a39be899f290e5a9fdf98d2c23d25cca54752401326bffca472a153dc3a"
+      },
+      "apacheAvro112": {"outcome": "accepted"},
+      "fastavro112": {"outcome": "accepted"}
+    },
+    {
+      "case": "recursive-cross-dependency-reference",
+      "input": "rust-exported-input",
+      "sourceSha256": {
+        "dependency": "560f384f73dde7664e30f43bedd9f9fe756152e8c2e7ff568088e769fb3d44e1",
+        "root": "e7c3fc2d67f5cbde2c4cd6a8a3d56c1cd89ba90c54767878790f26aebb67c569"
+      },
+      "apacheAvro112": {"outcome": "accepted"},
+      "fastavro112": {"outcome": "accepted"}
+    },
+    {
+      "case": "named-array-and-container-union",
+      "input": "original-only",
+      "sourceSha256": {
+        "dependency": "7c77b800b2600fe11c25fa4383265c7633aace583d193c823213309cae9b70a4",
+        "root": "ac34efd3ca850ac9754345f04c97940f763bde5da574d624f2a72d8bb57f9aff"
+      },
+      "apacheAvro112": {"outcome": "accepted"},
+      "fastavro112": {"outcome": "accepted"}
+    },
+    {
+      "case": "valid-single-relative-named-reference",
+      "input": "original-only",
+      "sourceSha256": {
+        "dependency": "1953c0336def70644b8f01e93212eb22817c8be71977390c0e5e13058c96aafe",
+        "root": "01b73ca4a8d91b3ccd3b255f7c9c92e326a1d1a9241df7a2e5f5cdf873ad6ebb"
+      },
+      "apacheAvro112": {"outcome": "accepted"},
+      "fastavro112": {"outcome": "accepted"}
+    },
+    {
+      "case": "normalized-duplicate-named-reference",
+      "input": "original-only",
+      "sourceSha256": {
+        "dependency": "1953c0336def70644b8f01e93212eb22817c8be71977390c0e5e13058c96aafe",
+        "root": "83ce7e15726a3de8d8d06d957e2520b4286de9b48d4e9d1f725063e2baeb5660"
+      },
+      "apacheAvro112": {"outcome": "accepted"},
+      "fastavro112": {"outcome": "accepted"}
+    },
+    {
+      "case": "object-form-missing-reference",
+      "input": "original-only",
+      "sourceSha256": {
+        "dependency": "4d7c8f815a03a4a7ed18003152023d3c47a4d7ca80e6c9a491c521b633e18773",
+        "root": "1de7218e79819974480cfb102b75bf4f9fb2f6093fc2abcf6a78cc6a5d666b82"
+      },
+      "apacheAvro112": {
+        "outcome": "rejected",
+        "errorType": "SchemaParseException",
+        "message": "Type property \"{'type': 'Missing'}\" not a valid Avro schema: Undefined type: Missing"
+      },
+      "fastavro112": {"outcome": "rejected", "errorType": "UnknownType", "message": "{'type': 'Missing'}"}
+    },
+    {
+      "case": "missing-field-name",
+      "input": "original-only",
+      "sourceSha256": {
+        "dependency": "4d7c8f815a03a4a7ed18003152023d3c47a4d7ca80e6c9a491c521b633e18773",
+        "root": "ec73db5df06bc688d5cf46199c79801c47daf0dc34a56ea63c1323fc56300dda"
+      },
+      "apacheAvro112": {"outcome": "rejected", "errorType": "SchemaParseException", "message": "Fields must have a non-empty name."},
+      "fastavro112": {"outcome": "rejected", "errorType": "KeyError", "message": "'name'"}
+    },
+    {
+      "case": "missing-field-type",
+      "input": "original-only",
+      "sourceSha256": {
+        "dependency": "4d7c8f815a03a4a7ed18003152023d3c47a4d7ca80e6c9a491c521b633e18773",
+        "root": "60e9f1c0a66607a417cb390df19abf14075178e3edb9ae1e42d4fe9c84e3f4c7"
+      },
+      "apacheAvro112": {
+        "outcome": "rejected",
+        "errorType": "SchemaParseException",
+        "message": "Type property \"None\" not a valid Avro schema: Could not make an Avro Schema object from None"
+      },
+      "fastavro112": {"outcome": "rejected", "errorType": "KeyError", "message": "'type'"}
+    }
+  ],
+  "scope": "Independent schema parser observations only; no datum/default/logical equivalence or full Avro conformance is inferred."
+}

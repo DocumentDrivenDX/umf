@@ -843,6 +843,18 @@ Python protobuf replays. Sol's read-only interface review identified this
 dependency order; the Go compiler/emitter, Edition 2024 and complete registry
 semantics remain named external blockers rather than pure-Rust claims.
 
+The [opt-in Protobuf source-import checkpoint](evidence/rust-migration/r5-protobuf-source/README.md)
+implements that prepare/compile/finish boundary with a private finalization
+step and explicit trusted cooperative compiler capability. A frozen TypeScript
+success/refusal packet is reproducible byte-for-byte. Independent Sol rereview
+closed three P2 differences in serialized request length, copy/refusal order,
+and UTF-16 compiler identity; it found no remaining P1/P2 in this bounded
+slice. Pinned offline Rust tests pass 8/8 source, 5/5 document and 9/9
+inspector cases. The capture compiler is a stub, and the existing TypeScript
+native-oracle test reached its assertions but failed while writing its fixture
+report in this worktree. Real compiler qualification, bindings, source emission,
+Edition 2024 and default cutover remain open.
+
 The next bounded Avro field-metadata shard has a frozen
 [100-case predecessor and independent native packet](evidence/rust-migration/r5-avro-fields/README.md).
 It pins Bun 1.4.3, avsc 5.7.9, Apache Avro 1.12.0 and fastavro 1.12.2,
@@ -895,6 +907,18 @@ tests and a newline-ceiling control pass; independent Sol rereview closed the
 LF metering and quadratic duplicate-ID findings with no remaining P1/P2. This
 does not implement `avsc` semantic interpretation, datum operations, native
 oracle parity, wrappers or default adapter activation.
+
+The next [opt-in Avro structural inspection slice](evidence/rust-migration/r5-avro-semantic-inspection/README.md)
+resolves caller-ordered named declarations, references, fields, arrays, maps and
+unions while retaining the original document tree. It always reports the
+profile as incomplete; defaults, logical types, datum codecs and full Avro
+validation remain outside this slice. Focused Rust tests pass 8/8 and the
+document integration target passes 9/9. Fresh Apache Avro 1.12.0 and
+fastavro 1.12.2 parser observations were independently reproduced on authored
+and exact Rust-exported schema inputs. Independent Sol rereview closed the
+native negative-probe provenance and pre-allocation metering defects, with no
+remaining P1/P2 in this bounded inspector. Wrapper/browser parity, wider
+native conformance and default cutover remain open.
 
 The bounded [R5 Iceberg schema checkpoint](evidence/rust-migration/r5-iceberg-schema/README.md)
 ports standalone Iceberg 1.11 schema JSON preservation, inspection, pointer

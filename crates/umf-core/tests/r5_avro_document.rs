@@ -169,6 +169,29 @@ fn predecessor_fixture_roundtrips_ordered_dependencies_metadata_and_detached_sou
 }
 
 #[test]
+fn recursive_dependency_inspection_and_exact_bundle_export_match_native_oracle_inputs() {
+    let dependency_json = r#"{"type":"record","name":"Node","namespace":"n","fields":[{"name":"next","type":["null","Node"]}]}"#;
+    let root_json = r#"{"type":"record","name":"Root","fields":[{"name":"node","type":"n.Node"}]}"#;
+    let id = Utf16::from("root");
+    let dependency_id = Utf16::from("node.avsc");
+    let document = import_schema(
+        &id,
+        &u16s(root_json),
+        &[AvroDependencySource { id: &dependency_id, schema_json: &u16s(dependency_json) }],
+        &mut Context::ordinary(),
+    ).unwrap();
+    let bundle=export_bundle(&document,&mut Context::ordinary()).unwrap();
+    assert_eq!(bundle.schema_json.to_utf8().unwrap(),format!("{root_json}\n"));
+    assert_eq!(bundle.dependencies[0].1.to_utf8().unwrap(),format!("{dependency_json}\n"));
+    let trees=import_schema(&id,&u16s(root_json),&[AvroDependencySource{id:&dependency_id,schema_json:&u16s(dependency_json)}],&mut Context::ordinary()).unwrap();
+    let root_tree=get_node(&trees,&Utf16::default(),None,&mut Context::ordinary()).unwrap();
+    let dependency_tree=get_node(&trees,&Utf16::default(),Some(&dependency_id),&mut Context::ordinary()).unwrap();
+    let inspection=umf_core::avro_semantics::inspect_schema(&root_tree,&[umf_core::avro_semantics::Dependency{id:&dependency_id,tree:&dependency_tree}],&mut Context::ordinary()).unwrap();
+    assert!(inspection.valid,"{:?}",inspection.diagnostics);
+    assert!(!inspection.complete);
+}
+
+#[test]
 fn copied_get_node_handles_escaped_members_and_dependency_roots() {
     let document = import();
     let escaped = get_node(
