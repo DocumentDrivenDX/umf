@@ -47,7 +47,7 @@ let commandSequence = 0;
 function safeCommandArguments(args: string[]) {
   const secretOption = /^(?:--?)(?:dsn|password|passwd|token|secret|credential|authorization)(?:=|$)/i;
   const rendered = args.slice(0, 8).map((argument, index) => {
-    if (index > 0 && secretOption.test(args[index - 1])) return '[redacted]';
+    if (index > 0 && secretOption.test(args[index - 1]!)) return '[redacted]';
     if (secretOption.test(argument)) return argument.includes('=') ? `${argument.split('=', 1)[0]}=[redacted]` : argument;
     if (/^[a-z][a-z0-9+.-]*:\/\/[^/@]+@/i.test(argument)) return argument.replace(/^(.*:\/\/)[^/@]+@/, '$1[redacted]@');
     return argument.length > 120 ? `${argument.slice(0, 96)}…[${argument.length} chars]` : argument;
