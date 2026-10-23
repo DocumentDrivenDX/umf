@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Check migration ownership boundaries and the source-exact pre-R4 V8 debt."""
+"""Check migration ownership boundaries and reject V8 in Python packages."""
 from __future__ import annotations
 
 import hashlib
@@ -17,19 +17,11 @@ except ModuleNotFoundError:
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-REPORT = ROOT / "docs/helix/04-build/evidence/rust-migration/r3/boundary-check.json"
-V8_DEBT = {
-    "python/umf_codegen/src/umf_codegen/_embedded.py": {
-        "sha256": "06b2c4489d8b0e2068b518e920497b01f984c58ca08954017bfc932a61c9dd53",
-        "reason": "Retained seven-operation Python V8 bridge after main PR41 added discover_changes and row_scope; all remain explicitly scoped R3/R4 debt, with R0 five-operation capture historical.",
-        "patterns": ["py_mini_racer", "MiniRacer"],
-    },
-    "python/umf_codegen/pyproject.toml": {
-        "sha256": "ee3fe91f0c26558fdf9d85191e521044d4bc11f8d08176c81b037d28790f8012",
-        "reason": "Pinned MiniRacer dependency remains pre-R4 debt; main PR40/41 changed only the package version through 0.1.0a3.",
-        "patterns": ["mini-racer==0.14.1"],
-    },
-}
+REPORT = Path(os.environ.get(
+    "UMF_RUST_BOUNDARY_REPORT",
+    Path(tempfile.gettempdir()) / "umf-rust-boundary-current.json",
+))
+V8_DEBT: dict[str, dict[str, object]] = {}
 PRODUCTION_PACKAGES = ("umf-core", "umf-core-wire", "umf-metamodel", "umf-codegen")
 PRODUCTION_SOURCE_FOLDERS = tuple(f"crates/{package}/src" for package in PRODUCTION_PACKAGES)
 
@@ -75,21 +67,21 @@ def scan_text(path: str, source: str, *, allowed_debt: dict[str, dict[str, objec
     if is_engine_source and path.endswith(".py"):
         for match in FORBIDDEN_PY_IMPORTS.finditer(source):
             line = source.count("\n", 0, match.start()) + 1
-            exception = allowed_debt.get(path)
-            if exception and sha(ROOT / path) == exception.get("sha256") and any(pattern in match.group(0) for pattern in exception["patterns"]):
-                continue
-            findings.append({"rule": "forbidden-python-javascript-engine", "path": path, "line": line, "message": "Python library imports an embedded JavaScript engine without an exact source-scoped debt record"})
+            findings.append({"rule": "forbidden-python-javascript-engine", "path": path, "line": line, "message": "Python library imports an embedded JavaScript engine"})
     if is_engine_source:
-        match = PRIVATE_CROSS_PACKAGE_IMPORT.search(source)
         current_package = None
         parts = Path(path).parts
         if "src" in parts:
             index = parts.index("src")
             if len(parts) > index + 1:
                 current_package = parts[index + 1]
-        imported_package = match.group(1) + ("_access" if match.group(1) == "umf" and match.group(0).startswith("from umf_access") else "") if match else None
-        if match and imported_package != current_package:
-            findings.append({"rule": "cross-package-private-import", "path": path, "line": source.count("\n", 0, match.start()) + 1, "message": f"Cross-package import reaches private module {match.group(0).strip()}"})
+        for match in PRIVATE_CROSS_PACKAGE_IMPORT.finditer(source):
+            imported_package = match.group(1) + ("_access" if match.group(1) == "umf" and match.group(0).startswith("from umf_access") else "")
+            import_line = source[match.start():source.find("\n", match.start()) if "\n" in source[match.start():] else len(source)].strip()
+            native_binding_edge = (path == "python/umf_codegen/src/umf_codegen/_native.py"
+                                   and import_line == "from umf._rust import _rust_core")
+            if imported_package != current_package and not native_binding_edge:
+                findings.append({"rule": "cross-package-private-import", "path": path, "line": source.count("\n", 0, match.start()) + 1, "message": f"Cross-package import reaches private module {match.group(0).strip()}"})
     return findings
 
 
@@ -384,19 +376,13 @@ def generated_provenance() -> tuple[list[dict[str, object]], list[dict[str, obje
 
 def run(check_controls: bool = True) -> dict[str, object]:
     findings: list[dict[str, object]] = []
-    # Individual exact-file exceptions make the current V8 debt visible to the migration gate.
     active_debt: dict[str, dict[str, object]] = {}
-    debt_status = []
-    for path, record in V8_DEBT.items():
-        full = ROOT / path
-        expected = record["sha256"]
-        if not expected:
-            raise RuntimeError(f"V8 debt needs a pinned source hash: {path}")
-        if not full.is_file() or sha(full) != expected:
-            findings.append({"rule": "v8-debt-source-drift", "path": path, "message": "Exact pre-R4 exception source changed; review and update or remove the debt record"})
-        else:
-            active_debt[path] = record
-            debt_status.append({"path": path, "sha256": expected, "reason": record["reason"], "patterns": record["patterns"], "status": "source-exact pre-R4 debt"})
+    debt_status: list[dict[str, object]] = []
+    codegen_manifest = ROOT / "python/umf_codegen/pyproject.toml"
+    if codegen_manifest.is_file():
+        dependencies = tomllib.loads(codegen_manifest.read_text(encoding="utf-8")).get("project", {}).get("dependencies", [])
+        if any("mini-racer" in dependency.lower() or "py-mini-racer" in dependency.lower() for dependency in dependencies):
+            findings.append({"rule": "forbidden-python-javascript-dependency", "path": "python/umf_codegen/pyproject.toml", "message": "Python codegen package depends on a JavaScript engine"})
     library_paths = []
     for folder in [ROOT / "src", ROOT / "python/src", ROOT / "python/umf_access/src", ROOT / "python/umf_codegen/src", ROOT / "bindings"]:
         if folder.exists():
@@ -424,7 +410,7 @@ def run(check_controls: bool = True) -> dict[str, object]:
             forbidden_names = fixture_manifest_dependencies(forbidden_manifest)
         controls = {"allowedPureRustDependency": "pass" if "serde" in allowed_names and not core_dependency_findings(allowed_names) else "fail",
                     "forbiddenHostDependency": "pass" if core_dependency_findings(forbidden_names) else "fail",
-                    "legacyV8AllowedOnlyAtExactDebtFile": "pass" if scan_text("python/umf_codegen/src/umf_codegen/_embedded.py", "from py_mini_racer import MiniRacer", allowed_debt=active_debt) == [] else "fail",
+                    "formerV8BridgeImportRejected": "pass" if scan_text("python/umf_codegen/src/umf_codegen/_embedded.py", "from py_mini_racer import MiniRacer", allowed_debt=active_debt) else "fail",
                     "unscopedV8ImportRejected": "pass" if scan_text("python/umf_access/src/umf_access/fake.py", "import py_mini_racer", allowed_debt=active_debt) else "fail",
                     "privateCrossPackageImportRejected": "pass" if any(f["rule"] == "cross-package-private-import" for f in scan_text("python/src/umf/new.py", "from umf_access._internal import x")) else "fail",
                     "allowedRelativeImportAccepted": "pass" if not scan_text("src/model/new.ts", "import { x } from '../validation/index.js';") else "fail",

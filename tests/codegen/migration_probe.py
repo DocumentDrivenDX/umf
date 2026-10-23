@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import copy
 import hashlib
+import importlib.resources
 import json
 import os
 import shutil
@@ -22,7 +23,19 @@ args=parser.parse_args()
 cases=json.loads(args.corpus.read_text())
 observations=[]
 tamper_count=0
-with patch.object(subprocess,'Popen',side_effect=AssertionError('external process forbidden')), \
+native_cli=str(importlib.resources.files('umf').joinpath('_bin','umf'))
+real_popen=subprocess.Popen
+native_launches=[]
+def only_native_cli(command,*args,**kwargs):
+    assert command[0]==native_cli and command[1]=='codegen',command
+    assert kwargs.get('cwd')==str(Path(native_cli).parent),kwargs
+    assert command[2:]==['--capabilities'] or command[2:] in (
+        ['migration','--request','-','--input-format','json','--output-format','wire'],
+        ['verify-migration','--request','-','--input-format','json','--output-format','wire'],
+    ),command
+    native_launches.append(command)
+    return real_popen(command,*args,**kwargs)
+with patch.object(subprocess,'Popen',side_effect=only_native_cli), \
      patch.object(shutil,'which',side_effect=AssertionError('executable lookup forbidden')), \
      patch.object(socket,'create_connection',side_effect=AssertionError('external network forbidden')), \
      patch.dict(os.environ,{'PATH':''}):
@@ -69,8 +82,9 @@ with patch.object(subprocess,'Popen',side_effect=AssertionError('external proces
             pass
         else:
             raise AssertionError('invalid deadline admitted')
+assert native_launches
 report={'scope':'installed original migration-plan compiler/verifier; no native migration admission',
         'cases':observations,'tamperControls':tamper_count,'deadlineControls':4,
-        'externalJavascriptProcesses':'forbidden','nativeLifecycleReleaseQualified':False}
+        'externalJavascriptProcesses':'forbidden','nativeCliLaunches':len(native_launches),'nativeLifecycleReleaseQualified':False}
 args.report.write_text(json.dumps(report,indent=2)+'\n')
 print(json.dumps({'parityCases':len(observations),'tamperControls':tamper_count,'deadlineControls':4}))

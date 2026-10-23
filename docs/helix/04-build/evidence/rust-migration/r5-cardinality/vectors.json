@@ -1,0 +1,22 @@
+{
+  "source": {
+    "basis": "Captured from retained TypeScript cardinality API; authority CONTRACT-001 and CONTRACT-040.",
+    "coreVersion": "0.10.0",
+    "inspectionSchema": "6.0.0",
+    "declarationSchema": "4.0.0"
+  },
+  "identity": {"module": "m", "element": "e"},
+  "document": {"umf":"0.10.0","id":"author","vocabularies":{"future":{"version":"1.0.0"}},"modules":[{"id":"m","namespace":"","elements":[{"id":"e","kind":"field","nullability":"required","extensions":{"future":{"opaque":"retain"}}},{"id":"v","kind":"field","scalarType":"integer","extensions":{}}]}]},
+  "known": {"umf":"0.10.0","id":"author","vocabularies":{"future":{"version":"1.0.0"}},"modules":[{"id":"m","namespace":"","elements":[{"id":"e","kind":"field","nullability":"required","extensions":{"future":{"opaque":"retain"}},"cardinality":"array","itemType":{"module":"m","element":"v","future":{"unknown":true}}},{"id":"v","kind":"field","scalarType":"integer","extensions":{}}]}]},
+  "unknown": {"umf":"0.10.0","id":"author","vocabularies":{"future":{"version":"1.0.0"}},"modules":[{"id":"m","namespace":"","elements":[{"id":"e","kind":"field","nullability":"required","extensions":{"future":{"opaque":"retain"}},"cardinality":"future-container"},{"id":"v","kind":"field","scalarType":"integer","extensions":{}}]}]},
+  "inapplicable": {"umf":"0.10.0","id":"author","vocabularies":{"future":{"version":"1.0.0"}},"modules":[{"id":"m","namespace":"","elements":[{"id":"e","kind":"record","extensions":{"future":{"opaque":"retain"}}},{"id":"v","kind":"field","scalarType":"integer","extensions":{}}]}]},
+  "request": {"cardinality":"array","itemType":{"module":"m","element":"v","future":{"unknown":true}}},
+  "expectedMeaning": {
+    "missing":{"state":"missing"},
+    "known":{"state":"known","cardinality":"array","itemType":{"module":"m","element":"v","future":{"unknown":true}}},
+    "unknown":{"state":"unknown","value":"future-container"},
+    "inapplicable":{"state":"inapplicable"}
+  },
+  "expectedPath":"/modules/0/elements/0/cardinality",
+  "expectedProvenance":{"origin":"authored","basis":"explicit-author-declaration","nativePath":null,"binding":{"id":"umf.core.cardinality.authoring","version":"4.0.0"}}
+}

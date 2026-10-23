@@ -4,6 +4,7 @@ use num_traits::{Signed, ToPrimitive, Zero};
 
 use crate::{
     context::Context,
+    ecma_coercion::{to_number, Primitive},
     error::{Diagnostic, EngineError, Severity},
     literal_policy::PreparedPolicy,
     value::{copy_json, Utf16, Value},
@@ -58,6 +59,157 @@ fn text(value: &Value) -> Option<&Utf16> {
     match value {
         Value::String(s) => Some(s),
         _ => None,
+    }
+}
+
+/// Compatibility for the public TypeScript field-value API's dynamic
+/// `value.length` / `value.charCodeAt(i)` sequence. JSON copying creates
+/// null-prototype objects, so object-to-primitive conversion has no default.
+fn public_string_carrier_count(raw: &Value, ctx: &mut Context<'_>) -> Result<usize, EngineError> {
+    let type_error = |message: &str| EngineError::new("TYPE_ERROR", Utf16::default(), message);
+    enum LengthValue<'a> {
+        Borrowed(&'a Value),
+        Number(f64),
+        Undefined,
+    }
+    let length = match raw {
+        Value::Null => {
+            return Err(type_error(
+                "null is not an object (evaluating 'value.length')",
+            ));
+        }
+        Value::Array(values) => LengthValue::Number(values.len() as f64),
+        Value::Object(_) => get(raw, "length")
+            .map(LengthValue::Borrowed)
+            .unwrap_or(LengthValue::Undefined),
+        _ => LengthValue::Undefined,
+    };
+    let length = match length {
+        LengthValue::Borrowed(value) => value,
+        LengthValue::Undefined => return Ok(0),
+        LengthValue::Number(value) => {
+            if value > 0.0 {
+                return Err(type_error("value.charCodeAt is not a function. (In 'value.charCodeAt(i)', 'value.charCodeAt' is undefined)"));
+            }
+            return Ok(0);
+        }
+    };
+
+    fn array_to_string(values: &[Value], out: &mut Vec<u16>) -> Result<(), EngineError> {
+        for (index, value) in values.iter().enumerate() {
+            if index != 0 {
+                out.push(b',' as u16);
+            }
+            match value {
+                Value::Null => {}
+                Value::String(s) => out.extend_from_slice(s.units()),
+                Value::Bool(v) => out.extend(v.to_string().encode_utf16()),
+                Value::Number(v) => out.extend(v.to_string().encode_utf16()),
+                Value::Array(nested) => array_to_string(nested, out)?,
+                Value::Object(_) => {
+                    return Err(EngineError::new(
+                        "TYPE_ERROR",
+                        Utf16::default(),
+                        "No default value",
+                    ))
+                }
+            }
+        }
+        Ok(())
+    }
+
+    let number = match length {
+        Value::Null => to_number(Primitive::Null, ctx)?,
+        Value::Bool(value) => to_number(Primitive::Bool(*value), ctx)?,
+        Value::Number(value) => to_number(Primitive::Number(*value), ctx)?,
+        Value::String(value) => to_number(Primitive::String(value), ctx)?,
+        Value::Array(values) => {
+            // First walk the whole JSON subtree, admitting each node and its
+            // copied text before allocating the recursive Array#join result.
+            let mut pending = vec![values.as_slice()];
+            let mut text_units = 0usize;
+            while let Some(items) = pending.pop() {
+                ctx.charge_work(items.len().saturating_add(1), Utf16::default())?;
+                text_units = text_units.saturating_add(items.len().saturating_sub(1));
+                for item in items {
+                    match item {
+                        Value::String(s) => {
+                            ctx.charge_work(s.len(), Utf16::default())?;
+                            text_units = text_units.saturating_add(s.len());
+                        }
+                        Value::Bool(_) => {
+                            ctx.charge_work(5, Utf16::default())?;
+                            text_units = text_units.saturating_add(5);
+                        }
+                        Value::Number(_) => {
+                            // Fixed-point Display of the smallest f64
+                            // subnormal is 326 characters; 400 safely admits
+                            // the conversion and output slot before formatting.
+                            ctx.charge_work(400, Utf16::default())?;
+                            text_units = text_units.saturating_add(400);
+                        }
+                        Value::Array(children) => pending.push(children),
+                        Value::Null | Value::Object(_) => {
+                            ctx.charge_work(1, Utf16::default())?;
+                        }
+                    }
+                }
+            }
+            ctx.charge_work(text_units, Utf16::default())?;
+            let mut joined = Vec::with_capacity(text_units);
+            array_to_string(values, &mut joined)?;
+            to_number(Primitive::String(&Utf16::new(joined)), ctx)?
+        }
+        Value::Object(_) => return Err(type_error("No default value")),
+    };
+    if number > 0.0 {
+        return Err(type_error("value.charCodeAt is not a function. (In 'value.charCodeAt(i)', 'value.charCodeAt' is undefined)"));
+    }
+    Ok(0)
+}
+
+#[cfg(test)]
+mod public_carrier_tests {
+    use super::*;
+
+    #[test]
+    fn array_length_coercion_is_stopped_by_the_cooperative_meter_before_join() {
+        let values = (0..128)
+            .map(|_| Value::String(Utf16::default()))
+            .collect::<Vec<_>>();
+        let raw = Value::Object(vec![(key("length"), Value::Array(values))]);
+        let mut meter = |_: usize| {
+            Err(EngineError::new(
+                "METER_STOP",
+                Utf16::default(),
+                "work denied",
+            ))
+        };
+        let mut ctx = Context::ordinary().with_meter(&mut meter);
+        let error = public_string_carrier_count(&raw, &mut ctx).unwrap_err();
+        assert_eq!(error.code, "METER_STOP");
+    }
+
+    #[test]
+    fn long_numeric_array_text_is_admitted_before_float_formatting() {
+        let raw = Value::Object(vec![(
+            key("length"),
+            Value::Array(vec![Value::Number(1e-300)]),
+        )]);
+        let mut meter = |amount: usize| {
+            if amount >= 400 {
+                Err(EngineError::new(
+                    "METER_STOP",
+                    Utf16::default(),
+                    "formatting work denied",
+                ))
+            } else {
+                Ok(())
+            }
+        };
+        let mut ctx = Context::ordinary().with_meter(&mut meter);
+        let error = public_string_carrier_count(&raw, &mut ctx).unwrap_err();
+        assert_eq!(error.code, "METER_STOP");
     }
 }
 fn utf8(value: &Value) -> Option<String> {
@@ -119,13 +271,24 @@ fn append_path(base: &Utf16, segment: &Utf16) -> Utf16 {
     out.extend(ptr_escape(segment).units());
     Utf16::new(out)
 }
+fn append_raw_path(base: &Utf16, segment: &Utf16) -> Utf16 {
+    let mut out = base.units().to_vec();
+    out.push(0x2f);
+    out.extend(segment.units());
+    Utf16::new(out)
+}
 fn append_ascii(base: &Utf16, segment: &str) -> Utf16 {
     append_path(base, &key(segment))
 }
 fn fail(reason: &str) -> LiteralFault {
     LiteralFault::new(reason)
 }
-fn known(value: &Value, allowed: &[String], path: &Utf16) -> Result<(), LiteralFault> {
+fn known(
+    value: &Value,
+    allowed: &[String],
+    path: &Utf16,
+    raw_unknown_path: bool,
+) -> Result<(), LiteralFault> {
     let Some(members) = object(value) else {
         return Err(fail("object").at(path.clone()));
     };
@@ -133,7 +296,11 @@ fn known(value: &Value, allowed: &[String], path: &Utf16) -> Result<(), LiteralF
         if !allowed.iter().any(|s| name == &key(s)) {
             return Err(LiteralFault {
                 reason: "unknown".into(),
-                path: append_path(path, name),
+                path: if raw_unknown_path {
+                    append_raw_path(path, name)
+                } else {
+                    append_path(path, name)
+                },
                 detail: name.clone(),
                 engine_error: None,
             });
@@ -280,6 +447,23 @@ fn format_decimal(value: &BigInt, ctx: &mut Context<'_>) -> Result<String, Liter
     ctx.check_cancelled(Utf16::default())
         .and_then(|_| ctx.check_deadline(Utf16::default()))
         .map_err(LiteralFault::from_engine)?;
+    Ok(text)
+}
+
+/// Format a numeric BigInt for the JavaScript numeric adapter using the same
+/// precharged radix-10 work estimate and post-format cooperative checks as
+/// core literal evaluation.
+pub(crate) fn format_bigint_decimal_for_numeric(
+    value: &BigInt,
+    ctx: &mut Context<'_>,
+) -> Result<String, EngineError> {
+    if value.is_zero() {
+        return Ok("0".to_owned());
+    }
+    ctx.charge_work_u64(decimal_format_work(value), Utf16::default())?;
+    let text = value.to_string();
+    ctx.check_cancelled(Utf16::default())?;
+    ctx.check_deadline(Utf16::default())?;
     Ok(text)
 }
 
@@ -813,6 +997,7 @@ fn evaluate(
     enabled: bool,
     policy: &Value,
     depth: usize,
+    public_field_value: bool,
     ctx: &mut Context<'_>,
 ) -> Result<(), LiteralFault> {
     ctx.charge_work(1, Utf16::default())
@@ -837,7 +1022,12 @@ fn evaluate(
     let item_key = selector(policy, "item");
     if let Some(item) = get(field, &item_key) {
         let allowed = prop_list(policy, "itemReferenceKeys");
-        known(item, &allowed, &append_ascii(&Utf16::default(), &item_key))?;
+        known(
+            item,
+            &allowed,
+            &append_ascii(&Utf16::default(), &item_key),
+            public_field_value,
+        )?;
     }
     let facets_key = selector(policy, "facets");
     let empty_facets = Value::Object(Vec::new());
@@ -846,6 +1036,7 @@ fn evaluate(
         facets,
         &prop_list(policy, "facetKeys"),
         &append_ascii(&Utf16::default(), &facets_key),
+        public_field_value,
     )?;
     for (group, keys) in object(get(policy, "facetGroups").unwrap_or(&Value::Null)).unwrap_or(&[]) {
         let Some(group) = group.to_utf8().ok() else {
@@ -861,6 +1052,7 @@ fn evaluate(
                         .filter_map(ascii)
                         .collect::<Vec<_>>(),
                     &append_ascii(&append_ascii(&Utf16::default(), &facets_key), &group),
+                    public_field_value,
                 )?;
             }
         }
@@ -939,6 +1131,7 @@ fn evaluate(
                     enabled,
                     policy,
                     depth + 1,
+                    public_field_value,
                     ctx,
                 )?
             }
@@ -951,6 +1144,7 @@ fn evaluate(
                     enabled,
                     policy,
                     depth + 1,
+                    public_field_value,
                     ctx,
                 )?
             }
@@ -974,6 +1168,39 @@ fn evaluate(
     }
     let fam = family(field, policy).ok_or_else(|| fail("family"))?;
     let raw = carrier(value, fam).ok_or_else(|| fail("family"))?;
+    if public_field_value
+        && str_at(fam, "mechanic").as_deref() == Some("unicode")
+        && !matches!(raw, Value::String(_))
+    {
+        let count = public_string_carrier_count(raw, ctx).map_err(LiteralFault::from_engine)?;
+        let has_length = get(facets, "length").is_some();
+        let has_allowed = get(field, "allowedValues").is_some();
+        if !has_allowed {
+            if !truth_at(fam, "refinements") {
+                if enabled {
+                    return Err(fail("refinements"));
+                }
+                return Ok(());
+            }
+            apply_refinements(
+                field,
+                value,
+                enabled,
+                policy,
+                "scalar",
+                Some(fam),
+                Some(count),
+                "after",
+                ctx,
+            )?;
+            return Ok(());
+        }
+        if has_length {
+            // The dynamic unicode loop fails for positive lengths above; for
+            // zero-length carriers, continue through normal allowed-value
+            // evaluation rather than silently accepting them.
+        }
+    }
     if !truth_at(fam, "refinements") {
         if enabled {
             return Err(fail("refinements"));
@@ -1032,7 +1259,42 @@ pub(crate) fn literal_errors_admitted(
     policy: &PreparedPolicy,
     ctx: &mut Context<'_>,
 ) -> Result<Vec<Diagnostic>, EngineError> {
-    match evaluate(document, field, value, enabled, policy.value(), 0, ctx) {
+    match evaluate(
+        document,
+        field,
+        value,
+        enabled,
+        policy.value(),
+        0,
+        false,
+        ctx,
+    ) {
+        Ok(()) => Ok(Vec::new()),
+        Err(error) => match error.engine_error {
+            Some(engine_error) => Err(engine_error),
+            None => Ok(vec![policy_error(&error, policy.value(), ctx)?]),
+        },
+    }
+}
+
+pub(crate) fn literal_field_value_errors_admitted(
+    document: &Value,
+    field: &Value,
+    value: &Value,
+    enabled: bool,
+    policy: &PreparedPolicy,
+    ctx: &mut Context<'_>,
+) -> Result<Vec<Diagnostic>, EngineError> {
+    match evaluate(
+        document,
+        field,
+        value,
+        enabled,
+        policy.value(),
+        0,
+        true,
+        ctx,
+    ) {
         Ok(()) => Ok(Vec::new()),
         Err(error) => match error.engine_error {
             Some(engine_error) => Err(engine_error),
@@ -1179,7 +1441,7 @@ pub(crate) fn numeric_interval_admitted(
                 diagnostics.push(policy_error(&error, p, ctx)?);
                 return Ok(diagnostics);
             }
-            if let Err(error) = evaluate(&doc, &base, bound, true, p, 0, ctx) {
+            if let Err(error) = evaluate(&doc, &base, bound, true, p, 0, false, ctx) {
                 if let Some(engine_error) = error.engine_error {
                     return Err(engine_error);
                 }

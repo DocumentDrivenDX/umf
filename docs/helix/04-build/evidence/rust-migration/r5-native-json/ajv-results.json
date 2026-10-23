@@ -1,0 +1,14 @@
+{
+  "runtime": "Bun 1.4.3",
+  "validator": "Ajv 8.20.0 Ajv2020 strict=false",
+  "schema": "spec/core/native-json.schema.json",
+  "schema_id": "urn:umf:native-json:0.1.0",
+  "rust_tagged_output_sha256": "9ad32fb8a224d37d19fdf952ffdb2ab209c47b9d57c9505a4211ed17c15d0b63",
+  "validations": {
+    "actual_rust_output": true,
+    "unknown_kind_mutation": false,
+    "malformed_number_token_01": false,
+    "missing_array_items": false,
+    "boolean_value_changed_to_string": false
+  }
+}

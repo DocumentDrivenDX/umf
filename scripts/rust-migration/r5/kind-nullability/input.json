@@ -1,0 +1,46 @@
+{
+  "umf": "0.10.0",
+  "id": "r5-kind-nullability",
+  "vocabularies": {
+    "future": {
+      "version": "1.0.0"
+    }
+  },
+  "modules": [
+    {
+      "id": "m",
+      "namespace": "",
+      "elements": [
+        {
+          "id": "known",
+          "kind": "field",
+          "nullability": "required",
+          "extensions": {
+            "future": {
+              "opaque": [
+                1,
+                {
+                  "retain": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "missing",
+          "kind": "field",
+          "extensions": {}
+        },
+        {
+          "id": "kindless",
+          "extensions": {}
+        },
+        {
+          "id": "record",
+          "kind": "record",
+          "extensions": {}
+        }
+      ]
+    }
+  ]
+}

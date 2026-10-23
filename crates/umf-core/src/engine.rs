@@ -170,7 +170,211 @@ fn is_model_admission_error(code: &str) -> bool {
         "NUMBER" | "PYTHON_SCHEMA_SOURCE_UNREPRESENTABLE" | "VALUE_INVALID"
     )
 }
+fn numeric_context_refusal_with_code(code: &str, message: &str) -> Validation {
+    Validation {
+        valid: false,
+        complete: false,
+        diagnostics: vec![Diagnostic {
+            code: Utf16::from(code),
+            path: Utf16::default(),
+            python_source_path: false,
+            message: Utf16::from(message),
+            severity: Severity::Error,
+            python_text_origin: None,
+        }],
+    }
+}
+fn field_value_refusal(code: &str, message: &str, path: &str) -> Validation {
+    field_value_refusal_utf16(code, Utf16::from(message), Utf16::from(path))
+}
+fn field_value_refusal_utf16(code: &str, message: Utf16, path: Utf16) -> Validation {
+    Validation {
+        valid: false,
+        complete: false,
+        diagnostics: vec![Diagnostic {
+            code: Utf16::from(code),
+            path,
+            python_source_path: false,
+            message,
+            severity: Severity::Error,
+            python_text_origin: None,
+        }],
+    }
+}
+fn field_value_error(error: EngineError) -> Result<Validation, EngineError> {
+    if error.is_control_failure() || !is_model_admission_error(&error.code) {
+        return Err(error);
+    }
+    Ok(Validation {
+        valid: false,
+        complete: false,
+        diagnostics: vec![Diagnostic {
+            code: Utf16::from(error.code),
+            path: error.path,
+            python_source_path: false,
+            message: error.message,
+            severity: Severity::Error,
+            python_text_origin: None,
+        }],
+    })
+}
+struct FieldValueNoCapabilities;
+impl Capabilities for FieldValueNoCapabilities {
+    fn validate_extension(
+        &mut self,
+        _: u64,
+        _: &Value,
+        _: &SemanticContext,
+    ) -> Result<Vec<Diagnostic>, Utf16> {
+        Ok(Vec::new())
+    }
+}
 impl Engine {
+    /// Evaluate the public CONTRACT-049 field-value operation. The caller does
+    /// not provide a registry: like the TypeScript API, this operation uses an
+    /// empty default registry while still validating the complete source.
+    /// Identity members remain UTF-16 values until exact lookup is complete.
+    pub fn validate_core_field_value_public(
+        &self,
+        source: &Value,
+        identity: &Value,
+        value: &Value,
+        ctx: &mut Context<'_>,
+    ) -> Result<Validation, EngineError> {
+        let identity = match copy_json(identity, ctx) {
+            Ok(value) => value,
+            Err(error) => return field_value_error(error),
+        };
+        let value = match copy_json(value, ctx) {
+            Ok(value) => value,
+            Err(error) => return field_value_error(error),
+        };
+        let identity_fields = match &identity {
+            Value::Object(fields) => fields,
+            _ => {
+                return Ok(field_value_refusal(
+                    "CORE_SCHEMA_PROPERTIES",
+                    "Expected object",
+                    "/identity",
+                ))
+            }
+        };
+        for (name, _) in identity_fields {
+            if name != &k("module") && name != &k("element") {
+                let mut path = "/identity/".encode_utf16().collect::<Vec<_>>();
+                path.extend(name.units());
+                let mut message = "Unknown relevant qualifier: "
+                    .encode_utf16()
+                    .collect::<Vec<_>>();
+                message.extend(name.units());
+                return Ok(field_value_refusal_utf16(
+                    "CORE_SCHEMA_PROPERTY_UNKNOWN",
+                    Utf16::new(message),
+                    Utf16::new(path),
+                ));
+            }
+        }
+        let source = match copy_json(source, ctx) {
+            Ok(value) => value,
+            Err(error) => return field_value_error(error),
+        };
+        let mut capabilities = FieldValueNoCapabilities;
+        let document_validation =
+            self.validate_document(&source, &Registry::default(), &mut capabilities, ctx)?;
+        if get(&source, "umf") != Some(&Value::string_utf8("0.10.0")) || !document_validation.valid
+        {
+            return Ok(field_value_refusal(
+                "CORE_SCHEMA_PROPERTIES",
+                "Expected valid current 0.10.0 envelope",
+                "",
+            ));
+        }
+        if identity_fields.len() != 2 {
+            return Ok(field_value_refusal(
+                "CORE_SCHEMA_PROPERTIES",
+                "Explicit identity required",
+                "",
+            ));
+        }
+        let module_id = get(&identity, "module").and_then(|v| match v {
+            Value::String(s) if !s.is_empty() => Some(s),
+            _ => None,
+        });
+        let Some(module_id) = module_id else {
+            return Ok(field_value_refusal(
+                "CORE_SCHEMA_PROPERTIES",
+                "Nonempty module ID required",
+                "",
+            ));
+        };
+        let module = match get(&source, "modules") {
+            Some(Value::Array(items)) => items
+                .iter()
+                .find(|item| get(item, "id") == Some(&Value::String(module_id.clone()))),
+            _ => None,
+        };
+        let Some(module) = module else {
+            return Ok(field_value_refusal(
+                "CORE_SCHEMA_PROPERTIES",
+                "Module not found",
+                "",
+            ));
+        };
+        let element_id = get(&identity, "element").and_then(|v| match v {
+            Value::String(s) if !s.is_empty() => Some(s),
+            _ => None,
+        });
+        let Some(element_id) = element_id else {
+            return Ok(field_value_refusal(
+                "CORE_SCHEMA_PROPERTIES",
+                "Nonempty element ID required",
+                "",
+            ));
+        };
+        let field = match get(module, "elements") {
+            Some(Value::Array(items)) => items
+                .iter()
+                .find(|item| get(item, "id") == Some(&Value::String(element_id.clone()))),
+            _ => None,
+        };
+        let Some(field) = field else {
+            return Ok(field_value_refusal(
+                "CORE_SCHEMA_PROPERTIES",
+                "Element not found",
+                "",
+            ));
+        };
+        if get(field, "kind") != Some(&Value::string_utf8("field")) {
+            return Ok(field_value_refusal(
+                "CORE_SCHEMA_PROPERTIES",
+                "Value properties apply only to Fields",
+                "",
+            ));
+        }
+        let mut diagnostics = crate::literal::literal_field_value_errors_admitted(
+            &source,
+            field,
+            &value,
+            true,
+            &self.policy,
+            ctx,
+        )?;
+        for diagnostic in &mut diagnostics {
+            if diagnostic.code == Utf16::from("CORE_SCHEMA_PROPERTY_UNKNOWN") {
+                diagnostic.severity = Severity::Error;
+            }
+        }
+        let valid = !diagnostics
+            .iter()
+            .any(|item| item.severity == Severity::Error);
+        let complete = diagnostics.is_empty();
+        Ok(Validation {
+            valid,
+            complete,
+            diagnostics,
+        })
+    }
+
     pub fn new(resources: ResourceSet, ctx: &mut Context<'_>) -> Result<Self, EngineError> {
         if ctx.profile() == crate::context::ResourceProfile::HardIsolated {
             return Err(EngineError::new(
@@ -246,6 +450,82 @@ impl Engine {
             }
         };
         self.validate_admitted_document(document, None, registry, capabilities, ctx)
+    }
+
+    /// Validate one value against an explicitly selected Field in the current
+    /// core 0.10.0 document. This is the Rust counterpart used by the opt-in
+    /// CONTRACT-049 JavaScript numeric context; it does not infer identity or
+    /// treat an unqualified context as declared-domain validation.
+    pub fn validate_core_field_value(
+        &self,
+        source: &Value,
+        module_id: &str,
+        element_id: &str,
+        value: &Value,
+        registry: &Registry,
+        capabilities: &mut dyn Capabilities,
+        ctx: &mut Context<'_>,
+    ) -> Result<Validation, EngineError> {
+        let document = copy_json(source, ctx)?;
+        if get(&document, "umf") != Some(&Value::string_utf8("0.10.0")) {
+            return Ok(numeric_context_refusal_with_code(
+                "CORE_SCHEMA_PROPERTIES",
+                "Expected valid current 0.10.0 envelope",
+            ));
+        }
+        let document_validation = self.validate_document(&document, registry, capabilities, ctx)?;
+        if !document_validation.valid {
+            return Ok(numeric_context_refusal_with_code(
+                "CORE_SCHEMA_PROPERTIES",
+                "Expected valid current 0.10.0 envelope",
+            ));
+        }
+        let module = match get(&document, "modules") {
+            Some(Value::Array(modules)) => modules
+                .iter()
+                .find(|module| get(module, "id") == Some(&Value::String(Utf16::from(module_id)))),
+            _ => None,
+        };
+        let Some(module) = module else {
+            return Ok(numeric_context_refusal_with_code(
+                "CORE_SCHEMA_PROPERTIES",
+                "Module not found",
+            ));
+        };
+        let field = match get(module, "elements") {
+            Some(Value::Array(elements)) => elements.iter().find(|element| {
+                get(element, "id") == Some(&Value::String(Utf16::from(element_id)))
+            }),
+            _ => None,
+        };
+        let Some(field) = field else {
+            return Ok(numeric_context_refusal_with_code(
+                "CORE_SCHEMA_PROPERTIES",
+                "Element not found",
+            ));
+        };
+        if get(field, "kind") != Some(&Value::string_utf8("field")) {
+            return Ok(numeric_context_refusal_with_code(
+                "CORE_SCHEMA_PROPERTIES",
+                "Literal target must be a Field",
+            ));
+        }
+        let mut diagnostics =
+            crate::literal::literal_errors(&document, field, value, true, &self.policy, ctx)?;
+        for diagnostic in &mut diagnostics {
+            if diagnostic.code == Utf16::from("CORE_SCHEMA_PROPERTY_UNKNOWN") {
+                diagnostic.severity = Severity::Error;
+            }
+        }
+        let valid = !diagnostics
+            .iter()
+            .any(|item| item.severity == Severity::Error);
+        let complete = diagnostics.is_empty();
+        Ok(Validation {
+            valid,
+            complete,
+            diagnostics,
+        })
     }
 
     /// Validate a Python-compatible source tree. Core semantics operate on a

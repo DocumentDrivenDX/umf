@@ -33,9 +33,10 @@ jobs:
               p = Path('spec/extensions') / extension / 'schema.json'
               sources['umf/' + str(p)] = p
           with zipfile.ZipFile(wheels[0]) as wheel:
-              native = {'umf/_rust_core.abi3.so'}
+              native = {'umf/_rust_core.abi3.so', 'umf/_bin/umf'}
               assert {n for n in wheel.namelist() if n.startswith('umf/')} == set(sources) | native
               assert wheel.read('umf/_rust_core.abi3.so'), 'Native Rust engine is missing'
+              assert wheel.read('umf/_bin/umf'), 'Native Rust CLI is missing'
               assert 'Tag: cp311-abi3-' in wheel.read(next(n for n in wheel.namelist() if n.endswith('.dist-info/WHEEL'))).decode()
               for name, source in sources.items():
                   assert wheel.read(name) == source.read_bytes(), name
@@ -46,6 +47,7 @@ jobs:
           python -m venv /tmp/umf-core-release
           /tmp/umf-core-release/bin/python -m pip install pytest python/dist/*.whl
           /tmp/umf-core-release/bin/python -I -c 'import importlib.metadata, pathlib, sysconfig, tomllib, umf; assert pathlib.Path(umf.__file__).is_relative_to(sysconfig.get_path("platlib")); assert importlib.metadata.version("umf-core") == tomllib.loads(pathlib.Path("python/pyproject.toml").read_text())["project"]["version"]; assert umf.__version__ == importlib.metadata.version("umf-core"); print(umf.__file__)'
+          /tmp/umf-core-release/bin/python -I -c 'from importlib.resources import files; import json, subprocess; binary=files("umf").joinpath("_bin/umf"); data=json.loads(subprocess.check_output([str(binary), "codegen", "--capabilities"], env={"PATH": ""})); assert data["protocol"] == "umf.codegen-cli/1"; assert data["resourceManifestSha256"]'
           /tmp/umf-core-release/bin/python -I -m pytest python/tests -q
       - uses: actions/upload-artifact@v4
         with:

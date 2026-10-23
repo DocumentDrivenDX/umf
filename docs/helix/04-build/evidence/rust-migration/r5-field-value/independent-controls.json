@@ -1,0 +1,11 @@
+{
+  "oracle": "Python 3 stdlib Fraction and Unicode code-point/bytes behavior",
+  "checks": {
+    "integer-accepted": true,
+    "integer-refused": false,
+    "decimal-exact": true,
+    "unicode-scalar-length": true,
+    "binary-case-insensitive": true
+  },
+  "allPassed": true
+}

@@ -15,12 +15,11 @@ SPEC.loader.exec_module(MODULE)
 
 
 class BoundaryRuleTests(unittest.TestCase):
-    def test_current_v8_is_only_allowed_at_exact_pre_r4_sources(self):
-        debt = {}
-        for path, record in MODULE.V8_DEBT.items():
-            debt[path] = record
-        self.assertEqual([], MODULE.scan_text("python/umf_codegen/src/umf_codegen/_embedded.py", "from py_mini_racer import MiniRacer", allowed_debt=debt))
-        self.assertTrue(MODULE.scan_text("python/umf_access/src/umf_access/values.py", "import py_mini_racer", allowed_debt=debt))
+    def test_v8_is_rejected_even_at_the_former_bridge_path(self):
+        self.assertEqual({}, MODULE.V8_DEBT)
+        for path in ["python/umf_codegen/src/umf_codegen/_embedded.py", "python/umf_access/src/umf_access/values.py"]:
+            findings = MODULE.scan_text(path, "from py_mini_racer import MiniRacer")
+            self.assertEqual("forbidden-python-javascript-engine", findings[0]["rule"])
 
     def test_production_core_cannot_restore_retired_runtime_or_reference_fallback(self):
         for source in ["from jsonschema import Draft7Validator", "from ruamel.yaml import YAML"]:
@@ -33,6 +32,9 @@ class BoundaryRuleTests(unittest.TestCase):
     def test_cross_package_private_import_is_rejected(self):
         findings = MODULE.scan_text("python/src/umf/example.py", "from umf_access._internal import private_api")
         self.assertEqual("cross-package-private-import", findings[0]["rule"])
+        native_path = "python/umf_codegen/src/umf_codegen/_native.py"
+        self.assertEqual([], MODULE.scan_text(native_path, "from umf._rust import _rust_core"))
+        self.assertEqual("cross-package-private-import", MODULE.scan_text(native_path, "from umf._rust import other_private")[0]["rule"])
 
     def test_browser_library_rejects_node_engine_import(self):
         findings = MODULE.scan_text("src/model/example.ts", "import {runInNewContext} from 'node:vm';")

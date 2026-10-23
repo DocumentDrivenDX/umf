@@ -1,0 +1,155 @@
+{
+  "source": {
+    "umf": "0.10.0",
+    "id": "r5-selection",
+    "vocabularies": {
+      "future": {
+        "version": "1.0.0"
+      }
+    },
+    "extensions": {
+      "future": {
+        "opaque": {
+          "module": "outside",
+          "element": "ignored"
+        }
+      }
+    },
+    "modules": [
+      {
+        "id": "sales",
+        "namespace": "sales",
+        "elements": [
+          {
+            "id": "customer",
+            "name": "Customer",
+            "scalarType": "integer",
+            "extensions": {
+              "future": {
+                "opaque": [
+                  1,
+                  {
+                    "retain": true
+                  }
+                ]
+              }
+            },
+            "references": [
+              {
+                "role": "account",
+                "module": "billing",
+                "element": "account",
+                "future": "annotation"
+              },
+              {
+                "role": "account",
+                "module": "billing",
+                "element": "account"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "support",
+        "namespace": "support",
+        "elements": [
+          {
+            "id": "customer",
+            "name": "Customer",
+            "scalarType": "future-scalar",
+            "extensions": {}
+          }
+        ]
+      },
+      {
+        "id": "billing",
+        "namespace": "billing",
+        "elements": [
+          {
+            "id": "account",
+            "name": "AccountHolder",
+            "scalarType": "string",
+            "extensions": {},
+            "references": [
+              {
+                "role": "owner",
+                "module": "sales",
+                "element": "customer"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "queries": {
+    "all": {
+      "references": "none"
+    },
+    "categoryAnd": {
+      "references": "none",
+      "modules": [
+        "sales",
+        "support"
+      ],
+      "namespaces": [
+        "sales",
+        "support"
+      ],
+      "names": [
+        "Customer"
+      ],
+      "scalarTypes": [
+        "integer",
+        "future-scalar"
+      ]
+    },
+    "emptyCategory": {
+      "references": "none",
+      "names": []
+    },
+    "unknownScalar": {
+      "references": "none",
+      "scalarTypes": [
+        "future-scalar"
+      ]
+    },
+    "repeatedEdges": {
+      "references": "none",
+      "names": [
+        "Customer"
+      ]
+    },
+    "cyclicTraversal": {
+      "references": "transitive",
+      "identities": [
+        {
+          "module": "sales",
+          "element": "customer"
+        }
+      ]
+    },
+    "emptyTraversal": {
+      "references": "transitive",
+      "identities": []
+    }
+  },
+  "surrogateSource": {
+    "umf": "0.10.0",
+    "id": "surrogate",
+    "vocabularies": {},
+    "modules": [
+      {
+        "id": "\ud800",
+        "namespace": "",
+        "elements": [
+          {
+            "id": "\ud800",
+            "extensions": {}
+          }
+        ]
+      }
+    ]
+  }
+}

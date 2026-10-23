@@ -115,9 +115,11 @@ def check(root: Path) -> int:
                           and target == 'psycopg2.extensions' and member == 'cursor')
         table_read_compiler = (name == 'umf_access.unified.table_reads' and target == 'weft'
                                and member == 'prepare_table_operation_module_json')
+        public_core_values = (name == 'umf_access.values' and target == 'umf'
+                              and member in {'rust_temporal', 'rust_values'})
         seed_compiler = (name == 'umf_access.lifecycle.seeds' and target == 'weft' and member == 'compile_table_seed_json'
                          or name == 'umf_access.lifecycle.backfills' and target == 'weft' and member == 'prepare_table_operation_module_json')
-        if package not in permitted and not spark_error and not typing_backport and not psycopg2_cursor and not table_read_compiler and not seed_compiler:
+        if package not in permitted and not spark_error and not typing_backport and not psycopg2_cursor and not table_read_compiler and not seed_compiler and not public_core_values:
             fail(path, "DEPENDENCY", f"{target} outside approved imports for {source_owner}")
         if package in {"importlib", "runpy"} and not (source_owner == "build" and target in {"importlib", "importlib.metadata"}):
             fail(path, "DYNAMIC", "dynamic loading module")

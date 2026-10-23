@@ -1,0 +1,531 @@
+[
+  {
+    "id": "integer-accepted",
+    "result": {
+      "valid": true,
+      "complete": true,
+      "diagnostics": []
+    }
+  },
+  {
+    "id": "integer-refused",
+    "result": {
+      "valid": false,
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "CORE_SCHEMA_PROPERTIES",
+          "path": "",
+          "message": "Literal is not an allowed value",
+          "severity": "error"
+        }
+      ]
+    }
+  },
+  {
+    "id": "decimal-exact",
+    "result": {
+      "valid": true,
+      "complete": true,
+      "diagnostics": []
+    }
+  },
+  {
+    "id": "unicode-scalar-length",
+    "result": {
+      "valid": true,
+      "complete": true,
+      "diagnostics": []
+    }
+  },
+  {
+    "id": "binary-case-insensitive",
+    "result": {
+      "valid": true,
+      "complete": true,
+      "diagnostics": []
+    }
+  },
+  {
+    "id": "unknown-identity-member",
+    "result": {
+      "valid": false,
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "CORE_SCHEMA_PROPERTY_UNKNOWN",
+          "path": "/identity/future",
+          "message": "Unknown relevant qualifier: future",
+          "severity": "error"
+        }
+      ]
+    }
+  },
+  {
+    "id": "lone-surrogate-identity-key",
+    "result": {
+      "valid": false,
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "CORE_SCHEMA_PROPERTY_UNKNOWN",
+          "path": "/identity/\ud800",
+          "message": "Unknown relevant qualifier: \ud800",
+          "severity": "error"
+        }
+      ]
+    }
+  },
+  {
+    "id": "missing-field",
+    "result": {
+      "valid": false,
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "CORE_SCHEMA_PROPERTIES",
+          "path": "",
+          "message": "Element not found",
+          "severity": "error"
+        }
+      ]
+    }
+  },
+  {
+    "id": "missing-identity",
+    "result": {
+      "valid": false,
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "CORE_SCHEMA_PROPERTIES",
+          "path": "",
+          "message": "Explicit identity required",
+          "severity": "error"
+        }
+      ]
+    }
+  },
+  {
+    "id": "missing-element-member",
+    "result": {
+      "valid": false,
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "CORE_SCHEMA_PROPERTIES",
+          "path": "",
+          "message": "Explicit identity required",
+          "severity": "error"
+        }
+      ]
+    }
+  },
+  {
+    "id": "empty-module-id",
+    "result": {
+      "valid": false,
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "CORE_SCHEMA_PROPERTIES",
+          "path": "",
+          "message": "Nonempty module ID required",
+          "severity": "error"
+        }
+      ]
+    }
+  },
+  {
+    "id": "empty-element-id",
+    "result": {
+      "valid": false,
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "CORE_SCHEMA_PROPERTIES",
+          "path": "",
+          "message": "Nonempty element ID required",
+          "severity": "error"
+        }
+      ]
+    }
+  },
+  {
+    "id": "unknown-key-a/b",
+    "result": {
+      "valid": false,
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "CORE_SCHEMA_PROPERTY_UNKNOWN",
+          "path": "/identity/a/b",
+          "message": "Unknown relevant qualifier: a/b",
+          "severity": "error"
+        }
+      ]
+    }
+  },
+  {
+    "id": "unknown-key-a~b",
+    "result": {
+      "valid": false,
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "CORE_SCHEMA_PROPERTY_UNKNOWN",
+          "path": "/identity/a~b",
+          "message": "Unknown relevant qualifier: a~b",
+          "severity": "error"
+        }
+      ]
+    }
+  },
+  {
+    "id": "unknown-key-\ud800",
+    "result": {
+      "valid": false,
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "CORE_SCHEMA_PROPERTY_UNKNOWN",
+          "path": "/identity/\ud800",
+          "message": "Unknown relevant qualifier: \ud800",
+          "severity": "error"
+        }
+      ]
+    }
+  },
+  {
+    "id": "string-number",
+    "result": {
+      "valid": true,
+      "complete": true,
+      "diagnostics": []
+    }
+  },
+  {
+    "id": "string-boolean",
+    "result": {
+      "valid": true,
+      "complete": true,
+      "diagnostics": []
+    }
+  },
+  {
+    "id": "string-array",
+    "result": {
+      "valid": true,
+      "complete": true,
+      "diagnostics": []
+    }
+  },
+  {
+    "id": "string-object",
+    "result": {
+      "valid": true,
+      "complete": true,
+      "diagnostics": []
+    }
+  },
+  {
+    "id": "string-null",
+    "thrown": {
+      "name": "TypeError",
+      "message": "null is not an object (evaluating 'value.length')"
+    }
+  },
+  {
+    "id": "invalid-source-before-missing-identity",
+    "result": {
+      "valid": false,
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "CORE_SCHEMA_PROPERTIES",
+          "path": "",
+          "message": "Expected valid current 0.10.0 envelope",
+          "severity": "error"
+        }
+      ]
+    }
+  },
+  {
+    "id": "unknown-facet-future/x~y",
+    "result": {
+      "valid": false,
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "CORE_SCHEMA_PROPERTY_UNKNOWN",
+          "path": "/facets/future/x~y",
+          "message": "Unknown relevant qualifier: future/x~y",
+          "severity": "error"
+        }
+      ]
+    }
+  },
+  {
+    "id": "unknown-itemType-future/x~y",
+    "result": {
+      "valid": false,
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "CORE_SCHEMA_PROPERTY_UNKNOWN",
+          "path": "/itemType/future/x~y",
+          "message": "Unknown relevant qualifier: future/x~y",
+          "severity": "error"
+        }
+      ]
+    }
+  },
+  {
+    "id": "unknown-facet-future/tilde~",
+    "result": {
+      "valid": false,
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "CORE_SCHEMA_PROPERTY_UNKNOWN",
+          "path": "/facets/future/tilde~",
+          "message": "Unknown relevant qualifier: future/tilde~",
+          "severity": "error"
+        }
+      ]
+    }
+  },
+  {
+    "id": "unknown-itemType-future/tilde~",
+    "result": {
+      "valid": false,
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "CORE_SCHEMA_PROPERTY_UNKNOWN",
+          "path": "/itemType/future/tilde~",
+          "message": "Unknown relevant qualifier: future/tilde~",
+          "severity": "error"
+        }
+      ]
+    }
+  },
+  {
+    "id": "unknown-facet-future/\ud800",
+    "result": {
+      "valid": false,
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "CORE_SCHEMA_PROPERTY_UNKNOWN",
+          "path": "/facets/future/\ud800",
+          "message": "Unknown relevant qualifier: future/\ud800",
+          "severity": "error"
+        }
+      ]
+    }
+  },
+  {
+    "id": "unknown-itemType-future/\ud800",
+    "result": {
+      "valid": false,
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "CORE_SCHEMA_PROPERTY_UNKNOWN",
+          "path": "/itemType/future/\ud800",
+          "message": "Unknown relevant qualifier: future/\ud800",
+          "severity": "error"
+        }
+      ]
+    }
+  },
+  {
+    "id": "string-number-with-unknown-facet",
+    "result": {
+      "valid": false,
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "CORE_SCHEMA_PROPERTY_UNKNOWN",
+          "path": "/facets/future",
+          "message": "Unknown relevant qualifier: future",
+          "severity": "error"
+        }
+      ]
+    }
+  },
+  {
+    "id": "string-null-with-unknown-facet",
+    "result": {
+      "valid": false,
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "CORE_SCHEMA_PROPERTY_UNKNOWN",
+          "path": "/facets/future",
+          "message": "Unknown relevant qualifier: future",
+          "severity": "error"
+        }
+      ]
+    }
+  },
+  {
+    "id": "string-carrier-empty-array",
+    "result": {
+      "valid": true,
+      "complete": true,
+      "diagnostics": []
+    }
+  },
+  {
+    "id": "string-carrier-empty-object",
+    "result": {
+      "valid": true,
+      "complete": true,
+      "diagnostics": []
+    }
+  },
+  {
+    "id": "string-carrier-length-zero",
+    "result": {
+      "valid": true,
+      "complete": true,
+      "diagnostics": []
+    }
+  },
+  {
+    "id": "string-carrier-length-negative",
+    "result": {
+      "valid": true,
+      "complete": true,
+      "diagnostics": []
+    }
+  },
+  {
+    "id": "string-carrier-length-empty-string",
+    "result": {
+      "valid": true,
+      "complete": true,
+      "diagnostics": []
+    }
+  },
+  {
+    "id": "string-carrier-length-false",
+    "result": {
+      "valid": true,
+      "complete": true,
+      "diagnostics": []
+    }
+  },
+  {
+    "id": "string-carrier-length-null",
+    "result": {
+      "valid": true,
+      "complete": true,
+      "diagnostics": []
+    }
+  },
+  {
+    "id": "string-carrier-length-empty-array",
+    "result": {
+      "valid": true,
+      "complete": true,
+      "diagnostics": []
+    }
+  },
+  {
+    "id": "string-carrier-length-positive-array",
+    "thrown": {
+      "name": "TypeError",
+      "message": "value.charCodeAt is not a function. (In 'value.charCodeAt(i)', 'value.charCodeAt' is undefined)"
+    }
+  },
+  {
+    "id": "string-carrier-length-fraction",
+    "thrown": {
+      "name": "TypeError",
+      "message": "value.charCodeAt is not a function. (In 'value.charCodeAt(i)', 'value.charCodeAt' is undefined)"
+    }
+  },
+  {
+    "id": "string-carrier-length-string-one",
+    "thrown": {
+      "name": "TypeError",
+      "message": "value.charCodeAt is not a function. (In 'value.charCodeAt(i)', 'value.charCodeAt' is undefined)"
+    }
+  },
+  {
+    "id": "string-carrier-length-true",
+    "thrown": {
+      "name": "TypeError",
+      "message": "value.charCodeAt is not a function. (In 'value.charCodeAt(i)', 'value.charCodeAt' is undefined)"
+    }
+  },
+  {
+    "id": "string-carrier-length-array-one",
+    "thrown": {
+      "name": "TypeError",
+      "message": "value.charCodeAt is not a function. (In 'value.charCodeAt(i)', 'value.charCodeAt' is undefined)"
+    }
+  },
+  {
+    "id": "string-carrier-length-object",
+    "thrown": {
+      "name": "TypeError",
+      "message": "No default value"
+    }
+  },
+  {
+    "id": "string-carrier-hex-string",
+    "thrown": {
+      "name": "TypeError",
+      "message": "value.charCodeAt is not a function. (In 'value.charCodeAt(i)', 'value.charCodeAt' is undefined)"
+    }
+  },
+  {
+    "id": "string-carrier-binary-string",
+    "thrown": {
+      "name": "TypeError",
+      "message": "value.charCodeAt is not a function. (In 'value.charCodeAt(i)', 'value.charCodeAt' is undefined)"
+    }
+  },
+  {
+    "id": "string-carrier-octal-string",
+    "thrown": {
+      "name": "TypeError",
+      "message": "value.charCodeAt is not a function. (In 'value.charCodeAt(i)', 'value.charCodeAt' is undefined)"
+    }
+  },
+  {
+    "id": "string-carrier-inf-string",
+    "result": {
+      "valid": true,
+      "complete": true,
+      "diagnostics": []
+    }
+  },
+  {
+    "id": "string-carrier-ecma-non-whitespace",
+    "result": {
+      "valid": true,
+      "complete": true,
+      "diagnostics": []
+    }
+  },
+  {
+    "id": "string-carrier-lone-surrogate-array",
+    "result": {
+      "valid": true,
+      "complete": true,
+      "diagnostics": []
+    }
+  },
+  {
+    "id": "string-carrier-subnormal-number-array",
+    "thrown": {
+      "name": "TypeError",
+      "message": "value.charCodeAt is not a function. (In 'value.charCodeAt(i)', 'value.charCodeAt' is undefined)"
+    }
+  }
+]

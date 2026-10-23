@@ -124,6 +124,392 @@ pub fn read_json_value(
     crate::copy_json(&value, ctx)
 }
 
+/// Parse native JSON while retaining exact number tokens and arbitrary UTF-16
+/// code units. A syntax-only pass establishes predecessor JSON.parse precedence;
+/// a second pass rejects duplicate decoded keys; bounded tree admission runs
+/// only after both whole-source checks have completed.
+pub(crate) fn read_native_json_tree(
+    source: &[u16],
+    ctx: &mut Context<'_>,
+) -> Result<crate::native_json::NativeJsonTree, EngineError> {
+    if ctx.profile() == crate::ResourceProfile::HardIsolated {
+        return Err(EngineError::new(
+            "RESOURCE_PROFILE_UNAVAILABLE",
+            Utf16::default(),
+            "HardIsolated resource profile is unavailable",
+        ));
+    }
+    if source.len() > ctx.limits().max_text_units {
+        return Err(fail("LIMIT", "Native JSON exceeds text limit"));
+    }
+    ctx.charge_text(source.len(), Utf16::default())?;
+    // Precharge the complete syntax scan. The grammar walk below also charges
+    // token and structural work as it proceeds, allowing host controls to stop
+    // long scans before any caller-visible result is produced.
+    ctx.charge_work(source.len(), Utf16::default())?;
+    let duplicate = preflight_native_json(source, ctx).map_err(native_json_parse_error)?;
+    if duplicate {
+        return Err(EngineError::new(
+            "JSON_SCHEMA_SYNTAX",
+            Utf16::default(),
+            "Invalid native JSON",
+        ));
+    }
+    let raw = JsonParser::<_, NativeJsonBuilder>::native(source, ctx)
+        .parse()
+        .map_err(native_json_parse_error)?;
+    crate::native_json::finish_parsed_tree(raw, ctx)
+}
+
+#[derive(Clone, Copy)]
+enum NativeArrayState {
+    ValueOrEnd,
+    Value,
+    Separator,
+}
+
+#[derive(Clone, Copy)]
+enum NativeObjectState {
+    KeyOrEnd,
+    Key,
+    Colon,
+    Value,
+    Separator,
+}
+
+enum NativeFrame {
+    Array(NativeArrayState),
+    Object(NativeObjectState, std::collections::BTreeSet<Vec<u16>>),
+}
+
+#[derive(Clone, Copy)]
+enum NativeAction {
+    TopValue,
+    TopEnd,
+    ArrayValue(bool),
+    ArraySeparator,
+    ObjectKey(bool),
+    ObjectColon,
+    ObjectValue,
+    ObjectSeparator,
+}
+
+/// Validate the complete JSON source without using the Rust call stack. A
+/// duplicate is remembered while syntax scanning continues, preserving
+/// syntax-before-duplicate-before-structural-limit precedence.
+fn preflight_native_json(
+    source: &[u16],
+    ctx: &mut Context<'_>,
+) -> Result<bool, EngineError> {
+    let mut at = 0usize;
+    let mut stack = Vec::<NativeFrame>::new();
+    let mut root_done = false;
+    let mut duplicate = false;
+    loop {
+        while source
+            .get(at)
+            .is_some_and(|unit| matches!(*unit, 0x20 | 0x09 | 0x0a | 0x0d))
+        {
+            at += 1;
+            ctx.charge_work(1, Utf16::default())?;
+        }
+        let action = match stack.last() {
+            None if root_done => NativeAction::TopEnd,
+            None => NativeAction::TopValue,
+            Some(NativeFrame::Array(NativeArrayState::ValueOrEnd)) => {
+                NativeAction::ArrayValue(true)
+            }
+            Some(NativeFrame::Array(NativeArrayState::Value)) => {
+                NativeAction::ArrayValue(false)
+            }
+            Some(NativeFrame::Array(NativeArrayState::Separator)) => {
+                NativeAction::ArraySeparator
+            }
+            Some(NativeFrame::Object(NativeObjectState::KeyOrEnd, _)) => {
+                NativeAction::ObjectKey(true)
+            }
+            Some(NativeFrame::Object(NativeObjectState::Key, _)) => {
+                NativeAction::ObjectKey(false)
+            }
+            Some(NativeFrame::Object(NativeObjectState::Colon, _)) => NativeAction::ObjectColon,
+            Some(NativeFrame::Object(NativeObjectState::Value, _)) => NativeAction::ObjectValue,
+            Some(NativeFrame::Object(NativeObjectState::Separator, _)) => {
+                NativeAction::ObjectSeparator
+            }
+        };
+        match action {
+            NativeAction::TopEnd => {
+                if at != source.len() {
+                    return Err(fail("SYNTAX", "Trailing JSON source"));
+                }
+                return Ok(duplicate);
+            }
+            NativeAction::TopValue | NativeAction::ArrayValue(_) | NativeAction::ObjectValue => {
+                let allow_end = matches!(action, NativeAction::ArrayValue(true));
+                if allow_end && source.get(at) == Some(&(b']' as u16)) {
+                    at += 1;
+                    stack.pop();
+                    complete_native_value(&mut stack, &mut root_done);
+                    continue;
+                }
+                let Some(unit) = source.get(at).copied() else {
+                    return Err(fail("SYNTAX", "Expected JSON value"));
+                };
+                ctx.charge_work(1, Utf16::default())?;
+                match unit {
+                    0x7b => {
+                        at += 1;
+                        stack.push(NativeFrame::Object(
+                            NativeObjectState::KeyOrEnd,
+                            std::collections::BTreeSet::new(),
+                        ));
+                    }
+                    0x5b => {
+                        at += 1;
+                        stack.push(NativeFrame::Array(NativeArrayState::ValueOrEnd));
+                    }
+                    0x22 => {
+                        scan_native_string(source, &mut at, ctx, false)?;
+                        complete_native_value(&mut stack, &mut root_done);
+                    }
+                    0x6e => {
+                        scan_native_literal(source, &mut at, b"null", ctx)?;
+                        complete_native_value(&mut stack, &mut root_done);
+                    }
+                    0x74 => {
+                        scan_native_literal(source, &mut at, b"true", ctx)?;
+                        complete_native_value(&mut stack, &mut root_done);
+                    }
+                    0x66 => {
+                        scan_native_literal(source, &mut at, b"false", ctx)?;
+                        complete_native_value(&mut stack, &mut root_done);
+                    }
+                    0x2d | 0x30..=0x39 => {
+                        scan_native_number(source, &mut at, ctx)?;
+                        complete_native_value(&mut stack, &mut root_done);
+                    }
+                    _ => return Err(fail("SYNTAX", "Expected JSON value")),
+                }
+            }
+            NativeAction::ArraySeparator => match source.get(at).copied() {
+                Some(0x5d) => {
+                    at += 1;
+                    stack.pop();
+                    complete_native_value(&mut stack, &mut root_done);
+                }
+                Some(0x2c) => {
+                    at += 1;
+                    if let Some(NativeFrame::Array(state)) = stack.last_mut() {
+                        *state = NativeArrayState::Value;
+                    }
+                }
+                _ => return Err(fail("SYNTAX", "Expected comma or closing bracket")),
+            },
+            NativeAction::ObjectKey(allow_end) => {
+                if allow_end && source.get(at) == Some(&(b'}' as u16)) {
+                    at += 1;
+                    stack.pop();
+                    complete_native_value(&mut stack, &mut root_done);
+                    continue;
+                }
+                if source.get(at) != Some(&(b'"' as u16)) {
+                    return Err(fail("SYNTAX", "JSON object keys must be strings"));
+                }
+                let key = scan_native_string(source, &mut at, ctx, true)?
+                    .expect("decoded native key");
+                if let Some(NativeFrame::Object(state, seen)) = stack.last_mut() {
+                    let comparisons = btree_search_comparisons(seen.len());
+                    ctx.charge_work_u64(
+                        (key.len() as u64).saturating_mul(comparisons),
+                        Utf16::default(),
+                    )?;
+                    if !seen.insert(key) {
+                        duplicate = true;
+                    }
+                    *state = NativeObjectState::Colon;
+                }
+            }
+            NativeAction::ObjectColon => {
+                if source.get(at) != Some(&(b':' as u16)) {
+                    return Err(fail("SYNTAX", "Expected colon after JSON object key"));
+                }
+                at += 1;
+                if let Some(NativeFrame::Object(state, _)) = stack.last_mut() {
+                    *state = NativeObjectState::Value;
+                }
+            }
+            NativeAction::ObjectSeparator => match source.get(at).copied() {
+                Some(0x7d) => {
+                    at += 1;
+                    stack.pop();
+                    complete_native_value(&mut stack, &mut root_done);
+                }
+                Some(0x2c) => {
+                    at += 1;
+                    if let Some(NativeFrame::Object(state, _)) = stack.last_mut() {
+                        *state = NativeObjectState::Key;
+                    }
+                }
+                _ => return Err(fail("SYNTAX", "Expected comma or closing brace")),
+            },
+        }
+    }
+}
+
+fn complete_native_value(stack: &mut [NativeFrame], root_done: &mut bool) {
+    match stack.last_mut() {
+        Some(NativeFrame::Array(state)) => *state = NativeArrayState::Separator,
+        Some(NativeFrame::Object(state, _)) => *state = NativeObjectState::Separator,
+        None => *root_done = true,
+    }
+}
+
+fn scan_native_string(
+    source: &[u16],
+    at: &mut usize,
+    ctx: &mut Context<'_>,
+    decode: bool,
+) -> Result<Option<Vec<u16>>, EngineError> {
+    if source.get(*at) != Some(&(b'"' as u16)) {
+        return Err(fail("SYNTAX", "Expected JSON string"));
+    }
+    *at += 1;
+    let mut decoded = decode.then(Vec::new);
+    loop {
+        let Some(unit) = source.get(*at).copied() else {
+            return Err(fail("SYNTAX", "Unterminated JSON string"));
+        };
+        *at += 1;
+        ctx.charge_work(1, Utf16::default())?;
+        match unit {
+            0x22 => return Ok(decoded),
+            0x5c => {
+                let Some(escape) = source.get(*at).copied() else {
+                    return Err(fail("SYNTAX", "Incomplete JSON escape"));
+                };
+                *at += 1;
+                let value = match escape {
+                    0x22 | 0x5c | 0x2f => escape,
+                    0x62 => 8,
+                    0x66 => 12,
+                    0x6e => 10,
+                    0x72 => 13,
+                    0x74 => 9,
+                    0x75 => scan_native_hex_escape(source, at, ctx)?,
+                    _ => return Err(fail("SYNTAX", "Invalid JSON escape")),
+                };
+                if let Some(output) = decoded.as_mut() {
+                    output.push(value);
+                }
+            }
+            0x00..=0x1f => {
+                return Err(fail("SYNTAX", "Unescaped control character in JSON string"))
+            }
+            other => {
+                if let Some(output) = decoded.as_mut() {
+                    output.push(other);
+                }
+            }
+        }
+    }
+}
+
+fn scan_native_hex_escape(
+    source: &[u16],
+    at: &mut usize,
+    ctx: &mut Context<'_>,
+) -> Result<u16, EngineError> {
+    let mut value = 0u16;
+    for _ in 0..4 {
+        let Some(unit) = source.get(*at).copied() else {
+            return Err(fail("SYNTAX", "Incomplete Unicode escape"));
+        };
+        *at += 1;
+        ctx.charge_work(1, Utf16::default())?;
+        let digit = match unit {
+            0x30..=0x39 => unit - 0x30,
+            0x41..=0x46 => unit - 0x41 + 10,
+            0x61..=0x66 => unit - 0x61 + 10,
+            _ => return Err(fail("SYNTAX", "Invalid Unicode escape")),
+        };
+        value = value * 16 + digit;
+    }
+    Ok(value)
+}
+
+fn scan_native_literal(
+    source: &[u16],
+    at: &mut usize,
+    literal: &[u8],
+    ctx: &mut Context<'_>,
+) -> Result<(), EngineError> {
+    for expected in literal {
+        if source.get(*at).copied() != Some(u16::from(*expected)) {
+            return Err(fail("SYNTAX", "Malformed JSON literal"));
+        }
+        *at += 1;
+        ctx.charge_work(1, Utf16::default())?;
+    }
+    Ok(())
+}
+
+fn scan_native_number(
+    source: &[u16],
+    at: &mut usize,
+    ctx: &mut Context<'_>,
+) -> Result<(), EngineError> {
+    let start = *at;
+    if source.get(*at) == Some(&(b'-' as u16)) {
+        *at += 1;
+    }
+    match source.get(*at).copied() {
+        Some(0x30) => {
+            *at += 1;
+            if source.get(*at).is_some_and(|unit| (0x30..=0x39).contains(unit)) {
+                return Err(fail("SYNTAX", "Leading zero in JSON number"));
+            }
+        }
+        Some(0x31..=0x39) => {
+            while source.get(*at).is_some_and(|unit| (0x30..=0x39).contains(unit)) {
+                *at += 1;
+            }
+        }
+        _ => return Err(fail("SYNTAX", "Malformed JSON number")),
+    }
+    if source.get(*at) == Some(&(b'.' as u16)) {
+        *at += 1;
+        let fraction = *at;
+        while source.get(*at).is_some_and(|unit| (0x30..=0x39).contains(unit)) {
+            *at += 1;
+        }
+        if fraction == *at {
+            return Err(fail("SYNTAX", "Malformed JSON fraction"));
+        }
+    }
+    if source.get(*at).is_some_and(|unit| matches!(*unit, 0x65 | 0x45)) {
+        *at += 1;
+        if source.get(*at).is_some_and(|unit| matches!(*unit, 0x2b | 0x2d)) {
+            *at += 1;
+        }
+        let exponent = *at;
+        while source.get(*at).is_some_and(|unit| (0x30..=0x39).contains(unit)) {
+            *at += 1;
+        }
+        if exponent == *at {
+            return Err(fail("SYNTAX", "Malformed JSON exponent"));
+        }
+    }
+    ctx.charge_work(*at - start, Utf16::default())
+}
+
+fn native_json_parse_error(error: EngineError) -> EngineError {
+    if error.code == "SYNTAX" || error.code == "DUPLICATE_KEY" {
+        EngineError::new("JSON_SCHEMA_SYNTAX", error.path, "Invalid native JSON")
+    } else {
+        error
+    }
+}
+
 /// Read JSON or YAML into Python's source-preserving value profile. Unlike
 /// [`read_json_value`], this path retains Python code-point identity and the
 /// distinction between integers and floats. It shares this module's JSON/YAML
@@ -264,6 +650,8 @@ trait JsonBuilder {
 struct CoreJsonBuilder;
 #[derive(Default)]
 struct PythonJsonBuilder;
+#[derive(Default)]
+struct NativeJsonBuilder;
 impl JsonBuilder for CoreJsonBuilder {
     type Text = Utf16;
     type Value = Value;
@@ -398,12 +786,58 @@ impl JsonBuilder for PythonJsonBuilder {
         text.to_utf16(ctx)
     }
 }
+impl JsonBuilder for NativeJsonBuilder {
+    type Text = Utf16;
+    type Value = crate::native_json::NativeJsonNode;
+    fn null(&self) -> Self::Value {
+        crate::native_json::NativeJsonNode::Null
+    }
+    fn boolean(&self, value: bool) -> Self::Value {
+        crate::native_json::NativeJsonNode::Boolean(value)
+    }
+    fn string(&self, points: Vec<(u32, bool)>) -> Result<Utf16, EngineError> {
+        Ok(Utf16::new(
+            points
+                .into_iter()
+                .map(|(point, _)| {
+                    u16::try_from(point)
+                        .map_err(|_| fail("SOURCE_ENCODING", "Invalid UTF-16 source"))
+                })
+                .collect::<Result<_, _>>()?,
+        ))
+    }
+    fn string_value(&self, text: Utf16) -> Self::Value {
+        crate::native_json::NativeJsonNode::String(text)
+    }
+    fn number(
+        &self,
+        token: &str,
+        _: bool,
+        _: &Utf16,
+        ctx: &mut Context<'_>,
+    ) -> Result<Self::Value, EngineError> {
+        ctx.charge_work(token.len(), Utf16::default())?;
+        Ok(crate::native_json::NativeJsonNode::Number(token.to_owned()))
+    }
+    fn array(&self, items: Vec<Self::Value>) -> Self::Value {
+        crate::native_json::NativeJsonNode::Array(items)
+    }
+    fn object(&self, members: Vec<(Utf16, Self::Value)>) -> Self::Value {
+        crate::native_json::NativeJsonNode::Object(members)
+    }
+    fn path_text(&self, text: &Utf16, _: &mut Context<'_>) -> Result<Utf16, EngineError> {
+        Ok(text.clone())
+    }
+}
 struct JsonParser<'a, 'b, 'c, S: ?Sized, B> {
     units: &'a S,
     at: usize,
     ctx: &'b mut Context<'c>,
     values: usize,
     builder: B,
+    enforce_tree_limits: bool,
+    detect_duplicates: bool,
+    create_paths: bool,
 }
 impl<'a, 'b, 'c, S: JsonSource + ?Sized, B: JsonBuilder + Default> JsonParser<'a, 'b, 'c, S, B> {
     fn new(units: &'a S, ctx: &'b mut Context<'c>) -> Self {
@@ -413,6 +847,17 @@ impl<'a, 'b, 'c, S: JsonSource + ?Sized, B: JsonBuilder + Default> JsonParser<'a
             ctx,
             values: 0,
             builder: B::default(),
+            enforce_tree_limits: true,
+            detect_duplicates: true,
+            create_paths: true,
+        }
+    }
+    fn native(units: &'a S, ctx: &'b mut Context<'c>) -> Self {
+        Self {
+            enforce_tree_limits: true,
+            detect_duplicates: false,
+            create_paths: false,
+            ..Self::new(units, ctx)
         }
     }
     fn parse(&mut self) -> Result<B::Value, EngineError> {
@@ -442,19 +887,28 @@ impl<'a, 'b, 'c, S: JsonSource + ?Sized, B: JsonBuilder + Default> JsonParser<'a
         }
     }
     fn value(&mut self, depth: usize, path: &Utf16) -> Result<B::Value, EngineError> {
-        if depth > self.ctx.limits().max_depth {
+        if self.enforce_tree_limits && depth > self.ctx.limits().max_depth {
             return Err(EngineError::new(
                 "LIMIT",
                 path.clone(),
                 "Nesting depth exceeded",
             ));
         }
-        self.values = self
-            .values
-            .checked_add(1)
-            .ok_or_else(|| EngineError::new("LIMIT", path.clone(), "Value counter overflow"))?;
-        self.ctx.check_tree_value_count(self.values, path.clone())?;
-        self.ctx.charge_work(1, path.clone())?;
+        if self.enforce_tree_limits {
+            self.values = self
+                .values
+                .checked_add(1)
+                .ok_or_else(|| EngineError::new("LIMIT", path.clone(), "Value counter overflow"))?;
+            self.ctx.check_tree_value_count(self.values, path.clone())?;
+        }
+        self.ctx.charge_work(
+            1,
+            if self.create_paths {
+                path.clone()
+            } else {
+                Utf16::default()
+            },
+        )?;
         self.ws();
         match self.units.point(self.at) {
             Some(0x6e) => {
@@ -644,7 +1098,11 @@ impl<'a, 'b, 'c, S: JsonSource + ?Sized, B: JsonBuilder + Default> JsonParser<'a
             return Ok(self.builder.array(items));
         }
         loop {
-            let item_path = append_path(path, &Utf16::from(items.len().to_string()));
+            let item_path = if self.create_paths {
+                append_path(path, &Utf16::from(items.len().to_string()))
+            } else {
+                Utf16::default()
+            };
             items.push(self.value(depth + 1, &item_path)?);
             self.ws();
             if self.take(0x5d) {
@@ -679,11 +1137,17 @@ impl<'a, 'b, 'c, S: JsonSource + ?Sized, B: JsonBuilder + Default> JsonParser<'a
             }
             let key = self.string()?;
             let key_path = self.builder.path_text(&key, self.ctx)?;
-            self.ctx.charge_work_u64(
-                (key_path.len() as u64).saturating_mul(btree_search_comparisons(seen.len())),
-                path.clone(),
-            )?;
-            if !seen.insert(key.clone()) {
+            if self.detect_duplicates {
+                self.ctx.charge_work_u64(
+                    (key_path.len() as u64).saturating_mul(btree_search_comparisons(seen.len())),
+                    if self.create_paths {
+                        path.clone()
+                    } else {
+                        Utf16::default()
+                    },
+                )?;
+            }
+            if self.detect_duplicates && !seen.insert(key.clone()) {
                 return Err(EngineError::new(
                     "DUPLICATE_KEY",
                     path.clone(),
@@ -699,7 +1163,11 @@ impl<'a, 'b, 'c, S: JsonSource + ?Sized, B: JsonBuilder + Default> JsonParser<'a
                 ));
             }
             self.ws();
-            let child_path = append_path(path, &key_path);
+            let child_path = if self.create_paths {
+                append_path(path, &key_path)
+            } else {
+                Utf16::default()
+            };
             let value = self.value(depth + 1, &child_path)?;
             members.push((key, value));
             self.ws();

@@ -1,0 +1,53 @@
+{
+  "schema": "umf.r4.python-json-decode-measurement/1",
+  "host": {
+    "platform": "macOS-27.0.1-arm64-arm-64bit",
+    "machine": "arm64",
+    "python": "3.11.17",
+    "maxrssUnit": "bytes on macOS; KiB on Linux"
+  },
+  "sample": "array of JSON 0.1 floats; parse interval only",
+  "qualification": "No hard Python-parent memory or parse-time bound follows from this sample.",
+  "runs": [
+    {
+      "requestedBytes": 1048576,
+      "actualBytes": 1048573,
+      "entries": 262143,
+      "seconds": 0.008026249997783452,
+      "maxrssBeforeRaw": 20987904,
+      "maxrssAfterRaw": 32718848
+    },
+    {
+      "requestedBytes": 4194304,
+      "actualBytes": 4194301,
+      "entries": 1048575,
+      "seconds": 0.027705874992534518,
+      "maxrssBeforeRaw": 27459584,
+      "maxrssAfterRaw": 67518464
+    },
+    {
+      "requestedBytes": 8388608,
+      "actualBytes": 8388605,
+      "entries": 2097151,
+      "seconds": 0.05988408299162984,
+      "maxrssBeforeRaw": 35717120,
+      "maxrssAfterRaw": 122175488
+    },
+    {
+      "requestedBytes": 16777216,
+      "actualBytes": 16777213,
+      "entries": 4194303,
+      "seconds": 0.12157541699707508,
+      "maxrssBeforeRaw": 52543488,
+      "maxrssAfterRaw": 223133696
+    },
+    {
+      "requestedBytes": 33554432,
+      "actualBytes": 33554429,
+      "entries": 8388607,
+      "seconds": 0.24200725002447143,
+      "maxrssBeforeRaw": 86114304,
+      "maxrssAfterRaw": 424886272
+    }
+  ]
+}

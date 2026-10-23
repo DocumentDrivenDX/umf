@@ -1,0 +1,70 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
+// Source-bound live behavior traces for the TypeScript editExtension predecessor.
+import assert from 'node:assert/strict';
+import { writeFileSync } from 'node:fs';
+import { editExtension } from '../../../../src/model/document';
+import { Registry } from '../../../../src/registry/registry';
+import { validateDocument } from '../../../../src/validation/document';
+import type { Document, ExtensionPackage, Json } from '../../../../src/model/types';
+const target='urn:test:edit-target', trigger='urn:test:edit-trigger';
+const pkg=(id:string,version='1.0.0'):ExtensionPackage=>({id,version,coreVersion:'0.10.0',description:`Synthetic ${id} trace package.`,schema:{type:'object',required:['label'],properties:{label:{type:'string'}},additionalProperties:true},semantics:'Trace-only semantics.',scopes:['element'],capabilities:{validation:'semantic',directions:[],evidence:[]}});
+const doc=(vocabularies:Document['vocabularies'],extensions:Record<string,Json>):Document=>({umf:'0.10.0',id:'fixture:live-edit-trace',vocabularies,modules:[{id:'m',namespace:'m',elements:[{id:'e',extensions}]}]});
+const payload=(d:Document,id:string)=>d.modules[0]!.elements[0]!.extensions[id] as Record<string,Json>;
+const caught=(fn:()=>unknown)=>{try{fn();return {value:null as unknown}}catch(value){return {value}}};
+const events:string[]=[];
+const mutationSource=doc({[trigger]:{version:'1.0.0'},[target]:{version:'1.0.0'}},{[trigger]:{label:'trigger'},[target]:{label:'before'}});
+const registry=new Registry(); let registered=false;
+registry.register(pkg(target),v=>{events.push(`semantic:target:v1:${String((v as any).label)}`);return []});
+registry.register(pkg(trigger),()=>{events.push('semantic:trigger');if(!registered){registry.register(pkg(target,'2.0.0'),v=>{events.push(`semantic:target:v2:${String((v as any).label)}`);return []});mutationSource.vocabularies[target]!.version='2.0.0';registered=true;events.push('registry:target-v2-registered')}return []});
+const mutationResult=editExtension(mutationSource,registry,'m','e',target,v=>{events.push(`updater:${String((v as any).label)}`);return {...(v as object),edited:true} as Json});
+events.push(`result:${String(payload(mutationResult,target).label)}`);
+assert.ok(events.includes('registry:target-v2-registered')); assert.ok(events.includes('updater:before')); assert.ok(events.includes('semantic:target:v2:before')); assert.equal(payload(mutationResult,target).edited,true);
+// Registration during validation is visible to a later extension lookup in the
+// same pass, while the already-emitted unknown-registration diagnostic remains.
+const samePassEvents:string[]=[];
+const samePassSource=doc({[trigger]:{version:'1.0.0'},[target]:{version:'1.0.0'}},{[trigger]:{label:'trigger'},[target]:{label:'target'}});
+const inspectionEvents:string[]=[];
+const inspectionRegistry=new Registry();
+inspectionRegistry.register(pkg(trigger),()=>{inspectionEvents.push('semantic:trigger');inspectionRegistry.register(pkg(target),v=>{inspectionEvents.push(`semantic:target:${String((v as any).label)}`);return []});inspectionEvents.push('registry:target-registered');return []});
+const samePassValidation=validateDocument(samePassSource,inspectionRegistry);
+assert.deepEqual(inspectionEvents,['semantic:trigger','registry:target-registered','semantic:target:target']);
+assert.equal(samePassValidation.valid,true);
+assert.equal(samePassValidation.complete,false);
+const samePassRegistry=new Registry();
+samePassRegistry.register(pkg(trigger),()=>{samePassEvents.push('semantic:trigger');samePassRegistry.register(pkg(target),v=>{samePassEvents.push(`semantic:target:${String((v as any).label)}`);return []});samePassEvents.push('registry:target-registered');return []});
+let samePassUpdaterCalled=false;
+const samePassError=caught(()=>editExtension(samePassSource,samePassRegistry,'m','e',target,v=>{samePassUpdaterCalled=true;samePassEvents.push('updater');return v}));
+assert.deepEqual(samePassEvents,['semantic:trigger','registry:target-registered','semantic:target:target']);
+assert.equal((samePassError.value as any).code,'UNSAFE_EDIT');
+assert.equal(samePassUpdaterCalled,false);
+
+const sourceEvents:string[]=[];
+const source=doc({[trigger]:{version:'1.0.0'},[target]:{version:'1.0.0'}},{[trigger]:{label:'trigger'},[target]:{label:'before',nested:{keep:true}}});
+const sourceRegistry=new Registry();
+let semanticPayloadDetached=false,semanticDocumentDetached=false;
+sourceRegistry.register(pkg(trigger),(value,context)=>{sourceEvents.push('semantic:trigger');semanticPayloadDetached=value!==payload(source,trigger);semanticDocumentDetached=context.document!==source;(context.document.modules[0]!.elements[0]!.extensions[target] as any).label='context-copy-only';payload(source,target).label='mutated-during-validation';return []});
+sourceRegistry.register(pkg(target),v=>{sourceEvents.push(`semantic:target:${String((v as any).label)}`);return []});
+let updaterPayload:Json|undefined;
+const sourceResult=editExtension(source,sourceRegistry,'m','e',target,v=>{updaterPayload=v;sourceEvents.push(`updater:${String((v as any).label)}`);(v as any).nested.keep=false;return v});
+assert.equal((updaterPayload as any).label,'mutated-during-validation');
+assert.equal((sourceResult.modules[0]!.elements[0]!.extensions[target] as any).nested.keep,false);
+assert.equal((source.modules[0]!.elements[0]!.extensions[target] as any).nested.keep,true);
+const nestedEvents:string[]=[];
+const nestedSource=doc({[target]:{version:'1.0.0'}},{[target]:{label:'outer',opaque:{n:1}}});
+const nestedRegistry=new Registry().register(pkg(target),v=>{nestedEvents.push(`semantic:${String((v as any).label)}`);return []});
+let outerPayload:Json|undefined,nestedResult:Document|undefined;
+const outerResult=editExtension(nestedSource,nestedRegistry,'m','e',target,v=>{outerPayload=v;nestedEvents.push('updater:outer:start');(v as any).opaque.n=2;nestedResult=editExtension(nestedSource,nestedRegistry,'m','e',target,inner=>{nestedEvents.push(`updater:nested:${String((inner as any).label)}`);return {...(inner as object),nested:true} as Json});nestedEvents.push(`updater:outer:end:${String((nestedResult!.modules[0]!.elements[0]!.extensions[target] as any).nested)}`);return {...(v as object),outer:true} as Json});
+assert.equal((nestedSource.modules[0]!.elements[0]!.extensions[target] as any).opaque.n,1);
+assert.equal((outerResult.modules[0]!.elements[0]!.extensions[target] as any).opaque.n,2);
+assert.equal((nestedResult!.modules[0]!.elements[0]!.extensions[target] as any).opaque.n,1);
+assert.notEqual(outerPayload,nestedResult!.modules[0]!.elements[0]!.extensions[target]);
+const callbackSentinel=Object.freeze({channel:'updater',identity:17});
+const callbackError=caught(()=>editExtension(nestedSource,nestedRegistry,'m','e',target,()=>{throw callbackSentinel}));
+assert.equal(callbackError.value,callbackSentinel);
+const semanticSentinel=Object.freeze({channel:'semantic-validator',identity:23});
+const semanticRegistry=new Registry().register(pkg(target),()=>{throw semanticSentinel});
+const semanticError=caught(()=>editExtension(nestedSource,semanticRegistry,'m','e',target,v=>v));
+assert.equal((semanticError.value as any).code,'UNSAFE_EDIT');assert.notEqual(semanticError.value,semanticSentinel);
+const result={source:'src/model/document.ts::editExtension + src/registry/registry.ts::Registry + src/validation/document.ts::validateDocument',runtime:{bun:Bun.version,platform:process.platform,arch:process.arch},cases:{registryMutationDuringValidation:{events,finalTargetPayload:payload(mutationResult,target)},
+  samePassRegistryMutation:{events:samePassEvents,validationDiagnostics:samePassValidation.diagnostics,refusal:{code:(samePassError.value as any).code,message:(samePassError.value as any).message},updaterCalled:samePassUpdaterCalled},originalSourceMutationDuringValidation:{events:sourceEvents,sourceAfter:payload(source,target),updaterPayload,resultPayload:payload(sourceResult,target),semanticPayloadDetached,semanticDocumentDetached},nestedInvocationAndCopies:{events:nestedEvents,sourceAfter:payload(nestedSource,target),outerResult:payload(outerResult,target),nestedResult:payload(nestedResult!,target),callbackPayload:outerPayload},exceptionChannels:{updater:{exactIdentity:callbackError.value===callbackSentinel,value:callbackSentinel},semanticValidator:{exactIdentity:semanticError.value===semanticSentinel,refusal:{code:(semanticError.value as any).code,message:(semanticError.value as any).message}}}}};
+writeFileSync(new URL('./live-trace.json',import.meta.url),`${JSON.stringify(result,null,2)}\n`);console.log(JSON.stringify({ok:true,output:'scripts/rust-migration/r5/edit-extension/live-trace.json'}));

@@ -76,6 +76,19 @@ struct AggregateTextScope<'ctx, 'cap> {
     context: &'ctx mut Context<'cap>,
     original: usize,
 }
+
+/// Restores the ordinary tree value ceiling after admitting one or more
+/// trusted catalog resources. Counters and host capabilities remain attached
+/// to the original operation Context.
+struct CatalogValueScope<'ctx, 'cap> {
+    context: &'ctx mut Context<'cap>,
+    original: usize,
+}
+impl Drop for CatalogValueScope<'_, '_> {
+    fn drop(&mut self) {
+        self.context.limits.max_values = self.original;
+    }
+}
 impl Drop for AggregateTextScope<'_, '_> {
     fn drop(&mut self) {
         self.context.limits.max_text_units = self.original;
@@ -197,6 +210,19 @@ impl<'a> Context<'a> {
             context: self,
             original,
         };
+        operation(&mut *scope.context)
+    }
+
+    /// Temporarily allow the independently bounded catalog value budget while
+    /// admitting trusted engine resources. Ordinary input admission resumes
+    /// before the caller performs its semantic operation.
+    pub fn with_catalog_value_limit<T>(
+        &mut self,
+        operation: impl FnOnce(&mut Context<'a>) -> T,
+    ) -> T {
+        let original = self.limits.max_values;
+        self.limits.max_values = Limits::catalog().max_values;
+        let scope = CatalogValueScope { context: self, original };
         operation(&mut *scope.context)
     }
 

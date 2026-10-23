@@ -1,0 +1,151 @@
+{
+  "cases": {
+    "invalid_tokens": [
+      {
+        "error": "SessionError:invalid cursor",
+        "token": ""
+      },
+      {
+        "error": "SessionError:invalid cursor",
+        "token": "raw-key"
+      },
+      {
+        "error": "SessionError:invalid cursor",
+        "token": "xxxxxxxxxxxxxxxxxxxx"
+      }
+    ],
+    "loads": [
+      {
+        "error": "SessionError:invalid operation JSON",
+        "raw": "{\"a\":1,\"a\":2}"
+      },
+      {
+        "error": "SessionError:invalid operation JSON",
+        "raw": "{\"a\":NaN}"
+      },
+      {
+        "error": "SessionError:invalid operation JSON",
+        "raw": "{\"a\":Infinity}"
+      },
+      {
+        "error": "SessionError:invalid operation JSON",
+        "raw": "{\"a\":-Infinity}"
+      },
+      {
+        "error": "SessionError:invalid operation JSON",
+        "raw": "{"
+      }
+    ],
+    "tokens": [
+      {
+        "after": [],
+        "decoded": {
+          "after": [],
+          "scope": {},
+          "version": "umf.table-cursor/0.1"
+        },
+        "scope": {},
+        "token": "eyJhZnRlciI6W10sInNjb3BlIjp7fSwidmVyc2lvbiI6InVtZi50YWJsZS1jdXJzb3IvMC4xIn0.a906455d083218b0390f821a3b267a8a8ecf7ea617403d11cdc179442027ee88"
+      },
+      {
+        "after": [
+          {
+            "integerToken": "9007199254740993"
+          }
+        ],
+        "decoded": {
+          "after": [
+            {
+              "integerToken": "9007199254740993"
+            }
+          ],
+          "scope": {
+            "inputsDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "operation": "p"
+          },
+          "version": "umf.table-cursor/0.1"
+        },
+        "scope": {
+          "inputsDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "operation": "p"
+        },
+        "token": "eyJhZnRlciI6W3siaW50ZWdlclRva2VuIjoiOTAwNzE5OTI1NDc0MDk5MyJ9XSwic2NvcGUiOnsiaW5wdXRzRGlnZXN0IjoiYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYSIsIm9wZXJhdGlvbiI6InAifSwidmVyc2lvbiI6InVtZi50YWJsZS1jdXJzb3IvMC4xIn0.22470cf1988b176e82bf65f8a63499a67c9e12958d7f144c0e0c6e68ca42c433"
+      },
+      {
+        "after": [
+          {
+            "string": "a\u0001"
+          }
+        ],
+        "decoded": {
+          "after": [
+            {
+              "string": "a\u0001"
+            }
+          ],
+          "scope": {
+            "unicode": "雪"
+          },
+          "version": "umf.table-cursor/0.1"
+        },
+        "scope": {
+          "unicode": "雪"
+        },
+        "token": "eyJhZnRlciI6W3sic3RyaW5nIjoiYVx1MDAwMSJ9XSwic2NvcGUiOnsidW5pY29kZSI6IumbqiJ9LCJ2ZXJzaW9uIjoidW1mLnRhYmxlLWN1cnNvci8wLjEifQ.42b63246abfccc586b578897240f46a01d4e51dcf70180ed8f4a7e5f69009519"
+      }
+    ],
+    "values": [
+      {
+        "canonical": "null",
+        "digest": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+        "repr": "None",
+        "size": 4
+      },
+      {
+        "canonical": "true",
+        "digest": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b",
+        "repr": "True",
+        "size": 4
+      },
+      {
+        "canonical": "1",
+        "digest": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+        "repr": "1",
+        "size": 1
+      },
+      {
+        "canonical": "1.0",
+        "digest": "d0ff5974b6aa52cf562bea5921840c032a860a91a3512f7fe8f768f6bbe005f6",
+        "repr": "1.0",
+        "size": 3
+      },
+      {
+        "canonical": "-0.0",
+        "digest": "c26617c7ccbcaa6631b45d851b8cf56e21d2ca624bdb1193afdbd4b560702cec",
+        "repr": "-0.0",
+        "size": 4
+      },
+      {
+        "canonical": "1e-07",
+        "digest": "e485fac25775a7da830698e7daac582737fc8b43ba4b351467a16cf8ed83122a",
+        "repr": "1e-07",
+        "size": 5
+      },
+      {
+        "canonical": "{\"a\":[1,2],\"雪\":\"\\u0001\"}",
+        "digest": "ab6f8cd58a48b7aa42be4d6a12f98be0303575f9b76eaf47a674bb1c820972a2",
+        "repr": "{'雪': '\\x01', 'a': [1, 2]}",
+        "size": 26
+      },
+      {
+        "canonical": "{\"e\":2,\"é\":1}",
+        "digest": "ae0cc153856ae8fdab2420c8f8e36a9f9cd47c4b1a73531be4bd7dc8092fa69e",
+        "repr": "{'é': 1, 'e': 2}",
+        "size": 14
+      }
+    ]
+  },
+  "python": "3.9.6",
+  "source": "python/umf_access/src/umf_access/unified/operation_values.py",
+  "source_sha256": "90638f330104eeb9405e553ef03638fe26db3a2f0440a255c0242deba0ce8b77"
+}

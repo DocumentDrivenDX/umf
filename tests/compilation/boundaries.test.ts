@@ -170,6 +170,13 @@ describe("actual Python boundary checker", () => {
     rejects("py", { [prefix + "surprise.py"]: "" }, "MODULE");
     rejects("py", { [prefix + "types.py"]: "from .dsl import Query", [prefix + "dsl/__init__.py"]: "class Query: pass" }, "DEPENDENCY");
   });
+  test("values foundation reaches only the two public native core bridges", () => {
+    const prefix = "python/umf_access/src/umf_access/";
+    expect(check("py", {[prefix + "values.py"]: "from umf import rust_temporal, rust_values"}).exitCode).toBe(0);
+    for (const source of ["from umf import _rust", "from umf import rust_codegen", "import umf._rust"])
+      rejects("py", {[prefix + "values.py"]: source}, "DEPENDENCY");
+    rejects("py", {[prefix + "types.py"]: "from umf import rust_values"}, "DEPENDENCY");
+  });
   test("lifecycle administration owns only its public compiler verifier and native exception imports",()=>{
     const prefix="python/umf_access/src/umf_access/";
     expect(check("py",{[prefix+"lifecycle/catalog.py"]:"from umf_codegen import verify_table_deployment, verify_table_migration\nfrom psycopg import Error\nfrom psycopg.rows import tuple_row\nfrom psycopg.types.json import Jsonb"}).exitCode).toBe(0);

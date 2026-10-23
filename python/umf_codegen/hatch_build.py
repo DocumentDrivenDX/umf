@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: MIT OR Apache-2.0
-"""Verify packaged generator assets; never build JavaScript during Python packaging."""
+"""Verify the explicit native compiler resource closure at package build time."""
 import ast
 import hashlib
 import json
@@ -7,30 +7,39 @@ from pathlib import Path
 
 from hatchling.builders.hooks.plugin.interface import BuildHookInterface
 
+RESOURCE_NAMES = {
+    'core.schema.json', 'core.reference-schema.json', 'core.package-schema.json',
+    'core.constraints.json', 'core.domain-policy.json', 'tables.package.json',
+    'actions.package.json', 'binding.package.json', 'stable-binding.package.json',
+}
+
+
+def _resource_pin(package: Path) -> str:
+    tree = ast.parse((package / '_release.py').read_text(encoding='utf-8'))
+    for node in tree.body:
+        if isinstance(node, ast.Assign) and any(
+            isinstance(target, ast.Name) and target.id == 'RESOURCE_MANIFEST_SHA256'
+            for target in node.targets
+        ):
+            return ast.literal_eval(node.value)
+    raise ValueError('Codegen resource manifest pin is missing')
+
 
 class CustomBuildHook(BuildHookInterface):
     def initialize(self, version, build_data):
         root = Path(self.root)
         package = root / 'src/umf_codegen'
-        constants = ast.parse((package / '_release.py').read_text())
-        pin = next(ast.literal_eval(n.value) for n in constants.body
-                   if isinstance(n, ast.Assign) and any(isinstance(t, ast.Name) and t.id == 'MANIFEST_SHA256' for t in n.targets))
-        assets = package / '_assets'
+        assets = package / '_resources'
         raw = (assets / 'manifest.json').read_bytes()
-        if hashlib.sha256(raw).hexdigest() != pin:
-            raise ValueError('Codegen manifest pin differs')
+        if hashlib.sha256(raw).hexdigest() != _resource_pin(package):
+            raise ValueError('Codegen resource manifest pin differs')
         manifest = json.loads(raw)
-        files = manifest['files']
-        if {str(p.relative_to(assets)) for p in assets.rglob('*') if p.is_file()} != set(files) | {'manifest.json'}:
-            raise ValueError('Codegen payload inventory differs')
+        if manifest.get('profile') != 'umf.codegen-resources/1':
+            raise ValueError('Unsupported codegen resource profile')
+        files = manifest.get('files')
+        actual = {str(path.relative_to(assets)) for path in assets.rglob('*') if path.is_file() and path.name != 'manifest.json'}
+        if not isinstance(files, dict) or set(files) != RESOURCE_NAMES or actual != RESOURCE_NAMES:
+            raise ValueError('Codegen resource inventory differs')
         for name, expected in files.items():
             if hashlib.sha256((assets / name).read_bytes()).hexdigest() != expected:
-                raise ValueError('Codegen asset differs: ' + name)
-        repository = root.parent.parent
-        if (repository / '.helix.yml').exists():
-            for name, expected in manifest['inputs'].items():
-                if name.startswith('node_modules/'):
-                    continue
-                path = repository / name
-                if not path.is_file() or hashlib.sha256(path.read_bytes()).hexdigest() != expected:
-                    raise ValueError('Stale generator source; run bun scripts/build-codegen.ts: ' + name)
+                raise ValueError('Codegen resource differs: ' + name)

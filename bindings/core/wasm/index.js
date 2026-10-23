@@ -1,7 +1,62 @@
-import {encodeRequestWire, encodeWire, fromWire, resultError, toWire} from '../node/src/wire.js';
+import {encodeRequestWire, encodeWire, fromWire, resultError, toWire} from './src/wire.js';
+import {createJavascriptNumericEngine as createNumericEngine, JAVASCRIPT_NUMERIC_PROFILE} from './src/javascript-numeric.js';
+import {createCoreModelOperations} from './src/core-model.js';
+import {createBit128Engine as createBit128EngineWithWire, BIT128_PROFILE} from './src/bit128.js';
+export {JAVASCRIPT_NUMERIC_PROFILE};
+export {BIT128_PROFILE};
+export const GREGORIAN_DATE_PROFILE = 'umf-gregorian-date/1.0.0';
+export const RFC3339_EXACT_INSTANT_PROFILE = 'umf-rfc3339-exact-instant/1.0.0';
+export const RFC3339_EXACT_INSTANT_MAXIMUM_BYTES = 1_048_576;
 
 function hasBrowserRuntime(host) {
   return !!host && typeof host.WebAssembly === 'object' && typeof host.WebAssembly.instantiate === 'function';
+}
+
+/** Create the opt-in, resource-free temporal adapter engine over a loaded WASM module. */
+export function createTemporalEngine(module) {
+  for (const name of ['temporalParseGregorianDateWire', 'temporalTruncateGregorianDateWire', 'temporalParseRfc3339ExactInstantWire', 'temporalSameRfc3339ExactInstantWire']) {
+    if (typeof module?.[name] !== 'function') throw new Error('RUST_WASM_BINDING_MISSING');
+  }
+  const decoded = (wire) => {
+    if (wire === 'TypeError') throw new TypeError('Temporal token requires text');
+    if (wire === 'RangeError') throw new RangeError('Temporal token is outside the selected profile');
+    return wire.split('|');
+  };
+  const parseGregorianDate = (token) => {
+    const [, year, month, day] = decoded(module.temporalParseGregorianDateWire(token));
+    return Object.freeze({profile: GREGORIAN_DATE_PROFILE, originalText: token, year: Number(year), month: Number(month), day: Number(day)});
+  };
+  const parseRfc3339ExactInstant = (token) => {
+    const [, utcSeconds, fractionalDigits, originalOffset, localOffsetKnown] = decoded(module.temporalParseRfc3339ExactInstantWire(token));
+    return Object.freeze({profile: RFC3339_EXACT_INSTANT_PROFILE, originalText: token, utcSeconds, fractionalDigits, originalOffset, localOffsetKnown: localOffsetKnown === 'true'});
+  };
+  return Object.freeze({parseGregorianDate,
+    truncateGregorianDate(token, unit) { return decoded(module.temporalTruncateGregorianDateWire(token, unit))[1]; },
+    parseRfc3339ExactInstant,
+    sameRfc3339ExactInstant(left, right) { return decoded(module.temporalSameRfc3339ExactInstantWire(left, right))[1] === 'true'; },
+  });
+}
+
+/** Initialize the standalone temporal adapters without requiring engine resources. */
+export async function initializeTemporalWasm(loader = () => import('./pkg/umf_core_wasm.js'), host = globalThis) {
+  if (!hasBrowserRuntime(host)) throw new Error('WASM_RUNTIME_UNAVAILABLE');
+  const module = await loader();
+  if (typeof module.default === 'function') await module.default();
+  return createTemporalEngine(module);
+}
+
+/** Create the opt-in `umf-128/1` codec over a loaded Rust/WASM module. */
+export function createBit128Engine(module, options = {}) {
+  if (typeof module?.executeBit128Wire !== 'function') throw new Error('RUST_WASM_BINDING_MISSING');
+  return createBit128EngineWithWire((wire, control) => module.executeBit128Wire(wire, control), options);
+}
+
+/** Initialize the standalone `umf-128/1` Rust/WASM codec. */
+export async function initializeBit128Wasm(loader = () => import('./pkg/umf_core_wasm.js'), host = globalThis, options = {}) {
+  if (!hasBrowserRuntime(host)) throw new Error('WASM_RUNTIME_UNAVAILABLE');
+  const module = await loader();
+  if (typeof module.default === 'function') await module.default();
+  return createBit128Engine(module, options);
 }
 
 /** Initialize the distributed Rust/WASM module asynchronously; returned operations are synchronous. */
@@ -12,6 +67,15 @@ export async function initializeWasm(loader = () => import('./pkg/umf_core_wasm.
   if (typeof module.default === 'function') await module.default();
   if (typeof module.copyJsonWire !== 'function') throw new Error('RUST_WASM_BINDING_MISSING');
   return createEngine(module, resources, options);
+}
+
+/** Initialize WASM and expose the additive core-model operation surface. */
+export async function initializeCoreModelWasm(resources, loader = () => import('./pkg/umf_core_wasm.js'), host = globalThis, options) {
+  if (!hasBrowserRuntime(host)) throw new Error('WASM_RUNTIME_UNAVAILABLE');
+  const module = await loader();
+  if (typeof module.default === 'function') await module.default();
+  if (typeof module.copyJsonWire !== 'function' || typeof module.executeRequestWire !== 'function') throw new Error('RUST_WASM_BINDING_MISSING');
+  return createCoreModelEngine(module, resources, options);
 }
 
 export class UmfCoreError extends Error {
@@ -31,7 +95,8 @@ function runRawValue(module, nativeFunction, input, format, controls) {
   return fromWire(JSON.parse(response.wire));
 }
 
-function descriptor(value, key, required = true) {
+function descriptor(value, key, required = true, work = undefined) {
+  work?.(1);
   if (!value || (Object.getPrototypeOf(value) !== Object.prototype && Object.getPrototypeOf(value) !== null)) throw new TypeError('Engine descriptors must be plain objects');
   const item = Object.getOwnPropertyDescriptor(value, key);
   if (!item) {
@@ -42,16 +107,20 @@ function descriptor(value, key, required = true) {
   return item.value;
 }
 
-function dataArray(value, name) {
+function dataArray(value, name, work = undefined) {
+  work?.(1);
   if (!Array.isArray(value)) throw new TypeError(`${name} must be an array`);
   if (Object.getPrototypeOf(value) !== Array.prototype) throw new TypeError(`${name} must be a plain array`);
-  const keys = Reflect.ownKeys(value);
   const length = Object.getOwnPropertyDescriptor(value, 'length')?.value;
+  work?.(length + 1);
+  const keys = Reflect.ownKeys(value);
   if (!Number.isSafeInteger(length) || keys.length !== length + 1) {
     throw new TypeError(`${name} must be a dense array without extra properties`);
   }
+  work?.(1);
   const items = [];
   for (let index = 0; index < length; index++) {
+    work?.(1);
     const item = Object.getOwnPropertyDescriptor(value, String(index));
     if (!item || !Object.hasOwn(item, 'value') || !item.enumerable) {
       throw new TypeError(`${name}[${index}] must be an enumerable data property`);
@@ -84,7 +153,7 @@ function callbackFailureText(error) {
   return 'Host callback failed';
 }
 
-function invoke(module, request, callbacks, profile, controls, accountHost = false) {
+function invoke(module, request, callbacks, profile, controls, accountHost = false, sharedControlBridge = undefined, sharedHostWork = undefined) {
   if (profile === 'hard-isolated') throw new UmfCoreError('RESOURCE_PROFILE_UNAVAILABLE', 'HardIsolated resource profile is unavailable');
   const dispatcher = (token, requestWire) => {
     const callback = callbacks.get(token);
@@ -98,8 +167,8 @@ function invoke(module, request, callbacks, profile, controls, accountHost = fal
       return encodeRequestWire({ok: false, message: callbackFailureText(error)});
     }
   };
-  const controlBridge = hasControls(controls) ? createControlBridge(controls) : undefined;
-  const hostWork = accountHost ? admissionWork(controlBridge) : undefined;
+  const controlBridge = sharedControlBridge ?? (hasControls(controls) ? createControlBridge(controls) : undefined);
+  const hostWork = accountHost ? (sharedHostWork ?? admissionWork(controlBridge)) : undefined;
   const responseText = module.executeRequestWire(encodeRequestWire(request, hostWork), profile, dispatcher, controlBridge);
   hostWork?.(responseText.length);
   const response = JSON.parse(responseText);
@@ -138,6 +207,15 @@ function createControlBridge(controls) {
 }
 
 export function createEngine(module, resources, options = {}) {
+  return createEngineInternal(module, resources, options, false);
+}
+
+/** Create the opt-in cardinality/kind/nullability ideal API over WASM. */
+export function createCoreModelEngine(module, resources, options = {}) {
+  return createEngineInternal(module, resources, options, true);
+}
+
+function createEngineInternal(module, resources, options, withModel) {
   const {profile, controls} = codegenOptions(options);
   if (typeof module.copyJsonWire !== 'function' || typeof module.executeRequestWire !== 'function') throw new Error('RUST_WASM_BINDING_MISSING');
   const base = {
@@ -158,32 +236,67 @@ export function createEngine(module, resources, options = {}) {
     writeJsonValue(value) { return runRawValue(module, module.writeValueWire, value, 'json', controls); },
   };
   if (resources === undefined) return Object.freeze(base);
-  // Resource trees are bounded independently in Rust; this wrapper object is
-  // only a transport bundle and cannot impose an aggregate value ceiling.
-  const snapshot = fromWire(toWire(resources, {maxDepth: 256, maxValues: Number.MAX_SAFE_INTEGER}));
-  for (const key of ['coreSchema', 'referenceSchema', 'packageSchema', 'constraints', 'domainPolicy']) {
-    if (!Object.hasOwn(snapshot, key)) throw new TypeError(`Missing explicit engine resource ${key}`);
+  const names = ['coreSchema', 'referenceSchema', 'packageSchema', 'constraints', 'domainPolicy'];
+  const hostWork = withModel ? admissionWork(hasControls(controls) ? createControlBridge(controls) : undefined) : undefined;
+  let fixedResources;
+  if (withModel) {
+    hostWork?.(1);
+    const prototype = Object.getPrototypeOf(resources);
+    if (prototype !== Object.prototype && prototype !== null) throw new TypeError('Engine resources must be a plain object');
+    const keys = Reflect.ownKeys(resources);
+    hostWork?.(keys.length);
+    for (const key of keys) {
+      if (typeof key !== 'string' || !names.includes(key)) throw new TypeError('Unknown explicit engine resource');
+      hostWork?.(key.length + 1);
+    }
+    fixedResources = Object.create(null);
+    for (const name of names) {
+      const resource = descriptor(resources, name);
+      fixedResources[name] = fromWire(toWire(resource, {maxDepth: 128, maxValues: 1_000_000, work: hostWork}), hostWork);
+    }
+  } else {
+    // The transport bundle is not one semantic resource tree.
+    const snapshot = fromWire(toWire(resources, {maxDepth: 256, maxValues: Number.MAX_SAFE_INTEGER}));
+    for (const key of names) if (!Object.hasOwn(snapshot, key)) throw new TypeError(`Missing explicit engine resource ${key}`);
+    fixedResources = Object.fromEntries(names.map((key) => [key, snapshot[key]]));
   }
-  const fixedResources = Object.fromEntries(['coreSchema', 'referenceSchema', 'packageSchema', 'constraints', 'domainPolicy'].map((key) => [key, snapshot[key]]));
   function call(op, args = {}, extensions = []) {
+    const controlBridge = hasControls(controls) ? createControlBridge(controls) : undefined;
+    const hostWork = withModel ? admissionWork(controlBridge) : undefined;
+    hostWork?.(1);
     const callbacks = new Map();
-    const registry = dataArray(extensions, 'extensions').map((extension, index) => {
-      const id = descriptor(extension, 'id');
-      const version = descriptor(extension, 'version');
-      const scopes = descriptor(extension, 'scopes');
-      const schema = descriptor(extension, 'schema', false) ?? true;
-      const semantics = descriptor(extension, 'semantics', false);
+    const extensionValues = withModel ? dataArray(extensions, 'extensions', hostWork) : dataArray(extensions, 'extensions');
+    hostWork?.(extensionValues.length + 1);
+    const registry = [];
+    for (let index = 0; index < extensionValues.length; index++) {
+      hostWork?.(1);
+      const extension = extensionValues[index];
+      const id = descriptor(extension, 'id', true, hostWork);
+      const version = descriptor(extension, 'version', true, hostWork);
+      const scopes = descriptor(extension, 'scopes', true, hostWork);
+      const schema = descriptor(extension, 'schema', false, hostWork) ?? true;
+      const semantics = descriptor(extension, 'semantics', false, hostWork);
       if (semantics !== undefined && typeof semantics !== 'function') throw new TypeError('Extension semantics must be a host callback function');
-      if (semantics) callbacks.set(index + 1, semantics);
-      return {id, version, scopes, schema, semantic: Boolean(semantics)};
-    });
-    return invoke(module, {op, resources: fixedResources, registry, ...args}, callbacks, profile, controls);
+      if (semantics) { hostWork?.(1); callbacks.set(index + 1, semantics); }
+      hostWork?.(5);
+      registry.push({id, version, scopes, schema, semantic: Boolean(semantics)});
+    }
+    hostWork?.(1);
+    return invoke(module, {op, resources: fixedResources, registry, ...args}, callbacks, profile, controls, withModel, controlBridge, hostWork);
   }
-  return Object.freeze({...base,
+  const api = {...base,
     validateDocument(document, registry = []) { return call('validate', {document}, registry); },
     readDocument(source, format = 'json', registry = []) { return call('read', {source, format}, registry).document; },
     writeDocument(document, format = 'json', registry = []) { return call('write', {document, format}, registry).source; },
-  });
+  };
+  if (withModel) Object.assign(api, createCoreModelOperations((op, args, extensions) => call(op, args, extensions)));
+  return Object.freeze(api);
+}
+
+/** Create the opt-in Rust-backed CONTRACT-049 numeric adapter. */
+export function createJavascriptNumericEngine(module, resources, options = {}) {
+  if (typeof module?.executeJavascriptNumericWire !== 'function') throw new Error('RUST_WASM_BINDING_MISSING');
+  return createNumericEngine(module.executeJavascriptNumericWire.bind(module), resources, options.controls);
 }
 
 function codegenOptions(options) {

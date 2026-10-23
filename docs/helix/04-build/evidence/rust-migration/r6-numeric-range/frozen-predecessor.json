@@ -1,0 +1,39 @@
+{
+  "profile": "umf-access-range/0.1.0",
+  "predecessor": {
+    "path": "python/umf_access/src/umf_access/values.py",
+    "sha256": "165e7c28f173a25d050e90205706990e189997d419111792612131c253e9fbef",
+    "otherSourceSha256": {
+      "crates/umf-core/src/access_values.rs": "5f3e0f505dce4bcb5a45d25d8e15cc32f92c7718da24a3b24883272bc579565a",
+      "bindings/core/python/src/lib.rs": "8145d36f4eddaa5848f7ba371718e0aecb9bc7d78281e8ff10b5f5f852e08779",
+      "python/src/umf/rust_values.py": "c4a91e7159f0f04450938dde24370808edb08ee22e3607e07d1ce9bf831ae50b"
+    },
+    "runtime": "CPython 3.11.17",
+    "baseline": "test_values_red.py: 6 passed, 0 failed; range matrix executed against source validate_range with the installed predecessor exact-values native bridge"
+  },
+  "cases": [
+    {"name":"integer_min_inclusive","value":{"int":"5"},"minimum":{"int":"5"},"outcome":"same-input"},
+    {"name":"integer_min_exclusive","value":{"int":"5"},"minimum":{"int":"5"},"minInclusive":false,"outcome":"value outside authored range"},
+    {"name":"integer_max_inclusive","value":{"int":"5"},"maximum":{"int":"5"},"outcome":"same-input"},
+    {"name":"integer_max_exclusive","value":{"int":"5"},"maximum":{"int":"5"},"maxInclusive":false,"outcome":"value outside authored range"},
+    {"name":"integer_min_fails_before_max_comparison","value":{"int":"5"},"minimum":{"int":"7"},"maximum":{"int":"3"},"outcome":"value outside authored range"},
+    {"name":"integer_min_bound_mixed_decimal","value":{"int":"1"},"minimum":{"decimal":"0"},"outcome":"range bound carrier mismatch"},
+    {"name":"integer_max_bad_type_validated_after_min","value":{"int":"0"},"minimum":{"int":"10"},"maximum":{"string":"bad"},"outcome":"range bound carrier mismatch"},
+    {"name":"decimal_trailing_zero_equal","value":{"decimal":"1.00"},"minimum":{"decimal":"1.0"},"maximum":{"decimal":"1.000"},"outcome":"same-input"},
+    {"name":"decimal_min_exclusive_trailing_zero_equal","value":{"decimal":"1.00"},"minimum":{"decimal":"1.0"},"minInclusive":false,"outcome":"value outside authored range"},
+    {"name":"decimal_max_exclusive_trailing_zero_equal","value":{"decimal":"1.00"},"maximum":{"decimal":"1.000"},"maxInclusive":false,"outcome":"value outside authored range"},
+    {"name":"decimal_fraction_above_max","value":{"decimal":"1.0001"},"maximum":{"decimal":"1.000"},"outcome":"value outside authored range"},
+    {"name":"decimal_signed_zero_equal_huge_exponents","value":{"decimal":"-0E+999999999"},"minimum":{"decimal":"0E-999999999"},"maximum":{"decimal":"0"},"outcome":"same-input"},
+    {"name":"decimal_signed_zero_min_exclusive","value":{"decimal":"-0E+999999999"},"minimum":{"decimal":"0"},"minInclusive":false,"outcome":"value outside authored range"},
+    {"name":"decimal_huge_positive_inside","value":{"decimal":"1E+999999999"},"minimum":{"decimal":"9E+999999998"},"maximum":{"decimal":"2E+999999999"},"outcome":"same-input"},
+    {"name":"decimal_huge_positive_above","value":{"decimal":"3E+999999999"},"maximum":{"decimal":"2E+999999999"},"outcome":"value outside authored range"},
+    {"name":"decimal_huge_negative_inside","value":{"decimal":"1E-999999999"},"minimum":{"decimal":"0"},"maximum":{"decimal":"2E-999999999"},"outcome":"same-input"},
+    {"name":"decimal_equal_with_exponent_and_trailing_zero","value":{"decimal":"10E+999999999"},"minimum":{"decimal":"1E+1000000000"},"outcome":"same-input"},
+    {"name":"decimal_value_nonfinite","value":{"decimal":"NaN"},"outcome":"finite Decimal carrier required"},
+    {"name":"decimal_bound_nonfinite","value":{"decimal":"1"},"minimum":{"decimal":"Infinity"},"outcome":"finite Decimal carrier required"},
+    {"name":"decimal_value_type_mismatch_precedes_finite_check","value":{"decimal":"1"},"minimum":{"float":"nan"},"outcome":"range bound carrier mismatch"},
+    {"name":"empty_interval_fails_value_check","value":{"int":"5"},"minimum":{"int":"6"},"maximum":{"int":"4"},"outcome":"value outside authored range"},
+    {"name":"truthy_string_inclusive","value":{"int":"5"},"minimum":{"int":"5"},"minInclusive":"false","outcome":"same-input"},
+    {"name":"falsey_integer_inclusive","value":{"int":"5"},"minimum":{"int":"5"},"minInclusive":0,"outcome":"value outside authored range"}
+  ]
+}

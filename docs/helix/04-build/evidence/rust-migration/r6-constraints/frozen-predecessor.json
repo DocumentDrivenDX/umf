@@ -1,0 +1,25 @@
+{
+  "profile": "umf-access-constraints/0.1.0",
+  "capturedBeforeImplementation": true,
+  "workingTreeValuesSourceSha256": "8c66f2aaa2187b1e62366dee36535f22fc6a57b6821c0113ca8ee246951d17cb",
+  "predecessorInstalledAccessWheel": {
+    "path": "/private/tmp/umf-r6-range-wheels/umf_access-0.1.0.dev6-py3-none-any.whl",
+    "sha256": "7a33757dba96890740cfcee19fa78a1c08a30ece2cc44c47281bd90e5a24180b",
+    "installedValuesSourceSha256": "2abd59670aa788c45408fc35ca92629a2049dad465d1d2f6e0af20fab1e15dc6"
+  },
+  "predecessorTestCases": [
+    "length_carriers_unicode_and_original_identity",
+    "length_minimum_before_maximum_and_short_circuit",
+    "length_truthiness_failure_and_exception_identity",
+    "allowed_exact_values_nan_decimal_zero_huge_int_and_original_identity",
+    "allowed_candidate_side_equality_order_truthiness_and_exception_identity",
+    "allowed_generator_and_decimal_signaling_nan",
+    "generated_field_validator_order_and_codec_round_trip"
+  ],
+  "recordedSemantics": {
+    "length": "Python len is retained, including Python string code-point counts; exact/custom bound comparisons preserve minimum-first short-circuit, reflected comparison dispatch, truth conversion and exception identity.",
+    "allowed": "The iterable is consumed in order; only same-type candidates are compared; equality dispatch is candidate-side and its truth conversion, short-circuit and exceptions are preserved.",
+    "decimal": "Finite decimal equality is numeric equality across different tuple spellings and signed zero; NaN is unequal, and signaling NaN may raise the original decimal exception.",
+    "identity": "Successful validation returns the exact input object."
+  }
+}

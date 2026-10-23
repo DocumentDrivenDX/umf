@@ -1,10 +1,12 @@
 # Rust-backed UMF core hosts
 
-These expose the R2 production core and additive R3 compiler entry points.
-The existing default TypeScript SDK continues to use its current implementation until the separate R7 cutover.
-The existing Python `umf_codegen` distribution and default CLI retain MiniRacer
-until R4. These Rust host packages are private;
-this work does not publish a wheel, npm package or Rust crate.
+These expose the R2 production core, the R3 compiler, and bounded opt-in R5
+operations. The default TypeScript SDK continues to use its current
+implementation until the separate R7 cutover. The current `umf_codegen`
+source distribution and CLI use the Rust compiler from the pinned `umf-core`
+wheel without MiniRacer; the R4 installed-artifact checkpoint is limited to its
+recorded platform and source cohort. These Rust host packages remain private;
+this worktree has not published a wheel, npm package or Rust crate.
 
 `crates/umf-core` owns document/schema validation, literal and constraint kernels,
 registry admission, JSON/YAML serialization and diagnostics.
@@ -72,10 +74,13 @@ failures remain terminal host errors. The CLI uses the same operations with a
 The generated files, diagnostics and source archives retain their existing
 contracts. Stage-one resolved IR stays private. Compiler source text retains the
 ordinary 4M limit; compiler aggregate result text has a separate 32Mi UTF-16
-budget, so a valid multi-file package can exceed 4M units. This API is additive;
-default generator CLI cutover and MiniRacer removal remain R4. The
+budget, so a valid multi-file package can exceed 4M units. The current
+`umf_codegen` package routes its public CLI through the bundled Rust executable
+in the pinned core wheel. The
+[R4 installed-artifact checkpoint](../../docs/helix/04-build/evidence/rust-migration/r4/)
+records its qualified source cohort and remaining release-platform gates. The
 [R3 evidence index](../../docs/helix/04-build/evidence/rust-migration/r3/)
-records exact versions, supported subsets and qualification status.
+records the predecessor compiler cohort.
 
 ## Values and resource controls
 

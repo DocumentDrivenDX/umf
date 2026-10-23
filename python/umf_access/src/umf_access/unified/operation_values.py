@@ -2,9 +2,6 @@
 """Exact native operation values, bounded frames and opaque page tokens."""
 from __future__ import annotations
 
-import base64
-import hashlib
-import hmac
 import json
 import math
 import re
@@ -18,22 +15,84 @@ from .session_policy import SessionError
 MAX_FRAME=8*1024*1024
 
 
+def _json_input(value):
+    """Serialize the explicitly supported Python JSON-like carrier for Rust."""
+    def admit(item):
+        kind = type(item)
+        if item is None or kind in (bool, int, float, str):
+            if kind is str:
+                item.encode("utf-8")
+            if kind is float and not math.isfinite(item):
+                raise SessionError("invalid operation JSON")
+            return
+        if kind in (list, tuple):
+            for child in item:
+                admit(child)
+            return
+        if kind is dict:
+            for key, child in item.items():
+                if type(key) is not str:
+                    raise SessionError("invalid operation JSON")
+                key.encode("utf-8")
+                admit(child)
+            return
+        raise SessionError("invalid operation JSON")
+
+    try:
+        admit(value)
+        return json.dumps(value, ensure_ascii=False, sort_keys=True,
+                          separators=(",", ":"), allow_nan=False)
+    except (ValueError, TypeError, UnicodeError, RecursionError):
+        raise SessionError("invalid operation JSON") from None
+
+
+def _rust_values():
+    from umf import rust_operation_values
+
+    try:
+        rust_operation_values.require_operation_values_profile()
+    except (ImportError, AttributeError, RuntimeError) as error:
+        raise SessionError("native operation-values capability unavailable") from error
+    return rust_operation_values
+
+
+def _native_error(error, default):
+    message = str(error)
+    allowed = {
+        "invalid operation JSON", "native wire frame bound exceeded",
+        "cursor capacity exceeded", "invalid cursor",
+    }
+    return SessionError(message if message in allowed else default)
+
+
 def canonical(value):
-    return json.dumps(value,ensure_ascii=False,sort_keys=True,separators=(',',':'),allow_nan=False)
+    try:
+        return _rust_values().operation_canonical(_json_input(value))
+    except SessionError:
+        raise
+    except (ValueError, TypeError, UnicodeError, RecursionError) as error:
+        raise _native_error(error, "invalid operation JSON") from None
 
 
 def bounded_size(value, limit=MAX_FRAME):
-    """Stop before assembling a potentially huge repeated-key JSON frame."""
-    size=0
-    encoder=json.JSONEncoder(ensure_ascii=False,sort_keys=True,separators=(',',':'),allow_nan=False)
-    for chunk in encoder.iterencode(value):
-        size+=len(chunk.encode('utf-8'))
-        if size>limit:raise SessionError('native wire frame bound exceeded')
-    return size
+    """Stop Rust canonical encoding as soon as the UTF-8 frame limit is crossed."""
+    if type(limit) is int and limit < 0:
+        raise SessionError("native wire frame bound exceeded")
+    try:
+        return _rust_values().operation_bounded_size(value, limit)
+    except SessionError:
+        raise
+    except (ValueError, TypeError, UnicodeError, RecursionError) as error:
+        raise _native_error(error, "invalid operation JSON") from None
 
 
 def digest(value):
-    return hashlib.sha256(canonical(value).encode('utf-8')).hexdigest()
+    try:
+        return _rust_values().operation_digest(_json_input(value))
+    except SessionError:
+        raise
+    except (ValueError, TypeError, UnicodeError, RecursionError) as error:
+        raise _native_error(error, "invalid operation JSON") from None
 
 
 def _unique(pairs):
@@ -45,31 +104,38 @@ def _unique(pairs):
 
 
 def loads(raw):
-    try:return json.loads(raw,object_pairs_hook=_unique,parse_constant=lambda _:(_ for _ in ()).throw(ValueError()))
-    except (ValueError,TypeError,RecursionError):raise SessionError('invalid operation JSON') from None
+    try:
+        raw_bytes = raw.encode("utf-8") if type(raw) is str else bytes(raw)
+        validated = _rust_values().operation_loads(raw_bytes)
+        return json.loads(validated, object_pairs_hook=_unique,
+                          parse_constant=lambda _: (_ for _ in ()).throw(ValueError()))
+    except SessionError:
+        raise
+    except (ValueError, TypeError, RecursionError, UnicodeError) as error:
+        if isinstance(error, SessionError):
+            raise
+        raise _native_error(error, "invalid operation JSON") from None
 
 
 def token_encode(secret,scope,after):
-    raw=canonical({'version':'umf.table-cursor/0.1','scope':scope,'after':after}).encode('utf-8')
-    encoded=base64.urlsafe_b64encode(raw).rstrip(b'=').decode('ascii')
-    result=encoded+'.'+hmac.new(secret,encoded.encode('ascii'),hashlib.sha256).hexdigest()
-    if len(result)>16384:raise SessionError('cursor capacity exceeded')
-    return result
+    try:
+        return _rust_values().operation_token_encode(
+            secret, _json_input(scope), _json_input(after))
+    except SessionError:
+        raise
+    except (ValueError, TypeError, UnicodeError, RecursionError) as error:
+        raise _native_error(error, "invalid operation JSON") from None
 
 
 def token_decode(secret,token):
     if type(token) is not str or len(token)>16384:raise SessionError('invalid cursor')
     try:
-        encoded,signature=token.split('.')
-        if not re.fullmatch('[A-Za-z0-9_-]+',encoded) or not re.fullmatch('[a-f0-9]{64}',signature):raise ValueError()
-        expected=hmac.new(secret,encoded.encode('ascii'),hashlib.sha256).hexdigest()
-        if not hmac.compare_digest(signature,expected):raise ValueError()
-        raw=base64.b64decode(encoded+'='*(-len(encoded)%4),altchars=b'-_',validate=True)
-        parsed=loads(raw)
-        if type(parsed) is not dict or set(parsed)!={'version','scope','after'} or parsed['version']!='umf.table-cursor/0.1' or type(parsed['scope']) is not dict or type(parsed['after']) is not list:raise ValueError()
-        return parsed
-    except (ValueError,TypeError,UnicodeError):raise SessionError('invalid cursor') from None
-
+        decoded = _rust_values().operation_token_decode(secret, token)
+        return json.loads(decoded, object_pairs_hook=_unique)
+    except SessionError:
+        raise
+    except (ValueError, TypeError, UnicodeError, RecursionError) as error:
+        raise _native_error(error, "invalid cursor") from None
 
 def native_arguments(program, item=0):
     sources={slot['id']:slot['source'] for slot in program['parameterSources']}

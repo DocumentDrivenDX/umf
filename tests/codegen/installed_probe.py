@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: MIT OR Apache-2.0
-"""Installed embedded V8 parity and writer fault controls, with JS processes forbidden."""
+"""Installed native parity, writer faults and trusted-resource controls."""
 from __future__ import annotations
 
 import argparse
@@ -8,11 +8,13 @@ import contextlib
 import io
 import hashlib
 import importlib.metadata
+import importlib.resources
 import json
 import os
 import shutil
 import socket
 import subprocess
+import sys
 import tempfile
 from pathlib import Path
 from unittest.mock import patch
@@ -40,7 +42,23 @@ def refuses(code, operation):
     raise AssertionError('expected refusal: '+code)
 
 
-with patch.object(subprocess,'Popen',side_effect=AssertionError('external process forbidden')), \
+real_popen = subprocess.Popen
+worker_launches = []
+native_cli = str(importlib.resources.files('umf').joinpath('_bin', 'umf'))
+codegen_operations = {'generate', 'deployment', 'verify-deployment', 'migration',
+                      'verify-migration', 'discover-changes', 'row-scope'}
+
+def only_native_worker(command, *args, **kwargs):
+    assert command[0] == native_cli, command
+    assert kwargs.get('cwd') == str(Path(native_cli).parent), kwargs
+    assert (command == [native_cli, 'codegen', '--capabilities'] or
+            (len(command) == 9 and command[1] == 'codegen' and command[2] in codegen_operations
+             and command[3:] == ['--request', '-', '--input-format', 'json',
+                                  '--output-format', 'wire'])), command
+    worker_launches.append(command)
+    return real_popen(command, *args, **kwargs)
+
+with patch.object(subprocess,'Popen',side_effect=only_native_worker), \
      patch.object(shutil,'which',side_effect=AssertionError('executable lookup forbidden')), \
      patch.object(socket,'create_connection',side_effect=AssertionError('external network forbidden')), \
      patch.dict(os.environ,{'PATH':''}):
@@ -113,21 +131,22 @@ with patch.object(subprocess,'Popen',side_effect=AssertionError('external proces
             except SystemExit as error: assert error.code==2
             else: raise AssertionError('duplicate flag accepted')
     refuses('GENERATION_TIMEOUT',lambda:generate_python_client(corpus[0]['request']['text'],package='shop',timeout_seconds=1e-12))
-    import umf_codegen._embedded as embedded
-    original=embedded.files('umf_codegen').joinpath('_assets')
+    import umf_codegen._native as native
+    original=native.resources.files('umf_codegen').joinpath('_resources')
     with tempfile.TemporaryDirectory(dir=Path(tempfile.gettempdir()).resolve(),prefix='umf-codegen-integrity-') as directory:
         copied=Path(directory)
-        shutil.copytree(original,copied/'_assets')
-        with patch.object(embedded,'files',return_value=copied):
-            manifest=copied/'_assets/manifest.json'
+        shutil.copytree(original,copied/'_resources')
+        with patch.object(native.resources,'files',return_value=copied):
+            manifest=copied/'_resources/manifest.json'
             manifest.write_bytes(manifest.read_bytes()+b' ')
-            refuses('PAYLOAD_INVALID',lambda:generate_python_client(corpus[0]['request']['text'],package='shop'))
+            refuses('ENGINE_UNAVAILABLE',native._load_resource_manifest)
         shutil.copyfile(original/'manifest.json',manifest)
-        bundle=copied/'_assets/generator.js.gz';bundle.write_bytes(bundle.read_bytes()+b'corrupt')
-        with patch.object(embedded,'files',return_value=copied):
-            refuses('PAYLOAD_INVALID',lambda:generate_python_client(corpus[0]['request']['text'],package='shop'))
+        resource=copied/'_resources/core.schema.json';resource.write_bytes(resource.read_bytes()+b'corrupt')
+        with patch.object(native.resources,'files',return_value=copied):
+            refuses('ENGINE_UNAVAILABLE',native._load_resource_manifest)
+    assert worker_launches, 'native worker was not launched'
 report={'python':__import__('platform').python_version(),'generator':importlib.metadata.version('umf-codegen'),
-        'engine':importlib.metadata.version('mini-racer'),'cases':results,'writerAndIntegrityControls':'passed',
-        'externalJavascriptProcesses':'forbidden','platform':__import__('platform').platform()}
+        'engine':importlib.metadata.version('umf-core'),'cases':results,'writerAndIntegrityControls':'passed',
+        'javascriptProcesses':'forbidden','nativeCliLaunches':len(worker_launches),'platform':__import__('platform').platform()}
 args.report.write_text(json.dumps(report,indent=2)+'\n')
 print(json.dumps({'parityCases':len(results),'writerAndIntegrityControls':'passed'}))

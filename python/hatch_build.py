@@ -132,7 +132,7 @@ class CustomBuildHook(BuildHookInterface):
                     flags = f"{flags} {flag}".strip()
             build_env["RUSTFLAGS"] = flags
         subprocess.run(
-            [cargo, "build", "--locked", "--release", "--manifest-path", str(repository / "bindings/core/python/Cargo.toml"), "-p", "umf-core-python"],
+            [cargo, "build", "--locked", "--release", "--manifest-path", str(repository / "Cargo.toml"), "-p", "umf-core-python", "-p", "umf-cli"],
             cwd=repository,
             env=build_env,
             check=True,
@@ -143,6 +143,10 @@ class CustomBuildHook(BuildHookInterface):
         if extension is None:
             raise FileNotFoundError(f"Compiled Python Rust extension is missing under {target}")
         build_data["force_include"][str(extension)] = "umf/_rust_core.abi3.so"
+        cli = target / ("umf.exe" if os.name == "nt" else "umf")
+        if not cli.is_file():
+            raise FileNotFoundError(f"Compiled Rust CLI is missing under {target}")
+        build_data["force_include"][str(cli)] = f"umf/_bin/{cli.name}"
         # This is a native abi3 wheel, never a universal py3-none-any archive.
         platform_tag = sysconfig.get_platform().replace("-", "_").replace(".", "_")
         build_data["pure_python"] = False

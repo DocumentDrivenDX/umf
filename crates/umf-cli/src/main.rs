@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
+#[cfg(feature = "codegen")]
+mod allocator;
+
 use std::{
     env, fs,
     io::{self, Read},
@@ -10,6 +13,31 @@ use umf_core::serialization::Format;
 use umf_core::{Context, Utf16, Value};
 
 fn main() {
+    #[cfg(feature = "codegen")]
+    if env::args().nth(1).as_deref() == Some("codegen") {
+        #[cfg(feature = "allocator-test")]
+        allocator::configure_test_cap_from_env();
+        allocator::activate_codegen();
+        #[cfg(feature = "allocator-test")]
+        if env::args().nth(2).as_deref() == Some("__allocator_probe") {
+            allocator::test_probe_from_env();
+            return;
+        }
+        let code = match codegen_run(env::args().skip(2).collect()) {
+            Ok(output) => {
+                println!("{output}");
+                0
+            }
+            Err((status, output)) => {
+                println!("{output}");
+                status
+            }
+        };
+        if code != 0 {
+            process::exit(code);
+        }
+        return;
+    }
     if env::args().nth(1).as_deref() == Some("core") {
         let args = env::args().skip(2).collect::<Vec<_>>();
         let (profile, baseline_callback) = match parse_core_args(&args) {
@@ -55,6 +83,404 @@ fn main() {
         eprintln!("{error}");
         process::exit(2);
     }
+}
+
+#[cfg(feature = "codegen")]
+const RESOURCE_PROFILE: &str = "umf.codegen-resources/1";
+#[cfg(feature = "codegen")]
+const CLI_PROTOCOL: &str = "umf.codegen-cli/1";
+#[cfg(feature = "codegen")]
+const MAX_REQUEST_BYTES: usize = 32 * 1024 * 1024;
+#[cfg(feature = "codegen")]
+const RESOURCE_FILES: &[(&str, &[u8])] = &[
+    (
+        "actions.package.json",
+        include_bytes!("../../../spec/extensions/actions/package.json"),
+    ),
+    (
+        "binding.package.json",
+        include_bytes!("../../../spec/extensions/binding/package.json"),
+    ),
+    (
+        "core.constraints.json",
+        include_bytes!("../../../spec/metamodel/generated/core-constraints.json"),
+    ),
+    (
+        "core.domain-policy.json",
+        include_bytes!("../../../spec/metamodel/generated/domain-policy.json"),
+    ),
+    (
+        "core.package-schema.json",
+        include_bytes!("../../../spec/core/extension-package.schema.json"),
+    ),
+    (
+        "core.reference-schema.json",
+        include_bytes!("../../../spec/core/semantic-type-reference.schema.json"),
+    ),
+    (
+        "core.schema.json",
+        include_bytes!("../../../spec/core/schema.json"),
+    ),
+    (
+        "stable-binding.package.json",
+        include_bytes!("../../../spec/extensions/binding-stable/package.json"),
+    ),
+    (
+        "tables.package.json",
+        include_bytes!("../../../spec/extensions/tables/package.json"),
+    ),
+];
+
+#[cfg(feature = "codegen")]
+fn codegen_run(args: Vec<String>) -> Result<String, (i32, String)> {
+    if args.as_slice() == ["--version"] {
+        let mut ctx = umf_core_wire::transport_context();
+        let value = object(vec![
+            ("protocol", Value::string_utf8(CLI_PROTOCOL)),
+            ("version", Value::string_utf8(env!("CARGO_PKG_VERSION"))),
+            ("profile", Value::string_utf8(RESOURCE_PROFILE)),
+            (
+                "inputFormat",
+                Value::string_utf8("umf.codegen-json-core-admission/1"),
+            ),
+            ("outputWireProtocol", Value::string_utf8("umf.core-wire/1")),
+            (
+                "resourceManifestSha256",
+                Value::string_utf8(resource_manifest_sha256()),
+            ),
+        ]);
+        return umf_core::serialization::stringify_compact_metered(&value, &mut ctx)
+            .and_then(|text| text.to_utf8().map_err(|_| output_encoding_error()))
+            .map_err(|error| (1, engine_error(error)));
+    }
+    if args.as_slice() == ["--capabilities"] {
+        let mut ctx = umf_core_wire::transport_context();
+        let value = object(vec![
+            ("protocol", Value::string_utf8(CLI_PROTOCOL)),
+            ("version", Value::string_utf8(env!("CARGO_PKG_VERSION"))),
+            ("profile", Value::string_utf8(RESOURCE_PROFILE)),
+            (
+                "inputFormat",
+                Value::string_utf8("umf.codegen-json-core-admission/1"),
+            ),
+            ("outputWireProtocol", Value::string_utf8("umf.core-wire/1")),
+            ("resourceManifest", resource_manifest()),
+            (
+                "resourceManifestSha256",
+                Value::string_utf8(resource_manifest_sha256()),
+            ),
+        ]);
+        return umf_core::serialization::stringify_compact_metered(&value, &mut ctx)
+            .and_then(|text| text.to_utf8().map_err(|_| output_encoding_error()))
+            .map_err(|error| (1, engine_error(error)));
+    }
+    let parsed = parse_codegen_args(&args).map_err(|message| (2, cli_error(&message)))?;
+    let input =
+        read_codegen_request(&parsed.request_path).map_err(|message| (2, cli_error(&message)))?;
+    if input.len() > MAX_REQUEST_BYTES {
+        return Err((2, cli_error("request exceeds the 32 MiB transport limit")));
+    }
+    let mut transport = umf_core_wire::transport_context();
+    let request = match parsed.input_format.as_str() {
+        "json" => {
+            let text = String::from_utf8(input)
+                .map_err(|error| (2, cli_error(&format!("input is not UTF-8: {error}"))))?;
+            umf_core::serialization::read_json_value(
+                &text.encode_utf16().collect::<Vec<_>>(),
+                Format::Json,
+                &mut transport,
+            )
+            .map_err(|error| (2, engine_error(error)))?
+        }
+        "wire" => {
+            let text = String::from_utf8(input)
+                .map_err(|error| (2, cli_error(&format!("wire input is not UTF-8: {error}"))))?;
+            umf_core_wire::decode(&text, &mut transport)
+                .map_err(|error| (2, engine_error(error)))?
+        }
+        _ => unreachable!(),
+    };
+
+    let mut ctx = Context::ordinary();
+    let result = codegen_operation(&parsed.operation, &request, &mut ctx)
+        .map_err(|error| (1, engine_error(error)))?;
+    let envelope = object(vec![("ok", Value::Bool(true)), ("result", result)]);
+    let mut output_transport = umf_core_wire::transport_context();
+    let output = match parsed.output_format.as_str() {
+        "json" => {
+            umf_core::serialization::stringify_compact_metered(&envelope, &mut output_transport)
+                .and_then(|text| text.to_utf8().map_err(|_| output_encoding_error()))
+                .map_err(|error| (1, engine_error(error)))?
+        }
+        "wire" => umf_core_wire::encode(&envelope, &mut output_transport)
+            .map_err(|error| (1, engine_error(error)))?,
+        _ => unreachable!(),
+    };
+    Ok(output)
+}
+
+#[cfg(feature = "codegen")]
+fn resource_manifest() -> Value {
+    let files = RESOURCE_FILES
+        .iter()
+        .map(|(name, bytes)| (Utf16::from(*name), Value::string_utf8(sha256(bytes))))
+        .collect();
+    object(vec![
+        ("files", Value::Object(files)),
+        ("profile", Value::string_utf8(RESOURCE_PROFILE)),
+    ])
+}
+
+#[cfg(feature = "codegen")]
+fn resource_manifest_sha256() -> String {
+    use std::fmt::Write;
+    let mut canonical = String::from("{\"files\":{");
+    for (index, (name, bytes)) in RESOURCE_FILES.iter().enumerate() {
+        if index > 0 {
+            canonical.push(',');
+        }
+        let _ = write!(canonical, "\"{name}\":\"{}\"", sha256(bytes));
+    }
+    canonical.push_str("},\"profile\":\"umf.codegen-resources/1\"}\n");
+    sha256(canonical.as_bytes())
+}
+
+#[cfg(feature = "codegen")]
+fn output_encoding_error() -> umf_core::EngineError {
+    umf_core::EngineError::new(
+        "OUTPUT_ENCODING",
+        Utf16::default(),
+        "Output cannot be represented as UTF-8",
+    )
+}
+
+#[cfg(feature = "codegen")]
+#[derive(Debug)]
+struct CodegenArgs {
+    operation: String,
+    request_path: String,
+    input_format: String,
+    output_format: String,
+}
+
+#[cfg(feature = "codegen")]
+fn parse_codegen_args(args: &[String]) -> Result<CodegenArgs, String> {
+    let valid_ops = [
+        "generate",
+        "deployment",
+        "verify-deployment",
+        "migration",
+        "verify-migration",
+        "discover-changes",
+        "row-scope",
+    ];
+    let operation = args.first().ok_or("operation is required")?.clone();
+    if !valid_ops.contains(&operation.as_str()) {
+        return Err(format!("unknown operation {operation}"));
+    }
+    let mut request_path = None;
+    let mut input_format = "json".to_owned();
+    let mut output_format = "json".to_owned();
+    let mut seen_input = false;
+    let mut seen_output = false;
+    let mut index = 1;
+    while index < args.len() {
+        let flag = args[index].as_str();
+        index += 1;
+        let value = args
+            .get(index)
+            .ok_or_else(|| format!("{flag} requires a value"))?
+            .clone();
+        index += 1;
+        match flag {
+            "--request" if request_path.is_none() => request_path = Some(value),
+            "--input-format" if !seen_input => {
+                if !["json", "wire"].contains(&value.as_str()) {
+                    return Err("--input-format must be json or wire".into());
+                }
+                input_format = value;
+                seen_input = true;
+            }
+            "--output-format" if !seen_output => {
+                if !["json", "wire"].contains(&value.as_str()) {
+                    return Err("--output-format must be json or wire".into());
+                }
+                output_format = value;
+                seen_output = true;
+            }
+            _ => return Err(format!("unexpected or duplicate argument {flag}")),
+        }
+    }
+    Ok(CodegenArgs {
+        operation,
+        request_path: request_path.ok_or("--request is required")?,
+        input_format,
+        output_format,
+    })
+}
+
+#[cfg(feature = "codegen")]
+fn codegen_operation(
+    operation: &str,
+    request: &Value,
+    ctx: &mut Context<'_>,
+) -> Result<Value, umf_core::EngineError> {
+    let mut resource_ctx = Context::catalog();
+    let tables = embedded_json(
+        include_str!("../../../spec/extensions/tables/package.json"),
+        &mut resource_ctx,
+    )?;
+    let actions = embedded_json(
+        include_str!("../../../spec/extensions/actions/package.json"),
+        &mut resource_ctx,
+    )?;
+    let binding = embedded_json(
+        include_str!("../../../spec/extensions/binding/package.json"),
+        &mut resource_ctx,
+    )?;
+    let stable_binding = embedded_json(
+        include_str!("../../../spec/extensions/binding-stable/package.json"),
+        &mut resource_ctx,
+    )?;
+    let tables_schema = field(&tables, "schema")
+        .cloned()
+        .ok_or_else(resource_error)?;
+    let actions_schema = field(&actions, "schema")
+        .cloned()
+        .ok_or_else(resource_error)?;
+    let resources = umf_codegen::CodegenResources::new(
+        umf_core::ResourceSet::new(
+            embedded_json(
+                include_str!("../../../spec/core/schema.json"),
+                &mut resource_ctx,
+            )?,
+            embedded_json(
+                include_str!("../../../spec/core/semantic-type-reference.schema.json"),
+                &mut resource_ctx,
+            )?,
+            embedded_json(
+                include_str!("../../../spec/core/extension-package.schema.json"),
+                &mut resource_ctx,
+            )?,
+            embedded_json(
+                include_str!("../../../spec/metamodel/generated/core-constraints.json"),
+                &mut resource_ctx,
+            )?,
+            embedded_json(
+                include_str!("../../../spec/metamodel/generated/domain-policy.json"),
+                &mut resource_ctx,
+            )?,
+        ),
+        tables,
+        tables_schema,
+        actions,
+        actions_schema,
+        binding,
+        stable_binding,
+        &mut resource_ctx,
+    )?;
+    let engine = umf_codegen::CodegenEngine::new(&resources);
+    match operation {
+        "generate" => engine.generate_python_client(request, ctx),
+        "deployment" => engine.compile_table_deployment(request, ctx),
+        "verify-deployment" => {
+            let bundle =
+                field(request, "bundle").ok_or_else(|| request_error("bundle is required"))?;
+            engine.verify_table_deployment(bundle, ctx)
+        }
+        "migration" => engine.compile_table_migration(request, ctx),
+        "verify-migration" => {
+            let plan = field(request, "plan").ok_or_else(|| request_error("plan is required"))?;
+            engine.verify_table_migration(plan, ctx)
+        }
+        "discover-changes" => {
+            if !matches!(request, Value::Object(members) if members.len() == 2)
+                || field(request, "previous").is_none()
+                || field(request, "next").is_none()
+            {
+                return Err(umf_core::EngineError::new(
+                    "MIGRATION_CHANGES_FAILED",
+                    Utf16::default(),
+                    "Expected exact previous and next deployment bundle members",
+                ));
+            }
+            let previous =
+                field(request, "previous").ok_or_else(|| request_error("previous is required"))?;
+            let next = field(request, "next").ok_or_else(|| request_error("next is required"))?;
+            let changes = engine.discover_table_migration_changes(previous, next, ctx)?;
+            Ok(object(vec![("changes", changes)]))
+        }
+        "row-scope" => engine.normalize_row_scope(request, ctx),
+        _ => unreachable!(),
+    }
+}
+
+#[cfg(feature = "codegen")]
+fn embedded_json(source: &str, ctx: &mut Context<'_>) -> Result<Value, umf_core::EngineError> {
+    umf_core::serialization::read_json_value(
+        &source.encode_utf16().collect::<Vec<_>>(),
+        Format::Json,
+        ctx,
+    )
+}
+#[cfg(feature = "codegen")]
+fn resource_error() -> umf_core::EngineError {
+    umf_core::EngineError::new(
+        "CODEGEN_RESOURCE_INVALID",
+        Utf16::default(),
+        "Embedded codegen resource is invalid",
+    )
+}
+#[cfg(feature = "codegen")]
+fn request_error(message: &str) -> umf_core::EngineError {
+    umf_core::EngineError::new("REQUEST", Utf16::default(), message)
+}
+#[cfg(feature = "codegen")]
+fn engine_error(error: umf_core::EngineError) -> String {
+    let mut ctx = Context::ordinary();
+    let fields = vec![
+        ("code", Value::string_utf8(error.code)),
+        ("message", Value::String(error.message)),
+        ("path", Value::String(error.path)),
+    ];
+    let error_value = object(fields);
+    let envelope = object(vec![("ok", Value::Bool(false)), ("error", error_value)]);
+    umf_core::serialization::stringify_compact_metered(&envelope, &mut ctx)
+        .and_then(|text| {
+            text.to_utf8().map_err(|_| {
+                umf_core::EngineError::new(
+                    "OUTPUT_ENCODING",
+                    Utf16::default(),
+                    "Output cannot be represented as UTF-8",
+                )
+            })
+        })
+        .unwrap_or_else(|_| "{\"ok\":false,\"error\":{\"code\":\"OUTPUT_ERROR\"}}".into())
+}
+#[cfg(feature = "codegen")]
+fn cli_error(message: &str) -> String {
+    let mut ctx = Context::ordinary();
+    let envelope = object(vec![
+        ("ok", Value::Bool(false)),
+        (
+            "error",
+            object(vec![
+                ("code", Value::string_utf8("CLI")),
+                ("message", Value::string_utf8(message)),
+            ]),
+        ),
+    ]);
+    umf_core::serialization::stringify_compact_metered(&envelope, &mut ctx)
+        .and_then(|text| {
+            text.to_utf8().map_err(|_| {
+                umf_core::EngineError::new(
+                    "OUTPUT_ENCODING",
+                    Utf16::default(),
+                    "Output cannot be represented as UTF-8",
+                )
+            })
+        })
+        .unwrap_or_else(|_| "{\"ok\":false,\"error\":{\"code\":\"CLI\"}}".into())
 }
 
 fn parse_core_args(
@@ -343,6 +769,34 @@ fn read_stdin() -> Result<Vec<u8>, String> {
         .map_err(|e| e.to_string())?;
     Ok(bytes)
 }
+#[cfg(feature = "codegen")]
+fn read_codegen_request(path: &str) -> Result<Vec<u8>, String> {
+    if path == "-" {
+        let mut bytes = Vec::new();
+        io::stdin()
+            .take((MAX_REQUEST_BYTES + 1) as u64)
+            .read_to_end(&mut bytes)
+            .map_err(|error| error.to_string())?;
+        if bytes.len() > MAX_REQUEST_BYTES {
+            return Err("request exceeds the 32 MiB transport limit".into());
+        }
+        return Ok(bytes);
+    }
+    let metadata = fs::metadata(path).map_err(|error| error.to_string())?;
+    if metadata.len() > MAX_REQUEST_BYTES as u64 {
+        return Err("request exceeds the 32 MiB transport limit".into());
+    }
+    let mut bytes = Vec::new();
+    fs::File::open(path)
+        .map_err(|error| error.to_string())?
+        .take((MAX_REQUEST_BYTES + 1) as u64)
+        .read_to_end(&mut bytes)
+        .map_err(|error| error.to_string())?;
+    if bytes.len() > MAX_REQUEST_BYTES {
+        return Err("request exceeds the 32 MiB transport limit".into());
+    }
+    Ok(bytes)
+}
 fn field<'a>(value: &'a Value, key: &str) -> Option<&'a Value> {
     if let Value::Object(items) = value {
         items
@@ -479,5 +933,50 @@ mod tests {
         expected.extend("document".encode_utf16());
         expected.extend([0x3a, 0xdc00]);
         assert_eq!(result[0].message.units(), expected);
+    }
+
+    #[test]
+    #[cfg(feature = "codegen")]
+    fn codegen_cli_requires_one_request_and_accepts_only_closed_formats() {
+        let parse = |args: &[&str]| {
+            parse_codegen_args(&args.iter().map(|s| (*s).into()).collect::<Vec<_>>())
+        };
+        assert_eq!(
+            parse(&["generate", "--request", "-"]).unwrap().input_format,
+            "json"
+        );
+        assert_eq!(
+            parse(&[
+                "deployment",
+                "--request",
+                "x",
+                "--input-format",
+                "wire",
+                "--output-format",
+                "wire"
+            ])
+            .unwrap()
+            .output_format,
+            "wire"
+        );
+        for args in [
+            vec!["generate"],
+            vec!["generate", "--request", "-", "--request", "x"],
+            vec!["generate", "--request", "-", "--input-format", "yaml"],
+            vec!["unknown", "--request", "-"],
+            vec!["generate", "-"],
+        ] {
+            assert!(parse(&args).is_err(), "accepted {args:?}");
+        }
+    }
+
+    #[test]
+    #[cfg(feature = "codegen")]
+    fn codegen_cli_pins_the_nine_source_resource_manifest() {
+        assert_eq!(RESOURCE_FILES.len(), 9);
+        assert_eq!(
+            resource_manifest_sha256(),
+            "f7c142db1c57bc5e12e463fcf530ec09f671b01ecb99c757866a73a154476609"
+        );
     }
 }

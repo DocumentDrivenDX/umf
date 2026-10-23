@@ -180,7 +180,9 @@ dev = ["pytest>=8"]
         self.assertNotIn(("umf-core", "jsonschema"), runtime)
         self.assertNotIn(("umf-core", "ruamel-yaml"), runtime)
         self.assertEqual({"pydantic"}, {package for project, package in runtime if project == "umf-core"})
-        self.assertIn(("umf-codegen", "mini-racer"), runtime)
+        self.assertIn(("umf-codegen", "umf-core"), runtime)
+        self.assertIn(("umf_access", "umf-core"), runtime)
+        self.assertFalse(any(package == "mini-racer" for _, package in runtime))
         self.assertNotIn(("umf-core", "hatchling.build"), runtime)
         self.assertTrue(any(entry["kind"] == "build-requirement" and entry["package"] == "hatchling" for entry in declarations))
 

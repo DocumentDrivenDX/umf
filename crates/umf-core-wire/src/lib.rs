@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 //! Private `umf.core-wire/1` transport shared by native language bindings.
+#[cfg(feature = "codegen")]
 mod codegen;
 
 use std::collections::BTreeSet;
@@ -596,6 +597,45 @@ pub fn write_value_wire_with_control(
     run_value_wire(wire_json, format, true, Some(control))
 }
 
+/// Execute one `umf-128/1` codec operation. Tagged admission, the codec, and
+/// tagged result encoding share this invocation context and host controls.
+pub fn execute_bit128_wire(wire_json: &str) -> String {
+    let mut no_control = |_amount: usize| Ok(());
+    execute_bit128_wire_with_control(wire_json, &mut no_control)
+}
+
+pub fn execute_bit128_wire_with_control(
+    wire_json: &str,
+    control: &mut dyn FnMut(usize) -> Result<(), EngineError>,
+) -> String {
+    let result = (|| {
+        let mut ctx = Context::ordinary().with_host_control(control);
+        let request = decode(wire_json, &mut ctx)?;
+        if text_field(&request, "profile").as_deref() != Some("umf-128/1") {
+            return Err(fail("REQUEST", "umf-128/1 profile is required"));
+        }
+        let op = text_field(&request, "op").ok_or_else(|| fail("REQUEST", "Codec operation is required"))?;
+        let args = field(&request, "args").ok_or_else(|| fail("REQUEST", "Codec arguments are required"))?;
+        let value = |name: &str| field(args, name).ok_or_else(|| fail("REQUEST", &format!("{name} is required")));
+        let result = match op.as_str() {
+            "parseBits128" => umf_core::bit128::parse_bits128(value("text")?, &mut ctx)?,
+            "parseUuid" => umf_core::bit128::parse_uuid(value("text")?, &mut ctx)?,
+            "bits128FromBytes" => umf_core::bit128::bits128_from_bytes(value("bytes")?, &mut ctx)?,
+            "bits128ToBytes" => umf_core::bit128::bits128_to_bytes(value("value")?, &mut ctx)?,
+            "uuidFromBits128" => umf_core::bit128::uuid_from_bits128(value("value")?, &mut ctx)?,
+            "uuidToBits128" => umf_core::bit128::uuid_to_bits128(value("value")?, &mut ctx)?,
+            "compareBits128" => umf_core::bit128::compare_bits128(value("left")?, value("right")?, &mut ctx)?,
+            "bits128ToWords" => umf_core::bit128::bits128_to_words(value("value")?, value("signed")?, &mut ctx)?,
+            "bits128FromWords" => umf_core::bit128::bits128_from_words(value("words")?, value("signed")?, &mut ctx)?,
+            "bits128ToInteger" => umf_core::bit128::bits128_to_integer(value("value")?, value("signed")?, &mut ctx)?,
+            "bits128FromInteger" => umf_core::bit128::bits128_from_integer(value("literal")?, value("signed")?, &mut ctx)?,
+            _ => return Err(fail("REQUEST", "Unknown umf-128/1 operation")),
+        };
+        encode(&result, &mut ctx)
+    })();
+    result_envelope(result)
+}
+
 fn run_value_wire(
     wire_json: &str,
     format: &str,
@@ -632,6 +672,199 @@ fn run_value_wire(
 
 pub fn error_envelope(error: EngineError) -> String {
     result_envelope(Err(error))
+}
+
+/// Execute one opt-in CONTRACT-049 numeric operation through the Rust core.
+/// This separate profile does not change the R3 codegen protocol or ordinary
+/// JSON number admission. A supplied context requires explicit core resources
+/// and is validated against the current document and selected Field.
+pub fn execute_javascript_numeric_wire(wire_json: &str) -> String {
+    let mut no_control = |_amount: usize| Ok(());
+    execute_javascript_numeric_wire_with_control(wire_json, &mut no_control)
+}
+
+pub fn execute_javascript_numeric_wire_with_control(
+    wire_json: &str,
+    control: &mut dyn FnMut(usize) -> Result<(), EngineError>,
+) -> String {
+    let result = (|| {
+        let request = {
+            let mut transport = transport_context().with_host_control(control);
+            decode(wire_json, &mut transport)?
+        };
+        if text_field(&request, "profile").as_deref() != Some("umf.javascript-numeric/1.0.0") {
+            return Err(fail("REQUEST", "JavaScript numeric profile is required"));
+        }
+        let operation = text_field(&request, "op")
+            .ok_or_else(|| fail("REQUEST", "JavaScript numeric operation is required"))?;
+        let (literal, output) = {
+            let mut operation_context = Context::ordinary().with_host_control(control);
+            match operation.as_str() {
+                "exactDecimal" => {
+                    let token = string_field(&request, "token")?;
+                    let token = umf_core::javascript_numeric::exact_decimal(&token, &mut operation_context)?;
+                    let literal = numeric_carrier("decimalToken", &token);
+                    (literal.clone(), literal)
+                }
+                "integerFromBigInt" => {
+                    let token = string_field(&request, "token")?;
+                    let token = umf_core::javascript_numeric::integer_from_bigint(&token, &mut operation_context)?;
+                    let literal = numeric_carrier("integerToken", &token);
+                    (literal.clone(), literal)
+                }
+                "integerToBigInt" => {
+                    let token = carrier_field(&request, "integerToken")?;
+                    let integer = umf_core::javascript_numeric::integer_to_bigint(&token, &mut operation_context)?;
+                    (numeric_carrier("integerToken", &token), Value::String(Utf16::from(integer)))
+                }
+                "admitJavascriptNumber" => {
+                    let bits = string_field(&request, "numberBits")?;
+                    if bits.len() != 16 || !bits.bytes().all(|byte| byte.is_ascii_hexdigit()) {
+                        return Err(fail("JAVASCRIPT_NUMERIC", "Expected binary64 bit pattern"));
+                    }
+                    let bits = u64::from_str_radix(&bits, 16)
+                        .map_err(|_| fail("JAVASCRIPT_NUMERIC", "Expected binary64 bit pattern"))?;
+                    let number = f64::from_bits(bits);
+                    let scalar_type = string_field(&request, "scalarType")?;
+                    let token = umf_core::javascript_numeric::admit_javascript_number(
+                        number,
+                        &scalar_type,
+                        &mut operation_context,
+                    )?;
+                    let carrier = if scalar_type == "integer" { "integerToken" } else { "decimalToken" };
+                    let literal = numeric_carrier(carrier, &token);
+                    (literal.clone(), literal)
+                }
+                "numericToNumberLossless" => {
+                    let (carrier, token) = numeric_literal_field(&request)?;
+                    let number = umf_core::javascript_numeric::numeric_to_number_lossless(
+                        &token,
+                        carrier == "integerToken",
+                        &mut operation_context,
+                    )?;
+                    (numeric_carrier(carrier, &token), Value::Number(number))
+                }
+                _ => return Err(fail("REQUEST", "Unknown JavaScript numeric operation")),
+            }
+        };
+
+        if let Some(context) = field(&request, "context") {
+            let resources = field(&request, "resources")
+                .ok_or_else(|| fail("REQUEST", "Explicit resources are required for Field context"))?;
+            let engine = {
+                let mut catalog = Context::catalog().with_host_control(control);
+                Engine::new(
+                    ResourceSet::new(
+                        required_field(resources, "coreSchema")?,
+                        required_field(resources, "referenceSchema")?,
+                        required_field(resources, "packageSchema")?,
+                        required_field(resources, "constraints")?,
+                        required_field(resources, "domainPolicy")?,
+                    ),
+                    &mut catalog,
+                )?
+            };
+            let document = required_field(context, "document")?;
+            let field_context = required_field(context, "field")?;
+            let module_id = string_field(&field_context, "module")?;
+            let element_id = string_field(&field_context, "element")?;
+            let registry = Registry::new();
+            let mut capabilities = NumericNoCapabilities;
+            let validation = {
+                let mut operation_context = Context::ordinary().with_host_control(control);
+                engine.validate_core_field_value(
+                    &document,
+                    &module_id,
+                    &element_id,
+                    &literal,
+                    &registry,
+                    &mut capabilities,
+                    &mut operation_context,
+                )?
+            };
+            let validation = validation_value(validation);
+            let mut operation_context = Context::ordinary().with_host_control(control);
+            return encode(&object(vec![("result", output), ("validation", validation)]), &mut operation_context);
+        }
+        let mut operation_context = Context::ordinary().with_host_control(control);
+        encode(&output, &mut operation_context)
+    })();
+    result_envelope(result)
+}
+
+struct NumericNoCapabilities;
+impl Capabilities for NumericNoCapabilities {
+    fn validate_extension(
+        &mut self,
+        _token: u64,
+        _payload: &Value,
+        _context: &umf_core::SemanticContext,
+    ) -> Result<Vec<Diagnostic>, Utf16> {
+        Err(Utf16::from("No extension callback is installed for numeric context validation"))
+    }
+}
+
+fn text_field(value: &Value, name: &str) -> Option<String> {
+    field(value, name)
+        .and_then(as_utf16)
+        .and_then(|value| value.to_utf8().ok())
+}
+
+fn string_field(value: &Value, name: &str) -> Result<String, EngineError> {
+    let value = field(value, name)
+        .and_then(as_utf16)
+        .ok_or_else(|| fail("REQUEST", "Required text value is missing"))?;
+    value
+        .to_utf8()
+        .map_err(|_| fail("REQUEST", "Text must contain well-formed UTF-16"))
+}
+
+fn required_field(value: &Value, name: &str) -> Result<Value, EngineError> {
+    field(value, name)
+        .cloned()
+        .ok_or_else(|| fail("REQUEST", "Explicit resource or context member is required"))
+}
+
+fn numeric_carrier(name: &str, token: &str) -> Value {
+    object(vec![(name, Value::String(Utf16::from(token)))])
+}
+
+fn carrier_field(request: &Value, carrier: &str) -> Result<String, EngineError> {
+    let literal = field(request, "literal").ok_or_else(|| fail("JAVASCRIPT_NUMERIC", "Expected one numeric carrier"))?;
+    let Value::Object(members) = literal else {
+        return Err(fail("JAVASCRIPT_NUMERIC", "Expected one numeric carrier"));
+    };
+    if members.len() != 1 || members[0].0 != Utf16::from(carrier) {
+        return Err(fail("JAVASCRIPT_NUMERIC", "Expected one numeric carrier"));
+    }
+    let Value::String(token) = &members[0].1 else {
+        return Err(fail("JAVASCRIPT_NUMERIC", "Expected numeric token text"));
+    };
+    token
+        .to_utf8()
+        .map_err(|_| fail("JAVASCRIPT_NUMERIC", "Expected numeric token text"))
+}
+
+fn numeric_literal_field(request: &Value) -> Result<(&'static str, String), EngineError> {
+    let literal = field(request, "literal").ok_or_else(|| fail("JAVASCRIPT_NUMERIC", "Expected one numeric carrier"))?;
+    let Value::Object(members) = literal else {
+        return Err(fail("JAVASCRIPT_NUMERIC", "Expected one numeric carrier"));
+    };
+    if members.len() != 1 {
+        return Err(fail("JAVASCRIPT_NUMERIC", "Expected one numeric carrier"));
+    }
+    let carrier = match members[0].0.to_utf8().ok().as_deref() {
+        Some("integerToken") => "integerToken",
+        Some("decimalToken") => "decimalToken",
+        _ => return Err(fail("JAVASCRIPT_NUMERIC", "Expected integerToken or decimalToken")),
+    };
+    let Value::String(token) = &members[0].1 else {
+        return Err(fail("JAVASCRIPT_NUMERIC", "Expected numeric token text"));
+    };
+    let token = token
+        .to_utf8()
+        .map_err(|_| fail("JAVASCRIPT_NUMERIC", "Expected numeric token text"))?;
+    Ok((carrier, token))
 }
 
 /// Execute the shared production engine request protocol. Each request uses a
@@ -683,14 +916,15 @@ fn execute_request_inner(
         .and_then(as_utf16)
         .and_then(|v| v.to_utf8().ok())
         .ok_or_else(|| fail("REQUEST", "Request op is required"))?;
+    #[cfg(feature = "codegen")]
     if let Some(operation) = op.strip_prefix("codegen/") {
         return codegen::execute(operation, &mut request, control);
     }
     let mut resources = take_field(&mut request, "resources")
         .ok_or_else(|| fail("REQUEST", "Explicit resources are required"))?;
     let registry_value = take_field(&mut request, "registry");
-    let (engine, registry) = {
-        let mut catalog = Context::catalog().with_host_control(control);
+    let mut operation = Context::ordinary().with_host_control(control);
+    let (engine, registry) = operation.with_catalog_value_limit(|catalog| {
         let resource = |resources: &mut Value, name: &str| {
             take_field(resources, name).ok_or_else(|| {
                 EngineError::new(
@@ -708,11 +942,11 @@ fn execute_request_inner(
                 resource(&mut resources, "constraints")?,
                 resource(&mut resources, "domainPolicy")?,
             ),
-            &mut catalog,
+            catalog,
         )?;
         let mut registry = Registry::new();
         if let Some(Value::Array(extensions)) = registry_value {
-            let schema_resources = engine.schema_resources_with_context(&mut catalog)?;
+            let schema_resources = engine.schema_resources_with_context(catalog)?;
             for (index, mut extension) in extensions.into_iter().enumerate() {
                 let id = take_field(&mut extension, "id")
                     .and_then(|v| match v {
@@ -755,15 +989,20 @@ fn execute_request_inner(
                     token,
                     engine.package_schema(),
                     &schema_resources,
-                    &mut catalog,
+                    catalog,
                 )?;
             }
         }
-        (engine, registry)
-    };
+        Ok::<_, EngineError>((engine, registry))
+    })?;
     let value = {
-        let mut operation = Context::ordinary().with_host_control(control);
         match op.as_str() {
+            "model/inspectCoreCardinality" | "model/declareCoreCardinality" | "model/verifyCoreCardinalityDeclaration"
+            | "model/inspectCoreKind" | "model/declareCoreKind" | "model/verifyCoreKindDeclaration"
+            | "model/inspectCoreNullability" | "model/declareCoreNullability" | "model/verifyCoreNullabilityDeclaration"
+            | "model/selectCoreElements" | "model/validateCoreFieldValue" => {
+                model_operation(&op, &request, &engine, &registry, capabilities, &mut operation)?
+            }
             "validate" => {
                 let document = field(&request, "document")
                     .ok_or_else(|| fail("REQUEST", "Document is required"))?;
@@ -806,6 +1045,69 @@ fn execute_request_inner(
     };
     let mut transport = transport_context().with_host_control(control);
     encode(&value, &mut transport)
+}
+
+fn model_operation(
+    op: &str,
+    request: &Value,
+    engine: &Engine,
+    registry: &Registry,
+    capabilities: &mut dyn Capabilities,
+    ctx: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    let value = |name: &str| field(request, name).ok_or_else(|| fail("REQUEST", &format!("{name} is required")));
+    let identity = || -> Result<(Utf16, Utf16), EngineError> {
+        let id = value("identity")?;
+        let module = field(id, "module").and_then(as_utf16).cloned().filter(|s| !s.is_empty())
+            .ok_or_else(|| fail("REQUEST", "identity.module must be a nonempty string"))?;
+        let element = field(id, "element").and_then(as_utf16).cloned().filter(|s| !s.is_empty())
+            .ok_or_else(|| fail("REQUEST", "identity.element must be a nonempty string"))?;
+        Ok((module, element))
+    };
+    let result = match op {
+        "model/validateCoreFieldValue" => validation_value(
+            engine.validate_core_field_value_public(
+                value("source")?,
+                value("field")?,
+                value("value")?,
+                ctx,
+            )?,
+        ),
+        "model/selectCoreElements" => umf_core::selection::select_core_elements(
+            value("source")?, value("query")?, engine, registry, capabilities, ctx,
+        )?,
+        "model/inspectCoreCardinality" => {
+            let (module, element) = identity()?;
+            umf_core::cardinality::inspect_core_cardinality(value("source")?, &umf_core::cardinality::Identity { module, element }, engine, registry, capabilities, ctx)?
+        }
+        "model/declareCoreCardinality" => {
+            let (module, element) = identity()?;
+            umf_core::cardinality::declare_core_cardinality(value("source")?, &umf_core::cardinality::Identity { module, element }, value("request")?, engine, registry, capabilities, ctx)?
+        }
+        "model/verifyCoreCardinalityDeclaration" => umf_core::cardinality::verify_core_cardinality_declaration(value("receipt")?, value("current")?, engine, registry, capabilities, ctx)?,
+        "model/inspectCoreKind" => {
+            let (module, element) = identity()?;
+            umf_core::core_kind::inspect_core_kind(value("source")?, &umf_core::core_kind::Identity { module, element }, engine, registry, capabilities, ctx)?
+        }
+        "model/declareCoreKind" => {
+            let (module, element) = identity()?;
+            let kind = as_utf16(value("kind")?).and_then(|x| x.to_utf8().ok()).ok_or_else(|| fail("REQUEST", "kind must be a string"))?;
+            umf_core::core_kind::declare_core_kind(value("source")?, &umf_core::core_kind::Identity { module, element }, &kind, engine, registry, capabilities, ctx)?
+        }
+        "model/verifyCoreKindDeclaration" => umf_core::core_kind::verify_core_kind_declaration(value("receipt")?, value("current")?, engine, registry, capabilities, ctx)?,
+        "model/inspectCoreNullability" => {
+            let (module, element) = identity()?;
+            umf_core::nullability::inspect_core_nullability(value("source")?, &umf_core::nullability::Identity { module, element }, engine, registry, capabilities, ctx)?
+        }
+        "model/declareCoreNullability" => {
+            let (module, element) = identity()?;
+            let nullability = as_utf16(value("nullability")?).and_then(|x| x.to_utf8().ok()).ok_or_else(|| fail("REQUEST", "nullability must be a string"))?;
+            umf_core::nullability::declare_core_nullability(value("source")?, &umf_core::nullability::Identity { module, element }, &nullability, engine, registry, capabilities, ctx)?
+        }
+        "model/verifyCoreNullabilityDeclaration" => umf_core::nullability::verify_core_nullability_declaration(value("receipt")?, value("current")?, engine, registry, capabilities, ctx)?,
+        _ => return Err(fail("REQUEST", "Unknown core model operation")),
+    };
+    Ok(result)
 }
 
 /// A separately bounded envelope context. The larger ceilings pay for tagged

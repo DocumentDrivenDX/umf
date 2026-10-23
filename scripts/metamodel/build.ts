@@ -4,11 +4,11 @@ import {resolve,dirname} from 'node:path';
 import {createHash} from 'node:crypto';
 import {rustMetamodel} from './rust';
 import {structuralSource} from './structural';
+import {rustCompileResources} from './source-closure';
 const root=resolve(import.meta.dir,'../..'),json=(v:any)=>JSON.stringify(v,null,2)+'\n',hash=(v:string|Uint8Array)=>createHash('sha256').update(v).digest('hex');
 // External compile-time inputs in the Rust CLI dependency closure. The other
 // schema-looking includes in Rust sources are behind cfg(test) and are not
 // part of this CLI build's compile-time resource set.
-const rustCompileResources=['spec/extensions/tables/operation.schema.json'];
 // The explicit Ajv backend remains a build-time dependency until the JS cutover.
 // It never executes inside the native core, CLI, Python wheel or WASM engine.
 async function compilerClosure():Promise<string[]>{
@@ -36,7 +36,7 @@ async function workspaceClosure():Promise<string[]>{
 }
 export async function generate(options:{check?:boolean;outputRoot?:string}={}){
  const compilerFiles=await compilerClosure(),workspaceFiles=(await workspaceClosure()).filter(path=>!compilerFiles.includes(path));
- const backendFiles=['scripts/metamodel/build.ts','scripts/metamodel/rust.ts','scripts/metamodel/structural.ts','src/validation/json-equality.ts','bindings/core/node/src/wire.js','package.json','bun.lock'];
+ const backendFiles=['scripts/metamodel/build.ts','scripts/metamodel/rust.ts','scripts/metamodel/source-closure.ts','scripts/metamodel/structural.ts','src/validation/json-equality.ts','bindings/core/node/src/wire.js','package.json','bun.lock'];
  const sources=Object.fromEntries(await Promise.all(['spec/metamodel/umf.yaml',...compilerFiles,...workspaceFiles,...backendFiles].map(async p=>[p,hash(await readFile(resolve(root,p)))])));
  const provenance={modelSha256:sources['spec/metamodel/umf.yaml'],compilerSha256:hash(json(Object.fromEntries(compilerFiles.map(p=>[p,sources[p]]))))};
  const compiled=rustMetamodel(['outputs','--input','spec/metamodel/umf.yaml','--compiler-sha256',provenance.compilerSha256],undefined,{sourceBound:true});

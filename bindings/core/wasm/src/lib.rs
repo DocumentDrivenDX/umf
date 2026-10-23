@@ -1,9 +1,55 @@
 use js_sys::Function;
 use umf_core::{
+    gregorian_date::{parse_gregorian_date, truncate_gregorian_date},
+    rfc3339_exact_instant::{parse_rfc3339_exact_instant, same_rfc3339_exact_instant},
     Capabilities, CapabilityError, Context, Diagnostic, EngineError, ResourceProfile,
     SemanticContext, Severity, Utf16, Value,
 };
 use wasm_bindgen::prelude::*;
+
+fn temporal_value(value: &JsValue) -> Value {
+    value
+        .as_string()
+        .map_or(Value::Null, |text| Value::String(Utf16::from(text)))
+}
+
+#[wasm_bindgen(js_name = temporalParseGregorianDateWire)]
+pub fn temporal_parse_gregorian_date_wire(token: JsValue) -> String {
+    match parse_gregorian_date(&temporal_value(&token)) {
+        Ok(date) => format!("OK|{}|{}|{}", date.year(), date.month(), date.day()),
+        Err(error) => error.name().to_owned(),
+    }
+}
+
+#[wasm_bindgen(js_name = temporalTruncateGregorianDateWire)]
+pub fn temporal_truncate_gregorian_date_wire(token: JsValue, unit: JsValue) -> String {
+    match truncate_gregorian_date(&temporal_value(&token), &temporal_value(&unit)) {
+        Ok(result) => format!("OK|{}", result.to_utf8().expect("truncated date is ASCII")),
+        Err(error) => error.name().to_owned(),
+    }
+}
+
+#[wasm_bindgen(js_name = temporalParseRfc3339ExactInstantWire)]
+pub fn temporal_parse_rfc3339_exact_instant_wire(token: JsValue) -> String {
+    match parse_rfc3339_exact_instant(&temporal_value(&token)) {
+        Ok(parsed) => format!(
+            "OK|{}|{}|{}|{}",
+            parsed.utc_seconds(),
+            parsed.fractional_digits(),
+            parsed.original_offset(),
+            parsed.local_offset_known()
+        ),
+        Err(error) => error.name().to_owned(),
+    }
+}
+
+#[wasm_bindgen(js_name = temporalSameRfc3339ExactInstantWire)]
+pub fn temporal_same_rfc3339_exact_instant_wire(left: JsValue, right: JsValue) -> String {
+    match same_rfc3339_exact_instant(&temporal_value(&left), &temporal_value(&right)) {
+        Ok(same) => format!("OK|{same}"),
+        Err(error) => error.name().to_owned(),
+    }
+}
 
 /// Trusted static-corpus probe used only by the Chromium qualification build.
 /// It is feature-gated and is not part of ordinary production WASM artifacts.
@@ -59,12 +105,25 @@ pub fn wide_work_probe() -> String {
         .charge_work_u64(amount, Utf16::default())
         .is_err_and(|error| error.code == "WIDE_DENIED");
     drop(denied);
-    format!("{{\"charged\":\"{charged}\",\"chunks\":{chunks:?},\"refused\":{refused},\"refusalCalls\":{calls}}}")
+    format!(
+        "{{\"charged\":\"{charged}\",\"chunks\":{chunks:?},\"refused\":{refused},\"refusalCalls\":{calls}}}"
+    )
 }
 
 #[wasm_bindgen(js_name = copyJsonWire)]
 pub fn copy_json_wire(wire_json: &str) -> Result<String, JsValue> {
     Ok(umf_core_wire::copy_wire_envelope(wire_json))
+}
+
+#[wasm_bindgen(js_name = executeBit128Wire)]
+pub fn execute_bit128_wire(wire_json: &str, control_dispatcher: Option<Function>) -> String {
+    if let Some(dispatcher) = control_dispatcher {
+        let mut control = WasmControl { dispatcher };
+        let mut hook = |amount| control.check(amount);
+        umf_core_wire::execute_bit128_wire_with_control(wire_json, &mut hook)
+    } else {
+        umf_core_wire::execute_bit128_wire(wire_json)
+    }
 }
 
 #[wasm_bindgen(js_name = readValueWire)]
@@ -117,7 +176,7 @@ pub fn execute_request_wire(
                 "RESOURCE_PROFILE",
                 Utf16::default(),
                 "Unknown resource profile",
-            ))
+            ));
         }
     };
     let mut capabilities = WasmCapabilities {
@@ -134,6 +193,20 @@ pub fn execute_request_wire(
         )
     } else {
         umf_core_wire::execute_request(wire_json, profile, &mut capabilities)
+    }
+}
+
+#[wasm_bindgen(js_name = executeJavascriptNumericWire)]
+pub fn execute_javascript_numeric_wire(
+    wire_json: &str,
+    control_dispatcher: Option<Function>,
+) -> String {
+    if let Some(dispatcher) = control_dispatcher {
+        let mut control = WasmControl { dispatcher };
+        let mut hook = |amount| control.check(amount);
+        umf_core_wire::execute_javascript_numeric_wire_with_control(wire_json, &mut hook)
+    } else {
+        umf_core_wire::execute_javascript_numeric_wire(wire_json)
     }
 }
 
@@ -245,7 +318,7 @@ impl WasmCapabilities {
                     _ => {
                         return Err(Utf16::from(
                             "WASM callback severity must be error or warning",
-                        ))
+                        ));
                     }
                 };
                 Ok(Diagnostic {

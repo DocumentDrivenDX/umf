@@ -1,0 +1,101 @@
+{
+  "producer": {
+    "runtime": "Bun 1.4.3 (26aa4e1a9)",
+    "source": "src/model/native-json.ts",
+    "source_sha256": "d09c92a9b7115ee469709bd1007f5ded8466810f",
+    "captured_before_rust_implementation": true
+  },
+  "limits": {
+    "source_utf16_units": 4000000,
+    "native_depth": 128,
+    "native_values": 100000,
+    "tagged_clone_depth": 64,
+    "tagged_clone_values": 33333
+  },
+  "envelopes": [
+    {
+      "case": "valid_exact_lexemes_utf16_and_order",
+      "source": "{\"z\":1.2300,\"10\":-0,\"2\":\"\\ud800\",\"01\":9e+003,\"x\":[true,null]}",
+      "ok": true,
+      "compact": "{\"2\":\"\\ud800\",\"10\":-0,\"z\":1.2300,\"01\":9e+003,\"x\":[true,null]}"
+    },
+    {
+      "case": "duplicate_key",
+      "source": "{\"x\":1,\"\\u0078\":2}",
+      "ok": false,
+      "code": "JSON_SCHEMA_SYNTAX",
+      "message": "Map keys must be unique at line 1, column 8:\\n\\n{\"x\":1,\"\\u0078\":2}\\n       ^\\n",
+      "path": ""
+    },
+    {
+      "case": "syntax_after_duplicate",
+      "source": "{\"x\":1,\"x\":2,}",
+      "ok": false,
+      "code": "JSON_SCHEMA_SYNTAX",
+      "message": "Invalid native JSON",
+      "path": ""
+    },
+    {
+      "case": "invalid_escape",
+      "source": "{\"x\":\\q}",
+      "ok": false,
+      "code": "JSON_SCHEMA_SYNTAX",
+      "message": "Invalid native JSON",
+      "path": ""
+    },
+    {
+      "case": "native_depth_limit",
+      "source_description": "129 nested arrays around null",
+      "ok": false,
+      "code": "LIMIT",
+      "message": "Native JSON structural limit exceeded",
+      "path": ""
+    },
+    {
+      "case": "native_value_limit",
+      "source_description": "root array and 100000 null children",
+      "ok": false,
+      "code": "LIMIT",
+      "message": "Native JSON structural limit exceeded",
+      "path": ""
+    },
+    {
+      "case": "source_limit",
+      "source_description": "4000001 UTF-16 spaces",
+      "ok": false,
+      "code": "LIMIT",
+      "message": "Native JSON exceeds text limit",
+      "path": ""
+    },
+    {
+      "case": "tagged_clone_value_limit",
+      "source_description": "tagged array with 33333 boolean items",
+      "ok": false,
+      "code": "LIMIT",
+      "message": "JSON structural limit exceeded",
+      "path": "/items/33332/kind"
+    },
+    {
+      "case": "tagged_clone_depth_limit",
+      "source_description": "65 nested tagged arrays",
+      "ok": false,
+      "code": "LIMIT",
+      "message": "JSON structural limit exceeded",
+      "path_description": "/items/0 repeated 64 times, then /kind"
+    },
+    {
+      "case": "pointer",
+      "outcomes": {
+        "": "root",
+        "/a~1b/~0key/1": "20",
+        "a": "Invalid JSON Pointer",
+        "/a~2": "Invalid JSON Pointer",
+        "/a~1b/~0key/01": "Pointer target does not exist"
+      }
+    }
+  ],
+  "precedence": [
+    "JSON syntax parsing completes before duplicate detection",
+    "duplicate detection completes before native depth/value structural limits"
+  ]
+}

@@ -52,7 +52,7 @@
     "test:metamodel": "bun test tests/metamodel && bun scripts/metamodel-browser.ts",
     "check:core-authority": "bun scripts/check-core-authority.ts",
     "check:unified-client-boundaries": "bun scripts/check-unified-client-boundaries.ts",
-    "check:rust-boundaries": "python3 scripts/rust-inventory.py --check && python3 scripts/check-rust-boundaries.py && python3 tests/rust-inventory/test_boundaries.py && python3 tests/rust-inventory/test_inventory.py",
+    "check:rust-boundaries": "bun scripts/rust-migration/check-boundaries.ts",
     "test:rust-core": "bun scripts/rust-core/conformance.ts"
   },
   "dependencies": {

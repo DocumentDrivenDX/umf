@@ -1054,6 +1054,19 @@ impl CompiledSchema {
         let dialect = select_dialect(schema)?;
         Self::compile_with_dialect(schema, resources, dialect, strict, ctx)
     }
+    /// Validate only the pinned dialect metaschema, without compiling or
+    /// resolving schema references. This lets callers report malformed schema
+    /// shape even when a separate reference in the same schema is unresolved.
+    pub fn validate_consumer_metaschema_only(
+        schema: &Value,
+        ctx: &mut Context<'_>,
+    ) -> Result<(), EngineError> {
+        if ctx.profile() == crate::context::ResourceProfile::HardIsolated {
+            return Err(unavailable());
+        }
+        let dialect = select_dialect(schema)?;
+        validate_schema_against_metaschema(schema, dialect, RegexProfile::Ecma262Unicode, ctx)
+    }
     /// Construct a consumer schema validator with the exact Python `re`
     /// profile supplied by the binding. References remain local-only and are
     /// resolved when evaluation reaches them, matching the predecessor API.

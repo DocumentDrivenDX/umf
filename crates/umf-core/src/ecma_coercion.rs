@@ -37,7 +37,7 @@ pub(crate) fn abstract_relational_compare(
     }
 }
 
-fn to_number(value: Primitive<'_>, ctx: &mut Context<'_>) -> Result<f64, EngineError> {
+pub(crate) fn to_number(value: Primitive<'_>, ctx: &mut Context<'_>) -> Result<f64, EngineError> {
     match value {
         Primitive::Undefined => Ok(f64::NAN),
         Primitive::Null => Ok(0.0),

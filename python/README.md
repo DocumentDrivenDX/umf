@@ -78,7 +78,10 @@ table deployment/migration compilation and verification, change discovery and
 row-scope normalization. `call()` retains the complete semantic result envelope;
 convenience methods raise `UmfCodegenError` for semantic failures. Cooperative
 controls use the same operation context through admission, Rust and result copies.
-The existing `umf_codegen` default CLI and its MiniRacer dependency remain until R4.
+The current `umf_codegen` source distribution and CLI dispatch through the
+bundled Rust executable in the pinned `umf-core` wheel without MiniRacer. Its
+installed-artifact qualification and remaining release-platform gates are
+recorded in the [R4 evidence](../docs/helix/04-build/evidence/rust-migration/r4/).
 
 Run `python -m pytest python/tests` from the repository root. Build with
 `uv build --project python`. The source distribution includes the current

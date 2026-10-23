@@ -1,0 +1,500 @@
+{
+  "format": "umf-r5-json-schema-baseline-v1",
+  "bunVersion": "1.4.3",
+  "sourceHashes": {
+    "src/adapters/json-schema/index.ts": "f65807123b937c91d984a1c77d15b7941475ce9ef294f02770da991befdaf900",
+    "src/adapters/json-schema/tree.ts": "5db655867191fde2f82a3f01ddbb63f35cb748500d0bc7fbe18b08f9eb72bb84",
+    "tests/json-schema/native.test.ts": "c56f107c880c1f26172883f6c64de18dfe069ea8b5fa9d7f3d5e33221bb1c753",
+    "tests/json-schema/upstream.test.ts": "a966a19b87fd94f4e99f72be5d31f51ac289101433eb5dc74b98bca0d1fb618e",
+    "spec/extensions/json-schema/schema.json": "f7d67498df51dd96c4b6d7358c20003aebc88ee282c61c5e0e3454b8008d6a00",
+    "spec/extensions/json-schema/package.json": "32bac6cf2a6fcb6d0f4367084f7e358887e263969f0b1697145abb0b413c4582",
+    "fixtures/json-schema/upstream/manifest.json": "469b632d602bcd12db7635ebc62963b6835983821ea024c816a475ca2427e7cf",
+    "docs/helix/02-design/contracts/CONTRACT-001-core-envelope.md": "000747cf9c84697333bb55a18c5a8a4eebd5f5c953ad08d580378d950ce9612d",
+    "docs/helix/02-design/contracts/CONTRACT-002-json-schema.md": "1b113e256c6171bf3b729fa006b103e34e413807d20888d347adda6c964ab0f0",
+    "docs/helix/02-design/adr/ADR-006-shared-rust-implementation.md": "0e483f2b040560daf9c91b35e5ffaefbee2faad90fa7b8ade148b9c1b02f63ee",
+    "docs/helix/04-build/rust-migration-plan.md": "cf74bedbd1955d835d79a75dbd44635b06a8d03ace27da532a885e3d8ccde0ca",
+    "docs/helix/03-test/test-plan.md": "9ed86d929e0f5540b233ce2f50c6f0484ae37e1601f26ca1b7783aad594382f4"
+  },
+  "results": {
+    "importInspect": {
+      "ok": true,
+      "value": {
+        "doc": {
+          "umf": "0.10.0",
+          "id": "r5-baseline",
+          "vocabularies": {
+            "umf.json-schema": {
+              "version": "0.1.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "schema",
+              "namespace": "https://example.test/root",
+              "elements": [
+                {
+                  "id": "schema",
+                  "extensions": {
+                    "umf.json-schema": {
+                      "dialect": "https://json-schema.org/draft/2020-12/schema",
+                      "baseUri": "https://example.test/root",
+                      "root": {
+                        "kind": "object",
+                        "members": {
+                          "type": {
+                            "kind": "string",
+                            "value": "object"
+                          },
+                          "properties": {
+                            "kind": "object",
+                            "members": {
+                              "price": {
+                                "kind": "object",
+                                "members": {
+                                  "type": {
+                                    "kind": "string",
+                                    "value": "number"
+                                  },
+                                  "minimum": {
+                                    "kind": "number",
+                                    "value": "9007199254740993"
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "resources": {}
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "inspection": {
+          "valid": true,
+          "complete": false,
+          "diagnostics": [
+            {
+              "code": "JSON_SCHEMA_NUMERIC",
+              "path": "/modules/0/elements/0/extensions/umf.json-schema",
+              "message": "Resource https://example.test/root: native values retained but JavaScript validation unavailable: UmfError: Integer exceeds exact JavaScript range",
+              "severity": "warning"
+            }
+          ]
+        }
+      }
+    },
+    "rootResourceBundle": {
+      "ok": true,
+      "value": {
+        "root": "{\"$ref\":\"https://example.test/types.json#/$defs/amount\"}\n",
+        "resources": {
+          "https://example.test/types.json": "{\"$id\":\"https://example.test/types.json\",\"$defs\":{\"amount\":{\"type\":\"number\",\"multipleOf\":0.10000000000000000001}}}\n"
+        },
+        "bundle": {
+          "schema": "{\"$ref\":\"https://example.test/types.json#/$defs/amount\"}\n",
+          "resources": {
+            "https://example.test/types.json": "{\"$id\":\"https://example.test/types.json\",\"$defs\":{\"amount\":{\"type\":\"number\",\"multipleOf\":0.10000000000000000001}}}\n"
+          },
+          "source": {
+            "umf": "0.10.0",
+            "id": "r5-baseline",
+            "vocabularies": {
+              "umf.json-schema": {
+                "version": "0.1.0"
+              }
+            },
+            "modules": [
+              {
+                "id": "schema",
+                "namespace": "https://example.test/root",
+                "elements": [
+                  {
+                    "id": "schema",
+                    "extensions": {
+                      "umf.json-schema": {
+                        "dialect": "https://json-schema.org/draft/2020-12/schema",
+                        "baseUri": "https://example.test/root",
+                        "root": {
+                          "kind": "boolean",
+                          "value": false
+                        },
+                        "resources": {
+                          "https://example.test/types.json": {
+                            "kind": "object",
+                            "members": {
+                              "$id": {
+                                "kind": "string",
+                                "value": "https://example.test/types.json"
+                              },
+                              "$defs": {
+                                "kind": "object",
+                                "members": {
+                                  "amount": {
+                                    "kind": "object",
+                                    "members": {
+                                      "type": {
+                                        "kind": "string",
+                                        "value": "number"
+                                      },
+                                      "multipleOf": {
+                                        "kind": "number",
+                                        "value": "0.10000000000000000001"
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "diagnostics": [
+            {
+              "code": "JSON_SCHEMA_NUMERIC",
+              "path": "/modules/0/elements/0/extensions/umf.json-schema",
+              "message": "Resource https://example.test/types.json: native values retained but JavaScript validation unavailable: UmfError: Parsing would change the decimal value",
+              "severity": "warning"
+            },
+            {
+              "code": "SOURCE_ARTIFACT_REQUIRED",
+              "path": "",
+              "severity": "warning",
+              "message": "Standalone native root does not carry UMF metadata or supplied resource files; retain this bundle for full source recovery."
+            }
+          ]
+        },
+        "bundleSourceCopyIsolated": true
+      }
+    },
+    "getWalk": {
+      "ok": true,
+      "value": {
+        "node": {
+          "kind": "object",
+          "members": {
+            "type": {
+              "kind": "string",
+              "value": "mutated"
+            }
+          }
+        },
+        "positions": [
+          {
+            "pointer": "",
+            "node": {
+              "kind": "object",
+              "members": {
+                "properties": {
+                  "kind": "object",
+                  "members": {
+                    "a/b~c": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "default": {
+                  "kind": "object",
+                  "members": {
+                    "properties": {
+                      "kind": "object",
+                      "members": {
+                        "ignored": {
+                          "kind": "boolean",
+                          "value": true
+                        }
+                      }
+                    }
+                  }
+                },
+                "allOf": {
+                  "kind": "array",
+                  "items": [
+                    {
+                      "kind": "boolean",
+                      "value": true
+                    }
+                  ]
+                },
+                "injected": {
+                  "kind": "boolean",
+                  "value": true
+                }
+              }
+            }
+          },
+          {
+            "pointer": "/properties/a~1b~0c",
+            "node": {
+              "kind": "object",
+              "members": {
+                "type": {
+                  "kind": "string",
+                  "value": "string"
+                }
+              }
+            }
+          },
+          {
+            "pointer": "/allOf/0",
+            "node": {
+              "kind": "boolean",
+              "value": true
+            }
+          }
+        ],
+        "getCopyIsolated": true,
+        "walkCopyIsolated": true
+      }
+    },
+    "atomicEdit": {
+      "ok": true,
+      "value": {
+        "sourceUnchanged": true,
+        "success": {
+          "ok": true,
+          "native": "{\"properties\":{\"n\":{\"type\":\"integer\",\"minimum\":2}}}\n",
+          "document": {
+            "umf": "0.10.0",
+            "id": "r5-baseline",
+            "vocabularies": {
+              "umf.json-schema": {
+                "version": "0.1.0"
+              }
+            },
+            "modules": [
+              {
+                "id": "schema",
+                "namespace": "https://example.test/edit",
+                "elements": [
+                  {
+                    "id": "schema",
+                    "extensions": {
+                      "umf.json-schema": {
+                        "dialect": "https://json-schema.org/draft/2020-12/schema",
+                        "baseUri": "https://example.test/edit",
+                        "root": {
+                          "kind": "object",
+                          "members": {
+                            "properties": {
+                              "kind": "object",
+                              "members": {
+                                "n": {
+                                  "kind": "object",
+                                  "members": {
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "integer"
+                                    },
+                                    "minimum": {
+                                      "kind": "number",
+                                      "value": "2"
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "resources": {}
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "invalid": {
+          "ok": false,
+          "error": {
+            "name": "UmfError",
+            "code": "INVALID_EDIT",
+            "message": "[{\"code\":\"JSON_SCHEMA_META\",\"path\":\"/modules/0/elements/0/extensions/umf.json-schema\",\"message\":\"Resource https://example.test/edit: [{\\\"instancePath\\\":\\\"/properties/n/type\\\",\\\"schemaPath\\\":\\\"#/$defs/simpleTypes/enum\\\",\\\"keyword\\\":\\\"enum\\\",\\\"params\\\":{\\\"allowedValues\\\":[\\\"array\\\",\\\"boolean\\\",\\\"integer\\\",\\\"null\\\",\\\"number\\\",\\\"object\\\",\\\"string\\\"]},\\\"message\\\":\\\"must be equal to one of the allowed values\\\"},{\\\"instancePath\\\":\\\"/properties/n/type\\\",\\\"schemaPath\\\":\\\"#/properties/type/anyOf/1/type\\\",\\\"keyword\\\":\\\"type\\\",\\\"params\\\":{\\\"type\\\":\\\"array\\\"},\\\"message\\\":\\\"must be array\\\"},{\\\"instancePath\\\":\\\"/properties/n/type\\\",\\\"schemaPath\\\":\\\"#/properties/type/anyOf\\\",\\\"keyword\\\":\\\"anyOf\\\",\\\"params\\\":{},\\\"message\\\":\\\"must match a schema in anyOf\\\"}]\",\"severity\":\"error\"}]"
+          }
+        },
+        "missing": {
+          "ok": false,
+          "error": {
+            "name": "UmfError",
+            "code": "JSON_SCHEMA_POINTER",
+            "message": "Native JSON Pointer target does not exist"
+          }
+        }
+      }
+    },
+    "admissionAndPrecedence": {
+      "ok": true,
+      "value": {
+        "duplicateKeys": {
+          "ok": false,
+          "error": {
+            "name": "UmfError",
+            "code": "JSON_SCHEMA_SYNTAX",
+            "message": "Map keys must be unique at line 1, column 18:\n\n{\"type\":\"string\",\"type\":\"number\"}\n                 ^\n"
+          }
+        },
+        "malformedJson": {
+          "ok": false,
+          "error": {
+            "name": "UmfError",
+            "code": "JSON_SCHEMA_SYNTAX",
+            "message": "Invalid native JSON"
+          }
+        },
+        "invalidRoot": {
+          "ok": false,
+          "error": {
+            "name": "UmfError",
+            "code": "JSON_SCHEMA_INVALID",
+            "message": "[{\"code\":\"JSON_SCHEMA_ROOT\",\"path\":\"/modules/0/elements/0/extensions/umf.json-schema\",\"message\":\"Resource https://example.test/array-root must be object or boolean\",\"severity\":\"error\"}]"
+          }
+        },
+        "malformedRetrievalUri": {
+          "ok": false,
+          "error": {
+            "name": "UmfError",
+            "code": "JSON_SCHEMA_URI",
+            "message": "Retrieval URI must be absolute and fragment-free"
+          }
+        },
+        "rootResourceCollision": {
+          "ok": false,
+          "error": {
+            "name": "UmfError",
+            "code": "JSON_SCHEMA_INVALID",
+            "message": "[{\"code\":\"JSON_SCHEMA_RESOURCE_COLLISION\",\"path\":\"/modules/0/elements/0/extensions/umf.json-schema\",\"message\":\"Root retrieval URI also appears in resources\",\"severity\":\"error\"}]"
+          }
+        },
+        "missingReference": {
+          "ok": true,
+          "value": {
+            "valid": true,
+            "complete": false,
+            "diagnostics": [
+              {
+                "code": "JSON_SCHEMA_COMPILE",
+                "path": "/modules/0/elements/0/extensions/umf.json-schema",
+                "message": "Native compiler could not establish validity: Error: can't resolve reference missing.json from id https://example.test/root",
+                "severity": "warning"
+              }
+            ]
+          }
+        },
+        "unknownDialect": {
+          "ok": true,
+          "value": {
+            "inspection": {
+              "valid": true,
+              "complete": false,
+              "diagnostics": [
+                {
+                  "code": "JSON_SCHEMA_DIALECT",
+                  "path": "/modules/0/elements/0/extensions/umf.json-schema",
+                  "message": "Uninterpreted dialect https://example.test/dialect",
+                  "severity": "warning"
+                }
+              ]
+            },
+            "export": "{\"$schema\":\"https://example.test/dialect\",\"type\":\"alien\"}\n"
+          }
+        },
+        "unknownKeyword": {
+          "ok": true,
+          "value": {
+            "valid": true,
+            "complete": false,
+            "diagnostics": [
+              {
+                "code": "JSON_SCHEMA_KEYWORD",
+                "path": "/modules/0/elements/0/extensions/umf.json-schema/x-opaque",
+                "message": "Uninterpreted keyword in https://example.test/k",
+                "severity": "warning"
+              }
+            ]
+          }
+        },
+        "invalidKnownAndUnknown": {
+          "ok": false,
+          "error": {
+            "name": "UmfError",
+            "code": "JSON_SCHEMA_INVALID",
+            "message": "[{\"code\":\"JSON_SCHEMA_KEYWORD\",\"path\":\"/modules/0/elements/0/extensions/umf.json-schema/x-opaque\",\"message\":\"Uninterpreted keyword in https://example.test/both\",\"severity\":\"warning\"},{\"code\":\"JSON_SCHEMA_META\",\"path\":\"/modules/0/elements/0/extensions/umf.json-schema\",\"message\":\"Resource https://example.test/both: [{\\\"instancePath\\\":\\\"/type\\\",\\\"schemaPath\\\":\\\"#/$defs/simpleTypes/enum\\\",\\\"keyword\\\":\\\"enum\\\",\\\"params\\\":{\\\"allowedValues\\\":[\\\"array\\\",\\\"boolean\\\",\\\"integer\\\",\\\"null\\\",\\\"number\\\",\\\"object\\\",\\\"string\\\"]},\\\"message\\\":\\\"must be equal to one of the allowed values\\\"},{\\\"instancePath\\\":\\\"/type\\\",\\\"schemaPath\\\":\\\"#/properties/type/anyOf/1/type\\\",\\\"keyword\\\":\\\"type\\\",\\\"params\\\":{\\\"type\\\":\\\"array\\\"},\\\"message\\\":\\\"must be array\\\"},{\\\"instancePath\\\":\\\"/type\\\",\\\"schemaPath\\\":\\\"#/properties/type/anyOf\\\",\\\"keyword\\\":\\\"anyOf\\\",\\\"params\\\":{},\\\"message\\\":\\\"must match a schema in anyOf\\\"}]\",\"severity\":\"error\"}]"
+          }
+        }
+      }
+    },
+    "exactNumbersAndUnknownRetention": {
+      "ok": true,
+      "value": {
+        "native": "{\"minimum\":9007199254740993,\"maximum\":1e400,\"multipleOf\":0.10000000000000000001,\"default\":-0,\"x-opaque\":{\"kind\":\"number\",\"value\":\"literal\"}}\n",
+        "diagnostics": [
+          {
+            "code": "JSON_SCHEMA_KEYWORD",
+            "path": "/modules/0/elements/0/extensions/umf.json-schema/x-opaque",
+            "message": "Uninterpreted keyword in https://example.test/n",
+            "severity": "warning"
+          },
+          {
+            "code": "JSON_SCHEMA_NUMERIC",
+            "path": "/modules/0/elements/0/extensions/umf.json-schema",
+            "message": "Resource https://example.test/n: native values retained but JavaScript validation unavailable: UmfError: Integer exceeds exact JavaScript range",
+            "severity": "warning"
+          }
+        ],
+        "tree": {
+          "kind": "number",
+          "value": "1e-5000"
+        }
+      }
+    },
+    "unknownRepresentation": {
+      "ok": true,
+      "value": {
+        "inspection": {
+          "valid": true,
+          "complete": false,
+          "diagnostics": [
+            {
+              "code": "JSON_SCHEMA_REPRESENTATION",
+              "path": "/modules/0/elements/0/extensions/umf.json-schema/root/futureRepresentation",
+              "message": "Unknown representation field cannot be emitted natively",
+              "severity": "warning"
+            }
+          ]
+        },
+        "export": {
+          "ok": false,
+          "error": {
+            "name": "UmfError",
+            "code": "JSON_SCHEMA_EXPORT",
+            "message": "[{\"code\":\"JSON_SCHEMA_REPRESENTATION\",\"path\":\"/root/futureRepresentation\",\"message\":\"Unknown representation field cannot be emitted natively\",\"severity\":\"warning\"}]"
+          }
+        },
+        "bundle": {
+          "ok": false,
+          "error": {
+            "name": "UmfError",
+            "code": "JSON_SCHEMA_EXPORT",
+            "message": "[{\"code\":\"JSON_SCHEMA_REPRESENTATION\",\"path\":\"/root/futureRepresentation\",\"message\":\"Unknown representation field cannot be emitted natively\",\"severity\":\"warning\"}]"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,1033 @@
+{
+  "identity": {
+    "module": "m",
+    "element": "e"
+  },
+  "document": {
+    "umf": "0.10.0",
+    "id": "author",
+    "vocabularies": {
+      "future": {
+        "version": "1.0.0"
+      }
+    },
+    "modules": [
+      {
+        "id": "m",
+        "namespace": "",
+        "elements": [
+          {
+            "id": "e",
+            "kind": "field",
+            "nullability": "required",
+            "extensions": {
+              "future": {
+                "opaque": "retain"
+              }
+            }
+          },
+          {
+            "id": "v",
+            "kind": "field",
+            "scalarType": "integer",
+            "extensions": {}
+          }
+        ]
+      }
+    ]
+  },
+  "known": {
+    "umf": "0.10.0",
+    "id": "author",
+    "vocabularies": {
+      "future": {
+        "version": "1.0.0"
+      }
+    },
+    "modules": [
+      {
+        "id": "m",
+        "namespace": "",
+        "elements": [
+          {
+            "id": "e",
+            "kind": "field",
+            "nullability": "required",
+            "extensions": {
+              "future": {
+                "opaque": "retain"
+              }
+            },
+            "cardinality": "array",
+            "itemType": {
+              "module": "m",
+              "element": "v",
+              "future": {
+                "unknown": true
+              }
+            }
+          },
+          {
+            "id": "v",
+            "kind": "field",
+            "scalarType": "integer",
+            "extensions": {}
+          }
+        ]
+      }
+    ]
+  },
+  "unknown": {
+    "umf": "0.10.0",
+    "id": "author",
+    "vocabularies": {
+      "future": {
+        "version": "1.0.0"
+      }
+    },
+    "modules": [
+      {
+        "id": "m",
+        "namespace": "",
+        "elements": [
+          {
+            "id": "e",
+            "kind": "field",
+            "nullability": "required",
+            "extensions": {
+              "future": {
+                "opaque": "retain"
+              }
+            },
+            "cardinality": "future-container"
+          },
+          {
+            "id": "v",
+            "kind": "field",
+            "scalarType": "integer",
+            "extensions": {}
+          }
+        ]
+      }
+    ]
+  },
+  "inapplicable": {
+    "umf": "0.10.0",
+    "id": "author",
+    "vocabularies": {
+      "future": {
+        "version": "1.0.0"
+      }
+    },
+    "modules": [
+      {
+        "id": "m",
+        "namespace": "",
+        "elements": [
+          {
+            "id": "e",
+            "kind": "record",
+            "extensions": {
+              "future": {
+                "opaque": "retain"
+              }
+            }
+          },
+          {
+            "id": "v",
+            "kind": "field",
+            "scalarType": "integer",
+            "extensions": {}
+          }
+        ]
+      }
+    ]
+  },
+  "request": {
+    "cardinality": "array",
+    "itemType": {
+      "module": "m",
+      "element": "v",
+      "future": {
+        "unknown": true
+      }
+    }
+  },
+  "inspections": {
+    "missing": {
+      "ok": true,
+      "value": {
+        "operation": "inspect-core-cardinality",
+        "version": "6.0.0",
+        "source": {
+          "umf": "0.10.0",
+          "id": "author",
+          "vocabularies": {
+            "future": {
+              "version": "1.0.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "e",
+                  "kind": "field",
+                  "nullability": "required",
+                  "extensions": {
+                    "future": {
+                      "opaque": "retain"
+                    }
+                  }
+                },
+                {
+                  "id": "v",
+                  "kind": "field",
+                  "scalarType": "integer",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "e"
+        },
+        "path": "/modules/0/elements/0/cardinality",
+        "meaning": {
+          "state": "missing"
+        },
+        "provenance": "unverified"
+      }
+    },
+    "known": {
+      "ok": true,
+      "value": {
+        "operation": "inspect-core-cardinality",
+        "version": "6.0.0",
+        "source": {
+          "umf": "0.10.0",
+          "id": "author",
+          "vocabularies": {
+            "future": {
+              "version": "1.0.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "e",
+                  "kind": "field",
+                  "nullability": "required",
+                  "extensions": {
+                    "future": {
+                      "opaque": "retain"
+                    }
+                  },
+                  "cardinality": "array",
+                  "itemType": {
+                    "module": "m",
+                    "element": "v",
+                    "future": {
+                      "unknown": true
+                    }
+                  }
+                },
+                {
+                  "id": "v",
+                  "kind": "field",
+                  "scalarType": "integer",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "e"
+        },
+        "path": "/modules/0/elements/0/cardinality",
+        "meaning": {
+          "state": "known",
+          "cardinality": "array",
+          "itemType": {
+            "module": "m",
+            "element": "v",
+            "future": {
+              "unknown": true
+            }
+          }
+        },
+        "provenance": "unverified"
+      }
+    },
+    "unknown": {
+      "ok": true,
+      "value": {
+        "operation": "inspect-core-cardinality",
+        "version": "6.0.0",
+        "source": {
+          "umf": "0.10.0",
+          "id": "author",
+          "vocabularies": {
+            "future": {
+              "version": "1.0.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "e",
+                  "kind": "field",
+                  "nullability": "required",
+                  "extensions": {
+                    "future": {
+                      "opaque": "retain"
+                    }
+                  },
+                  "cardinality": "future-container"
+                },
+                {
+                  "id": "v",
+                  "kind": "field",
+                  "scalarType": "integer",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "e"
+        },
+        "path": "/modules/0/elements/0/cardinality",
+        "meaning": {
+          "state": "unknown",
+          "value": "future-container"
+        },
+        "provenance": "unverified"
+      }
+    },
+    "surrogate": {
+      "ok": true,
+      "value": {
+        "operation": "inspect-core-cardinality",
+        "version": "6.0.0",
+        "source": {
+          "umf": "0.10.0",
+          "id": "author",
+          "vocabularies": {
+            "future": {
+              "version": "1.0.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "e",
+                  "kind": "field",
+                  "nullability": "required",
+                  "extensions": {
+                    "future": {
+                      "opaque": "retain"
+                    }
+                  },
+                  "cardinality": "\ud800"
+                },
+                {
+                  "id": "v",
+                  "kind": "field",
+                  "scalarType": "integer",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "e"
+        },
+        "path": "/modules/0/elements/0/cardinality",
+        "meaning": {
+          "state": "unknown",
+          "value": "\ud800"
+        },
+        "provenance": "unverified"
+      }
+    },
+    "inapplicable": {
+      "ok": true,
+      "value": {
+        "operation": "inspect-core-cardinality",
+        "version": "6.0.0",
+        "source": {
+          "umf": "0.10.0",
+          "id": "author",
+          "vocabularies": {
+            "future": {
+              "version": "1.0.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "e",
+                  "kind": "record",
+                  "extensions": {
+                    "future": {
+                      "opaque": "retain"
+                    }
+                  }
+                },
+                {
+                  "id": "v",
+                  "kind": "field",
+                  "scalarType": "integer",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "e"
+        },
+        "path": "/modules/0/elements/0/cardinality",
+        "meaning": {
+          "state": "inapplicable"
+        },
+        "provenance": "unverified"
+      }
+    }
+  },
+  "declaration": {
+    "operation": "declare-core-cardinality",
+    "version": "4.0.0",
+    "source": {
+      "umf": "0.10.0",
+      "id": "author",
+      "vocabularies": {
+        "future": {
+          "version": "1.0.0"
+        }
+      },
+      "modules": [
+        {
+          "id": "m",
+          "namespace": "",
+          "elements": [
+            {
+              "id": "e",
+              "kind": "field",
+              "nullability": "required",
+              "extensions": {
+                "future": {
+                  "opaque": "retain"
+                }
+              }
+            },
+            {
+              "id": "v",
+              "kind": "field",
+              "scalarType": "integer",
+              "extensions": {}
+            }
+          ]
+        }
+      ]
+    },
+    "target": {
+      "umf": "0.10.0",
+      "id": "author",
+      "vocabularies": {
+        "future": {
+          "version": "1.0.0"
+        }
+      },
+      "modules": [
+        {
+          "id": "m",
+          "namespace": "",
+          "elements": [
+            {
+              "id": "e",
+              "kind": "field",
+              "nullability": "required",
+              "extensions": {
+                "future": {
+                  "opaque": "retain"
+                }
+              },
+              "cardinality": "array",
+              "itemType": {
+                "module": "m",
+                "element": "v",
+                "future": {
+                  "unknown": true
+                }
+              }
+            },
+            {
+              "id": "v",
+              "kind": "field",
+              "scalarType": "integer",
+              "extensions": {}
+            }
+          ]
+        }
+      ]
+    },
+    "identity": {
+      "module": "m",
+      "element": "e"
+    },
+    "request": {
+      "cardinality": "array",
+      "itemType": {
+        "module": "m",
+        "element": "v",
+        "future": {
+          "unknown": true
+        }
+      }
+    },
+    "provenance": {
+      "origin": "authored",
+      "idealPath": "/modules/0/elements/0/cardinality",
+      "cardinality": "array",
+      "binding": {
+        "id": "umf.core.cardinality.authoring",
+        "version": "4.0.0"
+      },
+      "basis": "explicit-author-declaration",
+      "nativePath": null
+    }
+  },
+  "surrogateItemDocument": {
+    "umf": "0.10.0",
+    "id": "author",
+    "vocabularies": {
+      "future": {
+        "version": "1.0.0"
+      }
+    },
+    "modules": [
+      {
+        "id": "m",
+        "namespace": "",
+        "elements": [
+          {
+            "id": "e",
+            "kind": "field",
+            "nullability": "required",
+            "extensions": {
+              "future": {
+                "opaque": "retain"
+              }
+            }
+          },
+          {
+            "id": "\ud800",
+            "kind": "field",
+            "scalarType": "integer",
+            "extensions": {}
+          }
+        ]
+      }
+    ]
+  },
+  "surrogateItemRequest": {
+    "cardinality": "array",
+    "itemType": {
+      "module": "m",
+      "element": "\ud800"
+    }
+  },
+  "surrogateItemDeclaration": {
+    "ok": true,
+    "value": {
+      "operation": "declare-core-cardinality",
+      "version": "4.0.0",
+      "source": {
+        "umf": "0.10.0",
+        "id": "author",
+        "vocabularies": {
+          "future": {
+            "version": "1.0.0"
+          }
+        },
+        "modules": [
+          {
+            "id": "m",
+            "namespace": "",
+            "elements": [
+              {
+                "id": "e",
+                "kind": "field",
+                "nullability": "required",
+                "extensions": {
+                  "future": {
+                    "opaque": "retain"
+                  }
+                }
+              },
+              {
+                "id": "\ud800",
+                "kind": "field",
+                "scalarType": "integer",
+                "extensions": {}
+              }
+            ]
+          }
+        ]
+      },
+      "target": {
+        "umf": "0.10.0",
+        "id": "author",
+        "vocabularies": {
+          "future": {
+            "version": "1.0.0"
+          }
+        },
+        "modules": [
+          {
+            "id": "m",
+            "namespace": "",
+            "elements": [
+              {
+                "id": "e",
+                "kind": "field",
+                "nullability": "required",
+                "extensions": {
+                  "future": {
+                    "opaque": "retain"
+                  }
+                },
+                "cardinality": "array",
+                "itemType": {
+                  "module": "m",
+                  "element": "\ud800"
+                }
+              },
+              {
+                "id": "\ud800",
+                "kind": "field",
+                "scalarType": "integer",
+                "extensions": {}
+              }
+            ]
+          }
+        ]
+      },
+      "identity": {
+        "module": "m",
+        "element": "e"
+      },
+      "request": {
+        "cardinality": "array",
+        "itemType": {
+          "module": "m",
+          "element": "\ud800"
+        }
+      },
+      "provenance": {
+        "origin": "authored",
+        "idealPath": "/modules/0/elements/0/cardinality",
+        "cardinality": "array",
+        "binding": {
+          "id": "umf.core.cardinality.authoring",
+          "version": "4.0.0"
+        },
+        "basis": "explicit-author-declaration",
+        "nativePath": null
+      }
+    }
+  },
+  "surrogateIdentityDocument": {
+    "umf": "0.10.0",
+    "id": "author",
+    "vocabularies": {
+      "future": {
+        "version": "1.0.0"
+      }
+    },
+    "modules": [
+      {
+        "id": "\ud800",
+        "namespace": "",
+        "elements": [
+          {
+            "id": "\ud801",
+            "kind": "field",
+            "nullability": "required",
+            "extensions": {
+              "future": {
+                "opaque": "retain"
+              }
+            }
+          },
+          {
+            "id": "v",
+            "kind": "field",
+            "scalarType": "integer",
+            "extensions": {}
+          }
+        ]
+      }
+    ]
+  },
+  "surrogateIdentity": {
+    "module": "\ud800",
+    "element": "\ud801"
+  },
+  "malformedSourceReceipt": {
+    "operation": "declare-core-cardinality",
+    "version": "4.0.0",
+    "source": {},
+    "target": {
+      "umf": "0.10.0",
+      "id": "author",
+      "vocabularies": {
+        "future": {
+          "version": "1.0.0"
+        }
+      },
+      "modules": [
+        {
+          "id": "m",
+          "namespace": "",
+          "elements": [
+            {
+              "id": "e",
+              "kind": "field",
+              "nullability": "required",
+              "extensions": {
+                "future": {
+                  "opaque": "retain"
+                }
+              },
+              "cardinality": "array",
+              "itemType": {
+                "module": "m",
+                "element": "v",
+                "future": {
+                  "unknown": true
+                }
+              }
+            },
+            {
+              "id": "v",
+              "kind": "field",
+              "scalarType": "integer",
+              "extensions": {}
+            }
+          ]
+        }
+      ]
+    },
+    "identity": {
+      "module": "m",
+      "element": "e"
+    },
+    "request": {
+      "cardinality": "array",
+      "itemType": {
+        "module": "m",
+        "element": "v",
+        "future": {
+          "unknown": true
+        }
+      }
+    },
+    "provenance": {
+      "origin": "authored",
+      "idealPath": "/modules/0/elements/0/cardinality",
+      "cardinality": "array",
+      "binding": {
+        "id": "umf.core.cardinality.authoring",
+        "version": "4.0.0"
+      },
+      "basis": "explicit-author-declaration",
+      "nativePath": null
+    }
+  },
+  "malformedTargetReceipt": {
+    "operation": "declare-core-cardinality",
+    "version": "4.0.0",
+    "source": {
+      "umf": "0.10.0",
+      "id": "author",
+      "vocabularies": {
+        "future": {
+          "version": "1.0.0"
+        }
+      },
+      "modules": [
+        {
+          "id": "m",
+          "namespace": "",
+          "elements": [
+            {
+              "id": "e",
+              "kind": "field",
+              "nullability": "required",
+              "extensions": {
+                "future": {
+                  "opaque": "retain"
+                }
+              }
+            },
+            {
+              "id": "v",
+              "kind": "field",
+              "scalarType": "integer",
+              "extensions": {}
+            }
+          ]
+        }
+      ]
+    },
+    "target": {},
+    "identity": {
+      "module": "m",
+      "element": "e"
+    },
+    "request": {
+      "cardinality": "array",
+      "itemType": {
+        "module": "m",
+        "element": "v",
+        "future": {
+          "unknown": true
+        }
+      }
+    },
+    "provenance": {
+      "origin": "authored",
+      "idealPath": "/modules/0/elements/0/cardinality",
+      "cardinality": "array",
+      "binding": {
+        "id": "umf.core.cardinality.authoring",
+        "version": "4.0.0"
+      },
+      "basis": "explicit-author-declaration",
+      "nativePath": null
+    }
+  },
+  "verified": {
+    "ok": true,
+    "value": {
+      "operation": "declare-core-cardinality",
+      "version": "4.0.0",
+      "source": {
+        "umf": "0.10.0",
+        "id": "author",
+        "vocabularies": {
+          "future": {
+            "version": "1.0.0"
+          }
+        },
+        "modules": [
+          {
+            "id": "m",
+            "namespace": "",
+            "elements": [
+              {
+                "id": "e",
+                "kind": "field",
+                "nullability": "required",
+                "extensions": {
+                  "future": {
+                    "opaque": "retain"
+                  }
+                }
+              },
+              {
+                "id": "v",
+                "kind": "field",
+                "scalarType": "integer",
+                "extensions": {}
+              }
+            ]
+          }
+        ]
+      },
+      "target": {
+        "umf": "0.10.0",
+        "id": "author",
+        "vocabularies": {
+          "future": {
+            "version": "1.0.0"
+          }
+        },
+        "modules": [
+          {
+            "id": "m",
+            "namespace": "",
+            "elements": [
+              {
+                "id": "e",
+                "kind": "field",
+                "nullability": "required",
+                "extensions": {
+                  "future": {
+                    "opaque": "retain"
+                  }
+                },
+                "cardinality": "array",
+                "itemType": {
+                  "module": "m",
+                  "element": "v",
+                  "future": {
+                    "unknown": true
+                  }
+                }
+              },
+              {
+                "id": "v",
+                "kind": "field",
+                "scalarType": "integer",
+                "extensions": {}
+              }
+            ]
+          }
+        ]
+      },
+      "identity": {
+        "module": "m",
+        "element": "e"
+      },
+      "request": {
+        "cardinality": "array",
+        "itemType": {
+          "module": "m",
+          "element": "v",
+          "future": {
+            "unknown": true
+          }
+        }
+      },
+      "provenance": {
+        "origin": "authored",
+        "idealPath": "/modules/0/elements/0/cardinality",
+        "cardinality": "array",
+        "binding": {
+          "id": "umf.core.cardinality.authoring",
+          "version": "4.0.0"
+        },
+        "basis": "explicit-author-declaration",
+        "nativePath": null
+      }
+    }
+  },
+  "refusals": {
+    "unknownOverwrite": {
+      "ok": false,
+      "error": {
+        "code": "CORE_CARDINALITY_UNKNOWN",
+        "message": "Unknown cardinality cannot be overwritten by this operation",
+        "path": "/modules/0/elements/0/cardinality"
+      }
+    },
+    "invalidRequest": {
+      "ok": false,
+      "error": {
+        "code": "CORE_CARDINALITY_REQUEST",
+        "message": "[{\"instancePath\":\"/itemType/module\",\"schemaPath\":\"#/$defs/itemType/properties/module/minLength\",\"keyword\":\"minLength\",\"params\":{\"limit\":1},\"message\":\"must NOT have fewer than 1 characters\"},{\"instancePath\":\"/itemType/element\",\"schemaPath\":\"#/$defs/itemType/properties/element/minLength\",\"keyword\":\"minLength\",\"params\":{\"limit\":1},\"message\":\"must NOT have fewer than 1 characters\"},{\"instancePath\":\"/itemType\",\"schemaPath\":\"#/properties/itemType/oneOf/1/type\",\"keyword\":\"type\",\"params\":{\"type\":\"null\"},\"message\":\"must be null\"},{\"instancePath\":\"/itemType\",\"schemaPath\":\"#/properties/itemType/oneOf\",\"keyword\":\"oneOf\",\"params\":{\"passingSchemas\":null},\"message\":\"must match exactly one schema in oneOf\"}]",
+        "path": ""
+      }
+    },
+    "missingIdentity": {
+      "ok": false,
+      "error": {
+        "code": "CORE_CARDINALITY_MISSING",
+        "message": "Element identity is absent",
+        "path": ""
+      }
+    },
+    "malformedSourceReceipt": {
+      "ok": false,
+      "error": {
+        "code": "CORE_CARDINALITY_RECEIPT",
+        "message": "Malformed cardinality declaration",
+        "path": ""
+      }
+    },
+    "malformedTargetReceipt": {
+      "ok": false,
+      "error": {
+        "code": "CORE_CARDINALITY_RECEIPT",
+        "message": "Malformed cardinality declaration",
+        "path": ""
+      }
+    },
+    "surrogateIdentity": {
+      "ok": true,
+      "value": {
+        "operation": "inspect-core-cardinality",
+        "version": "6.0.0",
+        "source": {
+          "umf": "0.10.0",
+          "id": "author",
+          "vocabularies": {
+            "future": {
+              "version": "1.0.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "\ud800",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "\ud801",
+                  "kind": "field",
+                  "nullability": "required",
+                  "extensions": {
+                    "future": {
+                      "opaque": "retain"
+                    }
+                  }
+                },
+                {
+                  "id": "v",
+                  "kind": "field",
+                  "scalarType": "integer",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "\ud800",
+          "element": "\ud801"
+        },
+        "path": "/modules/0/elements/0/cardinality",
+        "meaning": {
+          "state": "missing"
+        },
+        "provenance": "unverified"
+      }
+    }
+  }
+}

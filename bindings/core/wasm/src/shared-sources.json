@@ -1,0 +1,19 @@
+{
+  "sources": [
+    {
+      "source": "bindings/core/node/src/wire.js",
+      "generated": "bindings/core/wasm/src/wire.js",
+      "sha256": "31c0bda130717d6e6438674bc7ba80977f916eb29e8ee1e9604e2ed219b56f33"
+    },
+    {
+      "source": "bindings/core/node/src/javascript-numeric.js",
+      "generated": "bindings/core/wasm/src/javascript-numeric.js",
+      "sha256": "a3145b1f434a028e8940ddc8a4c4c36e90fdf3465e59d44431e24a6fa50f73f5"
+    },
+    {
+      "source": "bindings/core/node/src/bit128.js",
+      "generated": "bindings/core/wasm/src/bit128.js",
+      "sha256": "ce8718f0761c1a171aa03b31b39d03fd21abc5f513649b93651a1239aaf43956"
+    }
+  ]
+}

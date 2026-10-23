@@ -3,8 +3,9 @@ use std::{cell::RefCell, collections::HashMap, rc::Rc};
 use pyo3::{
     exceptions::PyValueError,
     prelude::*,
-    types::{PyBytes, PyDict, PyList, PyTuple},
+    types::{PyBool, PyBytes, PyDict, PyFloat, PyInt, PyList, PyTuple},
 };
+use num_bigint::BigInt;
 use umf_core::{
     Capabilities, CapabilityError, Context, Diagnostic, Engine, EngineError, PythonDiagnosticText,
     Registry, ResourceSet, SemanticContext, Severity, Utf16, Value,
@@ -14,6 +15,622 @@ use umf_core::{
 };
 
 mod python_value;
+
+fn python_bigint(
+    py: Python<'_>,
+    value: &Bound<'_, PyAny>,
+    context: &mut Context<'_>,
+) -> PyResult<BigInt> {
+    if !value.is_exact_instance_of::<PyInt>() {
+        return Err(PyValueError::new_err("integer metadata required"));
+    }
+    let bits: usize = value
+        .call_method0("bit_length")?
+        .extract()
+        .map_err(|_| PyValueError::new_err("integer metadata cannot be represented"))?;
+    context
+        .charge_work(bits.saturating_add(1), Utf16::default())
+        .map_err(py_error)?;
+    let byte_len = bits.saturating_add(8).checked_div(8).unwrap_or(usize::MAX).max(1);
+    let kwargs = PyDict::new_bound(py);
+    kwargs.set_item("signed", true)?;
+    let bytes = value
+        .call_method("to_bytes", (byte_len, "little"), Some(&kwargs))?
+        .downcast_into::<PyBytes>()?;
+    Ok(BigInt::from_signed_bytes_le(bytes.as_bytes()))
+}
+
+#[pyfunction]
+fn access_values_profile_version() -> &'static str {
+    "umf-access-values/0.1.0"
+}
+
+#[pyfunction]
+fn operation_values_profile_version() -> &'static str {
+    umf_core::operation_values::PROFILE_VERSION
+}
+
+#[pyfunction]
+fn operation_canonical(json_text: &str) -> PyResult<String> {
+    umf_core::operation_values::canonical(json_text).map_err(|e| PyValueError::new_err(e.to_string()))
+}
+
+fn operation_python_node(
+    value: &Bound<'_, PyAny>,
+    limit: usize,
+    depth: usize,
+    lower_bound: &mut usize,
+) -> PyResult<umf_core::native_json::NativeJsonNode> {
+    use umf_core::{native_json::NativeJsonNode as Node, value::Utf16};
+
+    if depth > 128 {
+        return Err(PyValueError::new_err("native wire frame bound exceeded"));
+    }
+    let add_lower = |amount: usize, total: &mut usize| -> PyResult<()> {
+        *total = total.saturating_add(amount);
+        if *total > limit {
+            return Err(PyValueError::new_err("native wire frame bound exceeded"));
+        }
+        Ok(())
+    };
+    if value.is_none() {
+        add_lower(4, lower_bound)?;
+        return Ok(Node::Null);
+    }
+    if value.is_exact_instance_of::<PyBool>() {
+        let item = value.extract::<bool>()?;
+        add_lower(if item { 4 } else { 5 }, lower_bound)?;
+        return Ok(Node::Boolean(item));
+    }
+    if value.is_exact_instance_of::<PyInt>() {
+        let bits: usize = value.call_method0("bit_length")?.extract()?;
+        add_lower(bits / 4, lower_bound)?;
+        let token: String = value.str()?.extract()?;
+        add_lower(token.len().saturating_sub(bits / 4), lower_bound)?;
+        return Ok(Node::Number(token));
+    }
+    if value.is_exact_instance_of::<PyFloat>() {
+        let number = value.extract::<f64>()?;
+        if !number.is_finite() {
+            return Err(PyValueError::new_err("invalid operation JSON"));
+        }
+        let token: String = value.str()?.extract()?;
+        add_lower(token.len(), lower_bound)?;
+        return Ok(Node::Number(token));
+    }
+    if value.is_exact_instance_of::<pyo3::types::PyString>() {
+        let chars: usize = value.len()?;
+        add_lower(chars.saturating_add(2), lower_bound)?;
+        let text: String = value.extract()?;
+        return Ok(Node::String(Utf16::from_utf8(&text)));
+    }
+    if value.is_exact_instance_of::<PyList>() || value.is_exact_instance_of::<PyTuple>() {
+        let length = if value.is_exact_instance_of::<PyList>() {
+            value.downcast::<PyList>()?.len()
+        } else {
+            value.downcast::<PyTuple>()?.len()
+        };
+        add_lower(length.saturating_sub(1) + 2, lower_bound)?;
+        let mut result = Vec::with_capacity(length.min(limit));
+        for item in value.try_iter()? {
+            let item = item?;
+            result.push(operation_python_node(&item, limit, depth + 1, lower_bound)?);
+        }
+        return Ok(Node::Array(result));
+    }
+    if value.is_exact_instance_of::<PyDict>() {
+        let dict = value.downcast::<PyDict>()?;
+        add_lower(dict.len().saturating_sub(1) + 2, lower_bound)?;
+        let mut result = Vec::with_capacity(dict.len().min(limit));
+        for (key, item) in dict.iter() {
+            if !key.is_exact_instance_of::<pyo3::types::PyString>() {
+                return Err(PyValueError::new_err("invalid operation JSON"));
+            }
+            let chars: usize = key.len()?;
+            add_lower(chars.saturating_add(3), lower_bound)?;
+            let text: String = key.extract()?;
+            let child = operation_python_node(&item, limit, depth + 1, lower_bound)?;
+            result.push((Utf16::from_utf8(&text), child));
+        }
+        return Ok(Node::Object(result));
+    }
+    Err(PyValueError::new_err("invalid operation JSON"))
+}
+
+fn operation_size_limit(limit: &Bound<'_, PyAny>) -> PyResult<usize> {
+    if limit.is_exact_instance_of::<PyBool>() {
+        return Ok(usize::from(limit.extract::<bool>()?));
+    }
+    if limit.is_exact_instance_of::<PyInt>() {
+        if limit.call_method1("__lt__", (0,))?.extract::<bool>()? {
+            return Err(PyValueError::new_err("native wire frame bound exceeded"));
+        }
+        let bits: usize = limit.call_method0("bit_length")?.extract()?;
+        if bits > usize::BITS as usize {
+            return Ok(usize::MAX);
+        }
+        return Ok(limit.extract::<usize>().unwrap_or(usize::MAX));
+    }
+    if limit.is_exact_instance_of::<PyFloat>() {
+        let number = limit.extract::<f64>()?;
+        if number.is_nan() || number == f64::INFINITY {
+            return Ok(usize::MAX);
+        }
+        if number < 0.0 || number == f64::NEG_INFINITY {
+            return Err(PyValueError::new_err("native wire frame bound exceeded"));
+        }
+        return Ok(number as usize);
+    }
+    Err(pyo3::exceptions::PyTypeError::new_err(
+        "frame limit must be an integer or float",
+    ))
+}
+
+#[pyfunction]
+fn operation_bounded_size(value: &Bound<'_, PyAny>, limit: &Bound<'_, PyAny>) -> PyResult<usize> {
+    let limit = operation_size_limit(limit)?;
+    let mut lower_bound = 0usize;
+    let node = operation_python_node(value, limit, 0, &mut lower_bound)?;
+    umf_core::operation_values::bounded_size_node(&node, limit)
+        .map_err(|e| PyValueError::new_err(e.to_string()))
+}
+
+#[pyfunction]
+fn operation_digest(json_text: &str) -> PyResult<String> {
+    umf_core::operation_values::digest(json_text).map_err(|e| PyValueError::new_err(e.to_string()))
+}
+
+#[pyfunction]
+fn operation_loads(raw_utf8: &Bound<'_, PyBytes>) -> PyResult<String> {
+    let raw = std::str::from_utf8(raw_utf8.as_bytes())
+        .map_err(|_| PyValueError::new_err("invalid operation JSON"))?;
+    umf_core::operation_values::loads(raw).map_err(|e| PyValueError::new_err(e.to_string()))
+}
+
+#[pyfunction]
+fn operation_token_encode(
+    secret: &Bound<'_, PyBytes>,
+    scope_json: &str,
+    after_json: &str,
+) -> PyResult<String> {
+    umf_core::operation_values::token_encode(secret.as_bytes(), scope_json, after_json)
+        .map_err(|e| PyValueError::new_err(e.to_string()))
+}
+
+#[pyfunction]
+fn operation_token_decode(secret: &Bound<'_, PyBytes>, token: &str) -> PyResult<String> {
+    umf_core::operation_values::token_decode(secret.as_bytes(), token)
+        .map_err(|e| PyValueError::new_err(e.to_string()))
+}
+
+#[pyfunction]
+fn access_float32_profile_version() -> &'static str {
+    "umf-access-float32/0.1.0"
+}
+
+#[pyfunction]
+fn access_float32_classify(value: &Bound<'_, PyAny>) -> PyResult<u8> {
+    if !value.is_exact_instance_of::<PyFloat>() {
+        return Err(PyValueError::new_err("binary64 float carrier required"));
+    }
+    let value = value.extract::<f64>()?;
+    Ok(match umf_core::access_values::validate_float32(value) {
+        Ok(()) => 0,
+        Err(umf_core::access_values::Float32Error::NonFinite) => 1,
+        Err(umf_core::access_values::Float32Error::Overflow) => 2,
+        Err(umf_core::access_values::Float32Error::Rounding) => 3,
+    })
+}
+
+#[pyfunction]
+fn access_range_profile_version() -> &'static str {
+    "umf-access-range/0.1.0"
+}
+
+#[pyfunction]
+fn access_range_compare_integer(
+    py: Python<'_>,
+    left: &Bound<'_, PyAny>,
+    right: &Bound<'_, PyAny>,
+) -> PyResult<i8> {
+    if !left.is_exact_instance_of::<PyInt>() || !right.is_exact_instance_of::<PyInt>() {
+        return Err(PyValueError::new_err("integer range carrier required"));
+    }
+    let mut context = Context::ordinary();
+    let left = python_bigint(py, left, &mut context)?;
+    let right = python_bigint(py, right, &mut context)?;
+    Ok(ordering_code(umf_core::access_values::compare_integers(
+        &left, &right,
+    )))
+}
+
+#[pyfunction]
+fn access_range_compare_decimal(
+    py: Python<'_>,
+    left: &Bound<'_, PyAny>,
+    right: &Bound<'_, PyAny>,
+) -> PyResult<i8> {
+    let mut context = Context::ordinary();
+    let (left_sign, left_digits, left_exponent) = decimal_range_tuple(py, left, &mut context)?;
+    let (right_sign, right_digits, right_exponent) = decimal_range_tuple(py, right, &mut context)?;
+    umf_core::access_values::compare_decimal_tuples(
+        left_sign,
+        &left_digits,
+        &left_exponent,
+        right_sign,
+        &right_digits,
+        &right_exponent,
+    )
+    .map(ordering_code)
+    .map_err(|error| PyValueError::new_err(error.to_string()))
+}
+
+#[pyfunction]
+fn access_constraints_profile_version() -> &'static str {
+    "umf-access-constraints/0.1.0"
+}
+
+fn exact_stream_integer(value: &Bound<'_, PyAny>) -> Option<BigInt> {
+    if !value.is_exact_instance_of::<PyInt>() {
+        return None;
+    }
+    let bits = value.call_method0("bit_length").ok()?.extract::<usize>().ok()?;
+    let byte_len = bits.saturating_add(8).checked_div(8)?.max(1);
+    let kwargs = PyDict::new_bound(value.py());
+    kwargs.set_item("signed", true).ok()?;
+    let bytes = value
+        .call_method("to_bytes", (byte_len, "little"), Some(&kwargs))
+        .ok()?
+        .downcast_into::<PyBytes>()
+        .ok()?;
+    Some(BigInt::from_signed_bytes_le(bytes.as_bytes()))
+}
+
+#[pyfunction]
+fn access_stream_page_size_profile_version() -> &'static str {
+    "umf-access-stream-page-size/0.1.0"
+}
+
+#[pyfunction]
+fn access_stream_page_size_request_valid(requested: &Bound<'_, PyAny>) -> bool {
+    if requested.is_none() {
+        return true;
+    }
+    let value = exact_stream_integer(requested);
+    umf_core::access_stream::request_is_valid(value.as_ref()) && value.is_some()
+}
+
+#[pyfunction]
+fn access_stream_page_size_missing_domain_valid(requested: bool) -> bool {
+    umf_core::access_stream::missing_domain(requested).is_ok()
+}
+
+#[pyfunction]
+fn access_stream_page_size_domain_type_valid(exact_dict: bool) -> bool {
+    umf_core::access_stream::domain_type_is_valid(exact_dict).is_ok()
+}
+
+#[pyfunction]
+fn access_stream_page_size_domain_keys_valid(matches: bool) -> bool {
+    umf_core::access_stream::domain_keys_are_valid(matches).is_ok()
+}
+
+#[pyfunction]
+fn access_stream_page_size_domain_parameter_valid(matches: bool) -> bool {
+    umf_core::access_stream::domain_parameter_is_valid(matches).is_ok()
+}
+
+#[pyfunction]
+fn access_stream_page_size_minimum_valid(
+    exact_integer: bool,
+) -> bool {
+    umf_core::access_stream::minimum_carrier_is_valid(exact_integer)
+}
+
+#[pyfunction]
+fn access_stream_page_size_minimum_comparison_valid(matches_minimum: bool) -> bool {
+    umf_core::access_stream::minimum_value_is_valid(matches_minimum)
+}
+
+#[pyfunction]
+fn access_stream_page_size_minimum_exact_value_valid(value: &Bound<'_, PyAny>) -> bool {
+    exact_stream_integer(value).is_some_and(|integer| {
+        umf_core::access_stream::minimum_exact_value_is_valid(&integer)
+    })
+}
+
+#[pyfunction]
+fn access_stream_page_size_maximum_valid(
+    exact_integer: bool,
+) -> bool {
+    umf_core::access_stream::maximum_carrier_is_valid(exact_integer)
+}
+
+#[pyfunction]
+fn access_stream_page_size_maximum_comparison_valid(within_closed_range: bool) -> bool {
+    umf_core::access_stream::maximum_value_is_valid(within_closed_range)
+}
+
+#[pyfunction]
+fn access_stream_page_size_maximum_exact_value_valid(value: &Bound<'_, PyAny>) -> bool {
+    exact_stream_integer(value).is_some_and(|integer| {
+        umf_core::access_stream::maximum_exact_value_is_valid(&integer)
+    })
+}
+
+#[pyfunction]
+fn access_stream_page_size_row_cap_valid(
+    exact_integer: bool,
+    maximum_fits: bool,
+) -> bool {
+    umf_core::access_stream::row_cap_is_valid(exact_integer, maximum_fits)
+}
+
+#[pyfunction]
+fn access_stream_page_size_slot_count_valid(count: usize) -> bool {
+    umf_core::access_stream::slot_count_is_valid(count)
+}
+
+#[pyfunction]
+fn access_stream_page_size_slot_carrier_valid(matches: bool) -> bool {
+    umf_core::access_stream::slot_carrier_is_valid(matches)
+}
+
+#[pyfunction]
+fn access_stream_page_size_slot_nullability_valid(is_exact_false: bool) -> bool {
+    umf_core::access_stream::slot_nullability_is_valid(is_exact_false)
+}
+
+#[pyfunction]
+fn access_stream_page_size_final_maximum_valid(fits: bool) -> bool {
+    umf_core::access_stream::final_maximum_is_valid(fits).is_ok()
+}
+
+fn constraint_bound_bigint(
+    py: Python<'_>,
+    value: &Bound<'_, PyAny>,
+    context: &mut Context<'_>,
+) -> PyResult<BigInt> {
+    if value.is_exact_instance_of::<PyBool>() {
+        return Ok(BigInt::from(value.extract::<bool>()? as u8));
+    }
+    python_bigint(py, value, context)
+}
+
+#[pyfunction]
+fn access_constraints_length_within(
+    py: Python<'_>,
+    size: &Bound<'_, PyAny>,
+    minimum: Option<&Bound<'_, PyAny>>,
+    maximum: Option<&Bound<'_, PyAny>>,
+) -> PyResult<bool> {
+    if !size.is_exact_instance_of::<PyInt>() {
+        return Err(PyValueError::new_err("exact length carrier required"));
+    }
+    let mut context = Context::ordinary();
+    let size = python_bigint(py, size, &mut context)?;
+    let size = usize::try_from(size)
+        .map_err(|_| PyValueError::new_err("length outside supported range"))?;
+    let minimum = if let Some(bound) = minimum {
+        let bound = constraint_bound_bigint(py, bound, &mut context)?;
+        if !umf_core::access_constraints::length_within(size, Some(&bound), None) {
+            return Ok(false);
+        }
+        Some(bound)
+    } else {
+        None
+    };
+    let maximum = maximum
+        .map(|bound| constraint_bound_bigint(py, bound, &mut context))
+        .transpose()?;
+    Ok(umf_core::access_constraints::length_within(
+        size,
+        minimum.as_ref(),
+        maximum.as_ref(),
+    ))
+}
+
+#[pyfunction]
+fn access_constraints_equal_boolean(
+    left: &Bound<'_, PyAny>,
+    right: &Bound<'_, PyAny>,
+) -> PyResult<bool> {
+    if !left.is_exact_instance_of::<PyBool>() || !right.is_exact_instance_of::<PyBool>() {
+        return Err(PyValueError::new_err("exact boolean allowed-value carriers required"));
+    }
+    Ok(umf_core::access_constraints::equal_boolean(
+        left.extract::<bool>()?,
+        right.extract::<bool>()?,
+    ))
+}
+
+#[pyfunction]
+fn access_constraints_equal_integer(
+    py: Python<'_>,
+    left: &Bound<'_, PyAny>,
+    right: &Bound<'_, PyAny>,
+) -> PyResult<bool> {
+    if !left.is_exact_instance_of::<PyInt>() || !right.is_exact_instance_of::<PyInt>() {
+        return Err(PyValueError::new_err("exact integer allowed-value carriers required"));
+    }
+    let mut context = Context::ordinary();
+    let left = python_bigint(py, left, &mut context)?;
+    let right = python_bigint(py, right, &mut context)?;
+    Ok(umf_core::access_constraints::equal_integer(&left, &right))
+}
+
+#[pyfunction]
+fn access_constraints_equal_text(left: &Bound<'_, PyAny>, right: &Bound<'_, PyAny>) -> PyResult<bool> {
+    if !left.is_exact_instance_of::<pyo3::types::PyString>()
+        || !right.is_exact_instance_of::<pyo3::types::PyString>()
+    {
+        return Err(PyValueError::new_err("exact string allowed-value carriers required"));
+    }
+    let left = left.extract::<String>()?;
+    let right = right.extract::<String>()?;
+    Ok(umf_core::access_constraints::equal_text(&left, &right))
+}
+
+#[pyfunction]
+fn access_constraints_equal_bytes(left: &Bound<'_, PyAny>, right: &Bound<'_, PyAny>) -> PyResult<bool> {
+    if !left.is_exact_instance_of::<PyBytes>() || !right.is_exact_instance_of::<PyBytes>() {
+        return Err(PyValueError::new_err("exact bytes allowed-value carriers required"));
+    }
+    let left = left
+        .downcast::<PyBytes>()
+        .map_err(|_| PyValueError::new_err("exact bytes allowed-value carriers required"))?;
+    let right = right
+        .downcast::<PyBytes>()
+        .map_err(|_| PyValueError::new_err("exact bytes allowed-value carriers required"))?;
+    Ok(umf_core::access_constraints::equal_bytes(left.as_bytes(), right.as_bytes()))
+}
+
+#[pyfunction]
+fn access_constraints_equal_decimal(
+    py: Python<'_>,
+    left: &Bound<'_, PyAny>,
+    right: &Bound<'_, PyAny>,
+) -> PyResult<bool> {
+    let mut context = Context::ordinary();
+    let (left_sign, left_digits, left_exponent) = decimal_range_tuple(py, left, &mut context)?;
+    let (right_sign, right_digits, right_exponent) = decimal_range_tuple(py, right, &mut context)?;
+    umf_core::access_values::validate_decimal_tuple(&left_digits, &left_exponent, None, None)
+        .map_err(|error| PyValueError::new_err(error.to_string()))?;
+    umf_core::access_values::validate_decimal_tuple(&right_digits, &right_exponent, None, None)
+        .map_err(|error| PyValueError::new_err(error.to_string()))?;
+    Ok(umf_core::access_constraints::equal_decimal(
+        left_sign,
+        &left_digits,
+        &left_exponent,
+        right_sign,
+        &right_digits,
+        &right_exponent,
+    ))
+}
+
+fn ordering_code(ordering: std::cmp::Ordering) -> i8 {
+    match ordering {
+        std::cmp::Ordering::Less => -1,
+        std::cmp::Ordering::Equal => 0,
+        std::cmp::Ordering::Greater => 1,
+    }
+}
+
+fn decimal_range_tuple(
+    py: Python<'_>,
+    value: &Bound<'_, PyAny>,
+    context: &mut Context<'_>,
+) -> PyResult<(bool, Vec<u8>, BigInt)> {
+    let tuple = value
+        .downcast::<PyTuple>()
+        .map_err(|_| PyValueError::new_err("invalid Decimal coefficient tuple"))?;
+    if tuple.len() != 3 {
+        return Err(PyValueError::new_err("invalid Decimal coefficient tuple"));
+    }
+    let sign = tuple.get_item(0)?;
+    if !sign.is_exact_instance_of::<PyInt>() {
+        return Err(PyValueError::new_err("invalid Decimal coefficient tuple"));
+    }
+    let sign = python_bigint(py, &sign, context)?;
+    let sign = if sign == BigInt::from(0) {
+        false
+    } else if sign == BigInt::from(1) {
+        true
+    } else {
+        return Err(PyValueError::new_err("invalid Decimal coefficient tuple"));
+    };
+    let digits = tuple
+        .get_item(1)?
+        .downcast_into::<PyTuple>()
+        .map_err(|_| PyValueError::new_err("invalid Decimal coefficient tuple"))?;
+    context
+        .charge_work(digits.len(), Utf16::default())
+        .map_err(py_error)?;
+    let digits = digits
+        .iter()
+        .map(|digit| {
+            if !digit.is_exact_instance_of::<PyInt>() {
+                return Err(PyValueError::new_err("invalid Decimal coefficient tuple"));
+            }
+            digit
+                .extract::<u8>()
+                .map_err(|_| PyValueError::new_err("invalid Decimal coefficient tuple"))
+        })
+        .collect::<PyResult<Vec<_>>>()?;
+    let exponent = tuple.get_item(2)?;
+    let exponent = python_bigint(py, &exponent, context)?;
+    Ok((sign, digits, exponent))
+}
+
+#[pyfunction]
+#[pyo3(signature = (value, bits, signed))]
+fn access_values_integer_fits(
+    py: Python<'_>,
+    value: &Bound<'_, PyAny>,
+    bits: Option<&Bound<'_, PyAny>>,
+    signed: &Bound<'_, PyAny>,
+) -> PyResult<bool> {
+    if !value.is_exact_instance_of::<PyInt>() {
+        return Err(PyValueError::new_err("invalid integer width"));
+    }
+    if !signed.is_exact_instance_of::<pyo3::types::PyBool>()
+        || bits.is_some_and(|value| !value.is_exact_instance_of::<PyInt>())
+    {
+        return Err(PyValueError::new_err("invalid authored integer width"));
+    }
+    let signed = signed.extract::<bool>()?;
+    let mut context = Context::ordinary();
+    let value = python_bigint(py, value, &mut context)?;
+    let bits = bits
+        .map(|value| python_bigint(py, value, &mut context))
+        .transpose()?;
+    umf_core::access_values::integer_fits(&value, bits.as_ref(), signed)
+        .map_err(|error| PyValueError::new_err(error.to_string()))
+}
+
+#[pyfunction]
+#[pyo3(signature = (digits, exponent, precision=None, scale=None))]
+fn access_values_validate_decimal(
+    py: Python<'_>,
+    digits: &Bound<'_, PyAny>,
+    exponent: &Bound<'_, PyAny>,
+    precision: Option<&Bound<'_, PyAny>>,
+    scale: Option<&Bound<'_, PyAny>>,
+) -> PyResult<()> {
+    let mut context = Context::ordinary();
+    let digits = digits
+        .downcast::<PyTuple>()
+        .map_err(|_| PyValueError::new_err("invalid Decimal coefficient tuple"))?
+        ;
+    context
+        .charge_work(digits.len(), Utf16::default())
+        .map_err(py_error)?;
+    let digits = digits
+        .iter()
+        .map(|digit| {
+            if !digit.is_exact_instance_of::<PyInt>() {
+                return Err(PyValueError::new_err("invalid Decimal coefficient tuple"));
+            }
+            digit
+                .extract::<u8>()
+                .map_err(|_| PyValueError::new_err("invalid Decimal coefficient tuple"))
+        })
+        .collect::<PyResult<Vec<_>>>()?;
+    let exponent = python_bigint(py, exponent, &mut context)?;
+    let precision = precision
+        .map(|value| python_bigint(py, value, &mut context))
+        .transpose()?;
+    let scale = scale
+        .map(|value| python_bigint(py, value, &mut context))
+        .transpose()?;
+    umf_core::access_values::validate_decimal_tuple(
+        &digits,
+        &exponent,
+        precision.as_ref(),
+        scale.as_ref(),
+    )
+    .map_err(|error| PyValueError::new_err(error.to_string()))
+}
 
 /// Generic compiler transport; callbacks are supplied only by the binding caller.
 #[pyfunction]
@@ -462,6 +1079,44 @@ fn schema_path_segments_to_python(
 #[pyfunction]
 fn engine_version() -> &'static str {
     "umf-core-r2"
+}
+
+/// Identifies the additive compiler wire protocol independently of core semantics.
+#[pyfunction]
+fn codegen_protocol_version() -> &'static str {
+    "umf-codegen-r3-seven-ops-nine-resources/1"
+}
+
+#[pyfunction]
+#[pyo3(signature = (kind, year, month, day, hour, minute, second, microsecond, offset_microseconds=None))]
+fn access_temporal_canonical_token(
+    kind: &str,
+    year: u16,
+    month: u8,
+    day: u8,
+    hour: u8,
+    minute: u8,
+    second: u8,
+    microsecond: u32,
+    offset_microseconds: Option<i64>,
+) -> PyResult<String> {
+    umf_core::access_temporal::canonicalize_access_temporal(
+        kind,
+        year,
+        month,
+        day,
+        hour,
+        minute,
+        second,
+        microsecond,
+        offset_microseconds,
+    )
+    .map_err(|error| PyValueError::new_err(error.to_string()))
+}
+
+#[pyfunction]
+fn access_temporal_profile_version() -> &'static str {
+    "umf-access-temporal/0.1.0"
 }
 
 #[pyfunction]
@@ -1507,6 +2162,48 @@ fn _rust_core(module: &Bound<'_, PyModule>) -> PyResult<()> {
     module.add_function(wrap_pyfunction!(copy_python_consumer_value, module)?)?;
     module.add_function(wrap_pyfunction!(copy_python_json_value, module)?)?;
     module.add_function(wrap_pyfunction!(engine_version, module)?)?;
+    module.add_function(wrap_pyfunction!(codegen_protocol_version, module)?)?;
+    module.add_function(wrap_pyfunction!(access_temporal_canonical_token, module)?)?;
+    module.add_function(wrap_pyfunction!(access_temporal_profile_version, module)?)?;
+    module.add_function(wrap_pyfunction!(access_values_profile_version, module)?)?;
+    module.add_function(wrap_pyfunction!(operation_values_profile_version, module)?)?;
+    module.add_function(wrap_pyfunction!(operation_canonical, module)?)?;
+    module.add_function(wrap_pyfunction!(operation_bounded_size, module)?)?;
+    module.add_function(wrap_pyfunction!(operation_digest, module)?)?;
+    module.add_function(wrap_pyfunction!(operation_loads, module)?)?;
+    module.add_function(wrap_pyfunction!(operation_token_encode, module)?)?;
+    module.add_function(wrap_pyfunction!(operation_token_decode, module)?)?;
+    module.add_function(wrap_pyfunction!(access_float32_profile_version, module)?)?;
+    module.add_function(wrap_pyfunction!(access_float32_classify, module)?)?;
+    module.add_function(wrap_pyfunction!(access_range_profile_version, module)?)?;
+    module.add_function(wrap_pyfunction!(access_range_compare_integer, module)?)?;
+    module.add_function(wrap_pyfunction!(access_range_compare_decimal, module)?)?;
+    module.add_function(wrap_pyfunction!(access_constraints_profile_version, module)?)?;
+    module.add_function(wrap_pyfunction!(access_stream_page_size_profile_version, module)?)?;
+    module.add_function(wrap_pyfunction!(access_stream_page_size_request_valid, module)?)?;
+    module.add_function(wrap_pyfunction!(access_stream_page_size_missing_domain_valid, module)?)?;
+    module.add_function(wrap_pyfunction!(access_stream_page_size_domain_type_valid, module)?)?;
+    module.add_function(wrap_pyfunction!(access_stream_page_size_domain_keys_valid, module)?)?;
+    module.add_function(wrap_pyfunction!(access_stream_page_size_domain_parameter_valid, module)?)?;
+    module.add_function(wrap_pyfunction!(access_stream_page_size_minimum_valid, module)?)?;
+    module.add_function(wrap_pyfunction!(access_stream_page_size_minimum_comparison_valid, module)?)?;
+    module.add_function(wrap_pyfunction!(access_stream_page_size_minimum_exact_value_valid, module)?)?;
+    module.add_function(wrap_pyfunction!(access_stream_page_size_maximum_valid, module)?)?;
+    module.add_function(wrap_pyfunction!(access_stream_page_size_maximum_comparison_valid, module)?)?;
+    module.add_function(wrap_pyfunction!(access_stream_page_size_maximum_exact_value_valid, module)?)?;
+    module.add_function(wrap_pyfunction!(access_stream_page_size_row_cap_valid, module)?)?;
+    module.add_function(wrap_pyfunction!(access_stream_page_size_slot_count_valid, module)?)?;
+    module.add_function(wrap_pyfunction!(access_stream_page_size_slot_carrier_valid, module)?)?;
+    module.add_function(wrap_pyfunction!(access_stream_page_size_slot_nullability_valid, module)?)?;
+    module.add_function(wrap_pyfunction!(access_stream_page_size_final_maximum_valid, module)?)?;
+    module.add_function(wrap_pyfunction!(access_constraints_length_within, module)?)?;
+    module.add_function(wrap_pyfunction!(access_constraints_equal_boolean, module)?)?;
+    module.add_function(wrap_pyfunction!(access_constraints_equal_integer, module)?)?;
+    module.add_function(wrap_pyfunction!(access_constraints_equal_text, module)?)?;
+    module.add_function(wrap_pyfunction!(access_constraints_equal_bytes, module)?)?;
+    module.add_function(wrap_pyfunction!(access_constraints_equal_decimal, module)?)?;
+    module.add_function(wrap_pyfunction!(access_values_integer_fits, module)?)?;
+    module.add_function(wrap_pyfunction!(access_values_validate_decimal, module)?)?;
     module.add_function(wrap_pyfunction!(read_value_wire, module)?)?;
     module.add_function(wrap_pyfunction!(write_value, module)?)?;
     module.add_function(wrap_pyfunction!(read_python_value, module)?)?;

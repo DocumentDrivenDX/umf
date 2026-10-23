@@ -114,6 +114,36 @@ class TemporalCarrierTests(unittest.TestCase):
                 self.assertEqual(temporal_token("instant", value), expected)
 
     # @covers US-081-AC2
+    def test_python_datetime_oracle_across_epoch_and_gregorian_boundaries(self):
+        # Python's date/datetime implementation is the independent carrier and
+        # normalization oracle; no timestamp float or local timezone is used.
+        values = (
+            datetime(1, 1, 1, tzinfo=UTC),
+            datetime(1600, 2, 29, 23, 59, 59, 999999, tzinfo=UTC),
+            datetime(1570, 1, 1, tzinfo=UTC),
+            datetime(1569, 12, 31, 23, 59, 59, 999999, tzinfo=UTC),
+            datetime(1970, 1, 1, tzinfo=UTC),
+            datetime(1969, 12, 31, 23, 59, 59, 999999, tzinfo=UTC),
+            datetime(9999, 12, 31, 23, 59, 59, 999999, tzinfo=UTC),
+            datetime(2024, 1, 2, 12, 0, 0, 123456, tzinfo=timezone(timedelta(microseconds=1))),
+            datetime(2024, 1, 2, 12, 0, 0, 123456, tzinfo=timezone(timedelta(microseconds=-1))),
+        )
+        for value in values:
+            with self.subTest(value=value.isoformat()):
+                try:
+                    oracle = value.astimezone(UTC)
+                except (OverflowError, ValueError):
+                    with self.assertRaises(ValueError):
+                        temporal_token("instant", value)
+                    continue
+                expected = (
+                    f"{oracle.year:04d}-{oracle.month:02d}-{oracle.day:02d}T"
+                    f"{oracle.hour:02d}:{oracle.minute:02d}:{oracle.second:02d}."
+                    f"{oracle.microsecond:06d}Z"
+                )
+                self.assertEqual(temporal_token("instant", value), expected)
+
+    # @covers US-081-AC2
     def test_year_padding_preepoch_and_utc_overflow(self):
         self.assertEqual(temporal_token("date", date(1, 1, 1)), "0001-01-01")
         self.assertEqual(
@@ -130,9 +160,13 @@ class TemporalCarrierTests(unittest.TestCase):
             datetime.min.replace(tzinfo=timezone(timedelta(microseconds=1))),
             datetime.max.replace(tzinfo=timezone(timedelta(microseconds=-1))),
         ):
-            with self.assertRaises(ValueError):
+            with self.assertRaisesRegex(
+                ValueError, "instant UTC normalization outside supported years"
+            ):
                 temporal_token("instant", value)
-            with self.assertRaises(ValueError):
+            with self.assertRaisesRegex(
+                ValueError, "instant UTC normalization outside supported years"
+            ):
                 validate_instant(value)
 
     # @covers US-081-AC2

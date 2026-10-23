@@ -1,6 +1,8 @@
-use napi::{Env, JsFunction, Result as NapiResult};
+use napi::{Env, JsFunction, JsString, JsUnknown, Result as NapiResult, ValueType};
 use napi_derive::napi;
 use umf_core::{
+    gregorian_date::{parse_gregorian_date, truncate_gregorian_date},
+    rfc3339_exact_instant::{parse_rfc3339_exact_instant, same_rfc3339_exact_instant},
     Capabilities, CapabilityError, Context, Diagnostic, EngineError, ResourceProfile,
     SemanticContext, Severity, Utf16, Value,
 };
@@ -8,6 +10,21 @@ use umf_core::{
 #[napi(js_name = "copyJsonWire")]
 pub fn copy_json_wire(wire_json: String) -> NapiResult<String> {
     Ok(umf_core_wire::copy_wire_envelope(&wire_json))
+}
+
+#[napi(js_name = "executeBit128Wire")]
+pub fn execute_bit128_wire(
+    env: Env,
+    wire_json: String,
+    control_dispatcher: Option<JsFunction>,
+) -> NapiResult<String> {
+    if let Some(dispatcher) = control_dispatcher {
+        let mut control = NodeControl { env, dispatcher };
+        let mut hook = |amount| control.check(amount);
+        Ok(umf_core_wire::execute_bit128_wire_with_control(&wire_json, &mut hook))
+    } else {
+        Ok(umf_core_wire::execute_bit128_wire(&wire_json))
+    }
 }
 
 #[napi(js_name = "readValueWire")]
@@ -51,6 +68,70 @@ pub fn engine_version() -> &'static str {
     "umf-core-r2"
 }
 
+#[napi(js_name = "temporalParseGregorianDateWire")]
+pub fn temporal_parse_gregorian_date_wire(token: JsUnknown) -> NapiResult<String> {
+    let token = temporal_value(token)?;
+    Ok(match parse_gregorian_date(&token) {
+        Ok(date) => format!("OK|{}|{}|{}", date.year(), date.month(), date.day()),
+        Err(error) => error.name().to_owned(),
+    })
+}
+
+#[napi(js_name = "temporalTruncateGregorianDateWire")]
+pub fn temporal_truncate_gregorian_date_wire(
+    token: JsUnknown,
+    unit: JsUnknown,
+) -> NapiResult<String> {
+    let token = temporal_value(token)?;
+    let unit = temporal_value(unit)?;
+    Ok(match truncate_gregorian_date(&token, &unit) {
+        Ok(result) => format!("OK|{}", result.to_utf8().expect("truncated date is ASCII")),
+        Err(error) => error.name().to_owned(),
+    })
+}
+
+#[napi(js_name = "temporalParseRfc3339ExactInstantWire")]
+pub fn temporal_parse_rfc3339_exact_instant_wire(token: JsUnknown) -> NapiResult<String> {
+    let token = temporal_value(token)?;
+    Ok(match parse_rfc3339_exact_instant(&token) {
+        Ok(parsed) => format!(
+            "OK|{}|{}|{}|{}",
+            parsed.utc_seconds(),
+            parsed.fractional_digits(),
+            parsed.original_offset(),
+            parsed.local_offset_known()
+        ),
+        Err(error) => error.name().to_owned(),
+    })
+}
+
+#[napi(js_name = "temporalSameRfc3339ExactInstantWire")]
+pub fn temporal_same_rfc3339_exact_instant_wire(
+    left: JsUnknown,
+    right: JsUnknown,
+) -> NapiResult<String> {
+    let left = temporal_value(left)?;
+    let right = temporal_value(right)?;
+    Ok(match same_rfc3339_exact_instant(&left, &right) {
+        Ok(same) => format!("OK|{same}"),
+        Err(error) => error.name().to_owned(),
+    })
+}
+
+fn temporal_value(value: JsUnknown) -> NapiResult<Value> {
+    if value.get_type()? != ValueType::String {
+        return Ok(Value::Null);
+    }
+    let string: JsString = unsafe { value.cast() };
+    let mut units = string.into_utf16()?.as_slice().to_vec();
+    // N-API's UTF-16 getter includes a trailing NUL sentinel. Preserve
+    // embedded NUL code units and drop only that terminator.
+    if units.last() == Some(&0) {
+        units.pop();
+    }
+    Ok(Value::String(Utf16::new(units)))
+}
+
 #[napi(js_name = "executeRequestWire")]
 pub fn execute_request_wire(
     env: Env,
@@ -67,7 +148,7 @@ pub fn execute_request_wire(
                 "RESOURCE_PROFILE",
                 Utf16::default(),
                 "Unknown resource profile",
-            )))
+            )));
         }
     };
     let mut capabilities = NodeCapabilities { env, dispatcher };
@@ -86,6 +167,21 @@ pub fn execute_request_wire(
             profile,
             &mut capabilities,
         ))
+    }
+}
+
+#[napi(js_name = "executeJavascriptNumericWire")]
+pub fn execute_javascript_numeric_wire(
+    env: Env,
+    wire_json: String,
+    control_dispatcher: Option<JsFunction>,
+) -> NapiResult<String> {
+    if let Some(dispatcher) = control_dispatcher {
+        let mut control = NodeControl { env, dispatcher };
+        let mut hook = |amount| control.check(amount);
+        Ok(umf_core_wire::execute_javascript_numeric_wire_with_control(&wire_json, &mut hook))
+    } else {
+        Ok(umf_core_wire::execute_javascript_numeric_wire(&wire_json))
     }
 }
 
@@ -222,7 +318,7 @@ impl NodeCapabilities {
                     _ => {
                         return Err(Utf16::from(
                             "Node callback severity must be error or warning",
-                        ))
+                        ));
                     }
                 };
                 Ok(Diagnostic {

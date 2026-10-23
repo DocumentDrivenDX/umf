@@ -1,0 +1,128 @@
+{
+  "source": "src/model/document.ts::editExtension + src/registry/registry.ts::Registry + src/validation/document.ts::validateDocument",
+  "runtime": {
+    "bun": "1.4.3",
+    "platform": "darwin",
+    "arch": "arm64"
+  },
+  "cases": {
+    "registryMutationDuringValidation": {
+      "events": [
+        "semantic:trigger",
+        "registry:target-v2-registered",
+        "semantic:target:v1:before",
+        "updater:before",
+        "semantic:trigger",
+        "semantic:target:v2:before",
+        "result:before"
+      ],
+      "finalTargetPayload": {
+        "label": "before",
+        "edited": true
+      }
+    },
+    "samePassRegistryMutation": {
+      "events": [
+        "semantic:trigger",
+        "registry:target-registered",
+        "semantic:target:target"
+      ],
+      "validationDiagnostics": [
+        {
+          "code": "UNKNOWN_EXTENSION",
+          "path": "/vocabularies/urn:test:edit-target",
+          "message": "Exact extension version unavailable; content retained",
+          "severity": "warning"
+        }
+      ],
+      "refusal": {
+        "code": "UNSAFE_EDIT",
+        "message": "All present semantics must be validated before editing"
+      },
+      "updaterCalled": false
+    },
+    "originalSourceMutationDuringValidation": {
+      "events": [
+        "semantic:trigger",
+        "semantic:target:before",
+        "updater:mutated-during-validation",
+        "semantic:trigger",
+        "semantic:target:mutated-during-validation"
+      ],
+      "sourceAfter": {
+        "label": "mutated-during-validation",
+        "nested": {
+          "keep": true
+        }
+      },
+      "updaterPayload": {
+        "label": "mutated-during-validation",
+        "nested": {
+          "keep": false
+        }
+      },
+      "resultPayload": {
+        "label": "mutated-during-validation",
+        "nested": {
+          "keep": false
+        }
+      },
+      "semanticPayloadDetached": true,
+      "semanticDocumentDetached": true
+    },
+    "nestedInvocationAndCopies": {
+      "events": [
+        "semantic:outer",
+        "updater:outer:start",
+        "semantic:outer",
+        "updater:nested:outer",
+        "semantic:outer",
+        "updater:outer:end:true",
+        "semantic:outer",
+        "semantic:outer"
+      ],
+      "sourceAfter": {
+        "label": "outer",
+        "opaque": {
+          "n": 1
+        }
+      },
+      "outerResult": {
+        "label": "outer",
+        "opaque": {
+          "n": 2
+        },
+        "outer": true
+      },
+      "nestedResult": {
+        "label": "outer",
+        "opaque": {
+          "n": 1
+        },
+        "nested": true
+      },
+      "callbackPayload": {
+        "label": "outer",
+        "opaque": {
+          "n": 2
+        }
+      }
+    },
+    "exceptionChannels": {
+      "updater": {
+        "exactIdentity": true,
+        "value": {
+          "channel": "updater",
+          "identity": 17
+        }
+      },
+      "semanticValidator": {
+        "exactIdentity": false,
+        "refusal": {
+          "code": "UNSAFE_EDIT",
+          "message": "All present semantics must be validated before editing"
+        }
+      }
+    }
+  }
+}

@@ -766,7 +766,11 @@ fn build_table_modules(
 }
 
 fn row_name_option(name: &str, include: bool) -> Value {
-    if include { strval(name) } else { Value::Null }
+    if include {
+        strval(name)
+    } else {
+        Value::Null
+    }
 }
 fn table_field_meta(
     field: &Field,

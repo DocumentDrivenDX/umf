@@ -34,10 +34,14 @@ Move UMF-owned shared executable semantics to Rust. Deliver one Rust engine as a
 native CLI, Python bindings, Node/Bun bindings and browser WASM. First remove V8
 from the complete Python generator operation surface; then finish the broader
 single-source migration. Neither milestone implies new native semantic support.
-The owner authorizes R0–R3 in this worktree, with Sol planning/review and Luna
-implementation in parallel. R3 includes resolving production interfaces/resources,
-implementation, tests, review, current-main integration and PR creation and merge.
-R4–R8 and package publication remain separate actions.
+The owner authorizes the complete R0–R8 port in this worktree, including
+integration, testing, independent review, current-main reconciliation, PR/merge
+and UMF package release. Sol owns planning/review and Luna implementation under
+the existing allocation; reviewers must not approve their own changes. The
+2026-10-23 continuation extends the earlier R0–R3 authorization. Historical
+source-bound checkpoints retain their captured scope. Publication follows the
+final release gates; consumer-repository semantic changes, external messages and
+production deployment remain separately authorized.
 
 Governing artifacts: [ADR-006](../02-design/adr/ADR-006-shared-rust-implementation.md),
 [PRD](../01-frame/prd.md), [cross-cutting requirements](../01-frame/cross-cutting-requirements.md),
@@ -201,7 +205,15 @@ versions as supported APIs. Historical fixtures remain usable as inert controls.
 6. The Rust library owns no ambient filesystem, network, process, clock or database
    state. CLI and host capabilities provide I/O. Weft owns SQL semantics; Truss,
    Ashlar and TableSpec retain their execution/storage/authorization responsibilities.
-7. Python wheel and CLI execution require no JavaScript engine or subprocess.
+7. Python wheel and CLI execution require no JavaScript engine or external
+   language-runtime fallback. The R4 Python codegen host may start only the
+   `umf/_bin/umf` Rust executable from its exact pinned installed `umf-core`
+   wheel. This is a scoped host capability, not a second semantic
+   implementation: it must enforce the operation deadline, qualified Rust
+   allocation boundary and termination/reaping, and cannot launch Node/Bun/V8
+   or a replacement compiler. The standalone Rust CLI requires neither Python
+   nor JS. The Python parent's transport admission and response decoding have
+   separate bounded-input, deadline and memory-amplification qualifications.
    Generated Python clients remain stdlib-only and import neither the Rust extension
    nor `umf_codegen`. Boundary glue can remain Python/TS; semantic forks cannot.
 8. Each claimed native/version/browser subset requires fresh execution against the
@@ -220,13 +232,16 @@ versions as supported APIs. Historical fixtures remain usable as inert controls.
 | R5 | Remaining shared operations; CONTRACT-001–011 and each current family contract/test plan | R2; R4 before broad cutover | Port model operations, core ideals, extensions/actions/security, domain-pack algorithms, adapters and projections in bounded dependency order. For each family: fixtures, loss reports, unknown guards, both recovery directions, independent native oracles, browser/native/wrapper parity and removal of old semantic implementation. Each family is separately reviewable; unresolved families stay visible in the census. |
 | R6 | Python access and consumer bridges; ADR-004, CONTRACT-067–075/079, current consumer contracts | R3; relevant R5 families | Move remaining UMF-owned shared request/codec/planner/checking algorithms into Rust. Thin Python drivers/session/async/transport glue retains host ownership; generated client stays stdlib-only. Replay genuine installed native PostgreSQL/Weft/Truss/Ashlar/TableSpec integrations for changed paths, including cancellation, transactions, authorization and exact results. Preserve unrelated held/unsupported scopes. |
 | R7 | Default JS/browser and tooling retirement; ADR-005/006, CONTRACT-077/080 | R5, R6 | Node and Bun default to the qualified Rust binding; browser defaults to same Rust engine in WASM. Port remaining shared metamodel/reference/pack/build computation, keep UI and test harness glue. Complete export/module/dependency retirement census, no shipped fallback engine, no duplicated semantic kernels. Consumer and browser journeys pass with packaged artifacts. |
-| R8 | Integrated qualification and release preparation; TP-001 | R4–R7 | Full regression and required native corpus from one captured source cohort, clean builds, installed wheels/npm/CLI/WASM, current docs/reference/examples/notices and independent review. Produce release artifacts and hashes; actual publication/deployment requires separate authorization. Milestone B below. |
+| R8 | Integrated qualification and release preparation; TP-001 | R4–R7 | Full regression and required native corpus from one captured source cohort, clean builds, installed wheels/npm/CLI/WASM, current docs/reference/examples/notices and independent review. Produce reviewed release artifacts and hashes, then publish the authorized UMF release after its gates pass; production deployment remains separate. Milestone B below. |
 
 The migration command `bun run check:rust-boundaries` is implemented and wired
 locally, in pre-commit and CI. R2 extends it for production crate/binding ownership
 and successor generated provenance; it complements `check:access-boundaries`,
 `check:core-authority` and `check:unified-client-boundaries`. The R0/R1 captures
 remain historical source-bound evidence; new R2 captures identify their own inputs.
+During R5–R7 implementation the command validates a newly computed live census
+without rewriting the immutable R4 census or boundary receipt. A new committed
+source-bound census is still required at the final integration checkpoint.
 
 It checks the Cargo dependency graph and cross-language imports, core-to-host
 cycles/private access, forbidden JS engines/subprocess fallbacks, generated
@@ -241,6 +256,557 @@ before JSON Schema-to-Protobuf; Avro before its projections; GraphQL before inpu
 projection; OpenAPI after schema/resource resolution. Then proceed through the
 remaining adapter graph. R0 must enumerate every exported operation, including
 unexported algorithms reached by active scripts; these examples do not limit scope.
+
+## R4–R8 continuation gates — 2026-10-23
+
+These are required future gates, not completion evidence. Root owns integration
+and release identity. Each slice supplies source-bound tests and independent
+review before integration. Earlier receipts remain immutable historical evidence.
+
+### Successor census before broad cutover
+
+Capture current main in a new inventory without rewriting R0's historical census.
+R0's five bridge entries do not describe R3's seven-operation surface. Enumerate
+every public export, CLI command and algorithm reached by active scripts,
+including additions since R0. Each row records source hash, activation path,
+governing contract/test plan, Rust or generated-data owner, allowed thin host
+boundary, dependent families, frozen controls, required host/native gates and
+retirement of the old implementation. Reuse R3 coverage only by exact source
+closure. No blanket Python/adapter/script exclusions close active rows. Broad
+cutover and Milestone B require zero unresolved active rows.
+
+### R4 distribution, resources and isolation
+
+Compose `umf.rust_codegen.CodegenEngine` behind preserved `umf_codegen` public
+functions, `GenerationError`, CLI and writer. Lazy initialization is permitted;
+the operation deadline includes initialization and resource preparation. Preserve
+admission, request limits, failure ordering, non-writing checks and atomicity.
+Remove MiniRacer, embedded generator JS and obsolete payload build hooks from new
+distributions; retain inert historical evidence.
+
+Use the same nine explicit immutable trusted resources qualified in R3: core
+schema, reference schema, package schema, constraints, domain policy, tables,
+actions and both binding packages. Package them in wheel and sdist. A release
+manifest binds each resource name to its SHA-256; release evidence binds the
+model/source cohort. Documents and working-directory files cannot substitute
+resources. The repository `spec/` source is canonical, and the core CLI and
+codegen-wheel copies prove byte-identical derivation from it.
+
+The native successor is `umf-core` 0.11.0, a fresh artifact distinct from published
+pure 0.10.0. Pin the codegen dependency to this exact native cohort. Preserve the
+legacy core identifier only within its existing meaning; add a separately checked
+`codegen_protocol_version` for the R3/R4 operation/resource wire contract. The
+release manifest records the expected protocol, nine resource hashes and native
+artifact/source closure. A version string or method-presence test alone does not
+prove protocol compatibility. Reject stale/missing binaries or mismatched resources
+explicitly without fallback. The proposed codegen successor is 0.2.0; access
+versions and registry channels remain open until their release gates.
+
+Cooperative deadline polling alone does not preserve the old V8 hard execution
+timeout and 512 MiB hard heap bound. The additive API explicitly refuses
+`hard-isolated`. The R4 Python boundary therefore starts the exact installed
+Rust CLI in a child process and enforces one monotonic deadline across admission,
+capability check, execution and decode. It kills/reaps the child on timeout,
+bounds request/response pipes and maps refusal, allocator capacity and unexpected
+failure separately. The CLI's counting global allocator enforces 512 MiB of live
+Rust-requested allocation bytes from process startup once codegen dispatch begins;
+this does not bound process RSS, libc/allocator overhead, stack or the Python
+parent. The parent preflights a 32 MiB compact JSON request before serialization
+and caps wire output at 64 MiB, with deadline polling during value traversal.
+Qualification must measure and record Python response decode amplification and
+the remaining bounded parsing intervals. Neither bound is described as equivalent
+to the former V8 heap limit. An unavailable profile must fail explicitly or
+obtain a reviewed versioned contract change before claiming parity.
+
+R4 closes after all seven public operations and CLI/verifiers pass in clean
+installed wheels and an offline extracted-sdist rebuild with JS unavailable.
+Inspect dependencies/binary closure; generated clients remain stdlib-only.
+This establishes Milestone A, not the entire port.
+
+The [R4 installed-artifact checkpoint](evidence/rust-migration/r4/README.md)
+records all seven Python codegen operations through the bundled Rust CLI on
+macOS arm64 CPython 3.11.17, with exact offline-built wheel hashes, installed
+probe receipts, 206 core Python tests, resource/dependency inventories and a
+measured Python JSON-decode amplification sample. Independent Sol review found
+no P1/P2 in this bounded historical packaging checkpoint. Its successor census
+contains 571 source modules and 136 unresolved rows. R5/R6 work began after
+the checkpoint, so the packet deliberately does not bind the current moving
+source tree to those earlier wheels. A clean rebuild, exact source/artifact
+qualification and the broader hosted matrix remain required before R4 can be
+counted as a final release-cohort or portable Milestone A gate.
+
+### R5–R7 dependency order and retirement
+
+The live successor census captured at the R4 checkpoint remains the source of
+active-family obligations. Its 136 unresolved module rows are open work, not a
+retirement waiver; that figure counts unresolved *ownership classifications*,
+not the total number of active TypeScript/Python semantic modules awaiting
+implementation. Rows assigned to R5, R6 or R7 remain unported until their
+operation-level Rust evidence and retirement dispositions close. Refresh the
+census at integration checkpoints, and preserve each prior capture as evidence
+of the source cohort it measured. For shared R3
+modules, map individual exported operations to their Rust owners; membership in
+the R3 manifest alone cannot retire a wider TypeScript API.
+
+The first bounded R5 shards are Gregorian-date and RFC3339 exact-instant kernels
+with opt-in Node/Bun and browser WASM bindings, followed by the JavaScript numeric
+adapter. Gregorian/RFC3339 use CONTRACT-065/066, retained TypeScript fixtures,
+independent Python calendar/instant oracle rows and real-host parity. Sol's
+independent temporal review found no P1/P2 in this opt-in subset; default API
+switch, Python exposure and TypeScript retirement remain open. Numeric uses
+CONTRACT-049, its five current public operations, `src/adapters/javascript-numeric.ts`,
+`tests/core/javascript-numeric.test.ts`, a separately frozen Python exact-number
+oracle, and Node/Bun plus real-browser WASM gates. Its Rust module and bindings
+are implemented for an opt-in profile. The
+[R5 numeric checkpoint](evidence/rust-migration/r5-javascript-numeric/README.md)
+records 27 independent Python-oracle vectors through Node/Bun and real Chromium
+WASM, exact context refusal checks, and bounded work tests. After corrections
+for trailing-zero BigInts, unknown context admission and arithmetic formatting
+work, independent Sol review found no remaining P1/P2 in the stated five-operation
+slice. Its current TypeScript API remains the default; downstream float codecs,
+Python integration and the precise R7 wrapper/retirement gate remain open.
+
+The next parallel R5 model shard is core cardinality inspection and authoring
+from `src/model/cardinality.ts`, governed by CONTRACT-001 and the versioned
+cardinality operation schemas. It keeps known, missing, inapplicable and unknown
+distinct, preserves opaque nested extension content and receipts, and checks
+set/clear/keep plus stale or forged declarations. Contract-derived frozen
+vectors and an independent Draft 2020-12 schema validator provide meaning
+controls; there is no external native cardinality oracle because this is an
+authored core property. The retained TypeScript implementation stays active
+until Rust, Node/Bun and real-browser wrappers pass exact-source parity and
+independent review. Native target classifiers remain separate R5 families.
+The [bounded cardinality Rust core checkpoint](evidence/rust-migration/r5-cardinality/README.md)
+has complete TypeScript/Rust envelope differential and independent Ajv validation
+for its recorded cohort. Later cross-slice inspection reopened receipt
+nested-document admission and module/element surrogate identity checks. Those
+are corrected with full-schema receipt admission and raw UTF-16 identity;
+a second Sol final review reproduced both differentials and found no P1/P2
+after 12 focused tests and the full `umf-core` suite.
+Node/Bun and real-browser bindings, default cutover, and native cardinality
+classifiers remain open.
+
+The R5 core-model opt-in binding should route cardinality, kind and nullability
+through the existing tagged `executeRequestWire` transport as `model/*`
+operations. That transport retains isolated UTF-16 units in values, keys and
+identities; direct native UTF-8 string arguments would lose accepted source
+meaning. A single ordinary `Context` must cover admission, trusted resource
+and registry construction, model operation, result validation and verification,
+with existing host cancellation/deadline/work controls. Node/Bun and real
+Chromium WASM need identical complete-envelope fixtures and resource/refusal
+gates before the opt-in binding is counted. This does not authorize R7 default
+SDK cutover or removal of the retained TypeScript implementations.
+The [opt-in model binding checkpoint](evidence/rust-migration/r5-model-bindings/README.md)
+now passes the frozen Node/Bun/real Chromium envelope and Ajv gates for all
+nine cardinality, kind and nullability operations. The first independent Sol
+review found host resource conversion before work/cancel/deadline preflight;
+the Node and WASM factories now meter five resources independently, check
+controls before touching resource objects, and account host request/response
+conversion. A reopened Sol review reproduced those controls, exact artifact
+hashes and parity and found no remaining P1/P2 in the bounded opt-in cohort.
+The bounded [R5 core element selection binding](evidence/rust-migration/r5-selection-binding/README.md)
+now routes `model/selectCoreElements` over the tagged wire in opt-in Node/Bun and
+WASM core-model wrappers. Frozen TypeScript success/refusal envelopes, raw
+surrogate identities, unknown content, resource preflight, controls, actual
+Ajv outputs and Chromium 153 parity pass. Native classifiers and default R7
+cutover remain open.
+
+The next bounded core-ideal cluster is Element kind followed by Field
+nullability (`src/model/field-kind.ts` and `src/model/nullability.ts`), six
+inspect/declare/verify operations under CONTRACT-001/040. Freeze complete
+predecessor success and refusal envelopes before implementation. Use the
+current versioned kind (8/6) and nullability (7/5) operation schemas and the
+same explicit, metered Rust engine resources. Preserve identity admission,
+ordered diagnostics, unknown text and extension content, authored provenance,
+tamper/stale refusal and host cancellation. An independent Draft 2020-12
+validator must consume actual Rust receipts, not constructed expectations.
+Node/Bun and real Chromium WASM compare complete envelopes; the current
+TypeScript defaults remain until a separately reviewed R7 cutover. No external
+native-system equivalence is claimed for these authored ideals.
+The [kind/nullability Rust core checkpoint](evidence/rust-migration/r5-kind-nullability/README.md)
+passes six focused tests, complete frozen success/refusal envelopes and
+independent Ajv 2020 validation of 11 actual Rust outputs with four rejected
+nested-document controls. A separate Sol final review found no P1/P2 after
+correction of UTF-16 identities, unknown labels, malformed receipt admission
+and metering. Node/Bun and browser bindings, native classifiers and default
+cutover remain open.
+
+The bounded R5 `selectCoreElements` Rust core slice from
+`src/model/selection.ts` is recorded in the
+[selection checkpoint](evidence/rust-migration/r5-selection/README.md). It
+matches frozen TypeScript success and refusal envelopes, validates the full
+source and caller registry before selection, and passes focused graph-oracle
+and Ajv checks on actual Rust outputs. Independent Sol review corrections
+normalized malformed-query refusals, preserved the predecessor's precise
+descendant path for copy limits, charged long UTF-16 keys before path allocation,
+and brought the current schema/generator into fixed-point closure with cardinality
+filtering. Final Sol rereview reproduced ten focused tests, Ajv, graph-oracle and
+frozen-refusal checks with no P1/P2. The implementation remains scoped to the
+Rust core function. The separate
+[selection-binding checkpoint](evidence/rust-migration/r5-selection-binding/README.md)
+routes `model/selectCoreElements` over `executeRequestWire` and matches eight
+success and five refusal envelopes on Node, Bun and real Chromium. After a
+registry preflight correction, independent Sol review reproduced zero-touch
+cancelled-registry controls, a 128-entry metered cancellation, actual-output
+Ajv and four negative mutations with no remaining P1/P2. This is an opt-in
+binding; R7 default cutover and TypeScript retirement remain open. Keep
+`editExtension` separate because its callback
+transaction and completeness semantics require another capability decision.
+Closing selection does not retire the wider model, registry, schema or adapter
+modules; R7 default cutover remains separate.
+
+The separate R5 core slice adds a Rust `edit_extension` transaction in
+`crates/umf-core`. It validates the complete source with the caller's engine,
+immutable registry and capabilities before target lookup, works on an owned
+candidate, passes one isolated payload copy to the trusted updater, and admits
+the full candidate before returning it. Source invalidity/incompleteness,
+missing instances, invalid candidates and host control failures retain separate
+error paths. The current Rust core cohort has focused valid, refusal, updater
+trace, lone-surrogate identity, frozen TypeScript envelopes and actual-output
+Ajv checks in
+[`r5-edit-extension`](evidence/rust-migration/r5-edit-extension/README.md).
+Sol's reopened review found diagnostic UTF-16 copies occurred before context
+metering, then found count-proportional diagnostic-vector reservation before
+the first charge. `validation_value` now meters the diagnostic count before
+reserving slots, then precharges each diagnostic's text and fixed projection
+allowance before copying. The 65,537-unit text and 50,000-diagnostic low-work
+refusal regressions pass. Focused and full core, Ajv, callback-trace,
+TypeScript typecheck and formatting gates pass after these repairs. Final Sol
+rereview found no remaining P1/P2 in the bounded native transaction.
+Wrapper/browser qualification remains open;
+live-registry mutation and reentrant callback behavior are outside this bounded
+immutable-registry profile.
+
+The production `editExtension` binding must use an operation-scoped live host
+interface. The TypeScript predecessor validates the original with fresh
+`Registry.get` lookups during each pass, then copies the original source *after*
+initial validation; a semantic callback can mutate that source or register a
+package that changes later lookups in the same pass. The Rust execution host
+therefore needs owned, stable registration handles returned per lookup, a
+post-validation original-source copy checkpoint, and separate callback/updater
+exception channels. It must release registry borrows before invoking callbacks
+and give nested invocations separate control and exception frames. The existing
+immutable transaction remains a qualified core subset, not public API parity.
+Freeze predecessor side-effect, error, source-mutation, nested-call, UTF-16 and
+control traces before implementation; then prove immutable callers unchanged,
+live mutation in a native host harness, packaged Node/Bun and real Chromium
+parity, and installed Python source-carrier and exception behavior. Preserve the
+same outer work/deadline context across both validation passes and every host
+boundary. Synchronous user callbacks remain cooperative under that context.
+The source-bound [live predecessor trace](evidence/rust-migration/r5-edit-extension/README.md#live-typescript-predecessor-traces)
+now freezes same-pass registration visibility, the retained incompleteness
+warning, post-validation original-source mutation, detached copies, nested edit
+invocation and initial semantic/updater exception separation. Sol rereview
+reproduced the 31-file closure and trace twice with no remaining P1/P2 in this
+bounded evidence. Candidate-pass exception behavior and the Rust live-host
+binding remain open.
+
+The next independent pure-codec R5 candidate is the `umf-128/1` bits128 and
+UUID operation family in `src/model/bit128.ts` and `src/model/uuid.ts`, governed
+by CONTRACT-076 and SD-005. Port the eleven exact parse, byte, comparison,
+word and integer conversion operations as a host-independent Rust module before
+using them in Field, key or native-carrier ports. Freeze complete predecessor
+success/refusal results, including signed boundaries, negative zero, exponent
+limits, malformed snapshot members and copied byte views. Use the existing
+Python big-integer/UUID oracle and independent generated vectors, then qualify
+tagged Node/Bun and real-browser WASM admission separately; JavaScript
+prototype/accessor/symbol checks belong at the wrapper boundary. A portable
+codec result does not establish native UUID ordering, enforcement or the five
+adapter recovery gates.
+
+The [bounded pure-codec checkpoint](evidence/rust-migration/r5-bit128/README.md)
+now implements all eleven `umf-128/1` operations in `umf-core`. Its focused
+tests pass 387 independent Python vectors and twelve exact Bun predecessor edge
+outcomes, including repaired snapshot-shape and malformed-token diagnostic
+precedence. Independent Sol rereview found no remaining P1/P2 in the reviewed
+pure `Value` core; Node/Bun typed-array and snapshot admission, real-browser
+WASM, Python exposure, default cutover and native UUID consumers are separate
+open gates.
+
+The opt-in [R5 bit128 binding checkpoint](evidence/rust-migration/r5-bit128-binding/README.md)
+now exposes those eleven operations through the Rust-backed Node/Bun wrapper and
+a staged browser WASM path. After final fixed-width pre-allocation repair,
+independent Sol review replayed 298 host-carrier cases with zero mismatches or
+getter reads, 389 oracle vectors in Node and Chromium, Bun's 4 tests and 5,540
+assertions, resource controls and typecheck; no P1/P2 remained in this bounded
+scope. Python exposure, standalone distributed WASM package self-containment,
+default cutover, Field/key consumers and native UUID semantics remain open.
+
+The [bounded core Field-value checkpoint](evidence/rust-migration/r5-field-value/README.md)
+implements the public `validateCoreFieldValue` decision in `umf-core` for a
+50-case frozen JSON-carrier cohort. It preserves raw UTF-16 qualifier paths,
+exact numeric and binary comparisons, TypeError observations and validation
+order. Independent Ajv and Python controls passed, and Sol's final rereview
+found no remaining P1/P2 after ECMAScript coercion and pre-allocation metering
+repairs. The current TypeScript public API remains active. At this core-only
+checkpoint, Node/Bun, real-browser WASM, Python, CLI, arbitrary JavaScript
+object carriers and native consumers were separate qualification gates; their
+wrappers must map Rust `TYPE_ERROR` to host TypeError.
+
+The opt-in [R5 Field-value binding checkpoint](evidence/rust-migration/r5-field-value-binding/README.md)
+now maps the Rust `TYPE_ERROR` to a real host `TypeError` and matches all 50
+frozen JSON-carrier cases in Node 26, Bun 1.4 and actual Chromium 153 with
+the built WASM. Independent Sol review repeated the 11 TypeError outcomes,
+metering, cancellation and deadline controls, and found no P1/P2 in this
+bounded binding. The TypeScript default remains active; arbitrary JavaScript
+objects, Python/CLI exposure, standalone WASM package closure, R7 cutover and
+native consumers remain open.
+
+The next shared R5 foundation is an exact native JSON tree with preserved
+number lexemes, UTF-16 string/key units, duplicate-key refusal and tagged
+representation unknown-field retention. Its Rust parser, copied reads and
+renderer must have separate parse/copy resource admission and refuse native
+rendering when unknown representation fields would be lost. After independent
+review, the first dependent adapter shard is CONTRACT-002 JSON Schema 0.1.0:
+freeze all current import, inspect, root/resource/bundle export, get, walk and
+atomic-edit outcomes; port payload/URI admission, schema-position traversal,
+unknown-content diagnostics and copied native export before interpretation.
+Interpretation must match the declared Ajv 8.20.0 Draft 2020-12 profile or
+remain explicitly incomplete; the existing Rust schema evaluator is not by
+itself proof of adapter equivalence. Preserve the required upstream 46-file,
+384-case, 1,301-vector independent oracle profile and exact URI, resource
+collision, numeric and diagnostic ordering. CLI, installed Python, packed
+Node/Bun and distributed Chromium bindings are separate gates, followed by R7
+default cutover. JSON Schema projections and OpenAPI remain dependent work.
+
+The bounded [R5 native JSON checkpoint](evidence/rust-migration/r5-native-json/README.md)
+now has a Rust lossless tree, copied-subtree admission, exact number lexemes,
+UTF-16 keys and strings, and unknown tagged-field retention/refusal. Independent
+Sol review replayed deep nesting, syntax/duplicate/limit precedence and
+million-unit pre-allocation controls; focused Rust tests pass 11/11 with no
+remaining P1/P2 in this core slice. Duplicate-key diagnostic message text is
+not yet exact predecessor parity, and no adapter or host binding is qualified
+by this tree alone.
+
+The first [R5 JSON Schema preservation checkpoint](evidence/rust-migration/r5-json-schema-core/README.md)
+uses that tree for payload/document admission, URI resources, exact copied get,
+Draft 2020-12 schema-position walk and loss-aware native exports. Independent
+Sol review found no remaining P1/P2 in the focused 12-case Rust slice after
+repairing UTF-16 paths, representation extras, export scope and resource
+metering. Interpretation/inspection, atomic edits, the full upstream oracle
+profile and CLI/Python/Node/Bun/Chromium bindings remain open.
+
+The bounded [R5 JSON Schema inspector checkpoint](evidence/rust-migration/r5-json-schema-inspect/README.md)
+adds Draft 2020-12 metadata/resource inspection through the pinned Rust
+compiler, with explicit incomplete diagnostics for unqualified interpretation.
+Independent Sol replay passed the focused 12 adapter and four inspector tests,
+control provenance, exact-number refusal and metaschema-before-reference
+ordering after repair. Full Ajv 8.20 behavior, the upstream 46-file oracle,
+atomic edits and host/browser bindings remain open; this checkpoint does not
+qualify general JSON Schema validity.
+
+The [R5 JSON Schema atomic-edit checkpoint](evidence/rust-migration/r5-json-schema-edit/README.md)
+adds a copied Rust transaction for existing native root pointers. Mandatory
+source and candidate guards refuse unknown representation, keyword, dialect,
+vocabulary and numeric meaning even with a permissive callback; a separate
+trusted semantic oracle remains required. Independent Sol replay passed 12
+adapter, six edit and four inspector tests plus two adversarial probes after
+repairing source/candidate guards and exact extension dispatch. Full Ajv
+semantics, the upstream corpus and production host/browser exposure remain
+open, so this does not qualify general JSON Schema editing.
+
+The first bounded R6 shard is the CONTRACT-075 temporal carrier/token behavior
+in `python/umf_access/src/umf_access/values.py`, with CONTRACT-068/072 host
+boundaries. It depends on the qualified Rust date/instant subset, preserves
+Python datetime carrier admission as thin host glue, and requires installed
+wheel tests, independent datetime oracle rows and codec consumer replay before
+delegating shared token semantics. It does not confer authentication, transaction
+or storage authority on Rust. Separate Sol review must close this shard before
+its Python implementation can be retired.
+
+The [R6 temporal carrier checkpoint](evidence/rust-migration/r6-temporal/README.md)
+now records the bounded Rust-owned token implementation and installed macOS
+arm64 CPython 3.11 wheels. After an independent review found a raw-binding
+microsecond-range defect, the native boundary was corrected and rebuilt; the
+second Sol review found no remaining P1/P2 in this slice. The installed temporal
+and codec/native suites pass 10 tests, with additional Python datetime-oracle
+and raw-binding refusal-order evidence. This retires only the Python token
+calculation in the stated profile. The broader access test discovery still has
+23 generated-package/optional-dependency setup errors, and the moving worktree
+has no complete source-to-wheel release closure. Other R6 access algorithms,
+native integrations, platform/interpreter matrix and R8 gates remain open.
+The later public `umf.rust_temporal` bridge removes a cross-package private
+import; its rebuilt installed wheels passed those 10 focused tests and 59 P1
+runtime compatibility cases. A separate Sol review found no P1/P2 in the
+bounded bridge follow-up. Access CI now builds the pinned native core wheel
+alongside each access wheel before installed-package replay.
+
+The next R6 slice is exact integer-width and Decimal precision/scale admission
+from `umf_access.values`, governed by CONTRACT-068/070/072. These operations
+consume already resolved facets and do not depend on the remaining R5 native
+classifiers or on JavaScript numeric interpretation. Freeze predecessor outcomes
+before changing either function. Python retains exact carrier admission,
+`Decimal.as_tuple()` extraction, original-object return and error translation;
+the versioned public `umf.rust_values` bridge delegates width and
+coefficient/exponent decisions to Rust. The interface must preserve
+arbitrary Python integer metadata without narrowing, avoid constructing powers
+of ten for large exponents, and fail closed on absent or mismatched capability.
+Independent Python integer/rational oracles, newly built installed core/access
+wheels, generated numeric codecs and reached native PostgreSQL/Weft consumers
+are required before counting the broader access behavior. The
+[bounded R6 exact-values checkpoint](evidence/rust-migration/r6-exact-values/README.md)
+records 14 focused installed-wheel tests and two Rust unit tests. Independent
+Sol review reproduced both wheel hashes, replayed all 14 tests from a clean
+installation, and found no P1/P2 correctness issue; 10,000 independent integer
+interval cases, malformed raw inputs, arbitrary-size integer metadata, and
+huge-exponent negative-zero identity also passed. The earlier failure in two
+reused environments was stale installation state, not a wheel defect. Generated
+numeric codec and native consumer qualification remain open. A separate local
+installed-wheel replay passed 17 runtime codec, codec boundary, golden-vector
+and Delta projection tests, but it did not reach a native engine or generated
+client installation. The raw binding
+accounts work but has no host meter, cancellation,
+deadline or hard budget, so it makes no resource ceiling claim. Other
+`values.py` algorithms remain open.
+
+The bounded R6 exact numeric range admission in
+`umf_access.values.validate_range` now delegates comparisons to Rust.
+CONTRACT-049/068/070/072 govern resolved range facets and Python host
+ownership. Predecessor source and complete endpoint, bound-carrier,
+inclusivity-truthiness, ordering, zero, trailing-zero and huge-exponent outcomes
+were frozen before editing. Rust compares integer and finite Decimal values exactly
+through a separately versioned public bridge, while Python keeps carrier and
+bound admission, `Decimal.as_tuple()` extraction, error translation and
+original-object return. This does not include `validate_allowed`, length,
+vectors or the wider codec/driver surface. Independent integer/Fraction
+oracles, malformed raw controls and clean installed wheel replay passed in the
+[numeric range checkpoint](evidence/rust-migration/r6-numeric-range/README.md).
+Independent Sol review reproduced the wheel hashes, 17 focused installed tests
+and 20,000 independent Decimal comparisons and found no P1/P2. Actual generated
+numeric codec paths and reached native PostgreSQL/Weft checks remain open.
+The current raw numeric bridge still lacks a hard host work/deadline/cancel
+contract; its work accounting cannot be represented as a resource ceiling.
+
+The bounded R6 binary32 slice delegates per-scalar IEEE float32 classification
+from `validate_vector` and `validate_float32` to Rust through public
+`umf.rust_values` capability `umf-access-float32/0.1.0`. Python retains exact
+tuple/dimension/carrier admission, error translation and original-object return.
+The [float32 checkpoint](evidence/rust-migration/r6-exact-values/README.md)
+records frozen predecessor behavior, installed macOS arm64 CPython 3.11 wheel
+hashes, independent Fraction-oracle outcomes and local codec/projection checks.
+Independent Sol review replayed 100,000 seeded binary64 values and 34 signed
+overflow-midpoint neighbors with no P1/P2. Vector work/deadline/cancellation
+limits, generated vector clients and reached native consumers remain open.
+
+The next bounded R6 shard moves `validate_length` and `validate_allowed` scalar
+decisions from `umf_access.values` to Rust under public
+`umf-access-constraints/0.1.0`. Python retains exact carrier admission, `len`,
+ordered iteration, original-object identity, and candidate-side custom equality
+with its truth conversion and exceptions. Rust handles exact integer length
+bounds and generated scalar equality for bool, int, Unicode-scalar str, bytes,
+and finite Decimal. Predecessor controls include supplementary/combining
+Unicode lengths, exotic bound comparison traces, allowed generators, custom
+candidate equality, NaN, signaling NaN, huge integers, and exception identity;
+an independent Fraction oracle covers finite Decimal equality. The
+[constraints checkpoint](evidence/rust-migration/r6-constraints/README.md)
+records installed macOS arm64 CPython 3.11 wheel hashes, 31 focused installed
+tests across constraint/range/value/codec/golden suites, two Rust tests and raw
+binding refusal controls. An independent Sol review found that a surrogate
+candidate string needed the Python equality path even when the input string was
+scalar-valid; the guard now checks both operands and the rebuilt installed
+regression passes. Reopened Sol review verified 42 installed tests and both
+wheel hashes with no remaining P1/P2. The bridge exposes no
+host meter, cancellation, deadline or hard resource ceiling. Generated validation
+order received a local codec check; native PostgreSQL/Weft/Truss/Ashlar/TableSpec
+consumers and generated client installation remain open, as do other access algorithms, platform
+cohorts and the broader R6 port.
+
+The [R6 stream page-size checkpoint](evidence/rust-migration/r6-stream-page-size/README.md)
+ports the `pages.py` maximum-value admission decision through Rust while retaining
+Python's live mapping lookup, comparison, truth conversion and exception identity.
+After repair of repeated-lookup, short-circuit and truth-conversion drift, an
+independent Sol rereview matched all 10 adversarial predecessor traces. Fresh
+macOS arm64 CPython 3.11 installed wheels passed 21 stream/lifecycle tests and
+two focused Rust tests; the reviewed core and access wheel SHA-256 values are
+`290c05813b260790e66db950fb7045e800b7cbb611790ddd90d3676201a80bf5`
+and `d84d55473517b0ddfde01d2e1f5b4629dd101b300253a49449316a01804198e6`.
+Sol found no remaining P1/P2 in this bounded slice. Native PostgreSQL/Weft
+consumer qualification and broader resource ceilings remain open.
+
+The bounded [R6 operation-values checkpoint](evidence/rust-migration/r6-operation-values/README.md)
+moves canonical operation JSON, SHA-256 digest, bounded frame encoding,
+duplicate-key admission and authenticated page-cursor decisions to Rust for
+exact built-in Python JSON-like carriers. Independent Sol replay passed three
+Rust and 21 focused CPython 3.14 tests, including signed noncanonical cursor
+order, arbitrary-precision frame limits, the 16,384-character cursor boundary,
+escaped duplicate keys and reserved-key retention. It found no remaining P1/P2
+in that scope after repair. Canonical/digest host input materialization,
+installed-wheel replay, native consumers and the remaining request/result
+algorithms are open R6 gates; no whole-package parity follows from this slice.
+
+1. Close shared lossless native JSON/code units, exact literal/temporal/copying,
+   URI/resources, registry and schema-validation substrates. Preserve R2/R3
+   ownership and authored metamodel authority.
+2. Port model selection/edit/ideal operations and required extension validators,
+   then native representation, interpretation and projections in family slices.
+   Read each current contract/design/test plan and execution amendments first.
+   JSON Schema precedes dependent projections; Protobuf descriptor/source precedes
+   JSON Schema-to-Protobuf; Avro precedes its projections; GraphQL precedes input
+   projection; OpenAPI follows schema/resource scope. Dependencies govern order.
+3. Close every remaining active family in the successor census, including
+   Arrow/Parquet/Delta/Iceberg, PostgreSQL/SQL Server/Spark, RDF/JSON-LD/SHACL/OWL,
+   generalized RDF, TypeSpec/Smithy/LinkML/ODCS/dbt/TableSpec, extensions/actions/
+   security/tables, domain packs and projections. Difficult upstream compilers
+   are named blockers, not permission to omit an existing operation.
+4. R6 moves UMF-owned access request/codec/planner/checking semantics after their
+   R5 prerequisites. Python retains connection/session/async/transport glue;
+   consumers retain authentication, transactions and storage execution. Replay
+   changed genuine installed PostgreSQL/Weft/Truss/Ashlar/TableSpec paths, exact
+   results, cancellation, commit uncertainty and authorization.
+5. R7 switches packaged Node/Bun and actual browser WASM defaults after their
+   families qualify. Port reached metamodel/reference/pack/build computation;
+   retain UI/orchestration/test harness glue. Remove old active semantic modules,
+   imports and dependencies only after replacement review. No shipped fallback
+   engine or duplicated handwritten semantic kernel may remain.
+
+The [R7 clean compiler bootstrap checkpoint](evidence/rust-migration/r7-metamodel-bootstrap/README.md)
+now builds the source-bound metamodel CLI without codegen's generated resources,
+while preserving the default codegen CLI. The isolated generated-output-free
+fixture, seven authored resource hashes, fixed point, typecheck and focused CLI
+tests pass after regeneration and independent review. Reached reference/pack
+computation and default-client retirement remain open.
+
+The [R7 standalone WASM package checkpoint](evidence/rust-migration/r7-wasm-package/README.md)
+copies the three shared JavaScript carrier helpers deterministically into the
+package and rejects stale copies before packing. An independently repacked and
+freshly extracted 10-file tarball passed Node 26.12.1, Bun 1.4.3 and Chromium
+153.0.8010.12 checks: core copy/JSON, 389 bit128 vectors, 50 Field-value cases
+including 11 native `TypeError` outcomes, cancellation, metering and absence of
+browser Node globals. The reviewer used the captured WASM binary rather than an
+independent Rust rebuild. This qualifies only the tested opt-in package cohort;
+complete export-surface qualification, default-client cutover and publication
+remain R7/R8 work.
+
+Each family retains immutable predecessor outcomes, contract controls, independent
+version-pinned native oracles, required recovery directions, unknown-content/edit
+refusals, explicit losses, copy isolation and ordered failures. Qualify the declared
+CLI/Python/Node/Bun/Chromium operation matrix. Missing host capability cannot silently
+remove an existing operation. Preserve Edition 2024 limitations, temporal HELD and
+all other unqualified native subsets unless independently qualified.
+
+### R8 outcome and release checklist
+
+- [ ] Successor census has zero unresolved active rows; each has Rust ownership,
+      generated inert-data ownership or a justified thin host boundary.
+- [ ] Independent reviews name exact source hashes and reviewers who did not
+      implement reviewed changes; required corrections are closed.
+- [ ] One frozen source/model cohort passes boundary/authority checks, metamodel
+      fixed point, regression, typing and affected native integration tests.
+- [ ] Clean CLI runs without Python/JS; packed Node/Bun, distributed Chromium
+      WASM, installed wheels and offline extracted-sdist rebuilds pass their
+      complete declared matrix on the qualified hosted platforms.
+- [ ] API/CLI signatures, generated bytes/hash preimages, failure order, unknown
+      retention, valid/complete/loss reports and isolation have retained evidence
+      or explicit reviewed versioned changes.
+- [ ] Consumer docs/reference/examples, notices, package metadata and release
+      hashes describe exact versions/subsets/limits. Historical receipts are
+      never relabeled as execution of successor sources.
+- [ ] Root records package versions, ABI/protocol dependencies, channels,
+      artifacts/hashes and rollback pins. Current-main/required CI and independent
+      delivery review pass against the release cohort.
+- [ ] Publish authorized reviewed UMF artifacts and verify actual registry/index
+      artifacts and clean installs against hashes. Distinguish prepared artifacts,
+      publication and consumer adoption.
 
 ## Validation plan
 
@@ -295,8 +861,9 @@ establish that all of UMF is single-sourced in Rust.
 
 ### Milestone B: shared executable semantics are Rust-owned
 
-Every active algorithm in the R0 census has a Rust owner, generated-data owner or
-explicit thin host boundary. No active TS/Python semantic implementation or JS
+Every active algorithm in the live successor census, including operations added
+after R0, has a Rust owner, generated-data owner or explicit thin host boundary.
+No active TS/Python semantic implementation or JS
 engine fallback remains. The native CLI, Python, Node, Bun and real browser expose
 their declared qualified operation matrix from the same Rust source/model cohort.
 All retained differences are explicit host capabilities, rather than undeclared
@@ -349,8 +916,9 @@ compatibility with a different documentation release.
 
 Execute R0–R8 only after implementation authorization, in dependency order, through
 their gates. Scope includes ordinary debugging and relevant canonical documentation;
-publication, production deployment, external messages and consumer-repository
-semantic changes are separately authorized. One plan is sufficient; no tracker is selected. For R0–R2 the owner selects
+UMF package release is authorized by the 2026-10-23 continuation; production
+deployment, external messages and consumer-repository semantic changes remain
+separately authorized. One plan is sufficient; no tracker is selected. For R0–R2 the owner selects
 Sol for planning/review and Luna agents for implementation, using parallel work
 where file ownership and dependencies permit it.
 
@@ -457,8 +1025,8 @@ broader execution is ready.
 
 Implementation completion requires Milestones A and B, passing R0–R8 gates,
 closed retirement census, fresh source-bound native/browser/installed evidence,
-updated consumer-facing documentation and review. Release publication and native
-claims outside the tested matrix remain separate. No incomplete adapter or
+updated consumer-facing documentation, independent review and the authorized
+release. Native claims outside the tested matrix remain separate. No incomplete adapter or
 consumer gate is closed by the language migration.
 
 ## R2 execution and continuation

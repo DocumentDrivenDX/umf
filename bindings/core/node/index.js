@@ -1,5 +1,8 @@
 import {createRequire} from 'node:module';
 import {encodeRequestWire, encodeWire, fromWire, resultError, toWire} from './src/wire.js';
+import {createJavascriptNumericEngine as createNumericEngine, JAVASCRIPT_NUMERIC_PROFILE} from './src/javascript-numeric.js';
+import {createCoreModelOperations} from './src/core-model.js';
+import {createBit128Engine as createBit128EngineWithWire, BIT128_PROFILE} from './src/bit128.js';
 
 const require = createRequire(import.meta.url);
 const addon = require('./umf_core_node.node');
@@ -33,7 +36,45 @@ export function copyJson(value, limits) {
 
 export const engineVersion = addon.engineVersion();
 
-function dataProperty(value, name, required = true) {
+export {JAVASCRIPT_NUMERIC_PROFILE};
+export {BIT128_PROFILE};
+export function createBit128Engine(options = {}) {
+  if (typeof addon.executeBit128Wire !== 'function') throw new Error('RUST_NODE_BINDING_MISSING');
+  return createBit128EngineWithWire((wire, control) => addon.executeBit128Wire(wire, control), options);
+}
+/** Create the opt-in Rust-backed CONTRACT-049 numeric adapter. */
+export function createJavascriptNumericEngine(resources, options = {}) {
+  if (typeof addon.executeJavascriptNumericWire !== 'function') throw new Error('RUST_NODE_BINDING_MISSING');
+  return createNumericEngine(addon.executeJavascriptNumericWire, resources, options.controls);
+}
+
+export const GREGORIAN_DATE_PROFILE = 'umf-gregorian-date/1.0.0';
+export const RFC3339_EXACT_INSTANT_PROFILE = 'umf-rfc3339-exact-instant/1.0.0';
+export const RFC3339_EXACT_INSTANT_MAXIMUM_BYTES = 1_048_576;
+function temporalResult(wire) {
+  if (wire === 'TypeError') throw new TypeError('Temporal token requires text');
+  if (wire === 'RangeError') throw new RangeError('Temporal token is outside the selected profile');
+  return wire.split('|');
+}
+/** Create the opt-in Gregorian and RFC3339 temporal adapter engine. */
+export function createTemporalEngine() {
+  const parseGregorianDate = (token) => {
+    const [, year, month, day] = temporalResult(addon.temporalParseGregorianDateWire(token));
+    return Object.freeze({profile: GREGORIAN_DATE_PROFILE, originalText: token, year: Number(year), month: Number(month), day: Number(day)});
+  };
+  const parseRfc3339ExactInstant = (token) => {
+    const [, utcSeconds, fractionalDigits, originalOffset, localOffsetKnown] = temporalResult(addon.temporalParseRfc3339ExactInstantWire(token));
+    return Object.freeze({profile: RFC3339_EXACT_INSTANT_PROFILE, originalText: token, utcSeconds, fractionalDigits, originalOffset, localOffsetKnown: localOffsetKnown === 'true'});
+  };
+  return Object.freeze({parseGregorianDate,
+    truncateGregorianDate(token, unit) { return temporalResult(addon.temporalTruncateGregorianDateWire(token, unit))[1]; },
+    parseRfc3339ExactInstant,
+    sameRfc3339ExactInstant(left, right) { return temporalResult(addon.temporalSameRfc3339ExactInstantWire(left, right))[1] === 'true'; },
+  });
+}
+
+function dataProperty(value, name, required = true, work = undefined) {
+  work?.(1);
   if (!value || (Object.getPrototypeOf(value) !== Object.prototype && Object.getPrototypeOf(value) !== null)) {
     throw new TypeError('Engine descriptors must be plain objects');
   }
@@ -48,16 +89,20 @@ function dataProperty(value, name, required = true) {
   return descriptor.value;
 }
 
-function dataArray(value, name) {
+function dataArray(value, name, work = undefined) {
+  work?.(1);
   if (!Array.isArray(value)) throw new TypeError(`${name} must be an array`);
   if (Object.getPrototypeOf(value) !== Array.prototype) throw new TypeError(`${name} must be a plain array`);
-  const keys = Reflect.ownKeys(value);
   const length = Object.getOwnPropertyDescriptor(value, 'length')?.value;
+  work?.(length + 1);
+  const keys = Reflect.ownKeys(value);
   if (!Number.isSafeInteger(length) || keys.length !== length + 1) {
     throw new TypeError(`${name} must be a dense array without extra properties`);
   }
+  work?.(1);
   const items = [];
   for (let index = 0; index < length; index++) {
+    work?.(1);
     const item = Object.getOwnPropertyDescriptor(value, String(index));
     if (!item || !Object.hasOwn(item, 'value') || !item.enumerable) {
       throw new TypeError(`${name}[${index}] must be an enumerable data property`);
@@ -90,7 +135,7 @@ function callbackFailureText(error) {
   return 'Host callback failed';
 }
 
-function runRequest(request, callbacks, profile, controls, accountHost = false) {
+function runRequest(request, callbacks, profile, controls, accountHost = false, sharedControlBridge = undefined, sharedHostWork = undefined) {
   if (profile === 'hard-isolated') throw new UmfCoreError('RESOURCE_PROFILE_UNAVAILABLE', 'HardIsolated resource profile is unavailable');
   const callbackBridge = (token, requestWire) => {
     const callback = callbacks.get(token);
@@ -104,8 +149,8 @@ function runRequest(request, callbacks, profile, controls, accountHost = false) 
       return encodeRequestWire({ok: false, message: callbackFailureText(error)});
     }
   };
-  const controlBridge = hasControls(controls) ? createControlBridge(controls) : undefined;
-  const hostWork = accountHost ? admissionWork(controlBridge) : undefined;
+  const controlBridge = sharedControlBridge ?? (hasControls(controls) ? createControlBridge(controls) : undefined);
+  const hostWork = accountHost ? (sharedHostWork ?? admissionWork(controlBridge)) : undefined;
   const responseText = addon.executeRequestWire(encodeRequestWire(request, hostWork), profile, callbackBridge, controlBridge);
   hostWork?.(responseText.length);
   const response = JSON.parse(responseText);
@@ -153,37 +198,67 @@ function createControlBridge(controls) {
 
 /** Create a synchronous Rust engine over an explicit immutable resource set. */
 export function createEngine(resources, options = {}) {
+  return createEngineInternal(resources, options, false);
+}
+
+/** Create the opt-in cardinality/kind/nullability ideal API. */
+export function createCoreModelEngine(resources, options = {}) {
+  return createEngineInternal(resources, options, true);
+}
+
+function createEngineInternal(resources, options, withModel) {
   const {profile, controls} = codegenOptions(options);
-  // Each catalog payload is bounded independently by Rust admission. The
-  // transport envelope may combine all of them and must not add an aggregate
-  // value ceiling of its own.
-  const snapshot = fromWire(toWire(resources, {maxDepth: 256, maxValues: Number.MAX_SAFE_INTEGER}));
-  for (const name of ['coreSchema', 'referenceSchema', 'packageSchema', 'constraints', 'domainPolicy']) {
-    if (!Object.hasOwn(snapshot, name)) throw new TypeError(`Missing explicit engine resource ${name}`);
+  const names = ['coreSchema', 'referenceSchema', 'packageSchema', 'constraints', 'domainPolicy'];
+  const hostWork = withModel ? admissionWork(hasControls(controls) ? createControlBridge(controls) : undefined) : undefined;
+  // Model factories meter their host-side resource snapshot, with one catalog
+  // budget per resource. Legacy engine snapshot semantics remain unchanged.
+  let fixedResources;
+  if (withModel) {
+    hostWork?.(1);
+    const prototype = Object.getPrototypeOf(resources);
+    if (prototype !== Object.prototype && prototype !== null) throw new TypeError('Engine resources must be a plain object');
+    const keys = Reflect.ownKeys(resources);
+    hostWork?.(keys.length);
+    for (const key of keys) {
+      if (typeof key !== 'string' || !names.includes(key)) throw new TypeError('Unknown explicit engine resource');
+      hostWork?.(key.length + 1);
+    }
+    fixedResources = Object.create(null);
+    for (const name of names) {
+      const resource = dataProperty(resources, name);
+      fixedResources[name] = fromWire(toWire(resource, {maxDepth: 128, maxValues: 1_000_000, work: hostWork}), hostWork);
+    }
+  } else {
+    const snapshot = fromWire(toWire(resources, {maxDepth: 256, maxValues: Number.MAX_SAFE_INTEGER}));
+    for (const name of names) if (!Object.hasOwn(snapshot, name)) throw new TypeError(`Missing explicit engine resource ${name}`);
+    fixedResources = Object.fromEntries(names.map((name) => [name, snapshot[name]]));
   }
-  const fixedResources = {
-    coreSchema: snapshot.coreSchema,
-    referenceSchema: snapshot.referenceSchema,
-    packageSchema: snapshot.packageSchema,
-    constraints: snapshot.constraints,
-    domainPolicy: snapshot.domainPolicy,
-  };
   function invoke(op, args = {}, extensions = []) {
+    const controlBridge = hasControls(controls) ? createControlBridge(controls) : undefined;
+    const hostWork = withModel ? admissionWork(controlBridge) : undefined;
+    hostWork?.(1);
     const callbackMap = new Map();
-    const registry = dataArray(extensions, 'extensions').map((extension, index) => {
-      const id = dataProperty(extension, 'id');
-      const version = dataProperty(extension, 'version');
-      const scopes = dataProperty(extension, 'scopes');
-      const schema = dataProperty(extension, 'schema', false) ?? true;
-      const semantics = dataProperty(extension, 'semantics', false);
+    const extensionValues = withModel ? dataArray(extensions, 'extensions', hostWork) : dataArray(extensions, 'extensions');
+    hostWork?.(extensionValues.length + 1);
+    const registry = [];
+    for (let index = 0; index < extensionValues.length; index++) {
+      hostWork?.(1);
+      const extension = extensionValues[index];
+      const id = dataProperty(extension, 'id', true, hostWork);
+      const version = dataProperty(extension, 'version', true, hostWork);
+      const scopes = dataProperty(extension, 'scopes', true, hostWork);
+      const schema = dataProperty(extension, 'schema', false, hostWork) ?? true;
+      const semantics = dataProperty(extension, 'semantics', false, hostWork);
       if (semantics !== undefined && typeof semantics !== 'function') throw new TypeError('Extension semantics must be a host callback function');
-      if (semantics) callbackMap.set(index + 1, semantics);
-      return {id, version, scopes, schema, semantic: Boolean(semantics)};
-    });
+      if (semantics) { hostWork?.(1); callbackMap.set(index + 1, semantics); }
+      hostWork?.(5);
+      registry.push({id, version, scopes, schema, semantic: Boolean(semantics)});
+    }
+    hostWork?.(1);
     const request = {op, resources: fixedResources, registry, ...args};
-    return runRequest(request, callbackMap, profile, controls);
+    return runRequest(request, callbackMap, profile, controls, withModel, controlBridge, hostWork);
   }
-  return Object.freeze({
+  const api = {
     engineVersion,
     validateDocument(document, registry = []) { return invoke('validate', {document}, registry); },
     readDocument(source, format = 'json', registry = []) { return invoke('read', {source, format}, registry).document; },
@@ -192,7 +267,9 @@ export function createEngine(resources, options = {}) {
     writeValue(value, format = 'json') { return runRawValue(addon.writeValueWire, value, format, controls); },
     readJsonValue(source) { return runRawValue(addon.readValueWire, source, 'json', controls); },
     writeJsonValue(value) { return runRawValue(addon.writeValueWire, value, 'json', controls); },
-  });
+  };
+  if (withModel) Object.assign(api, createCoreModelOperations((op, args, extensions) => invoke(op, args, extensions)));
+  return Object.freeze(api);
 }
 
 function codegenOptions(options) {

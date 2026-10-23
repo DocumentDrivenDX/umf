@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:evidence:r5-field-value:validation-output",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": ["id"],
+    "oneOf": [
+      {"required": ["result"]},
+      {"required": ["thrown"]}
+    ],
+    "properties": {
+      "id": {"type": "string"},
+      "thrown": {
+        "type": "object",
+        "required": ["name", "message"],
+        "properties": {"name": {"const": "TypeError"}, "message": {"type": "string"}},
+        "additionalProperties": false
+      },
+      "result": {
+        "type": "object",
+        "required": ["valid", "complete", "diagnostics"],
+        "properties": {
+          "valid": {"type": "boolean"},
+          "complete": {"type": "boolean"},
+          "diagnostics": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["code", "path", "message", "severity"],
+              "properties": {
+                "code": {"type": "string"},
+                "path": {"type": "string"},
+                "message": {"type": "string"},
+                "severity": {"enum": ["error", "warning"]}
+              },
+              "additionalProperties": false
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "additionalProperties": false
+  }
+}

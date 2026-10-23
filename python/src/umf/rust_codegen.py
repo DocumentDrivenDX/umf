@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 import json
+import math
+import time
 import sys
 from collections.abc import Callable
 from typing import Any
@@ -159,6 +161,124 @@ def _host_work(max_work, meter, is_cancelled, now, deadline_ms):
                 raise UmfCoreError("DEADLINE", "Deadline elapsed")
 
     return work
+
+
+def _json_string_size(value: str, check_deadline, limit: int) -> int:
+    size = 2
+    for index, char in enumerate(value):
+        if index % 4096 == 0:
+            check_deadline()
+        point = ord(char)
+        size += 2 if char in ('"', "\\", "\b", "\f", "\n", "\r", "\t") else (
+            6 if point < 0x20 or point > 0x7E and point <= 0xFFFF else
+            12 if point > 0xFFFF else 1
+        )
+        if size > limit:
+            raise ValueError("native request must be at most 32 MiB of JSON")
+    return size
+
+
+def _codegen_pointer(path) -> str:
+    segments = []
+    while path is not None:
+        path, segment = path
+        segment = str(segment)
+        segments.append(segment.replace("~", "~0").replace("/", "~1"))
+    return "".join("/" + segment for segment in reversed(segments))
+
+
+def _admit_codegen_json(value: Any, deadline: float | None, max_bytes: int) -> None:
+    """Mirror R3 `_wire` admission and preflight compact ensure_ascii JSON size."""
+    def check_deadline() -> None:
+        if deadline is not None and time.monotonic() >= deadline:
+            raise UmfCoreError("DEADLINE", "Deadline elapsed")
+
+    pending = [("value", value, None, 0)]
+    count = 0
+    encoded_size = 0
+    while pending:
+        check_deadline()
+        kind, item, path, depth = pending.pop()
+        if kind == "list-iterator":
+            try:
+                index, child = next(item)
+            except StopIteration:
+                continue
+            pending.append((kind, item, path, depth))
+            pending.append(("value", child, (path, index), depth + 1))
+            continue
+        if kind == "dict-iterator":
+            try:
+                key, child = next(item)
+            except StopIteration:
+                continue
+            if type(key) is not str:
+                raise UmfCoreError("UNSUPPORTED_KEY", "JSON object keys must be strings", _codegen_pointer(path))
+            encoded_size += _json_string_size(key, check_deadline, max_bytes - encoded_size - 1) + 1
+            pending.append((kind, item, path, depth))
+            pending.append(("value", child, (path, key), depth + 1))
+            if encoded_size > max_bytes:
+                raise ValueError("native request must be at most 32 MiB of JSON")
+            continue
+        count += 1
+        if count > sys.maxsize or depth > 256:
+            raise UmfCoreError("LIMIT", "JSON structural limit exceeded", _codegen_pointer(path))
+        if item is None or type(item) is bool:
+            encoded_size += 4 if item is None else (4 if item else 5)
+        elif type(item) is int:
+            if item > 9_007_199_254_740_991 or item < -9_007_199_254_740_991:
+                raise UmfCoreError("NUMBER", "Integer is outside the safe binary64 envelope", _codegen_pointer(path))
+            encoded_size += len(json.dumps(item, separators=(",", ":")))
+        elif type(item) is float:
+            if not math.isfinite(item):
+                raise ValueError("Out of range float values are not JSON compliant")
+            encoded_size += len(json.dumps(item, separators=(",", ":")))
+        elif type(item) is str:
+            encoded_size += _json_string_size(item, check_deadline, max_bytes - encoded_size)
+        elif type(item) is list:
+            encoded_size += 2 + max(0, len(item) - 1)
+            if len(item) * 2 + 1 > max_bytes:
+                raise ValueError("native request must be at most 32 MiB of JSON")
+            pending.append(("list-iterator", enumerate(item), path, depth))
+        elif type(item) is dict:
+            encoded_size += 2 + max(0, len(item) - 1)
+            if len(item) * 5 + 1 > max_bytes:
+                raise ValueError("native request must be at most 32 MiB of JSON")
+            pending.append(("dict-iterator", iter(dict.items(item)), path, depth))
+        else:
+            raise UmfCoreError("UNSUPPORTED_VALUE", f"Unsupported Python value type: {type(item).__name__}", _codegen_pointer(path))
+        if encoded_size > max_bytes:
+            raise ValueError("native request must be at most 32 MiB of JSON")
+    check_deadline()
+
+
+def encode_codegen_cli_request_json(request: Any, *, deadline: float | None = None,
+                                    max_bytes: int = 32 * 1024 * 1024) -> str:
+    """Encode CLI JSON after R3-equivalent typed admission.
+
+    The CLI's JSON parser reconstructs the core binary64 and UTF-16 value tree.
+    A validation-only walk mirrors R3 Python ``_wire`` admission for supported
+    types, keys, safe integers, paths, depth and value count; differential tests
+    compare those decisions with ``_wire``. This avoids tagged UTF-16 unit
+    arrays while checking compact JSON size and deadline before encoding.
+    """
+    _admit_codegen_json(request, deadline, max_bytes)
+    return json.dumps(request, ensure_ascii=True, separators=(",", ":"), allow_nan=False)
+
+
+def decode_codegen_cli_response_wire(response: str, *, deadline: float | None = None) -> Any:
+    """Decode core-wire/1 with the R3 decoder and deadline-aware traversal.
+
+    The caller bounds serialized input to 64 MiB. ``json.loads`` may amplify
+    that input in parent memory and cannot be interrupted; traversal immediately
+    checks the shared deadline after parsing and throughout conversion.
+    """
+    if type(response) is not str:
+        raise TypeError("Native codegen CLI response must be text")
+    def work(_amount: int) -> None:
+        if deadline is not None and time.monotonic() >= deadline:
+            raise UmfCoreError("DEADLINE", "Deadline elapsed")
+    return _from_wire(json.loads(response), work)
 
 
 def _serialization_bound(value, work, *, skip=None):

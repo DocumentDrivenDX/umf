@@ -705,7 +705,8 @@ def main() -> int:
         return 0
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(payload, encoding="utf-8")
-    print(f"Wrote {OUT.relative_to(ROOT)}: {len(modules)} source modules; {sum(s['active'] for s in scripts)} active scripts; {len(result['dependencies']['javascript']['resolvedClosure'])} JS locked packages")
+    label = OUT.relative_to(ROOT) if OUT.is_relative_to(ROOT) else OUT
+    print(f"Wrote {label}: {len(modules)} source modules; {sum(s['active'] for s in scripts)} active scripts; {len(result['dependencies']['javascript']['resolvedClosure'])} JS locked packages")
     return 0
 
 

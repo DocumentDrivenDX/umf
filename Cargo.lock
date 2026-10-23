@@ -979,6 +979,7 @@ name = "umf-cli"
 version = "0.1.0"
 dependencies = [
  "sha2",
+ "umf-codegen",
  "umf-core",
  "umf-core-wire",
  "umf-metamodel",
@@ -996,12 +997,15 @@ dependencies = [
 name = "umf-core"
 version = "0.1.0"
 dependencies = [
+ "base64",
  "num-bigint",
  "num-traits",
  "regress",
  "ryu-js",
  "saphyr-parser",
+ "sha2",
  "serde_json",
+ "url",
 ]
 
 [[package]]
