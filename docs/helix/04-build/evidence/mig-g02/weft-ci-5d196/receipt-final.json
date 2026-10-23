@@ -1,0 +1,133 @@
+{
+  "schema": "weft.g02-final-ci-complete-capture/1",
+  "repository": "DocumentDrivenDX/weft",
+  "pullRequest": 29,
+  "event": "pull_request",
+  "runHeadSha": "5d196ea3184b1a711bb4bcf91215a496c18ce9b2",
+  "baseSha": "b59938f4671e1aa9bd99941f233a8d83e1b576d7",
+  "checkedOutRef": "c6414d163f270425027db08ef454747904bde406",
+  "sourceTree": "82913d1be942577389b6568d900cdf7c0ec3a20f",
+  "actualCheckoutTree": "82913d1be942577389b6568d900cdf7c0ec3a20f",
+  "sourceAndCheckoutTreesEqual": true,
+  "identityEvidence": {
+    "sourceCommitApi": "raw/commit-source.json",
+    "baseCommitApi": "raw/commit-base.json",
+    "checkoutCommitApi": "raw/commit-checkout.json",
+    "compilerCheckoutLog": "logs/compiler-job-120652688055.log",
+    "checkoutLogEvidence": "Log records fetching c6414d163f270425027db08ef454747904bde406 into refs/remotes/pull/29/merge and checks out that ref. The API commit trees for source H and checked-out merge ref are identical; check-run HEAD SHA remains H."
+  },
+  "sourceWorkflowSha256": {
+    ".github/workflows/truss-facts.yml": "05af442aa03832fcb48b856ec6f2dc1bda5be200dfb17474471d7e5ab77c15de",
+    ".github/workflows/table-operations.yml": "5db6adc9dfc6b58053f2e8926701a4760dbf7aa170f0dd7c2ce1c1c0c682ea55",
+    ".github/workflows/conformance.yml": "65d93dd3034623ea8f276d26174ef94e800dcb4d9e75563db8fdc09745c183a6"
+  },
+  "selectedSourceDefinedChecks": [
+    {
+      "workflow": "Truss facts compiler regression",
+      "workflowFile": ".github/workflows/truss-facts.yml",
+      "runId": 40023185471,
+      "jobId": 120652687377,
+      "jobName": "shared-compiler",
+      "status": "completed",
+      "conclusion": "success",
+      "checkRunHeadSha": "5d196ea3184b1a711bb4bcf91215a496c18ce9b2",
+      "runRecord": "raw/run-40023185471.json",
+      "jobRecord": "raw/jobs-40023185471.json",
+      "checkRecord": "raw/check-120652687377.json",
+      "artifact": {
+        "id": 12531664254,
+        "name": "truss-facts-parity",
+        "zip": "artifacts/truss-facts-parity.zip",
+        "bytes": 66936,
+        "sha256": "802f0087b873da898a317537136599255edd1b282dce9b17ae3a9317f0bcae56"
+      }
+    },
+    {
+      "workflow": "Declared table operation candidate",
+      "workflowFile": ".github/workflows/table-operations.yml",
+      "runId": 40023185590,
+      "jobId": 120652687772,
+      "jobName": "native-table-operations",
+      "status": "completed",
+      "conclusion": "success",
+      "checkRunHeadSha": "5d196ea3184b1a711bb4bcf91215a496c18ce9b2",
+      "runRecord": "raw/run-40023185590.json",
+      "jobRecord": "raw/jobs-40023185590.json",
+      "checkRecord": "raw/check-120652687772.json",
+      "artifact": {
+        "id": 12532456045,
+        "name": "declared-table-operation-candidate",
+        "zip": "artifacts/declared-table-operation-candidate.zip",
+        "bytes": 6569,
+        "sha256": "802303220cb647d0ddca0776d4753d1daba19e60c69649619001ce91cf0df54c"
+      }
+    },
+    {
+      "workflow": "Compiler conformance",
+      "workflowFile": ".github/workflows/conformance.yml",
+      "runId": 40023185354,
+      "jobId": 120652687811,
+      "jobName": "graph-requirements-candidate",
+      "status": "completed",
+      "conclusion": "success",
+      "checkRunHeadSha": "5d196ea3184b1a711bb4bcf91215a496c18ce9b2",
+      "runRecord": "raw/run-40023185354.json",
+      "jobRecord": "raw/jobs-40023185354.json",
+      "checkRecord": "raw/check-120652687811.json",
+      "artifact": {
+        "id": 12532482001,
+        "name": "graph-requirements-candidate-c6414d163f270425027db08ef454747904bde406",
+        "zip": "artifacts/graph-requirements-candidate-c6414d163f270425027db08ef454747904bde406.zip",
+        "bytes": 139682751,
+        "sha256": "c4a35bc043ab90a91e8b465cb7c5004fb096ec91b220c5ce62b3bd2fd40bd4fb"
+      }
+    },
+    {
+      "workflow": "Compiler conformance",
+      "workflowFile": ".github/workflows/conformance.yml",
+      "runId": 40023185354,
+      "jobId": 120652688055,
+      "jobName": "compiler-and-evidence",
+      "status": "completed",
+      "conclusion": "success",
+      "checkRunHeadSha": "5d196ea3184b1a711bb4bcf91215a496c18ce9b2",
+      "runRecord": "raw/run-40023185354.json",
+      "jobRecord": "raw/jobs-40023185354.json",
+      "checkRecord": "raw/check-120652688055.json",
+      "compilerJobLog": "logs/compiler-job-120652688055.log",
+      "artifact": {
+        "id": 12534441648,
+        "name": "current-qualification-c6414d163f270425027db08ef454747904bde406",
+        "zip": "artifacts/current-qualification-c6414d163f270425027db08ef454747904bde406.zip",
+        "bytes": 67071296,
+        "sha256": "c9a4a540e0056530839fe7c5546fed863737f9fdd29730e8103d5cc2132636fa"
+      }
+    }
+  ],
+  "compilerQualification": {
+    "runnerId": "07fd8a0051254dfcb9a57243ec022cc5",
+    "runnerStatus": "passed",
+    "retiredInputRefusals": 2181,
+    "refusalCases": 17,
+    "inputFiles": 5636
+  },
+  "allFourSelectedChecksPassed": true,
+  "cancelledDuplicateAudit": {
+    "runId": 40023180158,
+    "event": "push",
+    "headSha": "5d196ea3184b1a711bb4bcf91215a496c18ce9b2",
+    "status": "completed",
+    "conclusion": "cancelled",
+    "isNotCountedAsPass": true,
+    "runRecord": "raw/run-40023180158.json",
+    "jobRecord": "raw/jobs-40023180158.json",
+    "checkRecord": "raw/check-120652667251.json"
+  },
+  "priorPartialReceiptPreservedAt": "../receipt.json",
+  "artifactMetadataRecords": [
+    "raw/artifacts-40023185471.json",
+    "raw/artifacts-40023185590.json",
+    "raw/artifacts-40023185354.json"
+  ],
+  "reportingNote": "The prior receipt.json and files.sha256 remain untouched. This complete receipt records H as run/check SHA and separately records the synthetic merge checkout SHA/tree; no assertion that the merge commit SHA equals H is made."
+}

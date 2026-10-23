@@ -81,6 +81,24 @@ test('G02 existing-target backfill retains its nonempty future default exactly',
  expect(compileTableMigration({id:'g02-existing-default-003',predecessor:{id:'g02-existing-default-001',digest:'9'.repeat(64)},previous,next:bundle(wrongDefault),options}).status).toBe('blocked');
 });
 
+test('G02 does not rewrite retained creates: required append needs an existing create input or declared default',()=>{
+ const previousDoc=source({operation:false}),previous=bundle(previousDoc);
+ const omitted=source({append:true});
+ omitted.modules[0]!.extensions['umf.tables'].commands.unshift({version:'umf.table-operation/0.1',id:'create_note',parameters:[],consistency:'transaction',replay:'caller-key-required',body:{kind:'insert',table:'notes',values:[{field:ref('id'),value:{kind:'literal',value:{string:'new'}}},{field:ref('owner'),value:{kind:'literal',value:{string:'g02_alice'}}}],returning:[],maxRows:1}});
+ const refused=compileTableDeployment({text:JSON.stringify(omitted),configuration});
+ expect(refused.status).toBe('blocked');
+ if(refused.status==='blocked')expect(refused.diagnostics.some(item=>item.code==='TABLES_OPERATION_REQUIRED'&&item.path.endsWith('/body/values'))).toBe(true);
+ const predecessor=structuredClone(previousDoc);predecessor.modules[0]!.extensions['umf.tables'].commands=[];
+ const commandFreePrevious=bundle(predecessor),selectedOnly=source({append:true});
+ const candidateCommands=selectedOnly.modules[0]!.extensions['umf.tables'].commands;
+ expect(candidateCommands.map((command:any)=>command.id)).toEqual(['derive_summary']);
+ const next=bundle(selectedOnly);
+ const result=compileTableMigration({id:'g02-no-default-002',predecessor:{id:'g02-no-default-001',digest:'7'.repeat(64)},previous:commandFreePrevious,next,options:{version:'umf.table-migration-options/0.4',backfills:[{table:'notes',column:ref('summary'),operation:'derive_summary',scopedRows:true}],concurrentIndexes:[],reviewedChanges:[],validations:[]}});
+ expect(result.status).toBe('compiled');
+ if(result.status==='compiled')expect(result.plan.steps.map(step=>step.phaseOperation)).toEqual(['add-column','target-check','backfill','tighten-not-null']);
+ expect(previous.source).toEqual(commandFreePrevious.source);
+});
+
 test('G02 refuses a target self-reference, a newly appended input, and a second effect',()=>{
  const previous=bundle(source({operation:false})),base=source({append:true}),next=bundle(base);
  const compile=(doc:any,backfills:any[]=[{table:'notes',column:ref('summary'),operation:'derive_summary',scopedRows:true}])=>compileTableMigration({id:'g02-refuse-002',predecessor:{id:'g02-refuse-001',digest:'c'.repeat(64)},previous,next:bundle(doc),options:{version:'umf.table-migration-options/0.4',backfills,concurrentIndexes:[],reviewedChanges:[],validations:[]}});

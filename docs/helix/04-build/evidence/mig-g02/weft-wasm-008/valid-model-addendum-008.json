@@ -1,0 +1,35 @@
+{
+  "evidenceId": "mig-g02-weft-wasm-valid-model-008",
+  "sourceHead": "7413c19d16ca5d8d8ce60b62d49ca0a3250544df",
+  "supersedesCorpusScope": "Adds a valid selected-command-only fixture to candidate008; original 47-case corpus/report remain immutable and preserved.",
+  "fixtureRule": "Each test model retains only its selected .2 command to avoid unrelated legacy create declarations becoming incomplete when test fields are added.",
+  "crossImplementations": {
+    "cases": 47,
+    "statusesAgreeAcrossNativeWeftUmf": true,
+    "chromium": "153.0.8010.12",
+    "nativeWasmParity": true,
+    "databaseExecutionQualified": false
+  },
+  "artifacts": {
+    "g02-browser-cases-valid-model-008.json": {
+      "path": "/private/tmp/weft-g02-wasm-008/g02-browser-cases-valid-model-008.json",
+      "sha256": "dd869f69ad20182652ed6a44921556ea73d86f7fcd4dd6536160768253ce361b",
+      "bytes": 8066513
+    },
+    "g02-browser-report-valid-model-008.json": {
+      "path": "/private/tmp/weft-g02-wasm-008/g02-browser-report-valid-model-008.json",
+      "sha256": "5231300eae50ad6ada53388d903e20aabb07d44d531fad8a339416f409b14ce0",
+      "bytes": 10871
+    },
+    "predicate-umf-weft-parity-valid-model-008.json": {
+      "path": "/private/tmp/umf-g02-candidate-008-artifacts/predicate-umf-weft-parity-valid-model-008.json",
+      "sha256": "28889d1481fa852c866be265632d96c0ad8753cdd7f55372a3e8a41de0fba1f0",
+      "bytes": 22176
+    },
+    "predicate-domain-prepare-bind-valid-model-008.json": {
+      "path": "/private/tmp/umf-g02-candidate-008-artifacts/predicate-domain-prepare-bind-valid-model-008.json",
+      "sha256": "2d98389b8a8154e6ec09b8f8f1c9333b634f662a755c5f7e5f10aab629c02de9",
+      "bytes": 6944
+    }
+  }
+}

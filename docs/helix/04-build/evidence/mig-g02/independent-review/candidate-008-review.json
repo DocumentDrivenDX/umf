@@ -1,0 +1,37 @@
+{
+  "status": "passed-for-recorded-candidate",
+  "candidate": "008",
+  "source": {
+    "umfInputCheckpoint": "fa722648c8a70044a31420b32c3979253493dbe5",
+    "weftCompiler": "7413c19d16ca5d8d8ce60b62d49ca0a3250544df",
+    "weftMetadataHead": "5d196ea3184b1a711bb4bcf91215a496c18ce9b2"
+  },
+  "manifestSha256": "51d8f62a1e0cca768221ba2e8938058a09d10753ef31f48df7b4e9a60b71450c",
+  "evidence": "candidate-008/review-manifest.json",
+  "independentChecks": {
+    "nativeHostScenarios": 37,
+    "recoveryFaultScenarios": 3,
+    "recoveryAssertions": 87,
+    "noFutureDefaultAppendAssertions": 19,
+    "literalAdmissionBindCases": 37,
+    "realChromiumNativeWasmParityCases": 47,
+    "sdkInstalledCoreConformanceCases": 139,
+    "sdkExactPythonNativePlanParity": 37,
+    "newProfileYamlRefusals": 3,
+    "legacy03YamlPositive": true,
+    "sourceInputHashes": 247,
+    "packageSourceMembers": 212,
+    "sdkManifestMembers": 1748,
+    "linuxWheelArchives": 2,
+    "syntheticPrefixCleanupVerified": true
+  },
+  "limits": [
+    "PostgreSQL18.6 local macOS arm64 native evidence",
+    "Linux wheels verified for packaging; final Linux native CI remains separately required",
+    "Finite typed single-table/target maintenance subset only; no arbitrary SQL or transforms",
+    "Required append must leave successor create declarations valid; no implicit command rewrite",
+    "Profile0.4 retained sources JSON-only; UMF Rust migration profiles0.3/0.4 remain refused",
+    "G03-G11 remain open"
+  ],
+  "releaseDecision": "not approved: final access009 custody and affected-path checks, complete current-head CI, final notes, merge/tag and publication verification pending"
+}
