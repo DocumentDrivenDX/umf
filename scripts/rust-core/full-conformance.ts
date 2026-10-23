@@ -42,6 +42,19 @@ const npm = resolveTool(process.env.NPM, ['npm']);
 const bun = resolveTool(process.env.BUN, ['bun']);
 const gitTool = resolveTool(process.env.UMF_GIT, ['git']);
 const hashBytes = (bytes: Uint8Array) => createHash('sha256').update(bytes).digest('hex');
+let commandSequence = 0;
+
+function safeCommandArguments(args: string[]) {
+  const secretOption = /^(?:--?)(?:dsn|password|passwd|token|secret|credential|authorization)(?:=|$)/i;
+  const rendered = args.slice(0, 8).map((argument, index) => {
+    if (index > 0 && secretOption.test(args[index - 1])) return '[redacted]';
+    if (secretOption.test(argument)) return argument.includes('=') ? `${argument.split('=', 1)[0]}=[redacted]` : argument;
+    if (/^[a-z][a-z0-9+.-]*:\/\/[^/@]+@/i.test(argument)) return argument.replace(/^(.*:\/\/)[^/@]+@/, '$1[redacted]@');
+    return argument.length > 120 ? `${argument.slice(0, 96)}…[${argument.length} chars]` : argument;
+  });
+  const preview = JSON.stringify(rendered);
+  return preview.length > 512 ? `${preview.slice(0, 509)}…` : preview;
+}
 
 async function artifactContent(path: string) {
   const content = await readFile(path);
@@ -49,9 +62,20 @@ async function artifactContent(path: string) {
 }
 
 function command(program: string, args: string[], cwd: string, env: NodeJS.ProcessEnv = process.env) {
-  const result = spawnSync(program, args, {cwd, env, encoding: 'utf8', maxBuffer: 512 * 1024 * 1024});
+  const commandId = ++commandSequence;
+  const startedAt = Date.now();
+  const identity = {commandId, program: program.split(/[\\/]/).at(-1) ?? program, argsPreview: safeCommandArguments(args)};
+  process.stderr.write(`${JSON.stringify({event: 'command-start', ...identity})}\n`);
+  let result: {stdout: string | null; stderr: string | null; status: number | null; signal: NodeJS.Signals | null; error?: NodeJS.ErrnoException};
+  try {
+    result = spawnSync(program, args, {cwd, env, encoding: 'utf8', maxBuffer: 512 * 1024 * 1024});
+  } catch (error) {
+    process.stderr.write(`${JSON.stringify({event: 'command-end', ...identity, durationMs: Date.now() - startedAt, status: null, signal: null, errorCode: error instanceof Error ? error.name : 'unknown'})}\n`);
+    throw error;
+  }
   if (result.stdout) process.stdout.write(result.stdout);
   if (result.stderr) process.stderr.write(result.stderr);
+  process.stderr.write(`${JSON.stringify({event: 'command-end', ...identity, durationMs: Date.now() - startedAt, status: result.status, signal: result.signal, errorCode: result.error?.code ?? null})}\n`);
   if (result.error) throw result.error;
   if (result.status !== 0) throw new Error(`${program} ${args.join(' ')} failed (${result.status ?? result.signal})`);
   return {stdout: result.stdout ?? '', stderr: result.stderr ?? ''};
@@ -280,7 +304,18 @@ async function compilerQualification(host: string, executable: string, arguments
   const records: Record<string, unknown> = {};
   for (const [index, fixturePath] of compilerFixtures.entries()) {
     const report = join(cwd, `r3-${host}-${index}.json`);
-    const result = command(executable, [...arguments_, root, fixturePath], cwd, {...env, UMF_R3_REPORT: report});
+    const startedAt = Date.now();
+    let status = 'pass';
+    if (host === 'cli') process.stderr.write(`${JSON.stringify({event: 'cli-fixture-start', index, fixture: fixturePath})}\n`);
+    let result: {stdout: string; stderr: string};
+    try {
+      result = command(executable, [...arguments_, root, fixturePath], cwd, {...env, UMF_R3_REPORT: report});
+    } catch (error) {
+      status = 'fail';
+      throw error;
+    } finally {
+      if (host === 'cli') process.stderr.write(`${JSON.stringify({event: 'cli-fixture-end', index, fixture: fixturePath, status, durationMs: Date.now() - startedAt})}\n`);
+    }
     records[fixturePath] = {...outputRecord(`r3-${host}-complete-outcome-${index}`, result), actual: await artifactContent(report)};
   }
   return records;
@@ -388,6 +423,7 @@ try {
   results.codegenOntology = outputRecord('r3-unchanged-application-independent-ontology-on-rust-client-stdlib-only', command(bun, ['test', resolve(root, 'tests/access-unified.test.ts')], workspace, {...process.env, UMF_R3_UNIFIED_CANDIDATE: clientInput, UMF_UNIFIED_PYTHON: python, UMF_UNIFIED_POSTGRES_DSN: '', UMF_UNIFIED_WEFT_DIR: '', UMF_UNIFIED_PSYCOPG_DIR: ''}));
 
   const cli = resolve(release, 'umf');
+  results.cliWireTransport = outputRecord('bounded-native-cli-wire-transport-fault-controls', command(node, ['--test', resolve(root, 'scripts/rust-core/cli-wire-transport.test.mjs')], workspace, {...process.env, UMF_CLI_PATH: cli}));
   results.cli = outputRecord('native-cli-139-path-empty', command(node, [resolve(root, 'scripts/rust-core/cli-core-conformance.mjs'), fixture], workspace, {...process.env, PATH: '', UMF_CLI_PATH: cli}));
   results.codegenCli = await compilerQualification('cli', node, [compilerAdapter], workspace, {...process.env, PATH: '', UMF_R3_HOST: 'cli', UMF_R3_CLI: cli});
   artifacts.cli = {
