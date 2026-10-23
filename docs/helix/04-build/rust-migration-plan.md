@@ -1288,10 +1288,13 @@ An additional reviewed bounded source delta raises the focused Rust suite to
 CLI passes the frozen catalog with its child `PATH` empty. The Bun predecessor
 still passes eight tests/38 assertions. Sol found no remaining P1/P2 in this
 delta. The source-cohort metamodel outputs were regenerated after the
-2026-10-23 `origin/main` merge, and the fixed-point check now passes. The R7
-tooling inventory's older first-port/source hash snapshot requires an explicit
-refresh for that merged cohort; consumer parity and default activation remain
-open, so the source slice is not yet a full R7 qualification.
+2026-10-23 `origin/main` merge and again after Rust core commit `61fceefd0`;
+the latter fixed-point check passes. The [refreshed R7 tooling inventory](evidence/rust-migration/r7-tooling-inventory/README.md)
+binds its first-port and activation hashes to that cohort, including manifest
+SHA-256 `8adcdceec1380a0ede08fc86756e6a1fa23505626197c5e6f83bfd5e4fc0d912`.
+Consumer parity and default activation remain open, so the source slice is not
+yet a full R7 qualification. Later core edits require a new fixed-point check
+and inventory refresh.
 
 Each family retains immutable predecessor outcomes, contract controls, independent
 version-pinned native oracles, required recovery directions, unknown-content/edit

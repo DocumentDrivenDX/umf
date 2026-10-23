@@ -125,3 +125,29 @@ refresh; it must not be silently regenerated during the check.
 The inventory JSON binds this first-port row to the frozen source, manifest,
 canonical outcomes and implementation files. Recompute hashes after source
 freeze; generated manifest changes are parent-owned.
+
+## Refreshed first-port cohort — 2026-10-23
+
+The first-port and activation source hashes now bind the post-merge cohort. The
+previous snapshot pointed to the pre-refresh manifest (`8d1bf818…`), first-port
+implementation/test hashes, and `package.json` at 0.5.5 (`669b886f…`). After
+the `origin/main` merge and metamodel regeneration, the manifest records the
+0.5.6 source cohort and regenerated compiler/input/output digests; its current
+SHA-256 is `8adcdcee…` after the R5 core source commit `61fceefd0`. This generated metadata refresh does not change the 31
+R4 root set or establish a new R7 census.
+
+The current first-port source hashes also include the bounded Rust admission
+controls and current CLI/test sources. The CLI gained other operation dispatch
+routes in the surrounding migration work; `reference self-model-check` still
+accepts the frozen UTF-8 source and manifest over wire, validates admission,
+and returns the catalog. The frozen predecessor files and outcomes remain
+unchanged. The current focused evidence is 18 Rust metamodel tests, CLI parity
+with and without default features, an installed CLI replay with an empty child
+`PATH`, and eight Bun predecessor tests (38 assertions). The generated-output
+fixed point passes for this source cohort.
+
+These hashes refresh the inventory’s source binding only. They do not establish
+consumer parity beyond the recorded controls, activate Bun/reference/reader or
+browser consumers, retire any semantic kernel, or complete R7. Remaining
+refusal/resource parity, independent review and default activation gates remain
+open as recorded in the self-model admission evidence and migration plan.

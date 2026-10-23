@@ -750,17 +750,17 @@
       "docs/helix/04-build/evidence/rust-migration/r7-self-model-admission/frozen/catalog.canonical.json",
       "docs/helix/04-build/evidence/rust-migration/r7-self-model-admission/frozen/graph.canonical.json"
     ],
-    "parityGate": "Frozen bytes and canonical predecessor catalog/graph are in r7-self-model-admission/frozen. Compare recursively lexicographically canonicalized catalog and graph (not JCS); accept matching source and model SHA; preserve exact supported error order/text; cover unresolved members, duplicate edges, definition collisions, shape traversal, false labels, ECMAScript scalar/object/array ToString controls, malformed containers, UTF16 and numeric-key diagnostics, and late control/resource cases. The focused Rust metamodel reference suite passed 16 tests and the CLI reference test passed one on 2026-10-23. The Bun predecessor suite passes the added container/array/label controls. Rust applies bounded ECMAScript ToString to the JSON value domain. No activation until remaining refusal/resource coverage, clean no-default-features CLI, final metamodel fixed point and review pass.",
+    "parityGate": "Frozen bytes and canonical predecessor catalog/graph are in r7-self-model-admission/frozen. Compare recursively lexicographically canonicalized catalog and graph (not JCS); accept matching source and model SHA; preserve exact supported error order/text; cover unresolved members, duplicate edges, definition collisions, shape traversal, false labels, ECMAScript scalar/object/array ToString controls, malformed containers, UTF16 and numeric-key diagnostics, and late control/resource cases. The focused Rust metamodel reference suite passed 18 tests; the CLI parity test passed with and without default features, and an installed CLI replay passed with its child PATH empty. Eight Bun predecessor tests passed (38 assertions). Rust applies bounded ECMAScript ToString to the JSON value domain. The generated-output fixed point passes for the refreshed source cohort. Broader refusal/resource parity, independent R7 review, consumer parity and default activation remain open.",
     "consumerActivation": "Not activated. Keep the Bun reference consumer until frozen catalog and graph parity plus refusal/resource gates pass; then switch that consumer explicitly. CLI evidence alone does not activate browser or reader consumers.",
     "gateSourceHashes": {
       "spec/metamodel/umf.yaml": "1e406ee49b0c4c08b8eb996bb1fcb6e96fa8d6f4673f0877aa1800986b2dbbce",
-      "spec/metamodel/generated/manifest.json": "8d1bf818f11737432e20ac0ab1f7dbcbb61ea3f23df2e111b995ee6fefccff59",
+      "spec/metamodel/generated/manifest.json": "8adcdceec1380a0ede08fc86756e6a1fa23505626197c5e6f83bfd5e4fc0d912",
       "tests/reference/self-model.test.ts": "e9fcdbf164438572623b79096db61e21a7b8d9e61fc5f9f45f3b01a8aece0346",
       "docs/helix/05-deploy/reference/model/metamodel.ts": "20308bd3a21132e551fc51bcb84e9f05a90a1951dd69b245e313422f455299d6",
       "crates/umf-metamodel/src/lib.rs": "ba32c00d505b5439161c75cb10928c3d51cb51fd52a52ecb865a2806c23a0417",
-      "crates/umf-metamodel/src/reference.rs": "4335f04d2e1fe3dcd612cbbc69fb99e0f3a190f502d6aed52e1dafb798c67489",
-      "crates/umf-cli/src/main.rs": "6fe6d9c77e356aa674d45b7add7e6bad22fb1c87e3eb77f20b6aec5d5c425464",
-      "crates/umf-cli/tests/reference_cli.rs": "77a7b070cd801c4372fc97d1a4e98582263a1c60f8c273f6338640a4d86a7495",
+      "crates/umf-metamodel/src/reference.rs": "634fa3e51df15c7d0c632eae331577119bc123eaf50a17de73f7a272b2b83b9c",
+      "crates/umf-cli/src/main.rs": "9603e617ea7cf5c858f1ba40e425a48982ba369d7d494ea828f45cc6effdc8ac",
+      "crates/umf-cli/tests/reference_cli.rs": "c322c70b056e10a6c348330107b6596f0d9db6729274e9800f1ab0d0ed140b9a",
       "docs/helix/04-build/evidence/rust-migration/r7-self-model-admission/frozen/umf.yaml": "1e406ee49b0c4c08b8eb996bb1fcb6e96fa8d6f4673f0877aa1800986b2dbbce",
       "docs/helix/04-build/evidence/rust-migration/r7-self-model-admission/frozen/manifest.json": "97f6398e02a31bfa2eeb308f731099eb262c6374cc06e8a6553d1c0a1ed77b0d",
       "docs/helix/04-build/evidence/rust-migration/r7-self-model-admission/frozen/catalog.canonical.json": "d28ad992af59c27142b662580cd701ff4f9f36850155e09d2ae7fd99a0827bca",
@@ -786,6 +786,6 @@
     "activationReconciliation": "The 31 named R4 roots are all present at their current paths and root/import hashes are checked here; current activation statements are bound to package.json and the current consumer/build roots. The live boundary command does not emit an R7-specific root list, so the exact live R7 subset is explicitly not claimed as independently recaptured."
   },
   "liveActivationSources": {
-    "package.json": "669b886f28aa579025068c76f600bc782d983f2073af9937a981c75c934da3b2"
+    "package.json": "3ecc3d605fa229d3e94c04b709954f6787aba6094172d8a4a674e7aa7034cf1c"
   }
 }
