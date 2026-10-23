@@ -11,6 +11,8 @@ ddx:
       kind: informed_by
     - id: SD-030
       kind: informed_by
+    - id: SD-007
+      kind: informed_by
 ---
 
 # TD-085: Invoke typed actions on raw tables
@@ -462,3 +464,46 @@ Rollback of an aborted phase restores all its data/DDL/progress. After phase
 commit, use exact resume or separately approved forward repair. This design does
 not promise reversal of committed derived values, online execution, general
 transforms, managed acceptance or additional backend support.
+
+## G03 existing-column future-default integration
+
+CONTRACT-081 owns successor discovery/options/plan/execution versions and exact
+source/phase rules. SD-007 selects this future-write-only slice. US-051-AC12
+keeps historical fill distinct; US-051-AC15/16 govern recovery and qualified
+backend delivery. No G03 product implementation starts before contract review.
+
+| Component | Required change and boundary |
+| --- | --- |
+| `src/table-deployment/sql.ts`, `ddl.ts` | Extract one internal typed native-default expression renderer from `columnDefinitionSql`; deployment, G02's existing install-default and G03 SET use it with historical bytes unchanged. G03-specific admission limits remain separate. No string surgery or host imports. |
+| `src/extensions/tables/columns.ts`, literal/domain helpers | Reuse exact logical/native default matching and storage checks; add successor admission for Unicode/DDL bounds and conservative volatile refinements without widening older declaration profiles. |
+| `src/table-migration/reviewed.ts`, `options.ts`, `index.ts` | Explicit successor discovery branch and full old/new source-meaning digests; one exact target native/default and coupled logical-default delta. Independently compile both sources before normalization. Retain all unrelated source and command meaning. |
+| `src/table-migration/phases.ts`, `phases-options.ts`, successor schemas | Exactly one required default-change phase with compiler-owned typed correspondence. Never route native-equivalent transitions through the no-phases finalization shortcut. |
+| `scripts/codegen/entry.ts`, Python `umf_codegen` bridge/assets | Add the explicitly selected discovery request and exact successor dispatch; preserve legacy two-member requests and old discovery results. Regenerate measured embedded inputs. |
+| Python lifecycle `progress.py`, `host.py`, `mixed.py`, `mixed_prefix.py`, `witness.py`, `catalog.py`, `ledger.py` | Explicit successor phase/approval/reference dispatch in both host-neutral and Psycopg paths; exact target/prefix validation, writer locks, atomic DDL/progress, uncertain-COMMIT observation and final publication. Retain fixed metadata schemas/ACLs. |
+
+The renderer remains internal to the browser-compatible UMF PostgreSQL adapter.
+Weft's existing ordinary operation grammar is unchanged; no SQL expression or
+DDL renderer moves into the Python host. The host executes only the verified
+source-derived program and owns connection, identity, approval and recovery.
+Retain lifecycle/deployment/compilation boundary checks and their negative controls.
+
+Native catalog verification may use the existing protected scratch comparison,
+but it cannot authenticate source changes. For absent versus literal NULL and
+normalized numeric spellings, equal catalog witnesses still require exact
+approved plan/source identity and committed progress. Prefix reconstruction must
+recognize both the uncommitted predecessor and committed successor phase, while
+ordinary source publication remains fenced. No row UPDATE is generated or used
+to test acceptance. Lock/read-only authority checks cannot be replaced by a
+metadata-head fence against directly granted writers.
+
+Implementation order: freeze CONTRACT-081; extract the renderer with historical
+byte controls; implement isolated portable discovery/admission/phase generation;
+add both host dispatch/recovery routes; extend domain fixtures and independent
+native acceptance; measure browser/installed/native artifacts; then qualify the
+actual merged cohort and fresh published downloads. The final component versions,
+workflow inventory and dependency closure must come from that source, including
+any prior public action-runtime integration.
+
+Testing follows STP-085. Known-aborted default changes roll back DDL/progress;
+committed changes require exact resume or separately approved forward default
+repair. Neither repair nor source rollback erases rows inserted in between.

@@ -17,6 +17,8 @@ ddx:
       kind: informed_by
     - id: CONTRACT-079
       kind: informed_by
+    - id: SD-007
+      kind: informed_by
 ---
 
 # CONTRACT-081: Declared table lifecycle
@@ -1646,3 +1648,146 @@ The complete approved command supplies the exact target-NULL predicate and effec
 bound. Existing full names survive; a NULL input without authored coalesce or an
 overlength/rounded result aborts the entire phase. A future default is separate
 intent and never supplies historical row values implicitly.
+
+### G03 existing-column future-default successor
+
+SD-007 selects one existing stored Field's native default for future writes.
+CONTRACT-049 logical value resolution remains explicit and never mutates input
+through validation. PostgreSQL omission, explicit NULL and historical values
+remain distinct. This successor grants no historical fill or row-expression
+meaning to a default.
+
+#### Versions and exact selection
+
+| Surface | Selected G03 rule |
+| --- | --- |
+| Options / plan | `umf.table-migration-options/0.5` / `umf.table-migration/0.5` |
+| Execution profile | `umf.table-migration-execution/0.4`, fixed owner-only progress relation |
+| Change discovery | Explicit `{version:"umf.table-migration-discovery/0.2"}` selector; historical unselected discovery retains its exact output |
+| Declaration / ordinary operations / Weft | Existing native-default declaration and ordinary operation versions; no Weft grammar expansion |
+| Approval / installation | Approval 0.1 and installation 0.3 with explicit latest-plan 0.5 admission; exact storage, inventory and ACL meaning retained |
+| Opt-in Rust migration | MUST refuse unsupported plan/options 0.5 before effects; no engine fallback |
+
+Options 0.5 MUST contain exactly `version`, `backfills`, `concurrentIndexes`,
+`reviewedChanges`, `validations`. All arrays except `reviewedChanges` MUST be
+empty. That array MUST contain one marker with exactly `id`, `kind`, `path`,
+`oldDigest`, `newDigest`; `kind` MUST be `change-default`. Conversion and unknown
+members MUST refuse. Existing bounded identities and 64-digit lowercase
+hexadecimal digests apply.
+
+The marker MUST bind the complete source-derived old/new physical expectation,
+logical Field and native mapping, retaining the presence and exact value of both
+default declarations. Its path MUST identify the selected successor column
+mapping. The existing deterministic marker-ID/digest algorithm applies to these
+full values. Absence MUST NOT be replaced by a literal-NULL declaration. Catalog
+expression equality and normalized numeric value equality MUST NOT suppress a
+source change candidate. An unselected, duplicate, missing or forged marker MUST
+refuse before returning an executable plan.
+
+The public TypeScript discovery API MAY take the closed version selector as its
+third argument. Python discovery MUST expose the same selector as keyword
+`options`; the embedded request then has exactly `previous`, `next`, `options`.
+Without that selector the existing two-member request and historical discovery
+behavior MUST remain unchanged. Unknown selectors MUST refuse. Discovery only
+identifies review candidates; it cannot grant approval or compiler support.
+
+#### Whole-source correspondence and default admission
+
+Both retained sources MUST be JSON and compile independently. There MUST be one
+selected existing table and one selected existing stored Field. Their identity,
+order, name, logical/native type, nullability, facets, generation, immutability,
+collation, constraints and policies MUST remain unchanged. Other tables,
+dependencies, commands, seeds, unknown
+content and configuration MUST remain unchanged. No initial publication,
+append/drop, rename, type or nullability composition is admitted.
+
+Only the selected native mapping's `default` property may change. The selected
+logical Field's `default` may change with it, provided both complete sources
+satisfy the existing matching missing-only literal rule. Whole-source comparison
+MUST exempt exactly those two located properties, then require equality of all
+remaining parsed content and order. At least the authored native declaration
+MUST differ in presence or canonical JSON; logical-default-only changes refuse.
+Exact retained source bytes remain part of the plan identity. Selected native
+and logical default objects MUST contain only their known members; unknown
+selected default qualifiers remain retained and MUST block interpretation, even
+when normalization would otherwise remove that complete property.
+
+Native defaults remain exactly `{kind:"literal",value:CoreLiteral}`,
+`{kind:"currentTimestamp"}` for timestamptz, or `{kind:"randomUuid"}` for UUID.
+Removing the native property selects DROP DEFAULT. Literal NULL is admitted only
+for a nullable Field and remains an explicit declaration. Identity/generated
+columns cannot acquire a default. Arbitrary SQL/functions, casts, sequences,
+callbacks, session principals and row expressions MUST refuse. A literal MUST
+satisfy the logical domain, known facets and lossless native capacity before DDL
+emission. Volatile defaults on enumerated/ranged logical targets MUST refuse in
+this first subset; unchanged native CHECK/unique/FK constraints still apply to
+future writes and may reject generated values.
+
+G03 literal admission MUST reject NUL and unpaired UTF-16 surrogates before UTF-8
+encoding, including nested string-bearing carriers. Supplementary Unicode MUST
+survive unchanged. Each decoded literal payload is limited to 1,048,576 UTF-8
+bytes, measured as the sum of UTF-8 bytes of its decoded string-bearing carrier
+values, excluding wrapper keys and JSON escaping. Numeric tokens, dates,
+timestamps and UUIDs count their authored carrier text; binaryHex and bits128Hex
+count authored hexadecimal text, not decoded binary bytes. Boolean and NULL
+carriers contribute zero string bytes. Every literal occurrence is measured
+independently after surrogate rejection. The rendered default expression is
+independently limited to 1,048,576
+UTF-8 bytes; the complete ALTER statement is limited to 1,049,600 UTF-8 bytes.
+Escaping expansion counts. Exact numeric admission MUST bound coefficient/scale
+before allocation and prove the declared native integer or numeric(p,s) capacity.
+These new limits MUST NOT alter historical profile admission or rendered bytes.
+
+#### DDL, phase and source publication
+
+Deployment and G03 migration MUST share one authoritative typed default renderer
+for literal, transaction timestamp and qualified UUID expressions. Native
+expectations MUST derive from that same declaration. No implementation may strip
+or replace fragments of an opaque column-definition string to recover meaning.
+The extraction MUST retain byte-identical historical deployment/migration output.
+Functions, types and collations MUST remain explicitly qualified where applicable;
+`CURRENT_TIMESTAMP` retains PostgreSQL transaction-start semantics.
+
+Plan 0.5 retains the closed 0.4 plan members with the new versions. The execution
+profile MUST be exactly `{version:"umf.table-migration-execution/0.4",
+progressRelation:"umf_lifecycle_progress",ownerOnly:true}`. It MUST contain one
+`default-change` phase with `transaction:"required"` and exactly one target DDL
+step. That step has `kind:"table"`, `phaseOperation:"change-default"`, exact
+`phaseTarget:{table,field:TableRef}`, and `operation:"set-default"` or
+`operation:"drop-default"` as derived from the selected successor declaration.
+SET covers both first installation and replacement. No UPDATE, backfill, seed,
+concurrent operation or separate target phase is permitted.
+
+Even an absent-default to literal-NULL transition or equivalent numeric spelling
+MUST emit its finite DDL and required journal phase. An equal native before/after
+witness MUST NOT authorize skipping, completing or publishing that transition.
+Before effects, the host MUST verify the exact source-recompiled plan, approved
+predecessor and selected target under native writer exclusion. DDL, native prefix
+verification and authenticated phase progress MUST commit in one transaction.
+Progress MUST bind the approved source/plan identity, ordered step and phase,
+including when before/after catalog expressions coincide.
+
+Known abort permits retry after revalidation. An uncertain COMMIT requires
+observation of exact authenticated progress and its native postcondition before
+any redispatch. Native state alone is insufficient. A committed phase MUST NOT
+be dispatched again. Final source/history/reference/grant publication remains
+atomic and ingress stays fenced until native and source correspondence agree.
+Existing rows and existing NULLs MUST remain unchanged. Reversing a committed
+default affects later omitted writes only and cannot undo intervening row values.
+
+A generated parameter remains explicit when declared. A native default does not
+make it implicitly omittable. Both sources' complete command admission applies;
+removing a required target's default while a retained create omits that target
+MUST refuse. G03 MUST NOT repair command declarations implicitly.
+
+Unsupported composition/normalization returns located
+`TABLE_MIGRATION_OPTIONS` or `TABLE_MIGRATION_UNSUPPORTED`; invalid literal/domain
+or capacity retains the existing located table diagnostic. No partial plan is
+returned. Host profile/phase/target/approval/progress mismatch refuses before
+SQL. Native errors retain bounded SQLSTATE/identifiers without row DETAIL.
+
+For example, an optional integer column may change from absent native default to
+`{kind:"literal",value:{integerToken:"5"}}`. Historical NULLs remain NULL;
+a command omitting the column receives 5, explicit NULL remains NULL, and an
+explicit 9 remains 9. Replacing that declaration with a literal NULL still
+requires the reviewed, committed phase even if its catalog matches no default.

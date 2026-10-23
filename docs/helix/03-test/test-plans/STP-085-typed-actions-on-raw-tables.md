@@ -11,6 +11,8 @@ ddx:
       kind: informed_by
     - id: TD-085
       kind: informed_by
+    - id: SD-007
+      kind: informed_by
 ---
 
 # STP-085: Invoke typed actions on raw tables
@@ -277,3 +279,45 @@ Release gates include required CI, reviewed actual merge/source equivalence,
 immutable packages/mirrors/licenses, and two independent fresh published-download
 comparisons plus the packaged network-denied offline probe. Managed/Praxis
 acceptance and MIG-G03–G11 are separate gates, never inferred from local passes.
+
+## G03 existing-column future-default acceptance
+
+CONTRACT-081 selects the exact successor surface; SD-007 and TD-085 govern
+ownership and integration. The following allocations are planned tests, not
+executed G03 evidence. Existing G01/G02 and PostgreSQL feasibility observations
+retain their narrower scope.
+
+| Stable criterion / layer | Planned test and source citation | Required observation |
+| --- | --- | --- |
+| US-051-AC12/16, portable | `tests/lifecycle/g03-defaults.test.ts`; `@covers US-051-AC12`, `@covers US-051-AC16` | SET/replace/DROP for one existing nullable/required target; exact version and marker consumption; all other source meaning unchanged; coupled missing-only logical/native defaults; both sources independently compile; invalid required-create omission refuses. |
+| US-051-AC12/16, literal admission | Same suite and `tests/binding/table-migration.test.ts`; same citations | NULL versus absence, exact numeric capacity/refinements, unsupported volatile domain, NUL/unpaired surrogate and decoded/rendered UTF-8 boundary controls; supplementary Unicode and escaping preserved; no partial plan or native effect on refusal. |
+| US-051-AC15/16, source/phase authority | Same suite plus host phase tests; `@covers US-051-AC15`, `@covers US-051-AC16` | Absent-to-NULL and equivalent numeric spelling still produce one required DDL/progress phase; equal native witnesses cannot skip or publish; source/default/marker/step/phase/approval/progress tampering refuses. |
+| US-051-AC12/16, compiler parity | Shared new corpus through Bun, real Chromium and installed `umf_codegen`; same citations | Deterministic discovery, plan, verification and refusals; old two-member discovery and profiles 0.1–0.4 retain frozen outputs; opt-in unsupported Rust successor refuses before effects. |
+| US-051-AC12/15/16, installed native | `tests/lifecycle/g03-defaults-native.py`, fixture producer and independent reviewer oracle; cite all three | PostgreSQL18.6 nullable and required SET/replace/DROP; unchanged complete historical row snapshots including NULLs; distinct omitted/explicit-NULL/explicit-value commands and raw writes; logical validation does not insert defaults; no UPDATE dispatch or row rewrite. |
+| US-051-AC15, volatile/native boundary | Same installed suite; `@covers US-051-AC15` | UUID values use the qualified generator; timestamps equal transaction start across later statements; malicious search_path cannot replace builtins; unchanged RLS/constraints/ACLs remain effective. |
+| US-051-AC15, real recovery | Same suite with two-session writer barriers and driver fault injection; `@covers US-051-AC15` | Native writer exclusion, rollback before commit, lost COMMIT response with committed progress and no redispatch, same-catalog transition with/without authenticated progress, publication fault/resume and retained fencing. |
+
+Use fabricated commerce integer/decimal targets, Person nullable values, an
+audit transaction timestamp and UUID identifiers. Manually specify expected
+historical and new row values. Include an empty table and multiple differing old
+rows. Compare complete values, row identity/version witnesses and relation-file
+identity where applicable; catalog equality alone cannot prove nonmutation or
+source publication. Keep exact source distinctions for absent versus literal
+NULL and numeric spellings. Command-free-only coverage cannot replace positive
+omitted/explicit command cases.
+
+Planned portable command: `bun test tests/lifecycle/g03-defaults.test.ts`.
+The native runner must take an explicit isolated target, frozen fixtures and
+report path; run it through a fresh installed wheel cohort and independently
+repeat its assertions. Exercise both host-neutral and Psycopg routes, including
+sync/async where supported. Add default-only replay to the frozen historical
+corpus before extracting the shared renderer, so a byte change fails its gate.
+
+Release acceptance requires the actual final source workflow inventory,
+source/merge tree correspondence, source/SDK/embedded/RECORD custody, full locked
+platform closure and separate optional-parser license custody. Independently
+review the exact cohort and repeat fresh published-download/offline tests.
+G02 candidate artifacts, guessed dependency counts, another package's release
+version and local native feasibility do not satisfy these G03 gates. Managed
+consumer, other backends, G10/G11 command composition and Praxis changes remain
+outside this slice.
