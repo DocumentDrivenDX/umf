@@ -277,3 +277,70 @@ Both new hosted artifacts, their pre/post parity and test receipts, independent
 owner review, public release attachment and consumer public-extra qualification
 remain pending until their actual results are retained. No local SDK build was
 started for this decision, and no backend qualification follows from it.
+
+## Source-bound metamodel refresh and archive custody
+
+The source-bound generator completed against unchanged source
+`a4c6057bda65cfeda7ea4dde9d05bfdc02b36310`, using the official private
+output-root mode. Independent read/hash review accepted exactly the eleven
+declared outputs: the authored model digest stayed
+`1e406ee49b0c4c08b8eb996bb1fcb6e96fa8d6f4673f0877aa1800986b2dbbce`,
+and the nonmanifest outputs differed only in the exact compiler-provenance
+digest. The generated manifest now records 211 source entries, including the
+eleven single-set additions. Its source-bound compiler-closure SHA-256 is
+`f63bb4e9dbb8c094958d3ef50dad48f7ba30e047a5ebcac0a8ae402a27bed951`.
+The generated output manifest is
+`86d7c5215280429e3252b5d44880cb5ce3b7e80557bc5a095b22688893a79157`.
+After the exact reviewed copy, the coordinator observed the canonical
+metamodel self-check pass in 31.5 seconds using the source-bound cached
+compiler. This is source-generation evidence, not installed SDK qualification.
+
+The action resource inventory remains nine files. Its refreshed manifest is
+`857cb47fd75b274631c9008c61d1200ec0141b1d6da972248ba7b4a516967660`;
+independent hashing confirms every declared resource matches its canonical
+source. Five resource digests changed with the reviewed compiler-provenance
+refresh. Earlier evidence bound to manifest `13c3fb58b94eefdb319637eb15e80d20501d3538ab7b6c152e12a1b481156dff`
+remains historical evidence for that exact artifact and does not qualify these
+new bytes. Earlier bounded preparation attempts ended before generation;
+the successful staged generation and later canonical check are separate
+observations, not retroactive passes for those attempts.
+
+The coordinator independently compared the retained c71 source archive to an
+exact targeted snapshot of
+`c71be8f4117a3f8999e88760482e3c8b80ef982c`, supplying the retained direct
+wheel's exact METADATA bytes as the expected PKG-INFO. All 520 archive files
+matched the closed source inventory and bytes; the canonical inventory digest
+is `e283366d78ab725f952091090faa4637809f7862bd706777899fe540d2b0d0c1`.
+This comparison executed no archive code or build. It establishes a positive
+control for the custody checker on that historical source cohort, not a new
+installed pass for the earlier failed hosted attempt.
+
+The current archive gate must require the complete reviewed build-input
+inventory before rebuilding and recheck it afterward. The direct and rebuilt
+wheel METADATA and WHEEL bytes must match exactly, alongside the non-native
+payload; native bytes remain separately measured and separately qualified.
+The macOS repair must derive a truthful thin arm64 tag from the explicit Rust
+target and inspected Mach-O minimum OS while preserving the unstripped
+safeguard. Actual hosted direct/rebuilt installed qualification, independent
+owner review, public artifact attachment and Arras default public-extra proof
+remain pending. No backend or broader platform support follows from these
+source checks.
+
+The integrated source review is clear for the next hosted qualification run.
+The reviewer independently read and hashed the Mac target/inspector, file-relative
+build-hook loader, source-custody helper and its pre/post checks, exact
+METADATA/WHEEL comparison, and workflow's two independent installed gates.
+The reviewed main verifier SHA-256 is
+`e6e658d4bd4050ecb37923641cbc0db94936f2bb1c23d888d188463754beb38c`;
+its pinned sdist helper is
+`bf2c29b2bbdf2699b016566f2583288885014c99a4d4caf80095135b363a19d5`
+and native-platform helper is
+`5856eb375d176af7671ad22981d983a14cec24663e3a8bc466446b433c2cd7b1`.
+The implementation owner reports 47 focused controls passing, including the
+retained real-helper tamper/inventory/path/resource controls and orchestration
+controls, with Ruff, format, workflow YAML and diff checks passing. These are
+owner-executed checks; the independent reviewer did not rerun them or build
+native artifacts. Final source inventory and Rust boundary checks remain
+coordinator gates. Current hosted direct/rebuilt artifacts and their actual
+installed test receipts are still pending; source clearance supplies no
+installed, public-release or backend qualification.

@@ -195,16 +195,16 @@
   "capture": {
     "inventoryFormat": "0.2",
     "inventoryScript": "scripts/rust-inventory.py",
-    "sourceCohortSha256": "f7cb8b223771534d70ecd397968f995b76e826aa3e9f08a649986ce3ef795700",
+    "sourceCohortSha256": "6ee0e0926e8c7acac3b6c16433763746e6de7372cb35f8e2928d577ca65f7b8a",
     "typescriptApi": "5.9.3"
   },
   "counts": {
     "activeScriptFiles": 339,
-    "algorithmSymbols": 10247,
+    "algorithmSymbols": 10297,
     "pythonModules": 105,
     "rustBuildInputs": 76,
     "rustModules": 125,
-    "scriptFiles": 2937,
+    "scriptFiles": 2941,
     "sourceModules": 576,
     "typescriptModules": 471
   },
@@ -8618,6 +8618,23 @@
     {
       "activationEvidence": [],
       "active": false,
+      "algorithmSymbols": [
+        "NativePlatformError",
+        "_version",
+        "inspect_macho_bytes",
+        "inspect_macho_file",
+        "macos_target"
+      ],
+      "bytes": 4931,
+      "disposition": "unreferenced-script-source",
+      "language": "py",
+      "migrationObligation": "No current package/workflow/import activation edge discovered",
+      "path": "python/_native_platform.py",
+      "sha256": "5856eb375d176af7671ad22981d983a14cec24663e3a8bc466446b433c2cd7b1"
+    },
+    {
+      "activationEvidence": [],
+      "active": false,
       "algorithmSymbols": [],
       "bytes": 1145,
       "disposition": "unreferenced-script-source",
@@ -8638,12 +8655,12 @@
         "finalize",
         "initialize"
       ],
-      "bytes": 10074,
+      "bytes": 11980,
       "disposition": "unreferenced-script-source",
       "language": "py",
       "migrationObligation": "No current package/workflow/import activation edge discovered",
       "path": "python/hatch_build.py",
-      "sha256": "f9a29dcf724294ba0d3e147b8f24fec559831b3eba776cab680fed667711d12c"
+      "sha256": "e9e100f4c3b5badc8a04f00a6dae3471b022a5edf778eecf83a23adba009a330"
     },
     {
       "activationEvidence": [],
@@ -8739,7 +8756,7 @@
       "language": "py",
       "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
       "path": "python/src/umf/action_runtime.py",
-      "sha256": "a6e5d9999669b311a1ce113f8011f4b6be0ad9cca2cac1679f36a493ce013aa2"
+      "sha256": "6ba9e8f7480b7d2c691af088dc44a1d82efb0b0c4b9e38700eec91a6abfebb89"
     },
     {
       "activationEvidence": [],
@@ -9032,12 +9049,12 @@
         "test_public_dispatch_wrappers_reject_non_engines",
         "test_symlink_to_identical_official_bytes_is_still_refused"
       ],
-      "bytes": 17130,
+      "bytes": 17534,
       "disposition": "test-oracle-fixture-algorithm",
       "language": "py",
       "migrationObligation": "Active only where activation evidence says so; test/oracle logic is evidence and not an implementation port by default",
       "path": "python/tests/test_action_runtime_resources.py",
-      "sha256": "729c9fa17f0e253f8b93a99cd76652a440a8f069806c7f184c00e0ff39319e59"
+      "sha256": "d2b9bfdc9199fb50a4c7169bbaf55a8e26a9808a9c0466230263961a08990e1a"
     },
     {
       "activationEvidence": [
@@ -9076,32 +9093,37 @@
       "algorithmSymbols": [
         "_finalizer_source",
         "_install_wheel",
+        "_macho",
+        "_native_platform_helper",
         "_rewrite_installed_record",
         "_verifier",
         "_wheel",
         "_write_finalizer_inputs",
         "test_exact_wheel_payload_and_record_are_accepted",
+        "test_hatch_hook_loads_its_native_inspector_outside_project_directory",
         "test_installed_wheel_payload_and_record_match_the_exact_archive",
         "test_installed_wheel_verification_rejects_changed_or_escaped_files",
         "test_installed_workflow_disables_bytecode_and_hashes_verifier_source",
         "test_macos_arm64_tag_is_accepted_only_for_the_arm64_cohort",
+        "test_macos_artifact_rejects_fat_wrong_cpu_or_unqualified_minimum",
+        "test_native_platform_target_is_explicit_and_rejects_unknown_hosts",
         "test_python_support_tests_install_the_hatch_build_backend",
         "test_sdist_extraction_rejects_parent_traversal",
         "test_sdist_extraction_selects_the_single_top_level_project_with_nested_projects",
         "test_sdist_licenses_have_one_declared_inclusion_route",
         "test_sdist_rebuild_accepts_distinct_native_bytes_without_claiming_identity",
-        "test_sdist_rebuild_rejects_source_version_or_tag_drift",
+        "test_sdist_rebuild_rejects_source_version_tag_or_metadata_drift",
         "test_source_inventory_contains_all_nine_bound_runtime_resources",
         "test_wheel_verifier_rejects_unexpected_payload_or_claim",
         "test_workflow_finalizer_requires_positive_installed_proof_for_both_wheels",
         "test_workflow_independently_installs_and_qualifies_both_native_artifacts"
       ],
-      "bytes": 21257,
+      "bytes": 26953,
       "disposition": "unreferenced-test-source",
       "language": "py",
       "migrationObligation": "Retained test/evidence source with no discovered current activation edge",
       "path": "python/tests/test_distribution_artifact.py",
-      "sha256": "23ac5a2b15b278360d34290cf102afa8cf7c8ae766a22b2f9dd5da402667607b"
+      "sha256": "2439cedf82181136d4e901a085ca988e1e7cab5776a07043dd8131975fda50bd"
     },
     {
       "activationEvidence": [],
@@ -9117,6 +9139,51 @@
       "migrationObligation": "Retained test/evidence source with no discovered current activation edge",
       "path": "python/tests/test_domain_packs.py",
       "sha256": "5bdc0fbbbf2639ea0f40611299ac1d4bd6b24044a415c69cf72f7b4bf8433591"
+    },
+    {
+      "activationEvidence": [],
+      "active": false,
+      "algorithmSymbols": [
+        "_set_up_rebuild",
+        "_verifier",
+        "fake_build",
+        "fake_build",
+        "test_source_map_is_rechecked_after_build_before_retaining_wheel",
+        "test_stable_source_map_is_returned_only_after_both_checks",
+        "test_wrong_wheel_metadata_stops_before_build_and_retains_no_wheel",
+        "verify_inputs"
+      ],
+      "bytes": 4848,
+      "disposition": "unreferenced-test-source",
+      "language": "py",
+      "migrationObligation": "Retained test/evidence source with no discovered current activation edge",
+      "path": "python/tests/test_python_artifact_custody.py",
+      "sha256": "2a198bbfeec408f48349d16fcc529354705624168efe03cbc8bc65cabc1beb11"
+    },
+    {
+      "activationEvidence": [],
+      "active": false,
+      "algorithmSymbols": [
+        "_fixture",
+        "_hook",
+        "_make_archive",
+        "_make_checkout",
+        "_target_map",
+        "_write",
+        "forbidden",
+        "test_action_resource_manifest_and_package_copies_are_exact",
+        "test_archive_symlink_and_pkg_info_drift_refuse",
+        "test_exact_source_and_archive_inventory_returns_canonical_manifest",
+        "test_missing_required_source_and_unmapped_archive_extra_refuse",
+        "test_reverification_detects_source_drift_after_initial_manifest",
+        "test_source_mutations_refuse_byte_parity_before_any_build"
+      ],
+      "bytes": 12519,
+      "disposition": "unreferenced-test-source",
+      "language": "py",
+      "migrationObligation": "Retained test/evidence source with no discovered current activation edge",
+      "path": "python/tests/test_python_sdist.py",
+      "sha256": "030fc48f315eaaccbbaab943092119d2dd9de2d1605d5d8d0d49287a70f1a77b"
     },
     {
       "activationEvidence": [],
@@ -12474,7 +12541,7 @@
       "language": "py",
       "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
       "path": "python/umf_access/src/umf_access/generated_core.py",
-      "sha256": "85a6c567012677d92ffdf511f280317c9a148dd763cd3f956e113b0e76901471"
+      "sha256": "3ff8d84680d3585212379cd603fe6bc232f388b5ea2df8bc04885f6807f9f466"
     },
     {
       "activationEvidence": [],
@@ -48506,6 +48573,33 @@
       "activationEvidence": [],
       "active": false,
       "algorithmSymbols": [
+        "SdistInputError",
+        "_add",
+        "_archive_files",
+        "_canonical_manifest",
+        "_fail",
+        "_literal_assignments",
+        "_open_regular",
+        "_read_small",
+        "_relative",
+        "_safe_root",
+        "_sha_file",
+        "_source_inventory",
+        "_validate_pkg_info",
+        "_walk_source_tree",
+        "verify_sdist_inputs"
+      ],
+      "bytes": 17743,
+      "disposition": "unreferenced-script-source",
+      "language": "py",
+      "migrationObligation": "No current package/workflow/import activation edge discovered",
+      "path": "tools/_python_sdist.py",
+      "sha256": "bf2c29b2bbdf2699b016566f2583288885014c99a4d4caf80095135b363a19d5"
+    },
+    {
+      "activationEvidence": [],
+      "active": false,
+      "algorithmSymbols": [
         "encoded",
         "sha"
       ],
@@ -53347,23 +53441,27 @@
         "_check_record",
         "_compare_wheel_package_sources",
         "_extract_sdist",
+        "_inspect_macos_native",
+        "_native_platform_helper",
         "_platform_matches",
         "_rebuild_sdist_wheel",
         "_record_entries",
+        "_sdist_helper",
         "_sha256",
         "_source_payloads",
         "_validate_installed_wheel",
         "_validate_wheel",
+        "_wheel_metadata_bytes",
         "_wheel_package_bytes",
         "main",
         "verify"
       ],
-      "bytes": 30961,
+      "bytes": 35998,
       "disposition": "active-host-tooling-algorithm",
       "language": "py",
       "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
       "path": "tools/verify_python_artifacts.py",
-      "sha256": "6f1ab3ea110ab4f45321e578cfac224da9e05b6e79f869a822bf5f0547beaee1"
+      "sha256": "e6e658d4bd4050ecb37923641cbc0db94936f2bb1c23d888d188463754beb38c"
     }
   ],
   "sourceModules": [
@@ -53474,7 +53572,7 @@
         "prepare_single_set_action"
       ],
       "resolvedInternalImports": [],
-      "sha256": "a6e5d9999669b311a1ce113f8011f4b6be0ad9cca2cac1679f36a493ce013aa2"
+      "sha256": "6ba9e8f7480b7d2c691af088dc44a1d82efb0b0c4b9e38700eec91a6abfebb89"
     },
     {
       "bytes": 272,
@@ -54457,7 +54555,7 @@
       "path": "python/umf_access/src/umf_access/generated_core.py",
       "publicExports": [],
       "resolvedInternalImports": [],
-      "sha256": "85a6c567012677d92ffdf511f280317c9a148dd763cd3f956e113b0e76901471"
+      "sha256": "3ff8d84680d3585212379cd603fe6bc232f388b5ea2df8bc04885f6807f9f466"
     },
     {
       "bytes": 1486,
@@ -67622,7 +67720,7 @@
         "spec/metamodel/generated/core-constraints.json",
         "spec/metamodel/generated/domain-policy.json"
       ],
-      "sha256": "afd43ffe02ffb64973cf95521991c142c54bb07151d68f018066a9b46108b911"
+      "sha256": "ce2f1ea302e5f9f37973cf4db48871dbd0136224c2d19316cf91b416093220ed"
     },
     {
       "bytes": 284515,
@@ -67643,7 +67741,7 @@
       "resolvedImports": [
         "node_modules/ajv/dist/ajv.d.ts"
       ],
-      "sha256": "88e4252883b595782c01d6b63fd86e7a5ba8492aa4fec953a628e32a051bbbc4"
+      "sha256": "d1d6614073e82f4981da0fbf6caca44ad6a8bf91a491adef1fe53ad822d36dee"
     },
     {
       "bytes": 31768,

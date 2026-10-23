@@ -7,8 +7,10 @@ import argparse
 import base64
 import csv
 import hashlib
+import importlib.util
 import io
 import json
+import os
 import platform
 import re
 import subprocess
@@ -48,10 +50,72 @@ EXPECTED_RUNTIME_SOURCES = {
     "tablesPackage.json": "spec/extensions/tables/package.json",
 }
 SHA256_RE = re.compile(r"[0-9a-f]{64}\Z")
+NATIVE_PLATFORM_HELPER_SHA256 = (
+    "5856eb375d176af7671ad22981d983a14cec24663e3a8bc466446b433c2cd7b1"
+)
+SDIST_HELPER_SHA256 = "bf2c29b2bbdf2699b016566f2583288885014c99a4d4caf80095135b363a19d5"
 
 
 def _sha256(payload: bytes) -> str:
     return hashlib.sha256(payload).hexdigest()
+
+
+def _native_platform_helper() -> tuple[Any, Path]:
+    path = Path(__file__).resolve().parents[1] / "python/_native_platform.py"
+    try:
+        payload = path.read_bytes()
+    except OSError as error:
+        raise ValueError("Pinned native-platform inspector is unavailable") from error
+    if _sha256(payload) != NATIVE_PLATFORM_HELPER_SHA256:
+        raise ValueError("Native-platform inspector differs from its source pin")
+    spec = importlib.util.spec_from_file_location(
+        "umf_qualification_native_platform", path
+    )
+    if spec is None or spec.loader is None:
+        raise ValueError("Pinned native-platform inspector cannot be loaded")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    if _sha256(path.read_bytes()) != NATIVE_PLATFORM_HELPER_SHA256:
+        raise ValueError("Native-platform inspector changed during verification")
+    return module, path
+
+
+def _sdist_helper(repository: Path) -> tuple[Any, Path]:
+    path = repository / "tools/_python_sdist.py"
+    try:
+        payload = path.read_bytes()
+    except OSError as error:
+        raise ValueError("Pinned sdist input verifier is unavailable") from error
+    if _sha256(payload) != SDIST_HELPER_SHA256:
+        raise ValueError("Sdist input verifier differs from its source pin")
+    spec = importlib.util.spec_from_file_location(
+        "umf_qualification_python_sdist", path
+    )
+    if spec is None or spec.loader is None:
+        raise ValueError("Pinned sdist input verifier cannot be loaded")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    if _sha256(path.read_bytes()) != SDIST_HELPER_SHA256:
+        raise ValueError("Sdist input verifier changed during verification")
+    return module, path
+
+
+def _wheel_metadata_bytes(wheel_path: Path) -> bytes:
+    with zipfile.ZipFile(wheel_path) as wheel:
+        names = [
+            name for name in wheel.namelist() if name.endswith(".dist-info/METADATA")
+        ]
+        if len(names) != 1:
+            raise ValueError("Wheel must contain exactly one metadata file")
+        return wheel.read(names[0])
+
+
+def _inspect_macos_native(payload: bytes) -> dict[str, Any]:
+    module, path = _native_platform_helper()
+    result = module.inspect_macho_bytes(payload, "arm64")
+    if _sha256(path.read_bytes()) != NATIVE_PLATFORM_HELPER_SHA256:
+        raise ValueError("Native-platform inspector changed during verification")
+    return result
 
 
 def _source_payloads(repository: Path) -> tuple[dict[str, bytes], dict[str, str]]:
@@ -359,7 +423,7 @@ def _platform_matches(tag_platform: str, expected_platform: str) -> bool:
     if expected_platform == "linux_x86_64":
         return tag_platform == expected_platform
     if expected_platform == "macos_arm64":
-        return tag_platform.startswith("macosx_") and tag_platform.endswith("_arm64")
+        return tag_platform == "macosx_11_0_arm64"
     return False
 
 
@@ -425,8 +489,14 @@ def _validate_wheel(
         )
         if filenames != required_archive_files:
             raise ValueError("Wheel contains an unexpected top-level or metadata file")
-        if not wheel.read(NATIVE_MEMBER):
+        native_bytes = wheel.read(NATIVE_MEMBER)
+        if not native_bytes:
             raise ValueError("Wheel native extension is empty")
+        native_platform = (
+            _inspect_macos_native(native_bytes)
+            if expected_platform == "macos_arm64"
+            else None
+        )
         for name, payload in expected_payloads.items():
             if wheel.read(name) != payload:
                 raise ValueError(
@@ -442,7 +512,8 @@ def _validate_wheel(
             "version": expected_version,
             "tag": tag,
             "package_file_count": len(package_files),
-            "native_sha256": _sha256(wheel.read(NATIVE_MEMBER)),
+            "native_sha256": _sha256(native_bytes),
+            "native_platform": native_platform,
         }
 
 
@@ -518,15 +589,33 @@ def _extract_sdist(
     return roots[0]
 
 
-def _rebuild_sdist_wheel(sdist: Path, output_dir: Path, expected_version: str) -> Path:
+def _rebuild_sdist_wheel(
+    sdist: Path,
+    output_dir: Path,
+    expected_version: str,
+    repository: Path,
+    expected_pkg_info: bytes,
+) -> tuple[Path, dict[str, Any]]:
     output_dir.mkdir(parents=True, exist_ok=True)
     if any(output_dir.iterdir()):
         raise ValueError("Retained sdist-rebuild wheel directory must be empty")
     with tempfile.TemporaryDirectory(prefix="umf-action-sdist-") as temporary:
         temp_root = Path(temporary)
         source_root = _extract_sdist(sdist, temp_root / "source", expected_version)
+        helper, helper_path = _sdist_helper(repository)
+        source_manifest = helper.verify_sdist_inputs(
+            source_root,
+            repository,
+            expected_version=expected_version,
+            expected_pkg_info=expected_pkg_info,
+        )
+        if _sha256(helper_path.read_bytes()) != SDIST_HELPER_SHA256:
+            raise ValueError("Sdist input verifier changed before the rebuild")
         rebuilt = temp_root / "wheel"
         rebuilt.mkdir()
+        build_env = dict(os.environ)
+        build_env["CARGO_TARGET_DIR"] = str(temp_root / "cargo-target")
+        build_env["PYTHONDONTWRITEBYTECODE"] = "1"
         subprocess.run(
             [
                 sys.executable,
@@ -540,18 +629,31 @@ def _rebuild_sdist_wheel(sdist: Path, output_dir: Path, expected_version: str) -
             ],
             check=True,
             timeout=1800,
+            env=build_env,
         )
         wheels = list(rebuilt.glob("*.whl"))
         if len(wheels) != 1:
             raise ValueError("Source archive did not rebuild to exactly one wheel")
+        helper_after, helper_path_after = _sdist_helper(repository)
+        source_manifest_after = helper_after.verify_sdist_inputs(
+            source_root,
+            repository,
+            expected_version=expected_version,
+            expected_pkg_info=expected_pkg_info,
+        )
+        if (
+            source_manifest_after != source_manifest
+            or _sha256(helper_path_after.read_bytes()) != SDIST_HELPER_SHA256
+        ):
+            raise ValueError("Sdist build inputs changed during the rebuild")
         target = output_dir / wheels[0].name
         target.write_bytes(wheels[0].read_bytes())
-        return target
+        return target, source_manifest
 
 
 def _wheel_package_bytes(
     path: Path,
-) -> tuple[dict[str, bytes], str, str, str]:
+) -> tuple[dict[str, bytes], str, str, str, bytes, bytes]:
     with zipfile.ZipFile(path) as archive:
         names = [name for name in archive.namelist() if not name.endswith("/")]
         package = {
@@ -576,26 +678,44 @@ def _wheel_package_bytes(
             metadata.get("Version", ""),
             tag,
             _sha256(archive.read(NATIVE_MEMBER)),
+            archive.read(f"{dist_info}/METADATA"),
+            archive.read(f"{dist_info}/WHEEL"),
         )
 
 
 def _compare_wheel_package_sources(direct: Path, rebuilt: Path) -> dict[str, Any]:
-    direct_payload, direct_version, direct_tag, direct_native = _wheel_package_bytes(
-        direct
-    )
-    rebuilt_payload, rebuilt_version, rebuilt_tag, rebuilt_native = (
-        _wheel_package_bytes(rebuilt)
-    )
+    (
+        direct_payload,
+        direct_version,
+        direct_tag,
+        direct_native,
+        direct_metadata,
+        direct_wheel_metadata,
+    ) = _wheel_package_bytes(direct)
+    (
+        rebuilt_payload,
+        rebuilt_version,
+        rebuilt_tag,
+        rebuilt_native,
+        rebuilt_metadata,
+        rebuilt_wheel_metadata,
+    ) = _wheel_package_bytes(rebuilt)
     if direct_payload != rebuilt_payload:
         raise ValueError("Source archive rebuild changed non-native package payload")
     if direct_version != rebuilt_version:
         raise ValueError("Source archive rebuild changed the distribution version")
     if direct_tag != rebuilt_tag:
         raise ValueError("Source archive rebuild changed the platform tag")
+    if direct_metadata != rebuilt_metadata:
+        raise ValueError("Source archive rebuild changed wheel METADATA bytes")
+    if direct_wheel_metadata != rebuilt_wheel_metadata:
+        raise ValueError("Source archive rebuild changed wheel WHEEL bytes")
     return {
         "non_native_package_payload_matches": True,
         "version_matches": True,
         "tag_matches": True,
+        "metadata_byte_identity": True,
+        "wheel_byte_identity": True,
         "native_byte_identity": direct_native == rebuilt_native,
     }
 
@@ -662,6 +782,7 @@ def verify(
         ),
         "action_runtime_resource_count": len(resource_hashes),
         "action_runtime_resource_sha256": resource_hashes,
+        "native_platform_helper_sha256": NATIVE_PLATFORM_HELPER_SHA256,
     }
     if sdist_path is not None:
         if rebuilt_wheel_directory is None:
@@ -672,8 +793,12 @@ def verify(
             "filename": sdist_path.name,
             "sha256": _sha256(sdist_path.read_bytes()),
         }
-        rebuilt = _rebuild_sdist_wheel(
-            sdist_path, rebuilt_wheel_directory, distribution_version
+        rebuilt, source_manifest = _rebuild_sdist_wheel(
+            sdist_path,
+            rebuilt_wheel_directory,
+            distribution_version,
+            repository,
+            _wheel_metadata_bytes(wheel_path),
         )
         rebuilt_info = _validate_wheel(
             rebuilt,
@@ -685,6 +810,8 @@ def verify(
         source_parity = _compare_wheel_package_sources(wheel_path, rebuilt)
         receipt["artifacts"]["sdist_rebuilt"] = rebuilt_info
         receipt["sdist_rebuild"] = source_parity
+        receipt["sdist_build_inputs"] = source_manifest
+        receipt["sdist_helper_sha256"] = SDIST_HELPER_SHA256
     return receipt
 
 

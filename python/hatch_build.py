@@ -1,14 +1,29 @@
 # SPDX-License-Identifier: MIT OR Apache-2.0
 """Include only the current generated UMF authority in the Python wheel."""
 
+import importlib.util
 import os
+import platform
 import shutil
 import subprocess
+import sys
 import sysconfig
 import tempfile
 from pathlib import Path
 
 from hatchling.builders.hooks.plugin.interface import BuildHookInterface
+
+_NATIVE_PLATFORM_PATH = Path(__file__).with_name("_native_platform.py")
+_NATIVE_PLATFORM_SPEC = importlib.util.spec_from_file_location(
+    "umf_hatch_native_platform", _NATIVE_PLATFORM_PATH
+)
+if _NATIVE_PLATFORM_SPEC is None or _NATIVE_PLATFORM_SPEC.loader is None:
+    raise RuntimeError("The native platform inspector cannot be loaded")
+_NATIVE_PLATFORM = importlib.util.module_from_spec(_NATIVE_PLATFORM_SPEC)
+_NATIVE_PLATFORM_SPEC.loader.exec_module(_NATIVE_PLATFORM)
+MACOS_DEPLOYMENT_TARGET = _NATIVE_PLATFORM.MACOS_DEPLOYMENT_TARGET
+inspect_macho_file = _NATIVE_PLATFORM.inspect_macho_file
+macos_target = _NATIVE_PLATFORM.macos_target
 
 ACTION_RUNTIME_RESOURCES = (
     ("coreSchema.json", "spec/core/schema.json"),
@@ -86,7 +101,10 @@ def add_sdist_source_closure(repository: Path, build_data: dict) -> None:
             )
             for filename in sorted(files):
                 source = current / filename
-                if source.is_symlink() or source.suffix.lower() in SDIST_EXCLUDED_SUFFIXES:
+                if (
+                    source.is_symlink()
+                    or source.suffix.lower() in SDIST_EXCLUDED_SUFFIXES
+                ):
                     continue
                 if filename == ".DS_Store":
                     continue
@@ -100,7 +118,9 @@ def add_action_runtime_resources(
     """Carry the fixed resources into a wheel or rebuildable source archive."""
     manifest = package_root / "src/umf/action_runtime_resource_manifest.json"
     if not manifest.is_file() or manifest.is_symlink():
-        raise FileNotFoundError("The pinned action runtime resource inventory is missing")
+        raise FileNotFoundError(
+            "The pinned action runtime resource inventory is missing"
+        )
     manifest_target = (
         "umf/action_runtime_resource_manifest.json"
         if wheel
@@ -157,7 +177,11 @@ def add_wheel_action_runtime_package_copies(
 class CustomBuildHook(BuildHookInterface):
     def initialize(self, version, build_data):
         package_root = Path(self.root)
-        repository = package_root if (package_root / "spec/core").is_dir() else package_root.parent
+        repository = (
+            package_root
+            if (package_root / "spec/core").is_dir()
+            else package_root.parent
+        )
         if self.target_name == "sdist":
             # Carry the pinned native source closure so an sdist can produce
             # this abi3 wheel without JavaScript runtimes or downloads.
@@ -189,11 +213,18 @@ class CustomBuildHook(BuildHookInterface):
         for name in CORE_RESOURCES:
             source = core / name
             if not source.is_file():
-                raise FileNotFoundError(f"Current generated UMF schema is missing: {name}")
+                raise FileNotFoundError(
+                    f"Current generated UMF schema is missing: {name}"
+                )
             build_data["force_include"][str(source)] = f"umf/spec/core/{name}"
 
         generated = repository / "spec/metamodel/generated"
-        required = ("core-constraints.json", "domain-policy.json", "python-shapes.json", "manifest.json")
+        required = (
+            "core-constraints.json",
+            "domain-policy.json",
+            "python-shapes.json",
+            "manifest.json",
+        )
         for name in required:
             if not (generated / name).is_file():
                 raise FileNotFoundError(f"Generated UMF resource is missing: {name}")
@@ -201,17 +232,43 @@ class CustomBuildHook(BuildHookInterface):
 
         for path, name in (
             (repository / "spec/extensions/domain-pack/schema.json", "domain-pack"),
-            (repository / "spec/extensions/dataset-source/schema.json", "dataset-source"),
+            (
+                repository / "spec/extensions/dataset-source/schema.json",
+                "dataset-source",
+            ),
         ):
             if not path.is_file():
                 raise FileNotFoundError(f"Canonical {name} schema is missing")
-            build_data["force_include"][str(path)] = f"umf/spec/extensions/{name}/schema.json"
+            build_data["force_include"][str(path)] = (
+                f"umf/spec/extensions/{name}/schema.json"
+            )
 
         cargo = os.environ.get("CARGO") or shutil.which("cargo")
         if not cargo:
-            raise RuntimeError("Building umf-core from source requires the pinned Rust 1.90 cargo toolchain")
+            raise RuntimeError(
+                "Building umf-core from source requires the pinned Rust 1.90 cargo toolchain"
+            )
         build_env = os.environ.copy()
-        if sysconfig.get_platform().startswith("macosx"):
+        cargo_command = [
+            cargo,
+            "build",
+            "--locked",
+            "--release",
+            "--manifest-path",
+            str(repository / "bindings/core/python/Cargo.toml"),
+            "-p",
+            "umf-core-python",
+        ]
+        native_target = None
+        platform_tag = sysconfig.get_platform().replace("-", "_").replace(".", "_")
+        expected_machine = None
+        if sys.platform == "darwin":
+            native_target, platform_tag, expected_machine = macos_target(
+                sys.platform, platform.machine().lower()
+            )
+            build_env.pop("CARGO_BUILD_TARGET", None)
+            build_env["MACOSX_DEPLOYMENT_TARGET"] = MACOS_DEPLOYMENT_TARGET
+            cargo_command.extend(["--target", native_target])
             # Apple ld 27 can emit a dyld-invalid LINKEDIT string-pool offset
             # when release symbols are stripped. Keep the actual extension
             # unstripped on macOS; qualification imports this artifact.
@@ -222,19 +279,30 @@ class CustomBuildHook(BuildHookInterface):
                     flags = f"{flags} {flag}".strip()
             build_env["RUSTFLAGS"] = flags
         subprocess.run(
-            [cargo, "build", "--locked", "--release", "--manifest-path", str(repository / "bindings/core/python/Cargo.toml"), "-p", "umf-core-python"],
+            cargo_command,
             cwd=repository,
             env=build_env,
             check=True,
         )
-        target = Path(os.environ.get("CARGO_TARGET_DIR", repository / "target")) / "release"
-        candidates = (target / "lib_rust_core.dylib", target / "lib_rust_core.so", target / "_rust_core.dll")
+        target = Path(os.environ.get("CARGO_TARGET_DIR", repository / "target"))
+        if native_target is not None:
+            target = target / native_target
+        target = target / "release"
+        candidates = (
+            target / "lib_rust_core.dylib",
+            target / "lib_rust_core.so",
+            target / "_rust_core.dll",
+        )
         extension = next((path for path in candidates if path.is_file()), None)
         if extension is None:
-            raise FileNotFoundError(f"Compiled Python Rust extension is missing under {target}")
+            raise FileNotFoundError(
+                f"Compiled Python Rust extension is missing under {target}"
+            )
         build_data["force_include"][str(extension)] = "umf/_rust_core.abi3.so"
-        # This is a native abi3 wheel, never a universal py3-none-any archive.
-        platform_tag = sysconfig.get_platform().replace("-", "_").replace(".", "_")
+        if expected_machine is not None:
+            inspect_macho_file(extension, expected_machine)
+        # The explicit platform tag is based on a verified thin Mach-O slice,
+        # never on a universal2 Python interpreter's sysconfig platform.
         build_data["pure_python"] = False
         build_data["infer_tag"] = False
         build_data["tag"] = f"cp311-abi3-{platform_tag}"

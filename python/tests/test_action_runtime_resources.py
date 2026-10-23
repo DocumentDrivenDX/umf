@@ -350,10 +350,22 @@ def test_public_dispatch_wrappers_reject_non_engines():
 
 
 def test_manifest_digest_matches_the_pinned_inventory():
-    payload = (
+    manifest_path = (
         _repository_root() / "python/src/umf/action_runtime_resource_manifest.json"
-    ).read_bytes()
+    )
+    payload = manifest_path.read_bytes()
     assert hashlib.sha256(payload).hexdigest() == action_runtime._MANIFEST_SHA256
+    manifest = json.loads(payload)
+    for name in (
+        "coreSchema",
+        "referenceSchema",
+        "packageSchema",
+        "constraints",
+        "domainPolicy",
+    ):
+        resource = manifest["resources"][name]
+        source = _repository_root() / resource["source"]
+        assert hashlib.sha256(source.read_bytes()).hexdigest() == resource["sha256"]
 
 
 def test_capability_probe_requires_exact_values_and_maps_only_old_unknown_operation():

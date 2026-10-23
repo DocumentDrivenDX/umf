@@ -12,11 +12,13 @@ import io
 import json
 import os
 import re
+import struct
 import subprocess
 import sys
 import tarfile
 import textwrap
 import tomllib
+import types
 import zipfile
 from pathlib import Path
 
@@ -32,6 +34,22 @@ def _verifier():
     return module
 
 
+def _macho(machine="arm64", minimum=(11, 0, 0), *, fat=False, include_version=True):
+    if fat:
+        return b"\xca\xfe\xba\xbe" + bytes(64)
+    cpu_type = {"arm64": 0x0100000C, "x86_64": 0x01000007}[machine]
+    commands = b""
+    command_count = 0
+    if include_version:
+        packed = (minimum[0] << 16) | (minimum[1] << 8) | minimum[2]
+        commands = struct.pack("<IIIIII", 0x32, 24, 1, packed, packed, 0)
+        command_count = 1
+    header = struct.pack(
+        "<IiiIIIII", 0xFEEDFACF, cpu_type, 0, 2, command_count, len(commands), 0, 0
+    )
+    return header + commands
+
+
 def _wheel(
     path,
     package,
@@ -39,6 +57,8 @@ def _wheel(
     version="0.10.1",
     tag="cp311-abi3-linux_x86_64",
     native=b"native",
+    metadata_extra="",
+    wheel_extra="",
     corrupt_record=False,
 ):
     verifier = _verifier()
@@ -47,10 +67,10 @@ def _wheel(
         **package,
         verifier.NATIVE_MEMBER: native,
         f"{dist_info}/METADATA": (
-            f"Metadata-Version: 2.3\nName: umf-core\nVersion: {version}\n"
+            f"Metadata-Version: 2.3\nName: umf-core\nVersion: {version}\n{metadata_extra}"
         ).encode(),
         f"{dist_info}/WHEEL": (
-            f"Wheel-Version: 1.0\nRoot-Is-Purelib: false\nTag: {tag}\n"
+            f"Wheel-Version: 1.0\nRoot-Is-Purelib: false\nTag: {tag}\n{wheel_extra}"
         ).encode(),
     }
     for name in ("LICENSE.md", "LICENSE-MIT", "LICENSE-APACHE"):
@@ -178,6 +198,7 @@ def test_macos_arm64_tag_is_accepted_only_for_the_arm64_cohort(tmp_path):
         tmp_path / "macos.whl",
         package,
         tag="cp311-abi3-macosx_11_0_arm64",
+        native=_macho(),
     )
 
     result = verifier._validate_wheel(
@@ -185,6 +206,98 @@ def test_macos_arm64_tag_is_accepted_only_for_the_arm64_cohort(tmp_path):
     )
 
     assert result["tag"] == "cp311-abi3-macosx_11_0_arm64"
+    assert result["native_platform"] == {
+        "format": "thin-64-bit-macho",
+        "machine": "arm64",
+        "version_command": "LC_BUILD_VERSION",
+        "minimum_os": "11.0.0",
+    }
+
+
+@pytest.mark.parametrize(
+    ("native", "message"),
+    (
+        (_macho(fat=True), "thin"),
+        (_macho(machine="x86_64"), "CPU"),
+        (_macho(include_version=False), "version command"),
+        (_macho(minimum=(15, 0, 0)), "exactly macOS 11.0.0"),
+    ),
+)
+def test_macos_artifact_rejects_fat_wrong_cpu_or_unqualified_minimum(
+    tmp_path, native, message
+):
+    verifier = _verifier()
+    package = {"umf/__init__.py": b"source"}
+    licenses = {
+        name: b"license" for name in ("LICENSE.md", "LICENSE-MIT", "LICENSE-APACHE")
+    }
+    wheel = _wheel(
+        tmp_path / "invalid-macos.whl",
+        package,
+        tag="cp311-abi3-macosx_11_0_arm64",
+        native=native,
+    )
+
+    with pytest.raises(ValueError, match=message):
+        verifier._validate_wheel(wheel, package, licenses, "0.10.1", "macos_arm64")
+
+
+def test_hatch_hook_loads_its_native_inspector_outside_project_directory(
+    tmp_path, monkeypatch
+):
+    repository = Path(__file__).resolve().parents[2]
+    hook_path = repository / "python/hatch_build.py"
+    monkeypatch.chdir(tmp_path)
+    package_names = (
+        "hatchling",
+        "hatchling.builders",
+        "hatchling.builders.hooks",
+        "hatchling.builders.hooks.plugin",
+    )
+    for name in package_names:
+        package = types.ModuleType(name)
+        package.__path__ = []
+        monkeypatch.setitem(sys.modules, name, package)
+    interface = types.ModuleType("hatchling.builders.hooks.plugin.interface")
+    interface.BuildHookInterface = type("BuildHookInterface", (), {})
+    monkeypatch.setitem(
+        sys.modules, "hatchling.builders.hooks.plugin.interface", interface
+    )
+    spec = importlib.util.spec_from_file_location("umf_test_hatch_hook", hook_path)
+    assert spec is not None and spec.loader is not None
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+
+    assert module.macos_target("darwin", "arm64") == (
+        "aarch64-apple-darwin",
+        "macosx_11_0_arm64",
+        "arm64",
+    )
+
+
+def test_native_platform_target_is_explicit_and_rejects_unknown_hosts():
+    helper = _native_platform_helper()
+    assert helper.macos_target("darwin", "arm64") == (
+        "aarch64-apple-darwin",
+        "macosx_11_0_arm64",
+        "arm64",
+    )
+    assert helper.macos_target("darwin", "x86_64") == (
+        "x86_64-apple-darwin",
+        "macosx_11_0_x86_64",
+        "x86_64",
+    )
+    with pytest.raises(helper.NativePlatformError):
+        helper.macos_target("darwin", "universal2")
+
+
+def _native_platform_helper():
+    path = Path(__file__).resolve().parents[1] / "_native_platform.py"
+    spec = importlib.util.spec_from_file_location("umf_test_native_platform", path)
+    assert spec is not None and spec.loader is not None
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
 
 
 def test_sdist_rebuild_accepts_distinct_native_bytes_without_claiming_identity(
@@ -201,6 +314,8 @@ def test_sdist_rebuild_accepts_distinct_native_bytes_without_claiming_identity(
         "non_native_package_payload_matches": True,
         "version_matches": True,
         "tag_matches": True,
+        "metadata_byte_identity": True,
+        "wheel_byte_identity": True,
         "native_byte_identity": False,
     }
 
@@ -226,9 +341,21 @@ def test_sdist_rebuild_accepts_distinct_native_bytes_without_claiming_identity(
             "cp311-abi3-linux_aarch64",
             "platform tag",
         ),
+        (
+            {"umf/__init__.py": b"source"},
+            "0.10.1",
+            "cp311-abi3-linux_x86_64",
+            "wheel METADATA",
+        ),
+        (
+            {"umf/__init__.py": b"source"},
+            "0.10.1",
+            "cp311-abi3-linux_x86_64",
+            "wheel WHEEL",
+        ),
     ],
 )
-def test_sdist_rebuild_rejects_source_version_or_tag_drift(
+def test_sdist_rebuild_rejects_source_version_tag_or_metadata_drift(
     tmp_path, rebuilt_package, version, tag, message
 ):
     verifier = _verifier()
@@ -238,6 +365,8 @@ def test_sdist_rebuild_rejects_source_version_or_tag_drift(
         rebuilt_package,
         version=version,
         tag=tag,
+        metadata_extra="Summary: changed\n" if message == "wheel METADATA" else "",
+        wheel_extra="Generator: changed\n" if message == "wheel WHEEL" else "",
     )
 
     with pytest.raises(ValueError, match=message):
@@ -306,6 +435,8 @@ def test_installed_workflow_disables_bytecode_and_hashes_verifier_source():
     assert "-I -B" in workflow
     assert "hashFiles(" not in workflow
     assert "hashlib.sha256(verifier_path.read_bytes()).hexdigest()" in workflow
+    assert 'current.endswith("_arm64")' not in workflow
+    assert 'current.startswith("macosx_")' in workflow
 
 
 def test_workflow_independently_installs_and_qualifies_both_native_artifacts():
@@ -357,6 +488,7 @@ def _write_finalizer_inputs(
     *,
     missing_rebuilt_tests: bool = False,
     missing_rebuilt_posttest: bool = False,
+    malformed_source_map: bool = False,
 ) -> None:
     direct = {
         "filename": "umf_core-0.10.1-cp311-abi3-macosx_11_0_arm64.whl",
@@ -365,6 +497,12 @@ def _write_finalizer_inputs(
         "tag": "cp311-abi3-macosx_11_0_arm64",
         "package_file_count": 14,
         "native_sha256": "b" * 64,
+        "native_platform": {
+            "format": "thin-64-bit-macho",
+            "machine": "arm64",
+            "version_command": "LC_BUILD_VERSION",
+            "minimum_os": "11.0.0",
+        },
     }
     rebuilt = {
         **direct,
@@ -383,8 +521,17 @@ def _write_finalizer_inputs(
             "non_native_package_payload_matches": True,
             "version_matches": True,
             "tag_matches": True,
+            "metadata_byte_identity": True,
+            "wheel_byte_identity": True,
             "native_byte_identity": False,
         },
+        "sdist_build_inputs": {
+            "schema": "umf.python-sdist-build-inputs/1",
+            "file_count": 521,
+            "sha256": ("z" if malformed_source_map else "f") * 64,
+        },
+        "sdist_helper_sha256": "bf2c29b2bbdf2699b016566f2583288885014c99a4d4caf80095135b363a19d5",
+        "native_platform_helper_sha256": "5856eb375d176af7671ad22981d983a14cec24663e3a8bc466446b433c2cd7b1",
     }
     (root / "umf-artifact-payload.json").write_text(
         json.dumps(receipt), encoding="utf-8"
@@ -432,11 +579,16 @@ def _write_finalizer_inputs(
 
 
 @pytest.mark.parametrize(
-    ("missing_rebuilt_tests", "missing_rebuilt_posttest"),
-    ((False, False), (True, False), (False, True)),
+    ("missing_rebuilt_tests", "missing_rebuilt_posttest", "malformed_source_map"),
+    (
+        (False, False, False),
+        (True, False, False),
+        (False, True, False),
+        (False, False, True),
+    ),
 )
 def test_workflow_finalizer_requires_positive_installed_proof_for_both_wheels(
-    tmp_path, missing_rebuilt_tests, missing_rebuilt_posttest
+    tmp_path, missing_rebuilt_tests, missing_rebuilt_posttest, malformed_source_map
 ):
     workflow_path = (
         Path(__file__).resolve().parents[2]
@@ -448,6 +600,7 @@ def test_workflow_finalizer_requires_positive_installed_proof_for_both_wheels(
         tmp_path,
         missing_rebuilt_tests=missing_rebuilt_tests,
         missing_rebuilt_posttest=missing_rebuilt_posttest,
+        malformed_source_map=malformed_source_map,
     )
     output = tmp_path / "umf-qualification.json"
     environment = {
@@ -480,12 +633,18 @@ def test_workflow_finalizer_requires_positive_installed_proof_for_both_wheels(
 
     assert output.is_file(), result.stderr
     receipt = json.loads(output.read_text(encoding="utf-8"))
-    incomplete = missing_rebuilt_tests or missing_rebuilt_posttest
+    incomplete = (
+        missing_rebuilt_tests or missing_rebuilt_posttest or malformed_source_map
+    )
     expected = "failed_or_incomplete" if incomplete else "passed"
     assert receipt["installed_qualification"] == expected
     assert receipt["native_byte_identity"] is False
     assert receipt["installed_artifacts"]["direct"]["qualification"] == "passed"
-    rebuilt_expected = "failed_or_incomplete" if incomplete else "passed"
+    rebuilt_expected = (
+        "failed_or_incomplete"
+        if missing_rebuilt_tests or missing_rebuilt_posttest
+        else "passed"
+    )
     assert (
         receipt["installed_artifacts"]["sdist_rebuilt"]["qualification"]
         == rebuilt_expected
@@ -515,6 +674,11 @@ def test_sdist_licenses_have_one_declared_inclusion_route():
 
     assert licenses == {"LICENSE.md", "LICENSE-MIT", "LICENSE-APACHE"}
     assert not licenses.intersection(source_files)
+    force_include = project["tool"]["hatch"]["build"]["targets"]["sdist"][
+        "force-include"
+    ]
+    assert "_native_platform.py" not in force_include
+    assert (repository / "python/_native_platform.py").is_file()
 
 
 def test_python_support_tests_install_the_hatch_build_backend():

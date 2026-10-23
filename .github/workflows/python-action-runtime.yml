@@ -65,8 +65,8 @@ jobs:
           current = sysconfig.get_platform().replace("-", "_").replace(".", "_")
           if expected_platform == "linux_x86_64" and (sys.platform != "linux" or current != expected_platform):
               raise SystemExit(f"Unexpected Linux wheel platform: {current}")
-          if expected_platform == "macos_arm64" and (sys.platform != "darwin" or not (current.startswith("macosx_") and current.endswith("_arm64"))):
-              raise SystemExit(f"Unexpected macOS wheel platform: {current}")
+          if expected_platform == "macos_arm64" and (sys.platform != "darwin" or not current.startswith("macosx_")):
+              raise SystemExit(f"Unexpected macOS interpreter platform: {current}")
           print(f"runner={sys.platform} machine={machine} python_platform={current}")
           PY
       - name: Install bounded build and test tools
@@ -310,7 +310,24 @@ jobs:
               and receipt.get("sdist_rebuild", {}).get("non_native_package_payload_matches") is True
               and receipt.get("sdist_rebuild", {}).get("version_matches") is True
               and receipt.get("sdist_rebuild", {}).get("tag_matches") is True
+              and receipt.get("sdist_rebuild", {}).get("metadata_byte_identity") is True
+              and receipt.get("sdist_rebuild", {}).get("wheel_byte_identity") is True
               and type(receipt.get("sdist_rebuild", {}).get("native_byte_identity")) is bool
+              and isinstance(receipt.get("sdist_build_inputs"), dict)
+              and receipt["sdist_build_inputs"].get("schema") == "umf.python-sdist-build-inputs/1"
+              and type(receipt["sdist_build_inputs"].get("file_count")) is int
+              and receipt["sdist_build_inputs"].get("file_count", 0) > 0
+              and len(receipt["sdist_build_inputs"].get("sha256", "")) == 64
+              and all(char in "0123456789abcdef" for char in receipt["sdist_build_inputs"].get("sha256", ""))
+              and receipt.get("sdist_helper_sha256") == "bf2c29b2bbdf2699b016566f2583288885014c99a4d4caf80095135b363a19d5"
+              and receipt.get("native_platform_helper_sha256") == "5856eb375d176af7671ad22981d983a14cec24663e3a8bc466446b433c2cd7b1"
+              and (os.environ["COHORT"] != "macos-arm64" or (
+                  isinstance(direct_artifact.get("native_platform"), dict)
+                  and direct_artifact["native_platform"].get("format") == "thin-64-bit-macho"
+                  and direct_artifact["native_platform"].get("machine") == "arm64"
+                  and direct_artifact["native_platform"].get("minimum_os") == "11.0.0"
+                  and rebuilt_artifact.get("native_platform") == direct_artifact.get("native_platform")
+              ))
               and receipt.get("action_runtime_resource_count") == 9
               and receipt.get("distribution_version") == "0.10.1"
               and receipt.get("semantic_core_version") == "0.10.0"
