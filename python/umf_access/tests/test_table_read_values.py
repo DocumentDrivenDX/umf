@@ -3,6 +3,7 @@
 import copy
 import math
 import struct
+import sys
 import unittest
 from decimal import InvalidOperation, getcontext
 
@@ -53,6 +54,36 @@ class TableReadValues(unittest.TestCase):
             self.assertEqual(math.copysign(1,float(token)),math.copysign(1,number))
         for value in ('3ff000000000000','7ff0000000000000','fff0000000000000','7ff8000000000000','1.25'):
             with self.assertRaises(SessionError):value_from_native(value,output)
+
+    def test_rust_carrier_admission_keeps_host_timestamp_parse_and_lookup_order(self):
+        text='2026-01-01T24:00:00.000000Z'
+        if sys.version_info[:2] >= (3,14):
+            self.assertEqual(value_from_native(text,{'carrier':'timestamp','nullable':False}),{'timestamp':text})
+        else:
+            with self.assertRaises(SessionError):
+                value_from_native(text,{'carrier':'timestamp','nullable':False})
+
+        class LoggedOutput(dict):
+            def __init__(self,*args,**kwargs):
+                super().__init__(*args,**kwargs);self.reads=[]
+            def __getitem__(self,key):
+                self.reads.append(('item',key));return super().__getitem__(key)
+            def get(self,key,*args):
+                self.reads.append(('get',key));return super().get(key,*args)
+
+        output=LoggedOutput(carrier='float',nullable=False,nativeEncoding='ieee754-binary64-hex')
+        self.assertEqual(value_from_native('3ff0000000000000',output),{'floatToken':'1.0'})
+        self.assertEqual(output.reads,[('item','carrier'),('get','nativeEncoding')])
+
+        comparisons=[]
+        class DynamicCarrier:
+            def __eq__(self,other):
+                comparisons.append(other);return False
+        with self.assertRaises(SessionError):
+            value_from_native('1.25',{'carrier':DynamicCarrier(),'nullable':False})
+        self.assertEqual(comparisons,[
+            'boolean','string','date','timestamp','integer','decimal','float','float','uuid','bits128'
+        ])
 
     def test_native_values_cannot_lie_about_carriers_or_required_presence(self):
         for carrier,value in [('integer',1),('integer','01'),('decimal','NaN'),('decimal','Infinity'),

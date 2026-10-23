@@ -521,6 +521,31 @@ fn operation_native_token_classify(kind: &str, token: &str) -> PyResult<&'static
 }
 
 #[pyfunction]
+fn operation_native_result_classify(kind: &str, token: &str) -> PyResult<&'static str> {
+    let kind = match kind {
+        "date" => umf_core::operation_values::NativeResultKind::Date,
+        "timestamp" => umf_core::operation_values::NativeResultKind::Timestamp,
+        "float" => umf_core::operation_values::NativeResultKind::FloatDecimal,
+        "float-ieee754-binary64-hex" => {
+            umf_core::operation_values::NativeResultKind::FloatIeee754Binary64Hex
+        }
+        _ => {
+            return Err(PyValueError::new_err(
+                "unsupported native result carrier kind",
+            ))
+        }
+    };
+    let mut context = Context::ordinary();
+    umf_core::operation_values::native_result_classify(&mut context, kind, token)
+        .map(|decision| match decision {
+            umf_core::operation_values::NativeResultDecision::Accepted => "accepted",
+            umf_core::operation_values::NativeResultDecision::Candidate => "candidate",
+            umf_core::operation_values::NativeResultDecision::Refused => "refused",
+        })
+        .map_err(py_error)
+}
+
+#[pyfunction]
 fn protobuf_descriptor_profile_version() -> &'static str {
     umf_core::protobuf_descriptor::PROFILE_VERSION
 }
@@ -2586,6 +2611,7 @@ fn _rust_core(module: &Bound<'_, PyModule>) -> PyResult<()> {
     module.add_function(wrap_pyfunction!(operation_token_decode, module)?)?;
     module.add_function(wrap_pyfunction!(operation_key_literal_mode, module)?)?;
     module.add_function(wrap_pyfunction!(operation_native_token_classify, module)?)?;
+    module.add_function(wrap_pyfunction!(operation_native_result_classify, module)?)?;
     module.add_function(wrap_pyfunction!(
         related_keys::related_keys_profile_version,
         module

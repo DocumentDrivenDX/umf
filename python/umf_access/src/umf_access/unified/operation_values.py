@@ -65,6 +65,17 @@ def _native_error(error, default):
     return SessionError(message if message in allowed else default)
 
 
+def _native_result_classify(kind, token):
+    try:
+        return _rust_values().operation_native_result_classify(kind, token)
+    except SessionError:
+        raise
+    except (AttributeError, RuntimeError) as error:
+        raise SessionError('native operation-values capability unavailable') from error
+    except (ValueError, TypeError, UnicodeError) as error:
+        raise _native_error(error, 'native result value differs from its declared carrier') from None
+
+
 def canonical(value):
     try:
         return _rust_values().operation_canonical(_json_input(value))
@@ -188,6 +199,28 @@ def value_from_native(value,output):
             return {key:value}
         if kind == 'decimal' and decision == 'decimal-invalid-operation':
             getcontext().flags[InvalidOperation] = True
+        raise SessionError('native result value differs from its declared carrier')
+    if type(kind) is str and kind == 'date':
+        if _native_result_classify('date', value) == 'accepted':
+            return {'date':value}
+        raise SessionError('native result value differs from its declared carrier')
+    if type(kind) is str and kind == 'timestamp':
+        if _native_result_classify('timestamp', value) == 'candidate':
+            try:
+                datetime.fromisoformat(value)
+                return {'timestamp':value}
+            except ValueError:
+                pass
+        raise SessionError('native result value differs from its declared carrier')
+    if type(kind) is str and kind == 'float':
+        native_encoding = output.get('nativeEncoding')
+        if native_encoding == 'ieee754-binary64-hex':
+            if _native_result_classify('float-ieee754-binary64-hex', value) == 'accepted':
+                number=struct.unpack('!d',bytes.fromhex(value))[0]
+                return {'floatToken':repr(number)}
+            raise SessionError('native result value differs from its declared carrier')
+        if _native_result_classify('float', value) == 'accepted':
+            return {'floatToken':value}
         raise SessionError('native result value differs from its declared carrier')
     if kind=='date':
         try:

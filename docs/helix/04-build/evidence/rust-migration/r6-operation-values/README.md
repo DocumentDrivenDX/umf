@@ -192,3 +192,57 @@ rows, not a database-backed consumer. Native PostgreSQL, Weft, Truss, Ashlar and
 TableSpec acceptance, broader `value_from_native` carriers, a hard host deadline
 or meter, and the remaining R6 operations remain open under CONTRACT-079. This
 does not close `value_from_native` as a whole or R6.
+
+## Date, timestamp and float carrier follow-up — 2026-10-23
+
+The next bounded `value_from_native` slice moves exact built-in date calendar
+admission, timestamp lexical admission, finite decimal-float admission and
+lowercase IEEE-754 binary64-hex admission to `umf-core`. Python still owns
+nullable/carrier lookup, UTF-8 failure order, the conditional
+`nativeEncoding` lookup, binary64 unpacking and `repr` output. Timestamp calendar
+and time validation deliberately remains `datetime.fromisoformat`: the frozen
+CPython 3.11.17 predecessor rejects `2026-01-01T24:00:00.000000Z`, while
+CPython 3.14.8 accepts it. Date/time output continues to retain its exact input
+text. Dynamic carrier objects stay on the original Python comparison path and
+retain their callback order.
+
+The pre-edit source snapshot and selected outcome/lookup-order corpus are in
+[`carrier-predecessor-2026-10-23.json`](carrier-predecessor-2026-10-23.json).
+It records predecessor source SHA-256
+`106cd256e4976d37855eb6ef838c553de717bbcf09be269fbe374f1bdb4f852a`; the
+snapshot SHA-256 is
+`940a29ad0d548eb3024fb10e398260bb1f78068f2ae82d4008959df16c62d962`. The Rust-enabled
+adapter replay matches all 43 frozen cases on both CPython 3.11.17 and 3.14.8.
+The checked-in [float differential runner](float-admission-differential.py)
+uses seed `722`, compares 12,000 decimal tokens against the frozen Python
+grammar-plus-finite-`float` oracle, and hashes both ordered outcome streams.
+Its [CPython 3.11.17 report](float-admission-cpython311-2026-10-23.json) and
+[CPython 3.14.8 report](float-admission-cpython314-2026-10-23.json) each record
+8,125 admitted and 3,875 refused tokens, equal outcome digests
+`208a9f0c7eec1c17fec9673d3d052c574fd9032a615a9cc09a6047731598fd57`, and the
+same extension SHA-256 `bff4f4aaf9f770a1f0bf03ea100d4761f2cbe3635c04d08b5b63ab8edcbea632`.
+Reproduce after the locked offline Rust binding build by passing its
+`lib_rust_core.dylib` to the runner's `--extension` option for each interpreter.
+
+Rust 1.90.0 operation-values tests pass 6/6 and the PyO3 binding builds with the
+locked offline dependencies and isolated target directory. `test_table_read_values.py`
+passes 12/12 and `test_operation_values_rust.py` passes 9/9 on both CPython
+3.11.17 and 3.14.8 using that compiled extension and source-tree Python
+packages. This follow-up does not claim an installed-wheel replay. The tests do
+not qualify database-backed native consumers, deadline/cancellation controls,
+or full `value_from_native`/R6 completion.
+
+Current source identities for this follow-up are:
+
+| Source | SHA-256 |
+| --- | --- |
+| `crates/umf-core/src/operation_values.rs` | `098f6bee105ae46c9419cf6d4b0c5f4e798dc631602700aea6bbbbefd3e4b5d0` |
+| `bindings/core/python/src/lib.rs` | `545805b84eee4df6d3e0fd59ccce6d76eaf6384c5df352c310313d9839331f76` |
+| `python/src/umf/rust_operation_values.py` | `49b67564d68c8da1f9687ca1dc245b8ba840e4307214c674cc9821815e85f12d` |
+| `python/umf_access/src/umf_access/unified/operation_values.py` | `f0e66693918c4940dd16ff5bcd5ff7dfb41cfa33ceae7bc5a5464486c3586758` |
+| `python/umf_access/tests/test_table_read_values.py` | `8824f38af1aeb71c4c6c068afc37b2a75e17c317095e84bd29c0fa3247af25f0` |
+| `python/umf_access/tests/test_operation_values_rust.py` | `73936da722f6ca26894a829ba68191b46f28675fe9e012f4afa8c4c71b535604` |
+| `carrier-predecessor-2026-10-23.json` | `940a29ad0d548eb3024fb10e398260bb1f78068f2ae82d4008959df16c62d962` |
+| `float-admission-differential.py` | `efceaf94f6f23abd478e792287becb2c945d8069a468aef905813f1b60fdf7bb` |
+| `float-admission-cpython311-2026-10-23.json` | `e852d5ed35e9aa0a683678ef8b08fabcbeb7bb75e682dcff3449cc827df3567b` |
+| `float-admission-cpython314-2026-10-23.json` | `31a30652ca95c8761d41ee83611d28d9715735aef503458f083a6abe83b1c9ee` |

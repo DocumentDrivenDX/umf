@@ -56,6 +56,156 @@ pub enum NativeTokenDecision {
     DecimalInvalidOperation,
 }
 
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+pub enum NativeResultKind {
+    Date,
+    Timestamp,
+    FloatDecimal,
+    FloatIeee754Binary64Hex,
+}
+
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+pub enum NativeResultDecision {
+    Accepted,
+    Candidate,
+    Refused,
+}
+
+/// Admit closed built-in native result carriers without host callbacks.
+/// Timestamp returns `Candidate` after lexical admission because the Python
+/// adapter deliberately retains its interpreter-version-specific
+/// `datetime.fromisoformat` calendar/time check.
+pub fn native_result_classify(
+    context: &mut Context<'_>,
+    kind: NativeResultKind,
+    token: &str,
+) -> Result<NativeResultDecision, crate::error::EngineError> {
+    context.charge_work(token.len(), Utf16::default())?;
+    Ok(match kind {
+        NativeResultKind::Date => result_decision(valid_date_token(token)),
+        NativeResultKind::Timestamp => {
+            if valid_timestamp_shape(token) {
+                NativeResultDecision::Candidate
+            } else {
+                NativeResultDecision::Refused
+            }
+        }
+        NativeResultKind::FloatDecimal => result_decision(valid_float_token(token)),
+        NativeResultKind::FloatIeee754Binary64Hex => result_decision(valid_binary64_hex(token)),
+    })
+}
+
+fn result_decision(valid: bool) -> NativeResultDecision {
+    if valid {
+        NativeResultDecision::Accepted
+    } else {
+        NativeResultDecision::Refused
+    }
+}
+
+fn valid_date_token(token: &str) -> bool {
+    let bytes = token.as_bytes();
+    if bytes.len() != 10
+        || bytes[4] != b'-'
+        || bytes[7] != b'-'
+        || !bytes[..4].iter().all(u8::is_ascii_digit)
+        || !bytes[5..7].iter().all(u8::is_ascii_digit)
+        || !bytes[8..10].iter().all(u8::is_ascii_digit)
+    {
+        return false;
+    }
+    let year = u16::from(bytes[0] - b'0') * 1000
+        + u16::from(bytes[1] - b'0') * 100
+        + u16::from(bytes[2] - b'0') * 10
+        + u16::from(bytes[3] - b'0');
+    let month = (bytes[5] - b'0') * 10 + (bytes[6] - b'0');
+    let day = (bytes[8] - b'0') * 10 + (bytes[9] - b'0');
+    if year == 0 || !(1..=12).contains(&month) {
+        return false;
+    }
+    let leap = year % 4 == 0 && (year % 100 != 0 || year % 400 == 0);
+    let month_days = match month {
+        1 | 3 | 5 | 7 | 8 | 10 | 12 => 31,
+        4 | 6 | 9 | 11 => 30,
+        2 if leap => 29,
+        2 => 28,
+        _ => return false,
+    };
+    (1..=month_days).contains(&day)
+}
+
+fn valid_timestamp_shape(token: &str) -> bool {
+    let bytes = token.as_bytes();
+    bytes.len() == 27
+        && bytes[4] == b'-'
+        && bytes[7] == b'-'
+        && bytes[10] == b'T'
+        && bytes[13] == b':'
+        && bytes[16] == b':'
+        && bytes[19] == b'.'
+        && bytes[26] == b'Z'
+        && [0..4, 5..7, 8..10, 11..13, 14..16, 17..19, 20..26]
+            .iter()
+            .all(|range| bytes[range.clone()].iter().all(u8::is_ascii_digit))
+}
+
+fn valid_float_token(token: &str) -> bool {
+    let bytes = token.as_bytes();
+    if bytes.is_empty() {
+        return false;
+    }
+    let mut index = usize::from(bytes[0] == b'-');
+    let integer_start = index;
+    while index < bytes.len() && bytes[index].is_ascii_digit() {
+        index += 1;
+    }
+    if index == integer_start || (index - integer_start > 1 && bytes[integer_start] == b'0') {
+        return false;
+    }
+    if index < bytes.len() && bytes[index] == b'.' {
+        index += 1;
+        let fraction_start = index;
+        while index < bytes.len() && bytes[index].is_ascii_digit() {
+            index += 1;
+        }
+        if index == fraction_start {
+            return false;
+        }
+    }
+    if index < bytes.len() && matches!(bytes[index], b'e' | b'E') {
+        index += 1;
+        if index < bytes.len() && matches!(bytes[index], b'+' | b'-') {
+            index += 1;
+        }
+        let exponent_start = index;
+        while index < bytes.len() && bytes[index].is_ascii_digit() {
+            index += 1;
+        }
+        if index == exponent_start {
+            return false;
+        }
+    }
+    index == bytes.len() && token.parse::<f64>().is_ok_and(f64::is_finite)
+}
+
+fn valid_binary64_hex(token: &str) -> bool {
+    if token.len() != 16
+        || !token
+            .bytes()
+            .all(|byte| byte.is_ascii_digit() || (b'a'..=b'f').contains(&byte))
+    {
+        return false;
+    }
+    let bits = token.bytes().fold(0u64, |bits, byte| {
+        let digit = match byte {
+            b'0'..=b'9' => u64::from(byte - b'0'),
+            _ => u64::from(byte - b'a' + 10),
+        };
+        (bits << 4) | digit
+    });
+    bits & 0x7ff0_0000_0000_0000 != 0x7ff0_0000_0000_0000
+}
+
 /// Classify the closed text grammar for exact native result tokens.
 /// The caller owns carrier extraction and UTF-8 admission; this function has no
 /// host callbacks and does not normalize or rewrite the original token.
@@ -471,6 +621,71 @@ pub fn token_decode(secret: &[u8], token: &str) -> Result<String, OperationValue
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn native_date_timestamp_and_float_carrier_admission_is_bounded() {
+        let classify =
+            |kind, token| native_result_classify(&mut Context::ordinary(), kind, token).unwrap();
+        for token in ["0001-01-01", "2000-02-29", "9999-12-31"] {
+            assert_eq!(
+                classify(NativeResultKind::Date, token),
+                NativeResultDecision::Accepted,
+                "{token}"
+            );
+        }
+        for token in ["0000-01-01", "1900-02-29", "2026-2-03"] {
+            assert_eq!(
+                classify(NativeResultKind::Date, token),
+                NativeResultDecision::Refused,
+                "{token}"
+            );
+        }
+        for token in ["0001-01-01T00:00:00.000000Z", "2026-01-01T24:00:00.000000Z"] {
+            assert_eq!(
+                classify(NativeResultKind::Timestamp, token),
+                NativeResultDecision::Candidate,
+                "{token}"
+            );
+        }
+        for token in [
+            "2026-01-01T00:00:00.1234567Z",
+            "2026-01-01T00:00:00.123456+01:00",
+        ] {
+            assert_eq!(
+                classify(NativeResultKind::Timestamp, token),
+                NativeResultDecision::Refused,
+                "{token}"
+            );
+        }
+        for token in ["0", "-0", "5e-324", "-1e-9999"] {
+            assert_eq!(
+                classify(NativeResultKind::FloatDecimal, token),
+                NativeResultDecision::Accepted,
+                "{token}"
+            );
+        }
+        for token in ["NaN", "1e9999", "01", "1.0 "] {
+            assert_eq!(
+                classify(NativeResultKind::FloatDecimal, token),
+                NativeResultDecision::Refused,
+                "{token}"
+            );
+        }
+        for token in ["0000000000000001", "7fefffffffffffff"] {
+            assert_eq!(
+                classify(NativeResultKind::FloatIeee754Binary64Hex, token),
+                NativeResultDecision::Accepted,
+                "{token}"
+            );
+        }
+        for token in ["7ff0000000000000", "FFFFFFFFFFFFFFFF", "3ff000000000000"] {
+            assert_eq!(
+                classify(NativeResultKind::FloatIeee754Binary64Hex, token),
+                NativeResultDecision::Refused,
+                "{token}"
+            );
+        }
+    }
+
     #[test]
     fn strict_duplicate_nonfinite_and_reserved_content_handling() {
         for source in [r#"{"a":1,"a":2}"#, r#"{"x":NaN}"#] {

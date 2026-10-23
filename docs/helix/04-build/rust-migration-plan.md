@@ -1123,6 +1123,18 @@ a database-backed consumer. Native PostgreSQL, Weft, Truss, Ashlar and
 TableSpec consumers, broader `value_from_native` carriers and remaining access
 algorithms remain open; this does not close `value_from_native` or R6.
 
+The next [R6 native-result carrier slice](evidence/rust-migration/r6-operation-values/README.md#date-timestamp-and-float-carrier-follow-up--2026-10-23)
+moves built-in date, timestamp-shape, finite decimal-float and binary64-hex
+admission into Rust. Python retains mapping access, Unicode failure order,
+conditional encoding lookup, binary64 `repr` and the final timestamp parse;
+CPython 3.11 and 3.14 differ on hour-24 timestamps. Sol independently rebuilt
+the binding and reproduced six Rust tests, 21 focused Python tests and all 43
+frozen cases on both interpreters. A fixed-seed 12,000-case float comparator
+and its two receipts replay byte-for-byte after an evidence correction; Sol
+found no remaining P1/P2 in this bounded source-tree cohort. Installed-wheel
+replay, native consumers, host deadline/meter controls and the rest of
+`value_from_native` remain open.
+
 The bounded [R6 related-Key payload parser](evidence/rust-migration/r6-related-key-payload/README.md)
 has an iterative Rust core and an opt-in PyO3/Python facade. Its frozen
 parser-applicable matrix covers 106 observations; the full facade replay matches

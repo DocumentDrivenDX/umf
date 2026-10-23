@@ -20,6 +20,24 @@ from umf_access.unified.operation_values import (
 
 
 class RustOperationValues(unittest.TestCase):
+    def test_rust_native_result_carrier_classifier(self):
+        classify = rust_operation_values.operation_native_result_classify
+        for kind, token in [
+            ('date','2000-02-29'),
+            ('float','-1e-9999'),
+            ('float-ieee754-binary64-hex','8000000000000000'),
+        ]:
+            with self.subTest(kind=kind,token=token):
+                self.assertEqual(classify(kind,token),'accepted')
+        self.assertEqual(classify('timestamp','2026-01-01T24:00:00.000000Z'),'candidate')
+        for kind, token in [
+            ('date','1900-02-29'),
+            ('float','1e9999'),
+            ('float-ieee754-binary64-hex','7ff0000000000000'),
+        ]:
+            with self.subTest(kind=kind,token=token):
+                self.assertEqual(classify(kind,token),'refused')
+
     def test_key_literal_rust_dispatch_preserves_identity_and_custom_fallback(self):
         sentinel = object()
         for carrier, wrapped in [('string', 'string'), ('boolean', 'boolean')]:

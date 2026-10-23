@@ -44,6 +44,10 @@ def operation_native_token_classify(kind: str, token: str) -> str:
     return _rust._rust_core.operation_native_token_classify(kind, token)
 
 
+def operation_native_result_classify(kind: str, token: str) -> str:
+    return _rust._rust_core.operation_native_result_classify(kind, token)
+
+
 def require_operation_values_profile() -> None:
     actual = operation_values_profile_version()
     if actual != _PROFILE:
