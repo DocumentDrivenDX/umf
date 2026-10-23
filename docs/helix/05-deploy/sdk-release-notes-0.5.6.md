@@ -69,7 +69,9 @@ Preliminary local PostgreSQL 18.6 and Chromium results do not establish hosted
 database, additional platform, or private consumer acceptance.
 
 The selected subset is a fenced maintenance migration on one existing table
-and one target, with at most 10,000 selected rows. Expression depth is at most
+and one target, with exact retained JSON predecessor and successor sources and
+at most 10,000 selected rows. Non-JSON sources refuse during profile 0.4 plan
+admission. Expression depth is at most
 16, node count 256, fanout 32 and literal payload 1 MiB; exact numeric inference
 is bounded to 1,000 digits at every node. Numeric input storage requires finite
 `numeric(p,s)` with nonnegative scale no greater than precision; unbounded

@@ -3,6 +3,7 @@ import {expect,test} from 'bun:test';
 import {compileTableDeployment} from '../../src/table-deployment';
 import {compileTableMigration,discoverTableMigrationChanges,verifyTableMigration} from '../../src/table-migration';
 import {createValidator} from '../../src/validation/schema';
+import {writeDocument} from '../../src/model/document';
 import tablesSchema from '../../spec/extensions/tables/schema.json';
 import deploymentSchema from '../../spec/extensions/tables/deployment.schema.json';
 import migrationSchema from '../../spec/extensions/tables/migration-0.4.schema.json';
@@ -22,6 +23,7 @@ function source({append=false,operation=true,existingOptional=false,futureDefaul
  return doc;
 }
 function bundle(doc:any){const result=compileTableDeployment({text:JSON.stringify(doc),configuration});if(result.status!=='compiled')throw Error(JSON.stringify(result.diagnostics));return result.bundle;}
+function yamlBundle(doc:any){const result=compileTableDeployment({text:writeDocument(doc,'yaml'),format:'yaml',configuration});if(result.status!=='compiled')throw Error(JSON.stringify(result.diagnostics));return result.bundle;}
 
 test('G02 appends, derives, and tightens one required target in the exact ordered native phase',()=>{
  const previous=bundle(source({operation:false})),next=bundle(source({append:true}));
@@ -91,4 +93,31 @@ test('G02 refuses raw source meaning changes even when they emit no selected DDL
  const previous=bundle(source({operation:false})),base=source({append:true});
  const candidate=(doc:any)=>compileTableMigration({id:'g02-source-002',predecessor:{id:'g02-source-001',digest:'e'.repeat(64)},previous,next:bundle(doc),options:{version:'umf.table-migration-options/0.4',backfills:[{table:'notes',column:ref('summary'),operation:'derive_summary',scopedRows:true}],concurrentIndexes:[],reviewedChanges:[],validations:[]}});
  const retained=structuredClone(base);retained.modules[0]!.elements.find((item:any)=>item.id==='owner')!.description='Same DDL, different retained source meaning';expect(candidate(retained).status).toBe('blocked');
+});
+
+test('G02 refuses retained YAML sources at portable admission with source-specific paths',()=>{
+ const previousDoc=source({operation:false}),nextDoc=source({append:true});
+ const jsonPrevious=bundle(previousDoc),jsonNext=bundle(nextDoc),yamlPrevious=yamlBundle(previousDoc),yamlNext=yamlBundle(nextDoc);
+ const options={version:'umf.table-migration-options/0.4' as const,backfills:[{table:'notes',column:ref('summary'),operation:'derive_summary',scopedRows:true as const}],concurrentIndexes:[],reviewedChanges:[],validations:[]};
+ const compile=(previous:any,next:any)=>compileTableMigration({id:'g02-yaml-002',predecessor:{id:'g02-yaml-001',digest:'f'.repeat(64)},previous,next,options});
+ const previousYaml=compile(yamlPrevious,jsonNext);
+ expect(previousYaml.status).toBe('blocked');
+ if(previousYaml.status==='blocked')expect(previousYaml.diagnostics.map(item=>item.path)).toContain('/previous/source/format');
+ const nextYaml=compile(jsonPrevious,yamlNext);
+ expect(nextYaml.status).toBe('blocked');
+ if(nextYaml.status==='blocked')expect(nextYaml.diagnostics.map(item=>item.path)).toContain('/next/source/format');
+ expect(yamlPrevious.source.format).toBe('yaml');expect(yamlNext.source.format).toBe('yaml');
+});
+
+test('G02 format admission leaves historical 0.3 YAML source behavior unchanged',()=>{
+ const previousDoc=source({existingOptional:true,operation:false}),nextDoc=source({existingOptional:true});
+ nextDoc.modules[0]!.elements.find((item:any)=>item.id==='summary')!.nullability='required';
+ const fill=nextDoc.modules[0]!.extensions['umf.tables'].commands[0]!;
+ fill.version='umf.table-operation/0.1';fill.body.values[0]!.value={kind:'literal',value:{string:'filled'}};
+ const previous=yamlBundle(previousDoc),next=yamlBundle(nextDoc),marker=discoverTableMigrationChanges(previous,next).find(item=>item.kind==='tighten-not-null');
+ expect(marker).toBeDefined();if(!marker)throw Error('missing requiredness marker');
+ const {oldValue:_old,newValue:_new,...review}=marker;
+ const result=compileTableMigration({id:'g02-yaml-003',predecessor:{id:'g02-yaml-old',digest:'8'.repeat(64)},previous,next,options:{version:'umf.table-migration-options/0.3',backfills:[{table:'notes',column:ref('summary'),operation:'derive_summary',scopedRows:true}],concurrentIndexes:[],reviewedChanges:[review],validations:[]}});
+ expect(result.status).toBe('compiled');if(result.status!=='compiled')throw Error(JSON.stringify(result.diagnostics));
+ expect(result.plan.version).toBe('umf.table-migration/0.3');
 });

@@ -1510,6 +1510,11 @@ refuse. No other input or schema meaning changes in this plan. There is no
 callback, transform registry, raw SQL, join or ambient-state resolution.
 Source bytes, operation identity and AST are covered by the existing source and
 plan digests; a separate AST digest is not an authority substitute.
+The selected migration profile 0.4 requires both retained sources to have
+`format: "json"`, matching the qualified native binding capability. Non-JSON
+predecessor or successor sources MUST refuse at portable plan admission before
+approval, ingress fencing or effects. Implementations MUST NOT normalize them
+silently or change historical profile 0.1–0.3 admission.
 
 Carrier typing follows SD-007. CoreLiteral wrappers determine non-NULL literal
 types without imposing final target refinements on intermediate operands. NULL
