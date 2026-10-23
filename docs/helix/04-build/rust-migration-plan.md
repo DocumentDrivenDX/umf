@@ -702,6 +702,18 @@ references and anchors precede dynamic scope, annotation and numeric repairs.
 Neither focused result nor v4 activates the default adapter or qualifies
 general Draft 2020-12 support.
 
+The additive [v5 source-bound reference packet](evidence/rust-migration/r5-json-schema/static-reference-resolution-v5-2026-10-23.md)
+closes the targeted `ref.json:20,30,31`, `refRemote.json:5` and `anchor.json:3`
+vectors under an unchanged 89-file capture closure. Compared with v4, compile
+refusals fall from five to three, uncompiled vectors from 13 to nine, runtime
+errors from five to one and Rust/upstream disagreements from 14 to 12. The
+acceptance gate still rejects dynamic-reference, vocabulary, annotation and
+numeric differences. Independent Sol review verified its report/raw hashes and
+counts but found a P2 scope bug: an exact-URI shortcut can mistake a direct
+nested repeated relative `$id` for a resolver-selected resource. Keep v5 as
+immutable failing evidence; fix resource-entry identity and recapture before
+crediting the static-reference slice or moving to dynamic-scope qualification.
+
 The next bounded CONTRACT-003 Protobuf shard is only the binary descriptor
 codec, `readDescriptorSet` and `writeDescriptorSet`; source compilation,
 emission, inspection and JSON Schema projection remain separate. The
@@ -792,8 +804,19 @@ This is one local macOS arm64 cohort. Complete dependency-registry
 interpretation, broader Protobuf semantics and binding parity outside the
 inspector subset, native compiler validation and default cutover remain open.
 
-The next Protobuf slice is document import, export, copied descriptor get and
-bundle recovery, followed by a source-import prepare/finish operation. Freeze
+The [opt-in Protobuf document slice](evidence/rust-migration/r5-protobuf-document/README.md)
+now imports descriptor bytes into a UMF document, exports descriptor bytes,
+returns a copied descriptor tree, and bundles bytes with a copied source and
+ordered diagnostics. It validates the core envelope before payload operations
+and refuses unknown representation content that native export would discard.
+Its focused document suite passes 5/5 and the existing descriptor codec suite
+passes 11/11. Independent Sol review found and closed a P2 gap where the first
+version accepted invalid core IDs and malformed envelopes, then found no
+remaining P1/P2 in the bounded corrected slice. This is a Rust-core operation
+only; bindings, browser parity, source compilation and default cutover remain
+open.
+
+The next Protobuf slice is source-import prepare/finish. Freeze
 the current `src/adapters/protobuf/{index,source}.ts` success/refusal envelopes,
 unknown payload/archive guards, 4 MB binary and source-text bounds, copy
 isolation and ordered diagnostics before changing the default. Rust owns
@@ -847,7 +870,11 @@ The pinned `avsc` 5.7.9 accepts its representative schema; a fresh Apache
 Avro 1.12.0 Python or Java replay was unavailable in this environment. The
 packet is a migration baseline, not Rust parity or full Avro qualification.
 Datum behavior, protocol/IDL/container support, control surfaces and default
-cutover remain open.
+cutover remain open. Independent Sol review found and closed three P2 capture
+gaps: full proposal source/document preservation, an actual exact-int64
+adapter round trip, and an unknown-representation export case independent of
+the dependency guard. Sol rereview found no remaining P1/P2 in the corrected
+predecessor packet; its 11 selected source hashes match the current adapter.
 
 The bounded [R5 Iceberg schema checkpoint](evidence/rust-migration/r5-iceberg-schema/README.md)
 ports standalone Iceberg 1.11 schema JSON preservation, inspection, pointer
@@ -1172,9 +1199,11 @@ An additional reviewed bounded source delta raises the focused Rust suite to
 18 tests with supported malformed-value/refusal controls, and an installed
 CLI passes the frozen catalog with its child `PATH` empty. The Bun predecessor
 still passes eight tests/38 assertions. Sol found no remaining P1/P2 in this
-delta. The final source-cohort metamodel check currently reports stale
-`spec/core/schema.json`; regeneration, consumer parity and default activation
-remain open, so the source slice is not yet a full R7 qualification.
+delta. The source-cohort metamodel outputs were regenerated after the
+2026-10-23 `origin/main` merge, and the fixed-point check now passes. The R7
+tooling inventory's older first-port/source hash snapshot requires an explicit
+refresh for that merged cohort; consumer parity and default activation remain
+open, so the source slice is not yet a full R7 qualification.
 
 Each family retains immutable predecessor outcomes, contract controls, independent
 version-pinned native oracles, required recovery directions, unknown-content/edit

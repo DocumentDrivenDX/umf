@@ -2515,8 +2515,41 @@ impl CompiledSchema {
             .filter(|base| !base.is_empty())
             .or_else(|| schema_id(&self.schema))
             .unwrap_or_default();
+        let current_base = path
+            .to_utf8()
+            .ok()
+            .and_then(|text| text.split_once('#').map(|(base, _)| base.to_owned()))
+            .unwrap_or_default();
+        let root_base = schema_id(&self.schema);
+        let mut already_resolved = false;
+        if let Some(base) = root_base {
+            ctx.charge_work_u64(
+                base.len() as u64 + id.len() as u64 + current_base.len() as u64 + 1,
+                Utf16::default(),
+            )?;
+            already_resolved = resolve_schema_uri(self.dialect, &base, &id).as_deref()
+                == Some(current_base.as_str());
+        }
+        if !current_base.is_empty() && !already_resolved {
+            for (uri, _) in &self.resources.entries {
+                ctx.charge_work_u64(uri.len() as u64 + id.len() as u64 + 1, Utf16::default())?;
+                let base = uri.to_utf8().unwrap_or_default();
+                if resolve_schema_uri(self.dialect, &base, &id).as_deref()
+                    == Some(current_base.as_str())
+                {
+                    already_resolved = true;
+                    break;
+                }
+            }
+        }
         let effective = if id.contains(':') {
             id
+        } else if already_resolved {
+            // `resolve_ref` returns a target path rooted at the resolved
+            // resource URI. If the target schema repeats that URI in `$id`,
+            // carrying it through evaluation must not join the identifier a
+            // second time (which duplicates relative directory IDs).
+            current_base
         } else {
             resolve_schema_uri(self.dialect, &parent, &id).unwrap_or(id)
         };
@@ -6236,6 +6269,8 @@ fn active_keywords(d: SchemaDialect) -> &'static [&'static str] {
             "properties",
             "propertyNames",
             "required",
+            "then",
+            "else",
             "type",
             "unevaluatedItems",
             "unevaluatedProperties",
@@ -6995,12 +7030,28 @@ fn find_anchor<'a>(
         node: &'a Value,
         name: &str,
         dialect: SchemaDialect,
+        is_root: bool,
         ctx: &mut Context<'_>,
         path: &Utf16,
     ) -> Result<Option<&'a Value>, EngineError> {
         ctx.charge_work(1, path.clone())?;
         match node {
             Value::Object(members) => {
+                // Anchors are scoped to a schema resource. A nested resource
+                // may reuse the same anchor name, but it is not a candidate
+                // for a reference whose base URI selected the enclosing root.
+                if !is_root {
+                    let resource_id = match dialect {
+                        SchemaDialect::Draft3 | SchemaDialect::Draft4 => get(node, "id"),
+                        _ => get(node, "$id"),
+                    };
+                    if resource_id
+                        .and_then(as_utf8)
+                        .is_some_and(|id| !id.is_empty() && !id.starts_with('#'))
+                    {
+                        return Ok(None);
+                    }
+                }
                 let matches = ["$anchor", "$dynamicAnchor"]
                     .iter()
                     .any(|key| member(members, key).and_then(as_utf8).as_deref() == Some(name));
@@ -7008,7 +7059,7 @@ fn find_anchor<'a>(
                     return Ok(Some(node));
                 }
                 for value in schema_child_values(node, dialect, ctx, path)? {
-                    if let Some(found) = visit(value, name, dialect, ctx, path)? {
+                    if let Some(found) = visit(value, name, dialect, false, ctx, path)? {
                         return Ok(Some(found));
                     }
                 }
@@ -7016,7 +7067,7 @@ fn find_anchor<'a>(
             }
             Value::Array(items) => {
                 for item in items {
-                    if let Some(found) = visit(item, name, dialect, ctx, path)? {
+                    if let Some(found) = visit(item, name, dialect, false, ctx, path)? {
                         return Ok(Some(found));
                     }
                 }
@@ -7025,7 +7076,7 @@ fn find_anchor<'a>(
             _ => Ok(None),
         }
     }
-    visit(root, name, dialect, ctx, path)
+    visit(root, name, dialect, true, ctx, path)
 }
 fn as_utf8(v: &Value) -> Option<String> {
     if let Value::String(x) = v {
@@ -9095,5 +9146,92 @@ mod static_reference_resolution_tests {
 
         let dynamic_fallback = r##"{"$id":"https://example.test/root","$defs":{"target":{"$anchor":"plain","type":"integer"}},"$dynamicRef":"#plain"}"##;
         assert!(compile(dynamic_fallback, vec![]).is_ok());
+    }
+
+    #[test]
+    fn then_and_else_resources_are_available_to_sibling_refs() {
+        for keyword in ["then", "else"] {
+            let schema = format!(
+                r#"{{"$schema":"https://json-schema.org/draft/2020-12/schema","$ref":"http://example.com/ref/{keyword}","{keyword}":{{"$id":"http://example.com/ref/{keyword}","type":"integer"}}}}"#
+            );
+            let compiled = compile(&schema, vec![]).unwrap();
+            assert!(compiled
+                .validate(&value("12"), &mut Context::ordinary())
+                .unwrap()
+                .is_empty());
+            assert!(!compiled
+                .validate(&value("\"no\""), &mut Context::ordinary())
+                .unwrap()
+                .is_empty());
+        }
+    }
+
+    #[test]
+    fn anchor_resolution_skips_nested_resources_with_the_same_anchor() {
+        let schema = r##"{"$schema":"https://json-schema.org/draft/2020-12/schema","$id":"http://localhost:1234/draft2020-12/foobar","$defs":{"A":{"$id":"child1","allOf":[{"$id":"child2","$anchor":"my_anchor","type":"number"},{"$anchor":"my_anchor","type":"string"}]}},"$ref":"child1#my_anchor"}"##;
+        let compiled = compile(schema, vec![]).unwrap();
+        assert!(compiled
+            .validate(&value("\"a\""), &mut Context::ordinary())
+            .unwrap()
+            .is_empty());
+        assert!(!compiled
+            .validate(&value("1"), &mut Context::ordinary())
+            .unwrap()
+            .is_empty());
+    }
+
+    #[test]
+    fn referenced_relative_id_resource_is_not_rebased_a_second_time() {
+        let embedded = r##"{"$schema":"https://json-schema.org/draft/2020-12/schema","$id":"https://example.com/draft2020-12/ref-and-id3/base.json","$ref":"nested/foo.json","$defs":{"foo":{"$id":"nested/foo.json","$ref":"./bar.json"},"bar":{"$id":"nested/bar.json","type":"number"}}}"##;
+        let compiled = compile(embedded, vec![]).unwrap();
+        assert!(compiled
+            .validate(&value("5"), &mut Context::ordinary())
+            .unwrap()
+            .is_empty());
+        assert!(!compiled
+            .validate(&value("\"a\""), &mut Context::ordinary())
+            .unwrap()
+            .is_empty());
+
+        let changed_folder = r##"{"$schema":"https://json-schema.org/draft/2020-12/schema","$id":"http://localhost:1234/draft2020-12/scope_change_defs1.json","type":"object","properties":{"list":{"$ref":"baseUriChangeFolder/"}},"$defs":{"baz":{"$id":"baseUriChangeFolder/","type":"array","items":{"$ref":"folderInteger.json"}}}}"##;
+        let compiled = compile(
+            changed_folder,
+            vec![(
+                "http://localhost:1234/draft2020-12/baseUriChangeFolder/folderInteger.json",
+                r#"{"$schema":"https://json-schema.org/draft/2020-12/schema","type":"integer"}"#,
+            )],
+        )
+        .unwrap();
+        assert!(compiled
+            .validate(&value(r#"{"list":[1]}"#), &mut Context::ordinary())
+            .unwrap()
+            .is_empty());
+        assert!(!compiled
+            .validate(&value(r#"{"list":["a"]}"#), &mut Context::ordinary())
+            .unwrap()
+            .is_empty());
+    }
+
+    #[test]
+    fn parent_uri_suffix_is_not_mistaken_for_a_resolved_child_id() {
+        let schema = r##"{"$schema":"https://json-schema.org/draft/2020-12/schema","$id":"https://example.test/dir/foobar/","properties":{"x":{"$id":"bar/","$ref":"target"}}}"##;
+        let compiled = compile(
+            schema,
+            vec![
+                (
+                    "https://example.test/dir/foobar/bar/target",
+                    r#"{"type":"string"}"#,
+                ),
+                (
+                    "https://example.test/dir/foobar/target",
+                    r#"{"type":"integer"}"#,
+                ),
+            ],
+        )
+        .unwrap();
+        assert!(compiled
+            .validate(&value(r#"{"x":"ok"}"#), &mut Context::ordinary())
+            .unwrap()
+            .is_empty());
     }
 }
