@@ -17,6 +17,7 @@ pub mod access_stream;
 pub mod access_values;
 pub mod access_related_keys;
 pub mod avro_fields;
+pub mod avro_document;
 pub mod operation_values;
 pub mod outcome_values;
 pub mod protobuf_descriptor;
