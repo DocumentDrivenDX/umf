@@ -20,6 +20,7 @@ pub mod avro_fields;
 pub mod operation_values;
 pub mod outcome_values;
 pub mod protobuf_descriptor;
+pub mod protobuf_document;
 pub mod protobuf_inspect;
 pub mod bit128;
 pub mod cardinality;
