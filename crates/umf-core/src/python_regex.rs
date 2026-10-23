@@ -17,6 +17,7 @@ pub enum PythonReVersion {
     V3_11,
     V3_12,
     V3_13,
+    V3_14,
 }
 
 impl PythonReVersion {
@@ -25,6 +26,7 @@ impl PythonReVersion {
             11 => Ok(Self::V3_11),
             12 => Ok(Self::V3_12),
             13 => Ok(Self::V3_13),
+            14 => Ok(Self::V3_14),
             _ => Err(PythonRegexError::profile(minor)),
         }
     }
@@ -34,6 +36,7 @@ impl PythonReVersion {
             Self::V3_11 => 11,
             Self::V3_12 => 12,
             Self::V3_13 => 13,
+            Self::V3_14 => 14,
         }
     }
 }
@@ -1201,6 +1204,7 @@ fn is_word(c: u32, flags: Flags, version: PythonReVersion) -> bool {
         PythonReVersion::V3_11 => tables::WORD_V3_11,
         PythonReVersion::V3_12 => tables::WORD_V3_12,
         PythonReVersion::V3_13 => tables::WORD_V3_13,
+        PythonReVersion::V3_14 => tables::WORD_V3_14,
     };
     in_ranges(c, r)
 }
@@ -1209,6 +1213,7 @@ fn decimal_digit(c: u32, version: PythonReVersion) -> Option<u32> {
         PythonReVersion::V3_11 => tables::DIGIT_V3_11,
         PythonReVersion::V3_12 => tables::DIGIT_V3_12,
         PythonReVersion::V3_13 => tables::DIGIT_V3_13,
+        PythonReVersion::V3_14 => tables::DIGIT_V3_14,
     };
     ranges
         .binary_search_by(|(start, end)| {
@@ -1249,6 +1254,7 @@ fn is_digit(c: u32, flags: Flags, version: PythonReVersion) -> bool {
         PythonReVersion::V3_11 => tables::DIGIT_V3_11,
         PythonReVersion::V3_12 => tables::DIGIT_V3_12,
         PythonReVersion::V3_13 => tables::DIGIT_V3_13,
+        PythonReVersion::V3_14 => tables::DIGIT_V3_14,
     };
     in_ranges(c, r)
 }
@@ -1260,6 +1266,7 @@ fn is_space(c: u32, flags: Flags, version: PythonReVersion) -> bool {
         PythonReVersion::V3_11 => tables::SPACE_V3_11,
         PythonReVersion::V3_12 => tables::SPACE_V3_12,
         PythonReVersion::V3_13 => tables::SPACE_V3_13,
+        PythonReVersion::V3_14 => tables::SPACE_V3_14,
     };
     in_ranges(c, r)
 }
@@ -1272,6 +1279,7 @@ fn valid_group_name(name: &str, version: PythonReVersion) -> bool {
         PythonReVersion::V3_11 => (tables::IDSTART_V3_11, tables::IDCONTINUE_V3_11),
         PythonReVersion::V3_12 => (tables::IDSTART_V3_12, tables::IDCONTINUE_V3_12),
         PythonReVersion::V3_13 => (tables::IDSTART_V3_13, tables::IDCONTINUE_V3_13),
+        PythonReVersion::V3_14 => (tables::IDSTART_V3_14, tables::IDCONTINUE_V3_14),
     };
     in_ranges(first as u32, start) && chars.all(|ch| in_ranges(ch as u32, cont))
 }
@@ -1346,6 +1354,7 @@ fn simple_fold(c: u32, v: PythonReVersion) -> u32 {
         PythonReVersion::V3_11 => tables::LOWER_V3_11,
         PythonReVersion::V3_12 => tables::LOWER_V3_12,
         PythonReVersion::V3_13 => tables::LOWER_V3_13,
+        PythonReVersion::V3_14 => tables::LOWER_V3_14,
     };
     pairs
         .binary_search_by_key(&c, |p| p.0)
@@ -1356,6 +1365,7 @@ fn lower_reverse(v: PythonReVersion) -> &'static [(u32, u32)] {
         PythonReVersion::V3_11 => tables::LOWER_REVERSE_V3_11,
         PythonReVersion::V3_12 => tables::LOWER_REVERSE_V3_12,
         PythonReVersion::V3_13 => tables::LOWER_REVERSE_V3_13,
+        PythonReVersion::V3_14 => tables::LOWER_REVERSE_V3_14,
     }
 }
 fn casefix(v: PythonReVersion) -> &'static [(u32, u32)] {
@@ -1363,6 +1373,7 @@ fn casefix(v: PythonReVersion) -> &'static [(u32, u32)] {
         PythonReVersion::V3_11 => tables::CASEFIX_V3_11,
         PythonReVersion::V3_12 => tables::CASEFIX_V3_12,
         PythonReVersion::V3_13 => tables::CASEFIX_V3_13,
+        PythonReVersion::V3_14 => tables::CASEFIX_V3_14,
     }
 }
 fn casefix_reverse(v: PythonReVersion) -> &'static [(u32, u32)] {
@@ -1370,6 +1381,7 @@ fn casefix_reverse(v: PythonReVersion) -> &'static [(u32, u32)] {
         PythonReVersion::V3_11 => tables::CASEFIX_REVERSE_V3_11,
         PythonReVersion::V3_12 => tables::CASEFIX_REVERSE_V3_12,
         PythonReVersion::V3_13 => tables::CASEFIX_REVERSE_V3_13,
+        PythonReVersion::V3_14 => tables::CASEFIX_REVERSE_V3_14,
     }
 }
 fn has_pair(pairs: &[(u32, u32)], left: u32, right: u32) -> bool {
@@ -1463,7 +1475,7 @@ fn anchor_matches(a: Anchor, f: Flags, text: &[u32], pos: usize, v: PythonReVers
                 || (f.has(Flags::MULTILINE) && text.get(pos) == Some(&10))
         }
         Anchor::Boundary(neg) => {
-            if neg && text.is_empty() {
+            if neg && text.is_empty() && v != PythonReVersion::V3_14 {
                 return false;
             }
             let left = pos > 0 && is_word(text[pos - 1], f, v);
@@ -1841,7 +1853,9 @@ impl<'ctx, 'host> Parser<'ctx, 'host> {
                                     self.err("global flags not at the start of the expression")
                                 );
                             }
-                            if self.version == PythonReVersion::V3_13 && on.contains(&116) {
+                            if matches!(self.version, PythonReVersion::V3_13 | PythonReVersion::V3_14)
+                                && on.contains(&116)
+                            {
                                 return Err(self.err("invalid global flag"));
                             }
                             if (saved.has(Flags::ASCII) && on.contains(&117))
@@ -1954,7 +1968,9 @@ impl<'ctx, 'host> Parser<'ctx, 'host> {
                         .iter()
                         .all(|c| matches!(*c, 105 | 109 | 115 | 120 | 97 | 117 | 116))
                 {
-                    if self.version == PythonReVersion::V3_13 && spec.contains(&116) {
+                    if matches!(self.version, PythonReVersion::V3_13 | PythonReVersion::V3_14)
+                        && spec.contains(&116)
+                    {
                         return Err(self.err("invalid global flag"));
                     }
                     for c in spec {
@@ -2054,7 +2070,7 @@ impl<'ctx, 'host> Parser<'ctx, 'host> {
         Ok(s)
     }
     fn parse_quantifier(&mut self, n: Node) -> Result<Node, PythonRegexError> {
-        if self.version != PythonReVersion::V3_13
+        if !matches!(self.version, PythonReVersion::V3_13 | PythonReVersion::V3_14)
             && self.flags.has(Flags::TEMPLATE)
             && matches!(self.peek(), Some(42 | 43 | 63 | 123))
         {
@@ -2222,6 +2238,10 @@ impl<'ctx, 'host> Parser<'ctx, 'host> {
             87 => Node::Class(singlecat(Category::Word, true), f),
             65 => Node::Anchor(Anchor::AbsoluteBeginning, f),
             90 => Node::Anchor(Anchor::AbsoluteEnd, f),
+            122 if !in_class && self.version == PythonReVersion::V3_14 => {
+                Node::Anchor(Anchor::AbsoluteEnd, f)
+            }
+            122 if !in_class => return Err(self.err("bad escape")),
             98 if !in_class => Node::Anchor(Anchor::Boundary(false), f),
             66 if !in_class => Node::Anchor(Anchor::Boundary(true), f),
             98 => Node::Literal(8, f),
@@ -2509,8 +2529,9 @@ mod tests {
     }
     #[test]
     fn invalid_syntax_and_version_are_explicit() {
+        assert_eq!(PythonReVersion::from_minor(14), Ok(PythonReVersion::V3_14));
         assert_eq!(
-            PythonReVersion::from_minor(14).unwrap_err().code(),
+            PythonReVersion::from_minor(15).unwrap_err().code(),
             "PYTHON_REGEX_PROFILE_UNAVAILABLE"
         );
         assert!(PythonRegex::compile(&Utf16::from("(?<=a+)b"), PythonReVersion::V3_11).is_err());
@@ -2535,6 +2556,16 @@ mod tests {
         // line-break property.
         assert_eq!(find("a.$", "a\r"), Some((0, 2)));
         assert_eq!(find("a.$", "a\n"), None);
+    }
+
+    #[test]
+    fn python_314_regex_release_deltas_are_versioned() {
+        assert!(PythonRegex::compile(&Utf16::from(r"\z"), PythonReVersion::V3_13).is_err());
+        assert!(PythonRegex::compile(&Utf16::from(r"\z"), PythonReVersion::V3_14).is_ok());
+        let before = PythonRegex::compile(&Utf16::from(r"\B"), PythonReVersion::V3_13).unwrap();
+        let after = PythonRegex::compile(&Utf16::from(r"\B"), PythonReVersion::V3_14).unwrap();
+        assert_eq!(before.find_from_codepoints(&[], 0), None);
+        assert_eq!(after.find_from_codepoints(&[], 0), Some((0, 0)));
     }
     #[test]
     fn unicode_classes_and_versioned_tables() {
