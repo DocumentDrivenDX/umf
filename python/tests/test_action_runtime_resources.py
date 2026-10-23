@@ -8,6 +8,7 @@ import importlib.util
 import json
 import os
 import shutil
+import struct
 from pathlib import Path
 
 import pytest
@@ -272,9 +273,23 @@ def test_full_wheel_hook_initialization_keeps_resource_targets_disjoint(
 
     def fake_cargo(command, *, cwd, env, check):
         assert command[0] == "fake-cargo"
-        extension = target / "release" / "lib_rust_core.dylib"
+        extension_root = target
+        cpu_type = 0x0100000C
+        if "--target" in command:
+            native_target = command[command.index("--target") + 1]
+            cpu_type = {
+                "aarch64-apple-darwin": 0x0100000C,
+                "x86_64-apple-darwin": 0x01000007,
+            }[native_target]
+            extension_root = extension_root / native_target
+        extension = extension_root / "release" / "lib_rust_core.dylib"
         extension.parent.mkdir(parents=True)
-        extension.write_bytes(b"test-only fake compiled payload")
+        minimum_os = 11 << 16
+        version_command = struct.pack("<IIIIII", 0x32, 24, 1, minimum_os, minimum_os, 0)
+        header = struct.pack(
+            "<IiiIIIII", 0xFEEDFACF, cpu_type, 0, 2, 1, len(version_command), 0, 0
+        )
+        extension.write_bytes(header + version_command)
 
     monkeypatch.setattr(build_hook.subprocess, "run", fake_cargo)
     hook = build_hook.CustomBuildHook(

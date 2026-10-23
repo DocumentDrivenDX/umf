@@ -398,3 +398,66 @@ root-output symlink refusal. Existing ignored-directory behavior is preserved.
 Those owner-executed controls are distinct from the reviewer's source/hash
 inspection. Fresh hosted artifact rebuild and both installed qualifications
 remain pending.
+
+## Hosted dual-artifact result and macOS fixture repair
+
+At reviewed head `ef8962a02acb32a92aac408877383076828b7380`, run
+`40023461006` used producing merge
+`f7d35d6aed63f83bc806dfde12137835b953ba01`; the coordinator verified its tree
+matches that head. The Linux job `120653647455` passed both artifact gates.
+Independent original-byte/receipt/XML review confirms 237 passing tests with
+zero failures, errors or skips for each wheel, including the exact 139 core
+case IDs, source custody, exact non-native/METADATA/WHEEL parity and each
+artifact's own installed pre/post parity. This remains the observed Ubuntu
+24.04 x86_64, CPython 3.11.17, glibc 2.39 cohort. It supplies no macOS or
+portable-Linux qualification.
+
+The same run's macOS job `120653647206` completed actual wheel/source builds,
+strict source custody and rebuild, and both isolated installs/payload checks.
+Its direct test suite then reported 236 passing tests and one failure, with
+zero errors or skips. The failure was the source test
+`test_full_wheel_hook_initialization_keeps_resource_targets_disjoint`: its
+fake Cargo callback wrote to the old unqualified `release` directory while
+the hook now correctly uses the explicit `aarch64-apple-darwin/release`
+output. The rebuilt wheel's runtime suite was skipped after that failure;
+its successful post-test payload check cannot imply those tests ran. The
+final receipt correctly records `failed_or_incomplete` for both artifacts.
+
+The retained macOS artifact `12532102000` has ZIP SHA-256
+`9baabad8f9d7f651f23673aa27b5072b368d6bce9aedb8fc10edf5e4945ab1c5`.
+Independent hashing of its originals records direct wheel
+`abe8736d2a3ee1f7b6cb8382de7b9d0073091da1b80a1c1bbbeb2ee43cc16af8`,
+rebuilt wheel
+`592891dbb7510c8f487bd78094316ce37adbcc499f64a9931ce1c378a1f5ad50`,
+and shared source archive
+`f58afbe335a741a26980f45803c567730136a2b19383699291771e04b76c447d`.
+The failed qualification receipt SHA-256 is
+`45f1d129ae3dd859603aaaa1f9d9b15405e2ff1e1f54126bafc0389fbf2ba655`;
+the original direct-suite XML is
+`220cf1e8d8397f0dbea2b740765e7ea42bb0f3b4111421e51cd47aa995caada3`.
+These identities preserve the failed attempt, not qualified macOS assets.
+
+The repair must update only that synthetic callback's target path and provide
+valid synthetic Mach-O bytes for the declared CPU/minimum OS. Real native
+inspection and both actual installed gates remain unchanged. A local rerun of
+that source fixture, if performed against the retained unqualified SDK, proves
+only the fixture repair. Fresh complete hosted macOS qualification, final
+source checks, owner publication and Arras default public-extra acceptance
+remain mandatory.
+
+Independent static review cleared the test-only callback repair at SHA-256
+`3a08e3ad28da280334ecc75ef215025b2a6241d00b3659dff95a7ea384f7bd71`.
+The fake now follows the actual Cargo target argument and uses a closed CPU
+mapping for the hook's existing ARM64 and x86_64 Darwin targets, with bounded
+synthetic LC_BUILD_VERSION bytes declaring macOS 11.0. This preserves source
+test behavior for both branches without adding an Intel artifact support
+claim. No production hook, inspector or qualification gate changed.
+
+The implementation owner reran only the changed source fixture in a fresh
+local environment with the exact hosted Hatchling 1.27.0 and retained failed
+macOS direct wheel `abe8736d2a3ee1f7b6cb8382de7b9d0073091da1b80a1c1bbbeb2ee43cc16af8`:
+one test passed in 3.01 seconds. Ruff, format and diff checks also passed.
+The independent reviewer read/hashed the diff and did not execute this test.
+This is partial fixture-repair evidence, not an installed artifact
+qualification or a replacement for either hosted runtime suite. New hosted
+source and complete direct/rebuilt artifact gates remain required.
