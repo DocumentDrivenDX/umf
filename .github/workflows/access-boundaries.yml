@@ -195,10 +195,29 @@ jobs:
           toolchain: 1.90.0
       - run: bun install --frozen-lockfile
       - run: cargo test --locked -p umf-cli -p umf-codegen
-      - name: Build and install the exact native core wheel
+      - name: Test the native binary closure gate
+        run: python scripts/rust-migration/r4/test_binary_closure.py
+      - name: Build native core and codegen wheels through extracted sdists
         run: |
           python -m pip install build==1.3.0 hatchling==1.27.0
-          python -m build --wheel --outdir /tmp/umf-core-codegen-wheels python
+          cargo fetch --locked
+          python -m build --sdist --outdir /tmp/umf-core-codegen-sdists python
+          mkdir -p /tmp/umf-core-codegen-extracted
+          tar -xzf /tmp/umf-core-codegen-sdists/umf_core-0.11.0.tar.gz \
+            -C /tmp/umf-core-codegen-extracted
+          test -d /tmp/umf-core-codegen-extracted/umf_core-0.11.0
+          CARGO_TARGET_DIR=/tmp/umf-r4-sdist-cargo-target CARGO_NET_OFFLINE=true \
+            python -m build --no-isolation --wheel \
+            /tmp/umf-core-codegen-extracted/umf_core-0.11.0 \
+            --outdir /tmp/umf-core-codegen-wheels
+          python -m build --sdist --outdir /tmp/umf-codegen-sdists python/umf_codegen
+          mkdir -p /tmp/umf-codegen-extracted
+          tar -xzf /tmp/umf-codegen-sdists/umf_codegen-0.2.0.tar.gz \
+            -C /tmp/umf-codegen-extracted
+          test -d /tmp/umf-codegen-extracted/umf_codegen-0.2.0
+          python -m build --no-isolation --wheel \
+            /tmp/umf-codegen-extracted/umf_codegen-0.2.0 \
+            --outdir /tmp/umf-codegen-wheels
           python -m pip install /tmp/umf-core-codegen-wheels/*.whl
           python -I -c 'from importlib.metadata import version; from umf._rust import _rust_core; assert version("umf-core") == "0.11.0"; assert _rust_core.codegen_protocol_version() == "umf-codegen-r3-seven-ops-nine-resources/1"'
       - run: python scripts/check-codegen-boundaries.py
@@ -208,18 +227,59 @@ jobs:
       - run: bun scripts/table-deployment-corpus.ts /tmp/umf-deployment-corpus.json
       - run: bun scripts/table-migration-corpus.ts /tmp/umf-migration-corpus.json
       - run: bun scripts/table-reviewed-changes-corpus.ts /tmp/umf-reviewed-changes-corpus.json
-      - name: Build wheel through the self-contained source distribution
-        run: python -m build python/umf_codegen --outdir /tmp/umf-codegen-wheels
-      - name: Install the native packages into a clean environment
+      - name: Install the sdist-built native packages into a clean environment
         run: |
           python -m venv /tmp/umf-codegen-installed
           /tmp/umf-codegen-installed/bin/python -m pip --isolated install \
             --disable-pip-version-check --no-cache-dir 'pydantic==2.14.1'
           /tmp/umf-codegen-installed/bin/python -m pip --isolated install \
             --disable-pip-version-check --no-cache-dir --no-index --no-deps \
-            /tmp/umf-core-codegen-wheels/*.whl /tmp/umf-codegen-wheels/*.whl
+            /tmp/umf-core-codegen-wheels/umf_core-*.whl \
+            /tmp/umf-codegen-wheels/umf_codegen-*.whl
           /tmp/umf-codegen-installed/bin/python -I -m pip check
-          /tmp/umf-codegen-installed/bin/python -I -c 'from importlib.metadata import requires, version; assert version("umf-core") == "0.11.0"; assert version("umf-codegen") == "0.2.0"; assert not any("mini-racer" in item.lower() or "v8" in item.lower() for item in (requires("umf-codegen") or []))'
+          /tmp/umf-codegen-installed/bin/python -I -c 'from importlib.metadata import distributions, requires, version; assert version("umf-core") == "0.11.0"; assert version("umf-codegen") == "0.2.0"; metadata = (requires("umf-core") or []) + (requires("umf-codegen") or []); names = [distribution.metadata.get("Name", "").lower() for distribution in distributions()]; assert not any("mini-racer" in item.lower() or "v8" in item.lower() for item in metadata); assert not any("mini-racer" in name or "v8" in name for name in names)'
+          /tmp/umf-codegen-installed/bin/python -I - <<'PY' > /tmp/umf-binary-closure.json
+          import subprocess
+          import sys
+          import sysconfig
+          from pathlib import Path
+          root = Path(sysconfig.get_paths()["purelib"])
+          script = Path("scripts/rust-migration/r4/check_binary_closure.py").resolve()
+          binaries = [root / "umf/_rust_core.abi3.so", root / "umf/_bin/umf"]
+          subprocess.run([sys.executable, "-I", str(script), "--package-root", str(root), "--cli-binary", str(binaries[1]), *(str(path) for path in binaries)], check=True)
+          PY
+          rm -rf /tmp/umf-r4-sdist-cargo-target
+          env -i PATH='' /tmp/umf-codegen-installed/lib/python*/site-packages/umf/_bin/umf codegen --capabilities > /tmp/umf-cli-capabilities.json
+          env -i PATH='' /tmp/umf-codegen-installed/bin/python -I -c 'from umf._rust import _rust_core; assert _rust_core.codegen_protocol_version() == "umf-codegen-r3-seven-ops-nine-resources/1"'
+      - name: Bind built distributions to checked source closure
+        run: |
+          python - <<'PY' > /tmp/umf-r4-build-source-artifact-closure.json
+          import hashlib
+          import json
+          import os
+          import sys
+          from glob import glob
+          from pathlib import Path
+          sys.path.insert(0, "scripts/rust-migration/r4")
+          from qualify import source_inventory
+          artifacts = sorted(Path(name) for pattern in (
+                  "/tmp/umf-core-codegen-sdists/*.tar.gz",
+                  "/tmp/umf-core-codegen-wheels/*.whl",
+                  "/tmp/umf-codegen-sdists/*.tar.gz",
+                  "/tmp/umf-codegen-wheels/*.whl",
+              ) for name in glob(pattern))
+          assert len(artifacts) == 4, f"expected four built distributions, got {artifacts}"
+          artifact_records = [
+              {"path": str(path), "bytes": path.stat().st_size,
+               "sha256": hashlib.sha256(path.read_bytes()).hexdigest()}
+              for path in artifacts
+          ]
+          print(json.dumps({
+              "buildRevision": os.environ["GITHUB_SHA"],
+              "sourceClosure": source_inventory(),
+              "artifacts": artifact_records,
+          }, sort_keys=True, indent=2))
+          PY
       - name: Run codegen unit tests against the installed native packages
         run: /tmp/umf-codegen-installed/bin/python -I -m unittest discover -s python/umf_codegen/tests -v
       - name: Installed row_scope normalizer parity
@@ -254,6 +314,13 @@ jobs:
             /tmp/umf-deployment-python.json
             /tmp/umf-migration-python.json
             /tmp/umf-reviewed-changes-python.json
+            /tmp/umf-binary-closure.json
+            /tmp/umf-cli-capabilities.json
+            /tmp/umf-r4-build-source-artifact-closure.json
+            /tmp/umf-core-codegen-sdists/*
+            /tmp/umf-core-codegen-wheels/*
+            /tmp/umf-codegen-sdists/*
+            /tmp/umf-codegen-wheels/*
 
 
   native-sessions:

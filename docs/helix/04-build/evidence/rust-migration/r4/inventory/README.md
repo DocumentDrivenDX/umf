@@ -37,19 +37,19 @@ ddx:
       kind: informed_by
 ---
 
-# Current R4–R8 successor census
+# R4–R8 successor census capture
 
-This packet is the live successor to the historical [R0 inventory](../../r0/README.md)
+This packet is a captured successor to the historical [R0 inventory](../../r0/README.md)
 and [R3 inventory](../../r3/README.md). It leaves both packets unchanged. The
-machine-readable [census](census.json) binds current TypeScript and Python source
+machine-readable [census](census.json) binds captured TypeScript and Python source
 hashes, compiler-derived TypeScript exports/imports, Python exports/imports,
 declared algorithms, active script roots, family owner roles, migration tracks,
 retirement dispositions, R3 source-manifest membership, and unresolved rows.
 
-## Current capture
+## Captured cohort
 
-The captured cohort contains 572 source modules: 471 TypeScript and 101 Python.
-The R0/R3 activation walker found 306 active scripts. The census records 31
+The captured cohort contains 571 source modules: 471 TypeScript and 100 Python.
+The R0/R3 activation walker found 305 active scripts. The census records 31
 active R7 metamodel, reference, and schema-browser build scripts. It tracks all
 nine R3 operation families: seven Python bridge operations and the stage-one
 access package generator and diff. R3 operation roots are marked ported; shared
@@ -84,15 +84,15 @@ UV_CACHE_DIR=/private/tmp/umf-r4-uv-cache uv run --offline --no-project --python
 The capture reuses `scripts/rust-inventory.py` and its TypeScript compiler
 export/import resolver, but writes only this R4 census. It reads the immutable R3
 baseline and supplement source manifests to label exact R3 overlap. `--check`
-compares the regenerated census without writing it. The current source cohort
-hash is recorded in `census.json`; any source change requires a fresh capture.
-This snapshot was captured at `2026-10-23T12:50:04Z`. Its source cohort SHA-256
-is `a4b884f53680d2b677b72e422a23b59a399d8e843c835a83bb4c6999f129282d`, and the
-captured `census.json` SHA-256 is
-`5ce65f0ffddec107b9ada9978011e52a465cccab947d554540ee02b3d56bf38e`. Concurrent
-R4 edits may make `--check` fail after this capture; the check now prints the
-source cohort transition and changed module paths so the snapshot can be
-refreshed deliberately.
+compares the regenerated census without writing it. The captured source cohort
+SHA-256 is
+`ffc7aaf5235a72d79de9ff53b2933713cdd3cb27de2cdc74423a332358ae1771`,
+and the captured `census.json` SHA-256 is
+`a7c720915d91a28f938d7a8124f53212c8d3a4196a93cd1c779f432d30eaa66f`.
+The earlier 572-module/101-Python capture was superseded; neither snapshot
+qualifies later R5/R6 edits or merged main. A source change requires a fresh
+capture before a live-ownership claim. `--check` prints cohort transitions and
+changed module paths so the census can be refreshed deliberately.
 
 ## First bounded R5 candidate
 

@@ -67,6 +67,8 @@ SOURCE_FILES = [
     "scripts/build-codegen.ts",
     "scripts/rust-migration/r4/measure_decode.py",
     "scripts/rust-migration/r4/qualify.py",
+    "scripts/rust-migration/r4/check_binary_closure.py",
+    "scripts/rust-migration/r4/test_binary_closure.py",
     *RESOURCE_SOURCES,
 ]
 
