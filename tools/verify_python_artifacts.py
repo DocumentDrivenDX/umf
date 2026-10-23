@@ -519,6 +519,9 @@ def _extract_sdist(
 
 
 def _rebuild_sdist_wheel(sdist: Path, output_dir: Path, expected_version: str) -> Path:
+    output_dir.mkdir(parents=True, exist_ok=True)
+    if any(output_dir.iterdir()):
+        raise ValueError("Retained sdist-rebuild wheel directory must be empty")
     with tempfile.TemporaryDirectory(prefix="umf-action-sdist-") as temporary:
         temp_root = Path(temporary)
         source_root = _extract_sdist(sdist, temp_root / "source", expected_version)
@@ -541,17 +544,20 @@ def _rebuild_sdist_wheel(sdist: Path, output_dir: Path, expected_version: str) -
         wheels = list(rebuilt.glob("*.whl"))
         if len(wheels) != 1:
             raise ValueError("Source archive did not rebuild to exactly one wheel")
-        output_dir.mkdir(parents=True, exist_ok=True)
         target = output_dir / wheels[0].name
         target.write_bytes(wheels[0].read_bytes())
         return target
 
 
-def _wheel_package_bytes(path: Path) -> tuple[dict[str, bytes], str, str]:
+def _wheel_package_bytes(
+    path: Path,
+) -> tuple[dict[str, bytes], str, str, str]:
     with zipfile.ZipFile(path) as archive:
         names = [name for name in archive.namelist() if not name.endswith("/")]
         package = {
-            name: archive.read(name) for name in names if name.startswith("umf/")
+            name: archive.read(name)
+            for name in names
+            if name.startswith("umf/") and name != NATIVE_MEMBER
         }
         dist_info = next(
             name.split("/", 1)[0] for name in names if ".dist-info/" in name
@@ -565,7 +571,33 @@ def _wheel_package_bytes(path: Path) -> tuple[dict[str, bytes], str, str]:
             for line in wheel.splitlines()
             if line.startswith("Tag: ")
         )
-        return package, metadata.get("Version", ""), tag
+        return (
+            package,
+            metadata.get("Version", ""),
+            tag,
+            _sha256(archive.read(NATIVE_MEMBER)),
+        )
+
+
+def _compare_wheel_package_sources(direct: Path, rebuilt: Path) -> dict[str, Any]:
+    direct_payload, direct_version, direct_tag, direct_native = _wheel_package_bytes(
+        direct
+    )
+    rebuilt_payload, rebuilt_version, rebuilt_tag, rebuilt_native = (
+        _wheel_package_bytes(rebuilt)
+    )
+    if direct_payload != rebuilt_payload:
+        raise ValueError("Source archive rebuild changed non-native package payload")
+    if direct_version != rebuilt_version:
+        raise ValueError("Source archive rebuild changed the distribution version")
+    if direct_tag != rebuilt_tag:
+        raise ValueError("Source archive rebuild changed the platform tag")
+    return {
+        "non_native_package_payload_matches": True,
+        "version_matches": True,
+        "tag_matches": True,
+        "native_byte_identity": direct_native == rebuilt_native,
+    }
 
 
 def verify(
@@ -573,6 +605,7 @@ def verify(
     repository: Path,
     expected_platform: str,
     sdist_path: Path | None,
+    rebuilt_wheel_directory: Path | None = None,
 ) -> dict[str, Any]:
     repository = repository.resolve()
     project = tomllib.loads((repository / "python/pyproject.toml").read_text())
@@ -614,6 +647,9 @@ def verify(
             "python_platform": sysconfig.get_platform(),
         },
         "wheel": wheel_info,
+        "artifacts": {
+            "direct": wheel_info,
+        },
         "package_payload_sha256": _sha256(
             json.dumps(
                 {
@@ -628,42 +664,27 @@ def verify(
         "action_runtime_resource_sha256": resource_hashes,
     }
     if sdist_path is not None:
+        if rebuilt_wheel_directory is None:
+            raise ValueError(
+                "A retained output directory is required for the sdist-rebuilt wheel"
+            )
         receipt["sdist"] = {
             "filename": sdist_path.name,
             "sha256": _sha256(sdist_path.read_bytes()),
         }
-        with tempfile.TemporaryDirectory(prefix="umf-rebuilt-wheel-") as temporary:
-            rebuilt = _rebuild_sdist_wheel(
-                sdist_path, Path(temporary), distribution_version
-            )
-            rebuilt_info = _validate_wheel(
-                rebuilt,
-                expected_payloads,
-                expected_licenses,
-                distribution_version,
-                expected_platform,
-            )
-            original_payload, original_version, original_tag = _wheel_package_bytes(
-                wheel_path
-            )
-            rebuilt_payload, rebuilt_version, rebuilt_tag = _wheel_package_bytes(
-                rebuilt
-            )
-            if (
-                original_payload != rebuilt_payload
-                or original_version != rebuilt_version
-                or original_tag != rebuilt_tag
-            ):
-                raise ValueError(
-                    "Source archive rebuild changed the exact wheel package payload"
-                )
-            receipt["sdist_rebuild"] = {
-                "wheel_sha256": rebuilt_info["sha256"],
-                "package_file_count": rebuilt_info["package_file_count"],
-                "tag": rebuilt_info["tag"],
-                "package_payload_matches": True,
-                "native_sha256": rebuilt_info["native_sha256"],
-            }
+        rebuilt = _rebuild_sdist_wheel(
+            sdist_path, rebuilt_wheel_directory, distribution_version
+        )
+        rebuilt_info = _validate_wheel(
+            rebuilt,
+            expected_payloads,
+            expected_licenses,
+            distribution_version,
+            expected_platform,
+        )
+        source_parity = _compare_wheel_package_sources(wheel_path, rebuilt)
+        receipt["artifacts"]["sdist_rebuilt"] = rebuilt_info
+        receipt["sdist_rebuild"] = source_parity
     return receipt
 
 
@@ -684,6 +705,11 @@ def main() -> int:
         default="auto",
     )
     parser.add_argument("--sdist", type=Path)
+    parser.add_argument(
+        "--rebuilt-wheel-directory",
+        type=Path,
+        help="Retain the independently rebuilt wheel in this separate directory",
+    )
     parser.add_argument("--receipt", type=Path)
     args = parser.parse_args()
     if args.verify_installed_wheel:
@@ -708,7 +734,13 @@ def main() -> int:
             args.receipt.write_text(encoded, encoding="utf-8")
         print(encoded, end="")
         return 0
-    receipt = verify(args.wheel, args.repository, args.expected_platform, args.sdist)
+    receipt = verify(
+        args.wheel,
+        args.repository,
+        args.expected_platform,
+        args.sdist,
+        args.rebuilt_wheel_directory,
+    )
     encoded = json.dumps(receipt, sort_keys=True, separators=(",", ":")) + "\n"
     if args.receipt is not None:
         args.receipt.parent.mkdir(parents=True, exist_ok=True)

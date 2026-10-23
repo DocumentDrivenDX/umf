@@ -191,26 +191,38 @@ The bounded implementation allocation is:
   Sol independently reviews source and actual artifact evidence. The UMF owner
   independently reviews the resulting PR and controls public publication.
 
-The new qualification matrix targets Ubuntu 24.04 x86_64 and macOS 15 arm64.
+The new qualification matrix targets Ubuntu 24.04 x86_64 with CPython 3.11.17
+and macOS 15 arm64 with CPython 3.11.9. The latter is the available exact
+setup-python artifact; a separately observed local 3.11.17 arm64 installation
+does not change the hosted cohort.
 The Linux wheel is qualified with its actual `linux_x86_64` tag; it must not be
 relabelled as manylinux or taken as proof for other Linux distributions. The
 macOS artifact must retain its actual platform/ABI tag. Record the precise
 Python, OS, architecture, build source and toolchain for each observed run;
 an abi3 tag alone does not supply runtime or platform evidence.
 
-Each selected platform must build the wheel and source distribution, verify the
-closed source/resource/native inventory and archive RECORD, then install the
-exact wheel in a fresh environment outside the checkout. Verify import origin,
-installed RECORD and payload parity before reporting installed results. Execute
-the genuine generated Apply/Validate client, fixed action source/vectors,
-resource refusal controls and core regression corpus without treating missing
-runtime capability as a skip. Retain the exact 139-case core corpus identity and
-results; Arras separately proves its fresh-empty-registry parity against the
-same selected public SDK. Rebuild from the source distribution and compare the
-resulting payloads, explicitly qualifying any native binary differences rather
-than asserting container-byte equality. Existing browser/shared-Rust boundary
-and regression gates remain applicable to changed semantic code; no wider
-browser execution or consumer backend claim follows from Python qualification.
+Each selected platform must explicitly build a source wheel and source
+distribution, then retain the wheel rebuilt from that source distribution as a
+second artifact. Require byte-exact non-native package/resource payloads and
+matching distribution version and platform tag. Record both wheel and native
+binary hashes, plus the observed native-byte-identity boolean. Different native
+bytes do not prove equivalent binaries or inherit the other wheel's test result.
+Preserve the macOS unstripped/debug-info safeguard; do not strip a binary or
+substitute an older native file to force identity.
+
+Install each wheel in its own fresh environment outside the checkout. Verify
+its exact package/metadata/RECORD/native bytes before imports and again after
+tests, with each parity receipt bound to that wheel. Execute the same genuine
+generated Apply/Validate client, fixed action source/vectors, resource refusal
+controls and core regression corpus for both artifacts. Each requires its own
+successful test step and positive JUnit count with zero failures, errors or
+skips; missing proof or a passing sibling cannot qualify it. The final receipt
+retains both outcomes and passes only when both are independently qualified.
+Retain the exact 139-case core corpus identity and results; Arras separately
+proves its fresh-empty-registry parity against the selected public SDK.
+Existing browser/shared-Rust boundary and regression gates remain applicable to
+changed semantic code; no wider browser execution or consumer backend claim
+follows from Python qualification.
 
 The workflow uploads artifacts and safe qualification receipts only; it neither
 publishes packages nor mutates tags or releases. The owner review requires the
@@ -226,3 +238,42 @@ historical provenance for this port, not new public `0.10.1` evidence. Installed
 `0.10.1` platform qualification, independent owner review, publication and the
 consumer's default public-extra proof remain pending until actual artifacts and
 receipts establish each gate.
+
+## Hosted attempts and dual-artifact qualification decision
+
+The earlier hosted attempt `40006842930` failed its strict source-archive
+check before installed qualification. The retained source distribution SHA-256
+is `baa0a9f42a4edeffa9e2ea302ba5a5d74c3f099e7d34c0985cfa921d3ceda3d2`.
+Archive-header review identified three duplicate, byte-identical license
+members from simultaneous explicit source-closure and Hatch license-file
+inclusion. The repair removes only the redundant explicit license routes;
+duplicate/link/traversal rejection remains mandatory. The source archive also
+contains legitimate nested project metadata, so extraction now selects the
+single safe top-level `umf-core` project rather than rejecting all nested
+`pyproject.toml` files. Neither repair qualifies the failed artifact.
+
+At source `c71be8f4117a3f8999e88760482e3c8b80ef982c`, the coordinator reported
+Linux run `40009761439`, job `120606811539`, built both artifacts but failed the
+strict complete-package rebuilt-payload equality check. No installed pass is
+claimed for that attempt. The same run's macOS job `120606811008` failed Python
+setup because the requested 3.11.17 arm64 setup artifact was unavailable; the
+hosted matrix is corrected to exact 3.11.9 arm64. These failures remain part of
+the execution history and do not become successful receipts after source fixes.
+
+Independent read/hash review of the earlier, separately qualified `0.10.0`
+macOS candidate already shows unequal native artifacts: primary native SHA-256
+`ea1b1522c173b39f8c5ef1d696a228c15d540fcc590fcf8c644cbd3911116b51`
+and source-rebuilt native SHA-256
+`d54703ae8fe08c1d0cbea362e731d7d63bc4a4af3cb75e6692ed4c0b89a6cd1b`.
+That packet retained an independent installed-rebuilt semantic probe. It is
+precedent for retaining distinct artifacts, not proof for the new SDK or an
+attribution of the new Linux difference to a particular compiler mechanism.
+
+The adopted repair replaces an unsupported reproducible-native assumption
+with the two actual installed gates specified above. It keeps source/resource
+identity strict, records native identity accurately, and requires real separate
+qualification rather than accepting a merely nonempty rebuilt extension.
+Both new hosted artifacts, their pre/post parity and test receipts, independent
+owner review, public release attachment and consumer public-extra qualification
+remain pending until their actual results are retained. No local SDK build was
+started for this decision, and no backend qualification follows from it.

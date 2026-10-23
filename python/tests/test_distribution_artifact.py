@@ -9,7 +9,13 @@ import csv
 import hashlib
 import importlib.util
 import io
+import json
+import os
+import re
+import subprocess
+import sys
 import tarfile
+import textwrap
 import tomllib
 import zipfile
 from pathlib import Path
@@ -32,13 +38,14 @@ def _wheel(
     *,
     version="0.10.1",
     tag="cp311-abi3-linux_x86_64",
+    native=b"native",
     corrupt_record=False,
 ):
     verifier = _verifier()
     dist_info = f"umf_core-{version}.dist-info"
     files = {
         **package,
-        verifier.NATIVE_MEMBER: b"native",
+        verifier.NATIVE_MEMBER: native,
         f"{dist_info}/METADATA": (
             f"Metadata-Version: 2.3\nName: umf-core\nVersion: {version}\n"
         ).encode(),
@@ -180,6 +187,63 @@ def test_macos_arm64_tag_is_accepted_only_for_the_arm64_cohort(tmp_path):
     assert result["tag"] == "cp311-abi3-macosx_11_0_arm64"
 
 
+def test_sdist_rebuild_accepts_distinct_native_bytes_without_claiming_identity(
+    tmp_path,
+):
+    verifier = _verifier()
+    package = {"umf/__init__.py": b"source"}
+    direct = _wheel(tmp_path / "direct.whl", package, native=b"native-direct")
+    rebuilt = _wheel(tmp_path / "rebuilt.whl", package, native=b"native-rebuilt")
+
+    parity = verifier._compare_wheel_package_sources(direct, rebuilt)
+
+    assert parity == {
+        "non_native_package_payload_matches": True,
+        "version_matches": True,
+        "tag_matches": True,
+        "native_byte_identity": False,
+    }
+
+
+@pytest.mark.parametrize(
+    ("rebuilt_package", "version", "tag", "message"),
+    [
+        (
+            {"umf/__init__.py": b"changed"},
+            "0.10.1",
+            "cp311-abi3-linux_x86_64",
+            "non-native",
+        ),
+        (
+            {"umf/__init__.py": b"source"},
+            "0.10.0",
+            "cp311-abi3-linux_x86_64",
+            "version",
+        ),
+        (
+            {"umf/__init__.py": b"source"},
+            "0.10.1",
+            "cp311-abi3-linux_aarch64",
+            "platform tag",
+        ),
+    ],
+)
+def test_sdist_rebuild_rejects_source_version_or_tag_drift(
+    tmp_path, rebuilt_package, version, tag, message
+):
+    verifier = _verifier()
+    direct = _wheel(tmp_path / "direct.whl", {"umf/__init__.py": b"source"})
+    rebuilt = _wheel(
+        tmp_path / "rebuilt.whl",
+        rebuilt_package,
+        version=version,
+        tag=tag,
+    )
+
+    with pytest.raises(ValueError, match=message):
+        verifier._compare_wheel_package_sources(direct, rebuilt)
+
+
 def test_installed_wheel_payload_and_record_match_the_exact_archive(tmp_path):
     verifier = _verifier()
     package = {"umf/__init__.py": b"__version__ = '0.10.1'\n"}
@@ -242,6 +306,194 @@ def test_installed_workflow_disables_bytecode_and_hashes_verifier_source():
     assert "-I -B" in workflow
     assert "hashFiles(" not in workflow
     assert "hashlib.sha256(verifier_path.read_bytes()).hexdigest()" in workflow
+
+
+def test_workflow_independently_installs_and_qualifies_both_native_artifacts():
+    workflow = (
+        Path(__file__).resolve().parents[2]
+        / ".github/workflows/python-action-runtime.yml"
+    ).read_text(encoding="utf-8")
+
+    assert "python-version: '3.11.17'" in workflow
+    assert "python-version: '3.11.9'" in workflow
+    assert "python -m build --wheel --sdist --no-isolation python" in workflow
+    assert "--rebuilt-wheel-directory" in workflow
+    assert '"$RUNNER_TEMP/umf-installed-direct/bin/python" -m pip install' in workflow
+    assert (
+        '"$RUNNER_TEMP/umf-installed-sdist-rebuilt/bin/python" -m pip install'
+        in workflow
+    )
+    assert "id: direct_installed_tests" in workflow
+    assert "id: rebuilt_installed_tests" in workflow
+    assert workflow.count("python/tests/test_action_fixture_vectors.py") == 2
+    assert 'counts["skipped"] == 0' in workflow
+    assert (
+        'installed_artifacts.get("direct", {}).get("qualification") == "passed"'
+        in workflow
+    )
+    assert (
+        'installed_artifacts.get("sdist_rebuilt", {}).get("qualification") == "passed"'
+        in workflow
+    )
+    assert 'receipt["native_byte_identity"]' in workflow
+    assert (
+        "Native bytes differ; each artifact requires independent qualification, and binary equivalence is not claimed."
+        in workflow
+    )
+    assert "umf-sdist-rebuilt/*.whl" in workflow
+
+
+def _finalizer_source(workflow: str) -> str:
+    marker = 'python - "$GITHUB_WORKSPACE/tools/verify_python_artifacts.py" "$RUNNER_TEMP/umf-artifact-payload.json"'
+    start = workflow.index(marker)
+    block = workflow[start:]
+    match = re.search(r"<<'PY'\n(.*?)^\s*PY\s*$", block, re.MULTILINE | re.DOTALL)
+    assert match is not None
+    return textwrap.dedent(match.group(1))
+
+
+def _write_finalizer_inputs(
+    root: Path,
+    *,
+    missing_rebuilt_tests: bool = False,
+    missing_rebuilt_posttest: bool = False,
+) -> None:
+    direct = {
+        "filename": "umf_core-0.10.1-cp311-abi3-macosx_11_0_arm64.whl",
+        "sha256": "a" * 64,
+        "version": "0.10.1",
+        "tag": "cp311-abi3-macosx_11_0_arm64",
+        "package_file_count": 14,
+        "native_sha256": "b" * 64,
+    }
+    rebuilt = {
+        **direct,
+        "filename": "umf_core-0.10.1-cp311-abi3-macosx_11_0_arm64.whl",
+        "sha256": "c" * 64,
+        "native_sha256": "d" * 64,
+    }
+    receipt = {
+        "schema": "umf.python-artifact-qualification/1",
+        "source_payload_verification": "passed",
+        "distribution_version": "0.10.1",
+        "semantic_core_version": "0.10.0",
+        "action_runtime_resource_count": 9,
+        "artifacts": {"direct": direct, "sdist_rebuilt": rebuilt},
+        "sdist_rebuild": {
+            "non_native_package_payload_matches": True,
+            "version_matches": True,
+            "tag_matches": True,
+            "native_byte_identity": False,
+        },
+    }
+    (root / "umf-artifact-payload.json").write_text(
+        json.dumps(receipt), encoding="utf-8"
+    )
+    for name, artifact in (("direct", direct), ("sdist-rebuilt", rebuilt)):
+        (root / f"umf-install-{name}.json").write_text(
+            json.dumps(
+                {
+                    "installed_inside_environment": True,
+                    "distribution_version": "0.10.1",
+                    "semantic_core_version": "0.10.0",
+                }
+            ),
+            encoding="utf-8",
+        )
+        (root / f"umf-installed-{name}-payload.json").write_text(
+            json.dumps(
+                {
+                    "status": "passed",
+                    "wheel_sha256": artifact["sha256"],
+                    "native_sha256": artifact["native_sha256"],
+                    "package_file_count": artifact["package_file_count"],
+                }
+            ),
+            encoding="utf-8",
+        )
+        if not (missing_rebuilt_posttest and name == "sdist-rebuilt"):
+            (root / f"umf-installed-{name}-posttest.json").write_text(
+                json.dumps(
+                    {
+                        "status": "passed",
+                        "wheel_sha256": artifact["sha256"],
+                        "native_sha256": artifact["native_sha256"],
+                        "package_file_count": artifact["package_file_count"],
+                    }
+                ),
+                encoding="utf-8",
+            )
+    junit = '<testsuite tests="1" errors="0" failures="0" skipped="0" />\n'
+    (root / "umf-direct-action-tests.xml").write_text(junit, encoding="utf-8")
+    if not missing_rebuilt_tests:
+        (root / "umf-sdist-rebuilt-action-tests.xml").write_text(
+            junit, encoding="utf-8"
+        )
+
+
+@pytest.mark.parametrize(
+    ("missing_rebuilt_tests", "missing_rebuilt_posttest"),
+    ((False, False), (True, False), (False, True)),
+)
+def test_workflow_finalizer_requires_positive_installed_proof_for_both_wheels(
+    tmp_path, missing_rebuilt_tests, missing_rebuilt_posttest
+):
+    workflow_path = (
+        Path(__file__).resolve().parents[2]
+        / ".github/workflows/python-action-runtime.yml"
+    )
+    workflow = workflow_path.read_text(encoding="utf-8")
+    finalizer = _finalizer_source(workflow)
+    _write_finalizer_inputs(
+        tmp_path,
+        missing_rebuilt_tests=missing_rebuilt_tests,
+        missing_rebuilt_posttest=missing_rebuilt_posttest,
+    )
+    output = tmp_path / "umf-qualification.json"
+    environment = {
+        **os.environ,
+        "COHORT": "macos-arm64",
+        "SOURCE_REVISION": "e" * 40,
+        "RUN_ID": "123",
+        "RUN_ATTEMPT": "1",
+        "RUNNER_TEMP": str(tmp_path),
+        "DIRECT_TEST_OUTCOME": "success",
+        "SDIST_REBUILT_TEST_OUTCOME": "success",
+    }
+
+    result = subprocess.run(
+        [
+            sys.executable,
+            "-c",
+            finalizer,
+            str(workflow_path.parents[2] / "tools/verify_python_artifacts.py"),
+            str(tmp_path / "umf-artifact-payload.json"),
+            str(tmp_path / "umf-rustc-version.txt"),
+            str(tmp_path / "umf-cargo-version.txt"),
+            str(output),
+        ],
+        check=False,
+        capture_output=True,
+        text=True,
+        env=environment,
+    )
+
+    assert output.is_file(), result.stderr
+    receipt = json.loads(output.read_text(encoding="utf-8"))
+    incomplete = missing_rebuilt_tests or missing_rebuilt_posttest
+    expected = "failed_or_incomplete" if incomplete else "passed"
+    assert receipt["installed_qualification"] == expected
+    assert receipt["native_byte_identity"] is False
+    assert receipt["installed_artifacts"]["direct"]["qualification"] == "passed"
+    rebuilt_expected = "failed_or_incomplete" if incomplete else "passed"
+    assert (
+        receipt["installed_artifacts"]["sdist_rebuilt"]["qualification"]
+        == rebuilt_expected
+    )
+    if incomplete:
+        assert result.returncode != 0
+    else:
+        assert result.returncode == 0
 
 
 def test_sdist_licenses_have_one_declared_inclusion_route():

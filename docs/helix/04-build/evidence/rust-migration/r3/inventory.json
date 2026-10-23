@@ -195,12 +195,12 @@
   "capture": {
     "inventoryFormat": "0.2",
     "inventoryScript": "scripts/rust-inventory.py",
-    "sourceCohortSha256": "175282b854153028f07c191cf57d7fad8bb9c43438b04119723538c8be4a3c12",
+    "sourceCohortSha256": "f7cb8b223771534d70ecd397968f995b76e826aa3e9f08a649986ce3ef795700",
     "typescriptApi": "5.9.3"
   },
   "counts": {
     "activeScriptFiles": 339,
-    "algorithmSymbols": 10240,
+    "algorithmSymbols": 10247,
     "pythonModules": 105,
     "rustBuildInputs": 76,
     "rustModules": 125,
@@ -9074,10 +9074,12 @@
       "activationEvidence": [],
       "active": false,
       "algorithmSymbols": [
+        "_finalizer_source",
         "_install_wheel",
         "_rewrite_installed_record",
         "_verifier",
         "_wheel",
+        "_write_finalizer_inputs",
         "test_exact_wheel_payload_and_record_are_accepted",
         "test_installed_wheel_payload_and_record_match_the_exact_archive",
         "test_installed_wheel_verification_rejects_changed_or_escaped_files",
@@ -9087,15 +9089,19 @@
         "test_sdist_extraction_rejects_parent_traversal",
         "test_sdist_extraction_selects_the_single_top_level_project_with_nested_projects",
         "test_sdist_licenses_have_one_declared_inclusion_route",
+        "test_sdist_rebuild_accepts_distinct_native_bytes_without_claiming_identity",
+        "test_sdist_rebuild_rejects_source_version_or_tag_drift",
         "test_source_inventory_contains_all_nine_bound_runtime_resources",
-        "test_wheel_verifier_rejects_unexpected_payload_or_claim"
+        "test_wheel_verifier_rejects_unexpected_payload_or_claim",
+        "test_workflow_finalizer_requires_positive_installed_proof_for_both_wheels",
+        "test_workflow_independently_installs_and_qualifies_both_native_artifacts"
       ],
-      "bytes": 12626,
+      "bytes": 21257,
       "disposition": "unreferenced-test-source",
       "language": "py",
       "migrationObligation": "Retained test/evidence source with no discovered current activation edge",
       "path": "python/tests/test_distribution_artifact.py",
-      "sha256": "751b4bca9f8ed238a1ad909fe2e60bc70eefd50cb4a9abd904f33a0768fbcd14"
+      "sha256": "23ac5a2b15b278360d34290cf102afa8cf7c8ae766a22b2f9dd5da402667607b"
     },
     {
       "activationEvidence": [],
@@ -53339,6 +53345,7 @@
       "algorithmSymbols": [
         "_add_generated_json",
         "_check_record",
+        "_compare_wheel_package_sources",
         "_extract_sdist",
         "_platform_matches",
         "_rebuild_sdist_wheel",
@@ -53351,12 +53358,12 @@
         "main",
         "verify"
       ],
-      "bytes": 30125,
+      "bytes": 30961,
       "disposition": "active-host-tooling-algorithm",
       "language": "py",
       "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
       "path": "tools/verify_python_artifacts.py",
-      "sha256": "8c1e822242b465d33dc97c76a303582e36afd7ec4bf4bec499e3659fd7e12321"
+      "sha256": "6f1ab3ea110ab4f45321e578cfac224da9e05b6e79f869a822bf5f0547beaee1"
     }
   ],
   "sourceModules": [
