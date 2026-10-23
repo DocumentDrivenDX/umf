@@ -351,24 +351,28 @@ fn hex(bytes: &[u8]) -> String {
     }
     out
 }
-fn hmac_sha256(key: &[u8], message: &[u8]) -> [u8; 32] {
+pub(crate) fn hmac_sha256(key: &[u8], message: &[u8]) -> [u8; 32] {
     let mut key_block = [0u8; 64];
     if key.len() > 64 {
         key_block[..32].copy_from_slice(&Sha256::digest(key));
     } else {
         key_block[..key.len()].copy_from_slice(key);
     }
-    let mut inner = Vec::with_capacity(64 + message.len());
-    let mut outer = Vec::with_capacity(96);
+    let mut inner = Sha256::new();
     for byte in key_block {
-        inner.push(byte ^ 0x36);
-        outer.push(byte ^ 0x5c);
+        inner.update([byte ^ 0x36]);
     }
-    inner.extend_from_slice(message);
-    outer.extend_from_slice(&Sha256::digest(inner));
-    Sha256::digest(outer).into()
+    inner.update(message);
+    let inner_digest = inner.finalize();
+
+    let mut outer = Sha256::new();
+    for byte in key_block {
+        outer.update([byte ^ 0x5c]);
+    }
+    outer.update(inner_digest);
+    outer.finalize().into()
 }
-fn constant_eq(left: &[u8], right: &[u8]) -> bool {
+pub(crate) fn constant_eq(left: &[u8], right: &[u8]) -> bool {
     if left.len() != right.len() {
         return false;
     }

@@ -136,6 +136,7 @@ try {
         ajv.addSchema(schema,base);return ajv.getSchema(base)!;
       };
       if(!r) {
+        const vectorOutcomes=c.tests.map((vector:any,index:number)=>({index,expected:vector.valid,rust:{status:rustCapture.status==='passed'?'missing':'not-run'},ajv:{status:'not-run'},exported:{status:'not-run'}}));
         compare.missingRustCases++;
         if(rustCapture.status==='passed') compare.rustVectorsNotCompiled+=c.tests.length;
         else compare.rustVectorsNotRun+=c.tests.length;
@@ -145,24 +146,27 @@ try {
         } catch(error) {
           compare.ajvCompileFailures++;
           compare.vectors+=c.tests.length;
-          (compare.records as any[]).push({file,index,description:c.description,vectors:c.tests.length,rust:'not-run',ajvCompileError:String(error)});
+          for(const outcome of vectorOutcomes) outcome.ajv={status:'compile-error',error:String(error)};
+          (compare.records as any[]).push({file,index,description:c.description,vectors:c.tests.length,rust:'not-run',ajvCompileError:String(error),vectorOutcomes});
           continue;
         }
         let mismatchCount=0,errorCount=0;
-        for(const vector of c.tests) {compare.vectors++;try {if(!!ajv(vector.data)!==vector.valid){compare.ajvBaselineVectorMismatches++;mismatchCount++;}}catch(error){compare.ajvVectorErrors++;compare.ajvBaselineVectorErrors++;errorCount++;}}
+        for(const [vectorIndex,vector] of c.tests.entries()) {compare.vectors++;try {const valid=!!ajv(vector.data);vectorOutcomes[vectorIndex]!.ajv={status:'result',valid};if(valid!==vector.valid){compare.ajvBaselineVectorMismatches++;mismatchCount++;}}catch(error){vectorOutcomes[vectorIndex]!.ajv={status:'error',error:String(error)};compare.ajvVectorErrors++;compare.ajvBaselineVectorErrors++;errorCount++;}}
         if(mismatchCount)compare.ajvDisagreementCases++;
         if(errorCount)compare.ajvVectorErrorCases++;
-        (compare.records as any[]).push({file,index,description:c.description,vectors:c.tests.length,rust:'not-run',ajv:'completed',ajvMismatches:mismatchCount,ajvVectorErrors:errorCount});
+        (compare.records as any[]).push({file,index,description:c.description,vectors:c.tests.length,rust:'not-run',ajv:'completed',ajvMismatches:mismatchCount,ajvVectorErrors:errorCount,vectorOutcomes});
         continue;
       }
       if(r.compileError) compare.compileFailures++;
+      const vectorOutcomes=c.tests.map((vector:any,index:number)=>({index,expected:vector.valid,rust:{status:'not-compiled'},ajv:{status:'not-run'},exported:{status:'not-run'}}));
       for(const [vectorIndex,vectorResult] of r.vectors.entries()) {
         if(r.compileError || vectorResult?.rust == null) compare.rustVectorsNotCompiled++;
         else if(vectorResult.rust.Ok!==undefined) {
+          vectorOutcomes[vectorIndex]!.rust={status:'result',valid:vectorResult.rust.Ok};
           compare.rustVectorsExecuted++;
           compare.rustExpectedComparisons++;
           if(vectorResult.rust.Ok!==c.tests[vectorIndex].valid) compare.rustExpectedDisagreements++;
-        } else compare.rustVectorErrors++;
+        } else {vectorOutcomes[vectorIndex]!.rust={status:'error',error:vectorResult.rust.Err};compare.rustVectorErrors++;}
       }
       const adapter=r.adapter?.Ok;
       if(!adapter) {
@@ -171,19 +175,20 @@ try {
         compare.ajvNativeParityVectorsNotCompared+=c.tests.length;
         let ajv:any;
         try {ajv=make(c.schema,resources);}
-        catch(error) {compare.ajvCompileFailures++;compare.vectors+=c.tests.length;(compare.records as any[]).push({file,index,setupError:String(error)});continue;}
+        catch(error) {for(const outcome of vectorOutcomes){outcome.ajv={status:'compile-error',error:String(error)};outcome.exported={status:'not-compared',reason:'adapter result unavailable'};}compare.ajvCompileFailures++;compare.vectors+=c.tests.length;(compare.records as any[]).push({file,index,description:c.description,vectors:c.tests.length,setupError:String(error),vectorOutcomes});continue;}
         let baselineMismatchCount=0,vectorErrorCount=0;
         for(const [vectorIndex,vector] of c.tests.entries()) {
           compare.vectors++;
           try {
             const ajvValid=!!ajv(vector.data), rustResult=r.vectors[vectorIndex]?.rust;
+            vectorOutcomes[vectorIndex]!.ajv={status:'result',valid:ajvValid};
             if(ajvValid!==vector.valid){compare.ajvBaselineVectorMismatches++;baselineMismatchCount++;}
             if(rustResult?.Ok!==undefined) {compare.rustAjvComparisons++;if(rustResult.Ok!==ajvValid) compare.rustAjvDisagreements++;}
-          } catch(error) {compare.ajvVectorErrors++;compare.ajvBaselineVectorErrors++;vectorErrorCount++;}
+          } catch(error) {vectorOutcomes[vectorIndex]!.ajv={status:'error',error:String(error)};compare.ajvVectorErrors++;compare.ajvBaselineVectorErrors++;vectorErrorCount++;}
         }
         if(baselineMismatchCount)compare.ajvDisagreementCases++;
         if(vectorErrorCount)compare.ajvVectorErrorCases++;
-        (compare.records as any[]).push({file,index,description:c.description,vectors:c.tests.length,adapterError:r.adapter?.Err ?? 'missing Rust adapter result',compileError:r.compileError,baselineMismatchCount,vectorErrorCount});
+        (compare.records as any[]).push({file,index,description:c.description,vectors:c.tests.length,adapterError:r.adapter?.Err ?? 'missing Rust adapter result',compileError:r.compileError,baselineMismatchCount,vectorErrorCount,vectorOutcomes});
         continue;
       }
       const mismatches:any[]=[];
@@ -195,7 +200,9 @@ try {
         compare.vectors+=c.tests.length;
         compare.ajvNativeParityCasesNotCompared++;
         compare.ajvNativeParityVectorsNotCompared+=c.tests.length;
-        (compare.records as any[]).push({file,index,description:c.description,vectors:c.tests.length,ajvBaselineCompileError:String(error),ajvNativeParity:'not-compared'});
+        for(const outcome of vectorOutcomes) outcome.ajv={status:'compile-error',error:String(error)};
+        for(const outcome of vectorOutcomes) outcome.exported={status:'not-compared',reason:'original Ajv compilation unavailable'};
+        (compare.records as any[]).push({file,index,description:c.description,vectors:c.tests.length,adapterStable:adapter.rootExact && adapter.resourcesExact && isDeepStrictEqual(JSON.parse(adapter.getRoot),JSON.parse(adapter.originalRoot)),walkPositions:adapter.walkSchemaPositions,inspectionCodes:adapter.inspectionCodes,ajvBaselineCompileError:String(error),ajvNativeParity:'not-compared',vectorOutcomes});
         continue;
       }
       const baselineResults:(boolean|null)[]=[];
@@ -203,11 +210,13 @@ try {
         compare.vectors++;
         try {
           const valid=!!before(vector.data);
+          vectorOutcomes[vectorIndex]!.ajv={status:'result',valid};
           baselineResults.push(valid);
           if(valid!==vector.valid){compare.ajvBaselineVectorMismatches++;baselineMismatchCount++;}
           const rustResult=r.vectors[vectorIndex]?.rust;
           if(rustResult?.Ok!==undefined) {compare.rustAjvComparisons++;if(rustResult.Ok!==valid)compare.rustAjvDisagreements++;}
         } catch(error) {
+          vectorOutcomes[vectorIndex]!.ajv={status:'error',error:String(error)};
           baselineResults.push(null);
           compare.ajvVectorErrors++;
           compare.ajvBaselineVectorErrors++;
@@ -222,19 +231,22 @@ try {
         compare.ajvNativeCompileFailures++;
         compare.ajvNativeParityCasesNotCompared++;
         compare.ajvNativeParityVectorsNotCompared+=c.tests.length;
-        (compare.records as any[]).push({file,index,description:c.description,vectors:c.tests.length,compileError:r.compileError,adapterStable:adapter.rootExact && adapter.resourcesExact && isDeepStrictEqual(JSON.parse(adapter.getRoot),JSON.parse(adapter.originalRoot)),walkPositions:adapter.walkSchemaPositions,inspectionCodes:adapter.inspectionCodes,ajvNativeCompileError:String(error),ajvNativeParity:'not-compared',baselineMismatchCount,baselineErrorCount});
+        for(const outcome of vectorOutcomes) outcome.exported={status:'compile-error',error:String(error)};
+        (compare.records as any[]).push({file,index,description:c.description,vectors:c.tests.length,compileError:r.compileError,adapterStable:adapter.rootExact && adapter.resourcesExact && isDeepStrictEqual(JSON.parse(adapter.getRoot),JSON.parse(adapter.originalRoot)),walkPositions:adapter.walkSchemaPositions,inspectionCodes:adapter.inspectionCodes,ajvNativeCompileError:String(error),ajvNativeParity:'not-compared',baselineMismatchCount,baselineErrorCount,vectorOutcomes});
         continue;
       }
       for(const [vectorIndex,vector] of c.tests.entries()) {
         const baseline=baselineResults[vectorIndex];
-        if(baseline===null) {compare.ajvNativeParityVectorsNotCompared++;continue;}
+        if(baseline===null) {vectorOutcomes[vectorIndex]!.exported={status:'not-compared',reason:'original Ajv evaluation unavailable'};compare.ajvNativeParityVectorsNotCompared++;continue;}
         try {
           const native=!!after(vector.data);
+          vectorOutcomes[vectorIndex]!.exported={status:'result',valid:native};
           if(native!==vector.valid){compare.ajvNativeVectorMismatches++;nativeMismatchCount++;}
           compare.ajvNativeParityVectorsCompared++;
           parityComparedCount++;
           if(baseline!==native){compare.ajvNativeParityVectorMismatches++;parityMismatchCount++;mismatches.push({description:vector.description,ajvBefore:baseline,ajvAfter:native});}
         } catch(error) {
+          vectorOutcomes[vectorIndex]!.exported={status:'error',error:String(error)};
           compare.ajvVectorErrors++;
           compare.ajvNativeVectorErrors++;
           nativeErrorCount++;
@@ -244,7 +256,7 @@ try {
       recordNativeCaseOutcome(compare,baselineMismatchCount,baselineErrorCount,nativeMismatchCount,nativeErrorCount);
       if(parityComparedCount===0) compare.ajvNativeParityCasesNotCompared++;
       const parityStatus=parityMismatchCount?'mismatch':baselineErrorCount || nativeErrorCount?'incomplete':parityComparedCount===0?'not-compared':'pass';
-      (compare.records as any[]).push({file,index,description:c.description,vectors:c.tests.length,compileError:r.compileError,adapterStable:adapter.rootExact && adapter.resourcesExact && isDeepStrictEqual(JSON.parse(adapter.getRoot),JSON.parse(adapter.originalRoot)),walkPositions:adapter.walkSchemaPositions,inspectionCodes:adapter.inspectionCodes,ajvNativeParity:parityStatus,ajvMismatches:mismatches,baselineMismatchCount,nativeMismatchCount,parityMismatchCount,baselineErrorCount,nativeErrorCount});
+      (compare.records as any[]).push({file,index,description:c.description,vectors:c.tests.length,compileError:r.compileError,adapterStable:adapter.rootExact && adapter.resourcesExact && isDeepStrictEqual(JSON.parse(adapter.getRoot),JSON.parse(adapter.originalRoot)),walkPositions:adapter.walkSchemaPositions,inspectionCodes:adapter.inspectionCodes,ajvNativeParity:parityStatus,ajvMismatches:mismatches,baselineMismatchCount,nativeMismatchCount,parityMismatchCount,baselineErrorCount,nativeErrorCount,vectorOutcomes});
     }
   }
   if(compare.files!==46 || compare.cases!==384 || compare.vectors!==1301) throw new Error(`Comparison count mismatch: files=${compare.files} cases=${compare.cases} vectors=${compare.vectors}`);

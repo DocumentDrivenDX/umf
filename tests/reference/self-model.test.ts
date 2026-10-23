@@ -32,3 +32,58 @@ test('US-089-AC18: graph uses one node per authored Record and Field and refuses
  broken.document.modules[0]!.elements.find(e=>e.id==='document')!.members[0]!.element='missing-field';
  expect(()=>selfModelGraph(broken)).toThrow('SELF_MODEL_UNRESOLVED member');
 });
+
+test('R7 predecessor controls: graph containers use direct flatMap/map semantics',()=>{
+ const cases:[(c:any)=>void,string][]=[
+  [c=>{delete c.document.modules},"undefined is not an object (evaluating 'catalog.document.modules.flatMap')"],
+  [c=>{c.document.modules=null},"null is not an object (evaluating 'catalog.document.modules.flatMap')"],
+  [c=>{c.document.modules={}},"catalog.document.modules.flatMap is not a function."],
+  [c=>{delete c.document.modules[0].elements},"undefined is not an object (evaluating 'm.elements.map')"],
+  [c=>{c.document.modules[0].elements=null},"null is not an object (evaluating 'm.elements.map')"],
+  [c=>{c.document.modules[0].elements={}},"m.elements.map is not a function."],
+ ];
+ for(const [mutate,message] of cases){const copy=JSON.parse(JSON.stringify(catalog));mutate(copy);expect(()=>selfModelGraph(copy)).toThrow(message)}
+});
+
+test('R7 predecessor controls: labels preserve false and shape traversal skips arrays',()=>{
+ const copy=JSON.parse(JSON.stringify(catalog));
+ const elements=copy.document.modules.flatMap((m:any)=>m.elements);
+ const record=elements.find((e:any)=>e.kind==='record'),field=elements.find((e:any)=>e.kind==='field');
+ record.name=false;field.name=false;
+ field.extensions??={};field.extensions['umf.metamodel']??={};
+ const baseline=selfModelGraph(copy);
+ expect(baseline.records.find((r:any)=>r.id===JSON.stringify(['umf',record.id]))!.label).toBe(false);
+ expect(baseline.fields.find((f:any)=>f.id===JSON.stringify(['umf',field.id]))!.label).toBe(false);
+ const baseEdgeCount=baseline.edges.length;
+ field.extensions['umf.metamodel'].shape=[{tag:'link',target:'missing-array-target'}];
+ expect(selfModelGraph(copy).edges.length).toBe(baseEdgeCount);
+ field.extensions['umf.metamodel'].shape={nested:[[{tag:'link',target:'missing-nested-array-target'}]]};
+ expect(selfModelGraph(copy).edges.length).toBe(baseEdgeCount);
+});
+
+test('R7 predecessor controls: field edge labels use ECMAScript ToString',()=>{
+ const edgeLabel=(name:any)=>{const copy=JSON.parse(JSON.stringify(catalog));const elements=copy.document.modules[0].elements as any[];elements.find(e=>e.id==='document.modules').name=name;return selfModelGraph(copy).edges.find((e:any)=>e.source==='["umf","document"]'&&e.target==='["umf","module"]')!.label};
+ expect(edgeLabel(1e-7)).toBe('1e-7');
+ expect(edgeLabel({})).toBe('[object Object]');
+ expect(edgeLabel(['a','b'])).toBe('a,b');
+ expect(edgeLabel([1e-7,['a',null],{}])).toBe('1e-7,a,,[object Object]');
+ expect(()=>edgeLabel({toString:'blocked'})).toThrow('No default value');
+});
+
+test('R7 predecessor controls: members and references retain direct JS method failures',()=>{
+ const members=JSON.parse(JSON.stringify(catalog));members.document.modules[0].elements.find((e:any)=>e.id==='document').members=false;
+ expect(()=>selfModelGraph(members)).toThrow('false is not iterable');
+ const nullMember=JSON.parse(JSON.stringify(catalog));nullMember.document.modules[0].elements.find((e:any)=>e.id==='document').members=[null];
+ expect(()=>selfModelGraph(nullMember)).toThrow("null is not an object (evaluating 'member.module')");
+ const references=JSON.parse(JSON.stringify(catalog));references.document.modules[0].elements.find((e:any)=>e.id==='document.modules').references={};
+ expect(()=>selfModelGraph(references)).toThrow('field.references?.filter is not a function.');
+ const nullReference=JSON.parse(JSON.stringify(catalog));nullReference.document.modules[0].elements.find((e:any)=>e.id==='document.modules').references=[null];
+ expect(()=>selfModelGraph(nullReference)).toThrow("null is not an object (evaluating 'r.role')");
+});
+
+test('R7 predecessor controls: reached preowned text is not capped by an internal text-unit limit',()=>{
+ const copy=JSON.parse(JSON.stringify(catalog));const field=copy.document.modules[0].elements.find((e:any)=>e.id==='document.modules');
+ field.name='x'.repeat(4_000_001);
+ const graph=selfModelGraph(copy);
+ expect(graph.fields.find((f:any)=>f.id==='["umf","document.modules"]')!.label.length).toBe(4_000_001);
+});

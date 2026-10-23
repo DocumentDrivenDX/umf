@@ -1,0 +1,22 @@
+{
+  "label": "closed-enum-overlong-99",
+  "inputHex": "0a05420348e300",
+  "inputSha256": "9aa5992ac5aa130381f63a03957b8a04308801f83e4b66f4dd2be1446eccb8fe",
+  "predecessorUnknown": [
+    {
+      "number": 9,
+      "wireType": 0,
+      "data": "63"
+    }
+  ],
+  "predecessorOutputHex": "0a0442024863",
+  "sources": {
+    "descriptor": "be1d0450873a9b4dd0ff0e914ea1a282fe535e5ebde6f317c5f035c5f875dc8a",
+    "contract": "ee0b2a00d7b4a2b22fef4e4edb119db743d167d9cb60b6706726b822ecae4f52"
+  },
+  "independentPythonProtobuf7362": {
+    "preservedOutputHex": "0a05420348e300",
+    "source": "fixtures/protobuf/behavior-results.json",
+    "sourceSha256": "9ec17920e9e5cd107cbb4c9d81822781a88d854eb8c14b8536a8235a806900b1"
+  }
+}

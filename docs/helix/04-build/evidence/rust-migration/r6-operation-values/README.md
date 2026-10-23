@@ -159,3 +159,36 @@ Current source identities for this follow-up are:
 | `python/src/umf/rust_operation_values.py` | `6f6b5444319a36732b75ad57367f72013bd74ca081e0e0e49ad06238160aac25` |
 | `python/umf_access/src/umf_access/unified/operation_values.py` | `106cd256e4976d37855eb6ef838c553de717bbcf09be269fbe374f1bdb4f852a` |
 | `python/umf_access/tests/test_table_read_values.py` | `47e5e1ee7a1ec3f87f137e36993aac5a93dd4c23a8749b51bfdd13684c7c58d0` |
+
+## Typed-token installed-wheel replay — 2026-10-23
+
+The exact integer, decimal, UUID and bits128 classifier now has a fresh
+Darwin-arm64 source-to-wheel build and installed replay. Rust 1.90.0 built
+`umf-core` 0.11.0 as a CPython abi3 wheel with an isolated
+`CARGO_TARGET_DIR`; the `umf_access` 0.1.0.dev7 pure-Python wheel was rebuilt
+from the same source cohort. SHA-256 values are recorded in
+[`typed-token-wheel-replay-2026-10-23.json`](typed-token-wheel-replay-2026-10-23.json).
+The source closure hashes were identical immediately before and after both
+wheel builds and again after replay.
+
+Focused Rust operation-values tests pass 5/5. The same two wheels were installed
+into a fresh target and exercised on CPython 3.12.15 with Pydantic 2.14.1:
+`test_table_read_values.py` passes 11/11 and `test_operation_values_rust.py`
+passes 8/8. The table-read suite reaches `result_frame` count conversion and
+cardinality checks, in addition to the direct accepted/refused token vectors,
+nullable lookup ordering, Unicode failure order and Decimal context-flag cases.
+
+The same installed wheels also pass those 19 tests on CPython 3.11.17. Pydantic
+2.14.1, its CPython 3.11 arm64 `pydantic-core` 2.50.1 wheel, and its cached
+pure-Python dependencies were copied from the existing local uv cache into a
+temporary target without network access. Both `umf` and `umf_access` then imported
+from the installed wheel target normally. The replay used `unittest` discovery
+because `pytest` is not installed in this interpreter; all 19 tests passed. The
+3.12 replay also imports the installed packages normally.
+
+This closes focused Rust/PyO3 build and installed-module replay for the typed-token
+helper only. `result_frame` is an in-package consumer path over supplied native
+rows, not a database-backed consumer. Native PostgreSQL, Weft, Truss, Ashlar and
+TableSpec acceptance, broader `value_from_native` carriers, a hard host deadline
+or meter, and the remaining R6 operations remain open under CONTRACT-079. This
+does not close `value_from_native` as a whole or R6.

@@ -117,6 +117,22 @@ impl NativeJsonTree {
         Ok(Utf16::new(output))
     }
 
+    /// Materialize tagged form for copied edits while retaining unknown
+    /// representation fields. Native export still refuses these fields.
+    pub fn tagged_value_preserving_extras(&self, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
+        let mut value = tagged_value(&self.root, ctx)?;
+        for extra in &self.representation_extras {
+            let target = tagged_at_native_path_mut(&mut value, &extra.parent)
+                .ok_or_else(|| fail("NATIVE_JSON_REPRESENTATION", "Tagged extra path is unavailable"))?;
+            let Value::Object(fields) = target else { return Err(fail("NATIVE_JSON_REPRESENTATION", "Tagged node is not an object")); };
+            for (key, item) in &extra.fields {
+                ctx.charge_work(key.len().saturating_add(1), Utf16::default())?;
+                fields.push((key.clone(), crate::copy_json(item, ctx)?));
+            }
+        }
+        Ok(value)
+    }
+
     fn reject_unknown_representation_fields(&self) -> Result<(), EngineError> {
         if self.representation_extras.is_empty() {
             return Ok(());
@@ -226,6 +242,89 @@ impl NativeJsonTree {
             representation_extras: retained,
         })
     }
+
+    /// Return a copied tree with one existing node replaced. Extras attached
+    /// to the replaced subtree disappear with that subtree; extras elsewhere
+    /// remain at their original paths. The source tree is never mutated.
+    pub fn replace_node(
+        &self,
+        pointer: &Utf16,
+        replacement: &NativeJsonTree,
+        ctx: &mut Context<'_>,
+    ) -> Result<Self, EngineError> {
+        let segments = native_pointer(pointer, ctx)?;
+        // Resolve the target before allocating the candidate copy.
+        self.child(pointer, ctx)?;
+        let replacement = replacement.clone_tree(ctx)?;
+        let mut candidate = self.clone_tree(ctx)?;
+        fn replace(
+            node: &mut NativeJsonNode,
+            path: &[Utf16],
+            replacement: &NativeJsonNode,
+            ctx: &mut Context<'_>,
+        ) -> Result<(), EngineError> {
+            if path.is_empty() {
+                *node = replacement.clone();
+                return Ok(());
+            }
+            ctx.charge_work(path[0].len(), Utf16::default())?;
+            let child = match node {
+                NativeJsonNode::Object(members) => {
+                    let cost = members.iter().fold(0u64, |total, (key, _)| total.saturating_add(key.len().max(1) as u64));
+                    ctx.charge_work_u64(cost, Utf16::default())?;
+                    members.iter_mut().find(|(key, _)| key == &path[0]).map(|(_, value)| value)
+                }
+                NativeJsonNode::Array(items) => array_index(&path[0]).and_then(|index| items.get_mut(index)),
+                _ => None,
+            }.ok_or_else(pointer_missing)?;
+            replace(child, &path[1..], replacement, ctx)
+        }
+        replace(&mut candidate.root, &segments, &replacement.root, ctx)?;
+        candidate.representation_extras.retain(|extra| !extra.parent.starts_with(segments.as_slice()));
+        Ok(candidate)
+    }
+}
+
+fn tagged_value(node: &NativeJsonNode, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
+    ctx.charge_work(1, Utf16::default())?;
+    let kind = match node {
+        NativeJsonNode::Null => "null", NativeJsonNode::Boolean(_) => "boolean",
+        NativeJsonNode::String(_) => "string", NativeJsonNode::Number(_) => "number",
+        NativeJsonNode::Array(_) => "array", NativeJsonNode::Object(_) => "object",
+    };
+    let mut fields = vec![(Utf16::from("kind"), Value::string_utf8(kind))];
+    match node {
+        NativeJsonNode::Null => {}
+        NativeJsonNode::Boolean(v) => fields.push((Utf16::from("value"), Value::Bool(*v))),
+        NativeJsonNode::String(v) => fields.push((Utf16::from("value"), Value::String(v.clone()))),
+        NativeJsonNode::Number(v) => fields.push((Utf16::from("value"), Value::string_utf8(v))),
+        NativeJsonNode::Array(items) => fields.push((Utf16::from("items"), Value::Array(items.iter().map(|v| tagged_value(v,ctx)).collect::<Result<_,_>>()?))),
+        NativeJsonNode::Object(members) => fields.push((Utf16::from("members"), Value::Object(members.iter().map(|(k,v)|Ok((k.clone(),tagged_value(v,ctx)?))).collect::<Result<_,EngineError>>()?))),
+    }
+    Ok(Value::Object(fields))
+}
+
+fn tagged_at_native_path_mut<'a>(root: &'a mut Value, path: &[Utf16]) -> Option<&'a mut Value> {
+    let mut node = root;
+    for segment in path {
+        let fields = match node { Value::Object(v) => v, _ => return None };
+        let kind = fields.iter().find(|(k,_)| k == &Utf16::from("kind"))?.1.clone();
+        match kind {
+            Value::String(kind) if kind == Utf16::from("object") => {
+                let members = fields.iter_mut().find(|(k,_)| k == &Utf16::from("members"))?;
+                let Value::Object(members) = &mut members.1 else { return None };
+                node = &mut members.iter_mut().find(|(k,_)| k == segment)?.1;
+            }
+            Value::String(kind) if kind == Utf16::from("array") => {
+                let index = array_index(segment)?;
+                let items = fields.iter_mut().find(|(k,_)| k == &Utf16::from("items"))?;
+                let Value::Array(items) = &mut items.1 else { return None };
+                node = items.get_mut(index)?;
+            }
+            _ => return None,
+        }
+    }
+    Some(node)
 }
 
 fn count_clone_values(

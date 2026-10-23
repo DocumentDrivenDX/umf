@@ -1,11 +1,11 @@
 use std::{cell::RefCell, collections::HashMap, rc::Rc};
 
+use num_bigint::BigInt;
 use pyo3::{
     exceptions::PyValueError,
     prelude::*,
     types::{PyBool, PyBytes, PyDict, PyFloat, PyInt, PyList, PyString, PyTuple},
 };
-use num_bigint::BigInt;
 use umf_core::{
     Capabilities, CapabilityError, Context, Diagnostic, Engine, EngineError, PythonDiagnosticText,
     Registry, ResourceSet, SemanticContext, Severity, Utf16, Value,
@@ -15,6 +15,7 @@ use umf_core::{
 };
 
 mod python_value;
+mod related_keys;
 
 fn python_bigint(
     py: Python<'_>,
@@ -31,7 +32,11 @@ fn python_bigint(
     context
         .charge_work(bits.saturating_add(1), Utf16::default())
         .map_err(py_error)?;
-    let byte_len = bits.saturating_add(8).checked_div(8).unwrap_or(usize::MAX).max(1);
+    let byte_len = bits
+        .saturating_add(8)
+        .checked_div(8)
+        .unwrap_or(usize::MAX)
+        .max(1);
     let kwargs = PyDict::new_bound(py);
     kwargs.set_item("signed", true)?;
     let bytes = value
@@ -51,8 +56,272 @@ fn operation_values_profile_version() -> &'static str {
 }
 
 #[pyfunction]
+fn avro_fields_profile_version() -> &'static str {
+    "umf-r5-avro-fields/0.1.0"
+}
+
+#[pyfunction]
+fn iceberg_schema_profile_version() -> &'static str {
+    umf_core_wire::ICEBERG_SCHEMA_PROFILE
+}
+
+#[pyfunction]
+#[pyo3(signature = (wire_json, control=None))]
+fn execute_iceberg_wire(
+    py: Python<'_>,
+    wire_json: &str,
+    control: Option<PyObject>,
+) -> PyResult<String> {
+    if control.as_ref().is_some_and(|value| !value.bind(py).is_callable()) {
+        return Err(PyValueError::new_err("control must be callable"));
+    }
+    let Some(control) = control else {
+        return Ok(umf_core_wire::execute_iceberg_wire(wire_json));
+    };
+    let mut hook = |amount: usize| {
+        let outcome = control.bind(py).call1((amount,))
+            .map_err(|error| py_exception_engine_error(py, "METER_FAILURE", error))?;
+        if outcome.is_none() { return Ok(()); }
+        let (code, message, path): (String, String, String) = outcome.extract()
+            .map_err(|error| py_exception_engine_error(py, "METER_FAILURE", error))?;
+        let mut error = EngineError::new(code, Utf16::from(path), Utf16::from(message));
+        error.python_message_origin = None;
+        Err(error)
+    };
+    Ok(umf_core_wire::execute_iceberg_wire_with_control(wire_json, &mut hook))
+}
+
+#[pyfunction]
+fn protobuf_inspect_profile_version() -> &'static str {
+    umf_core_wire::PROTOBUF_INSPECT_PROFILE
+}
+
+#[pyfunction]
+#[pyo3(signature = (wire_json, control=None))]
+fn execute_protobuf_inspect_wire(
+    py: Python<'_>,
+    wire_json: &str,
+    control: Option<PyObject>,
+) -> PyResult<String> {
+    if control.as_ref().is_some_and(|value| !value.bind(py).is_callable()) {
+        return Err(PyValueError::new_err("control must be callable"));
+    }
+    let Some(control) = control else {
+        return Ok(umf_core_wire::execute_protobuf_inspect_wire(wire_json));
+    };
+    let mut hook = |amount: usize| {
+        let outcome = control.bind(py).call1((amount,))
+            .map_err(|error| py_exception_engine_error(py, "METER_FAILURE", error))?;
+        if outcome.is_none() { return Ok(()); }
+        let (code, message, path): (String, String, String) = outcome.extract()
+            .map_err(|error| py_exception_engine_error(py, "METER_FAILURE", error))?;
+        let mut error = EngineError::new(code, Utf16::from(path), Utf16::from(message));
+        error.python_message_origin = None;
+        Err(error)
+    };
+    Ok(umf_core_wire::execute_protobuf_inspect_wire_with_control(wire_json, &mut hook))
+}
+
+#[pyfunction]
+#[pyo3(signature = (root, dependencies=None, *, max_work=None, meter=None, is_cancelled=None, now=None, deadline_ms=None))]
+fn avro_fields_derive(
+    py: Python<'_>,
+    root: &Bound<'_, PyAny>,
+    dependencies: Option<&Bound<'_, PyAny>>,
+    max_work: Option<usize>,
+    meter: Option<PyObject>,
+    is_cancelled: Option<PyObject>,
+    now: Option<PyObject>,
+    deadline_ms: Option<u64>,
+) -> PyResult<PyObject> {
+    let empty_dependencies = PyTuple::empty_bound(py);
+    let dependencies = dependencies.unwrap_or(empty_dependencies.as_any());
+    for (name, callback) in [
+        ("meter", meter.as_ref()),
+        ("is_cancelled", is_cancelled.as_ref()),
+        ("now", now.as_ref()),
+    ] {
+        if callback.is_some_and(|value| !value.bind(py).is_callable()) {
+            return Err(PyValueError::new_err(format!("{name} must be callable")));
+        }
+    }
+    if deadline_ms.is_some() && now.is_none() {
+        return Err(PyValueError::new_err("now is required with deadline_ms"));
+    }
+    if !dependencies.is_exact_instance_of::<PyList>()
+        && !dependencies.is_exact_instance_of::<PyTuple>()
+    {
+        return Err(PyValueError::new_err(
+            "dependencies must be a list or tuple",
+        ));
+    }
+
+    let hook_meter = max_work.is_some() || meter.is_some();
+    let hook_cancel = is_cancelled.is_some();
+    let hook_clock = deadline_ms.is_some();
+    let state = Rc::new(RefCell::new(PythonWorkControl {
+        py,
+        max_work,
+        charged: 0,
+        meter,
+        is_cancelled,
+        now,
+        host_callback_failed: false,
+    }));
+    let mut meter_hook = {
+        let state = state.clone();
+        move |amount| state.borrow_mut().meter(amount)
+    };
+    let mut cancel_hook = {
+        let state = state.clone();
+        move || state.borrow_mut().cancelled()
+    };
+    let mut clock_hook = {
+        let state = state.clone();
+        move || state.borrow_mut().clock()
+    };
+    let mut context = Context::ordinary();
+    if hook_meter {
+        context = context.with_meter(&mut meter_hook);
+    }
+    if hook_cancel {
+        context = context.with_fallible_cancellation(&mut cancel_hook);
+    }
+    if hook_clock {
+        context = context.with_fallible_clock(
+            &mut clock_hook,
+            deadline_ms.expect("deadline requires clock"),
+        );
+    }
+
+    let admit_tree = |value: &Bound<'_, PyAny>,
+                      context: &mut Context<'_>|
+     -> PyResult<umf_core::native_json::NativeJsonTree> {
+        let mut count = 0;
+        let value = python_value::from_python(py, value, context, 0, &mut count)
+            .map_err(py_error)?
+            .project_schema_to_core(context)
+            .map_err(py_error)?;
+        umf_core::native_json::NativeJsonTree::from_tagged_value(&value, context).map_err(py_error)
+    };
+
+    let root = admit_tree(root, &mut context)?;
+    let mut dependency_ids = Vec::new();
+    let mut dependency_trees = Vec::new();
+    for dependency in dependencies.try_iter()? {
+        let dependency = dependency?;
+        let pair = if dependency.is_exact_instance_of::<PyTuple>() {
+            dependency.downcast::<PyTuple>()?
+        } else {
+            return Err(PyValueError::new_err(
+                "each dependency must be an exact (id, tagged_tree) tuple",
+            ));
+        };
+        if pair.len() != 2 || !pair.get_item(0)?.is_exact_instance_of::<PyString>() {
+            return Err(PyValueError::new_err(
+                "each dependency must be an exact (string_id, tagged_tree) tuple",
+            ));
+        }
+        let id_text =
+            python_value::pytext_from_python(&pair.get_item(0)?, &mut context).map_err(py_error)?;
+        // `to_utf16` charges the complete UTF-16 length before allocating its
+        // unit vector. The preceding Python-text admission is also charged
+        // before its host-string conversion, so oversized IDs cannot bypass
+        // the invocation meter, budget, cancellation, or deadline checks.
+        dependency_ids.push(id_text.to_utf16(&mut context).map_err(py_error)?);
+        dependency_trees.push(admit_tree(&pair.get_item(1)?, &mut context)?);
+    }
+    let dependencies = dependency_ids
+        .iter()
+        .zip(&dependency_trees)
+        .map(|(id, root)| umf_core::avro_fields::AvroDependency { id, root })
+        .collect::<Vec<_>>();
+    let fields = umf_core::avro_fields::derive_avro_fields(&root, &dependencies, &mut context)
+        .map_err(py_error)?;
+
+    let output = PyList::empty_bound(py);
+    for field in fields {
+        let item = PyDict::new_bound(py);
+        item.set_item("path", py_text(py, &field.path, &mut context)?)?;
+        item.set_item("record", py_text(py, &field.record, &mut context)?)?;
+        if let Some(id) = &field.dependency_id {
+            item.set_item("dependencyId", py_text(py, id, &mut context)?)?;
+        }
+        let native = field
+            .native_field
+            .tagged_value_preserving_extras(&mut context)
+            .map_err(py_error)?;
+        item.set_item(
+            "nativeField",
+            descriptor_value_to_python(py, &native, &mut context)?,
+        )?;
+        let element = PyDict::new_bound(py);
+        element.set_item(
+            "id",
+            field
+                .element_id
+                .to_utf8()
+                .map_err(|_| PyValueError::new_err("Avro element identifier is not valid UTF-8"))?,
+        )?;
+        element.set_item("name", py_text(py, &field.name, &mut context)?)?;
+        if let Some(description) = &field.description {
+            element.set_item("description", py_text(py, description, &mut context)?)?;
+        }
+        if let Some(scalar_type) = field.scalar_type {
+            element.set_item("scalarType", scalar_type.as_str())?;
+        }
+        element.set_item("extensions", PyDict::new_bound(py))?;
+        item.set_item("element", element)?;
+        output.append(item)?;
+    }
+    Ok(output.unbind().into())
+}
+
+// R6 outcome-values shard. Python owns preimage construction and call ordering;
+// these bindings accept bytes only and never retain secret material.
+#[pyfunction]
+fn outcome_values_profile_version() -> &'static str {
+    umf_core::outcome_values::PROFILE_VERSION
+}
+
+#[pyfunction]
+fn outcome_values_capabilities() -> Vec<&'static str> {
+    umf_core::outcome_values::CAPABILITIES.to_vec()
+}
+
+#[pyfunction]
+fn outcome_values_hmac_sha256(
+    secret: &Bound<'_, PyBytes>,
+    message: &Bound<'_, PyBytes>,
+) -> Vec<u8> {
+    umf_core::outcome_values::hmac_sha256(secret.as_bytes(), message.as_bytes()).to_vec()
+}
+
+#[pyfunction]
+fn outcome_values_slot_sha256(message: &Bound<'_, PyBytes>) -> Vec<u8> {
+    umf_core::outcome_values::slot_sha256(message.as_bytes()).to_vec()
+}
+
+#[pyfunction]
+fn outcome_values_signature_matches(
+    left: &Bound<'_, PyBytes>,
+    right: &Bound<'_, PyBytes>,
+) -> PyResult<bool> {
+    let left: [u8; 32] = left
+        .as_bytes()
+        .try_into()
+        .map_err(|_| PyValueError::new_err("outcome signature must be 32 bytes"))?;
+    let right: [u8; 32] = right
+        .as_bytes()
+        .try_into()
+        .map_err(|_| PyValueError::new_err("outcome signature must be 32 bytes"))?;
+    Ok(umf_core::outcome_values::signature_matches(&left, &right))
+}
+
+#[pyfunction]
 fn operation_canonical(json_text: &str) -> PyResult<String> {
-    umf_core::operation_values::canonical(json_text).map_err(|e| PyValueError::new_err(e.to_string()))
+    umf_core::operation_values::canonical(json_text)
+        .map_err(|e| PyValueError::new_err(e.to_string()))
 }
 
 fn operation_python_node(
@@ -233,7 +502,11 @@ fn operation_native_token_classify(kind: &str, token: &str) -> PyResult<&'static
         "decimal" => umf_core::operation_values::NativeTokenKind::Decimal,
         "uuid" => umf_core::operation_values::NativeTokenKind::Uuid,
         "bits128" => umf_core::operation_values::NativeTokenKind::Bits128,
-        _ => return Err(PyValueError::new_err("unsupported native result token kind")),
+        _ => {
+            return Err(PyValueError::new_err(
+                "unsupported native result token kind",
+            ))
+        }
     };
     let mut context = Context::ordinary();
     umf_core::operation_values::native_token_classify(&mut context, kind, token)
@@ -245,6 +518,75 @@ fn operation_native_token_classify(kind: &str, token: &str) -> PyResult<&'static
             }
         })
         .map_err(py_error)
+}
+
+#[pyfunction]
+fn protobuf_descriptor_profile_version() -> &'static str {
+    umf_core::protobuf_descriptor::PROFILE_VERSION
+}
+
+#[pyfunction]
+fn protobuf_read_descriptor_set(py: Python<'_>, binary: &Bound<'_, PyAny>) -> PyResult<PyObject> {
+    if !binary.is_exact_instance_of::<PyBytes>() {
+        return Err(py_error(EngineError::new(
+            "PROTOBUF_BINARY",
+            Utf16::default(),
+            "Expected exact bytes carrier",
+        )));
+    }
+    let input = binary.downcast::<PyBytes>()?.as_bytes();
+    let mut context = Context::ordinary();
+    let value = umf_core::protobuf_descriptor::read_descriptor_set(input, &mut context)
+        .map_err(py_error)?;
+    descriptor_value_to_python(py, &value, &mut context)
+}
+
+#[pyfunction]
+fn protobuf_write_descriptor_set(py: Python<'_>, node: &Bound<'_, PyAny>) -> PyResult<PyObject> {
+    let mut context = Context::ordinary();
+    let mut count = 0usize;
+    let admitted =
+        python_value::from_python(py, node, &mut context, 0, &mut count).map_err(py_error)?;
+    // Projection uses the ordinary UMF value admission profile (safe exact
+    // numbers, finite floats, structural limits, and charged string copies).
+    let value = admitted
+        .project_schema_to_core(&mut context)
+        .map_err(py_error)?;
+    let bytes = umf_core::protobuf_descriptor::write_descriptor_set(&value, &mut context)
+        .map_err(py_error)?;
+    Ok(PyBytes::new_bound(py, &bytes).unbind().into())
+}
+
+fn descriptor_value_to_python(
+    py: Python<'_>,
+    value: &Value,
+    context: &mut Context<'_>,
+) -> PyResult<PyObject> {
+    Ok(match value {
+        Value::Null => py.None(),
+        Value::Bool(value) => value.into_pyobject(py)?.to_owned().into_any().unbind(),
+        Value::Number(value) => value.into_pyobject(py)?.to_owned().into_any().unbind(),
+        Value::String(value) => py_text(py, value, context)?,
+        Value::Array(items) => {
+            let result = PyList::empty_bound(py);
+            for item in items {
+                context.charge_work(1, Utf16::default()).map_err(py_error)?;
+                result.append(descriptor_value_to_python(py, item, context)?)?;
+            }
+            result.unbind().into()
+        }
+        Value::Object(items) => {
+            let result = PyDict::new_bound(py);
+            for (key, item) in items {
+                context.charge_work(1, Utf16::default()).map_err(py_error)?;
+                result.set_item(
+                    py_text(py, key, context)?,
+                    descriptor_value_to_python(py, item, context)?,
+                )?;
+            }
+            result.unbind().into()
+        }
+    })
 }
 
 #[pyfunction]
@@ -318,7 +660,11 @@ fn exact_stream_integer(value: &Bound<'_, PyAny>) -> Option<BigInt> {
     if !value.is_exact_instance_of::<PyInt>() {
         return None;
     }
-    let bits = value.call_method0("bit_length").ok()?.extract::<usize>().ok()?;
+    let bits = value
+        .call_method0("bit_length")
+        .ok()?
+        .extract::<usize>()
+        .ok()?;
     let byte_len = bits.saturating_add(8).checked_div(8)?.max(1);
     let kwargs = PyDict::new_bound(value.py());
     kwargs.set_item("signed", true).ok()?;
@@ -365,9 +711,7 @@ fn access_stream_page_size_domain_parameter_valid(matches: bool) -> bool {
 }
 
 #[pyfunction]
-fn access_stream_page_size_minimum_valid(
-    exact_integer: bool,
-) -> bool {
+fn access_stream_page_size_minimum_valid(exact_integer: bool) -> bool {
     umf_core::access_stream::minimum_carrier_is_valid(exact_integer)
 }
 
@@ -378,15 +722,12 @@ fn access_stream_page_size_minimum_comparison_valid(matches_minimum: bool) -> bo
 
 #[pyfunction]
 fn access_stream_page_size_minimum_exact_value_valid(value: &Bound<'_, PyAny>) -> bool {
-    exact_stream_integer(value).is_some_and(|integer| {
-        umf_core::access_stream::minimum_exact_value_is_valid(&integer)
-    })
+    exact_stream_integer(value)
+        .is_some_and(|integer| umf_core::access_stream::minimum_exact_value_is_valid(&integer))
 }
 
 #[pyfunction]
-fn access_stream_page_size_maximum_valid(
-    exact_integer: bool,
-) -> bool {
+fn access_stream_page_size_maximum_valid(exact_integer: bool) -> bool {
     umf_core::access_stream::maximum_carrier_is_valid(exact_integer)
 }
 
@@ -397,16 +738,12 @@ fn access_stream_page_size_maximum_comparison_valid(within_closed_range: bool) -
 
 #[pyfunction]
 fn access_stream_page_size_maximum_exact_value_valid(value: &Bound<'_, PyAny>) -> bool {
-    exact_stream_integer(value).is_some_and(|integer| {
-        umf_core::access_stream::maximum_exact_value_is_valid(&integer)
-    })
+    exact_stream_integer(value)
+        .is_some_and(|integer| umf_core::access_stream::maximum_exact_value_is_valid(&integer))
 }
 
 #[pyfunction]
-fn access_stream_page_size_row_cap_valid(
-    exact_integer: bool,
-    maximum_fits: bool,
-) -> bool {
+fn access_stream_page_size_row_cap_valid(exact_integer: bool, maximum_fits: bool) -> bool {
     umf_core::access_stream::row_cap_is_valid(exact_integer, maximum_fits)
 }
 
@@ -480,7 +817,9 @@ fn access_constraints_equal_boolean(
     right: &Bound<'_, PyAny>,
 ) -> PyResult<bool> {
     if !left.is_exact_instance_of::<PyBool>() || !right.is_exact_instance_of::<PyBool>() {
-        return Err(PyValueError::new_err("exact boolean allowed-value carriers required"));
+        return Err(PyValueError::new_err(
+            "exact boolean allowed-value carriers required",
+        ));
     }
     Ok(umf_core::access_constraints::equal_boolean(
         left.extract::<bool>()?,
@@ -495,7 +834,9 @@ fn access_constraints_equal_integer(
     right: &Bound<'_, PyAny>,
 ) -> PyResult<bool> {
     if !left.is_exact_instance_of::<PyInt>() || !right.is_exact_instance_of::<PyInt>() {
-        return Err(PyValueError::new_err("exact integer allowed-value carriers required"));
+        return Err(PyValueError::new_err(
+            "exact integer allowed-value carriers required",
+        ));
     }
     let mut context = Context::ordinary();
     let left = python_bigint(py, left, &mut context)?;
@@ -504,11 +845,16 @@ fn access_constraints_equal_integer(
 }
 
 #[pyfunction]
-fn access_constraints_equal_text(left: &Bound<'_, PyAny>, right: &Bound<'_, PyAny>) -> PyResult<bool> {
+fn access_constraints_equal_text(
+    left: &Bound<'_, PyAny>,
+    right: &Bound<'_, PyAny>,
+) -> PyResult<bool> {
     if !left.is_exact_instance_of::<pyo3::types::PyString>()
         || !right.is_exact_instance_of::<pyo3::types::PyString>()
     {
-        return Err(PyValueError::new_err("exact string allowed-value carriers required"));
+        return Err(PyValueError::new_err(
+            "exact string allowed-value carriers required",
+        ));
     }
     let left = left.extract::<String>()?;
     let right = right.extract::<String>()?;
@@ -516,9 +862,14 @@ fn access_constraints_equal_text(left: &Bound<'_, PyAny>, right: &Bound<'_, PyAn
 }
 
 #[pyfunction]
-fn access_constraints_equal_bytes(left: &Bound<'_, PyAny>, right: &Bound<'_, PyAny>) -> PyResult<bool> {
+fn access_constraints_equal_bytes(
+    left: &Bound<'_, PyAny>,
+    right: &Bound<'_, PyAny>,
+) -> PyResult<bool> {
     if !left.is_exact_instance_of::<PyBytes>() || !right.is_exact_instance_of::<PyBytes>() {
-        return Err(PyValueError::new_err("exact bytes allowed-value carriers required"));
+        return Err(PyValueError::new_err(
+            "exact bytes allowed-value carriers required",
+        ));
     }
     let left = left
         .downcast::<PyBytes>()
@@ -526,7 +877,10 @@ fn access_constraints_equal_bytes(left: &Bound<'_, PyAny>, right: &Bound<'_, PyA
     let right = right
         .downcast::<PyBytes>()
         .map_err(|_| PyValueError::new_err("exact bytes allowed-value carriers required"))?;
-    Ok(umf_core::access_constraints::equal_bytes(left.as_bytes(), right.as_bytes()))
+    Ok(umf_core::access_constraints::equal_bytes(
+        left.as_bytes(),
+        right.as_bytes(),
+    ))
 }
 
 #[pyfunction]
@@ -644,8 +998,7 @@ fn access_values_validate_decimal(
     let mut context = Context::ordinary();
     let digits = digits
         .downcast::<PyTuple>()
-        .map_err(|_| PyValueError::new_err("invalid Decimal coefficient tuple"))?
-        ;
+        .map_err(|_| PyValueError::new_err("invalid Decimal coefficient tuple"))?;
     context
         .charge_work(digits.len(), Utf16::default())
         .map_err(py_error)?;
@@ -1835,6 +2188,9 @@ impl PythonWorkControl<'_> {
                 ));
             }
         };
+        if value.is_none() {
+            return Ok(None);
+        }
         match value.extract::<u64>() {
             Ok(value) => Ok(Some(value)),
             Err(error) => {
@@ -2211,6 +2567,17 @@ fn _rust_core(module: &Bound<'_, PyModule>) -> PyResult<()> {
     module.add_function(wrap_pyfunction!(access_temporal_profile_version, module)?)?;
     module.add_function(wrap_pyfunction!(access_values_profile_version, module)?)?;
     module.add_function(wrap_pyfunction!(operation_values_profile_version, module)?)?;
+    module.add_function(wrap_pyfunction!(avro_fields_profile_version, module)?)?;
+    module.add_function(wrap_pyfunction!(iceberg_schema_profile_version, module)?)?;
+    module.add_function(wrap_pyfunction!(execute_iceberg_wire, module)?)?;
+    module.add_function(wrap_pyfunction!(protobuf_inspect_profile_version, module)?)?;
+    module.add_function(wrap_pyfunction!(execute_protobuf_inspect_wire, module)?)?;
+    module.add_function(wrap_pyfunction!(avro_fields_derive, module)?)?;
+    module.add_function(wrap_pyfunction!(outcome_values_profile_version, module)?)?;
+    module.add_function(wrap_pyfunction!(outcome_values_capabilities, module)?)?;
+    module.add_function(wrap_pyfunction!(outcome_values_hmac_sha256, module)?)?;
+    module.add_function(wrap_pyfunction!(outcome_values_slot_sha256, module)?)?;
+    module.add_function(wrap_pyfunction!(outcome_values_signature_matches, module)?)?;
     module.add_function(wrap_pyfunction!(operation_canonical, module)?)?;
     module.add_function(wrap_pyfunction!(operation_bounded_size, module)?)?;
     module.add_function(wrap_pyfunction!(operation_digest, module)?)?;
@@ -2219,29 +2586,94 @@ fn _rust_core(module: &Bound<'_, PyModule>) -> PyResult<()> {
     module.add_function(wrap_pyfunction!(operation_token_decode, module)?)?;
     module.add_function(wrap_pyfunction!(operation_key_literal_mode, module)?)?;
     module.add_function(wrap_pyfunction!(operation_native_token_classify, module)?)?;
+    module.add_function(wrap_pyfunction!(
+        related_keys::related_keys_profile_version,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(related_keys::related_keys_parse, module)?)?;
+    module.add_function(wrap_pyfunction!(
+        protobuf_descriptor_profile_version,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(protobuf_read_descriptor_set, module)?)?;
+    module.add_function(wrap_pyfunction!(protobuf_write_descriptor_set, module)?)?;
     module.add_function(wrap_pyfunction!(access_float32_profile_version, module)?)?;
     module.add_function(wrap_pyfunction!(access_float32_classify, module)?)?;
     module.add_function(wrap_pyfunction!(access_range_profile_version, module)?)?;
     module.add_function(wrap_pyfunction!(access_range_compare_integer, module)?)?;
     module.add_function(wrap_pyfunction!(access_range_compare_decimal, module)?)?;
-    module.add_function(wrap_pyfunction!(access_constraints_profile_version, module)?)?;
-    module.add_function(wrap_pyfunction!(access_stream_page_size_profile_version, module)?)?;
-    module.add_function(wrap_pyfunction!(access_stream_page_size_request_valid, module)?)?;
-    module.add_function(wrap_pyfunction!(access_stream_page_size_missing_domain_valid, module)?)?;
-    module.add_function(wrap_pyfunction!(access_stream_page_size_domain_type_valid, module)?)?;
-    module.add_function(wrap_pyfunction!(access_stream_page_size_domain_keys_valid, module)?)?;
-    module.add_function(wrap_pyfunction!(access_stream_page_size_domain_parameter_valid, module)?)?;
-    module.add_function(wrap_pyfunction!(access_stream_page_size_minimum_valid, module)?)?;
-    module.add_function(wrap_pyfunction!(access_stream_page_size_minimum_comparison_valid, module)?)?;
-    module.add_function(wrap_pyfunction!(access_stream_page_size_minimum_exact_value_valid, module)?)?;
-    module.add_function(wrap_pyfunction!(access_stream_page_size_maximum_valid, module)?)?;
-    module.add_function(wrap_pyfunction!(access_stream_page_size_maximum_comparison_valid, module)?)?;
-    module.add_function(wrap_pyfunction!(access_stream_page_size_maximum_exact_value_valid, module)?)?;
-    module.add_function(wrap_pyfunction!(access_stream_page_size_row_cap_valid, module)?)?;
-    module.add_function(wrap_pyfunction!(access_stream_page_size_slot_count_valid, module)?)?;
-    module.add_function(wrap_pyfunction!(access_stream_page_size_slot_carrier_valid, module)?)?;
-    module.add_function(wrap_pyfunction!(access_stream_page_size_slot_nullability_valid, module)?)?;
-    module.add_function(wrap_pyfunction!(access_stream_page_size_final_maximum_valid, module)?)?;
+    module.add_function(wrap_pyfunction!(
+        access_constraints_profile_version,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(
+        access_stream_page_size_profile_version,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(
+        access_stream_page_size_request_valid,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(
+        access_stream_page_size_missing_domain_valid,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(
+        access_stream_page_size_domain_type_valid,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(
+        access_stream_page_size_domain_keys_valid,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(
+        access_stream_page_size_domain_parameter_valid,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(
+        access_stream_page_size_minimum_valid,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(
+        access_stream_page_size_minimum_comparison_valid,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(
+        access_stream_page_size_minimum_exact_value_valid,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(
+        access_stream_page_size_maximum_valid,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(
+        access_stream_page_size_maximum_comparison_valid,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(
+        access_stream_page_size_maximum_exact_value_valid,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(
+        access_stream_page_size_row_cap_valid,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(
+        access_stream_page_size_slot_count_valid,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(
+        access_stream_page_size_slot_carrier_valid,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(
+        access_stream_page_size_slot_nullability_valid,
+        module
+    )?)?;
+    module.add_function(wrap_pyfunction!(
+        access_stream_page_size_final_maximum_valid,
+        module
+    )?)?;
     module.add_function(wrap_pyfunction!(access_constraints_length_within, module)?)?;
     module.add_function(wrap_pyfunction!(access_constraints_equal_boolean, module)?)?;
     module.add_function(wrap_pyfunction!(access_constraints_equal_integer, module)?)?;

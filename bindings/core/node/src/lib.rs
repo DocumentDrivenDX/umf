@@ -170,6 +170,62 @@ pub fn execute_request_wire(
     }
 }
 
+#[napi(js_name = "executeIcebergWire")]
+pub fn execute_iceberg_wire(
+    env: Env,
+    wire_json: String,
+    control_dispatcher: Option<JsFunction>,
+) -> NapiResult<String> {
+    if let Some(dispatcher) = control_dispatcher {
+        let mut control = NodeControl { env, dispatcher };
+        let mut hook = |amount| control.check(amount);
+        Ok(umf_core_wire::execute_iceberg_wire_with_control(
+            &wire_json, &mut hook,
+        ))
+    } else {
+        Ok(umf_core_wire::execute_iceberg_wire(&wire_json))
+    }
+}
+
+#[napi(js_name = "icebergSchemaProfileVersion")]
+pub fn iceberg_schema_profile_version() -> &'static str {
+    umf_core_wire::ICEBERG_SCHEMA_PROFILE
+}
+
+#[napi(js_name = "executeProtobufInspectWire")]
+pub fn execute_protobuf_inspect_wire(
+    env: Env,
+    wire_json: String,
+    control_dispatcher: Option<JsFunction>,
+) -> NapiResult<String> {
+    if let Some(dispatcher) = control_dispatcher {
+        let mut control = NodeControl { env, dispatcher };
+        let mut hook = |amount| control.check(amount);
+        Ok(umf_core_wire::execute_protobuf_inspect_wire_with_control(&wire_json, &mut hook))
+    } else {
+        Ok(umf_core_wire::execute_protobuf_inspect_wire(&wire_json))
+    }
+}
+
+#[napi(js_name = "protobufInspectProfileVersion")]
+pub fn protobuf_inspect_profile_version() -> &'static str {
+    umf_core_wire::PROTOBUF_INSPECT_PROFILE
+}
+
+#[napi(js_name = "executeAvroFieldsWire")]
+pub fn execute_avro_fields_wire(env: Env, wire_json: String, control_dispatcher: Option<JsFunction>) -> NapiResult<String> {
+    if let Some(dispatcher) = control_dispatcher {
+        let mut control = NodeControl { env, dispatcher };
+        let mut hook = |amount| control.check(amount);
+        Ok(umf_core_wire::execute_avro_fields_wire_with_control(&wire_json, &mut hook))
+    } else {
+        Ok(umf_core_wire::execute_avro_fields_wire(&wire_json))
+    }
+}
+
+#[napi(js_name = "avroFieldsProfileVersion")]
+pub fn avro_fields_profile_version() -> &'static str { umf_core_wire::AVRO_FIELDS_PROFILE }
+
 #[napi(js_name = "executeJavascriptNumericWire")]
 pub fn execute_javascript_numeric_wire(
     env: Env,

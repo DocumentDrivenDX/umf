@@ -214,6 +214,30 @@ fn inspection_resolves_only_explicit_packaged_resources_and_checks_metaschema() 
     );
 }
 
+#[test]
+fn inspector_propagates_cancellation_during_single_root_resource_scan() {
+    let mut source = payload(r#"{"$defs":{"a":{"type":"string"},"b":{"type":"number"}}}"#);
+    source.resources = (0..8)
+        .map(|index| {
+            (
+                Utf16::from(format!("https://example.test/r{index}")),
+                tree(r#"{"$defs":{"nested":{"type":"boolean"}}}"#),
+            )
+        })
+        .collect();
+    let mut checks = 0usize;
+    let mut cancellation = || {
+        checks += 1;
+        checks >= 8
+    };
+    let mut ctx = Context::ordinary().with_cancellation(&mut cancellation);
+    let error = json_schema_inspect::inspect_payload(&source, &Utf16::from("/schema"), &mut ctx)
+        .unwrap_err();
+    assert_eq!(error.code, "CANCELLED");
+    assert!(error.is_control_failure());
+    assert!(checks >= 8);
+}
+
 fn from_serde(value: &serde_json::Value) -> Value {
     match value {
         serde_json::Value::Null => Value::Null,

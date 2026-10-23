@@ -1,0 +1,40 @@
+{
+  "captureHarness": "capture.py",
+  "captureHarnessSha256": "b4fd77ae24024f36c981a1d73e848fafd599f422c13c5b42a43111d87eb5021e",
+  "capturedOn": "2026-10-23",
+  "closure": "Source-bound predecessor, capture harness, direct governing/test inputs and per-interpreter reports only; transitive packages are excluded because this replay uses stdlib test doubles. This is not a wheel, native, Pydantic, or full dependency closure.",
+  "frozenSource": "frozen/related_keys.py",
+  "frozenSourceSha256": "dff3862ac453c553288123436d16e71799b6f43669ee8879f6865b4178bc6324",
+  "inputs": {
+    "docs/helix/02-design/adr/ADR-004-typed-data-access-sdk.md": "d45a04d261926391d780f9ea6f6f61db61bdf2ad0fb170b1f968faea8e2524cf",
+    "docs/helix/02-design/contracts/CONTRACT-068-generated-python-types.md": "94b3af02a1c6f10407ac31577c1277fd63bad2d05c0120c8cab9ec67e05e0a8e",
+    "docs/helix/02-design/contracts/CONTRACT-069-engine-target-adapters.md": "f48571fee7225e1253ab7b0abff3f73933ee76a16eba08eee407891d22c2bbf0",
+    "docs/helix/02-design/contracts/CONTRACT-071-query-command-catalog.md": "f02ef333f0eb8dc42ac69dffc8da3fdd721d15937178d9ad2a777f3bbab6e625",
+    "docs/helix/02-design/contracts/CONTRACT-072-runtime-targets.md": "ca6c19fe92d56550d2cb5a16833705b9cbcda70a39da63ab266f5b0161960f97",
+    "docs/helix/02-design/contracts/CONTRACT-075-access-temporal-profile.md": "f5fd731cba3d7bf985c489c6e561e1ce58b79621d486724ca7329057bc7a7615",
+    "docs/helix/03-test/test-plan.md": "778f92feb21fc2c6797f93ea6ba2621c2167726515900ec235f2883873d7a307",
+    "docs/helix/04-build/evidence/rust-migration/r6-related-key-payload/README.md": "0c43e10f55b19d75184ffb625320b940aa09277ed101f6bec153fe60bb6439f5",
+    "docs/helix/04-build/evidence/rust-migration/r6-related-key-payload/capture.py": "b4fd77ae24024f36c981a1d73e848fafd599f422c13c5b42a43111d87eb5021e",
+    "docs/helix/04-build/evidence/rust-migration/r6-related-key-payload/frozen/related_keys.py": "dff3862ac453c553288123436d16e71799b6f43669ee8879f6865b4178bc6324",
+    "docs/helix/04-build/rust-migration-plan.md": "d3a792eb52b8facdc683ef83261febb79f3abde388bdbb6aed01d4aeeac785a4",
+    "python/umf_access/src/umf_access/postgres_read.py": "42eb9f310916b9fbcc134d9f1db6d8ee6fff6e9dfe092e1c4bfdab2f21b82931",
+    "python/umf_access/src/umf_access/related_keys.py": "dff3862ac453c553288123436d16e71799b6f43669ee8879f6865b4178bc6324",
+    "python/umf_access/tests/test_related_key_transport.py": "722b5ec54432865b94c78848eec34cdfee25040c0137766bfbcfbda9f9fe0b09",
+    "python/umf_access/tests/test_truss_related_metadata.py": "9af0d0f70aef366fbbc008c1cf44f7059f50dfa4835e894dcefbef47d82a0430"
+  },
+  "predecessorSha256": "dff3862ac453c553288123436d16e71799b6f43669ee8879f6865b4178bc6324",
+  "predecessorSource": "python/umf_access/src/umf_access/related_keys.py",
+  "profile": "umf-r6-related-key-json-source-freeze/1",
+  "reports": {
+    "cpython-3.11.json": {
+      "caseCount": 56,
+      "runtime": "CPython 3.11.17",
+      "sha256": "e77d0ac692c992e18e7c7317f2c7d496c3f7ef794d05e2aa4384defb04dfaebb"
+    },
+    "cpython-3.14.json": {
+      "caseCount": 56,
+      "runtime": "CPython 3.14.8",
+      "sha256": "ba023a6c58079b2d3e6a06480d80c1f76111812c6f58edb2e34aa6285cdefbbf"
+    }
+  }
+}

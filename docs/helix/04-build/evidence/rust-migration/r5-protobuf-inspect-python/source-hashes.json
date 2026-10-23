@@ -1,0 +1,23 @@
+{
+  "profile": "umf-r5-protobuf-inspect/0.1.0",
+  "operation": "protobuf.descriptor.inspect",
+  "wheelSha256": "daf234c9eef122ab1c0c001ac071f62bc2e81ec5b8701879bcdce80d6f5b7611",
+  "installedExtensionSha256": "e4c5f32ce1b880d53772a37e1f2e0d5d8c0d1d137a21b22d1e28840a3028fc38",
+  "sources": {
+    "bindings/core/python/Cargo.toml": "190f17abce90c387affa8a01a875c98d81ebfbfce2ae7b525a9624701bb7e165",
+    "bindings/core/python/src/lib.rs": "6c8f58195b812bd212140ea8aedc8ac78ede0f08bf822ef3090a3aafc632aa64",
+    "Cargo.lock": "82adcd46f08ad8e9589b3724e5a7a68efcb38c621092ace49dad0316ccbfeea4",
+    "rust-toolchain.toml": "9af7a084f6c81634ad8ed71a2a095dc77bc1723406e0f95dccf19f4af5d984e6",
+    "python/pyproject.toml": "2bad9324634577d69877eb8e0ada4bb3ea43612e35cc9a45014961745266c7aa",
+    "python/hatch_build.py": "c6754b6d9acc041678e62943535aaabc3b6c96630809447a1f8e4dd3907064cf",
+    "python/src/umf/_rust.py": "f3b573f016fe6c89ac0d45da62cc49f145ea08622d9244490411248dfbb9fddf",
+    "python/src/umf/rust_iceberg_schema.py": "beb7a8a337a50740f2531c9a0700377ab5e07f651bbb578a6c179ae3abbc693f",
+    "python/src/umf/rust_protobuf_inspect.py": "05b4e0c68e8ef7b3fa77abacf5f326d4486b2c00547f14ec12978a2bcd984dae",
+    "scripts/rust-migration/r5/protobuf-inspect-python-replay.py": "7b2dbf80b241b28bafb62688930e566800539d3a6f38541d9ca5cf8108a91bbc",
+    "crates/umf-core-wire/src/lib.rs": "b6d65a5c617bfa24402a23fbca67d479be9e19b6937307ba9527e1bdb742aa71",
+    "crates/umf-core/src/protobuf_inspect.rs": "ea9304c1ee65f1685e9efff93f1172aa3aea344fccc2a6337f9aec263862367b",
+    "crates/umf-core/src/protobuf_descriptor_schema.rs": "8ae2ffb38da1f6cd5df460fbdd1dd462794bccc1f73db4e34588c88051266820",
+    "docs/helix/02-design/contracts/CONTRACT-003-protobuf.md": "fb0d01b950d30a44421e5d17aa8ab447b1738aee6dd687d81a9b1759712c9e4b",
+    "docs/helix/04-build/evidence/rust-migration/r5-protobuf-descriptor-codec/inspector-predecessor.json": "167e93475127d86606f7611f63ef6b050e11558c0faf71b367ec696c8ef284ff"
+  }
+}

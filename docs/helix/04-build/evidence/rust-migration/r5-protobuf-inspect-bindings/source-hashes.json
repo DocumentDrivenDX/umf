@@ -1,0 +1,31 @@
+{
+  "profile": "umf-r5-protobuf-inspect/0.1.0",
+  "operation": "protobuf.descriptor.inspect",
+  "runtimeEvidence": {
+    "node": "26.12.1",
+    "bun": "1.4.3",
+    "chromium": "153.0.8010.12",
+    "wasmBindgen": "0.2.100"
+  },
+  "artifacts": {
+    "stagedNodeAddonPath": "/private/tmp/umf-r5-protobuf-inspect-node/bindings/core/node/umf_core_node.node",
+    "stagedNodeAddonSha256": "6bbbd5cece4482d2ed54907e2c8812fcd3f8ec918e84d98db26d18dbf0029f2a",
+    "wasmInputPath": "/private/tmp/umf-r5-protobuf-inspect-bindings-target/wasm32-unknown-unknown/release/umf_core_wasm.wasm",
+    "wasmInputSha256": "7078b29b8f75f84e5189b2613def3d316f96bd1a06e44bdde5cb3ddadb9eb02c",
+    "wasmBindgenJsSha256": "fa61a598c2d55bd51a1e6d9a42346c42e6869456915f4290d26af11271cd7371",
+    "wasmBindgenBrowserWasmSha256": "bc583091fdb52ff5cb7b0b3589c581d07f9afdd1e7cc1d06e6b2b55d7941a4ff"
+  },
+  "sources": {
+    "bindings/core/node/src/lib.rs": "72a34e238a31596d50ee98ae9423b10158c8cdd0dc3ab940aa8af4d35683cfc7",
+    "bindings/core/node/index.js": "e8a4f9e82ac904a60685000603247b7a1d50d0089efa4a3a10f860bf4c94567b",
+    "bindings/core/node/index.d.ts": "3a6c3f21fec07d174217cd621bcd46a9eef6a6bfab5182017e3a7f93bff20a95",
+    "crates/umf-core/src/protobuf_inspect.rs": "ea9304c1ee65f1685e9efff93f1172aa3aea344fccc2a6337f9aec263862367b",
+    "bindings/core/wasm/src/lib.rs": "69f6952679657d9b56288e18ff65d2065781439aaaa5aa5e7b3f557e7a751855",
+    "bindings/core/wasm/index.js": "9fc6ee1f0aba82f9958050024e47229ef65eba2ebc2c3a0192554014f8ede364",
+    "bindings/core/wasm/index.d.ts": "c0fcd0d1c0a0c980192d74a3748242954edfc9d260e7a4b713d52cbc3cb7e670",
+    "tests/rust-core/protobuf-inspect-bindings.test.mjs": "36d52c3a51d85557726687fe45b6b28972fb62c2e44679b0d27c91ff2fc1ef07",
+    "scripts/rust-migration/r5/protobuf-inspect-bindings-node.mjs": "c0af86fe7c33169aab3ec8bc74089675388a3c7423f5e0abc2ca2260500d50e3",
+    "scripts/rust-migration/r5/protobuf-inspect-bindings-browser.ts": "a735f5413cb7e0216ef84aebe5688b6a24b823d5322a044489625929f8bd47a8",
+    "docs/helix/04-build/evidence/rust-migration/r5-protobuf-descriptor-codec/inspector-predecessor.json": "167e93475127d86606f7611f63ef6b050e11558c0faf71b367ec696c8ef284ff"
+  }
+}

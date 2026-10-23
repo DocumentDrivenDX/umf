@@ -1,0 +1,118 @@
+{
+  "receipt": "R5-Iceberg-current-source-replay-assessment-1",
+  "historicalBaseline": {
+    "path": "baseline.json",
+    "sha256": "22b7654f7e05cbf3290da46db3dab887e62f419b4973eb1ee25e64a4bbef68ef",
+    "immutable": true
+  },
+  "replay": {
+    "path": "current-source-replay.json",
+    "sha256": "1491e59f4103ff9d6922336e7c63d0ea9d42ff32db0ac89284c32778fc5f873a",
+    "authoredCases": 35,
+    "upstreamOccurrences": 21,
+    "authoredOutcomesEqualFrozen": true,
+    "upstreamOutcomesEqualFrozen": true,
+    "nativeOracleInvoked": false
+  },
+  "authoredFixtureInputs": {
+    "count": 35,
+    "sourceClosurePath": "source-closure.json",
+    "sourceClosureSha256": "67681aec23a7aa39021a43895133d1f3b7ec1cea46f985434d2fde6bc284db92",
+    "allCurrentHashesMatch": true,
+    "mutationControl": {
+      "path": "fixtures/iceberg/type-0.json",
+      "changedBytesInMemory": true,
+      "rejected": true
+    }
+  },
+  "generatedSourceDrift": [
+    {
+      "path": "src/generated/core-model.ts",
+      "historicalBaselineSha256": "bab8176b9d1902f4da76688e4e8a9221daf0e01b0b645f3acf0c948a33717450",
+      "headSha256": "b07e70cd443cf7a1c7332a3a41312d412edecd792badb5d76916219b14490edd",
+      "currentSha256": "815d8f76a86ad7c122f8581b6eb7a5ad3670b22d38eadfe6a748062fac60d350",
+      "classification": "compiler/provenance metadata only relative to HEAD",
+      "normalizedPayloadEqualToHead": true,
+      "historicalBaselineBytesRetained": false
+    },
+    {
+      "path": "src/generated/core-validators.ts",
+      "historicalBaselineSha256": "0edb2a9fb7a7768d90884562f9c9fe694f03b8b8027782c3d41e98a4d45ddecf",
+      "headSha256": "90d5be9c2fd7ad18742f470e601d80790aeedeaa8db74086cfc8441e6521a4a0",
+      "currentSha256": "03f630f1be538237371a52a7b0635f2134b3a51209af6ed3ff20a6cfaa4dfb78",
+      "classification": "compiler/provenance metadata only relative to HEAD",
+      "normalizedPayloadEqualToHead": true,
+      "historicalBaselineBytesRetained": false
+    },
+    {
+      "path": "spec/metamodel/generated/domain-policy.json",
+      "historicalBaselineSha256": "e32ac2d2c116bc5efa404f1ef6718fc862ba895e4d36dc8473e8cd0e50f23bfe",
+      "headSha256": "941e463b2830ede0cf585f472c380aff0ba8221d8d9772264b2e78fd3497dfa1",
+      "currentSha256": "a2b00bd9eebcb17273d557b4fd79e30d82c589e8076ec0b1b40fe5f77f9c33f8",
+      "classification": "compiler/provenance metadata only relative to HEAD",
+      "normalizedPayloadEqualToHead": true,
+      "historicalBaselineBytesRetained": false
+    },
+    {
+      "path": "spec/metamodel/generated/core-constraints.json",
+      "historicalBaselineSha256": "0bd4e237ec2dffe027a5771f7f2609dd90617b4b55597d994063144a68f153f6",
+      "headSha256": "6e024d3cd556971526b62fe27e4444d5147c67fb92961b6048630e015881d5b4",
+      "currentSha256": "525ae206d33a3dc918075b2a79ef3c95d3ba2269e462e4351c3325a1558d9263",
+      "classification": "compiler/provenance metadata only relative to HEAD",
+      "normalizedPayloadEqualToHead": true,
+      "historicalBaselineBytesRetained": false
+    },
+    {
+      "path": "spec/core/extension-package.schema.json",
+      "historicalBaselineSha256": "bb2aba8afc9543bf54cb24f8fed5627b79e88b978ae24deb56a7a682fbf40210",
+      "headSha256": "d420fe3e950f2ab8a4ce26eb1c6689ad76fd7fe52e6ce1bc2b5517411f601a36",
+      "currentSha256": "92bd00f36e6f7a8d46f2d29edbc44d2a73d7b86ad422482801adba0b041d8714",
+      "classification": "compiler/provenance metadata only relative to HEAD",
+      "normalizedPayloadEqualToHead": true,
+      "historicalBaselineBytesRetained": false
+    },
+    {
+      "path": "spec/core/semantic-type-reference.schema.json",
+      "historicalBaselineSha256": "e441b1c8a1cfc00fa7ccbafeb2b1bbabb90576f9e203f10dbc0d4d971f6e9c47",
+      "headSha256": "efaa15833ea9021b135b0f62296e357dfa3518cff67980dc5684d27feeb3ba17",
+      "currentSha256": "b0cc66cdab17bfd2fd7d0026e7f1864f841f2c9685c745f58c00ae1f5a260738",
+      "classification": "compiler/provenance metadata only relative to HEAD",
+      "normalizedPayloadEqualToHead": true,
+      "historicalBaselineBytesRetained": false
+    },
+    {
+      "path": "spec/core/schema.json",
+      "historicalBaselineSha256": "e5d428f7553c9283224d9daae519115a9dc4858a9f4fece2775695d207ef625b",
+      "headSha256": "ea1c1fdd710e9914c1dc54f71876e3ad94a80db37bd2b67c26c8339f2be1c932",
+      "currentSha256": "000c08351fbc67860c6d8d62ab776891bcac5d1ab59c14de199f31ee067f1b07",
+      "classification": "compiler/provenance metadata only relative to HEAD",
+      "normalizedPayloadEqualToHead": true,
+      "historicalBaselineBytesRetained": false
+    }
+  ],
+  "governanceContextDrift": {
+    "path": "docs/helix/04-build/rust-migration-plan.md",
+    "historicalSha256": "eaf9de95cbb1fa71fcf2f408b71f56bb8651dc46df5273db760969791783b92e",
+    "currentSha256": "cde574880bf2e20b2d9a1d0bd90ea41dbf87e74ad49b11fbb9ee81ba0adf6c36",
+    "classification": "plan drift, independently recorded; not executable input"
+  },
+  "historicalOracleOutputs": {
+    "verifiedUnchanged": true,
+    "paths": [
+      "fixtures/iceberg/oracle-results.json",
+      "fixtures/iceberg/browser-results.json",
+      "fixtures/iceberg/upstream/oracle-results.json",
+      "fixtures/iceberg/upstream/java-oracle-results.json",
+      "fixtures/iceberg/upstream/browser-results.json"
+    ],
+    "rerun": false
+  },
+  "limits": [
+    "The frozen baseline stores historical generated-source hashes, not their bytes; generated payload equality is therefore checked against current HEAD after removing only compiler/provenance metadata.",
+    "Outcome equality establishes current TypeScript predecessor behavior for this fixture set; it does not establish native equivalence or contract correctness."
+  ],
+  "checker": {
+    "path": "scripts/rust-migration/r5/check-iceberg-current-source-replay.py",
+    "sha256": "10dd099a4d6b3149b5bf32532ae9eeab57050cd717940c0fb922d34f9f25a1b1"
+  }
+}

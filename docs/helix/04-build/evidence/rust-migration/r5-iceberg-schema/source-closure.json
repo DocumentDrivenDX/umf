@@ -1,0 +1,648 @@
+{
+  "receipt": "R5-Iceberg-Gate0-source-closure-1",
+  "purpose": "Additive immutable source/resource closure supplement; baseline.json remains untouched by this receipt.",
+  "capturedFrom": {
+    "baselineSha256": "22b7654f7e05cbf3290da46db3dab887e62f419b4973eb1ee25e64a4bbef68ef",
+    "baselineHarnessSha256": "0d21365332c84c6d5b8e7a7a8415b8a502b4fbe9ba5cc2e0fd55a4951ceb72c2",
+    "controlCaptureSha256": "db97b31e0374ec8cfba83e885fee5804f7080205e23145c02e4720f38f14bce6",
+    "controlsSha256": "fbf009701506f1528615e8ea088a3ed961264df18f729f221722573a41ec8055",
+    "closureCheckerSha256": "825901ef45be8b33a45344affeff9d560cb14c3b601be8fc9afcf2c647bf932e"
+  },
+  "governanceContext": {
+    "planPath": "docs/helix/04-build/rust-migration-plan.md",
+    "capturedSha256": "eaf9de95cbb1fa71fcf2f408b71f56bb8651dc46df5273db760969791783b92e",
+    "currentSha256": "d3a792eb52b8facdc683ef83261febb79f3abde388bdbb6aed01d4aeeac785a4",
+    "driftIsContextOnly": true,
+    "baselineWasNotRewritten": true
+  },
+  "scope": {
+    "authoredInputs": 35,
+    "upstreamOccurrences": 21,
+    "upstreamJsonDocuments": 19,
+    "nativeAuthorityFiles": 3,
+    "nativeOracleProvenanceFiles": 9,
+    "additionalControls": 20
+  },
+  "authoredInputs": [
+    {
+      "id": "type-0",
+      "path": "fixtures/iceberg/type-0.json",
+      "sha256": "e44b9d27710d0c32e62fc931c16e9d800a44fcedeffa58a7c9f30d91b8b34342",
+      "umfValid": true,
+      "nativeAcceptedInExistingRecord": true,
+      "byteLength": 100
+    },
+    {
+      "id": "type-1",
+      "path": "fixtures/iceberg/type-1.json",
+      "sha256": "5a407a67c3a505f0f5f3f4882f2f0aca2fdf5489474ce5e03be34c4203856234",
+      "umfValid": true,
+      "nativeAcceptedInExistingRecord": true,
+      "byteLength": 96
+    },
+    {
+      "id": "type-2",
+      "path": "fixtures/iceberg/type-2.json",
+      "sha256": "05145518337053eda7d4a10ecb0c2ece8e73bb91b4c76092c39014bf4b0884f5",
+      "umfValid": true,
+      "nativeAcceptedInExistingRecord": true,
+      "byteLength": 97
+    },
+    {
+      "id": "type-3",
+      "path": "fixtures/iceberg/type-3.json",
+      "sha256": "a3a8bb6148b3c486446a6a59de39161ede3a885ef822970e9312d35e863b0b87",
+      "umfValid": true,
+      "nativeAcceptedInExistingRecord": true,
+      "byteLength": 98
+    },
+    {
+      "id": "type-4",
+      "path": "fixtures/iceberg/type-4.json",
+      "sha256": "4fcd4a56cacc7065515b1180c27c5dc57d9a4be13131a2731d18c750656cf672",
+      "umfValid": true,
+      "nativeAcceptedInExistingRecord": true,
+      "byteLength": 99
+    },
+    {
+      "id": "type-5",
+      "path": "fixtures/iceberg/type-5.json",
+      "sha256": "bde6672138e822bda2da1654ecb636d97fb1ba5471c166610734f1b73059a5fb",
+      "umfValid": true,
+      "nativeAcceptedInExistingRecord": true,
+      "byteLength": 97
+    },
+    {
+      "id": "type-6",
+      "path": "fixtures/iceberg/type-6.json",
+      "sha256": "a597abff82ef628eb268a80b3139fab78a94cfd7685fcbb8a5e8803a154bae97",
+      "umfValid": true,
+      "nativeAcceptedInExistingRecord": true,
+      "byteLength": 97
+    },
+    {
+      "id": "type-7",
+      "path": "fixtures/iceberg/type-7.json",
+      "sha256": "1569772dc37a1a6d942dbe1df543d9a5349c21b23fc5569ffcef4c53fb82eb8b",
+      "umfValid": true,
+      "nativeAcceptedInExistingRecord": true,
+      "byteLength": 102
+    },
+    {
+      "id": "type-8",
+      "path": "fixtures/iceberg/type-8.json",
+      "sha256": "d0a4551014e88e03746c794839d3c3f079f713bfe22b5cb79a58d443dc7e61fd",
+      "umfValid": true,
+      "nativeAcceptedInExistingRecord": true,
+      "byteLength": 104
+    },
+    {
+      "id": "type-9",
+      "path": "fixtures/iceberg/type-9.json",
+      "sha256": "c411c321aeae3f519b9159b0cee0f041fb07d87177f1fe1e2eac7e10a1e770be",
+      "umfValid": true,
+      "nativeAcceptedInExistingRecord": true,
+      "byteLength": 105
+    },
+    {
+      "id": "type-10",
+      "path": "fixtures/iceberg/type-10.json",
+      "sha256": "33fcef9646baca8dab1296da80bb02b8f76f1b9dab319d8930a01b566dcde93f",
+      "umfValid": true,
+      "nativeAcceptedInExistingRecord": true,
+      "byteLength": 107
+    },
+    {
+      "id": "type-11",
+      "path": "fixtures/iceberg/type-11.json",
+      "sha256": "e6bc16bce9d8c123f85d7cd23968584ac7d6c172cedeece7f94be7b9a0845acb",
+      "umfValid": true,
+      "nativeAcceptedInExistingRecord": true,
+      "byteLength": 99
+    },
+    {
+      "id": "type-12",
+      "path": "fixtures/iceberg/type-12.json",
+      "sha256": "383cf540ca66a0a0544fe03088cd623986791685e602a84563148275044000e7",
+      "umfValid": true,
+      "nativeAcceptedInExistingRecord": true,
+      "byteLength": 97
+    },
+    {
+      "id": "type-13",
+      "path": "fixtures/iceberg/type-13.json",
+      "sha256": "d5e2ef93c9c26e4210a9d93d87bcc5295a9e1a2128865b236e387491ab81bce0",
+      "umfValid": true,
+      "nativeAcceptedInExistingRecord": true,
+      "byteLength": 99
+    },
+    {
+      "id": "type-14",
+      "path": "fixtures/iceberg/type-14.json",
+      "sha256": "8da1bc3701dd164115474285f3889753c82f93df6175ce4753b6f0d0533869ee",
+      "umfValid": true,
+      "nativeAcceptedInExistingRecord": true,
+      "byteLength": 102
+    },
+    {
+      "id": "type-15",
+      "path": "fixtures/iceberg/type-15.json",
+      "sha256": "0964a473f34a808f4ea2a45efbfe483197e9ae7eee7c57e66b8e75ed464488ec",
+      "umfValid": true,
+      "nativeAcceptedInExistingRecord": true,
+      "byteLength": 107
+    },
+    {
+      "id": "type-16",
+      "path": "fixtures/iceberg/type-16.json",
+      "sha256": "8165a899e76fa5bc8cb6f5008eac51596e94daace9dffb432fbb005b936b8887",
+      "umfValid": true,
+      "nativeAcceptedInExistingRecord": true,
+      "byteLength": 100
+    },
+    {
+      "id": "type-17",
+      "path": "fixtures/iceberg/type-17.json",
+      "sha256": "4387b00651a7677f336dcf207c60362ba2784a7b21c5e8d154aa1873fecd400b",
+      "umfValid": true,
+      "nativeAcceptedInExistingRecord": false,
+      "byteLength": 100
+    },
+    {
+      "id": "type-18",
+      "path": "fixtures/iceberg/type-18.json",
+      "sha256": "2122f0b714600b685b0ddf26e7bbd45212866e6e79c0ab6c1c29e270ba396633",
+      "umfValid": true,
+      "nativeAcceptedInExistingRecord": false,
+      "byteLength": 112
+    },
+    {
+      "id": "type-19",
+      "path": "fixtures/iceberg/type-19.json",
+      "sha256": "e5a03ce2e3a60d989ab0fb38655825db568dc4649f7140605fd0524ebb10b836",
+      "umfValid": true,
+      "nativeAcceptedInExistingRecord": false,
+      "byteLength": 123
+    },
+    {
+      "id": "type-20",
+      "path": "fixtures/iceberg/type-20.json",
+      "sha256": "b8f13fff26cf9397d413615eb81baf67341db9a9460a12f40684c16268a9d50a",
+      "umfValid": true,
+      "nativeAcceptedInExistingRecord": false,
+      "byteLength": 106
+    },
+    {
+      "id": "nested",
+      "path": "fixtures/iceberg/nested.json",
+      "sha256": "e33b82b960623e88a287638a458203551183c3697ba07312b243dedde5f095ee",
+      "umfValid": true,
+      "nativeAcceptedInExistingRecord": true,
+      "byteLength": 595
+    },
+    {
+      "id": "exact-defaults",
+      "path": "fixtures/iceberg/exact-defaults.json",
+      "sha256": "921308c4e8ce5f197554bf5794334ab8aa38ded58d1b421f2844f916ef6f117c",
+      "umfValid": true,
+      "nativeAcceptedInExistingRecord": true,
+      "byteLength": 227
+    },
+    {
+      "id": "future-object",
+      "path": "fixtures/iceberg/future-object.json",
+      "sha256": "f292ab4183158d6c511192b873a103e13c7a29b4b782a0693d1da122f33b9787",
+      "umfValid": true,
+      "nativeAcceptedInExistingRecord": false,
+      "byteLength": 130
+    },
+    {
+      "id": "duplicate-id",
+      "path": "fixtures/iceberg/duplicate-id.json",
+      "sha256": "621263f17eea8491dd71584ea442cc79efacc790518d65339563597fada17501",
+      "umfValid": false,
+      "nativeAcceptedInExistingRecord": true,
+      "byteLength": 144
+    },
+    {
+      "id": "duplicate-name",
+      "path": "fixtures/iceberg/duplicate-name.json",
+      "sha256": "0c87f5449f7efb9d24317ed5ff1491accdddb15d7a405d4ed4a1f5ce7718a351",
+      "umfValid": false,
+      "nativeAcceptedInExistingRecord": false,
+      "byteLength": 144
+    },
+    {
+      "id": "collection-id-collision",
+      "path": "fixtures/iceberg/collection-id-collision.json",
+      "sha256": "14865ea031312f499960f7bca3d9edfd6f4e517d4a2e79aab34c49cce0c76909",
+      "umfValid": false,
+      "nativeAcceptedInExistingRecord": true,
+      "byteLength": 163
+    },
+    {
+      "id": "optional-identifier",
+      "path": "fixtures/iceberg/optional-identifier.json",
+      "sha256": "38db06cbe48ebdca221ad466ba33d164c2307b64eab440a991c813e73085561e",
+      "umfValid": false,
+      "nativeAcceptedInExistingRecord": false,
+      "byteLength": 122
+    },
+    {
+      "id": "nested-optional-identifier",
+      "path": "fixtures/iceberg/nested-optional-identifier.json",
+      "sha256": "375ec76b7c46d515e8d98b827050e5646a099f3d1f5fcd25866e54d9fd954666",
+      "umfValid": false,
+      "nativeAcceptedInExistingRecord": false,
+      "byteLength": 201
+    },
+    {
+      "id": "float-identifier",
+      "path": "fixtures/iceberg/float-identifier.json",
+      "sha256": "e26393f614c1d5f05f3892d41ec9d462bb5873a7c6e3bc8cdefc188b02fdc263",
+      "umfValid": false,
+      "nativeAcceptedInExistingRecord": false,
+      "byteLength": 122
+    },
+    {
+      "id": "missing-identifier",
+      "path": "fixtures/iceberg/missing-identifier.json",
+      "sha256": "4dd271508a081263ba50f57a1381264a81323fd2ddcf98d074ec568501c1fcbf",
+      "umfValid": false,
+      "nativeAcceptedInExistingRecord": false,
+      "byteLength": 123
+    },
+    {
+      "id": "decimal-range",
+      "path": "fixtures/iceberg/decimal-range.json",
+      "sha256": "2b96a39f9878df5424f32ae3b23190c58159bb02664aeddca6b8633e34540343",
+      "umfValid": false,
+      "nativeAcceptedInExistingRecord": true,
+      "byteLength": 107
+    },
+    {
+      "id": "missing-required",
+      "path": "fixtures/iceberg/missing-required.json",
+      "sha256": "ff0ddcbf4d40580505a5e76d625cde3216b921a2d720318fd97b7bde1c7bacca",
+      "umfValid": false,
+      "nativeAcceptedInExistingRecord": true,
+      "byteLength": 78
+    },
+    {
+      "id": "zero-id",
+      "path": "fixtures/iceberg/zero-id.json",
+      "sha256": "c08545345a61f14c586ab58fbac9e5e25fc3c677a9f1fa11c70dae00a5f084e9",
+      "umfValid": true,
+      "nativeAcceptedInExistingRecord": true,
+      "byteLength": 98
+    },
+    {
+      "id": "negative-id",
+      "path": "fixtures/iceberg/negative-id.json",
+      "sha256": "39140915412a177205af2d4566c3b48fcdd3a1064698fe382b30bb55ec768854",
+      "umfValid": true,
+      "nativeAcceptedInExistingRecord": true,
+      "byteLength": 104
+    }
+  ],
+  "nativeAuthority": [
+    {
+      "path": "native/iceberg/sources/spec.md",
+      "sha256": "bfcef92b4f675eb707672485dc369dfd37df2df98a478681e48444f6d3cf8216",
+      "manifestSha256": "bfcef92b4f675eb707672485dc369dfd37df2df98a478681e48444f6d3cf8216",
+      "verified": true
+    },
+    {
+      "path": "native/iceberg/sources/LICENSE",
+      "sha256": "af1ae2fcde9b5d0bc5fd9a4c77bb5470b30eebe6ec4376a1afcb904a2544f4a7",
+      "manifestSha256": "af1ae2fcde9b5d0bc5fd9a4c77bb5470b30eebe6ec4376a1afcb904a2544f4a7",
+      "verified": true
+    },
+    {
+      "path": "native/iceberg/sources/NOTICE",
+      "sha256": "e0fb343939d21224979dd95cbca333c0592bdbc76912c6a8455f5926d5e6a072",
+      "manifestSha256": "e0fb343939d21224979dd95cbca333c0592bdbc76912c6a8455f5926d5e6a072",
+      "verified": true
+    }
+  ],
+  "nativeOracleSources": [
+    {
+      "path": "native/iceberg/sources/manifest.json",
+      "sha256": "067fc55bf8c45e9057b71ed5a970b9a0ccee22ad3df97be10af4788df4e36a06"
+    },
+    {
+      "path": "native/iceberg/sources/spec.md",
+      "sha256": "bfcef92b4f675eb707672485dc369dfd37df2df98a478681e48444f6d3cf8216"
+    },
+    {
+      "path": "native/iceberg/sources/LICENSE",
+      "sha256": "af1ae2fcde9b5d0bc5fd9a4c77bb5470b30eebe6ec4376a1afcb904a2544f4a7"
+    },
+    {
+      "path": "native/iceberg/sources/NOTICE",
+      "sha256": "e0fb343939d21224979dd95cbca333c0592bdbc76912c6a8455f5926d5e6a072"
+    },
+    {
+      "path": "native/iceberg/oracle/pom.xml",
+      "sha256": "29f7972d4b08e739f27a9d8518967c8c7b3b6c255fefc34860b13abe8f405d87"
+    },
+    {
+      "path": "native/iceberg/oracle/src/main/java/IcebergOracle.java",
+      "sha256": "05bc299ccacca28462933b7164ff5ab43697dfd69caf8f97f6988ce09af900b3"
+    },
+    {
+      "path": "scripts/iceberg-java-oracle.ts",
+      "sha256": "bb715260c93ead1ecab40e6825cf4c1f14a3c26cf662e84cb682b4b44f6210d2"
+    },
+    {
+      "path": "scripts/iceberg-upstream-oracle.py",
+      "sha256": "fdf049a01c2fdd75649aa0dc1fd4192279cfc2313657199da92839b85feb1406"
+    },
+    {
+      "path": "scripts/iceberg-oracle.py",
+      "sha256": "03ecc212dd4a5d7a468dc7fcd41a32345fa87152d860f81fa2cbd85f41e61c97"
+    }
+  ],
+  "sourcePointerChecks": [
+    {
+      "id": "schema-0",
+      "sourcePath": "core/src/test/resources/TableMetadataPartitionStatisticsFiles.json",
+      "pointer": "/schemas/0",
+      "extractedPath": "extracted/schema-0.json",
+      "sourceResourceSha256": "ab2017fb30aeb9a27a1c4a8a384732ec03e3bc87cbb30370c2a1f46e3808856f",
+      "extractedSha256": "2397370af6304c272f78875f36363ee8647b9e896c2ebc1784abcf9177074d74",
+      "exactTreeMatch": true,
+      "numericLexemesAndObjectOrderCompared": true
+    },
+    {
+      "id": "schema-1",
+      "sourcePath": "core/src/test/resources/TableMetadataStatisticsFiles.json",
+      "pointer": "/schemas/0",
+      "extractedPath": "extracted/schema-1.json",
+      "sourceResourceSha256": "37422f9bba95447bfe1604d49faabdf7dda882c4f3a642de29181a65a8f42e5b",
+      "extractedSha256": "2397370af6304c272f78875f36363ee8647b9e896c2ebc1784abcf9177074d74",
+      "exactTreeMatch": true,
+      "numericLexemesAndObjectOrderCompared": true
+    },
+    {
+      "id": "schema-2",
+      "sourcePath": "core/src/test/resources/TableMetadataUnsupportedVersion.json",
+      "pointer": "/schema",
+      "extractedPath": "extracted/schema-2.json",
+      "sourceResourceSha256": "25a5108004532f081da1e0e823f64f300192917f5cf6d6ebbae8ed9658462531",
+      "extractedSha256": "2ca1fbfd24c321e1a97e0d1c81eb388a9ec8e44d6b4a1fff8afb1aade89d22d7",
+      "exactTreeMatch": true,
+      "numericLexemesAndObjectOrderCompared": true
+    },
+    {
+      "id": "schema-3",
+      "sourcePath": "core/src/test/resources/TableMetadataV1MissingSchemaType.json",
+      "pointer": "/schema",
+      "extractedPath": "extracted/schema-3.json",
+      "sourceResourceSha256": "acaebd6195a0ecab80bb9aacf977814517ffea83460a4ed8efd695657eda1265",
+      "extractedSha256": "e51734154d634cdcb7b98dd990a75736b653f35af00f997f5642849f77635216",
+      "exactTreeMatch": true,
+      "numericLexemesAndObjectOrderCompared": true
+    },
+    {
+      "id": "schema-4",
+      "sourcePath": "core/src/test/resources/TableMetadataV1Valid.json",
+      "pointer": "/schema",
+      "extractedPath": "extracted/schema-4.json",
+      "sourceResourceSha256": "3cf9ab3d20da58b63a2336c3d3e47555bfe8b087c6c1eeda86fe365126b93558",
+      "extractedSha256": "2ca1fbfd24c321e1a97e0d1c81eb388a9ec8e44d6b4a1fff8afb1aade89d22d7",
+      "exactTreeMatch": true,
+      "numericLexemesAndObjectOrderCompared": true
+    },
+    {
+      "id": "schema-5",
+      "sourcePath": "core/src/test/resources/TableMetadataV2CurrentSchemaNotFound.json",
+      "pointer": "/schemas/0",
+      "extractedPath": "extracted/schema-5.json",
+      "sourceResourceSha256": "2b9a48914f028fad4d1ac6dbd3b85e085c6e8ef381b2397c5331739e9ad13b38",
+      "extractedSha256": "2397370af6304c272f78875f36363ee8647b9e896c2ebc1784abcf9177074d74",
+      "exactTreeMatch": true,
+      "numericLexemesAndObjectOrderCompared": true
+    },
+    {
+      "id": "schema-6",
+      "sourcePath": "core/src/test/resources/TableMetadataV2CurrentSchemaNotFound.json",
+      "pointer": "/schemas/1",
+      "extractedPath": "extracted/schema-6.json",
+      "sourceResourceSha256": "2b9a48914f028fad4d1ac6dbd3b85e085c6e8ef381b2397c5331739e9ad13b38",
+      "extractedSha256": "a964a46debb519a3465209e2aa1ed51d2780aa82e49eb9c4b828f52ad99f09a4",
+      "exactTreeMatch": true,
+      "numericLexemesAndObjectOrderCompared": true
+    },
+    {
+      "id": "schema-7",
+      "sourcePath": "core/src/test/resources/TableMetadataV2MissingLastPartitionId.json",
+      "pointer": "/schemas/0",
+      "extractedPath": "extracted/schema-7.json",
+      "sourceResourceSha256": "5bb08f44ecb63e1c54ceda1286f74835db57d54260a25afe1d5e4015e5ba48e6",
+      "extractedSha256": "e0674623f5a42249613b54a8a6aa156138fff4cdd5aa1893b4cc59aae16b2943",
+      "exactTreeMatch": true,
+      "numericLexemesAndObjectOrderCompared": true
+    },
+    {
+      "id": "schema-8",
+      "sourcePath": "core/src/test/resources/TableMetadataV2MissingPartitionSpecs.json",
+      "pointer": "/schemas/0",
+      "extractedPath": "extracted/schema-8.json",
+      "sourceResourceSha256": "254b6622536e1cabda8389fbdad7863ab4a1fa3e388060884c5c16e988a51784",
+      "extractedSha256": "e0674623f5a42249613b54a8a6aa156138fff4cdd5aa1893b4cc59aae16b2943",
+      "exactTreeMatch": true,
+      "numericLexemesAndObjectOrderCompared": true
+    },
+    {
+      "id": "schema-9",
+      "sourcePath": "core/src/test/resources/TableMetadataV2MissingSchemas.json",
+      "pointer": "/schema",
+      "extractedPath": "extracted/schema-9.json",
+      "sourceResourceSha256": "f9ff49480553c0d41f4446a1fd2e8cfbb26ad99fbc85db27cb23352a9cba0d2d",
+      "extractedSha256": "2ca1fbfd24c321e1a97e0d1c81eb388a9ec8e44d6b4a1fff8afb1aade89d22d7",
+      "exactTreeMatch": true,
+      "numericLexemesAndObjectOrderCompared": true
+    },
+    {
+      "id": "schema-10",
+      "sourcePath": "core/src/test/resources/TableMetadataV2MissingSortOrder.json",
+      "pointer": "/schemas/0",
+      "extractedPath": "extracted/schema-10.json",
+      "sourceResourceSha256": "18eb09b3b806bd1173b9eba63ccd4e494a09cb5cd87ab6a8fa3442e5e39fdcb9",
+      "extractedSha256": "e0674623f5a42249613b54a8a6aa156138fff4cdd5aa1893b4cc59aae16b2943",
+      "exactTreeMatch": true,
+      "numericLexemesAndObjectOrderCompared": true
+    },
+    {
+      "id": "schema-11",
+      "sourcePath": "core/src/test/resources/TableMetadataV2Valid.json",
+      "pointer": "/schemas/0",
+      "extractedPath": "extracted/schema-11.json",
+      "sourceResourceSha256": "5218e13f623ce46ebf5bace0f2278b2ee812f1c629b384c39df07c5828056bd8",
+      "extractedSha256": "2397370af6304c272f78875f36363ee8647b9e896c2ebc1784abcf9177074d74",
+      "exactTreeMatch": true,
+      "numericLexemesAndObjectOrderCompared": true
+    },
+    {
+      "id": "schema-12",
+      "sourcePath": "core/src/test/resources/TableMetadataV2Valid.json",
+      "pointer": "/schemas/1",
+      "extractedPath": "extracted/schema-12.json",
+      "sourceResourceSha256": "5218e13f623ce46ebf5bace0f2278b2ee812f1c629b384c39df07c5828056bd8",
+      "extractedSha256": "a4a5b34f0f49cf628ad5239c4da65e81da1d57f9ac14d40c962758ed579a7815",
+      "exactTreeMatch": true,
+      "numericLexemesAndObjectOrderCompared": true
+    },
+    {
+      "id": "schema-13",
+      "sourcePath": "core/src/test/resources/TableMetadataV2ValidMinimal.json",
+      "pointer": "/schemas/0",
+      "extractedPath": "extracted/schema-13.json",
+      "sourceResourceSha256": "13f80ed2c3bb8b38b29dd33c9aa6aa4fbc2a01545851990edff3996dccc080a3",
+      "extractedSha256": "e0674623f5a42249613b54a8a6aa156138fff4cdd5aa1893b4cc59aae16b2943",
+      "exactTreeMatch": true,
+      "numericLexemesAndObjectOrderCompared": true
+    },
+    {
+      "id": "schema-14",
+      "sourcePath": "core/src/test/resources/TableMetadataV3ValidMinimal.json",
+      "pointer": "/schemas/0",
+      "extractedPath": "extracted/schema-14.json",
+      "sourceResourceSha256": "0c5c20c42c7ad58c00a064e37dff67d8ba9c38c1ea9177ed7e4c752b6a47de29",
+      "extractedSha256": "838bfa519f3811141f063a7588b8deb686fa1086422493f654d10a342adad50b",
+      "exactTreeMatch": true,
+      "numericLexemesAndObjectOrderCompared": true
+    },
+    {
+      "id": "schema-15",
+      "sourcePath": "core/src/test/resources/org/apache/iceberg/view/ValidViewMetadata.json",
+      "pointer": "/schemas/0",
+      "extractedPath": "extracted/schema-15.json",
+      "sourceResourceSha256": "9621c8aea1d887d55255d37f55e4523f50ecc16ee50ebd37ff436f803df3eb9b",
+      "extractedSha256": "e0674623f5a42249613b54a8a6aa156138fff4cdd5aa1893b4cc59aae16b2943",
+      "exactTreeMatch": true,
+      "numericLexemesAndObjectOrderCompared": true
+    },
+    {
+      "id": "schema-16",
+      "sourcePath": "core/src/test/resources/org/apache/iceberg/view/ViewMetadataInvalidCurrentSchema.json",
+      "pointer": "/schemas/0",
+      "extractedPath": "extracted/schema-16.json",
+      "sourceResourceSha256": "fc59c817505d312d410a6304ad1ad3899225045a6f8b89a1251cf0cf691c4a9b",
+      "extractedSha256": "a964a46debb519a3465209e2aa1ed51d2780aa82e49eb9c4b828f52ad99f09a4",
+      "exactTreeMatch": true,
+      "numericLexemesAndObjectOrderCompared": true
+    },
+    {
+      "id": "schema-17",
+      "sourcePath": "core/src/test/resources/org/apache/iceberg/view/ViewMetadataInvalidCurrentVersion.json",
+      "pointer": "/schemas/0",
+      "extractedPath": "extracted/schema-17.json",
+      "sourceResourceSha256": "fcb992d3055497469c4652199293f5c3af2eaec50c79c3e55d5893e107214665",
+      "extractedSha256": "a964a46debb519a3465209e2aa1ed51d2780aa82e49eb9c4b828f52ad99f09a4",
+      "exactTreeMatch": true,
+      "numericLexemesAndObjectOrderCompared": true
+    },
+    {
+      "id": "schema-18",
+      "sourcePath": "core/src/test/resources/org/apache/iceberg/view/ViewMetadataMissingCurrentVersion.json",
+      "pointer": "/schemas/0",
+      "extractedPath": "extracted/schema-18.json",
+      "sourceResourceSha256": "67fb0e7ffe1820e447fbd985c6be7021c682fad98bac043bbf9fb79a60b0b203",
+      "extractedSha256": "a964a46debb519a3465209e2aa1ed51d2780aa82e49eb9c4b828f52ad99f09a4",
+      "exactTreeMatch": true,
+      "numericLexemesAndObjectOrderCompared": true
+    },
+    {
+      "id": "schema-19",
+      "sourcePath": "core/src/test/resources/org/apache/iceberg/view/ViewMetadataMissingLocation.json",
+      "pointer": "/schemas/0",
+      "extractedPath": "extracted/schema-19.json",
+      "sourceResourceSha256": "1c5d9411abd396024fa67763eaf38842f634f24906a34741e96987b079ad36df",
+      "extractedSha256": "a964a46debb519a3465209e2aa1ed51d2780aa82e49eb9c4b828f52ad99f09a4",
+      "exactTreeMatch": true,
+      "numericLexemesAndObjectOrderCompared": true
+    },
+    {
+      "id": "schema-20",
+      "sourcePath": "core/src/test/resources/org/apache/iceberg/view/ViewMetadataMultipleSQLsForDialect.json",
+      "pointer": "/schemas/0",
+      "extractedPath": "extracted/schema-20.json",
+      "sourceResourceSha256": "9bf417f2003245be19730221cb3ac87d9180f3d9b49451da265089611f3e92b6",
+      "extractedSha256": "e0674623f5a42249613b54a8a6aa156138fff4cdd5aa1893b4cc59aae16b2943",
+      "exactTreeMatch": true,
+      "numericLexemesAndObjectOrderCompared": true
+    }
+  ],
+  "toolchainProvenance": {
+    "apacheIceberg": {
+      "version": "1.11.0",
+      "commit": "6976e020b894f6a6777704df2b8c4458cb291ae9",
+      "authorityManifestPath": "native/iceberg/sources/manifest.json"
+    },
+    "pyIceberg": {
+      "version": "PyIceberg 0.11.0",
+      "observedIn": "fixtures/iceberg/upstream/oracle-results.json",
+      "resultFilePreservedButNotRerun": true
+    },
+    "javaOracle": {
+      "runtime": "Apache Iceberg Java 1.11.0",
+      "javaVersion": "21.0.2",
+      "observedIn": "fixtures/iceberg/upstream/java-oracle-results.json",
+      "resultFilePreservedButNotRerun": true
+    },
+    "javaBuildConfiguration": {
+      "mavenRuntimeVersion": null,
+      "mavenRuntimeVersionStatus": "not recorded in the frozen outputs inspected for this packet",
+      "compilerRelease": "17",
+      "mavenCompilerPlugin": "3.14.0",
+      "mavenDependencyPlugin": "3.8.1",
+      "icebergCore": "1.11.0",
+      "pomPath": "native/iceberg/oracle/pom.xml"
+    },
+    "browser": {
+      "version": "148.0.7778.0",
+      "observedIn": "fixtures/iceberg/upstream/browser-results.json",
+      "resultFilePreservedButNotRerun": true
+    },
+    "bun": {
+      "version": "1.4.3",
+      "observedIn": "baseline.json"
+    },
+    "oracleExecutionThisGate": false
+  },
+  "historicalOutputHashes": [
+    {
+      "path": "fixtures/iceberg/oracle-results.json",
+      "sha256": "e7e9188d286691fd88b9d62e5a2f588cf03911986eda0a5579f910832e27bbfb",
+      "embeddedInBaseline": true,
+      "rerun": false
+    },
+    {
+      "path": "fixtures/iceberg/browser-results.json",
+      "sha256": "73fce6ee0ae8deb7ddbe6da4446f46d73711b5b1141044eff127bea2a55c083e",
+      "embeddedInBaseline": true,
+      "rerun": false
+    },
+    {
+      "path": "fixtures/iceberg/upstream/oracle-results.json",
+      "sha256": "f847ec412fd85f67707aba94f374dba4de9da201462ee9c5b9a85106b0793754",
+      "embeddedInBaseline": true,
+      "rerun": false
+    },
+    {
+      "path": "fixtures/iceberg/upstream/java-oracle-results.json",
+      "sha256": "73eccb62718122ae5660b0099295b67322bd60fa2f0ce2148ef6f0fa3d0c0a1b",
+      "embeddedInBaseline": true,
+      "rerun": false
+    },
+    {
+      "path": "fixtures/iceberg/upstream/browser-results.json",
+      "sha256": "018f542bc7214b9b165266f083d9deef47cd807353af755d67cd480efc61e00f",
+      "embeddedInBaseline": true,
+      "rerun": false
+    }
+  ],
+  "noNativeOrBrowserExecution": true
+}

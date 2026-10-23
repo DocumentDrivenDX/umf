@@ -196,6 +196,52 @@ pub fn execute_request_wire(
     }
 }
 
+#[wasm_bindgen(js_name = executeIcebergWire)]
+pub fn execute_iceberg_wire(wire_json: &str, control_dispatcher: Option<Function>) -> String {
+    if let Some(dispatcher) = control_dispatcher {
+        let mut control = WasmControl { dispatcher };
+        let mut hook = |amount| control.check(amount);
+        umf_core_wire::execute_iceberg_wire_with_control(wire_json, &mut hook)
+    } else {
+        umf_core_wire::execute_iceberg_wire(wire_json)
+    }
+}
+
+#[wasm_bindgen(js_name = icebergSchemaProfileVersion)]
+pub fn iceberg_schema_profile_version() -> String {
+    umf_core_wire::ICEBERG_SCHEMA_PROFILE.to_owned()
+}
+
+#[wasm_bindgen(js_name = executeProtobufInspectWire)]
+pub fn execute_protobuf_inspect_wire(wire_json: &str, control_dispatcher: Option<Function>) -> String {
+    if let Some(dispatcher) = control_dispatcher {
+        let mut control = WasmControl { dispatcher };
+        let mut hook = |amount| control.check(amount);
+        umf_core_wire::execute_protobuf_inspect_wire_with_control(wire_json, &mut hook)
+    } else {
+        umf_core_wire::execute_protobuf_inspect_wire(wire_json)
+    }
+}
+
+#[wasm_bindgen(js_name = protobufInspectProfileVersion)]
+pub fn protobuf_inspect_profile_version() -> String {
+    umf_core_wire::PROTOBUF_INSPECT_PROFILE.to_owned()
+}
+
+#[wasm_bindgen(js_name = executeAvroFieldsWire)]
+pub fn execute_avro_fields_wire(wire_json: &str, control_dispatcher: Option<Function>) -> String {
+    if let Some(dispatcher) = control_dispatcher {
+        let mut control = WasmControl { dispatcher };
+        let mut hook = |amount| control.check(amount);
+        umf_core_wire::execute_avro_fields_wire_with_control(wire_json, &mut hook)
+    } else {
+        umf_core_wire::execute_avro_fields_wire(wire_json)
+    }
+}
+
+#[wasm_bindgen(js_name = avroFieldsProfileVersion)]
+pub fn avro_fields_profile_version() -> String { umf_core_wire::AVRO_FIELDS_PROFILE.to_owned() }
+
 #[wasm_bindgen(js_name = executeJavascriptNumericWire)]
 pub fn execute_javascript_numeric_wire(
     wire_json: &str,

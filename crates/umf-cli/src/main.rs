@@ -12,6 +12,10 @@ use sha2::Digest;
 use umf_core::serialization::Format;
 use umf_core::{Context, Utf16, Value};
 
+const MAX_REFERENCE_REQUEST_BYTES: usize = 32 * 1024 * 1024;
+const MAX_ICEBERG_REQUEST_BYTES: usize = 32 * 1024 * 1024;
+const MAX_PROTOBUF_INSPECT_REQUEST_BYTES: usize = 32 * 1024 * 1024;
+
 fn main() {
     #[cfg(feature = "codegen")]
     if env::args().nth(1).as_deref() == Some("codegen") {
@@ -578,8 +582,17 @@ fn value_text(value: &Value) -> Option<Utf16> {
 }
 
 fn run(args: Vec<String>) -> Result<(), String> {
+    if args.first().map(String::as_str) == Some("reference") {
+        return reference_run(&args[1..]);
+    }
+    if args.first().map(String::as_str) == Some("iceberg") {
+        return iceberg_run(&args[1..]);
+    }
+    if args.first().map(String::as_str) == Some("protobuf") {
+        return protobuf_run(&args[1..]);
+    }
     if args.first().map(String::as_str) != Some("metamodel") {
-        return Err("usage: umf metamodel <parse|compile|shape|outputs> ...".into());
+        return Err("usage: umf <metamodel|reference|iceberg|protobuf> ...".into());
     }
     let operation = args
         .get(1)
@@ -725,6 +738,168 @@ fn run(args: Vec<String>) -> Result<(), String> {
     Ok(())
 }
 
+fn iceberg_run(args: &[String]) -> Result<(), String> {
+    if args == ["schema", "--version"] {
+        println!(
+            "{{\"profile\":\"{}\",\"version\":\"{}\"}}",
+            umf_core_wire::ICEBERG_SCHEMA_PROFILE,
+            env!("CARGO_PKG_VERSION"),
+        );
+        return Ok(());
+    }
+    if args == ["schema", "--capabilities"] {
+        println!(
+            "{{\"profile\":\"{}\",\"operations\":[\"iceberg.schema.import\",\"iceberg.schema.export\",\"iceberg.schema.inspect\",\"iceberg.schema.getNode\",\"iceberg.schema.proposeNodeEdit\"],\"resourceProfile\":\"cooperative\"}}",
+            umf_core_wire::ICEBERG_SCHEMA_PROFILE,
+        );
+        return Ok(());
+    }
+    if args.first().map(String::as_str) != Some("schema") {
+        return Err("usage: umf iceberg schema <--version|--capabilities|--stdin-wire [--max-work N] [--timeout-ms N]>".into());
+    }
+    let mut stdin_wire = false;
+    let mut max_work = None;
+    let mut timeout_ms = None;
+    let mut index = 1;
+    while index < args.len() {
+        match args[index].as_str() {
+            "--stdin-wire" if !stdin_wire => stdin_wire = true,
+            "--max-work" if max_work.is_none() => {
+                index += 1;
+                max_work = Some(args.get(index).ok_or("--max-work requires a value")?
+                    .parse::<u64>().map_err(|_| "--max-work requires a nonnegative integer")?);
+            }
+            "--timeout-ms" if timeout_ms.is_none() => {
+                index += 1;
+                timeout_ms = Some(args.get(index).ok_or("--timeout-ms requires a value")?
+                    .parse::<u64>().map_err(|_| "--timeout-ms requires a nonnegative integer")?);
+            }
+            _ => return Err("invalid Iceberg schema option".into()),
+        }
+        index += 1;
+    }
+    if !stdin_wire {
+        return Err("--stdin-wire is required".into());
+    }
+    let started = std::time::Instant::now();
+    let wire = String::from_utf8(read_limited(io::stdin(), MAX_ICEBERG_REQUEST_BYTES)?)
+        .map_err(|_| "Iceberg wire request is not valid UTF-8".to_owned())?;
+    let mut remaining = max_work.unwrap_or(u64::MAX);
+    let mut control = |amount: usize| {
+        let amount = amount as u64;
+        if amount > remaining {
+            return Err(umf_core::EngineError::new(
+                "RESOURCE_LIMIT", Utf16::default(), "Iceberg work budget exhausted",
+            ));
+        }
+        remaining -= amount;
+        if timeout_ms.is_some_and(|limit| started.elapsed().as_millis() >= u128::from(limit)) {
+            return Err(umf_core::EngineError::new(
+                "DEADLINE", Utf16::default(), "Iceberg deadline elapsed",
+            ));
+        }
+        Ok(())
+    };
+    println!("{}", umf_core_wire::execute_iceberg_wire_with_control(&wire, &mut control));
+    Ok(())
+}
+
+fn protobuf_run(args: &[String]) -> Result<(), String> {
+    if args == ["inspect", "--version"] {
+        println!(
+            "{{\"profile\":\"{}\",\"version\":\"{}\"}}",
+            umf_core_wire::PROTOBUF_INSPECT_PROFILE,
+            env!("CARGO_PKG_VERSION"),
+        );
+        return Ok(());
+    }
+    if args == ["inspect", "--capabilities"] {
+        println!(
+            "{{\"profile\":\"{}\",\"operations\":[\"protobuf.descriptor.inspect\"],\"resourceProfile\":\"cooperative\"}}",
+            umf_core_wire::PROTOBUF_INSPECT_PROFILE,
+        );
+        return Ok(());
+    }
+    if args.first().map(String::as_str) != Some("inspect") {
+        return Err("usage: umf protobuf inspect <--version|--capabilities|--stdin-wire [--max-work N] [--timeout-ms N]>".into());
+    }
+    let mut stdin_wire = false;
+    let mut max_work = None;
+    let mut timeout_ms = None;
+    let mut index = 1;
+    while index < args.len() {
+        match args[index].as_str() {
+            "--stdin-wire" if !stdin_wire => stdin_wire = true,
+            "--max-work" if max_work.is_none() => {
+                index += 1;
+                max_work = Some(args.get(index).ok_or("--max-work requires a value")?
+                    .parse::<u64>().map_err(|_| "--max-work requires a nonnegative integer")?);
+            }
+            "--timeout-ms" if timeout_ms.is_none() => {
+                index += 1;
+                timeout_ms = Some(args.get(index).ok_or("--timeout-ms requires a value")?
+                    .parse::<u64>().map_err(|_| "--timeout-ms requires a nonnegative integer")?);
+            }
+            _ => return Err("invalid Protobuf inspect option".into()),
+        }
+        index += 1;
+    }
+    if !stdin_wire {
+        return Err("--stdin-wire is required".into());
+    }
+    let started = std::time::Instant::now();
+    let wire = String::from_utf8(read_limited(io::stdin(), MAX_PROTOBUF_INSPECT_REQUEST_BYTES)?)
+        .map_err(|_| "Protobuf inspect wire request is not valid UTF-8".to_owned())?;
+    let mut remaining = max_work.unwrap_or(u64::MAX);
+    let mut control = |amount: usize| {
+        let amount = amount as u64;
+        if amount > remaining {
+            return Err(umf_core::EngineError::new(
+                "RESOURCE_LIMIT", Utf16::default(), "Protobuf inspect work budget exhausted",
+            ));
+        }
+        remaining -= amount;
+        if timeout_ms.is_some_and(|limit| started.elapsed().as_millis() >= u128::from(limit)) {
+            return Err(umf_core::EngineError::new(
+                "DEADLINE", Utf16::default(), "Protobuf inspect deadline elapsed",
+            ));
+        }
+        Ok(())
+    };
+    println!("{}", umf_core_wire::execute_protobuf_inspect_wire_with_control(&wire, &mut control));
+    Ok(())
+}
+
+fn reference_run(args: &[String]) -> Result<(), String> {
+    if args.len() != 2 || args[0] != "self-model-check" || args[1] != "--stdin-wire" {
+        return Err("usage: umf reference self-model-check --stdin-wire".into());
+    }
+    let mut ctx = Context::ordinary();
+    let wire = String::from_utf8(read_reference_request()?)
+        .map_err(|_| "wire input is not valid UTF-8".to_owned())?;
+    let request = decode_transport(&wire, &mut ctx).map_err(|error| error.to_string())?;
+    let source = match field(&request, "source") {
+        Some(Value::String(source)) => {
+            ctx.charge_work(source.len(), Utf16::default())
+                .map_err(|error| error.to_string())?;
+            source
+                .to_utf8()
+                .map_err(|_| "source is not valid UTF-8".to_owned())?
+        }
+        _ => return Err("self-model-check request requires a UTF-8 source string".into()),
+    };
+    let manifest =
+        field(&request, "manifest").ok_or("self-model-check request requires manifest")?;
+    let catalog =
+        umf_metamodel::reference::admit_self_model_catalog(source.as_bytes(), manifest, &mut ctx)
+            .map_err(|error| error.to_string())?;
+    println!(
+        "{}",
+        encode_transport(&catalog, &mut ctx).map_err(|error| error.to_string())?
+    );
+    Ok(())
+}
+
 fn encode_transport(value: &Value, ctx: &mut Context<'_>) -> Result<String, umf_core::EngineError> {
     let mut meter = |amount| ctx.charge_work(amount, Utf16::default());
     let mut transport = umf_core_wire::transport_context().with_meter(&mut meter);
@@ -767,6 +942,23 @@ fn read_stdin() -> Result<Vec<u8>, String> {
     io::stdin()
         .read_to_end(&mut bytes)
         .map_err(|e| e.to_string())?;
+    Ok(bytes)
+}
+fn read_reference_request() -> Result<Vec<u8>, String> {
+    read_limited(io::stdin(), MAX_REFERENCE_REQUEST_BYTES)
+}
+fn read_limited(mut reader: impl Read, maximum: usize) -> Result<Vec<u8>, String> {
+    let mut bytes = Vec::new();
+    reader
+        .by_ref()
+        .take(maximum.saturating_add(1) as u64)
+        .read_to_end(&mut bytes)
+        .map_err(|error| error.to_string())?;
+    if bytes.len() > maximum {
+        return Err(format!(
+            "request exceeds the {maximum}-byte transport limit"
+        ));
+    }
     Ok(bytes)
 }
 #[cfg(feature = "codegen")]
@@ -846,7 +1038,16 @@ fn sha256(bytes: &[u8]) -> String {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use std::io::Cursor;
     use umf_core::Capabilities;
+
+    #[test]
+    fn reference_request_reader_caps_bytes_before_wire_decode() {
+        assert!(read_limited(Cursor::new(b"12345"), 4)
+            .unwrap_err()
+            .contains("4-byte"));
+        assert_eq!(read_limited(Cursor::new(b"1234"), 4).unwrap(), b"1234");
+    }
 
     #[test]
     fn compiler_transport_preserves_independently_admitted_depth() {

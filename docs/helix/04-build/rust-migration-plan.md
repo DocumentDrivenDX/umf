@@ -335,6 +335,28 @@ source tree to those earlier wheels. A clean rebuild, exact source/artifact
 qualification and the broader hosted matrix remain required before R4 can be
 counted as a final release-cohort or portable Milestone A gate.
 
+After merging main at `7832e4e7`, the
+[post-main local artifact supplement](evidence/rust-migration/r4/post-main-local-artifact-qualification.md)
+replayed the historical 0.11.0/0.2.0 wheels on macOS arm64 CPython 3.11 and
+3.14. The seven codegen operation probes and installed unit tests passed with
+JavaScript runtimes unavailable; native Mach-O load commands and isolated imports
+show no build-target dylib dependency. This is runtime evidence for the earlier
+wheel hashes, not a source-to-wheel qualification of the merged branch. Core
+document validation on Python 3.14 explicitly refused its unavailable regex
+profile. A fresh offline extracted-sdist rebuild was blocked locally by the
+missing pinned Hatchling backend. The hosted matrix, binary closure gate and
+one frozen release-cohort rebuild remain open.
+
+The R4 [binary-closure gate](../../../scripts/rust-migration/r4/check_binary_closure.py)
+now inspects installed ELF and Mach-O load dependencies, follows bundled Mach-O
+libraries, and refuses external or unresolved loads. Its hosted workflow builds
+both wheels from extracted sdists with Cargo offline, removes the build target
+before isolated CLI/Python smoke checks, and records source and artifact hashes.
+Sixteen adversarial parser/closure tests pass on local Python 3.11 and 3.14;
+independent Sol rereview found no P1/P2 in the gate. Those local checks include
+the historical wheel, not a current-source rebuilt wheel. The four-platform/
+interpreter hosted matrix and exact source-to-artifact release proof remain open.
+
 ### R5–R7 dependency order and retirement
 
 The live successor census captured at the R4 checkpoint remains the source of
@@ -552,6 +574,17 @@ bounded binding. The TypeScript default remains active; arbitrary JavaScript
 objects, Python/CLI exposure, standalone WASM package closure, R7 cutover and
 native consumers remain open.
 
+The bounded [R5 schema-default checkpoint](evidence/rust-migration/r5-schema-defaults/README.md)
+ports `resolveCoreDefault` through the Rust engine, tagged wire and opt-in Node
+model wrapper. Twenty-four frozen predecessor cases compare complete success
+values or exact refusal code/path/message, including source-before-identity
+validation and module-before-element lookup. The Node wrapper restores the
+predecessor's input/result object alias when no default applies. Local focused
+core, wire, TypeScript and rebuilt-addon tests passed; Sol's independent final
+source review found no remaining P1/P2 after UTF-16 copy and diagnostic-metering
+repairs. The default TypeScript API, Python/CLI, browser/WASM and installed
+package qualification remain open.
+
 The next shared R5 foundation is an exact native JSON tree with preserved
 number lexemes, UTF-16 string/key units, duplicate-key refusal and tagged
 representation unknown-field retention. Its Rust parser, copied reads and
@@ -604,6 +637,257 @@ adapter, six edit and four inspector tests plus two adversarial probes after
 repairing source/candidate guards and exact extension dispatch. Full Ajv
 semantics, the upstream corpus and production host/browser exposure remain
 open, so this does not qualify general JSON Schema editing.
+
+The [R5 upstream-oracle harness](evidence/rust-migration/r5-json-schema/upstream-oracle-harness.md)
+now pins the Draft 2020-12 46-file, 384-case, 1,301-vector corpus and runs the
+Ajv 8.20 predecessor comparison with explicit Rust capture, adapter-preservation
+and per-vector accounting. Its Ajv-only run reproduces 30 baseline disagreements
+across 24 cases, seven compile failures and eight evaluation errors across four
+cases. At that Ajv-only checkpoint every Rust outcome was marked not run, and
+no native parity result was claimed.
+
+The first full [source-frozen Rust corpus capture](evidence/rust-migration/r5-json-schema/full-corpus-capture-2026-10-23.md)
+subsequently ran all 46 files, 384 cases and 1,301 vectors. Rust executed
+1,265 vectors; 15 compile refusals blocked 35, one executed vector errored,
+and 14 Rust outcomes disagreed with upstream expectations. The adapter
+preservation capture reported zero failures, but it does not exercise every
+public transaction or binding. The archived raw and comparison reports bind an
+unchanged 87-file source closure and exact hashes. These results are triage
+evidence, not qualification. Sol review found that the first acceptance-gate
+prototype can admit fabricated report shapes and waive adapter semantic drift
+through Ajv baseline exclusions; it also needs per-vector Rust/Ajv attribution.
+At the first capture, the gate was unusable for a passing claim pending those
+P2 repairs and independent review. Static reference/URI resolution, dynamic scope,
+unevaluated annotations and number handling remain distinct repair clusters.
+
+The additive [v3 source-bound corpus packet](evidence/rust-migration/r5-json-schema/full-corpus-capture-v3-2026-10-23.md)
+retains per-vector Rust, original Ajv and exported-schema outcomes and archives
+the comparison and raw capture for replay. Its acceptance gate now independently
+checks the pinned corpus's 160-file manifest closure, the exact 87-file runner
+source inventory and current hashes, raw-capture digest, case/vector accounting,
+Rust/upstream correctness even where Ajv is unavailable, and original/exported
+Ajv parity. Sol reproduced and closed two false-pass paths in the gate and found
+no remaining P1/P2 in this bounded review; seven synthetic tests and both
+TypeScript typechecks pass. The v3 source cohort still fails semantically: 15
+Rust schema refusals block 35 vectors, one vector errors, and 14 Rust results
+disagree with upstream. After subsequent core edits, replay against the moving
+checkout correctly stops at source-provenance verification. A new frozen-source
+capture is required after the static-reference repairs; v3 remains immutable
+failure evidence and does not qualify general Draft 2020-12 support.
+
+The bounded [static-reference follow-up](evidence/rust-migration/r5-json-schema/static-reference-resolution-followup-2026-10-23.md)
+now carries Draft 2020-12 retrieval/base scope through nested schema positions,
+applies an external resource root's relative `$id` once, resolves directory
+references with trailing-slash semantics, and traverses `then`/`else` schema
+positions. The upstream harness supplies the pinned official metaschemas as
+explicit Rust resources while preserving its original Ajv and adapter resource
+set. Legacy dialects retain their prior relative joiner and recognize absolute
+IDs. Sol found and closed two P2 scope/legacy regressions; the final focused
+Rust tests pass seven static-reference, five Python recursive-resource-scope
+and three Python reference-path cases. The separate
+[inspector metering follow-up](evidence/rust-migration/r5-json-schema-inspect/resource-metering-followup-2026-10-23.md)
+walks the root once and precharges key, URI, path, container and native-value
+copies. Its three unit and five integration tests pass. Sol found no remaining
+P1/P2 in these bounded source deltas. The successor
+[v4 source-bound capture](evidence/rust-migration/r5-json-schema/full-corpus-capture-v4-2026-10-23.md)
+closed the unchanged 46-file, 384-case, 1,301-vector corpus and current 87-file
+source inventory. Static resolution reduced compile refusals from 15 to five
+and blocked vectors from 35 to 13; Rust executed 1,283 vectors. The hardened
+gate still rejects five compile-failure cases, five runtime errors and 14
+Rust/upstream semantic disagreements. It found no source-provenance or adapter
+preservation failure; original/exported Ajv parity remained zero mismatches
+among 1,273 compared vectors. Independent Sol review replayed the gate and
+verified the raw hashes and counts with no P1/P2 false claim. Remaining static
+references and anchors precede dynamic scope, annotation and numeric repairs.
+Neither focused result nor v4 activates the default adapter or qualifies
+general Draft 2020-12 support.
+
+The next bounded CONTRACT-003 Protobuf shard is only the binary descriptor
+codec, `readDescriptorSet` and `writeDescriptorSet`; source compilation,
+emission, inspection and JSON Schema projection remain separate. The
+[93-operation predecessor packet](evidence/rust-migration/r5-protobuf-descriptor-codec/README.md)
+pins Buf 2.15.0, Bun 1.4.3, protoc 36.2, source and fixture hashes, and the
+installed Buf package closure before Rust implementation. A separate offline
+Python protobuf 7.36.2 replay passed all 42 authored native behavior checks
+before and after the TypeScript round trip and detected both deliberate default
+and presence mutations; its report matched the checked-in oracle byte-for-byte.
+The Rust interface
+uses portable `Value`/`Context`, a generated descriptor metadata table, and
+4,000,000-byte binary input/output limits. It must preserve unknown wire
+values and ordered entries, exact field presence, and the reached descriptor
+graph. Three predecessor behaviors conflict with CONTRACT-003: export rejects
+a valid 4 MB unknown field after hex expansion, an eleven-byte unknown varint
+is accepted despite malformed native wire, and a closed-enum unknown value
+with overlong encoding is normalized rather than retained byte-exactly. These
+are explicit normative corrections, not parity targets. Buf exposes 34 runtime
+descriptor message types while the historical predecessor schema had 30 `$defs`
+including a generic unknown definition. The five-message schema gap recorded by
+that immutable packet has since closed; the [additive schema-graph evidence](evidence/rust-migration/r5-protobuf-descriptor-codec/README.md#descriptor-schema-graph-closure)
+records exact pinned-runtime type and field closure without rewriting the
+predecessor hashes. The first independent Sol source review
+found exponential nested writes, a UTF-16 predicate compile error, and
+packed-enum, required-field, wire metadata, writer-order and test gaps. Luna
+repaired these against Buf and Python protobuf observations; subsequent Sol
+source review found no open P1/P2 in the bounded codec. The portable core
+compiled and its 11 focused descriptor tests passed at an intermediate source
+checkpoint. An opt-in Python binding and replay harness reconstruct all 93
+frozen operations and verify their input packet before import; Sol's final
+harness review found no open P1/P2. The installed `umf-core` 0.11.0 wheel now
+replays all 93 operations on CPython 3.11.17/Darwin arm64: 32 exact matches,
+seven contract-directed divergences, and 54 contract-expected rejections, with
+zero generic mismatches and zero unreplayable cases. The five initial nested
+depth mismatches were false positives caused by missing `inputBytes` in the
+harness summary and are corrected; all both-error cases were reviewed against
+CONTRACT-003. The compact receipt is
+[`installed-wheel-replay-summary.json`](evidence/rust-migration/r5-protobuf-descriptor-codec/installed-wheel-replay-summary.json).
+Node/Bun/Chromium binding replay and broader native qualification remain open;
+this single wheel cohort does not establish
+complete binary codec parity.
+
+The additive [R5 Protobuf descriptor inspector checkpoint](evidence/rust-migration/r5-protobuf-descriptor-codec/README.md)
+freezes ten current TypeScript `inspectProtobuf` observations and 41 source
+inputs separately from the immutable 93-operation binary-codec packet. The
+portable Rust inspector reads the pinned Document payload and source-archive
+shape, validates descriptor representation through the codec, reports ordered
+unknown-wire findings and bounded file-name registry warnings, and always
+marks compiler verification incomplete. Its eight focused tests pass, including
+a late host-meter rejection that independent Sol review found could previously
+be converted into a warning. The control error now propagates unchanged; file
+and archive duplicate checks use metered hash lookups. Two added UTF-16
+regressions retain lone-surrogate code units in diagnostic paths, including
+payload, source-archive and descriptor-field keys; independent Sol review of
+that repair found no P1/P2. Native source compilation/emission and complete
+dependency-registry interpretation remain open. The current TypeScript schema's
+complete pinned message graph is qualified separately by the additive
+schema-graph evidence.
+
+The opt-in [inspector binding evidence](evidence/rust-migration/r5-protobuf-inspect-bindings/README.md)
+now qualifies two frozen inspector observations, UTF-16 diagnostic paths,
+cooperative resource controls and a meter failure injected inside the Rust
+hook on Node 26.12.1, Bun 1.4.3 and real Chromium 153.0.8010.12. Bun's
+focused suite passes three tests and 21 assertions; source and artifact hashes
+are recorded for the native addon and WASM module. Independent Sol review
+reproduced the real-runtime results and found no remaining P1/P2 after the
+meter-failure injection and browser-receipt hash repairs. This is an opt-in
+inspector subset, not binary codec or source-compiler parity.
+
+The opt-in [Protobuf inspector wire/CLI checkpoint](evidence/rust-migration/r5-protobuf-inspect-cli/README.md)
+exposes one `protobuf.descriptor.inspect` operation under profile
+`umf-r5-protobuf-inspect/0.1.0`, using one cooperative Context for tagged decode,
+inspection and encode. Its Rust-only CLI runs with an empty `PATH` and a 32 MiB
+stdin bound. Ten focused wire/CLI tests pass with default and no-default
+features, including late inspection/encode host-control failure and oversized
+stdin refusal; independent Sol review found no P1/P2. The opt-in
+[CPython binding packet](evidence/rust-migration/r5-protobuf-inspect-python/README.md)
+replays all ten frozen inspector observations from the same installed abi3 wheel
+on CPython 3.11.17 and 3.12.15, with a real lone-surrogate
+diagnostic path, and resource, cancellation, deadline and meter failures injected
+inside the Rust hook after Python admission. Malformed-document and unknown-wire
+controls also pass. Exact wheel and extension hashes are recorded in its receipt;
+the source closure is recorded in the adjacent hash manifest. Independent Sol
+review reproduced both interpreter replays and found no P1/P2 in this bounded
+Python binding.
+
+This is one local macOS arm64 cohort. Complete dependency-registry
+interpretation, broader Protobuf semantics and binding parity outside the
+inspector subset, native compiler validation and default cutover remain open.
+
+The next Protobuf slice is document import, export, copied descriptor get and
+bundle recovery, followed by a source-import prepare/finish operation. Freeze
+the current `src/adapters/protobuf/{index,source}.ts` success/refusal envelopes,
+unknown payload/archive guards, 4 MB binary and source-text bounds, copy
+isolation and ordered diagnostics before changing the default. Rust owns
+request admission, immutable source-archive snapshot, descriptor handling and
+final document inspection; a trusted installed compiler remains an explicit
+host capability receiving a separate copy. One outer work/deadline context
+must cover both sides of that callback, and unavailable or noninterruptible
+compiler profiles must refuse their unsupported control claims. Later slices
+cover callback editing and source emission with independent protoc, Buf and
+Python protobuf replays. Sol's read-only interface review identified this
+dependency order; the Go compiler/emitter, Edition 2024 and complete registry
+semantics remain named external blockers rather than pure-Rust claims.
+
+The next bounded Avro field-metadata shard has a frozen
+[100-case predecessor and independent native packet](evidence/rust-migration/r5-avro-fields/README.md).
+It pins Bun 1.4.3, avsc 5.7.9, Apache Avro 1.12.0 and fastavro 1.12.2,
+including 20 upstream `.avsc` schemas and exact numeric/temporal controls.
+Independent Sol replay matched all 100 predecessor outputs and errors, but
+found that the packet's 48 hashed sources omit transitive executable files
+and installed YAML. An additive 298-file executable closure now binds those
+inputs without rewriting the historical packet; its executable-only check
+passes and explicitly reports subsequent plan-document drift. The portable
+Rust `deriveAvroFields` kernel and its refreshed 12 focused tests pass. The
+capacity, escaping and repeated-lookup controls have Sol source review with no
+open P1/P2. An opt-in `umf-core` 0.11.0 wheel on CPython 3.11.17/Darwin arm64
+passes 110 Python binding tests, including all 100 frozen cases and 294 field
+observations, exact ordered trees, and resource/error controls. Sol's binding
+delta review found no remaining P1/P2 after the clock and test-expectation
+repairs. Fresh native adapter replay, full Avro import/export, datum behavior,
+projections and default host cutover remain separate R5 work. The opt-in
+Node/Bun and WASM binding now passes the frozen
+100-case/294-field replay in Node 26.12.1, Bun 1.4.3 and real Chromium
+153.0.8010.12, with
+UTF-16 and exact-number carriers, unknown-content/order preservation, copy
+isolation, and resource/cancellation/deadline/error controls. The
+[binding evidence](evidence/rust-migration/r5-avro-fields/README.md#opt-in-nodebun-and-wasm-binding-evidence--2026-10-23)
+records the Rust 1.90.0 Darwin arm64 addon and WASM hashes. This remains a
+metadata-only opt-in profile; default adapter cutover and full Avro support are
+not qualified. Independent Sol review found and closed a WASM TypeScript
+declaration mismatch; the corrected nested metadata type has a consumer
+typecheck fixture. Root independently reran the real Chromium 100-case replay.
+The recorded source/artifact hashes are selected fingerprints, while an
+exhaustive transitive Rust build closure remains a final-release gate.
+
+The additive [full Avro adapter predecessor packet](evidence/rust-migration/r5-avro-full-predecessor/README.md)
+freezes current TypeScript import, export, inspect, node-read, edit-proposal and
+bundle behavior before a wider Rust port. It records dependency order,
+source-owned unknown metadata and exact number tokens, unknown tagged-tree
+refusal, detached copies, guard precedence and JSON/YAML serialization.
+The pinned `avsc` 5.7.9 accepts its representative schema; a fresh Apache
+Avro 1.12.0 Python or Java replay was unavailable in this environment. The
+packet is a migration baseline, not Rust parity or full Avro qualification.
+Datum behavior, protocol/IDL/container support, control surfaces and default
+cutover remain open.
+
+The bounded [R5 Iceberg schema checkpoint](evidence/rust-migration/r5-iceberg-schema/README.md)
+ports standalone Iceberg 1.11 schema JSON preservation, inspection, pointer
+reads and copied edits, without table metadata or default execution. Its Rust
+focused suite passes eight tests, including 35 authored and 21 upstream frozen
+schema replays, additive unknown-content controls, exact signed-int32 IDs,
+oversized type parameters, and copy isolation. Two rounds of independent Sol
+review found and closed exponent allocation/overflow, type-parameter, diagnostic
+order and quadratic zero-normalization defects. The subsequent P2 sibling-name
+metering and rejected-schema diagnostic defects are repaired. The bounded
+production interface is five versioned operations—import, export, inspect,
+getNode and proposeNodeEdit—using UTF-16 text and lossless tagged/core-wire
+values under one caller-owned Context. Its source-level wire and CLI suites pass
+three tests each, including a replay of all 56 frozen imports, a clean native
+CLI route, and the versioned capability declaration. Sol independently found no
+remaining P1/P2 in the reviewed Rust core, wire and CLI sources. These focused
+tests preserve complete diagnostic order and the predecessor's
+validation/pointer/replacement refusal order. The opt-in Node/Bun binding
+passes all 35 authored predecessor cases and 265 assertions; real Chromium
+WASM passes the same 26 successes/nine refusals plus UTF-16, metering and
+resource controls. Sol found no remaining P1/P2 in those bindings after a
+source-to-artifact hash correction and fresh WASM rebuild. An isolated
+CPython 3.12.15 / PyIceberg 0.11.0 oracle rerun matched the retained output
+bytes for 52 JSON/YAML round trips, 21 native-accepted schemas and a rename
+check. A fresh Temurin 21.0.13+9 / Maven 3.9.16 run of the pinned Java oracle
+also reproduced all 21 upstream result entries from the retained Java 21.0.2
+output; its separately bound 44-JAR closure and runtime-version-only output
+drift are in the Iceberg evidence receipt. These are bounded authored and
+upstream native subset checks, not direct Rust/native equivalence. The
+installed opt-in Python binding now passes all 35 authored and 21 upstream
+frozen cases through a rebuilt CPython 3.11 wheel, with five-operation results,
+UTF-16, copy, resource, cancellation, deadline and callback-failure controls.
+The final combined wheel (SHA-256
+`02b6b8fe766993c615902b2a7b90e75505657fc6f74fe0a4d3adccf7146c8335`)
+passes a normal `umf` package import and the full no-shim replay on both
+CPython 3.11.17 and 3.12.15. Independent Sol reran both installed profiles
+and verified the wheel/source/resource cohort with no P1/P2 in this bounded
+binding. The earlier 3.11 namespace-shim result remains historical only.
+Table context, evolution, broader adapter semantics and default cutover remain
+open.
 
 The first bounded R6 shard is the CONTRACT-075 temporal carrier/token behavior
 in `python/umf_access/src/umf_access/values.py`, with CONTRACT-068/072 host
@@ -734,6 +1018,93 @@ in that scope after repair. Canonical/digest host input materialization,
 installed-wheel replay, native consumers and the remaining request/result
 algorithms are open R6 gates; no whole-package parity follows from this slice.
 
+The next bounded `key_literal` decision in the same
+[R6 operation-values evidence](evidence/rust-migration/r6-operation-values/README.md)
+routes exact built-in string carrier selection and absent-key refusal through
+Rust. The Python wrapper retains custom carrier comparisons and returns the
+original value object; a surrogate-preserving PyO3 bridge keeps malformed
+Unicode carrier text from changing pass-through behavior. Independent Sol
+rereview reproduced lone-surrogate, `None` precedence, identity and custom
+exception controls against a fresh native extension with no remaining P1/P2
+in this operation. `native_arguments` remains Python-owned because arbitrary
+mapping lookup, hash/equality and index behavior cannot be eagerly projected
+without changing observable order. The source-tree check is not an
+installed-wheel or complete R6 qualification.
+
+The next [R6 typed-token source slice](evidence/rust-migration/r6-operation-values/README.md)
+routes exact built-in integer, decimal, UUID and bits128 result-token decisions
+through Rust while Python preserves lookup, Unicode error order, token identity
+and Decimal `InvalidOperation` context flags. A source-only Sol review found no
+remaining P1/P2 after exponent and flag repairs. A fresh Darwin arm64 Rust 1.90.0
+CPython abi3 core wheel and access wheel now pass five focused Rust tests and
+19 installed Python tests on CPython 3.12.15 with ordinary package imports.
+The same wheels pass the 19 focused tests on CPython 3.11.17 with ordinary
+`umf` and `umf_access` imports after installing Pydantic 2.14.1 and its
+dependencies from an existing offline cache into the temporary test
+environment. `unittest` discovery ran the focused suite because pytest was
+not installed in that interpreter. Source hashes stayed unchanged through
+both wheel builds and replays, with wheel hashes in the
+[additive receipt](evidence/rust-migration/r6-operation-values/typed-token-wheel-replay-2026-10-23.json).
+The in-package result-frame path was exercised with supplied native rows, not
+a database-backed consumer. Native PostgreSQL, Weft, Truss, Ashlar and
+TableSpec consumers, broader `value_from_native` carriers and remaining access
+algorithms remain open; this does not close `value_from_native` or R6.
+
+The bounded [R6 related-Key payload parser](evidence/rust-migration/r6-related-key-payload/README.md)
+has an iterative Rust core and an opt-in PyO3/Python facade. Its frozen
+parser-applicable matrix covers 106 observations; the full facade replay matches
+112 frozen outcomes across CPython 3.11.17 and 3.14.8. An initial wrapper
+refactor changed the default decoder's recursion refusal; the original direct
+`json.loads` call frame was restored and independently probed. Sol found
+additional custom-recursion-limit divergence in the opt-in parser. The
+112-outcome facade replay passes again on both interpreters. A corrected
+direct-call 20-control matrix, which does not interpose a Python wrapper or
+profiler on production outcomes, finds 12 one-container-late Rust parser
+refusals on CPython 3.11.17; all 20 direct outcomes match on CPython 3.14.8.
+Wrapper and profiler entry counts perturb near-limit behavior and are retained
+only as historical diagnostics. Experimental fixed-guard changes were reverted
+because they overcorrected; custom-limit parity remains an explicit gate, with
+no default cutover pending independent review of the corrected matrix.
+Installed generated-client and native PostgreSQL/Weft qualification, broad
+resource behavior and default cutover remain open.
+
+The next candidate is the authenticated table-outcome receipt family in
+`umf_access.unified.outcome_values`. Its HMAC preimages, principal/slot custody,
+stored-record verification and occupied-slot refusal require a frozen Python
+predecessor trace and a separately reviewed Rust/PyO3 interface before any
+production cutover. A [CPython 3.11/3.14 predecessor packet](evidence/rust-migration/r6-outcome-values/README.md)
+now captures exact canonical bytes, HMAC stages, payload and key limits,
+first-refusal order, and source-level occupied-slot sequencing. Sol cleared a
+narrow Rust HMAC/slot/fixed-byte-compare shard while retaining Python receipt
+objects, equality, type checks and transaction sequencing. Its parity mode and
+extension-identity supplement are corrected for new reports; historical
+reports remain executable-unbound. A fake writer proves occupied forged and
+authenticated-but-mismatched receipts refuse before effects or insertion, and
+the focused CPython 3.11 installed environment passes six existing outcome
+tests plus two short-circuit tests. Sol's next interface review identified an
+unbounded HMAC preimage copy and missing native capability handshake. The
+opt-in primitive now streams the preimage into HMAC and declares a versioned
+native capability; Sol found no remaining P1/P2 in that bounded source delta.
+The final combined CPython 3.11 abi3 0.11.0 wheel, SHA-256
+`02b6b8fe766993c615902b2a7b90e75505657fc6f74fe0a4d3adccf7146c8335`,
+is installed under CPython 3.11.17 and 3.12.15; both load the same extension
+and pass the frozen 17-case receipt/8-slot replay. That replay runs the frozen
+Python predecessor using the installed operation-values dependency; it does
+not substitute Rust into receipt construction or verification. Separate
+CPython 3.11 bridge and occupied-slot tests pass 6/6, Rust primitive tests
+pass 4/4, and identity controls pass 6/6. Independent Sol review verified the
+wheel, source/resource closure and both installed profiles without P1/P2.
+Native PostgreSQL/Weft consumer qualification and default outcome cutover
+remain open. Native database transaction authority stays with the Python driver.
+
+The bounded [CPython 3.14 regex profile](evidence/rust-migration/r6-python314-regex/README.md)
+adds versioned Unicode 16 tables and character names, `\\z`, and the 3.14
+empty-input `\\B` behavior without changing the prior 3.11–3.13 table rows.
+An independent Sol review replayed the 412-row CPython oracle and 15 focused
+Rust tests with no P1/P2. The source-tree PyO3 smoke also passed six CPython
+3.14 assertions. Installed wheels, other platforms and broader regex behavior
+remain unqualified; R6 is open.
+
 1. Close shared lossless native JSON/code units, exact literal/temporal/copying,
    URI/resources, registry and schema-validation substrates. Preserve R2/R3
    ownership and authored metamodel authority.
@@ -776,6 +1147,34 @@ browser Node globals. The reviewer used the captured WASM binary rather than an
 independent Rust rebuild. This qualifies only the tested opt-in package cohort;
 complete export-surface qualification, default-client cutover and publication
 remain R7/R8 work.
+
+The [R7 tooling inventory](evidence/rust-migration/r7-tooling-inventory/README.md)
+hash-binds the 31 historical metamodel, reference and schema-browser roots to
+their current sources and classifies their Rust kernels, generated data, host
+orchestration and UI responsibilities. Its first proposed native CLI slice is
+reference self-model admission with source-manifest provenance and graph checks.
+The inventory does not establish a fresh recursively closed R7 census or retire
+any active operation. Independent review, implementation and default activation
+remain open.
+
+The first R7 self-model admission source slice now has a Rust metamodel API
+and bounded native CLI route with a frozen authored source, manifest, catalog
+and graph. It uses `parse_model` without invoking `compile_model` and does not
+activate the Bun reference consumer. Independent Sol source review found and
+closed malformed null-container/member parity, native/WASM work-accounting and
+intermediate-text limits, including an exact `elements:null` diagnostic. The
+frozen Bun controls pass 8 tests/38 assertions and the 31-root inventory check
+passes. The focused Rust reference suite passes 16 tests, including a
+four-million-plus-unit preowned field label and late cancellation; the native
+CLI catalog test passes both normally and with `--no-default-features`. The
+metamodel check passed once after intermediate output regeneration on 2026-10-23.
+An additional reviewed bounded source delta raises the focused Rust suite to
+18 tests with supported malformed-value/refusal controls, and an installed
+CLI passes the frozen catalog with its child `PATH` empty. The Bun predecessor
+still passes eight tests/38 assertions. Sol found no remaining P1/P2 in this
+delta. The final source-cohort metamodel check currently reports stale
+`spec/core/schema.json`; regeneration, consumer parity and default activation
+remain open, so the source slice is not yet a full R7 qualification.
 
 Each family retains immutable predecessor outcomes, contract controls, independent
 version-pinned native oracles, required recovery directions, unknown-content/edit

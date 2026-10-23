@@ -53,6 +53,29 @@ fn references(v: &serde_json::Value, base: &str, out: &mut BTreeMap<String, Stri
     }
 }
 
+/// Explicitly preload the pinned Draft 2020-12 metaschema closure for this
+/// corpus harness. `CompiledSchema` itself does not install implicit remote
+/// resources; ordinary callers must supply their complete resource set.
+fn pinned_2020_metaschema_resources() -> BTreeMap<String, String> {
+    let source: serde_json::Value = serde_json::from_str(include_str!("../src/schema_metas.json")).unwrap();
+    let root = source["metaschemas"]["Draft202012Validator"].clone();
+    let mut resources = BTreeMap::from([(
+        "https://json-schema.org/draft/2020-12/schema".to_owned(),
+        serde_json::to_string(&root).unwrap(),
+    )]);
+    for item in source["resources"].as_array().unwrap() {
+        let Some(id) = item["id"].as_str() else { continue };
+        if id.starts_with("https://json-schema.org/draft/2020-12/meta/") {
+            resources.insert(id.to_owned(), serde_json::to_string(&item["schema"]).unwrap());
+        }
+    }
+    resources
+}
+
+fn schema_json_id(schema: &serde_json::Value) -> Option<String> {
+    schema.get("$id").and_then(|value| value.as_str()).map(str::to_owned)
+}
+
 #[test]
 fn capture_pinned_upstream_rust_and_native_adapter_results() {
     let out = std::env::var("UMF_R5_JSON_SCHEMA_REPORT").expect("wrapper must set report path");
@@ -73,12 +96,31 @@ fn capture_pinned_upstream_rust_and_native_adapter_results() {
             case_count += 1;
             let base = format!("https://umf.invalid/upstream/{name}/{index}");
             let mut deps = BTreeMap::new(); references(&case["schema"], &base, &mut deps, &remotes);
+            let mut compile_deps = deps.clone();
+            let root_id = schema_json_id(&case["schema"]);
+            let mut trusted_metaschema_count = 0usize;
+            for (uri, source) in pinned_2020_metaschema_resources() {
+                // The root schema already owns its own identifier as the primary resource.
+                if root_id.as_deref() == Some(uri.as_str()) {
+                    continue;
+                }
+                if let Some(previous) = compile_deps.get(&uri) {
+                    assert_eq!(
+                        serde_json::from_str::<serde_json::Value>(previous).unwrap(),
+                        serde_json::from_str::<serde_json::Value>(&source).unwrap(),
+                        "resource conflicts with pinned metaschema {uri}"
+                    );
+                } else {
+                    compile_deps.insert(uri, source);
+                    trusted_metaschema_count += 1;
+                }
+            }
             let schema_json = &case["schema"];
             let case_tree = source_tree.subtree_clone(&Utf16::from(format!("/{index}")), &mut Context::ordinary()).unwrap();
             let schema_tree = case_tree.subtree_clone(&Utf16::from("/schema"), &mut Context::ordinary()).unwrap();
             let schema_text = schema_tree.render_compact(&mut Context::ordinary()).unwrap().to_utf8().unwrap();
             let schema = from_json(schema_json);
-            let resources = SchemaResources { entries: deps.iter().filter_map(|(uri, text)| serde_json::from_str::<serde_json::Value>(text).ok().map(|v| (Utf16::from(uri.as_str()), from_json(&v)))).collect() };
+            let resources = SchemaResources { entries: compile_deps.iter().filter_map(|(uri, text)| serde_json::from_str::<serde_json::Value>(text).ok().map(|v| (Utf16::from(uri.as_str()), from_json(&v)))).collect() };
             let compiled = CompiledSchema::compile_consumer(&schema, &resources, false, &mut Context::ordinary());
 
             let adapter_result = (|| -> Result<serde_json::Value, String> {
@@ -118,7 +160,7 @@ fn capture_pinned_upstream_rust_and_native_adapter_results() {
                 let result = actual.map(|r| r.map_err(|e| e.code.clone()));
                 vectors.push(serde_json::json!({"index":vector_index,"description":test["description"],"expected":expected,"rust":result}));
             }
-            records.push(serde_json::json!({"file":name,"index":index,"description":case["description"],"vectorCount":vectors.len(),"dependencyCount":deps.len(),"compileError":compiled.as_ref().err().map(|e| e.code.clone()),"vectors":vectors,"adapter":adapter_result}));
+            records.push(serde_json::json!({"file":name,"index":index,"description":case["description"],"vectorCount":vectors.len(),"dependencyCount":deps.len(),"trustedMetaschemaResourceCount":trusted_metaschema_count,"compileError":compiled.as_ref().err().map(|e| e.code.clone()),"vectors":vectors,"adapter":adapter_result}));
         }
     }
     assert_eq!((case_count, vector_count), (384, 1301), "pinned corpus case/vector counts changed");

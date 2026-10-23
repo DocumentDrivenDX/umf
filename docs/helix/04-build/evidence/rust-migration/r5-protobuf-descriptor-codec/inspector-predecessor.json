@@ -1,0 +1,374 @@
+{
+  "capture": "R5 Protobuf descriptor TypeScript Document inspector predecessor (additive)",
+  "runtime": {
+    "bun": "1.4.3",
+    "bufbuildProtobuf": "2.15.0",
+    "bufPackageFiles": 344,
+    "bufPackageClosureSha256": "f8af62dda87923b9d6cf785bcd18843fd38aaa87ddac1922990a5b37a7f5b943",
+    "protoc": "libprotoc 36.2"
+  },
+  "sourceClosure": {
+    "sources": {
+      "bun.lock": "5fb58795dfe9ef5df89597c44372cf2a0739e1855f322f7622ae0c9d0ac71ce4",
+      "crates/umf-core/src/protobuf_descriptor.rs": "3052201eef5a3c9777e01d51d077d23bb95028db22d8e0cb58b2560161990558",
+      "crates/umf-core/src/protobuf_descriptor_schema.rs": "8ae2ffb38da1f6cd5df460fbdd1dd462794bccc1f73db4e34588c88051266820",
+      "docs/helix/02-design/contracts/CONTRACT-003-protobuf.md": "ee0b2a00d7b4a2b22fef4e4edb119db743d167d9cb60b6706726b822ecae4f52",
+      "docs/helix/02-design/technical-designs/TD-003-protobuf-descriptors.md": "a93b94d31ab555ac85c9e496ad5b48c51e7151eca1c0307d060366b37bf3cd99",
+      "docs/helix/04-build/evidence/rust-migration/r5-protobuf-descriptor-codec/capture-inspector.ts": "b64293d4e9976bff8a9fe93879be7473f872cc6e4b6b9c3edc21a3acfe964c6d",
+      "docs/helix/04-build/evidence/rust-migration/r5-protobuf-descriptor-codec/capture.ts": "e540b83f2f54233d9f7701e6243435543e589c7b32359e3de8380d5d8806249b",
+      "fixtures/protobuf/authored.pb": "6d64e6f8cc8eb240d181b2715b455e62a933a19bd18112620a892ea3ae285bf6",
+      "fixtures/protobuf/behavior-results.json": "9ec17920e9e5cd107cbb4c9d81822781a88d854eb8c14b8536a8235a806900b1",
+      "fixtures/protobuf/descriptor-results.json": "e35a5d2debe12a15b3ee1bd8db1ddb7e49fdec5f8d82ceb3f88522e8addb0d1a",
+      "fixtures/protobuf/upstream/LICENSE": "6e5e117324afd944dcf67f36cf329843bc1a92229a8cd9bb573d7a83130fea7d",
+      "fixtures/protobuf/upstream/google/protobuf/any.proto": "8e56f61e3078e9232d39ce1b1bab28613783af8191f93a910c3617933f87a179",
+      "fixtures/protobuf/upstream/google/protobuf/api.proto": "6d47d6272eb687c806b6feb08ef3925243c64ea076cd9440b783e27a7aec5502",
+      "fixtures/protobuf/upstream/google/protobuf/c_sharp_features.proto": "33febc3af13337ed572159e8ea9025aee04fe6c949047edb6e0318f71d0e72b6",
+      "fixtures/protobuf/upstream/google/protobuf/cpp_features.proto": "98b866a6533e4d7113ec037643db5a19707ee6953fa9b2655c0876c6f42bfb23",
+      "fixtures/protobuf/upstream/google/protobuf/cpp_file_options.proto": "1bd55d7dc4d793dfded37b992f30dab75fdb9c754251164cbc7fc19a133bcacc",
+      "fixtures/protobuf/upstream/google/protobuf/cpp_options.proto": "d6b102328016a57750abc911225592dd2cf06919cfeb6c1f6c1e56ef317a0305",
+      "fixtures/protobuf/upstream/google/protobuf/descriptor.proto": "c96db5406336ebcc82523c1dfb122721986a1f43c4aaed45a4a4ad6996efacc2",
+      "fixtures/protobuf/upstream/google/protobuf/duration.proto": "a3f7301ff2956ec2e30c2241ece07197e4a86c752348d5607224819d4921c9fe",
+      "fixtures/protobuf/upstream/google/protobuf/empty.proto": "ecef3d54cc9e079673b9816c67bac770f7f3bf6dada2d4596ba69d71daa971e6",
+      "fixtures/protobuf/upstream/google/protobuf/field_mask.proto": "9f031219ae54383afa84299fdd747e119b5f83c8e3dab060930ebb126af4460f",
+      "fixtures/protobuf/upstream/google/protobuf/go_features.proto": "bf4db7d7b0d40b612c985fcd2378c78ee49fd1c88cc76821cc4a65dbdc229f5f",
+      "fixtures/protobuf/upstream/google/protobuf/java_features.proto": "ac0253f236f9392a9c71c1b21297bc7ca892496ed550b12c93d0a4ae8e4120df",
+      "fixtures/protobuf/upstream/google/protobuf/json_enumvalue_options.proto": "49c7aa8dd13c8bd2e5235fbb87cf71389d42f9883cdb8941b45fc37536c8da57",
+      "fixtures/protobuf/upstream/google/protobuf/json_options.proto": "e2aa95146dd1d7182b32631ac980f1656fa07a21fe57bbe728107aad6b2c8084",
+      "fixtures/protobuf/upstream/google/protobuf/source_context.proto": "37d3401de89af1d1496fc949924a5f2011bd2fadfbeb0da1caa277159a96776d",
+      "fixtures/protobuf/upstream/google/protobuf/struct.proto": "85d5dd93079588f3fa33b5affe431223de4036f66ffb76253efe930bc2d39696",
+      "fixtures/protobuf/upstream/google/protobuf/timestamp.proto": "fa6c44dca2c90a2aaf3a1e4776cef2e9177f70fba365f236269f0f41ac166c96",
+      "fixtures/protobuf/upstream/google/protobuf/type.proto": "50a3b67b4d894e828173319aafcd6ac440c15340048452bd13a13e8b47cc6637",
+      "fixtures/protobuf/upstream/google/protobuf/wrappers.proto": "6878dc7534cf9805eee56345cdc38b5e9ca39dece246710c663c7007a67fef49",
+      "fixtures/protobuf/upstream/manifest.json": "3281392401493ec361b4400e5c3a4fe8e7e90c7fe02a6767e1fcd72fe757d695",
+      "package.json": "669b886f28aa579025068c76f600bc782d983f2073af9937a981c75c934da3b2",
+      "scripts/protobuf-behavior-oracle.py": "260c519390d893d0e0b1001d29ea32bfe032a0a29d9a02210175453428811bcb",
+      "scripts/protobuf-schema.ts": "c93f3d8d01b470de8c12eaa53cfb8ab6f47dffb3738fe2f6ab2499caac008e53",
+      "spec/extensions/protobuf/package.json": "ae68a6756e0e7901578ef93f13b6544c4eb2af011a3de8ed2e4d11ea3382f0cf",
+      "spec/extensions/protobuf/schema.json": "2c7034a9c8952180689e8e9c30b8dd736d2113e656cfc57267b40b66b7ab0cd9",
+      "src/adapters/protobuf/descriptor.ts": "be1d0450873a9b4dd0ff0e914ea1a282fe535e5ebde6f317c5f035c5f875dc8a",
+      "src/adapters/protobuf/index.ts": "cb4aa58974bc7a82073d41a3c4cf18564f9dff3a823b2a5da699165679a92a01",
+      "src/adapters/protobuf/source.ts": "0ab03a98400c74c19c39060e81950f2b08c198eeb75f5142eda22d40b3978023",
+      "tests/protobuf/behavior.test.ts": "a5397307c7d7813f530ae8d82dc511b235903c13d19db447affb5699f36bc98f",
+      "tests/protobuf/descriptor.test.ts": "888a3b985a7699d6bde37ac4b6fffa8c4716539cba7f5e67a8fb8a8ca0e014bf"
+    },
+    "sourceCount": 41,
+    "bufPackageClosureSha256": "f8af62dda87923b9d6cf785bcd18843fd38aaa87ddac1922990a5b37a7f5b943",
+    "bufPackageFiles": 344
+  },
+  "limits": {
+    "binaryMaxBytes": 4000000,
+    "coreDepth": 128,
+    "coreValues": 100000,
+    "coreMaxTextUnits": 4000000
+  },
+  "observations": [
+    {
+      "label": "authored-document-diagnostics",
+      "status": "ok",
+      "value": [
+        {
+          "code": "PROTOBUF_UNKNOWN",
+          "path": "/descriptorSet/fields/file/fields/message_type/fields/field/fields/options/fields/feature_support/unknown",
+          "severity": "warning",
+          "message": "Unknown native wire fields/options retained without semantic interpretation"
+        },
+        {
+          "code": "PROTOBUF_UNKNOWN",
+          "path": "/descriptorSet/fields/file/fields/message_type/fields/field/fields/options/fields/edition_defaults/unknown",
+          "severity": "warning",
+          "message": "Unknown native wire fields/options retained without semantic interpretation"
+        },
+        {
+          "code": "PROTOBUF_UNKNOWN",
+          "path": "/descriptorSet/fields/file/fields/message_type/fields/field/fields/options/fields/edition_defaults/unknown",
+          "severity": "warning",
+          "message": "Unknown native wire fields/options retained without semantic interpretation"
+        },
+        {
+          "code": "PROTOBUF_UNKNOWN",
+          "path": "/descriptorSet/fields/file/fields/message_type/fields/field/fields/options/fields/edition_defaults/unknown",
+          "severity": "warning",
+          "message": "Unknown native wire fields/options retained without semantic interpretation"
+        },
+        {
+          "code": "PROTOBUF_UNKNOWN",
+          "path": "/descriptorSet/fields/file/fields/message_type/fields/field/fields/options/fields/feature_support/unknown",
+          "severity": "warning",
+          "message": "Unknown native wire fields/options retained without semantic interpretation"
+        },
+        {
+          "code": "PROTOBUF_UNKNOWN",
+          "path": "/descriptorSet/fields/file/fields/message_type/fields/field/fields/options/unknown",
+          "severity": "warning",
+          "message": "Unknown native wire fields/options retained without semantic interpretation"
+        },
+        {
+          "code": "PROTOBUF_COMPILER_REQUIRED",
+          "path": "/descriptorSet",
+          "severity": "warning",
+          "message": "Browser descriptor checks do not certify native compiler validity; validate emitted artifacts with the pinned native compiler"
+        }
+      ]
+    },
+    {
+      "label": "authored-document-unknown-and-presence",
+      "status": "ok",
+      "value": {
+        "descriptorProfile": "protobuf-es-2.15.0",
+        "unknown": [
+          {
+            "path": "/descriptorSet/fields/file/fields/message_type/fields/field/fields/options/fields/feature_support",
+            "unknown": [
+              {
+                "number": 4,
+                "wireType": 0,
+                "data": "ea07"
+              }
+            ]
+          },
+          {
+            "path": "/descriptorSet/fields/file/fields/message_type/fields/field/fields/options/fields/edition_defaults",
+            "unknown": [
+              {
+                "number": 3,
+                "wireType": 0,
+                "data": "ea07"
+              }
+            ]
+          },
+          {
+            "path": "/descriptorSet/fields/file/fields/message_type/fields/field/fields/options/fields/edition_defaults",
+            "unknown": [
+              {
+                "number": 3,
+                "wireType": 0,
+                "data": "ea07"
+              }
+            ]
+          },
+          {
+            "path": "/descriptorSet/fields/file/fields/message_type/fields/field/fields/options/fields/edition_defaults",
+            "unknown": [
+              {
+                "number": 3,
+                "wireType": 0,
+                "data": "ea07"
+              }
+            ]
+          },
+          {
+            "path": "/descriptorSet/fields/file/fields/message_type/fields/field/fields/options/fields/feature_support",
+            "unknown": [
+              {
+                "number": 1,
+                "wireType": 0,
+                "data": "ea07"
+              }
+            ]
+          },
+          {
+            "path": "/descriptorSet/fields/file/fields/message_type/fields/field/fields/options",
+            "unknown": [
+              {
+                "number": 51001,
+                "wireType": 2,
+                "data": "11737461626c65206964656e746966696572"
+              }
+            ]
+          }
+        ],
+        "rootFields": [
+          "file"
+        ]
+      }
+    },
+    {
+      "label": "empty-document-diagnostics",
+      "status": "ok",
+      "value": [
+        {
+          "code": "PROTOBUF_COMPILER_REQUIRED",
+          "path": "/descriptorSet",
+          "severity": "warning",
+          "message": "Browser descriptor checks do not certify native compiler validity; validate emitted artifacts with the pinned native compiler"
+        }
+      ]
+    },
+    {
+      "label": "explicit-empty-vs-absent-presence",
+      "status": "ok",
+      "value": {
+        "explicit": {
+          "name": ""
+        },
+        "absent": {}
+      }
+    },
+    {
+      "label": "unknown-root-diagnostic-order",
+      "status": "ok",
+      "value": [
+        {
+          "code": "PROTOBUF_UNKNOWN",
+          "path": "/descriptorSet/unknown",
+          "severity": "warning",
+          "message": "Unknown native wire fields/options retained without semantic interpretation"
+        },
+        {
+          "code": "PROTOBUF_COMPILER_REQUIRED",
+          "path": "/descriptorSet",
+          "severity": "warning",
+          "message": "Browser descriptor checks do not certify native compiler validity; validate emitted artifacts with the pinned native compiler"
+        }
+      ]
+    },
+    {
+      "label": "unknown-nested-diagnostic-order",
+      "status": "ok",
+      "value": [
+        {
+          "code": "PROTOBUF_UNKNOWN",
+          "path": "/descriptorSet/fields/file/unknown",
+          "severity": "warning",
+          "message": "Unknown native wire fields/options retained without semantic interpretation"
+        },
+        {
+          "code": "PROTOBUF_COMPILER_REQUIRED",
+          "path": "/descriptorSet",
+          "severity": "warning",
+          "message": "Browser descriptor checks do not certify native compiler validity; validate emitted artifacts with the pinned native compiler"
+        }
+      ]
+    },
+    {
+      "label": "unknown-wire-byte-retention",
+      "status": "ok",
+      "value": {
+        "tree": [
+          {
+            "number": 50000,
+            "wireType": 2,
+            "data": "04000102ff"
+          }
+        ],
+        "exportHex": "82b51804000102ff"
+      }
+    },
+    {
+      "label": "empty-root-field-presence",
+      "status": "ok",
+      "value": {
+        "file": {
+          "name": ""
+        },
+        "exportHex": "0a020a00"
+      }
+    },
+    {
+      "label": "descriptor-graph-types-and-runtime-schema-gaps",
+      "status": "ok",
+      "value": {
+        "runtimeGraphTypeCount": 34,
+        "runtimeGraphTypes": [
+          "google.protobuf.FileDescriptorSet",
+          "google.protobuf.FileDescriptorProto",
+          "google.protobuf.DescriptorProto",
+          "google.protobuf.DescriptorProto.ExtensionRange",
+          "google.protobuf.DescriptorProto.ReservedRange",
+          "google.protobuf.ExtensionRangeOptions",
+          "google.protobuf.ExtensionRangeOptions.Declaration",
+          "google.protobuf.FieldDescriptorProto",
+          "google.protobuf.OneofDescriptorProto",
+          "google.protobuf.EnumDescriptorProto",
+          "google.protobuf.EnumDescriptorProto.EnumReservedRange",
+          "google.protobuf.EnumValueDescriptorProto",
+          "google.protobuf.ServiceDescriptorProto",
+          "google.protobuf.MethodDescriptorProto",
+          "google.protobuf.FileOptions",
+          "google.protobuf.MessageOptions",
+          "google.protobuf.FieldOptions",
+          "google.protobuf.FieldOptions.EditionDefault",
+          "google.protobuf.FieldOptions.FeatureSupport",
+          "google.protobuf.OneofOptions",
+          "google.protobuf.EnumOptions",
+          "google.protobuf.EnumValueOptions",
+          "google.protobuf.ServiceOptions",
+          "google.protobuf.MethodOptions",
+          "google.protobuf.UninterpretedOption",
+          "google.protobuf.UninterpretedOption.NamePart",
+          "google.protobuf.FeatureSet",
+          "google.protobuf.FeatureSet.VisibilityFeature",
+          "google.protobuf.FeatureSetDefaults",
+          "google.protobuf.FeatureSetDefaults.FeatureSetEditionDefault",
+          "google.protobuf.SourceCodeInfo",
+          "google.protobuf.SourceCodeInfo.Location",
+          "google.protobuf.GeneratedCodeInfo",
+          "google.protobuf.GeneratedCodeInfo.Annotation"
+        ],
+        "schemaTypeCount": 29,
+        "schemaTypes": [
+          "google.protobuf.DescriptorProto",
+          "google.protobuf.DescriptorProto.ExtensionRange",
+          "google.protobuf.DescriptorProto.ReservedRange",
+          "google.protobuf.EnumDescriptorProto",
+          "google.protobuf.EnumDescriptorProto.EnumReservedRange",
+          "google.protobuf.EnumOptions",
+          "google.protobuf.EnumValueDescriptorProto",
+          "google.protobuf.EnumValueOptions",
+          "google.protobuf.ExtensionRangeOptions",
+          "google.protobuf.ExtensionRangeOptions.Declaration",
+          "google.protobuf.FeatureSet",
+          "google.protobuf.FieldDescriptorProto",
+          "google.protobuf.FieldOptions",
+          "google.protobuf.FieldOptions.EditionDefault",
+          "google.protobuf.FieldOptions.FeatureSupport",
+          "google.protobuf.FileDescriptorProto",
+          "google.protobuf.FileDescriptorSet",
+          "google.protobuf.FileOptions",
+          "google.protobuf.MessageOptions",
+          "google.protobuf.MethodDescriptorProto",
+          "google.protobuf.MethodOptions",
+          "google.protobuf.OneofDescriptorProto",
+          "google.protobuf.OneofOptions",
+          "google.protobuf.ServiceDescriptorProto",
+          "google.protobuf.ServiceOptions",
+          "google.protobuf.SourceCodeInfo",
+          "google.protobuf.SourceCodeInfo.Location",
+          "google.protobuf.UninterpretedOption",
+          "google.protobuf.UninterpretedOption.NamePart"
+        ],
+        "runtimeOnlyTypes": [
+          "google.protobuf.FeatureSet.VisibilityFeature",
+          "google.protobuf.FeatureSetDefaults",
+          "google.protobuf.FeatureSetDefaults.FeatureSetEditionDefault",
+          "google.protobuf.GeneratedCodeInfo",
+          "google.protobuf.GeneratedCodeInfo.Annotation"
+        ],
+        "runtimeOnlyTypeCount": 5
+      }
+    },
+    {
+      "label": "source-operation-surface",
+      "status": "ok",
+      "value": {
+        "sourceArchiveOnImportedDocument": false,
+        "typescriptExports": [
+          {
+            "name": "importProtobufSources",
+            "present": true
+          },
+          {
+            "name": "exportProtobufSources",
+            "present": true
+          },
+          {
+            "name": "exportProtobufBundle",
+            "present": true
+          }
+        ],
+        "rustCodecExposesDescriptorBinaryOnly": true,
+        "sourceCompilerAndEmitterRustOperations": "unsupported in this shard"
+      }
+    }
+  ]
+}

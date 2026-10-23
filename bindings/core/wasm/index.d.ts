@@ -88,6 +88,42 @@ export interface UmfCoreModelEngine {
 }
 export declare function createCoreModelEngine(module: any, resources: UmfCoreResources, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): UmfCoreEngine & UmfCoreModelEngine;
 export declare function initializeCoreModelWasm(resources: UmfCoreResources, loader?: () => Promise<any>, host?: typeof globalThis, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): Promise<UmfCoreEngine & UmfCoreModelEngine>;
+export declare const ICEBERG_SCHEMA_PROFILE: 'umf-r5-iceberg-schema/0.1.0';
+export declare const PROTOBUF_INSPECT_PROFILE: 'umf-r5-protobuf-inspect/0.1.0';
+export declare const AVRO_FIELDS_PROFILE: 'umf-r5-avro-fields/0.1.0';
+export interface ProtobufInspectDiagnostic {code: string; path: string; message: string; severity: 'error' | 'warning'}
+export interface ProtobufInspectResult {valid: boolean; complete: boolean; diagnostics: ProtobufInspectDiagnostic[]}
+export interface ProtobufInspector {/** Inspect a UMF document containing a tagged Protobuf descriptor extension. */ inspect(document: unknown): ProtobufInspectResult}
+/** Create the opt-in bounded Rust Protobuf descriptor inspector. */
+export declare function createProtobufInspector(module: any, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): ProtobufInspector;
+/** Initialize the opt-in Protobuf descriptor inspector in a browser. */
+export declare function initializeProtobufInspectWasm(loader?: () => Promise<any>, host?: typeof globalThis, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): Promise<ProtobufInspector>;
+export interface AvroFieldMetadata {dependencyId?: string; path: string; record: string; nativeField: unknown; element: {id: string; name: string; description?: string; scalarType?: 'boolean' | 'integer' | 'float' | 'binary' | 'string' | 'date' | 'time' | 'timestamp' | 'decimal'; extensions: Record<string, never>}}
+export interface AvroFieldsEngine {deriveAvroFields(root: unknown, dependencies?: {id: string; root: unknown}[]): AvroFieldMetadata[]}
+/** Create the opt-in bounded Avro field-metadata projection over WASM. */
+export declare function createAvroFieldsEngine(module: any, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): AvroFieldsEngine;
+export declare function initializeAvroFieldsWasm(loader?: () => Promise<any>, host?: typeof globalThis, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): Promise<AvroFieldsEngine>;
+export interface IcebergSchemaValidation {
+  valid: boolean;
+  complete: boolean;
+  diagnostics: {code: string; path: string; message: string; severity: 'error' | 'warning'}[];
+}
+export interface IcebergSchemaEngine {
+  /** Import standalone Iceberg schema JSON as a tagged UMF extension document. */
+  importSchema(source: string, id: string): unknown;
+  /** Export a validated schema without dropping unknown representation content. */
+  exportSchema(document: unknown): string;
+  /** Inspect the pinned standalone schema subset; completeness remains false. */
+  inspect(document: unknown): IcebergSchemaValidation;
+  /** Return a copied tagged native JSON node at an RFC 6901 pointer. */
+  getNode(document: unknown, pointer: string): unknown;
+  /** Return a validated candidate document; this does not commit or mutate input. */
+  proposeNodeEdit(document: unknown, pointer: string, replacementJson: string): {document: unknown; validation: IcebergSchemaValidation};
+}
+/** Create the opt-in standalone Iceberg schema JSON engine using embedded pinned resources. */
+export declare function createIcebergSchemaEngine(module: any, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): IcebergSchemaEngine;
+/** Initialize the opt-in standalone Iceberg schema JSON engine in a browser. */
+export declare function initializeIcebergSchemaWasm(loader?: () => Promise<any>, host?: typeof globalThis, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): Promise<IcebergSchemaEngine>;
 
 export interface UmfCodegenResources extends UmfCoreResources {tablesPackage: unknown; actionsPackage: unknown; bindingPackage: unknown; stableBindingPackage: unknown}
 export type UmfCodegenOperation = 'generatePythonClient' | 'compileTableDeployment' | 'verifyTableDeployment' | 'compileTableMigration' | 'verifyTableMigration' | 'discoverTableMigrationChanges' | 'normalizeRowScope' | 'generateAccessPackage' | 'diffAccessPackages';

@@ -1,0 +1,2611 @@
+{
+  "python": "3.12.15 (main, Oct  3 2026, 00:54:33) [Clang 22.1.3 ]",
+  "apacheAvro": "1.12.0",
+  "fastavro": "1.12.2",
+  "predecessorSha256": "2cf1aa4a26aecfb0050a29458f43ff97eb94b1c3a5e20498b36ac118b41cce16",
+  "dependencyFileSha256": {
+    "avro/HandshakeRequest.avsc": "8d739ab36b3b572f674878601d0c4b07bcaf641955c88bac50c637fa8a6a3d2c",
+    "avro/HandshakeResponse.avsc": "16c4d8c1bbf7c4f2f740ac3a5b499125095e311a15c265f9bf68045135e7d1a6",
+    "avro/LICENSE": "c79a7fea0e3cac04cd43f20e7b648e5a0ff8fa5344e644b0ee09ca1162b62747",
+    "avro/NOTICE": "984731deb198a9bb13b74feb165cb84c24b868602164de40df47451a17085afa",
+    "avro/VERSION.txt": "c92df6bdde330be219d62f48ec6490b01889436f2f59027aab200e74de619168",
+    "avro/__init__.py": "85557220215e230aec669f44bda3f58f988a647cdf109ada3c824c2b520dabf9",
+    "avro/__main__.py": "2b8dc5fabeed0f360454c2f206a8206d7ece26ca32b89621346ec128b62a82b4",
+    "avro/__pycache__/__init__.cpython-312.pyc": "9b381cc1de25c9c00c9f145c6394debc2f01cb19ea35d75c21d41c4e7aaa62ec",
+    "avro/__pycache__/constants.cpython-312.pyc": "273a2ae06b836af713bd7a17284031572030cf439d2ec39fbb01c815519ad551",
+    "avro/__pycache__/errors.cpython-312.pyc": "391822ffde81f6c937fd20338d3d4f13bcdbee40ae0532d5c0407e57c18b108b",
+    "avro/__pycache__/name.cpython-312.pyc": "10dc87ba58e1b48028f164c4bf3c1be0e6d43665dac887ccf85edd81ca92a6e5",
+    "avro/__pycache__/schema.cpython-312.pyc": "35e4ac065749699050f974344545a7c5de4f0a7f1208d0f97488e6369c72d937",
+    "avro/codecs.py": "fbe0ac4eb2af2cb7ec3f803430ff3f21d82982e7cd673a75899ec4e126f0114b",
+    "avro/compatibility.py": "565fbf011554fff5ef774556556ade4e16741d3f9695f8b98b80f0f30f1095da",
+    "avro/constants.py": "1388b68b63c99da6e54df019abad2a7c86af255388dc522f55c28940f94e1086",
+    "avro/datafile.py": "aa9392914d4e18932873500d880bd219d378abef7ddf9f19217cb3ef546cac38",
+    "avro/errors.py": "f80cb96d7d4abd6b5e7d145bb2c731068bfcdbd8402f912c913914e025bf9975",
+    "avro/interop.avsc": "7e894e5e1fe8d78331ce93c103248d152772dc476dda1c3e11ea16931d203619",
+    "avro/io.py": "e3d822be5689caf5c4ab67b72cdf62511f9a4926a52f79fcf7609046d44ad1f5",
+    "avro/ipc.py": "d00ea8933b04db7dd14adcc217a825e8e9b48b1b04381088c4975252c24c1c07",
+    "avro/name.py": "f484ad7b97f5f8737cc92253704fd70e38d012ef09a51275a07d8d793de8c111",
+    "avro/protocol.py": "11754bfb033ddde25077b8fa89280e829cc95ddcb5c31d4a52e27038e0140838",
+    "avro/py.typed": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "avro/schema.py": "7f6b1b9ca64dc2955d4cac96a610c8c0dd1954da4274535ba47f885b5c81ed8f",
+    "avro/test/__init__.py": "de167c519304725e129edad15f2255acbbaa1d38b8950fa641b1f2611e735142",
+    "avro/test/gen_interop_data.py": "517d232f56c348c8f08e70fe5726b4d07e13a46085bdd97410ad754ec47d513f",
+    "avro/test/mock_tether_parent.py": "4140dc27fb8a95e14f2580ed2185e4cb06270eac4e73445637328eeacc345bd7",
+    "avro/test/sample_http_client.py": "a4eceeb55235982cd517aa60475a4720b24beefd5898cf0ada71a6fcddd2e453",
+    "avro/test/sample_http_server.py": "e0c15ceb8f0eb179acaaf8ef44db76c09b64827b329e48ec14392b354b484dc1",
+    "avro/test/test_bench.py": "c7525366cebf85210dccedaac1a3e70e17e57bdd17439249281583834e54ba78",
+    "avro/test/test_compatibility.py": "48e1f565c5fa2878a4abd6e408ff558d201eec5ef24b8489bb13894b7f635039",
+    "avro/test/test_datafile.py": "7625388f871e9603fce558f0cdd8a16ac582fe9d72c8b535216d821131f75df3",
+    "avro/test/test_datafile_interop.py": "d9826eed141162331b9c1c93c00e632f6a2653b17c7a01a06d41dcdaae88b6e3",
+    "avro/test/test_init.py": "1cce1d578f4f963c9dd159c19449a4d3f108ae666b31f0a1ebdc5872e8dc0610",
+    "avro/test/test_io.py": "7c37a2fde03bfb48d67780b207db051e47f9f0c498ff1cc00546cfa18fbe285c",
+    "avro/test/test_ipc.py": "b7eb51e11147e7a5811ac89d47a57b8273c8d16e1cdb75b51041409ceb30aec6",
+    "avro/test/test_name.py": "0ea9c6d28fe685289488684aa0f6f00f4754e876be6ff9d23f783e0a722316fb",
+    "avro/test/test_protocol.py": "6b9be3a18c02472a60e16edc987c988e9aa0b4be66e4baf5f2acd24359c95005",
+    "avro/test/test_schema.py": "0eefb56edaa630521579593ec40a6fca3b3143655d714d47d9dd6de8feccdebc",
+    "avro/test/test_script.py": "3f6babeff37a5005fdc9d733c7d454517f33a3e96f1c88d6eefaabe0f5fd6126",
+    "avro/test/test_tether_task.py": "0b9bfc97441677a848c80833231008a40fa6ba6fd675786c0a01c9a84d670a08",
+    "avro/test/test_tether_task_runner.py": "704076b7a0cf474aaf263f13f68d768bcae7adfbabd45aa8d8cbaa9420d6627d",
+    "avro/test/test_tether_word_count.py": "5ab2f24b6e3ba179fe22f1e53badef955d60a016ade06a50422f17101a0e1cfc",
+    "avro/test/word_count_task.py": "c0a292e4c3a983dcd952efb247695e661b25473cc8cce9a254ed43bc0fa6f036",
+    "avro/tether/InputProtocol.avpr": "62e5102c131a598f02aadb1f0b2d3dc995d7c56bc95aa78185ff0c23b9d8ae80",
+    "avro/tether/OutputProtocol.avpr": "72a9fa4d9998e5a93447d10416e304c5e93651fe4af9af0721ec0dfa32bb4d10",
+    "avro/tether/__init__.py": "0a71224675e2c8ad212b74e198a2e7ab468303c8aa6f6c3c2002c13ec8b4eb9e",
+    "avro/tether/tether_task.py": "0a7e4f01669868d5474b159888bb5a1dfbfe8179585e6790451772419101aab2",
+    "avro/tether/tether_task_runner.py": "75486b04aae37551eea61d5839e73292e4ecb7056208cc42b861b8d010f6541c",
+    "avro/tether/util.py": "a5fc73d07968a261f7f6a08172154e15c2d249782e009b5754db6b9fb56de1d6",
+    "avro/timezones.py": "0a8a5f1ed03f4c0f113acf7c8744fa8914006007277af928a8875e918e7a0f21",
+    "avro/tool.py": "69bfe04983ffa5fea2aad510d6569047fdd867fa6eeabaf4eb8beed8af1158dc",
+    "avro/utils.py": "86910600a7b9942bc533a781d7c5c9980961b11c2e8b9ea85be7eff6fc843f1a",
+    "fastavro/__init__.py": "6de1c962a4519e19a9a3053f8c200eb7cac65920dc947f944ee6421c5a0df336",
+    "fastavro/__main__.py": "9bd8fa7ca8a58c8ce04948eeb398f53aa8fb9c716149d9c70e2742e98359834e",
+    "fastavro/__pycache__/__init__.cpython-312.pyc": "726943214492fc229175e681d844418c0860fb7be9af1cef93f402f32ffcd274",
+    "fastavro/__pycache__/_read_common.cpython-312.pyc": "33148421a8955a7445a3e7959f3017b338df693ba7abc31c9af580a507be577b",
+    "fastavro/__pycache__/_read_py.cpython-312.pyc": "a56c5e91d9d819c4450ee6746e4d62aecdcec09b9975128c1383150910f42d4b",
+    "fastavro/__pycache__/_schema_common.cpython-312.pyc": "bb24b18aa7a3730ebf415eecc1b31177dbda82417ffb2b617a8300bad0235ecb",
+    "fastavro/__pycache__/_validate_common.cpython-312.pyc": "7c8df0713a51f320fdb840a156bffa85c1f9e1bae67decad2d19592df0ce30b1",
+    "fastavro/__pycache__/_write_common.cpython-312.pyc": "3c97e9666cd5a7fe90350f0ba0332a214d04121a5c2f416b6b551b1bcf2a2b96",
+    "fastavro/__pycache__/_write_py.cpython-312.pyc": "13f4f59d2f192a98247d9c644969438942e7c863bccae1441ac6308d6871798c",
+    "fastavro/__pycache__/const.cpython-312.pyc": "fa8dc2e574fd51917ac6cd956702fedda908ba6e3046ce3f53a14d2e3b83d4ef",
+    "fastavro/__pycache__/json_read.cpython-312.pyc": "8dfc4a5fcd3641c41ede4f33b4f263cbd4718db6ab7afa45ef4b5848a2505c21",
+    "fastavro/__pycache__/json_write.cpython-312.pyc": "f367a78f9ebb2004e6c556126722c4bdd3edd8c1469e3f2c2d52337a2b379ae6",
+    "fastavro/__pycache__/logical_readers.cpython-312.pyc": "5f302402e7b9f72562e673de59e57de1601afacf5f27b817a61a4a01f23cab8d",
+    "fastavro/__pycache__/logical_writers.cpython-312.pyc": "43feba99bbef65ae9f11dad66b93a22da016c97efb3e3a453e904ab9f769ad4f",
+    "fastavro/__pycache__/read.cpython-312.pyc": "5a0682135b9a81dc16ec651bdd081348c1075e640976feee401f177f2da38da9",
+    "fastavro/__pycache__/schema.cpython-312.pyc": "8c448df232f86eb1788e6b92bd813d4eeca7e57a84abee6a891d46cf02268590",
+    "fastavro/__pycache__/types.cpython-312.pyc": "3094649b85f7523897dd5515868b3a40c5cbede19f19d9355934fd760eaa1243",
+    "fastavro/__pycache__/validation.cpython-312.pyc": "a762e43279a320f184c144ed4733929e03c15ea1f2a88edbfe5f82973efd5861",
+    "fastavro/__pycache__/write.cpython-312.pyc": "9e3864be625e98878c9df8a638b42245a1d518a89f249c6d86c14efebf2330c2",
+    "fastavro/_logical_readers.cpython-312-darwin.so": "c36f47b93cb36449971861726ad56c257badcb743654c28445bdbcdf19a7d17d",
+    "fastavro/_logical_readers.pyi": "2f8caee6155d54c70553b22219b80b23f7df582cf9d84f914ecc19069d6841cb",
+    "fastavro/_logical_readers_py.py": "ecacda6edc6b6e09e96a14c33e866ae5e0fc7a8c39971a814b65a81662340789",
+    "fastavro/_logical_readers_py.pyi": "2f8caee6155d54c70553b22219b80b23f7df582cf9d84f914ecc19069d6841cb",
+    "fastavro/_logical_writers.cpython-312-darwin.so": "c4ec144778c8dab6033ff10fef6aaa43e6af607a1b6633b3d3fdafe2804456f2",
+    "fastavro/_logical_writers.pyi": "be8f3921e6592d70e0fa8cbce4a4d56663e02133a0dd3d0f43b2610757446081",
+    "fastavro/_logical_writers_py.py": "bbbe44f69b3c194656b51a4dd4ae34e480fecbade4628c0c5b1d1e0712d41cc6",
+    "fastavro/_logical_writers_py.pyi": "be8f3921e6592d70e0fa8cbce4a4d56663e02133a0dd3d0f43b2610757446081",
+    "fastavro/_read.cpython-312-darwin.so": "0d50dbe737142c7316f96fb3407a69e301512abb6a2de043d829382cab24afe6",
+    "fastavro/_read.pyi": "4337bc71dce1fc537b9ac2723b4d8fd39e62e21fcdc9896610a6c1087a29d593",
+    "fastavro/_read_common.py": "e2c323211228d4d724d697837054c6b9741cae40b61d703de663e5c90c11b89a",
+    "fastavro/_read_py.py": "0995c53173dd9e8aaf10ee24051b9b85e3aa30eccb2b93ede4c0a4dea4d3a26d",
+    "fastavro/_schema.cpython-312-darwin.so": "633101451ad2b0e876928103d79b9c7a2d7bae7e512250421a080b30b18acebb",
+    "fastavro/_schema.pyi": "2e0543e63bc8fcf8c746d2d584a82236e6628c76f1b6c41c215b387dd23c1b14",
+    "fastavro/_schema_common.py": "ec31245c30eaafc97add8a83be7264623fef6f836a94bd743b97926edc4d9292",
+    "fastavro/_schema_py.py": "cf89b9ec4ce048e3bb3737521b35219cc5619b1fe373329721cb6fba68936545",
+    "fastavro/_validate_common.py": "7e42e46e4bb7e1f045baf2a8f0046890a4daf40f8f4688908896890798226d89",
+    "fastavro/_validation.cpython-312-darwin.so": "844f2e2a8dade597ae7cfa01347688ea196a4923c6fb583875daf9c5913df759",
+    "fastavro/_validation.pyi": "ef6fb8496f9824e86fbac646b3feeb7ff7f31bd525f6a010e4d522412d2ead5c",
+    "fastavro/_validation_py.py": "15fdb9ad6ad09d2014fd33b764d01f011713e83e0dc7014082a522c31f87b604",
+    "fastavro/_write.cpython-312-darwin.so": "cb917735af6c26f044381811f54a7945ce8ab00a275e582334a0220bcc40b84e",
+    "fastavro/_write.pyi": "e92581c2df2b448eb66c7f8682080f808bb4f2387bdde855556bcda33b43aa60",
+    "fastavro/_write_common.py": "e8b56b0dc2f2ee3b90d9c65462d4cc06fa4bd5ca59d60930af4c558847c4bdea",
+    "fastavro/_write_py.py": "c23e1d87606702fe22f67f2470858684869944aa09498ab6ec61252fd0755d4c",
+    "fastavro/const.py": "674bbe8e5341d0c5612a27e04fa2359c7a3327202b7436bcdc165ceeb6723604",
+    "fastavro/io/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "fastavro/io/__pycache__/__init__.cpython-312.pyc": "70daf5351f96cb1a5e0787e5be8df61357c5c20dbb37ad0d884f8f74068acff3",
+    "fastavro/io/__pycache__/binary_decoder.cpython-312.pyc": "ad126397247c592c1f793185139417125a880f7049c1430bc5f80311902c6070",
+    "fastavro/io/__pycache__/binary_encoder.cpython-312.pyc": "9efabf64a004990f08647509a1881b7ef73c8994c548dd67b851a580777abedf",
+    "fastavro/io/__pycache__/json_decoder.cpython-312.pyc": "2f341700017fa802bc45393e7171fba4e75d344af74fe76f98f484a67628f211",
+    "fastavro/io/__pycache__/json_encoder.cpython-312.pyc": "dbde88e0f5472495205cb673efc5f455a9cf40bc2f68280187d5091d2b8f5ec9",
+    "fastavro/io/__pycache__/parser.cpython-312.pyc": "d7d0be5cd7248dd6d67629a17e9b68e97c8511e3ba40ca90697ff660f57db06f",
+    "fastavro/io/__pycache__/symbols.cpython-312.pyc": "1cb252f627d6b936cc2d7241435fad3ba5b722d5be7c733a0e06eddae65ce2bc",
+    "fastavro/io/binary_decoder.py": "e5d2d27ae3bef4b21619c3eabd9f851963f8980b7460c1cd482a713a1301d253",
+    "fastavro/io/binary_encoder.py": "6eacd14bc0b18281b20ccca79ce8d254922fd3de70cf2bbbd4c6ab1c9957cadc",
+    "fastavro/io/json_decoder.py": "d3d8f7688f9eb77900838d5796931c09279666cabca7e677efd8c253085abae5",
+    "fastavro/io/json_encoder.py": "5c454b935f32d4c30e8fa642852513d97847e5000a3ecbc0ae422709d79a7513",
+    "fastavro/io/parser.py": "1d0cd246724b62dd48411710d434f2108d21ea5fe08aaf3a0b82d74c8af0104d",
+    "fastavro/io/symbols.py": "c2275573dd1a11289e4c4920a2defb1a0fe76e932c8278e00125d241f53b6f5c",
+    "fastavro/json_read.py": "3857d78a7c6d1b5f30e332d62596363eff6cacc76c0029a151337bd070ff0381",
+    "fastavro/json_write.py": "da0bce0ab96100aee816212add7aa864b623ca4bc01c2ff6640338dd6ccc5a76",
+    "fastavro/logical_readers.py": "526578967d02c74118557317e32b615c8cc443970daa8a16a269c91c736f7e42",
+    "fastavro/logical_writers.py": "caa38581cfea47a7ffac5d358ec110b1692738987270760ce1b82d8a6a1e05a6",
+    "fastavro/py.typed": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "fastavro/read.py": "0fe3e4804b8897eaac67f71b7ce0785447bf8b75a29f1a9ba92a2ce148cc16dc",
+    "fastavro/repository/__init__.py": "649c1f403383fc94a334c978188947d23de7db90d3e88c235b5e941dfef05352",
+    "fastavro/repository/__pycache__/__init__.cpython-312.pyc": "c41747fa905639ae11b8126d1c74f88774a34213fbd9b8d4a71e6ee487024b2c",
+    "fastavro/repository/__pycache__/base.cpython-312.pyc": "28705ad9d6ac8a12dbf3e9874bd16e13951b5efc7986dad37c32ac6d130597c2",
+    "fastavro/repository/__pycache__/flat_dict.cpython-312.pyc": "a5fb2e751a8158bcf343638fbb2a9a114b8c99065b8c3b40f27c513bb75734f6",
+    "fastavro/repository/base.py": "031eb2a5744aaa7adaabafc44db001e2880941b345b4a52dc5c9f018ed076050",
+    "fastavro/repository/flat_dict.py": "e05d523ede96b4f09524e2d626295b260f8e718d864bec7e3705e5fcd361d212",
+    "fastavro/schema.py": "10bf4a5b5514aff9997b6dd0daa26874e8d3a5e43cbbbaeeeb33a61c47bd3026",
+    "fastavro/types.py": "9eb290a57a8f67906efeb3b666a6659b9e9a74f54193b8bd3ab645d503a797b3",
+    "fastavro/utils.py": "041ffcd26b02d67c4b46195ab47b0fb3ed7417084c22ca8eefa06081f3c172f2",
+    "fastavro/validation.py": "e0c28093e6e9e7dc6a9d837fbff3b5b83f7dc588605156878d657344d34da742",
+    "fastavro/write.py": "346b62906f1579427dd9df823c9a488a3420243c05be0a4e303d570f7e5bdf11"
+  },
+  "dependencyClosureSha256": "be00163a8b202f21c65aa8028c1aea10595059a6392d710380bf80842baa7db4",
+  "observations": [
+    {
+      "label": "26-field-shape-baseline",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "schemaClass": "RecordSchema",
+          "typeName": "record"
+        },
+        "warnings": [
+          "Invalid decimal precision 3. Max is 2.",
+          "Invalid decimal scale 3. Cannot be greater than precision 2.",
+          "Unknown future, using bytes.",
+          "Unknown local-timestamp-micros, using long.",
+          "Unknown timestamp-nanos, using long."
+        ]
+      }
+    },
+    {
+      "label": "26-field-shape-baseline",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": false,
+        "errorType": "SchemaParseException",
+        "message": "decimal scale must be less than or equal to the precision of 2",
+        "warnings": []
+      }
+    },
+    {
+      "label": "numeric-0-precision-value",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "schemaClass": "RecordSchema",
+          "typeName": "record"
+        },
+        "warnings": [
+          "Invalid decimal precision 1.0. Must be a positive integer."
+        ]
+      }
+    },
+    {
+      "label": "numeric-0-precision-value",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": false,
+        "errorType": "SchemaParseException",
+        "message": "decimal precision must be a positive integer, not 1.0",
+        "warnings": []
+      }
+    },
+    {
+      "label": "numeric-1-precision-value",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "schemaClass": "RecordSchema",
+          "typeName": "record"
+        },
+        "warnings": [
+          "Invalid decimal precision 0.0. Must be a positive integer."
+        ]
+      }
+    },
+    {
+      "label": "numeric-1-precision-value",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "numeric-2-precision-value",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "schemaClass": "RecordSchema",
+          "typeName": "record"
+        },
+        "warnings": [
+          "Invalid decimal precision 9007199254740993. Max is 9."
+        ]
+      }
+    },
+    {
+      "label": "numeric-2-precision-value",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": false,
+        "errorType": "SchemaParseException",
+        "message": "decimal precision of 9007199254740993 doesn't fit into array of length 4",
+        "warnings": []
+      }
+    },
+    {
+      "label": "numeric-3-precision-value",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "schemaClass": "RecordSchema",
+          "typeName": "record"
+        },
+        "warnings": [
+          "Invalid decimal precision 0. Must be a positive integer."
+        ]
+      }
+    },
+    {
+      "label": "numeric-3-precision-value",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "numeric-4-precision-value",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "schemaClass": "RecordSchema",
+          "typeName": "record"
+        },
+        "warnings": [
+          "Invalid decimal precision 1.0. Must be a positive integer."
+        ]
+      }
+    },
+    {
+      "label": "numeric-4-precision-value",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": false,
+        "errorType": "SchemaParseException",
+        "message": "decimal precision must be a positive integer, not 1.0",
+        "warnings": []
+      }
+    },
+    {
+      "label": "numeric-5-scale-value",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "schemaClass": "RecordSchema",
+          "typeName": "record"
+        },
+        "warnings": [
+          "Invalid decimal scale 1.0. Must be a non-negative integer."
+        ]
+      }
+    },
+    {
+      "label": "numeric-5-scale-value",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": false,
+        "errorType": "SchemaParseException",
+        "message": "decimal scale must be a positive integer, not 1.0",
+        "warnings": []
+      }
+    },
+    {
+      "label": "numeric-6-scale-value",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "schemaClass": "RecordSchema",
+          "typeName": "record"
+        },
+        "warnings": [
+          "Invalid decimal scale 0.0. Must be a non-negative integer."
+        ]
+      }
+    },
+    {
+      "label": "numeric-6-scale-value",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "numeric-7-scale-value",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "schemaClass": "RecordSchema",
+          "typeName": "record"
+        },
+        "warnings": [
+          "Invalid decimal scale 9007199254740993. Cannot be greater than precision 2."
+        ]
+      }
+    },
+    {
+      "label": "numeric-7-scale-value",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": false,
+        "errorType": "SchemaParseException",
+        "message": "decimal scale must be less than or equal to the precision of 2",
+        "warnings": []
+      }
+    },
+    {
+      "label": "numeric-8-scale-value",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "schemaClass": "RecordSchema",
+          "typeName": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "numeric-8-scale-value",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "numeric-9-scale-value",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "schemaClass": "RecordSchema",
+          "typeName": "record"
+        },
+        "warnings": [
+          "Invalid decimal scale 1.0. Must be a non-negative integer."
+        ]
+      }
+    },
+    {
+      "label": "numeric-9-scale-value",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": false,
+        "errorType": "SchemaParseException",
+        "message": "decimal scale must be a positive integer, not 1.0",
+        "warnings": []
+      }
+    },
+    {
+      "label": "numeric-10-size-value",
+      "engine": "apache",
+      "outcome": {
+        "accepted": false,
+        "errorType": "SchemaParseException",
+        "message": "Type property \"{'type': 'fixed', 'name': 'DecimalValue', 'size': 1.0, 'logicalType': 'decimal', 'precision': 2, 'scale': 1}\" not a valid Avro schema: Fixed Schema requires a valid positive integer for size property.",
+        "warnings": []
+      }
+    },
+    {
+      "label": "numeric-10-size-value",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "numeric-11-size-value",
+      "engine": "apache",
+      "outcome": {
+        "accepted": false,
+        "errorType": "SchemaParseException",
+        "message": "Type property \"{'type': 'fixed', 'name': 'DecimalValue', 'size': 0.0, 'logicalType': 'decimal', 'precision': 2, 'scale': 1}\" not a valid Avro schema: Fixed Schema requires a valid positive integer for size property.",
+        "warnings": [
+          "Invalid decimal precision 2. Max is -1."
+        ]
+      }
+    },
+    {
+      "label": "numeric-11-size-value",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": false,
+        "errorType": "SchemaParseException",
+        "message": "decimal precision of 2 doesn't fit into array of length 0.0",
+        "warnings": []
+      }
+    },
+    {
+      "label": "numeric-12-size-value",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "schemaClass": "RecordSchema",
+          "typeName": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "numeric-12-size-value",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "numeric-13-size-value",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "schemaClass": "RecordSchema",
+          "typeName": "record"
+        },
+        "warnings": [
+          "Invalid decimal precision 2. Max is -1."
+        ]
+      }
+    },
+    {
+      "label": "numeric-13-size-value",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": false,
+        "errorType": "SchemaParseException",
+        "message": "decimal precision of 2 doesn't fit into array of length 0",
+        "warnings": []
+      }
+    },
+    {
+      "label": "numeric-14-size-value",
+      "engine": "apache",
+      "outcome": {
+        "accepted": false,
+        "errorType": "SchemaParseException",
+        "message": "Type property \"{'type': 'fixed', 'name': 'DecimalValue', 'size': 1.0, 'logicalType': 'decimal', 'precision': 2, 'scale': 1}\" not a valid Avro schema: Fixed Schema requires a valid positive integer for size property.",
+        "warnings": []
+      }
+    },
+    {
+      "label": "numeric-14-size-value",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "temporal-timestamp-millis-valid",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "schemaClass": "RecordSchema",
+          "typeName": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "temporal-timestamp-millis-valid",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "temporal-timestamp-millis-suffix0",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "schemaClass": "RecordSchema",
+          "typeName": "record"
+        },
+        "warnings": [
+          "Unknown timestamp-millis\n, using long."
+        ]
+      }
+    },
+    {
+      "label": "temporal-timestamp-millis-suffix0",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "temporal-timestamp-millis-suffix1",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "schemaClass": "RecordSchema",
+          "typeName": "record"
+        },
+        "warnings": [
+          "Unknown timestamp-millis\r, using long."
+        ]
+      }
+    },
+    {
+      "label": "temporal-timestamp-millis-suffix1",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "temporal-timestamp-millis-suffix2",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "schemaClass": "RecordSchema",
+          "typeName": "record"
+        },
+        "warnings": [
+          "Unknown timestamp-millis\u2028, using long."
+        ]
+      }
+    },
+    {
+      "label": "temporal-timestamp-millis-suffix2",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "temporal-timestamp-millis-suffix3",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "schemaClass": "RecordSchema",
+          "typeName": "record"
+        },
+        "warnings": [
+          "Unknown timestamp-millis\u2029, using long."
+        ]
+      }
+    },
+    {
+      "label": "temporal-timestamp-millis-suffix3",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "temporal-timestamp-millis-suffix4",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "schemaClass": "RecordSchema",
+          "typeName": "record"
+        },
+        "warnings": [
+          "Unknown timestamp-millis , using long."
+        ]
+      }
+    },
+    {
+      "label": "temporal-timestamp-millis-suffix4",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "temporal-timestamp-millis-suffix5",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "schemaClass": "RecordSchema",
+          "typeName": "record"
+        },
+        "warnings": [
+          "Unknown timestamp-millis\u0000, using long."
+        ]
+      }
+    },
+    {
+      "label": "temporal-timestamp-millis-suffix5",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "temporal-timestamp-millis-array",
+      "engine": "apache",
+      "outcome": {
+        "accepted": false,
+        "errorType": "SchemaParseException",
+        "message": "Type property \"{'type': 'long', 'logicalType': ['timestamp-millis']}\" not a valid Avro schema: unhashable type: 'list'",
+        "warnings": []
+      }
+    },
+    {
+      "label": "temporal-timestamp-millis-array",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "temporal-timestamp-millis-wrong-carrier",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "schemaClass": "RecordSchema",
+          "typeName": "record"
+        },
+        "warnings": [
+          "Logical type timestamp-millis requires literal type long, not int."
+        ]
+      }
+    },
+    {
+      "label": "temporal-timestamp-millis-wrong-carrier",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "temporal-timestamp-micros-valid",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "schemaClass": "RecordSchema",
+          "typeName": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "temporal-timestamp-micros-valid",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "temporal-timestamp-micros-suffix0",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "schemaClass": "RecordSchema",
+          "typeName": "record"
+        },
+        "warnings": [
+          "Unknown timestamp-micros\n, using long."
+        ]
+      }
+    },
+    {
+      "label": "temporal-timestamp-micros-suffix0",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "temporal-timestamp-micros-suffix1",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "schemaClass": "RecordSchema",
+          "typeName": "record"
+        },
+        "warnings": [
+          "Unknown timestamp-micros\r, using long."
+        ]
+      }
+    },
+    {
+      "label": "temporal-timestamp-micros-suffix1",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "temporal-timestamp-micros-suffix2",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "schemaClass": "RecordSchema",
+          "typeName": "record"
+        },
+        "warnings": [
+          "Unknown timestamp-micros\u2028, using long."
+        ]
+      }
+    },
+    {
+      "label": "temporal-timestamp-micros-suffix2",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "temporal-timestamp-micros-suffix3",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "schemaClass": "RecordSchema",
+          "typeName": "record"
+        },
+        "warnings": [
+          "Unknown timestamp-micros\u2029, using long."
+        ]
+      }
+    },
+    {
+      "label": "temporal-timestamp-micros-suffix3",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "temporal-timestamp-micros-suffix4",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "schemaClass": "RecordSchema",
+          "typeName": "record"
+        },
+        "warnings": [
+          "Unknown timestamp-micros , using long."
+        ]
+      }
+    },
+    {
+      "label": "temporal-timestamp-micros-suffix4",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "temporal-timestamp-micros-suffix5",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "schemaClass": "RecordSchema",
+          "typeName": "record"
+        },
+        "warnings": [
+          "Unknown timestamp-micros\u0000, using long."
+        ]
+      }
+    },
+    {
+      "label": "temporal-timestamp-micros-suffix5",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "temporal-timestamp-micros-array",
+      "engine": "apache",
+      "outcome": {
+        "accepted": false,
+        "errorType": "SchemaParseException",
+        "message": "Type property \"{'type': 'long', 'logicalType': ['timestamp-micros']}\" not a valid Avro schema: unhashable type: 'list'",
+        "warnings": []
+      }
+    },
+    {
+      "label": "temporal-timestamp-micros-array",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "temporal-timestamp-micros-wrong-carrier",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "schemaClass": "RecordSchema",
+          "typeName": "record"
+        },
+        "warnings": [
+          "Logical type timestamp-micros requires literal type long, not int."
+        ]
+      }
+    },
+    {
+      "label": "temporal-timestamp-micros-wrong-carrier",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "temporal-timestamp-nanos-valid",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "schemaClass": "RecordSchema",
+          "typeName": "record"
+        },
+        "warnings": [
+          "Unknown timestamp-nanos, using long."
+        ]
+      }
+    },
+    {
+      "label": "temporal-timestamp-nanos-valid",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "temporal-timestamp-nanos-suffix0",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "schemaClass": "RecordSchema",
+          "typeName": "record"
+        },
+        "warnings": [
+          "Unknown timestamp-nanos\n, using long."
+        ]
+      }
+    },
+    {
+      "label": "temporal-timestamp-nanos-suffix0",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "temporal-timestamp-nanos-suffix1",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "schemaClass": "RecordSchema",
+          "typeName": "record"
+        },
+        "warnings": [
+          "Unknown timestamp-nanos\r, using long."
+        ]
+      }
+    },
+    {
+      "label": "temporal-timestamp-nanos-suffix1",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "temporal-timestamp-nanos-suffix2",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "schemaClass": "RecordSchema",
+          "typeName": "record"
+        },
+        "warnings": [
+          "Unknown timestamp-nanos\u2028, using long."
+        ]
+      }
+    },
+    {
+      "label": "temporal-timestamp-nanos-suffix2",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "temporal-timestamp-nanos-suffix3",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "schemaClass": "RecordSchema",
+          "typeName": "record"
+        },
+        "warnings": [
+          "Unknown timestamp-nanos\u2029, using long."
+        ]
+      }
+    },
+    {
+      "label": "temporal-timestamp-nanos-suffix3",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "temporal-timestamp-nanos-suffix4",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "schemaClass": "RecordSchema",
+          "typeName": "record"
+        },
+        "warnings": [
+          "Unknown timestamp-nanos , using long."
+        ]
+      }
+    },
+    {
+      "label": "temporal-timestamp-nanos-suffix4",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "temporal-timestamp-nanos-suffix5",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "schemaClass": "RecordSchema",
+          "typeName": "record"
+        },
+        "warnings": [
+          "Unknown timestamp-nanos\u0000, using long."
+        ]
+      }
+    },
+    {
+      "label": "temporal-timestamp-nanos-suffix5",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "temporal-timestamp-nanos-array",
+      "engine": "apache",
+      "outcome": {
+        "accepted": false,
+        "errorType": "SchemaParseException",
+        "message": "Type property \"{'type': 'long', 'logicalType': ['timestamp-nanos']}\" not a valid Avro schema: unhashable type: 'list'",
+        "warnings": []
+      }
+    },
+    {
+      "label": "temporal-timestamp-nanos-array",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "temporal-timestamp-nanos-wrong-carrier",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "schemaClass": "RecordSchema",
+          "typeName": "record"
+        },
+        "warnings": [
+          "Unknown timestamp-nanos, using int."
+        ]
+      }
+    },
+    {
+      "label": "temporal-timestamp-nanos-wrong-carrier",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "temporal-local-timestamp-millis-valid",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "schemaClass": "RecordSchema",
+          "typeName": "record"
+        },
+        "warnings": [
+          "Unknown local-timestamp-millis, using long."
+        ]
+      }
+    },
+    {
+      "label": "temporal-local-timestamp-millis-valid",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "temporal-local-timestamp-millis-suffix0",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "schemaClass": "RecordSchema",
+          "typeName": "record"
+        },
+        "warnings": [
+          "Unknown local-timestamp-millis\n, using long."
+        ]
+      }
+    },
+    {
+      "label": "temporal-local-timestamp-millis-suffix0",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "temporal-local-timestamp-millis-suffix1",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "schemaClass": "RecordSchema",
+          "typeName": "record"
+        },
+        "warnings": [
+          "Unknown local-timestamp-millis\r, using long."
+        ]
+      }
+    },
+    {
+      "label": "temporal-local-timestamp-millis-suffix1",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "temporal-local-timestamp-millis-suffix2",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "schemaClass": "RecordSchema",
+          "typeName": "record"
+        },
+        "warnings": [
+          "Unknown local-timestamp-millis\u2028, using long."
+        ]
+      }
+    },
+    {
+      "label": "temporal-local-timestamp-millis-suffix2",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "temporal-local-timestamp-millis-suffix3",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "schemaClass": "RecordSchema",
+          "typeName": "record"
+        },
+        "warnings": [
+          "Unknown local-timestamp-millis\u2029, using long."
+        ]
+      }
+    },
+    {
+      "label": "temporal-local-timestamp-millis-suffix3",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "temporal-local-timestamp-millis-suffix4",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "schemaClass": "RecordSchema",
+          "typeName": "record"
+        },
+        "warnings": [
+          "Unknown local-timestamp-millis , using long."
+        ]
+      }
+    },
+    {
+      "label": "temporal-local-timestamp-millis-suffix4",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "temporal-local-timestamp-millis-suffix5",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "schemaClass": "RecordSchema",
+          "typeName": "record"
+        },
+        "warnings": [
+          "Unknown local-timestamp-millis\u0000, using long."
+        ]
+      }
+    },
+    {
+      "label": "temporal-local-timestamp-millis-suffix5",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "temporal-local-timestamp-millis-array",
+      "engine": "apache",
+      "outcome": {
+        "accepted": false,
+        "errorType": "SchemaParseException",
+        "message": "Type property \"{'type': 'long', 'logicalType': ['local-timestamp-millis']}\" not a valid Avro schema: unhashable type: 'list'",
+        "warnings": []
+      }
+    },
+    {
+      "label": "temporal-local-timestamp-millis-array",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "temporal-local-timestamp-millis-wrong-carrier",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "schemaClass": "RecordSchema",
+          "typeName": "record"
+        },
+        "warnings": [
+          "Unknown local-timestamp-millis, using int."
+        ]
+      }
+    },
+    {
+      "label": "temporal-local-timestamp-millis-wrong-carrier",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "temporal-local-timestamp-micros-valid",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "schemaClass": "RecordSchema",
+          "typeName": "record"
+        },
+        "warnings": [
+          "Unknown local-timestamp-micros, using long."
+        ]
+      }
+    },
+    {
+      "label": "temporal-local-timestamp-micros-valid",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "temporal-local-timestamp-micros-suffix0",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "schemaClass": "RecordSchema",
+          "typeName": "record"
+        },
+        "warnings": [
+          "Unknown local-timestamp-micros\n, using long."
+        ]
+      }
+    },
+    {
+      "label": "temporal-local-timestamp-micros-suffix0",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "temporal-local-timestamp-micros-suffix1",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "schemaClass": "RecordSchema",
+          "typeName": "record"
+        },
+        "warnings": [
+          "Unknown local-timestamp-micros\r, using long."
+        ]
+      }
+    },
+    {
+      "label": "temporal-local-timestamp-micros-suffix1",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "temporal-local-timestamp-micros-suffix2",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "schemaClass": "RecordSchema",
+          "typeName": "record"
+        },
+        "warnings": [
+          "Unknown local-timestamp-micros\u2028, using long."
+        ]
+      }
+    },
+    {
+      "label": "temporal-local-timestamp-micros-suffix2",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "temporal-local-timestamp-micros-suffix3",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "schemaClass": "RecordSchema",
+          "typeName": "record"
+        },
+        "warnings": [
+          "Unknown local-timestamp-micros\u2029, using long."
+        ]
+      }
+    },
+    {
+      "label": "temporal-local-timestamp-micros-suffix3",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "temporal-local-timestamp-micros-suffix4",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "schemaClass": "RecordSchema",
+          "typeName": "record"
+        },
+        "warnings": [
+          "Unknown local-timestamp-micros , using long."
+        ]
+      }
+    },
+    {
+      "label": "temporal-local-timestamp-micros-suffix4",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "temporal-local-timestamp-micros-suffix5",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "schemaClass": "RecordSchema",
+          "typeName": "record"
+        },
+        "warnings": [
+          "Unknown local-timestamp-micros\u0000, using long."
+        ]
+      }
+    },
+    {
+      "label": "temporal-local-timestamp-micros-suffix5",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "temporal-local-timestamp-micros-array",
+      "engine": "apache",
+      "outcome": {
+        "accepted": false,
+        "errorType": "SchemaParseException",
+        "message": "Type property \"{'type': 'long', 'logicalType': ['local-timestamp-micros']}\" not a valid Avro schema: unhashable type: 'list'",
+        "warnings": []
+      }
+    },
+    {
+      "label": "temporal-local-timestamp-micros-array",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "temporal-local-timestamp-micros-wrong-carrier",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "schemaClass": "RecordSchema",
+          "typeName": "record"
+        },
+        "warnings": [
+          "Unknown local-timestamp-micros, using int."
+        ]
+      }
+    },
+    {
+      "label": "temporal-local-timestamp-micros-wrong-carrier",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "temporal-local-timestamp-nanos-valid",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "schemaClass": "RecordSchema",
+          "typeName": "record"
+        },
+        "warnings": [
+          "Unknown local-timestamp-nanos, using long."
+        ]
+      }
+    },
+    {
+      "label": "temporal-local-timestamp-nanos-valid",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "temporal-local-timestamp-nanos-suffix0",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "schemaClass": "RecordSchema",
+          "typeName": "record"
+        },
+        "warnings": [
+          "Unknown local-timestamp-nanos\n, using long."
+        ]
+      }
+    },
+    {
+      "label": "temporal-local-timestamp-nanos-suffix0",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "temporal-local-timestamp-nanos-suffix1",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "schemaClass": "RecordSchema",
+          "typeName": "record"
+        },
+        "warnings": [
+          "Unknown local-timestamp-nanos\r, using long."
+        ]
+      }
+    },
+    {
+      "label": "temporal-local-timestamp-nanos-suffix1",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "temporal-local-timestamp-nanos-suffix2",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "schemaClass": "RecordSchema",
+          "typeName": "record"
+        },
+        "warnings": [
+          "Unknown local-timestamp-nanos\u2028, using long."
+        ]
+      }
+    },
+    {
+      "label": "temporal-local-timestamp-nanos-suffix2",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "temporal-local-timestamp-nanos-suffix3",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "schemaClass": "RecordSchema",
+          "typeName": "record"
+        },
+        "warnings": [
+          "Unknown local-timestamp-nanos\u2029, using long."
+        ]
+      }
+    },
+    {
+      "label": "temporal-local-timestamp-nanos-suffix3",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "temporal-local-timestamp-nanos-suffix4",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "schemaClass": "RecordSchema",
+          "typeName": "record"
+        },
+        "warnings": [
+          "Unknown local-timestamp-nanos , using long."
+        ]
+      }
+    },
+    {
+      "label": "temporal-local-timestamp-nanos-suffix4",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "temporal-local-timestamp-nanos-suffix5",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "schemaClass": "RecordSchema",
+          "typeName": "record"
+        },
+        "warnings": [
+          "Unknown local-timestamp-nanos\u0000, using long."
+        ]
+      }
+    },
+    {
+      "label": "temporal-local-timestamp-nanos-suffix5",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "temporal-local-timestamp-nanos-array",
+      "engine": "apache",
+      "outcome": {
+        "accepted": false,
+        "errorType": "SchemaParseException",
+        "message": "Type property \"{'type': 'long', 'logicalType': ['local-timestamp-nanos']}\" not a valid Avro schema: unhashable type: 'list'",
+        "warnings": []
+      }
+    },
+    {
+      "label": "temporal-local-timestamp-nanos-array",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "temporal-local-timestamp-nanos-wrong-carrier",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "schemaClass": "RecordSchema",
+          "typeName": "record"
+        },
+        "warnings": [
+          "Unknown local-timestamp-nanos, using int."
+        ]
+      }
+    },
+    {
+      "label": "temporal-local-timestamp-nanos-wrong-carrier",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "upstream-share/test/schemas/FooBarSpecificRecord.avsc",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "schemaClass": "RecordSchema",
+          "typeName": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "upstream-share/test/schemas/FooBarSpecificRecord.avsc",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "upstream-share/test/schemas/RecordWithRequiredFields.avsc",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "schemaClass": "RecordSchema",
+          "typeName": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "upstream-share/test/schemas/RecordWithRequiredFields.avsc",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "upstream-share/test/schemas/interop.avsc",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "schemaClass": "RecordSchema",
+          "typeName": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "upstream-share/test/schemas/interop.avsc",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "upstream-share/test/schemas/reserved.avsc",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "schemaClass": "EnumSchema",
+          "typeName": "enum"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "upstream-share/test/schemas/reserved.avsc",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": "enum"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "upstream-share/test/schemas/weather.avsc",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "schemaClass": "RecordSchema",
+          "typeName": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "upstream-share/test/schemas/weather.avsc",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "upstream-lang/java/avro/src/test/resources/SchemaBuilder.avsc",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "schemaClass": "RecordSchema",
+          "typeName": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "upstream-lang/java/avro/src/test/resources/SchemaBuilder.avsc",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "upstream-lang/java/avro/src/test/resources/TestRecordWithLogicalTypes.avsc",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "schemaClass": "RecordSchema",
+          "typeName": "record"
+        },
+        "warnings": [
+          "Unknown big-decimal, using bytes."
+        ]
+      }
+    },
+    {
+      "label": "upstream-lang/java/avro/src/test/resources/TestRecordWithLogicalTypes.avsc",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "upstream-lang/java/avro/src/test/resources/TestRecordWithMapsAndArrays.avsc",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "schemaClass": "RecordSchema",
+          "typeName": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "upstream-lang/java/avro/src/test/resources/TestRecordWithMapsAndArrays.avsc",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "upstream-lang/java/avro/src/test/resources/TestUnionRecord.avsc",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "schemaClass": "UnionSchema",
+          "typeName": "union"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "upstream-lang/java/avro/src/test/resources/TestUnionRecord.avsc",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": "list"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "upstream-lang/java/avro/src/test/resources/multipleFile/ApplicationEvent.avsc",
+      "engine": "apache",
+      "outcome": {
+        "accepted": false,
+        "errorType": "SchemaParseException",
+        "message": "Type property \"['null', {'type': 'array', 'items': 'model.DocumentInfo'}]\" not a valid Avro schema: Union item must be a valid Avro schema: Items schema (model.DocumentInfo) not a valid Avro schema: Could not make an Avro Schema object from model.DocumentInfo (known names: dict_keys(['model.ApplicationEvent']))",
+        "warnings": []
+      }
+    },
+    {
+      "label": "upstream-lang/java/avro/src/test/resources/multipleFile/ApplicationEvent.avsc",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": false,
+        "errorType": "UnknownType",
+        "message": "model.DocumentInfo",
+        "warnings": []
+      }
+    },
+    {
+      "label": "upstream-lang/java/avro/src/test/resources/multipleFile/DocumentInfo.avsc",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "schemaClass": "RecordSchema",
+          "typeName": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "upstream-lang/java/avro/src/test/resources/multipleFile/DocumentInfo.avsc",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "upstream-lang/java/avro/src/test/resources/multipleFile/MyResponse.avsc",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "schemaClass": "RecordSchema",
+          "typeName": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "upstream-lang/java/avro/src/test/resources/multipleFile/MyResponse.avsc",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "upstream-lang/java/compiler/src/test/resources/foo.Bar.avsc",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "schemaClass": "RecordSchema",
+          "typeName": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "upstream-lang/java/compiler/src/test/resources/foo.Bar.avsc",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "upstream-lang/java/compiler/src/test/resources/full_record_v1.avsc",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "schemaClass": "RecordSchema",
+          "typeName": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "upstream-lang/java/compiler/src/test/resources/full_record_v1.avsc",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "upstream-lang/java/compiler/src/test/resources/full_record_v2.avsc",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "schemaClass": "RecordSchema",
+          "typeName": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "upstream-lang/java/compiler/src/test/resources/full_record_v2.avsc",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "upstream-lang/java/compiler/src/test/resources/logical-uuid.avsc",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "schemaClass": "RecordSchema",
+          "typeName": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "upstream-lang/java/compiler/src/test/resources/logical-uuid.avsc",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "upstream-lang/java/compiler/src/test/resources/logical_types_with_multiple_fields.avsc",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "schemaClass": "RecordSchema",
+          "typeName": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "upstream-lang/java/compiler/src/test/resources/logical_types_with_multiple_fields.avsc",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "upstream-lang/java/compiler/src/test/resources/regression_error_field_in_record.avsc",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "schemaClass": "RecordSchema",
+          "typeName": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "upstream-lang/java/compiler/src/test/resources/regression_error_field_in_record.avsc",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "upstream-lang/java/compiler/src/test/resources/simple_record.avsc",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "schemaClass": "RecordSchema",
+          "typeName": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "upstream-lang/java/compiler/src/test/resources/simple_record.avsc",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "upstream-lang/java/compiler/src/test/resources/union_and_fixed_fields.avsc",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "schemaClass": "RecordSchema",
+          "typeName": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "upstream-lang/java/compiler/src/test/resources/union_and_fixed_fields.avsc",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "adversarial-dependency-forward-reference",
+      "engine": "apache",
+      "outcome": {
+        "accepted": false,
+        "errorType": "SchemaParseException",
+        "message": "Type property \"shared.Token\" not a valid Avro schema: Could not make an Avro Schema object from shared.Token",
+        "warnings": []
+      }
+    },
+    {
+      "label": "adversarial-dependency-forward-reference",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": false,
+        "errorType": "UnknownType",
+        "message": "shared.Token",
+        "warnings": []
+      }
+    },
+    {
+      "label": "adversarial-dependency-provider-first",
+      "engine": "apache",
+      "outcome": {
+        "accepted": false,
+        "errorType": "SchemaParseException",
+        "message": "Type property \"shared.Token\" not a valid Avro schema: Could not make an Avro Schema object from shared.Token",
+        "warnings": []
+      }
+    },
+    {
+      "label": "adversarial-dependency-provider-first",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": false,
+        "errorType": "UnknownType",
+        "message": "shared.Token",
+        "warnings": []
+      }
+    },
+    {
+      "label": "adversarial-duplicate-qualified-name-ambiguity",
+      "engine": "apache",
+      "outcome": {
+        "accepted": false,
+        "errorType": "SchemaParseException",
+        "message": "Type property \"shared.Token\" not a valid Avro schema: Could not make an Avro Schema object from shared.Token",
+        "warnings": []
+      }
+    },
+    {
+      "label": "adversarial-duplicate-qualified-name-ambiguity",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": false,
+        "errorType": "UnknownType",
+        "message": "shared.Token",
+        "warnings": []
+      }
+    },
+    {
+      "label": "adversarial-namespace-shadow-and-explicit-namespace",
+      "engine": "apache",
+      "outcome": {
+        "accepted": false,
+        "errorType": "SchemaParseException",
+        "message": "Type property \"{'type': 'record', 'name': 'Child', 'namespace': 'inner', 'fields': [{'name': 'same', 'type': 'int'}, {'name': 'shadow', 'type': 'Token'}]}\" not a valid Avro schema: Type property \"Token\" not a valid Avro schema: Could not make an Avro Schema object from Token",
+        "warnings": []
+      }
+    },
+    {
+      "label": "adversarial-namespace-shadow-and-explicit-namespace",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": false,
+        "errorType": "UnknownType",
+        "message": "inner.Token",
+        "warnings": []
+      }
+    },
+    {
+      "label": "adversarial-recursive-record",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "schemaClass": "RecordSchema",
+          "typeName": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "adversarial-recursive-record",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": "record"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "adversarial-alias-is-not-a-declaration",
+      "engine": "apache",
+      "outcome": {
+        "accepted": false,
+        "errorType": "SchemaParseException",
+        "message": "Type property \"Alias\" not a valid Avro schema: Could not make an Avro Schema object from Alias",
+        "warnings": []
+      }
+    },
+    {
+      "label": "adversarial-alias-is-not-a-declaration",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": false,
+        "errorType": "UnknownType",
+        "message": "Alias",
+        "warnings": []
+      }
+    },
+    {
+      "label": "adversarial-null-and-mixed-unions",
+      "engine": "apache",
+      "outcome": {
+        "accepted": false,
+        "errorType": "SchemaParseException",
+        "message": "Type property \"['null', 'Fixed']\" not a valid Avro schema: Union item must be a valid Avro schema: Could not make an Avro Schema object from Fixed",
+        "warnings": []
+      }
+    },
+    {
+      "label": "adversarial-null-and-mixed-unions",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": false,
+        "errorType": "UnknownType",
+        "message": "Fixed",
+        "warnings": []
+      }
+    },
+    {
+      "label": "adversarial-unknown-annotation-default-and-unusual-key",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "schemaClass": "RecordSchema",
+          "typeName": "record"
+        },
+        "warnings": [
+          "Unknown future-kind, using bytes."
+        ]
+      }
+    },
+    {
+      "label": "adversarial-unknown-annotation-default-and-unusual-key",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": false,
+        "errorType": "SchemaParseException",
+        "message": "Default value <9007199254740993> must match schema type: bytes",
+        "warnings": []
+      }
+    },
+    {
+      "label": "adversarial-exact-decimal-boundaries",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "schemaClass": "RecordSchema",
+          "typeName": "record"
+        },
+        "warnings": [
+          "Invalid decimal precision 0. Must be a positive integer.",
+          "Invalid decimal precision 9007199254740991. Max is 2147483647.",
+          "Invalid decimal precision 9007199254740992. Max is 2147483647.",
+          "Invalid decimal scale 9007199254740992. Cannot be greater than precision 12."
+        ]
+      }
+    },
+    {
+      "label": "adversarial-exact-decimal-boundaries",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": false,
+        "errorType": "SchemaParseException",
+        "message": "decimal scale must be less than or equal to the precision of 12",
+        "warnings": []
+      }
+    },
+    {
+      "label": "adversarial-root-union-with-record-branches",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "schemaClass": "UnionSchema",
+          "typeName": "union"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "label": "adversarial-root-union-with-record-branches",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": "list"
+        },
+        "warnings": []
+      }
+    }
+  ],
+  "decimalControls": [
+    {
+      "label": "numeric-0-precision-value",
+      "key": "precision",
+      "token": "1.0000000000000000001",
+      "integralSafeNonNegativeZero": false
+    },
+    {
+      "label": "numeric-1-precision-value",
+      "key": "precision",
+      "token": "1E-400",
+      "integralSafeNonNegativeZero": false
+    },
+    {
+      "label": "numeric-2-precision-value",
+      "key": "precision",
+      "token": "9007199254740993",
+      "integralSafeNonNegativeZero": false
+    },
+    {
+      "label": "numeric-3-precision-value",
+      "key": "precision",
+      "token": "-0",
+      "integralSafeNonNegativeZero": false
+    },
+    {
+      "label": "numeric-4-precision-value",
+      "key": "precision",
+      "token": "1.00",
+      "integralSafeNonNegativeZero": true
+    },
+    {
+      "label": "numeric-5-scale-value",
+      "key": "scale",
+      "token": "1.0000000000000000001",
+      "integralSafeNonNegativeZero": false
+    },
+    {
+      "label": "numeric-6-scale-value",
+      "key": "scale",
+      "token": "1E-400",
+      "integralSafeNonNegativeZero": false
+    },
+    {
+      "label": "numeric-7-scale-value",
+      "key": "scale",
+      "token": "9007199254740993",
+      "integralSafeNonNegativeZero": false
+    },
+    {
+      "label": "numeric-8-scale-value",
+      "key": "scale",
+      "token": "-0",
+      "integralSafeNonNegativeZero": false
+    },
+    {
+      "label": "numeric-9-scale-value",
+      "key": "scale",
+      "token": "1.00",
+      "integralSafeNonNegativeZero": true
+    },
+    {
+      "label": "numeric-10-size-value",
+      "key": "size",
+      "token": "1.0000000000000000001",
+      "integralSafeNonNegativeZero": false
+    },
+    {
+      "label": "numeric-11-size-value",
+      "key": "size",
+      "token": "1E-400",
+      "integralSafeNonNegativeZero": false
+    },
+    {
+      "label": "numeric-12-size-value",
+      "key": "size",
+      "token": "9007199254740993",
+      "integralSafeNonNegativeZero": false
+    },
+    {
+      "label": "numeric-13-size-value",
+      "key": "size",
+      "token": "-0",
+      "integralSafeNonNegativeZero": false
+    },
+    {
+      "label": "numeric-14-size-value",
+      "key": "size",
+      "token": "1.00",
+      "integralSafeNonNegativeZero": true
+    }
+  ],
+  "scope": "Independent native schema parse acceptance/warnings for each frozen input; named dependencies are not implicitly merged for these standalone cases. Decimal controls use Python Decimal on exact source tokens and are not parser meaning claims."
+}

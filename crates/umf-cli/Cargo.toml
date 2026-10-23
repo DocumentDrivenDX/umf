@@ -24,3 +24,6 @@ default = ["codegen"]
 codegen = ["dep:umf-codegen", "umf-core-wire/codegen"]
 # Enables a disposable child-process probe for allocator tests. Never enable in published binaries.
 allocator-test = ["codegen"]
+
+[dev-dependencies]
+serde_json = "=1.0.140"

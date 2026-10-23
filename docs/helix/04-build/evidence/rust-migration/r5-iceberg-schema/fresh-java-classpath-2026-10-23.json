@@ -1,0 +1,227 @@
+{
+  "receipt": "R5-Iceberg-Java-resolved-classpath-2026-10-23",
+  "ordering": "Maven dependency:build-classpath order",
+  "digestPreimage": "For each entry in order: UTF-8 path, one ASCII space, lowercase SHA-256 hex, one LF. SHA-256 of concatenation.",
+  "entries": [
+    {
+      "path": "org/apache/iceberg/iceberg-core/1.11.0/iceberg-core-1.11.0.jar",
+      "sha256": "53b9eb7a8c34fb9958ea7d9a4d19ba5bc96f592d0f05e8625b0778c70b1f0090",
+      "bytes": 2575099
+    },
+    {
+      "path": "org/apache/iceberg/iceberg-api/1.11.0/iceberg-api-1.11.0.jar",
+      "sha256": "f00675a12ceb6d833bb9c22024823a3e7afdedf7abcefe34719f45b0d211995a",
+      "bytes": 705698
+    },
+    {
+      "path": "org/apache/avro/avro/1.12.1/avro-1.12.1.jar",
+      "sha256": "72600f057bfbe2efe35fa55433e7756d45667dc938934be38a6e2be368aca237",
+      "bytes": 718936
+    },
+    {
+      "path": "org/apache/commons/commons-compress/1.28.0/commons-compress-1.28.0.jar",
+      "sha256": "e1522945218456f3649a39bc4afd70ce4bd466221519dba7d378f2141a4642ca",
+      "bytes": 1117221
+    },
+    {
+      "path": "commons-codec/commons-codec/1.19.0/commons-codec-1.19.0.jar",
+      "sha256": "5c3881e4f556855e9c532927ee0c9dfde94cc66760d5805c031a59887070af5f",
+      "bytes": 374716
+    },
+    {
+      "path": "commons-io/commons-io/2.20.0/commons-io-2.20.0.jar",
+      "sha256": "df90bba0fe3cb586b7f164e78fe8f8f4da3f2dd5c27fa645f888100ccc25dd72",
+      "bytes": 563971
+    },
+    {
+      "path": "org/slf4j/slf4j-api/2.0.17/slf4j-api-2.0.17.jar",
+      "sha256": "7b751d952061954d5abfed7181c1f645d336091b679891591d63329c622eb832",
+      "bytes": 69908
+    },
+    {
+      "path": "org/apache/iceberg/iceberg-common/1.11.0/iceberg-common-1.11.0.jar",
+      "sha256": "b2835d00db7c92bdfa728123ad7cdcb488e2f2805c1c51fb9ae94e8bd203bd7d",
+      "bytes": 31895
+    },
+    {
+      "path": "org/apache/iceberg/iceberg-bundled-guava/1.11.0/iceberg-bundled-guava-1.11.0.jar",
+      "sha256": "396d48d93ef5735f2ddef0cf9b3d6968ebd67b64b5cfe753d41c429d3f46a2a1",
+      "bytes": 1785615
+    },
+    {
+      "path": "io/airlift/aircompressor/2.0.3/aircompressor-2.0.3.jar",
+      "sha256": "b86bb66f610079e0bf790d62e2ff68853eb0dc4748a6d68ae28bce92b68094aa",
+      "bytes": 255256
+    },
+    {
+      "path": "org/apache/httpcomponents/client5/httpclient5/5.6.1/httpclient5-5.6.1.jar",
+      "sha256": "1e3d8444c3c27772e4b9d42a790f06b3345a8ece4fd16d00981f2f2460e1e772",
+      "bytes": 1054142
+    },
+    {
+      "path": "org/apache/httpcomponents/core5/httpcore5/5.4/httpcore5-5.4.jar",
+      "sha256": "cec2981fa7f520efb63f0787c24f10af2679e31f9f75c448c4dde40a3ae8100d",
+      "bytes": 952936
+    },
+    {
+      "path": "org/apache/httpcomponents/core5/httpcore5-h2/5.4/httpcore5-h2-5.4.jar",
+      "sha256": "2e0f4ace15db2d1609c2b06eca6012e7582afe4a99ad8d15073f62dd8edb3460",
+      "bytes": 263347
+    },
+    {
+      "path": "com/fasterxml/jackson/core/jackson-core/2.21.3/jackson-core-2.21.3.jar",
+      "sha256": "baf8b739e9d9b93bcdb33f25046bfdb8dbd74c97de2a8698539fbe0c7eeac0bb",
+      "bytes": 594142
+    },
+    {
+      "path": "com/fasterxml/jackson/core/jackson-databind/2.21.3/jackson-databind-2.21.3.jar",
+      "sha256": "f397563d8e67630c10cab8c2334ca0e55af832fa3ebde160a379c2c96d43bf25",
+      "bytes": 1702259
+    },
+    {
+      "path": "com/fasterxml/jackson/core/jackson-annotations/2.21/jackson-annotations-2.21.jar",
+      "sha256": "53ca085f4a150f703f49e1aabd935bd03b43e1ea3d55d135438292af22cef56b",
+      "bytes": 82104
+    },
+    {
+      "path": "com/github/ben-manes/caffeine/caffeine/2.9.3/caffeine-2.9.3.jar",
+      "sha256": "1e0a7bbef1dd791653143f3f05d0e489934bf5481e58a87c9e619cd46b68729b",
+      "bytes": 912143
+    },
+    {
+      "path": "org/checkerframework/checker-qual/3.19.0/checker-qual-3.19.0.jar",
+      "sha256": "a827c49183f3a632277d27a0a4673686cb341507447b9d570261094bd748aa68",
+      "bytes": 222143
+    },
+    {
+      "path": "com/google/errorprone/error_prone_annotations/2.10.0/error_prone_annotations-2.10.0.jar",
+      "sha256": "a249d4d25dfb86d41e6c82fc335df580189f0c9feeabdc53233fc1e5060724a1",
+      "bytes": 15992
+    },
+    {
+      "path": "org/roaringbitmap/RoaringBitmap/1.6.14/RoaringBitmap-1.6.14.jar",
+      "sha256": "78ae7a6261b5b03f53b8db991047d06959cfadbd0b08af54bd95dda40af9acba",
+      "bytes": 474903
+    },
+    {
+      "path": "org/apache/iceberg/iceberg-parquet/1.11.0/iceberg-parquet-1.11.0.jar",
+      "sha256": "9abe486e0a37b4ace19edda9ec3260a339660a77360d4ea50ae71e05b3786a81",
+      "bytes": 439470
+    },
+    {
+      "path": "org/apache/parquet/parquet-avro/1.17.1/parquet-avro-1.17.1.jar",
+      "sha256": "ecb51da201df8266970af66686f9cb9df58db6702e0128e211d1a8d5050f6021",
+      "bytes": 2198363
+    },
+    {
+      "path": "org/apache/parquet/parquet-hadoop/1.17.1/parquet-hadoop-1.17.1.jar",
+      "sha256": "2aeb5e21fb12ddc51fc8c69050906446d9c261c28b0446abf2e40d80cfc8e0a0",
+      "bytes": 1637051
+    },
+    {
+      "path": "org/apache/parquet/parquet-jackson/1.17.1/parquet-jackson-1.17.1.jar",
+      "sha256": "bc1879dd3b81200d8925e8e61ccee59a48867f6f567039b8b86f4fb36041ac5e",
+      "bytes": 2428664
+    },
+    {
+      "path": "org/xerial/snappy/snappy-java/1.1.10.7/snappy-java-1.1.10.7.jar",
+      "sha256": "4c766cb3f855415ee734b2392949a0b6f12a60879334a74518deaf6270d32e36",
+      "bytes": 2338496
+    },
+    {
+      "path": "commons-pool/commons-pool/1.6/commons-pool-1.6.jar",
+      "sha256": "46c42b4a38dc6b2db53a9ee5c92c63db103665d56694e2cfce2c95d51a6860cc",
+      "bytes": 111119
+    },
+    {
+      "path": "com/github/luben/zstd-jni/1.5.7-3/zstd-jni-1.5.7-3.jar",
+      "sha256": "a38a4a97f1b43b878c91e0dd7f1e3d17f0e70beec71d95bacaf56a2f207624a3",
+      "bytes": 7408362
+    },
+    {
+      "path": "org/apache/parquet/parquet-variant/1.17.1/parquet-variant-1.17.1.jar",
+      "sha256": "766fe23a18247569bdcbb5fee0f5d709ed37c0efde22893206b1101f49817c9c",
+      "bytes": 81267
+    },
+    {
+      "path": "org/apache/iceberg/iceberg-data/1.11.0/iceberg-data-1.11.0.jar",
+      "sha256": "a5c50127df53888ef3fe250c08adc58fff2b78dd6f8a5c227fe1939b0dfdb3e5",
+      "bytes": 60775
+    },
+    {
+      "path": "org/apache/orc/orc-core/1.9.8/orc-core-1.9.8-nohive.jar",
+      "sha256": "7e28246ba0497a021dae904cb696a8c67dafb4eeea3bd3ed3b770b72d2786142",
+      "bytes": 3286434
+    },
+    {
+      "path": "org/apache/orc/orc-shims/1.9.8/orc-shims-1.9.8.jar",
+      "sha256": "515337cf5e19552d2e2380896441870b70670f24d1b3fd7085c9a625081e87ab",
+      "bytes": 29010
+    },
+    {
+      "path": "org/apache/commons/commons-lang3/3.12.0/commons-lang3-3.12.0.jar",
+      "sha256": "d919d904486c037f8d193412da0c92e22a9fa24230b9d67a57855c5c31c7e94e",
+      "bytes": 587402
+    },
+    {
+      "path": "org/threeten/threeten-extra/1.7.1/threeten-extra-1.7.1.jar",
+      "sha256": "9bbcbe09a631320bdc3325bbb04c93068473bc0e04b85e2ef3e42314d5a7dacf",
+      "bytes": 256667
+    },
+    {
+      "path": "org/apache/parquet/parquet-column/1.17.1/parquet-column-1.17.1.jar",
+      "sha256": "25c4be0714581a5b33f6862ec972da30b9dd864ecb5b86698b288d0eb0d5b089",
+      "bytes": 3350511
+    },
+    {
+      "path": "org/apache/parquet/parquet-common/1.17.1/parquet-common-1.17.1.jar",
+      "sha256": "844c5779c5071a95cbc410d711eff408589cbecd6e7063d75a88dd47dbc582f1",
+      "bytes": 123540
+    },
+    {
+      "path": "org/apache/parquet/parquet-format-structures/1.17.1/parquet-format-structures-1.17.1.jar",
+      "sha256": "8e12f3d99de417fec077d858fe6f84daa79fdbfdc0753075843801118853a29b",
+      "bytes": 834047
+    },
+    {
+      "path": "javax/annotation/javax.annotation-api/1.3.2/javax.annotation-api-1.3.2.jar",
+      "sha256": "e04ba5195bcd555dc95650f7cc614d151e4bcd52d29a10b8aa2197f3ab89ab9b",
+      "bytes": 26586
+    },
+    {
+      "path": "org/apache/parquet/parquet-encoding/1.17.1/parquet-encoding-1.17.1.jar",
+      "sha256": "afc8ca7c319c3ff21eb58f900dae067e36ef472f7c74d578ccf7a656f13f0908",
+      "bytes": 834068
+    },
+    {
+      "path": "org/locationtech/jts/jts-core/1.20.0/jts-core-1.20.0.jar",
+      "sha256": "6a783d8f9dba3d3cf7265435f134402f63c05838aa6cbcc4297ad3a5b2842baf",
+      "bytes": 1239978
+    },
+    {
+      "path": "org/apache/hadoop/hadoop-client-api/3.3.0/hadoop-client-api-3.3.0.jar",
+      "sha256": "d549ba6d131fd6c8e5d42a78dab5c790950edd6258523dedc556b537ca6654aa",
+      "bytes": 19207034
+    },
+    {
+      "path": "org/apache/hadoop/hadoop-client-runtime/3.3.0/hadoop-client-runtime-3.3.0.jar",
+      "sha256": "2ba23f1e1dbb03e73600a41fcb187ad2626529684ed226085a91b0a0d6d67ee5",
+      "bytes": 27255121
+    },
+    {
+      "path": "org/apache/htrace/htrace-core4/4.1.0-incubating/htrace-core4-4.1.0-incubating.jar",
+      "sha256": "5d45b7904857c3e4ad36b3bcc57be2d2c5f308c69b5f6a58bd86aa7d48a25ef6",
+      "bytes": 1502280
+    },
+    {
+      "path": "commons-logging/commons-logging/1.1.3/commons-logging-1.1.3.jar",
+      "sha256": "70903f6fc82e9908c8da9f20443f61d90f0870a312642991fe8462a0b9391784",
+      "bytes": 62050
+    },
+    {
+      "path": "com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.jar",
+      "sha256": "766ad2a0783f2687962c8ad74ceecc38a28b9f72a2d085ee438b7813e928d0c7",
+      "bytes": 19936
+    }
+  ]
+}

@@ -6,6 +6,8 @@ use std::collections::{BTreeMap, BTreeSet};
 use umf_core::serialization::Format;
 use umf_core::{Context, EngineError, Utf16, Value};
 
+pub mod reference;
+
 #[derive(Clone, Debug)]
 pub struct CompilerProvenance {
     pub model_sha256: String,

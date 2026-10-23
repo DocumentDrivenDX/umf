@@ -1,0 +1,119 @@
+{
+  "kind": "umf-r5-avro-fields-supplement/1",
+  "sourceSha256": "66ddf3cd26893cafe81122a8d908679215e17a8387e3f5cdd3a134b186c0b041",
+  "observations": [
+    {
+      "label": "record-name-missing",
+      "source": "{\"type\":\"record\",\"fields\":[{\"name\":\"x\",\"type\":\"int\"}]}",
+      "fields": []
+    },
+    {
+      "label": "record-name-empty",
+      "source": "{\"type\":\"record\",\"name\":\"\",\"fields\":[{\"name\":\"x\",\"type\":\"int\"}]}",
+      "fields": []
+    },
+    {
+      "label": "field-name-empty",
+      "source": "{\"type\":\"record\",\"name\":\"R\",\"fields\":[{\"name\":\"\",\"type\":\"int\"}]}",
+      "fields": []
+    },
+    {
+      "label": "fixed-size-wasm32-overflow",
+      "source": "{\"type\":\"record\",\"name\":\"R\",\"fields\":[{\"name\":\"x\",\"type\":{\"type\":\"fixed\",\"name\":\"F\",\"size\":4294967297,\"logicalType\":\"decimal\",\"precision\":1}}]}",
+      "fields": [
+        {
+          "path": "/fields/0",
+          "record": "R",
+          "nativeField": {
+            "kind": "object",
+            "members": {
+              "name": {
+                "kind": "string",
+                "value": "x"
+              },
+              "type": {
+                "kind": "object",
+                "members": {
+                  "type": {
+                    "kind": "string",
+                    "value": "fixed"
+                  },
+                  "name": {
+                    "kind": "string",
+                    "value": "F"
+                  },
+                  "size": {
+                    "kind": "number",
+                    "value": "4294967297"
+                  },
+                  "logicalType": {
+                    "kind": "string",
+                    "value": "decimal"
+                  },
+                  "precision": {
+                    "kind": "number",
+                    "value": "1"
+                  }
+                }
+              }
+            }
+          },
+          "element": {
+            "id": "[null,\"/fields/0\"]",
+            "name": "x",
+            "extensions": {}
+          }
+        }
+      ]
+    },
+    {
+      "label": "precision-wasm32-overflow",
+      "source": "{\"type\":\"record\",\"name\":\"R\",\"fields\":[{\"name\":\"x\",\"type\":{\"type\":\"fixed\",\"name\":\"F\",\"size\":1,\"logicalType\":\"decimal\",\"precision\":4294967297}}]}",
+      "fields": [
+        {
+          "path": "/fields/0",
+          "record": "R",
+          "nativeField": {
+            "kind": "object",
+            "members": {
+              "name": {
+                "kind": "string",
+                "value": "x"
+              },
+              "type": {
+                "kind": "object",
+                "members": {
+                  "type": {
+                    "kind": "string",
+                    "value": "fixed"
+                  },
+                  "name": {
+                    "kind": "string",
+                    "value": "F"
+                  },
+                  "size": {
+                    "kind": "number",
+                    "value": "1"
+                  },
+                  "logicalType": {
+                    "kind": "string",
+                    "value": "decimal"
+                  },
+                  "precision": {
+                    "kind": "number",
+                    "value": "4294967297"
+                  }
+                }
+              }
+            }
+          },
+          "element": {
+            "id": "[null,\"/fields/0\"]",
+            "name": "x",
+            "extensions": {}
+          }
+        }
+      ]
+    }
+  ]
+}

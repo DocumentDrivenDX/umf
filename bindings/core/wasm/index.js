@@ -7,6 +7,9 @@ export {BIT128_PROFILE};
 export const GREGORIAN_DATE_PROFILE = 'umf-gregorian-date/1.0.0';
 export const RFC3339_EXACT_INSTANT_PROFILE = 'umf-rfc3339-exact-instant/1.0.0';
 export const RFC3339_EXACT_INSTANT_MAXIMUM_BYTES = 1_048_576;
+export const ICEBERG_SCHEMA_PROFILE = 'umf-r5-iceberg-schema/0.1.0';
+export const PROTOBUF_INSPECT_PROFILE = 'umf-r5-protobuf-inspect/0.1.0';
+export const AVRO_FIELDS_PROFILE = 'umf-r5-avro-fields/0.1.0';
 
 function hasBrowserRuntime(host) {
   return !!host && typeof host.WebAssembly === 'object' && typeof host.WebAssembly.instantiate === 'function';
@@ -76,6 +79,22 @@ export async function initializeCoreModelWasm(resources, loader = () => import('
   if (typeof module.default === 'function') await module.default();
   if (typeof module.copyJsonWire !== 'function' || typeof module.executeRequestWire !== 'function') throw new Error('RUST_WASM_BINDING_MISSING');
   return createCoreModelEngine(module, resources, options);
+}
+
+/** Initialize the standalone Iceberg schema JSON engine using pinned WASM resources. */
+export async function initializeIcebergSchemaWasm(loader = () => import('./pkg/umf_core_wasm.js'), host = globalThis, options = {}) {
+  if (!hasBrowserRuntime(host)) throw new Error('WASM_RUNTIME_UNAVAILABLE');
+  const module = await loader();
+  if (typeof module.default === 'function') await module.default();
+  return createIcebergSchemaEngine(module, options);
+}
+
+/** Initialize the opt-in Protobuf descriptor inspector in a browser. */
+export async function initializeProtobufInspectWasm(loader = () => import('./pkg/umf_core_wasm.js'), host = globalThis, options = {}) {
+  if (!hasBrowserRuntime(host)) throw new Error('WASM_RUNTIME_UNAVAILABLE');
+  const module = await loader();
+  if (typeof module.default === 'function') await module.default();
+  return createProtobufInspector(module, options);
 }
 
 export class UmfCoreError extends Error {
@@ -213,6 +232,83 @@ export function createEngine(module, resources, options = {}) {
 /** Create the opt-in cardinality/kind/nullability ideal API over WASM. */
 export function createCoreModelEngine(module, resources, options = {}) {
   return createEngineInternal(module, resources, options, true);
+}
+
+/** Create the opt-in standalone Iceberg schema JSON engine over pinned Rust resources. */
+export function createIcebergSchemaEngine(module, options = {}) {
+  if (typeof module?.executeIcebergWire !== 'function' || typeof module?.icebergSchemaProfileVersion !== 'function') throw new Error('RUST_WASM_BINDING_MISSING');
+  if (module.icebergSchemaProfileVersion() !== ICEBERG_SCHEMA_PROFILE) throw new Error('RUST_WASM_BINDING_PROFILE_MISMATCH');
+  const {controls} = codegenOptions(options);
+  const call = (operation, fields) => {
+    const controlBridge = hasControls(controls) ? createControlBridge(controls) : undefined;
+    const hostWork = admissionWork(controlBridge);
+    hostWork?.(1);
+    const request = {op: `iceberg.schema.${operation}`, ...fields};
+    const responseText = module.executeIcebergWire(encodeRequestWire(request, hostWork), controlBridge);
+    hostWork?.(responseText.length);
+    const envelope = JSON.parse(responseText);
+    const failure = resultError(envelope);
+    if (failure) throw new UmfCoreError(failure.code, failure.message, failure.path);
+    hostWork?.(envelope.wire.length);
+    return fromWire(JSON.parse(envelope.wire), hostWork);
+  };
+  return Object.freeze({
+    importSchema(source, id) { return call('import', {source, id}); },
+    exportSchema(document) { return call('export', {document}); },
+    inspect(document) { return call('inspect', {document}); },
+    getNode(document, pointer) { return call('getNode', {document, pointer}); },
+    proposeNodeEdit(document, pointer, replacement) { return call('proposeNodeEdit', {document, pointer, replacement}); },
+  });
+}
+
+/** Create the opt-in bounded Rust Protobuf descriptor inspector. */
+export function createProtobufInspector(module, options = {}) {
+  if (typeof module?.executeProtobufInspectWire !== 'function' || typeof module?.protobufInspectProfileVersion !== 'function') throw new Error('RUST_WASM_BINDING_MISSING');
+  if (module.protobufInspectProfileVersion() !== PROTOBUF_INSPECT_PROFILE) throw new Error('RUST_WASM_BINDING_PROFILE_MISMATCH');
+  const {controls} = codegenOptions(options);
+  return Object.freeze({
+    inspect(document) {
+      const controlBridge = hasControls(controls) ? createControlBridge(controls) : undefined;
+      const hostWork = admissionWork(controlBridge);
+      hostWork?.(1);
+      const request = {op: 'protobuf.descriptor.inspect', document};
+      const responseText = module.executeProtobufInspectWire(encodeRequestWire(request, hostWork), controlBridge);
+      hostWork?.(responseText.length);
+      const envelope = JSON.parse(responseText);
+      const failure = resultError(envelope);
+      if (failure) throw new UmfCoreError(failure.code, failure.message, failure.path);
+      hostWork?.(envelope.wire.length);
+      return fromWire(JSON.parse(envelope.wire), hostWork);
+    },
+  });
+}
+
+/** Create the opt-in bounded Avro field-metadata projection over WASM. */
+export function createAvroFieldsEngine(module, options = {}) {
+  if (typeof module?.executeAvroFieldsWire !== 'function' || typeof module?.avroFieldsProfileVersion !== 'function') throw new Error('RUST_WASM_BINDING_MISSING');
+  if (module.avroFieldsProfileVersion() !== AVRO_FIELDS_PROFILE) throw new Error('RUST_WASM_BINDING_PROFILE_MISMATCH');
+  const {controls} = codegenOptions(options);
+  return Object.freeze({deriveAvroFields(root, dependencies = []) {
+    const controlBridge = hasControls(controls) ? createControlBridge(controls) : undefined;
+    const hostWork = admissionWork(controlBridge);
+    hostWork?.(1);
+    const request = {op: 'avro.fields.derive', root, dependencies};
+    const responseText = module.executeAvroFieldsWire(encodeRequestWire(request, hostWork), controlBridge);
+    hostWork?.(responseText.length);
+    const envelope = JSON.parse(responseText);
+    const failure = resultError(envelope);
+    if (failure) throw new UmfCoreError(failure.code, failure.message, failure.path);
+    hostWork?.(envelope.wire.length);
+    return fromWire(JSON.parse(envelope.wire), hostWork);
+  }});
+}
+
+/** Initialize the opt-in Avro field-metadata projection in a browser. */
+export async function initializeAvroFieldsWasm(loader = () => import('./pkg/umf_core_wasm.js'), host = globalThis, options = {}) {
+  if (!hasBrowserRuntime(host)) throw new Error('WASM_RUNTIME_UNAVAILABLE');
+  const module = await loader();
+  if (typeof module.default === 'function') await module.default();
+  return createAvroFieldsEngine(module, options);
 }
 
 function createEngineInternal(module, resources, options, withModel) {

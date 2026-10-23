@@ -1,0 +1,47 @@
+{
+  "receipt": "R5-Iceberg-fresh-PyIceberg-native-2026-10-23",
+  "scope": "Authored standalone schema JSON round trips and one field rename; native oracle comparison only",
+  "environment": {
+    "platform": "Darwin arm64",
+    "python": "CPython 3.12.15",
+    "pyiceberg": "0.11.0",
+    "pydantic": "2.14.1",
+    "pyicebergMetadataSha256": "c2f4c013db48320fe4972ed49ba04edd3202a438002b99a11505745c5af937ab",
+    "pyicebergRecordSha256": "642f49d020afa9b73e63c2cba88874e6a40a460cdbf13b31da158661cdd0663b"
+  },
+  "inputs": {
+    "oracleScript": {
+      "path": "scripts/iceberg-oracle.py",
+      "sha256": "03ecc212dd4a5d7a468dc7fcd41a32345fa87152d860f81fa2cbd85f41e61c97"
+    },
+    "fixtureManifest": {
+      "path": "fixtures/iceberg/manifest.json",
+      "sha256": "a74036878c8a741673aea76ce84fc8330495e978d8bd32b18aa56fcecc5e5b1c"
+    },
+    "frozenPredecessor": {
+      "path": "docs/helix/04-build/evidence/rust-migration/r5-iceberg-schema/baseline.json",
+      "sha256": "22b7654f7e05cbf3290da46db3dab887e62f419b4973eb1ee25e64a4bbef68ef"
+    },
+    "rustCore": {
+      "path": "crates/umf-core/src/iceberg_schema.rs",
+      "sha256": "2f06f8fbbb51198c83cfb7a6e4c77583338234c1352b780d79859c2f407da52d"
+    }
+  },
+  "execution": {
+    "isolatedWorkingDirectory": "/private/tmp/umf-r5-iceberg-native-run",
+    "command": "/private/tmp/umf-r5-iceberg-native/bin/python /Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/iceberg-oracle.py",
+    "exitCode": 0,
+    "jsonYamlRoundtrips": 52,
+    "nativeAccepted": 21,
+    "editVerified": true,
+    "generatedOutputSha256": "e7e9188d286691fd88b9d62e5a2f588cf03911986eda0a5579f910832e27bbfb",
+    "historicalOracleOutputSha256": "e7e9188d286691fd88b9d62e5a2f588cf03911986eda0a5579f910832e27bbfb",
+    "generatedMatchesHistoricalBytes": true,
+    "historicalOutputModified": false
+  },
+  "limits": [
+    "The PyIceberg oracle consumes the retained JSON/YAML round-trip fixtures; it does not execute the Rust binding or independently replay all five Rust operations.",
+    "The nine authored UMF-invalid cases are excluded by this oracle script; Rust refusal evidence remains the frozen predecessor replay.",
+    "No fresh Java, table-context, evolution, data-reader or cross-platform native qualification is established."
+  ]
+}

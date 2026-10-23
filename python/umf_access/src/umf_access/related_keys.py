@@ -124,6 +124,8 @@ def _number(_: str) -> object:
 
 
 def decode_related_keys(value: object, decoder: object, key_model: type[StrictModel]) -> RelatedKeys[StrictModel]:
+    # Keep the legacy path in this frame: CPython's json.loads recursion
+    # behavior depends on ambient Python call depth, including this wrapper.
     metadata = validate_decoder(decoder,key_model)
     if metadata["profile"] != "pg-related-keys-json/0.1":
         raise CodecError("original engine related values require their owner adapter")
@@ -131,6 +133,66 @@ def decode_related_keys(value: object, decoder: object, key_model: type[StrictMo
         raise CodecError("related-Key native JSON text required")
     try:
         payload=json.loads(value,object_pairs_hook=_object,parse_int=_number,parse_float=_number,parse_constant=_number)
+    except (ValueError,TypeError):
+        raise CodecError("invalid related-Key JSON text") from None
+    if type(payload) is not dict or set(payload) != {"items","truncated"} or type(payload["items"]) is not list or type(payload["truncated"]) is not bool:
+        raise CodecError("closed related-Key JSON payload required")
+    items=payload["items"];bound=cast(int,metadata["bound"])
+    if len(items)>bound or payload["truncated"] and len(items)!=bound:
+        raise CodecError("related-Key truncation/bound differs")
+    descriptor=key_descriptor(key_model)
+    components=cast(list[dict[str,object]],descriptor["components"])
+    fields=cast(tuple[tuple[str,str,str],...],getattr(key_model,"UMF_FIELDS",None))
+    result: list[StrictModel]=[]
+    previous: tuple[object,...] | None=None
+    for item in items:
+        if type(item) is not list or len(item)!=len(components):
+            raise CodecError("related-Key component inventory differs")
+        values: list[object]=[]
+        for token,component in zip(item,components,strict=True):
+            carrier=component["carrier"]
+            decoded: object
+            if carrier=="boolean":
+                if type(token) is not bool:raise CodecError("Boolean related-Key token required")
+                decoded=token
+            elif type(token) is not str:
+                raise CodecError("exact related-Key string token required")
+            elif carrier=="string":decoded=token
+            elif carrier=="integer":
+                if not _INTEGER.fullmatch(token):raise CodecError("canonical Integer related-Key token required")
+                decoded=int(Decimal(token))
+            else:
+                if not _DECIMAL.fullmatch(token):raise CodecError("exact finite Decimal related-Key token required")
+                try:decoded=Decimal(token)
+                except InvalidOperation:raise CodecError("exact finite Decimal related-Key token required") from None
+                if not decoded.is_finite():raise CodecError("exact finite Decimal related-Key token required")
+            values.append(decoded)
+        key=validate_graph(key_model,{name:value for (_,_,name),value in zip(fields,values,strict=True)})
+        normalized=tuple(getattr(key,name) for _,_,name in fields)
+        if previous is not None and not _ascending(previous,normalized,components):
+            raise CodecError("related-Key native ordering or uniqueness differs")
+        previous=normalized;result.append(key)
+    return RelatedKeys(tuple(result),payload["truncated"])
+
+
+def decode_related_keys_rust(value: object, decoder: object, key_model: type[StrictModel]) -> RelatedKeys[StrictModel]:
+    """Opt in to the Rust parser while preserving all Python-owned decoding."""
+    from .rust_related_keys import loads
+
+    return _decode_related_keys(value, decoder, key_model, loads)
+
+
+def _decode_related_keys(value: object, decoder: object, key_model: type[StrictModel], parser: object) -> RelatedKeys[StrictModel]:
+    metadata = validate_decoder(decoder,key_model)
+    if metadata["profile"] != "pg-related-keys-json/0.1":
+        raise CodecError("original engine related values require their owner adapter")
+    if type(value) is not str:
+        raise CodecError("related-Key native JSON text required")
+    try:
+        if parser is json.loads:
+            payload=json.loads(value,object_pairs_hook=_object,parse_int=_number,parse_float=_number,parse_constant=_number)
+        else:
+            payload=parser(value)  # type: ignore[operator]
     except (ValueError,TypeError):
         raise CodecError("invalid related-Key JSON text") from None
     if type(payload) is not dict or set(payload) != {"items","truncated"} or type(payload["items"]) is not list or type(payload["truncated"]) is not bool:

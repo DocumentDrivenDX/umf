@@ -1013,6 +1013,9 @@ impl CompiledSchema {
         compiled.preflight(
             &compiled.schema,
             &schema_origin_path(&compiled.schema),
+            &schema_id(&compiled.schema)
+                .map(|id| resolve_schema_uri(dialect, "", &id).unwrap_or(id))
+                .unwrap_or_default(),
             0,
             ctx,
             &mut BTreeSet::new(),
@@ -1020,9 +1023,11 @@ impl CompiledSchema {
         for (id, resource) in &compiled.resources.entries {
             let mut root_path = id.units().to_vec();
             root_path.push(0x23);
+            let retrieval = id.to_utf8().unwrap_or_default();
             compiled.preflight(
                 resource,
                 &Utf16::new(root_path),
+                &retrieval,
                 0,
                 ctx,
                 &mut BTreeSet::new(),
@@ -1426,6 +1431,9 @@ impl CompiledSchema {
         compiled.preflight(
             &compiled.schema,
             &schema_origin_path(&compiled.schema),
+            &schema_id(&compiled.schema)
+                .map(|id| resolve_schema_uri(dialect, "", &id).unwrap_or(id))
+                .unwrap_or_default(),
             0,
             ctx,
             &mut BTreeSet::new(),
@@ -1433,9 +1441,11 @@ impl CompiledSchema {
         for (id, resource) in &compiled.resources.entries {
             let mut root_path = id.units().to_vec();
             root_path.push(0x23);
+            let retrieval = id.to_utf8().unwrap_or_default();
             compiled.preflight(
                 resource,
                 &Utf16::new(root_path),
+                &retrieval,
                 0,
                 ctx,
                 &mut BTreeSet::new(),
@@ -1544,6 +1554,7 @@ impl CompiledSchema {
         &self,
         schema: &Value,
         path: &Utf16,
+        scope: &str,
         depth: usize,
         ctx: &mut Context<'_>,
         seen: &mut BTreeSet<usize>,
@@ -1577,6 +1588,12 @@ impl CompiledSchema {
             return Err(schema_error(path, "Schema must be an object or boolean"));
         };
         let known = keywords(self.dialect);
+        let scope = if let Some(id) = schema_id(schema) {
+            ctx.charge_work(scope.len().saturating_add(id.len()), path.clone())?;
+            resolve_schema_uri(self.dialect, scope, &id).unwrap_or(id)
+        } else {
+            scope.to_owned()
+        };
         for (key, val) in m {
             let text = match key.to_utf8() {
                 Ok(text) => text,
@@ -1600,7 +1617,7 @@ impl CompiledSchema {
                         return Err(schema_error(&child, "reference keyword must be a string"));
                     }
                     if self.resolve_references_at_compile {
-                        self.resolve_ref(val, &child, ctx)?;
+                        self.resolve_ref_with_scope(val, &child, &scope, ctx)?;
                     }
                 }
                 "$anchor" | "$dynamicAnchor" => {
@@ -1625,7 +1642,7 @@ impl CompiledSchema {
                     if self.dialect == SchemaDialect::Draft3 {
                         match val {
                             Value::Object(_) => {
-                                self.preflight(val, &child, depth + 1, ctx, seen)?;
+                                self.preflight(val, &child, &scope, depth + 1, ctx, seen)?;
                             }
                             Value::Array(items) => {
                                 for (index, branch) in items.iter().enumerate() {
@@ -1633,6 +1650,7 @@ impl CompiledSchema {
                                         self.preflight(
                                             branch,
                                             &append_schema_path(&child, &index.to_string()),
+                                            &scope,
                                             depth + 1,
                                             ctx,
                                             seen,
@@ -1680,7 +1698,7 @@ impl CompiledSchema {
                                 self.compile_pattern(name, &pattern_path, ctx)?;
                             }
                             let p = append_schema_pointer(&append_schema_path(path, &text), name);
-                            self.preflight(child_schema, &p, depth + 1, ctx, seen)?;
+                            self.preflight(child_schema, &p, &scope, depth + 1, ctx, seen)?;
                         }
                     } else {
                         return Err(schema_error(&child, "Keyword value must be an object"));
@@ -1726,13 +1744,14 @@ impl CompiledSchema {
                                     &append_schema_path(path, &text),
                                     &i.to_string(),
                                 ),
+                                &scope,
                                 depth + 1,
                                 ctx,
                                 seen,
                             )?;
                         }
                     } else {
-                        self.preflight(val, &child, depth + 1, ctx, seen)?;
+                        self.preflight(val, &child, &scope, depth + 1, ctx, seen)?;
                     }
                 }
                 "allOf" | "anyOf" | "oneOf" | "prefixItems" => {
@@ -1744,6 +1763,7 @@ impl CompiledSchema {
                             self.preflight(
                                 x,
                                 &append_schema_path(&child, &i.to_string()),
+                                &scope,
                                 depth + 1,
                                 ctx,
                                 seen,
@@ -1759,13 +1779,14 @@ impl CompiledSchema {
                             self.preflight(
                                 item,
                                 &append_schema_path(&child, &index.to_string()),
+                                &scope,
                                 depth + 1,
                                 ctx,
                                 seen,
                             )?;
                         }
                     } else {
-                        self.preflight(val, &child, depth + 1, ctx, seen)?;
+                        self.preflight(val, &child, &scope, depth + 1, ctx, seen)?;
                     }
                 }
                 "pattern" => {
@@ -1838,6 +1859,7 @@ impl CompiledSchema {
                                 self.preflight(
                                     dep,
                                     &append_schema_pointer(&child, name),
+                                    &scope,
                                     depth + 1,
                                     ctx,
                                     seen,
@@ -2112,6 +2134,26 @@ impl CompiledSchema {
         path: &Utf16,
         ctx: &mut Context<'_>,
     ) -> Result<(&'a Value, Utf16), EngineError> {
+        self.resolve_ref_scoped(reference, path, None, ctx)
+    }
+
+    fn resolve_ref_with_scope<'a>(
+        &'a self,
+        reference: &Value,
+        path: &Utf16,
+        scope: &str,
+        ctx: &mut Context<'_>,
+    ) -> Result<(&'a Value, Utf16), EngineError> {
+        self.resolve_ref_scoped(reference, path, Some(scope), ctx)
+    }
+
+    fn resolve_ref_scoped<'a>(
+        &'a self,
+        reference: &Value,
+        path: &Utf16,
+        scope_override: Option<&str>,
+        ctx: &mut Context<'_>,
+    ) -> Result<(&'a Value, Utf16), EngineError> {
         ctx.charge_work_u64(
             path.len() as u64 + btree_index_lookup_work(self.python_reference_targets.len()) + 1,
             Utf16::default(),
@@ -2218,12 +2260,12 @@ impl CompiledSchema {
         let (base, fragment) = text.split_once('#').unwrap_or((&text, ""));
         // A relative reference within an externally supplied resource resolves
         // against that resource's root, not the primary schema's root.
-        let current_origin = path
+        let current_origin = scope_override.map(str::to_owned).or_else(|| path
             .to_utf8()
             .ok()
             .and_then(|p| p.split_once('#').map(|(id, _)| id.to_owned()))
             .filter(|origin| !origin.is_empty())
-            .or_else(|| schema_id(&self.schema))
+            .or_else(|| schema_id(&self.schema)))
             .unwrap_or_default();
         let effective_base = if base.is_empty() {
             if current_origin.is_empty() {
@@ -2234,7 +2276,7 @@ impl CompiledSchema {
         } else if base.contains(':') {
             base.to_owned()
         } else {
-            resolve_relative_uri(&current_origin, base).ok_or_else(|| {
+            resolve_schema_uri(self.dialect, &current_origin, base).ok_or_else(|| {
                 EngineError::new(
                     "SCHEMA_REF_UNRESOLVED",
                     path.clone(),
@@ -2476,7 +2518,7 @@ impl CompiledSchema {
         let effective = if id.contains(':') {
             id
         } else {
-            resolve_relative_uri(&parent, &id).unwrap_or(id)
+            resolve_schema_uri(self.dialect, &parent, &id).unwrap_or(id)
         };
         let mut units = effective.encode_utf16().collect::<Vec<_>>();
         units.push(b'#' as u16);
@@ -6155,6 +6197,8 @@ fn active_keywords(d: SchemaDialect) -> &'static [&'static str] {
             "propertyNames",
             "required",
             "type",
+            "then",
+            "else",
             "unevaluatedItems",
             "unevaluatedProperties",
             "uniqueItems",
@@ -6437,6 +6481,25 @@ fn percent_decode_fragment(fragment: &str) -> String {
     }
     String::from_utf8_lossy(&decoded).into_owned()
 }
+fn resolve_schema_uri(dialect: SchemaDialect, base: &str, reference: &str) -> Option<String> {
+    if dialect == SchemaDialect::Draft2020_12 {
+        return resolve_draft2020_uri(base, reference);
+    }
+    // The legacy profiles retain their historical relative-path joiner, but
+    // an absolute `$id`/reference is already a complete URI and must not be
+    // appended to the current scope as though it were a path.
+    if url::Url::parse(reference).is_ok() {
+        return Some(reference.to_owned());
+    }
+    resolve_relative_uri(base, reference)
+}
+fn resolve_draft2020_uri(base: &str, reference: &str) -> Option<String> {
+    if let Ok(absolute) = url::Url::parse(reference) {
+        return Some(absolute.to_string());
+    }
+    let base = url::Url::parse(base).ok()?;
+    base.join(reference).ok().map(|joined| joined.to_string())
+}
 fn resolve_relative_uri(base: &str, reference: &str) -> Option<String> {
     let (scheme, rest) = base.split_once("://")?;
     let authority_end = rest.find('/').unwrap_or(rest.len());
@@ -6710,12 +6773,18 @@ fn find_embedded_resource<'a>(
             Value::Object(_) => {
                 let own_id = schema_id(node);
                 let effective = own_id.as_deref().map(|id| {
-                    if id.contains(":") {
+                    // URI parsing is bounded by metering both the inherited
+                    // base and the authored identifier before resolution.
+                    ctx.charge_work(parent.len().saturating_add(id.len()), path.clone())?;
+                    let resolved = if dialect != SchemaDialect::Draft2020_12
+                        && url::Url::parse(id).is_ok()
+                    {
                         id.to_owned()
                     } else {
-                        resolve_relative_uri(parent, id).unwrap_or_else(|| id.to_owned())
-                    }
-                });
+                        resolve_schema_uri(dialect, parent, id).unwrap_or_else(|| id.to_owned())
+                    };
+                    Ok(resolved)
+                }).transpose()?;
                 let base = effective.as_deref().unwrap_or(parent);
                 if effective.as_deref() == Some(target) {
                     return Ok(Some(node));
@@ -8873,5 +8942,158 @@ mod python_resource_work_tests {
             "DENIED_URI_JOIN"
         );
         assert!(observed >= (base.len() + relative.len()) * 10);
+    }
+}
+
+
+#[cfg(test)]
+mod static_reference_resolution_tests {
+    use super::*;
+
+    fn value(source: &str) -> Value {
+        crate::serialization::read_json_value(
+            &source.encode_utf16().collect::<Vec<_>>(),
+            crate::serialization::Format::Json,
+            &mut Context::ordinary(),
+        )
+        .unwrap()
+    }
+
+    fn compile(schema: &str, resources: Vec<(&str, &str)>) -> Result<CompiledSchema, EngineError> {
+        let entries = resources
+            .into_iter()
+            .map(|(uri, schema)| (Utf16::from(uri), value(schema)))
+            .collect();
+        CompiledSchema::compile_consumer(
+            &value(schema),
+            &SchemaResources { entries },
+            false,
+            &mut Context::ordinary(),
+        )
+    }
+
+    #[test]
+    fn nested_ids_set_reference_scope_and_annotations_do_not() {
+        let result = compile(
+            r#"{"$id":"https://example.test/root/","$defs":{"nested":{"$id":"sub/","$ref":"target.json"}},"examples":[{"$id":"https://example.test/fake/","$ref":"missing.json"}]}"#,
+            vec![("https://example.test/root/sub/target.json", "true")],
+        );
+        assert!(result.is_ok(), "{result:?}");
+
+        let missing = compile(
+            r#"{"$id":"https://example.test/root/","$defs":{"nested":{"$id":"sub/","$ref":"missing.json"}}}"#,
+            vec![],
+        );
+        assert_eq!(missing.unwrap_err().code, "SCHEMA_REF_UNRESOLVED");
+    }
+
+    #[test]
+    fn retrieved_relative_root_id_is_resolved_once_and_keeps_its_directory() {
+        let result = compile(
+            r#"{"$id":"https://example.test/main.json","$ref":"https://example.test/root.json"}"#,
+            vec![
+                (
+                    "https://example.test/root.json",
+                    r#"{"$id":"sub/","$ref":"target.json"}"#,
+                ),
+                ("https://example.test/sub/target.json", "true"),
+            ],
+        );
+        assert!(result.is_ok(), "{result:?}");
+    }
+
+    #[test]
+    fn legacy_absolute_root_and_nested_ids_are_not_joined_as_relative_paths() {
+        let root = value(
+            r##"{"$schema":"http://json-schema.org/draft-07/schema#","$id":"https://example.test/root.json","definitions":{"target":{"type":"integer"}},"$ref":"#/definitions/target"}"##,
+        );
+        let compiled = CompiledSchema::compile_consumer(
+            &root,
+            &SchemaResources { entries: vec![] },
+            false,
+            &mut Context::ordinary(),
+        )
+        .unwrap();
+        assert!(compiled
+            .validate(&value("1"), &mut Context::ordinary())
+            .unwrap()
+            .is_empty());
+
+        let nested = value(
+            r##"{"$schema":"http://json-schema.org/draft-07/schema#","$id":"https://example.test/root.json","properties":{"x":{"$id":"https://example.test/child.json","definitions":{"target":{"type":"integer"}},"$ref":"#/definitions/target"}}}"##,
+        );
+        assert!(CompiledSchema::compile_consumer(
+            &nested,
+            &SchemaResources { entries: vec![] },
+            false,
+            &mut Context::ordinary(),
+        )
+        .is_ok());
+    }
+
+    #[test]
+    fn reference_resolution_handles_directory_bases_and_urn_local_pointers() {
+        assert_eq!(
+            resolve_draft2020_uri("https://example.test/folder/", "child.json").as_deref(),
+            Some("https://example.test/folder/child.json")
+        );
+        assert_eq!(
+            resolve_draft2020_uri("https://example.test/a/b/root.json", "../child.json").as_deref(),
+            Some("https://example.test/a/child.json")
+        );
+        assert!(compile(
+            r##"{"$id":"urn:example:root","$defs":{"target":{"type":"string"}},"$ref":"#/$defs/target"}"##,
+            vec![],
+        )
+        .is_ok());
+    }
+
+    #[test]
+    fn then_else_are_schema_positions_and_cycles_are_bounded() {
+        let schema = r#"{"$id":"https://example.test/root","if":{},"then":{"$ref":"https://example.test/then"},"else":{"$ref":"https://example.test/else"}}"#;
+        assert!(compile(
+            schema,
+            vec![
+                ("https://example.test/then", "true"),
+                ("https://example.test/else", "false"),
+            ],
+        )
+        .is_ok());
+        let missing_else = compile(
+            schema,
+            vec![("https://example.test/then", "true")],
+        );
+        assert_eq!(missing_else.unwrap_err().code, "SCHEMA_REF_UNRESOLVED");
+        assert!(compile(r##"{"$id":"https://example.test/cycle","$ref":"#"}"##, vec![]).is_ok());
+    }
+
+    #[test]
+    fn conflicting_resource_uris_remain_explicit_errors() {
+        let error = compile(
+            r#"{"$id":"https://example.test/root","$ref":"https://example.test/shared"}"#,
+            vec![
+                ("https://example.test/shared", "true"),
+                ("https://example.test/shared", "false"),
+            ],
+        )
+        .unwrap_err();
+        assert_eq!(error.code, "SCHEMA_ID_CONFLICT");
+    }
+
+    #[test]
+    fn static_and_dynamic_refs_resolve_anchors_in_schema_positions() {
+        let schema = r##"{"$id":"https://example.test/root","$defs":{"target":{"$anchor":"plain","type":"integer"}},"$ref":"#plain"}"##;
+        let compiled = compile(schema, vec![]).unwrap();
+        assert!(compiled
+            .validate(&value("1"), &mut Context::ordinary())
+            .unwrap()
+            .is_empty());
+        assert!(!compiled
+            .validate(&value("\"no\""), &mut Context::ordinary())
+            .unwrap()
+            .is_empty());
+
+        let dynamic_fallback = r##"{"$id":"https://example.test/root","$defs":{"target":{"$anchor":"plain","type":"integer"}},"$dynamicRef":"#plain"}"##;
+        assert!(compile(dynamic_fallback, vec![]).is_ok());
     }
 }

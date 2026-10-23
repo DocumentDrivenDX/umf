@@ -1,0 +1,35 @@
+{
+  "status": "pass",
+  "profile": "umf-r5-protobuf-inspect/0.1.0",
+  "operation": "protobuf.descriptor.inspect",
+  "wheel": {
+    "path": "/private/tmp/umf-r5-protobuf-inspect-python-dist/umf_core-0.11.0-cp311-abi3-macosx_11_0_arm64.whl",
+    "sha256": "daf234c9eef122ab1c0c001ac071f62bc2e81ec5b8701879bcdce80d6f5b7611",
+    "installedExtensionSha256": "e4c5f32ce1b880d53772a37e1f2e0d5d8c0d1d137a21b22d1e28840a3028fc38"
+  },
+  "runtime": {
+    "wheelBuildPython": "3.11.17",
+    "replayPython": "3.12.15",
+    "implementation": "CPython",
+    "os": "macOS arm64",
+    "rustc": "1.90.0 (1159e78c4 2025-09-14)",
+    "cargo": "1.90.0 (840b83a10 2025-07-30)"
+  },
+  "cases": {
+    "frozenPredecessorObservations": 10,
+    "utf16LoneSurrogateDiagnosticPath": "pass",
+    "cooperativeControls": ["RESOURCE_LIMIT", "CANCELLED", "DEADLINE", "METER_FAILURE"],
+    "controlsInjectedAfterPythonAdmissionInsideRustHook": ["RESOURCE_LIMIT", "CANCELLED", "DEADLINE", "METER_FAILURE"],
+    "exactWireEnvelopes": ["success-tagged-value", "error-code-message-units-path-units"],
+    "malformedAndUnknownControls": ["invalid-document", "unknown-root", "unknown-nested", "unknown-byte-retention", "explicit-empty-presence"]
+  },
+  "observedWork": 8794,
+  "complete": false,
+  "limits": {
+    "controlChecksAreCooperative": true,
+    "hardIsolation": false,
+    "nativeCompilerValidation": "required",
+    "nodeBrowserAndSourceCompilerParity": "not established",
+    "defaultExecutionRouteChanged": false
+  }
+}

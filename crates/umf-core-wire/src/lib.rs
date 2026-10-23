@@ -674,6 +674,193 @@ pub fn error_envelope(error: EngineError) -> String {
     result_envelope(Err(error))
 }
 
+/// Exact opt-in capability identity shared by CLI, Node/Bun, WASM and Python.
+pub const ICEBERG_SCHEMA_PROFILE: &str = "umf-r5-iceberg-schema/0.1.0";
+
+/// Execute the standalone Iceberg 1.11 schema subset through pinned Rust
+/// resources. The tagged wire carries UTF-16 strings and lossless document
+/// values; host bindings never parse the native schema or replacement JSON.
+pub fn execute_iceberg_wire(wire_json: &str) -> String {
+    let mut no_control = |_amount: usize| Ok(());
+    execute_iceberg_wire_with_control(wire_json, &mut no_control)
+}
+
+/// The caller's work hook covers wire admission, resource construction, the
+/// selected operation, and result encoding under one fresh ordinary Context.
+pub fn execute_iceberg_wire_with_control(
+    wire_json: &str,
+    control: &mut dyn FnMut(usize) -> Result<(), EngineError>,
+) -> String {
+    let result = (|| {
+        use umf_core::iceberg_schema::{
+            export_iceberg_schema, get_iceberg_node, import_iceberg_schema,
+            inspect_iceberg, propose_iceberg_node_edit, IcebergSchemaResources,
+        };
+
+        let mut ctx = Context::ordinary().with_host_control(control);
+        let request = decode(wire_json, &mut ctx)?;
+        let op = field(&request, "op")
+            .and_then(as_utf16)
+            .and_then(|value| value.to_utf8().ok())
+            .ok_or_else(|| fail("REQUEST", "Iceberg operation is required"))?;
+        if !matches!(
+            op.as_str(),
+            "iceberg.schema.import"
+                | "iceberg.schema.export"
+                | "iceberg.schema.inspect"
+                | "iceberg.schema.getNode"
+                | "iceberg.schema.proposeNodeEdit"
+        ) {
+            return Err(fail("REQUEST", "Unknown Iceberg schema operation"));
+        }
+        let resources = IcebergSchemaResources::new(&mut ctx)?;
+        let text = |name: &str| {
+            field(&request, name)
+                .and_then(as_utf16)
+                .ok_or_else(|| fail("REQUEST", &format!("Iceberg {name} string is required")))
+        };
+        let document = || {
+            field(&request, "document")
+                .ok_or_else(|| fail("REQUEST", "Iceberg document is required"))
+        };
+        let value = match op.as_str() {
+            "iceberg.schema.import" => import_iceberg_schema(
+                text("source")?.units(),
+                text("id")?,
+                &resources,
+                &mut ctx,
+            )?,
+            "iceberg.schema.export" => Value::String(export_iceberg_schema(
+                document()?,
+                &resources,
+                &mut ctx,
+            )?),
+            "iceberg.schema.inspect" => {
+                validation_value(inspect_iceberg(document()?, &resources, &mut ctx)?)
+            }
+            "iceberg.schema.getNode" => get_iceberg_node(
+                document()?,
+                text("pointer")?,
+                &resources,
+                &mut ctx,
+            )?
+            .tagged_value_preserving_extras(&mut ctx)?,
+            "iceberg.schema.proposeNodeEdit" => {
+                let (candidate, validation) = propose_iceberg_node_edit(
+                    document()?,
+                    text("pointer")?,
+                    text("replacement")?.units(),
+                    &resources,
+                    &mut ctx,
+                )?;
+                object(vec![
+                    ("document", candidate),
+                    ("validation", validation_value(validation)),
+                ])
+            }
+            _ => unreachable!("Iceberg operation was checked above"),
+        };
+        encode(&value, &mut ctx)
+    })();
+    result_envelope(result)
+}
+
+/// Exact opt-in identity for the bounded Protobuf descriptor inspector.
+pub const PROTOBUF_INSPECT_PROFILE: &str = "umf-r5-protobuf-inspect/0.1.0";
+
+/// Versioned opt-in Avro field metadata projection. This operation does not
+/// parse Avro source text or activate the default Avro adapter.
+pub const AVRO_FIELDS_PROFILE: &str = "umf-r5-avro-fields/0.1.0";
+
+pub fn execute_avro_fields_wire(wire_json: &str) -> String {
+    let mut no_control = |_amount: usize| Ok(());
+    execute_avro_fields_wire_with_control(wire_json, &mut no_control)
+}
+
+pub fn execute_avro_fields_wire_with_control(
+    wire_json: &str,
+    control: &mut dyn FnMut(usize) -> Result<(), EngineError>,
+) -> String {
+    let result = (|| {
+        use umf_core::{avro_fields::{derive_avro_fields, AvroDependency}, native_json::NativeJsonTree};
+        let mut ctx = Context::ordinary().with_host_control(control);
+        let request = decode(wire_json, &mut ctx)?;
+        if text_field(&request, "op").as_deref() != Some("avro.fields.derive") {
+            return Err(fail("REQUEST", "Unknown Avro fields operation"));
+        }
+        let root = NativeJsonTree::from_tagged_value(
+            field(&request, "root").ok_or_else(|| fail("REQUEST", "Avro root is required"))?,
+            &mut ctx,
+        )?;
+        let items = match field(&request, "dependencies") {
+            None => &[][..],
+            Some(Value::Array(items)) => items.as_slice(),
+            _ => return Err(fail("REQUEST", "Avro dependencies must be an array")),
+        };
+        let mut owned = Vec::with_capacity(items.len());
+        for item in items {
+            let id = field(item, "id").and_then(as_utf16).cloned()
+                .ok_or_else(|| fail("REQUEST", "Dependency id is required"))?;
+            let tree = NativeJsonTree::from_tagged_value(
+                field(item, "root").ok_or_else(|| fail("REQUEST", "Dependency root is required"))?,
+                &mut ctx,
+            )?;
+            owned.push((id, tree));
+        }
+        let dependencies = owned.iter().map(|(id, tree)| AvroDependency { id, root: tree }).collect::<Vec<_>>();
+        let fields = derive_avro_fields(&root, &dependencies, &mut ctx)?;
+        let mut output = Vec::with_capacity(fields.len());
+        for field in fields {
+            let native_field = field.native_field.tagged_value_preserving_extras(&mut ctx)?;
+            let mut element = vec![
+                ("id", Value::String(field.element_id)),
+                ("name", Value::String(field.name)),
+            ];
+            if let Some(description) = field.description { element.push(("description", Value::String(description))); }
+            if let Some(scalar) = field.scalar_type { element.push(("scalarType", Value::string_utf8(scalar.as_str()))); }
+            element.push(("extensions", Value::Object(Vec::new())));
+            let mut item = vec![
+                ("path", Value::String(field.path)),
+                ("record", Value::String(field.record)),
+                ("nativeField", native_field),
+                ("element", Value::Object(element.into_iter().map(|(key, value)| (Utf16::from(key), value)).collect())),
+            ];
+            if let Some(id) = field.dependency_id { item.push(("dependencyId", Value::String(id))); }
+            output.push(Value::Object(item.into_iter().map(|(key, value)| (Utf16::from(key), value)).collect()));
+        }
+        encode(&Value::Array(output), &mut ctx)
+    })();
+    result_envelope(result)
+}
+
+/// Inspect a UMF document through the Rust core and return its diagnostics in
+/// the ordinary `umf.core-wire/1` result envelope. Admission, inspection, and
+/// result encoding share one fresh cooperative context and caller control.
+pub fn execute_protobuf_inspect_wire(wire_json: &str) -> String {
+    let mut no_control = |_amount: usize| Ok(());
+    execute_protobuf_inspect_wire_with_control(wire_json, &mut no_control)
+}
+
+pub fn execute_protobuf_inspect_wire_with_control(
+    wire_json: &str,
+    control: &mut dyn FnMut(usize) -> Result<(), EngineError>,
+) -> String {
+    let result = (|| {
+        let mut ctx = Context::ordinary().with_host_control(control);
+        let request = decode(wire_json, &mut ctx)?;
+        let op = text_field(&request, "op")
+            .ok_or_else(|| fail("REQUEST", "Protobuf inspect operation is required"))?;
+        if op != "protobuf.descriptor.inspect" {
+            return Err(fail("REQUEST", "Unknown Protobuf inspect operation"));
+        }
+        let document = field(&request, "document")
+            .ok_or_else(|| fail("REQUEST", "Protobuf document is required"))?;
+        let validation = umf_core::protobuf_inspect::inspect_protobuf_document(document, &mut ctx)?;
+        encode(&validation_value(validation), &mut ctx)
+    })();
+    result_envelope(result)
+}
+
 /// Execute one opt-in CONTRACT-049 numeric operation through the Rust core.
 /// This separate profile does not change the R3 codegen protocol or ordinary
 /// JSON number admission. A supplied context requires explicit core resources

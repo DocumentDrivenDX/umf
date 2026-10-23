@@ -6,7 +6,7 @@
 use crate::{
     context::Context,
     error::{Diagnostic, EngineError, Severity},
-    json_schema_adapter::{self, DIALECT_2020_12, JsonSchemaPayload, SchemaPosition},
+    json_schema_adapter::{self, JsonSchemaPayload, SchemaPosition, DIALECT_2020_12},
     native_json::{NativeJsonNode, NativeJsonTree},
     schema::{CompiledSchema, SchemaResources},
     value::{Utf16, Value},
@@ -185,6 +185,15 @@ fn inspect_payload_profile(
     let mut has_numeric_limit = false;
     let mut numeric_limit_resources = Vec::new();
 
+    // The resource count is known without constructing a second URI/tree
+    // collection. Charge it before either retaining resource identities or
+    // reserving any per-resource storage.
+    ctx.charge_work(
+        payload.resources.len().saturating_add(1),
+        extension_path.clone(),
+    )?;
+    let mut root_positions = Some(json_schema_adapter::walk(payload, ctx)?);
+
     for (key, _) in &payload.representation_extras {
         push(
             &mut diagnostics,
@@ -195,18 +204,12 @@ fn inspect_payload_profile(
         );
     }
 
-    let mut resources: Vec<(Utf16, &NativeJsonTree)> =
-        Vec::with_capacity(payload.resources.len() + 1);
-    resources.push((payload.base_uri.clone(), &payload.root));
-    resources.extend(
-        payload
-            .resources
-            .iter()
-            .map(|(uri, tree)| (uri.clone(), tree)),
-    );
-
-    for (uri, tree) in &resources {
+    for (resource_index, (uri, tree)) in std::iter::once((&payload.base_uri, &payload.root))
+        .chain(payload.resources.iter().map(|(uri, tree)| (uri, tree)))
+        .enumerate()
+    {
         ctx.charge_work(1, extension_path.clone())?;
+        ctx.charge_work(uri.len(), extension_path.clone())?;
         if tree.has_representation_extras() {
             push(
                 &mut diagnostics,
@@ -216,11 +219,13 @@ fn inspect_payload_profile(
                 Severity::Warning,
             );
         }
-        let positions = json_schema_adapter::walk(payload, ctx)?;
-        // walk() covers the root only. Resource roots are scanned separately
-        // below so their diagnostics retain retrieval-resource identity.
-        let positions = if uri == &payload.base_uri {
-            positions
+        // walk() covers the root. It must only be called once: rescanning it
+        // for every packaged resource made inspection work quadratic in the
+        // resource count and discarded each duplicate result.
+        let positions = if resource_index == 0 {
+            root_positions
+                .take()
+                .expect("root positions are consumed once")
         } else {
             schema_positions(tree, ctx)?
         };
@@ -335,6 +340,7 @@ fn inspect_payload_profile(
         let resource_numeric_limit = contains_unsafe_number(tree, ctx)?;
         has_numeric_limit |= resource_numeric_limit;
         if resource_numeric_limit {
+            ctx.charge_work(uri.len().saturating_add(1), extension_path.clone())?;
             numeric_limit_resources.push(uri.clone());
         }
     }
@@ -412,11 +418,14 @@ fn handle_compile_error(
 }
 
 fn compile_payload(payload: &JsonSchemaPayload, ctx: &mut Context<'_>) -> Result<(), EngineError> {
+    ctx.charge_work(payload.resources.len().saturating_add(1), Utf16::default())?;
     let mut root = native_to_value(payload.root.root(), ctx)?;
     install_retrieval_id(&mut root, &payload.base_uri, ctx)?;
     let mut schemas = Vec::with_capacity(payload.resources.len() + 1);
+    ctx.charge_work(payload.base_uri.len(), Utf16::default())?;
     schemas.push((payload.base_uri.clone(), root));
     for (uri, tree) in &payload.resources {
+        ctx.charge_work(uri.len(), Utf16::default())?;
         let mut value = native_to_value(tree.root(), ctx)?;
         install_retrieval_id(&mut value, uri, ctx)?;
         schemas.push((uri.clone(), value));
@@ -439,10 +448,12 @@ fn compile_payload(payload: &JsonSchemaPayload, ctx: &mut Context<'_>) -> Result
             }
         }
         let mut resolution = SchemaResources::default();
+        ctx.charge_work(schemas.len().saturating_sub(1), Utf16::default())?;
         for (resource_index, (uri, resource)) in schemas.iter().enumerate() {
             if resource_index == target_index {
                 continue;
             }
+            ctx.charge_work(uri.len(), Utf16::default())?;
             resolution
                 .entries
                 .push((uri.clone(), crate::copy_json(resource, ctx)?));
@@ -481,6 +492,7 @@ fn install_retrieval_id(
     let id_key = Utf16::from("$id");
     let position = members.iter().position(|(key, _)| key == &id_key);
     let Some(position) = position else {
+        ctx.charge_work(retrieval.len(), Utf16::default())?;
         members.push((id_key, Value::String(retrieval.clone())));
         return Ok(());
     };
@@ -494,10 +506,13 @@ fn install_retrieval_id(
             "$id must be UTF-8 for the Rust compiler profile",
         )
     })?;
+    ctx.charge_work(id_text.len(), Utf16::default())?;
     let Ok(retrieval_text) = retrieval.to_utf8() else {
         return Ok(());
     };
+    ctx.charge_work(retrieval_text.len(), Utf16::default())?;
     if let Ok(absolute) = url::Url::parse(&id_text) {
+        ctx.charge_work(absolute.as_str().len(), Utf16::default())?;
         members[position].1 = Value::string_utf8(absolute.as_str());
         return Ok(());
     }
@@ -525,8 +540,12 @@ fn native_to_value(node: &NativeJsonNode, ctx: &mut Context<'_>) -> Result<Value
     match node {
         NativeJsonNode::Null => Ok(Value::Null),
         NativeJsonNode::Boolean(value) => Ok(Value::Bool(*value)),
-        NativeJsonNode::String(value) => Ok(Value::String(value.clone())),
+        NativeJsonNode::String(value) => {
+            ctx.charge_work(value.len(), Utf16::default())?;
+            Ok(Value::String(value.clone()))
+        }
         NativeJsonNode::Number(token) => {
+            ctx.charge_work(token.len(), Utf16::default())?;
             let value = token.parse::<f64>().map_err(|_| {
                 EngineError::new(
                     "JSON_SCHEMA_NUMERIC",
@@ -544,6 +563,7 @@ fn native_to_value(node: &NativeJsonNode, ctx: &mut Context<'_>) -> Result<Value
             Value::number(value, Utf16::default())
         }
         NativeJsonNode::Array(items) => {
+            ctx.charge_work(items.len(), Utf16::default())?;
             let mut result = Vec::with_capacity(items.len());
             for item in items {
                 result.push(native_to_value(item, ctx)?);
@@ -551,6 +571,10 @@ fn native_to_value(node: &NativeJsonNode, ctx: &mut Context<'_>) -> Result<Value
             Ok(Value::Array(result))
         }
         NativeJsonNode::Object(members) => {
+            let key_units = members
+                .iter()
+                .fold(0usize, |total, (key, _)| total.saturating_add(key.len()));
+            ctx.charge_work(members.len().saturating_add(key_units), Utf16::default())?;
             let mut result = Vec::with_capacity(members.len());
             for (key, value) in members {
                 result.push((key.clone(), native_to_value(value, ctx)?));
@@ -564,18 +588,26 @@ fn contains_unsafe_number(
     tree: &NativeJsonTree,
     ctx: &mut Context<'_>,
 ) -> Result<bool, EngineError> {
+    ctx.charge_work(1, Utf16::default())?;
     let mut stack = vec![tree.root()];
     while let Some(node) = stack.pop() {
         ctx.charge_work(1, Utf16::default())?;
         match node {
             NativeJsonNode::Number(token) => {
+                ctx.charge_work(token.len(), Utf16::default())?;
                 let parsed = token.parse::<f64>();
                 if parsed.map_or(true, |value| number_token_is_unsafe(token, value)) {
                     return Ok(true);
                 }
             }
-            NativeJsonNode::Array(items) => stack.extend(items.iter()),
-            NativeJsonNode::Object(members) => stack.extend(members.iter().map(|(_, value)| value)),
+            NativeJsonNode::Array(items) => {
+                ctx.charge_work(items.len(), Utf16::default())?;
+                stack.extend(items.iter());
+            }
+            NativeJsonNode::Object(members) => {
+                ctx.charge_work(members.len(), Utf16::default())?;
+                stack.extend(members.iter().map(|(_, value)| value));
+            }
             _ => {}
         }
     }
@@ -675,6 +707,11 @@ fn join(base: &Utf16, suffix: &Utf16, ctx: &mut Context<'_>) -> Result<Utf16, En
     Ok(Utf16::new(units))
 }
 fn child(parent: &Utf16, segment: &Utf16, ctx: &mut Context<'_>) -> Result<Utf16, EngineError> {
+    let escaped_len = segment.units().iter().fold(0usize, |length, unit| {
+        length.saturating_add(if matches!(*unit, 0x7e | 0x2f) { 2 } else { 1 })
+    });
+    let total_len = parent.len().saturating_add(1).saturating_add(escaped_len);
+    ctx.charge_text(total_len, parent.clone())?;
     let mut units = parent.units().to_vec();
     units.push(b'/' as u16);
     for unit in segment.units() {
@@ -684,13 +721,71 @@ fn child(parent: &Utf16, segment: &Utf16, ctx: &mut Context<'_>) -> Result<Utf16
             other => units.push(other),
         }
     }
-    ctx.charge_text(units.len(), parent.clone())?;
     Ok(Utf16::new(units))
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn native_conversion_precharges_string_bytes_and_container_slots() {
+        let text = Utf16::from("s".repeat(1024));
+        let mut observed = Vec::new();
+        let mut meter = |amount| {
+            observed.push(amount);
+            if amount >= text.len() {
+                Err(EngineError::new("METER_STOP", Utf16::default(), "stopped"))
+            } else {
+                Ok(())
+            }
+        };
+        let error = native_to_value(
+            &NativeJsonNode::String(text.clone()),
+            &mut Context::ordinary().with_meter(&mut meter),
+        )
+        .unwrap_err();
+        assert_eq!(error.code, "METER_STOP");
+        assert_eq!(observed, [1, text.len()]);
+
+        let items = (0..256).map(|_| NativeJsonNode::Null).collect();
+        let mut observed = Vec::new();
+        let mut meter = |amount| {
+            observed.push(amount);
+            if amount >= 256 {
+                Err(EngineError::new("METER_STOP", Utf16::default(), "stopped"))
+            } else {
+                Ok(())
+            }
+        };
+        let error = native_to_value(
+            &NativeJsonNode::Array(items),
+            &mut Context::ordinary().with_meter(&mut meter),
+        )
+        .unwrap_err();
+        assert_eq!(error.code, "METER_STOP");
+        assert_eq!(observed, [1, 256]);
+    }
+
+    #[test]
+    fn child_path_charges_escaped_size_before_copying_parent() {
+        let parent = Utf16::from("/large-prefix");
+        let segment = Utf16::from("a/b~c");
+        let expected = parent.len() + 1 + 7;
+        let mut observed = Vec::new();
+        let mut meter = |amount| {
+            observed.push(amount);
+            Err(EngineError::new("METER_STOP", Utf16::default(), "stopped"))
+        };
+        let error = child(
+            &parent,
+            &segment,
+            &mut Context::ordinary().with_meter(&mut meter),
+        )
+        .unwrap_err();
+        assert_eq!(error.code, "METER_STOP");
+        assert_eq!(observed, [expected]);
+    }
 
     #[test]
     fn compile_error_mapping_obeys_provenance_before_public_code() {
@@ -722,10 +817,16 @@ fn schema_positions(
     tree: &NativeJsonTree,
     ctx: &mut Context<'_>,
 ) -> Result<Vec<SchemaPosition>, EngineError> {
+    ctx.charge_work(1, Utf16::default())?;
     let mut output = Vec::new();
+    ctx.charge_work(1, Utf16::default())?;
     let mut stack = vec![(Utf16::default(), tree.root())];
     while let Some((pointer, node)) = stack.pop() {
         ctx.charge_work(1, pointer.clone())?;
+        ctx.charge_work(
+            pointer.len().saturating_mul(2).saturating_add(1),
+            pointer.clone(),
+        )?;
         output.push(SchemaPosition {
             pointer: pointer.clone(),
             node: tree.subtree_clone(&pointer, ctx)?,
@@ -733,6 +834,7 @@ fn schema_positions(
         let NativeJsonNode::Object(members) = node else {
             continue;
         };
+        ctx.charge_work(members.len(), pointer.clone())?;
         let mut children = Vec::new();
         for (key, value) in members {
             let name = key.to_utf8().unwrap_or_default();
@@ -748,17 +850,18 @@ fn schema_positions(
                 if let NativeJsonNode::Object(entries) = value {
                     let key_path = child(&pointer, key, ctx)?;
                     for (child_key, child_node) in entries {
-                        children.push((child(&key_path, child_key, ctx)?, child_node));
+                        let path = child(&key_path, child_key, ctx)?;
+                        ctx.charge_work(1, pointer.clone())?;
+                        children.push((path, child_node));
                     }
                 }
             } else if ["allOf", "anyOf", "oneOf", "prefixItems"].contains(&name.as_str()) {
                 if let NativeJsonNode::Array(entries) = value {
                     let key_path = child(&pointer, key, ctx)?;
                     for (index, child_node) in entries.iter().enumerate() {
-                        children.push((
-                            child(&key_path, &Utf16::from(index.to_string()), ctx)?,
-                            child_node,
-                        ));
+                        let path = child(&key_path, &Utf16::from(index.to_string()), ctx)?;
+                        ctx.charge_work(1, pointer.clone())?;
+                        children.push((path, child_node));
                     }
                 }
             } else if [
@@ -776,10 +879,12 @@ fn schema_positions(
             ]
             .contains(&name.as_str())
             {
+                ctx.charge_work(1, pointer.clone())?;
                 children.push((child(&pointer, key, ctx)?, value));
             }
         }
         for child in children.into_iter().rev() {
+            ctx.charge_work(1, pointer.clone())?;
             stack.push(child);
         }
     }

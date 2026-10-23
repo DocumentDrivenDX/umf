@@ -51,6 +51,9 @@ export function createJavascriptNumericEngine(resources, options = {}) {
 export const GREGORIAN_DATE_PROFILE = 'umf-gregorian-date/1.0.0';
 export const RFC3339_EXACT_INSTANT_PROFILE = 'umf-rfc3339-exact-instant/1.0.0';
 export const RFC3339_EXACT_INSTANT_MAXIMUM_BYTES = 1_048_576;
+export const ICEBERG_SCHEMA_PROFILE = 'umf-r5-iceberg-schema/0.1.0';
+export const PROTOBUF_INSPECT_PROFILE = 'umf-r5-protobuf-inspect/0.1.0';
+export const AVRO_FIELDS_PROFILE = 'umf-r5-avro-fields/0.1.0';
 function temporalResult(wire) {
   if (wire === 'TypeError') throw new TypeError('Temporal token requires text');
   if (wire === 'RangeError') throw new RangeError('Temporal token is outside the selected profile');
@@ -204,6 +207,75 @@ export function createEngine(resources, options = {}) {
 /** Create the opt-in cardinality/kind/nullability ideal API. */
 export function createCoreModelEngine(resources, options = {}) {
   return createEngineInternal(resources, options, true);
+}
+
+/** Create the opt-in standalone Iceberg schema JSON engine over pinned Rust resources. */
+export function createIcebergSchemaEngine(options = {}) {
+  if (typeof addon.executeIcebergWire !== 'function' || typeof addon.icebergSchemaProfileVersion !== 'function') throw new Error('RUST_NODE_BINDING_MISSING');
+  if (addon.icebergSchemaProfileVersion() !== ICEBERG_SCHEMA_PROFILE) throw new Error('RUST_NODE_BINDING_PROFILE_MISMATCH');
+  const {controls} = codegenOptions(options);
+  const call = (operation, fields) => {
+    const controlBridge = hasControls(controls) ? createControlBridge(controls) : undefined;
+    const hostWork = admissionWork(controlBridge);
+    hostWork?.(1);
+    const request = {op: `iceberg.schema.${operation}`, ...fields};
+    const responseText = addon.executeIcebergWire(encodeRequestWire(request, hostWork), controlBridge);
+    hostWork?.(responseText.length);
+    const envelope = JSON.parse(responseText);
+    const failure = resultError(envelope);
+    if (failure) throw new UmfCoreError(failure.code, failure.message, failure.path);
+    hostWork?.(envelope.wire.length);
+    return fromWire(JSON.parse(envelope.wire), hostWork);
+  };
+  return Object.freeze({
+    importSchema(source, id) { return call('import', {source, id}); },
+    exportSchema(document) { return call('export', {document}); },
+    inspect(document) { return call('inspect', {document}); },
+    getNode(document, pointer) { return call('getNode', {document, pointer}); },
+    proposeNodeEdit(document, pointer, replacement) { return call('proposeNodeEdit', {document, pointer, replacement}); },
+  });
+}
+
+/** Create the opt-in bounded Rust Protobuf descriptor inspector. */
+export function createProtobufInspector(options = {}) {
+  if (typeof addon.executeProtobufInspectWire !== 'function' || typeof addon.protobufInspectProfileVersion !== 'function') throw new Error('RUST_NODE_BINDING_MISSING');
+  if (addon.protobufInspectProfileVersion() !== PROTOBUF_INSPECT_PROFILE) throw new Error('RUST_NODE_BINDING_PROFILE_MISMATCH');
+  const {controls} = codegenOptions(options);
+  return Object.freeze({
+    inspect(document) {
+      const controlBridge = hasControls(controls) ? createControlBridge(controls) : undefined;
+      const hostWork = admissionWork(controlBridge);
+      hostWork?.(1);
+      const request = {op: 'protobuf.descriptor.inspect', document};
+      const responseText = addon.executeProtobufInspectWire(encodeRequestWire(request, hostWork), controlBridge);
+      hostWork?.(responseText.length);
+      const envelope = JSON.parse(responseText);
+      const failure = resultError(envelope);
+      if (failure) throw new UmfCoreError(failure.code, failure.message, failure.path);
+      hostWork?.(envelope.wire.length);
+      return fromWire(JSON.parse(envelope.wire), hostWork);
+    },
+  });
+}
+
+/** Create the opt-in bounded Avro field-metadata projection. */
+export function createAvroFieldsEngine(options = {}) {
+  if (typeof addon.executeAvroFieldsWire !== 'function' || typeof addon.avroFieldsProfileVersion !== 'function') throw new Error('RUST_NODE_BINDING_MISSING');
+  if (addon.avroFieldsProfileVersion() !== AVRO_FIELDS_PROFILE) throw new Error('RUST_NODE_BINDING_PROFILE_MISMATCH');
+  const {controls} = codegenOptions(options);
+  return Object.freeze({deriveAvroFields(root, dependencies = []) {
+    const controlBridge = hasControls(controls) ? createControlBridge(controls) : undefined;
+    const hostWork = admissionWork(controlBridge);
+    hostWork?.(1);
+    const request = {op: 'avro.fields.derive', root, dependencies};
+    const responseText = addon.executeAvroFieldsWire(encodeRequestWire(request, hostWork), controlBridge);
+    hostWork?.(responseText.length);
+    const envelope = JSON.parse(responseText);
+    const failure = resultError(envelope);
+    if (failure) throw new UmfCoreError(failure.code, failure.message, failure.path);
+    hostWork?.(envelope.wire.length);
+    return fromWire(JSON.parse(envelope.wire), hostWork);
+  }});
 }
 
 function createEngineInternal(resources, options, withModel) {
