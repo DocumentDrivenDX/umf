@@ -195,12 +195,12 @@
   "capture": {
     "inventoryFormat": "0.2",
     "inventoryScript": "scripts/rust-inventory.py",
-    "sourceCohortSha256": "6ee0e0926e8c7acac3b6c16433763746e6de7372cb35f8e2928d577ca65f7b8a",
+    "sourceCohortSha256": "030b3f4686dbac1380f4d5eb5d6292b3139cee96ef10cd9db19aaa0f6a00e72d",
     "typescriptApi": "5.9.3"
   },
   "counts": {
     "activeScriptFiles": 339,
-    "algorithmSymbols": 10297,
+    "algorithmSymbols": 10298,
     "pythonModules": 105,
     "rustBuildInputs": 76,
     "rustModules": 125,
@@ -9123,7 +9123,7 @@
       "language": "py",
       "migrationObligation": "Retained test/evidence source with no discovered current activation edge",
       "path": "python/tests/test_distribution_artifact.py",
-      "sha256": "2439cedf82181136d4e901a085ca988e1e7cab5776a07043dd8131975fda50bd"
+      "sha256": "93d4731fc86df55c78e6657cd38bd70759fa71d548efaa4ca97b341fabf93fa2"
     },
     {
       "activationEvidence": [],
@@ -9175,15 +9175,16 @@
         "test_archive_symlink_and_pkg_info_drift_refuse",
         "test_exact_source_and_archive_inventory_returns_canonical_manifest",
         "test_missing_required_source_and_unmapped_archive_extra_refuse",
+        "test_python_dist_output_is_excluded_without_excluding_nested_source_packages",
         "test_reverification_detects_source_drift_after_initial_manifest",
         "test_source_mutations_refuse_byte_parity_before_any_build"
       ],
-      "bytes": 12519,
+      "bytes": 14467,
       "disposition": "unreferenced-test-source",
       "language": "py",
       "migrationObligation": "Retained test/evidence source with no discovered current activation edge",
       "path": "python/tests/test_python_sdist.py",
-      "sha256": "030fc48f315eaaccbbaab943092119d2dd9de2d1605d5d8d0d49287a70f1a77b"
+      "sha256": "8cae69f25810c6658898702ec01df72ddc3b643c91c1c04a82acdd585946cacc"
     },
     {
       "activationEvidence": [],
@@ -48589,12 +48590,12 @@
         "_walk_source_tree",
         "verify_sdist_inputs"
       ],
-      "bytes": 17743,
+      "bytes": 17992,
       "disposition": "unreferenced-script-source",
       "language": "py",
       "migrationObligation": "No current package/workflow/import activation edge discovered",
       "path": "tools/_python_sdist.py",
-      "sha256": "bf2c29b2bbdf2699b016566f2583288885014c99a4d4caf80095135b363a19d5"
+      "sha256": "81ce3ed420fce370ae9440d2994413d11e3b3838aa0e3eb9c32df8594f2d6b7e"
     },
     {
       "activationEvidence": [],
@@ -53461,7 +53462,7 @@
       "language": "py",
       "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
       "path": "tools/verify_python_artifacts.py",
-      "sha256": "e6e658d4bd4050ecb37923641cbc0db94936f2bb1c23d888d188463754beb38c"
+      "sha256": "7892ab07d78abc0fc368046aa3435728a4d107300798d14ad6287c95e4f836a5"
     }
   ],
   "sourceModules": [

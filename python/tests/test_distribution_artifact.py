@@ -530,7 +530,7 @@ def _write_finalizer_inputs(
             "file_count": 521,
             "sha256": ("z" if malformed_source_map else "f") * 64,
         },
-        "sdist_helper_sha256": "bf2c29b2bbdf2699b016566f2583288885014c99a4d4caf80095135b363a19d5",
+        "sdist_helper_sha256": "81ce3ed420fce370ae9440d2994413d11e3b3838aa0e3eb9c32df8594f2d6b7e",
         "native_platform_helper_sha256": "5856eb375d176af7671ad22981d983a14cec24663e3a8bc466446b433c2cd7b1",
     }
     (root / "umf-artifact-payload.json").write_text(

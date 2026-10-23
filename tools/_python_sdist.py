@@ -227,6 +227,7 @@ def _walk_source_tree(
     excluded_dirs: set[str],
     excluded_suffixes: set[str],
     reject_symlinks: bool,
+    excluded_paths: set[str] | None = None,
 ) -> int:
     source_prefix = root / source_root
     try:
@@ -248,6 +249,9 @@ def _walk_source_tree(
             if candidate.is_symlink():
                 if reject_symlinks:
                     _fail("approved-source-symlink")
+                continue
+            source_rel = candidate.relative_to(root).as_posix()
+            if excluded_paths is not None and source_rel in excluded_paths:
                 continue
             kept.append(name)
         directories[:] = kept
@@ -345,6 +349,7 @@ def _source_inventory(checkout: Path) -> dict[str, str]:
         excluded_dirs=_PYTHON_BUILD_DIRS,
         excluded_suffixes=_PYTHON_BUILD_SUFFIXES,
         reject_symlinks=True,
+        excluded_paths={"python/dist"},
     )
     try:
         pyproject = tomllib.loads(

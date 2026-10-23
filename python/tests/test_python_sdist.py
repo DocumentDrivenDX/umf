@@ -11,7 +11,7 @@ import pytest
 
 _HELPER_PATH = Path(__file__).resolve().parents[2] / "tools/_python_sdist.py"
 assert hashlib.sha256(_HELPER_PATH.read_bytes()).hexdigest() == (
-    "bf2c29b2bbdf2699b016566f2583288885014c99a4d4caf80095135b363a19d5"
+    "81ce3ed420fce370ae9440d2994413d11e3b3838aa0e3eb9c32df8594f2d6b7e"
 )
 _HELPER_SPEC = importlib.util.spec_from_file_location(
     "umf_test_python_sdist", _HELPER_PATH
@@ -307,6 +307,46 @@ def test_action_resource_manifest_and_package_copies_are_exact(tmp_path: Path) -
     checkout, archive, _files = _fixture(tmp_path / "next")
     _write(checkout, "python/src/umf/action_runtime_resources/extra.json", b"extra\n")
     with pytest.raises(sdist.SdistInputError):
+        sdist.verify_sdist_inputs(
+            archive, checkout, expected_version=VERSION, expected_pkg_info=PKG_INFO
+        )
+
+
+def test_python_dist_output_is_excluded_without_excluding_nested_source_packages(
+    tmp_path: Path,
+) -> None:
+    checkout, archive, _files = _fixture(tmp_path)
+    output = checkout / "python/dist"
+    output.mkdir(parents=True)
+    (output / "umf_core-0.10.1.tar.gz").write_bytes(b"generated archive")
+    (output / "umf_core-0.10.1-cp311-linux.whl").write_bytes(b"generated wheel")
+
+    nested_build = checkout / "python/src/umf_access/build"
+    nested_build.mkdir(parents=True)
+    (nested_build / "__init__.py").write_bytes(b"legitimate build package\n")
+    nested_dist = checkout / "python/src/umf_access/dist"
+    nested_dist.mkdir(parents=True)
+    (nested_dist / "manifest.py").write_bytes(b"legitimate dist package\n")
+    _write(archive, "src/umf_access/build/__init__.py", b"legitimate build package\n")
+    _write(archive, "src/umf_access/dist/manifest.py", b"legitimate dist package\n")
+
+    result = sdist.verify_sdist_inputs(
+        archive, checkout, expected_version=VERSION, expected_pkg_info=PKG_INFO
+    )
+    assert "dist/umf_core-0.10.1.tar.gz" not in result["files"]
+    assert "dist/umf_core-0.10.1-cp311-linux.whl" not in result["files"]
+    assert "src/umf_access/build/__init__.py" in result["files"]
+    assert "src/umf_access/dist/manifest.py" in result["files"]
+
+    _write(archive, "dist/unapproved.whl", b"archive output must not be hidden")
+    with pytest.raises(sdist.SdistInputError, match="sdist-file-inventory-differs"):
+        sdist.verify_sdist_inputs(
+            archive, checkout, expected_version=VERSION, expected_pkg_info=PKG_INFO
+        )
+
+    checkout, archive, _files = _fixture(tmp_path / "symlink")
+    (checkout / "python/dist").symlink_to(tmp_path, target_is_directory=True)
+    with pytest.raises(sdist.SdistInputError, match="approved-source-symlink"):
         sdist.verify_sdist_inputs(
             archive, checkout, expected_version=VERSION, expected_pkg_info=PKG_INFO
         )

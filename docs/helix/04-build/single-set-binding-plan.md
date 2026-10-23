@@ -344,3 +344,57 @@ native artifacts. Final source inventory and Rust boundary checks remain
 coordinator gates. Current hosted direct/rebuilt artifacts and their actual
 installed test receipts are still pending; source clearance supplies no
 installed, public-release or backend qualification.
+
+## Hosted post-build source inventory correction
+
+Run `40021779237`, Linux job `120647877231`, built the direct wheel and source
+distribution, then failed the pre-rebuild custody gate with
+`sdist-file-inventory-differs`. It checked out producing PR merge
+`b46d8087eb3482b5bbe3fe2652b5080092887af4`; the coordinator confirmed its tree
+is identical to reviewed head `5e68560b66cd6b2324b595a5b6f08ab26c870295`.
+No sdist rebuild or installed qualification ran. Retained artifact `12530912238`
+has ZIP SHA-256
+`5ac968a68bf94db7bd986a910e0f9f3ee3916e67f7c436a24c732773e6ab3566`.
+Independent container hashing records the direct wheel as
+`34019b36dbed45ae49ff85f4eed5e68693d5bb62ace8d2e52cf78070d23df1df`
+and source archive as
+`f5b2e1903886e5df3735b13c77aec7f3f1fb2b9808c71e2964eeed2eb8fda3cf`.
+These are retained failed-attempt artifacts, not qualified release assets.
+
+The coordinator's byte-only comparison found all 523 archive files matched
+the clean source closure, with no missing, extra or differing bytes. A bounded
+reproduction placed only the two retained build containers in the live
+checkout's `python/dist` output directory. The helper then expected 525 files:
+the only two additional expected paths were the generated wheel and source
+archive under that root output directory. No archive-only or byte differences
+appeared; the temporary reproduction outputs were removed in cleanup.
+The retained comparison-record SHA-256 is
+`52b72911a92b6977b4d1217b0cfffc66522f075abd97fad9e5a48f25896155e4`.
+
+The repair is confined to excluding that generated root `python/dist` subtree
+from source enumeration. Legitimate nested package directories named `build`
+or `dist` remain source inputs, and archive duplicate/path/link rejection and
+complete byte custody remain mandatory. Retained controls must exercise the
+post-build output condition and nested source preservation. This diagnosis and
+source repair do not convert the failed run into a pass; actual hosted
+rebuild and both installed artifact qualifications remain required.
+
+The repaired helper passed the retained-artifact control with both generated
+containers present under the exact 5e source snapshot's `python/dist`.
+All 523 approved archive files matched, with canonical inventory SHA-256
+`a1d49cb246c10df2171d5141af8749e61947a2fcba1957dc8f15d3d45977747a`.
+The executing owner measured unchanged helper SHA-256 before and after:
+`81ce3ed420fce370ae9440d2994413d11e3b3838aa0e3eb9c32df8594f2d6b7e`.
+The retained control receipt SHA-256 is
+`e9f1b7bc7ec8910298d6d5ffd9e7c9bfec63acf305da93617fbc21fe78bafc08`.
+This byte-only control performed no archive build or installed runtime test.
+
+Independent static review cleared the exact root-output-only repair and all
+helper pins, including the main verifier now hashed as
+`7892ab07d78abc0fc368046aa3435728a4d107300798d14ad6287c95e4f836a5`.
+The implementation owner reports all nine real helper tests passing, including
+root-output exclusion, retained nested source, archive-extra refusal and
+root-output symlink refusal. Existing ignored-directory behavior is preserved.
+Those owner-executed controls are distinct from the reviewer's source/hash
+inspection. Fresh hosted artifact rebuild and both installed qualifications
+remain pending.

@@ -319,7 +319,7 @@ jobs:
               and receipt["sdist_build_inputs"].get("file_count", 0) > 0
               and len(receipt["sdist_build_inputs"].get("sha256", "")) == 64
               and all(char in "0123456789abcdef" for char in receipt["sdist_build_inputs"].get("sha256", ""))
-              and receipt.get("sdist_helper_sha256") == "bf2c29b2bbdf2699b016566f2583288885014c99a4d4caf80095135b363a19d5"
+              and receipt.get("sdist_helper_sha256") == "81ce3ed420fce370ae9440d2994413d11e3b3838aa0e3eb9c32df8594f2d6b7e"
               and receipt.get("native_platform_helper_sha256") == "5856eb375d176af7671ad22981d983a14cec24663e3a8bc466446b433c2cd7b1"
               and (os.environ["COHORT"] != "macos-arm64" or (
                   isinstance(direct_artifact.get("native_platform"), dict)
