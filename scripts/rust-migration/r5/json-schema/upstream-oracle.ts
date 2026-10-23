@@ -71,8 +71,9 @@ try {
   if(process.env.UMF_R5_SKIP_RUST==='1') rustCapture={status:'skipped',reason:'UMF_R5_SKIP_RUST=1'};
   else {
     const rust=spawnSync('cargo',['test','--locked','-p','umf-core','--test','r5_json_schema_full_corpus','capture_pinned_upstream_rust_and_native_adapter_results','--','--exact','--nocapture'],{encoding:'utf8',env:{...process.env,UMF_R5_JSON_SCHEMA_REPORT:freshRustPath}});
-    if(rust.error?.code==='ENOENT') rustCapture={status:'unavailable',reason:`Rust capture could not start: ${rust.error.message}`};
-    else if(rust.error) throw new Error(`Rust capture could not start: ${rust.error.message}`);
+    const spawnError=rust.error as NodeJS.ErrnoException | undefined;
+    if(spawnError?.code==='ENOENT') rustCapture={status:'unavailable',reason:`Rust capture could not start: ${spawnError.message}`};
+    else if(spawnError) throw new Error(`Rust capture could not start: ${spawnError.message}`);
     else if(rust.status!==0) throw new Error(`Rust capture failed with status ${rust.status}:\n${rust.stdout}\n${rust.stderr}`);
     else {
       const testLine='test capture_pinned_upstream_rust_and_native_adapter_results ... ok';
