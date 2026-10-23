@@ -1,0 +1,437 @@
+{
+  "profile": "umf-r6-related-key-recursion-controls/2",
+  "python": "3.14.8 (main, Sep 30 2026, 17:55:09) [Clang 21.0.0 (clang-2100.3.34.2)]",
+  "frozenPredecessorSha256": "dff3862ac453c553288123436d16e71799b6f43669ee8879f6865b4178bc6324",
+  "scope": "First RecursionError by nested-array depth through 220. Unprofiled outcomes are direct production calls. Profiled outcomes use sys.setprofile events without replacing functions or adding wrapper frames; events distinguish json.loads, Rust facade loads, and the PyO3 native related_keys_parse c_call.",
+  "matrix": [
+    {
+      "recursionLimit": 30,
+      "ambientDepth": 0,
+      "frozen": {
+        "unprofiled": null,
+        "profiled": null
+      },
+      "rust": {
+        "unprofiled": null,
+        "profiled": null
+      }
+    },
+    {
+      "recursionLimit": 30,
+      "ambientDepth": 10,
+      "frozen": {
+        "unprofiled": null,
+        "profiled": null
+      },
+      "rust": {
+        "unprofiled": null,
+        "profiled": null
+      }
+    },
+    {
+      "recursionLimit": 30,
+      "ambientDepth": 25,
+      "frozen": {
+        "unprofiled": {
+          "containerDepth": 1,
+          "exception": "RecursionError",
+          "message": "maximum recursion depth exceeded",
+          "entries": {
+            "pythonJsonLoads": 0,
+            "rustFacadeLoads": 0,
+            "rustCoreParse": 0
+          }
+        },
+        "profiled": {
+          "containerDepth": 1,
+          "exception": "RecursionError",
+          "message": "maximum recursion depth exceeded",
+          "entries": {
+            "pythonJsonLoads": 0,
+            "rustFacadeLoads": 0,
+            "rustCoreParse": 0
+          }
+        }
+      },
+      "rust": {
+        "unprofiled": {
+          "containerDepth": 1,
+          "exception": "RecursionError",
+          "message": "maximum recursion depth exceeded",
+          "entries": {
+            "pythonJsonLoads": 0,
+            "rustFacadeLoads": 0,
+            "rustCoreParse": 0
+          }
+        },
+        "profiled": {
+          "containerDepth": 1,
+          "exception": "RecursionError",
+          "message": "maximum recursion depth exceeded",
+          "entries": {
+            "pythonJsonLoads": 0,
+            "rustFacadeLoads": 0,
+            "rustCoreParse": 0
+          }
+        }
+      }
+    },
+    {
+      "recursionLimit": 30,
+      "ambientDepth": 40,
+      "frozen": {
+        "unprofiled": {
+          "containerDepth": 1,
+          "exception": "RecursionError",
+          "message": "maximum recursion depth exceeded",
+          "entries": {
+            "pythonJsonLoads": 0,
+            "rustFacadeLoads": 0,
+            "rustCoreParse": 0
+          }
+        },
+        "profiled": {
+          "containerDepth": 1,
+          "exception": "RecursionError",
+          "message": "maximum recursion depth exceeded",
+          "entries": {
+            "pythonJsonLoads": 0,
+            "rustFacadeLoads": 0,
+            "rustCoreParse": 0
+          }
+        }
+      },
+      "rust": {
+        "unprofiled": {
+          "containerDepth": 1,
+          "exception": "RecursionError",
+          "message": "maximum recursion depth exceeded",
+          "entries": {
+            "pythonJsonLoads": 0,
+            "rustFacadeLoads": 0,
+            "rustCoreParse": 0
+          }
+        },
+        "profiled": {
+          "containerDepth": 1,
+          "exception": "RecursionError",
+          "message": "maximum recursion depth exceeded",
+          "entries": {
+            "pythonJsonLoads": 0,
+            "rustFacadeLoads": 0,
+            "rustCoreParse": 0
+          }
+        }
+      }
+    },
+    {
+      "recursionLimit": 30,
+      "ambientDepth": 190,
+      "frozen": {
+        "unprofiled": {
+          "containerDepth": 1,
+          "exception": "RecursionError",
+          "message": "maximum recursion depth exceeded",
+          "entries": {
+            "pythonJsonLoads": 0,
+            "rustFacadeLoads": 0,
+            "rustCoreParse": 0
+          }
+        },
+        "profiled": {
+          "containerDepth": 1,
+          "exception": "RecursionError",
+          "message": "maximum recursion depth exceeded",
+          "entries": {
+            "pythonJsonLoads": 0,
+            "rustFacadeLoads": 0,
+            "rustCoreParse": 0
+          }
+        }
+      },
+      "rust": {
+        "unprofiled": {
+          "containerDepth": 1,
+          "exception": "RecursionError",
+          "message": "maximum recursion depth exceeded",
+          "entries": {
+            "pythonJsonLoads": 0,
+            "rustFacadeLoads": 0,
+            "rustCoreParse": 0
+          }
+        },
+        "profiled": {
+          "containerDepth": 1,
+          "exception": "RecursionError",
+          "message": "maximum recursion depth exceeded",
+          "entries": {
+            "pythonJsonLoads": 0,
+            "rustFacadeLoads": 0,
+            "rustCoreParse": 0
+          }
+        }
+      }
+    },
+    {
+      "recursionLimit": 50,
+      "ambientDepth": 0,
+      "frozen": {
+        "unprofiled": null,
+        "profiled": null
+      },
+      "rust": {
+        "unprofiled": null,
+        "profiled": null
+      }
+    },
+    {
+      "recursionLimit": 50,
+      "ambientDepth": 10,
+      "frozen": {
+        "unprofiled": null,
+        "profiled": null
+      },
+      "rust": {
+        "unprofiled": null,
+        "profiled": null
+      }
+    },
+    {
+      "recursionLimit": 50,
+      "ambientDepth": 25,
+      "frozen": {
+        "unprofiled": null,
+        "profiled": null
+      },
+      "rust": {
+        "unprofiled": null,
+        "profiled": null
+      }
+    },
+    {
+      "recursionLimit": 50,
+      "ambientDepth": 40,
+      "frozen": {
+        "unprofiled": null,
+        "profiled": null
+      },
+      "rust": {
+        "unprofiled": null,
+        "profiled": {
+          "containerDepth": 1,
+          "exception": "RecursionError",
+          "message": "maximum recursion depth exceeded",
+          "entries": {
+            "pythonJsonLoads": 0,
+            "rustFacadeLoads": 0,
+            "rustCoreParse": 0
+          }
+        }
+      }
+    },
+    {
+      "recursionLimit": 50,
+      "ambientDepth": 190,
+      "frozen": {
+        "unprofiled": {
+          "containerDepth": 1,
+          "exception": "RecursionError",
+          "message": "maximum recursion depth exceeded",
+          "entries": {
+            "pythonJsonLoads": 0,
+            "rustFacadeLoads": 0,
+            "rustCoreParse": 0
+          }
+        },
+        "profiled": {
+          "containerDepth": 1,
+          "exception": "RecursionError",
+          "message": "maximum recursion depth exceeded",
+          "entries": {
+            "pythonJsonLoads": 0,
+            "rustFacadeLoads": 0,
+            "rustCoreParse": 0
+          }
+        }
+      },
+      "rust": {
+        "unprofiled": {
+          "containerDepth": 1,
+          "exception": "RecursionError",
+          "message": "maximum recursion depth exceeded",
+          "entries": {
+            "pythonJsonLoads": 0,
+            "rustFacadeLoads": 0,
+            "rustCoreParse": 0
+          }
+        },
+        "profiled": {
+          "containerDepth": 1,
+          "exception": "RecursionError",
+          "message": "maximum recursion depth exceeded",
+          "entries": {
+            "pythonJsonLoads": 0,
+            "rustFacadeLoads": 0,
+            "rustCoreParse": 0
+          }
+        }
+      }
+    },
+    {
+      "recursionLimit": 100,
+      "ambientDepth": 0,
+      "frozen": {
+        "unprofiled": null,
+        "profiled": null
+      },
+      "rust": {
+        "unprofiled": null,
+        "profiled": null
+      }
+    },
+    {
+      "recursionLimit": 100,
+      "ambientDepth": 10,
+      "frozen": {
+        "unprofiled": null,
+        "profiled": null
+      },
+      "rust": {
+        "unprofiled": null,
+        "profiled": null
+      }
+    },
+    {
+      "recursionLimit": 100,
+      "ambientDepth": 25,
+      "frozen": {
+        "unprofiled": null,
+        "profiled": null
+      },
+      "rust": {
+        "unprofiled": null,
+        "profiled": null
+      }
+    },
+    {
+      "recursionLimit": 100,
+      "ambientDepth": 40,
+      "frozen": {
+        "unprofiled": null,
+        "profiled": null
+      },
+      "rust": {
+        "unprofiled": null,
+        "profiled": null
+      }
+    },
+    {
+      "recursionLimit": 100,
+      "ambientDepth": 190,
+      "frozen": {
+        "unprofiled": {
+          "containerDepth": 1,
+          "exception": "RecursionError",
+          "message": "maximum recursion depth exceeded",
+          "entries": {
+            "pythonJsonLoads": 0,
+            "rustFacadeLoads": 0,
+            "rustCoreParse": 0
+          }
+        },
+        "profiled": {
+          "containerDepth": 1,
+          "exception": "RecursionError",
+          "message": "maximum recursion depth exceeded",
+          "entries": {
+            "pythonJsonLoads": 0,
+            "rustFacadeLoads": 0,
+            "rustCoreParse": 0
+          }
+        }
+      },
+      "rust": {
+        "unprofiled": {
+          "containerDepth": 1,
+          "exception": "RecursionError",
+          "message": "maximum recursion depth exceeded",
+          "entries": {
+            "pythonJsonLoads": 0,
+            "rustFacadeLoads": 0,
+            "rustCoreParse": 0
+          }
+        },
+        "profiled": {
+          "containerDepth": 1,
+          "exception": "RecursionError",
+          "message": "maximum recursion depth exceeded",
+          "entries": {
+            "pythonJsonLoads": 0,
+            "rustFacadeLoads": 0,
+            "rustCoreParse": 0
+          }
+        }
+      }
+    },
+    {
+      "recursionLimit": 250,
+      "ambientDepth": 0,
+      "frozen": {
+        "unprofiled": null,
+        "profiled": null
+      },
+      "rust": {
+        "unprofiled": null,
+        "profiled": null
+      }
+    },
+    {
+      "recursionLimit": 250,
+      "ambientDepth": 10,
+      "frozen": {
+        "unprofiled": null,
+        "profiled": null
+      },
+      "rust": {
+        "unprofiled": null,
+        "profiled": null
+      }
+    },
+    {
+      "recursionLimit": 250,
+      "ambientDepth": 25,
+      "frozen": {
+        "unprofiled": null,
+        "profiled": null
+      },
+      "rust": {
+        "unprofiled": null,
+        "profiled": null
+      }
+    },
+    {
+      "recursionLimit": 250,
+      "ambientDepth": 40,
+      "frozen": {
+        "unprofiled": null,
+        "profiled": null
+      },
+      "rust": {
+        "unprofiled": null,
+        "profiled": null
+      }
+    },
+    {
+      "recursionLimit": 250,
+      "ambientDepth": 190,
+      "frozen": {
+        "unprofiled": null,
+        "profiled": null
+      },
+      "rust": {
+        "unprofiled": null,
+        "profiled": null
+      }
+    }
+  ]
+}

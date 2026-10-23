@@ -146,6 +146,38 @@ class RustRelatedKeyParserTests(unittest.TestCase):
             )
         self.assertEqual(type(malformed.exception.__context__).__name__, "JSONDecodeError")
 
+    def test_direct_parser_recursion_threshold_tracks_json_loads(self) -> None:
+        """Keep the opt-in guard aligned at a high ambient Python stack depth."""
+        original_limit = sys.getrecursionlimit()
+        try:
+            sys.setrecursionlimit(250)
+            outcomes: dict[str, tuple[int | None, str | None]] = {}
+            for name, decoder in (
+                ("python", decode_related_keys),
+                ("rust", decode_related_keys_rust),
+            ):
+                first_error = None
+                for container_depth in range(1, 221):
+                    payload = "[" * container_depth + "null" + "]" * container_depth
+
+                    def invoke():
+                        return decoder(payload, self.metadata, OrderKey)
+
+                    def ambient(depth: int):
+                        return invoke() if depth == 0 else ambient(depth - 1)
+
+                    try:
+                        ambient(190)
+                    except RecursionError as error:
+                        first_error = (container_depth, str(error))
+                        break
+                    except CodecError:
+                        pass
+                outcomes[name] = first_error or (None, None)
+            self.assertEqual(outcomes["rust"], outcomes["python"])
+        finally:
+            sys.setrecursionlimit(original_limit)
+
     def test_common_shapes_continue_to_be_owned_by_python(self) -> None:
         for text in (
             "[]",

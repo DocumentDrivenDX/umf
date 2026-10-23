@@ -1117,6 +1117,16 @@ no default cutover pending independent review of the corrected matrix.
 Installed generated-client and native PostgreSQL/Weft qualification, broad
 resource behavior and default cutover remain open.
 
+An additive [direct-call recursion repair](evidence/rust-migration/r6-related-key-payload/README.md#cpython-311-recursion-repair--2026-10-23)
+accounts for the active `json.loads` frame once at the first container on
+CPython 3.11, leaving the 3.14 profile unchanged. The same 20 frozen direct
+controls now have zero mismatches on each interpreter, and the 112-outcome
+facade replay remains exact. Independent Sol review reproduced the old 12/20
+3.11 failure and the repaired 0/20 result, and proved the authored regression
+fails against the old extension. This closes that bounded recursion mismatch;
+the generated commerce fixture remains stale, so full package, native consumer,
+hard resource and default-cutover gates remain open.
+
 The next candidate is the authenticated table-outcome receipt family in
 `umf_access.unified.outcome_values`. Its HMAC preimages, principal/slot custody,
 stored-record verification and occupied-slot refusal require a frozen Python

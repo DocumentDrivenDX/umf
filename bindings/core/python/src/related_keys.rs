@@ -52,10 +52,14 @@ pub fn related_keys_parse(
     let parsed = match parse_related_key_json(&input, diagnostic_profile) {
         Ok(value) => {
             // CPython's JSON decoder enters its recursion budget once per
-            // array/object. The Rust parser stays iterative; this boundary
-            // check reproduces the active interpreter's budget without native
-            // Rust stack growth.
-            let recursion = RecursionBudget::enter_for_json_containers(py, &input)?;
+            // array/object. This boundary replay also accounts for the
+            // json.loads frame on CPython 3.11; the Rust parser stays iterative
+            // and does not grow the native stack.
+            let recursion = RecursionBudget::enter_for_json_containers(
+                py,
+                &input,
+                diagnostic_profile,
+            )?;
             drop(recursion);
             value
         }
@@ -65,6 +69,7 @@ pub fn related_keys_parse(
             let recursion = RecursionBudget::enter_for_json_containers(
                 py,
                 &input[..failure.offset.min(input.len())],
+                diagnostic_profile,
             )?;
             drop(recursion);
             let kind = match failure.kind {
@@ -124,11 +129,16 @@ struct RecursionBudget {
 }
 
 impl RecursionBudget {
-    fn enter_for_json_containers(py: Python<'_>, input: &[u32]) -> PyResult<Self> {
+    fn enter_for_json_containers(
+        py: Python<'_>,
+        input: &[u32],
+        profile: DiagnosticProfile,
+    ) -> PyResult<Self> {
         let mut budget = Self { entered: 0 };
         let mut containers = Vec::new();
         let mut in_string = false;
         let mut escaped = false;
+        let mut modeled_json_loads_frame = false;
         for &point in input {
             if in_string {
                 if escaped {
@@ -143,11 +153,32 @@ impl RecursionBudget {
             match point {
                 x if x == b'"' as u32 => in_string = true,
                 x if x == b'[' as u32 => {
+                    // CPython 3.11's json.loads frame consumes one recursion
+                    // level for the duration of decoding. This post-parse
+                    // replay is outside json.loads, so account for that frame
+                    // once alongside the first container.
+                    // CPython 3.14's recursion accounting no longer needs this
+                    // adjustment (and the direct-call matrix matches without
+                    // it).
+                    if !modeled_json_loads_frame && profile == DiagnosticProfile::Cpython311 {
+                        budget.enter(
+                            py,
+                            " while decoding a JSON array from a unicode string",
+                        )?;
+                    }
                     budget.enter(py, " while decoding a JSON array from a unicode string")?;
+                    modeled_json_loads_frame = true;
                     containers.push(b']' as u32);
                 }
                 x if x == b'{' as u32 => {
+                    if !modeled_json_loads_frame && profile == DiagnosticProfile::Cpython311 {
+                        budget.enter(
+                            py,
+                            " while decoding a JSON object from a unicode string",
+                        )?;
+                    }
                     budget.enter(py, " while decoding a JSON object from a unicode string")?;
+                    modeled_json_loads_frame = true;
                     containers.push(b'}' as u32);
                 }
                 x if (x == b']' as u32 || x == b'}' as u32)

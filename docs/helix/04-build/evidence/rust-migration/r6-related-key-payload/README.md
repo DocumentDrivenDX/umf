@@ -305,8 +305,42 @@ preflight cases in each interpreter cohort: `precedence-metadata-before-parse`,
 `precedence-value-type-before-parse`. Each is refused by Python-owned metadata,
 profile, or exact-string admission before the Rust parser is called.
 
-The earlier source snapshot hashes below are retained as historical values;
-the current successor hashes for the corrected controls appear above.
+The earlier source snapshot hashes in the legacy table at the end of this
+record are retained as historical values. Successor hashes appear in the
+additive repair section below.
+
+## CPython 3.11 recursion repair — 2026-10-23
+
+This additive successor leaves the frozen direct-call predecessor files and
+earlier failed experiment unchanged. The PyO3 boundary now holds one additional
+recursion credit while it replays the first JSON container on CPython 3.11.17,
+matching the active `json.loads` frame. CPython 3.14.8 retains its prior rule.
+The parser remains iterative, and the default Python decoder still calls
+`json.loads` directly.
+
+The [3.11 repaired direct-call report](custom-recursion-cpython-3.11-direct-repaired.json)
+and [3.14 report](custom-recursion-cpython-3.14-direct-repaired.json) have
+SHA-256 `78054141cf8c7139b976411138512c863ec3657ff661282bab5d1f8c21b05491`
+and `bad4232d37307632f4745078e56a009a399aab78ea82cd7977f8d24e4c98959f`.
+Each matches all 20 frozen direct-call outcomes; the full frozen facade replay
+matches 56/56 on each interpreter. Eleven focused Rust parser tests,
+`cargo check -p umf-core-python`, and the rebuilt PyO3 extension pass. The
+extension used for independent replay has SHA-256
+`a7c08dcc6c88af415588694d204f0f7c67ec073f16d66eb0a9abd5a98d6c3ae5`.
+The repaired binding and authored test source SHA-256 values are
+`d5f99acccc49c8d2f4bf89b94c4673ad3af3585cfbd223b9e490f03738a56114`
+and `60c3a922ea3df3d51329d9c2251d95400b6c92fa2fd5cfe8c0fed1470a1ba2a5`.
+
+Independent Sol review reproduced 12/20 old CPython 3.11 mismatches and
+0/20 repaired mismatches on both interpreters. It ran the authored threshold
+test with synthetic captured Key metadata: the old extension failed at Rust
+depth 45 versus Python depth 44; the repaired extension passed on both
+interpreters. No P1/P2 remained in this bounded repair. The generated commerce
+fixture's `GeneratedSource` pins are stale, so this is not a complete package
+test. Installed generated-client/native-engine acceptance and hard work,
+memory, cancellation and deadline guarantees remain open.
+
+### Earlier source snapshot (historical)
 
 | Source | SHA-256 |
 | --- | --- |
