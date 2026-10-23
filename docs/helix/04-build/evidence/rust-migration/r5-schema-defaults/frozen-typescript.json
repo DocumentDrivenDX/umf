@@ -1,0 +1,2422 @@
+{
+  "runtime": "1.4.3",
+  "source": {
+    "umf": "0.10.0",
+    "id": "schema-properties",
+    "vocabularies": {},
+    "title": "Orders",
+    "aliases": [
+      "sales"
+    ],
+    "modules": [
+      {
+        "id": "m",
+        "namespace": "sales",
+        "title": "Sales",
+        "aliases": [
+          "commerce"
+        ],
+        "elements": [
+          {
+            "id": "quantity",
+            "name": "quantity",
+            "kind": "field",
+            "scalarType": "integer",
+            "cardinality": "one",
+            "nullability": "required",
+            "extensions": {},
+            "facets": {
+              "integerWidth": {
+                "bits": 64,
+                "signed": true
+              }
+            },
+            "title": "Quantity",
+            "aliases": [
+              "qty"
+            ],
+            "examples": [
+              {
+                "integerToken": "3"
+              }
+            ],
+            "allowedValues": [
+              {
+                "integerToken": "1"
+              },
+              {
+                "integerToken": "2"
+              }
+            ],
+            "default": {
+              "value": {
+                "integerToken": "1"
+              },
+              "on": "missing"
+            }
+          },
+          {
+            "id": "price",
+            "kind": "field",
+            "scalarType": "decimal",
+            "nullability": "required",
+            "extensions": {},
+            "facets": {
+              "precision": 20,
+              "scale": 2,
+              "range": {
+                "min": {
+                  "decimalToken": "0.01"
+                },
+                "max": {
+                  "decimalToken": "999999999999999999.99"
+                }
+              }
+            },
+            "examples": [
+              {
+                "decimalToken": "1.20"
+              }
+            ],
+            "default": {
+              "value": {
+                "decimalToken": "1.20"
+              },
+              "on": "missing-or-null"
+            }
+          },
+          {
+            "id": "label",
+            "kind": "field",
+            "scalarType": "string",
+            "nullability": "absent-allowed",
+            "extensions": {},
+            "facets": {
+              "length": {
+                "min": 1,
+                "max": 3,
+                "unit": "unicode-scalar"
+              }
+            },
+            "examples": [
+              {
+                "string": "😀"
+              }
+            ],
+            "default": {
+              "value": {
+                "string": "new"
+              },
+              "on": "null"
+            }
+          },
+          {
+            "id": "byte",
+            "kind": "field",
+            "scalarType": "binary",
+            "extensions": {},
+            "facets": {
+              "length": {
+                "min": 1,
+                "max": 2,
+                "unit": "byte"
+              }
+            },
+            "allowedValues": [
+              {
+                "binaryHex": "ff"
+              }
+            ]
+          },
+          {
+            "id": "vector-item",
+            "kind": "field",
+            "scalarType": "integer",
+            "extensions": {}
+          },
+          {
+            "id": "vector",
+            "kind": "field",
+            "cardinality": "array",
+            "itemType": {
+              "module": "m",
+              "element": "vector-item"
+            },
+            "extensions": {},
+            "facets": {
+              "collectionSize": {
+                "min": 2,
+                "max": 2
+              }
+            },
+            "examples": [
+              {
+                "array": [
+                  {
+                    "integerToken": "1"
+                  },
+                  {
+                    "integerToken": "1"
+                  }
+                ]
+              }
+            ],
+            "default": {
+              "value": {
+                "array": [
+                  {
+                    "integerToken": "0"
+                  },
+                  {
+                    "integerToken": "0"
+                  }
+                ]
+              },
+              "on": "missing"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "outcomes": [
+    {
+      "id": "quantity-missing",
+      "identity": {
+        "module": "m",
+        "element": "quantity"
+      },
+      "input": {
+        "state": "missing"
+      },
+      "result": {
+        "operation": "resolve-core-default",
+        "version": "2.0.0",
+        "source": {
+          "umf": "0.10.0",
+          "id": "schema-properties",
+          "vocabularies": {},
+          "title": "Orders",
+          "aliases": [
+            "sales"
+          ],
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "title": "Sales",
+              "aliases": [
+                "commerce"
+              ],
+              "elements": [
+                {
+                  "id": "quantity",
+                  "name": "quantity",
+                  "kind": "field",
+                  "scalarType": "integer",
+                  "cardinality": "one",
+                  "nullability": "required",
+                  "extensions": {},
+                  "facets": {
+                    "integerWidth": {
+                      "bits": 64,
+                      "signed": true
+                    }
+                  },
+                  "title": "Quantity",
+                  "aliases": [
+                    "qty"
+                  ],
+                  "examples": [
+                    {
+                      "integerToken": "3"
+                    }
+                  ],
+                  "allowedValues": [
+                    {
+                      "integerToken": "1"
+                    },
+                    {
+                      "integerToken": "2"
+                    }
+                  ],
+                  "default": {
+                    "value": {
+                      "integerToken": "1"
+                    },
+                    "on": "missing"
+                  }
+                },
+                {
+                  "id": "price",
+                  "kind": "field",
+                  "scalarType": "decimal",
+                  "nullability": "required",
+                  "extensions": {},
+                  "facets": {
+                    "precision": 20,
+                    "scale": 2,
+                    "range": {
+                      "min": {
+                        "decimalToken": "0.01"
+                      },
+                      "max": {
+                        "decimalToken": "999999999999999999.99"
+                      }
+                    }
+                  },
+                  "examples": [
+                    {
+                      "decimalToken": "1.20"
+                    }
+                  ],
+                  "default": {
+                    "value": {
+                      "decimalToken": "1.20"
+                    },
+                    "on": "missing-or-null"
+                  }
+                },
+                {
+                  "id": "label",
+                  "kind": "field",
+                  "scalarType": "string",
+                  "nullability": "absent-allowed",
+                  "extensions": {},
+                  "facets": {
+                    "length": {
+                      "min": 1,
+                      "max": 3,
+                      "unit": "unicode-scalar"
+                    }
+                  },
+                  "examples": [
+                    {
+                      "string": "😀"
+                    }
+                  ],
+                  "default": {
+                    "value": {
+                      "string": "new"
+                    },
+                    "on": "null"
+                  }
+                },
+                {
+                  "id": "byte",
+                  "kind": "field",
+                  "scalarType": "binary",
+                  "extensions": {},
+                  "facets": {
+                    "length": {
+                      "min": 1,
+                      "max": 2,
+                      "unit": "byte"
+                    }
+                  },
+                  "allowedValues": [
+                    {
+                      "binaryHex": "ff"
+                    }
+                  ]
+                },
+                {
+                  "id": "vector-item",
+                  "kind": "field",
+                  "scalarType": "integer",
+                  "extensions": {}
+                },
+                {
+                  "id": "vector",
+                  "kind": "field",
+                  "cardinality": "array",
+                  "itemType": {
+                    "module": "m",
+                    "element": "vector-item"
+                  },
+                  "extensions": {},
+                  "facets": {
+                    "collectionSize": {
+                      "min": 2,
+                      "max": 2
+                    }
+                  },
+                  "examples": [
+                    {
+                      "array": [
+                        {
+                          "integerToken": "1"
+                        },
+                        {
+                          "integerToken": "1"
+                        }
+                      ]
+                    }
+                  ],
+                  "default": {
+                    "value": {
+                      "array": [
+                        {
+                          "integerToken": "0"
+                        },
+                        {
+                          "integerToken": "0"
+                        }
+                      ]
+                    },
+                    "on": "missing"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "quantity"
+        },
+        "input": {
+          "state": "missing"
+        },
+        "result": {
+          "state": "present",
+          "value": {
+            "integerToken": "1"
+          }
+        },
+        "applied": true
+      }
+    },
+    {
+      "id": "quantity-present-null-invalid",
+      "identity": {
+        "module": "m",
+        "element": "quantity"
+      },
+      "input": {
+        "state": "present",
+        "value": null
+      },
+      "error": {
+        "name": "UmfError",
+        "message": "[{\"code\":\"CORE_SCHEMA_PROPERTIES\",\"path\":\"\",\"message\":\"Null requires explicit absent-allowed\",\"severity\":\"error\"}]",
+        "code": "CORE_SCHEMA_PROPERTIES",
+        "path": ""
+      }
+    },
+    {
+      "id": "quantity-present-token",
+      "identity": {
+        "module": "m",
+        "element": "quantity"
+      },
+      "input": {
+        "state": "present",
+        "value": {
+          "integerToken": "2"
+        }
+      },
+      "result": {
+        "operation": "resolve-core-default",
+        "version": "2.0.0",
+        "source": {
+          "umf": "0.10.0",
+          "id": "schema-properties",
+          "vocabularies": {},
+          "title": "Orders",
+          "aliases": [
+            "sales"
+          ],
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "title": "Sales",
+              "aliases": [
+                "commerce"
+              ],
+              "elements": [
+                {
+                  "id": "quantity",
+                  "name": "quantity",
+                  "kind": "field",
+                  "scalarType": "integer",
+                  "cardinality": "one",
+                  "nullability": "required",
+                  "extensions": {},
+                  "facets": {
+                    "integerWidth": {
+                      "bits": 64,
+                      "signed": true
+                    }
+                  },
+                  "title": "Quantity",
+                  "aliases": [
+                    "qty"
+                  ],
+                  "examples": [
+                    {
+                      "integerToken": "3"
+                    }
+                  ],
+                  "allowedValues": [
+                    {
+                      "integerToken": "1"
+                    },
+                    {
+                      "integerToken": "2"
+                    }
+                  ],
+                  "default": {
+                    "value": {
+                      "integerToken": "1"
+                    },
+                    "on": "missing"
+                  }
+                },
+                {
+                  "id": "price",
+                  "kind": "field",
+                  "scalarType": "decimal",
+                  "nullability": "required",
+                  "extensions": {},
+                  "facets": {
+                    "precision": 20,
+                    "scale": 2,
+                    "range": {
+                      "min": {
+                        "decimalToken": "0.01"
+                      },
+                      "max": {
+                        "decimalToken": "999999999999999999.99"
+                      }
+                    }
+                  },
+                  "examples": [
+                    {
+                      "decimalToken": "1.20"
+                    }
+                  ],
+                  "default": {
+                    "value": {
+                      "decimalToken": "1.20"
+                    },
+                    "on": "missing-or-null"
+                  }
+                },
+                {
+                  "id": "label",
+                  "kind": "field",
+                  "scalarType": "string",
+                  "nullability": "absent-allowed",
+                  "extensions": {},
+                  "facets": {
+                    "length": {
+                      "min": 1,
+                      "max": 3,
+                      "unit": "unicode-scalar"
+                    }
+                  },
+                  "examples": [
+                    {
+                      "string": "😀"
+                    }
+                  ],
+                  "default": {
+                    "value": {
+                      "string": "new"
+                    },
+                    "on": "null"
+                  }
+                },
+                {
+                  "id": "byte",
+                  "kind": "field",
+                  "scalarType": "binary",
+                  "extensions": {},
+                  "facets": {
+                    "length": {
+                      "min": 1,
+                      "max": 2,
+                      "unit": "byte"
+                    }
+                  },
+                  "allowedValues": [
+                    {
+                      "binaryHex": "ff"
+                    }
+                  ]
+                },
+                {
+                  "id": "vector-item",
+                  "kind": "field",
+                  "scalarType": "integer",
+                  "extensions": {}
+                },
+                {
+                  "id": "vector",
+                  "kind": "field",
+                  "cardinality": "array",
+                  "itemType": {
+                    "module": "m",
+                    "element": "vector-item"
+                  },
+                  "extensions": {},
+                  "facets": {
+                    "collectionSize": {
+                      "min": 2,
+                      "max": 2
+                    }
+                  },
+                  "examples": [
+                    {
+                      "array": [
+                        {
+                          "integerToken": "1"
+                        },
+                        {
+                          "integerToken": "1"
+                        }
+                      ]
+                    }
+                  ],
+                  "default": {
+                    "value": {
+                      "array": [
+                        {
+                          "integerToken": "0"
+                        },
+                        {
+                          "integerToken": "0"
+                        }
+                      ]
+                    },
+                    "on": "missing"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "quantity"
+        },
+        "input": {
+          "state": "present",
+          "value": {
+            "integerToken": "2"
+          }
+        },
+        "result": {
+          "state": "present",
+          "value": {
+            "integerToken": "2"
+          }
+        },
+        "applied": false
+      }
+    },
+    {
+      "id": "label-missing-no-default",
+      "identity": {
+        "module": "m",
+        "element": "label"
+      },
+      "input": {
+        "state": "missing"
+      },
+      "result": {
+        "operation": "resolve-core-default",
+        "version": "2.0.0",
+        "source": {
+          "umf": "0.10.0",
+          "id": "schema-properties",
+          "vocabularies": {},
+          "title": "Orders",
+          "aliases": [
+            "sales"
+          ],
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "title": "Sales",
+              "aliases": [
+                "commerce"
+              ],
+              "elements": [
+                {
+                  "id": "quantity",
+                  "name": "quantity",
+                  "kind": "field",
+                  "scalarType": "integer",
+                  "cardinality": "one",
+                  "nullability": "required",
+                  "extensions": {},
+                  "facets": {
+                    "integerWidth": {
+                      "bits": 64,
+                      "signed": true
+                    }
+                  },
+                  "title": "Quantity",
+                  "aliases": [
+                    "qty"
+                  ],
+                  "examples": [
+                    {
+                      "integerToken": "3"
+                    }
+                  ],
+                  "allowedValues": [
+                    {
+                      "integerToken": "1"
+                    },
+                    {
+                      "integerToken": "2"
+                    }
+                  ],
+                  "default": {
+                    "value": {
+                      "integerToken": "1"
+                    },
+                    "on": "missing"
+                  }
+                },
+                {
+                  "id": "price",
+                  "kind": "field",
+                  "scalarType": "decimal",
+                  "nullability": "required",
+                  "extensions": {},
+                  "facets": {
+                    "precision": 20,
+                    "scale": 2,
+                    "range": {
+                      "min": {
+                        "decimalToken": "0.01"
+                      },
+                      "max": {
+                        "decimalToken": "999999999999999999.99"
+                      }
+                    }
+                  },
+                  "examples": [
+                    {
+                      "decimalToken": "1.20"
+                    }
+                  ],
+                  "default": {
+                    "value": {
+                      "decimalToken": "1.20"
+                    },
+                    "on": "missing-or-null"
+                  }
+                },
+                {
+                  "id": "label",
+                  "kind": "field",
+                  "scalarType": "string",
+                  "nullability": "absent-allowed",
+                  "extensions": {},
+                  "facets": {
+                    "length": {
+                      "min": 1,
+                      "max": 3,
+                      "unit": "unicode-scalar"
+                    }
+                  },
+                  "examples": [
+                    {
+                      "string": "😀"
+                    }
+                  ],
+                  "default": {
+                    "value": {
+                      "string": "new"
+                    },
+                    "on": "null"
+                  }
+                },
+                {
+                  "id": "byte",
+                  "kind": "field",
+                  "scalarType": "binary",
+                  "extensions": {},
+                  "facets": {
+                    "length": {
+                      "min": 1,
+                      "max": 2,
+                      "unit": "byte"
+                    }
+                  },
+                  "allowedValues": [
+                    {
+                      "binaryHex": "ff"
+                    }
+                  ]
+                },
+                {
+                  "id": "vector-item",
+                  "kind": "field",
+                  "scalarType": "integer",
+                  "extensions": {}
+                },
+                {
+                  "id": "vector",
+                  "kind": "field",
+                  "cardinality": "array",
+                  "itemType": {
+                    "module": "m",
+                    "element": "vector-item"
+                  },
+                  "extensions": {},
+                  "facets": {
+                    "collectionSize": {
+                      "min": 2,
+                      "max": 2
+                    }
+                  },
+                  "examples": [
+                    {
+                      "array": [
+                        {
+                          "integerToken": "1"
+                        },
+                        {
+                          "integerToken": "1"
+                        }
+                      ]
+                    }
+                  ],
+                  "default": {
+                    "value": {
+                      "array": [
+                        {
+                          "integerToken": "0"
+                        },
+                        {
+                          "integerToken": "0"
+                        }
+                      ]
+                    },
+                    "on": "missing"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "label"
+        },
+        "input": {
+          "state": "missing"
+        },
+        "result": {
+          "state": "missing"
+        },
+        "applied": false
+      }
+    },
+    {
+      "id": "label-present-null-default",
+      "identity": {
+        "module": "m",
+        "element": "label"
+      },
+      "input": {
+        "state": "present",
+        "value": null
+      },
+      "result": {
+        "operation": "resolve-core-default",
+        "version": "2.0.0",
+        "source": {
+          "umf": "0.10.0",
+          "id": "schema-properties",
+          "vocabularies": {},
+          "title": "Orders",
+          "aliases": [
+            "sales"
+          ],
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "title": "Sales",
+              "aliases": [
+                "commerce"
+              ],
+              "elements": [
+                {
+                  "id": "quantity",
+                  "name": "quantity",
+                  "kind": "field",
+                  "scalarType": "integer",
+                  "cardinality": "one",
+                  "nullability": "required",
+                  "extensions": {},
+                  "facets": {
+                    "integerWidth": {
+                      "bits": 64,
+                      "signed": true
+                    }
+                  },
+                  "title": "Quantity",
+                  "aliases": [
+                    "qty"
+                  ],
+                  "examples": [
+                    {
+                      "integerToken": "3"
+                    }
+                  ],
+                  "allowedValues": [
+                    {
+                      "integerToken": "1"
+                    },
+                    {
+                      "integerToken": "2"
+                    }
+                  ],
+                  "default": {
+                    "value": {
+                      "integerToken": "1"
+                    },
+                    "on": "missing"
+                  }
+                },
+                {
+                  "id": "price",
+                  "kind": "field",
+                  "scalarType": "decimal",
+                  "nullability": "required",
+                  "extensions": {},
+                  "facets": {
+                    "precision": 20,
+                    "scale": 2,
+                    "range": {
+                      "min": {
+                        "decimalToken": "0.01"
+                      },
+                      "max": {
+                        "decimalToken": "999999999999999999.99"
+                      }
+                    }
+                  },
+                  "examples": [
+                    {
+                      "decimalToken": "1.20"
+                    }
+                  ],
+                  "default": {
+                    "value": {
+                      "decimalToken": "1.20"
+                    },
+                    "on": "missing-or-null"
+                  }
+                },
+                {
+                  "id": "label",
+                  "kind": "field",
+                  "scalarType": "string",
+                  "nullability": "absent-allowed",
+                  "extensions": {},
+                  "facets": {
+                    "length": {
+                      "min": 1,
+                      "max": 3,
+                      "unit": "unicode-scalar"
+                    }
+                  },
+                  "examples": [
+                    {
+                      "string": "😀"
+                    }
+                  ],
+                  "default": {
+                    "value": {
+                      "string": "new"
+                    },
+                    "on": "null"
+                  }
+                },
+                {
+                  "id": "byte",
+                  "kind": "field",
+                  "scalarType": "binary",
+                  "extensions": {},
+                  "facets": {
+                    "length": {
+                      "min": 1,
+                      "max": 2,
+                      "unit": "byte"
+                    }
+                  },
+                  "allowedValues": [
+                    {
+                      "binaryHex": "ff"
+                    }
+                  ]
+                },
+                {
+                  "id": "vector-item",
+                  "kind": "field",
+                  "scalarType": "integer",
+                  "extensions": {}
+                },
+                {
+                  "id": "vector",
+                  "kind": "field",
+                  "cardinality": "array",
+                  "itemType": {
+                    "module": "m",
+                    "element": "vector-item"
+                  },
+                  "extensions": {},
+                  "facets": {
+                    "collectionSize": {
+                      "min": 2,
+                      "max": 2
+                    }
+                  },
+                  "examples": [
+                    {
+                      "array": [
+                        {
+                          "integerToken": "1"
+                        },
+                        {
+                          "integerToken": "1"
+                        }
+                      ]
+                    }
+                  ],
+                  "default": {
+                    "value": {
+                      "array": [
+                        {
+                          "integerToken": "0"
+                        },
+                        {
+                          "integerToken": "0"
+                        }
+                      ]
+                    },
+                    "on": "missing"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "label"
+        },
+        "input": {
+          "state": "present",
+          "value": null
+        },
+        "result": {
+          "state": "present",
+          "value": {
+            "string": "new"
+          }
+        },
+        "applied": true
+      }
+    },
+    {
+      "id": "price-present-null-default",
+      "identity": {
+        "module": "m",
+        "element": "price"
+      },
+      "input": {
+        "state": "present",
+        "value": null
+      },
+      "result": {
+        "operation": "resolve-core-default",
+        "version": "2.0.0",
+        "source": {
+          "umf": "0.10.0",
+          "id": "schema-properties",
+          "vocabularies": {},
+          "title": "Orders",
+          "aliases": [
+            "sales"
+          ],
+          "modules": [
+            {
+              "id": "m",
+              "namespace": "sales",
+              "title": "Sales",
+              "aliases": [
+                "commerce"
+              ],
+              "elements": [
+                {
+                  "id": "quantity",
+                  "name": "quantity",
+                  "kind": "field",
+                  "scalarType": "integer",
+                  "cardinality": "one",
+                  "nullability": "required",
+                  "extensions": {},
+                  "facets": {
+                    "integerWidth": {
+                      "bits": 64,
+                      "signed": true
+                    }
+                  },
+                  "title": "Quantity",
+                  "aliases": [
+                    "qty"
+                  ],
+                  "examples": [
+                    {
+                      "integerToken": "3"
+                    }
+                  ],
+                  "allowedValues": [
+                    {
+                      "integerToken": "1"
+                    },
+                    {
+                      "integerToken": "2"
+                    }
+                  ],
+                  "default": {
+                    "value": {
+                      "integerToken": "1"
+                    },
+                    "on": "missing"
+                  }
+                },
+                {
+                  "id": "price",
+                  "kind": "field",
+                  "scalarType": "decimal",
+                  "nullability": "required",
+                  "extensions": {},
+                  "facets": {
+                    "precision": 20,
+                    "scale": 2,
+                    "range": {
+                      "min": {
+                        "decimalToken": "0.01"
+                      },
+                      "max": {
+                        "decimalToken": "999999999999999999.99"
+                      }
+                    }
+                  },
+                  "examples": [
+                    {
+                      "decimalToken": "1.20"
+                    }
+                  ],
+                  "default": {
+                    "value": {
+                      "decimalToken": "1.20"
+                    },
+                    "on": "missing-or-null"
+                  }
+                },
+                {
+                  "id": "label",
+                  "kind": "field",
+                  "scalarType": "string",
+                  "nullability": "absent-allowed",
+                  "extensions": {},
+                  "facets": {
+                    "length": {
+                      "min": 1,
+                      "max": 3,
+                      "unit": "unicode-scalar"
+                    }
+                  },
+                  "examples": [
+                    {
+                      "string": "😀"
+                    }
+                  ],
+                  "default": {
+                    "value": {
+                      "string": "new"
+                    },
+                    "on": "null"
+                  }
+                },
+                {
+                  "id": "byte",
+                  "kind": "field",
+                  "scalarType": "binary",
+                  "extensions": {},
+                  "facets": {
+                    "length": {
+                      "min": 1,
+                      "max": 2,
+                      "unit": "byte"
+                    }
+                  },
+                  "allowedValues": [
+                    {
+                      "binaryHex": "ff"
+                    }
+                  ]
+                },
+                {
+                  "id": "vector-item",
+                  "kind": "field",
+                  "scalarType": "integer",
+                  "extensions": {}
+                },
+                {
+                  "id": "vector",
+                  "kind": "field",
+                  "cardinality": "array",
+                  "itemType": {
+                    "module": "m",
+                    "element": "vector-item"
+                  },
+                  "extensions": {},
+                  "facets": {
+                    "collectionSize": {
+                      "min": 2,
+                      "max": 2
+                    }
+                  },
+                  "examples": [
+                    {
+                      "array": [
+                        {
+                          "integerToken": "1"
+                        },
+                        {
+                          "integerToken": "1"
+                        }
+                      ]
+                    }
+                  ],
+                  "default": {
+                    "value": {
+                      "array": [
+                        {
+                          "integerToken": "0"
+                        },
+                        {
+                          "integerToken": "0"
+                        }
+                      ]
+                    },
+                    "on": "missing"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "identity": {
+          "module": "m",
+          "element": "price"
+        },
+        "input": {
+          "state": "present",
+          "value": null
+        },
+        "result": {
+          "state": "present",
+          "value": {
+            "decimalToken": "1.20"
+          }
+        },
+        "applied": true
+      }
+    },
+    {
+      "id": "state-unknown-qualifier",
+      "identity": {
+        "module": "m",
+        "element": "quantity"
+      },
+      "input": {
+        "state": "missing",
+        "future": "keep-me"
+      },
+      "error": {
+        "name": "UmfError",
+        "message": "Unknown relevant qualifier: future",
+        "code": "CORE_SCHEMA_PROPERTY_UNKNOWN",
+        "path": "/state/future"
+      }
+    },
+    {
+      "id": "identity-unknown-qualifier",
+      "identity": {
+        "module": "m",
+        "element": "quantity",
+        "future": "keep-me"
+      },
+      "input": {
+        "state": "missing"
+      },
+      "error": {
+        "name": "UmfError",
+        "message": "Unknown relevant qualifier: future",
+        "code": "CORE_SCHEMA_PROPERTY_UNKNOWN",
+        "path": "/identity/future"
+      }
+    },
+    {
+      "id": "state-error-precedes-identity-error",
+      "identity": {
+        "module": "m",
+        "element": "quantity",
+        "future": "keep-me"
+      },
+      "input": {
+        "state": "missing",
+        "future": "keep-me"
+      },
+      "error": {
+        "name": "UmfError",
+        "message": "Unknown relevant qualifier: future",
+        "code": "CORE_SCHEMA_PROPERTY_UNKNOWN",
+        "path": "/state/future"
+      }
+    },
+    {
+      "id": "state-null",
+      "identity": {
+        "module": "m",
+        "element": "quantity"
+      },
+      "input": null,
+      "error": {
+        "name": "UmfError",
+        "message": "Expected object",
+        "code": "CORE_SCHEMA_PROPERTIES",
+        "path": "/state"
+      }
+    },
+    {
+      "id": "state-array",
+      "identity": {
+        "module": "m",
+        "element": "quantity"
+      },
+      "input": [],
+      "error": {
+        "name": "UmfError",
+        "message": "Expected object",
+        "code": "CORE_SCHEMA_PROPERTIES",
+        "path": "/state"
+      }
+    },
+    {
+      "id": "state-missing-tag",
+      "identity": {
+        "module": "m",
+        "element": "quantity"
+      },
+      "input": {},
+      "error": {
+        "name": "UmfError",
+        "message": "Explicit missing/present state required",
+        "code": "CORE_SCHEMA_PROPERTIES",
+        "path": ""
+      }
+    },
+    {
+      "id": "state-present-without-value",
+      "identity": {
+        "module": "m",
+        "element": "quantity"
+      },
+      "input": {
+        "state": "present"
+      },
+      "error": {
+        "name": "UmfError",
+        "message": "Explicit missing/present state required",
+        "code": "CORE_SCHEMA_PROPERTIES",
+        "path": ""
+      }
+    },
+    {
+      "id": "state-missing-with-value",
+      "identity": {
+        "module": "m",
+        "element": "quantity"
+      },
+      "input": {
+        "state": "missing",
+        "value": null
+      },
+      "error": {
+        "name": "UmfError",
+        "message": "Unknown relevant qualifier: value",
+        "code": "CORE_SCHEMA_PROPERTY_UNKNOWN",
+        "path": "/state/value"
+      }
+    },
+    {
+      "id": "state-unknown-tag-with-value",
+      "identity": {
+        "module": "m",
+        "element": "quantity"
+      },
+      "input": {
+        "state": "bogus",
+        "value": null
+      },
+      "error": {
+        "name": "UmfError",
+        "message": "Explicit missing/present state required",
+        "code": "CORE_SCHEMA_PROPERTIES",
+        "path": ""
+      }
+    },
+    {
+      "id": "identity-null",
+      "identity": null,
+      "input": {
+        "state": "missing"
+      },
+      "error": {
+        "name": "UmfError",
+        "message": "Expected object",
+        "code": "CORE_SCHEMA_PROPERTIES",
+        "path": "/identity"
+      }
+    },
+    {
+      "id": "identity-missing-element",
+      "identity": {
+        "module": "m"
+      },
+      "input": {
+        "state": "missing"
+      },
+      "error": {
+        "name": "UmfError",
+        "message": "Explicit identity required",
+        "code": "CORE_SCHEMA_PROPERTIES",
+        "path": ""
+      }
+    },
+    {
+      "id": "identity-empty-module",
+      "identity": {
+        "module": "",
+        "element": "quantity"
+      },
+      "input": {
+        "state": "missing"
+      },
+      "error": {
+        "name": "UmfError",
+        "message": "Nonempty module ID required",
+        "code": "CORE_SCHEMA_PROPERTIES",
+        "path": ""
+      }
+    },
+    {
+      "id": "source-wrong-version",
+      "identity": {
+        "module": "m",
+        "element": "quantity"
+      },
+      "input": {
+        "state": "missing"
+      },
+      "source": {
+        "umf": "0.7.0",
+        "id": "schema-properties",
+        "vocabularies": {},
+        "title": "Orders",
+        "aliases": [
+          "sales"
+        ],
+        "modules": [
+          {
+            "id": "m",
+            "namespace": "sales",
+            "title": "Sales",
+            "aliases": [
+              "commerce"
+            ],
+            "elements": [
+              {
+                "id": "quantity",
+                "name": "quantity",
+                "kind": "field",
+                "scalarType": "integer",
+                "cardinality": "one",
+                "nullability": "required",
+                "extensions": {},
+                "facets": {
+                  "integerWidth": {
+                    "bits": 64,
+                    "signed": true
+                  }
+                },
+                "title": "Quantity",
+                "aliases": [
+                  "qty"
+                ],
+                "examples": [
+                  {
+                    "integerToken": "3"
+                  }
+                ],
+                "allowedValues": [
+                  {
+                    "integerToken": "1"
+                  },
+                  {
+                    "integerToken": "2"
+                  }
+                ],
+                "default": {
+                  "value": {
+                    "integerToken": "1"
+                  },
+                  "on": "missing"
+                }
+              },
+              {
+                "id": "price",
+                "kind": "field",
+                "scalarType": "decimal",
+                "nullability": "required",
+                "extensions": {},
+                "facets": {
+                  "precision": 20,
+                  "scale": 2,
+                  "range": {
+                    "min": {
+                      "decimalToken": "0.01"
+                    },
+                    "max": {
+                      "decimalToken": "999999999999999999.99"
+                    }
+                  }
+                },
+                "examples": [
+                  {
+                    "decimalToken": "1.20"
+                  }
+                ],
+                "default": {
+                  "value": {
+                    "decimalToken": "1.20"
+                  },
+                  "on": "missing-or-null"
+                }
+              },
+              {
+                "id": "label",
+                "kind": "field",
+                "scalarType": "string",
+                "nullability": "absent-allowed",
+                "extensions": {},
+                "facets": {
+                  "length": {
+                    "min": 1,
+                    "max": 3,
+                    "unit": "unicode-scalar"
+                  }
+                },
+                "examples": [
+                  {
+                    "string": "😀"
+                  }
+                ],
+                "default": {
+                  "value": {
+                    "string": "new"
+                  },
+                  "on": "null"
+                }
+              },
+              {
+                "id": "byte",
+                "kind": "field",
+                "scalarType": "binary",
+                "extensions": {},
+                "facets": {
+                  "length": {
+                    "min": 1,
+                    "max": 2,
+                    "unit": "byte"
+                  }
+                },
+                "allowedValues": [
+                  {
+                    "binaryHex": "ff"
+                  }
+                ]
+              },
+              {
+                "id": "vector-item",
+                "kind": "field",
+                "scalarType": "integer",
+                "extensions": {}
+              },
+              {
+                "id": "vector",
+                "kind": "field",
+                "cardinality": "array",
+                "itemType": {
+                  "module": "m",
+                  "element": "vector-item"
+                },
+                "extensions": {},
+                "facets": {
+                  "collectionSize": {
+                    "min": 2,
+                    "max": 2
+                  }
+                },
+                "examples": [
+                  {
+                    "array": [
+                      {
+                        "integerToken": "1"
+                      },
+                      {
+                        "integerToken": "1"
+                      }
+                    ]
+                  }
+                ],
+                "default": {
+                  "value": {
+                    "array": [
+                      {
+                        "integerToken": "0"
+                      },
+                      {
+                        "integerToken": "0"
+                      }
+                    ]
+                  },
+                  "on": "missing"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "error": {
+        "name": "UmfError",
+        "message": "Expected valid current 0.10.0 envelope",
+        "code": "CORE_SCHEMA_PROPERTIES",
+        "path": ""
+      }
+    },
+    {
+      "id": "source-wrong-version-before-invalid-identity",
+      "identity": {
+        "module": "",
+        "element": "quantity"
+      },
+      "input": {
+        "state": "missing"
+      },
+      "source": {
+        "umf": "0.7.0",
+        "id": "schema-properties",
+        "vocabularies": {},
+        "title": "Orders",
+        "aliases": [
+          "sales"
+        ],
+        "modules": [
+          {
+            "id": "m",
+            "namespace": "sales",
+            "title": "Sales",
+            "aliases": [
+              "commerce"
+            ],
+            "elements": [
+              {
+                "id": "quantity",
+                "name": "quantity",
+                "kind": "field",
+                "scalarType": "integer",
+                "cardinality": "one",
+                "nullability": "required",
+                "extensions": {},
+                "facets": {
+                  "integerWidth": {
+                    "bits": 64,
+                    "signed": true
+                  }
+                },
+                "title": "Quantity",
+                "aliases": [
+                  "qty"
+                ],
+                "examples": [
+                  {
+                    "integerToken": "3"
+                  }
+                ],
+                "allowedValues": [
+                  {
+                    "integerToken": "1"
+                  },
+                  {
+                    "integerToken": "2"
+                  }
+                ],
+                "default": {
+                  "value": {
+                    "integerToken": "1"
+                  },
+                  "on": "missing"
+                }
+              },
+              {
+                "id": "price",
+                "kind": "field",
+                "scalarType": "decimal",
+                "nullability": "required",
+                "extensions": {},
+                "facets": {
+                  "precision": 20,
+                  "scale": 2,
+                  "range": {
+                    "min": {
+                      "decimalToken": "0.01"
+                    },
+                    "max": {
+                      "decimalToken": "999999999999999999.99"
+                    }
+                  }
+                },
+                "examples": [
+                  {
+                    "decimalToken": "1.20"
+                  }
+                ],
+                "default": {
+                  "value": {
+                    "decimalToken": "1.20"
+                  },
+                  "on": "missing-or-null"
+                }
+              },
+              {
+                "id": "label",
+                "kind": "field",
+                "scalarType": "string",
+                "nullability": "absent-allowed",
+                "extensions": {},
+                "facets": {
+                  "length": {
+                    "min": 1,
+                    "max": 3,
+                    "unit": "unicode-scalar"
+                  }
+                },
+                "examples": [
+                  {
+                    "string": "😀"
+                  }
+                ],
+                "default": {
+                  "value": {
+                    "string": "new"
+                  },
+                  "on": "null"
+                }
+              },
+              {
+                "id": "byte",
+                "kind": "field",
+                "scalarType": "binary",
+                "extensions": {},
+                "facets": {
+                  "length": {
+                    "min": 1,
+                    "max": 2,
+                    "unit": "byte"
+                  }
+                },
+                "allowedValues": [
+                  {
+                    "binaryHex": "ff"
+                  }
+                ]
+              },
+              {
+                "id": "vector-item",
+                "kind": "field",
+                "scalarType": "integer",
+                "extensions": {}
+              },
+              {
+                "id": "vector",
+                "kind": "field",
+                "cardinality": "array",
+                "itemType": {
+                  "module": "m",
+                  "element": "vector-item"
+                },
+                "extensions": {},
+                "facets": {
+                  "collectionSize": {
+                    "min": 2,
+                    "max": 2
+                  }
+                },
+                "examples": [
+                  {
+                    "array": [
+                      {
+                        "integerToken": "1"
+                      },
+                      {
+                        "integerToken": "1"
+                      }
+                    ]
+                  }
+                ],
+                "default": {
+                  "value": {
+                    "array": [
+                      {
+                        "integerToken": "0"
+                      },
+                      {
+                        "integerToken": "0"
+                      }
+                    ]
+                  },
+                  "on": "missing"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "error": {
+        "name": "UmfError",
+        "message": "Expected valid current 0.10.0 envelope",
+        "code": "CORE_SCHEMA_PROPERTIES",
+        "path": ""
+      }
+    },
+    {
+      "id": "source-wrong-version-before-incomplete-identity",
+      "identity": {
+        "module": "m"
+      },
+      "input": {
+        "state": "missing"
+      },
+      "source": {
+        "umf": "0.7.0",
+        "id": "schema-properties",
+        "vocabularies": {},
+        "title": "Orders",
+        "aliases": [
+          "sales"
+        ],
+        "modules": [
+          {
+            "id": "m",
+            "namespace": "sales",
+            "title": "Sales",
+            "aliases": [
+              "commerce"
+            ],
+            "elements": [
+              {
+                "id": "quantity",
+                "name": "quantity",
+                "kind": "field",
+                "scalarType": "integer",
+                "cardinality": "one",
+                "nullability": "required",
+                "extensions": {},
+                "facets": {
+                  "integerWidth": {
+                    "bits": 64,
+                    "signed": true
+                  }
+                },
+                "title": "Quantity",
+                "aliases": [
+                  "qty"
+                ],
+                "examples": [
+                  {
+                    "integerToken": "3"
+                  }
+                ],
+                "allowedValues": [
+                  {
+                    "integerToken": "1"
+                  },
+                  {
+                    "integerToken": "2"
+                  }
+                ],
+                "default": {
+                  "value": {
+                    "integerToken": "1"
+                  },
+                  "on": "missing"
+                }
+              },
+              {
+                "id": "price",
+                "kind": "field",
+                "scalarType": "decimal",
+                "nullability": "required",
+                "extensions": {},
+                "facets": {
+                  "precision": 20,
+                  "scale": 2,
+                  "range": {
+                    "min": {
+                      "decimalToken": "0.01"
+                    },
+                    "max": {
+                      "decimalToken": "999999999999999999.99"
+                    }
+                  }
+                },
+                "examples": [
+                  {
+                    "decimalToken": "1.20"
+                  }
+                ],
+                "default": {
+                  "value": {
+                    "decimalToken": "1.20"
+                  },
+                  "on": "missing-or-null"
+                }
+              },
+              {
+                "id": "label",
+                "kind": "field",
+                "scalarType": "string",
+                "nullability": "absent-allowed",
+                "extensions": {},
+                "facets": {
+                  "length": {
+                    "min": 1,
+                    "max": 3,
+                    "unit": "unicode-scalar"
+                  }
+                },
+                "examples": [
+                  {
+                    "string": "😀"
+                  }
+                ],
+                "default": {
+                  "value": {
+                    "string": "new"
+                  },
+                  "on": "null"
+                }
+              },
+              {
+                "id": "byte",
+                "kind": "field",
+                "scalarType": "binary",
+                "extensions": {},
+                "facets": {
+                  "length": {
+                    "min": 1,
+                    "max": 2,
+                    "unit": "byte"
+                  }
+                },
+                "allowedValues": [
+                  {
+                    "binaryHex": "ff"
+                  }
+                ]
+              },
+              {
+                "id": "vector-item",
+                "kind": "field",
+                "scalarType": "integer",
+                "extensions": {}
+              },
+              {
+                "id": "vector",
+                "kind": "field",
+                "cardinality": "array",
+                "itemType": {
+                  "module": "m",
+                  "element": "vector-item"
+                },
+                "extensions": {},
+                "facets": {
+                  "collectionSize": {
+                    "min": 2,
+                    "max": 2
+                  }
+                },
+                "examples": [
+                  {
+                    "array": [
+                      {
+                        "integerToken": "1"
+                      },
+                      {
+                        "integerToken": "1"
+                      }
+                    ]
+                  }
+                ],
+                "default": {
+                  "value": {
+                    "array": [
+                      {
+                        "integerToken": "0"
+                      },
+                      {
+                        "integerToken": "0"
+                      }
+                    ]
+                  },
+                  "on": "missing"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "error": {
+        "name": "UmfError",
+        "message": "Expected valid current 0.10.0 envelope",
+        "code": "CORE_SCHEMA_PROPERTIES",
+        "path": ""
+      }
+    },
+    {
+      "id": "identity-element-checked-after-module-lookup",
+      "identity": {
+        "module": "absent",
+        "element": ""
+      },
+      "input": {
+        "state": "missing"
+      },
+      "error": {
+        "name": "UmfError",
+        "message": "Module not found",
+        "code": "CORE_SCHEMA_PROPERTIES",
+        "path": ""
+      }
+    },
+    {
+      "id": "source-invalid-envelope",
+      "identity": {
+        "module": "m",
+        "element": "quantity"
+      },
+      "input": {
+        "state": "missing"
+      },
+      "source": {
+        "umf": "0.10.0",
+        "id": "",
+        "vocabularies": {},
+        "title": "Orders",
+        "aliases": [
+          "sales"
+        ],
+        "modules": [
+          {
+            "id": "m",
+            "namespace": "sales",
+            "title": "Sales",
+            "aliases": [
+              "commerce"
+            ],
+            "elements": [
+              {
+                "id": "quantity",
+                "name": "quantity",
+                "kind": "field",
+                "scalarType": "integer",
+                "cardinality": "one",
+                "nullability": "required",
+                "extensions": {},
+                "facets": {
+                  "integerWidth": {
+                    "bits": 64,
+                    "signed": true
+                  }
+                },
+                "title": "Quantity",
+                "aliases": [
+                  "qty"
+                ],
+                "examples": [
+                  {
+                    "integerToken": "3"
+                  }
+                ],
+                "allowedValues": [
+                  {
+                    "integerToken": "1"
+                  },
+                  {
+                    "integerToken": "2"
+                  }
+                ],
+                "default": {
+                  "value": {
+                    "integerToken": "1"
+                  },
+                  "on": "missing"
+                }
+              },
+              {
+                "id": "price",
+                "kind": "field",
+                "scalarType": "decimal",
+                "nullability": "required",
+                "extensions": {},
+                "facets": {
+                  "precision": 20,
+                  "scale": 2,
+                  "range": {
+                    "min": {
+                      "decimalToken": "0.01"
+                    },
+                    "max": {
+                      "decimalToken": "999999999999999999.99"
+                    }
+                  }
+                },
+                "examples": [
+                  {
+                    "decimalToken": "1.20"
+                  }
+                ],
+                "default": {
+                  "value": {
+                    "decimalToken": "1.20"
+                  },
+                  "on": "missing-or-null"
+                }
+              },
+              {
+                "id": "label",
+                "kind": "field",
+                "scalarType": "string",
+                "nullability": "absent-allowed",
+                "extensions": {},
+                "facets": {
+                  "length": {
+                    "min": 1,
+                    "max": 3,
+                    "unit": "unicode-scalar"
+                  }
+                },
+                "examples": [
+                  {
+                    "string": "😀"
+                  }
+                ],
+                "default": {
+                  "value": {
+                    "string": "new"
+                  },
+                  "on": "null"
+                }
+              },
+              {
+                "id": "byte",
+                "kind": "field",
+                "scalarType": "binary",
+                "extensions": {},
+                "facets": {
+                  "length": {
+                    "min": 1,
+                    "max": 2,
+                    "unit": "byte"
+                  }
+                },
+                "allowedValues": [
+                  {
+                    "binaryHex": "ff"
+                  }
+                ]
+              },
+              {
+                "id": "vector-item",
+                "kind": "field",
+                "scalarType": "integer",
+                "extensions": {}
+              },
+              {
+                "id": "vector",
+                "kind": "field",
+                "cardinality": "array",
+                "itemType": {
+                  "module": "m",
+                  "element": "vector-item"
+                },
+                "extensions": {},
+                "facets": {
+                  "collectionSize": {
+                    "min": 2,
+                    "max": 2
+                  }
+                },
+                "examples": [
+                  {
+                    "array": [
+                      {
+                        "integerToken": "1"
+                      },
+                      {
+                        "integerToken": "1"
+                      }
+                    ]
+                  }
+                ],
+                "default": {
+                  "value": {
+                    "array": [
+                      {
+                        "integerToken": "0"
+                      },
+                      {
+                        "integerToken": "0"
+                      }
+                    ]
+                  },
+                  "on": "missing"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "error": {
+        "name": "UmfError",
+        "message": "Expected valid current 0.10.0 envelope",
+        "code": "CORE_SCHEMA_PROPERTIES",
+        "path": ""
+      }
+    },
+    {
+      "id": "default-unknown-qualifier",
+      "source": {
+        "umf": "0.10.0",
+        "id": "schema-properties",
+        "vocabularies": {},
+        "title": "Orders",
+        "aliases": [
+          "sales"
+        ],
+        "modules": [
+          {
+            "id": "m",
+            "namespace": "sales",
+            "title": "Sales",
+            "aliases": [
+              "commerce"
+            ],
+            "elements": [
+              {
+                "id": "quantity",
+                "name": "quantity",
+                "kind": "field",
+                "scalarType": "integer",
+                "cardinality": "one",
+                "nullability": "required",
+                "extensions": {},
+                "facets": {
+                  "integerWidth": {
+                    "bits": 64,
+                    "signed": true
+                  }
+                },
+                "title": "Quantity",
+                "aliases": [
+                  "qty"
+                ],
+                "examples": [
+                  {
+                    "integerToken": "3"
+                  }
+                ],
+                "allowedValues": [
+                  {
+                    "integerToken": "1"
+                  },
+                  {
+                    "integerToken": "2"
+                  }
+                ],
+                "default": {
+                  "value": {
+                    "integerToken": "1"
+                  },
+                  "on": "missing",
+                  "future": "keep-me"
+                }
+              },
+              {
+                "id": "price",
+                "kind": "field",
+                "scalarType": "decimal",
+                "nullability": "required",
+                "extensions": {},
+                "facets": {
+                  "precision": 20,
+                  "scale": 2,
+                  "range": {
+                    "min": {
+                      "decimalToken": "0.01"
+                    },
+                    "max": {
+                      "decimalToken": "999999999999999999.99"
+                    }
+                  }
+                },
+                "examples": [
+                  {
+                    "decimalToken": "1.20"
+                  }
+                ],
+                "default": {
+                  "value": {
+                    "decimalToken": "1.20"
+                  },
+                  "on": "missing-or-null"
+                }
+              },
+              {
+                "id": "label",
+                "kind": "field",
+                "scalarType": "string",
+                "nullability": "absent-allowed",
+                "extensions": {},
+                "facets": {
+                  "length": {
+                    "min": 1,
+                    "max": 3,
+                    "unit": "unicode-scalar"
+                  }
+                },
+                "examples": [
+                  {
+                    "string": "😀"
+                  }
+                ],
+                "default": {
+                  "value": {
+                    "string": "new"
+                  },
+                  "on": "null"
+                }
+              },
+              {
+                "id": "byte",
+                "kind": "field",
+                "scalarType": "binary",
+                "extensions": {},
+                "facets": {
+                  "length": {
+                    "min": 1,
+                    "max": 2,
+                    "unit": "byte"
+                  }
+                },
+                "allowedValues": [
+                  {
+                    "binaryHex": "ff"
+                  }
+                ]
+              },
+              {
+                "id": "vector-item",
+                "kind": "field",
+                "scalarType": "integer",
+                "extensions": {}
+              },
+              {
+                "id": "vector",
+                "kind": "field",
+                "cardinality": "array",
+                "itemType": {
+                  "module": "m",
+                  "element": "vector-item"
+                },
+                "extensions": {},
+                "facets": {
+                  "collectionSize": {
+                    "min": 2,
+                    "max": 2
+                  }
+                },
+                "examples": [
+                  {
+                    "array": [
+                      {
+                        "integerToken": "1"
+                      },
+                      {
+                        "integerToken": "1"
+                      }
+                    ]
+                  }
+                ],
+                "default": {
+                  "value": {
+                    "array": [
+                      {
+                        "integerToken": "0"
+                      },
+                      {
+                        "integerToken": "0"
+                      }
+                    ]
+                  },
+                  "on": "missing"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "identity": {
+        "module": "m",
+        "element": "quantity"
+      },
+      "input": {
+        "state": "missing"
+      },
+      "error": {
+        "name": "UmfError",
+        "message": "Unknown relevant qualifier: future",
+        "code": "CORE_SCHEMA_PROPERTY_UNKNOWN",
+        "path": "/modules/0/elements/0/default/future"
+      }
+    }
+  ]
+}

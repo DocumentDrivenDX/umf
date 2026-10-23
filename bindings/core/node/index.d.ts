@@ -79,10 +79,22 @@ export interface UmfCoreEngine {
   writeJsonValue(value: unknown): string;
 }
 export interface UmfCoreValidation { valid: boolean; complete: boolean; diagnostics: {code: string; path: string; message: string; severity: 'error' | 'warning'}[] }
+export type UmfCoreDefaultInput = {state: 'missing'} | {state: 'present'; value: unknown};
+export type UmfCoreDefaultState = {state: 'missing'} | {state: 'present'; value: unknown};
+export interface UmfCoreDefaultResolution {
+  operation: 'resolve-core-default';
+  version: '2.0.0';
+  source: unknown;
+  identity: {module: string; element: string};
+  input: UmfCoreDefaultInput;
+  result: UmfCoreDefaultState;
+  applied: boolean;
+}
 export declare function createEngine(resources: UmfCoreResources, options?: {profile?: 'cooperative' | 'hard-isolated'; controls?: UmfCoreControls}): UmfCoreEngine;
 export interface UmfCoreModelEngine {
   selectCoreElements(source: unknown, query: unknown, registry?: UmfCoreExtension[]): unknown;
   validateCoreFieldValue(source: unknown, field: {module: string; element: string}, value: unknown): UmfCoreValidation;
+  resolveCoreDefault(source: unknown, field: {module: string; element: string}, state: UmfCoreDefaultInput): UmfCoreDefaultResolution;
   inspectCoreCardinality(source: unknown, module: string, element: string): unknown;
   declareCoreCardinality(source: unknown, module: string, element: string, request: unknown): unknown;
   verifyCoreCardinalityDeclaration(receipt: unknown, current: unknown): unknown;

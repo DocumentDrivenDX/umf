@@ -1000,7 +1000,7 @@ fn execute_request_inner(
             "model/inspectCoreCardinality" | "model/declareCoreCardinality" | "model/verifyCoreCardinalityDeclaration"
             | "model/inspectCoreKind" | "model/declareCoreKind" | "model/verifyCoreKindDeclaration"
             | "model/inspectCoreNullability" | "model/declareCoreNullability" | "model/verifyCoreNullabilityDeclaration"
-            | "model/selectCoreElements" | "model/validateCoreFieldValue" => {
+            | "model/selectCoreElements" | "model/validateCoreFieldValue" | "model/resolveCoreDefault" => {
                 model_operation(&op, &request, &engine, &registry, capabilities, &mut operation)?
             }
             "validate" => {
@@ -1073,6 +1073,12 @@ fn model_operation(
                 ctx,
             )?,
         ),
+        "model/resolveCoreDefault" => engine.resolve_core_default_public(
+            value("source")?,
+            value("field")?,
+            value("state")?,
+            ctx,
+        )?,
         "model/selectCoreElements" => umf_core::selection::select_core_elements(
             value("source")?, value("query")?, engine, registry, capabilities, ctx,
         )?,

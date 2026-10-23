@@ -152,6 +152,20 @@ impl Capabilities for SourceCapabilities<'_> {
 fn k(s: &str) -> Utf16 {
     Utf16::from(s)
 }
+fn as_utf16(value: &Value) -> Option<&Utf16> {
+    match value {
+        Value::String(text) => Some(text),
+        _ => None,
+    }
+}
+fn object(fields: Vec<(&str, Value)>) -> Value {
+    Value::Object(
+        fields
+            .into_iter()
+            .map(|(name, value)| (k(name), value))
+            .collect(),
+    )
+}
 fn get<'a>(v: &'a Value, n: &str) -> Option<&'a Value> {
     match v {
         Value::Object(m) => m.iter().find(|(x, _)| x == &k(n)).map(|(_, v)| v),
@@ -230,6 +244,230 @@ impl Capabilities for FieldValueNoCapabilities {
     }
 }
 impl Engine {
+    /// Resolve a declared core Field default without mutating its source.
+    /// This is the Rust-owned CONTRACT-049 operation used by the opt-in
+    /// model binding; missing and present-null remain distinct states.
+    pub fn resolve_core_default_public(
+        &self,
+        source: &Value,
+        identity: &Value,
+        state: &Value,
+        ctx: &mut Context<'_>,
+    ) -> Result<Value, EngineError> {
+        let identity = copy_json(identity, ctx)?;
+        let state = copy_json(state, ctx)?;
+        let properties_error = |message: &str, path: &str| {
+            EngineError::new("CORE_SCHEMA_PROPERTIES", Utf16::from(path), message)
+        };
+        let unknown = |name: &Utf16, base: &str| {
+            let mut path = base.encode_utf16().collect::<Vec<_>>();
+            path.extend(name.units());
+            let mut message = "Unknown relevant qualifier: "
+                .encode_utf16()
+                .collect::<Vec<_>>();
+            message.extend(name.units());
+            EngineError::new(
+                "CORE_SCHEMA_PROPERTY_UNKNOWN",
+                Utf16::new(path),
+                Utf16::new(message),
+            )
+        };
+        let Value::Object(state_fields) = &state else {
+            return Err(properties_error("Expected object", "/state"));
+        };
+        let state_name = get(&state, "state").and_then(as_utf16);
+        let missing = state_name == Some(&Utf16::from("missing"));
+        let present = state_name == Some(&Utf16::from("present"));
+        for (key, _) in state_fields {
+            if key != &k("state") && !(!missing && key == &k("value")) {
+                ctx.charge_text(
+                    key.len().saturating_mul(2).saturating_add(48),
+                    Utf16::from("/state"),
+                )?;
+                return Err(unknown(key, "/state/"));
+            }
+        }
+        if !missing && !present
+            || present && get(&state, "value").is_none()
+            || missing && state_fields.len() != 1
+            || present && state_fields.len() != 2
+        {
+            return Err(properties_error(
+                "Explicit missing/present state required",
+                "",
+            ));
+        }
+
+        // The TypeScript predecessor admits state before identity, so when
+        // both are malformed its first refusal is state-owned.
+        let Value::Object(identity_fields) = &identity else {
+            return Err(properties_error("Expected object", "/identity"));
+        };
+        for (key, _) in identity_fields {
+            if key != &k("module") && key != &k("element") {
+                ctx.charge_text(
+                    key.len().saturating_mul(2).saturating_add(48),
+                    Utf16::from("/identity"),
+                )?;
+                return Err(unknown(key, "/identity/"));
+            }
+        }
+        let module_id = get(&identity, "module").and_then(as_utf16);
+        let element_id = get(&identity, "element").and_then(as_utf16);
+
+        // The predecessor validates the source before identity cardinality
+        // and nonempty checks, after its known-member refusal.
+        let source = copy_json(source, ctx)?;
+        if get(&source, "umf") != Some(&Value::string_utf8("0.10.0")) {
+            return Err(properties_error(
+                "Expected valid current 0.10.0 envelope",
+                "",
+            ));
+        }
+        let mut capabilities = FieldValueNoCapabilities;
+        let document_validation =
+            self.validate_document(&source, &Registry::default(), &mut capabilities, ctx)?;
+        if !document_validation.valid {
+            return Err(properties_error(
+                "Expected valid current 0.10.0 envelope",
+                "",
+            ));
+        }
+        if identity_fields.len() != 2 {
+            return Err(properties_error("Explicit identity required", ""));
+        }
+        let module_id = module_id
+            .filter(|value| !value.is_empty())
+            .ok_or_else(|| properties_error("Nonempty module ID required", ""))?;
+
+        let module_index = match get(&source, "modules") {
+            Some(Value::Array(modules)) => {
+                let mut found = None;
+                for (index, module) in modules.iter().enumerate() {
+                    ctx.charge_work(1, Utf16::default())?;
+                    if get(module, "id").and_then(as_utf16) == Some(module_id) {
+                        found = Some((index, module));
+                        break;
+                    }
+                }
+                found
+            }
+            _ => None,
+        }
+        .ok_or_else(|| properties_error("Module not found", ""))?;
+        let (module_index, module) = module_index;
+        let element_id = element_id
+            .filter(|value| !value.is_empty())
+            .ok_or_else(|| properties_error("Nonempty element ID required", ""))?;
+        let element = match get(module, "elements") {
+            Some(Value::Array(elements)) => {
+                let mut found = None;
+                for (index, element) in elements.iter().enumerate() {
+                    ctx.charge_work(1, Utf16::default())?;
+                    if get(element, "id").and_then(as_utf16) == Some(element_id) {
+                        found = Some((index, element));
+                        break;
+                    }
+                }
+                found
+            }
+            _ => None,
+        }
+        .ok_or_else(|| properties_error("Element not found", ""))?;
+        let (element_index, field) = element;
+        if get(field, "kind") != Some(&Value::string_utf8("field")) {
+            return Err(properties_error("Default target must be a Field", ""));
+        }
+        let declaration = get(field, "default");
+        if let Some(Value::Object(members)) = declaration {
+            let default_path = format!("/modules/{module_index}/elements/{element_index}/default/");
+            for (key, _) in members {
+                if key != &k("value") && key != &k("on") {
+                    ctx.charge_text(
+                        key.len().saturating_mul(2).saturating_add(64),
+                        Utf16::from("/default"),
+                    )?;
+                    return Err(unknown(key, &default_path));
+                }
+            }
+        }
+        let apply = declaration.is_some_and(|default| {
+            let on = get(default, "on").and_then(as_utf16);
+            if missing {
+                on == Some(&Utf16::from("missing")) || on == Some(&Utf16::from("missing-or-null"))
+            } else {
+                get(&state, "value") == Some(&Value::Null)
+                    && (on == Some(&Utf16::from("null"))
+                        || on == Some(&Utf16::from("missing-or-null")))
+            }
+        });
+        let result = if apply {
+            object(vec![
+                ("state", Value::string_utf8("present")),
+                (
+                    "value",
+                    copy_json(get(declaration.unwrap(), "value").unwrap(), ctx)?,
+                ),
+            ])
+        } else {
+            copy_json(&state, ctx)?
+        };
+        if let Some(value) = get(&result, "value") {
+            let validation =
+                self.validate_core_field_value_public(&source, &identity, value, ctx)?;
+            if !validation.valid {
+                let mut diagnostic_units = 0usize;
+                for diagnostic in &validation.diagnostics {
+                    ctx.charge_work(1, diagnostic.path.clone())?;
+                    diagnostic_units = diagnostic_units
+                        .saturating_add(diagnostic.code.len())
+                        .saturating_add(diagnostic.path.len())
+                        .saturating_add(diagnostic.message.len())
+                        .saturating_add(64);
+                }
+                // Compact JSON escaping can expand a UTF-16 unit to six
+                // ASCII units. Admit that upper bound before allocating the
+                // diagnostic envelope and serialized refusal string.
+                ctx.charge_text(diagnostic_units.saturating_mul(6), Utf16::default())?;
+                let diagnostics = Value::Array(
+                    validation
+                        .diagnostics
+                        .iter()
+                        .map(|diagnostic| {
+                            object(vec![
+                                ("code", Value::String(diagnostic.code.clone())),
+                                ("path", Value::String(diagnostic.path.clone())),
+                                ("message", Value::String(diagnostic.message.clone())),
+                                (
+                                    "severity",
+                                    Value::string_utf8(match diagnostic.severity {
+                                        Severity::Error => "error",
+                                        Severity::Warning => "warning",
+                                    }),
+                                ),
+                            ])
+                        })
+                        .collect(),
+                );
+                let message = crate::serialization::stringify_compact(&diagnostics)?;
+                return Err(EngineError::new(
+                    "CORE_SCHEMA_PROPERTIES",
+                    Utf16::default(),
+                    message,
+                ));
+            }
+        }
+        Ok(object(vec![
+            ("operation", Value::string_utf8("resolve-core-default")),
+            ("version", Value::string_utf8("2.0.0")),
+            ("source", source),
+            ("identity", identity),
+            ("input", state),
+            ("result", result),
+            ("applied", Value::Bool(apply)),
+        ]))
+    }
+
     /// Evaluate the public CONTRACT-049 field-value operation. The caller does
     /// not provide a registry: like the TypeScript API, this operation uses an
     /// empty default registry while still validating the complete source.

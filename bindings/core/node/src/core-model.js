@@ -10,6 +10,19 @@ export function createCoreModelOperations(invoke) {
         throw error;
       }
     },
+    resolveCoreDefault(source, field, state) {
+      try {
+        const receipt = invoke('model/resolveCoreDefault', {source, field, state});
+        // The TypeScript predecessor returns its copied input state directly
+        // as result when no default applies; preserve that observable alias.
+        if (!receipt.applied) receipt.result = receipt.input;
+        return receipt;
+      }
+      catch (error) {
+        if (error?.code === 'TYPE_ERROR') throw new TypeError(error.message);
+        throw error;
+      }
+    },
     inspectCoreCardinality(source, module, element) { return invoke('model/inspectCoreCardinality', {source, identity: identity(module, element)}); },
     declareCoreCardinality(source, module, element, request) { return invoke('model/declareCoreCardinality', {source, identity: identity(module, element), request}); },
     verifyCoreCardinalityDeclaration(receipt, current) { return invoke('model/verifyCoreCardinalityDeclaration', {receipt, current}); },
