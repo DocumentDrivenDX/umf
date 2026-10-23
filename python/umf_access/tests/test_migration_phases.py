@@ -5,8 +5,11 @@ import copy
 import unittest
 
 from umf_access.lifecycle.catalog import CatalogError
+from umf_access.lifecycle.mixed import (
+    _verify_backfill_add_target,
+    _verify_backfill_tighten_target,
+)
 from umf_access.lifecycle.progress import _phase_digest, _verified_phases
-from umf_access.lifecycle.mixed import _verify_backfill_add_target, _verify_backfill_tighten_target
 
 
 def plan():

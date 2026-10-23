@@ -71,10 +71,7 @@ def _apply_backfill(connection, plan, step):
         if not derived:
             raise
         # Keep PostgreSQL's machine-readable class while dropping DETAIL and row data.
-        try:
-            from psycopg import Error as PsycopgError
-        except ImportError:
-            raise
+        from psycopg import Error as PsycopgError
         if isinstance(error, PsycopgError):
             raise CatalogError('derived-backfill-native-error', sqlstate=error.sqlstate) from None
         raise

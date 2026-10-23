@@ -322,7 +322,6 @@ def _verify_backfill_add_target(plan, phase):
             or any(step.get('sourcePath') != columns[0].get('sourcePath') + '/domain'
                    or step.get('sql') != expected_check_sql for step in target_checks)):
         raise CatalogError('mixed-phase-profile')
-    return
 
 
 def apply_mixed_migration(connection, plan, *, approved_digest, expected_head, person_roles,

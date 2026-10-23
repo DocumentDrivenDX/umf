@@ -5,8 +5,8 @@ from __future__ import annotations
 import unittest
 from unittest.mock import patch
 
-from umf_access.unified.table_reads import SyncTableReader
 from umf_access.unified.session_policy import SessionError
+from umf_access.unified.table_reads import SyncTableReader
 
 
 class G02OrdinaryRuntimeRefusal(unittest.TestCase):
