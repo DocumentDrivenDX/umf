@@ -329,6 +329,26 @@ archive installs and passes 139 conformance cases. Remaining release gates are
 final tooling source review, actual platform/offline cohort receipts, final
 source/asset correspondence and immutable merge/release/post-download checks.
 
+
+### Current-main integration, 2026-10-23
+
+All hosted checks at `75ef423efd9c6c412e72d2f9703fe052e12ea380` completed
+successfully. Four exact frozen-v2 default-mirror cells cover Ubuntu 24.04
+x86_64 and macOS 14 arm64 with Python 3.11/3.14. Four optional parser cells
+pass, but their original logs do not establish wheel hash identity; the successor
+workflow must retain artifact hashes before final optional-cohort qualification.
+The source/evidence review is preserved in
+[evidence/praxis-embedder/sol-final-source-review.json](evidence/praxis-embedder/sol-final-source-review.json).
+
+Main's R3 compiler port is integrated at `b8c47b23c`. Default Python compilation
+still uses V8; additive Rust migration profiles 0.1/0.2 do not imply G01 profile
+0.3 support. Generated compiler provenance changed, requiring fresh access/codegen
+assets, package/input diffs, installed native checks and offline qualification.
+The frozen v2 receipts remain immutable historical evidence. Fresh merged-source
+SDK installation passes 139 conformance cases, TypeScript checking passes, and
+focused G01/lifecycle regression passes 13 tests/64 assertions. Final combined-head
+CI, reviewed v3 asset custody and publication remain open.
+
 | Risk | Response and recovery |
 | --- | --- |
 | Fill and tighten separated by a commit | Compiler emits one typed paired phase; host rejects split phases. Uncommitted pair rolls back; after commit retain data/constraint and fencing until exact resume or approved forward repair. |

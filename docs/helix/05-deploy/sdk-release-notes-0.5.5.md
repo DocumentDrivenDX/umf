@@ -25,8 +25,9 @@ This is an unpublished candidate inventory, not a release announcement.
 Selected versions are SDK 0.5.5, `umf_access` 0.1.0.dev7 and
 `umf_codegen` 0.1.0a4. The semantic core remains 0.10.0; its original release
 assets are reused. Weft 0.4.49 is the selected unchanged SQL dependency.
-The merged source also contains the separately qualified R2 native Rust core
-development work. This release does not rebuild, replace or publish its Python
+The merged source also contains the separately qualified R2 native Rust core and additive R3 compiler
+development work. The additive Rust migration path admits profiles 0.1/0.2;
+it does not supply the G01 profile 0.3 capability qualified below. This release does not rebuild, replace or publish its Python
 core distribution; the original core wheel and sdist retain their exact bytes.
 Release date, final source/asset hashes and supported matrix cells remain open
 until the completion plan's review and acceptance gates pass.
