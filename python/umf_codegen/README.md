@@ -34,9 +34,15 @@ if result["status"] == "compiled":
     plan = verify_table_migration(result["plan"])
 
 candidates = discover_table_migration_changes(previous_bundle, next_bundle)
+# G03 default-change discovery is opt-in; omitting options preserves the
+# historical candidate set and request shape.
+default_candidates = discover_table_migration_changes(
+    previous_bundle, next_bundle,
+    options={"version": "umf.table-migration-discovery/0.2"},
+)
 reviewed_changes = [
     {key: candidate[key] for key in ("id", "kind", "path", "oldDigest", "newDigest")}
-    for candidate in candidates
+    for candidate in default_candidates
 ]
 ```
 

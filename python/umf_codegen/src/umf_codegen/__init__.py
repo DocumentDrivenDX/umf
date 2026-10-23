@@ -82,6 +82,10 @@ class ReviewedChangeCandidate(TypedDict):
     newValue: object
 
 
+class TableMigrationDiscoveryOptions(TypedDict):
+    version: Literal["umf.table-migration-discovery/0.2"]
+
+
 def compile_table_migration(*, migration_id: str, predecessor: TableMigrationPredecessor | None,
                             previous_bundle: dict[str, object] | None, next_bundle: dict[str, object],
                             options: dict[str, object] | None = None,
@@ -100,14 +104,20 @@ def verify_table_migration(plan: dict[str, object], *, timeout_seconds: float = 
 
 
 def discover_table_migration_changes(previous_bundle: dict[str, object], next_bundle: dict[str, object],
-                                     *, timeout_seconds: float = 30) -> list[ReviewedChangeCandidate]:
+                                     *, options: TableMigrationDiscoveryOptions | None = None,
+                                     timeout_seconds: float = 30) -> list[ReviewedChangeCandidate]:
     """Discover exact source-bound review candidates from two verified deployment bundles.
 
     Returned values explain each delta. Copy only id, kind, path, oldDigest and
     newDigest into `reviewedChanges`; a supported type conversion must also be
     selected explicitly as `pg-cast-v1`.
+    Omitting `options`, or passing `None`, retains the historical discovery
+    profile. G03 candidates require the explicit discovery 0.2 selector.
     """
-    result = execute({"previous": previous_bundle, "next": next_bundle}, timeout_seconds,
+    request = {"previous": previous_bundle, "next": next_bundle}
+    if options is not None:
+        request["options"] = options
+    result = execute(request, timeout_seconds,
                      operation="discover_changes")
     changes = result.get("changes")
     if not isinstance(changes, list) or any(not isinstance(item, dict) for item in changes):
@@ -160,6 +170,7 @@ __all__ = [
     "ReviewedChangeCandidate",
     "TableDeploymentConfiguration",
     "TableDeploymentDiagnostic",
+    "TableMigrationDiscoveryOptions",
     "TableMigrationPredecessor",
     "compile_table_deployment",
     "compile_table_migration",
