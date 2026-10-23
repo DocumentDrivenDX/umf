@@ -206,6 +206,10 @@ export function inspectRowExpression(expression:RowExpression,targetRef:TableRef
   const left=infer(node.left,p+'/left',depth+1),right=infer(node.right,p+'/right',depth+1);if(!left||!right)return;
   if(left.scalar!==null&&!numeric(left)||right.scalar!==null&&!numeric(right))ctx.add('TABLES_OPERATION_DOMAIN',p,'Arithmetic operands must be exact integer or decimal values');
   if(left.scalar===null||right.scalar===null){
+   // Arithmetic has an intrinsic numeric carrier even when both literal
+   // operands are NULL. Keep that carrier so target typing cannot erase the
+   // operator's meaning (NULL + NULL is still numeric NULL).
+   if(left.scalar===null&&right.scalar===null)return bounded({scalar:'decimal',nullable:true,native:'numeric',integral:0,fractional:0,staticallyIntegral:true},p);
    const base=left.scalar===null?right:left;
    return bounded({...base,nullable:true,staticallyIntegral:base.staticallyIntegral},p);
   }

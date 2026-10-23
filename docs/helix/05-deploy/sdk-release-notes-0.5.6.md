@@ -31,7 +31,7 @@ final source and artifact identities, and platform qualification are pending.
 ## Changes and Ownership
 
 The closed `umf.table-operation/0.2` declaration supports same-row Field reads,
-finite literals, coalesce, strict text concatenation, exact numeric arithmetic,
+finite literals, coalesce, strict text concatenation, exact numeric +/−/×,
 and conditional expressions with literal-only predicates. UMF validates model
 meaning and compiles source-bound migration plans. Weft's shared Rust core
 validates the operation and its PostgreSQL backend lowers the expression and
@@ -48,7 +48,9 @@ are excluded from public host errors.
 
 Administrative 0.2 operations are excluded from generated application methods;
 ordinary 0.1 operations remain available. Historical profiles retain their
-semantics. The additive Rust UMF migration path does not implement profile 0.4.
+semantics. The additive Rust UMF migration path remains scoped to profiles
+0.1/0.2; it does not implement profiles 0.3/0.4. G01's existing-field fill/tighten
+behavior retains its separate qualification and regression coverage.
 
 ## Migration and Recovery
 
@@ -69,17 +71,32 @@ database, additional platform, or private consumer acceptance.
 The selected subset is a fenced maintenance migration on one existing table
 and one target, with at most 10,000 selected rows. Expression depth is at most
 16, node count 256, fanout 32 and literal payload 1 MiB; exact numeric inference
-is bounded to 1,000 digits at every node. Hosts also impose statement and lock
+is bounded to 1,000 digits at every node. Numeric input storage requires finite
+`numeric(p,s)` with nonnegative scale no greater than precision; unbounded
+numeric storage is outside this profile. Hosts also impose statement and lock
 timeouts. The public result-frame limit does not bound PostgreSQL's private
 expression memory.
 
 Arbitrary SQL, callbacks, joins, casts, floating arithmetic and ambient state
 are outside this profile. Inputs cannot include the target, newly appended
 siblings, generated values or uninterpreted selected meaning. Appended domain
-CHECKs must permit NULL staging. General default changes, rewrites, retirement,
-online reconciliation, table-inventory changes and cross-store coordination
-remain separately gated MIG-G03–G11 work. No Praxis code or managed target is
-changed by this release.
+CHECKs must permit NULL staging. Adding keys, foreign keys or cross-column
+constraints alongside an appended derived target is outside this profile.
+Existing unchanged native constraints remain effective.
+
+| Residual | Separate scope remaining after G02 |
+| --- | --- |
+| MIG-G03 | General changes to existing-column future defaults. |
+| MIG-G04 | Narrowing, cross-family casts and shadow rewrites. |
+| MIG-G05 | Retained-value retirement windows and reversible deletion. |
+| MIG-G06 | Online chunked backfills with concurrent application writes. |
+| MIG-G07 | Cross-document and coordinated multi-store migrations. |
+| MIG-G08 | Genuine migration qualification for Truss, Ashlar and other backends. |
+| MIG-G09 | Actual managed consumer acceptance on an authorized isolated target; local PostgreSQL evidence is insufficient. |
+| MIG-G10 | Initial publication and table-inventory changes in the phased successor profiles. |
+| MIG-G11 | Combined drop/append replacement of columns in one existing-table migration. |
+
+No Praxis code or managed target is changed by this release.
 
 ## References
 

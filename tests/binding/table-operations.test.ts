@@ -119,6 +119,7 @@ test('defaulted create omission and each predicate shape retain explicit typed m
   {op:'in',field:ref('owner'),values:[{kind:'literal',value:{string:'a'}},{kind:'literal',value:{string:'b'}}]},
   ...['eq','ne','lt','le','gt','ge','startsWith'].map(op=>({op,field:ref('owner'),value:{kind:'literal',value:{string:'a'}}})),
  ]){const e=source(),c=payload(e).commands[0];c.parameters=[];c.body.where=where;expect(inspect(e).diagnostics).toEqual([]);}
+ for(const op of ['eq','ne']){const e=source(),c=payload(e).commands[0];e.modules[0].elements.find((x:any)=>x.id==='owner').nullability='absent-allowed';c.parameters=[];c.body.where={op,field:ref('owner'),value:{kind:'literal',value:null}};expect(inspect(e).diagnostics,`${op} retains nullable closed-predicate admission`).toEqual([]);}
 });
 
 test('module-wide operation predicate capacity refuses before interpreting an excess subtree',()=>{
@@ -170,6 +171,9 @@ test('G02 expression typing admits every operator family and literal-only condit
   ['count_copy',{op:'add',left:field('count'),right:lit({integerToken:'1'})}],
   ['count_copy',{op:'subtract',left:field('count'),right:lit({integerToken:'1'})}],
   ['count_copy',{op:'multiply',left:field('count'),right:lit({integerToken:'2'})}],
+  ['count_copy',{op:'add',left:lit(null),right:lit(null)}],
+  ['amount_wide',{op:'multiply',left:lit(null),right:lit(null)}],
+  ['display',{op:'concat',args:[lit(null),lit(null)]}],
   ['count_copy',lit({integerToken:'1.0'})],['count_copy',lit({decimalToken:'1.0'})],
   ['count_copy',lit({decimalToken:'100e-2'})],['count_copy',lit({decimalToken:'-0e999999999999999999999999'})],
   ['count_copy',lit({decimalToken:'2e1'})],
@@ -192,6 +196,25 @@ test('G02 expression typing admits every operator family and literal-only condit
  for(const [target,expression]of good){const result=typed(target,expression);expect(result.valid,`${target}:${JSON.stringify(expression)} ${JSON.stringify(result.diagnostics)}`).toBe(true);}
 });
 
+test('G02 conditional predicates preserve NULL-safe equality and reject boolean/UUID ordering',()=>{
+ const condition=(when:any)=>({op:'conditional',when,then:{op:'field',field:ref('id')},else:{op:'literal',value:{string:'fallback'}}});
+ const nullValue={kind:'literal',value:null};
+ for(const op of ['eq','ne'])for(const predicate of [
+  {op,field:ref('owner'),value:nullValue},
+  {op:'not',arg:{op,field:ref('owner'),value:nullValue}},
+ ]){
+  const d=source();addColumn(d,'display','string',{kind:'text'});d.modules[0].elements.find((x:any)=>x.id==='owner').nullability='absent-allowed';
+  backfill(d,'display',condition(predicate));
+  expect(inspect(d).valid,`${JSON.stringify(predicate)} ${JSON.stringify(inspect(d).diagnostics)}`).toBe(true);
+ }
+ for(const field of ['flag','event_uuid']){
+  const d=source();addColumn(d,'display','string',{kind:'text'});addColumn(d,'flag','boolean',{kind:'boolean'});addColumn(d,'event_uuid','uuid',{kind:'uuid'});d.modules[0].elements.find((x:any)=>x.id===field).nullability='absent-allowed';
+  const expression=condition({op:'lt',field:ref(field),value:nullValue});
+  backfill(d,'display',expression);
+  expect(inspect(d).valid,`${field} ordering with NULL must refuse`).toBe(false);
+ }
+});
+
 test('G02 rejects incompatible branches and numeric bounds at every expression node',()=>{
  const typed=(target:string,expression:any)=>{const d=source();
   addColumn(d,'count','integer',{kind:'int4'});addColumn(d,'count_decimal','decimal',{kind:'numeric',precision:5,scale:0},{facets:{precision:5,scale:0}});
@@ -207,8 +230,14 @@ test('G02 rejects incompatible branches and numeric bounds at every expression n
  expect(typed('amount_wide',lit({decimalToken:'1e-1000'})).valid).toBe(true);
  expect(typed('count_copy',lit({decimalToken:'1.5'})).valid).toBe(false);
  expect(typed('count_copy',lit({integerToken:'1.2'})).valid).toBe(false);
+ for(const target of ['display','flag','event_day'])expect(typed(target,{op:'add',left:lit(null),right:lit(null)}).valid,`NULL arithmetic must not acquire ${target} carrier`).toBe(false);
+ expect(typed('count_copy',{op:'concat',args:[lit(null),lit(null)]}).valid).toBe(false);
  expect(typed('amount_wide',lit({integerToken:'1'.repeat(1001)})).diagnostics.map(x=>x.code)).toContain('TABLES_OPERATION_CAPACITY');
  expect(typed('amount_wide',lit({decimalToken:'1e-1001'})).diagnostics.map(x=>x.code)).toContain('TABLES_OPERATION_CAPACITY');
+ const cancelled='0.'+'0'.repeat(2000)+'99999e2005';
+ expect(typed('count_copy',lit({integerToken:cancelled})).valid).toBe(true);
+ expect(typed('count_copy',lit({decimalToken:cancelled})).valid).toBe(true);
+ expect(typed('count_copy',lit({decimalToken:'0.'+'0'.repeat(2001)+'99999e2005'})).valid).toBe(false);
  expect(typed('amount_wide',{op:'coalesce',args:[lit(null),{op:'coalesce',args:[lit({decimalToken:'1e-1001'}),field('amount_wide')]}]}).diagnostics.map(x=>x.code)).toContain('TABLES_OPERATION_CAPACITY');
  const tooMany={op:'conditional',when:{op:'in',field:ref('id'),values:Array.from({length:33},()=>({kind:'literal',value:{string:'x'}}))},then:field('id'),else:lit({string:'x'})};
  expect(()=>rowExpressionInputRefs(tooMany as any)).toThrow(/fanout/);

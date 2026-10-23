@@ -3,7 +3,9 @@ import ts from 'typescript-api';
 import {readdir,readFile} from 'node:fs/promises';
 const owners:Record<string,readonly string[]>={
  'migration/index.ts':['./options','./reviewed','./phases','./phases-options','../model/json','../model/document','../model/types','../compilation/bundle/hash','../table-deployment','../table-deployment/sql'],
- 'migration/options.ts':['../model/document','../model/types','../compilation/bundle/hash','../table-deployment','../extensions/tables','./reviewed'],
+ // Migration options close the admitted backfill inputs using the table-owned,
+ // pure row-expression reference walker; this does not grant lowering authority.
+ 'migration/options.ts':['../model/document','../model/types','../compilation/bundle/hash','../table-deployment','../extensions/tables','../extensions/tables/row-expressions','./reviewed'],
  'migration/reviewed.ts':['../compilation/bundle/hash','../model/document','../table-deployment'],
  'migration/phases.ts':['../table-deployment','./phases-options'],
  'migration/phases-options.ts':['../extensions/tables'],

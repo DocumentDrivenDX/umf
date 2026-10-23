@@ -1498,6 +1498,10 @@ Conditions use existing `all`, `and`, `or`, `not`, `isNull`, `in`, comparisons a
 operands. `related`, parameter, sourceField, rowExpression, principal and clock
 operands refuse. Predicate ordering, NULL and comparison semantics retain their
 qualified meaning: only SQL true selects `then`; false or unknown selects `else`.
+Equality and inequality retain the existing NULL-safe predicate meaning: two
+NULL values compare equal, and exactly one NULL compares unequal. Ordering and
+membership retain their existing SQL three-valued meaning. Qualified operator
+closure MUST preserve these distinctions.
 
 Every input Field MUST already exist on the same table and retain exact logical,
 native, facet, collation and mapping meaning across both sources. The target,
@@ -1511,7 +1515,9 @@ Carrier typing follows SD-007. CoreLiteral wrappers determine non-NULL literal
 types without imposing final target refinements on intermediate operands. NULL
 is a context-resolved nullable leaf; ambiguous incompatible carriers refuse.
 Coalesce returns the first non-NULL operand, conditional selects one branch, and
-concat is strict: any NULL operand yields NULL. Text/varchar requires C
+concat is strict: any NULL operand yields NULL. Concat retains its text carrier
+and arithmetic retains its numeric carrier even when every operand is NULL;
+context resolution cannot turn either into an unrelated result type. Text/varchar requires C
 collation; char/bpchar and locale conversions refuse. Boolean, UUID, date and
 instant admit only identity-preserving field/literal, coalesce and conditional
 forms with exact native/logical compatibility. No float, implicit parsing,
@@ -1523,6 +1529,10 @@ nonnegative scale no greater than precision. A node's maximum integral and
 fractional digits `(I,S)` use native bounds or exact token bounds; add/subtract
 infer `(max(I1,I2)+1,max(S1,S2))`, multiply `(I1+I2,S1+S2)`, and
 coalesce/conditional componentwise maxima. Every node requires I+S <= 1000.
+Literal budgets describe the effective exact value after exponent/fraction
+cancellation. Implementations MUST bound the resulting coefficient and scale
+before allocating canonical native values; a raw exponent threshold is not a
+substitute for this budget. Original source tokens remain unchanged.
 All arithmetic uses unconstrained numeric intermediates. Nonfinite database
 values or final NULL/invalid results abort the entire phase. No invalid row is
 skipped, clipped, quarantined or silently replaced by a default.
