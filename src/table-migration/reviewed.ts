@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {canonical,hashCanonical} from '../compilation/bundle/hash';
 import {readDocument} from '../model/document';
+import {UmfError} from '../model/types';
 import type {TableDeploymentBundle} from '../table-deployment';
 import {discoverG03DefaultChanges} from './g03-defaults';
 
@@ -15,6 +16,11 @@ const safeId=(value:string):boolean=>!!value&&value.length<=128&&!value.includes
 
 /** Source-bound marker candidates. Candidates only identify changes; compiler support is checked independently. */
 export function discoverTableMigrationChanges(previous:TableDeploymentBundle,next:TableDeploymentBundle,selector?:TableMigrationDiscoverySelector):ReviewedChangeCandidate[]{
+ if(selector!==undefined&&(!selector||typeof selector!=='object'||Object.keys(selector).length!==1||selector.version!=='umf.table-migration-discovery/0.2'))throw new Error('Unknown table-migration discovery selector');
+ if(selector!==undefined){
+  if(previous.source.format!=='json')throw new UmfError('TABLE_MIGRATION_OPTIONS','Version 0.2 discovery requires exact JSON retained sources','/previous/source/format');
+  if(next.source.format!=='json')throw new UmfError('TABLE_MIGRATION_OPTIONS','Version 0.2 discovery requires exact JSON retained sources','/next/source/format');
+ }
  const result:ReviewedChangeCandidate[]=[];
  const oldDocument=readDocument(previous.source.utf8,previous.source.format),newDocument=readDocument(next.source.utf8,next.source.format);
  const add=(kind:ReviewedChangeKind,path:string,a:unknown,b:unknown):void=>{
@@ -58,7 +64,6 @@ export function discoverTableMigrationChanges(previous:TableDeploymentBundle,nex
   }
  }
  if(selector!==undefined){
-  if(!selector||typeof selector!=='object'||Object.keys(selector).length!==1||selector.version!=='umf.table-migration-discovery/0.2')throw new Error('Unknown table-migration discovery selector');
   result.push(...discoverG03DefaultChanges(previous,next));
  }
  return result;

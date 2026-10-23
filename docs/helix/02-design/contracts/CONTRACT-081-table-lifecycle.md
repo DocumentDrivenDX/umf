@@ -1668,6 +1668,16 @@ meaning to a default.
 | Approval / installation | Approval 0.1 and installation 0.3 with explicit latest-plan 0.5 admission; exact storage, inventory and ACL meaning retained |
 | Opt-in Rust migration | MUST refuse unsupported plan/options 0.5 before effects; no engine fallback |
 
+Selected discovery 0.2 MUST require JSON for both retained sources. A non-JSON
+predecessor or successor MUST refuse with `TABLE_MIGRATION_OPTIONS` at
+`/previous/source/format` or `/next/source/format`, respectively. Historical
+unselected discovery, including YAML inputs, MUST retain its exact behavior.
+
+The Python discovery API defines `options=None` as an unselected call and MUST
+omit the selector member from its wire request. A raw bridge request containing
+`options:null` is an explicit invalid selector and MUST refuse; these are
+separate API observations.
+
 Options 0.5 MUST contain exactly `version`, `backfills`, `concurrentIndexes`,
 `reviewedChanges`, `validations`. All arrays except `reviewedChanges` MUST be
 empty. That array MUST contain one marker with exactly `id`, `kind`, `path`,

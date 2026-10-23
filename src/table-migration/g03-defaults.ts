@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {readDocument} from '../model/document';
+import {copyJson} from '../model/json';
 import {checkSchemaLiteral,literalIdentity,schemaCoefficient} from '../model/schema-literals';
 import {UmfError,type Document,type Element} from '../model/types';
 import type {TableDefault,TableRef} from '../extensions/tables';
@@ -75,7 +76,7 @@ export function validateG03DefaultChange(previous:TableDeploymentBundle,next:Tab
  // Whole-source closure: after removing exactly the selected native and logical
  // default properties, every parsed source value and ordered array must match.
  const oldDoc=readDocument(previous.source.utf8,'json'),newDoc=readDocument(next.source.utf8,'json');
- const oldCopy=structuredClone(oldDoc) as any,newCopy=structuredClone(newDoc) as any;
+ const oldCopy=copyJson(oldDoc) as any,newCopy=copyJson(newDoc) as any;
  const oldMapping=oldCopy.modules[old.moduleIndex].extensions['umf.tables'].tables[old.tableIndex].columns[old.columnIndex];
  const newMapping=newCopy.modules[fresh.moduleIndex].extensions['umf.tables'].tables[fresh.tableIndex].columns[fresh.columnIndex];
  const oldField=oldCopy.modules.find((module:any)=>module.id===old.ref.module)?.elements.find((item:any)=>item.id===old.ref.element);
@@ -84,7 +85,7 @@ export function validateG03DefaultChange(previous:TableDeploymentBundle,next:Tab
  if(!same(oldCopy,newCopy))fail('TABLE_MIGRATION_UNSUPPORTED','Only the selected native and logical default properties may change','/next/source');
  // The independently recompiled physical catalog may differ only in that
  // same declaration and its resulting column definition text.
- const oldCatalog=structuredClone(previous.expectedCatalog) as any,newCatalog=structuredClone(next.expectedCatalog) as any;
+ const oldCatalog=copyJson(previous.expectedCatalog) as any,newCatalog=copyJson(next.expectedCatalog) as any;
  const oldTable=oldCatalog.tables.find((item:any)=>item.id===old.table.id),newTable=newCatalog.tables.find((item:any)=>item.id===fresh.table.id);
  const oldPhysical=oldTable?.columns.find((item:any)=>item.field.module===old.ref.module&&item.field.element===old.ref.element);
  const newPhysical=newTable?.columns.find((item:any)=>item.field.module===fresh.ref.module&&item.field.element===fresh.ref.element);

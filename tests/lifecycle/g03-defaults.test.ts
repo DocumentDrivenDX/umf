@@ -87,12 +87,35 @@ test('G03 supports SET and DROP and records an absent-to-literal-NULL change',()
  expect(nullPlan.status).toBe('compiled');if(nullPlan.status!=='compiled')throw Error(JSON.stringify(nullPlan.diagnostics));
 });
 
+test('G03 plan compilation uses portable JSON copying without structuredClone',()=>{
+ const input=transition(undefined,literal('new'));
+ const original=globalThis.structuredClone;
+ try{
+  Object.defineProperty(globalThis,'structuredClone',{configurable:true,writable:true,value:undefined});
+  const result=compileTableMigration({id:'g03-no-structured-clone',predecessor:{id:'g03-no-structured-clone-base',digest:'a'.repeat(64)},...input});
+  expect(result.status).toBe('compiled');
+ }finally{Object.defineProperty(globalThis,'structuredClone',{configurable:true,writable:true,value:original});}
+});
+
 test('G03 discovery selector is exact and legacy discovery stays unchanged',()=>{
  const {previous,next}=transition(undefined,literal('next'));
  expect(discoverTableMigrationChanges(previous,next).some(item=>item.kind==='change-default')).toBe(false);
  expect(discoverTableMigrationChanges(previous,next,{version:'umf.table-migration-discovery/0.2'}).some(item=>item.kind==='change-default')).toBe(true);
  expect(()=>discoverTableMigrationChanges(previous,next,{version:'umf.table-migration-discovery/0.2',extra:true} as any)).toThrow();
  expect(()=>discoverTableMigrationChanges(previous,next,{version:'umf.table-migration-discovery/0.3'} as any)).toThrow();
+});
+
+test('G03 opt-in discovery refuses non-JSON sources while unselected legacy YAML behavior remains unchanged',()=>{
+ const {previous,next}=transition(undefined,literal('new'));
+ const yamlPrevious={...previous,source:{...previous.source,format:'yaml' as const}};
+ const yamlNext={...next,source:{...next.source,format:'yaml' as const}};
+ expect(()=>discoverTableMigrationChanges(yamlPrevious,next)).not.toThrow();
+ expect(discoverTableMigrationChanges(yamlPrevious,next)).toEqual([]);
+ expect(()=>discoverTableMigrationChanges(yamlPrevious,next,{version:'umf.table-migration-discovery/0.3'} as any)).toThrow('Unknown table-migration discovery selector');
+ for(const [before,after,path] of [[yamlPrevious,next,'/previous/source/format'],[previous,yamlNext,'/next/source/format']] as const){
+  try{discoverTableMigrationChanges(before,after,{version:'umf.table-migration-discovery/0.2'});throw Error('G03 selector admitted a non-JSON retained source');}
+  catch(error){expect(error).toMatchObject({code:'TABLE_MIGRATION_OPTIONS',path});}
+ }
 });
 
 test('G03 keeps logical-only default changes out of its selector and refuses unrelated source effects',()=>{

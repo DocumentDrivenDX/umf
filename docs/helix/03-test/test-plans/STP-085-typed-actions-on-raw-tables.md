@@ -297,6 +297,11 @@ retain their narrower scope.
 | US-051-AC15, volatile/native boundary | Same installed suite; `@covers US-051-AC15` | UUID values use the qualified generator; timestamps equal transaction start across later statements; malicious search_path cannot replace builtins; unchanged RLS/constraints/ACLs remain effective. |
 | US-051-AC15, real recovery | Same suite with two-session writer barriers and driver fault injection; `@covers US-051-AC15` | Native writer exclusion, rollback before commit, lost COMMIT response with committed progress and no redispatch, same-catalog transition with/without authenticated progress, publication fault/resume and retained fencing. |
 
+Selected discovery 0.2 must refuse retained YAML with the actual previous or
+next source-format pointer, while unselected YAML discovery retains its old
+output. Test Python `options=None` omission separately from raw bridge
+`options:null` refusal; do not assign one expected result to both routes.
+
 Use fabricated commerce integer/decimal targets, Person nullable values, an
 audit transaction timestamp and UUID identifiers. Manually specify expected
 historical and new row values. Include an empty table and multiple differing old
