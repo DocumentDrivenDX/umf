@@ -616,12 +616,35 @@ impl CompiledSchema {
         ctx: &mut Context<'_>,
         evaluated: &mut Evaluated,
     ) -> Result<(), EngineError> {
+        self.collect_schema_annotations_resolved(
+            schema_path,
+            schema,
+            data,
+            ip,
+            depth,
+            ctx,
+            evaluated,
+            false,
+        )
+    }
+
+    fn collect_schema_annotations_resolved<T: InstanceView>(
+        &self,
+        schema_path: &Utf16,
+        schema: &Value,
+        data: &T,
+        ip: &Utf16,
+        depth: usize,
+        ctx: &mut Context<'_>,
+        evaluated: &mut Evaluated,
+        id_already_applied: bool,
+    ) -> Result<(), EngineError> {
         let mut scan = evaluated.child(ctx, ip)?;
         scan.mode = EvaluationMode::AllErrors;
         scan.collect_annotations = true;
         scan.annotation_scan = true;
         let mut ignored_errors = Vec::new();
-        self.eval(
+        self.eval_resolved(
             schema,
             data,
             ip,
@@ -630,6 +653,7 @@ impl CompiledSchema {
             ctx,
             &mut ignored_errors,
             &mut scan,
+            id_already_applied,
         )?;
         evaluated.merge(scan, ctx, ip)?;
         Ok(())
@@ -1890,8 +1914,8 @@ impl CompiledSchema {
         reference: &Value,
         path: &Utf16,
         ctx: &mut Context<'_>,
-    ) -> Result<(&'a Value, Utf16), EngineError> {
-        self.resolve_ref(reference, path, ctx).map_err(|error| {
+    ) -> Result<(&'a Value, Utf16, bool), EngineError> {
+        let (target, target_path) = self.resolve_ref(reference, path, ctx).map_err(|error| {
             if matches!(self.regex_profile, RegexProfile::Python(_))
                 && error.code == "SCHEMA_REF_UNRESOLVED"
             {
@@ -1899,7 +1923,61 @@ impl CompiledSchema {
             } else {
                 error
             }
-        })
+        })?;
+        let mut id_applied = false;
+        if !matches!(self.regex_profile, RegexProfile::Python(_)) {
+            let is_pointer_fragment = as_utf8(reference).is_some_and(|text| {
+                text.split_once('#')
+                    .is_some_and(|(_, fragment)| fragment.starts_with('/'))
+            });
+            if is_pointer_fragment {
+                // JSON Pointer traversal normalizes each entered schema path below.
+                id_applied = true;
+            } else if let Some(origin) = target_path
+                .to_utf8()
+                .ok()
+                .and_then(|text| text.split_once('#').map(|(base, _)| base.to_owned()))
+            {
+                let mut root = (schema_id(&self.schema).as_deref() == Some(origin.as_str()))
+                    .then_some(&self.schema);
+                if root.is_none() {
+                    for (uri, value) in &self.resources.entries {
+                        ctx.charge_work(uri.len().saturating_add(1), Utf16::default())?;
+                        if uri.to_utf8().ok().as_deref() == Some(origin.as_str()) {
+                            root = Some(value);
+                            break;
+                        }
+                    }
+                }
+                if root.is_none() {
+                    root = find_embedded_resource(
+                        &self.schema,
+                        &origin,
+                        self.dialect,
+                        ctx,
+                        path,
+                    )?;
+                }
+                if root.is_none() {
+                    for (_, value) in &self.resources.entries {
+                        root = find_embedded_resource(
+                            value,
+                            &origin,
+                            self.dialect,
+                            ctx,
+                            path,
+                        )?;
+                        if root.is_some() {
+                            break;
+                        }
+                    }
+                }
+                if root.is_some_and(|root| std::ptr::eq(root, target)) {
+                    id_applied = true;
+                }
+            }
+        }
+        Ok((target, target_path, id_applied))
     }
 
     fn python_record_reference_lookup(
@@ -2324,6 +2402,12 @@ impl CompiledSchema {
             })?
         };
         let mut current = root;
+        let mut schema_path = effective_base.encode_utf16().collect::<Vec<_>>();
+        schema_path.push(0x23);
+        if matches!(self.regex_profile, RegexProfile::Python(_)) {
+            schema_path.extend(fragment.encode_utf16());
+        }
+        let mut sp = Utf16::new(schema_path);
         if !fragment.is_empty() {
             ctx.charge_work(fragment.len(), path.clone())?;
             let decoded_fragment = percent_decode_fragment(fragment);
@@ -2331,34 +2415,84 @@ impl CompiledSchema {
                 for part in decoded_fragment[1..].split('/') {
                     let key = unescape_pointer(part);
                     let traversing_scalar = !matches!(current, Value::Object(_) | Value::Array(_));
-                    current = match current {
+                    let (next, next_path) = match current {
                         Value::Object(m) => {
                             ctx.charge_work(m.len(), path.clone())?;
-                            m.iter()
+                            let (key, value) = m.iter()
                                 .find(|(k, _)| k.units() == key.as_slice())
-                                .map(|(_, v)| v)
+                                .ok_or_else(|| {
+                                    if traversing_scalar
+                                        && matches!(self.regex_profile, RegexProfile::Python(_))
+                                    {
+                                        EngineError::new(
+                                            "PYTHON_SCHEMA_EVALUATION",
+                                            path.clone(),
+                                            "Schema reference path traverses a non-container value",
+                                        )
+                                        .with_python_schema_terminal(PythonSchemaTerminal::LocalReference)
+                                    } else {
+                                        EngineError::new(
+                                            "SCHEMA_REF_UNRESOLVED",
+                                            path.clone(),
+                                            "Schema reference target does not exist",
+                                        )
+                                    }
+                                })?;
+                            let next_path = if matches!(self.regex_profile, RegexProfile::Python(_))
+                            {
+                                sp.clone()
+                            } else {
+                                self.schema_pointer(&sp, key, ctx)?
+                            };
+                            (value, next_path)
                         }
-                        Value::Array(a) => part.parse::<usize>().ok().and_then(|i| a.get(i)),
-                        _ => None,
+                        Value::Array(a) => {
+                            let index = part.parse::<usize>().ok();
+                            let value = index.and_then(|i| a.get(i)).ok_or_else(|| {
+                                EngineError::new(
+                                    "SCHEMA_REF_UNRESOLVED",
+                                    path.clone(),
+                                    "Schema reference target does not exist",
+                                )
+                            })?;
+                            let index = index.unwrap_or_default();
+                            if matches!(self.regex_profile, RegexProfile::Python(_)) {
+                                (value, sp.clone())
+                            } else {
+                                ctx.charge_work(sp.len().saturating_add(22), Utf16::default())?;
+                                (value, append_schema_path(&sp, &index.to_string()))
+                            }
+                        }
+                        _ => {
+                            return Err(if traversing_scalar
+                                && matches!(self.regex_profile, RegexProfile::Python(_))
+                            {
+                                EngineError::new(
+                                    "PYTHON_SCHEMA_EVALUATION",
+                                    path.clone(),
+                                    "Schema reference path traverses a non-container value",
+                                )
+                                .with_python_schema_terminal(PythonSchemaTerminal::LocalReference)
+                            } else {
+                                EngineError::new(
+                                    "SCHEMA_REF_UNRESOLVED",
+                                    path.clone(),
+                                    "Schema reference target does not exist",
+                                )
+                            })
+                        }
+                    };
+                    current = next;
+                    if !matches!(self.regex_profile, RegexProfile::Python(_)) {
+                    let normalized = self.effective_schema_path(current, &next_path, ctx)?;
+                    let entered_resource = schema_id(current).is_some();
+                    sp = preserve_schema_fragment(
+                        &normalized,
+                        &next_path,
+                        entered_resource,
+                        ctx,
+                    )?;
                     }
-                    .ok_or_else(|| {
-                        if traversing_scalar
-                            && matches!(self.regex_profile, RegexProfile::Python(_))
-                        {
-                            EngineError::new(
-                                "PYTHON_SCHEMA_EVALUATION",
-                                path.clone(),
-                                "Schema reference path traverses a non-container value",
-                            )
-                            .with_python_schema_terminal(PythonSchemaTerminal::LocalReference)
-                        } else {
-                            EngineError::new(
-                                "SCHEMA_REF_UNRESOLVED",
-                                path.clone(),
-                                "Schema reference target does not exist",
-                            )
-                        }
-                    })?;
                 }
             } else {
                 current = if let Some(anchor) =
@@ -2377,10 +2511,6 @@ impl CompiledSchema {
                 };
             }
         }
-        let mut schema_path = effective_base.encode_utf16().collect::<Vec<_>>();
-        schema_path.push(0x23);
-        schema_path.extend(fragment.encode_utf16());
-        let sp = Utf16::new(schema_path);
         Ok((current, sp))
     }
     fn draft3_type_matches<T: InstanceView>(
@@ -2435,7 +2565,27 @@ impl CompiledSchema {
         out: &mut Vec<StructuralError>,
         evaluated: &mut Evaluated,
     ) -> Result<(), EngineError> {
-        let scoped_path = self.effective_schema_path(schema, sp, ctx)?;
+        self.eval_resolved(schema, data, ip, sp, depth, ctx, out, evaluated, false)
+    }
+
+    fn eval_resolved<T: InstanceView>(
+        &self,
+        schema: &Value,
+        data: &T,
+        ip: &Utf16,
+        sp: &Utf16,
+        depth: usize,
+        ctx: &mut Context<'_>,
+        out: &mut Vec<StructuralError>,
+        evaluated: &mut Evaluated,
+        id_already_applied: bool,
+    ) -> Result<(), EngineError> {
+        let scoped_path = if id_already_applied {
+            ctx.charge_work(sp.len(), Utf16::default())?;
+            sp.clone()
+        } else {
+            self.effective_schema_path(schema, sp, ctx)?
+        };
         let scope_len = evaluated.dynamic_scope.len();
         if let Some(Value::String(anchor)) = get(schema, "$dynamicAnchor") {
             ctx.charge_work_u64(
@@ -2515,44 +2665,8 @@ impl CompiledSchema {
             .filter(|base| !base.is_empty())
             .or_else(|| schema_id(&self.schema))
             .unwrap_or_default();
-        let current_base = path
-            .to_utf8()
-            .ok()
-            .and_then(|text| text.split_once('#').map(|(base, _)| base.to_owned()))
-            .unwrap_or_default();
-        let root_base = schema_id(&self.schema);
-        let mut already_resolved = false;
-        if let Some(base) = root_base {
-            ctx.charge_work_u64(
-                base.len() as u64 + id.len() as u64 + current_base.len() as u64 + 1,
-                Utf16::default(),
-            )?;
-            already_resolved = resolve_schema_uri(self.dialect, &base, &id).as_deref()
-                == Some(current_base.as_str());
-        }
-        if !current_base.is_empty() && !already_resolved {
-            for (uri, _) in &self.resources.entries {
-                ctx.charge_work_u64(uri.len() as u64 + id.len() as u64 + 1, Utf16::default())?;
-                let base = uri.to_utf8().unwrap_or_default();
-                if resolve_schema_uri(self.dialect, &base, &id).as_deref()
-                    == Some(current_base.as_str())
-                {
-                    already_resolved = true;
-                    break;
-                }
-            }
-        }
-        let effective = if id.contains(':') {
-            id
-        } else if already_resolved {
-            // `resolve_ref` returns a target path rooted at the resolved
-            // resource URI. If the target schema repeats that URI in `$id`,
-            // carrying it through evaluation must not join the identifier a
-            // second time (which duplicates relative directory IDs).
-            current_base
-        } else {
-            resolve_schema_uri(self.dialect, &parent, &id).unwrap_or(id)
-        };
+        ctx.charge_work_u64(parent.len() as u64 + id.len() as u64 + 1, Utf16::default())?;
+        let effective = resolve_schema_uri(self.dialect, &parent, &id).unwrap_or(id);
         let mut units = effective.encode_utf16().collect::<Vec<_>>();
         units.push(b'#' as u16);
         Ok(Utf16::new(units))
@@ -2873,7 +2987,7 @@ impl CompiledSchema {
         unevaluated_properties: &mut Option<(&Value, Utf16)>,
         unevaluated_items: &mut Option<(&Value, Utf16)>,
     ) -> Result<(), EngineError> {
-        let (target, tsp) = self.resolve_eval_ref(rule, &kp, ctx)?;
+        let (target, tsp, id_applied) = self.resolve_eval_ref(rule, &kp, ctx)?;
         // The Draft 3 predecessor's reference applicator treats
         // boolean targets as mappings and raises TypeError. Keep
         // this a runtime failure: unrelated `definitions` values
@@ -2905,7 +3019,7 @@ impl CompiledSchema {
             && (self.uses_python_2020_annotation_profile()
                 || self.uses_python_2019_annotation_profile())
         {
-            self.collect_schema_annotations(
+            self.collect_schema_annotations_resolved(
                 &tsp,
                 target,
                 data,
@@ -2913,12 +3027,13 @@ impl CompiledSchema {
                 depth + 1,
                 ctx,
                 &mut reference_annotations,
+                id_applied,
             )?;
             evaluated.merge(reference_annotations, ctx, ip)?;
             return Ok(());
         }
         let mut reference_errors = Vec::new();
-        if let Err(error) = self.eval(
+        if let Err(error) = self.eval_resolved(
             target,
             data,
             ip,
@@ -2927,6 +3042,7 @@ impl CompiledSchema {
             ctx,
             &mut reference_errors,
             &mut reference_annotations,
+            id_applied,
         ) {
             if matches!(self.regex_profile, RegexProfile::Python(_)) {
                 for error in &mut reference_errors {
@@ -2992,8 +3108,9 @@ impl CompiledSchema {
         let python_recursive = keyword == "$recursiveRef"
             && self.dialect == SchemaDialect::Draft2019_09
             && matches!(self.regex_profile, RegexProfile::Python(_));
-        let (mut target, mut tsp) = if python_recursive {
-            self.python_recursive_retarget(rule, evaluated, ctx)?
+        let (mut target, mut tsp, mut id_applied) = if python_recursive {
+            let (target, tsp) = self.python_recursive_retarget(rule, evaluated, ctx)?;
+            (target, tsp, false)
         } else {
             self.resolve_eval_ref(rule, &kp, ctx)?
         };
@@ -3054,7 +3171,8 @@ impl CompiledSchema {
                         tsp = dynamic_path.clone();
                     } else {
                         let dynamic_ref = Value::String(dynamic_path.clone());
-                        (target, tsp) = self.resolve_eval_ref(&dynamic_ref, dynamic_path, ctx)?;
+                        (target, tsp, id_applied) =
+                            self.resolve_eval_ref(&dynamic_ref, dynamic_path, ctx)?;
                     }
                     if matches!(self.regex_profile, RegexProfile::Python(_))
                         && !matches!(target, Value::Object(_) | Value::Bool(_))
@@ -3075,7 +3193,7 @@ impl CompiledSchema {
             && (self.uses_python_2020_annotation_profile()
                 || self.uses_python_2019_annotation_profile())
         {
-            self.collect_schema_annotations(
+            self.collect_schema_annotations_resolved(
                 &tsp,
                 target,
                 data,
@@ -3083,12 +3201,13 @@ impl CompiledSchema {
                 depth + 1,
                 ctx,
                 &mut reference_annotations,
+                id_applied,
             )?;
             evaluated.merge(reference_annotations, ctx, ip)?;
             return Ok(());
         }
         let mut reference_errors = Vec::new();
-        if let Err(error) = self.eval(
+        if let Err(error) = self.eval_resolved(
             target,
             data,
             ip,
@@ -3097,6 +3216,7 @@ impl CompiledSchema {
             ctx,
             &mut reference_errors,
             &mut reference_annotations,
+            id_applied,
         ) {
             if matches!(self.regex_profile, RegexProfile::Python(_)) {
                 for error in &mut reference_errors {
@@ -8881,6 +9001,30 @@ fn append_schema_path(p: &Utf16, s: &str) -> Utf16 {
     u.extend(s.encode_utf16());
     Utf16::new(u)
 }
+fn preserve_schema_fragment(
+    normalized: &Utf16,
+    original: &Utf16,
+    entered_resource: bool,
+    ctx: &mut Context<'_>,
+) -> Result<Utf16, EngineError> {
+    let normalized_hash = normalized.units().iter().position(|unit| *unit == 0x23);
+    let original_hash = original.units().iter().position(|unit| *unit == 0x23);
+    let (Some(normalized_hash), Some(original_hash)) = (normalized_hash, original_hash) else {
+        return Ok(normalized.clone());
+    };
+    let suffix = if entered_resource {
+        &original.units()[original_hash..original_hash + 1]
+    } else {
+        &original.units()[original_hash..]
+    };
+    ctx.charge_work_u64(
+        normalized_hash as u64 + suffix.len() as u64 + 1,
+        Utf16::default(),
+    )?;
+    let mut units = normalized.units()[..normalized_hash].to_vec();
+    units.extend_from_slice(suffix);
+    Ok(Utf16::new(units))
+}
 fn append_schema_pointer(p: &Utf16, segment: &Utf16) -> Utf16 {
     let mut units = p.units().to_vec();
     if units.last() != Some(&0x2f) {
@@ -9231,6 +9375,87 @@ mod static_reference_resolution_tests {
         .unwrap();
         assert!(compiled
             .validate(&value(r#"{"x":"ok"}"#), &mut Context::ordinary())
+            .unwrap()
+            .is_empty());
+    }
+
+    #[test]
+    fn repeated_relative_ids_are_applied_for_direct_nested_evaluation() {
+        let schema = r##"{"$schema":"https://json-schema.org/draft/2020-12/schema","$id":"https://example.test/root.json","properties":{"x":{"$id":"foo/","properties":{"y":{"$id":"foo/","$ref":"target"}}}}}"##;
+        let compiled = compile(
+            schema,
+            vec![
+                ("https://example.test/foo/foo/target", r#"{"type":"string"}"#),
+                ("https://example.test/foo/target", r#"{"type":"integer"}"#),
+            ],
+        )
+        .unwrap();
+        assert!(compiled
+            .validate(&value(r#"{"x":{"y":"ok"}}"#), &mut Context::ordinary())
+            .unwrap()
+            .is_empty());
+    }
+
+    #[test]
+    fn anchored_resource_root_does_not_reapply_its_identifier() {
+        let schema = r##"{"$schema":"https://json-schema.org/draft/2020-12/schema","$id":"https://example.test/root.json","$defs":{"resource":{"$id":"foo/","$anchor":"a","type":"string"}},"$ref":"foo/#a"}"##;
+        let compiled = compile(schema, vec![]).unwrap();
+        assert!(compiled
+            .validate(&value("\"ok\""), &mut Context::ordinary())
+            .unwrap()
+            .is_empty());
+        assert!(!compiled
+            .validate(&value("1"), &mut Context::ordinary())
+            .unwrap()
+            .is_empty());
+    }
+
+    #[test]
+    fn anchored_root_in_external_document_keeps_resource_identity() {
+        let schema = r##"{"$schema":"https://json-schema.org/draft/2020-12/schema","$id":"https://example.test/root.json","$ref":"https://example.test/external/foo/#a"}"##;
+        let external = r##"{"$schema":"https://json-schema.org/draft/2020-12/schema","$id":"https://example.test/external/root.json","$defs":{"resource":{"$id":"foo/","$anchor":"a","type":"string"}}}"##;
+        let compiled = compile(
+            schema,
+            vec![("https://example.test/external/root.json", external)],
+        )
+        .unwrap();
+        assert!(compiled
+            .validate(&value("\"ok\""), &mut Context::ordinary())
+            .unwrap()
+            .is_empty());
+        assert!(!compiled
+            .validate(&value("1"), &mut Context::ordinary())
+            .unwrap()
+            .is_empty());
+    }
+
+    #[test]
+    fn pointer_target_identifier_scopes_following_references_once() {
+        let schema = r##"{"$schema":"https://json-schema.org/draft/2020-12/schema","$id":"https://example.test/root.json","$defs":{"resource":{"$id":"foo/","$defs":{"target":{"$id":"bar/","$ref":"target"}}}},"properties":{"x":{"$ref":"#/$defs/resource/$defs/target"}}}"##;
+        let compiled = compile(
+            schema,
+            vec![
+                ("https://example.test/foo/bar/target", r#"{"type":"string"}"#),
+                ("https://example.test/foo/target", r#"{"type":"integer"}"#),
+            ],
+        )
+        .unwrap();
+        assert!(compiled
+            .validate(&value(r#"{"x":"ok"}"#), &mut Context::ordinary())
+            .unwrap()
+            .is_empty());
+        assert!(!compiled
+            .validate(&value(r#"{"x":1}"#), &mut Context::ordinary())
+            .unwrap()
+            .is_empty());
+    }
+
+    #[test]
+    fn pointer_entered_dynamic_resource_resets_pointer_scope_at_resource_root() {
+        let schema = r##"{"$schema":"https://json-schema.org/draft/2020-12/schema","$id":"https://example.test/root.json","$defs":{"resource":{"$id":"foo/","$dynamicAnchor":"a","type":"object","properties":{"y":{"$dynamicRef":"#a"}}}},"properties":{"x":{"$ref":"#/$defs/resource"}}}"##;
+        let compiled = compile(schema, vec![]).unwrap();
+        assert!(compiled
+            .validate(&value(r#"{"x":{"y":{}}}"#), &mut Context::ordinary())
             .unwrap()
             .is_empty());
     }

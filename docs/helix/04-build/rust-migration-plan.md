@@ -714,6 +714,19 @@ nested repeated relative `$id` for a resolver-selected resource. Keep v5 as
 immutable failing evidence; fix resource-entry identity and recapture before
 crediting the static-reference slice or moving to dynamic-scope qualification.
 
+The additive [v6 source-bound reference packet](evidence/rust-migration/r5-json-schema/static-reference-resolution-v6-2026-10-23.md)
+fixes that resource-entry identity bug and passes 16 focused Rust controls. Its
+89-file source closure was identical before and after the full pinned capture;
+independent Sol review verified every closure hash, raw/report digest and case
+count with no new P1/P2 finding. The five targeted static-reference cases match
+upstream. The full corpus result remains the same as v5: 1,291 executed of
+1,301 vectors, nine uncompiled, one runtime error and 12 Rust/upstream boolean
+disagreements. Acceptance still fails solely on semantic/support issues. Next
+repair the ten dynamic-reference vectors and two unevaluated-annotation vectors,
+then the separate number and vocabulary refusal/error clusters, and recapture
+under a fresh source closure. Neither v6 nor the focused suite qualifies broad
+Draft 2020-12 support or default cutover.
+
 The next bounded CONTRACT-003 Protobuf shard is only the binary descriptor
 codec, `readDescriptorSet` and `writeDescriptorSet`; source compilation,
 emission, inspection and JSON Schema projection remain separate. The
@@ -875,6 +888,13 @@ gaps: full proposal source/document preservation, an actual exact-int64
 adapter round trip, and an unknown-representation export case independent of
 the dependency guard. Sol rereview found no remaining P1/P2 in the corrected
 predecessor packet; its 11 selected source hashes match the current adapter.
+
+The [opt-in Avro document core](evidence/rust-migration/r5-avro-document-core/README.md)
+adds lossless document carriage and bounded edits in Rust. Eight focused Rust
+tests and a newline-ceiling control pass; independent Sol rereview closed the
+LF metering and quadratic duplicate-ID findings with no remaining P1/P2. This
+does not implement `avsc` semantic interpretation, datum operations, native
+oracle parity, wrappers or default adapter activation.
 
 The bounded [R5 Iceberg schema checkpoint](evidence/rust-migration/r5-iceberg-schema/README.md)
 ports standalone Iceberg 1.11 schema JSON preservation, inspection, pointer
@@ -1072,6 +1092,8 @@ environment. `unittest` discovery ran the focused suite because pytest was
 not installed in that interpreter. Source hashes stayed unchanged through
 both wheel builds and replays, with wheel hashes in the
 [additive receipt](evidence/rust-migration/r6-operation-values/typed-token-wheel-replay-2026-10-23.json).
+Independent Sol replay confirmed the wheel hashes and 19 focused outcomes on
+both interpreters with no P1/P2 in this installed-wheel scope.
 The in-package result-frame path was exercised with supplied native rows, not
 a database-backed consumer. Native PostgreSQL, Weft, Truss, Ashlar and
 TableSpec consumers, broader `value_from_native` carriers and remaining access
