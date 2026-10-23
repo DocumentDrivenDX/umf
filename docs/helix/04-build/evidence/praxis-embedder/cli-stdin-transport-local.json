@@ -1,0 +1,79 @@
+{
+  "status": "pass",
+  "sourceCommit": "240fbb262d28c0b2a77601abe611e8eb6583e746",
+  "sourceFiles": [
+    {
+      "path": "scripts/rust-core/cli-core-conformance.mjs",
+      "sha256": "7ff048d9b3885d9be7c733a3befa6a54421b56a2ed68f3c4add4b7821bc33de5"
+    },
+    {
+      "path": "scripts/rust-core/cli-wire-transport.mjs",
+      "sha256": "b176d978be24d86881a67a55cd2e0283a13511b01146ef078abb93e9343c4ad4"
+    },
+    {
+      "path": "scripts/rust-core/cli-wire-transport.test.mjs",
+      "sha256": "5d95cbea9a404e7b7c0816fa2c6d624764c197a6df7ff9169b5ebb46af5c7802"
+    },
+    {
+      "path": "scripts/rust-core/full-conformance.ts",
+      "sha256": "468caf8036cc8b6514f3fe841173bac61d1ec2663509b923ed853a210c510be9"
+    },
+    {
+      "path": "scripts/rust-migration/r3/host-replay.mjs",
+      "sha256": "fc17b6617c7c7e7b6881772523e7360a62caacd74ad7e239ce1e040cd09da527"
+    }
+  ],
+  "sourceClosureSha256": "8cc944721a250dc9ddfe7ac08ff8a6e90103ceb17587fa2fa3971e3e0de4cbb1",
+  "cli": {
+    "path": "/private/tmp/umf-u1-cli-target/release/umf",
+    "sha256": "bbcbe4ce2eb399aacac1bc2af5d077817841c3727dd65ce08cf0d56b7507900c",
+    "rustToolchain": "1.90.0"
+  },
+  "runtime": {
+    "bun": "1.4.3",
+    "node": "v26.12.1",
+    "platform": "darwin-arm64"
+  },
+  "checks": [
+    {
+      "name": "transport-tests",
+      "command": "UMF_CLI_PATH=/private/tmp/umf-u1-cli-target/release/umf node --test scripts/rust-core/cli-wire-transport.test.mjs",
+      "status": "pass",
+      "cases": 9
+    },
+    {
+      "name": "cli-core",
+      "command": "UMF_CLI_PATH=/private/tmp/umf-u1-cli-target/release/umf node scripts/rust-core/cli-core-conformance.mjs docs/helix/04-build/evidence/rust-migration/r2/baseline-current-conformance.json",
+      "status": "pass",
+      "cases": 139,
+      "controls": 3
+    },
+    {
+      "name": "nested-launch-repeat",
+      "command": "/opt/homebrew/bin/bun /private/tmp/umf-u1-repeat100.mjs",
+      "status": "pass",
+      "loops": 100,
+      "requests": 500,
+      "durationMs": 174302
+    },
+    {
+      "name": "all-compiler-fixtures",
+      "command": "node /private/tmp/umf-u1-fixture-sweep.mjs",
+      "status": "pass",
+      "fixtures": 102,
+      "cases": 615,
+      "durationMs": 255207
+    },
+    {
+      "name": "public-pipe-control",
+      "command": "node /private/tmp/umf-u1-direct-pipe.mjs",
+      "status": "pass"
+    }
+  ],
+  "finalChangeAfterNativeGates": "full-conformance command start/end stderr labels with bounded redacted argument preview only; no behavior/effect inputs changed",
+  "validationAfterFinalChange": {
+    "transportSuite": "9/9 passed",
+    "syntax": "node --experimental-strip-types --check full-conformance.ts and node --check all changed mjs passed",
+    "diffCheck": "git diff --check passed"
+  }
+}

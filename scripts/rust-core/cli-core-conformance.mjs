@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 // Run the production native CLI against the frozen 139-case corpus with PATH empty.
 import assert from 'node:assert/strict';
-import {execFileSync} from 'node:child_process';
 import {createHash} from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
+import {runCliWire} from './cli-wire-transport.mjs';
 import {encodeWire, fromWire, resultError} from '../../bindings/core/node/src/wire.js';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
@@ -38,13 +38,18 @@ const lines = corpus.cases.map((item) => {
   }];
   return encodeWire(request, {maxDepth: 256, maxValues: 1_200_000});
 });
-const output = execFileSync(cli, ['core', '--stdin-wire', '--profile', 'cooperative', '--test-baseline-callback'], {
+const outputRun = await runCliWire({
+  command: cli,
+  args: ['core', '--stdin-wire', '--profile', 'cooperative', '--test-baseline-callback'],
   cwd: root,
-  input: `${lines.join('\n')}\n`,
-  encoding: 'utf8',
+  wireBytes: Buffer.from(`${lines.join('\n')}\n`, 'utf8'),
   env: {...process.env, PATH: ''},
   maxBuffer: 256 * 1024 * 1024,
+  timeoutMs: 120_000,
+  label: 'r2-baseline-current-conformance#all-139-cases',
 });
+if (outputRun.status !== 0) throw new Error(outputRun.stderr || `Native CLI exited ${outputRun.status ?? outputRun.signal}`);
+const output = outputRun.stdout;
 const envelopes = output.trimEnd().split('\n').map((line) => JSON.parse(line));
 assert.equal(envelopes.length, corpus.cases.length, 'native CLI must emit one result per vector');
 
@@ -64,17 +69,21 @@ const catalogRequest = encodeWire({
   registry: [],
   document: corpus.cases.find((item) => item.valid).document,
 }, {maxDepth: 256, maxValues: Number.MAX_SAFE_INTEGER});
-function invokeOne(requestWire) {
-  const output = execFileSync(cli, ['core', '--stdin-wire', '--profile', 'cooperative', '--test-baseline-callback'], {
+async function invokeOne(requestWire, label) {
+  const run = await runCliWire({
+    command: cli,
+    args: ['core', '--stdin-wire', '--profile', 'cooperative', '--test-baseline-callback'],
     cwd: root,
-    input: `${requestWire}\n`,
-    encoding: 'utf8',
+    wireBytes: Buffer.from(`${requestWire}\n`, 'utf8'),
     env: {...process.env, PATH: ''},
     maxBuffer: 256 * 1024 * 1024,
+    timeoutMs: 120_000,
+    label,
   });
-  return JSON.parse(output.trim());
+  if (run.status !== 0) throw new Error(run.stderr || `Native CLI exited ${run.status ?? run.signal}`);
+  return JSON.parse(run.stdout.trim());
 }
-const catalogEnvelope = invokeOne(catalogRequest);
+const catalogEnvelope = await invokeOne(catalogRequest, 'r2-baseline-current-conformance#independent-resource-catalog');
 assert.equal(resultError(catalogEnvelope), null, 'native CLI must admit each catalog resource independently');
 assert.equal(catalogEnvelope.status, 'ok', 'native CLI resource-bundle request must complete');
 function nested(depth) {
@@ -83,10 +92,10 @@ function nested(depth) {
   return value;
 }
 for (const [name, document] of [['depth-129', nested(129)], ['values-100001', Array(100_001).fill(null)]]) {
-  const envelope = invokeOne(encodeWire({op: 'validate', resources, registry: [], document}, {
+  const envelope = await invokeOne(encodeWire({op: 'validate', resources, registry: [], document}, {
     maxDepth: 256,
     maxValues: Number.MAX_SAFE_INTEGER,
-  }));
+  }), `r2-baseline-current-conformance#${name}`);
   const failure = resultError(envelope);
   assert.equal(failure?.code, 'LIMIT', `ordinary ${name} must still be refused after transport decoding`);
 }

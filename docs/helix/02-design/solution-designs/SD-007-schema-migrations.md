@@ -277,6 +277,105 @@ The owner assigns that chat code ownership and this chat design review.
 Exact public shapes, capability
 limits and diagnostic codes are intentionally not frozen by this design.
 
+## Existing optional-field fill before requiredness
+
+This successor design closes MIG-G01 within the existing single-document,
+existing-table maintenance model. It implements US-051-AC12/15/16 through
+CONTRACT-081 and TD-085/STP-085; it does not require the general transformation
+or online reconciliation designs. Code remains owned by **Plan UMF and Weft
+Praxis asks**. Version numbers are unassigned until the current release closes.
+
+### Selected semantics
+
+For `Person(name, birthday?: date)` becoming `Person(name, birthday: date)`,
+the administrator explicitly selects a historical fill, for example the authored
+date literal `2000-01-01`. This is a domain decision about missing birthdays;
+UMF must never invent a birthday. The intent selects only native NULL values.
+An existing birthday remains byte/value-equivalent under the qualified codec.
+SQL storage maps this profile's optional value to NULL; there is no separate
+stored missing-value state. Other absence mappings require another profile.
+
+The selected operation is an original authored command in the exact approved
+**next-source** module, as in current appended-column fill. It is not a command
+looked up by name in an ambient registry or necessarily present in the predecessor.
+The command remains a parameter-free, non-batch typed UPDATE with one assignment,
+no returning rows, the exact selected Field's `isNull` predicate, and an explicit
+existing Weft effect bound. Allowed assignments are a typed non-null literal or
+the already qualified transaction-clock expression where the target domain
+admits it. An instant clock cannot silently become a date or infer a timezone.
+Weft owns data SQL lowering and binding; the portable planner owns selection,
+source correspondence and operation/type validation.
+
+The table and Field retain their stable IDs, physical names, logical/native
+types, facets, defaults, generated/immutable status and collation. The only
+selected Field change is optional-to-required. Generated or immutable targets
+refuse. Unrelated source changes still pass existing admission rules; the first
+G01 profile refuses selected-field rename, conversion, removal, future-default
+change and dependent-object change in the same plan. Broader combinations require
+separate qualification. Duplicate fills, nullable fill values, excess bounds,
+wrong predicates, extra assignments, missing markers and unused selections refuse
+before effect dispatch. Native constraints remain active and can reject an
+otherwise typed fill, including uniqueness, checks and foreign keys.
+
+Historical fill, logical default and future-write native default remain separate.
+Adding a future default neither selects a fill nor proves old rows valid. Existing
+future-default semantics remain unchanged in G01. A later omitted birthday still
+fails if the target has no future default; explicit NULL fails requiredness even
+when a future default exists. A literal fill is already possible without adding
+general default lifecycle support (MIG-G03).
+
+### Ordering and recovery
+
+Reuse the existing durable phase runner and ledger, with a successor compiler
+grouping rule: the selected fill and its reviewed `tighten-not-null` step occupy
+one required transaction phase. After target/source/authority admission and
+migration fencing, obtain the existing native exclusive table locks, revalidate
+the phase boundary, run the approved null-only UPDATE, then enforce NOT NULL
+before releasing those locks. Restore and verify row-level security before commit.
+The data effects, requiredness, bounded count and progress receipt commit together.
+Native enforcement checks the actual complete table; a cached count or sample
+cannot substitute. Verify the final native catalog, privileges and source
+correspondence before publishing the new generation and enabling its clients.
+
+Application admission remains fenced between phases. The current metadata-head
+grant fence protects generated-client ingress; it does not establish persistent
+direct-table writer exclusion. Consequently no commit barrier, concurrent-index
+step or other lock release may split the selected fill/tighten pair. Direct
+writers wait for the phase's locks, then encounter enforced requiredness. Test
+held transactions and writers scheduled immediately after fill. A future split
+pair requires a separately qualified persistent native write guard. Privileged
+administrator interference remains subject to the existing trusted-host boundary
+and resumed native drift checks.
+
+An error, bound excess, failed NOT NULL enforcement or cancellation before a
+confirmed paired-phase commit rolls back that phase's data, requiredness and
+progress. Once the pair commits, its values and constraint remain even if a later
+phase or publication fails. The installation stays fenced until exact resume or
+separately authorized forward repair. There is no promise of whole-plan data
+rollback. A lost commit response is resolved from authenticated native progress
+and witnesses before retry; committed fill is never dispatched again.
+Transaction-clock values are fixed by the successful paired transaction. A known
+aborted attempt may obtain another transaction time on retry; an unresolved
+attempt cannot be retried speculatively. No per-row clock values enter receipts.
+
+### Profile and acceptance boundary
+
+Use a distinct successor options/plan capability for existing-column fill.
+Retain exact historical verification/replay of 0.1/0.2 artifacts and their old
+appended-column semantics. New execution requires current profile admission;
+historical verification alone grants no effects. Reuse the existing backfill
+selection structure where sufficient; any new member must have a closed shape,
+bound and digest coverage. Do not introduce a second transformation format,
+phase journal or core envelope revision.
+
+Before code, allocate exact wire shapes, diagnostic codes, compiler/host version
+admission and boundary-check commands in CONTRACT-081/TD-085, and primary fixture
+ownership in STP-085 with `@covers US-051-AC12`, `AC15` and `AC16`. If one reviewed
+artifact amendment is insufficient, add only the missing contract surface.
+The [build plan](../../04-build/schema-migration-plan.md#remaining-gap-delivery-order)
+defines the G01 implementation gates and subsequent residual sequence. Existing
+fail-if-any-null tightening and appended-column fill retain regression coverage.
+
 ## Concern Alignment
 
 ADR-002 keeps planning browser-compatible TypeScript, tested in Bun and Chromium.

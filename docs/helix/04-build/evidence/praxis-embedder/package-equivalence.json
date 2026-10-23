@@ -1,0 +1,20 @@
+{
+  "profile": "umf.embedder.product-equivalence/1",
+  "qualifiedSourceCommit": "435ed5844",
+  "currentSourceCommit": "75ef423efd9c6c412e72d2f9703fe052e12ea380",
+  "products": {
+    "umf_access": {
+      "wheel": "umf_access-0.1.0.dev7-py3-none-any.whl",
+      "sha256": "74af2b9d896895fc0af29bf22ee7e00469fbce6070f1d7f433d35b824eeb5d30",
+      "sourceFilesEqual": 88
+    },
+    "umf_codegen": {
+      "wheel": "umf_codegen-0.1.0a4-py3-none-any.whl",
+      "sha256": "88d0e08079808052242f5df2a7ccbef49bc8c0daf0b7fa9482098474f9b9bded",
+      "sourceFilesEqual": 18
+    }
+  },
+  "embeddedInputHashesEqual": 234,
+  "productSourceEquivalence": "passed",
+  "laterChanges": "Tooling, evidence, browser test portability and SDK-only producer provenance; no changed qualified wheel or embedded compiler input."
+}

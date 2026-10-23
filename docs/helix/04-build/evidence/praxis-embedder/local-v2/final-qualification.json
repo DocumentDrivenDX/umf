@@ -1,0 +1,124 @@
+{
+  "cells": {
+    "py311": {
+      "cell": {
+        "architecture": "arm64",
+        "libc": "not applicable",
+        "os": "macos-27",
+        "python": "3.11.17",
+        "runnerIdentity": {
+          "architecture": "arm64",
+          "macVersion": "27.0.1",
+          "system": "Darwin"
+        }
+      },
+      "installedVersions": {
+        "annotated-types": "0.8.0",
+        "attrs": "26.1.0",
+        "jsonschema": "4.26.0",
+        "jsonschema-specifications": "2025.9.1",
+        "mini-racer": "0.14.1",
+        "psycopg": "3.2.13",
+        "psycopg-binary": "3.2.13",
+        "pydantic": "2.14.1",
+        "pydantic-core": "2.50.1",
+        "referencing": "0.37.0",
+        "rpds-py": "2026.9.1",
+        "ruamel-yaml": "0.19.1",
+        "typing-extensions": "4.16.0",
+        "typing-inspection": "0.4.4",
+        "umf-access": "0.1.0.dev7",
+        "umf-codegen": "0.1.0a4",
+        "umf-core": "0.10.0",
+        "weft-sql": "0.4.49"
+      },
+      "lock": "cohort.lock.json",
+      "lockSha256": "758d47190b319bdf0379f8830d5052f5bbd052773b59620965039dfa49750734",
+      "manifest": "mirror-probe-py311/manifest.json",
+      "manifestSha256": "8a0c48b944ac4da487f6888b31023adfe57bbf2ee144da1ff7685189f2a927a1",
+      "networkIsolation": "macOS sandbox-exec deny network*",
+      "probes": {
+        "missing-wheel": "refused under OS network denial",
+        "tampered-wheel": "refused under OS network denial",
+        "umf-codegen-check": "passed",
+        "umf-codegen-generate": "passed",
+        "umf-table-apply": "approval-required before connection",
+        "umf-table-check": "passed",
+        "umf-table-new": "passed"
+      },
+      "report": "offline-report-py311.json",
+      "reportSha256": "8cf409224ebe5b96c659068a0beccfa20d3760910367e6ad31320cfb5a3e0a09",
+      "status": "passed",
+      "wheelCount": 29,
+      "wheelInventorySha256": "0ceb89a6fd6f6a840c49c3572f00940a2963bce029374a18d5a417bd47bd9fcd"
+    },
+    "py314": {
+      "cell": {
+        "architecture": "arm64",
+        "libc": "not applicable",
+        "os": "macos-27",
+        "python": "3.14.8",
+        "runnerIdentity": {
+          "architecture": "arm64",
+          "macVersion": "27.0.1",
+          "system": "Darwin"
+        }
+      },
+      "installedVersions": {
+        "annotated-types": "0.8.0",
+        "attrs": "26.1.0",
+        "jsonschema": "4.26.0",
+        "jsonschema-specifications": "2025.9.1",
+        "mini-racer": "0.14.1",
+        "psycopg": "3.2.13",
+        "psycopg-binary": "3.2.13",
+        "pydantic": "2.14.1",
+        "pydantic-core": "2.50.1",
+        "referencing": "0.37.0",
+        "rpds-py": "2026.9.1",
+        "ruamel-yaml": "0.19.1",
+        "typing-extensions": "4.16.0",
+        "typing-inspection": "0.4.4",
+        "umf-access": "0.1.0.dev7",
+        "umf-codegen": "0.1.0a4",
+        "umf-core": "0.10.0",
+        "weft-sql": "0.4.49"
+      },
+      "lock": "cohort-py314.lock.json",
+      "lockSha256": "5ffa34987b4d6b10a2db7b418c6bc6fd6b035f06ecb73ec302452155d8d42fbb",
+      "manifest": "mirror-probe-py314/manifest.json",
+      "manifestSha256": "f18cf84469b1c991f44b496cb678f5fdf8ed1f1ad2a65cfc29bb6ec6dd25d441",
+      "networkIsolation": "macOS sandbox-exec deny network*",
+      "probes": {
+        "missing-wheel": "refused under OS network denial",
+        "tampered-wheel": "refused under OS network denial",
+        "umf-codegen-check": "passed",
+        "umf-codegen-generate": "passed",
+        "umf-table-apply": "approval-required before connection",
+        "umf-table-check": "passed",
+        "umf-table-new": "passed"
+      },
+      "report": "offline-report-py314.json",
+      "reportSha256": "1cd55c0bdd0cf7fc6af38825f4173d6b01e26657278ba9bc07294abddea79b31",
+      "status": "passed",
+      "wheelCount": 29,
+      "wheelInventorySha256": "0ceb89a6fd6f6a840c49c3572f00940a2963bce029374a18d5a417bd47bd9fcd"
+    }
+  },
+  "cohort": {
+    "packages": 18,
+    "sourceWheelhouse": "v2 assets exactly replace only access/codegen wheels from the preserved preflight wheelhouse",
+    "wheels": 29
+  },
+  "profile": "umf-final-local-cohort-v2-qualification/1",
+  "publisherProvenance": {
+    "file": "publisher-provenance.json",
+    "sha256": "072922be2744808b5bc5b1fe5842551e7e182431cb99c2d52fdb4b10824c3f6d"
+  },
+  "sourceCommit": "199d66a1ec66d184d867c75d75777fdc607ddf8e",
+  "status": "passed",
+  "v2Wheels": {
+    "umf_access-0.1.0.dev7-py3-none-any.whl": "74af2b9d896895fc0af29bf22ee7e00469fbce6070f1d7f433d35b824eeb5d30",
+    "umf_codegen-0.1.0a4-py3-none-any.whl": "88d0e08079808052242f5df2a7ccbef49bc8c0daf0b7fa9482098474f9b9bded"
+  }
+}

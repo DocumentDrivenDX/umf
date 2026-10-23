@@ -43,8 +43,9 @@ FR-18/19, FEAT-007 COMP-06–11, US-051-AC11–16 and
 [SD-007](../02-design/solution-designs/SD-007-schema-migrations.md) require the
 following separate proof layers. The [build plan](../04-build/schema-migration-plan.md)
 sequences reconciliation with CONTRACT-081/TD-085/STP-085 in the existing U1/U2
-implementation stream. Allocate remaining criteria in TD-051/STP-051 before
-residual implementation; reuse native cases already owned by STP-085.
+implementation stream. Allocate G01 in existing TD-085/STP-085; allocate later
+uncovered portable criteria in additional designs/tests only where needed.
+Reuse native cases already owned by STP-085.
 
 | Primary layer / criteria | Required proof |
 | --- | --- |
@@ -63,6 +64,26 @@ Sampling does not prove whole-dataset acceptance. Evidence must bind exact
 sources, native/driver versions, transforms, installed artifacts, target generation
 and limits. Birthdays/reject values stay in access-controlled host data stores;
 portable receipts contain bounded summaries and protected evidence references.
+
+#### Selected existing-column backfill gate
+
+The next selected design slice is MIG-G01 in
+[the migration plan](../04-build/schema-migration-plan.md#remaining-gap-delivery-order).
+SD-007 defines same-identity/type null-only fill followed by reviewed NOT NULL
+under maintenance fencing. Allocate its exact compiler, recovery and native cases
+in existing STP-085, with `@covers US-051-AC12`, `AC15` and `AC16`; amend
+CONTRACT-081/TD-085 before source implementation. This bounded successor reuses
+the native phase runner and does not need a parallel TD-051/STP-051 framework.
+
+Require mixed present/null birthdays; explicit date fill and invalid/null refusal;
+full target constraints and bound rollback; unchanged future-default behavior;
+two-session writer probes proving one lock/transaction covers fill and tightening;
+lost commit responses and no repeated committed clock/effects; authority drift;
+final catalog and generated-client admission. A failed later phase may leave
+committed fills with the installation fenced: verify that state explicitly.
+Evidence also binds the successor profile and exact installed/browser cohort,
+and retains original 0.1/0.2 verification/replay and appended-fill regressions.
+Passing these tests closes G01 only for the declared finite maintenance subset.
 
 ### Authored relationship and binding amendment
 

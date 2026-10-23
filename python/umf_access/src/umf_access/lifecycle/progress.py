@@ -63,9 +63,30 @@ def _verified_phases(plan: dict[str, Any]) -> list[dict[str, Any]]:
     """Check exact ordered step coverage before consulting or creating progress."""
     profile = plan.get('executionProfile')
     phases = plan.get('phases')
-    if (profile != {'version': 'umf.table-migration-execution/0.1',
-                    'progressRelation': PROGRESS, 'ownerOnly': True}
-            or type(phases) is not list or not phases or type(plan.get('steps')) is not list):
+    options_version = plan.get('options', {}).get('version')
+    if options_version == 'umf.table-migration-options/0.2':
+        expected_profile = {'version': 'umf.table-migration-execution/0.1',
+                            'progressRelation': PROGRESS, 'ownerOnly': True}
+        allow_backfill_tighten = False
+    elif options_version == 'umf.table-migration-options/0.3':
+        from .approval import APPROVAL_PROFILE
+
+        expected_profile = {'version': 'umf.table-migration-execution/0.2',
+                            'progressRelation': PROGRESS, 'ownerOnly': True}
+        if plan.get('approvalProfile') != APPROVAL_PROFILE:
+            raise CatalogError('approval-profile-mismatch')
+        allow_backfill_tighten = True
+    else:
+        raise CatalogError('mixed-phase-profile')
+    if (profile != expected_profile
+            or type(phases) is not list or type(plan.get('steps')) is not list):
+        raise CatalogError('mixed-phase-profile')
+    if not phases:
+        # A v0.3 source-only plan can have no native operations (for example,
+        # an added typed command). It publishes through the host's atomic
+        # no-effect finalizer and must not create a progress relation.
+        if options_version == 'umf.table-migration-options/0.3' and not plan['steps']:
+            return phases
         raise CatalogError('mixed-phase-profile')
     by_id = {step.get('id'): step for step in plan['steps'] if type(step) is dict}
     if len(by_id) != len(plan['steps']):
@@ -74,7 +95,7 @@ def _verified_phases(plan: dict[str, Any]) -> list[dict[str, Any]]:
     for index, phase in enumerate(phases, 1):
         if (type(phase) is not dict or set(phase) != {'id','kind','transaction','steps'}
                 or phase['id'] != 'phase-'+str(index).zfill(5)
-                or phase['kind'] not in ('transaction','backfill','concurrent-index','constraint-add','constraint-validation','seed')
+                or phase['kind'] not in ('transaction','backfill','concurrent-index','constraint-add','constraint-validation','seed','backfill-tighten')
                 or phase['transaction'] not in ('required','forbidden')
                 or type(phase['steps']) is not list or not phase['steps']):
             raise CatalogError('mixed-phase-profile')
@@ -87,7 +108,9 @@ def _verified_phases(plan: dict[str, Any]) -> list[dict[str, Any]]:
             seen.append(step_id)
         expected_kind = []
         for step in selected:
-            if step['kind'] == 'backfill':
+            if step.get('phaseOperation') in ('backfill','tighten-not-null'):
+                expected_kind.append('backfill-tighten')
+            elif step['kind'] == 'backfill':
                 expected_kind.append('backfill')
             elif step['kind'] == 'index' and step['transaction'] == 'forbidden':
                 expected_kind.append('concurrent-index')
@@ -99,9 +122,35 @@ def _verified_phases(plan: dict[str, Any]) -> list[dict[str, Any]]:
                 expected_kind.append('seed')
             else:
                 expected_kind.append('transaction')
-        if (len(set(expected_kind)) != 1 or expected_kind[0] != phase['kind']
-                or phase['kind'] != 'transaction' and len(selected) != 1):
+        if ((len(set(expected_kind)) != 1 or expected_kind[0] != phase['kind']
+                or phase['kind'] != 'transaction' and len(selected) != 1)
+                and (phase['kind'] != 'backfill-tighten' or not allow_backfill_tighten)):
             raise CatalogError('mixed-phase-profile')
+        if phase['kind'] == 'backfill-tighten':
+            if not allow_backfill_tighten or len(selected) != 2:
+                raise CatalogError('mixed-phase-profile')
+            backfill, tighten = selected
+            target = backfill.get('phaseTarget')
+            if (phase['transaction'] != 'required'
+                    or backfill.get('phaseOperation') != 'backfill'
+                    or backfill.get('kind') != 'backfill'
+                    or backfill.get('transaction') != 'required'
+                    or type(backfill.get('operation')) is not str
+                    or not backfill['operation']
+                    or tighten.get('phaseOperation') != 'tighten-not-null'
+                    or tighten.get('transaction') != 'required'
+                    or type(tighten.get('sql')) is not str
+                    or not tighten['sql']
+                    or type(target) is not dict
+                    or set(target) != {'table','field'}
+                    or type(target.get('table')) is not str
+                    or not target['table']
+                    or type(target.get('field')) is not dict
+                    or set(target['field']) != {'module','element'}
+                    or any(type(target['field'][key]) is not str or not target['field'][key]
+                           for key in ('module','element'))
+                    or tighten.get('phaseTarget') != target):
+                raise CatalogError('mixed-phase-profile')
         if phase['kind'] == 'backfill' and (len(selected) != 1 or selected[0]['kind'] != 'backfill'):
             raise CatalogError('mixed-phase-profile')
         if phase['kind'] == 'concurrent-index' and (len(selected) != 1 or selected[0]['kind'] != 'index' or selected[0]['transaction'] != 'forbidden'):

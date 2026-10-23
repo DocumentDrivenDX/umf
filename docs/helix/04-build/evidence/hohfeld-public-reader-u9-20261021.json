@@ -1,0 +1,41 @@
+{
+  "profile": "umf.u9-public-reader-probe/0.1",
+  "source": {
+    "id": "u9-public-reader-probe",
+    "sha256": "c081f4e74dc1d7c413ecf61cd1b2b7b02ec94fb93b2426990330d4873adbd033",
+    "bytes": 1844
+  },
+  "versions": {
+    "umf": "0.10.0",
+    "hohfeld": "0.5.0",
+    "weft": "0.4.49",
+    "truss": "0.0.45",
+    "postgresqlMajor": 18
+  },
+  "assertions": [
+    "umf-core-valid",
+    "released-hohfeld-registers-and-reads-exact-document",
+    "released-weft-compiles-and-executes-exact-document-binding",
+    "selected-reader-returns-required-key-and-nullable-string",
+    "native-weft-reader-returns-matching-two-row-result"
+  ],
+  "controls": {
+    "wrong-core-version": {
+      "hohfeld": "refused",
+      "weft": "blocked"
+    },
+    "unknown-vocabulary": {
+      "hohfeld": "refused",
+      "weft": "compiled"
+    },
+    "unsupported-scalar": {
+      "hohfeld": "refused",
+      "weft": "blocked"
+    }
+  },
+  "limits": [
+    "one DDD entity with one required string key and one optional string field",
+    "no value-object, relationship, action, or wider core support claim",
+    "Weft native query uses a synthetic mapped table on the same disposable PostgreSQL target"
+  ]
+}

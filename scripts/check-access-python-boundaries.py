@@ -39,6 +39,11 @@ def check(root: Path) -> int:
                "facade": {"dsl", "runtime", "foundation"}}
     helpers = {"types": "foundation", "values": "foundation", "codec_support": "foundation", "generated_core": "foundation",
                "related_keys": "runtime", "verification": "targets", "managed_delta": "targets", "managed_actions": "targets", "managed_bulk": "targets", "managed_support": "targets", "delta_read": "targets", "postgres_search": "targets", "unity_search": "targets", "search_catalog": "runtime", "commands": "runtime", "manifest_commands": "runtime", "bulk": "runtime", "postgres_bulk": "targets", "native_program": "runtime", "native_actions": "targets", "catalog": "runtime", "reviewed": "runtime", "postgres_read": "targets", "capture": "dsl", "protocols": "runtime", "pages": "runtime", "adoption": "runtime", "engine_catalog": "runtime", "unified": "targets"}
+    # Keep the administrative host, approval and optional parser adapters
+    # explicit in the module map. They remain within the lifecycle owner.
+    helpers.update({"host": "lifecycle", "approval": "lifecycle",
+                    "sql_containment": "lifecycle", "sql_containment_parser": "lifecycle",
+                    "sql_containment_cli": "lifecycle"})
     # Administration is a separate explicit owner; generator/driver imports do
     # not become available to the portable DSL, regular runtime or other targets.
     allowed["lifecycle"] = set()
@@ -77,6 +82,9 @@ def check(root: Path) -> int:
     def edge(name: str, target: str, member: str = "") -> None:
         path = modules[name]
         source_owner = owner(name)
+        if name == 'umf_access.lifecycle.sql_containment' and not (
+                target in {'collections.abc', 'dataclasses', 'hashlib', 'json', 'typing', '__future__'}):
+            fail(path, 'HOST', 'containment admission is pure; parser and I/O belong to explicit adapters')
         if target == "umf_access" or target.startswith("umf_access."):
             if target not in modules:
                 fail(path, "UNRESOLVED", target)
@@ -119,9 +127,15 @@ def check(root: Path) -> int:
                               and member in {'rust_temporal', 'rust_values'})
         seed_compiler = (name == 'umf_access.lifecycle.seeds' and target == 'weft' and member == 'compile_table_seed_json'
                          or name == 'umf_access.lifecycle.backfills' and target == 'weft' and member == 'prepare_table_operation_module_json')
-        if package not in permitted and not spark_error and not typing_backport and not psycopg2_cursor and not table_read_compiler and not seed_compiler and not public_core_values:
+        # The optional containment adapter has one narrow parser entry point;
+        # the pure checker module must not import the parser or its dependencies.
+        containment_parser = (name == 'umf_access.lifecycle.sql_containment_parser'
+                              and target == 'pglast.parser' and member == 'parse_sql_json')
+        if package not in permitted and not spark_error and not typing_backport and not psycopg2_cursor and not table_read_compiler and not seed_compiler and not public_core_values and not containment_parser:
             fail(path, "DEPENDENCY", f"{target} outside approved imports for {source_owner}")
-        if package in {"importlib", "runpy"} and not (source_owner == "build" and target in {"importlib", "importlib.metadata"}):
+        metadata_pin = (name == 'umf_access.lifecycle.sql_containment_parser'
+                        and target == 'importlib.metadata' and member in {'version', 'PackageNotFoundError'})
+        if package in {"importlib", "runpy"} and not (source_owner == "build" and target in {"importlib", "importlib.metadata"}) and not metadata_pin:
             fail(path, "DYNAMIC", "dynamic loading module")
         if source_owner in {"foundation", "dsl", "runtime", "conformance"} and package in {"os", "socket", "urllib", "http", "ftplib", "subprocess", "pathlib", "io", "shutil"}:
             fail(path, "HOST", f"host I/O module {package} is outside pure SDK boundary")

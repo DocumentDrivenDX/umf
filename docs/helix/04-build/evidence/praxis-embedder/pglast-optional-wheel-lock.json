@@ -1,0 +1,251 @@
+{
+  "cohort": "optional-admin-sql-containment",
+  "intendedCells": [
+    {
+      "architecture": "x86_64",
+      "libc": "glibc >= 2.27",
+      "os": "ubuntu-24.04",
+      "python": "3.11"
+    },
+    {
+      "architecture": "x86_64",
+      "libc": "glibc >= 2.27",
+      "os": "ubuntu-24.04",
+      "python": "3.14"
+    },
+    {
+      "architecture": "arm64",
+      "libc": "not applicable",
+      "os": "macos-14",
+      "python": "3.11"
+    },
+    {
+      "architecture": "arm64",
+      "libc": "not applicable",
+      "os": "macos-14",
+      "python": "3.14"
+    }
+  ],
+  "optionalProfiles": {},
+  "packages": [
+    {
+      "distribution": "pglast",
+      "source": {
+        "kind": "pypi-wheel-with-sdist-license-source",
+        "licenseEvidence": {
+          "path": "pglast-7.20/PKG-INFO",
+          "sha256": "837968169d3a232e44bf6b3e26919413581dea52178483ba272fb418bf5d9697"
+        },
+        "licenseExpression": "GPL-3.0-or-later",
+        "licenseNotice": "The four selected wheels contain no standalone license files. Preserve the pinned sdist and its PKG-INFO license evidence with this optional distribution. The sdist also includes the bundled libpg_query notice.",
+        "pypiAttestation": "not provided for this release",
+        "releasePage": "https://pypi.org/project/pglast/7.20/",
+        "sdistSha256": "6dd32bfd848e0f35de448ef23d819c8de5bb55087b160f488918d97779116a92",
+        "sdistSizeBytes": 3434321,
+        "sdistUrl": "https://files.pythonhosted.org/packages/source/p/pglast/pglast-7.20.tar.gz",
+        "sourceNoticeFiles": [
+          {
+            "license": "BSD-3-Clause-style libpg_query redistribution notice",
+            "path": "pglast-7.20/libpg_query/LICENSE",
+            "sha256": "f9352c20940619a380a5e9f23cebe34d8f797cfbd747fc236a7a3e5fc8ef9b41"
+          }
+        ],
+        "wheelLicenseFiles": []
+      },
+      "version": "7.20"
+    }
+  ],
+  "profile": "umf.embedder-wheel-lock/1",
+  "status": "locked",
+  "templateSha256": "f052b63ee89a01b9c526e09ccbe286eb6b9430629f24edeb4a9267e318a65025",
+  "wheels": [
+    {
+      "distribution": "pglast",
+      "filename": "pglast-7.20-cp311-cp311-macosx_11_0_arm64.whl",
+      "license": null,
+      "licenseExpression": "GPL-3.0-or-later",
+      "licenseFilePaths": [],
+      "licenseFiles": [],
+      "requiresDist": [
+        "bump-my-version==1.5.1; extra == \"dev\"",
+        "cython==3.3.0; extra == \"dev\"",
+        "pycparser==3.0; extra == \"dev\"",
+        "readme-renderer==46.0; extra == \"dev\"",
+        "setuptools==84.0.0; extra == \"dev\"",
+        "sphinx==9.0.4; extra == \"dev\"",
+        "twine==7.0.0; extra == \"dev\"",
+        "coverage==7.16.2; extra == \"test\"",
+        "mypy==2.3.1; extra == \"test\"",
+        "pytest-cov==7.1.0; extra == \"test\"",
+        "pytest==9.1.1; extra == \"test\"",
+        "ty==0.0.84; extra == \"test\""
+      ],
+      "sha256": "bebb805cac4354b5907b620dc16c30144ac72dd18b423bedfd5f33d272a836f6",
+      "size": 1493347,
+      "source": {
+        "kind": "pypi-wheel-with-sdist-license-source",
+        "licenseEvidence": {
+          "path": "pglast-7.20/PKG-INFO",
+          "sha256": "837968169d3a232e44bf6b3e26919413581dea52178483ba272fb418bf5d9697"
+        },
+        "licenseExpression": "GPL-3.0-or-later",
+        "licenseNotice": "The four selected wheels contain no standalone license files. Preserve the pinned sdist and its PKG-INFO license evidence with this optional distribution. The sdist also includes the bundled libpg_query notice.",
+        "pypiAttestation": "not provided for this release",
+        "releasePage": "https://pypi.org/project/pglast/7.20/",
+        "sdistSha256": "6dd32bfd848e0f35de448ef23d819c8de5bb55087b160f488918d97779116a92",
+        "sdistSizeBytes": 3434321,
+        "sdistUrl": "https://files.pythonhosted.org/packages/source/p/pglast/pglast-7.20.tar.gz",
+        "sourceNoticeFiles": [
+          {
+            "license": "BSD-3-Clause-style libpg_query redistribution notice",
+            "path": "pglast-7.20/libpg_query/LICENSE",
+            "sha256": "f9352c20940619a380a5e9f23cebe34d8f797cfbd747fc236a7a3e5fc8ef9b41"
+          }
+        ],
+        "wheelLicenseFiles": []
+      },
+      "version": "7.20"
+    },
+    {
+      "distribution": "pglast",
+      "filename": "pglast-7.20-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+      "license": null,
+      "licenseExpression": "GPL-3.0-or-later",
+      "licenseFilePaths": [],
+      "licenseFiles": [],
+      "requiresDist": [
+        "bump-my-version==1.5.1; extra == \"dev\"",
+        "cython==3.3.0; extra == \"dev\"",
+        "pycparser==3.0; extra == \"dev\"",
+        "readme-renderer==46.0; extra == \"dev\"",
+        "setuptools==84.0.0; extra == \"dev\"",
+        "sphinx==9.0.4; extra == \"dev\"",
+        "twine==7.0.0; extra == \"dev\"",
+        "coverage==7.16.2; extra == \"test\"",
+        "mypy==2.3.1; extra == \"test\"",
+        "pytest-cov==7.1.0; extra == \"test\"",
+        "pytest==9.1.1; extra == \"test\"",
+        "ty==0.0.84; extra == \"test\""
+      ],
+      "sha256": "b8dea95b65e469b05f0e0edc9a06a8bdd100527b66ac66d0412ddc23e5a1ca83",
+      "size": 6282972,
+      "source": {
+        "kind": "pypi-wheel-with-sdist-license-source",
+        "licenseEvidence": {
+          "path": "pglast-7.20/PKG-INFO",
+          "sha256": "837968169d3a232e44bf6b3e26919413581dea52178483ba272fb418bf5d9697"
+        },
+        "licenseExpression": "GPL-3.0-or-later",
+        "licenseNotice": "The four selected wheels contain no standalone license files. Preserve the pinned sdist and its PKG-INFO license evidence with this optional distribution. The sdist also includes the bundled libpg_query notice.",
+        "pypiAttestation": "not provided for this release",
+        "releasePage": "https://pypi.org/project/pglast/7.20/",
+        "sdistSha256": "6dd32bfd848e0f35de448ef23d819c8de5bb55087b160f488918d97779116a92",
+        "sdistSizeBytes": 3434321,
+        "sdistUrl": "https://files.pythonhosted.org/packages/source/p/pglast/pglast-7.20.tar.gz",
+        "sourceNoticeFiles": [
+          {
+            "license": "BSD-3-Clause-style libpg_query redistribution notice",
+            "path": "pglast-7.20/libpg_query/LICENSE",
+            "sha256": "f9352c20940619a380a5e9f23cebe34d8f797cfbd747fc236a7a3e5fc8ef9b41"
+          }
+        ],
+        "wheelLicenseFiles": []
+      },
+      "version": "7.20"
+    },
+    {
+      "distribution": "pglast",
+      "filename": "pglast-7.20-cp314-cp314-macosx_11_0_arm64.whl",
+      "license": null,
+      "licenseExpression": "GPL-3.0-or-later",
+      "licenseFilePaths": [],
+      "licenseFiles": [],
+      "requiresDist": [
+        "bump-my-version==1.5.1; extra == \"dev\"",
+        "cython==3.3.0; extra == \"dev\"",
+        "pycparser==3.0; extra == \"dev\"",
+        "readme-renderer==46.0; extra == \"dev\"",
+        "setuptools==84.0.0; extra == \"dev\"",
+        "sphinx==9.0.4; extra == \"dev\"",
+        "twine==7.0.0; extra == \"dev\"",
+        "coverage==7.16.2; extra == \"test\"",
+        "mypy==2.3.1; extra == \"test\"",
+        "pytest-cov==7.1.0; extra == \"test\"",
+        "pytest==9.1.1; extra == \"test\"",
+        "ty==0.0.84; extra == \"test\""
+      ],
+      "sha256": "9728963e1f0570a1fcff25e04ab3843bffcafd509822d6aad9df093dca1a331b",
+      "size": 1506915,
+      "source": {
+        "kind": "pypi-wheel-with-sdist-license-source",
+        "licenseEvidence": {
+          "path": "pglast-7.20/PKG-INFO",
+          "sha256": "837968169d3a232e44bf6b3e26919413581dea52178483ba272fb418bf5d9697"
+        },
+        "licenseExpression": "GPL-3.0-or-later",
+        "licenseNotice": "The four selected wheels contain no standalone license files. Preserve the pinned sdist and its PKG-INFO license evidence with this optional distribution. The sdist also includes the bundled libpg_query notice.",
+        "pypiAttestation": "not provided for this release",
+        "releasePage": "https://pypi.org/project/pglast/7.20/",
+        "sdistSha256": "6dd32bfd848e0f35de448ef23d819c8de5bb55087b160f488918d97779116a92",
+        "sdistSizeBytes": 3434321,
+        "sdistUrl": "https://files.pythonhosted.org/packages/source/p/pglast/pglast-7.20.tar.gz",
+        "sourceNoticeFiles": [
+          {
+            "license": "BSD-3-Clause-style libpg_query redistribution notice",
+            "path": "pglast-7.20/libpg_query/LICENSE",
+            "sha256": "f9352c20940619a380a5e9f23cebe34d8f797cfbd747fc236a7a3e5fc8ef9b41"
+          }
+        ],
+        "wheelLicenseFiles": []
+      },
+      "version": "7.20"
+    },
+    {
+      "distribution": "pglast",
+      "filename": "pglast-7.20-cp314-cp314-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+      "license": null,
+      "licenseExpression": "GPL-3.0-or-later",
+      "licenseFilePaths": [],
+      "licenseFiles": [],
+      "requiresDist": [
+        "bump-my-version==1.5.1; extra == \"dev\"",
+        "cython==3.3.0; extra == \"dev\"",
+        "pycparser==3.0; extra == \"dev\"",
+        "readme-renderer==46.0; extra == \"dev\"",
+        "setuptools==84.0.0; extra == \"dev\"",
+        "sphinx==9.0.4; extra == \"dev\"",
+        "twine==7.0.0; extra == \"dev\"",
+        "coverage==7.16.2; extra == \"test\"",
+        "mypy==2.3.1; extra == \"test\"",
+        "pytest-cov==7.1.0; extra == \"test\"",
+        "pytest==9.1.1; extra == \"test\"",
+        "ty==0.0.84; extra == \"test\""
+      ],
+      "sha256": "8f28a703ebc6318dcccfba720a56ca9b0e3b720f60caa43cc617c710123e4496",
+      "size": 6293354,
+      "source": {
+        "kind": "pypi-wheel-with-sdist-license-source",
+        "licenseEvidence": {
+          "path": "pglast-7.20/PKG-INFO",
+          "sha256": "837968169d3a232e44bf6b3e26919413581dea52178483ba272fb418bf5d9697"
+        },
+        "licenseExpression": "GPL-3.0-or-later",
+        "licenseNotice": "The four selected wheels contain no standalone license files. Preserve the pinned sdist and its PKG-INFO license evidence with this optional distribution. The sdist also includes the bundled libpg_query notice.",
+        "pypiAttestation": "not provided for this release",
+        "releasePage": "https://pypi.org/project/pglast/7.20/",
+        "sdistSha256": "6dd32bfd848e0f35de448ef23d819c8de5bb55087b160f488918d97779116a92",
+        "sdistSizeBytes": 3434321,
+        "sdistUrl": "https://files.pythonhosted.org/packages/source/p/pglast/pglast-7.20.tar.gz",
+        "sourceNoticeFiles": [
+          {
+            "license": "BSD-3-Clause-style libpg_query redistribution notice",
+            "path": "pglast-7.20/libpg_query/LICENSE",
+            "sha256": "f9352c20940619a380a5e9f23cebe34d8f797cfbd747fc236a7a3e5fc8ef9b41"
+          }
+        ],
+        "wheelLicenseFiles": []
+      },
+      "version": "7.20"
+    }
+  ]
+}

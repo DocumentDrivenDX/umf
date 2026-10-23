@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 /** Compiler-backed TypeScript export/import census helper for rust-inventory.py. */
 import ts from 'typescript-api';
+import {parseDocument} from 'yaml';
 import {resolve,relative} from 'node:path';
 
 const root=resolve(import.meta.dir,'..');
@@ -33,4 +34,12 @@ for(const source of program.getSourceFiles()){
   const exports=symbol?checker.getExportsOfModule(symbol).map(s=>s.getName()).sort():[];
   out[relative(root,abs).replaceAll('\\','/')]={publicExports:exports,imports:[...new Set(imports)].sort(),resolvedImports:[...new Set(resolvedImports)].sort()};
 }
-console.log(JSON.stringify({typescriptVersion:ts.version,files:out}));
+const workflowRuns:Record<string,string[]>={};
+for(const file of ts.sys.readDirectory(resolve(root,'.github/workflows'),['.yml','.yaml'])){
+  const path=resolve(file),source=await Bun.file(path).text(),document=parseDocument(source,{uniqueKeys:true});
+  if(document.errors.length)throw new Error(`Invalid workflow YAML ${relative(root,path)}: ${document.errors.map(error=>error.message).join('; ')}`);
+  const workflow=document.toJS() as {jobs?:Record<string,{steps?:Array<{run?:unknown}>}>};
+  const runs=Object.values(workflow.jobs??{}).flatMap(job=>(job.steps??[]).flatMap(step=>typeof step.run==='string'?[step.run]:[]));
+  workflowRuns[relative(root,path).replaceAll('\\','/')]=runs;
+}
+console.log(JSON.stringify({typescriptVersion:ts.version,files:out,workflowRuns}));

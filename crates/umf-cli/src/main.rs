@@ -976,7 +976,7 @@ mod tests {
         assert_eq!(RESOURCE_FILES.len(), 9);
         assert_eq!(
             resource_manifest_sha256(),
-            "f7c142db1c57bc5e12e463fcf530ec09f671b01ecb99c757866a73a154476609"
+            "52dcb72d07244cfb7dfe9931054d289ff2eecc6ced86699b0a93c4e28be56a6f"
         );
     }
 }

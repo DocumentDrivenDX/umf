@@ -1,5 +1,11 @@
 # UMF project documentation
 
+[Embedder completion plan](04-build/praxis-embedder-completion-plan.md) selects
+remaining upstream U4–U9 asks, atomic existing-column NULL fill before
+requiredness, domain/conversion fixtures and a consumer-owner handoff, followed
+by another release. Actual Praxis changes and managed consumer acceptance stay
+outside this task; the released U1–U3 evidence below keeps its original scope.
+
 [Shared Rust migration and Python V8 removal plan](04-build/rust-migration-plan.md)
 sequences a native Rust CLI and Python/Node/Bun/browser bindings over one engine.
 [ADR-006](02-design/adr/ADR-006-shared-rust-implementation.md) records the target

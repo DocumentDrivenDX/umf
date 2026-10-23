@@ -1,9 +1,11 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {expect,test} from 'bun:test';
 import {compileTableDeployment,verifyTableDeployment} from '../../src/table-deployment';
+import {compileTableMigration} from '../../src/table-migration';
 import {generatePythonClient} from '../../src/access';
 import {inspectTableLifecycle} from '../../src/extensions/tables';
 import {domainSource} from '../unified/table-domain-fixture';
+import {legalDomainAuthoringSource} from '../unified/legal-domain-authoring-fixture';
 const configuration={module:'demo',schema:'demo_schema',ownerRole:'demo_owner',personRole:'demo_person',batchRole:'demo_batch',groupRoles:{}};
 test('blocking logical domains and transaction-clock assignments retain their exact source',()=>{
  const doc=domainSource(),inspection=inspectTableLifecycle(doc);
@@ -25,4 +27,29 @@ test('blocking logical domains and transaction-clock assignments retain their ex
  const bad=structuredClone(doc),clock=bad.modules[0].extensions['umf.tables'].commands.find((c:any)=>c.id==='touch');
  clock.body.values.at(-1).field={module:'demo',element:'amount'};
  expect(inspectTableLifecycle(bad).diagnostics.some(d=>d.code==='TABLES_OPERATION_DOMAIN')).toBe(true);
+});
+
+test('synthetic legal domain authoring drives exact comments, enum and nullable numeric range constraints',()=>{
+ const doc=legalDomainAuthoringSource(),inspection=inspectTableLifecycle(doc);
+ expect(inspection.diagnostics).toEqual([]);
+ const compiled=compileTableDeployment({text:JSON.stringify(doc),configuration:{...configuration,module:'legal_lifecycle',schema:'legal_domain_demo',groupRoles:{billing_admin:'legal_domain_billing'}}});
+ expect(compiled.status).toBe('compiled');if(compiled.status!=='compiled')throw Error(JSON.stringify(compiled));
+ expect(verifyTableDeployment(compiled.bundle)).toEqual(compiled.bundle);
+ const sql=compiled.bundle.steps.map(step=>step.sql).join('\n');
+ expect(sql).toContain('COMMENT ON TABLE "legal_domain_demo"."matters" IS ');
+ expect(sql).toContain('IS E\'Synthetic matter record: "review"\\\\scope\nsecond line.\'');
+ expect(sql).toContain('COMMENT ON COLUMN "legal_domain_demo"."matters"."review_state" IS ');
+ expect(sql).toContain('IS E\'Review state: "draft"\\\\approved\nretained exactly.\'');
+ expect(sql).toContain('"review_state" IN (');
+ expect(sql).toContain('"risk_score" >= E\'0\'::pg_catalog.numeric AND "risk_score" < E\'1e2\'::pg_catalog.numeric');
+ expect(sql).toContain('COMMENT ON COLUMN "legal_domain_demo"."matters"."risk_score" IS ');
+ expect(doc.modules[0]!.elements.find((element:any)=>element.id==='matters__review_state')!.description).toBe('Review state: "draft"\\approved\nretained exactly.');
+ const cleared=structuredClone(doc);delete cleared.modules[0]!.elements.find((element:any)=>element.id==='matters__risk_score')!.description;
+ const next=compileTableDeployment({text:JSON.stringify(cleared),configuration:{...configuration,module:'legal_lifecycle',schema:'legal_domain_demo',groupRoles:{billing_admin:'legal_domain_billing'}}});
+ expect(next.status).toBe('compiled');if(next.status!=='compiled')throw Error(JSON.stringify(next));
+ const initial=compileTableMigration({id:'domain-001',predecessor:null,previous:null,next:compiled.bundle});
+ expect(initial.status).toBe('compiled');if(initial.status!=='compiled')throw Error(JSON.stringify(initial));
+ const forward=compileTableMigration({id:'domain-002',predecessor:{id:'domain-001',digest:initial.plan.digest},previous:compiled.bundle,next:next.bundle});
+ expect(forward.status).toBe('compiled');if(forward.status!=='compiled')throw Error(JSON.stringify(forward));
+ expect(forward.plan.steps.map(step=>step.sql).join('\n')).toContain('COMMENT ON COLUMN "legal_domain_demo"."matters"."risk_score" IS NULL');
 });

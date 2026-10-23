@@ -18,6 +18,85 @@ SPEC.loader.exec_module(MODULE)
 
 
 class InventoryDependencyTests(unittest.TestCase):
+    def test_python_console_scripts_activate_only_resolved_authored_entrypoint_modules(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory).resolve()
+            manifest = root / "python/example/pyproject.toml"
+            entrypoint = root / "python/example/src/pkg/cli.py"
+            unrelated = root / "python/example/src/pkg/unused.py"
+            for path in (manifest, entrypoint, unrelated):
+                path.parent.mkdir(parents=True, exist_ok=True)
+            manifest.write_text(
+                '[project.scripts]\n"example-cli" = "pkg.cli:main.run"\n'
+                '"external" = "other.cli:main"\n"no-callable" = "pkg.cli"\n'
+                '"empty-callable" = "pkg.cli:"\n"empty-module" = ":main"\n'
+                '"extra-target" = "pkg.cli:main unexpected"\n', encoding="utf-8")
+            with patch.object(MODULE, "ROOT", root):
+                roots = MODULE.python_console_entrypoint_roots([manifest], [entrypoint, unrelated])
+            self.assertEqual({"python/example/src/pkg/cli.py": {"project.scripts:example-cli (python/example/pyproject.toml)"}}, roots)
+            self.assertNotIn("python/example/src/pkg/unused.py", roots)
+
+    def test_workflow_unittest_discovery_activates_only_matching_files_under_declared_start(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory).resolve()
+            selected = root / "tests/lifecycle/test_parser.py"
+            another = root / "tests/lifecycle/test_other.py"
+            outside = root / "tests/other/test_parser.py"
+            for path in (selected, another, outside):
+                path.parent.mkdir(parents=True, exist_ok=True)
+            workflow_runs = {".github/workflows/optional.yml": [
+                "python -m unittest discover -s tests/lifecycle -p test_parser.py",
+                "python -I -m unittest discover -s tests/lifecycle -v",
+                "python -m unittest tests.not_discovery",
+            ]}
+            with patch.object(MODULE, "ROOT", root):
+                roots, unresolved = MODULE.workflow_unittest_discovery_roots(workflow_runs, [selected, another, outside])
+            self.assertEqual({
+                "tests/lifecycle/test_parser.py": {
+                    "workflow:.github/workflows/optional.yml unittest discover -s tests/lifecycle -p test_parser.py",
+                    "workflow:.github/workflows/optional.yml unittest discover -s tests/lifecycle -p test*.py",
+                },
+                "tests/lifecycle/test_other.py": {
+                    "workflow:.github/workflows/optional.yml unittest discover -s tests/lifecycle -p test*.py",
+                },
+            }, roots)
+            self.assertEqual([], unresolved)
+            self.assertNotIn("tests/other/test_parser.py", roots)
+
+    def test_workflow_unittest_discovery_ignores_comments_help_malformed_and_broad_flags(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory).resolve()
+            selected = root / "tests/lifecycle/test_parser.py"
+            for path in (selected,):
+                path.parent.mkdir(parents=True, exist_ok=True)
+            workflow_runs = {".github/workflows/optional.yml": [
+                "# python -m unittest discover -s tests/lifecycle -p test_parser.py",
+                "python -m unittest discover --help",
+                "python -m unittest discover -s",
+                "python -m unittest discover -p test_parser.py",
+                "python -m unittest discover -s . -p test_parser.py",
+                "python -m unittest discover -s ../outside -p test_parser.py",
+                "python -m unittest discover -s tests/lifecycle -p '*.py'",
+                "python -m unittest discover -s tests/lifecycle -p test_parser.py --unknown",
+                "python -m unittest discover -s tests/lifecycle -p 'unterminated",
+                "cat <<'TEXT'\npython -m unittest discover -s tests/lifecycle -p test_parser.py\nTEXT",
+                'echo "python -m unittest discover -s tests/lifecycle -p test_parser.py\n"',
+                "python -m unittest discover \\\n-s tests/lifecycle -p test_parser.py",
+            ]}
+            with patch.object(MODULE, "ROOT", root):
+                roots, unresolved = MODULE.workflow_unittest_discovery_roots(workflow_runs, [selected])
+            self.assertEqual({}, roots)
+            self.assertEqual(11, len(unresolved))
+            self.assertTrue(all(item["workflow"] == ".github/workflows/optional.yml" for item in unresolved))
+            self.assertTrue(all(len(item["commandSha256"]) == 64 for item in unresolved))
+            self.assertEqual({
+                "unsupported-or-incomplete-unittest-discovery-options",
+                "unbounded-or-out-of-root-unittest-start-directory",
+                "unbounded-or-invalid-unittest-pattern",
+                "malformed-unittest-discovery-command",
+                "multiline-unittest-discovery-run-block-not-admitted",
+            }, {item["reason"] for item in unresolved})
+
     def test_rust_input_identity_covers_embedded_data_but_excludes_artifacts(self):
         import tempfile
         from unittest.mock import patch

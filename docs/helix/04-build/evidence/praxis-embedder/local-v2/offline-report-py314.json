@@ -1,0 +1,57 @@
+{
+  "cell": {
+    "architecture": "arm64",
+    "libc": "not applicable",
+    "os": "macos-27",
+    "python": "3.14.8",
+    "runnerIdentity": {
+      "architecture": "arm64",
+      "macVersion": "27.0.1",
+      "system": "Darwin"
+    }
+  },
+  "install": {
+    "cache": "disabled",
+    "dependencyCheck": "passed",
+    "indexScheme": "file",
+    "networkIsolation": "macOS sandbox-exec deny network*",
+    "pipIsolated": true,
+    "requireHashes": true,
+    "sourceBuilds": "forbidden"
+  },
+  "installedVersions": {
+    "annotated-types": "0.8.0",
+    "attrs": "26.1.0",
+    "jsonschema": "4.26.0",
+    "jsonschema-specifications": "2025.9.1",
+    "mini-racer": "0.14.1",
+    "psycopg": "3.2.13",
+    "psycopg-binary": "3.2.13",
+    "pydantic": "2.14.1",
+    "pydantic-core": "2.50.1",
+    "referencing": "0.37.0",
+    "rpds-py": "2026.9.1",
+    "ruamel-yaml": "0.19.1",
+    "typing-extensions": "4.16.0",
+    "typing-inspection": "0.4.4",
+    "umf-access": "0.1.0.dev7",
+    "umf-codegen": "0.1.0a4",
+    "umf-core": "0.10.0",
+    "weft-sql": "0.4.49"
+  },
+  "lockSha256": "5ffa34987b4d6b10a2db7b418c6bc6fd6b035f06ecb73ec302452155d8d42fbb",
+  "mirrorManifestSha256": "f18cf84469b1c991f44b496cb678f5fdf8ed1f1ad2a65cfc29bb6ec6dd25d441",
+  "probes": {
+    "missing-wheel": "refused under OS network denial",
+    "tampered-wheel": "refused under OS network denial",
+    "umf-codegen-check": "passed",
+    "umf-codegen-generate": "passed",
+    "umf-table-apply": "approval-required before connection",
+    "umf-table-check": "passed",
+    "umf-table-new": "passed"
+  },
+  "profile": "umf-offline-mirror-installed/1",
+  "status": "passed",
+  "wheelCount": 29,
+  "wheelInventorySha256": "0ceb89a6fd6f6a840c49c3572f00940a2963bce029374a18d5a417bd47bd9fcd"
+}

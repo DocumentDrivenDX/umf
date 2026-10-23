@@ -23,6 +23,7 @@ from .witness import _json_bytes
 _REFERENCE_KEYS = {'version','bundleDigest','sourceDigest','configurationDigest',
                    'generation','headDigest','planDigest','headRelationOid','headShape',
                    'nativeWitness','historyShape','referenceDigest'}
+_APPROVAL_REFERENCE_KEYS = {'approvalProfile', 'approvalPlanDigest', 'approvalShape'}
 _MAX_REFERENCE_BYTES = 16*1024*1024
 
 
@@ -46,17 +47,39 @@ def _issue_reference(connection: Any, source: dict[str, Any], entry: dict[str, A
     outcome_shape=_outcome_shape(connection,schema)
     if outcome_shape is not None:
         reference.update(version='umf.table-installation/0.2',outcomeShape=_normalized(outcome_shape))
+    if entry['plan'].get('version') == 'umf.table-migration/0.3':
+        from .approval import APPROVAL_PROFILE, _approval_shape
+
+        if entry['plan'].get('approvalProfile') != APPROVAL_PROFILE or entry['plan']['digest'] != reference['planDigest']:
+            raise CatalogError('installation-reference-mismatch')
+        reference.update(version='umf.table-installation/0.3',
+                         approvalProfile=APPROVAL_PROFILE,
+                         approvalPlanDigest=entry['plan']['digest'],
+                         approvalShape=_normalized(_approval_shape(connection, source)))
     reference['referenceDigest'] = hashlib.sha256(_json_bytes(reference)).hexdigest()
     return reference
 
 
 def _checked_reference(reference: dict[str, object], source: dict[str, Any]) -> dict[str, Any]:
-    if type(reference) is not dict or set(reference) != (_REFERENCE_KEYS | {'outcomeShape'} if reference.get('version')=='umf.table-installation/0.2' else _REFERENCE_KEYS):
+    if type(reference) is not dict:
+        raise CatalogError('installation-reference-mismatch')
+    version = reference.get('version')
+    keys = (_REFERENCE_KEYS | {'outcomeShape'} if version == 'umf.table-installation/0.2'
+            else _REFERENCE_KEYS | {'outcomeShape'} | _APPROVAL_REFERENCE_KEYS
+            if version == 'umf.table-installation/0.3'
+            else _REFERENCE_KEYS)
+    if set(reference) != keys:
         raise CatalogError('installation-reference-mismatch')
     checked = _normalized(reference)
     digest = checked.pop('referenceDigest')
-    if (checked['version'] not in ('umf.table-installation/0.1','umf.table-installation/0.2')
+    if (checked['version'] not in ('umf.table-installation/0.1','umf.table-installation/0.2','umf.table-installation/0.3')
             or checked['version']=='umf.table-installation/0.2' and type(checked['outcomeShape']) is not dict
+            or checked['version']=='umf.table-installation/0.3' and (
+                checked['approvalProfile'] != {'version':'umf.table-migration-approval/0.1',
+                    'relation':'umf_lifecycle_approvals','ownerOnly':True}
+                or checked['approvalPlanDigest'] != checked['planDigest']
+                or type(checked['approvalShape']) is not dict
+                or type(checked.get('outcomeShape')) is not dict)
             or digest != hashlib.sha256(_json_bytes(checked)).hexdigest()
             or any(checked[key] != source[key] for key in ('bundleDigest','sourceDigest','configurationDigest'))
             or type(checked['generation']) is not int or not 1 <= checked['generation'] <= 128
@@ -156,6 +179,11 @@ def _head_steps(source, expected, statement_timeout_ms, lock_timeout_ms):
         raise CatalogError('history-catalog-mismatch')
     if _normalized((yield from _outcome_shape_steps(schema))) != expected.get('outcomeShape'):
         raise CatalogError('outcome-catalog-mismatch')
+    if expected['version'] == 'umf.table-installation/0.3':
+        from .approval import _approval_shape_steps
+
+        if _normalized((yield from _approval_shape_steps(schema))) != expected['approvalShape']:
+            raise CatalogError('approval-catalog-mismatch')
     yield _Query('execute', 'LOCK TABLE ' + _q(schema) + '.' + _q(HEAD) + ' IN ACCESS SHARE MODE', ())
     location = (yield _Query('one', 'SELECT d.oid,d.datname,n.oid,n.nspowner\nFROM pg_catalog.pg_database d,pg_catalog.pg_namespace n\nWHERE d.datname=pg_catalog.current_database() AND n.nspname=%s', (schema,)))
     witness = expected['nativeWitness']
@@ -167,6 +195,11 @@ def _head_steps(source, expected, statement_timeout_ms, lock_timeout_ms):
         raise CatalogError('history-catalog-mismatch')
     if _normalized((yield from _outcome_shape_steps(schema))) != expected.get('outcomeShape'):
         raise CatalogError('outcome-catalog-mismatch')
+    if expected['version'] == 'umf.table-installation/0.3':
+        from .approval import _approval_shape_steps
+
+        if _normalized((yield from _approval_shape_steps(schema))) != expected['approvalShape']:
+            raise CatalogError('approval-catalog-mismatch')
     relation = _q(schema) + '.' + _q(HEAD)
     row = (yield _Query('one', 'SELECT generation,head_digest,plan_digest,bundle_digest,source_digest,\nconfiguration_digest,pg_catalog.octet_length(native_witness::pg_catalog.text) FROM ' + relation, ()))
     if row is None or tuple(row[:6]) != tuple(expected[k] for k in ('generation', 'headDigest', 'planDigest', 'bundleDigest', 'sourceDigest', 'configurationDigest')):
