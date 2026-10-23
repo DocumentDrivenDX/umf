@@ -326,9 +326,9 @@ async function installPythonWheel(wheel: string, workspace: string) {
   const venv = join(workspace, 'venv');
   command(uv, ['venv', '--python', python, venv], workspace, {...process.env, UV_OFFLINE: '1'});
   const py = pythonVenvPython(venv);
-  command(uv, ['pip', 'install', '--offline', '--python', py, 'pytest>=8.4,<10', wheel], workspace, {...process.env, UV_OFFLINE: '1'});
+  command(uv, ['pip', 'install', '--offline', '--python', py, 'pytest>=8.4,<10', 'hatchling>=1.27,<2', wheel], workspace, {...process.env, UV_OFFLINE: '1'});
   const env = {...process.env, PATH: '', UMF_GIT: gitTool, UMF_REQUIRE_INSTALLED: '1'};
-  const versionResult = command(py, ['-c', 'import json, pydantic, pytest, sys; print(json.dumps({"python": sys.version, "implementation": sys.implementation.name, "pydantic": pydantic.__version__, "pytest": pytest.__version__}))'], workspace, env);
+  const versionResult = command(py, ['-c', 'import importlib.metadata, json, pydantic, pytest, sys; print(json.dumps({"python": sys.version, "implementation": sys.implementation.name, "hatchling": importlib.metadata.version("hatchling"), "pydantic": pydantic.__version__, "pytest": pytest.__version__}))'], workspace, env);
   const versions = JSON.parse(versionResult.stdout.trim());
   const suite = command(py, ['-m', 'pytest', '-c', resolve(root, 'python/pyproject.toml'), resolve(root, 'python/tests')], workspace, env);
   const corpus = command(py, [resolve(root, 'scripts/rust-core/python-conformance.py'), fixture], workspace, env);

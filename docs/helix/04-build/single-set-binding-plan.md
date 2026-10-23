@@ -513,3 +513,34 @@ the new source-distribution cohort must be rebuilt and both resulting native
 artifacts independently qualified again. Earlier successful matrix receipts
 remain unchanged evidence for their exact originals; public publication and
 Arras default public-extra acceptance remain separate gates.
+
+
+## Isolated full-conformance build-backend repair
+
+On source `0a640fd2270bb8c5b5d53acd4f77d6d0834483f5`, Rust production
+macOS Python 3.12 job `120674417231` reached its installed Python suite and
+reported 294 passed / two failed out of 296 tests. Both failures imported the
+source build hook and raised `ModuleNotFoundError: hatchling`. The isolated
+conformance environment installed pytest and the exact SDK wheel, but omitted
+the build backend required by those source-hook controls. The workflow already
+primed `hatchling>=1.27,<2` before offline qualification. This failure remains
+part of the source-check history; it does not invalidate or replace the separate
+237-test direct/rebuilt artifact receipts from run `40029644127`.
+
+Independent source review clears the two-line repair in
+`scripts/rust-core/full-conformance.ts`, SHA-256
+`fd2a2f8bf21c4443f3f370d625bf721ec712e668d6a902b6e74d5897671a8214`:
+the fresh test environment installs that same bounded Hatchling requirement
+with the existing offline command and records its actual distribution version
+using `importlib.metadata`. Exact wheel/payload gates, isolated execution and
+full test selection remain unchanged. Hatchling is a qualification tool, not
+a new SDK runtime dependency.
+
+The implementation owner reports both existing source-hook tests passing
+with 31 tests deselected in a private environment with Hatchling 1.32.4;
+only pytest cache-write warnings occurred. The independent reviewer inspected
+and hashed the actual diff, without rerunning tests or importing artifact code.
+This is a bounded repair check, not a successful rerun of the full conformance
+suite. Final inventory/boundary checks and current-source hosted conformance
+and artifact attribution remain required before publication. No public SDK
+installation or Arras default public-extra acceptance is claimed here.
