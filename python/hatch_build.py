@@ -110,16 +110,15 @@ def add_action_runtime_resources(
         else "src/umf/action_runtime_resource_manifest.json"
     )
     build_data["force_include"][str(manifest)] = manifest_target
+    if wheel:
+        return
     for filename, source_name in ACTION_RUNTIME_RESOURCES:
         source = repository / source_name
         if not source.is_file() or source.is_symlink():
             raise FileNotFoundError(
                 f"The official action runtime resource is missing: {source_name}"
             )
-        # The canonical source paths are the wheel hook's inputs when a wheel
-        # is rebuilt from an sdist. The wheel hook maps them into package data.
-        target = f"umf/action_runtime_resources/{filename}" if wheel else source_name
-        build_data["force_include"][str(source)] = target
+        build_data["force_include"][str(source)] = source_name
 
 
 def add_sdist_action_runtime_package_copies(
@@ -137,6 +136,24 @@ def add_sdist_action_runtime_package_copies(
         shutil.copyfile(source, staged)
         build_data["force_include"][str(staged)] = (
             f"src/umf/action_runtime_resources/{filename}"
+        )
+
+
+def add_wheel_action_runtime_package_copies(
+    repository: Path, build_data: dict, staging_root: Path
+) -> None:
+    """Stage fixed resource copies so later directory includes cannot replace them."""
+    staging_root.mkdir(parents=True, exist_ok=True)
+    for filename, source_name in ACTION_RUNTIME_RESOURCES:
+        source = repository / source_name
+        if not source.is_file() or source.is_symlink():
+            raise FileNotFoundError(
+                f"The official action runtime resource is missing: {source_name}"
+            )
+        staged = staging_root / filename
+        shutil.copyfile(source, staged)
+        build_data["force_include"][str(staged)] = (
+            f"umf/action_runtime_resources/{filename}"
         )
 
 
@@ -163,6 +180,14 @@ class CustomBuildHook(BuildHookInterface):
         if self.target_name != "wheel":
             return
         add_action_runtime_resources(repository, package_root, build_data, wheel=True)
+        self._action_runtime_staging = tempfile.TemporaryDirectory(
+            prefix="umf-wheel-action-resources-"
+        )
+        add_wheel_action_runtime_package_copies(
+            repository,
+            build_data,
+            Path(self._action_runtime_staging.name),
+        )
         core = repository / "spec/core"
         for name in CORE_RESOURCES:
             source = core / name

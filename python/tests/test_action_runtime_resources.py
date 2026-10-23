@@ -235,20 +235,78 @@ def test_extracted_sdist_contains_every_canonical_resource_needed_by_wheel_hook(
     build_hook.add_action_runtime_resources(
         extracted, extracted, wheel_includes, wheel=True
     )
+    wheel_staging = tmp_path / "wheel-staging"
+    build_hook.add_wheel_action_runtime_package_copies(
+        extracted, wheel_includes, wheel_staging
+    )
     for filename, source_name in build_hook.ACTION_RUNTIME_RESOURCES:
         source = extracted / source_name
+        staged_copy = wheel_staging / filename
         assert source.is_file()
-        assert wheel_includes["force_include"][str(source)] == (
+        assert str(source) not in wheel_includes["force_include"] or (
+            wheel_includes["force_include"][str(source)]
+            != f"umf/action_runtime_resources/{filename}"
+        )
+        assert wheel_includes["force_include"][str(staged_copy)] == (
             f"umf/action_runtime_resources/{filename}"
         )
+        assert staged_copy.read_bytes() == source.read_bytes()
 
     missing_name = build_hook.ACTION_RUNTIME_RESOURCES[-1][1]
     missing = extracted / missing_name
     missing.unlink()
     with pytest.raises(FileNotFoundError, match=missing_name):
-        build_hook.add_action_runtime_resources(
-            extracted, extracted, {"force_include": {}}, wheel=True
+        build_hook.add_wheel_action_runtime_package_copies(
+            extracted, {"force_include": {}}, tmp_path / "missing-wheel-staging"
         )
+
+
+def test_full_wheel_hook_initialization_keeps_resource_targets_disjoint(
+    monkeypatch, tmp_path
+):
+    build_hook = _load_build_hook_module()
+    repository = _repository_root()
+    target = tmp_path / "cargo-target"
+    monkeypatch.setenv("CARGO_TARGET_DIR", str(target))
+    monkeypatch.setenv("CARGO", "fake-cargo")
+
+    def fake_cargo(command, *, cwd, env, check):
+        assert command[0] == "fake-cargo"
+        extension = target / "release" / "lib_rust_core.dylib"
+        extension.parent.mkdir(parents=True)
+        extension.write_bytes(b"test-only fake compiled payload")
+
+    monkeypatch.setattr(build_hook.subprocess, "run", fake_cargo)
+    hook = build_hook.CustomBuildHook(
+        str(repository / "python"), {}, None, None, "", "wheel"
+    )
+    build_data = {"force_include": {}}
+    hook.initialize(None, build_data)
+
+    targets = build_data["force_include"]
+    runtime_targets = {
+        target
+        for target in targets.values()
+        if target.startswith("umf/action_runtime_resources/")
+    }
+    expected_targets = {
+        f"umf/action_runtime_resources/{filename}"
+        for filename, _source in build_hook.ACTION_RUNTIME_RESOURCES
+    }
+    assert runtime_targets == expected_targets
+    assert len(runtime_targets) == len(build_hook.ACTION_RUNTIME_RESOURCES)
+    for filename, source_name in build_hook.ACTION_RUNTIME_RESOURCES:
+        target_path = f"umf/action_runtime_resources/{filename}"
+        source = Path(
+            next(
+                path
+                for path, destination in targets.items()
+                if destination == target_path
+            )
+        )
+        assert source.parent == Path(hook._action_runtime_staging.name)
+        assert source.read_bytes() == (repository / source_name).read_bytes()
+    hook.finalize(None, build_data, tmp_path / "unused-wheel.whl")
 
 
 def test_dispatch_wrappers_forward_one_request_to_the_named_rust_operation(monkeypatch):
