@@ -77,3 +77,27 @@ The recorded source closure has these SHA-256 identities:
 | `python/umf_access/src/umf_access/unified/operation_values.py` | `b8d13aeb5a880e09fc06bdb297c4e012481b0d4886dcce5bd6558296cc796eb1` |
 | `python/umf_access/tests/test_operation_values_rust.py` | `0c4203b73dc94d9b117e0931d1b31f13a126271ca66e604b4fc8f007bd415f35` |
 | Locally built `_rust_core.abi3.so` | `4161d780eff7ed82df7ec921e735d4f9ff234aaa213bcd4e16180a8ea8f89ee5` |
+
+## R6 operation follow-up — 2026-10-23
+
+The next bounded source slice ports `key_literal` for an exact built-in `str`
+carrier through `umf-core`; Python retains the original object in the returned
+wrapper. Carrier subclasses and custom equality/truth-conversion objects remain
+on the original Python path so their callbacks and exception identity are
+preserved. The absent-key refusal keeps its predecessor diagnostic and occurs
+before any custom carrier comparison. Focused source-tree checks cover string,
+boolean and pass-through modes, object identity, absent values, custom equality
+exceptions, truth-conversion exceptions and `str` subclasses. This is source
+test evidence for that helper only; no installed-wheel or consumer qualification
+is claimed.
+
+`native_arguments` remains Python-owned. Its predecessor hash is
+`b8d13aeb5a880e09fc06bdb297c4e012481b0d4886dcce5bd6558296cc796eb1`. The helper
+builds a Python dictionary from arbitrary IDs and source objects, then performs
+each source-kind decision and carrier lookup in DB-API order. The selected
+mapping methods, key equality/hash behavior, exception precedence and Python
+`__index__` handling are observable. An eager structural projection into Rust
+changes those traces for unselected malformed sources and for an earlier host
+lookup failure followed by a later unknown source. The attempted bounded port
+was discarded; this operation remains unclaimed until a slice preserves those
+host interactions or explicitly qualifies a narrower contract.

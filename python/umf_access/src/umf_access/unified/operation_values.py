@@ -60,7 +60,7 @@ def _native_error(error, default):
     message = str(error)
     allowed = {
         "invalid operation JSON", "native wire frame bound exceeded",
-        "cursor capacity exceeded", "invalid cursor",
+        "cursor capacity exceeded", "invalid cursor", "native cursor key is absent",
     }
     return SessionError(message if message in allowed else default)
 
@@ -208,6 +208,18 @@ def value_from_native(value,output):
 
 def key_literal(value,carrier):
     if value is None:raise SessionError('native cursor key is absent')
+    if type(carrier) is str:
+        try:
+            mode = _rust_values().operation_key_literal_mode(carrier, False)
+        except SessionError:
+            raise
+        except (AttributeError, RuntimeError) as error:
+            raise SessionError('native operation-values capability unavailable') from error
+        except ValueError as error:
+            raise _native_error(error, 'invalid operation JSON') from None
+        if mode == 'string':return {'string':value}
+        if mode == 'boolean':return {'boolean':value}
+        return value
     if carrier=='string':return {'string':value}
     if carrier=='boolean':return {'boolean':value}
     return value

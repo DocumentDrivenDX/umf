@@ -12,6 +12,7 @@ from umf_access.unified.operation_values import (
     bounded_size,
     canonical,
     digest,
+    key_literal,
     loads,
     token_decode,
     token_encode,
@@ -19,6 +20,52 @@ from umf_access.unified.operation_values import (
 
 
 class RustOperationValues(unittest.TestCase):
+    def test_key_literal_rust_dispatch_preserves_identity_and_custom_fallback(self):
+        sentinel = object()
+        for carrier, wrapped in [('string', 'string'), ('boolean', 'boolean')]:
+            result = key_literal(sentinel, carrier)
+            self.assertIs(result[wrapped], sentinel)
+        self.assertIs(key_literal(sentinel, 'integer'), sentinel)
+        lone_surrogate = '\ud800'
+        self.assertIs(key_literal(sentinel, lone_surrogate), sentinel)
+        with self.assertRaisesRegex(SessionError, 'native cursor key is absent'):
+            key_literal(None, 'string')
+        with self.assertRaisesRegex(SessionError, 'native cursor key is absent'):
+            key_literal(None, lone_surrogate)
+
+        class Marker(Exception): pass
+        marker = Marker('comparison failed')
+
+        class ExplodingEquality:
+            called = False
+            def __eq__(self, other):
+                self.called = True
+                raise marker
+
+        custom = ExplodingEquality()
+        with self.assertRaises(Marker) as raised:
+            key_literal(sentinel, custom)
+        self.assertIs(raised.exception, marker)
+        self.assertTrue(custom.called)
+        custom.called = False
+        with self.assertRaisesRegex(SessionError, 'native cursor key is absent'):
+            key_literal(None, custom)
+        self.assertFalse(custom.called)
+
+        class ExplodingTruth:
+            def __bool__(self): raise marker
+        class DeferredEquality:
+            def __eq__(self, other): return ExplodingTruth()
+        with self.assertRaises(Marker) as raised:
+            key_literal(sentinel, DeferredEquality())
+        self.assertIs(raised.exception, marker)
+
+        class CustomString(str):
+            def __eq__(self, other): raise marker
+        with self.assertRaises(Marker) as raised:
+            key_literal(sentinel, CustomString('string'))
+        self.assertIs(raised.exception, marker)
+
     def test_profile_and_builtin_canonical_bytes_match_stdlib_oracle(self):
         self.assertEqual(
             rust_operation_values.operation_values_profile_version(),

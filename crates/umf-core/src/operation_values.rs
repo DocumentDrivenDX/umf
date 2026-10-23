@@ -18,6 +18,7 @@ pub enum OperationValuesError {
     FrameBound,
     CursorCapacity,
     Cursor,
+    NativeKeyAbsent,
 }
 impl fmt::Display for OperationValuesError {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
@@ -26,10 +27,33 @@ impl fmt::Display for OperationValuesError {
             Self::FrameBound => "native wire frame bound exceeded",
             Self::CursorCapacity => "cursor capacity exceeded",
             Self::Cursor => "invalid cursor",
+            Self::NativeKeyAbsent => "native cursor key is absent",
         })
     }
 }
+
 impl std::error::Error for OperationValuesError {}
+
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+pub enum KeyLiteralMode {
+    String,
+    Boolean,
+    PassThrough,
+}
+
+pub fn key_literal_mode(
+    carrier: &Utf16,
+    value_is_none: bool,
+) -> Result<KeyLiteralMode, OperationValuesError> {
+    if value_is_none {
+        return Err(OperationValuesError::NativeKeyAbsent);
+    }
+    Ok(match carrier.to_utf8().ok().as_deref() {
+        Some("string") => KeyLiteralMode::String,
+        Some("boolean") => KeyLiteralMode::Boolean,
+        _ => KeyLiteralMode::PassThrough,
+    })
+}
 
 fn parse(raw: &str) -> Result<NativeJsonTree, OperationValuesError> {
     let source: Vec<u16> = raw.encode_utf16().collect();
@@ -303,5 +327,25 @@ mod tests {
         let signature = hex(&hmac_sha256(b"secret", encoded.as_bytes()));
         let token = format!("{encoded}.{signature}");
         assert_eq!(token_decode(b"secret", &token).unwrap(), raw);
+    }
+
+    #[test]
+    fn key_literal_mode_keeps_exact_carrier_dispatch_and_absence() {
+        assert_eq!(
+            key_literal_mode(&Utf16::from_utf8("string"), false),
+            Ok(KeyLiteralMode::String)
+        );
+        assert_eq!(
+            key_literal_mode(&Utf16::from_utf8("boolean"), false),
+            Ok(KeyLiteralMode::Boolean)
+        );
+        assert_eq!(
+            key_literal_mode(&Utf16::from_utf8("integer"), false),
+            Ok(KeyLiteralMode::PassThrough)
+        );
+        assert_eq!(
+            key_literal_mode(&Utf16::new(vec![0xd800]), true),
+            Err(OperationValuesError::NativeKeyAbsent)
+        );
     }
 }

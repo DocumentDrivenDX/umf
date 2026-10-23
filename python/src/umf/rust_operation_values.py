@@ -36,6 +36,10 @@ def operation_token_decode(secret: bytes, token: str) -> str:
     return _rust._rust_core.operation_token_decode(secret, token)
 
 
+def operation_key_literal_mode(carrier: str, value_is_none: bool) -> str:
+    return _rust._rust_core.operation_key_literal_mode(carrier, value_is_none)
+
+
 def require_operation_values_profile() -> None:
     actual = operation_values_profile_version()
     if actual != _PROFILE:

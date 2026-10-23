@@ -186,6 +186,14 @@ describe("actual Python boundary checker", () => {
       rejects("py", {[prefix + "values.py"]: source}, "DEPENDENCY");
     rejects("py", {[prefix + "types.py"]: "from umf import rust_values"}, "DEPENDENCY");
   });
+  test("stream and operation-value owners reach only their public Rust bridges", () => {
+    const prefix = "python/umf_access/src/umf_access/";
+    expect(check("py", {[prefix + "pages.py"]: "from umf import rust_streams"}).exitCode).toBe(0);
+    expect(check("py", {[prefix + "unified/operation_values.py"]: "from umf import rust_operation_values"}).exitCode).toBe(0);
+    rejects("py", {[prefix + "pages.py"]: "from umf import rust_operation_values"}, "DEPENDENCY");
+    rejects("py", {[prefix + "unified/operation_values.py"]: "from umf import rust_streams"}, "DEPENDENCY");
+    rejects("py", {[prefix + "unified/session.py"]: "from umf import rust_operation_values"}, "DEPENDENCY");
+  });
   test("lifecycle administration owns only its public compiler verifier and native exception imports",()=>{
     const prefix="python/umf_access/src/umf_access/";
     expect(check("py",{[prefix+"lifecycle/catalog.py"]:"from umf_codegen import verify_table_deployment, verify_table_migration\nfrom psycopg import Error\nfrom psycopg.rows import tuple_row\nfrom psycopg.types.json import Jsonb"}).exitCode).toBe(0);

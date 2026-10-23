@@ -3,7 +3,7 @@ use std::{cell::RefCell, collections::HashMap, rc::Rc};
 use pyo3::{
     exceptions::PyValueError,
     prelude::*,
-    types::{PyBool, PyBytes, PyDict, PyFloat, PyInt, PyList, PyTuple},
+    types::{PyBool, PyBytes, PyDict, PyFloat, PyInt, PyList, PyString, PyTuple},
 };
 use num_bigint::BigInt;
 use umf_core::{
@@ -200,6 +200,29 @@ fn operation_token_encode(
 #[pyfunction]
 fn operation_token_decode(secret: &Bound<'_, PyBytes>, token: &str) -> PyResult<String> {
     umf_core::operation_values::token_decode(secret.as_bytes(), token)
+        .map_err(|e| PyValueError::new_err(e.to_string()))
+}
+
+#[pyfunction]
+fn operation_key_literal_mode(
+    py: Python<'_>,
+    carrier: &Bound<'_, PyAny>,
+    value_is_none: bool,
+) -> PyResult<&'static str> {
+    if !carrier.is_exact_instance_of::<PyString>() {
+        return Err(PyValueError::new_err("exact string carrier required"));
+    }
+    let carrier = if value_is_none {
+        Utf16::default()
+    } else {
+        extract_utf16(py, carrier)?
+    };
+    umf_core::operation_values::key_literal_mode(&carrier, value_is_none)
+        .map(|mode| match mode {
+            umf_core::operation_values::KeyLiteralMode::String => "string",
+            umf_core::operation_values::KeyLiteralMode::Boolean => "boolean",
+            umf_core::operation_values::KeyLiteralMode::PassThrough => "pass-through",
+        })
         .map_err(|e| PyValueError::new_err(e.to_string()))
 }
 
@@ -2173,6 +2196,7 @@ fn _rust_core(module: &Bound<'_, PyModule>) -> PyResult<()> {
     module.add_function(wrap_pyfunction!(operation_loads, module)?)?;
     module.add_function(wrap_pyfunction!(operation_token_encode, module)?)?;
     module.add_function(wrap_pyfunction!(operation_token_decode, module)?)?;
+    module.add_function(wrap_pyfunction!(operation_key_literal_mode, module)?)?;
     module.add_function(wrap_pyfunction!(access_float32_profile_version, module)?)?;
     module.add_function(wrap_pyfunction!(access_float32_classify, module)?)?;
     module.add_function(wrap_pyfunction!(access_range_profile_version, module)?)?;

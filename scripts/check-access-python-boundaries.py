@@ -123,8 +123,10 @@ def check(root: Path) -> int:
                           and target == 'psycopg2.extensions' and member == 'cursor')
         table_read_compiler = (name == 'umf_access.unified.table_reads' and target == 'weft'
                                and member == 'prepare_table_operation_module_json')
-        public_core_values = (name == 'umf_access.values' and target == 'umf'
-                              and member in {'rust_temporal', 'rust_values'})
+        public_core_values = (target == 'umf' and (
+            name == 'umf_access.values' and member in {'rust_temporal', 'rust_values'}
+            or name == 'umf_access.pages' and member == 'rust_streams'
+            or name == 'umf_access.unified.operation_values' and member == 'rust_operation_values'))
         seed_compiler = (name == 'umf_access.lifecycle.seeds' and target == 'weft' and member == 'compile_table_seed_json'
                          or name == 'umf_access.lifecycle.backfills' and target == 'weft' and member == 'prepare_table_operation_module_json')
         # The optional containment adapter has one narrow parser entry point;
