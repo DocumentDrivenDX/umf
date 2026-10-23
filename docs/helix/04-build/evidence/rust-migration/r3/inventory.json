@@ -158,7 +158,7 @@
       "tests/lifecycle/prepare-legacy-oracle.py",
       "tests/lifecycle/reviewed-native-fixture.ts",
       "tests/lifecycle/reviewed_native.py",
-      "tests/lifecycle/test_sql_containment.py",
+      "tests/lifecycle/sql_containment_ci_receipt.py",
       "tests/metamodel/authority-boundaries.test.ts",
       "tests/metamodel/browser-entry.ts",
       "tests/metamodel/compiler-kernel.test.ts",
@@ -189,16 +189,16 @@
   "capture": {
     "inventoryFormat": "0.2",
     "inventoryScript": "scripts/rust-inventory.py",
-    "sourceCohortSha256": "414cf697322807ccbf469261c8a107629c4e72f392d48d937af74b5065788207",
+    "sourceCohortSha256": "e678148acb894f67dc4feec8f85240a090638bacb0d7c20c0ec5d98c7415bb2b",
     "typescriptApi": "5.9.3"
   },
   "counts": {
     "activeScriptFiles": 329,
-    "algorithmSymbols": 10131,
+    "algorithmSymbols": 10135,
     "pythonModules": 104,
     "rustBuildInputs": 76,
     "rustModules": 114,
-    "scriptFiles": 2928,
+    "scriptFiles": 2929,
     "sourceModules": 575,
     "typescriptModules": 471
   },
@@ -42610,6 +42610,24 @@
       "sha256": "4d4cb6845d421a72212fd6d7be0590a4e1aa8b3d8545c97954ed42fb879f8a33"
     },
     {
+      "activationEvidence": [
+        ".github/workflows/sql-containment.yml"
+      ],
+      "active": true,
+      "algorithmSymbols": [
+        "_cell",
+        "_run",
+        "_verify_wheel",
+        "main"
+      ],
+      "bytes": 5682,
+      "disposition": "test-oracle-fixture-algorithm",
+      "language": "py",
+      "migrationObligation": "Active only where activation evidence says so; test/oracle logic is evidence and not an implementation port by default",
+      "path": "tests/lifecycle/sql_containment_ci_receipt.py",
+      "sha256": "f2a681c77e08e375e8b0caac18f9fa0be2f5b389bb76b9cdbde52c1d4fcff755"
+    },
+    {
       "activationEvidence": [],
       "active": false,
       "algorithmSymbols": [
@@ -42650,10 +42668,8 @@
       "sha256": "a8a640f9a012648d1a0f04dc6dcb496e30190a75766ef8dac3f9ddfc1ad57473"
     },
     {
-      "activationEvidence": [
-        "workflow:.github/workflows/sql-containment.yml unittest discover -s tests/lifecycle -p test_sql_containment.py"
-      ],
-      "active": true,
+      "activationEvidence": [],
+      "active": false,
       "algorithmSymbols": [
         "ChangedParser",
         "ContainmentTests",
@@ -42669,9 +42685,9 @@
         "test_trusted_parser_version_and_closed_ast"
       ],
       "bytes": 8284,
-      "disposition": "test-oracle-fixture-algorithm",
+      "disposition": "unreferenced-test-source",
       "language": "py",
-      "migrationObligation": "Active only where activation evidence says so; test/oracle logic is evidence and not an implementation port by default",
+      "migrationObligation": "Retained test/evidence source with no discovered current activation edge",
       "path": "tests/lifecycle/test_sql_containment.py",
       "sha256": "b661463c1377d6ab70ae1c6636e4fb003b6507d70003839c9a202559123b9188"
     },
