@@ -149,3 +149,80 @@ artifact review remain pending; no pass is inferred from this planning record.
 - Candidate artifacts, source and support limits are documented and handed to
   the consumer owner through a reviewable PR/patch.
 - No unverified wider native, policy-execution, release or full-port claim remains.
+
+## Public Python SDK 0.10.1 integration and qualification
+
+2026-10-23: The UMF owner authorized this bounded public SDK preparation on
+current main `009c042545a17b49ea857eff22d0fcf3fd71ef44`. The reviewed semantic
+and packaging changes are preserved through the original commit provenance:
+`f46e91d49217640805225b1fcd8fbfa4fa8d4569` was cherry-picked with `-x` as
+`60dcfd735f042241f6993ec48941ade279fa64d4`, followed by
+`42cc635653972689d9443cbc06442df47eca92ca` as
+`2e2d901c8b7c0df0526d4b664374bde51bfb616b`. This ports the bounded public
+binding onto the current native SDK foundation; it does not adopt the separate
+full-port branch or replace current-main lifecycle and SQL-containment work.
+
+The selected Python distribution is `umf-core==0.10.1`. Its package
+`__version__` follows that distribution version; the UMF document/schema version
+and model `umfVersion` remain `0.10.0`. Distribution compatibility is qualified
+by actual regression evidence rather than inferred from that shared document
+version. The independent UMF owner retains final review and publication
+responsibility, with repository tag `umf-v0.5.6` selected for the reviewed merge.
+No tag, public URL, published artifact digest, or publication success is asserted
+by this preparation record. The separate full-port distribution remains outside
+this slice.
+
+A source-byte comparison against the retained candidate inventory found all nine
+canonical action resources unchanged on the selected current-main base. The
+existing action runtime inventory digest remains
+`13c3fb58b94eefdb319637eb15e80d20501d3538ab7b6c152e12a1b481156dff`.
+This is a source comparison, not proof of a new installed or published package.
+The fixed inventory and each resource digest must still be verified in every
+built wheel and in its installed payload. Preserve the current native Hatch
+hook, complete source-distribution closure and macOS binary handling.
+
+The bounded implementation allocation is:
+
+- Luna packaging owns the distribution constants, exact package inventory
+  verifier, related tests and a nonpublishing SDK qualification workflow.
+- The existing PyPI workflow may reuse that exact payload verifier in its build
+  gate. Its publication action, environment and permissions remain unchanged.
+- Root owns source commits, hosted artifact collection and build coordination;
+  Sol independently reviews source and actual artifact evidence. The UMF owner
+  independently reviews the resulting PR and controls public publication.
+
+The new qualification matrix targets Ubuntu 24.04 x86_64 and macOS 15 arm64.
+The Linux wheel is qualified with its actual `linux_x86_64` tag; it must not be
+relabelled as manylinux or taken as proof for other Linux distributions. The
+macOS artifact must retain its actual platform/ABI tag. Record the precise
+Python, OS, architecture, build source and toolchain for each observed run;
+an abi3 tag alone does not supply runtime or platform evidence.
+
+Each selected platform must build the wheel and source distribution, verify the
+closed source/resource/native inventory and archive RECORD, then install the
+exact wheel in a fresh environment outside the checkout. Verify import origin,
+installed RECORD and payload parity before reporting installed results. Execute
+the genuine generated Apply/Validate client, fixed action source/vectors,
+resource refusal controls and core regression corpus without treating missing
+runtime capability as a skip. Retain the exact 139-case core corpus identity and
+results; Arras separately proves its fresh-empty-registry parity against the
+same selected public SDK. Rebuild from the source distribution and compare the
+resulting payloads, explicitly qualifying any native binary differences rather
+than asserting container-byte equality. Existing browser/shared-Rust boundary
+and regression gates remain applicable to changed semantic code; no wider
+browser execution or consumer backend claim follows from Python qualification.
+
+The workflow uploads artifacts and safe qualification receipts only; it neither
+publishes packages nor mutates tags or releases. The owner review requires the
+actual wheel/source-distribution hashes, native/resource identities, installed
+results, rebuild comparison and supported/refused subset before publication.
+After publication, Arras may select exact platform-specific public URLs/hashes
+and requalify the unchanged document semantics plus its memory-host path. Its
+local candidate override remains distinct from the default public-extra gate.
+
+The earlier candidate evidence remains scoped to the exact local native
+`umf-core==0.10.0` artifact and macOS arm64 environment that produced it. It is
+historical provenance for this port, not new public `0.10.1` evidence. Installed
+`0.10.1` platform qualification, independent owner review, publication and the
+consumer's default public-extra proof remain pending until actual artifacts and
+receipts establish each gate.

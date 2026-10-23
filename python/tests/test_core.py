@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 
 import pytest
+import umf
 from umf import (
     Diagnostic,
     Document,
@@ -78,6 +79,11 @@ def test_only_generated_current_core_schema_is_active():
     assert core_schema()
     with pytest.raises(ValueError, match="Unsupported UMF core version"):
         core_schema("0.8.0")
+
+
+def test_distribution_version_is_distinct_from_semantic_core_version():
+    assert umf.__version__ == "0.10.1"
+    assert current_core_version() == "0.10.0"
 
 
 def test_literal_refinement_selection_and_order_come_from_generated_policy():

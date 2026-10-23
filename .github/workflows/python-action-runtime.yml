@@ -1,0 +1,239 @@
+name: Python action-runtime artifact qualification
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  qualify-installed-artifact:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - cohort: linux-x86_64
+            runs-on: ubuntu-24.04
+            python-architecture: x64
+            expected-machine: x86_64
+            expected-platform: linux_x86_64
+          - cohort: macos-arm64
+            runs-on: macos-15
+            python-architecture: arm64
+            expected-machine: arm64
+            expected-platform: macos_arm64
+    runs-on: ${{ matrix.runs-on }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Isolate Rust toolchain state
+        run: |
+          {
+            printf 'RUSTUP_HOME=%s/umf-action-rustup\n' "$RUNNER_TEMP"
+            printf 'CARGO_TARGET_DIR=%s/umf-action-target\n' "$RUNNER_TEMP"
+          } >> "$GITHUB_ENV"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11.17'
+          architecture: ${{ matrix.python-architecture }}
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: 1.90.0
+      - name: Record the compiler cohort
+        run: |
+          rustc -Vv > "$RUNNER_TEMP/umf-rustc-version.txt"
+          cargo --version > "$RUNNER_TEMP/umf-cargo-version.txt"
+      - name: Require the declared runner architecture
+        env:
+          EXPECTED_MACHINE: ${{ matrix.expected-machine }}
+          EXPECTED_PLATFORM: ${{ matrix.expected-platform }}
+        run: |
+          python - <<'PY'
+          import os
+          import platform
+          import sys
+          import sysconfig
+
+          machine = platform.machine().lower()
+          expected = os.environ["EXPECTED_MACHINE"]
+          expected_platform = os.environ["EXPECTED_PLATFORM"]
+          if machine != expected:
+              raise SystemExit(f"Expected {expected}; runner reported {machine}")
+          current = sysconfig.get_platform().replace("-", "_").replace(".", "_")
+          if expected_platform == "linux_x86_64" and (sys.platform != "linux" or current != expected_platform):
+              raise SystemExit(f"Unexpected Linux wheel platform: {current}")
+          if expected_platform == "macos_arm64" and (sys.platform != "darwin" or not (current.startswith("macosx_") and current.endswith("_arm64"))):
+              raise SystemExit(f"Unexpected macOS wheel platform: {current}")
+          print(f"runner={sys.platform} machine={machine} python_platform={current}")
+          PY
+      - name: Install bounded build and test tools
+        run: python -m pip install 'build==1.3.0' 'hatchling==1.27.0'
+      - name: Build the source and binary distributions
+        run: python -m build --no-isolation python
+      - name: Verify wheel payload and rebuild from the sdist
+        env:
+          EXPECTED_PLATFORM: ${{ matrix.expected-platform }}
+        run: |
+          python tools/verify_python_artifacts.py \
+            --wheel python/dist/*.whl \
+            --sdist python/dist/*.tar.gz \
+            --repository . \
+            --expected-platform "$EXPECTED_PLATFORM" \
+            --receipt "$RUNNER_TEMP/umf-artifact-payload.json"
+      - name: Create an isolated installed-wheel environment
+        run: |
+          python -m venv "$RUNNER_TEMP/umf-installed"
+          "$RUNNER_TEMP/umf-installed/bin/python" -m pip install \
+            'pytest==8.4.2' 'hatchling==1.27.0' 'pydantic==2.11.9'
+          "$RUNNER_TEMP/umf-installed/bin/python" -m pip install --no-deps --no-compile python/dist/*.whl
+      - name: Verify installed distribution, semantic core, and native module
+        env:
+          EXPECTED_MACHINE: ${{ matrix.expected-machine }}
+        run: |
+          set -euo pipefail
+          "$RUNNER_TEMP/umf-installed/bin/python" -I -B \
+            "$GITHUB_WORKSPACE/tools/verify_python_artifacts.py" \
+            --wheel "$GITHUB_WORKSPACE"/python/dist/*.whl \
+            --verify-installed-wheel \
+            --receipt "$RUNNER_TEMP/umf-installed-payload.json"
+          "$RUNNER_TEMP/umf-installed/bin/python" -I -B - "$RUNNER_TEMP/umf-install.json" <<'PY'
+          import importlib.metadata
+          import json
+          import os
+          import platform
+          import sys
+          import sysconfig
+          from pathlib import Path
+          import umf
+          from umf._rust import _rust_core
+          from umf import current_core_version
+
+          package_root = Path(umf.__file__).resolve()
+          platlib = Path(sysconfig.get_path("platlib")).resolve()
+          if not package_root.is_relative_to(platlib):
+              raise SystemExit("UMF imported outside the isolated installation")
+          if platform.machine().lower() != os.environ["EXPECTED_MACHINE"]:
+              raise SystemExit("Installed test interpreter architecture changed")
+          if importlib.metadata.version("umf-core") != "0.10.1" or umf.__version__ != "0.10.1":
+              raise SystemExit("Installed distribution version is not 0.10.1")
+          if current_core_version() != "0.10.0":
+              raise SystemExit("Installed semantic core is not 0.10.0")
+          extension = Path(_rust_core.__file__).resolve()
+          if not extension.is_relative_to(package_root.parent) or extension.suffix != ".so":
+              raise SystemExit("Rust extension is not installed within UMF")
+          output = {
+              "python": platform.python_version(),
+              "python_platform": sysconfig.get_platform(),
+              "machine": platform.machine(),
+              "system": platform.platform(),
+              "libc": list(platform.libc_ver()),
+              "distribution_version": importlib.metadata.version("umf-core"),
+              "semantic_core_version": current_core_version(),
+              "installed_inside_environment": True,
+              "native_extension": extension.name,
+          }
+          Path(sys.argv[1]).write_text(json.dumps(output, sort_keys=True) + "\n", encoding="utf-8")
+          PY
+      - name: Run installed action-runtime and core regression tests
+        id: installed_tests
+        run: |
+          cd "$RUNNER_TEMP"
+          "$RUNNER_TEMP/umf-installed/bin/python" -I -B -m pytest -q \
+            --junitxml="$RUNNER_TEMP/umf-action-tests.xml" \
+            "$GITHUB_WORKSPACE/python/tests/test_action_runtime_generated_client.py" \
+            "$GITHUB_WORKSPACE/python/tests/test_action_runtime_resources.py" \
+            "$GITHUB_WORKSPACE/python/tests/test_action_fixture_vectors.py" \
+            "$GITHUB_WORKSPACE/python/tests/test_core.py" \
+            "$GITHUB_WORKSPACE/python/tests/test_rust_core.py"
+      - name: Finalize qualification receipt
+        if: always()
+        env:
+          TEST_OUTCOME: ${{ steps.installed_tests.outcome }}
+          COHORT: ${{ matrix.cohort }}
+          SOURCE_REVISION: ${{ github.sha }}
+          RUN_ID: ${{ github.run_id }}
+          RUN_ATTEMPT: ${{ github.run_attempt }}
+        run: |
+          python - "$GITHUB_WORKSPACE/tools/verify_python_artifacts.py" "$RUNNER_TEMP/umf-artifact-payload.json" "$RUNNER_TEMP/umf-install.json" "$RUNNER_TEMP/umf-installed-payload.json" "$RUNNER_TEMP/umf-action-tests.xml" "$RUNNER_TEMP/umf-rustc-version.txt" "$RUNNER_TEMP/umf-cargo-version.txt" "$RUNNER_TEMP/umf-qualification.json" <<'PY'
+          import hashlib
+          import json
+          import os
+          import sys
+          import xml.etree.ElementTree as ET
+          from pathlib import Path
+
+          verifier_path, payload_path, install_path, installed_payload_path, junit_path, rustc_path, cargo_path, receipt_path = map(Path, sys.argv[1:])
+          receipt = json.loads(payload_path.read_text(encoding="utf-8")) if payload_path.is_file() else {
+              "schema": "umf.python-artifact-qualification/1",
+              "verification": "not_completed",
+          }
+          if install_path.is_file():
+              receipt["installation"] = json.loads(install_path.read_text(encoding="utf-8"))
+          if installed_payload_path.is_file():
+              receipt["installed_payload_parity"] = json.loads(installed_payload_path.read_text(encoding="utf-8"))
+          receipt["cohort"] = os.environ["COHORT"]
+          receipt["source_revision"] = os.environ["SOURCE_REVISION"]
+          receipt["workflow_run_id"] = os.environ["RUN_ID"]
+          receipt["workflow_run_attempt"] = os.environ["RUN_ATTEMPT"]
+          receipt["verifier_source_sha256"] = hashlib.sha256(verifier_path.read_bytes()).hexdigest()
+          if rustc_path.is_file():
+              compiler = {}
+              for line in rustc_path.read_text(encoding="utf-8").splitlines():
+                  key, separator, value = line.partition(": ")
+                  if separator and key in {"release", "host", "commit-date", "LLVM version"}:
+                      compiler[key.replace("-", "_").replace(" ", "_")] = value
+              receipt["rustc"] = compiler
+          if cargo_path.is_file():
+              receipt["cargo"] = cargo_path.read_text(encoding="utf-8").strip()
+          test_outcome = os.environ.get("TEST_OUTCOME", "not_run")
+          receipt["installed_test_step"] = test_outcome
+          counts = None
+          if junit_path.is_file():
+              root = ET.parse(junit_path).getroot()
+              suites = [root] if root.tag == "testsuite" else list(root.findall("testsuite"))
+              counts = {key: sum(int(suite.get(key, "0")) for suite in suites) for key in ("tests", "errors", "failures", "skipped")}
+              receipt["installed_test_counts"] = counts
+          passed = (
+              test_outcome == "success"
+              and install_path.is_file()
+              and installed_payload_path.is_file()
+              and counts is not None
+              and counts["tests"] > 0
+              and counts["errors"] == 0
+              and counts["failures"] == 0
+              and counts["skipped"] == 0
+              and receipt.get("source_payload_verification") == "passed"
+              and receipt.get("sdist_rebuild", {}).get("package_payload_matches") is True
+              and receipt.get("action_runtime_resource_count") == 9
+              and receipt.get("distribution_version") == "0.10.1"
+              and receipt.get("semantic_core_version") == "0.10.0"
+              and receipt.get("installation", {}).get("installed_inside_environment") is True
+              and receipt.get("installed_payload_parity", {}).get("status") == "passed"
+              and receipt.get("installed_payload_parity", {}).get("wheel_sha256") == receipt.get("wheel", {}).get("sha256")
+              and receipt.get("installed_payload_parity", {}).get("native_sha256") == receipt.get("wheel", {}).get("native_sha256")
+              and receipt.get("installed_payload_parity", {}).get("package_file_count") == receipt.get("wheel", {}).get("package_file_count")
+              and len(receipt["source_revision"]) == 40
+              and all(char in "0123456789abcdef" for char in receipt["source_revision"])
+              and len(receipt["verifier_source_sha256"]) == 64
+              and all(char in "0123456789abcdef" for char in receipt["verifier_source_sha256"])
+              and receipt.get("installation", {}).get("distribution_version") == "0.10.1"
+              and receipt.get("installation", {}).get("semantic_core_version") == "0.10.0"
+          )
+          receipt["installed_qualification"] = "passed" if passed else "failed_or_incomplete"
+          receipt_path.write_text(json.dumps(receipt, sort_keys=True) + "\n", encoding="utf-8")
+          if not passed:
+              raise SystemExit("Installed qualification needs a successful install and positive zero-skip tests")
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: umf-python-action-runtime-${{ matrix.cohort }}
+          path: |
+            python/dist/*.whl
+            python/dist/*.tar.gz
+            ${{ runner.temp }}/umf-artifact-payload.json
+            ${{ runner.temp }}/umf-install.json
+            ${{ runner.temp }}/umf-installed-payload.json
+            ${{ runner.temp }}/umf-qualification.json
+          if-no-files-found: warn
