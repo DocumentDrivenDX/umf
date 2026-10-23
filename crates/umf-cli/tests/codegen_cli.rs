@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 use std::io::Write;
 use std::process::{Command, Stdio};
+use sha2::{Digest, Sha256};
 use umf_core::serialization::{read_json_value, stringify_compact_metered, Format};
 use umf_core::{Context, Utf16, Value};
 
@@ -109,7 +110,41 @@ fn capabilities_reports_the_pinned_resource_manifest() {
     assert!(envelope.contains("umf.codegen-cli/1"));
     assert!(envelope.contains("umf.codegen-json-core-admission/1"));
     assert!(envelope.contains("umf.core-wire/1"));
-    assert!(envelope.contains("7f7dc9982ff89e7b2dee4dc24955e038bf8daef45d02b7586f583884da5d696a"));
+    let capabilities = parse_json(&envelope);
+    let digest = compact_json(member(&capabilities, "resourceManifestSha256"));
+    assert_eq!(digest.len(), 66);
+    assert!(digest.starts_with('"') && digest.ends_with('"'));
+    assert!(digest[1..65].bytes().all(|byte| byte.is_ascii_hexdigit()));
+    assert_eq!(
+        member(member(&capabilities, "resourceManifest"), "profile"),
+        &Value::string_utf8("umf.codegen-resources/1")
+    );
+    let manifest = member(&capabilities, "resourceManifest");
+    let Value::Object(files) = member(manifest, "files") else {
+        panic!("resource file map expected")
+    };
+    let sources: &[(&str, &[u8])] = &[
+        ("actions.package.json", include_bytes!("../../../spec/extensions/actions/package.json")),
+        ("binding.package.json", include_bytes!("../../../spec/extensions/binding/package.json")),
+        ("core.constraints.json", include_bytes!("../../../spec/metamodel/generated/core-constraints.json")),
+        ("core.domain-policy.json", include_bytes!("../../../spec/metamodel/generated/domain-policy.json")),
+        ("core.package-schema.json", include_bytes!("../../../spec/core/extension-package.schema.json")),
+        ("core.reference-schema.json", include_bytes!("../../../spec/core/semantic-type-reference.schema.json")),
+        ("core.schema.json", include_bytes!("../../../spec/core/schema.json")),
+        ("stable-binding.package.json", include_bytes!("../../../spec/extensions/binding-stable/package.json")),
+        ("tables.package.json", include_bytes!("../../../spec/extensions/tables/package.json")),
+    ];
+    assert_eq!(files.len(), sources.len());
+    for &(name, source) in sources {
+        let expected = format!("{:x}", Sha256::digest(source));
+        assert_eq!(member(member(manifest, "files"), name), &Value::string_utf8(&expected));
+    }
+    let canonical = format!("{}\n", compact_json(manifest));
+    let expected_digest = format!("{:x}", Sha256::digest(canonical.as_bytes()));
+    assert_eq!(
+        member(&capabilities, "resourceManifestSha256"),
+        &Value::string_utf8(&expected_digest)
+    );
     assert!(envelope.contains("stable-binding.package.json"));
 }
 
@@ -122,7 +157,14 @@ fn version_reports_cli_protocol_version_and_resource_digest() {
     assert!(envelope.contains("umf.codegen-json-core-admission/1"));
     assert!(envelope.contains("umf.core-wire/1"));
     assert!(envelope.contains("\"version\":\"0.1.0\""));
-    assert!(envelope.contains("7f7dc9982ff89e7b2dee4dc24955e038bf8daef45d02b7586f583884da5d696a"));
+    let version = parse_json(&envelope);
+    let capabilities = run(&["codegen", "--capabilities"], b"");
+    assert!(capabilities.status.success());
+    let capabilities = parse_json(&String::from_utf8(capabilities.stdout).unwrap());
+    assert_eq!(
+        member(&version, "resourceManifestSha256"),
+        member(&capabilities, "resourceManifestSha256")
+    );
 }
 
 #[test]
