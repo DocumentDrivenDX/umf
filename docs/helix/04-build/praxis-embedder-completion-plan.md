@@ -359,6 +359,28 @@ CI, reviewed v3 asset custody and publication remain open.
 | Hohfeld constant mistaken for delivery | Installed same-document behavior, actual host journey and published release/date are required; retain old distribution and source for rollback. |
 | Published asset mutation | New immutable versions for changed artifacts; reuse unchanged core release bytes; retain old cohorts and document forward-only data effects. |
 
+### Qualification transport continuation, 2026-10-23
+
+The [transport diagnosis](evidence/praxis-embedder/cli-stdin-transport-diagnosis.json)
+records an intermittent local input-pipe wait: 41 repeated fixture runs completed,
+then the Rust CLI waited in stdin `read_to_end` while Node and Bun waited on
+children. Captured process samples precede termination of the disposable diagnostic
+group. This does not prove the cause of the still-running hosted macOS 14 jobs.
+
+The reviewed harness uses private file-backed stdin with identical wire bytes,
+inherited working directory/environment and serial comparisons. CLI waits have
+fatal timeouts, output bounds, process-group termination and cleanup. Existing
+public CLI stdin semantics and product behavior remain unchanged. Nine transport
+controls, 139 CLI cases plus three controls, 100 repeated fixtures/500 requests,
+and all 102 compiler fixtures/615 cases pass on the recorded local macOS 27
+runtime. The [source review](evidence/praxis-embedder/cli-stdin-transport-review.json)
+distinguishes these runs from the final command-logging-only delta.
+
+EC-11 still requires fresh exact-head CI and package/input/asset custody before
+merge and immutable publication. Original source and execution receipts retain
+their actual identities; no historical evidence is relabeled. Every required matrix cell must pass on the new source tree. A timeout remains
+a failure; every fixture retains its complete result comparison.
+
 ## Exit Criteria
 
 Plan readiness requires concrete ownership, boundaries, sequence, shared interface
