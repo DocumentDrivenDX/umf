@@ -5,9 +5,22 @@ import os
 import shutil
 import subprocess
 import sysconfig
+import tempfile
 from pathlib import Path
 
 from hatchling.builders.hooks.plugin.interface import BuildHookInterface
+
+ACTION_RUNTIME_RESOURCES = (
+    ("coreSchema.json", "spec/core/schema.json"),
+    ("referenceSchema.json", "spec/core/semantic-type-reference.schema.json"),
+    ("packageSchema.json", "spec/core/extension-package.schema.json"),
+    ("constraints.json", "spec/metamodel/generated/core-constraints.json"),
+    ("domainPolicy.json", "spec/metamodel/generated/domain-policy.json"),
+    ("tablesPackage.json", "spec/extensions/tables/package.json"),
+    ("actionsPackage.json", "spec/extensions/actions/package.json"),
+    ("bindingPackage.json", "spec/extensions/binding/package.json"),
+    ("stableBindingPackage.json", "spec/extensions/binding-stable/package.json"),
+)
 
 CORE_RESOURCES = (
     "schema.json",
@@ -84,6 +97,49 @@ def add_sdist_source_closure(repository: Path, build_data: dict) -> None:
                 build_data["force_include"][str(source)] = target
 
 
+def add_action_runtime_resources(
+    repository: Path, package_root: Path, build_data: dict, *, wheel: bool
+) -> None:
+    """Carry the fixed resources into a wheel or rebuildable source archive."""
+    manifest = package_root / "src/umf/action_runtime_resource_manifest.json"
+    if not manifest.is_file() or manifest.is_symlink():
+        raise FileNotFoundError("The pinned action runtime resource inventory is missing")
+    manifest_target = (
+        "umf/action_runtime_resource_manifest.json"
+        if wheel
+        else "src/umf/action_runtime_resource_manifest.json"
+    )
+    build_data["force_include"][str(manifest)] = manifest_target
+    for filename, source_name in ACTION_RUNTIME_RESOURCES:
+        source = repository / source_name
+        if not source.is_file() or source.is_symlink():
+            raise FileNotFoundError(
+                f"The official action runtime resource is missing: {source_name}"
+            )
+        # The canonical source paths are the wheel hook's inputs when a wheel
+        # is rebuilt from an sdist. The wheel hook maps them into package data.
+        target = f"umf/action_runtime_resources/{filename}" if wheel else source_name
+        build_data["force_include"][str(source)] = target
+
+
+def add_sdist_action_runtime_package_copies(
+    repository: Path, build_data: dict, staging_root: Path
+) -> None:
+    """Keep installed resource copies in the sdist alongside canonical inputs."""
+    staging_root.mkdir(parents=True, exist_ok=True)
+    for filename, source_name in ACTION_RUNTIME_RESOURCES:
+        source = repository / source_name
+        if not source.is_file() or source.is_symlink():
+            raise FileNotFoundError(
+                f"The official action runtime resource is missing: {source_name}"
+            )
+        staged = staging_root / filename
+        shutil.copyfile(source, staged)
+        build_data["force_include"][str(staged)] = (
+            f"src/umf/action_runtime_resources/{filename}"
+        )
+
+
 class CustomBuildHook(BuildHookInterface):
     def initialize(self, version, build_data):
         package_root = Path(self.root)
@@ -92,9 +148,21 @@ class CustomBuildHook(BuildHookInterface):
             # Carry the pinned native source closure so an sdist can produce
             # this abi3 wheel without JavaScript runtimes or downloads.
             add_sdist_source_closure(repository, build_data)
+            add_action_runtime_resources(
+                repository, package_root, build_data, wheel=False
+            )
+            self._action_runtime_staging = tempfile.TemporaryDirectory(
+                prefix="umf-sdist-action-resources-"
+            )
+            add_sdist_action_runtime_package_copies(
+                repository,
+                build_data,
+                Path(self._action_runtime_staging.name),
+            )
             return
         if self.target_name != "wheel":
             return
+        add_action_runtime_resources(repository, package_root, build_data, wheel=True)
         core = repository / "spec/core"
         for name in CORE_RESOURCES:
             source = core / name
@@ -148,3 +216,8 @@ class CustomBuildHook(BuildHookInterface):
         build_data["pure_python"] = False
         build_data["infer_tag"] = False
         build_data["tag"] = f"cp311-abi3-{platform_tag}"
+
+    def finalize(self, version, build_data, artifact_path):
+        staging = getattr(self, "_action_runtime_staging", None)
+        if staging is not None:
+            staging.cleanup()

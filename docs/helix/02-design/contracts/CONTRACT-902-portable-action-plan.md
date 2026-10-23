@@ -90,3 +90,8 @@ For `UPDATE Customer SET active = false WHERE last_seen < :cutoff`, a selected r
 ### Explicit browser-local profile branch — 2026-10-15
 
 CONTRACT-905 adds exact local-owner actor/policy/invocation interpretation and conditional reuse of plan-model/1, plan/1 and manifest/1 carriers. Previous human/tx1 restrictions remain mandatory whenever invocation is umf.actions.tx/1; local invocation uses its separately defined local-owner custody and bulk companion, never a fabricated human or bulk.principal. Unknown/mixed profiles refuse. Existing native producer/enrollment bytes are not relabeled or requalified. Metadata success never issues a store capability or seal.
+
+
+## Separate capability-qualified single-SET binding — 2026-10-23
+
+CONTRACT-906 defines a separate single-set-prepared/1 branch for current core 0.10.0. It does not emit or widen plan-model/1, waive relevant unknowns, or convert an opaque host-policy obligation to checked. This contract's documented core 0.8.0 pin and current-core implementation mismatch remain an explicit compatibility gap for plan/1; the separate bridge does not relabel historical bytes or prove that older portable plan profile. See [CONTRACT-906](CONTRACT-906-single-set-admission.md).

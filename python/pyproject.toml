@@ -27,6 +27,7 @@ packages = ["src/umf"]
 "../spec/extensions/domain-pack" = "spec/extensions/domain-pack"
 "../spec/extensions/dataset-source" = "spec/extensions/dataset-source"
 "../fixtures/metamodel/current-conformance.json" = "fixtures/metamodel/current-conformance.json"
+"../fixtures/actions-binding" = "fixtures/actions-binding"
 
 [dependency-groups]
 dev = ["pytest>=8.4,<10", "ruff>=0.13"]
