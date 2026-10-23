@@ -5,10 +5,11 @@ import {copyJson} from '../model/json';
 import {readDocument} from '../model/document';
 import {UmfError,type Diagnostic} from '../model/types';
 import {canonical,hashCanonical} from '../compilation/bundle/hash';
-import {columnDefinitionSql,literalSql,nativeType} from '../table-deployment/sql';
+import {columnDefinitionSql,nativeType,typedDefaultExpressionSql} from '../table-deployment/sql';
 import {verifyTableDeployment,type TableDeploymentBundle,type TableDeploymentStep} from '../table-deployment';
 import {discoverTableMigrationChanges} from './reviewed';
 import {phaseTableMigrationSteps,type TableMigrationPhase} from './phases';
+import {preflightG03DefaultLiteral,validateG03DefaultChange} from './g03-defaults';
 import type {TableMigrationExecutionProfile} from './phases-options';
 export {discoverTableMigrationChanges,reviewedValueDigest} from './reviewed';
 export type {ReviewedChangeCandidate,ReviewedChangeKind,ReviewedChangeMarker} from './reviewed';
@@ -19,13 +20,13 @@ export interface TableMigrationRequest {
 }
 export interface TableMigrationStep extends Omit<TableDeploymentStep,'transaction'|'kind'> {
  kind:TableDeploymentStep['kind']|'backfill'|'seed';transaction:'required'|'forbidden';operation?:string;constraintKind?:'check'|'foreignKey';seedSets?:string[];
- phaseOperation?:'backfill'|'tighten-not-null'|'add-column'|'target-check'|'install-default';phaseTarget?:{table:string;field:{module:string;element:string}};
+ phaseOperation?:'backfill'|'tighten-not-null'|'add-column'|'target-check'|'install-default'|'change-default';phaseTarget?:{table:string;field:{module:string;element:string}};
  preconditions:{phase:'before-plan';kind:'empty-private-schema'|'installed-source-cohort';bundleDigest:string|null};
  expectedOutcome:{phase:'before-commit';kind:'complete-next-source-catalog';bundleDigest:string};
  verification:'native-catalog-privileges-and-role-scope';recovery:'rollback-transaction'|'inspect-index';
 }
 export interface TableMigrationPlan extends TableMigrationRequest {
- version:'umf.table-migration/0.1'|'umf.table-migration/0.2'|'umf.table-migration/0.3'|'umf.table-migration/0.4';canonicalization:'RFC8785';
+ version:'umf.table-migration/0.1'|'umf.table-migration/0.2'|'umf.table-migration/0.3'|'umf.table-migration/0.4'|'umf.table-migration/0.5';canonicalization:'RFC8785';
  fromBundleDigest:string|null;toBundleDigest:string;
  steps:TableMigrationStep[];
  phases?:TableMigrationPhase[];executionProfile?:TableMigrationExecutionProfile;
@@ -309,6 +310,7 @@ function assertNoColumnDependents(column:TableDeploymentBundle['expectedCatalog'
 /** Inert forward plans: initial deployment, bounded additive DDL or command revisions. */
 function compileTableMigrationInternal(input:TableMigrationRequest,allowLegacyUnreviewedPolicy=false):TableMigrationResult{
  try{
+  preflightG03DefaultLiteral(input);
   const request=copyJson(input) as unknown as TableMigrationRequest;
   if(!request||Object.keys(request).some(k=>!['id','predecessor','previous','next','options'].includes(k))||!['id','predecessor','previous','next'].every(k=>Object.hasOwn(request,k)))fail('Unknown or missing migration request member');
   identity(request.id,'/id');
@@ -321,6 +323,7 @@ function compileTableMigrationInternal(input:TableMigrationRequest,allowLegacyUn
   const previous=request.previous===null?null:verifyTableDeployment(request.previous),next=verifyTableDeployment(request.next);
   if((previous===null)!==(request.predecessor===null))fail('Only initial deployment has a null predecessor','/predecessor');
   const options=migrationOptions(request.options,next,previous);
+  if(options?.version==='umf.table-migration-options/0.5')return compileG03DefaultChangePlan(request,previous!,next,options);
   if((options?.version==='umf.table-migration-options/0.2'||options?.version==='umf.table-migration-options/0.3'||options?.version==='umf.table-migration-options/0.4')&&!previous)fail('Phased plans require an installed predecessor; initial publication is not supported','/previous');
   if(previous&&(options?.version==='umf.table-migration-options/0.2'||options?.version==='umf.table-migration-options/0.3'||options?.version==='umf.table-migration-options/0.4')&&!same(previous.expectedCatalog.tables.map(t=>t.id).sort(),next.expectedCatalog.tables.map(t=>t.id).sort()))fail('Phased plans cannot add or remove tables until the runtime models absent and newly created table identities explicitly','/next/expectedCatalog/tables');
   let changes:MigrationChanges={policyChanges:new Set(),columnChanges:new Map(),droppedColumns:new Map(),renamedColumns:new Map(),notNullColumns:new Map(),relaxNullColumns:new Map(),typeChanges:new Map(),indexChanges:new Map(),keyChanges:new Map(),foreignKeyChanges:new Map(),checkChanges:new Map(),droppedChecks:new Map(),checkPaths:new Map(),grantChanges:new Map()};
@@ -376,7 +379,7 @@ function compileTableMigrationInternal(input:TableMigrationRequest,allowLegacyUn
       steps.push({id:'',kind:'backfill',sourcePath:'/options/backfills/'+options!.backfills.indexOf(backfill),transaction:'required',sql:'',operation:backfill.operation,...(options!.version==='umf.table-migration-options/0.4'?{phaseOperation:'backfill' as const,phaseTarget}:{})});
       const column=next.expectedCatalog.columns.find(c=>c.table===table.id&&refKey(c.field)===refKey(backfill.column))!;
       const defaultValue=table.columns.find(c=>refKey(c.field)===refKey(column.field))!.default;
-      const defaultSql=defaultValue?(defaultValue.kind==='literal'?literalSql(defaultValue.value):defaultValue.kind==='randomUuid'?'pg_catalog.gen_random_uuid()':'CURRENT_TIMESTAMP'):'';
+      const defaultSql=defaultValue?typedDefaultExpressionSql(defaultValue):'';
       if(defaultSql)steps.push({id:'',kind:'table',sourcePath:column.sourcePath,transaction:'required',sql:'ALTER TABLE '+quoteIdentifier(next.configuration.schema)+'.'+quoteIdentifier(table.name)+' ALTER COLUMN '+quoteIdentifier(column.name)+' SET DEFAULT '+defaultSql,...(appended?{phaseOperation:'install-default' as const,phaseTarget}:{})});
       if(!column.nullable)steps.push({id:'',kind:'table',sourcePath:column.sourcePath,transaction:'required',sql:'ALTER TABLE '+quoteIdentifier(next.configuration.schema)+'.'+quoteIdentifier(table.name)+' ALTER COLUMN '+quoteIdentifier(column.name)+' SET NOT NULL',...(options!.version==='umf.table-migration-options/0.4'?{phaseOperation:'tighten-not-null' as const,phaseTarget}:{})});
      }
@@ -522,6 +525,32 @@ function compileTableMigrationInternal(input:TableMigrationRequest,allowLegacyUn
  }
 }
 
+function compileG03DefaultChangePlan(request:TableMigrationRequest,previous:TableDeploymentBundle,next:TableDeploymentBundle,options:TableMigrationOptions):TableMigrationResult{
+ const candidate=validateG03DefaultChange(previous,next,options.reviewedChanges),match=/^\/modules\/(\d+)\/extensions\/umf\.tables\/tables\/(\d+)\/columns\/(\d+)\/default$/.exec(candidate.path);
+ if(!match)fail('G03 marker path is not a selected native default','/options/reviewedChanges/0/path');
+ const doc=readDocument(next.source.utf8,'json'),module=doc.modules[Number(match![1])]!,table=(module.extensions!['umf.tables'] as any).tables[Number(match![2])]!,column=table.columns[Number(match![3])]!;
+ const field={module:column.field.module,element:column.field.element},phaseTarget={table:table.id,field};
+ const relation=quoteIdentifier(next.configuration.schema)+'.'+quoteIdentifier(table.name),target=quoteIdentifier(column.name);
+ const defaultExpression=Object.hasOwn(column,'default')?typedDefaultExpressionSql(column.default):undefined;
+ if(defaultExpression!==undefined&&new TextEncoder().encode(defaultExpression).length>1_048_576)fail('G03 rendered default expression exceeds 1 MiB UTF-8',candidate.path);
+ const sql=defaultExpression!==undefined
+  ?'ALTER TABLE '+relation+' ALTER COLUMN '+target+' SET DEFAULT '+defaultExpression
+  :'ALTER TABLE '+relation+' ALTER COLUMN '+target+' DROP DEFAULT';
+ if(new TextEncoder().encode(sql).length>1_049_600)fail('G03 ALTER statement exceeds 1,049,600 UTF-8 bytes',candidate.path);
+ const step:TableMigrationStep={id:'step-00001',kind:'table',sourcePath:candidate.path,transaction:'required',sql,operation:Object.hasOwn(column,'default')?'set-default':'drop-default',phaseOperation:'change-default',phaseTarget,
+  preconditions:{phase:'before-plan',kind:'installed-source-cohort',bundleDigest:previous.bundleDigest},
+  expectedOutcome:{phase:'before-commit',kind:'complete-next-source-catalog',bundleDigest:next.bundleDigest},
+  verification:'native-catalog-privileges-and-role-scope',recovery:'rollback-transaction'};
+ const phased=phaseTableMigrationSteps([step],previous,next,options,'none');
+ const body={version:'umf.table-migration/0.5' as const,canonicalization:'RFC8785' as const,id:request.id,predecessor:request.predecessor,previous,next,
+  fromBundleDigest:previous.bundleDigest,toBundleDigest:next.bundleDigest,steps:phased.steps,seedExecution:'none' as const,
+  phases:phased.phases,executionProfile:phased.executionProfile,
+  approvalProfile:{version:'umf.table-migration-approval/0.1' as const,relation:'umf_lifecycle_approvals' as const,ownerOnly:true as const},
+  options,review:[],requiresApproval:true as const,nativeQualified:false as const};
+ if(new TextEncoder().encode(canonical(body)).length>24_000_000)fail('Migration plan exceeds24MB');
+ return {status:'compiled',plan:copyJson({...body,digest:hashCanonical(body)}) as unknown as TableMigrationPlan,diagnostics:[]};
+}
+
 export function compileTableMigration(input:TableMigrationRequest):TableMigrationResult{
  return compileTableMigrationInternal(input,false);
 }
@@ -529,7 +558,7 @@ export function compileTableMigration(input:TableMigrationRequest):TableMigratio
 /** Source recompilation verifies complete plans, even after untrusted rehashing. */
 export function verifyTableMigration(input:unknown):TableMigrationPlan{
  const value=copyJson(input) as unknown as TableMigrationPlan;
- if(!value||!['umf.table-migration/0.1','umf.table-migration/0.2','umf.table-migration/0.3','umf.table-migration/0.4'].includes(value.version))fail('Unknown migration plan');
+ if(!value||!['umf.table-migration/0.1','umf.table-migration/0.2','umf.table-migration/0.3','umf.table-migration/0.4','umf.table-migration/0.5'].includes(value.version))fail('Unknown migration plan');
  const result=compileTableMigrationInternal({id:value.id,predecessor:value.predecessor,previous:value.previous,next:value.next,...(value.options?{options:value.options}:{})},value.version==='umf.table-migration/0.1');
  if(result.status!=='compiled')return fail('Migration differs from exact source recompilation');
  if(!same(value,result.plan))fail('Migration differs from exact source recompilation');

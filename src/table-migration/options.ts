@@ -6,9 +6,10 @@ import type {TableDeploymentBundle} from '../table-deployment';
 import type {RowExpressionOperation,TableOperation,TableRef} from '../extensions/tables';
 import {rowExpressionInputRefs} from '../extensions/tables/row-expressions';
 import {validateReviewedChangeMarkers,type ReviewedChangeMarker} from './reviewed';
+import {validateG03DefaultChange} from './g03-defaults';
 export type {ReviewedChangeMarker,ReviewedChangeKind,ReviewedChangeCandidate} from './reviewed';
 export interface TableMigrationOptions {
- version:'umf.table-migration-options/0.1'|'umf.table-migration-options/0.2'|'umf.table-migration-options/0.3'|'umf.table-migration-options/0.4';
+ version:'umf.table-migration-options/0.1'|'umf.table-migration-options/0.2'|'umf.table-migration-options/0.3'|'umf.table-migration-options/0.4'|'umf.table-migration-options/0.5';
  backfills:{table:string;column:TableRef;operation:string;scopedRows:true}[];
  concurrentIndexes:{table:string;index:string}[];
  reviewedChanges?:ReviewedChangeMarker[];
@@ -38,12 +39,15 @@ export function migrationOptions(value:TableMigrationOptions|undefined,next:Tabl
  const v1=value.version==='umf.table-migration-options/0.1',v2=value.version==='umf.table-migration-options/0.2';
  const v3=value.version==='umf.table-migration-options/0.3';
  const v4=value.version==='umf.table-migration-options/0.4';
- if((v1&&!exact(value,['version','backfills','concurrentIndexes']))||((v2||v3||v4)&&!exact(value,['version','backfills','concurrentIndexes','reviewedChanges','validations']))||(!v1&&!v2&&!v3&&!v4)||!Array.isArray(value.backfills)||!Array.isArray(value.concurrentIndexes)||value.backfills.length>256||value.concurrentIndexes.length>256||((v2||v3||v4)&&(!Array.isArray(value.reviewedChanges)||!Array.isArray(value.validations)||value.validations.length>256)))fail('Unknown options profile, members or resource bounds');
- if(!previous)return fail(v2?'Version 0.2 phased plans require a previous installed source; initial publication is not supported':'Options require a previous installed source');
+ const v5=value.version==='umf.table-migration-options/0.5';
+ if((v1&&!exact(value,['version','backfills','concurrentIndexes']))||((v2||v3||v4||v5)&&!exact(value,['version','backfills','concurrentIndexes','reviewedChanges','validations']))||(!v1&&!v2&&!v3&&!v4&&!v5)||!Array.isArray(value.backfills)||!Array.isArray(value.concurrentIndexes)||value.backfills.length>256||value.concurrentIndexes.length>256||((v2||v3||v4||v5)&&(!Array.isArray(value.reviewedChanges)||!Array.isArray(value.validations)||value.validations.length>256)))fail('Unknown options profile, members or resource bounds');
+ if(!previous)return fail(v2?'Version 0.2 phased plans require a previous installed source; initial publication is not supported':v5?'Version 0.5 default changes require a previous installed source; initial publication is not supported':'Options require a previous installed source');
  if(v4&&previous.source.format!=='json')fail('Version 0.4 derived backfills require JSON source bytes','/previous/source/format');
  if(v4&&next.source.format!=='json')fail('Version 0.4 derived backfills require JSON source bytes','/next/source/format');
- if(v2||v3||v4){
-  try{value.reviewedChanges=validateReviewedChangeMarkers(value.reviewedChanges,previous,next);}catch(error){fail(error instanceof Error?error.message:'Invalid reviewed change marker');}
+ if(v5&&previous.source.format!=='json')fail('Version 0.5 default changes require JSON source bytes','/previous/source/format');
+ if(v5&&next.source.format!=='json')fail('Version 0.5 default changes require JSON source bytes','/next/source/format');
+ if(v2||v3||v4||v5){
+  try{value.reviewedChanges=validateReviewedChangeMarkers(value.reviewedChanges,previous,next,v5?{version:'umf.table-migration-discovery/0.2'}:undefined);}catch(error){fail(error instanceof Error?error.message:'Invalid reviewed change marker');}
   const seenValidations=new Set<string>();
   for(const [i,selection] of value.validations!.entries()){
    const path='/options/validations/'+i;
@@ -99,6 +103,11 @@ export function migrationOptions(value:TableMigrationOptions|undefined,next:Tabl
   }else if(value.reviewedChanges!.length!==0)fail('An appended target cannot carry a fabricated review marker','/options/reviewedChanges');
   validateG02SourceDelta(previous,next,selected.table,selected.column,selected.operation,existing);
   if(!operation||operation.version!=='umf.table-operation/0.2')fail('G02 must select its exact next-source operation 0.2','/options/backfills/0/operation');
+ }
+ if(v5){
+  if(value.backfills.length||value.concurrentIndexes.length||value.validations!.length||value.reviewedChanges!.length!==1)fail('G03 selects one existing-column default change only, with no backfills, indexes or validations');
+  if(Object.keys(value.reviewedChanges![0]!).sort().join(',')!=='id,kind,newDigest,oldDigest,path')fail('G03 default marker is closed and cannot carry conversion or unknown qualifiers','/options/reviewedChanges/0');
+  validateG03DefaultChange(previous,next,value.reviewedChanges);
  }
  seen.clear();
  for(const [i,selection] of value.concurrentIndexes.entries()){

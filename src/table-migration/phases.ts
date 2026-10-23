@@ -18,7 +18,7 @@ export interface PhasedMigrationStep {
  sql?:string;
  constraintKind?:'check'|'foreignKey';
  seedSets?:string[];
- phaseOperation?:'backfill'|'tighten-not-null'|'add-column'|'target-check'|'install-default';
+ phaseOperation?:'backfill'|'tighten-not-null'|'add-column'|'target-check'|'install-default'|'change-default';
  phaseTarget?:{table:string;field:{module:string;element:string}};
 }
 
@@ -53,6 +53,11 @@ const EXECUTION_PROFILE_02:TableMigrationExecutionProfile={
 };
 const EXECUTION_PROFILE_03:TableMigrationExecutionProfile={
  version:'umf.table-migration-execution/0.3',
+ progressRelation:'umf_lifecycle_progress',
+ ownerOnly:true,
+};
+const EXECUTION_PROFILE_04:TableMigrationExecutionProfile={
+ version:'umf.table-migration-execution/0.4',
  progressRelation:'umf_lifecycle_progress',
  ownerOnly:true,
 };
@@ -94,6 +99,12 @@ export function phaseTableMigrationSteps<TStep extends PhasedMigrationStep>(
  }
  const isG01=!!_options&&typeof _options==='object'&&(_options as {version?:unknown}).version==='umf.table-migration-options/0.3';
  const isG02=!!_options&&typeof _options==='object'&&(_options as {version?:unknown}).version==='umf.table-migration-options/0.4';
+ const isG03=!!_options&&typeof _options==='object'&&(_options as {version?:unknown}).version==='umf.table-migration-options/0.5';
+ if(isG03){
+  const step=plannedSteps[0];
+  if(plannedSteps.length!==1||step?.kind!=='table'||step.transaction!=='required'||step.phaseOperation!=='change-default'||!step.phaseTarget||!step.sql||!['set-default','drop-default'].includes(step.operation??''))throw new Error('g03-default-change-step-invalid');
+  return {steps:plannedSteps,phases:[{id:'phase-00001',kind:'default-change',transaction:'required',steps:[step.id]}],executionProfile:EXECUTION_PROFILE_04};
+ }
  const phases:TableMigrationPhase[]=[];
  let current:TableMigrationPhase|undefined;
  const flush=()=>{if(current){phases.push(current);current=undefined;}};

@@ -2,17 +2,19 @@
 import {canonical,hashCanonical} from '../compilation/bundle/hash';
 import {readDocument} from '../model/document';
 import type {TableDeploymentBundle} from '../table-deployment';
+import {discoverG03DefaultChanges} from './g03-defaults';
 
-export type ReviewedChangeKind='drop-column'|'rename-column'|'change-column-type'|'tighten-not-null'|'relax-not-null'|'replace-check'|'replace-foreign-key'|'replace-index'|'replace-primary-key'|'change-policy';
+export type ReviewedChangeKind='drop-column'|'rename-column'|'change-column-type'|'tighten-not-null'|'relax-not-null'|'replace-check'|'replace-foreign-key'|'replace-index'|'replace-primary-key'|'change-policy'|'change-default';
 export interface ReviewedChangeMarker {
  id:string;kind:ReviewedChangeKind;path:string;oldDigest:string;newDigest:string;conversion?:string;
 }
 export interface ReviewedChangeCandidate extends ReviewedChangeMarker {oldValue:unknown;newValue:unknown}
+export interface TableMigrationDiscoverySelector {version:'umf.table-migration-discovery/0.2'}
 export const reviewedValueDigest=(value:unknown):string=>hashCanonical(value===undefined?null:value);
 const safeId=(value:string):boolean=>!!value&&value.length<=128&&!value.includes('\0');
 
 /** Source-bound marker candidates. Candidates only identify changes; compiler support is checked independently. */
-export function discoverTableMigrationChanges(previous:TableDeploymentBundle,next:TableDeploymentBundle):ReviewedChangeCandidate[]{
+export function discoverTableMigrationChanges(previous:TableDeploymentBundle,next:TableDeploymentBundle,selector?:TableMigrationDiscoverySelector):ReviewedChangeCandidate[]{
  const result:ReviewedChangeCandidate[]=[];
  const oldDocument=readDocument(previous.source.utf8,previous.source.format),newDocument=readDocument(next.source.utf8,next.source.format);
  const add=(kind:ReviewedChangeKind,path:string,a:unknown,b:unknown):void=>{
@@ -55,14 +57,18 @@ export function discoverTableMigrationChanges(previous:TableDeploymentBundle,nex
    const before=oldTable.policy[audience][command],after=freshTable.policy[audience][command];if(canonical(before)!==canonical(after))add('change-policy','/modules/'+readModuleIndex(next)+'/extensions/umf.tables/tables/'+next.expectedCatalog.tables.indexOf(freshTable)+'/policy/'+audience+'/'+command,before,after);
   }
  }
+ if(selector!==undefined){
+  if(!selector||typeof selector!=='object'||Object.keys(selector).length!==1||selector.version!=='umf.table-migration-discovery/0.2')throw new Error('Unknown table-migration discovery selector');
+  result.push(...discoverG03DefaultChanges(previous,next));
+ }
  return result;
 }
 function readModuleIndex(bundle:TableDeploymentBundle):number{
  try{return readDocument(bundle.source.utf8,bundle.source.format).modules.findIndex(x=>x.id===bundle.module);}catch{return 0;}
 }
-export function validateReviewedChangeMarkers(value:unknown,previous:TableDeploymentBundle,next:TableDeploymentBundle):ReviewedChangeMarker[]{
+export function validateReviewedChangeMarkers(value:unknown,previous:TableDeploymentBundle,next:TableDeploymentBundle,selector?:TableMigrationDiscoverySelector):ReviewedChangeMarker[]{
  if(!Array.isArray(value)||value.length>512)throw new Error('reviewedChanges must be an array of at most512 exact markers');
- const candidates=discoverTableMigrationChanges(previous,next),byId=new Map(candidates.map(c=>[c.id,c]));const seen=new Set<string>();
+ const candidates=discoverTableMigrationChanges(previous,next,selector),byId=new Map(candidates.map(c=>[c.id,c]));const seen=new Set<string>();
  return value.map((item,index)=>{
   const path='/options/reviewedChanges/'+index;
   if(!item||typeof item!=='object'||Array.isArray(item))throw new Error(path+': expected reviewed change object');

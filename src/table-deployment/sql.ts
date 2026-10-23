@@ -23,11 +23,12 @@ export function columnDefinitionSql(column:TableColumn,nullable:boolean):string{
  if(['text','varchar'].includes(column.nativeType.kind))definition+=' COLLATE pg_catalog."C"';
  if(!nullable)definition+=' NOT NULL';
  if(column.generated)definition+=' GENERATED '+(column.generated.generation==='always'?'ALWAYS':'BY DEFAULT')+' AS IDENTITY';
- if(column.default){
-  const value=column.default.kind==='literal'?literalSql(column.default.value):column.default.kind==='randomUuid'?'pg_catalog.gen_random_uuid()':'CURRENT_TIMESTAMP';
-  definition+=' DEFAULT '+value;
- }
+ if(column.default)definition+=' DEFAULT '+typedDefaultExpressionSql(column.default);
  return definition;
+}
+/** Render the closed typed native-default vocabulary used by deployment and migration DDL. */
+export function typedDefaultExpressionSql(value:NonNullable<TableColumn['default']>):string{
+ return value.kind==='literal'?literalSql(value.value):value.kind==='randomUuid'?'pg_catalog.gen_random_uuid()':'CURRENT_TIMESTAMP';
 }
 function numericToken(token:string):string{
  const match=/^(-?)(0|[1-9][0-9]*)(?:\.([0-9]+))?(?:[eE]([+-]?[0-9]+))?$/.exec(token);

@@ -1,7 +1,7 @@
 {
   "scope": "Published JSON Schema metaschema/compilation and reference closure, not native semantics",
-  "schemas": 383,
-  "passed": 383,
+  "schemas": 385,
+  "passed": 385,
   "results": [
     {
       "path": "spec/compilation/access-manifest.schema.json",
@@ -2370,8 +2370,22 @@
       "failures": []
     },
     {
+      "path": "spec/extensions/tables/migration-0.5.schema.json",
+      "id": "urn:umf:table-migration:0.5",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
       "path": "spec/extensions/tables/migration-phases-0.2.schema.json",
       "id": "urn:umf:table-migration-phases:0.2",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/tables/migration-phases-0.4.schema.json",
+      "id": "urn:umf:table-migration-phases:0.4",
       "dialect": "https://json-schema.org/draft/2020-12/schema",
       "passed": true,
       "failures": []
