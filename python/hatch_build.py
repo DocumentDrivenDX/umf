@@ -33,9 +33,6 @@ SDIST_SOURCE_FILES = (
     "Cargo.lock",
     "rust-toolchain.toml",
     ".cargo/config.toml",
-    "LICENSE.md",
-    "LICENSE-MIT",
-    "LICENSE-APACHE",
 )
 SDIST_SOURCE_TREES = (
     "crates",

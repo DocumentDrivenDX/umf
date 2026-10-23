@@ -446,8 +446,12 @@ def _validate_wheel(
         }
 
 
-def _extract_sdist(sdist: Path, destination: Path) -> Path:
+def _extract_sdist(
+    sdist: Path, destination: Path, expected_version: str = "0.10.1"
+) -> Path:
     destination.mkdir(parents=True, exist_ok=True)
+    if any(destination.iterdir()):
+        raise ValueError("Source extraction destination must be empty")
     with tarfile.open(sdist, "r:gz") as archive:
         members = archive.getmembers()
         if (
@@ -456,6 +460,7 @@ def _extract_sdist(sdist: Path, destination: Path) -> Path:
         ):
             raise ValueError("Source archive exceeds the extraction bounds")
         seen: set[str] = set()
+        top_levels: set[str] = set()
         for member in members:
             path = PurePosixPath(member.name)
             normalized_name = member.name.rstrip("/") if member.isdir() else member.name
@@ -470,6 +475,13 @@ def _extract_sdist(sdist: Path, destination: Path) -> Path:
                 raise ValueError("Source archive contains an unsafe member path")
             if not (member.isfile() or member.isdir()):
                 raise ValueError("Source archive contains an unsupported member type")
+            if not path.parts or path.parts[0] in {"", "."}:
+                raise ValueError("Source archive must have one named project root")
+            top_levels.add(path.parts[0])
+            if len(path.parts) == 1 and not member.isdir():
+                raise ValueError(
+                    "Source archive contains a file outside its project root"
+                )
             seen.add(normalized_name)
             target = destination.joinpath(*path.parts)
             if member.isdir():
@@ -480,16 +492,36 @@ def _extract_sdist(sdist: Path, destination: Path) -> Path:
             if source is None:
                 raise ValueError("Source archive member cannot be read")
             target.write_bytes(source.read())
-    projects = list(destination.rglob("pyproject.toml"))
-    if len(projects) != 1:
-        raise ValueError("Source archive must contain exactly one project file")
-    return projects[0].parent
+    roots = list(destination.iterdir())
+    if (
+        len(top_levels) != 1
+        or len(roots) != 1
+        or roots[0].is_symlink()
+        or not roots[0].is_dir()
+    ):
+        raise ValueError("Source archive must contain exactly one safe project root")
+    project_file = roots[0] / "pyproject.toml"
+    if project_file.is_symlink() or not project_file.is_file():
+        raise ValueError("Source archive root has no project metadata")
+    try:
+        project = tomllib.loads(project_file.read_text(encoding="utf-8"))
+    except (OSError, UnicodeDecodeError, tomllib.TOMLDecodeError) as error:
+        raise ValueError("Source archive project metadata is malformed") from error
+    metadata = project.get("project")
+    if (
+        type(metadata) is not dict
+        or type(metadata.get("name")) is not str
+        or metadata["name"].lower().replace("_", "-") != "umf-core"
+        or metadata.get("version") != expected_version
+    ):
+        raise ValueError("Source archive root is not the expected UMF distribution")
+    return roots[0]
 
 
-def _rebuild_sdist_wheel(sdist: Path, output_dir: Path) -> Path:
+def _rebuild_sdist_wheel(sdist: Path, output_dir: Path, expected_version: str) -> Path:
     with tempfile.TemporaryDirectory(prefix="umf-action-sdist-") as temporary:
         temp_root = Path(temporary)
-        source_root = _extract_sdist(sdist, temp_root / "source")
+        source_root = _extract_sdist(sdist, temp_root / "source", expected_version)
         rebuilt = temp_root / "wheel"
         rebuilt.mkdir()
         subprocess.run(
@@ -601,7 +633,9 @@ def verify(
             "sha256": _sha256(sdist_path.read_bytes()),
         }
         with tempfile.TemporaryDirectory(prefix="umf-rebuilt-wheel-") as temporary:
-            rebuilt = _rebuild_sdist_wheel(sdist_path, Path(temporary))
+            rebuilt = _rebuild_sdist_wheel(
+                sdist_path, Path(temporary), distribution_version
+            )
             rebuilt_info = _validate_wheel(
                 rebuilt,
                 expected_payloads,

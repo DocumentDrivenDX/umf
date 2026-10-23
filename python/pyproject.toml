@@ -30,7 +30,7 @@ packages = ["src/umf"]
 "../fixtures/actions-binding" = "fixtures/actions-binding"
 
 [dependency-groups]
-dev = ["pytest>=8.4,<10", "ruff>=0.13"]
+dev = ["pytest>=8.4,<10", "ruff>=0.13", "hatchling>=1.27,<2"]
 
 [tool.hatch.build.hooks.custom]
 

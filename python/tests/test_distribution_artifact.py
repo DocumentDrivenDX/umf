@@ -3,12 +3,14 @@
 
 from __future__ import annotations
 
+import ast
 import base64
 import csv
 import hashlib
 import importlib.util
 import io
 import tarfile
+import tomllib
 import zipfile
 from pathlib import Path
 
@@ -242,6 +244,38 @@ def test_installed_workflow_disables_bytecode_and_hashes_verifier_source():
     assert "hashlib.sha256(verifier_path.read_bytes()).hexdigest()" in workflow
 
 
+def test_sdist_licenses_have_one_declared_inclusion_route():
+    repository = Path(__file__).resolve().parents[2]
+    project = tomllib.loads(
+        (repository / "python/pyproject.toml").read_text(encoding="utf-8")
+    )
+    tree = ast.parse((repository / "python/hatch_build.py").read_text(encoding="utf-8"))
+    source_files = next(
+        ast.literal_eval(node.value)
+        for node in tree.body
+        if isinstance(node, ast.Assign)
+        and any(
+            isinstance(target, ast.Name) and target.id == "SDIST_SOURCE_FILES"
+            for target in node.targets
+        )
+    )
+    licenses = set(project["project"]["license-files"])
+
+    assert licenses == {"LICENSE.md", "LICENSE-MIT", "LICENSE-APACHE"}
+    assert not licenses.intersection(source_files)
+
+
+def test_python_support_tests_install_the_hatch_build_backend():
+    repository = Path(__file__).resolve().parents[2]
+    project = tomllib.loads(
+        (repository / "python/pyproject.toml").read_text(encoding="utf-8")
+    )
+    workflow = (repository / ".github/workflows/python.yml").read_text(encoding="utf-8")
+
+    assert "hatchling>=1.27,<2" in project["dependency-groups"]["dev"]
+    assert "'hatchling>=1.27,<2'" in workflow
+
+
 def test_sdist_extraction_rejects_parent_traversal(tmp_path):
     verifier = _verifier()
     archive_path = tmp_path / "unsafe.tar.gz"
@@ -253,6 +287,38 @@ def test_sdist_extraction_rejects_parent_traversal(tmp_path):
     with pytest.raises(ValueError, match="unsafe member path"):
         verifier._extract_sdist(archive_path, tmp_path / "extract")
     assert not (tmp_path / "outside.txt").exists()
+
+
+def test_sdist_extraction_selects_the_single_top_level_project_with_nested_projects(
+    tmp_path,
+):
+    verifier = _verifier()
+    archive_path = tmp_path / "source.tar.gz"
+    with tarfile.open(archive_path, "w:gz") as archive:
+        for name in (
+            "umf_core-0.10.1/",
+            "umf_core-0.10.1/nested/",
+        ):
+            member = tarfile.TarInfo(name)
+            member.type = tarfile.DIRTYPE
+            archive.addfile(member)
+        files = {
+            "umf_core-0.10.1/pyproject.toml": (
+                b'[project]\nname = "umf-core"\nversion = "0.10.1"\n'
+            ),
+            "umf_core-0.10.1/nested/pyproject.toml": (
+                b'[project]\nname = "nested-helper"\nversion = "1.0"\n'
+            ),
+        }
+        for name, payload in files.items():
+            member = tarfile.TarInfo(name)
+            member.size = len(payload)
+            archive.addfile(member, io.BytesIO(payload))
+
+    root = verifier._extract_sdist(archive_path, tmp_path / "source")
+
+    assert root.name == "umf_core-0.10.1"
+    assert (root / "nested/pyproject.toml").is_file()
 
 
 @pytest.mark.parametrize(
