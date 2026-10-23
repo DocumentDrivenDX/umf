@@ -135,6 +135,7 @@ test('Spark Delta 4 realization preserves source and explicitly disposes every a
   expect(generateDeltaDDL(doc)).toEqual(managed);
   expect(local.targetProfile).toBe('spark-delta4/0.1');
   expect(local.realizationProfile).toBe('umf.delta.spark-realization/0.1.0');
+  if(local.target.kind!=='relation')throw new Error('Expected relation target');
   expect(local.target.relation).toEqual(['local_catalog','local_schema','items']);
   expect(local.target.location).toBe('/tmp/delta/items');
   expect(local.sql).toContain('CREATE TABLE `local_catalog`.`local_schema`.`items`');
@@ -181,14 +182,14 @@ test('Spark Delta 4 target binding is typed and original property validation pre
   expect(result.sql).toContain("LOCATION '/tmp/delta/owner\\'s\\\\table';");
   expect(result.target.identitySha256).toBe(hashCanonical({profile:'spark-delta4/0.1',...localTarget}));
   expect(result.definition.name).toEqual(definition.name);
-  for(const target of [
+  for(const target of ([
     {kind:'relation',relation:['local','schema','bad; DROP TABLE x'],location:'/tmp/items'},
     {kind:'relation',relation:['local','schema','items'],location:'/tmp/../items'},
     {kind:'relation',relation:['local','schema','items'],location:'/tmp//items'},
     {kind:'relation',relation:['local','schema','items'],location:'/tmp/items/'},
     {kind:'relation',relation:['local','schema','items'],location:'/tmp/has\ncontrol'},
     {kind:'relation',relation:['local','schema','items'],location:'relative/items'},
-  ])expect(()=>realizeSparkDelta4DDL(valid,target)).toThrow();
+  ] as any[]))expect(()=>realizeSparkDelta4DDL(valid,target)).toThrow();
 
   for(const [key,value] of [['delta.targetFileSize','0'],['delta.parquet.compression.codec','not-a-codec']]){
     const malformed=defineDeltaTable(schema,definition,{id:'malformed'});
