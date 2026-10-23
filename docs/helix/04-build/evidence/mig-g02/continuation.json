@@ -1,0 +1,57 @@
+{
+  "phase": "D2-D4 implemented; D5 adversarial review and candidate005 rebuild active",
+  "baseCommit": "009c042545a17b49ea857eff22d0fcf3fd71ef44",
+  "designReviewerThread": "01a1605c-de92-72c0-afcd-0498b7422c1c",
+  "governingInputs": [
+    {
+      "path": "docs/helix/02-design/contracts/CONTRACT-081-table-lifecycle.md",
+      "sha256": "c40fd3305c072772d79707368496f669e9dd09e0f1ce3a96f0cc7be7d684cf4f"
+    },
+    {
+      "path": "docs/helix/02-design/solution-designs/SD-007-schema-migrations.md",
+      "sha256": "76620af44e6fd389819ce5230f8bd5714ea403ed9820ba504d90d2f2e5f9d8e5"
+    },
+    {
+      "path": "docs/helix/02-design/technical-designs/TD-085-typed-actions-on-raw-tables.md",
+      "sha256": "29f61cd70ef72e3318da38da0ba2acb70fe016271093a11e68f29e209983285c"
+    },
+    {
+      "path": "docs/helix/03-test/test-plans/STP-085-typed-actions-on-raw-tables.md",
+      "sha256": "a5a54495aaf1138472a507ed34de9d80535c1bc24b712016bcb4244a99cc5464"
+    },
+    {
+      "path": "docs/helix/04-build/schema-migration-plan.md",
+      "sha256": "a75095f23cab59387d97f992091cbfa786d59c3306e73a6f9282415dc4bd9368"
+    }
+  ],
+  "baseline": {
+    "umfMigrationTests": 22,
+    "assertions": 121,
+    "weftOperationTests": 19,
+    "boundaryViolations": 0
+  },
+  "noPraxisChanges": true,
+  "nativeFeasibility": "5 temporary-table guard cases pass; not implementation qualification",
+  "remaining": "Finish candidate005 fixes and coherent browser/installed/native/WASM qualification; obtain independent source/release review; pin Weft upstream schema to immutable UMF commit; build platform cohort, required CI, merge, release, fresh postverify. Praxis excluded.",
+  "decisions": [
+    "Append target CHECKs must permit NULL staging or refuse",
+    "New .2 text literals reject NUL/unpaired surrogates",
+    "Ordinary generated action catalogs exclude administrative .2; ordinary runtime remains .1-only",
+    "Finite guard covers all numeric references, including unused conditional branches"
+  ],
+  "agents": {
+    "g02_readiness": "AST/schema/ordinary-client exclusion",
+    "g02_weft": "Weft shared Rust admission/PostgreSQL guard",
+    "g02_migration_host": "migration/options/host/native fixtures"
+  },
+  "candidateState": {
+    "004": "Preliminary immutable artifacts/browser receipt only; superseded for final qualification after source-review fixes",
+    "005": "Building: restored existing .3/.4 host target binding, dispatch add-target verifier, exact numeric budget and raw literal byte parity fixes under review"
+  },
+  "verificationLimits": [
+    "Independent PostgreSQL 18.6 positive/negative domain and atomic commit-loss cases passed on preliminary003; final frozen cohort rerun pending",
+    "004 Chromium: 52 G02 assertions/155 total, Bun parity, no network; no native/WASM qualification inferred",
+    "Primary fault evidence is being strengthened with DBAPI observer active throughout every recovery and generated person/batch access proof",
+    "Local Docker broad wrapper blocked before tests by credential helper; no passing broad result claimed"
+  ]
+}

@@ -247,7 +247,7 @@ class PsycopgMigrationHost:
         from .progress import _verified_phases
 
         plan = _verified_plan(request.plan)
-        if (plan.get("version") != "umf.table-migration/0.3"
+        if (plan.get("version") not in ("umf.table-migration/0.3", "umf.table-migration/0.4")
                 or request.expected_head is None
                 or type(request.file_digest) is not str
                 or re.fullmatch(r"[a-f0-9]{64}", request.file_digest) is None):
@@ -354,7 +354,7 @@ class _PsycopgLease:
                     or latest["plan"]["toBundleDigest"] != request.plan["fromBundleDigest"]
                     or request.plan["previous"] != latest["plan"]["next"]):
                 raise CatalogError("ledger-head-mismatch")
-            if request.plan.get("version") == "umf.table-migration/0.3":
+            if request.plan.get("version") in ("umf.table-migration/0.3", "umf.table-migration/0.4"):
                 _verify_transition_predecessor(self, request, latest, history)
             else:
                 _verify_installed(self.connection, latest, self.host._person_roles,
@@ -701,11 +701,13 @@ class _PsycopgRequiredPhase:
 
     def verify_boundary(self, plan: dict[str, Any], phase: dict[str, Any],
                         prior: PhaseReceipt) -> None:
-        from .mixed import _verify_backfill_tighten_target
+        from .mixed import _verify_backfill_add_target, _verify_backfill_tighten_target
         from .witness import _capture_witness
 
         if phase["kind"] == "backfill-tighten":
             _verify_backfill_tighten_target(plan, phase)
+        if phase["kind"] == "backfill-add":
+            _verify_backfill_add_target(plan, phase)
         if _capture_witness(self.lease.connection, plan["next"]) != prior.prefix_witness:
             raise CatalogError("progress-prefix-mismatch")
         self.prior = prior
@@ -812,8 +814,9 @@ def apply_migration_on_host(host: MigrationHost, plan: dict[str, Any], *,
     from .progress import _phase_digest, _verified_phases
 
     source_plan = _verified_plan(plan)
-    if (source_plan.get("version") != "umf.table-migration/0.3"
-            or source_plan.get("options", {}).get("version") != "umf.table-migration-options/0.3"
+    if (source_plan.get("version") not in ("umf.table-migration/0.3", "umf.table-migration/0.4")
+            or source_plan.get("options", {}).get("version") not in ("umf.table-migration-options/0.3", "umf.table-migration-options/0.4")
+            or (source_plan.get("version") == "umf.table-migration/0.3") != (source_plan.get("options", {}).get("version") == "umf.table-migration-options/0.3")
             or source_plan.get("approvalProfile") != {
                 "version": "umf.table-migration-approval/0.1",
                 "relation": "umf_lifecycle_approvals", "ownerOnly": True}):
@@ -1042,7 +1045,7 @@ def _verify_predecessor_metadata(connection: Any, plan: dict[str, Any],
 
     selected_profile = None
     if plan.get("approvalProfile") is not None:
-        if (plan.get("version") != "umf.table-migration/0.3"
+        if (plan.get("version") not in ("umf.table-migration/0.3", "umf.table-migration/0.4")
                 or plan.get("approvalProfile") != APPROVAL_PROFILE
                 or plan.get("previous") is None
                 or type(expected_head) is not str):
@@ -1105,7 +1108,7 @@ def _verify_transition_predecessor(lease: _PsycopgLease,
     )
 
     plan = request.plan
-    if (plan.get("version") != "umf.table-migration/0.3"
+    if (plan.get("version") not in ("umf.table-migration/0.3", "umf.table-migration/0.4")
             or plan.get("approvalProfile") != APPROVAL_PROFILE
             or plan.get("previous") != latest["plan"]["next"]
             or latest["entryDigest"] != request.expected_head

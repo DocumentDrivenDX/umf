@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import type {Document} from '../model/types';
-import {inspectTableLifecycle,type TableOperation} from '../extensions/tables';
+import {inspectTableLifecycle,type TableOperation,type TableOperationV1} from '../extensions/tables';
 import type {FieldInfo,Ref} from './types';
 
 interface Tools {
@@ -21,8 +21,9 @@ export function tableClients(doc:Document,wanted:Set<string>|undefined,t:Tools){
   for(const table of tables)ids.add(m.id+'.'+table.record.element);
   const selectedTables=new Set(tables.map(table=>table.id));
   const columns=new Map(payload.tables.flatMap(table=>table.columns.map(column=>[JSON.stringify([column.field.module,column.field.element]),column] as const)));
-  const operations=(payload.commands as TableOperation[]).filter(op=>op.body.kind==='query'?tables.length===payload.tables.length:selectedTables.has(op.body.table));
-  if(!operations.length)t.fail(m.id,'Native table lifecycle client requires declared operations');
+  // Typed backfill operations are administrative migration inputs, never app client methods.
+  const operations=(payload.commands as TableOperation[]).filter((op):op is TableOperationV1=>op.version==='umf.table-operation/0.1'&&(op.body.kind==='query'?tables.length===payload.tables.length:selectedTables.has(op.body.table)));
+  if(!operations.length&&!payload.commands.some(op=>(op as any).version==='umf.table-operation/0.2'))t.fail(m.id,'Native table lifecycle client requires declared operations');
   const python=t.name(m.id,'field',m.id),prefix=t.name(m.id,'class',m.id),cls=prefix+'Module';
   const reserve=(symbol:string)=>{if(t.used.has(symbol))t.fail(m.id,'Generated native type collision');t.used.add(symbol);};
   if(modules.some(module=>module.python===python))t.fail(m.id,'Generated module attribute collision');

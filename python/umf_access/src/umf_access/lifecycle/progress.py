@@ -76,6 +76,15 @@ def _verified_phases(plan: dict[str, Any]) -> list[dict[str, Any]]:
         if plan.get('approvalProfile') != APPROVAL_PROFILE:
             raise CatalogError('approval-profile-mismatch')
         allow_backfill_tighten = True
+    elif options_version == 'umf.table-migration-options/0.4':
+        from .approval import APPROVAL_PROFILE
+
+        expected_profile = {'version': 'umf.table-migration-execution/0.3',
+                            'progressRelation': PROGRESS, 'ownerOnly': True}
+        if (plan.get('version') != 'umf.table-migration/0.4'
+                or plan.get('approvalProfile') != APPROVAL_PROFILE):
+            raise CatalogError('approval-profile-mismatch')
+        allow_backfill_tighten = True
     else:
         raise CatalogError('mixed-phase-profile')
     if (profile != expected_profile
@@ -85,7 +94,7 @@ def _verified_phases(plan: dict[str, Any]) -> list[dict[str, Any]]:
         # A v0.3 source-only plan can have no native operations (for example,
         # an added typed command). It publishes through the host's atomic
         # no-effect finalizer and must not create a progress relation.
-        if options_version == 'umf.table-migration-options/0.3' and not plan['steps']:
+        if options_version in ('umf.table-migration-options/0.3','umf.table-migration-options/0.4') and not plan['steps']:
             return phases
         raise CatalogError('mixed-phase-profile')
     by_id = {step.get('id'): step for step in plan['steps'] if type(step) is dict}
@@ -95,7 +104,7 @@ def _verified_phases(plan: dict[str, Any]) -> list[dict[str, Any]]:
     for index, phase in enumerate(phases, 1):
         if (type(phase) is not dict or set(phase) != {'id','kind','transaction','steps'}
                 or phase['id'] != 'phase-'+str(index).zfill(5)
-                or phase['kind'] not in ('transaction','backfill','concurrent-index','constraint-add','constraint-validation','seed','backfill-tighten')
+                or phase['kind'] not in ('transaction','backfill','concurrent-index','constraint-add','constraint-validation','seed','backfill-tighten','backfill-add')
                 or phase['transaction'] not in ('required','forbidden')
                 or type(phase['steps']) is not list or not phase['steps']):
             raise CatalogError('mixed-phase-profile')
@@ -107,9 +116,14 @@ def _verified_phases(plan: dict[str, Any]) -> list[dict[str, Any]]:
             selected.append(step)
             seen.append(step_id)
         expected_kind = []
+        append_group = any(step.get('phaseOperation') == 'add-column' for step in selected)
         for step in selected:
-            if step.get('phaseOperation') in ('backfill','tighten-not-null'):
+            if append_group and step.get('phaseOperation') in ('add-column','target-check','backfill','install-default','tighten-not-null'):
+                expected_kind.append('backfill-add')
+            elif step.get('phaseOperation') in ('backfill','tighten-not-null'):
                 expected_kind.append('backfill-tighten')
+            elif step.get('phaseOperation') in ('add-column','target-check','install-default'):
+                expected_kind.append('backfill-add')
             elif step['kind'] == 'backfill':
                 expected_kind.append('backfill')
             elif step['kind'] == 'index' and step['transaction'] == 'forbidden':
@@ -123,8 +137,8 @@ def _verified_phases(plan: dict[str, Any]) -> list[dict[str, Any]]:
             else:
                 expected_kind.append('transaction')
         if ((len(set(expected_kind)) != 1 or expected_kind[0] != phase['kind']
-                or phase['kind'] != 'transaction' and len(selected) != 1)
-                and (phase['kind'] != 'backfill-tighten' or not allow_backfill_tighten)):
+                or phase['kind'] not in ('transaction','backfill-add') and len(selected) != 1)
+                and (phase['kind'] not in ('backfill-tighten','backfill-add') or not allow_backfill_tighten)):
             raise CatalogError('mixed-phase-profile')
         if phase['kind'] == 'backfill-tighten':
             if not allow_backfill_tighten or len(selected) != 2:
@@ -150,6 +164,26 @@ def _verified_phases(plan: dict[str, Any]) -> list[dict[str, Any]]:
                     or any(type(target['field'][key]) is not str or not target['field'][key]
                            for key in ('module','element'))
                     or tighten.get('phaseTarget') != target):
+                raise CatalogError('mixed-phase-profile')
+        if phase['kind'] == 'backfill-add':
+            roles = [step.get('phaseOperation') for step in selected]
+            backfill_index = roles.index('backfill') if 'backfill' in roles else -1
+            default_index = roles.index('install-default') if 'install-default' in roles else -1
+            targets = [step.get('phaseTarget') for step in selected]
+            if (options_version != 'umf.table-migration-options/0.4'
+                    or len(selected) < 3 or roles[0] != 'add-column'
+                    or roles[-1] != 'tighten-not-null'
+                    or roles.count('backfill') != 1 or roles.count('tighten-not-null') != 1
+                    or roles.count('install-default') > 1 or backfill_index < 1
+                    or any(role != 'target-check' for role in roles[1:backfill_index])
+                    or default_index != -1 and default_index < backfill_index
+                    or any(role != 'install-default' for role in roles[backfill_index+1:-1])
+                    or any(step['transaction'] != 'required' for step in selected)
+                    or any(target != targets[0] for target in targets)
+                    or selected[0].get('kind') != 'table'
+                    or selected[backfill_index].get('kind') != 'backfill'
+                    or selected[backfill_index].get('sql') != ''
+                    or selected[-1].get('kind') != 'table'):
                 raise CatalogError('mixed-phase-profile')
         if phase['kind'] == 'backfill' and (len(selected) != 1 or selected[0]['kind'] != 'backfill'):
             raise CatalogError('mixed-phase-profile')

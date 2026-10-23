@@ -405,3 +405,60 @@ Consumer eleven-table/four-migration input stays private. The shared runner emit
 only aggregate source/cohort digests and observations publicly; original history
 and local/managed receipts stay in host-controlled storage. A missing isolated
 Lakebase target blocks managed acceptance, not independent source implementation.
+## G02 typed same-row backfill implementation
+
+SD-007 selects the finite same-row algebra; CONTRACT-081 owns every successor
+version, AST field, program guard and atomic phase correspondence. Implement
+both existing-field fill/tighten and appended-required-field add/fill/activation
+before claiming the selected profile. Preserve the older compilers/verifiers.
+
+| Module owner | Changes and boundaries |
+| --- | --- |
+| `src/extensions/tables/types.ts`, new `row-expressions.ts`, `operations.ts` and successor operation schema | Closed source AST, carrier/NULL typing, precision/scale/resource bounds; browser-pure, no native SQL, host or driver imports |
+| `src/table-migration/options.ts`, new `derived-backfills.ts`, `index.ts`, `phases.ts`, `phases-options.ts` and successor schemas | Previous/next stable input closure, exact selector/marker consumption, standalone target change and source-derived atomic step roles; no SQL expression rendering |
+| Weft `table_operation` core/schema/validation and PostgreSQL adapter | Original-source admission and same shared Rust implementation for native Python/WASM; typed expression lowering and all-row stored-value/finite-input/count/frame guard |
+| Python lifecycle `backfills.py`, `progress.py`, `mixed.py`, `mixed_prefix.py`, `host.py`, `ledger.py` | Explicit successor/program/guard dispatch, exact phase/prefix/native witness admission, native locks, approvals and recovery; no AST evaluator or SQL renderer |
+| `umf_codegen` embedded engine/package inputs | Regenerate from reviewed portable source; explicit UMF opt-in Rust 0.4 refusal, never fallback to an unrelated engine/profile |
+
+The existing architecture remains intact. Extend the adopted lifecycle/deployment
+and Python module maps with the new pure modules and exact allowed dependencies.
+Run `bun run check:access-boundaries`, lifecycle/deployment boundary checkers and
+their existing negative controls. Source and embedded-input manifests must cover
+the new schema/module closure. Vendor AST types do not become public UMF types.
+
+Weft extends the UPDATE RETURNING/effects aggregate rather than introducing a
+preflight scan, CTID join or host-side row loop. Infer exact numeric budgets before
+lowering. Emit untyped numeric intermediate arithmetic, strict C text semantics,
+qualified built-in resolution, and a private per-row exactness/finite-input test.
+The complete aggregate raises a runtime statement error on any invalid matched
+row. Select only the declared public affected marker after validation. Keep all
+numeric input references in the guard, including unused conditional branches.
+
+The portable compiler binds atomic members using stable typed target identity and
+explicit step roles. Existing-target pairing remains fill then tightening.
+Appended target creation is nullable and default-free; target domain checks,
+derived fill, optional declared future default and NOT NULL share one required
+phase. No unrelated schema/data step enters that phase. Source-derived prefix
+reconstruction must model committed append and existing-target phases exactly.
+Before any member, acquire native table locks and verify full source, authority,
+approval, catalog and progress correspondence. Hold locks through RLS restoration
+and phase receipt commit. Unknown commit recovery observes; it never blindly
+evaluates a pure expression again.
+
+Candidate tests use fabricated Person full names and commerce integer/decimal
+amounts, with manually specified expected per-row outputs. They contain no Praxis
+sources or row payloads. Native exception handling retains SQLSTATE and bounded
+identifiers in ordinary errors; rejected row/native DETAIL remains private.
+
+Implementation sequence: freeze interfaces; implement UMF AST/compiler and Weft
+admission/lowering in parallel using the same schema; integrate host phase and
+installed native fixtures; run browser/Python/native and historical controls;
+freeze package source/RECORD/embedded closure; obtain independent native/design
+signoff; merge, publish an explicitly pinned cohort and verify fresh downloads.
+Weft's in-progress release version must be reconciled before selecting its next
+version. No old core asset is rebuilt or silently replaced.
+
+Rollback of an aborted phase restores all its data/DDL/progress. After phase
+commit, use exact resume or separately approved forward repair. This design does
+not promise reversal of committed derived values, online execution, general
+transforms, managed acceptance or additional backend support.

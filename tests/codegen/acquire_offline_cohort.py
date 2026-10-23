@@ -133,7 +133,7 @@ with tempfile.TemporaryDirectory(prefix='umf-offline-cohort-') as temporary:
             source.update({'url': CORE_URL, 'sha256': CORE_SHA256, 'release': 'umf-v0.5.4'})
         elif name == 'weft-sql':
             source.update({'url': args.weft_wheel_url, 'sha256': args.weft_wheel_sha256,
-                           'release': 'weft v0.4.49'})
+                           'release': f'weft v{package["version"]}'})
 
     dependencies = [
         f"{package['distribution']}=={package['version']}"

@@ -139,6 +139,10 @@ class _TableReader:
         declaration = declarations.get(operation) if type(operation) is str else None
         if declaration is None:
             raise SessionError('operation is not declared in this module')
+        if declaration.get('version') != 'umf.table-operation/0.1':
+            # Typed row expressions are migration-only at this runtime version.
+            # Refuse before program binding or any SQL/authority acquisition.
+            raise SessionError('unsupported ordinary table operation version')
         query=declaration['body']['kind']=='query'
         read=query or declaration['body']['kind']=='read'
         if query and (size is not None or cursor is not None or items is not None):

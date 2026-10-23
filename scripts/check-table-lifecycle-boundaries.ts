@@ -7,10 +7,13 @@ const owners:Record<string,readonly string[]>={
  'temporal.ts':['../../model/types'],
  'context.ts':[...model,'./types','./temporal'],
  'expressions.ts':['../../model/types','./context','./types'],
+ // Reuse the exact core coefficient parser so row-expression numeric typing
+ // admits precisely the core literal grammar without reinterpreting tokens.
+ 'row-expressions.ts':['../../model/types','../../model/schema-literals','./context','./types'],
  'columns.ts':[...model,'./context','./expressions','./types'],
  'policies.ts':['./context','./types'],
  'seeds.ts':['./columns','./context','./types'],
- 'operations.ts':['../../model/schema-literals','../../../spec/extensions/tables/operation.schema.json','../../../spec/extensions/tables/schema.json','../../validation/schema','./columns','./context','./types'],
+ 'operations.ts':['../../model/schema-literals','../../../spec/extensions/tables/operation.schema.json','../../../spec/extensions/tables/operation-0.2.schema.json','../../../spec/extensions/tables/schema.json','../../validation/schema','./columns','./context','./row-expressions','./types'],
  'index.ts':['../../../spec/extensions/tables/package.json','../../model/types','../../model/json','../../registry/registry','../../validation/document','./context','./columns','./policies','./seeds','./operations','./types'],
 };
 const forbidden=new Set(['Bun','process','require','fetch','eval','Function','Buffer','XMLHttpRequest','WebSocket','Deno','globalThis','window','postMessage']);

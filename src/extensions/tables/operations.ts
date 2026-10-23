@@ -1,31 +1,55 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import operationSchema from '../../../spec/extensions/tables/operation.schema.json';
+import rowExpressionOperationSchema from '../../../spec/extensions/tables/operation-0.2.schema.json';
 import tableSchema from '../../../spec/extensions/tables/schema.json';
 import {createValidator} from '../../validation/schema';
 import {canonicalSchemaJson} from '../../model/schema-literals';
 import {domain,inspectUnknown,refKey,TableContext} from './context';
+import {inspectRowExpression,rowExpressionInputRefs} from './row-expressions';
 import {inspectStoredLiteral} from './columns';
-import type {TableDeclaration,TableLifecyclePayload,TableOperation,TableOperationPredicate,TableOperationValue,TableRef,TableNativeType} from './types';
+import type {RowExpressionOperation,TableDeclaration,TableLifecyclePayload,TableOperation,TableOperationPredicate,TableOperationV1,TableOperationValue,TableRef,TableNativeType} from './types';
 
 const validator=createValidator();validator.addSchema(tableSchema);
 const validOperation=validator.compile(operationSchema);
+const validRowExpressionOperation=validator.compile(rowExpressionOperationSchema);
 const definitions={...tableSchema.$defs,...operationSchema.$defs};
+const rowExpressionDefinitions={...tableSchema.$defs,...rowExpressionOperationSchema.$defs};
 /** Declaration/type admission only. Weft owns lowering; hosts own effects/replay. */
 export function inspectOperations(payload:TableLifecyclePayload,ctx:TableContext):void {
- const admitted:TableOperation[]=[];
+ const admitted:{id:string}[]=[];
  for(const[i,raw]of payload.commands.entries()){
   const path=ctx.path+'/commands/'+i;
+  if(raw&&typeof raw==='object'&&!Array.isArray(raw)&&(raw as Record<string,unknown>).version==='umf.table-operation/0.2'){
+   const expression=(raw as any).body?.values?.[0]?.value?.expression;
+   try{if(expression!==undefined)rowExpressionInputRefs(expression as any);}catch(error){const e=error as Error&{path?:string;code?:string};ctx.add(e.code??'TABLES_OPERATION_SHAPE',path+'/body/values/0/value/expression'+(e.path??''),e.message);continue;}
+   if(!validRowExpressionOperation(raw)){ctx.add('TABLES_OPERATION_SHAPE',path,'Invalid typed row-expression operation shape');continue;}
+   admitted.push(raw as unknown as RowExpressionOperation);
+   inspectUnknown(raw,rowExpressionOperationSchema,rowExpressionDefinitions,ctx,path);
+   inspectRowExpressionOperation(raw as unknown as RowExpressionOperation,payload,ctx,path);
+   continue;
+  }
   if(!raw||typeof raw!=='object'||Array.isArray(raw)||(raw as Record<string,unknown>).version!=='umf.table-operation/0.1'){
    ctx.add('TABLES_COMMAND_PENDING',path,'Unknown operation version is retained without interpretation',true);continue;
   }
   if(!validOperation(raw)){ctx.add('TABLES_OPERATION_SHAPE',path,'Invalid declared operation shape');continue;}
   inspectUnknown(raw,operationSchema,definitions,ctx,path);
-  const command=raw as unknown as TableOperation;admitted.push(command);
+  const command=raw as unknown as TableOperationV1;admitted.push(command);
   inspectOperation(command,payload,ctx,path);
  }
  ctx.unique(admitted,c=>c.id,ctx.path+'/commands','operation ID');
 }
-function inspectOperation(command:TableOperation,payload:TableLifecyclePayload,ctx:TableContext,path:string):void {
+function inspectRowExpressionOperation(command:RowExpressionOperation,payload:TableLifecyclePayload,ctx:TableContext,path:string):void{
+ const body=command.body,table=payload.tables.find(t=>t.id===body.table);
+ if(!table){ctx.add('TABLES_OPERATION_SOURCE',path+'/body/table','Operation requires a table in its owning module');return;}
+ const targetRef=body.values[0].field,target=table.columns.find(c=>refKey(c.field)===refKey(targetRef));
+ if(!target||!ctx.field(targetRef,path+'/body/values/0/field')){ctx.add('TABLES_OPERATION_SOURCE',path+'/body/values/0/field','Target must be a mapped Field of the selected table');return;}
+ if(refKey(body.where.field)!==refKey(targetRef))ctx.add('TABLES_OPERATION_SOURCE',path+'/body/where/field','Only NULL rows of the assignment target may be selected');
+ if(!mutable(table,targetRef,ctx))ctx.add('TABLES_OPERATION_SOURCE',path+'/body/values/0/field','Row-expression target cannot be a Key or immutable Field');
+ if(target.generated)ctx.add('TABLES_OPERATION_SOURCE',path+'/body/values/0/field','Generated columns cannot be assigned');
+ if(body.values[0].value.kind!=='rowExpression')return;
+ inspectRowExpression(body.values[0].value.expression,targetRef,table,ctx,path+'/body/values/0/value/expression');
+}
+function inspectOperation(command:TableOperationV1,payload:TableLifecyclePayload,ctx:TableContext,path:string):void {
  if(command.body.kind==='query'){inspectQuery(command,ctx,path);return;}
  const tableId=command.body.table;
  const table=payload.tables.find(t=>t.id===tableId);
