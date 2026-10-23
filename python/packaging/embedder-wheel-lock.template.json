@@ -1,0 +1,46 @@
+{
+  "profile": "umf.embedder-wheel-lock/1",
+  "status": "template",
+  "description": "U7/U8 administrative Python wheel cohort. The cells below are intended qualification targets, not completed support claims. Capture exact immutable wheel hashes and receipts after release candidates are built; never treat this template as an install lock.",
+  "intendedCells": [
+    {"os": "ubuntu-24.04", "architecture": "x86_64", "libc": "glibc >= 2.27", "python": "3.11"},
+    {"os": "ubuntu-24.04", "architecture": "x86_64", "libc": "glibc >= 2.27", "python": "3.14"},
+    {"os": "macos-14", "architecture": "arm64", "libc": "not applicable", "python": "3.11"},
+    {"os": "macos-14", "architecture": "arm64", "libc": "not applicable", "python": "3.14"}
+  ],
+  "packages": [
+    {"distribution": "umf-access", "version": "0.1.0.dev7", "source": {"kind": "repository-wheel", "path": "python/umf_access", "commit": "FILL_AT_CANDIDATE_FREEZE"}},
+    {"distribution": "umf-codegen", "version": "0.1.0a4", "source": {"kind": "repository-wheel", "path": "python/umf_codegen", "commit": "FILL_AT_CANDIDATE_FREEZE"}},
+    {"distribution": "umf-core", "version": "0.10.0", "source": {"kind": "immutable-release-wheel", "release": "umf-core 0.10.0", "sha256": "FILL_FROM_EXISTING_RELEASE_CUSTODY"}},
+    {"distribution": "weft-sql", "version": "0.4.49", "source": {"kind": "immutable-release-wheel", "release": "weft-sql 0.4.49", "sha256": "FILL_FROM_EXISTING_RELEASE_CUSTODY"}},
+    {"distribution": "mini-racer", "version": "0.14.1", "source": {"kind": "pypi-wheel", "url": "https://pypi.org/project/mini-racer/0.14.1/"}},
+    {"distribution": "annotated-types", "version": "0.8.0", "source": {"kind": "pypi-wheel", "url": "https://pypi.org/project/annotated-types/0.8.0/"}},
+    {"distribution": "attrs", "version": "26.1.0", "source": {"kind": "pypi-wheel", "url": "https://pypi.org/project/attrs/26.1.0/"}},
+    {"distribution": "jsonschema", "version": "4.26.0", "source": {"kind": "pypi-wheel", "url": "https://pypi.org/project/jsonschema/4.26.0/"}},
+    {"distribution": "jsonschema-specifications", "version": "2025.9.1", "source": {"kind": "pypi-wheel", "url": "https://pypi.org/project/jsonschema-specifications/2025.9.1/"}},
+    {"distribution": "pydantic", "version": "2.14.1", "source": {"kind": "pypi-wheel", "url": "https://pypi.org/project/pydantic/2.14.1/"}},
+    {"distribution": "pydantic-core", "version": "2.50.1", "source": {"kind": "pypi-wheel", "url": "https://pypi.org/project/pydantic-core/2.50.1/"}},
+    {"distribution": "psycopg", "version": "3.2.13", "source": {"kind": "pypi-wheel", "url": "https://pypi.org/project/psycopg/3.2.13/"}},
+    {"distribution": "psycopg-binary", "version": "3.2.13", "source": {"kind": "pypi-wheel", "url": "https://pypi.org/project/psycopg-binary/3.2.13/"}},
+    {"distribution": "referencing", "version": "0.37.0", "source": {"kind": "pypi-wheel", "url": "https://pypi.org/project/referencing/0.37.0/"}},
+    {"distribution": "rpds-py", "version": "2026.9.1", "source": {"kind": "pypi-wheel", "url": "https://pypi.org/project/rpds-py/2026.9.1/"}},
+    {"distribution": "ruamel-yaml", "version": "0.19.1", "source": {"kind": "pypi-wheel", "url": "https://pypi.org/project/ruamel.yaml/0.19.1/"}},
+    {"distribution": "typing-extensions", "version": "4.16.0", "source": {"kind": "pypi-wheel", "url": "https://pypi.org/project/typing-extensions/4.16.0/"}},
+    {"distribution": "typing-inspection", "version": "0.4.4", "source": {"kind": "pypi-wheel", "url": "https://pypi.org/project/typing-inspection/0.4.4/"}}
+  ],
+  "optionalProfiles": {
+    "admin-sql-containment": {
+      "includedInDefaultMirror": false,
+      "distribution": "pglast",
+      "version": "7.20",
+      "license": "GPL-3.0-or-later",
+      "sourceCatalog": "docs/helix/04-build/evidence/praxis-embedder/pglast-optional-wheel-lock.json",
+      "lockTemplate": "python/packaging/pglast-optional-wheel-lock.template.json",
+      "sdistUrl": "https://files.pythonhosted.org/packages/source/p/pglast/pglast-7.20.tar.gz",
+      "sdistSha256": "6dd32bfd848e0f35de448ef23d819c8de5bb55087b160f488918d97779116a92",
+      "pypiAttestation": "not provided for this release",
+      "wheelLicenseFiles": [],
+      "note": "Optional containment cohort; four wheel hashes and source/license notices are in the separate lock. Keep outside the default runtime mirror."
+    }
+  }
+}

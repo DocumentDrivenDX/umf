@@ -1,0 +1,59 @@
+{
+  "profile": "umf.cli-stdin-transport-diagnosis/1",
+  "implementationCommit": "04ce37ce1b3f22013de1baa2ba83d81bf60f988c",
+  "baseSourceCommit": "240fbb262d28c0b2a77601abe611e8eb6583e746",
+  "scope": "Qualification harness transport only. This is a reproducible local EOF wait and a bounded mitigation, not proof of the hosted runner root cause or universal subprocess safety.",
+  "originalReproduction": {
+    "sourceCommit": "240fbb262d28c0b2a77601abe611e8eb6583e746",
+    "os": "macOS 27.0.1 arm64",
+    "bun": "1.4.3",
+    "node": "26.12.1",
+    "rust": "1.90.0",
+    "fixture": "docs/helix/04-build/evidence/rust-migration/r3/sol-final-row-property-admission-review/frozen.json",
+    "requestedRepeats": 100,
+    "completedRepeats": 41,
+    "timeoutSeconds": 120,
+    "sampleInterpretation": "Rust CLI blocked in Stdin::read_to_end/read; Node in synchronous child runner/libuv kevent; Bun in kevent64. All sampled sleeping with 0 CPU. Captured before terminating only the disposable diagnostic process group. Does not establish the hosted CI root cause.",
+    "retainedFiles": {
+      "sample-21157.txt": {
+        "sha256": "90c1c325793a3f7d7d99565b055e583bba82e2ee031c84e1627095dac311b916",
+        "sizeBytes": 19687
+      },
+      "sample-21735.txt": {
+        "sha256": "822236078fd8ef57a88af0d698d75ae80c1eeb31fa05e47e8c3e62d9a5215738",
+        "sizeBytes": 98184
+      },
+      "sample-21736.txt": {
+        "sha256": "04d20af064620c613f20c11dc5e525f0dd9540080e01defdbc7f57450f89ae21",
+        "sizeBytes": 13980
+      }
+    }
+  },
+  "originalHostedHandles": {
+    "runs": [
+      39955430866,
+      39955438238
+    ],
+    "jobs": [
+      120419983679,
+      120420009374
+    ],
+    "lastObservedState": "in_progress; retained unchanged before the new source qualification"
+  },
+  "localEvidence": {
+    "path": "cli-stdin-transport-local.json",
+    "sha256": "5165ddfbfa9e805106458f9bf9a86cd220864e6d76047437a372de5be32f092a",
+    "sourceInterpretation": "sourceCommit denotes the base of a dirty isolated worktree; sourceFiles identify exact reviewed bytes. Native runs preceded only the recorded outer-command logging delta. They are not relabeled as execution of that final wrapper."
+  },
+  "review": {
+    "path": "cli-stdin-transport-review.json",
+    "sha256": "df86dc57e5dc3ab7dae18ad3542d7a91acaaeee566666511e1d9c3515abbe309"
+  },
+  "releaseGates": "Fresh exact-head CI, package/input and nine-asset custody, native qualification, actual merge and metadata review, publication and post-download checks remain required.",
+  "hostedPlatformClarification": {
+    "observedJob": 120419983441,
+    "observedSystem": "macOS 26.6.2 (25G83)",
+    "evidence": "Completed job Operating System header, read through GitHub Actions job logs",
+    "scope": "Rust macos-latest is separate from the pinned macos-14 compiler/offline matrix. No exact OS version is inferred for an unobserved job."
+  }
+}

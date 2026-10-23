@@ -12,7 +12,7 @@
     "discoverTableMigrationChanges"
   ],
   "v8": "14.4.258.23",
-  "bundleSha256": "ec7112d56963b8ee65d214e10d18a74dbd4b6b00c3f2afca795aff93211edd08",
+  "bundleSha256": "87ccc91dfed7c5d2f1f4c82381562a8e1f4221533b0f23d1d7c016cc04a7c799",
   "builder": "bun@1.4.3",
   "license": "MIT OR Apache-2.0",
   "inputs": {
@@ -229,15 +229,15 @@
     "src/registry/registry.ts": "b5fc12f7ea6799acc61442df2c1e6b8f1d6b2ece3410278396daf8992a431674",
     "src/table-authoring/row-scope.ts": "d18ed69a608c5bffb3200a5e1a58725bc6c8e2daaedfbb4de79d72eec1fefee6",
     "src/table-deployment/configuration.ts": "adc510b21141db111aa57cb2ca4e1d2d98424a93c37e4ade946a5a74e1ca5482",
-    "src/table-deployment/ddl.ts": "3b71df73c9fe1c2825ea3860db121cc17b8a003e61493d5cfedf47f7806566c0",
+    "src/table-deployment/ddl.ts": "c537de5bf06cf4984cbdf3d062cb2ceff9e9ec9ccc84720d3c9ede8b74a3726c",
     "src/table-deployment/domains.ts": "3c79e54501d7e511b8bdbd44da392167050a9ee67dfb1d049733b49d9baec9cc",
     "src/table-deployment/index.ts": "6130d0084e7f3b51aa06a9747a26a1f05a4b561e8bd2791da4874e8574d12e88",
     "src/table-deployment/policies.ts": "ba60b37dca21ed715953f2bc5fb079f527055c3d7dd72b18bf43cd634e179124",
-    "src/table-deployment/sql.ts": "b81daaa2e665e89448b69f03e25ec5f4f4660d641d27794bea9c4f743be4a17d",
+    "src/table-deployment/sql.ts": "486b0c5714054ffc7d36a388d7e76ef4bf8e146bcc46acb3680002760465c3ff",
     "src/table-deployment/temporal.ts": "c4f0ef55e3b13052d933f259a12e7ac79a86c58c6579ab6046b02c6cd017197f",
-    "src/table-migration/index.ts": "c92588d55b4d59e9d6e93e3d5c709999a5f74d5ad9cef18dfc6a563de89e01f0",
-    "src/table-migration/options.ts": "b0da19ffee8179aa3fcffdb7e9c63711c1a6873b57ac00579422cf9d47aa94d7",
-    "src/table-migration/phases.ts": "0762d9ddd0fc88f32d1dcb5a033fcee915d1c29cb605274338d406b3f00a8926",
+    "src/table-migration/index.ts": "f9dd8509e0c9ad3d475cfe40d9447d363ac103b10f8db6fbb20a5550ca8ec192",
+    "src/table-migration/options.ts": "db0ced026be10745db2b098278ead72d10743f1340799b46879e095f7135a8d8",
+    "src/table-migration/phases.ts": "56f6e882888b5ae9fdd767cb2712cdaad1f0b80c86ab0d650f08e13e718c07f2",
     "src/table-migration/reviewed.ts": "b4891eb9def70ef2838c5a92cbcf2f92067d56758b2e6f4a88e9cf8add81d614",
     "src/validation/constraint-kernel.ts": "968bde65e6e7e8da7ec92849498dbfbe9a71f931c9538094a18c85be5b4a4362",
     "src/validation/constraint-language.ts": "decf47ca801a2c03d0c01b92ef3418813c79992c042be879ba0c1d2561678597",
@@ -294,7 +294,7 @@
     }
   ],
   "files": {
-    "generator.js.gz": "d3b94f47ea254f7d1901b5716e0378055cc1551a75887d57b8329f86946adb87",
+    "generator.js.gz": "d9874b61b91d2211619aa1643ec13d0b6d2c9ab3c2f8ee55d04a9954b53e7396",
     "notices/ajv/LICENSE": "a05350a88e318e4f5f2c2a1ff1e2e88daa4dd38e6e78b71cccae422bdc762cc3",
     "notices/ajv/package.json": "1f9033ee5a6515e7d76938b7072941862d1ed228a6879cc7fe10cdeb75107989",
     "notices/fast-deep-equal/LICENSE": "7bf9b2de73a6b356761c948d0e9eeb4be6c1270bd04c79cd489c1e400ffdfc1a",

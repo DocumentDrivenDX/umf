@@ -6,6 +6,7 @@ import hashlib
 import json
 import re
 
+from .approval import APPROVAL_PROFILE, _verify_approval_relation
 from .catalog import CatalogError, _all, _execute, _installation, _one, _q
 from .concurrent import _index_state
 from .head_view import HEAD
@@ -77,23 +78,31 @@ def _verify_mixed_prefix(connection, plan, receipt):
     # The fixed metadata relation set is explicit. App relations may only be
     # names in the verified next source; no umf_* namespace blanket is used.
     _verify_mixed_metadata_inventory(connection, plan)
+    if plan.get('approvalProfile') == APPROVAL_PROFILE:
+        _verify_approval_relation(connection, bundle)
     _verify_history_schema(connection, bundle)
     _verify_progress_schema(connection, bundle)
     _verify_outcomes(connection, bundle)
     _verify_phase_head(connection, bundle)
 
 
-def _verify_mixed_metadata_inventory(connection, plan):
+def _verify_mixed_metadata_inventory(connection, plan, *, progress_required=True):
     bundle = plan['next']
     schema = bundle['configuration']['schema']
     rows = _all(connection, "SELECT c.relname,c.relkind FROM pg_catalog.pg_class c JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace WHERE n.nspname=%s AND c.relkind IN ('r','p','v','m','S','f') ORDER BY c.relname", (schema,))
-    fixed = {HISTORY:'r', OUTCOMES:'r', PROGRESS:'r', HEAD:'v'}
+    fixed = {HISTORY:'r', OUTCOMES:'r', HEAD:'v'}
+    if progress_required:
+        fixed[PROGRESS] = 'r'
+    if plan.get('approvalProfile') == APPROVAL_PROFILE:
+        fixed[APPROVAL_PROFILE['relation']] = 'r'
     actual_fixed = {name:kind for name,kind in rows if name in fixed}
     if actual_fixed != fixed:
         raise CatalogError('progress-inventory-mismatch')
     app_names = {table['name'] for table in bundle['expectedCatalog']['tables']}
     if any(name not in app_names and name not in fixed for name, _ in rows):
         raise CatalogError('progress-inventory-mismatch')
+    if plan.get('approvalProfile') == APPROVAL_PROFILE:
+        _verify_approval_relation(connection, bundle)
 
 
 def _without_concurrent_effect(witness, plan, phase):
@@ -151,7 +160,8 @@ def _lock_phase_tables(connection, plan):
             _execute(connection, 'LOCK TABLE '+_q(schema)+'.'+_q(table['name'])+' IN ACCESS EXCLUSIVE MODE')
 
 
-def _verify_phase_execution_boundary(connection, plan, person_roles):
+def _verify_phase_execution_boundary(connection, plan, person_roles, *,
+                                     progress_required=True):
     """Recheck source-independent execution and authority boundaries under locks.
 
     The phase witness binds the intentional partial source prefix. This check
@@ -162,10 +172,12 @@ def _verify_phase_execution_boundary(connection, plan, person_roles):
     bundle = plan['next']
     schema = bundle['configuration']['schema']
     cfg = bundle['configuration']
-    _verify_mixed_metadata_inventory(connection, plan)
+    _verify_mixed_metadata_inventory(connection, plan,
+                                     progress_required=progress_required)
     _verify_history_schema(connection, bundle)
     _verify_outcomes(connection, bundle)
-    _verify_progress_schema(connection, bundle)
+    if progress_required:
+        _verify_progress_schema(connection, bundle)
     _verify_phase_head(connection, bundle)
     relation_ids = []
     for table in bundle['expectedCatalog']['tables']:
@@ -206,6 +218,8 @@ def _run_required_phase(connection, plan, phase, person_roles, *, statement_time
     bundle = plan['next']
     from .backfills import _apply_backfill
     from .seeds import _apply_seeds
+    if phase['kind'] == 'backfill-tighten':
+        _verify_backfill_tighten_target(plan, phase)
     with _installation(connection, bundle, statement_timeout_ms=statement_timeout_ms,
                        lock_timeout_ms=lock_timeout_ms):
         for step in _phase_steps(plan, phase):
@@ -222,6 +236,35 @@ def _run_required_phase(connection, plan, phase, person_roles, *, statement_time
                 _execute(connection, step['sql'])
         witness = _capture_witness(connection, bundle)
         return witness
+
+
+def _verify_backfill_tighten_target(plan, phase):
+    """Bind the paired data fill and NOT NULL step to one selected source Field."""
+    steps = _phase_steps(plan, phase)
+    if len(steps) != 2:
+        raise CatalogError('mixed-phase-profile')
+    backfill, tighten = steps
+    target = backfill.get('phaseTarget')
+    selection = {
+        'table': target['table'],
+        'column': {'module': target['field']['module'],
+                   'element': target['field']['element']},
+        'operation': backfill.get('operation'),
+    }
+    options = plan.get('options', {})
+    backfills = options.get('backfills', [])
+    matches = [(index, item) for index, item in enumerate(backfills)
+               if item.get('table') == selection['table']
+               and item.get('column') == selection['column']
+               and item.get('operation') == selection['operation']]
+    columns = [item for item in plan['next']['expectedCatalog']['columns']
+               if item.get('table') == selection['table']
+               and item.get('field') == selection['column']]
+    if (len(matches) != 1 or len(columns) != 1
+            or columns[0].get('sourcePath') != tighten.get('sourcePath')
+            or columns[0].get('nullable') is not False
+            or backfill.get('sourcePath') != '/options/backfills/'+str(matches[0][0])):
+        raise CatalogError('mixed-phase-profile')
 
 
 def apply_mixed_migration(connection, plan, *, approved_digest, expected_head, person_roles,

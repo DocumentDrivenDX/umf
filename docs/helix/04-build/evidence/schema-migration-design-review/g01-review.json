@@ -1,0 +1,134 @@
+{
+  "version": "umf.migration-design-review/1",
+  "date": "2026-10-22",
+  "scope": "Single-document, existing-table PostgreSQL 18.6 maintenance migration: one unchanged-identity/type/default optional Field, finite explicit NULL-only fill and reviewed NOT NULL in one required transaction; composition refuses.",
+  "status": "passed for bounded profile",
+  "sourceReview": {
+    "status": "passed",
+    "commit": "1bee79622302671be81f1ef6e02985687a87eaf8",
+    "focusedTests": {
+      "tests": 13,
+      "assertions": 64,
+      "result": "passed"
+    },
+    "defaultPreservation": "shared typed renderer independently source-reviewed and native-tested"
+  },
+  "findings": [
+    {
+      "id": "G01-R01",
+      "status": "closed for bounded profile",
+      "finding": "Native rollback oracle must prove data-step reachability and actual native constraint/bound cause; generic CatalogError can occur before UPDATE."
+    },
+    {
+      "id": "G01-R02",
+      "status": "closed for bounded profile",
+      "finding": "Existing future default unchanged in both sources blocks optional-to-required compilation because appendOnly appends NOT NULL after DEFAULT; deployment renders it before DEFAULT. Preserve typed semantics in successor without changing historical profiles."
+    },
+    {
+      "id": "G01-R03",
+      "status": "closed for bounded profile",
+      "finding": "Command-only successor final inventory must not require a progress relation."
+    }
+  ],
+  "independentNative": {
+    "status": "passed",
+    "server": "PostgreSQL 18.6 (Homebrew) on aarch64-apple-darwin27.0.0, compiled by Apple clang version 21.0.0 (clang-2100.3.34.2), 64-bit",
+    "migrationScenarios": 13,
+    "supplementalChecks": 9,
+    "heldWriterNativeSqlstate": "55P03",
+    "hostNative": {
+      "status": "passed",
+      "historicalReplayReturnsCurrentReference": true,
+      "commandOnlyLostResponseObserved": true,
+      "tamperRefusals": 8
+    },
+    "fixtureSha256": "deaada66753d28052e08531f412717607ef3cd6a74021235f523d803564aeb55",
+    "fixtureArchive": "g01/fixture.json.gz",
+    "execution": "Isolated -I interpreter, no source PYTHONPATH; disposable local databases and roles cleaned by test harnesses.",
+    "preflightNotes": [
+      "Initial reviewer setup search_path corrected before successful native acceptance.",
+      "Unchanged-default supported-case compiler refusal found independently, fixed via shared typed renderer and retested.",
+      "Supplemental lock observer moved to earlier native catalog admission locks; preliminary later-phase observer could not see the expected lock error. Final receipt proves actual 55P03 and zero fill dispatch."
+    ]
+  },
+  "releaseTracking": {
+    "status": "candidate notes enumerate G02\u2013G11 individually; final canonical integration requested",
+    "path": "docs/helix/05-deploy/sdk-release-notes-0.5.5.md",
+    "residuals": [
+      "MIG-G02",
+      "MIG-G03",
+      "MIG-G04",
+      "MIG-G05",
+      "MIG-G06",
+      "MIG-G07",
+      "MIG-G08",
+      "MIG-G09",
+      "MIG-G10",
+      "MIG-G11"
+    ],
+    "G01": "passes only the recorded bounded profile; broader transforms, online execution and combinations remain unsupported"
+  },
+  "sourceCommit": "435ed5844",
+  "qualifiedPackages": {
+    "umf_access": {
+      "version": "0.1.0.dev7",
+      "wheelSha256": "74af2b9d896895fc0af29bf22ee7e00469fbce6070f1d7f433d35b824eeb5d30"
+    },
+    "umf_codegen": {
+      "version": "0.1.0a4",
+      "wheelSha256": "88d0e08079808052242f5df2a7ccbef49bc8c0daf0b7fa9482098474f9b9bded"
+    },
+    "core": "original immutable 0.10.0 wheel",
+    "weft-sql": "0.4.49",
+    "psycopg": "3.2.13",
+    "mini-racer": "0.14.1",
+    "python": "3.11.17"
+  },
+  "artifacts": [
+    {
+      "path": "g01/native.json",
+      "sha256": "1d23d0671ca9c8e409c2965d8f6335353fc885f9b4d0720e4734249edfa204f6"
+    },
+    {
+      "path": "g01/supplemental.json",
+      "sha256": "7626faf17e4521e9320c08f9388b69ab28513b10e467e59bff3b81503b026994"
+    },
+    {
+      "path": "g01/host-native.json",
+      "sha256": "9e9a44f8cb3b63386d6e4ceeeb5a3d9f5959e8374ea3c52368d91bb42a65680e"
+    },
+    {
+      "path": "g01/package-audit.json",
+      "sha256": "873a9ae9e730582080a33a115fd1fa0563a27c7a7f70989cc6d5c5a46fca6c32"
+    },
+    {
+      "path": "g01/supplemental-probe.py",
+      "sha256": "2fc969db8954c038958e697d1f61e4fd51cb600f775bf3231bc99a4be0359f1e"
+    },
+    {
+      "path": "g01/package-audit.py",
+      "sha256": "acfaea69e65467357a95d4d65d6d2bf4b20228606e6ac5217d7f4d26fb31fc18"
+    },
+    {
+      "path": "g01/host-runner.py",
+      "sha256": "1e795b486277a7907d8f8f9bad88e0a48a60038918df23592529d3755942c9b0"
+    },
+    {
+      "path": "g01/native-probe.py",
+      "sha256": "2d51fc002e57290167f1b75d7685f6e1538333a2659863c803733d506d621ba2"
+    },
+    {
+      "path": "g01/host-probe.py",
+      "sha256": "8369e981e09cbf30c9217bdda49c1a20c8fc52b5627958f4248538ac5ea32c71"
+    },
+    {
+      "path": "g01/cleanup.json",
+      "sha256": "13315eeea1cd6a6da3f45169a61315af2e93b9d6d2f7687a7aaea17024995e2e"
+    }
+  ],
+  "limits": [
+    "Independent local native evidence is not managed Lakebase/Praxis acceptance or other-backend qualification.",
+    "Any changed implementation/package/fixture inputs require equivalence review or affected revalidation before reusing this signoff.",
+    "Final hosted matrix, publication and whole-release acceptance remain implementation-owner gates."
+  ]
+}

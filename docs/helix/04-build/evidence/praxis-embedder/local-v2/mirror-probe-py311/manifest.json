@@ -1,0 +1,1359 @@
+{
+  "cohort": "default",
+  "distributions": [
+    "annotated-types",
+    "attrs",
+    "jsonschema",
+    "jsonschema-specifications",
+    "mini-racer",
+    "psycopg",
+    "psycopg-binary",
+    "pydantic",
+    "pydantic-core",
+    "referencing",
+    "rpds-py",
+    "ruamel-yaml",
+    "typing-extensions",
+    "typing-inspection",
+    "umf-access",
+    "umf-codegen",
+    "umf-core",
+    "weft-sql"
+  ],
+  "intendedCells": [
+    {
+      "architecture": "arm64",
+      "libc": "not applicable",
+      "os": "macos-27",
+      "python": "3.11"
+    }
+  ],
+  "lockSha256": "758d47190b319bdf0379f8830d5052f5bbd052773b59620965039dfa49750734",
+  "networkUsed": false,
+  "optionalProfiles": {
+    "admin-sql-containment": {
+      "distribution": "pglast",
+      "includedInDefaultMirror": false,
+      "license": "GPL-3.0-or-later",
+      "lockTemplate": "python/packaging/pglast-optional-wheel-lock.template.json",
+      "note": "Optional containment cohort; four wheel hashes and source/license notices are in the separate lock. Keep outside the default runtime mirror.",
+      "pypiAttestation": "not provided for this release",
+      "sdistSha256": "6dd32bfd848e0f35de448ef23d819c8de5bb55087b160f488918d97779116a92",
+      "sdistUrl": "https://files.pythonhosted.org/packages/source/p/pglast/pglast-7.20.tar.gz",
+      "sourceCatalog": "docs/helix/04-build/evidence/praxis-embedder/pglast-optional-wheel-lock.json",
+      "version": "7.20",
+      "wheelLicenseFiles": []
+    }
+  },
+  "profile": "local-wheel-mirror/2",
+  "wheelCount": 29,
+  "wheels": [
+    {
+      "distribution": "annotated-types",
+      "filename": "annotated_types-0.8.0-py3-none-any.whl",
+      "license": null,
+      "licenseExpression": "MIT",
+      "licenseFilePaths": [
+        "annotated_types-0.8.0.dist-info/licenses/LICENSE"
+      ],
+      "licenseFiles": [
+        "LICENSE"
+      ],
+      "requiresDist": [],
+      "sha256": "f072f4d804ea359e4eaf198b1af7a8b0943881a87f31bb764f8bf219bb9419e0",
+      "size": 13427,
+      "source": {
+        "kind": "pypi-wheel",
+        "publisherMetadataSha256": "a6e8e5b10c8fd2f596bba53e015cd37f6279fb5cec26ce0c5e9968625be4fefa",
+        "sourceArchives": [
+          {
+            "sha256": "13b2beaad985e05e2d6407ee4c4f35590b11f8d693a258a561055cac8f64cab7",
+            "size": 15893,
+            "url": "https://files.pythonhosted.org/packages/5f/56/a8120250d128bed162cd73c76d45f6ef9991f3e068f62a8ee060afa3104a/annotated_types-0.8.0.tar.gz"
+          }
+        ],
+        "url": "https://pypi.org/project/annotated-types/0.8.0/",
+        "wheels": [
+          {
+            "filename": "annotated_types-0.8.0-py3-none-any.whl",
+            "sha256": "f072f4d804ea359e4eaf198b1af7a8b0943881a87f31bb764f8bf219bb9419e0",
+            "size": 13427,
+            "url": "https://files.pythonhosted.org/packages/99/91/8acff4f5e50511b911bbccb72b8628a49c68ce14148cd9f6431094859a90/annotated_types-0.8.0-py3-none-any.whl"
+          }
+        ]
+      },
+      "version": "0.8.0"
+    },
+    {
+      "distribution": "attrs",
+      "filename": "attrs-26.1.0-py3-none-any.whl",
+      "license": null,
+      "licenseExpression": "MIT",
+      "licenseFilePaths": [
+        "attrs-26.1.0.dist-info/licenses/LICENSE"
+      ],
+      "licenseFiles": [
+        "LICENSE"
+      ],
+      "requiresDist": [],
+      "sha256": "c647aa4a12dfbad9333ca4e71fe62ddc36f4e63b2d260a37a8b83d2f043ac309",
+      "size": 67548,
+      "source": {
+        "kind": "pypi-wheel",
+        "publisherMetadataSha256": "a882bf941fb4a0bb748d0194df544121cc130f5fb15a710ab6b804c17d2899b7",
+        "sourceArchives": [
+          {
+            "sha256": "d03ceb89cb322a8fd706d4fb91940737b6642aa36998fe130a9bc96c985eff32",
+            "size": 952055,
+            "url": "https://files.pythonhosted.org/packages/9a/8e/82a0fe20a541c03148528be8cac2408564a6c9a0cc7e9171802bc1d26985/attrs-26.1.0.tar.gz"
+          }
+        ],
+        "url": "https://pypi.org/project/attrs/26.1.0/",
+        "wheels": [
+          {
+            "filename": "attrs-26.1.0-py3-none-any.whl",
+            "sha256": "c647aa4a12dfbad9333ca4e71fe62ddc36f4e63b2d260a37a8b83d2f043ac309",
+            "size": 67548,
+            "url": "https://files.pythonhosted.org/packages/64/b4/17d4b0b2a2dc85a6df63d1157e028ed19f90d4cd97c36717afef2bc2f395/attrs-26.1.0-py3-none-any.whl"
+          }
+        ]
+      },
+      "version": "26.1.0"
+    },
+    {
+      "distribution": "jsonschema",
+      "filename": "jsonschema-4.26.0-py3-none-any.whl",
+      "license": null,
+      "licenseExpression": "MIT",
+      "licenseFilePaths": [
+        "jsonschema-4.26.0.dist-info/licenses/COPYING"
+      ],
+      "licenseFiles": [
+        "COPYING"
+      ],
+      "requiresDist": [
+        "attrs>=22.2.0",
+        "jsonschema-specifications>=2023.03.6",
+        "referencing>=0.28.4",
+        "rpds-py>=0.25.0",
+        "fqdn; extra == 'format'",
+        "idna; extra == 'format'",
+        "isoduration; extra == 'format'",
+        "jsonpointer>1.13; extra == 'format'",
+        "rfc3339-validator; extra == 'format'",
+        "rfc3987; extra == 'format'",
+        "uri-template; extra == 'format'",
+        "webcolors>=1.11; extra == 'format'",
+        "fqdn; extra == 'format-nongpl'",
+        "idna; extra == 'format-nongpl'",
+        "isoduration; extra == 'format-nongpl'",
+        "jsonpointer>1.13; extra == 'format-nongpl'",
+        "rfc3339-validator; extra == 'format-nongpl'",
+        "rfc3986-validator>0.1.0; extra == 'format-nongpl'",
+        "rfc3987-syntax>=1.1.0; extra == 'format-nongpl'",
+        "uri-template; extra == 'format-nongpl'",
+        "webcolors>=24.6.0; extra == 'format-nongpl'"
+      ],
+      "sha256": "d489f15263b8d200f8387e64b4c3a75f06629559fb73deb8fdfb525f2dab50ce",
+      "size": 90630,
+      "source": {
+        "kind": "pypi-wheel",
+        "publisherMetadataSha256": "d0c9ccdfa30c3cdc57b048c2be21123dfb0c2f4d6bef2e8324dcb4eac985cfcf",
+        "sourceArchives": [
+          {
+            "sha256": "0c26707e2efad8aa1bfc5b7ce170f3fccc2e4918ff85989ba9ffa9facb2be326",
+            "size": 366583,
+            "url": "https://files.pythonhosted.org/packages/b3/fc/e067678238fa451312d4c62bf6e6cf5ec56375422aee02f9cb5f909b3047/jsonschema-4.26.0.tar.gz"
+          }
+        ],
+        "url": "https://pypi.org/project/jsonschema/4.26.0/",
+        "wheels": [
+          {
+            "filename": "jsonschema-4.26.0-py3-none-any.whl",
+            "sha256": "d489f15263b8d200f8387e64b4c3a75f06629559fb73deb8fdfb525f2dab50ce",
+            "size": 90630,
+            "url": "https://files.pythonhosted.org/packages/69/90/f63fb5873511e014207a475e2bb4e8b2e570d655b00ac19a9a0ca0a385ee/jsonschema-4.26.0-py3-none-any.whl"
+          }
+        ]
+      },
+      "version": "4.26.0"
+    },
+    {
+      "distribution": "jsonschema-specifications",
+      "filename": "jsonschema_specifications-2025.9.1-py3-none-any.whl",
+      "license": null,
+      "licenseExpression": "MIT",
+      "licenseFilePaths": [
+        "jsonschema_specifications-2025.9.1.dist-info/licenses/COPYING"
+      ],
+      "licenseFiles": [
+        "COPYING"
+      ],
+      "requiresDist": [
+        "referencing>=0.31.0"
+      ],
+      "sha256": "98802fee3a11ee76ecaca44429fda8a41bff98b00a0f2838151b113f210cc6fe",
+      "size": 18437,
+      "source": {
+        "kind": "pypi-wheel",
+        "publisherMetadataSha256": "91810d8f79384375ad0c0cf631e06903e2790b030d3fad2f1ad657b20ddd839e",
+        "sourceArchives": [
+          {
+            "sha256": "b540987f239e745613c7a9176f3edb72b832a4ac465cf02712288397832b5e8d",
+            "size": 32855,
+            "url": "https://files.pythonhosted.org/packages/19/74/a633ee74eb36c44aa6d1095e7cc5569bebf04342ee146178e2d36600708b/jsonschema_specifications-2025.9.1.tar.gz"
+          }
+        ],
+        "url": "https://pypi.org/project/jsonschema-specifications/2025.9.1/",
+        "wheels": [
+          {
+            "filename": "jsonschema_specifications-2025.9.1-py3-none-any.whl",
+            "sha256": "98802fee3a11ee76ecaca44429fda8a41bff98b00a0f2838151b113f210cc6fe",
+            "size": 18437,
+            "url": "https://files.pythonhosted.org/packages/41/45/1a4ed80516f02155c51f51e8cedb3c1902296743db0bbc66608a0db2814f/jsonschema_specifications-2025.9.1-py3-none-any.whl"
+          }
+        ]
+      },
+      "version": "2025.9.1"
+    },
+    {
+      "distribution": "mini-racer",
+      "filename": "mini_racer-0.14.1-py3-none-macosx_11_0_arm64.whl",
+      "license": null,
+      "licenseExpression": "ISC",
+      "licenseFilePaths": [
+        "mini_racer-0.14.1.dist-info/licenses/LICENSE",
+        "mini_racer-0.14.1.dist-info/licenses/AUTHORS.md"
+      ],
+      "licenseFiles": [
+        "LICENSE",
+        "AUTHORS.md"
+      ],
+      "requiresDist": [],
+      "sha256": "56cc6965a1665a50d8d613bc43aa83b4cec6b1f09acc69dc4c2845dacb201463",
+      "size": 18511166,
+      "source": {
+        "kind": "pypi-wheel",
+        "publisherMetadataSha256": "270b8414a9e934d1fc6b4c5a21cb519337e7c35f62524217b476dc663604d0db",
+        "sourceArchives": [
+          {
+            "sha256": "0df25889b7c4e753520324a1687d85e41f9f64984efa81963339ed400f004d49",
+            "size": 41771,
+            "url": "https://files.pythonhosted.org/packages/71/b0/5b200bdf093433f1933f783fbc908c23349a1a575c28c81aff75b609c7c1/mini_racer-0.14.1.tar.gz"
+          }
+        ],
+        "url": "https://pypi.org/project/mini-racer/0.14.1/",
+        "wheels": [
+          {
+            "filename": "mini_racer-0.14.1-py3-none-manylinux_2_27_x86_64.whl",
+            "sha256": "cdf3a088e1363f16a695288f882abf76b3705b8e1df21418208b87ed010037a4",
+            "size": 22178205,
+            "url": "https://files.pythonhosted.org/packages/c2/3c/c5bd479784826bbbc69f713aae2bcfd5ef353ba4e5e0e661666938474535/mini_racer-0.14.1-py3-none-manylinux_2_27_x86_64.whl"
+          },
+          {
+            "filename": "mini_racer-0.14.1-py3-none-macosx_11_0_arm64.whl",
+            "sha256": "56cc6965a1665a50d8d613bc43aa83b4cec6b1f09acc69dc4c2845dacb201463",
+            "size": 18511166,
+            "url": "https://files.pythonhosted.org/packages/09/bf/ecaad0c208b9d8bd8f2141f7fa5e520b66915945a2ed56c520524df75fcb/mini_racer-0.14.1-py3-none-macosx_11_0_arm64.whl"
+          }
+        ]
+      },
+      "version": "0.14.1"
+    },
+    {
+      "distribution": "mini-racer",
+      "filename": "mini_racer-0.14.1-py3-none-manylinux_2_27_x86_64.whl",
+      "license": null,
+      "licenseExpression": "ISC",
+      "licenseFilePaths": [
+        "mini_racer-0.14.1.dist-info/licenses/LICENSE",
+        "mini_racer-0.14.1.dist-info/licenses/AUTHORS.md"
+      ],
+      "licenseFiles": [
+        "LICENSE",
+        "AUTHORS.md"
+      ],
+      "requiresDist": [],
+      "sha256": "cdf3a088e1363f16a695288f882abf76b3705b8e1df21418208b87ed010037a4",
+      "size": 22178205,
+      "source": {
+        "kind": "pypi-wheel",
+        "publisherMetadataSha256": "270b8414a9e934d1fc6b4c5a21cb519337e7c35f62524217b476dc663604d0db",
+        "sourceArchives": [
+          {
+            "sha256": "0df25889b7c4e753520324a1687d85e41f9f64984efa81963339ed400f004d49",
+            "size": 41771,
+            "url": "https://files.pythonhosted.org/packages/71/b0/5b200bdf093433f1933f783fbc908c23349a1a575c28c81aff75b609c7c1/mini_racer-0.14.1.tar.gz"
+          }
+        ],
+        "url": "https://pypi.org/project/mini-racer/0.14.1/",
+        "wheels": [
+          {
+            "filename": "mini_racer-0.14.1-py3-none-manylinux_2_27_x86_64.whl",
+            "sha256": "cdf3a088e1363f16a695288f882abf76b3705b8e1df21418208b87ed010037a4",
+            "size": 22178205,
+            "url": "https://files.pythonhosted.org/packages/c2/3c/c5bd479784826bbbc69f713aae2bcfd5ef353ba4e5e0e661666938474535/mini_racer-0.14.1-py3-none-manylinux_2_27_x86_64.whl"
+          },
+          {
+            "filename": "mini_racer-0.14.1-py3-none-macosx_11_0_arm64.whl",
+            "sha256": "56cc6965a1665a50d8d613bc43aa83b4cec6b1f09acc69dc4c2845dacb201463",
+            "size": 18511166,
+            "url": "https://files.pythonhosted.org/packages/09/bf/ecaad0c208b9d8bd8f2141f7fa5e520b66915945a2ed56c520524df75fcb/mini_racer-0.14.1-py3-none-macosx_11_0_arm64.whl"
+          }
+        ]
+      },
+      "version": "0.14.1"
+    },
+    {
+      "distribution": "psycopg",
+      "filename": "psycopg-3.2.13-py3-none-any.whl",
+      "license": "LGPL-3.0-only",
+      "licenseExpression": null,
+      "licenseFilePaths": [
+        "psycopg-3.2.13.dist-info/licenses/LICENSE.txt"
+      ],
+      "licenseFiles": [
+        "LICENSE.txt"
+      ],
+      "requiresDist": [
+        "backports.zoneinfo>=0.2.0; python_version < \"3.9\"",
+        "typing-extensions>=4.6; python_version < \"3.13\"",
+        "tzdata; sys_platform == \"win32\"",
+        "psycopg-c==3.2.13; implementation_name != \"pypy\" and extra == \"c\"",
+        "psycopg-binary==3.2.13; implementation_name != \"pypy\" and extra == \"binary\"",
+        "psycopg-pool; extra == \"pool\"",
+        "anyio>=4.0; extra == \"test\"",
+        "mypy>=1.14; extra == \"test\"",
+        "pproxy>=2.7; extra == \"test\"",
+        "pytest>=6.2.5; extra == \"test\"",
+        "pytest-cov>=3.0; extra == \"test\"",
+        "pytest-randomly>=3.5; extra == \"test\"",
+        "ast-comments>=1.1.2; extra == \"dev\"",
+        "black>=24.1.0; extra == \"dev\"",
+        "codespell>=2.2; extra == \"dev\"",
+        "dnspython>=2.1; extra == \"dev\"",
+        "flake8>=4.0; extra == \"dev\"",
+        "isort[colors]>=6.0; extra == \"dev\"",
+        "isort-psycopg; extra == \"dev\"",
+        "mypy>=1.14; extra == \"dev\"",
+        "pre-commit>=4.0.1; extra == \"dev\"",
+        "types-setuptools>=57.4; extra == \"dev\"",
+        "types-shapely>=2.0; extra == \"dev\"",
+        "wheel>=0.37; extra == \"dev\"",
+        "Sphinx>=5.0; extra == \"docs\"",
+        "furo==2022.6.21; extra == \"docs\"",
+        "sphinx-autobuild>=2021.3.14; extra == \"docs\"",
+        "sphinx-autodoc-typehints>=1.12; extra == \"docs\""
+      ],
+      "sha256": "a481374514f2da627157f767a9336705ebefe93ea7a0522a6cbacba165da179a",
+      "size": 206797,
+      "source": {
+        "kind": "pypi-wheel",
+        "publisherMetadataSha256": "75bc1a7dcbd3138894e54a221dd00d0b3e0f2ecf7de59be2788d34749d320724",
+        "sourceArchives": [
+          {
+            "sha256": "309adaeda61d44556046ec9a83a93f42bbe5310120b1995f3af49ab6d9f13c1d",
+            "size": 160626,
+            "url": "https://files.pythonhosted.org/packages/44/05/d4a05988f15fcf90e0088c735b1f2fc04a30b7fc65461d6ec278f5f2f17a/psycopg-3.2.13.tar.gz"
+          }
+        ],
+        "url": "https://pypi.org/project/psycopg/3.2.13/",
+        "wheels": [
+          {
+            "filename": "psycopg-3.2.13-py3-none-any.whl",
+            "sha256": "a481374514f2da627157f767a9336705ebefe93ea7a0522a6cbacba165da179a",
+            "size": 206797,
+            "url": "https://files.pythonhosted.org/packages/a9/14/f2724bd1986158a348316e86fdd0837a838b14a711df3f00e47fba597447/psycopg-3.2.13-py3-none-any.whl"
+          }
+        ]
+      },
+      "version": "3.2.13"
+    },
+    {
+      "distribution": "psycopg-binary",
+      "filename": "psycopg_binary-3.2.13-cp311-cp311-macosx_11_0_arm64.whl",
+      "license": "LGPL-3.0-only",
+      "licenseExpression": null,
+      "licenseFilePaths": [
+        "psycopg_binary-3.2.13.dist-info/licenses/LICENSE.txt"
+      ],
+      "licenseFiles": [
+        "LICENSE.txt"
+      ],
+      "requiresDist": [],
+      "sha256": "8db77fac1dfe3f69c982db92a51fd78e1354fa8f523a6781a636123e5c7ffcde",
+      "size": 4077002,
+      "source": {
+        "kind": "pypi-wheel",
+        "publisherMetadataSha256": "c14e82693eba98c64c164b0a53f1466d8e4c1a44b360a159d0e4aabff8e02e56",
+        "sourceArchives": [],
+        "url": "https://pypi.org/project/psycopg-binary/3.2.13/",
+        "wheels": [
+          {
+            "filename": "psycopg_binary-3.2.13-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+            "sha256": "27150515de5f709e4142429db6fd36a1d01f0b8b17d915b5f7bb095364465398",
+            "size": 4421537,
+            "url": "https://files.pythonhosted.org/packages/c2/74/3702732d01639c97943d56ec26860357dfacda0b5a708e82e794d07f499c/psycopg_binary-3.2.13-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl"
+          },
+          {
+            "filename": "psycopg_binary-3.2.13-cp314-cp314-macosx_11_0_arm64.whl",
+            "sha256": "7561a71d764d6f74d66e8b7d844b0f27fa33de508f65c17b1d56a94c73644776",
+            "size": 4071631,
+            "url": "https://files.pythonhosted.org/packages/e0/2e/3b4afbd94d48df19c3931cedba464b109f89d81ac43178e6a3d654b4e8d5/psycopg_binary-3.2.13-cp314-cp314-macosx_11_0_arm64.whl"
+          },
+          {
+            "filename": "psycopg_binary-3.2.13-cp314-cp314-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+            "sha256": "c96cb5a27e68acac6d74b64fca38592a692de9c4b7827339190698d58027aa45",
+            "size": 4403046,
+            "url": "https://files.pythonhosted.org/packages/46/33/bed384665356bb9ba17dd8e104884d87cc2343d16dffdfd9aaa9a159bd4d/psycopg_binary-3.2.13-cp314-cp314-manylinux2014_x86_64.manylinux_2_17_x86_64.whl"
+          },
+          {
+            "filename": "psycopg_binary-3.2.13-cp311-cp311-macosx_11_0_arm64.whl",
+            "sha256": "8db77fac1dfe3f69c982db92a51fd78e1354fa8f523a6781a636123e5c7ffcde",
+            "size": 4077002,
+            "url": "https://files.pythonhosted.org/packages/07/87/857639681f5dfcd567aaf199fe4e5b026a105b0462a604f4fb7eda0735d8/psycopg_binary-3.2.13-cp311-cp311-macosx_11_0_arm64.whl"
+          }
+        ]
+      },
+      "version": "3.2.13"
+    },
+    {
+      "distribution": "psycopg-binary",
+      "filename": "psycopg_binary-3.2.13-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+      "license": "LGPL-3.0-only",
+      "licenseExpression": null,
+      "licenseFilePaths": [
+        "psycopg_binary-3.2.13.dist-info/licenses/LICENSE.txt"
+      ],
+      "licenseFiles": [
+        "LICENSE.txt"
+      ],
+      "requiresDist": [],
+      "sha256": "27150515de5f709e4142429db6fd36a1d01f0b8b17d915b5f7bb095364465398",
+      "size": 4421537,
+      "source": {
+        "kind": "pypi-wheel",
+        "publisherMetadataSha256": "c14e82693eba98c64c164b0a53f1466d8e4c1a44b360a159d0e4aabff8e02e56",
+        "sourceArchives": [],
+        "url": "https://pypi.org/project/psycopg-binary/3.2.13/",
+        "wheels": [
+          {
+            "filename": "psycopg_binary-3.2.13-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+            "sha256": "27150515de5f709e4142429db6fd36a1d01f0b8b17d915b5f7bb095364465398",
+            "size": 4421537,
+            "url": "https://files.pythonhosted.org/packages/c2/74/3702732d01639c97943d56ec26860357dfacda0b5a708e82e794d07f499c/psycopg_binary-3.2.13-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl"
+          },
+          {
+            "filename": "psycopg_binary-3.2.13-cp314-cp314-macosx_11_0_arm64.whl",
+            "sha256": "7561a71d764d6f74d66e8b7d844b0f27fa33de508f65c17b1d56a94c73644776",
+            "size": 4071631,
+            "url": "https://files.pythonhosted.org/packages/e0/2e/3b4afbd94d48df19c3931cedba464b109f89d81ac43178e6a3d654b4e8d5/psycopg_binary-3.2.13-cp314-cp314-macosx_11_0_arm64.whl"
+          },
+          {
+            "filename": "psycopg_binary-3.2.13-cp314-cp314-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+            "sha256": "c96cb5a27e68acac6d74b64fca38592a692de9c4b7827339190698d58027aa45",
+            "size": 4403046,
+            "url": "https://files.pythonhosted.org/packages/46/33/bed384665356bb9ba17dd8e104884d87cc2343d16dffdfd9aaa9a159bd4d/psycopg_binary-3.2.13-cp314-cp314-manylinux2014_x86_64.manylinux_2_17_x86_64.whl"
+          },
+          {
+            "filename": "psycopg_binary-3.2.13-cp311-cp311-macosx_11_0_arm64.whl",
+            "sha256": "8db77fac1dfe3f69c982db92a51fd78e1354fa8f523a6781a636123e5c7ffcde",
+            "size": 4077002,
+            "url": "https://files.pythonhosted.org/packages/07/87/857639681f5dfcd567aaf199fe4e5b026a105b0462a604f4fb7eda0735d8/psycopg_binary-3.2.13-cp311-cp311-macosx_11_0_arm64.whl"
+          }
+        ]
+      },
+      "version": "3.2.13"
+    },
+    {
+      "distribution": "psycopg-binary",
+      "filename": "psycopg_binary-3.2.13-cp314-cp314-macosx_11_0_arm64.whl",
+      "license": "LGPL-3.0-only",
+      "licenseExpression": null,
+      "licenseFilePaths": [
+        "psycopg_binary-3.2.13.dist-info/licenses/LICENSE.txt"
+      ],
+      "licenseFiles": [
+        "LICENSE.txt"
+      ],
+      "requiresDist": [],
+      "sha256": "7561a71d764d6f74d66e8b7d844b0f27fa33de508f65c17b1d56a94c73644776",
+      "size": 4071631,
+      "source": {
+        "kind": "pypi-wheel",
+        "publisherMetadataSha256": "c14e82693eba98c64c164b0a53f1466d8e4c1a44b360a159d0e4aabff8e02e56",
+        "sourceArchives": [],
+        "url": "https://pypi.org/project/psycopg-binary/3.2.13/",
+        "wheels": [
+          {
+            "filename": "psycopg_binary-3.2.13-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+            "sha256": "27150515de5f709e4142429db6fd36a1d01f0b8b17d915b5f7bb095364465398",
+            "size": 4421537,
+            "url": "https://files.pythonhosted.org/packages/c2/74/3702732d01639c97943d56ec26860357dfacda0b5a708e82e794d07f499c/psycopg_binary-3.2.13-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl"
+          },
+          {
+            "filename": "psycopg_binary-3.2.13-cp314-cp314-macosx_11_0_arm64.whl",
+            "sha256": "7561a71d764d6f74d66e8b7d844b0f27fa33de508f65c17b1d56a94c73644776",
+            "size": 4071631,
+            "url": "https://files.pythonhosted.org/packages/e0/2e/3b4afbd94d48df19c3931cedba464b109f89d81ac43178e6a3d654b4e8d5/psycopg_binary-3.2.13-cp314-cp314-macosx_11_0_arm64.whl"
+          },
+          {
+            "filename": "psycopg_binary-3.2.13-cp314-cp314-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+            "sha256": "c96cb5a27e68acac6d74b64fca38592a692de9c4b7827339190698d58027aa45",
+            "size": 4403046,
+            "url": "https://files.pythonhosted.org/packages/46/33/bed384665356bb9ba17dd8e104884d87cc2343d16dffdfd9aaa9a159bd4d/psycopg_binary-3.2.13-cp314-cp314-manylinux2014_x86_64.manylinux_2_17_x86_64.whl"
+          },
+          {
+            "filename": "psycopg_binary-3.2.13-cp311-cp311-macosx_11_0_arm64.whl",
+            "sha256": "8db77fac1dfe3f69c982db92a51fd78e1354fa8f523a6781a636123e5c7ffcde",
+            "size": 4077002,
+            "url": "https://files.pythonhosted.org/packages/07/87/857639681f5dfcd567aaf199fe4e5b026a105b0462a604f4fb7eda0735d8/psycopg_binary-3.2.13-cp311-cp311-macosx_11_0_arm64.whl"
+          }
+        ]
+      },
+      "version": "3.2.13"
+    },
+    {
+      "distribution": "psycopg-binary",
+      "filename": "psycopg_binary-3.2.13-cp314-cp314-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+      "license": "LGPL-3.0-only",
+      "licenseExpression": null,
+      "licenseFilePaths": [
+        "psycopg_binary-3.2.13.dist-info/licenses/LICENSE.txt"
+      ],
+      "licenseFiles": [
+        "LICENSE.txt"
+      ],
+      "requiresDist": [],
+      "sha256": "c96cb5a27e68acac6d74b64fca38592a692de9c4b7827339190698d58027aa45",
+      "size": 4403046,
+      "source": {
+        "kind": "pypi-wheel",
+        "publisherMetadataSha256": "c14e82693eba98c64c164b0a53f1466d8e4c1a44b360a159d0e4aabff8e02e56",
+        "sourceArchives": [],
+        "url": "https://pypi.org/project/psycopg-binary/3.2.13/",
+        "wheels": [
+          {
+            "filename": "psycopg_binary-3.2.13-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+            "sha256": "27150515de5f709e4142429db6fd36a1d01f0b8b17d915b5f7bb095364465398",
+            "size": 4421537,
+            "url": "https://files.pythonhosted.org/packages/c2/74/3702732d01639c97943d56ec26860357dfacda0b5a708e82e794d07f499c/psycopg_binary-3.2.13-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl"
+          },
+          {
+            "filename": "psycopg_binary-3.2.13-cp314-cp314-macosx_11_0_arm64.whl",
+            "sha256": "7561a71d764d6f74d66e8b7d844b0f27fa33de508f65c17b1d56a94c73644776",
+            "size": 4071631,
+            "url": "https://files.pythonhosted.org/packages/e0/2e/3b4afbd94d48df19c3931cedba464b109f89d81ac43178e6a3d654b4e8d5/psycopg_binary-3.2.13-cp314-cp314-macosx_11_0_arm64.whl"
+          },
+          {
+            "filename": "psycopg_binary-3.2.13-cp314-cp314-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+            "sha256": "c96cb5a27e68acac6d74b64fca38592a692de9c4b7827339190698d58027aa45",
+            "size": 4403046,
+            "url": "https://files.pythonhosted.org/packages/46/33/bed384665356bb9ba17dd8e104884d87cc2343d16dffdfd9aaa9a159bd4d/psycopg_binary-3.2.13-cp314-cp314-manylinux2014_x86_64.manylinux_2_17_x86_64.whl"
+          },
+          {
+            "filename": "psycopg_binary-3.2.13-cp311-cp311-macosx_11_0_arm64.whl",
+            "sha256": "8db77fac1dfe3f69c982db92a51fd78e1354fa8f523a6781a636123e5c7ffcde",
+            "size": 4077002,
+            "url": "https://files.pythonhosted.org/packages/07/87/857639681f5dfcd567aaf199fe4e5b026a105b0462a604f4fb7eda0735d8/psycopg_binary-3.2.13-cp311-cp311-macosx_11_0_arm64.whl"
+          }
+        ]
+      },
+      "version": "3.2.13"
+    },
+    {
+      "distribution": "pydantic",
+      "filename": "pydantic-2.14.1-py3-none-any.whl",
+      "license": null,
+      "licenseExpression": "MIT",
+      "licenseFilePaths": [
+        "pydantic-2.14.1.dist-info/licenses/LICENSE"
+      ],
+      "licenseFiles": [
+        "LICENSE"
+      ],
+      "requiresDist": [
+        "annotated-types>=0.6.0",
+        "pydantic-core==2.50.1",
+        "typing-extensions>=4.16.0",
+        "typing-inspection>=0.4.4",
+        "email-validator>=2.0.0; extra == 'email'",
+        "tzdata; (platform_system == 'Windows') and extra == 'timezone'"
+      ],
+      "sha256": "9195d967ec791692a04438115466764fb8b9a27b31f14a760437694f40d6b454",
+      "size": 488106,
+      "source": {
+        "kind": "pypi-wheel",
+        "publisherMetadataSha256": "7413703dd60983a01d25e54730f9153c4d7a83fc788c77955b5237269cf9f071",
+        "sourceArchives": [
+          {
+            "sha256": "94f478203dd03404682a1ada216965651dd74b1d2d5ffd62e00e0837caab5c26",
+            "size": 900362,
+            "url": "https://files.pythonhosted.org/packages/7c/0b/8e10b2e693af8ec54346a14caf36221334775975a747c9ceaa3f8371d96d/pydantic-2.14.1.tar.gz"
+          }
+        ],
+        "url": "https://pypi.org/project/pydantic/2.14.1/",
+        "wheels": [
+          {
+            "filename": "pydantic-2.14.1-py3-none-any.whl",
+            "sha256": "9195d967ec791692a04438115466764fb8b9a27b31f14a760437694f40d6b454",
+            "size": 488106,
+            "url": "https://files.pythonhosted.org/packages/35/ea/a56b9fe5066f3537b7882f77e9c5dfb26d8c2eefdaed9b5fc73d57b4dc22/pydantic-2.14.1-py3-none-any.whl"
+          }
+        ]
+      },
+      "version": "2.14.1"
+    },
+    {
+      "distribution": "pydantic-core",
+      "filename": "pydantic_core-2.50.1-cp311-cp311-macosx_11_0_arm64.whl",
+      "license": null,
+      "licenseExpression": "MIT",
+      "licenseFilePaths": [
+        "pydantic_core-2.50.1.dist-info/licenses/LICENSE"
+      ],
+      "licenseFiles": [
+        "LICENSE"
+      ],
+      "requiresDist": [
+        "typing-extensions>=4.16.0"
+      ],
+      "sha256": "b6d0c2183008c188e19f4906d426b293bdc4f67ab17df8e180fe16cda208fa71",
+      "size": 2045761,
+      "source": {
+        "kind": "pypi-wheel",
+        "publisherMetadataSha256": "e93d77eaf72dda287409887550bda890a4067311ea072bf9b274df9ce6d96804",
+        "sourceArchives": [
+          {
+            "sha256": "e50d7b94baac6c7d09927fa5ca5800a0c7ee5015c7fcff65beb3a1931b5a6e09",
+            "size": 513515,
+            "url": "https://files.pythonhosted.org/packages/a6/24/af4ec4be49fbc810f35b0bdcacc3d433b56bbfa469fd3bfd4ae116cd9bf1/pydantic_core-2.50.1.tar.gz"
+          }
+        ],
+        "url": "https://pypi.org/project/pydantic-core/2.50.1/",
+        "wheels": [
+          {
+            "filename": "pydantic_core-2.50.1-cp311-cp311-macosx_11_0_arm64.whl",
+            "sha256": "b6d0c2183008c188e19f4906d426b293bdc4f67ab17df8e180fe16cda208fa71",
+            "size": 2045761,
+            "url": "https://files.pythonhosted.org/packages/59/20/938ef7e0541af0a314e2f9d63848dbd1656ba2ebfe5ca0469f7ebee00d5e/pydantic_core-2.50.1-cp311-cp311-macosx_11_0_arm64.whl"
+          },
+          {
+            "filename": "pydantic_core-2.50.1-cp314-cp314-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+            "sha256": "42b54c2c90ad348b5e3a85e03e715d572c1fde357ef104cdfe3b03b697a404ea",
+            "size": 2159857,
+            "url": "https://files.pythonhosted.org/packages/45/35/38f6d6564fae57d9b12e5676dfa947e0e7d5c46dbeaa7eb3352261d6d299/pydantic_core-2.50.1-cp314-cp314-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
+          },
+          {
+            "filename": "pydantic_core-2.50.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+            "sha256": "8812592c85d0edf423f10eadcef42716d71e8219085ad9e85b775057b7306133",
+            "size": 2157623,
+            "url": "https://files.pythonhosted.org/packages/ed/60/7f2ae89c37e69a3dc0da9ff57b0388c285542c688d05f36767770429de85/pydantic_core-2.50.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
+          },
+          {
+            "filename": "pydantic_core-2.50.1-cp314-cp314-macosx_11_0_arm64.whl",
+            "sha256": "4df197990c15b5a37c5a277d131d9f2c67de6133f2e5dafd80d9bba4b99f46f9",
+            "size": 2023740,
+            "url": "https://files.pythonhosted.org/packages/94/40/15c06410c9b7b8da5805d27b64e09bd3f900e986728106db2689dbc51513/pydantic_core-2.50.1-cp314-cp314-macosx_11_0_arm64.whl"
+          }
+        ]
+      },
+      "version": "2.50.1"
+    },
+    {
+      "distribution": "pydantic-core",
+      "filename": "pydantic_core-2.50.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "license": null,
+      "licenseExpression": "MIT",
+      "licenseFilePaths": [
+        "pydantic_core-2.50.1.dist-info/licenses/LICENSE"
+      ],
+      "licenseFiles": [
+        "LICENSE"
+      ],
+      "requiresDist": [
+        "typing-extensions>=4.16.0"
+      ],
+      "sha256": "8812592c85d0edf423f10eadcef42716d71e8219085ad9e85b775057b7306133",
+      "size": 2157623,
+      "source": {
+        "kind": "pypi-wheel",
+        "publisherMetadataSha256": "e93d77eaf72dda287409887550bda890a4067311ea072bf9b274df9ce6d96804",
+        "sourceArchives": [
+          {
+            "sha256": "e50d7b94baac6c7d09927fa5ca5800a0c7ee5015c7fcff65beb3a1931b5a6e09",
+            "size": 513515,
+            "url": "https://files.pythonhosted.org/packages/a6/24/af4ec4be49fbc810f35b0bdcacc3d433b56bbfa469fd3bfd4ae116cd9bf1/pydantic_core-2.50.1.tar.gz"
+          }
+        ],
+        "url": "https://pypi.org/project/pydantic-core/2.50.1/",
+        "wheels": [
+          {
+            "filename": "pydantic_core-2.50.1-cp311-cp311-macosx_11_0_arm64.whl",
+            "sha256": "b6d0c2183008c188e19f4906d426b293bdc4f67ab17df8e180fe16cda208fa71",
+            "size": 2045761,
+            "url": "https://files.pythonhosted.org/packages/59/20/938ef7e0541af0a314e2f9d63848dbd1656ba2ebfe5ca0469f7ebee00d5e/pydantic_core-2.50.1-cp311-cp311-macosx_11_0_arm64.whl"
+          },
+          {
+            "filename": "pydantic_core-2.50.1-cp314-cp314-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+            "sha256": "42b54c2c90ad348b5e3a85e03e715d572c1fde357ef104cdfe3b03b697a404ea",
+            "size": 2159857,
+            "url": "https://files.pythonhosted.org/packages/45/35/38f6d6564fae57d9b12e5676dfa947e0e7d5c46dbeaa7eb3352261d6d299/pydantic_core-2.50.1-cp314-cp314-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
+          },
+          {
+            "filename": "pydantic_core-2.50.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+            "sha256": "8812592c85d0edf423f10eadcef42716d71e8219085ad9e85b775057b7306133",
+            "size": 2157623,
+            "url": "https://files.pythonhosted.org/packages/ed/60/7f2ae89c37e69a3dc0da9ff57b0388c285542c688d05f36767770429de85/pydantic_core-2.50.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
+          },
+          {
+            "filename": "pydantic_core-2.50.1-cp314-cp314-macosx_11_0_arm64.whl",
+            "sha256": "4df197990c15b5a37c5a277d131d9f2c67de6133f2e5dafd80d9bba4b99f46f9",
+            "size": 2023740,
+            "url": "https://files.pythonhosted.org/packages/94/40/15c06410c9b7b8da5805d27b64e09bd3f900e986728106db2689dbc51513/pydantic_core-2.50.1-cp314-cp314-macosx_11_0_arm64.whl"
+          }
+        ]
+      },
+      "version": "2.50.1"
+    },
+    {
+      "distribution": "pydantic-core",
+      "filename": "pydantic_core-2.50.1-cp314-cp314-macosx_11_0_arm64.whl",
+      "license": null,
+      "licenseExpression": "MIT",
+      "licenseFilePaths": [
+        "pydantic_core-2.50.1.dist-info/licenses/LICENSE"
+      ],
+      "licenseFiles": [
+        "LICENSE"
+      ],
+      "requiresDist": [
+        "typing-extensions>=4.16.0"
+      ],
+      "sha256": "4df197990c15b5a37c5a277d131d9f2c67de6133f2e5dafd80d9bba4b99f46f9",
+      "size": 2023740,
+      "source": {
+        "kind": "pypi-wheel",
+        "publisherMetadataSha256": "e93d77eaf72dda287409887550bda890a4067311ea072bf9b274df9ce6d96804",
+        "sourceArchives": [
+          {
+            "sha256": "e50d7b94baac6c7d09927fa5ca5800a0c7ee5015c7fcff65beb3a1931b5a6e09",
+            "size": 513515,
+            "url": "https://files.pythonhosted.org/packages/a6/24/af4ec4be49fbc810f35b0bdcacc3d433b56bbfa469fd3bfd4ae116cd9bf1/pydantic_core-2.50.1.tar.gz"
+          }
+        ],
+        "url": "https://pypi.org/project/pydantic-core/2.50.1/",
+        "wheels": [
+          {
+            "filename": "pydantic_core-2.50.1-cp311-cp311-macosx_11_0_arm64.whl",
+            "sha256": "b6d0c2183008c188e19f4906d426b293bdc4f67ab17df8e180fe16cda208fa71",
+            "size": 2045761,
+            "url": "https://files.pythonhosted.org/packages/59/20/938ef7e0541af0a314e2f9d63848dbd1656ba2ebfe5ca0469f7ebee00d5e/pydantic_core-2.50.1-cp311-cp311-macosx_11_0_arm64.whl"
+          },
+          {
+            "filename": "pydantic_core-2.50.1-cp314-cp314-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+            "sha256": "42b54c2c90ad348b5e3a85e03e715d572c1fde357ef104cdfe3b03b697a404ea",
+            "size": 2159857,
+            "url": "https://files.pythonhosted.org/packages/45/35/38f6d6564fae57d9b12e5676dfa947e0e7d5c46dbeaa7eb3352261d6d299/pydantic_core-2.50.1-cp314-cp314-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
+          },
+          {
+            "filename": "pydantic_core-2.50.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+            "sha256": "8812592c85d0edf423f10eadcef42716d71e8219085ad9e85b775057b7306133",
+            "size": 2157623,
+            "url": "https://files.pythonhosted.org/packages/ed/60/7f2ae89c37e69a3dc0da9ff57b0388c285542c688d05f36767770429de85/pydantic_core-2.50.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
+          },
+          {
+            "filename": "pydantic_core-2.50.1-cp314-cp314-macosx_11_0_arm64.whl",
+            "sha256": "4df197990c15b5a37c5a277d131d9f2c67de6133f2e5dafd80d9bba4b99f46f9",
+            "size": 2023740,
+            "url": "https://files.pythonhosted.org/packages/94/40/15c06410c9b7b8da5805d27b64e09bd3f900e986728106db2689dbc51513/pydantic_core-2.50.1-cp314-cp314-macosx_11_0_arm64.whl"
+          }
+        ]
+      },
+      "version": "2.50.1"
+    },
+    {
+      "distribution": "pydantic-core",
+      "filename": "pydantic_core-2.50.1-cp314-cp314-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "license": null,
+      "licenseExpression": "MIT",
+      "licenseFilePaths": [
+        "pydantic_core-2.50.1.dist-info/licenses/LICENSE"
+      ],
+      "licenseFiles": [
+        "LICENSE"
+      ],
+      "requiresDist": [
+        "typing-extensions>=4.16.0"
+      ],
+      "sha256": "42b54c2c90ad348b5e3a85e03e715d572c1fde357ef104cdfe3b03b697a404ea",
+      "size": 2159857,
+      "source": {
+        "kind": "pypi-wheel",
+        "publisherMetadataSha256": "e93d77eaf72dda287409887550bda890a4067311ea072bf9b274df9ce6d96804",
+        "sourceArchives": [
+          {
+            "sha256": "e50d7b94baac6c7d09927fa5ca5800a0c7ee5015c7fcff65beb3a1931b5a6e09",
+            "size": 513515,
+            "url": "https://files.pythonhosted.org/packages/a6/24/af4ec4be49fbc810f35b0bdcacc3d433b56bbfa469fd3bfd4ae116cd9bf1/pydantic_core-2.50.1.tar.gz"
+          }
+        ],
+        "url": "https://pypi.org/project/pydantic-core/2.50.1/",
+        "wheels": [
+          {
+            "filename": "pydantic_core-2.50.1-cp311-cp311-macosx_11_0_arm64.whl",
+            "sha256": "b6d0c2183008c188e19f4906d426b293bdc4f67ab17df8e180fe16cda208fa71",
+            "size": 2045761,
+            "url": "https://files.pythonhosted.org/packages/59/20/938ef7e0541af0a314e2f9d63848dbd1656ba2ebfe5ca0469f7ebee00d5e/pydantic_core-2.50.1-cp311-cp311-macosx_11_0_arm64.whl"
+          },
+          {
+            "filename": "pydantic_core-2.50.1-cp314-cp314-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+            "sha256": "42b54c2c90ad348b5e3a85e03e715d572c1fde357ef104cdfe3b03b697a404ea",
+            "size": 2159857,
+            "url": "https://files.pythonhosted.org/packages/45/35/38f6d6564fae57d9b12e5676dfa947e0e7d5c46dbeaa7eb3352261d6d299/pydantic_core-2.50.1-cp314-cp314-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
+          },
+          {
+            "filename": "pydantic_core-2.50.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+            "sha256": "8812592c85d0edf423f10eadcef42716d71e8219085ad9e85b775057b7306133",
+            "size": 2157623,
+            "url": "https://files.pythonhosted.org/packages/ed/60/7f2ae89c37e69a3dc0da9ff57b0388c285542c688d05f36767770429de85/pydantic_core-2.50.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
+          },
+          {
+            "filename": "pydantic_core-2.50.1-cp314-cp314-macosx_11_0_arm64.whl",
+            "sha256": "4df197990c15b5a37c5a277d131d9f2c67de6133f2e5dafd80d9bba4b99f46f9",
+            "size": 2023740,
+            "url": "https://files.pythonhosted.org/packages/94/40/15c06410c9b7b8da5805d27b64e09bd3f900e986728106db2689dbc51513/pydantic_core-2.50.1-cp314-cp314-macosx_11_0_arm64.whl"
+          }
+        ]
+      },
+      "version": "2.50.1"
+    },
+    {
+      "distribution": "referencing",
+      "filename": "referencing-0.37.0-py3-none-any.whl",
+      "license": null,
+      "licenseExpression": "MIT",
+      "licenseFilePaths": [
+        "referencing-0.37.0.dist-info/licenses/COPYING"
+      ],
+      "licenseFiles": [
+        "COPYING"
+      ],
+      "requiresDist": [
+        "attrs>=22.2.0",
+        "rpds-py>=0.7.0",
+        "typing-extensions>=4.4.0; python_version < '3.13'"
+      ],
+      "sha256": "381329a9f99628c9069361716891d34ad94af76e461dcb0335825aecc7692231",
+      "size": 26766,
+      "source": {
+        "kind": "pypi-wheel",
+        "publisherMetadataSha256": "a67968d8e03aa45e650fc2ff0d07796676db1a7841ce8e810bf2dba5af689464",
+        "sourceArchives": [
+          {
+            "sha256": "44aefc3142c5b842538163acb373e24cce6632bd54bdb01b21ad5863489f50d8",
+            "size": 78036,
+            "url": "https://files.pythonhosted.org/packages/22/f5/df4e9027acead3ecc63e50fe1e36aca1523e1719559c499951bb4b53188f/referencing-0.37.0.tar.gz"
+          }
+        ],
+        "url": "https://pypi.org/project/referencing/0.37.0/",
+        "wheels": [
+          {
+            "filename": "referencing-0.37.0-py3-none-any.whl",
+            "sha256": "381329a9f99628c9069361716891d34ad94af76e461dcb0335825aecc7692231",
+            "size": 26766,
+            "url": "https://files.pythonhosted.org/packages/2c/58/ca301544e1fa93ed4f80d724bf5b194f6e4b945841c5bfd555878eea9fcb/referencing-0.37.0-py3-none-any.whl"
+          }
+        ]
+      },
+      "version": "0.37.0"
+    },
+    {
+      "distribution": "rpds-py",
+      "filename": "rpds_py-2026.9.1-cp311-cp311-macosx_11_0_arm64.whl",
+      "license": null,
+      "licenseExpression": "MIT",
+      "licenseFilePaths": [
+        "rpds_py-2026.9.1.dist-info/licenses/LICENSE"
+      ],
+      "licenseFiles": [
+        "LICENSE"
+      ],
+      "requiresDist": [],
+      "sha256": "3231c4c0e521dafa5be0c9f114ee2c2ad46650836f2d72caa86801950c3e7044",
+      "size": 346770,
+      "source": {
+        "kind": "pypi-wheel",
+        "publisherMetadataSha256": "93808b9ff27aabe26d9a4f03b28422d1d05c3fb8716d88f3826e7ddf4b0b258b",
+        "sourceArchives": [
+          {
+            "sha256": "4793ef7f78268b124b73fa933440f01d258bbae01de9fa53e9080c9ab0425a12",
+            "size": 63948,
+            "url": "https://files.pythonhosted.org/packages/42/68/3bd46b8a5e01d3c2ebdf9c5e9497912e3fe0cde02bac21a7130ca866e403/rpds_py-2026.9.1.tar.gz"
+          }
+        ],
+        "url": "https://pypi.org/project/rpds-py/2026.9.1/",
+        "wheels": [
+          {
+            "filename": "rpds_py-2026.9.1-cp314-cp314-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+            "sha256": "eac2f5dbafd585dfe31f86a23ebf0d3ba480a9d49ebc87947267b5608d4ea0cd",
+            "size": 371623,
+            "url": "https://files.pythonhosted.org/packages/22/9d/d08a1128ab199b2f0cf25bfeb0639bd05119fff4b7c47bec24ef9a8ec23f/rpds_py-2026.9.1-cp314-cp314-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
+          },
+          {
+            "filename": "rpds_py-2026.9.1-cp311-cp311-macosx_11_0_arm64.whl",
+            "sha256": "3231c4c0e521dafa5be0c9f114ee2c2ad46650836f2d72caa86801950c3e7044",
+            "size": 346770,
+            "url": "https://files.pythonhosted.org/packages/9e/b2/632c3d034961149eff606e3e357547620a9ab37b849ae5815f67838753fd/rpds_py-2026.9.1-cp311-cp311-macosx_11_0_arm64.whl"
+          },
+          {
+            "filename": "rpds_py-2026.9.1-cp314-cp314-macosx_11_0_arm64.whl",
+            "sha256": "3f0e9ac28fc067d4d34b88ae43c48e9489455c97fee9633d851f7eeed5a05d35",
+            "size": 341878,
+            "url": "https://files.pythonhosted.org/packages/04/37/b751de2b59b0197a1d92a5dd491de88e8a5e928c2e6562581974f1e85263/rpds_py-2026.9.1-cp314-cp314-macosx_11_0_arm64.whl"
+          },
+          {
+            "filename": "rpds_py-2026.9.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+            "sha256": "136a1c3fe4402b7008bc81cb62ee538481795b61a7e83df88dff3b3f02b726ff",
+            "size": 375426,
+            "url": "https://files.pythonhosted.org/packages/2d/5c/aac3b960fd55d37b49f77c0eebbe043eaf36762ebd48e7b46951e59c1c05/rpds_py-2026.9.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
+          }
+        ]
+      },
+      "version": "2026.9.1"
+    },
+    {
+      "distribution": "rpds-py",
+      "filename": "rpds_py-2026.9.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "license": null,
+      "licenseExpression": "MIT",
+      "licenseFilePaths": [
+        "rpds_py-2026.9.1.dist-info/licenses/LICENSE"
+      ],
+      "licenseFiles": [
+        "LICENSE"
+      ],
+      "requiresDist": [],
+      "sha256": "136a1c3fe4402b7008bc81cb62ee538481795b61a7e83df88dff3b3f02b726ff",
+      "size": 375426,
+      "source": {
+        "kind": "pypi-wheel",
+        "publisherMetadataSha256": "93808b9ff27aabe26d9a4f03b28422d1d05c3fb8716d88f3826e7ddf4b0b258b",
+        "sourceArchives": [
+          {
+            "sha256": "4793ef7f78268b124b73fa933440f01d258bbae01de9fa53e9080c9ab0425a12",
+            "size": 63948,
+            "url": "https://files.pythonhosted.org/packages/42/68/3bd46b8a5e01d3c2ebdf9c5e9497912e3fe0cde02bac21a7130ca866e403/rpds_py-2026.9.1.tar.gz"
+          }
+        ],
+        "url": "https://pypi.org/project/rpds-py/2026.9.1/",
+        "wheels": [
+          {
+            "filename": "rpds_py-2026.9.1-cp314-cp314-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+            "sha256": "eac2f5dbafd585dfe31f86a23ebf0d3ba480a9d49ebc87947267b5608d4ea0cd",
+            "size": 371623,
+            "url": "https://files.pythonhosted.org/packages/22/9d/d08a1128ab199b2f0cf25bfeb0639bd05119fff4b7c47bec24ef9a8ec23f/rpds_py-2026.9.1-cp314-cp314-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
+          },
+          {
+            "filename": "rpds_py-2026.9.1-cp311-cp311-macosx_11_0_arm64.whl",
+            "sha256": "3231c4c0e521dafa5be0c9f114ee2c2ad46650836f2d72caa86801950c3e7044",
+            "size": 346770,
+            "url": "https://files.pythonhosted.org/packages/9e/b2/632c3d034961149eff606e3e357547620a9ab37b849ae5815f67838753fd/rpds_py-2026.9.1-cp311-cp311-macosx_11_0_arm64.whl"
+          },
+          {
+            "filename": "rpds_py-2026.9.1-cp314-cp314-macosx_11_0_arm64.whl",
+            "sha256": "3f0e9ac28fc067d4d34b88ae43c48e9489455c97fee9633d851f7eeed5a05d35",
+            "size": 341878,
+            "url": "https://files.pythonhosted.org/packages/04/37/b751de2b59b0197a1d92a5dd491de88e8a5e928c2e6562581974f1e85263/rpds_py-2026.9.1-cp314-cp314-macosx_11_0_arm64.whl"
+          },
+          {
+            "filename": "rpds_py-2026.9.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+            "sha256": "136a1c3fe4402b7008bc81cb62ee538481795b61a7e83df88dff3b3f02b726ff",
+            "size": 375426,
+            "url": "https://files.pythonhosted.org/packages/2d/5c/aac3b960fd55d37b49f77c0eebbe043eaf36762ebd48e7b46951e59c1c05/rpds_py-2026.9.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
+          }
+        ]
+      },
+      "version": "2026.9.1"
+    },
+    {
+      "distribution": "rpds-py",
+      "filename": "rpds_py-2026.9.1-cp314-cp314-macosx_11_0_arm64.whl",
+      "license": null,
+      "licenseExpression": "MIT",
+      "licenseFilePaths": [
+        "rpds_py-2026.9.1.dist-info/licenses/LICENSE"
+      ],
+      "licenseFiles": [
+        "LICENSE"
+      ],
+      "requiresDist": [],
+      "sha256": "3f0e9ac28fc067d4d34b88ae43c48e9489455c97fee9633d851f7eeed5a05d35",
+      "size": 341878,
+      "source": {
+        "kind": "pypi-wheel",
+        "publisherMetadataSha256": "93808b9ff27aabe26d9a4f03b28422d1d05c3fb8716d88f3826e7ddf4b0b258b",
+        "sourceArchives": [
+          {
+            "sha256": "4793ef7f78268b124b73fa933440f01d258bbae01de9fa53e9080c9ab0425a12",
+            "size": 63948,
+            "url": "https://files.pythonhosted.org/packages/42/68/3bd46b8a5e01d3c2ebdf9c5e9497912e3fe0cde02bac21a7130ca866e403/rpds_py-2026.9.1.tar.gz"
+          }
+        ],
+        "url": "https://pypi.org/project/rpds-py/2026.9.1/",
+        "wheels": [
+          {
+            "filename": "rpds_py-2026.9.1-cp314-cp314-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+            "sha256": "eac2f5dbafd585dfe31f86a23ebf0d3ba480a9d49ebc87947267b5608d4ea0cd",
+            "size": 371623,
+            "url": "https://files.pythonhosted.org/packages/22/9d/d08a1128ab199b2f0cf25bfeb0639bd05119fff4b7c47bec24ef9a8ec23f/rpds_py-2026.9.1-cp314-cp314-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
+          },
+          {
+            "filename": "rpds_py-2026.9.1-cp311-cp311-macosx_11_0_arm64.whl",
+            "sha256": "3231c4c0e521dafa5be0c9f114ee2c2ad46650836f2d72caa86801950c3e7044",
+            "size": 346770,
+            "url": "https://files.pythonhosted.org/packages/9e/b2/632c3d034961149eff606e3e357547620a9ab37b849ae5815f67838753fd/rpds_py-2026.9.1-cp311-cp311-macosx_11_0_arm64.whl"
+          },
+          {
+            "filename": "rpds_py-2026.9.1-cp314-cp314-macosx_11_0_arm64.whl",
+            "sha256": "3f0e9ac28fc067d4d34b88ae43c48e9489455c97fee9633d851f7eeed5a05d35",
+            "size": 341878,
+            "url": "https://files.pythonhosted.org/packages/04/37/b751de2b59b0197a1d92a5dd491de88e8a5e928c2e6562581974f1e85263/rpds_py-2026.9.1-cp314-cp314-macosx_11_0_arm64.whl"
+          },
+          {
+            "filename": "rpds_py-2026.9.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+            "sha256": "136a1c3fe4402b7008bc81cb62ee538481795b61a7e83df88dff3b3f02b726ff",
+            "size": 375426,
+            "url": "https://files.pythonhosted.org/packages/2d/5c/aac3b960fd55d37b49f77c0eebbe043eaf36762ebd48e7b46951e59c1c05/rpds_py-2026.9.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
+          }
+        ]
+      },
+      "version": "2026.9.1"
+    },
+    {
+      "distribution": "rpds-py",
+      "filename": "rpds_py-2026.9.1-cp314-cp314-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "license": null,
+      "licenseExpression": "MIT",
+      "licenseFilePaths": [
+        "rpds_py-2026.9.1.dist-info/licenses/LICENSE"
+      ],
+      "licenseFiles": [
+        "LICENSE"
+      ],
+      "requiresDist": [],
+      "sha256": "eac2f5dbafd585dfe31f86a23ebf0d3ba480a9d49ebc87947267b5608d4ea0cd",
+      "size": 371623,
+      "source": {
+        "kind": "pypi-wheel",
+        "publisherMetadataSha256": "93808b9ff27aabe26d9a4f03b28422d1d05c3fb8716d88f3826e7ddf4b0b258b",
+        "sourceArchives": [
+          {
+            "sha256": "4793ef7f78268b124b73fa933440f01d258bbae01de9fa53e9080c9ab0425a12",
+            "size": 63948,
+            "url": "https://files.pythonhosted.org/packages/42/68/3bd46b8a5e01d3c2ebdf9c5e9497912e3fe0cde02bac21a7130ca866e403/rpds_py-2026.9.1.tar.gz"
+          }
+        ],
+        "url": "https://pypi.org/project/rpds-py/2026.9.1/",
+        "wheels": [
+          {
+            "filename": "rpds_py-2026.9.1-cp314-cp314-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+            "sha256": "eac2f5dbafd585dfe31f86a23ebf0d3ba480a9d49ebc87947267b5608d4ea0cd",
+            "size": 371623,
+            "url": "https://files.pythonhosted.org/packages/22/9d/d08a1128ab199b2f0cf25bfeb0639bd05119fff4b7c47bec24ef9a8ec23f/rpds_py-2026.9.1-cp314-cp314-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
+          },
+          {
+            "filename": "rpds_py-2026.9.1-cp311-cp311-macosx_11_0_arm64.whl",
+            "sha256": "3231c4c0e521dafa5be0c9f114ee2c2ad46650836f2d72caa86801950c3e7044",
+            "size": 346770,
+            "url": "https://files.pythonhosted.org/packages/9e/b2/632c3d034961149eff606e3e357547620a9ab37b849ae5815f67838753fd/rpds_py-2026.9.1-cp311-cp311-macosx_11_0_arm64.whl"
+          },
+          {
+            "filename": "rpds_py-2026.9.1-cp314-cp314-macosx_11_0_arm64.whl",
+            "sha256": "3f0e9ac28fc067d4d34b88ae43c48e9489455c97fee9633d851f7eeed5a05d35",
+            "size": 341878,
+            "url": "https://files.pythonhosted.org/packages/04/37/b751de2b59b0197a1d92a5dd491de88e8a5e928c2e6562581974f1e85263/rpds_py-2026.9.1-cp314-cp314-macosx_11_0_arm64.whl"
+          },
+          {
+            "filename": "rpds_py-2026.9.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+            "sha256": "136a1c3fe4402b7008bc81cb62ee538481795b61a7e83df88dff3b3f02b726ff",
+            "size": 375426,
+            "url": "https://files.pythonhosted.org/packages/2d/5c/aac3b960fd55d37b49f77c0eebbe043eaf36762ebd48e7b46951e59c1c05/rpds_py-2026.9.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
+          }
+        ]
+      },
+      "version": "2026.9.1"
+    },
+    {
+      "distribution": "ruamel-yaml",
+      "filename": "ruamel_yaml-0.19.1-py3-none-any.whl",
+      "license": "MIT",
+      "licenseExpression": null,
+      "licenseFilePaths": [
+        "ruamel_yaml-0.19.1.dist-info/licenses/LICENSE"
+      ],
+      "licenseFiles": [
+        "LICENSE"
+      ],
+      "requiresDist": [
+        "ruamel.yaml.clib; platform_python_implementation == \"CPython\" and extra == \"oldlibyaml\"",
+        "ruamel.yaml.clibz>=0.3.7; platform_python_implementation == \"CPython\" and extra == \"libyaml\"",
+        "ruamel.yaml.jinja2>=0.2; extra == \"jinja2\"",
+        "ryd; extra == \"docs\"",
+        "mercurial>5.7; extra == \"docs\""
+      ],
+      "sha256": "27592957fedf6e0b62f281e96effd28043345e0e66001f97683aa9a40c667c93",
+      "size": 118102,
+      "source": {
+        "kind": "pypi-wheel",
+        "publisherMetadataSha256": "0360222b1c2f139b7f098a4037384375c6c4cd56360188a0da271c2d3687eacf",
+        "sourceArchives": [
+          {
+            "sha256": "53eb66cd27849eff968ebf8f0bf61f46cdac2da1d1f3576dd4ccee9b25c31993",
+            "size": 142709,
+            "url": "https://files.pythonhosted.org/packages/c7/3b/ebda527b56beb90cb7652cb1c7e4f91f48649fbcd8d2eb2fb6e77cd3329b/ruamel_yaml-0.19.1.tar.gz"
+          }
+        ],
+        "url": "https://pypi.org/project/ruamel.yaml/0.19.1/",
+        "wheels": [
+          {
+            "filename": "ruamel_yaml-0.19.1-py3-none-any.whl",
+            "sha256": "27592957fedf6e0b62f281e96effd28043345e0e66001f97683aa9a40c667c93",
+            "size": 118102,
+            "url": "https://files.pythonhosted.org/packages/b8/0c/51f6841f1d84f404f92463fc2b1ba0da357ca1e3db6b7fbda26956c3b82a/ruamel_yaml-0.19.1-py3-none-any.whl"
+          }
+        ]
+      },
+      "version": "0.19.1"
+    },
+    {
+      "distribution": "typing-extensions",
+      "filename": "typing_extensions-4.16.0-py3-none-any.whl",
+      "license": null,
+      "licenseExpression": "PSF-2.0",
+      "licenseFilePaths": [
+        "typing_extensions-4.16.0.dist-info/licenses/LICENSE"
+      ],
+      "licenseFiles": [
+        "LICENSE"
+      ],
+      "requiresDist": [],
+      "sha256": "481caa481374e813c1b176ada14e97f1f67a4539ce9cfeb3f350d78d6370c2e8",
+      "size": 45571,
+      "source": {
+        "kind": "pypi-wheel",
+        "publisherMetadataSha256": "2140da00d62dde967f52d0be0ae28444f1d6a3fe603f52c83c23988c32122d5a",
+        "sourceArchives": [
+          {
+            "sha256": "dc983d19a509c94dba722ee6abd33940f7c05a89e243c47e907eb4db6f1a43e5",
+            "size": 113555,
+            "url": "https://files.pythonhosted.org/packages/f6/cc/6253133b5bb138fc3306cebfbda2c520f545d36b5be2c7255cc528bb45d6/typing_extensions-4.16.0.tar.gz"
+          }
+        ],
+        "url": "https://pypi.org/project/typing-extensions/4.16.0/",
+        "wheels": [
+          {
+            "filename": "typing_extensions-4.16.0-py3-none-any.whl",
+            "sha256": "481caa481374e813c1b176ada14e97f1f67a4539ce9cfeb3f350d78d6370c2e8",
+            "size": 45571,
+            "url": "https://files.pythonhosted.org/packages/49/d3/b8441a820a491ddfc024b0b0cf0393375b75ea13866d9c66727e54c2fc80/typing_extensions-4.16.0-py3-none-any.whl"
+          }
+        ]
+      },
+      "version": "4.16.0"
+    },
+    {
+      "distribution": "typing-inspection",
+      "filename": "typing_inspection-0.4.4-py3-none-any.whl",
+      "license": null,
+      "licenseExpression": "MIT",
+      "licenseFilePaths": [
+        "typing_inspection-0.4.4.dist-info/licenses/LICENSE"
+      ],
+      "licenseFiles": [
+        "LICENSE"
+      ],
+      "requiresDist": [
+        "typing-extensions>=4.15.0"
+      ],
+      "sha256": "65b8397ba37ccbce054456aaccddfc91e6e3083c92824df348d96ca832f3f147",
+      "size": 14750,
+      "source": {
+        "kind": "pypi-wheel",
+        "publisherMetadataSha256": "0605416f2f37f2df04e45360cf5ce4ca5eeca6d414bb6ddb1ec5a9893c62ac30",
+        "sourceArchives": [
+          {
+            "sha256": "547274fa6b0a561ccf549cc9524b999a578e737d015d8709d021f9d0d13bea47",
+            "size": 76928,
+            "url": "https://files.pythonhosted.org/packages/a3/26/b09b8010994eccc3c09092e6b34058f36a460eea2d4c3e8b910c695975a0/typing_inspection-0.4.4.tar.gz"
+          }
+        ],
+        "url": "https://pypi.org/project/typing-inspection/0.4.4/",
+        "wheels": [
+          {
+            "filename": "typing_inspection-0.4.4-py3-none-any.whl",
+            "sha256": "65b8397ba37ccbce054456aaccddfc91e6e3083c92824df348d96ca832f3f147",
+            "size": 14750,
+            "url": "https://files.pythonhosted.org/packages/67/81/4add07e5172b7ac40d8ed5ff580409a7801a4fe26d529bdd915401dabfbe/typing_inspection-0.4.4-py3-none-any.whl"
+          }
+        ]
+      },
+      "version": "0.4.4"
+    },
+    {
+      "distribution": "umf-access",
+      "filename": "umf_access-0.1.0.dev7-py3-none-any.whl",
+      "license": null,
+      "licenseExpression": "MIT OR Apache-2.0",
+      "licenseFilePaths": [
+        "umf_access-0.1.0.dev7.dist-info/licenses/LICENSE-APACHE",
+        "umf_access-0.1.0.dev7.dist-info/licenses/LICENSE-MIT",
+        "umf_access-0.1.0.dev7.dist-info/licenses/LICENSE.md"
+      ],
+      "licenseFiles": [
+        "LICENSE-APACHE",
+        "LICENSE-MIT",
+        "LICENSE.md"
+      ],
+      "requiresDist": [
+        "pydantic<3,>=2.13",
+        "typing-extensions<5,>=4.16",
+        "pglast==7.20; extra == 'sql-containment'"
+      ],
+      "sha256": "74af2b9d896895fc0af29bf22ee7e00469fbce6070f1d7f433d35b824eeb5d30",
+      "size": 336886,
+      "source": {
+        "assets": {
+          "umf_access-0.1.0.dev7-py3-none-any.whl": "74af2b9d896895fc0af29bf22ee7e00469fbce6070f1d7f433d35b824eeb5d30",
+          "umf_access-0.1.0.dev7.tar.gz": "f785b9c2abd1047f7eec872032e52927b60e2f09dbc5ebae7533df3860c05677"
+        },
+        "commit": "199d66a1ec66d184d867c75d75777fdc607ddf8e",
+        "kind": "repository-wheel",
+        "path": "python/umf_access"
+      },
+      "version": "0.1.0.dev7"
+    },
+    {
+      "distribution": "umf-codegen",
+      "filename": "umf_codegen-0.1.0a4-py3-none-any.whl",
+      "license": null,
+      "licenseExpression": "MIT OR Apache-2.0",
+      "licenseFilePaths": [
+        "umf_codegen-0.1.0a4.dist-info/licenses/LICENSE-APACHE",
+        "umf_codegen-0.1.0a4.dist-info/licenses/LICENSE-MIT",
+        "umf_codegen-0.1.0a4.dist-info/licenses/LICENSE.md"
+      ],
+      "licenseFiles": [
+        "LICENSE-APACHE",
+        "LICENSE-MIT",
+        "LICENSE.md"
+      ],
+      "requiresDist": [
+        "mini-racer==0.14.1"
+      ],
+      "sha256": "88d0e08079808052242f5df2a7ccbef49bc8c0daf0b7fa9482098474f9b9bded",
+      "size": 218311,
+      "source": {
+        "assets": {
+          "umf_codegen-0.1.0a4-py3-none-any.whl": "88d0e08079808052242f5df2a7ccbef49bc8c0daf0b7fa9482098474f9b9bded",
+          "umf_codegen-0.1.0a4.tar.gz": "b36309cded7af4d9e120ea4f57c02ea22addb021e9e543cffc78555f9e115071"
+        },
+        "commit": "199d66a1ec66d184d867c75d75777fdc607ddf8e",
+        "kind": "repository-wheel",
+        "path": "python/umf_codegen"
+      },
+      "version": "0.1.0a4"
+    },
+    {
+      "distribution": "umf-core",
+      "filename": "umf_core-0.10.0-py3-none-any.whl",
+      "license": null,
+      "licenseExpression": "MIT OR Apache-2.0",
+      "licenseFilePaths": [
+        "umf_core-0.10.0.dist-info/licenses/LICENSE-APACHE",
+        "umf_core-0.10.0.dist-info/licenses/LICENSE-MIT",
+        "umf_core-0.10.0.dist-info/licenses/LICENSE.md"
+      ],
+      "licenseFiles": [
+        "LICENSE-APACHE",
+        "LICENSE-MIT",
+        "LICENSE.md"
+      ],
+      "requiresDist": [
+        "jsonschema<5,>=4.25",
+        "pydantic<3,>=2.11",
+        "ruamel-yaml<1,>=0.18"
+      ],
+      "sha256": "49633924b45a3c8499d4fcc1a24c30d5a8fcb34d974ab019bbda987cb47da0f9",
+      "size": 71258,
+      "source": {
+        "assets": {
+          "umf_core-0.10.0-py3-none-any.whl": "49633924b45a3c8499d4fcc1a24c30d5a8fcb34d974ab019bbda987cb47da0f9"
+        },
+        "kind": "immutable-release-wheel",
+        "release": "umf-core 0.10.0"
+      },
+      "version": "0.10.0"
+    },
+    {
+      "distribution": "weft-sql",
+      "filename": "weft_sql-0.4.49-cp39-abi3-macosx_11_0_arm64.whl",
+      "license": null,
+      "licenseExpression": "MIT OR Apache-2.0",
+      "licenseFilePaths": [
+        "weft_sql-0.4.49.dist-info/licenses/LICENSE.md",
+        "weft_sql-0.4.49.dist-info/licenses/LICENSE-MIT",
+        "weft_sql-0.4.49.dist-info/licenses/LICENSE-APACHE",
+        "weft_sql-0.4.49.dist-info/licenses/THIRD-PARTY-LICENSES.txt"
+      ],
+      "licenseFiles": [
+        "LICENSE.md",
+        "LICENSE-MIT",
+        "LICENSE-APACHE",
+        "THIRD-PARTY-LICENSES.txt"
+      ],
+      "requiresDist": [],
+      "sha256": "695e12867dfcffedb0e4bde7fa571835ebd43fd1c06b0d775b1abecb45ffa117",
+      "size": 10256657,
+      "source": {
+        "assets": {
+          "weft_sql-0.4.49-cp39-abi3-macosx_11_0_arm64.whl": "695e12867dfcffedb0e4bde7fa571835ebd43fd1c06b0d775b1abecb45ffa117",
+          "weft_sql-0.4.49-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl": "8ca1625249c1d3bed20864dfd71481d8b956b3901ffdc619fc3ec4a1a473be9c"
+        },
+        "kind": "immutable-release-wheel",
+        "release": "weft-sql 0.4.49"
+      },
+      "version": "0.4.49"
+    },
+    {
+      "distribution": "weft-sql",
+      "filename": "weft_sql-0.4.49-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "license": null,
+      "licenseExpression": "MIT OR Apache-2.0",
+      "licenseFilePaths": [
+        "weft_sql-0.4.49.dist-info/licenses/LICENSE.md",
+        "weft_sql-0.4.49.dist-info/licenses/LICENSE-MIT",
+        "weft_sql-0.4.49.dist-info/licenses/LICENSE-APACHE",
+        "weft_sql-0.4.49.dist-info/licenses/THIRD-PARTY-LICENSES.txt"
+      ],
+      "licenseFiles": [
+        "LICENSE.md",
+        "LICENSE-MIT",
+        "LICENSE-APACHE",
+        "THIRD-PARTY-LICENSES.txt"
+      ],
+      "requiresDist": [],
+      "sha256": "8ca1625249c1d3bed20864dfd71481d8b956b3901ffdc619fc3ec4a1a473be9c",
+      "size": 13305257,
+      "source": {
+        "assets": {
+          "weft_sql-0.4.49-cp39-abi3-macosx_11_0_arm64.whl": "695e12867dfcffedb0e4bde7fa571835ebd43fd1c06b0d775b1abecb45ffa117",
+          "weft_sql-0.4.49-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl": "8ca1625249c1d3bed20864dfd71481d8b956b3901ffdc619fc3ec4a1a473be9c"
+        },
+        "kind": "immutable-release-wheel",
+        "release": "weft-sql 0.4.49"
+      },
+      "version": "0.4.49"
+    }
+  ]
+}

@@ -78,7 +78,8 @@ def _table_acl(connection: Any, source: dict[str, Any], table: dict[str, Any]) -
 def verify_native_privileges(connection: Any, bundle: dict[str, object], *,
                              person_roles: tuple[str, ...],
                              statement_timeout_ms: int = 30_000,
-                             lock_timeout_ms: int = 5_000) -> dict[str, object]:
+                             lock_timeout_ms: int = 5_000,
+                             _approval_profile: dict[str, object] | None = None) -> dict[str, object]:
     """Verify source ACLs/selected roles; never admit operations or repair privileges.
 
     Root plugin roles have no data/routine authority outside the private schema.
@@ -127,6 +128,13 @@ AND c.relkind NOT IN ('i','I') ORDER BY c.relname""",(schema_id,))
             if not _verify_head_view(connection,source):
                 raise CatalogError('head-view-missing')
             expected_inventory.append((HEAD,))
+        if _approval_profile is not None:
+            from .approval import APPROVAL_PROFILE, _verify_approval_relation
+
+            if _approval_profile != APPROVAL_PROFILE:
+                raise CatalogError('approval-catalog-mismatch')
+            if _verify_approval_relation(connection,source):
+                expected_inventory.append((APPROVAL_PROFILE['relation'],))
         if inventory != sorted(expected_inventory):
             raise CatalogError('catalog-mismatch')
         for table in source['expectedCatalog']['tables']:
