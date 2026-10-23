@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {test,expect} from 'bun:test';
-import {defineDeltaTable,generateDeltaDDL,generateDeltaDDLBundle,DELTA_DEFINITION_EXTENSION} from '../../src/adapters/delta/ddl';
+import {defineDeltaTable,generateDeltaDDL,generateDeltaDDLBundle,realizeSparkDelta4DDL,DELTA_DEFINITION_EXTENSION} from '../../src/adapters/delta/ddl';
 import {readDocument,writeDocument} from '../../src/model/document';
 import {exportDeltaSchema} from '../../src/adapters/delta';
+import {hashCanonical} from '../../src/compilation/bundle/hash';
 
 const schema=JSON.stringify({type:'struct',fields:[{name:'id',type:'long',nullable:false,metadata:{}},{name:'caption',type:'string',nullable:true,metadata:{}}]});
 const definition={profile:'databricks-managed-delta/0.1' as const,name:['catalog','schema','items'],clusterBy:['id'],partitionBy:[],properties:{'delta.targetFileSize':'67108864'}};
@@ -119,6 +120,93 @@ test('column comments preserve exact schema, Unicode and escaped literals at bot
     expect(result.sql).toContain("STRUCT<`label`: STRING COMMENT 'Nested label'> COMMENT ''");
   }
   expect(JSON.stringify(doc)).toBe(original);
+});
+
+test('Spark Delta 4 realization preserves source and explicitly disposes every authored layout choice',()=>{
+  const authored={...definition,properties:{
+    'delta.targetFileSize':'67108864',
+    'delta.parquet.compression.codec':'zstd',
+    'delta.dataSkippingStatsColumns':'id,caption',
+    'delta.deletedFileRetentionDuration':'interval 14 days'
+  }};
+  const doc=defineDeltaTable(schema,authored,{id:'spark-delta4'}),source=JSON.stringify(doc);
+  const managed=generateDeltaDDL(doc),local=realizeSparkDelta4DDL(doc,{kind:'relation',relation:['local_catalog','local_schema','items'],location:'/tmp/delta/items'});
+  expect(JSON.stringify(doc)).toBe(source);
+  expect(generateDeltaDDL(doc)).toEqual(managed);
+  expect(local.targetProfile).toBe('spark-delta4/0.1');
+  expect(local.realizationProfile).toBe('umf.delta.spark-realization/0.1.0');
+  expect(local.target.relation).toEqual(['local_catalog','local_schema','items']);
+  expect(local.target.location).toBe('/tmp/delta/items');
+  expect(local.sql).toContain('CREATE TABLE `local_catalog`.`local_schema`.`items`');
+  expect(local.sql).toContain("LOCATION '/tmp/delta/items'\nTBLPROPERTIES");
+  expect(local.schemaJson).toBe(schema);
+  expect(local.sql).toContain("'delta.dataSkippingStatsColumns'='id,caption'");
+  expect(local.sql).toContain("'delta.deletedFileRetentionDuration'='interval 14 days'");
+  expect(local.sql).not.toContain('delta.parquet.compression.codec');
+  expect(local.sql).not.toContain('delta.targetFileSize');
+  expect(local.writerSettings).toEqual([{key:'spark.sql.parquet.compression.codec',value:'zstd'}]);
+  expect(local.dispositions.map(({sourcePointer,outcome})=>[sourcePointer,outcome])).toEqual([
+    ['/extensions/umf.delta.definition/clusterBy','sql'],
+    ['/extensions/umf.delta.definition/partitionBy','none-authored'],
+    ['/extensions/umf.delta.definition/properties/delta.dataSkippingStatsColumns','sql'],
+    ['/extensions/umf.delta.definition/properties/delta.deletedFileRetentionDuration','sql'],
+    ['/extensions/umf.delta.definition/properties/delta.parquet.compression.codec','writer-setting'],
+    ['/extensions/umf.delta.definition/properties/delta.targetFileSize','unrealized-performance-hint']
+  ]);
+  expect(local.dispositions.at(-1)?.authoredValue).toBe('67108864');
+  expect(local.sourceSha256).toMatch(/^[a-f0-9]{64}$/);
+  expect(local.schemaSha256).toMatch(/^[a-f0-9]{64}$/);
+});
+
+test('Spark Delta 4 realization refuses unmapped codecs and records empty collections',()=>{
+  const empty=defineDeltaTable(schema,{...definition,clusterBy:[],properties:{}},{id:'empty'});
+  const target={kind:'relation' as const,relation:['local','schema','empty'],location:'/tmp/empty'};
+  expect(realizeSparkDelta4DDL(empty,target).dispositions).toEqual([
+    {sourcePointer:'/extensions/umf.delta.definition/clusterBy',authoredValue:[],outcome:'none-authored',explanation:'No columns were authored for this layout choice.'},
+    {sourcePointer:'/extensions/umf.delta.definition/partitionBy',authoredValue:[],outcome:'none-authored',explanation:'No columns were authored for this layout choice.'},
+    {sourcePointer:'/extensions/umf.delta.definition/properties',authoredValue:{},outcome:'none-authored',explanation:'No table properties were authored.'}
+  ]);
+  const nonZstd=defineDeltaTable(schema,{...definition,properties:{'delta.parquet.compression.codec':'snappy'}},{id:'codec-refusal'});
+  expect(()=>realizeSparkDelta4DDL(nonZstd,target)).toThrow(/writer mapping is not qualified/);
+  const unknown=defineDeltaTable(schema,definition,{id:'unknown-realization'});
+  (unknown.extensions![DELTA_DEFINITION_EXTENSION] as Record<string,unknown>).futureMeaning='retain';
+  expect(()=>realizeSparkDelta4DDL(unknown,target)).toThrow();
+});
+
+test('Spark Delta 4 target binding is typed and original property validation precedes projection',()=>{
+  const valid=defineDeltaTable(schema,definition,{id:'target-bindings'});
+  const localTarget={kind:'relation' as const,relation:['local','schema','owner'],location:"/tmp/delta/owner's\\table"};
+  const result=realizeSparkDelta4DDL(valid,localTarget);
+  expect(result.sql).toContain("CREATE TABLE `local`.`schema`.`owner` ");
+  expect(result.sql).toContain("LOCATION '/tmp/delta/owner\\'s\\\\table';");
+  expect(result.target.identitySha256).toBe(hashCanonical({profile:'spark-delta4/0.1',...localTarget}));
+  expect(result.definition.name).toEqual(definition.name);
+  for(const target of [
+    {kind:'relation',relation:['local','schema','bad; DROP TABLE x'],location:'/tmp/items'},
+    {kind:'relation',relation:['local','schema','items'],location:'/tmp/../items'},
+    {kind:'relation',relation:['local','schema','items'],location:'/tmp//items'},
+    {kind:'relation',relation:['local','schema','items'],location:'/tmp/items/'},
+    {kind:'relation',relation:['local','schema','items'],location:'/tmp/has\ncontrol'},
+    {kind:'relation',relation:['local','schema','items'],location:'relative/items'},
+  ])expect(()=>realizeSparkDelta4DDL(valid,target)).toThrow();
+
+  for(const [key,value] of [['delta.targetFileSize','0'],['delta.parquet.compression.codec','not-a-codec']]){
+    const malformed=defineDeltaTable(schema,definition,{id:'malformed'});
+    ((malformed.extensions![DELTA_DEFINITION_EXTENSION] as Record<string,any>).properties as Record<string,string>)[key!]=value!;
+    expect(()=>realizeSparkDelta4DDL(malformed,{kind:'relation',relation:['local','schema','bad'],location:'/tmp/bad'})).toThrow();
+  }
+});
+
+test('Spark Delta 4 path target binds an exact local Delta path without a metastore relation',()=>{
+  const valid=defineDeltaTable(schema,definition,{id:'path-target'});
+  const target={kind:'delta-path' as const,path:"/tmp/delta/owner's\\table`quoted`"};
+  const result=realizeSparkDelta4DDL(valid,target);
+  expect(result.sql).toContain("CREATE TABLE delta.`/tmp/delta/owner's\\table``quoted``` (");
+  expect(result.sql).not.toContain(' LOCATION ');
+  expect(result.target).toEqual({profile:'spark-delta4/0.1',...target,
+    identitySha256:hashCanonical({profile:'spark-delta4/0.1',...target})});
+  expect(()=>realizeSparkDelta4DDL(valid,{...target,location:'/tmp/elsewhere'} as any)).toThrow();
+  expect(()=>realizeSparkDelta4DDL(valid,{...target,kind:'unknown'} as any)).toThrow();
 });
 
 test('comment metadata refuses unknown meaning, controls and client macros',()=>{
