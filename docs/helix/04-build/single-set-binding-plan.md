@@ -544,3 +544,46 @@ This is a bounded repair check, not a successful rerun of the full conformance
 suite. Final inventory/boundary checks and current-source hosted conformance
 and artifact attribution remain required before publication. No public SDK
 installation or Arras default public-extra acceptance is claimed here.
+
+
+## Current-main integration and renewed artifact attribution
+
+The PR base advanced from `009c042545a17b49ea857eff22d0fcf3fd71ef44` to
+`9a11ae5c04c23f0cc0ae1d61a27c4d7a64819b08`. The coordinator merged that
+main commit into the SDK branch as
+`fc1f8c969436523c54442802841aaa9a166dd9d6`, preserving the SDK evidence
+commits. The upstream changes include Delta DDL realization, root package
+version 0.5.6, a TypeScript non-null assertion in conformance logging, and
+corresponding generated provenance. They do not add a Rust/Cargo/binding
+change or expand this Python single-SET support claim. Python distribution
+0.10.1 remains distinct from document/core 0.10.0.
+
+The merged source required a new generated action-plan producer identity.
+The coordinator ran the official identity generator and its check. Independent
+read-only reconstruction of the 1,397 declared tracked inputs matches producer
+`sha256:50471c37ae034e07f9bec6414785e2a9c6a31f46e4adb379381764778a0c2f02`;
+the actual regenerated identity file SHA-256 is
+`7459351309d95346b2f4bdbe4b3c6f5531b7c10f3cadfabd893ffae69bef0d52`.
+Its action-plan schema digest is unchanged. The legacy codegen check remained
+current at 234 inputs / 13 outputs, without regenerating that bundle.
+
+The coordinator's source-bound canonical metamodel check passed in 1.577
+seconds using the validated existing compiler target; its retained receipt
+SHA-256 is `23d727babbc187aeccfb47641fd9c12a5d4f2effe6fe127fb041a1120c658c73`.
+The recorded compiler binary SHA-256 is
+`6a9f35959eb023dd3c196164aa0f8d9b439f65c4369fe0eeb1ee6ed8b266d328`.
+The owned process group was observed empty and the resource window released.
+The independent reviewer inspected the actual identity diff and receipt;
+these generation and execution results are coordinator observations, not
+reviewer reruns. Model/compiler source identities remain unchanged.
+
+Run `40029644127` and its independently reviewed Linux/macOS direct and
+source-rebuilt receipts remain valid historical evidence for source
+`0a640fd2270bb8c5b5d53acd4f77d6d0834483f5`. They are superseded as
+publication inputs for the newly merged source. The root package-version
+change updates the generated metamodel manifest, which the Python build hook
+includes in its wheel payload; whole-wheel and source-archive identities must
+therefore be measured again. Final inventory/boundary checks, current-source
+hosted checks and dual installed-artifact qualification precede selection of
+new publication bytes. Earlier private Arras cutover hashes remain unapplied
+until those exact bytes are qualified, published and anonymously verified.

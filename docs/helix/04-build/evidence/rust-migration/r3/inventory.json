@@ -195,7 +195,7 @@
   "capture": {
     "inventoryFormat": "0.2",
     "inventoryScript": "scripts/rust-inventory.py",
-    "sourceCohortSha256": "452138f8f91d8d6204ae736268aeb3b7c5bb56ce43055884b50a8bf49ab02d56",
+    "sourceCohortSha256": "da73bd22e8c9c28611747f9cb2d06885656493f78d0ae1d99538b2265578f30d",
     "typescriptApi": "5.9.3"
   },
   "counts": {
@@ -32908,12 +32908,12 @@
         "sourceClosure",
         "walk"
       ],
-      "bytes": 68464,
+      "bytes": 68465,
       "disposition": "active-host-tooling-algorithm",
       "language": "ts",
       "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
       "path": "scripts/rust-core/full-conformance.ts",
-      "sha256": "fd2a2f8bf21c4443f3f370d625bf721ec712e668d6a902b6e74d5897671a8214"
+      "sha256": "28e9bee188826fa34653d01fd20daac9179260a15ba17e4a9362968fbb40c684"
     },
     {
       "activationEvidence": [],
@@ -41798,12 +41798,12 @@
       "activationEvidence": [],
       "active": false,
       "algorithmSymbols": [],
-      "bytes": 10775,
+      "bytes": 17211,
       "disposition": "unreferenced-test-source",
       "language": "ts",
       "migrationObligation": "Retained test/evidence source with no discovered current activation edge",
       "path": "tests/delta/ddl.test.ts",
-      "sha256": "1dc10ca5c0aad71ddf7e50cb18661d79a48bba1c64c1bcca957f3699bc52ab87"
+      "sha256": "9634da1730afa16de5ff069669040e6b1b84eef791ae6af403c4704dd0bf16ea"
     },
     {
       "activationEvidence": [],
@@ -57041,10 +57041,11 @@
       "sha256": "b42274f91055c509bc767beb9ebabd6f6001772195a0363c0a4d7c573a7d2c40"
     },
     {
-      "bytes": 10592,
+      "bytes": 17255,
       "disposition": "shared-adapter-or-extension",
       "imports": [
         "../../../spec/extensions/delta-definition/package.json",
+        "../../compilation/bundle/hash",
         "../../generated/core-model",
         "../../model/json",
         "../../model/types",
@@ -57057,20 +57058,25 @@
       "publicExports": [
         "DELTA_DEFINITION_EXTENSION",
         "DeltaDefinition",
+        "SparkDelta4DDLRealization",
+        "SparkDelta4Disposition",
+        "SparkDelta4TargetBinding",
         "defineDeltaTable",
         "deltaDefinitionPackage",
         "generateDeltaDDL",
-        "generateDeltaDDLBundle"
+        "generateDeltaDDLBundle",
+        "realizeSparkDelta4DDL"
       ],
       "resolvedImports": [
         "spec/extensions/delta-definition/package.json",
         "src/adapters/delta/index.ts",
+        "src/compilation/bundle/hash.ts",
         "src/generated/core-model.ts",
         "src/model/json.ts",
         "src/model/types.ts",
         "src/validation/document.ts"
       ],
-      "sha256": "f840a8498f79e4a3863447767443189e8930d4466a4c05ef9bb3743288379cc9"
+      "sha256": "8e4f694b7e3ecbdc0548f06b4db0a67339ea9319d3b70939003d4a0d18856051"
     },
     {
       "bytes": 6841,
@@ -65265,7 +65271,7 @@
         "actionPlanProducerBuild"
       ],
       "resolvedImports": [],
-      "sha256": "34e3ef2e997dc7f9c46e80588d29f2aaabe77ff65e7d7e0d47981258ecee4972"
+      "sha256": "7459351309d95346b2f4bdbe4b3c6f5531b7c10f3cadfabd893ffae69bef0d52"
     },
     {
       "bytes": 4286,
@@ -68866,6 +68872,9 @@
         "SparkArrowIssue",
         "SparkArrowPolicy",
         "SparkArrowProjection",
+        "SparkDelta4DDLRealization",
+        "SparkDelta4Disposition",
+        "SparkDelta4TargetBinding",
         "SqlServerAvroPolicy",
         "SqlServerAvroProjection",
         "SqlServerBindingResidual",
@@ -69726,6 +69735,7 @@
         "readJsonValue",
         "readProtectionSource",
         "readSecuritySource",
+        "realizeSparkDelta4DDL",
         "reconcileDeltaCheckpoint",
         "reconcileDeltaCheckpointSidecars",
         "reconcileDeltaCommits",
