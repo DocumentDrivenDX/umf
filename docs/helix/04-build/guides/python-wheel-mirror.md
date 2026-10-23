@@ -1,7 +1,8 @@
 # Hash-pinned Python wheel mirror
 
-A static mirror is an offline distribution route, not a public release or a
-publisher/index claim. The layout follows the [PyPA Simple Repository API](https://packaging.python.org/en/latest/specifications/simple-repository-api/).
+A static mirror provides an offline distribution route. A released mirror
+archive does not imply public package-index hosting. The layout follows the
+[PyPA Simple Repository API](https://packaging.python.org/en/latest/specifications/simple-repository-api/).
 
 ## Freeze a candidate cohort
 
@@ -89,8 +90,12 @@ python scripts/python-package-mirror.py \
 
 Use a new virtual environment for each intended cell. The probe first matches the
 actual OS release, architecture, libc and Python minor against that cell, then
-requires an OS network-denial sandbox (`sandbox-exec` on macOS or `sudo unshare
---net` on Linux) before installation or installed probes. If that facility cannot
+requires an OS network-denial sandbox (`sandbox-exec` on macOS or `unshare
+--net` on Linux) before installation or installed probes. Non-root Linux callers
+also need `sudo` and `setpriv`: the child drops back to the original UID/GID
+inside the namespace, clears supplementary groups, and proves both identity and
+loopback denial. This prevents root-owned install files in the caller's private
+test workspace. If that facility cannot
 be established, qualification refuses. The receipt records the runner's actual
 OS release and the enforced network isolation. Install only from the mirror's
 local file index, with pip configuration/environment isolation, no cache, hashes

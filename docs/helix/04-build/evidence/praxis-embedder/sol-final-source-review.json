@@ -1,0 +1,146 @@
+{
+  "profile": "umf.embedder.sol-final-review/1",
+  "recordedAtUtc": "2026-10-22T13:08:49.131745+00:00",
+  "reviewer": "Sol independent planning/source/evidence review",
+  "catalog": "installed HELIX 0.18.0 workflows/modes/review.md",
+  "sourceCommit": "75ef423efd9c6c412e72d2f9703fe052e12ea380",
+  "workingTreeScope": "Reviewed metadata and oracle additions are not yet all committed; hashes below identify the reviewed versions.",
+  "status": "approved for bounded source and retained local evidence",
+  "wholeReleaseComplete": false,
+  "productSourceGate": "passed within the selected U4-U9 and standalone G01 scopes; no remaining source finding from this review",
+  "reviewMethod": [
+    "Fresh review of master plan, candidate support inventory, lifecycle/parser/mirror guides and consumer handoff against retained evidence and prior independent source gates.",
+    "Independently checked evidence hash chains, package source equivalence and all embedded compiler input hashes; did not rerun previously passed native/browser/full suites without changed product inputs.",
+    "No product, Praxis or governed repository files edited by reviewer; only this review receipt was written."
+  ],
+  "closedFindings": [
+    {
+      "id": "SOL-PACKET-01",
+      "status": "closed",
+      "path": "docs/helix/04-build/schema-migration-plan.md",
+      "finding": "Stale selection sentence said the release selects managed-consumer qualification.",
+      "resolution": "Now explicitly selects G01/upstream embedder delivery and leaves managed qualification as external MIG-G09 follow-up."
+    }
+  ],
+  "custodyChecks": {
+    "qualifiedSourceCommit": "435ed5844",
+    "qualifiedWheelHashes": {
+      "umf_access-0.1.0.dev7-py3-none-any.whl": "74af2b9d896895fc0af29bf22ee7e00469fbce6070f1d7f433d35b824eeb5d30",
+      "umf_codegen-0.1.0a4-py3-none-any.whl": "88d0e08079808052242f5df2a7ccbef49bc8c0daf0b7fa9482098474f9b9bded"
+    },
+    "packageAuditSourceCounts": {
+      "access": 88,
+      "codegen": 18
+    },
+    "independentlyComparedAllTrackedPackageFiles": {
+      "access": 228,
+      "codegen": 26,
+      "changedFromQualifiedSource": []
+    },
+    "embeddedCompilerInputHashes": {
+      "count": 234,
+      "equalQualifiedManifest": true,
+      "equalCurrentFiles": true
+    },
+    "g01PreservedArtifactHashes": {
+      "checked": 10,
+      "allMatched": true,
+      "decompressedFixtureHashMatched": true
+    },
+    "localDefaultMirrorChains": {
+      "reportLockAndManifestHashes": "both cells matched",
+      "publisherProvenanceHashMatched": true,
+      "wheels": 29,
+      "distributions": 18
+    },
+    "u4NativeRunnerHashMatched": true
+  },
+  "acceptedEvidenceScopes": {
+    "G01": "13 installed native migration scenarios, nine supplemental checks and U5 host-native evidence for one same-identity/type/facets/default optional Field, NULL-only finite literal or qualified transaction-clock fill followed by NOT NULL in one standalone required transaction. Composition, arbitrary transforms and online execution are not supported.",
+    "U4": "Eight installed native synthetic-domain checks, escaped comments, nullable enum/range enforcement and cleanup; no private consumer or managed claim.",
+    "U5": "Trusted host-owned approval custody, exact metadata/reference profile, historical replay/current reference, command-only lost-publication observation, eight named native pre-effect tamper refusals and generated person/batch reads. The installation owner remains trusted.",
+    "U6": "Optional pglast 7.20 / PostgreSQL AST 170007 inert parsed containment. Closed syntax checks do not verify native catalog meaning or authorize execution; all function calls refuse.",
+    "U7U8Local": "Actual macOS 27 ARM64 with Python 3.11.17 and 3.14.8, exact v2 default wheels, OS network denial, fresh installs/probes and missing/tampered artifact refusal. These are not the four intended hosted cells.",
+    "optionalParserMirror": "Separate four-wheel pglast cohort with upstream sdist/license provenance and local installed smoke. The receipt explicitly makes no intended-cell support claim; default mirror excludes pglast.",
+    "U9": "Released Hohfeld 0.5.0, actual publication 2026-10-21, exact facet-free current-core 0.10 DDD entity/string-Key/optional-string document shared with Weft/Truss native journey. No full-core, facet, relationship or graph-migration conformance claim; additional merged reader fixes are unreleased and excluded.",
+    "consumerHandoff": "Executable adoption prompt preserves original history/bytes and host duties, reconciles ten available tables versus older eleven-table claim, requires published exact packages and leaves actual consumer changes with its owner. No Praxis files changed."
+  },
+  "previousToolingGate": {
+    "source": "982d70ab6 plus same-command workflow split",
+    "status": "passed",
+    "evidence": "24 inventory tests and boundary self-test independently passed; original console/discovery bypasses and heredoc data refused; exact four workflow commands/order preserved; multiline syntax explicit unresolved rather than inferred active."
+  },
+  "pendingReleaseGates": [
+    "Final current-source hosted CI, including intended exact Ubuntu 24.04 x86_64/macOS 14 ARM64 by CPython 3.11/3.14 cells. Review actual runtime/cohort receipts; do not infer untested support.",
+    "Commit and preserve final canonical metadata/evidence, source/asset hashes and support inventory; retain equivalence for unchanged qualified product bytes.",
+    "Merge and publish immutable SDK 0.5.5/access dev7/codegen a4 assets with original immutable core 0.10.0 release bytes, complete default offline mirror and separate optional parser source/license custody.",
+    "Post-download immutable release/hash checks and advertised installed/mirror checks before reporting whole-release completion."
+  ],
+  "explicitExternalResiduals": [
+    "MIG-G09 actual managed Lakebase/Praxis adoption remains unverified and externally owned, outside this upstream release gate after owner clarification.",
+    "MIG-G02-G08 and MIG-G10-G11 retain individual documented limits. G01 qualification does not close them.",
+    "Unreleased Hohfeld refusal fixes are a separate upstream follow-up, not capabilities delivered in the immutable 0.5.0 distribution."
+  ],
+  "reviewedFiles": [
+    {
+      "path": "docs/helix/04-build/praxis-embedder-completion-plan.md",
+      "sha256": "fef97104680c57a6d7c348e341492ecd89e7f055a23347c7242b361e39e80399"
+    },
+    {
+      "path": "docs/helix/04-build/schema-migration-plan.md",
+      "sha256": "f3b40fba7e4a304ea3d1332c7d425c885e1a25fa709c1b4c3884036310bec68d"
+    },
+    {
+      "path": "docs/helix/05-deploy/sdk-release-notes-0.5.5.md",
+      "sha256": "5b05d1ecae7c0f6169a9648feaf95b0ba0188d910af43a2b4bc49a5e4e5c6e05"
+    },
+    {
+      "path": "docs/helix/04-build/guides/legal-table-lifecycle.md",
+      "sha256": "47a4f41fee749f806894bed03395e64d84f00b3c9711192a5fd59f0b4bb4ab1f"
+    },
+    {
+      "path": "docs/helix/04-build/guides/python-wheel-mirror.md",
+      "sha256": "aebd0e6640fdc04d3cb77bd0458bc78856ce9cb36cc2bee9676ddb261007f50b"
+    },
+    {
+      "path": "docs/helix/04-build/guides/sql-containment.md",
+      "sha256": "6288f00096c7e1741ae6ccc1c04bc80eeb838aa8a436f424ad307953741cd87e"
+    },
+    {
+      "path": "docs/helix/04-build/guides/praxis-adoption-handoff.md",
+      "sha256": "fd0af72b4d54f9647991eccae8a05ae05179ae96c29fe555791b74b1d1cd7653"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/praxis-embedder/package-equivalence.json",
+      "sha256": "247cc03357aba2f8287fe4ba2bde75f432c96519b493cb4364bf085bc275d217"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/praxis-embedder/local-v2/final-qualification.json",
+      "sha256": "b645b077a120d6a33e874405982de3e394a439183a281dab53d323f200edd984"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/praxis-embedder/optional-v2/optional-inventory.json",
+      "sha256": "c529884fb80ce9486217b7d07d1b7884d850b266533cc722a8053b1b7cdef48a"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/praxis-embedder/optional-v2/installed-smoke-receipt.json",
+      "sha256": "7d0ba456331837be15d54496dd3bbb2caabc58885dd44984e9776bcc0cada177"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/praxis-embedder/umf-u4-final-installed-v2.json",
+      "sha256": "10cbba8c08c1edba2351e876491e178051fecc1220a69ff21131299a11f3c4fa"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/praxis-embedder/umf-u4-final-installed-v2-runner.json",
+      "sha256": "f4217db7365b3f7a3bef3b68860cec371f54e7ee7ae4bb3441ff403136978d51"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/schema-migration-design-review/g01-review.json",
+      "sha256": "c9621cf89d507fe39a5d1ceb289c3c1ef254383ae0d33dd3d8126d6b11590f1c"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/hohfeld-public-reader-u9-20261021.json",
+      "sha256": "1bbedca6c9a066d395317d9778fb873fadb5200dbe8c58dc5e3a69387f1c6603"
+    }
+  ]
+}

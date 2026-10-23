@@ -63,8 +63,36 @@ representations are checked by the compiler, and PostgreSQL validates existing
 values and target constraints. Narrowing, cross-family casts, rounding,
 arbitrary expressions, unrelated default/generated/immutable/collation changes,
 and hidden logical facet changes refuse even with a fresh review marker. Existing
-column NULL backfill, online chunked rewrite, retained-value retirement windows,
-and automatic data rollback after purge are unsupported.
+column NULL backfill is outside this 0.2 profile. Online chunked rewrite,
+retained-value retirement windows and automatic data rollback after purge remain
+unsupported.
+
+## Existing-column fill before requiredness
+
+The successor options/plan 0.3 and execution profile 0.2 admit one existing
+optional Field becoming required with a reviewed, bounded NULL-only fill. Select
+the exact next-source, parameter-free, single-assignment typed UPDATE in
+`backfills`, including `scopedRows: true`, and the exact tightening review marker.
+The native fixture uses `column: {module: 'demo', element: 'summary'}` and
+`operation: 'fill_summary'`; see the
+[complete source-bound fixture](../../../../tests/lifecycle/g01-native-fixture.ts).
+
+Identity, carrier/type, facets and future default must remain unchanged. The fill
+uses an admitted non-null literal or qualified transaction clock, preserves
+present values, and changes historical NULL cells only. A future default does
+not fill history. The required phase holds native locks and commits fill,
+NOT NULL and the phase receipt together. Constraint or bound failure rolls the
+pair back; direct writers cannot cross an activation gap. Exact recovery observes
+a committed pair without repeating its fill or clock.
+
+This is a standalone maintenance operation: additional column/table/index,
+validation, seed or other effects refuse before a runnable plan is returned.
+Arbitrary per-row transforms and online reconciliation remain unsupported.
+The [independent installed signoff](../evidence/schema-migration-design-review/g01-review.json)
+qualifies the exact PostgreSQL/Python/package cohort and thirteen-case subset.
+Durable approval and the closed installation-reference 0.3 metadata profile are
+required. They do not authorize downgrading a persistent-approval installation
+to an older profile for otherwise unsupported table-inventory changes.
 
 ## Python administration
 
@@ -154,7 +182,7 @@ upper bound without changing bootstrap or history fixtures.
 
 The migration implementation plan tracks residuals MIG-G01 through MIG-G11 in
 [`schema-migration-plan.md`](../schema-migration-plan.md). Those entries include
-existing-column NULL fills, arbitrary row transforms, general defaults, narrowing,
+existing-column NULL fills outside the selected 0.3 pair, arbitrary row transforms, general defaults, narrowing,
 retirement/restore, online chunked rewrites, cross-document work, non-PostgreSQL
 backends, managed-consumer qualification, v0.2 inventory/bootstrap and combined
 column drop/append. They are explicit scope limits, not implied support.

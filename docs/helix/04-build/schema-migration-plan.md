@@ -212,7 +212,7 @@ whether refusal occurs in planning or requires unqualified host capability.
 | MIG-G07 | Cross-document schema migration and coordinated multi-store execution are not delivered by single-document deployment digests. | US-050/CONTRACT-045 then MIG-02/08 | Exact revision/dependency closure, unknown extensions, source/target identity and explicit cross-store recovery without assumed distributed atomicity |
 | MIG-G08 | Truss, Ashlar and other storage backends lack qualification for this shared migration design. Mutable admission and immutable new-publication semantics remain backend-owned. | MIG-08; each backend owner | Same Person intent with genuine graph/table/file effects, backend-specific refusals and publication/journal recovery |
 | MIG-G09 | Actual managed Lakebase/Praxis consumer migration acceptance is unverified. Local PostgreSQL evidence and installed wheels do not establish managed privileges, platform limits or adoption. | MIG-07; integration and consumer owners | Dedicated managed target and actual consumer schema/workload replay on frozen installed artifacts |
-| MIG-G10 | Mixed v0.2 table-inventory changes and v0.2 initial deployment are outside the selected existing-table evolution profile. Use the qualified v0.1 bootstrap/additive-table route separately; do not imply one mixed plan can create tables and evolve existing ones. | MIG-02/07; table compiler/host | Explicit portable refusal of unsupported v0.2 shapes, preserved exact v0.1 bootstrap/add-table behavior, then a separately designed prefix-inventory execution profile before expansion |
+| MIG-G10 | Mixed v0.2/v0.3 table-inventory changes and initial deployment are outside the selected existing-table evolution profiles. The separately qualified v0.1 bootstrap/add-table route does not imply a downgrade path from persistent-approval metadata or one mixed plan that creates tables and evolves existing ones. | MIG-02/07; table compiler/host | Explicit portable refusal of unsupported v0.2/v0.3 shapes, preserved exact v0.1 bootstrap/add-table behavior, then a separately designed prefix-inventory execution profile before expansion |
 | MIG-G11 | Dropping and appending columns in one existing-table migration is explicitly unsupported and must refuse before plan emission, including equal-count replacement. Do not infer atomic combined support from separate drop/add capabilities. | MIG-02/05; stable-ID dependency scheduling owner | Stable-ID additions/removals and complete ordered effects; same/different counts, denied UPDATE and dependent policies; separately approved migrations only where each intermediate schema/data state is valid and independently qualified |
 
 Do not invent dates or erase residuals to close the bounded release. Each owner
@@ -233,8 +233,9 @@ Design and acceptance review stay in **Explain UMF schema migrations**;
 installed/native qualification. The current frozen release proceeds separately.
 The owner subsequently authorized implementation, merge and another release
 through the [embedder completion plan](praxis-embedder-completion-plan.md). That
-plan selects G01 and managed-consumer qualification; subsequent residual waves
-below remain separately selected scope. Do not infer release numbers or dates.
+plan selects G01 and upstream embedder delivery. Managed-consumer qualification
+remains external MIG-G09 follow-up; subsequent residual waves below remain
+separately selected scope. Do not infer release numbers or dates.
 
 Implementation-owner feasibility review, 2026-10-21: the existing required-phase
 runner executes typed backfill and DDL steps in one installation transaction,
