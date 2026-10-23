@@ -13,7 +13,7 @@
     "requestedRepeats": 100,
     "completedRepeats": 41,
     "timeoutSeconds": 120,
-    "sampleInterpretation": "Rust CLI blocked in Stdin::read_to_end/read; Node in synchronous child runner/libuv kevent; Bun in kevent64. All sampled sleeping with 0 CPU. Captured before terminating only the disposable diagnostic process group. Does not establish CI macOS14 root cause.",
+    "sampleInterpretation": "Rust CLI blocked in Stdin::read_to_end/read; Node in synchronous child runner/libuv kevent; Bun in kevent64. All sampled sleeping with 0 CPU. Captured before terminating only the disposable diagnostic process group. Does not establish the hosted CI root cause.",
     "retainedFiles": {
       "sample-21157.txt": {
         "sha256": "90c1c325793a3f7d7d99565b055e583bba82e2ee031c84e1627095dac311b916",
@@ -49,5 +49,11 @@
     "path": "cli-stdin-transport-review.json",
     "sha256": "df86dc57e5dc3ab7dae18ad3542d7a91acaaeee566666511e1d9c3515abbe309"
   },
-  "releaseGates": "Fresh exact-head CI, package/input and nine-asset custody, native qualification, actual merge and metadata review, publication and post-download checks remain required."
+  "releaseGates": "Fresh exact-head CI, package/input and nine-asset custody, native qualification, actual merge and metadata review, publication and post-download checks remain required.",
+  "hostedPlatformClarification": {
+    "observedJob": 120419983441,
+    "observedSystem": "macOS 26.6.2 (25G83)",
+    "evidence": "Completed job Operating System header, read through GitHub Actions job logs",
+    "scope": "Rust macos-latest is separate from the pinned macos-14 compiler/offline matrix. No exact OS version is inferred for an unobserved job."
+  }
 }

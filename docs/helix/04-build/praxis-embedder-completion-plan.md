@@ -365,7 +365,7 @@ The [transport diagnosis](evidence/praxis-embedder/cli-stdin-transport-diagnosis
 records an intermittent local input-pipe wait: 41 repeated fixture runs completed,
 then the Rust CLI waited in stdin `read_to_end` while Node and Bun waited on
 children. Captured process samples precede termination of the disposable diagnostic
-group. This does not prove the cause of the still-running hosted macOS 14 jobs.
+group. This does not prove the cause of the still-running hosted macOS jobs.
 
 The reviewed harness uses private file-backed stdin with identical wire bytes,
 inherited working directory/environment and serial comparisons. CLI waits have

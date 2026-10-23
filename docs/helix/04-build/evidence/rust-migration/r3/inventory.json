@@ -189,16 +189,16 @@
   "capture": {
     "inventoryFormat": "0.2",
     "inventoryScript": "scripts/rust-inventory.py",
-    "sourceCohortSha256": "15442061cbdac0f367b0639463dc1591687a244d4991266b60512d81472066ff",
+    "sourceCohortSha256": "a66f4eef2ab3409504c3f8b65f0dbc70e0aeb6f9d378e7d66491e8a6d1f7661f",
     "typescriptApi": "5.9.3"
   },
   "counts": {
     "activeScriptFiles": 329,
-    "algorithmSymbols": 10136,
+    "algorithmSymbols": 10145,
     "pythonModules": 104,
     "rustBuildInputs": 76,
     "rustModules": 114,
-    "scriptFiles": 2929,
+    "scriptFiles": 2931,
     "sourceModules": 575,
     "typescriptModules": 471
   },
@@ -32357,12 +32357,44 @@
         "nested",
         "withExamples"
       ],
-      "bytes": 5520,
+      "bytes": 6096,
       "disposition": "unreferenced-script-source",
       "language": "mjs",
       "migrationObligation": "No current package/workflow/import activation edge discovered",
       "path": "scripts/rust-core/cli-core-conformance.mjs",
-      "sha256": "417d40b12097fab6ec6763aa0973672949a0750fad3da1b09efb450650aac9ec"
+      "sha256": "7ff048d9b3885d9be7c733a3befa6a54421b56a2ed68f3c4add4b7821bc33de5"
+    },
+    {
+      "activationEvidence": [],
+      "active": false,
+      "algorithmSymbols": [
+        "append",
+        "diagnostic",
+        "runCliWire",
+        "signalProcessGroup"
+      ],
+      "bytes": 6911,
+      "disposition": "unreferenced-script-source",
+      "language": "mjs",
+      "migrationObligation": "No current package/workflow/import activation edge discovered",
+      "path": "scripts/rust-core/cli-wire-transport.mjs",
+      "sha256": "b176d978be24d86881a67a55cd2e0283a13511b01146ef078abb93e9343c4ad4"
+    },
+    {
+      "activationEvidence": [],
+      "active": false,
+      "algorithmSymbols": [
+        "assertEmpty",
+        "invoke",
+        "temporaryRoot",
+        "waitUntilGone"
+      ],
+      "bytes": 12323,
+      "disposition": "unreferenced-script-source",
+      "language": "mjs",
+      "migrationObligation": "No current package/workflow/import activation edge discovered",
+      "path": "scripts/rust-core/cli-wire-transport.test.mjs",
+      "sha256": "5d95cbea9a404e7b7c0816fa2c6d624764c197a6df7ff9169b5ebb46af5c7802"
     },
     {
       "activationEvidence": [
@@ -32435,16 +32467,17 @@
         "outputRecord",
         "pythonVenvPython",
         "resolveTool",
+        "safeCommandArguments",
         "sdistPackage",
         "sourceClosure",
         "walk"
       ],
-      "bytes": 65954,
+      "bytes": 68368,
       "disposition": "active-host-tooling-algorithm",
       "language": "ts",
       "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
       "path": "scripts/rust-core/full-conformance.ts",
-      "sha256": "ed7ddd0408dbfbbdc2d94c595db8f4ec70df5264e645437ee1e20e80eb186648"
+      "sha256": "468caf8036cc8b6514f3fe841173bac61d1ec2663509b923ed853a210c510be9"
     },
     {
       "activationEvidence": [],
@@ -32778,12 +32811,12 @@
       "activationEvidence": [],
       "active": false,
       "algorithmSymbols": [],
-      "bytes": 3288,
+      "bytes": 3766,
       "disposition": "unreferenced-script-source",
       "language": "mjs",
       "migrationObligation": "No current package/workflow/import activation edge discovered",
       "path": "scripts/rust-migration/r3/host-replay.mjs",
-      "sha256": "6f9c48b7c2fd543a508d3aa139beae45d0a45b153df90f8bb3afa8933456fcc8"
+      "sha256": "fc17b6617c7c7e7b6881772523e7360a62caacd74ad7e239ce1e040cd09da527"
     },
     {
       "activationEvidence": [],
