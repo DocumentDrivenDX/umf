@@ -1,5 +1,32 @@
 # UMF
 
+The source checkout keeps complete domain packs, their scripts and bundled source
+data, native verification sources, canonical conformance corpora, fixture licenses
+and the test stack in place, together with the active published reference site.
+Generated reports, disposable logs, copied run trees and retired site binaries
+are optional. Hash-bound logs used as test oracles stay local.
+The size gate allows **500 MB** for functional source
+and data, excluding `.git`, dependencies and build output; the earlier 50/125 MB
+cuts removed required inputs. Historical verification replay may require:
+
+```sh
+bun run assets:restore --group fixtures
+# Historical evidence and retired site output:
+bun run assets:restore --group evidence
+bun run assets:restore --group site
+```
+
+Restore only after the cleanup deletions are committed, or use `--output /tmp/umf-replay`
+for an isolated directory. Until then, restoring into this working tree would undo
+the pending deletions. Files come from the pinned pre-cleanup Git revision, with
+object hashes verified; no external storage or automatic download is used.
+A shallow clone must first fetch the revision listed in
+[optional-assets.json](docs/helix/04-build/optional-assets.json).
+Before history is squashed, still-needed assets must move to a separate repository
+or durable storage. Normal package, reference and domain-pack inputs are local;
+their builds do not automatically hydrate historical run output.
+`bun run check:repo-size` enforces the source-tree budget.
+
 The published [SDK 0.5.2 release](https://github.com/DocumentDrivenDX/umf/releases/tag/umf-v0.5.2)
 includes the immutable UMF 0.10.0 Python core, `umf_access` 0.1.0.dev4 host
 and `umf_codegen` 0.1.0a1. Its [release notes](docs/helix/05-deploy/sdk-release-notes-0.5.2.md)

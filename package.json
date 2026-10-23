@@ -15,6 +15,8 @@
     }
   },
   "scripts": {
+    "check:repo-size": "bun scripts/check-repository-size.ts",
+    "assets:restore": "python3 scripts/restore-optional-assets.py",
     "check:access-boundaries": "bun scripts/check-compilation-boundaries.ts && python3 scripts/check-access-python-boundaries.py",
     "test:access-boundaries": "bun test tests/compilation/boundaries.test.ts",
     "typecheck": "bun node_modules/typescript/bin/tsc --noEmit && bun node_modules/typescript/bin/tsc -p tsconfig.tools.json",

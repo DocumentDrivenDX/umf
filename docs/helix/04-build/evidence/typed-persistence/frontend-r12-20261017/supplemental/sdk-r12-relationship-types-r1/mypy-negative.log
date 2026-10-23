@@ -1,5 +1,0 @@
-tests/compilation/python/static/relationships/negative/list_wrong_param.py:5: error: Argument 1 to "is_in" of "Column" has incompatible type "Param[list[str]]"; expected "Param[list[int]] | list[int] | tuple[int, ...]"  [arg-type]
-tests/compilation/python/static/relationships/negative/list_wrong_literal.py:5: error: Argument 1 to "is_in" of "Column" has incompatible type "list[int | None]"; expected "Param[list[str]] | Param[list[str | None]] | list[str] | list[str | None] | tuple[str | None, ...]"  [arg-type]
-tests/compilation/python/static/relationships/negative/inverse_selected_key.py:5: error: Argument 1 to "has" of "Related" has incompatible type "Param[OrderKey]"; expected "OrderOrderKeyKey | Param[OrderOrderKeyKey]"  [arg-type]
-tests/compilation/python/static/relationships/negative/forward_original_inverse_key.py:5: error: Argument 1 to "has" of "Related" has incompatible type "Param[OrderOrderKeyKey]"; expected "OrderKey | Param[OrderKey]"  [arg-type]
-Found 4 errors in 4 files (checked 4 source files)

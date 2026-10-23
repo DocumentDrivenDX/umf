@@ -1,8 +1,0 @@
-ownedServerStopped=true
-Traceback (most recent call last):
-  File "/private/tmp/sdk-early-lock-source-unit-inputs-r2/python/umf_access/tests/bulk_list_native_e2e.py", line 142, in <module>
-    command(
-  File "/private/tmp/sdk-early-lock-source-unit-inputs-r2/python/umf_access/tests/bulk_list_native_e2e.py", line 44, in command
-    raise RuntimeError(p.stdout + p.stderr)
-RuntimeError: {"reason":"WEFT_BLOCKED: {\"diagnostics\":[{\"code\":\"source-exact action verification requires original PG native facts\"}],\"status\":\"blocked\",\"version\":\"weft.native-action/0.1\"}","status":"refused"}
-

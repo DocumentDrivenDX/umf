@@ -1,8 +1,0 @@
-Traceback (most recent call last):
-  File "/private/tmp/managed-search-transport-20261017/read_owned_history_r2.py", line 64, in <module>
-    if __name__=='__main__':main()
-                            ~~~~^^
-  File "/private/tmp/managed-search-transport-20261017/read_owned_history_r2.py", line 45, in main
-    if value.get('has_next_page') or value.get('next_page_token') or type(rows) is not list or len(rows)!=1:raise ValueError('one complete exact owned history row required')
-                                                                                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-ValueError: one complete exact owned history row required

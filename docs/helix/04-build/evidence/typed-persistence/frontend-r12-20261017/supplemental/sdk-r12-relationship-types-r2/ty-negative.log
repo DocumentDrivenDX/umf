@@ -1,5 +1,0 @@
-tests/compilation/python/static/relationships/negative/forward_original_inverse_key.py:5:52: error[invalid-argument-type] Argument to bound method `Related.has` is incorrect: Expected `OrderKey | Param[OrderKey]`, found `Param[OrderOrderKeyKey]`
-tests/compilation/python/static/relationships/negative/inverse_selected_key.py:5:62: error[invalid-argument-type] Argument to bound method `Related.has` is incorrect: Expected `OrderOrderKeyKey | Param[OrderOrderKeyKey]`, found `Param[OrderKey]`
-tests/compilation/python/static/relationships/negative/list_wrong_literal.py:5:33: error[no-matching-overload] No overload of bound method `Column.is_in` matches arguments
-tests/compilation/python/static/relationships/negative/list_wrong_param.py:5:33: error[no-matching-overload] No overload of bound method `Column.is_in` matches arguments
-Found 4 diagnostics

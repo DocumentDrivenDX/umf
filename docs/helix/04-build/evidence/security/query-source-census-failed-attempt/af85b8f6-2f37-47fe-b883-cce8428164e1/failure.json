@@ -1,6 +1,0 @@
-{
-  "status": "failed-harness-attempt",
-  "failure": "external-namespace-privileges:exact-source-restoration: source-image digest mismatch",
-  "cause": "Revoke after first grant retains an explicit default ACL rather than the original NULL ACL. The census correctly distinguishes native representations; initialize explicit schema ACL before baseline capture.",
-  "cleanup": "finally completed without another exception; no standalone removal transcript or full observation receipt published"
-}

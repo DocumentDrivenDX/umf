@@ -1,5 +1,12 @@
 # UMF project documentation
 
+[Repository size reduction plan](04-build/repository-size-plan.md) retains working
+domain packs, verification source, canonical corpora and active build/acceptance
+inputs and the active published site while deleting bulky run output. A 500 MB budget replaces cuts that removed
+functional inputs. [The asset index](04-build/optional-assets.json) pins historical
+output and copied replay trees; normal build inputs remain local. External storage
+and history cleanup remain deferred.
+
 [Praxis lifecycle roadmap](01-frame/praxis-lifecycle-roadmap.md) assesses the ten
 client integration gaps and proposes gated delivery for direct tables, native
 identity/policies and Truss/Ashlar graph hosts. Release numbers are proposed;

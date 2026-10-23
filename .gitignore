@@ -18,3 +18,12 @@ __pycache__/
 
 # Stable POSIX coordination inode for native identity preflight attempts.
 /docs/helix/04-build/evidence/security/.databricks-actors.json.lock
+
+# Historical run output; canonical fixtures and their licenses stay tracked.
+/fixtures/**/*.log
+/fixtures/validation/relationship-gate-test-baseline-1790899698673443188/**
+/fixtures/validation/relationship-integrated-final/**
+/docs/helix/04-build/evidence/**
+/docs/helix/05-deploy/microsite/assets/truss-browser/**
+/docs/helix/05-deploy/microsite/assets/weft-local-mutation/**
+/docs/helix/05-deploy/microsite/assets/weft-mutation/**

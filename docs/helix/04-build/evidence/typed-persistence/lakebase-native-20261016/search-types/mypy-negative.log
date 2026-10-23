@@ -1,9 +1,0 @@
-tests/compilation/python/static/search/negative/foreign_leg.py:5: error: Argument 2 to "hybrid" has incompatible type "SearchLeg[Other]"; expected "SearchLeg[Doc]"  [arg-type]
-tests/compilation/python/static/search/negative/wrong_vector.py:4: error: Argument 1 to "near_vector" of "VectorIndex" has incompatible type "Param[str]"; expected "Param[tuple[float, ...]]"  [arg-type]
-tests/compilation/python/static/search/negative/wrong_text.py:4: error: Argument 1 to "matches" of "KeywordIndex" has incompatible type "Param[int]"; expected "Param[str]"  [arg-type]
-tests/compilation/python/static/search/negative/update.py:4: error: "RankedQuery[Doc, Doc]" has no attribute "update"  [attr-defined]
-tests/compilation/python/static/search/negative/page.py:4: error: "RankedQuery[Doc, Doc]" has no attribute "page"  [attr-defined]
-tests/compilation/python/static/search/negative/order_by.py:4: error: "RankedQuery[Doc, Doc]" has no attribute "order_by"  [attr-defined]
-tests/compilation/python/static/search/negative/exists.py:4: error: "RankedQuery[Doc, Doc]" has no attribute "exists"  [attr-defined]
-tests/compilation/python/static/search/negative/count.py:4: error: "RankedQuery[Doc, Doc]" has no attribute "count"  [attr-defined]
-Found 8 errors in 8 files (checked 8 source files)

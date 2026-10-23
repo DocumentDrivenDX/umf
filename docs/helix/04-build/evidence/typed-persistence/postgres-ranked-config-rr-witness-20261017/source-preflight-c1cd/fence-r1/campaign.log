@@ -1,6 +1,0 @@
-{"status": "fail", "checks": 0, "ownedServerStopped": true}
-Traceback (most recent call last):
-  File "/private/tmp/pg-final-fence-source-preflight.py", line 29, in <module>
-    reader.execute("SELECT pg_catalog.set_config('search_path','pg_catalog,pg_temp',true)");actual=read(guard);assert actual==[(True,)],actual;result['checks'].append({'kind':'exact-owner-fence-admission','isolation':isolation,'xminAfterLock':xmin,'actual':actual});reader.execute('ROLLBACK')
-                                                                                                                      ^^^^^^^^^^^^^^^^^
-AssertionError: [(False,)]

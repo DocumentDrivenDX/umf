@@ -1,8 +1,0 @@
-{"status": "fail", "checks": 5, "ownedServerStopped": true}
-Traceback (most recent call last):
-  File "/private/tmp/pg-final-fence-source-preflight-r4.py", line 38, in <module>
-    for lock in scalar['obligations']['mutationIndexEffects']['lockSql']:reader.execute(lock)
-                                                                         ~~~~~~~~~~~~~~^^^^^^
-  File "/private/tmp/sdk-privilege-r24-weft-r20-env/lib/python3.14/site-packages/psycopg/connection.py", line 304, in execute
-    raise ex.with_traceback(None)
-psycopg.errors.InsufficientPrivilege: permission denied for table orders

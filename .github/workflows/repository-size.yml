@@ -1,0 +1,16 @@
+name: Source checkout size
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  size:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.4.2
+      - run: bun run check:repo-size
+      - run: bun test ./tests/domain-pack-checkout.test.ts
+      - run: bun test ./tests/build-inputs.test.ts
+      - run: python3 -m unittest discover -s tests -p test_optional_assets.py

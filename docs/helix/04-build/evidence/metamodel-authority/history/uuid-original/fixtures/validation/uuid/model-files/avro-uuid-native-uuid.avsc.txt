@@ -1,1 +1,0 @@
-{"type": "record", "name": "children", "namespace": "umf.model.r1", "fields": [{"name": "id", "type": {"type": "fixed", "name": "umf_1_0_uuid", "namespace": "umf.model.r1.values", "size": 16, "logicalType": "uuid"}}, {"name": "parent", "type": ["null", {"type": "fixed", "name": "umf_1_1_uuid", "namespace": "umf.model.r1.values", "size": 16, "logicalType": "uuid"}]}]}

@@ -1,6 +1,0 @@
-/private/tmp/sdk-mypy40-focused-audit-20261017/negative.py:10: error: Expression is of type "Bucket[Order, int | None]", not "Bucket[Order, int]"  [assert-type]
-/private/tmp/sdk-mypy40-focused-audit-20261017/negative.py:11: error: Expression is of type "Bucket[Order, Decimal]", not "Bucket[Order, int]"  [assert-type]
-/private/tmp/sdk-mypy40-focused-audit-20261017/negative.py:12: error: Argument 1 to "to_alias" of "OptionalJoin" has incompatible type "OrderAlias[BadTag]"; expected "RecordAlias[Customer, BadTag]"  [arg-type]
-/private/tmp/sdk-mypy40-focused-audit-20261017/negative.py:13: error: Argument 1 to "has" of "Related" has incompatible type "OrderKey"; expected "CustomerKey | Param[CustomerKey]"  [arg-type]
-/private/tmp/sdk-mypy40-focused-audit-20261017/negative.py:14: error: Argument 1 to "related" of "Query" has incompatible type "OptionalNavigation[Order, Customer, OrderKey, CustomerKey, CustomerKey, OrderKey]"; expected "OptionalNavigation[Customer, Customer, OrderKey, CustomerKey, CustomerKey, OrderKey]"  [arg-type]
-Found 5 errors in 1 file (checked 1 source file)

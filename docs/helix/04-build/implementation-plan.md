@@ -43,6 +43,13 @@ ddx:
 
 ## Scope
 
+The [repository size reduction plan](repository-size-plan.md) sequences the
+owner-selected current-tree cleanup: preserve complete domain packs and verification
+source, canonical corpora and active build/acceptance inputs; delete bulky run output;
+retain the active published site and explicit restoration for historical replay;
+and enforce a 500 MB budget.
+History cleanup remains separate.
+
 ### Current alignment and execution priorities
 
 The relationship/binding amendment below is historical preparation. Its scoped
