@@ -25,6 +25,8 @@ const schema = JSON.stringify({type:'record',name:'Invoice',namespace:'billing',
 ],customTopTag:{preserve:[1,'x']}});
 const dependency = JSON.stringify({type:'record',name:'Currency',namespace:'billing',fields:[{name:'code',type:'string'}],customDepTag:true});
 const doc = importAvroSchema(schema,{id:'invoice',dependencies:[{id:'currency.avsc',schema:dependency}]});
+doc.extensions = {'example.future':{opaque:['keep-me',7]}};
+doc.vocabularies['example.future'] = {version:'7.0.0'};
 const inspect = inspectAvro(doc);
 const rootExport = error(() => exportAvroSchema(doc));
 const bundle = exportAvroBundle(doc);
@@ -33,8 +35,10 @@ node.members.logicalType!.value = 'changed';
 const originalAfterReturnedNodeMutation = getAvroNode(doc,'/fields/0/type').members.logicalType!.value;
 const proposal = proposeAvroNodeEdit(doc,'/fields/0/type/scale','3');
 const conservativeEdit = error(() => editAvroNode(doc,'/fields/0/type/scale','3'));
+const proposalSnapshot = structuredClone(proposal);
 proposal.document.id = 'mutated-report-document';
-const proposalCopiesIsolated = doc.id === 'invoice' && proposal.source.id === 'invoice' && proposal.edit.replacement.kind === 'number' && proposal.edit.replacement.value === '3';
+proposal.document.extensions!['example.future'].opaque[0] = 'mutated-candidate';
+const proposalCopiesIsolated = doc.id === 'invoice' && doc.extensions!['example.future'].opaque[0] === 'keep-me' && proposal.source.id === 'invoice' && proposal.source.extensions!['example.future'].opaque[0] === 'keep-me' && proposal.edit.replacement.kind === 'number' && proposal.edit.replacement.value === '3';
 const bundleCopy = exportAvroBundle(doc); bundleCopy.source.id = 'mutated-bundle-source';
 const bundleCopyIsolated = exportAvroBundle(doc).source.id === 'invoice';
 const recoveries = ['json','yaml'].map(format => {
@@ -43,10 +47,10 @@ const recoveries = ['json','yaml'].map(format => {
   return {format, sameDocument: JSON.stringify(returned) === JSON.stringify(doc), root: exportAvroBundle(returned).schema};
 });
 
-const unknown = structuredClone(doc);
+const unknown = importAvroSchema(schema,{id:'invoice-no-dependency'});
 const payload = unknown.modules[0]!.elements[0]!.extensions['umf.avro'] as any;
 payload.root.futureTaggedField = {kept:true};
-const unknownOutcome = {inspect: inspectAvro(unknown), rootExport: error(() => exportAvroSchema(unknown)), proposal: error(() => proposeAvroNodeEdit(unknown,'/missing','0'))};
+const unknownOutcome = {inspect: inspectAvro(unknown), rootExport: error(() => exportAvroSchema(unknown)), bundleExport: error(() => exportAvroBundle(unknown)), proposal: error(() => proposeAvroNodeEdit(unknown,'/missing','0'))};
 const stale = structuredClone(doc);
 stale.modules.find(m => m.id === 'avro.fields')!.elements[0]!.name = 'stale';
 const attached = structuredClone(doc);
@@ -63,6 +67,17 @@ const pointers = {
   malformedPointer: error(() => getAvroNode(doc,'fields/0')),
   badReplacement: error(() => proposeAvroNodeEdit(doc,'/fields/0/type','not-json')),
 };
+const exactInt64Schema = '{"type":"record","name":"ExactInvoice","fields":[{"name":"count","type":"long","default":9223372036854775807}]}';
+const exactInt64 = importAvroSchema(exactInt64Schema,{id:'exact-int64'});
+const exactInt64Observations = ['json','yaml'].map(format => {
+  const nativeBefore = exportAvroSchema(exactInt64);
+  const tokenBefore = getAvroNode(exactInt64,'/fields/0/default');
+  const diagnosticsBefore = inspectAvro(exactInt64).diagnostics;
+  const serialized = writeDocument(exactInt64,format as 'json'|'yaml');
+  const returned = readDocument(serialized,format as 'json'|'yaml');
+  const nativeAfter = exportAvroSchema(returned);
+  return {format,tokenBefore,nativeBefore,nativeAfter,tokenAfter:getAvroNode(returned,'/fields/0/default'),diagnosticsBefore,diagnosticsAfter:inspectAvro(returned).diagnostics,roundTripPreservesExactToken:nativeBefore.includes('9223372036854775807')&&nativeAfter.includes('9223372036854775807')};
+});
 const refusals = {
   staleMaterializedMetadata: error(() => proposeAvroNodeEdit(stale,'/fields/0/type','"string"')),
   unknownBeforePathResolution: unknownOutcome.proposal,
@@ -79,14 +94,14 @@ const outcome = {
     'src/model/document.ts','src/validation/document.ts','spec/extensions/avro/package.json',
     'docs/helix/02-design/contracts/CONTRACT-007-avro.md','docs/helix/02-design/contracts/CONTRACT-008-avro-document-projection.md',
   ].map(path => [path,sha(path)])),
-  input:{schema,dependency},
-  operations:{import:{extension:doc.modules[0]!.elements[0]!.extensions['umf.avro'],fieldMetadata:doc.modules.find(m=>m.id==='avro.fields')!.elements},inspect,rootExport,bundle,nodeReturnedMutationIsolated:originalAfterReturnedNodeMutation==='decimal',proposal:{status:proposal.status,validation:proposal.validation,edit:proposal.edit},proposalCopiesIsolated,bundleCopyIsolated,conservativeEdit,recoveries},
-  unknownRetention:{nativeMetadataExportRetained:JSON.parse(bundle.schema).customTopTag,fieldMetadataRetained:JSON.parse(bundle.schema).fields[0].customFieldTag,unknownRepresentation:unknownOutcome},
+  input:{schema,dependency,exactInt64Schema},
+  operations:{import:{extension:doc.modules[0]!.elements[0]!.extensions['umf.avro'],fieldMetadata:doc.modules.find(m=>m.id==='avro.fields')!.elements},inspect,rootExport,bundle,nodeReturnedMutationIsolated:originalAfterReturnedNodeMutation==='decimal',proposal:proposalSnapshot,proposalCopiesIsolated,bundleCopyIsolated,conservativeEdit,recoveries,exactInt64:exactInt64Observations},
+  unknownRetention:{unrelatedUmfExtensionInCandidate:proposalSnapshot.document.extensions?.['example.future'],nativeMetadataExportRetained:JSON.parse(bundle.schema).customTopTag,fieldMetadataRetained:JSON.parse(bundle.schema).fields[0].type.customFieldTag,unknownRepresentation:unknownOutcome},
   dependencies:dependencyOutcomes,
   pointers,
   refusalPrecedence:refusals,
   controls:{resourceCancellationDeadline:'not-applicable: current public operations are synchronous and expose no such controls'},
-  nativeOracle:{avscVersion:'5.7.9',accepted:avsc.Type.forSchema(JSON.parse(schema))!==undefined,exactInt64RetainedByAdapterButRejectedByHostNumberValidator:error(()=>avsc.Type.forSchema({type:'record',name:'Exact',fields:[{name:'n',type:'long',default:9223372036854775807}]})),apacheAvro:'not-run: pinned Apache Avro Python module and Java artifact are unavailable in this worktree environment'},
+  nativeOracle:{avscVersion:'5.7.9',accepted:avsc.Type.forSchema(JSON.parse(schema))!==undefined,exactInt64ParsedDefault:JSON.parse(exactInt64Schema).fields[0].default,exactInt64HostValidation:error(()=>avsc.Type.forSchema(JSON.parse(exactInt64Schema))),apacheAvro:'not-run: pinned Apache Avro Python module and Java artifact are unavailable in this worktree environment'},
   scope:'Captures current TS adapter behavior and a pinned avsc acceptance check; not full Avro qualification, not Rust parity, not support for IDL/protocol/container data or datum codecs.'
 };
 writeFileSync(resolve(here,'outcomes.json'),JSON.stringify(outcome,null,2)+'\n');

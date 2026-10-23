@@ -10,8 +10,11 @@ Avro qualification. The governing contracts are
 `outcomes.json` records exact TypeScript output for import, export, inspect,
 get-node, candidate edits and bundle export, plus stable error names/messages,
 source hashes and runtime versions. The representative Avro 1.12.0 input includes
-a named dependency, recursive source-owned metadata, a decimal logical type, a
+a named dependency, nested source-owned metadata, a decimal logical type, a
 custom field attribute, an escaped JSON Pointer member and field metadata.
+The candidate report is snapshotted in full before isolation mutations and
+contains an unrelated, version-declared UMF extension in both source and
+proposed documents.
 
 The captured boundary shows these behaviors:
 
@@ -23,7 +26,9 @@ The captured boundary shows these behaviors:
 - Root-only export refuses a document with dependencies. Bundle export returns
   the root, ordered dependencies, copied source UMF, and a source-artifact
   diagnostic. Native custom attributes survive; unknown tagged-representation
-  members are reported and block native export and node proposals.
+  members are reported and block root-only export, bundle export and node
+  proposals. The unknown-representation export cases use a root-only source, so
+  the refusal is not masked by the separate dependency refusal.
 - `getAvroNode` uses RFC 6901 escaping (`~1`, then `~0`) and returns a detached
   copy. Missing dependencies and pointers are refused. Candidate edits return a
   copied source, proposed document, replacement tree, path and validation;
@@ -40,13 +45,19 @@ The captured boundary shows these behaviors:
   whitespace and JSON string escape spelling are formatting, not retained source
   bytes. Returned node, bundle-source and proposal objects are isolated copies.
 
-The `avsc` 5.7.9 oracle accepts the representative schema. It also refuses a
-long default above JavaScript's safe integer range after number rounding, while
-the UMF adapter retains the exact input token and records `AVRO_NUMERIC`; this is
-an explicit host-validator limit. The pinned Apache Avro 1.12.0 Python module is
-not installed in this worktree environment, and its Java artifact is unavailable,
-so this packet does not claim a fresh Apache-native replay. Existing Apache Avro
-1.12.0 corpus and behavior evidence remains in the other scoped Avro records.
+For the exact JSON text int64 case, import, tagged-tree read, inspect and both
+JSON/YAML document serialization round trips preserve token
+`9223372036854775807` exactly in `outcomes.json`, alongside `AVRO_NUMERIC`
+diagnostics before and after serialization. `avsc` 5.7.9 accepts the
+representative schema but refuses the exact int64 default after `JSON.parse`
+rounds it to `9223372036854776000`; this records the host-number validator limit,
+not adapter loss. The pinned Apache Avro 1.12.0 Python module is not installed in
+this worktree environment, and its Java artifact is unavailable, so this packet
+does not claim a fresh Apache-native replay. Existing Apache Avro 1.12.0 corpus
+and behavior evidence remains in the other scoped Avro records.
+
+The source custom-field attribute is at `/root/fields/0/type/customFieldTag`;
+its export observation reads `fields[0].type.customFieldTag`.
 
 The current public operations are synchronous and expose no cancellation,
 resource-budget or deadline controls, so those controls are not applicable at
