@@ -196,7 +196,7 @@
   "capture": {
     "inventoryFormat": "0.2",
     "inventoryScript": "scripts/rust-inventory.py",
-    "sourceCohortSha256": "28549cc5560c496db561cd493ac6b3de03164f06617bc3d098b32c24e457277d",
+    "sourceCohortSha256": "eb1ca3e6a4388d15ff40176939552273759a88b5362f5deebdd4da5d36c4ea23",
     "typescriptApi": "5.9.3"
   },
   "counts": {
@@ -41434,12 +41434,12 @@
       "activationEvidence": [],
       "active": false,
       "algorithmSymbols": [],
-      "bytes": 10775,
+      "bytes": 17211,
       "disposition": "unreferenced-test-source",
       "language": "ts",
       "migrationObligation": "Retained test/evidence source with no discovered current activation edge",
       "path": "tests/delta/ddl.test.ts",
-      "sha256": "1dc10ca5c0aad71ddf7e50cb18661d79a48bba1c64c1bcca957f3699bc52ab87"
+      "sha256": "9634da1730afa16de5ff069669040e6b1b84eef791ae6af403c4704dd0bf16ea"
     },
     {
       "activationEvidence": [],
@@ -56741,10 +56741,11 @@
       "sha256": "b42274f91055c509bc767beb9ebabd6f6001772195a0363c0a4d7c573a7d2c40"
     },
     {
-      "bytes": 10592,
+      "bytes": 17255,
       "disposition": "shared-adapter-or-extension",
       "imports": [
         "../../../spec/extensions/delta-definition/package.json",
+        "../../compilation/bundle/hash",
         "../../generated/core-model",
         "../../model/json",
         "../../model/types",
@@ -56757,20 +56758,25 @@
       "publicExports": [
         "DELTA_DEFINITION_EXTENSION",
         "DeltaDefinition",
+        "SparkDelta4DDLRealization",
+        "SparkDelta4Disposition",
+        "SparkDelta4TargetBinding",
         "defineDeltaTable",
         "deltaDefinitionPackage",
         "generateDeltaDDL",
-        "generateDeltaDDLBundle"
+        "generateDeltaDDLBundle",
+        "realizeSparkDelta4DDL"
       ],
       "resolvedImports": [
         "spec/extensions/delta-definition/package.json",
         "src/adapters/delta/index.ts",
+        "src/compilation/bundle/hash.ts",
         "src/generated/core-model.ts",
         "src/model/json.ts",
         "src/model/types.ts",
         "src/validation/document.ts"
       ],
-      "sha256": "f840a8498f79e4a3863447767443189e8930d4466a4c05ef9bb3743288379cc9"
+      "sha256": "8e4f694b7e3ecbdc0548f06b4db0a67339ea9319d3b70939003d4a0d18856051"
     },
     {
       "bytes": 6841,
@@ -64965,7 +64971,7 @@
         "actionPlanProducerBuild"
       ],
       "resolvedImports": [],
-      "sha256": "45eaaed838e44b48802dfdd422ef7b649a109cf5a98e50c5d0ce36e2f1d4fd83"
+      "sha256": "2a9be7c644112d16c654a93714a9c966bf73063563331bcf36d35fb311bf7a4c"
     },
     {
       "bytes": 4286,
@@ -68615,6 +68621,9 @@
         "SparkArrowIssue",
         "SparkArrowPolicy",
         "SparkArrowProjection",
+        "SparkDelta4DDLRealization",
+        "SparkDelta4Disposition",
+        "SparkDelta4TargetBinding",
         "SqlServerAvroPolicy",
         "SqlServerAvroProjection",
         "SqlServerBindingResidual",
@@ -69476,6 +69485,7 @@
         "readJsonValue",
         "readProtectionSource",
         "readSecuritySource",
+        "realizeSparkDelta4DDL",
         "reconcileDeltaCheckpoint",
         "reconcileDeltaCheckpointSidecars",
         "reconcileDeltaCommits",
