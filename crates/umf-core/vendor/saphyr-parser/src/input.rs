@@ -3,8 +3,8 @@
 //! [`Input`] must be implemented for the parser to fetch input. Make sure your needs aren't
 //! covered by the [`BufferedInput`].
 
-use alloc::string::String;
 use crate::ScanProfile;
+use alloc::string::String;
 
 pub(crate) mod buffered;
 pub(crate) mod str;
@@ -26,18 +26,24 @@ pub use crate::char_traits::{
 ///    their YAML object.
 pub trait Input {
     /// Return the immutable scanner profile selected by the trusted caller.
-    fn scan_profile(&self) -> ScanProfile { ScanProfile::Yaml12 }
+    fn scan_profile(&self) -> ScanProfile {
+        ScanProfile::Yaml12
+    }
 
     /// Test whether a character is a line break under this input's profile.
     #[inline]
     fn profile_is_break(&self, c: char) -> bool {
-        is_break(c) || (self.scan_profile() == ScanProfile::PythonRuamel12 && matches!(c, '\u{0085}' | '\u{2028}' | '\u{2029}'))
+        is_break(c)
+            || (self.scan_profile() == ScanProfile::PythonRuamel12
+                && matches!(c, '\u{0085}' | '\u{2028}' | '\u{2029}'))
     }
 
     /// Test whether a character is a line break or stream-end marker under this profile.
     #[inline]
     fn profile_is_breakz(&self, c: char) -> bool {
-        is_breakz(c) || (self.scan_profile() == ScanProfile::PythonRuamel12 && matches!(c, '\u{0085}' | '\u{2028}' | '\u{2029}'))
+        is_breakz(c)
+            || (self.scan_profile() == ScanProfile::PythonRuamel12
+                && matches!(c, '\u{0085}' | '\u{2028}' | '\u{2029}'))
     }
 
     /// Test whether a character is blank or a line break under this profile.
@@ -236,7 +242,9 @@ pub trait Input {
                     self.skip(); // Skip over '#'
                     loop {
                         let c = self.look_ch();
-                        if self.profile_is_breakz(c) { break; }
+                        if self.profile_is_breakz(c) {
+                            break;
+                        }
                         self.skip();
                         chars_consumed += 1;
                     }
@@ -409,7 +417,9 @@ pub trait Input {
         let mut count = 0;
         loop {
             let c = self.look_ch();
-            if self.profile_is_breakz(c) { break; }
+            if self.profile_is_breakz(c) {
+                break;
+            }
             count += 1;
             self.skip();
         }

@@ -19,6 +19,7 @@ Repository = "https://github.com/DocumentDrivenDX/umf"
 packages = ["src/umf"]
 
 [tool.hatch.build.targets.sdist.force-include]
+"../spec/extensions/tables/operation.schema.json" = "spec/extensions/tables/operation.schema.json"
 "../spec/core/schema.json" = "spec/core/schema.json"
 "../spec/core/semantic-type-reference.schema.json" = "spec/core/semantic-type-reference.schema.json"
 "../spec/core/extension-package.schema.json" = "spec/core/extension-package.schema.json"

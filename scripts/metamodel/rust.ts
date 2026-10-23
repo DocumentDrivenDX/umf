@@ -9,9 +9,9 @@ const hash=(bytes:string|Uint8Array)=>createHash('sha256').update(bytes).digest(
 type Artifact={fingerprint:string;executable:string;binarySha256:string;sources:Record<string,string>};
 let cached:Artifact|undefined;
 function snapshot():{fingerprint:string;sources:Record<string,string>} {
- const paths=['Cargo.toml','Cargo.lock','rust-toolchain.toml','.cargo/config.toml'];
+ const paths=['Cargo.toml','Cargo.lock','rust-toolchain.toml','.cargo/config.toml','spec/extensions/tables/operation.schema.json'];
  function visit(path:string):void {for(const entry of readdirSync(resolve(repositoryRoot,path),{withFileTypes:true})){if(['target','node_modules','.git','__pycache__'].includes(entry.name))continue;const child=path+'/'+entry.name;if(entry.isDirectory())visit(child);else if(entry.isFile())paths.push(child);}}
- for(const path of ['crates/umf-core','crates/umf-core-wire','crates/umf-metamodel','crates/umf-cli'])visit(path);
+ for(const path of ['crates/umf-core','crates/umf-core-wire','crates/umf-codegen','crates/umf-metamodel','crates/umf-cli'])visit(path);
  const sources=Object.fromEntries(paths.sort().map(path=>[path,hash(readFileSync(resolve(repositoryRoot,path)))]));
  const env=Object.fromEntries(['RUSTFLAGS','CARGO_ENCODED_RUSTFLAGS','CARGO_BUILD_TARGET','RUSTUP_TOOLCHAIN'].map(name=>[name,process.env[name]??'']));
  return {sources,fingerprint:hash(JSON.stringify({sources,env}))};

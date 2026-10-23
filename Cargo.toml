@@ -3,6 +3,7 @@ resolver = "2"
 members = [
   "crates/umf-core",
   "crates/umf-core-wire",
+  "crates/umf-codegen",
   "bindings/core/python",
   "bindings/core/node",
   "bindings/core/wasm",

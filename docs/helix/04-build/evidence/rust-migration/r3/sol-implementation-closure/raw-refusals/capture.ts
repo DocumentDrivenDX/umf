@@ -1,0 +1,7 @@
+import {readFileSync,writeFileSync} from 'node:fs';
+import '../../../../../../../../scripts/codegen/entry.ts';
+const corpus=JSON.parse(readFileSync('/private/tmp/sol-backfill-probes.json','utf8')).cases,base=corpus[0].request,cases:any[]=[];
+for(const [name,value]of[['null',null],['boolean',false],['number',1],['array',[]],['bad_version',{version:'future'}],['bad_marker_id',{version:'umf.table-migration-options/0.2',backfills:[],concurrentIndexes:[],validations:[],reviewedChanges:[{id:'bad',kind:'x',path:'',oldDigest:'x',newDigest:'x'}]}]]as any[]){const request={...structuredClone(base),options:value};cases.push({id:'sol6_options_'+name,operation:'compileTableMigration',request,expected:JSON.parse((globalThis as any).__umf_table_migrate(JSON.stringify(request)))});}
+{const r=structuredClone(base);r.predecessor=null;r.next={};cases.push({id:'sol6_next_admission_precedes_lineage',operation:'compileTableMigration',request:r,expected:JSON.parse((globalThis as any).__umf_table_migrate(JSON.stringify(r)))});}
+for(const side of ['previous','next']){const r=structuredClone(base);r[side].future='\ud800';cases.push({id:'sol6_'+side+'_noninteroperable_extra',operation:'compileTableMigration',request:r,expected:JSON.parse((globalThis as any).__umf_table_migrate(JSON.stringify(r)))});}
+writeFileSync('/private/tmp/sol-refusal-probes.json',JSON.stringify({cases},null,2)+'\n');console.log(cases.map(c=>[c.id,c.expected.error??c.expected.result.diagnostics]));

@@ -20,6 +20,8 @@ pub struct StructuralError {
     pub keyword: String,
     pub params: Value,
     pub message: Utf16,
+    /// Original property name on compiler-mode propertyNames child errors.
+    pub compiler_property_name: Option<Utf16>,
     pub python_params: Option<std::sync::Arc<crate::python_value::PythonConsumerValue>>,
     pub python_error: Option<PythonErrorMetadata>,
     pub python_physical_instance_path: Option<Utf16>,
@@ -166,6 +168,110 @@ enum CompiledRegex {
     Python(PythonRegex),
 }
 
+fn compiler_object_order<T: InstanceView>(
+    data: &T,
+    count: usize,
+    ctx: &mut Context<'_>,
+) -> Result<Vec<usize>, EngineError> {
+    ctx.charge_work(count.saturating_mul(64), Utf16::default())?;
+    let mut indices = std::collections::BTreeMap::new();
+    let mut ordinary = Vec::with_capacity(count);
+    for index in 0..count {
+        ctx.charge_work(1, Utf16::default())?;
+        let Some((name, _)) = data.object_entry(index) else {
+            continue;
+        };
+        let numeric = match name {
+            InstanceText::Utf16(name) => {
+                let units = name.units();
+                let mut number = 0u64;
+                let valid = !units.is_empty()
+                    && units.len() <= 10
+                    && (units.len() == 1 || units[0] != 48)
+                    && units.iter().all(|u| {
+                        if !(48..=57).contains(u) {
+                            return false;
+                        }
+                        number = number * 10 + u64::from(*u - 48);
+                        true
+                    });
+                if valid && number < u64::from(u32::MAX) {
+                    Some(number as u32)
+                } else {
+                    None
+                }
+            }
+            _ => None,
+        };
+        if let Some(number) = numeric {
+            indices.insert(number, index);
+        } else {
+            ordinary.push(index);
+        }
+    }
+    let mut ordered = Vec::with_capacity(count);
+    ordered.extend(indices.into_values());
+    ordered.extend(ordinary);
+    Ok(ordered)
+}
+
+// Source: pinned Ajv 8.20 groups plus createValidator/installJsonEquality.
+// The custom const/enum/uniqueItems rules are re-added after their groups'
+// standard rules. Metadata and unknown inert keywords have no error phase.
+fn compiler_keyword_rank(key: &Utf16) -> usize {
+    const ORDER: &[&str] = &[
+        "type",
+        "$dynamicRef",
+        "$recursiveRef",
+        "$ref",
+        "not",
+        "anyOf",
+        "oneOf",
+        "allOf",
+        "if",
+        "then",
+        "else",
+        "const",
+        "enum",
+        "maximum",
+        "minimum",
+        "exclusiveMaximum",
+        "exclusiveMinimum",
+        "multipleOf",
+        "maxLength",
+        "minLength",
+        "pattern",
+        "format",
+        "maxItems",
+        "minItems",
+        "additionalItems",
+        "prefixItems",
+        "items",
+        "contains",
+        "minContains",
+        "maxContains",
+        "unevaluatedItems",
+        "uniqueItems",
+        "maxProperties",
+        "minProperties",
+        "required",
+        "propertyNames",
+        "additionalProperties",
+        "dependencies",
+        "properties",
+        "patternProperties",
+        "dependentRequired",
+        "dependentSchemas",
+        "unevaluatedProperties",
+    ];
+    ORDER
+        .iter()
+        .position(|name| {
+            key.len() == name.len() && key.units().iter().copied().eq(name.encode_utf16())
+        })
+        .unwrap_or(usize::MAX)
+}
+
 #[derive(Clone, Debug, Default)]
 struct Evaluated {
     properties: BTreeSet<Vec<u32>>,
@@ -176,6 +282,9 @@ struct Evaluated {
     python_recursive_history: Vec<PythonResourceLocator>,
     mode: EvaluationMode,
     collect_annotations: bool,
+    /// Opt-in compiler diagnostic presentation; ordinary/Python validation
+    /// retains its qualified aggregate combinator behavior.
+    codegen_errors: bool,
     annotation_scan: bool,
     annotation_scan_short_circuit: bool,
 }
@@ -197,6 +306,7 @@ impl Evaluated {
             python_recursive_history: self.python_recursive_history.clone(),
             mode: self.mode,
             collect_annotations: self.collect_annotations,
+            codegen_errors: self.codegen_errors,
             ..Self::default()
         })
     }
@@ -1326,9 +1436,36 @@ impl CompiledSchema {
         value: &Value,
         ctx: &mut Context<'_>,
     ) -> Result<Vec<StructuralError>, EngineError> {
+        self.validate_with_codegen_errors(value, false, ctx)
+    }
+    /// Return the compiler's all-errors ECMAScript presentation, including
+    /// failed oneOf branches and the indices of its first two passing branches.
+    /// This uses the same evaluator and live Context as ordinary validation;
+    /// artifact content cannot select this presentation mode.
+    pub fn validate_codegen_errors(
+        &self,
+        value: &Value,
+        ctx: &mut Context<'_>,
+    ) -> Result<Vec<StructuralError>, EngineError> {
+        if !matches!(self.regex_profile, RegexProfile::Ecma262Unicode) {
+            return Err(EngineError::new(
+                "SCHEMA_PROFILE",
+                Utf16::default(),
+                "Compiler diagnostics require the ECMAScript schema profile",
+            ));
+        }
+        self.validate_with_codegen_errors(value, true, ctx)
+    }
+    fn validate_with_codegen_errors(
+        &self,
+        value: &Value,
+        codegen_errors: bool,
+        ctx: &mut Context<'_>,
+    ) -> Result<Vec<StructuralError>, EngineError> {
         let value = copy_json(value, ctx)?;
         let mut errors = Vec::new();
         let mut evaluated = Evaluated::default();
+        evaluated.codegen_errors = codegen_errors;
         self.eval(
             &self.schema,
             &value,
@@ -3112,7 +3249,14 @@ impl CompiledSchema {
         match keyword {
             "properties" => {
                 if let Value::Object(schemas) = rule {
-                    for (member_index, (name, sub)) in schemas.iter().enumerate() {
+                    let order = if evaluated.codegen_errors {
+                        Some(compiler_object_order(rule, schemas.len(), ctx)?)
+                    } else {
+                        None
+                    };
+                    for slot in 0..schemas.len() {
+                        let member_index = order.as_ref().map_or(slot, |order| order[slot]);
+                        let (name, sub) = &schemas[member_index];
                         let source_name = self.source_member_text(&kp, member_index, name, ctx)?;
                         if let Some(v) = data.object_find(source_name, ctx)? {
                             evaluated.insert_property(source_name, ctx, ip)?;
@@ -3232,14 +3376,31 @@ impl CompiledSchema {
         match keyword {
             "patternProperties" => {
                 if let Value::Object(schemas) = rule {
-                    for (name, sub) in schemas.iter() {
+                    let schema_order = if evaluated.codegen_errors {
+                        Some(compiler_object_order(rule, schemas.len(), ctx)?)
+                    } else {
+                        None
+                    };
+                    let data_order = if evaluated.codegen_errors {
+                        Some(compiler_object_order(
+                            data,
+                            data.object_len().unwrap_or(0),
+                            ctx,
+                        )?)
+                    } else {
+                        None
+                    };
+                    for slot in 0..schemas.len() {
+                        let (name, sub) =
+                            &schemas[schema_order.as_ref().map_or(slot, |order| order[slot])];
                         let Some(count) = data.object_len() else {
                             continue;
                         };
                         ctx.charge_work(count, ip.clone())?;
                         let pattern_path = self.schema_pointer(&kp, name, ctx)?;
                         let re = self.compile_pattern(name, &pattern_path, ctx)?;
-                        for index in 0..count {
+                        for slot in 0..count {
+                            let index = data_order.as_ref().map_or(slot, |order| order[slot]);
                             let Some((k, v)) = data.object_entry(index) else {
                                 continue;
                             };
@@ -3313,7 +3474,13 @@ impl CompiledSchema {
         }
         if let Some(count) = data.object_len() {
             let mut has_undeclared = false;
-            for index in 0..count {
+            let compiler_order = if evaluated.codegen_errors {
+                Some(compiler_object_order(data, count, ctx)?)
+            } else {
+                None
+            };
+            for slot in 0..count {
+                let index = compiler_order.as_ref().map_or(slot, |order| order[slot]);
                 let Some((k, v)) = data.object_entry(index) else {
                     continue;
                 };
@@ -3328,7 +3495,20 @@ impl CompiledSchema {
                         }
                     } else if matches!(rule, Value::Bool(false)) {
                         evaluated.insert_property(k, ctx, ip)?;
-                        has_undeclared = true;
+                        if evaluated.codegen_errors {
+                            let name = k.to_utf16(ctx)?;
+                            push_ctx(
+                                ctx,
+                                out,
+                                ip,
+                                &kp,
+                                "additionalProperties",
+                                object(vec![("additionalProperty", Value::String(name))]),
+                                "must NOT have additional properties",
+                            )?;
+                        } else {
+                            has_undeclared = true;
+                        }
                     } else {
                         evaluated.insert_property(k, ctx, ip)?;
                         self.evaluate_additional_property(
@@ -3488,7 +3668,13 @@ impl CompiledSchema {
         match keyword {
             "propertyNames" => {
                 if let Some(count) = data.object_len() {
-                    for index in 0..count {
+                    let order = if evaluated.codegen_errors {
+                        Some(compiler_object_order(data, count, ctx)?)
+                    } else {
+                        None
+                    };
+                    for slot in 0..count {
+                        let index = order.as_ref().map_or(slot, |order| order[slot]);
                         let Some((k, _)) = data.object_entry(index) else {
                             continue;
                         };
@@ -3510,7 +3696,28 @@ impl CompiledSchema {
                             return Err(error);
                         }
                         if !errs.is_empty() {
-                            if matches!(self.regex_profile, RegexProfile::Python(_)) {
+                            if evaluated.codegen_errors {
+                                let property_name = k.to_utf16(ctx)?;
+                                for error in &mut errs {
+                                    ctx.charge_work(
+                                        property_name.len().saturating_add(1),
+                                        ip.clone(),
+                                    )?;
+                                    error.compiler_property_name = Some(property_name.clone());
+                                }
+                                ctx.charge_work(errs.len(), ip.clone())?;
+                                out.extend(errs);
+                                ctx.charge_work(property_name.len().saturating_add(1), ip.clone())?;
+                                push_ctx(
+                                    ctx,
+                                    out,
+                                    ip,
+                                    kp,
+                                    "propertyNames",
+                                    object(vec![("propertyName", Value::String(property_name))]),
+                                    "property name must be valid",
+                                )?;
+                            } else if matches!(self.regex_profile, RegexProfile::Python(_)) {
                                 let override_value =
                                     std::sync::Arc::new(keyval.python_snapshot(ctx)?);
                                 ctx.charge_work_u64(
@@ -4343,6 +4550,8 @@ impl CompiledSchema {
             "anyOf" | "oneOf" => {
                 if let Value::Array(schemas) = rule {
                     let mut matches = 0;
+                    let codegen_one_of = keyword == "oneOf" && evaluated.codegen_errors;
+                    let mut passing_schemas = Vec::new();
                     let mut successful_annotations = Vec::new();
                     // Ajv's default all-errors core profile includes the errors from
                     // each failed anyOf branch before the aggregate anyOf error. The
@@ -4357,7 +4566,8 @@ impl CompiledSchema {
                         // until it finds a success. After the first oneOf
                         // match, later branches are checked with is_valid
                         // (first-error), while anyOf stops immediately.
-                        branch_annotations.mode = if matches > 0
+                        branch_annotations.mode = if !codegen_one_of
+                            && matches > 0
                             && (keyword == "oneOf" || evaluated.collect_annotations)
                         {
                             EvaluationMode::FirstError
@@ -4380,10 +4590,17 @@ impl CompiledSchema {
                         if e.is_empty() {
                             matches += 1;
                             successful_annotations.push(branch_annotations);
+                            if codegen_one_of {
+                                ctx.charge_work(1, ip.clone())?;
+                                passing_schemas.push(Value::Number(i as f64));
+                                if matches == 2 {
+                                    break;
+                                }
+                            }
                             if keyword == "anyOf" && !evaluated.collect_annotations {
                                 break;
                             }
-                        } else if keyword == "anyOf"
+                        } else if (keyword == "anyOf" || codegen_one_of)
                             && matches!(self.regex_profile, RegexProfile::Ecma262Unicode)
                             && mode == EvaluationMode::AllErrors
                         {
@@ -4396,6 +4613,13 @@ impl CompiledSchema {
                         matches != 1
                     };
                     if failed {
+                        // Ajv retains the first passing branch's annotations
+                        // even when the second pass makes oneOf invalid.
+                        if codegen_one_of {
+                            if let Some(first) = successful_annotations.into_iter().next() {
+                                evaluated.merge(first, ctx, ip)?;
+                            }
+                        }
                         out.extend(failed_branch_errors);
                         push_ctx(
                             ctx,
@@ -4403,7 +4627,18 @@ impl CompiledSchema {
                             ip,
                             &kp,
                             &keyword,
-                            object(vec![]),
+                            if codegen_one_of {
+                                object(vec![(
+                                    "passingSchemas",
+                                    if matches == 0 {
+                                        Value::Null
+                                    } else {
+                                        Value::Array(passing_schemas)
+                                    },
+                                )])
+                            } else {
+                                object(vec![])
+                            },
                             if keyword == "anyOf" {
                                 "must match a schema in anyOf"
                             } else {
@@ -4760,6 +4995,83 @@ impl CompiledSchema {
                     } else {
                         None
                     };
+                    if evaluated.codegen_errors {
+                        // Ajv ignores an unconstrained zero minimum and rejects
+                        // contradictory bounds before evaluating the predicate.
+                        if min == 0 && max.is_none() {
+                            return Ok(());
+                        }
+                        let always_valid = match rule {
+                            Value::Bool(value) => *value,
+                            Value::Object(fields) => {
+                                let mut inert = true;
+                                for (key, _) in fields {
+                                    ctx.charge_work(key.len().saturating_add(1), ip.clone())?;
+                                    if compiler_keyword_rank(key) != usize::MAX {
+                                        inert = false;
+                                        break;
+                                    }
+                                }
+                                inert
+                            }
+                            _ => false,
+                        };
+                        let contradictory = max.is_some_and(|limit| min > limit);
+                        let mut matches = if always_valid { value_count } else { 0 };
+                        let mut failures = Vec::new();
+                        if !contradictory && !always_valid {
+                            // Ajv's nontrivial contains predicate evaluates the
+                            // complete array for unevaluatedItems, even on failure.
+                            for index in 0..value_count {
+                                evaluated.insert_item(index, ctx, ip)?;
+                            }
+                            for index in 0..value_count {
+                                ctx.charge_work(1, ip.clone())?;
+                                let Some(value) = data.array_get(index) else {
+                                    continue;
+                                };
+                                let mut errors = Vec::new();
+                                let mut branch = evaluated.child(ctx, ip)?;
+                                branch.mode = EvaluationMode::AllErrors;
+                                self.eval(
+                                    rule,
+                                    value,
+                                    &append_instance_path(ip, &Utf16::from(index.to_string())),
+                                    kp,
+                                    depth + 1,
+                                    ctx,
+                                    &mut errors,
+                                    &mut branch,
+                                )?;
+                                if errors.is_empty() {
+                                    matches += 1;
+                                    if max.is_some_and(|limit| matches > limit)
+                                        || (max.is_none() && matches >= min)
+                                    {
+                                        break;
+                                    }
+                                } else {
+                                    ctx.charge_work(errors.len(), ip.clone())?;
+                                    failures.extend(errors);
+                                }
+                            }
+                        }
+                        if contradictory
+                            || matches < min
+                            || max.is_some_and(|limit| matches > limit)
+                        {
+                            out.extend(failures);
+                            let mut params = vec![("minContains", Value::Number(min as f64))];
+                            let message = if let Some(limit) = max {
+                                params.push(("maxContains", Value::Number(limit as f64)));
+                                format!("must contain at least {min} and no more than {limit} valid item(s)")
+                            } else {
+                                format!("must contain at least {min} valid item(s)")
+                            };
+                            push_ctx(ctx, out, ip, kp, "contains", object(params), &message)?;
+                        }
+                        return Ok(());
+                    }
                     let mut matches = 0;
                     let mut matching_indices = Vec::new();
                     for i in 0..value_count {
@@ -4936,7 +5248,25 @@ impl CompiledSchema {
             .any(|(k, _)| k.to_utf8().ok().as_deref() == Some("$ref"));
         let mut unevaluated_properties: Option<(&Value, Utf16)> = None;
         let mut unevaluated_items: Option<(&Value, Utf16)> = None;
-        'keywords: for (key, rule) in members {
+        // Opt-in compiler presentation follows the pinned ECMAScript
+        // validator's keyword groups, rather than schema insertion order.
+        // The normal/Python path allocates no ordering vector and retains its
+        // original traversal, callbacks and diagnostic order.
+        let compiler_order = if evaluated.codegen_errors {
+            ctx.charge_work(members.len().saturating_mul(128), Utf16::default())?;
+            let mut order = Vec::with_capacity(members.len());
+            for (index, (key, _)) in members.iter().enumerate() {
+                ctx.charge_work(key.len().saturating_add(1), Utf16::default())?;
+                order.push((compiler_keyword_rank(key), index));
+            }
+            order.sort_unstable();
+            Some(order)
+        } else {
+            None
+        };
+        'keywords: for slot in 0..members.len() {
+            let index = compiler_order.as_ref().map_or(slot, |order| order[slot].1);
+            let (key, rule) = &members[index];
             let Ok(keyword) = key.to_utf8() else { continue };
             if evaluated.annotation_scan
                 && !matches!(
@@ -8038,6 +8368,7 @@ fn push_ctx_precharged(
         keyword: kw.into(),
         params,
         message,
+        compiler_property_name: None,
         python_params: None,
         python_error: None,
         python_physical_instance_path: None,
@@ -8160,6 +8491,7 @@ fn push_ctx(
         keyword: kw.into(),
         params,
         message: Utf16::from(msg),
+        compiler_property_name: None,
         python_params: None,
         python_error: None,
         python_physical_instance_path: None,
@@ -8204,6 +8536,7 @@ fn push_units_ctx_after_precharge(
         keyword: kw.into(),
         params,
         message,
+        compiler_property_name: None,
         python_params: None,
         python_error: None,
         python_physical_instance_path: None,

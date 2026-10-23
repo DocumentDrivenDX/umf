@@ -1,0 +1,200 @@
+{
+  "format": "umf-r3-baseline-receipt/1",
+  "oracle": "current TypeScript operation wrappers and direct stage-one compiler API; exact wrapper envelopes are retained",
+  "toolchain": {
+    "bun": "1.4.3",
+    "typescript": "7.0.2",
+    "bunReportedNodeCompat": "v26.3.0",
+    "platform": "darwin",
+    "arch": "arm64"
+  },
+  "sourceManifest": {
+    "path": "source-manifest.json",
+    "sha256": "27c4fb966107d359aa29fb2207bd049348818e78d7ad0dc2ad2a972e8923392d",
+    "fileCount": 320
+  },
+  "retainedEmbeddedGenerator": {
+    "compressedPath": "python/umf_codegen/src/umf_codegen/_assets/generator.js.gz",
+    "compressedBytes": 752727,
+    "compressedSha256": "97d8bb0799d67e3cbefcafe84d6e3a9eadd6ee484d7099deb7bef2b032c189b6",
+    "manifestPath": "python/umf_codegen/src/umf_codegen/_assets/manifest.json",
+    "manifestSha256": "cb203c3369390042f5c02c0d138617a5456467f727d2e32430898c16a024f0e8",
+    "decompressedJavaScriptBytes": 752649,
+    "decompressedJavaScriptSha256": "69227680f51acc17c74dafe80a8ab1db9066672beb9c93e11d7840daf47207b8",
+    "manifestBundleSha256": "69227680f51acc17c74dafe80a8ab1db9066672beb9c93e11d7840daf47207b8",
+    "engine": "mini-racer==0.14.1",
+    "v8": "14.4.258.23",
+    "dependencies": [
+      {
+        "name": "ajv",
+        "version": "8.20.0"
+      },
+      {
+        "name": "fast-deep-equal",
+        "version": "3.1.3"
+      },
+      {
+        "name": "fast-uri",
+        "version": "3.1.8"
+      },
+      {
+        "name": "json-schema-traverse",
+        "version": "1.0.0"
+      },
+      {
+        "name": "yaml",
+        "version": "2.9.1"
+      }
+    ]
+  },
+  "operationCorpus": {
+    "path": "operations.json",
+    "sha256": "40c05901135a90b4d9777b88a1f62aa0ade6aa47dcf85f054db01dad04560c78",
+    "caseCount": 129,
+    "operations": [
+      "compileTableDeployment",
+      "compileTableMigration",
+      "discoverTableMigrationChanges",
+      "generatePythonClient",
+      "normalizeRowScope",
+      "verifyTableDeployment",
+      "verifyTableMigration"
+    ]
+  },
+  "stageOne": {
+    "path": "stage-one.json",
+    "sha256": "2a54d5c29c9f814b50be12a24584fa27817e933901f1a83ea5e3f1b9ce9ec161",
+    "vectors": [
+      {
+        "id": "candidate-base",
+        "resultSha256": "f8576aa39383df76ef3fe97830ffc07438be38746b8e452115b6f97cce3d66af",
+        "fileCount": 8,
+        "admissionHasIR": true,
+        "emissionCaptured": true
+      },
+      {
+        "id": "report-mode",
+        "resultSha256": "3129e523fdbb5334614dcc0f0573312f716c956a85af4349803eb28e4816fccc",
+        "fileCount": 8,
+        "admissionHasIR": true,
+        "emissionCaptured": true
+      },
+      {
+        "id": "source-digest-whitespace",
+        "resultSha256": "9134a4e97975b3e2363bb94861a2a3d51de8fafe8b2a53cd5c52566a60437890",
+        "fileCount": 8,
+        "admissionHasIR": true,
+        "emissionCaptured": true
+      },
+      {
+        "id": "profile-digest-change",
+        "resultSha256": "9adbf1257c5c32c9f814a5bb033741ec7d9cb238aca25bfccd97cac78177db20",
+        "fileCount": 8,
+        "admissionHasIR": true,
+        "emissionCaptured": true
+      },
+      {
+        "id": "unknown-selected-refusal",
+        "resultSha256": "80e73d0591166880807193f54084fdad10084f001df57257a12b4ebc57c70b19",
+        "fileCount": 0,
+        "admissionHasIR": true,
+        "emissionCaptured": false
+      },
+      {
+        "id": "unselected-unknown-preserved",
+        "resultSha256": "6fb45e7d6bf6681dd048f8e2b97804e53164b88e28c9fe9e6d4036711cd6be92",
+        "fileCount": 8,
+        "admissionHasIR": true,
+        "emissionCaptured": true
+      },
+      {
+        "id": "unicode-source",
+        "resultSha256": "82f3e532feae5838f28a41a282ec5ba23aacde8eacb3f0fa234ba443caed88db",
+        "fileCount": 8,
+        "admissionHasIR": true,
+        "emissionCaptured": true
+      },
+      {
+        "id": "explicit-names",
+        "resultSha256": "6a81d97afaaf950202ec1e6d81814c8379745a0edfc5f5879bb5827c682d26a2",
+        "fileCount": 8,
+        "admissionHasIR": true,
+        "emissionCaptured": true
+      },
+      {
+        "id": "projection",
+        "resultSha256": "c4821e4ca05142184a73411a4a45f56948f1fe8537128515eee5ca9a2f91dd8e",
+        "fileCount": 8,
+        "admissionHasIR": true,
+        "emissionCaptured": true
+      },
+      {
+        "id": "relationship-closure",
+        "resultSha256": "8b5ef1a38864742536226e40feeffdb3e1ebe76ecfa7845c36a1810b7dcd848e",
+        "fileCount": 8,
+        "admissionHasIR": true,
+        "emissionCaptured": true
+      },
+      {
+        "id": "alternate-key",
+        "resultSha256": "f93f2cff6745ef45fb5a3714d10dfdbb784ce958b6836ca1234ebce258fb896d",
+        "fileCount": 8,
+        "admissionHasIR": true,
+        "emissionCaptured": true
+      },
+      {
+        "id": "typed-action",
+        "resultSha256": "9546cf7357d1d24af23ec49de0a454bb32fb10d25a90d3ac24d881ad719c6061",
+        "fileCount": 9,
+        "admissionHasIR": true,
+        "emissionCaptured": true
+      },
+      {
+        "id": "search-index",
+        "resultSha256": "7d0c136e8db3bfac3477141c04c6a4e5aeb9f7e834f585ed357ee9626f6ee04b",
+        "fileCount": 8,
+        "admissionHasIR": true,
+        "emissionCaptured": true
+      },
+      {
+        "id": "missing-view-refusal",
+        "resultSha256": "2b79ca33de36b7930b1389ea38d968e1d23dccda0835c10c3b6f351c283e754b",
+        "fileCount": 0,
+        "admissionHasIR": true,
+        "emissionCaptured": false
+      },
+      {
+        "id": "source-count-limit",
+        "resultSha256": "b386fb36989a90da8b6baa400cb5cdaa6fec113982e91c489f4e10abb08c054c",
+        "fileCount": 0,
+        "admissionHasIR": true,
+        "emissionCaptured": false
+      },
+      {
+        "id": "request-shape-refusal",
+        "resultSha256": "a380734be5bc613912623e38e61cca2607651064eeda4aff50b94593ff3a821c",
+        "fileCount": 0,
+        "admissionHasIR": false,
+        "emissionCaptured": false
+      },
+      {
+        "id": "profile-shape-refusal",
+        "resultSha256": "ce89f8ade99790bb15f6e0dd673cb561658a1d1b6b99961533ef7cc968062ce1",
+        "fileCount": 0,
+        "admissionHasIR": true,
+        "emissionCaptured": false
+      }
+    ],
+    "diffs": [
+      "base-to-report",
+      "base-to-projection"
+    ]
+  },
+  "notes": [
+    "Operation requests and complete ordered result envelopes are retained per case.",
+    "Compile successes feed verifier cases; tampered and malformed inputs are separate refusal controls.",
+    "Stage-one captures private admitted IR, independent Python emission, full package result, input/profile digests, and emitted UTF-8 bytes.",
+    "The retained embedded bundle and its checked-in manifest are hashed independently of the current TypeScript oracle.",
+    "Bun process.version is recorded as Bun-reported Node compatibility metadata, not as evidence of an installed Node runtime."
+  ]
+}

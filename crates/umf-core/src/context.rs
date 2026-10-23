@@ -57,6 +57,31 @@ pub struct Context<'a> {
     deadline_ms: Option<u64>,
 }
 
+/// Restores a temporary trusted schema traversal allowance on both normal
+/// return and Rust unwinding; all counters and host capabilities remain owned
+/// by the original Context throughout the scope.
+struct SchemaDepthScope<'ctx, 'cap> {
+    context: &'ctx mut Context<'cap>,
+    original: usize,
+}
+impl Drop for SchemaDepthScope<'_, '_> {
+    fn drop(&mut self) {
+        self.context.limits.max_depth = self.original;
+    }
+}
+
+/// Restores the ordinary source-text bound after parsing a bounded aggregate
+/// whose individually admitted documents are carried as string values.
+struct AggregateTextScope<'ctx, 'cap> {
+    context: &'ctx mut Context<'cap>,
+    original: usize,
+}
+impl Drop for AggregateTextScope<'_, '_> {
+    fn drop(&mut self) {
+        self.context.limits.max_text_units = self.original;
+    }
+}
+
 impl<'a> Context<'a> {
     pub fn ordinary() -> Self {
         Self::with_limits(ResourceProfile::Cooperative, Limits::ordinary())
@@ -135,6 +160,44 @@ impl<'a> Context<'a> {
 
     pub fn limits(&self) -> Limits {
         self.limits
+    }
+
+    /// Allow bounded schema-only hops while interpreting a trusted fixed schema
+    /// over input that has already passed this Context's ordinary JSON admission.
+    /// This is not source admission: the original depth is restored afterward,
+    /// including on unwind, and work/instruction counters and capabilities are
+    /// never copied or reset.
+    pub fn with_schema_depth_allowance<T>(
+        &mut self,
+        maximum: usize,
+        operation: impl FnOnce(&mut Context<'a>) -> T,
+    ) -> T {
+        let original = self.limits.max_depth;
+        self.limits.max_depth = original.max(maximum);
+        let scope = SchemaDepthScope {
+            context: self,
+            original,
+        };
+        operation(&mut *scope.context)
+    }
+
+    /// Parse an internal aggregate archive with a separate bounded text budget.
+    /// The requested allowance never exceeds32 Mi UTF-16 units. Individual
+    /// source documents must still enforce their own original admission bound.
+    /// This changes only the text ceiling: all counters and host capabilities
+    /// stay in this Context, and the original ceiling is restored on unwind.
+    pub fn with_aggregate_text_limit<T>(
+        &mut self,
+        maximum: usize,
+        operation: impl FnOnce(&mut Context<'a>) -> T,
+    ) -> T {
+        let original = self.limits.max_text_units;
+        self.limits.max_text_units = maximum.min(32 * 1024 * 1024);
+        let scope = AggregateTextScope {
+            context: self,
+            original,
+        };
+        operation(&mut *scope.context)
     }
 
     pub fn profile(&self) -> ResourceProfile {
@@ -222,7 +285,8 @@ impl<'a> Context<'a> {
     pub fn check_cancelled(&mut self, path: Utf16) -> Result<(), EngineError> {
         if let Some(check) = self.fallible_cancellation.as_deref_mut() {
             if check().map_err(EngineError::from_host)? {
-                return Err(EngineError::new("CANCELLED", path, "Operation cancelled"));
+                return Err(EngineError::new("CANCELLED", path, "Operation cancelled")
+                    .with_control_failure());
             }
         }
         if self
@@ -230,7 +294,9 @@ impl<'a> Context<'a> {
             .as_deref_mut()
             .is_some_and(|check| check())
         {
-            return Err(EngineError::new("CANCELLED", path, "Operation cancelled"));
+            return Err(
+                EngineError::new("CANCELLED", path, "Operation cancelled").with_control_failure()
+            );
         }
         Ok(())
     }
@@ -245,10 +311,13 @@ impl<'a> Context<'a> {
                     "CLOCK_CAPABILITY_REQUIRED",
                     path,
                     "Host clock capability did not return a time",
-                ));
+                )
+                .with_control_failure());
             };
             if now > deadline {
-                return Err(EngineError::new("DEADLINE", path, "Deadline elapsed"));
+                return Err(
+                    EngineError::new("DEADLINE", path, "Deadline elapsed").with_control_failure()
+                );
             }
             return Ok(());
         }
@@ -257,17 +326,21 @@ impl<'a> Context<'a> {
                 "CLOCK_CAPABILITY_REQUIRED",
                 path,
                 "Host clock capability is required for deadline requests",
-            ));
+            )
+            .with_control_failure());
         };
         let Some(now) = clock() else {
             return Err(EngineError::new(
                 "CLOCK_CAPABILITY_REQUIRED",
                 path,
                 "Host clock capability did not return a time",
-            ));
+            )
+            .with_control_failure());
         };
         if now > deadline {
-            return Err(EngineError::new("DEADLINE", path, "Deadline elapsed"));
+            return Err(
+                EngineError::new("DEADLINE", path, "Deadline elapsed").with_control_failure()
+            );
         }
         Ok(())
     }
@@ -276,6 +349,102 @@ impl<'a> Context<'a> {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn aggregate_text_scope_caps_and_restores_without_resetting_controls_or_counters() {
+        let mut calls = 0;
+        let mut meter = |_: usize| {
+            calls += 1;
+            Ok(())
+        };
+        let mut ctx = Context::ordinary().with_meter(&mut meter);
+        ctx.charge_constraint_step(Utf16::default()).unwrap();
+        let result: Result<(), EngineError> = ctx.with_aggregate_text_limit(usize::MAX, |ctx| {
+            assert_eq!(ctx.limits().max_text_units, 32 * 1024 * 1024);
+            assert_eq!(ctx.limits().max_values, Limits::ordinary().max_values);
+            ctx.charge_constraint_step(Utf16::default())?;
+            ctx.charge_text(4_000_001, Utf16::default())?;
+            Err(EngineError::new("TEST", Utf16::default(), "test"))
+        });
+        assert!(result.is_err());
+        assert_eq!(ctx.constraint_steps(), 2);
+        assert_eq!(ctx.limits().max_text_units, 4_000_000);
+        assert_eq!(
+            ctx.charge_text(4_000_001, Utf16::default())
+                .unwrap_err()
+                .code,
+            "LIMIT"
+        );
+        let caught = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+            ctx.with_aggregate_text_limit(8_000_000, |_| panic!("bounded unwind proof"))
+        }));
+        assert!(caught.is_err());
+        assert_eq!(ctx.limits().max_text_units, 4_000_000);
+        assert_eq!(ctx.constraint_steps(), 2);
+        drop(ctx);
+        assert!(calls >= 3);
+    }
+
+    #[test]
+    fn trusted_schema_depth_scope_preserves_counters_and_restores_on_error_and_unwind() {
+        let mut ctx = Context::ordinary();
+        ctx.charge_constraint_step(Utf16::default()).unwrap();
+        let result: Result<(), EngineError> = ctx.with_schema_depth_allowance(544, |ctx| {
+            assert_eq!(ctx.limits().max_depth, 544);
+            ctx.charge_constraint_step(Utf16::default())?;
+            Err(EngineError::new("TEST", Utf16::default(), "test"))
+        });
+        assert!(result.is_err());
+        assert_eq!(ctx.constraint_steps(), 2);
+        assert_eq!(ctx.limits().max_depth, 128);
+        let caught = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+            ctx.with_schema_depth_allowance(544, |_| panic!("bounded unwind proof"))
+        }));
+        assert!(caught.is_err());
+        assert_eq!(ctx.limits().max_depth, 128);
+        assert_eq!(ctx.constraint_steps(), 2);
+    }
+
+    #[test]
+    fn cooperative_failure_origin_survives_semantic_error_lookalikes() {
+        for code in [
+            "JSON_PARSE",
+            "TABLE_DEPLOYMENT_UNSUPPORTED",
+            "INPUT",
+            "LIMIT",
+        ] {
+            let ordinary = EngineError::new(code, Utf16::default(), "lookalike");
+            assert!(!ordinary.is_control_failure());
+            let mut meter = |_amount| Err(ordinary.clone());
+            let mut ctx = Context::ordinary().with_meter(&mut meter);
+            let observed = ctx.charge_work(1, Utf16::default()).unwrap_err();
+            assert_eq!(observed.code, code);
+            assert_eq!(observed.message, Utf16::from("lookalike"));
+            assert!(observed.is_control_failure());
+        }
+    }
+
+    #[test]
+    fn native_cancellation_and_deadline_have_control_origin() {
+        let mut cancel = || true;
+        let mut ctx = Context::ordinary().with_cancellation(&mut cancel);
+        assert!(ctx
+            .check_cancelled(Utf16::default())
+            .unwrap_err()
+            .is_control_failure());
+        let mut clock = || Some(2);
+        let mut ctx = Context::ordinary().with_clock(&mut clock, 1);
+        assert!(ctx
+            .check_deadline(Utf16::default())
+            .unwrap_err()
+            .is_control_failure());
+        let mut no_time = || None;
+        let mut ctx = Context::ordinary().with_clock(&mut no_time, 1);
+        assert!(ctx
+            .check_deadline(Utf16::default())
+            .unwrap_err()
+            .is_control_failure());
+    }
 
     #[test]
     fn work_accumulator_crosses_u32_without_a_platform_limit() {

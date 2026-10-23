@@ -20,10 +20,7 @@ use core::char;
 use thiserror::Error;
 
 use crate::{
-    char_traits::{
-        as_hex, is_anchor_char, is_flow, is_hex,
-        is_tag_char, is_uri_char,
-    },
+    char_traits::{as_hex, is_anchor_char, is_flow, is_hex, is_tag_char, is_uri_char},
     input::{Input, SkipTabs},
 };
 
@@ -1661,7 +1658,11 @@ impl<'input, T: Input> Scanner<'input, T> {
         self.roll_indent(mark.col, None, TokenType::BlockSequenceStart, mark);
         let found_tabs = self.skip_ws_to_eol(SkipTabs::Yes)?.found_tabs();
         self.input.lookahead(2);
-        if found_tabs && self.input.next_char_is('-') && self.input.profile_is_blank_or_breakz(self.input.peek_nth(1))
+        if found_tabs
+            && self.input.next_char_is('-')
+            && self
+                .input
+                .profile_is_blank_or_breakz(self.input.peek_nth(1))
         {
             return Err(ScanError::new_str(
                 self.mark,
@@ -1851,8 +1852,11 @@ impl<'input, T: Input> Scanner<'input, T> {
             // We are at the first content character of a content line.
             trailing_blank = self.input.next_is_blank();
             if !literal && !leading_break.is_empty() && !leading_blank && !trailing_blank {
-                let preserve_separator = self.input.scan_profile() == crate::ScanProfile::PythonRuamel12
-                    && leading_break.chars().any(|c| matches!(c, '\u{2028}' | '\u{2029}'));
+                let preserve_separator = self.input.scan_profile()
+                    == crate::ScanProfile::PythonRuamel12
+                    && leading_break
+                        .chars()
+                        .any(|c| matches!(c, '\u{2028}' | '\u{2029}'));
                 if preserve_separator {
                     string.push_str(&leading_break);
                     string.push_str(&trailing_breaks);
@@ -2135,8 +2139,11 @@ impl<'input, T: Input> Scanner<'input, T> {
 
             // Join the whitespaces or fold line breaks.
             if leading_blanks {
-                let preserve_separator = self.input.scan_profile() == crate::ScanProfile::PythonRuamel12
-                    && leading_break.chars().any(|c| matches!(c, '\u{2028}' | '\u{2029}'));
+                let preserve_separator = self.input.scan_profile()
+                    == crate::ScanProfile::PythonRuamel12
+                    && leading_break
+                        .chars()
+                        .any(|c| matches!(c, '\u{2028}' | '\u{2029}'));
                 if preserve_separator {
                     string.push_str(&leading_break);
                     string.push_str(&trailing_breaks);
@@ -2381,8 +2388,12 @@ impl<'input, T: Input> Scanner<'input, T> {
                 && self.input.next_can_be_plain_scalar(self.flow_level > 0)
             {
                 if self.leading_whitespace {
-                    let preserve_separator = self.input.scan_profile() == crate::ScanProfile::PythonRuamel12
-                        && self.buf_leading_break.chars().any(|c| matches!(c, '\u{2028}' | '\u{2029}'));
+                    let preserve_separator = self.input.scan_profile()
+                        == crate::ScanProfile::PythonRuamel12
+                        && self
+                            .buf_leading_break
+                            .chars()
+                            .any(|c| matches!(c, '\u{2028}' | '\u{2029}'));
                     if preserve_separator {
                         string.push_str(&self.buf_leading_break);
                         string.push_str(&self.buf_trailing_breaks);
@@ -2467,26 +2478,28 @@ impl<'input, T: Input> Scanner<'input, T> {
                     if self.leading_whitespace {
                         let c = self.input.peek();
                         self.skip_break();
-                        self.buf_trailing_breaks.push(if self.input.scan_profile()
-                            == crate::ScanProfile::PythonRuamel12
-                            && matches!(c, '\u{2028}' | '\u{2029}')
-                        {
-                            c
-                        } else {
-                            '\n'
-                        });
+                        self.buf_trailing_breaks.push(
+                            if self.input.scan_profile() == crate::ScanProfile::PythonRuamel12
+                                && matches!(c, '\u{2028}' | '\u{2029}')
+                            {
+                                c
+                            } else {
+                                '\n'
+                            },
+                        );
                     } else {
                         self.buf_whitespaces.clear();
                         let c = self.input.peek();
                         self.skip_break();
-                        self.buf_leading_break.push(if self.input.scan_profile()
-                            == crate::ScanProfile::PythonRuamel12
-                            && matches!(c, '\u{2028}' | '\u{2029}')
-                        {
-                            c
-                        } else {
-                            '\n'
-                        });
+                        self.buf_leading_break.push(
+                            if self.input.scan_profile() == crate::ScanProfile::PythonRuamel12
+                                && matches!(c, '\u{2028}' | '\u{2029}')
+                            {
+                                c
+                            } else {
+                                '\n'
+                            },
+                        );
                         self.leading_whitespace = true;
                     }
                 }

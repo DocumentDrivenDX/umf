@@ -1,0 +1,29 @@
+{
+  "schema": "umf.r3-inspector-repair-freeze/1",
+  "status": "implementation_frozen_independent_review_required",
+  "source": "crates/umf-codegen/src/access/inspection.rs",
+  "sha256": "eb0de16c4411a4ae3c35fafd7b3ba1fd5009a7bfe35d8cf5d80bb2d4ed3c454d",
+  "repairs": [
+    "borrowed UTF16 binding identity and exact index name distinctness",
+    "live binding callback Context, metered candidate/diagnostic/copy paths and terminal host-error provenance",
+    "raw profile layout checks scoped to lakebase/spark/unity; PostgreSQL checks retain own source profile boundary",
+    "selected members coverage only for records actually present in this binding.elements",
+    "selected missing record locate path preserves first module index or -1 and first missing element -1"
+  ],
+  "verification": {
+    "inspectorFocusedUnits": 6,
+    "publicFocusedCases": 9,
+    "publicMatches": 9,
+    "reports": [
+      "/private/tmp/sol-inspector-missing-ref-final.json",
+      "/private/tmp/sol-inspector-final8-prior7.json",
+      "/private/tmp/sol-inspector-missing-element-valid-final.json"
+    ],
+    "separateMalformedRequestControl": "sol-missing-selected-element-review/frozen.json,1/1 INPUTbeforeinspector"
+  },
+  "limits": [
+    "No self-approval; Sol generation independently reviews source.",
+    "Final formatted source/build/installedhost cohort remains root-owned.",
+    "Prior64-case report62/64 is retained historical evidence; other two access/canonical defects were assigned generation owner, no expectations changed."
+  ]
+}

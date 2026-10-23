@@ -1,0 +1,222 @@
+{
+  "cases": [
+    {
+      "id": "row-group-array-index",
+      "operation": "normalizeRowScope",
+      "request": {
+        "input": {
+          "commands": [
+            "vendor"
+          ],
+          "groups": [
+            {
+              "name": "0",
+              "commands": [
+                "vendor"
+              ]
+            }
+          ]
+        },
+        "context": {
+          "groups": [
+            "role"
+          ]
+        }
+      },
+      "expected": {
+        "ok": true,
+        "result": {
+          "valid": false,
+          "source": {
+            "commands": [
+              "vendor"
+            ],
+            "groups": [
+              {
+                "name": "0",
+                "commands": [
+                  "vendor"
+                ]
+              }
+            ]
+          },
+          "diagnostics": [
+            {
+              "code": "ROW_SCOPE_COMMAND",
+              "path": "/commands/0",
+              "message": "Unknown command"
+            },
+            {
+              "code": "ROW_SCOPE_COMMAND",
+              "path": "/groups/0/commands/0",
+              "message": "Unknown command"
+            }
+          ],
+          "sourceToOutput": {}
+        }
+      }
+    },
+    {
+      "id": "row-group-string-index",
+      "operation": "normalizeRowScope",
+      "request": {
+        "input": {
+          "commands": [
+            "vendor"
+          ],
+          "groups": [
+            {
+              "name": "0",
+              "commands": [
+                "vendor"
+              ]
+            }
+          ]
+        },
+        "context": {
+          "groups": "abc"
+        }
+      },
+      "expected": {
+        "ok": true,
+        "result": {
+          "valid": false,
+          "source": {
+            "commands": [
+              "vendor"
+            ],
+            "groups": [
+              {
+                "name": "0",
+                "commands": [
+                  "vendor"
+                ]
+              }
+            ]
+          },
+          "diagnostics": [
+            {
+              "code": "ROW_SCOPE_COMMAND",
+              "path": "/commands/0",
+              "message": "Unknown command"
+            },
+            {
+              "code": "ROW_SCOPE_COMMAND",
+              "path": "/groups/0/commands/0",
+              "message": "Unknown command"
+            }
+          ],
+          "sourceToOutput": {}
+        }
+      }
+    },
+    {
+      "id": "row-group-string-length",
+      "operation": "normalizeRowScope",
+      "request": {
+        "input": {
+          "commands": [
+            "vendor"
+          ],
+          "groups": [
+            {
+              "name": "length",
+              "commands": [
+                "vendor"
+              ]
+            }
+          ]
+        },
+        "context": {
+          "groups": "abc"
+        }
+      },
+      "expected": {
+        "ok": true,
+        "result": {
+          "valid": false,
+          "source": {
+            "commands": [
+              "vendor"
+            ],
+            "groups": [
+              {
+                "name": "length",
+                "commands": [
+                  "vendor"
+                ]
+              }
+            ]
+          },
+          "diagnostics": [
+            {
+              "code": "ROW_SCOPE_COMMAND",
+              "path": "/commands/0",
+              "message": "Unknown command"
+            },
+            {
+              "code": "ROW_SCOPE_COMMAND",
+              "path": "/groups/0/commands/0",
+              "message": "Unknown command"
+            }
+          ],
+          "sourceToOutput": {}
+        }
+      }
+    },
+    {
+      "id": "row-group-object-inherited",
+      "operation": "normalizeRowScope",
+      "request": {
+        "input": {
+          "commands": [
+            "vendor"
+          ],
+          "groups": [
+            {
+              "name": "toString",
+              "commands": [
+                "vendor"
+              ]
+            }
+          ]
+        },
+        "context": {
+          "groups": {}
+        }
+      },
+      "expected": {
+        "ok": true,
+        "result": {
+          "valid": false,
+          "source": {
+            "commands": [
+              "vendor"
+            ],
+            "groups": [
+              {
+                "name": "toString",
+                "commands": [
+                  "vendor"
+                ]
+              }
+            ]
+          },
+          "diagnostics": [
+            {
+              "code": "ROW_SCOPE_COMMAND",
+              "path": "/commands/0",
+              "message": "Unknown command"
+            },
+            {
+              "code": "ROW_SCOPE_COMMAND",
+              "path": "/groups/0/commands/0",
+              "message": "Unknown command"
+            }
+          ],
+          "sourceToOutput": {}
+        }
+      }
+    }
+  ]
+}

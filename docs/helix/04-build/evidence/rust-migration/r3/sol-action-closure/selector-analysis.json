@@ -1,0 +1,4255 @@
+{
+  "format": "umf-r3-action-selector-analysis/1",
+  "cases": [
+    {
+      "id": "action-selector-wrong-domain",
+      "document": {
+        "umf": "0.10.0",
+        "id": "commerce-model",
+        "vocabularies": {
+          "umf.access": {
+            "version": "0.1.0"
+          },
+          "umf.actions": {
+            "version": "0.1.0"
+          },
+          "future.census": {
+            "version": "1.0.0"
+          }
+        },
+        "modules": [
+          {
+            "id": "commerce",
+            "namespace": "commerce",
+            "elements": [
+              {
+                "id": "orderId",
+                "kind": "field",
+                "scalarType": "string",
+                "cardinality": "one",
+                "nullability": "required",
+                "extensions": {}
+              },
+              {
+                "id": "amount",
+                "kind": "field",
+                "scalarType": "decimal",
+                "cardinality": "one",
+                "nullability": "required",
+                "extensions": {},
+                "facets": {
+                  "precision": 12,
+                  "scale": 2
+                },
+                "description": "Exact decimal source annotation"
+              },
+              {
+                "id": "memo",
+                "kind": "field",
+                "scalarType": "string",
+                "cardinality": "one",
+                "nullability": "absent-allowed",
+                "extensions": {},
+                "default": {
+                  "on": "missing",
+                  "value": {
+                    "string": "pending"
+                  }
+                }
+              },
+              {
+                "id": "placedAt",
+                "kind": "field",
+                "scalarType": "timestamp",
+                "cardinality": "one",
+                "nullability": "required",
+                "extensions": {}
+              },
+              {
+                "id": "revision",
+                "kind": "field",
+                "scalarType": "integer",
+                "cardinality": "one",
+                "nullability": "required",
+                "extensions": {},
+                "facets": {
+                  "integerWidth": {
+                    "bits": 64,
+                    "signed": true
+                  }
+                }
+              },
+              {
+                "id": "Order",
+                "kind": "record",
+                "members": [
+                  {
+                    "module": "commerce",
+                    "element": "orderId"
+                  },
+                  {
+                    "module": "commerce",
+                    "element": "amount"
+                  },
+                  {
+                    "module": "commerce",
+                    "element": "memo"
+                  },
+                  {
+                    "module": "commerce",
+                    "element": "placedAt"
+                  },
+                  {
+                    "module": "commerce",
+                    "element": "revision"
+                  }
+                ],
+                "keys": [
+                  {
+                    "id": "order-key",
+                    "name": "Order primary key",
+                    "fields": [
+                      {
+                        "module": "commerce",
+                        "element": "orderId"
+                      }
+                    ],
+                    "primary": true
+                  }
+                ],
+                "extensions": {},
+                "description": "Selected Order annotation retained without native enforcement"
+              },
+              {
+                "id": "customerId",
+                "kind": "field",
+                "scalarType": "string",
+                "cardinality": "one",
+                "nullability": "required",
+                "extensions": {}
+              },
+              {
+                "id": "name",
+                "kind": "field",
+                "scalarType": "string",
+                "cardinality": "one",
+                "nullability": "required",
+                "extensions": {}
+              },
+              {
+                "id": "Customer",
+                "kind": "record",
+                "members": [
+                  {
+                    "module": "commerce",
+                    "element": "customerId"
+                  },
+                  {
+                    "module": "commerce",
+                    "element": "name"
+                  }
+                ],
+                "keys": [
+                  {
+                    "id": "Customer-key",
+                    "name": "Customer primary key",
+                    "primary": true,
+                    "fields": [
+                      {
+                        "module": "commerce",
+                        "element": "customerId"
+                      }
+                    ]
+                  }
+                ],
+                "extensions": {}
+              },
+              {
+                "id": "lineOrderId",
+                "kind": "field",
+                "scalarType": "string",
+                "cardinality": "one",
+                "nullability": "required",
+                "extensions": {}
+              },
+              {
+                "id": "lineNumber",
+                "kind": "field",
+                "scalarType": "integer",
+                "cardinality": "one",
+                "nullability": "required",
+                "extensions": {},
+                "facets": {
+                  "integerWidth": {
+                    "bits": 32,
+                    "signed": true
+                  }
+                }
+              },
+              {
+                "id": "OrderLine",
+                "kind": "record",
+                "members": [
+                  {
+                    "module": "commerce",
+                    "element": "lineOrderId"
+                  },
+                  {
+                    "module": "commerce",
+                    "element": "lineNumber"
+                  }
+                ],
+                "keys": [
+                  {
+                    "id": "OrderLine-key",
+                    "name": "OrderLine primary key",
+                    "primary": true,
+                    "fields": [
+                      {
+                        "module": "commerce",
+                        "element": "lineOrderId"
+                      },
+                      {
+                        "module": "commerce",
+                        "element": "lineNumber"
+                      }
+                    ]
+                  }
+                ],
+                "extensions": {}
+              }
+            ],
+            "extensions": {
+              "umf.access": {
+                "views": [
+                  {
+                    "record": {
+                      "module": "commerce",
+                      "element": "Order"
+                    },
+                    "fields": [
+                      {
+                        "field": {
+                          "module": "commerce",
+                          "element": "orderId"
+                        },
+                        "row": {
+                          "missing": false,
+                          "null": false
+                        },
+                        "create": {
+                          "missing": false,
+                          "null": false
+                        },
+                        "mutable": false,
+                        "generated": false
+                      },
+                      {
+                        "field": {
+                          "module": "commerce",
+                          "element": "amount"
+                        },
+                        "row": {
+                          "missing": false,
+                          "null": false
+                        },
+                        "create": {
+                          "missing": false,
+                          "null": false
+                        },
+                        "mutable": true,
+                        "generated": false
+                      },
+                      {
+                        "field": {
+                          "module": "commerce",
+                          "element": "memo"
+                        },
+                        "row": {
+                          "missing": false,
+                          "null": true
+                        },
+                        "create": {
+                          "missing": true,
+                          "null": true
+                        },
+                        "mutable": true,
+                        "generated": false
+                      },
+                      {
+                        "field": {
+                          "module": "commerce",
+                          "element": "placedAt"
+                        },
+                        "row": {
+                          "missing": false,
+                          "null": false
+                        },
+                        "create": {
+                          "missing": false,
+                          "null": false
+                        },
+                        "mutable": false,
+                        "generated": false,
+                        "temporal": "instant"
+                      },
+                      {
+                        "field": {
+                          "module": "commerce",
+                          "element": "revision"
+                        },
+                        "row": {
+                          "missing": false,
+                          "null": false
+                        },
+                        "create": {
+                          "missing": true,
+                          "null": false
+                        },
+                        "mutable": false,
+                        "generated": true
+                      }
+                    ],
+                    "selectedKey": {
+                      "module": "commerce",
+                      "element": "Order",
+                      "key": "order-key"
+                    }
+                  },
+                  {
+                    "record": {
+                      "module": "commerce",
+                      "element": "Customer"
+                    },
+                    "fields": [
+                      {
+                        "field": {
+                          "module": "commerce",
+                          "element": "customerId"
+                        },
+                        "row": {
+                          "missing": false,
+                          "null": false
+                        },
+                        "create": {
+                          "missing": false,
+                          "null": false
+                        },
+                        "mutable": false,
+                        "generated": false
+                      },
+                      {
+                        "field": {
+                          "module": "commerce",
+                          "element": "name"
+                        },
+                        "row": {
+                          "missing": false,
+                          "null": false
+                        },
+                        "create": {
+                          "missing": false,
+                          "null": false
+                        },
+                        "mutable": true,
+                        "generated": false
+                      }
+                    ],
+                    "selectedKey": {
+                      "module": "commerce",
+                      "element": "Customer",
+                      "key": "Customer-key"
+                    }
+                  },
+                  {
+                    "record": {
+                      "module": "commerce",
+                      "element": "OrderLine"
+                    },
+                    "fields": [
+                      {
+                        "field": {
+                          "module": "commerce",
+                          "element": "lineOrderId"
+                        },
+                        "row": {
+                          "missing": false,
+                          "null": false
+                        },
+                        "create": {
+                          "missing": false,
+                          "null": false
+                        },
+                        "mutable": false,
+                        "generated": false
+                      },
+                      {
+                        "field": {
+                          "module": "commerce",
+                          "element": "lineNumber"
+                        },
+                        "row": {
+                          "missing": false,
+                          "null": false
+                        },
+                        "create": {
+                          "missing": false,
+                          "null": false
+                        },
+                        "mutable": false,
+                        "generated": false
+                      }
+                    ],
+                    "selectedKey": {
+                      "module": "commerce",
+                      "element": "OrderLine",
+                      "key": "OrderLine-key"
+                    }
+                  }
+                ],
+                "columns": [
+                  {
+                    "binding": {
+                      "sourceId": "orders-binding",
+                      "module": "commerce"
+                    },
+                    "target": {
+                      "platform": "postgresql",
+                      "majorVersion": "18"
+                    },
+                    "columns": [
+                      {
+                        "field": {
+                          "module": "commerce",
+                          "element": "orderId"
+                        },
+                        "type": "text",
+                        "notNull": true,
+                        "generation": null
+                      },
+                      {
+                        "field": {
+                          "module": "commerce",
+                          "element": "amount"
+                        },
+                        "type": "numeric(12,2)",
+                        "notNull": true,
+                        "generation": null
+                      },
+                      {
+                        "field": {
+                          "module": "commerce",
+                          "element": "memo"
+                        },
+                        "type": "text",
+                        "notNull": false,
+                        "generation": null
+                      },
+                      {
+                        "field": {
+                          "module": "commerce",
+                          "element": "placedAt"
+                        },
+                        "type": "timestamptz",
+                        "notNull": true,
+                        "generation": null
+                      },
+                      {
+                        "field": {
+                          "module": "commerce",
+                          "element": "revision"
+                        },
+                        "type": "bigint",
+                        "notNull": true,
+                        "generation": "identity"
+                      }
+                    ]
+                  }
+                ],
+                "search": [],
+                "searchBindings": []
+              },
+              "umf.actions": {
+                "actions": [
+                  {
+                    "id": "shipOrder",
+                    "name": "Ship order",
+                    "description": "Declared handler identity; no execution qualification",
+                    "parameters": [
+                      {
+                        "id": "order",
+                        "kind": "entity",
+                        "target": {
+                          "module": "commerce",
+                          "element": "Order",
+                          "key": "order-key"
+                        },
+                        "required": true
+                      },
+                      {
+                        "id": "memo",
+                        "kind": "value",
+                        "field": {
+                          "module": "commerce",
+                          "element": "memo"
+                        },
+                        "required": false
+                      }
+                    ],
+                    "outputs": [],
+                    "preconditions": [],
+                    "postconditions": [],
+                    "reads": [],
+                    "writes": [
+                      {
+                        "id": "orderWrite",
+                        "record": {
+                          "module": "commerce",
+                          "element": "Order"
+                        },
+                        "selector": {
+                          "language": "umf.actions.keys",
+                          "version": "1",
+                          "expression": "{\"key\":\"order-key\",\"components\":[{\"literal\":{\"boolean\":true}}]}",
+                          "references": []
+                        },
+                        "maxEntities": 1,
+                        "fields": [
+                          {
+                            "module": "commerce",
+                            "element": "memo"
+                          }
+                        ],
+                        "relationships": [],
+                        "create": false,
+                        "delete": false
+                      }
+                    ],
+                    "binding": {
+                      "kind": "recipe",
+                      "profile": {
+                        "id": "graph-write",
+                        "version": "1"
+                      },
+                      "effects": [
+                        {
+                          "id": "neutral",
+                          "kind": "set",
+                          "entity": {
+                            "parameter": "order"
+                          },
+                          "values": [
+                            {
+                              "field": {
+                                "module": "commerce",
+                                "element": "memo"
+                              },
+                              "value": {
+                                "literal": {
+                                  "string": "ok"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    "failures": [
+                      {
+                        "code": "NOT_READY",
+                        "message": "Not ready",
+                        "retryable": false
+                      },
+                      {
+                        "code": "INVALID",
+                        "message": "not met",
+                        "retryable": false
+                      }
+                    ],
+                    "authorization": {
+                      "kind": "roles",
+                      "profile": {
+                        "id": "umf.actions.roles",
+                        "version": "1"
+                      },
+                      "roles": [
+                        "shipper"
+                      ]
+                    },
+                    "attribution": {
+                      "subject": "person-required"
+                    },
+                    "atomicity": "single-store",
+                    "idempotency": "caller-key-optional",
+                    "result": {
+                      "identities": "created-and-changed",
+                      "version": "store-opaque",
+                      "receipt": "read-at-least"
+                    }
+                  }
+                ]
+              }
+            },
+            "title": "Commerce source metadata",
+            "aliases": [
+              "shop"
+            ]
+          }
+        ],
+        "title": "Authored census title; no executable semantics",
+        "aliases": [
+          "original/commerce",
+          "orders~ledger"
+        ]
+      },
+      "action": {
+        "id": "shipOrder",
+        "name": "Ship order",
+        "description": "Declared handler identity; no execution qualification",
+        "parameters": [
+          {
+            "id": "order",
+            "kind": "entity",
+            "target": {
+              "module": "commerce",
+              "element": "Order",
+              "key": "order-key"
+            },
+            "required": true
+          },
+          {
+            "id": "memo",
+            "kind": "value",
+            "field": {
+              "module": "commerce",
+              "element": "memo"
+            },
+            "required": false
+          }
+        ],
+        "outputs": [],
+        "preconditions": [],
+        "postconditions": [],
+        "reads": [],
+        "writes": [
+          {
+            "id": "orderWrite",
+            "record": {
+              "module": "commerce",
+              "element": "Order"
+            },
+            "selector": {
+              "language": "umf.actions.keys",
+              "version": "1",
+              "expression": "{\"key\":\"order-key\",\"components\":[{\"literal\":{\"boolean\":true}}]}",
+              "references": []
+            },
+            "maxEntities": 1,
+            "fields": [
+              {
+                "module": "commerce",
+                "element": "memo"
+              }
+            ],
+            "relationships": [],
+            "create": false,
+            "delete": false
+          }
+        ],
+        "binding": {
+          "kind": "recipe",
+          "profile": {
+            "id": "graph-write",
+            "version": "1"
+          },
+          "effects": [
+            {
+              "id": "neutral",
+              "kind": "set",
+              "entity": {
+                "parameter": "order"
+              },
+              "values": [
+                {
+                  "field": {
+                    "module": "commerce",
+                    "element": "memo"
+                  },
+                  "value": {
+                    "literal": {
+                      "string": "ok"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "failures": [
+          {
+            "code": "NOT_READY",
+            "message": "Not ready",
+            "retryable": false
+          },
+          {
+            "code": "INVALID",
+            "message": "not met",
+            "retryable": false
+          }
+        ],
+        "authorization": {
+          "kind": "roles",
+          "profile": {
+            "id": "umf.actions.roles",
+            "version": "1"
+          },
+          "roles": [
+            "shipper"
+          ]
+        },
+        "attribution": {
+          "subject": "person-required"
+        },
+        "atomicity": "single-store",
+        "idempotency": "caller-key-optional",
+        "result": {
+          "identities": "created-and-changed",
+          "version": "store-opaque",
+          "receipt": "read-at-least"
+        }
+      },
+      "expected": {
+        "obligations": [
+          {
+            "id": "/action/parameters/0",
+            "path": "/action/parameters/0",
+            "kind": "key",
+            "status": "checked"
+          },
+          {
+            "id": "/modules/0/elements/5",
+            "path": "/modules/0/elements/5",
+            "kind": "model",
+            "status": "checked"
+          },
+          {
+            "id": "/modules/0/elements/0",
+            "path": "/modules/0/elements/0",
+            "kind": "model",
+            "status": "checked"
+          },
+          {
+            "id": "/modules/0/elements/1",
+            "path": "/modules/0/elements/1",
+            "kind": "model",
+            "status": "checked"
+          },
+          {
+            "id": "/modules/0/elements/2",
+            "path": "/modules/0/elements/2",
+            "kind": "model",
+            "status": "checked"
+          },
+          {
+            "id": "/modules/0/elements/3",
+            "path": "/modules/0/elements/3",
+            "kind": "model",
+            "status": "checked"
+          },
+          {
+            "id": "/modules/0/elements/4",
+            "path": "/modules/0/elements/4",
+            "kind": "model",
+            "status": "checked"
+          },
+          {
+            "id": "/modules/0/elements/5/keys/0",
+            "path": "/modules/0/elements/5/keys/0",
+            "kind": "key",
+            "status": "checked"
+          },
+          {
+            "id": "/action/parameters/1",
+            "path": "/action/parameters/1",
+            "kind": "value",
+            "status": "checked"
+          },
+          {
+            "id": "/action/writes/0",
+            "path": "/action/writes/0",
+            "kind": "frame",
+            "status": "checked"
+          },
+          {
+            "id": "/action/writes/0/selector",
+            "path": "/action/writes/0/selector",
+            "kind": "selector",
+            "status": "unchecked"
+          },
+          {
+            "id": "/action/failures/0",
+            "path": "/action/failures/0",
+            "kind": "failure",
+            "status": "checked"
+          },
+          {
+            "id": "/action/failures/1",
+            "path": "/action/failures/1",
+            "kind": "failure",
+            "status": "checked"
+          },
+          {
+            "id": "/action/authorization",
+            "path": "/action/authorization",
+            "kind": "authorization",
+            "status": "checked"
+          },
+          {
+            "id": "/action/attribution",
+            "path": "/action/attribution",
+            "kind": "attribution",
+            "status": "checked"
+          },
+          {
+            "id": "/action/atomicity",
+            "path": "/action/atomicity",
+            "kind": "atomicity",
+            "status": "checked"
+          },
+          {
+            "id": "/action/idempotency",
+            "path": "/action/idempotency",
+            "kind": "idempotency",
+            "status": "checked"
+          },
+          {
+            "id": "/action/result",
+            "path": "/action/result",
+            "kind": "result",
+            "status": "checked"
+          },
+          {
+            "id": "/action/binding",
+            "path": "/action/binding",
+            "kind": "binding",
+            "status": "checked"
+          },
+          {
+            "id": "/action/binding/effects/0",
+            "path": "/action/binding/effects/0",
+            "kind": "effect",
+            "status": "checked"
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "ACTION_STRUCTURE",
+            "path": "/action/writes/0/selector",
+            "message": "UmfError: Literal does not match scalar family",
+            "severity": "error"
+          }
+        ]
+      }
+    },
+    {
+      "id": "action-selector-wrong-wrapper",
+      "document": {
+        "umf": "0.10.0",
+        "id": "commerce-model",
+        "vocabularies": {
+          "umf.access": {
+            "version": "0.1.0"
+          },
+          "umf.actions": {
+            "version": "0.1.0"
+          },
+          "future.census": {
+            "version": "1.0.0"
+          }
+        },
+        "modules": [
+          {
+            "id": "commerce",
+            "namespace": "commerce",
+            "elements": [
+              {
+                "id": "orderId",
+                "kind": "field",
+                "scalarType": "string",
+                "cardinality": "one",
+                "nullability": "required",
+                "extensions": {}
+              },
+              {
+                "id": "amount",
+                "kind": "field",
+                "scalarType": "decimal",
+                "cardinality": "one",
+                "nullability": "required",
+                "extensions": {},
+                "facets": {
+                  "precision": 12,
+                  "scale": 2
+                },
+                "description": "Exact decimal source annotation"
+              },
+              {
+                "id": "memo",
+                "kind": "field",
+                "scalarType": "string",
+                "cardinality": "one",
+                "nullability": "absent-allowed",
+                "extensions": {},
+                "default": {
+                  "on": "missing",
+                  "value": {
+                    "string": "pending"
+                  }
+                }
+              },
+              {
+                "id": "placedAt",
+                "kind": "field",
+                "scalarType": "timestamp",
+                "cardinality": "one",
+                "nullability": "required",
+                "extensions": {}
+              },
+              {
+                "id": "revision",
+                "kind": "field",
+                "scalarType": "integer",
+                "cardinality": "one",
+                "nullability": "required",
+                "extensions": {},
+                "facets": {
+                  "integerWidth": {
+                    "bits": 64,
+                    "signed": true
+                  }
+                }
+              },
+              {
+                "id": "Order",
+                "kind": "record",
+                "members": [
+                  {
+                    "module": "commerce",
+                    "element": "orderId"
+                  },
+                  {
+                    "module": "commerce",
+                    "element": "amount"
+                  },
+                  {
+                    "module": "commerce",
+                    "element": "memo"
+                  },
+                  {
+                    "module": "commerce",
+                    "element": "placedAt"
+                  },
+                  {
+                    "module": "commerce",
+                    "element": "revision"
+                  }
+                ],
+                "keys": [
+                  {
+                    "id": "order-key",
+                    "name": "Order primary key",
+                    "fields": [
+                      {
+                        "module": "commerce",
+                        "element": "orderId"
+                      }
+                    ],
+                    "primary": true
+                  }
+                ],
+                "extensions": {},
+                "description": "Selected Order annotation retained without native enforcement"
+              },
+              {
+                "id": "customerId",
+                "kind": "field",
+                "scalarType": "string",
+                "cardinality": "one",
+                "nullability": "required",
+                "extensions": {}
+              },
+              {
+                "id": "name",
+                "kind": "field",
+                "scalarType": "string",
+                "cardinality": "one",
+                "nullability": "required",
+                "extensions": {}
+              },
+              {
+                "id": "Customer",
+                "kind": "record",
+                "members": [
+                  {
+                    "module": "commerce",
+                    "element": "customerId"
+                  },
+                  {
+                    "module": "commerce",
+                    "element": "name"
+                  }
+                ],
+                "keys": [
+                  {
+                    "id": "Customer-key",
+                    "name": "Customer primary key",
+                    "primary": true,
+                    "fields": [
+                      {
+                        "module": "commerce",
+                        "element": "customerId"
+                      }
+                    ]
+                  }
+                ],
+                "extensions": {}
+              },
+              {
+                "id": "lineOrderId",
+                "kind": "field",
+                "scalarType": "string",
+                "cardinality": "one",
+                "nullability": "required",
+                "extensions": {}
+              },
+              {
+                "id": "lineNumber",
+                "kind": "field",
+                "scalarType": "integer",
+                "cardinality": "one",
+                "nullability": "required",
+                "extensions": {},
+                "facets": {
+                  "integerWidth": {
+                    "bits": 32,
+                    "signed": true
+                  }
+                }
+              },
+              {
+                "id": "OrderLine",
+                "kind": "record",
+                "members": [
+                  {
+                    "module": "commerce",
+                    "element": "lineOrderId"
+                  },
+                  {
+                    "module": "commerce",
+                    "element": "lineNumber"
+                  }
+                ],
+                "keys": [
+                  {
+                    "id": "OrderLine-key",
+                    "name": "OrderLine primary key",
+                    "primary": true,
+                    "fields": [
+                      {
+                        "module": "commerce",
+                        "element": "lineOrderId"
+                      },
+                      {
+                        "module": "commerce",
+                        "element": "lineNumber"
+                      }
+                    ]
+                  }
+                ],
+                "extensions": {}
+              }
+            ],
+            "extensions": {
+              "umf.access": {
+                "views": [
+                  {
+                    "record": {
+                      "module": "commerce",
+                      "element": "Order"
+                    },
+                    "fields": [
+                      {
+                        "field": {
+                          "module": "commerce",
+                          "element": "orderId"
+                        },
+                        "row": {
+                          "missing": false,
+                          "null": false
+                        },
+                        "create": {
+                          "missing": false,
+                          "null": false
+                        },
+                        "mutable": false,
+                        "generated": false
+                      },
+                      {
+                        "field": {
+                          "module": "commerce",
+                          "element": "amount"
+                        },
+                        "row": {
+                          "missing": false,
+                          "null": false
+                        },
+                        "create": {
+                          "missing": false,
+                          "null": false
+                        },
+                        "mutable": true,
+                        "generated": false
+                      },
+                      {
+                        "field": {
+                          "module": "commerce",
+                          "element": "memo"
+                        },
+                        "row": {
+                          "missing": false,
+                          "null": true
+                        },
+                        "create": {
+                          "missing": true,
+                          "null": true
+                        },
+                        "mutable": true,
+                        "generated": false
+                      },
+                      {
+                        "field": {
+                          "module": "commerce",
+                          "element": "placedAt"
+                        },
+                        "row": {
+                          "missing": false,
+                          "null": false
+                        },
+                        "create": {
+                          "missing": false,
+                          "null": false
+                        },
+                        "mutable": false,
+                        "generated": false,
+                        "temporal": "instant"
+                      },
+                      {
+                        "field": {
+                          "module": "commerce",
+                          "element": "revision"
+                        },
+                        "row": {
+                          "missing": false,
+                          "null": false
+                        },
+                        "create": {
+                          "missing": true,
+                          "null": false
+                        },
+                        "mutable": false,
+                        "generated": true
+                      }
+                    ],
+                    "selectedKey": {
+                      "module": "commerce",
+                      "element": "Order",
+                      "key": "order-key"
+                    }
+                  },
+                  {
+                    "record": {
+                      "module": "commerce",
+                      "element": "Customer"
+                    },
+                    "fields": [
+                      {
+                        "field": {
+                          "module": "commerce",
+                          "element": "customerId"
+                        },
+                        "row": {
+                          "missing": false,
+                          "null": false
+                        },
+                        "create": {
+                          "missing": false,
+                          "null": false
+                        },
+                        "mutable": false,
+                        "generated": false
+                      },
+                      {
+                        "field": {
+                          "module": "commerce",
+                          "element": "name"
+                        },
+                        "row": {
+                          "missing": false,
+                          "null": false
+                        },
+                        "create": {
+                          "missing": false,
+                          "null": false
+                        },
+                        "mutable": true,
+                        "generated": false
+                      }
+                    ],
+                    "selectedKey": {
+                      "module": "commerce",
+                      "element": "Customer",
+                      "key": "Customer-key"
+                    }
+                  },
+                  {
+                    "record": {
+                      "module": "commerce",
+                      "element": "OrderLine"
+                    },
+                    "fields": [
+                      {
+                        "field": {
+                          "module": "commerce",
+                          "element": "lineOrderId"
+                        },
+                        "row": {
+                          "missing": false,
+                          "null": false
+                        },
+                        "create": {
+                          "missing": false,
+                          "null": false
+                        },
+                        "mutable": false,
+                        "generated": false
+                      },
+                      {
+                        "field": {
+                          "module": "commerce",
+                          "element": "lineNumber"
+                        },
+                        "row": {
+                          "missing": false,
+                          "null": false
+                        },
+                        "create": {
+                          "missing": false,
+                          "null": false
+                        },
+                        "mutable": false,
+                        "generated": false
+                      }
+                    ],
+                    "selectedKey": {
+                      "module": "commerce",
+                      "element": "OrderLine",
+                      "key": "OrderLine-key"
+                    }
+                  }
+                ],
+                "columns": [
+                  {
+                    "binding": {
+                      "sourceId": "orders-binding",
+                      "module": "commerce"
+                    },
+                    "target": {
+                      "platform": "postgresql",
+                      "majorVersion": "18"
+                    },
+                    "columns": [
+                      {
+                        "field": {
+                          "module": "commerce",
+                          "element": "orderId"
+                        },
+                        "type": "text",
+                        "notNull": true,
+                        "generation": null
+                      },
+                      {
+                        "field": {
+                          "module": "commerce",
+                          "element": "amount"
+                        },
+                        "type": "numeric(12,2)",
+                        "notNull": true,
+                        "generation": null
+                      },
+                      {
+                        "field": {
+                          "module": "commerce",
+                          "element": "memo"
+                        },
+                        "type": "text",
+                        "notNull": false,
+                        "generation": null
+                      },
+                      {
+                        "field": {
+                          "module": "commerce",
+                          "element": "placedAt"
+                        },
+                        "type": "timestamptz",
+                        "notNull": true,
+                        "generation": null
+                      },
+                      {
+                        "field": {
+                          "module": "commerce",
+                          "element": "revision"
+                        },
+                        "type": "bigint",
+                        "notNull": true,
+                        "generation": "identity"
+                      }
+                    ]
+                  }
+                ],
+                "search": [],
+                "searchBindings": []
+              },
+              "umf.actions": {
+                "actions": [
+                  {
+                    "id": "shipOrder",
+                    "name": "Ship order",
+                    "description": "Declared handler identity; no execution qualification",
+                    "parameters": [
+                      {
+                        "id": "order",
+                        "kind": "entity",
+                        "target": {
+                          "module": "commerce",
+                          "element": "Order",
+                          "key": "order-key"
+                        },
+                        "required": true
+                      },
+                      {
+                        "id": "memo",
+                        "kind": "value",
+                        "field": {
+                          "module": "commerce",
+                          "element": "memo"
+                        },
+                        "required": false
+                      }
+                    ],
+                    "outputs": [],
+                    "preconditions": [],
+                    "postconditions": [],
+                    "reads": [],
+                    "writes": [
+                      {
+                        "id": "orderWrite",
+                        "record": {
+                          "module": "commerce",
+                          "element": "Order"
+                        },
+                        "selector": {
+                          "language": "umf.actions.keys",
+                          "version": "1",
+                          "expression": "{\"key\":\"order-key\",\"components\":[{\"literal\":{\"boolean\":\"true\"}}]}",
+                          "references": []
+                        },
+                        "maxEntities": 1,
+                        "fields": [
+                          {
+                            "module": "commerce",
+                            "element": "memo"
+                          }
+                        ],
+                        "relationships": [],
+                        "create": false,
+                        "delete": false
+                      }
+                    ],
+                    "binding": {
+                      "kind": "recipe",
+                      "profile": {
+                        "id": "graph-write",
+                        "version": "1"
+                      },
+                      "effects": [
+                        {
+                          "id": "neutral",
+                          "kind": "set",
+                          "entity": {
+                            "parameter": "order"
+                          },
+                          "values": [
+                            {
+                              "field": {
+                                "module": "commerce",
+                                "element": "memo"
+                              },
+                              "value": {
+                                "literal": {
+                                  "string": "ok"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    "failures": [
+                      {
+                        "code": "NOT_READY",
+                        "message": "Not ready",
+                        "retryable": false
+                      },
+                      {
+                        "code": "INVALID",
+                        "message": "not met",
+                        "retryable": false
+                      }
+                    ],
+                    "authorization": {
+                      "kind": "roles",
+                      "profile": {
+                        "id": "umf.actions.roles",
+                        "version": "1"
+                      },
+                      "roles": [
+                        "shipper"
+                      ]
+                    },
+                    "attribution": {
+                      "subject": "person-required"
+                    },
+                    "atomicity": "single-store",
+                    "idempotency": "caller-key-optional",
+                    "result": {
+                      "identities": "created-and-changed",
+                      "version": "store-opaque",
+                      "receipt": "read-at-least"
+                    }
+                  }
+                ]
+              }
+            },
+            "title": "Commerce source metadata",
+            "aliases": [
+              "shop"
+            ]
+          }
+        ],
+        "title": "Authored census title; no executable semantics",
+        "aliases": [
+          "original/commerce",
+          "orders~ledger"
+        ]
+      },
+      "action": {
+        "id": "shipOrder",
+        "name": "Ship order",
+        "description": "Declared handler identity; no execution qualification",
+        "parameters": [
+          {
+            "id": "order",
+            "kind": "entity",
+            "target": {
+              "module": "commerce",
+              "element": "Order",
+              "key": "order-key"
+            },
+            "required": true
+          },
+          {
+            "id": "memo",
+            "kind": "value",
+            "field": {
+              "module": "commerce",
+              "element": "memo"
+            },
+            "required": false
+          }
+        ],
+        "outputs": [],
+        "preconditions": [],
+        "postconditions": [],
+        "reads": [],
+        "writes": [
+          {
+            "id": "orderWrite",
+            "record": {
+              "module": "commerce",
+              "element": "Order"
+            },
+            "selector": {
+              "language": "umf.actions.keys",
+              "version": "1",
+              "expression": "{\"key\":\"order-key\",\"components\":[{\"literal\":{\"boolean\":\"true\"}}]}",
+              "references": []
+            },
+            "maxEntities": 1,
+            "fields": [
+              {
+                "module": "commerce",
+                "element": "memo"
+              }
+            ],
+            "relationships": [],
+            "create": false,
+            "delete": false
+          }
+        ],
+        "binding": {
+          "kind": "recipe",
+          "profile": {
+            "id": "graph-write",
+            "version": "1"
+          },
+          "effects": [
+            {
+              "id": "neutral",
+              "kind": "set",
+              "entity": {
+                "parameter": "order"
+              },
+              "values": [
+                {
+                  "field": {
+                    "module": "commerce",
+                    "element": "memo"
+                  },
+                  "value": {
+                    "literal": {
+                      "string": "ok"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "failures": [
+          {
+            "code": "NOT_READY",
+            "message": "Not ready",
+            "retryable": false
+          },
+          {
+            "code": "INVALID",
+            "message": "not met",
+            "retryable": false
+          }
+        ],
+        "authorization": {
+          "kind": "roles",
+          "profile": {
+            "id": "umf.actions.roles",
+            "version": "1"
+          },
+          "roles": [
+            "shipper"
+          ]
+        },
+        "attribution": {
+          "subject": "person-required"
+        },
+        "atomicity": "single-store",
+        "idempotency": "caller-key-optional",
+        "result": {
+          "identities": "created-and-changed",
+          "version": "store-opaque",
+          "receipt": "read-at-least"
+        }
+      },
+      "expected": {
+        "obligations": [
+          {
+            "id": "/action/parameters/0",
+            "path": "/action/parameters/0",
+            "kind": "key",
+            "status": "checked"
+          },
+          {
+            "id": "/modules/0/elements/5",
+            "path": "/modules/0/elements/5",
+            "kind": "model",
+            "status": "checked"
+          },
+          {
+            "id": "/modules/0/elements/0",
+            "path": "/modules/0/elements/0",
+            "kind": "model",
+            "status": "checked"
+          },
+          {
+            "id": "/modules/0/elements/1",
+            "path": "/modules/0/elements/1",
+            "kind": "model",
+            "status": "checked"
+          },
+          {
+            "id": "/modules/0/elements/2",
+            "path": "/modules/0/elements/2",
+            "kind": "model",
+            "status": "checked"
+          },
+          {
+            "id": "/modules/0/elements/3",
+            "path": "/modules/0/elements/3",
+            "kind": "model",
+            "status": "checked"
+          },
+          {
+            "id": "/modules/0/elements/4",
+            "path": "/modules/0/elements/4",
+            "kind": "model",
+            "status": "checked"
+          },
+          {
+            "id": "/modules/0/elements/5/keys/0",
+            "path": "/modules/0/elements/5/keys/0",
+            "kind": "key",
+            "status": "checked"
+          },
+          {
+            "id": "/action/parameters/1",
+            "path": "/action/parameters/1",
+            "kind": "value",
+            "status": "checked"
+          },
+          {
+            "id": "/action/writes/0",
+            "path": "/action/writes/0",
+            "kind": "frame",
+            "status": "checked"
+          },
+          {
+            "id": "/action/writes/0/selector",
+            "path": "/action/writes/0/selector",
+            "kind": "selector",
+            "status": "unchecked"
+          },
+          {
+            "id": "/action/failures/0",
+            "path": "/action/failures/0",
+            "kind": "failure",
+            "status": "checked"
+          },
+          {
+            "id": "/action/failures/1",
+            "path": "/action/failures/1",
+            "kind": "failure",
+            "status": "checked"
+          },
+          {
+            "id": "/action/authorization",
+            "path": "/action/authorization",
+            "kind": "authorization",
+            "status": "checked"
+          },
+          {
+            "id": "/action/attribution",
+            "path": "/action/attribution",
+            "kind": "attribution",
+            "status": "checked"
+          },
+          {
+            "id": "/action/atomicity",
+            "path": "/action/atomicity",
+            "kind": "atomicity",
+            "status": "checked"
+          },
+          {
+            "id": "/action/idempotency",
+            "path": "/action/idempotency",
+            "kind": "idempotency",
+            "status": "checked"
+          },
+          {
+            "id": "/action/result",
+            "path": "/action/result",
+            "kind": "result",
+            "status": "checked"
+          },
+          {
+            "id": "/action/binding",
+            "path": "/action/binding",
+            "kind": "binding",
+            "status": "checked"
+          },
+          {
+            "id": "/action/binding/effects/0",
+            "path": "/action/binding/effects/0",
+            "kind": "effect",
+            "status": "checked"
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "ACTION_STRUCTURE",
+            "path": "/action/writes/0/selector",
+            "message": "UmfError: Key component needs an exact typed literal wrapper",
+            "severity": "error"
+          }
+        ]
+      }
+    },
+    {
+      "id": "action-selector-null",
+      "document": {
+        "umf": "0.10.0",
+        "id": "commerce-model",
+        "vocabularies": {
+          "umf.access": {
+            "version": "0.1.0"
+          },
+          "umf.actions": {
+            "version": "0.1.0"
+          },
+          "future.census": {
+            "version": "1.0.0"
+          }
+        },
+        "modules": [
+          {
+            "id": "commerce",
+            "namespace": "commerce",
+            "elements": [
+              {
+                "id": "orderId",
+                "kind": "field",
+                "scalarType": "string",
+                "cardinality": "one",
+                "nullability": "required",
+                "extensions": {}
+              },
+              {
+                "id": "amount",
+                "kind": "field",
+                "scalarType": "decimal",
+                "cardinality": "one",
+                "nullability": "required",
+                "extensions": {},
+                "facets": {
+                  "precision": 12,
+                  "scale": 2
+                },
+                "description": "Exact decimal source annotation"
+              },
+              {
+                "id": "memo",
+                "kind": "field",
+                "scalarType": "string",
+                "cardinality": "one",
+                "nullability": "absent-allowed",
+                "extensions": {},
+                "default": {
+                  "on": "missing",
+                  "value": {
+                    "string": "pending"
+                  }
+                }
+              },
+              {
+                "id": "placedAt",
+                "kind": "field",
+                "scalarType": "timestamp",
+                "cardinality": "one",
+                "nullability": "required",
+                "extensions": {}
+              },
+              {
+                "id": "revision",
+                "kind": "field",
+                "scalarType": "integer",
+                "cardinality": "one",
+                "nullability": "required",
+                "extensions": {},
+                "facets": {
+                  "integerWidth": {
+                    "bits": 64,
+                    "signed": true
+                  }
+                }
+              },
+              {
+                "id": "Order",
+                "kind": "record",
+                "members": [
+                  {
+                    "module": "commerce",
+                    "element": "orderId"
+                  },
+                  {
+                    "module": "commerce",
+                    "element": "amount"
+                  },
+                  {
+                    "module": "commerce",
+                    "element": "memo"
+                  },
+                  {
+                    "module": "commerce",
+                    "element": "placedAt"
+                  },
+                  {
+                    "module": "commerce",
+                    "element": "revision"
+                  }
+                ],
+                "keys": [
+                  {
+                    "id": "order-key",
+                    "name": "Order primary key",
+                    "fields": [
+                      {
+                        "module": "commerce",
+                        "element": "orderId"
+                      }
+                    ],
+                    "primary": true
+                  }
+                ],
+                "extensions": {},
+                "description": "Selected Order annotation retained without native enforcement"
+              },
+              {
+                "id": "customerId",
+                "kind": "field",
+                "scalarType": "string",
+                "cardinality": "one",
+                "nullability": "required",
+                "extensions": {}
+              },
+              {
+                "id": "name",
+                "kind": "field",
+                "scalarType": "string",
+                "cardinality": "one",
+                "nullability": "required",
+                "extensions": {}
+              },
+              {
+                "id": "Customer",
+                "kind": "record",
+                "members": [
+                  {
+                    "module": "commerce",
+                    "element": "customerId"
+                  },
+                  {
+                    "module": "commerce",
+                    "element": "name"
+                  }
+                ],
+                "keys": [
+                  {
+                    "id": "Customer-key",
+                    "name": "Customer primary key",
+                    "primary": true,
+                    "fields": [
+                      {
+                        "module": "commerce",
+                        "element": "customerId"
+                      }
+                    ]
+                  }
+                ],
+                "extensions": {}
+              },
+              {
+                "id": "lineOrderId",
+                "kind": "field",
+                "scalarType": "string",
+                "cardinality": "one",
+                "nullability": "required",
+                "extensions": {}
+              },
+              {
+                "id": "lineNumber",
+                "kind": "field",
+                "scalarType": "integer",
+                "cardinality": "one",
+                "nullability": "required",
+                "extensions": {},
+                "facets": {
+                  "integerWidth": {
+                    "bits": 32,
+                    "signed": true
+                  }
+                }
+              },
+              {
+                "id": "OrderLine",
+                "kind": "record",
+                "members": [
+                  {
+                    "module": "commerce",
+                    "element": "lineOrderId"
+                  },
+                  {
+                    "module": "commerce",
+                    "element": "lineNumber"
+                  }
+                ],
+                "keys": [
+                  {
+                    "id": "OrderLine-key",
+                    "name": "OrderLine primary key",
+                    "primary": true,
+                    "fields": [
+                      {
+                        "module": "commerce",
+                        "element": "lineOrderId"
+                      },
+                      {
+                        "module": "commerce",
+                        "element": "lineNumber"
+                      }
+                    ]
+                  }
+                ],
+                "extensions": {}
+              }
+            ],
+            "extensions": {
+              "umf.access": {
+                "views": [
+                  {
+                    "record": {
+                      "module": "commerce",
+                      "element": "Order"
+                    },
+                    "fields": [
+                      {
+                        "field": {
+                          "module": "commerce",
+                          "element": "orderId"
+                        },
+                        "row": {
+                          "missing": false,
+                          "null": false
+                        },
+                        "create": {
+                          "missing": false,
+                          "null": false
+                        },
+                        "mutable": false,
+                        "generated": false
+                      },
+                      {
+                        "field": {
+                          "module": "commerce",
+                          "element": "amount"
+                        },
+                        "row": {
+                          "missing": false,
+                          "null": false
+                        },
+                        "create": {
+                          "missing": false,
+                          "null": false
+                        },
+                        "mutable": true,
+                        "generated": false
+                      },
+                      {
+                        "field": {
+                          "module": "commerce",
+                          "element": "memo"
+                        },
+                        "row": {
+                          "missing": false,
+                          "null": true
+                        },
+                        "create": {
+                          "missing": true,
+                          "null": true
+                        },
+                        "mutable": true,
+                        "generated": false
+                      },
+                      {
+                        "field": {
+                          "module": "commerce",
+                          "element": "placedAt"
+                        },
+                        "row": {
+                          "missing": false,
+                          "null": false
+                        },
+                        "create": {
+                          "missing": false,
+                          "null": false
+                        },
+                        "mutable": false,
+                        "generated": false,
+                        "temporal": "instant"
+                      },
+                      {
+                        "field": {
+                          "module": "commerce",
+                          "element": "revision"
+                        },
+                        "row": {
+                          "missing": false,
+                          "null": false
+                        },
+                        "create": {
+                          "missing": true,
+                          "null": false
+                        },
+                        "mutable": false,
+                        "generated": true
+                      }
+                    ],
+                    "selectedKey": {
+                      "module": "commerce",
+                      "element": "Order",
+                      "key": "order-key"
+                    }
+                  },
+                  {
+                    "record": {
+                      "module": "commerce",
+                      "element": "Customer"
+                    },
+                    "fields": [
+                      {
+                        "field": {
+                          "module": "commerce",
+                          "element": "customerId"
+                        },
+                        "row": {
+                          "missing": false,
+                          "null": false
+                        },
+                        "create": {
+                          "missing": false,
+                          "null": false
+                        },
+                        "mutable": false,
+                        "generated": false
+                      },
+                      {
+                        "field": {
+                          "module": "commerce",
+                          "element": "name"
+                        },
+                        "row": {
+                          "missing": false,
+                          "null": false
+                        },
+                        "create": {
+                          "missing": false,
+                          "null": false
+                        },
+                        "mutable": true,
+                        "generated": false
+                      }
+                    ],
+                    "selectedKey": {
+                      "module": "commerce",
+                      "element": "Customer",
+                      "key": "Customer-key"
+                    }
+                  },
+                  {
+                    "record": {
+                      "module": "commerce",
+                      "element": "OrderLine"
+                    },
+                    "fields": [
+                      {
+                        "field": {
+                          "module": "commerce",
+                          "element": "lineOrderId"
+                        },
+                        "row": {
+                          "missing": false,
+                          "null": false
+                        },
+                        "create": {
+                          "missing": false,
+                          "null": false
+                        },
+                        "mutable": false,
+                        "generated": false
+                      },
+                      {
+                        "field": {
+                          "module": "commerce",
+                          "element": "lineNumber"
+                        },
+                        "row": {
+                          "missing": false,
+                          "null": false
+                        },
+                        "create": {
+                          "missing": false,
+                          "null": false
+                        },
+                        "mutable": false,
+                        "generated": false
+                      }
+                    ],
+                    "selectedKey": {
+                      "module": "commerce",
+                      "element": "OrderLine",
+                      "key": "OrderLine-key"
+                    }
+                  }
+                ],
+                "columns": [
+                  {
+                    "binding": {
+                      "sourceId": "orders-binding",
+                      "module": "commerce"
+                    },
+                    "target": {
+                      "platform": "postgresql",
+                      "majorVersion": "18"
+                    },
+                    "columns": [
+                      {
+                        "field": {
+                          "module": "commerce",
+                          "element": "orderId"
+                        },
+                        "type": "text",
+                        "notNull": true,
+                        "generation": null
+                      },
+                      {
+                        "field": {
+                          "module": "commerce",
+                          "element": "amount"
+                        },
+                        "type": "numeric(12,2)",
+                        "notNull": true,
+                        "generation": null
+                      },
+                      {
+                        "field": {
+                          "module": "commerce",
+                          "element": "memo"
+                        },
+                        "type": "text",
+                        "notNull": false,
+                        "generation": null
+                      },
+                      {
+                        "field": {
+                          "module": "commerce",
+                          "element": "placedAt"
+                        },
+                        "type": "timestamptz",
+                        "notNull": true,
+                        "generation": null
+                      },
+                      {
+                        "field": {
+                          "module": "commerce",
+                          "element": "revision"
+                        },
+                        "type": "bigint",
+                        "notNull": true,
+                        "generation": "identity"
+                      }
+                    ]
+                  }
+                ],
+                "search": [],
+                "searchBindings": []
+              },
+              "umf.actions": {
+                "actions": [
+                  {
+                    "id": "shipOrder",
+                    "name": "Ship order",
+                    "description": "Declared handler identity; no execution qualification",
+                    "parameters": [
+                      {
+                        "id": "order",
+                        "kind": "entity",
+                        "target": {
+                          "module": "commerce",
+                          "element": "Order",
+                          "key": "order-key"
+                        },
+                        "required": true
+                      },
+                      {
+                        "id": "memo",
+                        "kind": "value",
+                        "field": {
+                          "module": "commerce",
+                          "element": "memo"
+                        },
+                        "required": false
+                      }
+                    ],
+                    "outputs": [],
+                    "preconditions": [],
+                    "postconditions": [],
+                    "reads": [],
+                    "writes": [
+                      {
+                        "id": "orderWrite",
+                        "record": {
+                          "module": "commerce",
+                          "element": "Order"
+                        },
+                        "selector": {
+                          "language": "umf.actions.keys",
+                          "version": "1",
+                          "expression": "{\"key\":\"order-key\",\"components\":[{\"literal\":null}]}",
+                          "references": []
+                        },
+                        "maxEntities": 1,
+                        "fields": [
+                          {
+                            "module": "commerce",
+                            "element": "memo"
+                          }
+                        ],
+                        "relationships": [],
+                        "create": false,
+                        "delete": false
+                      }
+                    ],
+                    "binding": {
+                      "kind": "recipe",
+                      "profile": {
+                        "id": "graph-write",
+                        "version": "1"
+                      },
+                      "effects": [
+                        {
+                          "id": "neutral",
+                          "kind": "set",
+                          "entity": {
+                            "parameter": "order"
+                          },
+                          "values": [
+                            {
+                              "field": {
+                                "module": "commerce",
+                                "element": "memo"
+                              },
+                              "value": {
+                                "literal": {
+                                  "string": "ok"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    "failures": [
+                      {
+                        "code": "NOT_READY",
+                        "message": "Not ready",
+                        "retryable": false
+                      },
+                      {
+                        "code": "INVALID",
+                        "message": "not met",
+                        "retryable": false
+                      }
+                    ],
+                    "authorization": {
+                      "kind": "roles",
+                      "profile": {
+                        "id": "umf.actions.roles",
+                        "version": "1"
+                      },
+                      "roles": [
+                        "shipper"
+                      ]
+                    },
+                    "attribution": {
+                      "subject": "person-required"
+                    },
+                    "atomicity": "single-store",
+                    "idempotency": "caller-key-optional",
+                    "result": {
+                      "identities": "created-and-changed",
+                      "version": "store-opaque",
+                      "receipt": "read-at-least"
+                    }
+                  }
+                ]
+              }
+            },
+            "title": "Commerce source metadata",
+            "aliases": [
+              "shop"
+            ]
+          }
+        ],
+        "title": "Authored census title; no executable semantics",
+        "aliases": [
+          "original/commerce",
+          "orders~ledger"
+        ]
+      },
+      "action": {
+        "id": "shipOrder",
+        "name": "Ship order",
+        "description": "Declared handler identity; no execution qualification",
+        "parameters": [
+          {
+            "id": "order",
+            "kind": "entity",
+            "target": {
+              "module": "commerce",
+              "element": "Order",
+              "key": "order-key"
+            },
+            "required": true
+          },
+          {
+            "id": "memo",
+            "kind": "value",
+            "field": {
+              "module": "commerce",
+              "element": "memo"
+            },
+            "required": false
+          }
+        ],
+        "outputs": [],
+        "preconditions": [],
+        "postconditions": [],
+        "reads": [],
+        "writes": [
+          {
+            "id": "orderWrite",
+            "record": {
+              "module": "commerce",
+              "element": "Order"
+            },
+            "selector": {
+              "language": "umf.actions.keys",
+              "version": "1",
+              "expression": "{\"key\":\"order-key\",\"components\":[{\"literal\":null}]}",
+              "references": []
+            },
+            "maxEntities": 1,
+            "fields": [
+              {
+                "module": "commerce",
+                "element": "memo"
+              }
+            ],
+            "relationships": [],
+            "create": false,
+            "delete": false
+          }
+        ],
+        "binding": {
+          "kind": "recipe",
+          "profile": {
+            "id": "graph-write",
+            "version": "1"
+          },
+          "effects": [
+            {
+              "id": "neutral",
+              "kind": "set",
+              "entity": {
+                "parameter": "order"
+              },
+              "values": [
+                {
+                  "field": {
+                    "module": "commerce",
+                    "element": "memo"
+                  },
+                  "value": {
+                    "literal": {
+                      "string": "ok"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "failures": [
+          {
+            "code": "NOT_READY",
+            "message": "Not ready",
+            "retryable": false
+          },
+          {
+            "code": "INVALID",
+            "message": "not met",
+            "retryable": false
+          }
+        ],
+        "authorization": {
+          "kind": "roles",
+          "profile": {
+            "id": "umf.actions.roles",
+            "version": "1"
+          },
+          "roles": [
+            "shipper"
+          ]
+        },
+        "attribution": {
+          "subject": "person-required"
+        },
+        "atomicity": "single-store",
+        "idempotency": "caller-key-optional",
+        "result": {
+          "identities": "created-and-changed",
+          "version": "store-opaque",
+          "receipt": "read-at-least"
+        }
+      },
+      "expected": {
+        "obligations": [
+          {
+            "id": "/action/parameters/0",
+            "path": "/action/parameters/0",
+            "kind": "key",
+            "status": "checked"
+          },
+          {
+            "id": "/modules/0/elements/5",
+            "path": "/modules/0/elements/5",
+            "kind": "model",
+            "status": "checked"
+          },
+          {
+            "id": "/modules/0/elements/0",
+            "path": "/modules/0/elements/0",
+            "kind": "model",
+            "status": "checked"
+          },
+          {
+            "id": "/modules/0/elements/1",
+            "path": "/modules/0/elements/1",
+            "kind": "model",
+            "status": "checked"
+          },
+          {
+            "id": "/modules/0/elements/2",
+            "path": "/modules/0/elements/2",
+            "kind": "model",
+            "status": "checked"
+          },
+          {
+            "id": "/modules/0/elements/3",
+            "path": "/modules/0/elements/3",
+            "kind": "model",
+            "status": "checked"
+          },
+          {
+            "id": "/modules/0/elements/4",
+            "path": "/modules/0/elements/4",
+            "kind": "model",
+            "status": "checked"
+          },
+          {
+            "id": "/modules/0/elements/5/keys/0",
+            "path": "/modules/0/elements/5/keys/0",
+            "kind": "key",
+            "status": "checked"
+          },
+          {
+            "id": "/action/parameters/1",
+            "path": "/action/parameters/1",
+            "kind": "value",
+            "status": "checked"
+          },
+          {
+            "id": "/action/writes/0",
+            "path": "/action/writes/0",
+            "kind": "frame",
+            "status": "checked"
+          },
+          {
+            "id": "/action/writes/0/selector",
+            "path": "/action/writes/0/selector",
+            "kind": "selector",
+            "status": "unchecked"
+          },
+          {
+            "id": "/action/failures/0",
+            "path": "/action/failures/0",
+            "kind": "failure",
+            "status": "checked"
+          },
+          {
+            "id": "/action/failures/1",
+            "path": "/action/failures/1",
+            "kind": "failure",
+            "status": "checked"
+          },
+          {
+            "id": "/action/authorization",
+            "path": "/action/authorization",
+            "kind": "authorization",
+            "status": "checked"
+          },
+          {
+            "id": "/action/attribution",
+            "path": "/action/attribution",
+            "kind": "attribution",
+            "status": "checked"
+          },
+          {
+            "id": "/action/atomicity",
+            "path": "/action/atomicity",
+            "kind": "atomicity",
+            "status": "checked"
+          },
+          {
+            "id": "/action/idempotency",
+            "path": "/action/idempotency",
+            "kind": "idempotency",
+            "status": "checked"
+          },
+          {
+            "id": "/action/result",
+            "path": "/action/result",
+            "kind": "result",
+            "status": "checked"
+          },
+          {
+            "id": "/action/binding",
+            "path": "/action/binding",
+            "kind": "binding",
+            "status": "checked"
+          },
+          {
+            "id": "/action/binding/effects/0",
+            "path": "/action/binding/effects/0",
+            "kind": "effect",
+            "status": "checked"
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "ACTION_STRUCTURE",
+            "path": "/action/writes/0/selector",
+            "message": "UmfError: Null requires explicit absent-allowed",
+            "severity": "error"
+          }
+        ]
+      }
+    },
+    {
+      "id": "action-selector-unknown-key",
+      "document": {
+        "umf": "0.10.0",
+        "id": "commerce-model",
+        "vocabularies": {
+          "umf.access": {
+            "version": "0.1.0"
+          },
+          "umf.actions": {
+            "version": "0.1.0"
+          },
+          "future.census": {
+            "version": "1.0.0"
+          }
+        },
+        "modules": [
+          {
+            "id": "commerce",
+            "namespace": "commerce",
+            "elements": [
+              {
+                "id": "orderId",
+                "kind": "field",
+                "scalarType": "string",
+                "cardinality": "one",
+                "nullability": "required",
+                "extensions": {}
+              },
+              {
+                "id": "amount",
+                "kind": "field",
+                "scalarType": "decimal",
+                "cardinality": "one",
+                "nullability": "required",
+                "extensions": {},
+                "facets": {
+                  "precision": 12,
+                  "scale": 2
+                },
+                "description": "Exact decimal source annotation"
+              },
+              {
+                "id": "memo",
+                "kind": "field",
+                "scalarType": "string",
+                "cardinality": "one",
+                "nullability": "absent-allowed",
+                "extensions": {},
+                "default": {
+                  "on": "missing",
+                  "value": {
+                    "string": "pending"
+                  }
+                }
+              },
+              {
+                "id": "placedAt",
+                "kind": "field",
+                "scalarType": "timestamp",
+                "cardinality": "one",
+                "nullability": "required",
+                "extensions": {}
+              },
+              {
+                "id": "revision",
+                "kind": "field",
+                "scalarType": "integer",
+                "cardinality": "one",
+                "nullability": "required",
+                "extensions": {},
+                "facets": {
+                  "integerWidth": {
+                    "bits": 64,
+                    "signed": true
+                  }
+                }
+              },
+              {
+                "id": "Order",
+                "kind": "record",
+                "members": [
+                  {
+                    "module": "commerce",
+                    "element": "orderId"
+                  },
+                  {
+                    "module": "commerce",
+                    "element": "amount"
+                  },
+                  {
+                    "module": "commerce",
+                    "element": "memo"
+                  },
+                  {
+                    "module": "commerce",
+                    "element": "placedAt"
+                  },
+                  {
+                    "module": "commerce",
+                    "element": "revision"
+                  }
+                ],
+                "keys": [
+                  {
+                    "id": "order-key",
+                    "name": "Order primary key",
+                    "fields": [
+                      {
+                        "module": "commerce",
+                        "element": "orderId"
+                      }
+                    ],
+                    "primary": true
+                  }
+                ],
+                "extensions": {},
+                "description": "Selected Order annotation retained without native enforcement"
+              },
+              {
+                "id": "customerId",
+                "kind": "field",
+                "scalarType": "string",
+                "cardinality": "one",
+                "nullability": "required",
+                "extensions": {}
+              },
+              {
+                "id": "name",
+                "kind": "field",
+                "scalarType": "string",
+                "cardinality": "one",
+                "nullability": "required",
+                "extensions": {}
+              },
+              {
+                "id": "Customer",
+                "kind": "record",
+                "members": [
+                  {
+                    "module": "commerce",
+                    "element": "customerId"
+                  },
+                  {
+                    "module": "commerce",
+                    "element": "name"
+                  }
+                ],
+                "keys": [
+                  {
+                    "id": "Customer-key",
+                    "name": "Customer primary key",
+                    "primary": true,
+                    "fields": [
+                      {
+                        "module": "commerce",
+                        "element": "customerId"
+                      }
+                    ]
+                  }
+                ],
+                "extensions": {}
+              },
+              {
+                "id": "lineOrderId",
+                "kind": "field",
+                "scalarType": "string",
+                "cardinality": "one",
+                "nullability": "required",
+                "extensions": {}
+              },
+              {
+                "id": "lineNumber",
+                "kind": "field",
+                "scalarType": "integer",
+                "cardinality": "one",
+                "nullability": "required",
+                "extensions": {},
+                "facets": {
+                  "integerWidth": {
+                    "bits": 32,
+                    "signed": true
+                  }
+                }
+              },
+              {
+                "id": "OrderLine",
+                "kind": "record",
+                "members": [
+                  {
+                    "module": "commerce",
+                    "element": "lineOrderId"
+                  },
+                  {
+                    "module": "commerce",
+                    "element": "lineNumber"
+                  }
+                ],
+                "keys": [
+                  {
+                    "id": "OrderLine-key",
+                    "name": "OrderLine primary key",
+                    "primary": true,
+                    "fields": [
+                      {
+                        "module": "commerce",
+                        "element": "lineOrderId"
+                      },
+                      {
+                        "module": "commerce",
+                        "element": "lineNumber"
+                      }
+                    ]
+                  }
+                ],
+                "extensions": {}
+              }
+            ],
+            "extensions": {
+              "umf.access": {
+                "views": [
+                  {
+                    "record": {
+                      "module": "commerce",
+                      "element": "Order"
+                    },
+                    "fields": [
+                      {
+                        "field": {
+                          "module": "commerce",
+                          "element": "orderId"
+                        },
+                        "row": {
+                          "missing": false,
+                          "null": false
+                        },
+                        "create": {
+                          "missing": false,
+                          "null": false
+                        },
+                        "mutable": false,
+                        "generated": false
+                      },
+                      {
+                        "field": {
+                          "module": "commerce",
+                          "element": "amount"
+                        },
+                        "row": {
+                          "missing": false,
+                          "null": false
+                        },
+                        "create": {
+                          "missing": false,
+                          "null": false
+                        },
+                        "mutable": true,
+                        "generated": false
+                      },
+                      {
+                        "field": {
+                          "module": "commerce",
+                          "element": "memo"
+                        },
+                        "row": {
+                          "missing": false,
+                          "null": true
+                        },
+                        "create": {
+                          "missing": true,
+                          "null": true
+                        },
+                        "mutable": true,
+                        "generated": false
+                      },
+                      {
+                        "field": {
+                          "module": "commerce",
+                          "element": "placedAt"
+                        },
+                        "row": {
+                          "missing": false,
+                          "null": false
+                        },
+                        "create": {
+                          "missing": false,
+                          "null": false
+                        },
+                        "mutable": false,
+                        "generated": false,
+                        "temporal": "instant"
+                      },
+                      {
+                        "field": {
+                          "module": "commerce",
+                          "element": "revision"
+                        },
+                        "row": {
+                          "missing": false,
+                          "null": false
+                        },
+                        "create": {
+                          "missing": true,
+                          "null": false
+                        },
+                        "mutable": false,
+                        "generated": true
+                      }
+                    ],
+                    "selectedKey": {
+                      "module": "commerce",
+                      "element": "Order",
+                      "key": "order-key"
+                    }
+                  },
+                  {
+                    "record": {
+                      "module": "commerce",
+                      "element": "Customer"
+                    },
+                    "fields": [
+                      {
+                        "field": {
+                          "module": "commerce",
+                          "element": "customerId"
+                        },
+                        "row": {
+                          "missing": false,
+                          "null": false
+                        },
+                        "create": {
+                          "missing": false,
+                          "null": false
+                        },
+                        "mutable": false,
+                        "generated": false
+                      },
+                      {
+                        "field": {
+                          "module": "commerce",
+                          "element": "name"
+                        },
+                        "row": {
+                          "missing": false,
+                          "null": false
+                        },
+                        "create": {
+                          "missing": false,
+                          "null": false
+                        },
+                        "mutable": true,
+                        "generated": false
+                      }
+                    ],
+                    "selectedKey": {
+                      "module": "commerce",
+                      "element": "Customer",
+                      "key": "Customer-key"
+                    }
+                  },
+                  {
+                    "record": {
+                      "module": "commerce",
+                      "element": "OrderLine"
+                    },
+                    "fields": [
+                      {
+                        "field": {
+                          "module": "commerce",
+                          "element": "lineOrderId"
+                        },
+                        "row": {
+                          "missing": false,
+                          "null": false
+                        },
+                        "create": {
+                          "missing": false,
+                          "null": false
+                        },
+                        "mutable": false,
+                        "generated": false
+                      },
+                      {
+                        "field": {
+                          "module": "commerce",
+                          "element": "lineNumber"
+                        },
+                        "row": {
+                          "missing": false,
+                          "null": false
+                        },
+                        "create": {
+                          "missing": false,
+                          "null": false
+                        },
+                        "mutable": false,
+                        "generated": false
+                      }
+                    ],
+                    "selectedKey": {
+                      "module": "commerce",
+                      "element": "OrderLine",
+                      "key": "OrderLine-key"
+                    }
+                  }
+                ],
+                "columns": [
+                  {
+                    "binding": {
+                      "sourceId": "orders-binding",
+                      "module": "commerce"
+                    },
+                    "target": {
+                      "platform": "postgresql",
+                      "majorVersion": "18"
+                    },
+                    "columns": [
+                      {
+                        "field": {
+                          "module": "commerce",
+                          "element": "orderId"
+                        },
+                        "type": "text",
+                        "notNull": true,
+                        "generation": null
+                      },
+                      {
+                        "field": {
+                          "module": "commerce",
+                          "element": "amount"
+                        },
+                        "type": "numeric(12,2)",
+                        "notNull": true,
+                        "generation": null
+                      },
+                      {
+                        "field": {
+                          "module": "commerce",
+                          "element": "memo"
+                        },
+                        "type": "text",
+                        "notNull": false,
+                        "generation": null
+                      },
+                      {
+                        "field": {
+                          "module": "commerce",
+                          "element": "placedAt"
+                        },
+                        "type": "timestamptz",
+                        "notNull": true,
+                        "generation": null
+                      },
+                      {
+                        "field": {
+                          "module": "commerce",
+                          "element": "revision"
+                        },
+                        "type": "bigint",
+                        "notNull": true,
+                        "generation": "identity"
+                      }
+                    ]
+                  }
+                ],
+                "search": [],
+                "searchBindings": []
+              },
+              "umf.actions": {
+                "actions": [
+                  {
+                    "id": "shipOrder",
+                    "name": "Ship order",
+                    "description": "Declared handler identity; no execution qualification",
+                    "parameters": [
+                      {
+                        "id": "order",
+                        "kind": "entity",
+                        "target": {
+                          "module": "commerce",
+                          "element": "Order",
+                          "key": "order-key"
+                        },
+                        "required": true
+                      },
+                      {
+                        "id": "memo",
+                        "kind": "value",
+                        "field": {
+                          "module": "commerce",
+                          "element": "memo"
+                        },
+                        "required": false
+                      }
+                    ],
+                    "outputs": [],
+                    "preconditions": [],
+                    "postconditions": [],
+                    "reads": [],
+                    "writes": [
+                      {
+                        "id": "orderWrite",
+                        "record": {
+                          "module": "commerce",
+                          "element": "Order"
+                        },
+                        "selector": {
+                          "language": "umf.actions.keys",
+                          "version": "1",
+                          "expression": "{\"key\":\"missing\",\"components\":[{\"literal\":{\"string\":\"o\"}}]}",
+                          "references": []
+                        },
+                        "maxEntities": 1,
+                        "fields": [
+                          {
+                            "module": "commerce",
+                            "element": "memo"
+                          }
+                        ],
+                        "relationships": [],
+                        "create": false,
+                        "delete": false
+                      }
+                    ],
+                    "binding": {
+                      "kind": "recipe",
+                      "profile": {
+                        "id": "graph-write",
+                        "version": "1"
+                      },
+                      "effects": [
+                        {
+                          "id": "neutral",
+                          "kind": "set",
+                          "entity": {
+                            "parameter": "order"
+                          },
+                          "values": [
+                            {
+                              "field": {
+                                "module": "commerce",
+                                "element": "memo"
+                              },
+                              "value": {
+                                "literal": {
+                                  "string": "ok"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    "failures": [
+                      {
+                        "code": "NOT_READY",
+                        "message": "Not ready",
+                        "retryable": false
+                      },
+                      {
+                        "code": "INVALID",
+                        "message": "not met",
+                        "retryable": false
+                      }
+                    ],
+                    "authorization": {
+                      "kind": "roles",
+                      "profile": {
+                        "id": "umf.actions.roles",
+                        "version": "1"
+                      },
+                      "roles": [
+                        "shipper"
+                      ]
+                    },
+                    "attribution": {
+                      "subject": "person-required"
+                    },
+                    "atomicity": "single-store",
+                    "idempotency": "caller-key-optional",
+                    "result": {
+                      "identities": "created-and-changed",
+                      "version": "store-opaque",
+                      "receipt": "read-at-least"
+                    }
+                  }
+                ]
+              }
+            },
+            "title": "Commerce source metadata",
+            "aliases": [
+              "shop"
+            ]
+          }
+        ],
+        "title": "Authored census title; no executable semantics",
+        "aliases": [
+          "original/commerce",
+          "orders~ledger"
+        ]
+      },
+      "action": {
+        "id": "shipOrder",
+        "name": "Ship order",
+        "description": "Declared handler identity; no execution qualification",
+        "parameters": [
+          {
+            "id": "order",
+            "kind": "entity",
+            "target": {
+              "module": "commerce",
+              "element": "Order",
+              "key": "order-key"
+            },
+            "required": true
+          },
+          {
+            "id": "memo",
+            "kind": "value",
+            "field": {
+              "module": "commerce",
+              "element": "memo"
+            },
+            "required": false
+          }
+        ],
+        "outputs": [],
+        "preconditions": [],
+        "postconditions": [],
+        "reads": [],
+        "writes": [
+          {
+            "id": "orderWrite",
+            "record": {
+              "module": "commerce",
+              "element": "Order"
+            },
+            "selector": {
+              "language": "umf.actions.keys",
+              "version": "1",
+              "expression": "{\"key\":\"missing\",\"components\":[{\"literal\":{\"string\":\"o\"}}]}",
+              "references": []
+            },
+            "maxEntities": 1,
+            "fields": [
+              {
+                "module": "commerce",
+                "element": "memo"
+              }
+            ],
+            "relationships": [],
+            "create": false,
+            "delete": false
+          }
+        ],
+        "binding": {
+          "kind": "recipe",
+          "profile": {
+            "id": "graph-write",
+            "version": "1"
+          },
+          "effects": [
+            {
+              "id": "neutral",
+              "kind": "set",
+              "entity": {
+                "parameter": "order"
+              },
+              "values": [
+                {
+                  "field": {
+                    "module": "commerce",
+                    "element": "memo"
+                  },
+                  "value": {
+                    "literal": {
+                      "string": "ok"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "failures": [
+          {
+            "code": "NOT_READY",
+            "message": "Not ready",
+            "retryable": false
+          },
+          {
+            "code": "INVALID",
+            "message": "not met",
+            "retryable": false
+          }
+        ],
+        "authorization": {
+          "kind": "roles",
+          "profile": {
+            "id": "umf.actions.roles",
+            "version": "1"
+          },
+          "roles": [
+            "shipper"
+          ]
+        },
+        "attribution": {
+          "subject": "person-required"
+        },
+        "atomicity": "single-store",
+        "idempotency": "caller-key-optional",
+        "result": {
+          "identities": "created-and-changed",
+          "version": "store-opaque",
+          "receipt": "read-at-least"
+        }
+      },
+      "expected": {
+        "obligations": [
+          {
+            "id": "/action/parameters/0",
+            "path": "/action/parameters/0",
+            "kind": "key",
+            "status": "checked"
+          },
+          {
+            "id": "/modules/0/elements/5",
+            "path": "/modules/0/elements/5",
+            "kind": "model",
+            "status": "checked"
+          },
+          {
+            "id": "/modules/0/elements/0",
+            "path": "/modules/0/elements/0",
+            "kind": "model",
+            "status": "checked"
+          },
+          {
+            "id": "/modules/0/elements/1",
+            "path": "/modules/0/elements/1",
+            "kind": "model",
+            "status": "checked"
+          },
+          {
+            "id": "/modules/0/elements/2",
+            "path": "/modules/0/elements/2",
+            "kind": "model",
+            "status": "checked"
+          },
+          {
+            "id": "/modules/0/elements/3",
+            "path": "/modules/0/elements/3",
+            "kind": "model",
+            "status": "checked"
+          },
+          {
+            "id": "/modules/0/elements/4",
+            "path": "/modules/0/elements/4",
+            "kind": "model",
+            "status": "checked"
+          },
+          {
+            "id": "/modules/0/elements/5/keys/0",
+            "path": "/modules/0/elements/5/keys/0",
+            "kind": "key",
+            "status": "checked"
+          },
+          {
+            "id": "/action/parameters/1",
+            "path": "/action/parameters/1",
+            "kind": "value",
+            "status": "checked"
+          },
+          {
+            "id": "/action/writes/0",
+            "path": "/action/writes/0",
+            "kind": "frame",
+            "status": "checked"
+          },
+          {
+            "id": "/action/writes/0/selector",
+            "path": "/action/writes/0/selector",
+            "kind": "selector",
+            "status": "unchecked"
+          },
+          {
+            "id": "/action/failures/0",
+            "path": "/action/failures/0",
+            "kind": "failure",
+            "status": "checked"
+          },
+          {
+            "id": "/action/failures/1",
+            "path": "/action/failures/1",
+            "kind": "failure",
+            "status": "checked"
+          },
+          {
+            "id": "/action/authorization",
+            "path": "/action/authorization",
+            "kind": "authorization",
+            "status": "checked"
+          },
+          {
+            "id": "/action/attribution",
+            "path": "/action/attribution",
+            "kind": "attribution",
+            "status": "checked"
+          },
+          {
+            "id": "/action/atomicity",
+            "path": "/action/atomicity",
+            "kind": "atomicity",
+            "status": "checked"
+          },
+          {
+            "id": "/action/idempotency",
+            "path": "/action/idempotency",
+            "kind": "idempotency",
+            "status": "checked"
+          },
+          {
+            "id": "/action/result",
+            "path": "/action/result",
+            "kind": "result",
+            "status": "checked"
+          },
+          {
+            "id": "/action/binding",
+            "path": "/action/binding",
+            "kind": "binding",
+            "status": "checked"
+          },
+          {
+            "id": "/action/binding/effects/0",
+            "path": "/action/binding/effects/0",
+            "kind": "effect",
+            "status": "checked"
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "ACTION_STRUCTURE",
+            "path": "/action/writes/0/selector",
+            "message": "UmfError: Exact Record and stable Key must resolve",
+            "severity": "error"
+          }
+        ]
+      }
+    },
+    {
+      "id": "action-selector-string-surrogate",
+      "document": {
+        "umf": "0.10.0",
+        "id": "commerce-model",
+        "vocabularies": {
+          "umf.access": {
+            "version": "0.1.0"
+          },
+          "umf.actions": {
+            "version": "0.1.0"
+          },
+          "future.census": {
+            "version": "1.0.0"
+          }
+        },
+        "modules": [
+          {
+            "id": "commerce",
+            "namespace": "commerce",
+            "elements": [
+              {
+                "id": "orderId",
+                "kind": "field",
+                "scalarType": "string",
+                "cardinality": "one",
+                "nullability": "required",
+                "extensions": {}
+              },
+              {
+                "id": "amount",
+                "kind": "field",
+                "scalarType": "decimal",
+                "cardinality": "one",
+                "nullability": "required",
+                "extensions": {},
+                "facets": {
+                  "precision": 12,
+                  "scale": 2
+                },
+                "description": "Exact decimal source annotation"
+              },
+              {
+                "id": "memo",
+                "kind": "field",
+                "scalarType": "string",
+                "cardinality": "one",
+                "nullability": "absent-allowed",
+                "extensions": {},
+                "default": {
+                  "on": "missing",
+                  "value": {
+                    "string": "pending"
+                  }
+                }
+              },
+              {
+                "id": "placedAt",
+                "kind": "field",
+                "scalarType": "timestamp",
+                "cardinality": "one",
+                "nullability": "required",
+                "extensions": {}
+              },
+              {
+                "id": "revision",
+                "kind": "field",
+                "scalarType": "integer",
+                "cardinality": "one",
+                "nullability": "required",
+                "extensions": {},
+                "facets": {
+                  "integerWidth": {
+                    "bits": 64,
+                    "signed": true
+                  }
+                }
+              },
+              {
+                "id": "Order",
+                "kind": "record",
+                "members": [
+                  {
+                    "module": "commerce",
+                    "element": "orderId"
+                  },
+                  {
+                    "module": "commerce",
+                    "element": "amount"
+                  },
+                  {
+                    "module": "commerce",
+                    "element": "memo"
+                  },
+                  {
+                    "module": "commerce",
+                    "element": "placedAt"
+                  },
+                  {
+                    "module": "commerce",
+                    "element": "revision"
+                  }
+                ],
+                "keys": [
+                  {
+                    "id": "order-key",
+                    "name": "Order primary key",
+                    "fields": [
+                      {
+                        "module": "commerce",
+                        "element": "orderId"
+                      }
+                    ],
+                    "primary": true
+                  }
+                ],
+                "extensions": {},
+                "description": "Selected Order annotation retained without native enforcement"
+              },
+              {
+                "id": "customerId",
+                "kind": "field",
+                "scalarType": "string",
+                "cardinality": "one",
+                "nullability": "required",
+                "extensions": {}
+              },
+              {
+                "id": "name",
+                "kind": "field",
+                "scalarType": "string",
+                "cardinality": "one",
+                "nullability": "required",
+                "extensions": {}
+              },
+              {
+                "id": "Customer",
+                "kind": "record",
+                "members": [
+                  {
+                    "module": "commerce",
+                    "element": "customerId"
+                  },
+                  {
+                    "module": "commerce",
+                    "element": "name"
+                  }
+                ],
+                "keys": [
+                  {
+                    "id": "Customer-key",
+                    "name": "Customer primary key",
+                    "primary": true,
+                    "fields": [
+                      {
+                        "module": "commerce",
+                        "element": "customerId"
+                      }
+                    ]
+                  }
+                ],
+                "extensions": {}
+              },
+              {
+                "id": "lineOrderId",
+                "kind": "field",
+                "scalarType": "string",
+                "cardinality": "one",
+                "nullability": "required",
+                "extensions": {}
+              },
+              {
+                "id": "lineNumber",
+                "kind": "field",
+                "scalarType": "integer",
+                "cardinality": "one",
+                "nullability": "required",
+                "extensions": {},
+                "facets": {
+                  "integerWidth": {
+                    "bits": 32,
+                    "signed": true
+                  }
+                }
+              },
+              {
+                "id": "OrderLine",
+                "kind": "record",
+                "members": [
+                  {
+                    "module": "commerce",
+                    "element": "lineOrderId"
+                  },
+                  {
+                    "module": "commerce",
+                    "element": "lineNumber"
+                  }
+                ],
+                "keys": [
+                  {
+                    "id": "OrderLine-key",
+                    "name": "OrderLine primary key",
+                    "primary": true,
+                    "fields": [
+                      {
+                        "module": "commerce",
+                        "element": "lineOrderId"
+                      },
+                      {
+                        "module": "commerce",
+                        "element": "lineNumber"
+                      }
+                    ]
+                  }
+                ],
+                "extensions": {}
+              }
+            ],
+            "extensions": {
+              "umf.access": {
+                "views": [
+                  {
+                    "record": {
+                      "module": "commerce",
+                      "element": "Order"
+                    },
+                    "fields": [
+                      {
+                        "field": {
+                          "module": "commerce",
+                          "element": "orderId"
+                        },
+                        "row": {
+                          "missing": false,
+                          "null": false
+                        },
+                        "create": {
+                          "missing": false,
+                          "null": false
+                        },
+                        "mutable": false,
+                        "generated": false
+                      },
+                      {
+                        "field": {
+                          "module": "commerce",
+                          "element": "amount"
+                        },
+                        "row": {
+                          "missing": false,
+                          "null": false
+                        },
+                        "create": {
+                          "missing": false,
+                          "null": false
+                        },
+                        "mutable": true,
+                        "generated": false
+                      },
+                      {
+                        "field": {
+                          "module": "commerce",
+                          "element": "memo"
+                        },
+                        "row": {
+                          "missing": false,
+                          "null": true
+                        },
+                        "create": {
+                          "missing": true,
+                          "null": true
+                        },
+                        "mutable": true,
+                        "generated": false
+                      },
+                      {
+                        "field": {
+                          "module": "commerce",
+                          "element": "placedAt"
+                        },
+                        "row": {
+                          "missing": false,
+                          "null": false
+                        },
+                        "create": {
+                          "missing": false,
+                          "null": false
+                        },
+                        "mutable": false,
+                        "generated": false,
+                        "temporal": "instant"
+                      },
+                      {
+                        "field": {
+                          "module": "commerce",
+                          "element": "revision"
+                        },
+                        "row": {
+                          "missing": false,
+                          "null": false
+                        },
+                        "create": {
+                          "missing": true,
+                          "null": false
+                        },
+                        "mutable": false,
+                        "generated": true
+                      }
+                    ],
+                    "selectedKey": {
+                      "module": "commerce",
+                      "element": "Order",
+                      "key": "order-key"
+                    }
+                  },
+                  {
+                    "record": {
+                      "module": "commerce",
+                      "element": "Customer"
+                    },
+                    "fields": [
+                      {
+                        "field": {
+                          "module": "commerce",
+                          "element": "customerId"
+                        },
+                        "row": {
+                          "missing": false,
+                          "null": false
+                        },
+                        "create": {
+                          "missing": false,
+                          "null": false
+                        },
+                        "mutable": false,
+                        "generated": false
+                      },
+                      {
+                        "field": {
+                          "module": "commerce",
+                          "element": "name"
+                        },
+                        "row": {
+                          "missing": false,
+                          "null": false
+                        },
+                        "create": {
+                          "missing": false,
+                          "null": false
+                        },
+                        "mutable": true,
+                        "generated": false
+                      }
+                    ],
+                    "selectedKey": {
+                      "module": "commerce",
+                      "element": "Customer",
+                      "key": "Customer-key"
+                    }
+                  },
+                  {
+                    "record": {
+                      "module": "commerce",
+                      "element": "OrderLine"
+                    },
+                    "fields": [
+                      {
+                        "field": {
+                          "module": "commerce",
+                          "element": "lineOrderId"
+                        },
+                        "row": {
+                          "missing": false,
+                          "null": false
+                        },
+                        "create": {
+                          "missing": false,
+                          "null": false
+                        },
+                        "mutable": false,
+                        "generated": false
+                      },
+                      {
+                        "field": {
+                          "module": "commerce",
+                          "element": "lineNumber"
+                        },
+                        "row": {
+                          "missing": false,
+                          "null": false
+                        },
+                        "create": {
+                          "missing": false,
+                          "null": false
+                        },
+                        "mutable": false,
+                        "generated": false
+                      }
+                    ],
+                    "selectedKey": {
+                      "module": "commerce",
+                      "element": "OrderLine",
+                      "key": "OrderLine-key"
+                    }
+                  }
+                ],
+                "columns": [
+                  {
+                    "binding": {
+                      "sourceId": "orders-binding",
+                      "module": "commerce"
+                    },
+                    "target": {
+                      "platform": "postgresql",
+                      "majorVersion": "18"
+                    },
+                    "columns": [
+                      {
+                        "field": {
+                          "module": "commerce",
+                          "element": "orderId"
+                        },
+                        "type": "text",
+                        "notNull": true,
+                        "generation": null
+                      },
+                      {
+                        "field": {
+                          "module": "commerce",
+                          "element": "amount"
+                        },
+                        "type": "numeric(12,2)",
+                        "notNull": true,
+                        "generation": null
+                      },
+                      {
+                        "field": {
+                          "module": "commerce",
+                          "element": "memo"
+                        },
+                        "type": "text",
+                        "notNull": false,
+                        "generation": null
+                      },
+                      {
+                        "field": {
+                          "module": "commerce",
+                          "element": "placedAt"
+                        },
+                        "type": "timestamptz",
+                        "notNull": true,
+                        "generation": null
+                      },
+                      {
+                        "field": {
+                          "module": "commerce",
+                          "element": "revision"
+                        },
+                        "type": "bigint",
+                        "notNull": true,
+                        "generation": "identity"
+                      }
+                    ]
+                  }
+                ],
+                "search": [],
+                "searchBindings": []
+              },
+              "umf.actions": {
+                "actions": [
+                  {
+                    "id": "shipOrder",
+                    "name": "Ship order",
+                    "description": "Declared handler identity; no execution qualification",
+                    "parameters": [
+                      {
+                        "id": "order",
+                        "kind": "entity",
+                        "target": {
+                          "module": "commerce",
+                          "element": "Order",
+                          "key": "order-key"
+                        },
+                        "required": true
+                      },
+                      {
+                        "id": "memo",
+                        "kind": "value",
+                        "field": {
+                          "module": "commerce",
+                          "element": "memo"
+                        },
+                        "required": false
+                      }
+                    ],
+                    "outputs": [],
+                    "preconditions": [],
+                    "postconditions": [],
+                    "reads": [],
+                    "writes": [
+                      {
+                        "id": "orderWrite",
+                        "record": {
+                          "module": "commerce",
+                          "element": "Order"
+                        },
+                        "selector": {
+                          "language": "umf.actions.keys",
+                          "version": "1",
+                          "expression": "{\"key\":\"order-key\",\"components\":[{\"literal\":{\"string\":\"\\ud800\"}}]}",
+                          "references": []
+                        },
+                        "maxEntities": 1,
+                        "fields": [
+                          {
+                            "module": "commerce",
+                            "element": "memo"
+                          }
+                        ],
+                        "relationships": [],
+                        "create": false,
+                        "delete": false
+                      }
+                    ],
+                    "binding": {
+                      "kind": "recipe",
+                      "profile": {
+                        "id": "graph-write",
+                        "version": "1"
+                      },
+                      "effects": [
+                        {
+                          "id": "neutral",
+                          "kind": "set",
+                          "entity": {
+                            "parameter": "order"
+                          },
+                          "values": [
+                            {
+                              "field": {
+                                "module": "commerce",
+                                "element": "memo"
+                              },
+                              "value": {
+                                "literal": {
+                                  "string": "ok"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    "failures": [
+                      {
+                        "code": "NOT_READY",
+                        "message": "Not ready",
+                        "retryable": false
+                      },
+                      {
+                        "code": "INVALID",
+                        "message": "not met",
+                        "retryable": false
+                      }
+                    ],
+                    "authorization": {
+                      "kind": "roles",
+                      "profile": {
+                        "id": "umf.actions.roles",
+                        "version": "1"
+                      },
+                      "roles": [
+                        "shipper"
+                      ]
+                    },
+                    "attribution": {
+                      "subject": "person-required"
+                    },
+                    "atomicity": "single-store",
+                    "idempotency": "caller-key-optional",
+                    "result": {
+                      "identities": "created-and-changed",
+                      "version": "store-opaque",
+                      "receipt": "read-at-least"
+                    }
+                  }
+                ]
+              }
+            },
+            "title": "Commerce source metadata",
+            "aliases": [
+              "shop"
+            ]
+          }
+        ],
+        "title": "Authored census title; no executable semantics",
+        "aliases": [
+          "original/commerce",
+          "orders~ledger"
+        ]
+      },
+      "action": {
+        "id": "shipOrder",
+        "name": "Ship order",
+        "description": "Declared handler identity; no execution qualification",
+        "parameters": [
+          {
+            "id": "order",
+            "kind": "entity",
+            "target": {
+              "module": "commerce",
+              "element": "Order",
+              "key": "order-key"
+            },
+            "required": true
+          },
+          {
+            "id": "memo",
+            "kind": "value",
+            "field": {
+              "module": "commerce",
+              "element": "memo"
+            },
+            "required": false
+          }
+        ],
+        "outputs": [],
+        "preconditions": [],
+        "postconditions": [],
+        "reads": [],
+        "writes": [
+          {
+            "id": "orderWrite",
+            "record": {
+              "module": "commerce",
+              "element": "Order"
+            },
+            "selector": {
+              "language": "umf.actions.keys",
+              "version": "1",
+              "expression": "{\"key\":\"order-key\",\"components\":[{\"literal\":{\"string\":\"\\ud800\"}}]}",
+              "references": []
+            },
+            "maxEntities": 1,
+            "fields": [
+              {
+                "module": "commerce",
+                "element": "memo"
+              }
+            ],
+            "relationships": [],
+            "create": false,
+            "delete": false
+          }
+        ],
+        "binding": {
+          "kind": "recipe",
+          "profile": {
+            "id": "graph-write",
+            "version": "1"
+          },
+          "effects": [
+            {
+              "id": "neutral",
+              "kind": "set",
+              "entity": {
+                "parameter": "order"
+              },
+              "values": [
+                {
+                  "field": {
+                    "module": "commerce",
+                    "element": "memo"
+                  },
+                  "value": {
+                    "literal": {
+                      "string": "ok"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "failures": [
+          {
+            "code": "NOT_READY",
+            "message": "Not ready",
+            "retryable": false
+          },
+          {
+            "code": "INVALID",
+            "message": "not met",
+            "retryable": false
+          }
+        ],
+        "authorization": {
+          "kind": "roles",
+          "profile": {
+            "id": "umf.actions.roles",
+            "version": "1"
+          },
+          "roles": [
+            "shipper"
+          ]
+        },
+        "attribution": {
+          "subject": "person-required"
+        },
+        "atomicity": "single-store",
+        "idempotency": "caller-key-optional",
+        "result": {
+          "identities": "created-and-changed",
+          "version": "store-opaque",
+          "receipt": "read-at-least"
+        }
+      },
+      "expected": {
+        "obligations": [
+          {
+            "id": "/action/parameters/0",
+            "path": "/action/parameters/0",
+            "kind": "key",
+            "status": "checked"
+          },
+          {
+            "id": "/modules/0/elements/5",
+            "path": "/modules/0/elements/5",
+            "kind": "model",
+            "status": "checked"
+          },
+          {
+            "id": "/modules/0/elements/0",
+            "path": "/modules/0/elements/0",
+            "kind": "model",
+            "status": "checked"
+          },
+          {
+            "id": "/modules/0/elements/1",
+            "path": "/modules/0/elements/1",
+            "kind": "model",
+            "status": "checked"
+          },
+          {
+            "id": "/modules/0/elements/2",
+            "path": "/modules/0/elements/2",
+            "kind": "model",
+            "status": "checked"
+          },
+          {
+            "id": "/modules/0/elements/3",
+            "path": "/modules/0/elements/3",
+            "kind": "model",
+            "status": "checked"
+          },
+          {
+            "id": "/modules/0/elements/4",
+            "path": "/modules/0/elements/4",
+            "kind": "model",
+            "status": "checked"
+          },
+          {
+            "id": "/modules/0/elements/5/keys/0",
+            "path": "/modules/0/elements/5/keys/0",
+            "kind": "key",
+            "status": "checked"
+          },
+          {
+            "id": "/action/parameters/1",
+            "path": "/action/parameters/1",
+            "kind": "value",
+            "status": "checked"
+          },
+          {
+            "id": "/action/writes/0",
+            "path": "/action/writes/0",
+            "kind": "frame",
+            "status": "checked"
+          },
+          {
+            "id": "/action/writes/0/selector",
+            "path": "/action/writes/0/selector",
+            "kind": "selector",
+            "status": "unchecked"
+          },
+          {
+            "id": "/action/failures/0",
+            "path": "/action/failures/0",
+            "kind": "failure",
+            "status": "checked"
+          },
+          {
+            "id": "/action/failures/1",
+            "path": "/action/failures/1",
+            "kind": "failure",
+            "status": "checked"
+          },
+          {
+            "id": "/action/authorization",
+            "path": "/action/authorization",
+            "kind": "authorization",
+            "status": "checked"
+          },
+          {
+            "id": "/action/attribution",
+            "path": "/action/attribution",
+            "kind": "attribution",
+            "status": "checked"
+          },
+          {
+            "id": "/action/atomicity",
+            "path": "/action/atomicity",
+            "kind": "atomicity",
+            "status": "checked"
+          },
+          {
+            "id": "/action/idempotency",
+            "path": "/action/idempotency",
+            "kind": "idempotency",
+            "status": "checked"
+          },
+          {
+            "id": "/action/result",
+            "path": "/action/result",
+            "kind": "result",
+            "status": "checked"
+          },
+          {
+            "id": "/action/binding",
+            "path": "/action/binding",
+            "kind": "binding",
+            "status": "checked"
+          },
+          {
+            "id": "/action/binding/effects/0",
+            "path": "/action/binding/effects/0",
+            "kind": "effect",
+            "status": "checked"
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "ACTION_STRUCTURE",
+            "path": "/action/writes/0/selector",
+            "message": "UmfError: Unpaired Unicode surrogate",
+            "severity": "error"
+          }
+        ]
+      }
+    }
+  ]
+}

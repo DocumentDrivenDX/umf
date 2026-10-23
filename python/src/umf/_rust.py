@@ -27,7 +27,9 @@ def _units(text: str) -> list[int]:
     return list(struct.unpack(f"<{len(raw) // 2}H", raw)) if raw else []
 
 
-def _wire(value: Any, path: str = "", depth: int = 0, counter: list[int] | None = None, *, max_values: int = 100_000, max_depth: int = 128) -> dict[str, Any]:
+def _wire(value: Any, path: str = "", depth: int = 0, counter: list[int] | None = None, *, max_values: int = 100_000, max_depth: int = 128, work: Any = None) -> dict[str, Any]:
+    if work is not None:
+        work(1)
     if counter is None:
         counter = [0]
     counter[0] += 1
@@ -46,21 +48,29 @@ def _wire(value: Any, path: str = "", depth: int = 0, counter: list[int] | None 
         bits = struct.pack(">d", value).hex()
         return {"kind": "number", "bits": bits}
     if type(value) is str:
+        if work is not None:
+            work(len(value) * 2)
         return {"kind": "string", "units": _units(value)}
     if type(value) is list:
-        return {"kind": "array", "items": [_wire(item, f"{path}/{index}", depth + 1, counter, max_values=max_values, max_depth=max_depth) for index, item in enumerate(value)]}
+        if work is not None:
+            work(len(value))
+        return {"kind": "array", "items": [_wire(item, f"{path}/{index}", depth + 1, counter, max_values=max_values, max_depth=max_depth, work=work) for index, item in enumerate(value)]}
     if type(value) is dict:
         members = []
         for key, item in dict.items(value):
             if type(key) is not str:
                 raise UmfCoreError("UNSUPPORTED_KEY", "JSON object keys must be strings", path)
+            if work is not None:
+                work(len(key) * 2 + 1)
             escaped = key.replace("~", "~0").replace("/", "~1")
-            members.append({"key": _units(key), "value": _wire(item, f"{path}/{escaped}", depth + 1, counter, max_values=max_values, max_depth=max_depth)})
+            members.append({"key": _units(key), "value": _wire(item, f"{path}/{escaped}", depth + 1, counter, max_values=max_values, max_depth=max_depth, work=work)})
         return {"kind": "object", "members": members}
     raise UmfCoreError("UNSUPPORTED_VALUE", f"Unsupported Python value type: {type(value).__name__}", path)
 
 
-def _from_wire(value: dict[str, Any]) -> Any:
+def _from_wire(value: dict[str, Any], work: Any = None) -> Any:
+    if work is not None:
+        work(1)
     kind = value["kind"]
     if kind == "null":
         return None
@@ -69,18 +79,22 @@ def _from_wire(value: dict[str, Any]) -> Any:
     if kind == "number":
         return struct.unpack(">d", bytes.fromhex(value["bits"]))[0]
     if kind == "string":
+        if work is not None:
+            work(len(value["units"]))
         raw = struct.pack(f"<{len(value['units'])}H", *value["units"]) if value["units"] else b""
         return raw.decode("utf-16-le", "surrogatepass")
     if kind == "array":
-        return [_from_wire(item) for item in value["items"]]
+        return [_from_wire(item, work) for item in value["items"]]
     if kind == "object":
         result = {}
         for member in value["members"]:
+            if work is not None:
+                work(len(member["key"]) + 1)
             raw = struct.pack(f"<{len(member['key'])}H", *member["key"]) if member["key"] else b""
             key = raw.decode("utf-16-le", "surrogatepass")
             if key in result:
                 raise UmfCoreError("DUPLICATE_KEY", "Duplicate object key")
-            result[key] = _from_wire(member["value"])
+            result[key] = _from_wire(member["value"], work)
         return result
     raise UmfCoreError("WIRE_FORMAT", f"Unknown umf.core-wire/1 tag {kind!r}")
 

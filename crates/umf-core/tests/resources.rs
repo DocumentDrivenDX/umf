@@ -201,3 +201,50 @@ fn ordinary_constraint_instruction_budget_is_five_million_steps() {
         "LIMIT"
     );
 }
+
+#[test]
+fn host_model_admission_lookalikes_are_not_converted_to_invalid_documents() {
+    let engine = engine();
+    for code in [
+        "NUMBER",
+        "VALUE_INVALID",
+        "PYTHON_SCHEMA_SOURCE_UNREPRESENTABLE",
+    ] {
+        let mut meter = |_amount| {
+            Err(EngineError::new(
+                code,
+                Utf16::default(),
+                "host admission lookalike",
+            ))
+        };
+        let mut ctx = Context::ordinary().with_meter(&mut meter);
+        let error = engine
+            .validate_document(
+                &Value::Null,
+                &Registry::new(),
+                &mut NoCapabilities,
+                &mut ctx,
+            )
+            .unwrap_err();
+        assert!(error.is_control_failure());
+        assert_eq!(error.code, code);
+        let mut python_meter = |_amount| {
+            Err(EngineError::new(
+                code,
+                Utf16::default(),
+                "host admission lookalike",
+            ))
+        };
+        let mut ctx = Context::ordinary().with_meter(&mut python_meter);
+        let error = engine
+            .validate_python_document(
+                &umf_core::PythonConsumerValue::Null,
+                &Registry::new(),
+                &mut NoCapabilities,
+                &mut ctx,
+            )
+            .unwrap_err();
+        assert!(error.is_control_failure());
+        assert_eq!(error.code, code);
+    }
+}

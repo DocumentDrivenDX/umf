@@ -15,6 +15,132 @@ use umf_core::{
 
 mod python_value;
 
+/// Generic compiler transport; callbacks are supplied only by the binding caller.
+#[pyfunction]
+#[pyo3(signature = (wire_json, profile="cooperative", max_work=None, meter=None, is_cancelled=None, now=None, deadline_ms=None, control=None))]
+fn execute_codegen_wire(
+    py: Python<'_>,
+    wire_json: &str,
+    profile: &str,
+    max_work: Option<usize>,
+    meter: Option<PyObject>,
+    is_cancelled: Option<PyObject>,
+    now: Option<PyObject>,
+    deadline_ms: Option<u64>,
+    control: Option<PyObject>,
+) -> PyResult<String> {
+    let profile = match profile {
+        "cooperative" => umf_core::ResourceProfile::Cooperative,
+        "hard-isolated" => umf_core::ResourceProfile::HardIsolated,
+        _ => return Err(PyValueError::new_err("Unknown resource profile")),
+    };
+    for (name, callback) in [
+        ("meter", meter.as_ref()),
+        ("is_cancelled", is_cancelled.as_ref()),
+        ("now", now.as_ref()),
+    ] {
+        if callback.is_some_and(|value| !value.bind(py).is_callable()) {
+            return Err(PyValueError::new_err(format!("{name} must be callable")));
+        }
+    }
+    if deadline_ms.is_some() && now.is_none() {
+        return Err(PyValueError::new_err("now is required with deadline_ms"));
+    }
+    // No artifact can install a semantic callback through this transport.
+    struct NoCallbacks;
+    impl Capabilities for NoCallbacks {
+        fn validate_extension(
+            &mut self,
+            _: u64,
+            _: &Value,
+            _: &SemanticContext,
+        ) -> Result<Vec<Diagnostic>, Utf16> {
+            Err("No compiler extension callback is registered".into())
+        }
+    }
+    let mut state = PythonWorkControl {
+        py,
+        max_work,
+        charged: 0,
+        meter,
+        is_cancelled,
+        now,
+        host_callback_failed: false,
+    };
+    let mut failure = None;
+    let mut control_hook = |amount| {
+        let result = (|| {
+            if let Some(callback) = &control {
+                let outcome = callback
+                    .bind(py)
+                    .call1((amount,))
+                    .map_err(|error| py_exception_engine_error(py, "METER_FAILURE", error))?;
+                if !outcome.is_none() {
+                    let (code, message, path): (String, Bound<'_, PyAny>, Bound<'_, PyAny>) =
+                        outcome.extract().map_err(|error| {
+                            py_exception_engine_error(py, "METER_FAILURE", error)
+                        })?;
+                    let mut ctx = Context::ordinary();
+                    let origin = python_value::pytext_from_python(&message, &mut ctx)?;
+                    let mut error = EngineError::new(
+                        code,
+                        extract_utf16(py, &path).map_err(|error| {
+                            py_exception_engine_error(py, "METER_FAILURE", error)
+                        })?,
+                        pytext_utf16(&origin),
+                    );
+                    error.python_message_origin = Some(origin);
+                    return Err(error);
+                }
+                return Ok(());
+            }
+            state.meter(amount)?;
+            if state.cancelled()? {
+                return Err(EngineError::new(
+                    "CANCELLED",
+                    Utf16::default(),
+                    "Operation cancelled by host",
+                ));
+            }
+            if let Some(deadline) = deadline_ms {
+                let time = state.clock()?.ok_or_else(|| {
+                    EngineError::new(
+                        "CLOCK_CAPABILITY_REQUIRED",
+                        Utf16::default(),
+                        "Host clock capability is required for deadline requests",
+                    )
+                })?;
+                if time > deadline {
+                    return Err(EngineError::new(
+                        "DEADLINE",
+                        Utf16::default(),
+                        "Deadline elapsed",
+                    ));
+                }
+            }
+            Ok(())
+        })();
+        if let Err(error) = &result {
+            failure = Some(error.clone());
+        }
+        result
+    };
+    let response = umf_core_wire::execute_request_with_control(
+        wire_json,
+        profile,
+        &mut NoCallbacks,
+        &mut control_hook,
+    );
+    if let Some(error) = failure {
+        return Err(py_error_preserving_origin(
+            py,
+            error,
+            &mut Context::ordinary(),
+        ));
+    }
+    Ok(response)
+}
+
 #[pyfunction]
 fn copy_json_wire(wire_json: &str) -> PyResult<String> {
     Ok(umf_core_wire::copy_wire_envelope(wire_json))
@@ -1376,6 +1502,7 @@ fn py_error_utf16(py: Python<'_>, error: PyErr) -> Utf16 {
 
 #[pymodule]
 fn _rust_core(module: &Bound<'_, PyModule>) -> PyResult<()> {
+    module.add_function(wrap_pyfunction!(execute_codegen_wire, module)?)?;
     module.add_function(wrap_pyfunction!(copy_json_wire, module)?)?;
     module.add_function(wrap_pyfunction!(copy_python_consumer_value, module)?)?;
     module.add_function(wrap_pyfunction!(copy_python_json_value, module)?)?;

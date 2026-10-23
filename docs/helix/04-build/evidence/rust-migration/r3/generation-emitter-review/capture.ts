@@ -1,0 +1,20 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
+import {generateAccessPackage} from '../../../../../../../src/compilation';
+import {request,profile} from '../../../../../../../tests/compilation/access-fixtures';
+import {writeFile} from 'node:fs/promises';
+import {readFileSync} from 'node:fs';
+import {createHash} from 'node:crypto';
+const out=import.meta.dir+'/frozen.json';if(await Bun.file(out).exists())throw Error('Refusing to refresh frozen expectations');
+const cases:any[]=[];const base=JSON.parse(readFileSync(import.meta.dir+'/../baseline/stage-one.json','utf8')).vectors.find((v:any)=>v.id==='search-index').request;
+const add=(id:string,change:(q:any,d:any)=>void,seed:any={request:request(),profile:profile()})=>{const input=structuredClone(seed);const d=JSON.parse(input.request.sources[0].text);change(input.request,d);input.request.sources[0].text=JSON.stringify(d);let expected;try{expected={ok:true,result:generateAccessPackage(input.request,input.profile)}}catch(error){const e=error as any;expected={ok:false,error:{code:e.code??'GENERATION_FAILED',message:e.message,...(e.pointer===undefined?{}:{pointer:e.pointer})}}}cases.push({id,operation:'generateAccessPackage',request:input,expected});};
+add('no-integer-facet',(q,d)=>{delete d.modules[0].elements.find((f:any)=>f.id==='revision').facets;});
+add('no-decimal-facet',(q,d)=>{delete d.modules[0].elements.find((f:any)=>f.id==='amount').facets;});
+add('range-and-domains',(q,d)=>{const f=d.modules[0].elements.find((f:any)=>f.id==='revision');f.facets.range={min:{integerToken:'-100'},max:{integerToken:'100'},minInclusive:false,maxInclusive:true};f.allowedValues=[{integerToken:'2'},{integerToken:'4'}];});
+const containers={request:request(),profile:profile()};containers.request.sources[0].text=readFileSync(import.meta.dir+'/../../../../../../../fixtures/access/commerce/containers.json','utf8');
+add('deep-container',(q,d)=>{const m=d.modules[0];const f=m.elements.find((f:any)=>f.id==='tagItem');delete f.scalarType;f.cardinality='array';f.itemType={module:'commerce',element:'deepTag'};m.elements.push({id:'deepTag',kind:'field',scalarType:'string',cardinality:'one',nullability:'required',extensions:{}});const fs=m.extensions['umf.access'].views[0].fields;const i=fs.findIndex((v:any)=>v.field.element==='tagItem');fs.splice(i+1,0,{field:{module:'commerce',element:'deepTag'},row:{missing:false,null:false},create:{missing:false,null:false},mutable:false,generated:false});},containers);
+add('search-missing-kind',(q,d)=>{delete d.modules[0].extensions['umf.access'].search[0].kind;},base);
+add('search-unknown-member',(q,d)=>{d.modules[0].extensions['umf.access'].search[0].future=true;},base);
+add('search-invalid-binding',(q,d)=>{d.modules[0].extensions['umf.access'].searchBindings[0].maxK=0;},base);
+add('search-duplicate-id',(q,d)=>{d.modules[0].extensions['umf.access'].search.push(structuredClone(d.modules[0].extensions['umf.access'].search[0]));},base);
+add('search-vector-dimensions',(q,d)=>{const x=d.modules[0].extensions['umf.access'].search.find((x:any)=>x.kind==='vector');x.vector.dimensions=17000;},base);
+const frozen=JSON.stringify({format:'umf-r3-generation-emitter-review/1',cases},null,2)+'\n';await writeFile(out,frozen);await writeFile(import.meta.dir+'/receipt.json',JSON.stringify({frozenSha256:createHash('sha256').update(frozen).digest('hex'),scope:'Original TS full output before emitter/scalar/search fixes'},null,2)+'\n');console.log(cases.map(c=>[c.id,c.expected.result?.outcome??'error']));

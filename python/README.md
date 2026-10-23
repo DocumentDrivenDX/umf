@@ -13,7 +13,7 @@ pip install https://github.com/DocumentDrivenDX/umf/releases/download/umf-v0.5.1
 ```
 
 The release URL above identifies the existing published Python artifact. The
-R2 development source builds a platform-specific native Rust extension instead:
+development source builds a platform-specific native Rust extension instead:
 
 ```sh
 rustup toolchain install 1.90.0
@@ -70,6 +70,15 @@ The R2 Rust-backed production hosts and their resource controls are described in
 the portable safe-number/UTF-16 profile. Standalone Python consumer-schema
 validation uses a separate native Python value profile; exact tested runtime
 versions and compatibility limits belong to the R2 qualification evidence.
+
+The additive R3 compiler is available as `from umf.rust_codegen import CodegenEngine`.
+Construct it with the nine explicit trusted resources described in the binding
+README. Its snake_case convenience methods cover both generators, access diffing,
+table deployment/migration compilation and verification, change discovery and
+row-scope normalization. `call()` retains the complete semantic result envelope;
+convenience methods raise `UmfCodegenError` for semantic failures. Cooperative
+controls use the same operation context through admission, Rust and result copies.
+The existing `umf_codegen` default CLI and its MiniRacer dependency remain until R4.
 
 Run `python -m pytest python/tests` from the repository root. Build with
 `uv build --project python`. The source distribution includes the current

@@ -13,6 +13,9 @@ pub struct EngineError {
     /// predecessor exposes as ordered iterator terminals. Public code/message
     /// equality is not sufficient to make a host error deferable.
     pub(crate) python_schema_terminal: Option<PythonSchemaTerminal>,
+    /// Trusted origin for cooperative host/control failures. Message/code text
+    /// alone never determines whether a compiler may turn an error into data.
+    control_failure: bool,
 }
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -30,7 +33,19 @@ impl EngineError {
             message: message.into(),
             python_message_origin: None,
             python_schema_terminal: None,
+            control_failure: false,
         }
+    }
+
+    /// Whether this error arose from an invocation control capability. The flag
+    /// is internal provenance and is not serialized into diagnostics or wire data.
+    pub fn is_control_failure(&self) -> bool {
+        self.control_failure
+    }
+
+    pub(crate) fn with_control_failure(mut self) -> Self {
+        self.control_failure = true;
+        self
     }
 
     pub(crate) fn with_python_schema_terminal(mut self, terminal: PythonSchemaTerminal) -> Self {
@@ -47,6 +62,7 @@ impl EngineError {
     /// boundary and change how this operation handles the error.
     pub(crate) fn from_host(mut self) -> Self {
         self.python_schema_terminal = None;
+        self.control_failure = true;
         self
     }
 }

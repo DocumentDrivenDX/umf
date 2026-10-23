@@ -1,12 +1,13 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {afterEach,expect,test} from 'bun:test';
+import {readFileSync} from 'node:fs';
 import {mkdtemp,readFile,readdir,writeFile,rm,symlink,mkdir,realpath,lstat} from 'node:fs/promises';
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
 import {createHash} from 'node:crypto';
 import {writeAccessPackage,checkAccessPackage,runAccessCli} from '../../scripts/umf-access-generate';
 // Explicit files-as-data fixture: does not qualify the source generator.
-function generateAccessPackage(){const path='shop/models.py',text='fixture models\n';const digest=(s:string)=>createHash('sha256').update(s).digest('hex');const manifest=JSON.stringify({inventory:[{path,sha256:digest(text)}]});return {outcome:'candidate' as const,files:[{path,text,sha256:digest(text)},{path:'shop/_umf/manifest.json',text:manifest,sha256:digest(manifest)}]};}
+function generateAccessPackage(){if(process.env.UMF_R3_WRITER_CANDIDATE)return JSON.parse(readFileSync(process.env.UMF_R3_WRITER_CANDIDATE,'utf8')) as {outcome:'candidate';files:{path:string;text:string;sha256:string}[]};const path='shop/models.py',text='fixture models\n';const digest=(s:string)=>createHash('sha256').update(s).digest('hex');const manifest=JSON.stringify({inventory:[{path,sha256:digest(text)}]});return {outcome:'candidate' as const,files:[{path,text,sha256:digest(text)},{path:'shop/_umf/manifest.json',text:manifest,sha256:digest(manifest)}]};}
 const roots:string[]=[];
 afterEach(async()=>{for(const p of roots.splice(0))await rm(p,{recursive:true,force:true});});
 async function setup(){const root=await mkdtemp(join(await realpath(tmpdir()),'umf-access-'));roots.push(root);const destination=join(root,'output'),r=generateAccessPackage();await writeAccessPackage(destination,r);return {root,destination,r};}

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-/** Build and qualify the installed R2 Python, Node, Bun, WASM/browser, and CLI hosts. */
+/** Build and qualify installed core and compiler Python, Node, Bun, WASM/browser, and CLI hosts. */
 import {createHash} from 'node:crypto';
 import {spawnSync} from 'node:child_process';
 import {copyFile, mkdir, mkdtemp, readFile, readdir, rm, symlink, writeFile} from 'node:fs/promises';
@@ -9,9 +9,10 @@ import {delimiter, dirname, join, relative, resolve, sep} from 'node:path';
 
 const root = resolve(import.meta.dir, '../..');
 const fixture = resolve(root, 'docs/helix/04-build/evidence/rust-migration/r2/baseline-current-conformance.json');
-const evidence = resolve(root, 'docs/helix/04-build/evidence/rust-migration/r2');
-const receiptPath = process.env.UMF_R2_QUALIFICATION_PATH
-  ? resolve(root, process.env.UMF_R2_QUALIFICATION_PATH)
+const evidence = resolve(root, 'docs/helix/04-build/evidence/rust-migration/r3');
+const receiptOverride = process.env.UMF_R3_QUALIFICATION_PATH ?? process.env.UMF_R2_QUALIFICATION_PATH;
+const receiptPath = receiptOverride
+  ? resolve(root, receiptOverride)
   : resolve(evidence, 'production-host-qualification.json');
 function resolveTool(override: string | undefined, names: string[], extra: string[] = []): string {
   const directories = (process.env.PATH ?? '').split(delimiter).filter(Boolean);
@@ -97,13 +98,34 @@ async function walk(path: string): Promise<string[]> {
 async function sourceClosure() {
   const roots = [
     'Cargo.toml', 'Cargo.lock', 'rust-toolchain.toml', '.cargo/config.toml', 'package.json', 'bun.lock',
-    'crates/umf-core', 'crates/umf-core-wire', 'crates/umf-metamodel', 'crates/umf-cli',
+    'crates/umf-core', 'crates/umf-core-wire', 'crates/umf-codegen', 'crates/umf-metamodel', 'crates/umf-cli',
     'bindings/core', 'python/src/umf', 'python/tests', 'python/pyproject.toml', 'python/hatch_build.py',
     'python/README.md', 'python/LICENSE.md', 'python/LICENSE-MIT', 'python/LICENSE-APACHE',
     'python/umf_access/src/umf_access/generated_core.py',
-    'scripts/rust-core', 'spec/core', 'spec/metamodel/generated',
+    'scripts/rust-core', 'scripts/rust-migration', 'tests/rust-core', 'spec/core', 'spec/metamodel/generated',
     'spec/metamodel/umf.yaml', 'spec/metamodel/package.json',
     'spec/extensions/domain-pack/schema.json', 'spec/extensions/dataset-source/schema.json',
+    'spec/extensions/tables/operation.schema.json',
+    ...compilerFixtures,
+    'docs/helix/04-build/evidence/rust-migration/r3/sol-shared-query-review/query.json',
+    'docs/helix/04-build/evidence/rust-migration/r3/unicode-lowercase/source-data.json',
+    // Private compiler/analyzer and resource-control fixtures consumed by the
+    // Rust suite are inputs too, although they are outside the public replay API.
+    'docs/helix/04-build/evidence/rust-migration/r3/sol-generation-schema-order-review/source.json',
+    'docs/helix/04-build/evidence/rust-migration/r3/sol-final-migration-meter-review/scan-inputs.json',
+    'docs/helix/04-build/evidence/rust-migration/r3/sol-unified-action-admission/analysis.json',
+    'docs/helix/04-build/evidence/rust-migration/r3/sol-unified-action-admission/bounds/analysis.json',
+    'docs/helix/04-build/evidence/rust-migration/r3/sol-action-closure/qualified-analysis.json',
+    'docs/helix/04-build/evidence/rust-migration/r3/sol-action-closure/expression-analysis.json',
+    'docs/helix/04-build/evidence/rust-migration/r3/sol-action-closure/selector-analysis.json',
+    'docs/helix/04-build/evidence/rust-migration/r3/sol-action-closure/parser-analysis.json',
+    'docs/helix/04-build/evidence/rust-migration/r3/sol-independent-action-review/analysis.json',
+    'docs/helix/04-build/evidence/rust-migration/r3/sol-independent-action-review/parser-order.json',
+    'spec/extensions/tables/package.json', 'spec/extensions/actions/package.json',
+    'spec/extensions/binding/package.json', 'spec/extensions/binding-stable/package.json',
+    'src', 'fixtures/access', 'tests/compilation/access-writer.test.ts',
+    'tests/compilation/access-fixtures.ts', 'scripts/umf-access-generate.ts', 'scripts/access-e2e.ts',
+    'tests/access-unified.test.ts', 'tests/unified',
     'docs/helix/04-build/evidence/rust-migration/r2/baseline-current-conformance.json',
     'docs/helix/04-build/evidence/rust-migration/r2/schema-admission-predecessor.json',
     'docs/helix/04-build/evidence/rust-migration/r2/schema-suite-predecessor.json',
@@ -171,13 +193,14 @@ async function sourceClosure() {
     'docs/helix/04-build/evidence/rust-migration/r2/approved-python-yaml-nel-correction.json',
     'scripts/rust-core/python-serialization-conformance.py',
     'scripts/metamodel', 'tests/rust-core', 'src/generated',
-    '.github/workflows/rust-core.yml',
+    '.github/workflows/rust-core.yml', '.github/workflows/access-boundaries.yml',
     'scripts/check-rust-boundaries.py', 'scripts/rust-inventory.py',
   ];
-  for (const name of await readdir(evidence)) {
+  const coreEvidence=resolve(root,'docs/helix/04-build/evidence/rust-migration/r2');
+  for (const name of await readdir(coreEvidence)) {
     if (/^freeze-.*\.(?:py|ts)$/.test(name)
       || /^sol-.*(?:predecessor.*|decision|amendment)\.json$/.test(name)) {
-      roots.push(relative(root, join(evidence, name)));
+      roots.push(relative(root, join(coreEvidence, name)));
     }
   }
   const files = new Set<string>();
@@ -244,6 +267,25 @@ async function createNoJavascriptToolPath(directory: string) {
   return {path, entries, verification: check.stdout.trim()};
 }
 
+const compilerFixtures = [
+  'docs/helix/04-build/evidence/rust-migration/r3/baseline/operations.json',
+  'docs/helix/04-build/evidence/rust-migration/r3/baseline/stage-one.json',
+  'docs/helix/04-build/evidence/rust-migration/r3/supplement/operations.json.gz',
+  'docs/helix/04-build/evidence/rust-migration/r3/sol-migration-row-scope-review/umf-sol-r3-round3.json',
+  ...(await walk(resolve(root, 'docs/helix/04-build/evidence/rust-migration/r3')))
+    .filter(path => path.endsWith(`${sep}frozen.json`) || path.endsWith(`${sep}frozen.json.gz`))
+    .map(path => relative(root, path).split(sep).join('/')),
+];
+async function compilerQualification(host: string, executable: string, arguments_: string[], cwd: string, env: NodeJS.ProcessEnv) {
+  const records: Record<string, unknown> = {};
+  for (const [index, fixturePath] of compilerFixtures.entries()) {
+    const report = join(cwd, `r3-${host}-${index}.json`);
+    const result = command(executable, [...arguments_, root, fixturePath], cwd, {...env, UMF_R3_REPORT: report});
+    records[fixturePath] = {...outputRecord(`r3-${host}-complete-outcome-${index}`, result), actual: await artifactContent(report)};
+  }
+  return records;
+}
+
 async function installPythonWheel(wheel: string, workspace: string) {
   await mkdir(workspace, {recursive: true});
   const venv = join(workspace, 'venv');
@@ -255,6 +297,7 @@ async function installPythonWheel(wheel: string, workspace: string) {
   const versions = JSON.parse(versionResult.stdout.trim());
   const suite = command(py, ['-m', 'pytest', '-c', resolve(root, 'python/pyproject.toml'), resolve(root, 'python/tests')], workspace, env);
   const corpus = command(py, [resolve(root, 'scripts/rust-core/python-conformance.py'), fixture], workspace, env);
+  const codegen = await compilerQualification('python', py, [resolve(root, 'scripts/rust-migration/r3/python-replay.py')], workspace, env);
   const admission = resolve(root, 'docs/helix/04-build/evidence/rust-migration/r2/schema-admission-predecessor.json');
   const suiteReceipt = resolve(process.env.UMF_JSON_SCHEMA_SUITE_RECEIPT
     ?? join(root, 'docs/helix/04-build/evidence/rust-migration/r2/schema-suite-predecessor-outcomes.json'));
@@ -279,6 +322,7 @@ async function installPythonWheel(wheel: string, workspace: string) {
     versions,
     suite: outputRecord('installed-python-public-suite', suite),
     corpus: outputRecord('installed-python-139-and-controls', corpus),
+    codegen,
     schema: outputRecord('installed-python-9282-admission-and-official-suite', schema),
     schemaEvaluationOrder: outputRecord('installed-python-schema-evaluation-order-reference-scope-identity-anchor-uri-7671-methods-and-263-errors', schemaEvaluationOrder),
     serialization: outputRecord('installed-python-typed-serialization-predecessor', serialization),
@@ -288,7 +332,7 @@ async function installPythonWheel(wheel: string, workspace: string) {
 const sourceBefore = await sourceClosure();
 const commit = await git(['rev-parse', 'HEAD']);
 const statusAtStart = await git(['status', '--porcelain=v1', '--untracked-files=all']);
-const workspace = await mkdtemp(join(tmpdir(), 'umf-r2-full-conformance-'));
+const workspace = await mkdtemp(join(tmpdir(), 'umf-r3-full-conformance-'));
 const results: Record<string, unknown> = {};
 const artifacts: Record<string, unknown> = {};
 try {
@@ -299,6 +343,7 @@ try {
   const nodeLibrary = findBinary(release, /^libumf_core_node\.(?:dylib|so)$/);
   const nodeAddon = resolve(root, 'bindings/core/node/umf_core_node.node');
   await copyFile(nodeLibrary, nodeAddon);
+  results.codegenHostAdmission = outputRecord('r3-host-constructor-copy-and-carrier-controls', command(node, ['--test', resolve(root, 'tests/rust-core/codegen-host-admission.test.mjs')], workspace));
   artifacts.nodeAddon = {
     path: relative(root, nodeAddon).split(sep).join('/'),
     ...await artifactContent(nodeAddon),
@@ -325,9 +370,26 @@ try {
   const nodeVersion = command(node, ['-e', 'if (process.versions.bun) process.exit(2); process.stdout.write(process.version)'], workspace).stdout;
   results.node = outputRecord('packed-installed-node', command(node, [resolve(root, 'scripts/rust-core/node-conformance.mjs'), fixture], workspace, nodeEnv));
   results.bun = outputRecord('packed-installed-bun', command(bun, [resolve(root, 'scripts/rust-core/node-conformance.mjs'), fixture], workspace, nodeEnv));
+  const compilerAdapter = resolve(root, 'scripts/rust-migration/r3/host-replay.mjs');
+  const compilerNodeEnv = {...nodeEnv, UMF_R3_NODE_PACKAGE: installedNodeEntry};
+  results.codegenNode = await compilerQualification('node', node, [compilerAdapter], workspace, compilerNodeEnv);
+  results.codegenBun = await compilerQualification('bun', bun, [compilerAdapter], workspace, compilerNodeEnv);
+  const stageResult = JSON.parse(await readFile(join(workspace, 'r3-node-1.json'), 'utf8'));
+  const baseCandidate = stageResult.results.find((row: any) => row.id === 'candidate-base');
+  if (!baseCandidate?.matches || !baseCandidate.actual?.ok || baseCandidate.actual.result?.outcome !== 'candidate') throw new Error('Rust writer qualification requires the exact frozen candidate package');
+  const writerInput = join(workspace, 'r3-writer-candidate.json');
+  await writeFile(writerInput, JSON.stringify(baseCandidate.actual.result));
+  results.codegenWriter = outputRecord('r3-writer-drift-path-fault-ownership-stage-two-controls-on-rust-files', command(bun, ['test', resolve(root, 'tests/compilation/access-writer.test.ts')], workspace, {...process.env, UMF_R3_WRITER_CANDIDATE: writerInput}));
+  const clientResult = JSON.parse(await readFile(join(workspace, 'r3-node-0.json'), 'utf8'));
+  const clientCandidate = clientResult.results.find((row: any) => row.id === 'client/original-json');
+  if (!clientCandidate?.matches || !clientCandidate.actual?.ok) throw new Error('Rust ontology qualification requires an exact frozen client');
+  const clientInput = join(workspace, 'r3-unified-candidate.json');
+  await writeFile(clientInput, JSON.stringify(clientCandidate.actual.result));
+  results.codegenOntology = outputRecord('r3-unchanged-application-independent-ontology-on-rust-client-stdlib-only', command(bun, ['test', resolve(root, 'tests/access-unified.test.ts')], workspace, {...process.env, UMF_R3_UNIFIED_CANDIDATE: clientInput, UMF_UNIFIED_PYTHON: python, UMF_UNIFIED_POSTGRES_DSN: '', UMF_UNIFIED_WEFT_DIR: '', UMF_UNIFIED_PSYCOPG_DIR: ''}));
 
   const cli = resolve(release, 'umf');
   results.cli = outputRecord('native-cli-139-path-empty', command(node, [resolve(root, 'scripts/rust-core/cli-core-conformance.mjs'), fixture], workspace, {...process.env, PATH: '', UMF_CLI_PATH: cli}));
+  results.codegenCli = await compilerQualification('cli', node, [compilerAdapter], workspace, {...process.env, PATH: '', UMF_R3_HOST: 'cli', UMF_R3_CLI: cli});
   artifacts.cli = {
     path: relative(root, cli).split(sep).join('/'),
     ...await artifactContent(cli),
@@ -353,6 +415,13 @@ try {
     UMF_WASM_SCHEMA_DEPTH_CONFORMANCE: '0',
   });
   results.chromiumDefaultWasm = outputRecord('real-chromium-default-production-wasm-139-boundaries-controls', defaultBrowser);
+  const compilerBrowser: Record<string, unknown> = {};
+  for (const [index, fixturePath] of compilerFixtures.entries()) {
+    const report = join(workspace, `r3-chromium-${index}.json`);
+    const run = command(node, ['--experimental-strip-types', resolve(root, 'scripts/rust-migration/r3/browser-conformance.ts')], workspace, {...process.env, UMF_WASM_PKG_PATH: `${defaultWasmPkg}/umf_core_wasm.js`, UMF_R3_FIXTURE: fixturePath, UMF_R3_REPORT: report});
+    compilerBrowser[fixturePath] = {...outputRecord(`r3-real-chromium-complete-outcome-${index}`, run), actual: await artifactContent(report)};
+  }
+  results.codegenChromium = compilerBrowser;
 
   const wasmBuild = command(cargo, ['build', '--locked', '--release', '--target', 'wasm32-unknown-unknown', '-p', 'umf-core-wasm', '--features', 'conformance'], root, env);
   results.wasmFeatureBuild = outputRecord('wasm-release-python-regex-conformance-feature-build', wasmBuild);
@@ -401,6 +470,8 @@ try {
   const requiredSdistMembers = [
     'Cargo.toml', 'Cargo.lock', 'rust-toolchain.toml', '.cargo/config.toml',
     'LICENSE.md', 'LICENSE-MIT', 'LICENSE-APACHE', 'crates/umf-core/src/lib.rs',
+    'crates/umf-codegen/src/lib.rs', 'crates/umf-codegen/src/generation/python_runtime.py',
+    'crates/umf-codegen/src/generation/table_runtime.py', 'spec/extensions/tables/operation.schema.json',
     'bindings/core/python/Cargo.toml', 'bindings/core/node/Cargo.toml', 'bindings/core/wasm/Cargo.toml',
   ];
   const missingSdistMembers = requiredSdistMembers.filter((required) =>
@@ -440,9 +511,9 @@ try {
   results.pythonSdistInstall = await installPythonWheel(sdistWheel, join(pythonWorkspace, 'sdist-installed'));
 
   const sourceAfter = await sourceClosure();
-  if (sourceAfter.digest !== sourceBefore.digest) throw new Error('R2 source closure changed during qualification; do not issue a mixed-source receipt');
+  if (sourceAfter.digest !== sourceBefore.digest) throw new Error('R3 source closure changed during qualification; do not issue a mixed-source receipt');
   const receipt = {
-    id: 'umf.rust-migration.r2.production-host-qualification',
+    id: 'umf.rust-migration.r3.production-host-qualification',
     status: 'pass',
     capturedAt: new Date().toISOString(),
     sourceCommit: commit,

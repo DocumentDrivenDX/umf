@@ -1,0 +1,198 @@
+{
+  "id": "umf.r3.hosted-build-source-closure-review/1",
+  "baseCommit": "79ec42caac5614b8742f558f0c1620a7ec74e049",
+  "decision": "approve_exact_reviewed_successor_delta_subject_to_complete_required_hosted_ci",
+  "files": [
+    {
+      "path": "docs/helix/04-build/evidence/rust-migration/r3/inventory.json",
+      "beforeSha256": "d5866c9043c4368182dbee14779028ae83153cf1f6a112fb9a21c495aa994f25",
+      "afterSha256": "73805a2425dff9a113f154a083cfb3c9c3ee20257914aac54ec54357e1cfdd8c"
+    },
+    {
+      "path": "python/umf_access/src/umf_access/generated_core.py",
+      "beforeSha256": "0ebf12bdd71f45ec392243617197f7130d0bab1844d059a383276e7ed79adf43",
+      "afterSha256": "85a6c567012677d92ffdf511f280317c9a148dd763cd3f956e113b0e76901471"
+    },
+    {
+      "path": "python/umf_codegen/src/umf_codegen/_assets/generator.js.gz",
+      "beforeSha256": "97d8bb0799d67e3cbefcafe84d6e3a9eadd6ee484d7099deb7bef2b032c189b6",
+      "afterSha256": "d3b94f47ea254f7d1901b5716e0378055cc1551a75887d57b8329f86946adb87"
+    },
+    {
+      "path": "python/umf_codegen/src/umf_codegen/_assets/manifest.json",
+      "beforeSha256": "cb203c3369390042f5c02c0d138617a5456467f727d2e32430898c16a024f0e8",
+      "afterSha256": "ac3f482b3a0eec9f030349bed266bd297e62047bb7d3891c03c994da7f85d87f"
+    },
+    {
+      "path": "python/umf_codegen/src/umf_codegen/_release.py",
+      "beforeSha256": "da85165c88712517405e8d32473650f70ab04e3a73328132121cdeaca57da17f",
+      "afterSha256": "76227fd0a0ea5935dc2abeb017b36335676ebbc761b51df2f364743970a19b53"
+    },
+    {
+      "path": "scripts/metamodel/build.ts",
+      "beforeSha256": "7fca29a8c84df0fb5d6411c41c175c1883b12e1202f8036c7800982a9597b4a6",
+      "afterSha256": "cd9a3499515a2887c3c9f80cd6fdad4bbca767b0cde5ffe098cf12fe2e001f03"
+    },
+    {
+      "path": "scripts/metamodel/rust.ts",
+      "beforeSha256": "031e3f2fc9c8846ae4bc749cd3abfcdd40f00416d6e6a72b87e4abdd237ba8bf",
+      "afterSha256": "f3459b4732527299c2f0068f96fb5eaad0cf6d32a8e1a07fb30b2a3954160493"
+    },
+    {
+      "path": "spec/core/extension-package.schema.json",
+      "beforeSha256": "f77841f00d1c2db4d65499f5041d9221c5b3629310b27e5b3cf7604f93b80101",
+      "afterSha256": "eeda9a096c2a277b13335f2f86c14e3400f83f4f9ad1e6fdc4ed73544fd6db32"
+    },
+    {
+      "path": "spec/core/schema.json",
+      "beforeSha256": "30cc308d7c5556e41bf2755610a4994669bad124fcee1504423c3884e581d78a",
+      "afterSha256": "57bdb4a349ccc1d5ab56e5b0700bcf8a11caa91e13b2efc33b29ff27839e76cb"
+    },
+    {
+      "path": "spec/core/semantic-type-reference.schema.json",
+      "beforeSha256": "36865bfd512a8c34a93c741c15c47b82291f68c1df010a166753d978d83a8c25",
+      "afterSha256": "ae1585250d493cb119db4d457b13ae3bec1c1ee55f5ca0f3bcb047aeedc5c411"
+    },
+    {
+      "path": "spec/metamodel/generated/core-constraints.json",
+      "beforeSha256": "d31eb23837e060933437bca8afdbd51d36e910b54855be9e0fb172113875f563",
+      "afterSha256": "1db20e22f4f48df20cc288871f92d27314d578ffcd41ab6e9df01f218a7760fb"
+    },
+    {
+      "path": "spec/metamodel/generated/domain-policy.json",
+      "beforeSha256": "33be781420796c11ab63ffa21041cd901fdf2b4c5296117784ac93dec8e3ce5b",
+      "afterSha256": "038a4f9b1f8a7cee78c2628a7d595ce7b5549afc41396bffffb8508e380843cb"
+    },
+    {
+      "path": "spec/metamodel/generated/manifest.json",
+      "beforeSha256": "0aaaf1d75d4db888156b61834017ce61ef633258f87991a578af1d9015b3a187",
+      "afterSha256": "706c4d71e5f9a5f23ef18993d23523827c9f98ccad7f8e12410c863f7e06c593"
+    },
+    {
+      "path": "spec/metamodel/generated/python-shapes.json",
+      "beforeSha256": "40c267a528d40a137185070b776ce742f00ffa4e6bca8b511736cf7bd25fb88a",
+      "afterSha256": "7baed6286fd435d023a5b83e14415509fdcec5ec34dab400903b0754281c0106"
+    },
+    {
+      "path": "src/generated/core-model.ts",
+      "beforeSha256": "1c0f4966a6c9cd279a6755c4e1b32add846d7ad0dd21abbfc14c61f9c22f5789",
+      "afterSha256": "afd43ffe02ffb64973cf95521991c142c54bb07151d68f018066a9b46108b911"
+    },
+    {
+      "path": "src/generated/core-validators.ts",
+      "beforeSha256": "63261fd2576cd185715f90cacdc942534001764510c0d6011781a7ded55192de",
+      "afterSha256": "88e4252883b595782c01d6b63fd86e7a5ba8492aa4fec953a628e32a051bbbc4"
+    }
+  ],
+  "sourceBoundaryReview": {
+    "scope": "Metamodel CLI compile-time source/resource census; no portable Rust compiler semantic change.",
+    "changes": [
+      "Both sourceBound snapshot and generated compiler closure now include the entire transitive umf-codegen crate.",
+      "Both include explicit authored tables operation schema and Cargo configuration. Crate traversal includes static Python templates and Unicode data.",
+      "Test-only external includes excluded; no generated-output dependency cycle introduced.",
+      "Artifact fingerprint, before/after build snapshot checks and generation final-source checks retain existing enforcement using the expanded set."
+    ],
+    "manifestCurrentHashChecks": [
+      "crates/umf-codegen/src/resources.rs",
+      "crates/umf-codegen/src/generation/python_runtime.py",
+      "crates/umf-codegen/src/generation/table_runtime.py",
+      "crates/umf-codegen/src/access/unicode_lowercase_data.rs",
+      "spec/extensions/tables/operation.schema.json",
+      ".cargo/config.toml"
+    ],
+    "findings": []
+  },
+  "generatedDeltaReview": "Core JSON changes confined to $comment or provenance/compilerSha256; embedded Python-shapes schema comments/provenance only. Generated TypeScript model/validators and Python core equal base after SHA256 normalization. Manifest updates compiler/source/workspace classification and generated output hashes.",
+  "legacyPayload": {
+    "beforeBundleSha256": "69227680f51acc17c74dafe80a8ab1db9066672beb9c93e11d7840daf47207b8",
+    "afterBundleSha256": "ec7112d56963b8ee65d214e10d18a74dbd4b6b00c3f2afca795aff93211edd08",
+    "beforeGzipSha256": "97d8bb0799d67e3cbefcafe84d6e3a9eadd6ee484d7099deb7bef2b032c189b6",
+    "afterGzipSha256": "d3b94f47ea254f7d1901b5716e0378055cc1551a75887d57b8329f86946adb87",
+    "decompressedBytesBefore": 752649,
+    "decompressedBytesAfter": 752649,
+    "comparisonMethod": "Replace every ASCII regex [0-9a-f]{64} token with identical sentinel in decompressed bytes, then compare entire byte streams. Independently pass; additionally enumerate token-pair changes.",
+    "normalizedEqual": true,
+    "digestTokens": 10,
+    "changedTokenPairs": [
+      {
+        "before": "601bff5f9b8a6c0940941317c898fbce08ce4c62583aa86f71ab02d0d2737057",
+        "after": "e3088d5c9bb519953181fd236443a91e1bfa7b77e0b6c93ae1564031c3ae4f3e"
+      },
+      {
+        "before": "601bff5f9b8a6c0940941317c898fbce08ce4c62583aa86f71ab02d0d2737057",
+        "after": "e3088d5c9bb519953181fd236443a91e1bfa7b77e0b6c93ae1564031c3ae4f3e"
+      },
+      {
+        "before": "601bff5f9b8a6c0940941317c898fbce08ce4c62583aa86f71ab02d0d2737057",
+        "after": "e3088d5c9bb519953181fd236443a91e1bfa7b77e0b6c93ae1564031c3ae4f3e"
+      },
+      {
+        "before": "601bff5f9b8a6c0940941317c898fbce08ce4c62583aa86f71ab02d0d2737057",
+        "after": "e3088d5c9bb519953181fd236443a91e1bfa7b77e0b6c93ae1564031c3ae4f3e"
+      },
+      {
+        "before": "601bff5f9b8a6c0940941317c898fbce08ce4c62583aa86f71ab02d0d2737057",
+        "after": "e3088d5c9bb519953181fd236443a91e1bfa7b77e0b6c93ae1564031c3ae4f3e"
+      }
+    ],
+    "scope": "Only five repeated compiler source provenance hash tokens change; bundle implementation text unchanged."
+  },
+  "validation": {
+    "legacyBuildCheck": {
+      "command": "bun scripts/build-codegen.ts --check",
+      "status": "pass",
+      "inputs": 234,
+      "files": 13,
+      "reportedBy": "luna_final_client_admission and luna_legacy_payload_fix"
+    },
+    "legacyWheel": "Author reports uv build python/umf_codegen --wheel passes with real pinned Hatchling.",
+    "legacyProbe": "Author reports current/stale/corrupt probe checks pass with local Hatchling interface stub; not claimed as full installed build-hook qualification.",
+    "cleanGeneration": {
+      "reportedBy": "luna_final_client_admission",
+      "focused": {
+        "command": "bun test tests/metamodel/compiler-kernel.test.ts",
+        "passed": 19,
+        "expectations": 140
+      },
+      "full": {
+        "command": "bun test tests/metamodel",
+        "passed": 59,
+        "expectations": 405,
+        "scope": "Includes clean generation, fixed point/no-write inventory and 15 authority-boundary tests."
+      },
+      "toolchain": "Rust1.90.0; root reports local build parallelism limited to2."
+    },
+    "hostedFinalHead": "Complete required hosted gates remain pending for successor commit.",
+    "installedLegacyOperations": {
+      "reportedBy": "luna_legacy_payload_fix",
+      "python": "3.11.17",
+      "miniRacer": "0.14.1",
+      "environment": "Fresh wheel installed; isolated python -I CI probes.",
+      "status": "pass",
+      "generator": "30 parity cases plus writer/integrity controls",
+      "rowScope": "6 cases",
+      "deployment": "15 parity and30tamper controls",
+      "migration": "17 parity,99tamper and4deadline controls",
+      "reviewedChanges": "3 candidate parity and8forged/malformed refusals"
+    },
+    "pythonCoreSuccessorAttempt": {
+      "reportedBy": "luna_final_client_admission",
+      "command": "env -u PYTHONPATH /private/tmp/umf-r3-incremental-python/bin/python -I -m pytest /Users/erik/.codex/worktrees/rust-binding-spike/umf/python/tests -q",
+      "status": "pass",
+      "passed": 206,
+      "seconds": 15.8,
+      "warnings": "One cache-path warning",
+      "scope": "Current Python source files and six _RESOURCE_PATHS assets copied into existing installed artifact. Incremental artifact validation; no fresh wheel or Rust rebuild. Earlier missing _rust_core collection attempt used an incomplete temporary environment and supplies no qualification."
+    },
+    "reviewerFinalHashCheck": "All16 recorded successor file hashes independently match current bytes after both author validation reports."
+  },
+  "immutablePriorQualification": {
+    "sourceClosureSha256": "8dc238d2a285a25dc94941f8120b0bef22745a5ef1b815d74487e8a2e3ece03d",
+    "receiptSha256": "2e068100414297c19c3c8f12c603b16a7353904e40eb31914c19bd30f4c74bf2",
+    "scope": "Original six-cohort 615-case qualification remains attached to its original source hashes; not relabeled for this successor."
+  },
+  "limitations": [
+    "No frozen expected result was changed.",
+    "This review supplements earlier Ruff-only review and immutable full cohort; it is not a replacement full local qualification receipt."
+  ]
+}

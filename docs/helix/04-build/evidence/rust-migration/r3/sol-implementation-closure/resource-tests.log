@@ -1,0 +1,200 @@
+    Blocking waiting for file lock on build directory
+warning: unused variable: `actual_mid`
+   --> crates/umf-codegen/src/access/mod.rs:991:41
+    |
+991 |                     let Some(((fmi,fei),actual_mid,field))=field_location.filter(|(_,actual_mid,_)|actual_mid==&field_mid) else {
+    |                                         ^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_actual_mid`
+    |
+    = note: `#[warn(unused_variables)]` on by default
+
+warning: unused variable: `p`
+    --> crates/umf-codegen/src/actions/mod.rs:1111:26
+     |
+1111 |     fn model(refv:&Value,p:Utf16,modules:&[Value],visited:&mut BTreeSet<Utf16>,out:&mut Vec<ActionObligation>,seen:&mut BTreeSet<Utf16>,c...
+     |                          ^ help: if this is intentional, prefix it with an underscore: `_p`
+
+warning: unused variable: `module`
+    --> crates/umf-codegen/src/actions/mod.rs:1223:5
+     |
+1223 |     module: &Utf16,
+     |     ^^^^^^ help: if this is intentional, prefix it with an underscore: `_module`
+
+warning: unused variable: `r`
+   --> crates/umf-codegen/src/row_scope/mod.rs:600:24
+    |
+600 |             for (path, r) in &via_rules {
+    |                        ^ help: if this is intentional, prefix it with an underscore: `_r`
+
+warning: function `index` is never used
+  --> crates/umf-codegen/src/access/mod.rs:67:4
+   |
+67 | fn index<'a>(value: &'a Value, i: usize) -> &'a Value {
+   |    ^^^^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+warning: associated functions `from_inspection` and `blocked_diagnostics` are never used
+   --> crates/umf-codegen/src/deployment/mod.rs:356:8
+    |
+329 | impl Refusal {
+    | ------------ associated functions in this implementation
+...
+356 |     fn from_inspection(inspection: &Value) -> Self {
+    |        ^^^^^^^^^^^^^^^
+...
+359 |     fn blocked_diagnostics(diagnostics: Vec<umf_core::Diagnostic>) -> Self {
+    |        ^^^^^^^^^^^^^^^^^^^
+
+warning: function `blocked_diagnostics` is never used
+   --> crates/umf-codegen/src/deployment/mod.rs:381:4
+    |
+381 | fn blocked_diagnostics(diagnostics: Vec<umf_core::Diagnostic>) -> Value {
+    |    ^^^^^^^^^^^^^^^^^^^
+
+warning: multiple fields are never read
+   --> crates/umf-codegen/src/generation/client.rs:271:5
+    |
+268 | struct RelationInfo {
+    |        ------------ fields in this struct
+...
+271 |     owner_module: String,
+    |     ^^^^^^^^^^^^
+272 |     owner_element: String,
+    |     ^^^^^^^^^^^^^
+273 |     target_module: String,
+    |     ^^^^^^^^^^^^^
+274 |     target_element: String,
+    |     ^^^^^^^^^^^^^^
+...
+279 |     key: String,
+    |     ^^^
+280 |     pointer: String,
+    |     ^^^^^^^
+281 |     logical_name: Option<Value>,
+    |     ^^^^^^^^^^^^
+282 |     to_one: bool,
+    |     ^^^^^^
+283 |     optional: bool,
+    |     ^^^^^^^^
+    |
+    = note: `RelationInfo` has a derived impl for the trait `Clone`, but this is intentionally ignored during dead code analysis
+
+warning: field `declaration` is never read
+   --> crates/umf-codegen/src/generation/client.rs:290:5
+    |
+288 | struct TableCommand {
+    |        ------------ field in this struct
+289 |     info: Value,
+290 |     declaration: Value,
+    |     ^^^^^^^^^^^
+    |
+    = note: `TableCommand` has a derived impl for the trait `Clone`, but this is intentionally ignored during dead code analysis
+
+warning: function `number_text` is never used
+   --> crates/umf-codegen/src/generation/client.rs:625:4
+    |
+625 | fn number_text(value: &Value) -> String {
+    |    ^^^^^^^^^^^
+
+warning: function `utf16_cmp` is never used
+   --> crates/umf-codegen/src/generation/python.rs:100:15
+    |
+100 | pub(crate) fn utf16_cmp(a: &Utf16, b: &Utf16) -> std::cmp::Ordering {
+    |               ^^^^^^^^^
+
+warning: function `sha256_hex` is never used
+   --> crates/umf-codegen/src/generation/python.rs:104:15
+    |
+104 | pub(crate) fn sha256_hex(bytes: &[u8]) -> String {
+    |               ^^^^^^^^^^
+
+warning: function `source_bytes` is never used
+   --> crates/umf-codegen/src/generation/python.rs:110:15
+    |
+110 | pub(crate) fn source_bytes(text: &Utf16) -> Result<Vec<u8>, EngineError> {
+    |               ^^^^^^^^^^^^
+
+warning: function `text` is never used
+  --> crates/umf-codegen/src/generation/value.rs:10:15
+   |
+10 | pub(crate) fn text(value: &Value) -> Option<String> {
+   |               ^^^^
+
+warning: function `text_at` is never used
+  --> crates/umf-codegen/src/generation/value.rs:17:15
+   |
+17 | pub(crate) fn text_at(value: &Value, key: &str) -> Option<String> {
+   |               ^^^^^^^
+
+warning: function `boolean` is never used
+  --> crates/umf-codegen/src/generation/value.rs:29:15
+   |
+29 | pub(crate) fn boolean(value: &Value) -> Option<bool> {
+   |               ^^^^^^^
+
+warning: function `number` is never used
+  --> crates/umf-codegen/src/generation/value.rs:36:15
+   |
+36 | pub(crate) fn number(value: &Value) -> Option<f64> {
+   |               ^^^^^^
+
+warning: function `string` is never used
+  --> crates/umf-codegen/src/generation/value.rs:43:15
+   |
+43 | pub(crate) fn string(value: impl AsRef<str>) -> Value {
+   |               ^^^^^^
+
+warning: function `bool` is never used
+  --> crates/umf-codegen/src/generation/value.rs:47:15
+   |
+47 | pub(crate) fn bool(value: bool) -> Value {
+   |               ^^^^
+
+warning: function `member_path` is never used
+  --> crates/umf-codegen/src/generation/value.rs:68:15
+   |
+68 | pub(crate) fn member_path(index: usize, member: &str) -> Utf16 {
+   |               ^^^^^^^^^^^
+
+warning: function `err` is never used
+  --> crates/umf-codegen/src/generation/value.rs:72:15
+   |
+72 | pub(crate) fn err(code: &str, path: impl Into<Utf16>, message: &str) -> EngineError {
+   |               ^^^
+
+warning: function `precharge` is never used
+  --> crates/umf-codegen/src/generation/value.rs:78:15
+   |
+78 | pub(crate) fn precharge(
+   |               ^^^^^^^^^
+
+warning: function `copy_field` is never used
+   --> crates/umf-codegen/src/migration/mod.rs:253:4
+    |
+253 | fn copy_field(value: &Value, key: &str, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
+    |    ^^^^^^^^^^
+
+warning: function `item_by_id` is never used
+   --> crates/umf-codegen/src/migration/mod.rs:385:4
+    |
+385 | fn item_by_id<'a>(items: &'a [Value], id: &Value) -> Option<&'a Value> {
+    |    ^^^^^^^^^^
+
+warning: `umf-codegen` (lib) generated 24 warnings
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.36s
+     Running tests/raw_controls.rs (target/debug/deps/raw_controls-7ab0028f35a966c0)
+
+running 2 tests
+test all_nine_raw_apis_reject_duplicate_and_nonfinite_unselected_data ... ok
+test all_nine_raw_apis_propagate_host_errors_even_with_semantic_codes ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.86s
+
+     Running tests/sol_migration_resources.rs (target/debug/deps/sol_migration_resources-d8f30501e5ae8346)
+
+running 2 tests
+test sol_row_normalization_polls_after_admission_before_diagnostic_work ... ok
+test sol_migration_and_discovery_preserve_late_semantic_looking_host_failures ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.30s
+

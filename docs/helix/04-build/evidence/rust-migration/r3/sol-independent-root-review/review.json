@@ -1,0 +1,28 @@
+{
+  "status": "no_remaining_findings_in_scoped_sources",
+  "reviewedSources": {
+    "crates/umf-codegen/src/access/admission.rs": "ae4118c59826187d49ed4d91849d2ce7b4c61ee363ba241e6ac08576a992f2c4",
+    "python/src/umf/rust_codegen.py": "7afdfadfa71206f46036974edff7e1b8b73c6d1d47636346f11ff606ddf08acb"
+  },
+  "scope": [
+    "source ordered target admission, naming, dependencies, relevance and unknown-key refusal",
+    "before-copy text accounting and iterative dependency traversal",
+    "Python cached resource serialization precharge and response-envelope parsing precharge"
+  ],
+  "independentChecks": {
+    "pythonFocusedTests": 2,
+    "pythonRustInvocations": 0,
+    "pythonEnvironment": "/private/tmp/umf-r3-incremental-python/bin/python with current pure host dynamically loaded",
+    "newPublicControl": "../sol-independent-target-admission-review/frozen.json",
+    "sourceOwnerReportedReplay": {
+      "targetControls": 16,
+      "independentKeyPrefixControl": 1
+    }
+  },
+  "exclusions": [
+    "root-owned schema.rs compiler mode remains under corrective review",
+    "generation and inspection helpers require their own source review",
+    "fresh installed wheel and all-host coherent qualification remain separate",
+    "renew source hashes after integration formatting"
+  ]
+}

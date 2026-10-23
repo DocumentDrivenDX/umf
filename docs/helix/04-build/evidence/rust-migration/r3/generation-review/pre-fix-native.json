@@ -1,0 +1,169 @@
+{
+  "schema": "umf.r3-incremental-native-replay/1",
+  "scope": "Incremental diagnostic replay; binary hash does not independently establish a clean source/build cohort",
+  "binary": "/Users/erik/.codex/worktrees/rust-binding-spike/umf/target/debug/examples/r3_replay",
+  "binarySha256": "9c1b3099f58dbbd5785663e2f9e7e532d90ec49db3cd745966e4d0df1faf26c6",
+  "binaryChangedDuringRun": false,
+  "fixture": "/Users/erik/.codex/worktrees/rust-binding-spike/umf/docs/helix/04-build/evidence/rust-migration/r3/generation-review/frozen.json",
+  "fixtureSha256": "391d499e9ed94af3562c9ddb1b0bad185ff6aa7ef632a94f60dbdf0dbbe0b86f",
+  "driverScriptSha256": "2d83d22fb75d54598714edfacf8a5ec4dbc47ea0980f4a40c7d80e91832c5964",
+  "elapsedSeconds": 11.93924724997487,
+  "cases": 17,
+  "matches": 9,
+  "mismatches": [
+    {
+      "id": "allowed-values",
+      "operation": "generateAccessPackage",
+      "path": "$/result/files/1/text",
+      "reason": "values differ",
+      "expected": "{\"abi\":\"umf-python-types/0.1\",\"contract\":\"umf-access-generate/0.1\",\"dispositions\":[{\"assertion\":\"source-context\",\"checks\":[\"informational\"],\"fidelity\":\"exact\",\"id\":\"d1\",\"obligationIds\":[],\"pointer\":\"/id\",\"reason\":\"Known source identity or annotation retained; no native enforcement or execution is established\",\"relevance\":\"selected\",\"sourceId\":\"logical\"},{\"assertion\":\"cardinality\",\"checks\":[\"client\"],\"fidelity\":\"exact\",\"id\":\"d54\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/0/cardinality\",\"r",
+      "actual": "{\"abi\":\"umf-python-types/0.1\",\"contract\":\"umf-access-generate/0.1\",\"dispositions\":[{\"assertion\":\"source-context\",\"checks\":[\"informational\"],\"fidelity\":\"exact\",\"id\":\"d1\",\"obligationIds\":[],\"pointer\":\"/id\",\"reason\":\"Known source identity or annotation retained; no native enforcement or execution is established\",\"relevance\":\"selected\",\"sourceId\":\"logical\"},{\"assertion\":\"cardinality\",\"checks\":[\"client\"],\"fidelity\":\"exact\",\"id\":\"d54\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/0/cardinality\",\"r"
+    },
+    {
+      "id": "nested-domain",
+      "operation": "generateAccessPackage",
+      "path": "$/result/files/1/text",
+      "reason": "values differ",
+      "expected": "{\"abi\":\"umf-python-types/0.1\",\"contract\":\"umf-access-generate/0.1\",\"dispositions\":[{\"assertion\":\"source-context\",\"checks\":[\"informational\"],\"fidelity\":\"exact\",\"id\":\"d1\",\"obligationIds\":[],\"pointer\":\"/id\",\"reason\":\"Known source identity or annotation retained; no native enforcement or execution is established\",\"relevance\":\"selected\",\"sourceId\":\"logical\"},{\"assertion\":\"cardinality\",\"checks\":[\"client\"],\"fidelity\":\"exact\",\"id\":\"d86\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/0/cardinality\",\"r",
+      "actual": "{\"abi\":\"umf-python-types/0.1\",\"contract\":\"umf-access-generate/0.1\",\"dispositions\":[{\"assertion\":\"source-context\",\"checks\":[\"informational\"],\"fidelity\":\"exact\",\"id\":\"d1\",\"obligationIds\":[],\"pointer\":\"/id\",\"reason\":\"Known source identity or annotation retained; no native enforcement or execution is established\",\"relevance\":\"selected\",\"sourceId\":\"logical\"},{\"assertion\":\"cardinality\",\"checks\":[\"client\"],\"fidelity\":\"exact\",\"id\":\"d86\",\"obligationIds\":[],\"pointer\":\"/modules/0/elements/0/cardinality\",\"r"
+    },
+    {
+      "id": "presence-conflict",
+      "operation": "generateAccessPackage",
+      "path": "$/result/outcome",
+      "reason": "values differ",
+      "expected": "refused",
+      "actual": "candidate"
+    },
+    {
+      "id": "unknown-facet",
+      "operation": "generateAccessPackage",
+      "path": "$/result/outcome",
+      "reason": "values differ",
+      "expected": "refused",
+      "actual": "candidate"
+    },
+    {
+      "id": "unknown-view",
+      "operation": "generateAccessPackage",
+      "path": "$/result/outcome",
+      "reason": "values differ",
+      "expected": "refused",
+      "actual": "candidate"
+    },
+    {
+      "id": "diff-base-allowed-values",
+      "operation": "diffAccessPackages",
+      "path": "$/result/0/classification",
+      "reason": "values differ",
+      "expected": "breaking",
+      "actual": "source-compatible"
+    },
+    {
+      "id": "diff-base-selected-alternate",
+      "operation": "diffAccessPackages",
+      "path": "$/result/17/classification",
+      "reason": "values differ",
+      "expected": "breaking",
+      "actual": "source-compatible"
+    },
+    {
+      "id": "diff-containers-nested-domain",
+      "operation": "diffAccessPackages",
+      "path": "$/result/0/classification",
+      "reason": "values differ",
+      "expected": "breaking",
+      "actual": "source-compatible"
+    }
+  ],
+  "outcomes": [
+    {
+      "id": "base",
+      "operation": "generateAccessPackage",
+      "matches": true
+    },
+    {
+      "id": "allowed-values",
+      "operation": "generateAccessPackage",
+      "matches": false
+    },
+    {
+      "id": "default-value",
+      "operation": "generateAccessPackage",
+      "matches": true
+    },
+    {
+      "id": "selected-alternate",
+      "operation": "generateAccessPackage",
+      "matches": true
+    },
+    {
+      "id": "names",
+      "operation": "generateAccessPackage",
+      "matches": true
+    },
+    {
+      "id": "containers",
+      "operation": "generateAccessPackage",
+      "matches": true
+    },
+    {
+      "id": "nested-domain",
+      "operation": "generateAccessPackage",
+      "matches": false
+    },
+    {
+      "id": "presence-conflict",
+      "operation": "generateAccessPackage",
+      "matches": false
+    },
+    {
+      "id": "unknown-facet",
+      "operation": "generateAccessPackage",
+      "matches": false
+    },
+    {
+      "id": "unknown-view",
+      "operation": "generateAccessPackage",
+      "matches": false
+    },
+    {
+      "id": "diff-base-allowed-values",
+      "operation": "diffAccessPackages",
+      "matches": false
+    },
+    {
+      "id": "diff-base-default-value",
+      "operation": "diffAccessPackages",
+      "matches": true
+    },
+    {
+      "id": "diff-base-selected-alternate",
+      "operation": "diffAccessPackages",
+      "matches": false
+    },
+    {
+      "id": "diff-base-names",
+      "operation": "diffAccessPackages",
+      "matches": true
+    },
+    {
+      "id": "diff-containers-nested-domain",
+      "operation": "diffAccessPackages",
+      "matches": false
+    },
+    {
+      "id": "diff-base-base",
+      "operation": "diffAccessPackages",
+      "matches": true
+    },
+    {
+      "id": "diff-containers-containers",
+      "operation": "diffAccessPackages",
+      "matches": true
+    }
+  ],
+  "actualPath": "/private/tmp/r3-generation-predecessor.actual.json",
+  "rawPath": "/private/tmp/r3-generation-predecessor.stdout.jsonl",
+  "stderrPath": "/private/tmp/r3-generation-predecessor.stderr.log"
+}

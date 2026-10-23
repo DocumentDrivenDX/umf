@@ -1,0 +1,528 @@
+--- inspection.before-8e.rs
++++ inspection.final.rs
+@@ -184,20 +184,10 @@
+     out.extend(pointer_escape(segment).units());
+     Utf16::new(out)
+ }
+-fn metered_path(
+-    base: &Utf16,
+-    segment: &Utf16,
+-    ctx: &mut Context<'_>,
+-) -> Result<Utf16, EngineError> {
+-    ctx.charge_work(
+-        base.len()
+-            .saturating_add(segment.len().saturating_mul(2))
+-            .saturating_add(1),
+-        Utf16::default(),
+-    )?;
+-    let mut out = base.units().to_vec();
+-    out.push(47);
+-    out.extend(pointer_escape(segment).units());
++fn metered_path(base:&Utf16,segment:&Utf16,ctx:&mut Context<'_>)->Result<Utf16,EngineError>{
++    ctx.charge_work(base.len().saturating_add(segment.len().saturating_mul(2)).saturating_add(1),Utf16::default())?;
++    let mut out=base.units().to_vec();out.push(47);
++    for(index,unit)in segment.units().iter().enumerate(){if index%1024==0{ctx.charge_work(1,Utf16::default())?;}match *unit{126=>out.extend([126,48]),47=>out.extend([126,49]),unit=>out.push(unit)}}
+     Ok(Utf16::new(out))
+ }
+ fn metered_raw_path(
+@@ -220,9 +210,7 @@
+ fn key_allowed(key: &Utf16, allowed: &[&str]) -> bool {
+     allowed.iter().any(|name| key == &Utf16::from(*name))
+ }
+-fn only_keys(value: &Value, allowed: &[&str]) -> bool {
+-    object(value).is_some_and(|v| v.iter().all(|(k, _)| key_allowed(k, allowed)))
+-}
++fn only_keys(value:&Value,allowed:&[&str],ctx:&mut Context<'_>)->Result<bool,EngineError>{let Some(fields)=object(value)else{return Ok(false)};for(key,_)in fields{ctx.charge_work(key.len().saturating_add(1),Utf16::default())?;if !key_allowed(key,allowed){return Ok(false)}}Ok(true)}
+ fn javascript_ordered_value(value: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
+     match value {
+         Value::Object(_) => {
+@@ -297,24 +285,19 @@
+ }
+ // A source document may encode a long collection chain with shallow JSON.
+ // Follow that graph iteratively; JSON admission depth does not bound its length.
+-fn metered_reference(
+-    value: &Value,
+-    ctx: &mut Context<'_>,
+-) -> Result<Option<(Utf16, Utf16)>, EngineError> {
+-    let units = string_member(value, "module")
+-        .map_or(0, Utf16::len)
+-        .saturating_add(string_member(value, "element").map_or(0, Utf16::len));
+-    let key_units = object(value).map_or(0, |members| {
+-        members
+-            .iter()
+-            .fold(0usize, |total, (key, _)| total.saturating_add(key.len()))
+-    });
+-    ctx.charge_work(
+-        units.saturating_add(key_units).saturating_add(1),
+-        Utf16::default(),
+-    )?;
+-    Ok(reference(value))
+-}
++fn metered_reference(value:&Value,ctx:&mut Context<'_>)->Result<Option<(Utf16,Utf16)>,EngineError>{
++    let Some(fields)=object(value) else{return Ok(None)};
++    let(mut module,mut element)=(None,None);let mut allowed=true;
++    for(key,value)in fields {
++        ctx.charge_work(key.len().saturating_add(1),Utf16::default())?;
++        if key==&Utf16::from("module"){module=string(value);}else if key==&Utf16::from("element"){element=string(value);}else{allowed=false;}
++    }
++    let(Some(module),Some(element))=(module,element)else{return Ok(None)};
++    if !allowed||module.is_empty()||element.is_empty(){return Ok(None)}
++    ctx.charge_work(module.len().saturating_add(element.len()),Utf16::default())?;
++    Ok(Some((module.clone(),element.clone())))
++}
++
+ fn collection_field<'a>(
+     doc: &'a Value,
+     module: &Utf16,
+@@ -544,7 +527,7 @@
+ ) -> Result<(Value, Vec<Value>), EngineError> {
+     let mut unknown = Vec::new();
+     for d in validation {
+-        ctx.charge_work(d.path.len().saturating_add(1), d.path.clone())?;
++        ctx.charge_work(d.path.len().saturating_add(base.len()).saturating_add(10), Utf16::default())?;
+         if d.severity != umf_core::Severity::Warning {
+             continue;
+         }
+@@ -606,10 +589,7 @@
+         ctx,
+     )?;
+     let properties = properties(&admitted, ctx)?;
+-    let paths = partial
+-        .into_iter()
+-        .filter_map(|v| string(&v).cloned())
+-        .collect();
++    let paths = partial.into_iter().filter_map(|v|if let Value::String(path)=v{Some(path)}else{None}).collect();
+     Ok((facets, properties, paths))
+ }
+ 
+@@ -623,11 +603,12 @@
+     source_id: &str,
+     ctx: &mut Context<'_>,
+ ) -> Result<Inspection, EngineError> {
+-    ctx.charge_work(source_id.encode_utf16().count(), Utf16::default())?;
++    ctx.charge_work(source_id.len(), Utf16::default())?;
+     let source = Utf16::from(source_id);
+     let mut out = Inspection::default();
+     let document_validation = core_validation(engine, document, ctx)?;
+     for diagnostic in &document_validation {
++        ctx.charge_work(1,Utf16::default())?;
+         if diagnostic.severity == umf_core::Severity::Error {
+             push_access_diag(
+                 &mut out.diagnostics,
+@@ -800,7 +781,7 @@
+             for (key, _) in js_object_members(payload, ctx)? {
+                 let base_path = Utf16::from(base.as_str());
+                 let unknown_path = metered_path(&base_path, key, ctx)?;
+-                ctx.charge_work(key.len(), unknown_path.clone())?;
++                ctx.charge_work(key.len(), Utf16::default())?;
+                 if !key_allowed(key, &["views", "columns", "search", "searchBindings"]) {
+                     push_unknown_diag(&mut out.diagnostics, &source, unknown_path, ctx)?;
+                 }
+@@ -910,14 +891,7 @@
+                         )
+                     });
+                 let collation = member(column, "collation");
+-                let collation_ok = collation.is_none()
+-                    || collation.is_some_and(|v| {
+-                        v == &Value::Null
+-                            || object(v).is_some_and(|_| {
+-                                string_member(v, "schema").is_some_and(native_name)
+-                                    && string_member(v, "name").is_some_and(native_name)
+-                            })
+-                    });
++                let collation_ok=if let Some(value)=collation {if value==&Value::Null{true}else if let(Some(schema),Some(name))=(string_member(value,"schema"),string_member(value,"name")){native_name(schema,ctx)?&&native_name(name,ctx)?}else{false}}else{true};
+                 if object(column).is_none()
+                     || metered_reference(member(column, "field").unwrap_or(&Value::Null), ctx)?
+                         .is_none()
+@@ -964,51 +938,17 @@
+     // Binding and column declarations are checked before selected Views, just
+     // as in the TypeScript source. All lookups are metered before scans.
+     ctx.charge_work(columns.len().saturating_mul(64), Utf16::default())?;
+-    let mut seen_sets: Vec<(Utf16, Utf16, Value)> = Vec::with_capacity(columns.len());
+-    for (set, p) in &columns {
+-        ctx.charge_work(1, p.clone())?;
+-        binding_value_work(member(set, "target").unwrap_or(&Value::Null), ctx)?;
+-        let source_id_value =
+-            string_member(member(set, "binding").unwrap_or(&Value::Null), "sourceId");
+-        if let Some(value) = source_id_value {
+-            ctx.charge_work(value.len(), Utf16::default())?;
+-        }
+-        let source_id = source_id_value.cloned().unwrap_or_default();
+-        let binding_module_value =
+-            string_member(member(set, "binding").unwrap_or(&Value::Null), "module");
+-        if let Some(value) = binding_module_value {
+-            ctx.charge_work(value.len(), Utf16::default())?;
+-        }
+-        let binding_module = binding_module_value.cloned().unwrap_or_default();
+-        binding_value_work(member(set, "target").unwrap_or(&Value::Null), ctx)?;
+-        let target_value = member(set, "target").cloned().unwrap_or(Value::Null);
+-        let mut duplicate_set = false;
+-        for (source, module, target) in &seen_sets {
+-            ctx.charge_work(
+-                source
+-                    .len()
+-                    .saturating_add(module.len())
+-                    .saturating_add(source_id.len())
+-                    .saturating_add(binding_module.len())
+-                    .saturating_add(1),
+-                Utf16::default(),
+-            )?;
+-            binding_value_work(target, ctx)?;
+-            if source == &source_id && module == &binding_module && target == &target_value {
+-                duplicate_set = true;
+-                break;
+-            }
+-        }
+-        if duplicate_set {
+-            push_access_diag(
+-                &mut out.diagnostics,
+-                "ACCESS_REFERENCE",
+-                &source,
+-                p.clone(),
+-                ctx,
+-            )?;
+-        }
+-        seen_sets.push((source_id, binding_module, target_value));
++    let mut seen_sets=BTreeSet::new();
++    for(set,p)in &columns {
++        ctx.charge_work(1,Utf16::default())?;
++        let binding=member(set,"binding").unwrap_or(&Value::Null);
++        let source_id=string_member(binding,"sourceId").unwrap();let binding_module=string_member(binding,"module").unwrap();
++        ctx.charge_work(source_id.len().saturating_add(binding_module.len()).saturating_add(3),Utf16::default())?;
++        let target=javascript_ordered_value(member(set,"target").unwrap_or(&Value::Null),ctx)?;
++        let identity=arr([Value::String(source_id.clone()),Value::String(binding_module.clone()),target]);
++        let identity=umf_core::serialization::stringify_compact_metered(&identity,ctx)?;
++        ctx.charge_work(identity.len().saturating_mul(64),Utf16::default())?;
++        if !seen_sets.insert(identity){push_access_diag(&mut out.diagnostics,"ACCESS_REFERENCE",&source,p.clone(),ctx)?;}
+         let binding = member(set, "binding").unwrap_or(&Value::Null);
+         let binding_source_units = string_member(binding, "sourceId").map_or(0, Utf16::len);
+         ctx.charge_work(binding_source_units, Utf16::default())?;
+@@ -1307,10 +1247,7 @@
+         let mut ordered_keys = Vec::with_capacity(keys.len());
+         for key in keys {
+             ctx.charge_work(1, key_prefix.clone())?;
+-            let id = member(key, "id").cloned().unwrap_or(Value::Null);
+-            if let Some(id_text) = string(&id) {
+-                ctx.charge_work(id_text.len(), Utf16::default())?;
+-            }
++            let id_value=member(key,"id").unwrap_or(&Value::Null);binding_value_work(id_value,ctx)?;let id=id_value.clone();
+             let fields = array(key, "fields");
+             ctx.charge_work(fields.len().saturating_mul(4), key_prefix.clone())?;
+             let mut key_fields = Vec::with_capacity(fields.len());
+@@ -1326,15 +1263,7 @@
+             }
+             ordered_keys.push(obj([("id", id), ("fields", arr(key_fields))]));
+         }
+-        let sort_work = ordered_keys
+-            .len()
+-            .saturating_mul((usize::BITS - ordered_keys.len().max(1).leading_zeros()) as usize + 1);
+-        ctx.charge_work(sort_work, key_prefix.clone())?;
+-        ordered_keys.sort_by(|a, b| {
+-            let ax = string_member(a, "id") == selected_key.as_ref();
+-            let bx = string_member(b, "id") == selected_key.as_ref();
+-            bx.cmp(&ax)
+-        });
++        ordered_keys=selected_keys_first(ordered_keys,selected_key.as_ref(),ctx)?;
+         ctx.charge_work(member_refs.len().saturating_mul(64), Utf16::default())?;
+         let mut resolved = Vec::with_capacity(member_refs.len());
+         let mut owned = BTreeSet::new();
+@@ -1453,9 +1382,7 @@
+                     push_unknown_diag(&mut out.diagnostics, &source, p, ctx)?;
+                 }
+             }
+-            let field_column_capacity = columns.iter().fold(0usize, |total, (set, _)| {
+-                total.saturating_add(array(set, "columns").len())
+-            });
++            let mut field_column_capacity=0usize;for(set,_)in &columns{ctx.charge_work(1,Utf16::default())?;field_column_capacity=field_column_capacity.saturating_add(array(set,"columns").len());}
+             ctx.charge_work(field_column_capacity.saturating_mul(16), Utf16::default())?;
+             let mut field_columns = Vec::with_capacity(field_column_capacity);
+             for (set, set_path) in &columns {
+@@ -1505,21 +1432,8 @@
+             let default_on = member(&properties_value, "default")
+                 .and_then(|v| get(v, "on"))
+                 .unwrap_or_else(|| "none".into());
+-            let valid = check_presence(
+-                nullability.as_str(),
+-                admits_null,
+-                &default_on,
+-                key,
+-                mutable,
+-                generated,
+-                !field_columns.is_empty(),
+-                &not_nulls,
+-                nested,
+-                row_missing,
+-                row_null,
+-                create_missing,
+-                create_null,
+-            );
++            let valid=(!owned_field||check_presence_metered(nullability.as_str(),admits_null,&default_on,key,mutable,generated,!field_columns.is_empty(),&not_nulls,false,row_missing,row_null,create_missing,create_null,ctx)?)
++                &&(!nested||check_presence_metered(nullability.as_str(),admits_null,&default_on,false,mutable,generated,!field_columns.is_empty(),&not_nulls,true,row_missing,row_null,create_missing,create_null,ctx)?);
+             if !valid
+                 || key
+                     && matches!(
+@@ -1549,12 +1463,7 @@
+                 )?;
+             }
+             for (column, set, set_path) in &field_columns {
+-                binding_value_work(field, ctx)?;
+-                binding_value_work(fv, ctx)?;
+-                binding_value_work(column, ctx)?;
+-                binding_value_work(set, ctx)?;
+-                binding_value_work(&facet_values, ctx)?;
+-                if !native_compatible(field, fv, column, set, &facet_values, &vectors) {
++                if !native_compatible(field,fv,column,set,&facet_values,&vectors,ctx)? {
+                     push_access_diag(
+                         &mut out.diagnostics,
+                         "ACCESS_NATIVE",
+@@ -1668,63 +1577,43 @@
+     Ok(out)
+ }
+ 
+-fn check_presence(
+-    availability: &str,
+-    admits_null: bool,
+-    default_on: &str,
+-    key: bool,
+-    mutable: bool,
+-    generated: bool,
+-    bound: bool,
+-    not_null: &[bool],
+-    nested: bool,
+-    row_missing: bool,
+-    row_null: bool,
+-    create_missing: bool,
+-    create_null: bool,
+-) -> bool {
+-    if availability == "unspecified" || !matches!(availability, "required" | "absent-allowed") {
+-        return false;
+-    }
+-    if key && (availability != "required" || admits_null || mutable) {
+-        return false;
+-    }
+-    if availability == "required" && admits_null {
+-        return false;
+-    }
+-    if nested {
+-        return !generated
+-            && !mutable
+-            && !row_missing
+-            && !create_missing
+-            && row_null == admits_null
+-            && create_null == admits_null;
+-    }
+-    if bound && (not_null.is_empty() || not_null.iter().any(|n| *n == row_null) || row_missing) {
+-        return false;
+-    }
+-    if generated {
+-        return create_missing
+-            && !create_null
+-            && !row_missing
+-            && (!row_null || (bound && admits_null));
+-    }
+-    if key || availability == "required" {
+-        let omittable = !key && matches!(default_on, "missing" | "missing-or-null");
+-        return !row_missing && !row_null && !create_null && (!create_missing || omittable);
+-    }
+-    if create_null && !admits_null {
+-        return false;
+-    }
+-    if bound {
+-        return admits_null || !row_null;
+-    }
+-    row_missing && row_null == admits_null
+-}
+-fn native_name(v: &Utf16) -> bool {
+-    !v.is_empty()
+-        && !v.units().contains(&0)
+-        && v.to_utf8().ok().is_some_and(|x| x.as_bytes().len() <= 63)
++fn selected_keys_first(keys:Vec<Value>,selected:Option<&Utf16>,ctx:&mut Context<'_>)->Result<Vec<Value>,EngineError>{
++    ctx.charge_work(keys.len().saturating_mul(8),Utf16::default())?;
++    let mut first=Vec::with_capacity(keys.len());let mut rest=Vec::with_capacity(keys.len());
++    for key in keys {let id=string_member(&key,"id");ctx.charge_work(id.map_or(0,Utf16::len).saturating_add(selected.map_or(0,Utf16::len)).saturating_add(1),Utf16::default())?;if id==selected{first.push(key);}else{rest.push(key);}}
++    for key in rest{ctx.charge_work(1,Utf16::default())?;first.push(key);}Ok(first)
++}
++fn check_presence_metered(availability:&str,admits_null:bool,default_on:&str,key:bool,mutable:bool,generated:bool,bound:bool,not_null:&[bool],nested:bool,row_missing:bool,row_null:bool,create_missing:bool,create_null:bool,ctx:&mut Context<'_>)->Result<bool,EngineError>{
++    ctx.charge_work(1,Utf16::default())?;
++    if availability=="unspecified"||!matches!(availability,"required"|"absent-allowed"){return Ok(false)}
++    if key&&(availability!="required"||admits_null||mutable){return Ok(false)}
++    if availability=="required"&&admits_null{return Ok(false)}
++    if nested{return Ok(!generated&&!mutable&&!row_missing&&!create_missing&&row_null==admits_null&&create_null==admits_null)}
++    if bound{if not_null.is_empty(){return Ok(false)}for value in not_null{ctx.charge_work(1,Utf16::default())?;if *value==row_null{return Ok(false)}}if row_missing{return Ok(false)}}
++    if generated{return Ok(create_missing&&!create_null&&!row_missing&&(!row_null||(bound&&admits_null)))}
++    if key||availability=="required"{let omittable=!key&&matches!(default_on,"missing"|"missing-or-null");return Ok(!row_missing&&!row_null&&!create_null&&(!create_missing||omittable))}
++    if create_null&&!admits_null{return Ok(false)}
++    if bound{return Ok(admits_null||!row_null)}
++    Ok(row_missing&&row_null==admits_null)
++}
++#[cfg(test)]
++fn check_presence(availability:&str,admits_null:bool,default_on:&str,key:bool,mutable:bool,generated:bool,bound:bool,not_null:&[bool],nested:bool,row_missing:bool,row_null:bool,create_missing:bool,create_null:bool)->bool{
++    check_presence_metered(availability,admits_null,default_on,key,mutable,generated,bound,not_null,nested,row_missing,row_null,create_missing,create_null,&mut Context::ordinary()).unwrap()
++}
++fn native_name(value:&Utf16,ctx:&mut Context<'_>)->Result<bool,EngineError>{
++    ctx.charge_work(1,Utf16::default())?;
++    if value.is_empty()||value.len()>63{return Ok(false)}
++    let mut bytes=0;let mut index=0;
++    while index<value.len(){ctx.charge_work(1,Utf16::default())?;let unit=value.units()[index];if unit==0{return Ok(false)}bytes+=if unit<=0x7f{1}else if unit<=0x7ff{2}else if(0xd800..=0xdbff).contains(&unit)&&value.units().get(index+1).is_some_and(|next|(0xdc00..=0xdfff).contains(next)){index+=1;4}else{3};if bytes>63{return Ok(false)}index+=1;}
++    Ok(true)
++}
++// Pinned Bun17 oracle: these are every non-ASCII scalar whose toUpperCase()
++// result is entirely ASCII. Native accepted spellings are entirely ASCII.
++fn native_ascii_uppercase(value:&str,ctx:&mut Context<'_>)->Result<Option<String>,EngineError>{
++    ctx.charge_work(value.len().saturating_mul(3).saturating_add(1),Utf16::default())?;
++    let mut result=String::new();
++    for(index,ch)in value.chars().enumerate(){if index%1024==0{ctx.charge_work(1,Utf16::default())?;}if ch.is_ascii(){result.push(ch.to_ascii_uppercase());}else{let expansion=match ch{'\u{df}'=>"SS",'\u{131}'=>"I",'\u{17f}'=>"S",'\u{fb00}'=>"FF",'\u{fb01}'=>"FI",'\u{fb02}'=>"FL",'\u{fb03}'=>"FFI",'\u{fb04}'=>"FFL",'\u{fb05}'|'\u{fb06}'=>"ST",_=>return Ok(None)};result.push_str(expansion);}}
++    Ok(Some(result))
+ }
+ fn presence(v: &Value) -> bool {
+     matches!(member(v, "missing"), Some(Value::Bool(_)))
+@@ -1737,29 +1626,27 @@
+     set: &Value,
+     facets: &Value,
+     vectors: &BTreeMap<(Utf16, Utf16), i64>,
+-) -> bool {
+-    let scalar = get(field, "scalarType").unwrap_or_default();
+-    let card = get(field, "cardinality").unwrap_or_else(|| "one".into());
+-    let ty = get(column, "type").unwrap_or_default();
++    ctx:&mut Context<'_>,
++) -> Result<bool,EngineError> {
++    let scalar = get_metered(field,"scalarType",ctx)?.unwrap_or_default();
++    let card = get_metered(field,"cardinality",ctx)?.unwrap_or_default();
++    let ty = get_metered(column,"type",ctx)?.unwrap_or_default();
+     let platform =
+-        get(member(set, "target").unwrap_or(&Value::Null), "platform").unwrap_or_default();
+-    let major = get(
+-        member(set, "target").unwrap_or(&Value::Null),
+-        "majorVersion",
+-    )
+-    .unwrap_or_default();
++        get_metered(member(set,"target").unwrap_or(&Value::Null),"platform",ctx)?.unwrap_or_default();
++    let major=get_metered(member(set,"target").unwrap_or(&Value::Null),"majorVersion",ctx)?.unwrap_or_default();
+     let field_ref = member(column, "field").unwrap_or(&Value::Null);
+-    let vector = value_ref(field_ref).and_then(|r| vectors.get(&r).copied());
++    let vector=if let(Some(module),Some(element))=(string_member(field_ref,"module"),string_member(field_ref,"element")){ctx.charge_work(module.len().saturating_add(element.len()),Utf16::default())?;vectors.get(&(module.clone(),element.clone())).copied()}else{None};
+     let size = member(facets, "collectionSize").unwrap_or(&Value::Null);
+     let vector_ok = card == "array"
+         && vector.is_some_and(|d| d > 0)
+         && number(member(size, "min").unwrap_or(&Value::Null)) == vector.map(|x| x as f64)
+         && number(member(size, "max").unwrap_or(&Value::Null)) == vector.map(|x| x as f64);
+-    if card != "one" && !vector_ok {
+-        return false;
+-    }
++    if card!="one"&&!vector_ok{return Ok(false)}
++    let uppercase=if ["unity-catalog","spark-delta"].contains(&platform.as_str()){native_ascii_uppercase(&ty,ctx)?}else{None};
++    let temporal=get_metered(view,"temporal",ctx)?;
++    Ok((||{
+     if ["unity-catalog", "spark-delta"].contains(&platform.as_str()) {
+-        let t = ty.to_ascii_uppercase();
++        let Some(t)=uppercase else{return false};
+         match scalar.as_str() {
+             "integer" => {
+                 let w = member(facets, "integerWidth").unwrap_or(&Value::Null);
+@@ -1823,7 +1710,7 @@
+                 );
+     }
+     if scalar == "timestamp" {
+-        return if get(view, "temporal").as_deref() == Some("instant") {
++        return if temporal.as_deref() == Some("instant") {
+             matches!(ty.as_str(), "timestamptz" | "timestamp with time zone")
+         } else {
+             matches!(ty.as_str(), "timestamp" | "timestamp without time zone")
+@@ -1836,6 +1723,7 @@
+         "date" => ty == "date",
+         _ => false,
+     }
++})())
+ }
+ 
+ /// Rust port of the registered binding package callback. The callback is run
+@@ -2758,8 +2646,8 @@
+         )
+         && only_keys(
+             member(set, "target").unwrap_or(&Value::Null),
+-            &["platform", "majorVersion"],
+-        )
++            &["platform", "majorVersion"],ctx,
++        )?
+         && binding_label(
+             member(payload, "logical").unwrap_or(&Value::Null),
+             "coreVersion",
+@@ -2849,7 +2737,7 @@
+             if table.is_none_or(Utf16::is_empty)
+                 || member(row, "partition").is_some()
+                 || binding_locate(logical, &m, &e, ctx)?
+-                    .is_none_or(|(_, _, _, el)| get(el, "kind").as_deref() != Some("record"))
++                    .is_none_or(|(_, _, _, el)| !binding_label(el,"kind","record"))
+             {
+                 binding_access_add(diagnostics, source, "ACCESS_REFERENCE", &profile_path, ctx)?;
+             }
+@@ -2882,7 +2770,7 @@
+                         break;
+                     }
+                 }
+-                if get(record, "kind").as_deref() != Some("record")
++                if !binding_label(record,"kind","record")
+                     || member(record, "members").and_then(array_items).is_none()
+                     || partial
+                 {
+@@ -2911,7 +2799,7 @@
+                 column.map_or(0, Utf16::len).saturating_mul(64),
+                 Utf16::default(),
+             )?;
+-            if get(row, "storage").as_deref() != Some("column")
++            if !binding_label(row,"storage","column")
+                 || member(row, "field").is_some()
+                 || column.is_none_or(Utf16::is_empty)
+                 || member(row, "documentColumn").is_some()
+@@ -2949,7 +2837,7 @@
+                 diagnostics,
+                 source,
+                 "ACCESS_REFERENCE",
+-                &binding_child(set_path, &i.to_string(), ctx)?,
++                &binding_child(set_path, &format!("columns/{i}"), ctx)?,
+                 ctx,
+             )?;
+             continue;
+@@ -2971,7 +2859,7 @@
+                 diagnostics,
+                 source,
+                 "ACCESS_REFERENCE",
+-                &binding_child(&binding_child(set_path, &i.to_string(), ctx)?, "field", ctx)?,
++                &binding_child(&binding_child(set_path, &format!("columns/{i}"), ctx)?, "field", ctx)?,
+                 ctx,
+             )?;
+         }
+@@ -2980,7 +2868,7 @@
+                 diagnostics,
+                 source,
+                 "ACCESS_REFERENCE",
+-                &binding_child(set_path, &i.to_string(), ctx)?,
++                &binding_child(set_path, &format!("columns/{i}"), ctx)?,
+                 ctx,
+             )?;
+         }
+@@ -3030,6 +2918,24 @@
+ #[cfg(test)]
+ mod inspection_tests {
+     use super::*;
++
++    #[test]
++    fn native_presence_key_order_and_reference_scans_keep_live_host_controls(){
++        let field=obj([("scalarType",s("string")),("cardinality",s("one"))]);
++        let view=obj([]);let column=obj([("type",s("I".repeat(20_000)))]);let set=obj([("target",obj([("platform",s("spark-delta")),("majorVersion",s("4"))]))]);
++        let keys:Vec<_>=(0..128).map(|index|obj([("id",s(format!("k{index}")))] )).collect();
++        let selected=Utf16::from("k64");let mut observed=Context::ordinary();let sorted=selected_keys_first(keys.clone(),Some(&selected),&mut observed).unwrap();
++        assert_eq!(string_member(&sorted[0],"id"),Some(&selected));assert_eq!(string_member(&sorted[1],"id"),Some(&Utf16::from("k0")));assert_eq!(string_member(&sorted[65],"id"),Some(&Utf16::from("k65")));
++        for code in ["LIMIT","CANCELLED","VALUE_INVALID"] {
++            let mut rendering=false;let mut polls=0;
++            let mut meter=|amount:usize|{if amount>=60_000{rendering=true;}else if rendering&&amount==1{polls+=1;if polls==8{return Err(EngineError::new(code,Utf16::from("/host/native"),"inside native spelling"));}}Ok(())};
++            let error=native_compatible(&field,&view,&column,&set,&obj([]),&BTreeMap::new(),&mut Context::ordinary().with_meter(&mut meter)).unwrap_err();assert!(error.is_control_failure());assert_eq!(error.code,code);assert_eq!(error.path,Utf16::from("/host/native"));assert_eq!(polls,8);
++            let mut calls=0;let mut meter=|_:usize|{calls+=1;if calls==96{Err(EngineError::new(code,Utf16::from("/host/presence"),"inside not-null scan"))}else{Ok(())}};
++            let error=check_presence_metered("absent-allowed",false,"none",false,false,false,true,&vec![true;128],false,false,false,false,false,&mut Context::ordinary().with_meter(&mut meter)).unwrap_err();assert!(error.is_control_failure());assert_eq!(error.code,code);assert_eq!(error.path,Utf16::from("/host/presence"));assert_eq!(calls,96);
++            let mut calls=0;let mut meter=|_:usize|{calls+=1;if calls==96{Err(EngineError::new(code,Utf16::from("/host/key-order"),"inside key comparison"))}else{Ok(())}};
++            let error=selected_keys_first(keys.clone(),Some(&selected),&mut Context::ordinary().with_meter(&mut meter)).unwrap_err();assert!(error.is_control_failure());assert_eq!(error.code,code);assert_eq!(error.path,Utf16::from("/host/key-order"));assert_eq!(calls,96);
++        }
++    }
+ 
+     fn assert_meter_preserves_host_origin<F>(expected_work: u64, mut operation: F)
+     where

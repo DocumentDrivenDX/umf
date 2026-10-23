@@ -1,0 +1,1201 @@
+{
+  "cases": [
+    {
+      "id": "sol-final-request-utf16-logical",
+      "operation": "generateAccessPackage",
+      "request": {
+        "request": {
+          "contract": "umf-access-generate/0.1",
+          "sources": [
+            {
+              "id": "logical",
+              "format": "json",
+              "text": "{"
+            }
+          ],
+          "logical": "\ud800",
+          "bindings": [],
+          "records": [
+            {
+              "module": "commerce",
+              "element": "Order"
+            }
+          ],
+          "actions": [
+            {
+              "module": "commerce",
+              "action": "shipOrder"
+            }
+          ],
+          "projections": [],
+          "package": "shop",
+          "names": [],
+          "mode": "strict",
+          "profileId": "test.access",
+          "profileVersion": "0.1.0",
+          "coreVersion": "0.10.0"
+        },
+        "profile": {
+          "id": "test.access",
+          "version": "0.1.0",
+          "compilerVersion": "test",
+          "coreVersions": [
+            "0.10.0"
+          ],
+          "vocabularies": [
+            {
+              "id": "umf.access",
+              "version": "0.1.0"
+            },
+            {
+              "id": "umf.actions",
+              "version": "0.1.0"
+            },
+            {
+              "id": "umf.binding",
+              "version": "0.2.0"
+            }
+          ],
+          "python": {
+            "version": "3.14.7"
+          },
+          "dependencies": [
+            {
+              "distribution": "umf_access",
+              "version": "0.1.0"
+            },
+            {
+              "distribution": "pydantic",
+              "version": "2.14.1"
+            }
+          ],
+          "checkers": [
+            {
+              "name": "mypy",
+              "version": "2.4.0",
+              "configuration": {
+                "check_untyped_defs": true
+              }
+            },
+            {
+              "name": "pyright",
+              "version": "1.1.414",
+              "configuration": {
+                "typeCheckingMode": "strict",
+                "environment": "test"
+              }
+            }
+          ],
+          "reservedNames": [
+            "test_reserved"
+          ],
+          "importedNames": [
+            "decimal",
+            "pydantic",
+            "umf_access"
+          ],
+          "assertionKinds": [
+            "kind",
+            "nullability",
+            "Key",
+            "facets",
+            "defaults",
+            "relationships",
+            "actions",
+            "umf.access"
+          ],
+          "subset": "test fixture, not qualified",
+          "codeSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      },
+      "expected": {
+        "ok": false,
+        "error": {
+          "code": "INPUT",
+          "message": "Typed access admission refused: INPUT",
+          "pointer": "/sources/0/text"
+        }
+      }
+    },
+    {
+      "id": "sol-final-request-utf16-profile-id",
+      "operation": "generateAccessPackage",
+      "request": {
+        "request": {
+          "contract": "umf-access-generate/0.1",
+          "sources": [
+            {
+              "id": "logical",
+              "format": "json",
+              "text": "{"
+            }
+          ],
+          "logical": "logical",
+          "bindings": [],
+          "records": [
+            {
+              "module": "commerce",
+              "element": "Order"
+            }
+          ],
+          "actions": [
+            {
+              "module": "commerce",
+              "action": "shipOrder"
+            }
+          ],
+          "projections": [],
+          "package": "shop",
+          "names": [],
+          "mode": "strict",
+          "profileId": "\ud800",
+          "profileVersion": "0.1.0",
+          "coreVersion": "0.10.0"
+        },
+        "profile": {
+          "id": "\ud800",
+          "version": "0.1.0",
+          "compilerVersion": "test",
+          "coreVersions": [
+            "0.10.0"
+          ],
+          "vocabularies": [
+            {
+              "id": "umf.access",
+              "version": "0.1.0"
+            },
+            {
+              "id": "umf.actions",
+              "version": "0.1.0"
+            },
+            {
+              "id": "umf.binding",
+              "version": "0.2.0"
+            }
+          ],
+          "python": {
+            "version": "3.14.7"
+          },
+          "dependencies": [
+            {
+              "distribution": "umf_access",
+              "version": "0.1.0"
+            },
+            {
+              "distribution": "pydantic",
+              "version": "2.14.1"
+            }
+          ],
+          "checkers": [
+            {
+              "name": "mypy",
+              "version": "2.4.0",
+              "configuration": {
+                "check_untyped_defs": true
+              }
+            },
+            {
+              "name": "pyright",
+              "version": "1.1.414",
+              "configuration": {
+                "typeCheckingMode": "strict",
+                "environment": "test"
+              }
+            }
+          ],
+          "reservedNames": [
+            "test_reserved"
+          ],
+          "importedNames": [
+            "decimal",
+            "pydantic",
+            "umf_access"
+          ],
+          "assertionKinds": [
+            "kind",
+            "nullability",
+            "Key",
+            "facets",
+            "defaults",
+            "relationships",
+            "actions",
+            "umf.access"
+          ],
+          "subset": "test fixture, not qualified",
+          "codeSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      },
+      "expected": {
+        "ok": false,
+        "error": {
+          "code": "INPUT",
+          "message": "Typed access admission refused: INPUT",
+          "pointer": "/sources/0/text"
+        }
+      }
+    },
+    {
+      "id": "sol-final-request-utf16-profile-version",
+      "operation": "generateAccessPackage",
+      "request": {
+        "request": {
+          "contract": "umf-access-generate/0.1",
+          "sources": [
+            {
+              "id": "logical",
+              "format": "json",
+              "text": "{"
+            }
+          ],
+          "logical": "logical",
+          "bindings": [],
+          "records": [
+            {
+              "module": "commerce",
+              "element": "Order"
+            }
+          ],
+          "actions": [
+            {
+              "module": "commerce",
+              "action": "shipOrder"
+            }
+          ],
+          "projections": [],
+          "package": "shop",
+          "names": [],
+          "mode": "strict",
+          "profileId": "test.access",
+          "profileVersion": "\ud800",
+          "coreVersion": "0.10.0"
+        },
+        "profile": {
+          "id": "test.access",
+          "version": "\ud800",
+          "compilerVersion": "test",
+          "coreVersions": [
+            "0.10.0"
+          ],
+          "vocabularies": [
+            {
+              "id": "umf.access",
+              "version": "0.1.0"
+            },
+            {
+              "id": "umf.actions",
+              "version": "0.1.0"
+            },
+            {
+              "id": "umf.binding",
+              "version": "0.2.0"
+            }
+          ],
+          "python": {
+            "version": "3.14.7"
+          },
+          "dependencies": [
+            {
+              "distribution": "umf_access",
+              "version": "0.1.0"
+            },
+            {
+              "distribution": "pydantic",
+              "version": "2.14.1"
+            }
+          ],
+          "checkers": [
+            {
+              "name": "mypy",
+              "version": "2.4.0",
+              "configuration": {
+                "check_untyped_defs": true
+              }
+            },
+            {
+              "name": "pyright",
+              "version": "1.1.414",
+              "configuration": {
+                "typeCheckingMode": "strict",
+                "environment": "test"
+              }
+            }
+          ],
+          "reservedNames": [
+            "test_reserved"
+          ],
+          "importedNames": [
+            "decimal",
+            "pydantic",
+            "umf_access"
+          ],
+          "assertionKinds": [
+            "kind",
+            "nullability",
+            "Key",
+            "facets",
+            "defaults",
+            "relationships",
+            "actions",
+            "umf.access"
+          ],
+          "subset": "test fixture, not qualified",
+          "codeSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      },
+      "expected": {
+        "ok": false,
+        "error": {
+          "code": "INPUT",
+          "message": "Typed access admission refused: INPUT",
+          "pointer": "/sources/0/text"
+        }
+      }
+    },
+    {
+      "id": "sol-final-request-utf16-source-id",
+      "operation": "generateAccessPackage",
+      "request": {
+        "request": {
+          "contract": "umf-access-generate/0.1",
+          "sources": [
+            {
+              "id": "\ud800",
+              "format": "json",
+              "text": "{"
+            }
+          ],
+          "logical": "logical",
+          "bindings": [],
+          "records": [
+            {
+              "module": "commerce",
+              "element": "Order"
+            }
+          ],
+          "actions": [
+            {
+              "module": "commerce",
+              "action": "shipOrder"
+            }
+          ],
+          "projections": [],
+          "package": "shop",
+          "names": [],
+          "mode": "strict",
+          "profileId": "test.access",
+          "profileVersion": "0.1.0",
+          "coreVersion": "0.10.0"
+        },
+        "profile": {
+          "id": "test.access",
+          "version": "0.1.0",
+          "compilerVersion": "test",
+          "coreVersions": [
+            "0.10.0"
+          ],
+          "vocabularies": [
+            {
+              "id": "umf.access",
+              "version": "0.1.0"
+            },
+            {
+              "id": "umf.actions",
+              "version": "0.1.0"
+            },
+            {
+              "id": "umf.binding",
+              "version": "0.2.0"
+            }
+          ],
+          "python": {
+            "version": "3.14.7"
+          },
+          "dependencies": [
+            {
+              "distribution": "umf_access",
+              "version": "0.1.0"
+            },
+            {
+              "distribution": "pydantic",
+              "version": "2.14.1"
+            }
+          ],
+          "checkers": [
+            {
+              "name": "mypy",
+              "version": "2.4.0",
+              "configuration": {
+                "check_untyped_defs": true
+              }
+            },
+            {
+              "name": "pyright",
+              "version": "1.1.414",
+              "configuration": {
+                "typeCheckingMode": "strict",
+                "environment": "test"
+              }
+            }
+          ],
+          "reservedNames": [
+            "test_reserved"
+          ],
+          "importedNames": [
+            "decimal",
+            "pydantic",
+            "umf_access"
+          ],
+          "assertionKinds": [
+            "kind",
+            "nullability",
+            "Key",
+            "facets",
+            "defaults",
+            "relationships",
+            "actions",
+            "umf.access"
+          ],
+          "subset": "test fixture, not qualified",
+          "codeSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      },
+      "expected": {
+        "ok": false,
+        "error": {
+          "code": "INPUT",
+          "message": "Typed access admission refused: INPUT",
+          "pointer": "/sources/0/text"
+        }
+      }
+    },
+    {
+      "id": "sol-final-request-utf16-source-text",
+      "operation": "generateAccessPackage",
+      "request": {
+        "request": {
+          "contract": "umf-access-generate/0.1",
+          "sources": [
+            {
+              "id": "logical",
+              "format": "json",
+              "text": "\ud800"
+            }
+          ],
+          "logical": "logical",
+          "bindings": [],
+          "records": [
+            {
+              "module": "commerce",
+              "element": "Order"
+            }
+          ],
+          "actions": [
+            {
+              "module": "commerce",
+              "action": "shipOrder"
+            }
+          ],
+          "projections": [],
+          "package": "shop",
+          "names": [],
+          "mode": "strict",
+          "profileId": "test.access",
+          "profileVersion": "0.1.0",
+          "coreVersion": "0.10.0"
+        },
+        "profile": {
+          "id": "test.access",
+          "version": "0.1.0",
+          "compilerVersion": "test",
+          "coreVersions": [
+            "0.10.0"
+          ],
+          "vocabularies": [
+            {
+              "id": "umf.access",
+              "version": "0.1.0"
+            },
+            {
+              "id": "umf.actions",
+              "version": "0.1.0"
+            },
+            {
+              "id": "umf.binding",
+              "version": "0.2.0"
+            }
+          ],
+          "python": {
+            "version": "3.14.7"
+          },
+          "dependencies": [
+            {
+              "distribution": "umf_access",
+              "version": "0.1.0"
+            },
+            {
+              "distribution": "pydantic",
+              "version": "2.14.1"
+            }
+          ],
+          "checkers": [
+            {
+              "name": "mypy",
+              "version": "2.4.0",
+              "configuration": {
+                "check_untyped_defs": true
+              }
+            },
+            {
+              "name": "pyright",
+              "version": "1.1.414",
+              "configuration": {
+                "typeCheckingMode": "strict",
+                "environment": "test"
+              }
+            }
+          ],
+          "reservedNames": [
+            "test_reserved"
+          ],
+          "importedNames": [
+            "decimal",
+            "pydantic",
+            "umf_access"
+          ],
+          "assertionKinds": [
+            "kind",
+            "nullability",
+            "Key",
+            "facets",
+            "defaults",
+            "relationships",
+            "actions",
+            "umf.access"
+          ],
+          "subset": "test fixture, not qualified",
+          "codeSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      },
+      "expected": {
+        "ok": false,
+        "error": {
+          "code": "INPUT",
+          "message": "Typed access admission refused: INPUT",
+          "pointer": "/sources/0/text"
+        }
+      }
+    },
+    {
+      "id": "sol-final-request-utf16-name-sourceId",
+      "operation": "generateAccessPackage",
+      "request": {
+        "request": {
+          "contract": "umf-access-generate/0.1",
+          "sources": [
+            {
+              "id": "logical",
+              "format": "json",
+              "text": "{"
+            }
+          ],
+          "logical": "logical",
+          "bindings": [],
+          "records": [
+            {
+              "module": "commerce",
+              "element": "Order"
+            }
+          ],
+          "actions": [
+            {
+              "module": "commerce",
+              "action": "shipOrder"
+            }
+          ],
+          "projections": [],
+          "package": "shop",
+          "names": [
+            {
+              "sourceId": "\ud800",
+              "pointer": "/modules/0/elements/0",
+              "python": "Good"
+            }
+          ],
+          "mode": "strict",
+          "profileId": "test.access",
+          "profileVersion": "0.1.0",
+          "coreVersion": "0.10.0"
+        },
+        "profile": {
+          "id": "test.access",
+          "version": "0.1.0",
+          "compilerVersion": "test",
+          "coreVersions": [
+            "0.10.0"
+          ],
+          "vocabularies": [
+            {
+              "id": "umf.access",
+              "version": "0.1.0"
+            },
+            {
+              "id": "umf.actions",
+              "version": "0.1.0"
+            },
+            {
+              "id": "umf.binding",
+              "version": "0.2.0"
+            }
+          ],
+          "python": {
+            "version": "3.14.7"
+          },
+          "dependencies": [
+            {
+              "distribution": "umf_access",
+              "version": "0.1.0"
+            },
+            {
+              "distribution": "pydantic",
+              "version": "2.14.1"
+            }
+          ],
+          "checkers": [
+            {
+              "name": "mypy",
+              "version": "2.4.0",
+              "configuration": {
+                "check_untyped_defs": true
+              }
+            },
+            {
+              "name": "pyright",
+              "version": "1.1.414",
+              "configuration": {
+                "typeCheckingMode": "strict",
+                "environment": "test"
+              }
+            }
+          ],
+          "reservedNames": [
+            "test_reserved"
+          ],
+          "importedNames": [
+            "decimal",
+            "pydantic",
+            "umf_access"
+          ],
+          "assertionKinds": [
+            "kind",
+            "nullability",
+            "Key",
+            "facets",
+            "defaults",
+            "relationships",
+            "actions",
+            "umf.access"
+          ],
+          "subset": "test fixture, not qualified",
+          "codeSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      },
+      "expected": {
+        "ok": false,
+        "error": {
+          "code": "INPUT",
+          "message": "Typed access admission refused: INPUT",
+          "pointer": "/sources/0/text"
+        }
+      }
+    },
+    {
+      "id": "sol-final-request-utf16-name-pointer",
+      "operation": "generateAccessPackage",
+      "request": {
+        "request": {
+          "contract": "umf-access-generate/0.1",
+          "sources": [
+            {
+              "id": "logical",
+              "format": "json",
+              "text": "{"
+            }
+          ],
+          "logical": "logical",
+          "bindings": [],
+          "records": [
+            {
+              "module": "commerce",
+              "element": "Order"
+            }
+          ],
+          "actions": [
+            {
+              "module": "commerce",
+              "action": "shipOrder"
+            }
+          ],
+          "projections": [],
+          "package": "shop",
+          "names": [
+            {
+              "sourceId": "logical",
+              "pointer": "\ud800",
+              "python": "Good"
+            }
+          ],
+          "mode": "strict",
+          "profileId": "test.access",
+          "profileVersion": "0.1.0",
+          "coreVersion": "0.10.0"
+        },
+        "profile": {
+          "id": "test.access",
+          "version": "0.1.0",
+          "compilerVersion": "test",
+          "coreVersions": [
+            "0.10.0"
+          ],
+          "vocabularies": [
+            {
+              "id": "umf.access",
+              "version": "0.1.0"
+            },
+            {
+              "id": "umf.actions",
+              "version": "0.1.0"
+            },
+            {
+              "id": "umf.binding",
+              "version": "0.2.0"
+            }
+          ],
+          "python": {
+            "version": "3.14.7"
+          },
+          "dependencies": [
+            {
+              "distribution": "umf_access",
+              "version": "0.1.0"
+            },
+            {
+              "distribution": "pydantic",
+              "version": "2.14.1"
+            }
+          ],
+          "checkers": [
+            {
+              "name": "mypy",
+              "version": "2.4.0",
+              "configuration": {
+                "check_untyped_defs": true
+              }
+            },
+            {
+              "name": "pyright",
+              "version": "1.1.414",
+              "configuration": {
+                "typeCheckingMode": "strict",
+                "environment": "test"
+              }
+            }
+          ],
+          "reservedNames": [
+            "test_reserved"
+          ],
+          "importedNames": [
+            "decimal",
+            "pydantic",
+            "umf_access"
+          ],
+          "assertionKinds": [
+            "kind",
+            "nullability",
+            "Key",
+            "facets",
+            "defaults",
+            "relationships",
+            "actions",
+            "umf.access"
+          ],
+          "subset": "test fixture, not qualified",
+          "codeSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      },
+      "expected": {
+        "ok": false,
+        "error": {
+          "code": "INPUT",
+          "message": "Typed access admission refused: INPUT",
+          "pointer": "/sources/0/text"
+        }
+      }
+    },
+    {
+      "id": "sol-final-request-utf16-name-python",
+      "operation": "generateAccessPackage",
+      "request": {
+        "request": {
+          "contract": "umf-access-generate/0.1",
+          "sources": [
+            {
+              "id": "logical",
+              "format": "json",
+              "text": "{"
+            }
+          ],
+          "logical": "logical",
+          "bindings": [],
+          "records": [
+            {
+              "module": "commerce",
+              "element": "Order"
+            }
+          ],
+          "actions": [
+            {
+              "module": "commerce",
+              "action": "shipOrder"
+            }
+          ],
+          "projections": [],
+          "package": "shop",
+          "names": [
+            {
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/0",
+              "python": "\ud800"
+            }
+          ],
+          "mode": "strict",
+          "profileId": "test.access",
+          "profileVersion": "0.1.0",
+          "coreVersion": "0.10.0"
+        },
+        "profile": {
+          "id": "test.access",
+          "version": "0.1.0",
+          "compilerVersion": "test",
+          "coreVersions": [
+            "0.10.0"
+          ],
+          "vocabularies": [
+            {
+              "id": "umf.access",
+              "version": "0.1.0"
+            },
+            {
+              "id": "umf.actions",
+              "version": "0.1.0"
+            },
+            {
+              "id": "umf.binding",
+              "version": "0.2.0"
+            }
+          ],
+          "python": {
+            "version": "3.14.7"
+          },
+          "dependencies": [
+            {
+              "distribution": "umf_access",
+              "version": "0.1.0"
+            },
+            {
+              "distribution": "pydantic",
+              "version": "2.14.1"
+            }
+          ],
+          "checkers": [
+            {
+              "name": "mypy",
+              "version": "2.4.0",
+              "configuration": {
+                "check_untyped_defs": true
+              }
+            },
+            {
+              "name": "pyright",
+              "version": "1.1.414",
+              "configuration": {
+                "typeCheckingMode": "strict",
+                "environment": "test"
+              }
+            }
+          ],
+          "reservedNames": [
+            "test_reserved"
+          ],
+          "importedNames": [
+            "decimal",
+            "pydantic",
+            "umf_access"
+          ],
+          "assertionKinds": [
+            "kind",
+            "nullability",
+            "Key",
+            "facets",
+            "defaults",
+            "relationships",
+            "actions",
+            "umf.access"
+          ],
+          "subset": "test fixture, not qualified",
+          "codeSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      },
+      "expected": {
+        "ok": false,
+        "error": {
+          "code": "INPUT",
+          "message": "Typed access admission refused: INPUT",
+          "pointer": "/sources/0/text"
+        }
+      }
+    },
+    {
+      "id": "sol-final-request-utf16-action-module",
+      "operation": "generateAccessPackage",
+      "request": {
+        "request": {
+          "contract": "umf-access-generate/0.1",
+          "sources": [
+            {
+              "id": "logical",
+              "format": "json",
+              "text": "{"
+            }
+          ],
+          "logical": "logical",
+          "bindings": [],
+          "records": [
+            {
+              "module": "commerce",
+              "element": "Order"
+            }
+          ],
+          "actions": [
+            {
+              "module": "\ud800",
+              "action": "x"
+            }
+          ],
+          "projections": [],
+          "package": "shop",
+          "names": [],
+          "mode": "strict",
+          "profileId": "test.access",
+          "profileVersion": "0.1.0",
+          "coreVersion": "0.10.0"
+        },
+        "profile": {
+          "id": "test.access",
+          "version": "0.1.0",
+          "compilerVersion": "test",
+          "coreVersions": [
+            "0.10.0"
+          ],
+          "vocabularies": [
+            {
+              "id": "umf.access",
+              "version": "0.1.0"
+            },
+            {
+              "id": "umf.actions",
+              "version": "0.1.0"
+            },
+            {
+              "id": "umf.binding",
+              "version": "0.2.0"
+            }
+          ],
+          "python": {
+            "version": "3.14.7"
+          },
+          "dependencies": [
+            {
+              "distribution": "umf_access",
+              "version": "0.1.0"
+            },
+            {
+              "distribution": "pydantic",
+              "version": "2.14.1"
+            }
+          ],
+          "checkers": [
+            {
+              "name": "mypy",
+              "version": "2.4.0",
+              "configuration": {
+                "check_untyped_defs": true
+              }
+            },
+            {
+              "name": "pyright",
+              "version": "1.1.414",
+              "configuration": {
+                "typeCheckingMode": "strict",
+                "environment": "test"
+              }
+            }
+          ],
+          "reservedNames": [
+            "test_reserved"
+          ],
+          "importedNames": [
+            "decimal",
+            "pydantic",
+            "umf_access"
+          ],
+          "assertionKinds": [
+            "kind",
+            "nullability",
+            "Key",
+            "facets",
+            "defaults",
+            "relationships",
+            "actions",
+            "umf.access"
+          ],
+          "subset": "test fixture, not qualified",
+          "codeSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      },
+      "expected": {
+        "ok": false,
+        "error": {
+          "code": "INPUT",
+          "message": "Typed access admission refused: INPUT",
+          "pointer": "/sources/0/text"
+        }
+      }
+    },
+    {
+      "id": "sol-final-request-utf16-projection-name",
+      "operation": "generateAccessPackage",
+      "request": {
+        "request": {
+          "contract": "umf-access-generate/0.1",
+          "sources": [
+            {
+              "id": "logical",
+              "format": "json",
+              "text": "{"
+            }
+          ],
+          "logical": "logical",
+          "bindings": [],
+          "records": [
+            {
+              "module": "commerce",
+              "element": "Order"
+            }
+          ],
+          "actions": [
+            {
+              "module": "commerce",
+              "action": "shipOrder"
+            }
+          ],
+          "projections": [
+            {
+              "name": "\ud800",
+              "record": {
+                "module": "commerce",
+                "element": "Order"
+              },
+              "fields": []
+            }
+          ],
+          "package": "shop",
+          "names": [],
+          "mode": "strict",
+          "profileId": "test.access",
+          "profileVersion": "0.1.0",
+          "coreVersion": "0.10.0"
+        },
+        "profile": {
+          "id": "test.access",
+          "version": "0.1.0",
+          "compilerVersion": "test",
+          "coreVersions": [
+            "0.10.0"
+          ],
+          "vocabularies": [
+            {
+              "id": "umf.access",
+              "version": "0.1.0"
+            },
+            {
+              "id": "umf.actions",
+              "version": "0.1.0"
+            },
+            {
+              "id": "umf.binding",
+              "version": "0.2.0"
+            }
+          ],
+          "python": {
+            "version": "3.14.7"
+          },
+          "dependencies": [
+            {
+              "distribution": "umf_access",
+              "version": "0.1.0"
+            },
+            {
+              "distribution": "pydantic",
+              "version": "2.14.1"
+            }
+          ],
+          "checkers": [
+            {
+              "name": "mypy",
+              "version": "2.4.0",
+              "configuration": {
+                "check_untyped_defs": true
+              }
+            },
+            {
+              "name": "pyright",
+              "version": "1.1.414",
+              "configuration": {
+                "typeCheckingMode": "strict",
+                "environment": "test"
+              }
+            }
+          ],
+          "reservedNames": [
+            "test_reserved"
+          ],
+          "importedNames": [
+            "decimal",
+            "pydantic",
+            "umf_access"
+          ],
+          "assertionKinds": [
+            "kind",
+            "nullability",
+            "Key",
+            "facets",
+            "defaults",
+            "relationships",
+            "actions",
+            "umf.access"
+          ],
+          "subset": "test fixture, not qualified",
+          "codeSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      },
+      "expected": {
+        "ok": false,
+        "error": {
+          "code": "INPUT",
+          "message": "Typed access admission refused: INPUT",
+          "pointer": "/sources/0/text"
+        }
+      }
+    }
+  ]
+}
