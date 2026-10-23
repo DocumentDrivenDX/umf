@@ -2587,7 +2587,23 @@ impl CompiledSchema {
             self.effective_schema_path(schema, sp, ctx)?
         };
         let scope_len = evaluated.dynamic_scope.len();
-        if let Some(Value::String(anchor)) = get(schema, "$dynamicAnchor") {
+        // Draft 2020-12 dynamic scope is a chain of entered schema resources,
+        // not a stack of only the dynamically anchored nodes visited by normal
+        // applicator evaluation. A resource's anchors may live in `$defs` and
+        // still participate when a reference enters that resource. Register
+        // those anchors at resource entry, in resource traversal order.
+        if self.dialect == SchemaDialect::Draft2020_12
+            && !matches!(self.regex_profile, RegexProfile::Python(_))
+        {
+            if let Some((resource, resource_path)) =
+                self.dynamic_resource_for_path(&scoped_path, ctx)?
+            {
+                self.push_resource_dynamic_anchors(resource, &resource_path, evaluated, ctx)?;
+            }
+        } else if let Some(Value::String(anchor)) = get(schema, "$dynamicAnchor") {
+            // Python's qualified Draft 2020-12 profile retains the historical
+            // per-node stack; resource-wide dynamic-anchor discovery is only
+            // used by the ECMAScript validator path.
             ctx.charge_work_u64(
                 anchor.len() as u64 + scoped_path.len() as u64 + 2,
                 Utf16::default(),
@@ -2617,6 +2633,139 @@ impl CompiledSchema {
         };
         evaluated.dynamic_scope.truncate(scope_len);
         result
+    }
+
+    fn push_resource_dynamic_anchors(
+        &self,
+        resource: &Value,
+        resource_path: &Utf16,
+        evaluated: &mut Evaluated,
+        ctx: &mut Context<'_>,
+    ) -> Result<(), EngineError> {
+        fn pointer_path(
+            owner: &CompiledSchema,
+            node: &Value,
+            address: usize,
+            path: &Utf16,
+            ctx: &mut Context<'_>,
+        ) -> Result<Option<Utf16>, EngineError> {
+            ctx.charge_work(1, Utf16::default())?;
+            if node as *const Value as usize == address {
+                return Ok(Some(path.clone()));
+            }
+            match node {
+                Value::Object(members) => {
+                    for (key, child) in members {
+                        let child_path = owner.schema_pointer(path, key, ctx)?;
+                        if let Some(found) = pointer_path(owner, child, address, &child_path, ctx)? {
+                            return Ok(Some(found));
+                        }
+                    }
+                }
+                Value::Array(items) => {
+                    for (index, child) in items.iter().enumerate() {
+                        ctx.charge_work(path.len().saturating_add(22), Utf16::default())?;
+                        let child_path = append_schema_path(path, &index.to_string());
+                        if let Some(found) = pointer_path(owner, child, address, &child_path, ctx)? {
+                            return Ok(Some(found));
+                        }
+                    }
+                }
+                _ => {}
+            }
+            Ok(None)
+        }
+        fn visit(
+            owner: &CompiledSchema,
+            resource: &Value,
+            node: &Value,
+            is_root: bool,
+            resource_path: &Utf16,
+            evaluated: &mut Evaluated,
+            ctx: &mut Context<'_>,
+        ) -> Result<(), EngineError> {
+            ctx.charge_work(1, resource_path.clone())?;
+            if !is_root && schema_id(node).is_some() {
+                return Ok(());
+            }
+            if let Some(Value::String(anchor)) = get(node, "$dynamicAnchor") {
+                let address = node as *const Value as usize;
+                let mut already_registered = false;
+                for (_, _, existing_address) in &evaluated.dynamic_scope {
+                    ctx.charge_work(1, Utf16::default())?;
+                    if *existing_address == address {
+                        already_registered = true;
+                        break;
+                    }
+                }
+                if already_registered {
+                    for child in schema_child_values(node, owner.dialect, ctx, resource_path)? {
+                        visit(owner, resource, child, false, resource_path, evaluated, ctx)?;
+                    }
+                    return Ok(());
+                }
+                let anchor_path = pointer_path(
+                    owner,
+                    resource,
+                    address,
+                    resource_path,
+                    ctx,
+                )?
+                .unwrap_or_else(|| resource_path.clone());
+                ctx.charge_work_u64(
+                    anchor.len() as u64 + anchor_path.len() as u64 + 2,
+                    Utf16::default(),
+                )?;
+                evaluated.dynamic_scope.push((
+                    anchor.units().to_vec(),
+                    anchor_path,
+                    node as *const Value as usize,
+                ));
+            }
+            for child in schema_child_values(node, owner.dialect, ctx, resource_path)? {
+                visit(owner, resource, child, false, resource_path, evaluated, ctx)?;
+            }
+            Ok(())
+        }
+        visit(self, resource, resource, true, resource_path, evaluated, ctx)
+    }
+
+    fn dynamic_resource_for_path<'a>(
+        &'a self,
+        path: &Utf16,
+        ctx: &mut Context<'_>,
+    ) -> Result<Option<(&'a Value, Utf16)>, EngineError> {
+        ctx.charge_work_u64((path.len() as u64).saturating_mul(2).saturating_add(1), path.clone())?;
+        let text = path.to_utf8().unwrap_or_default();
+        let base = text.split('#').next().unwrap_or("");
+        let resource = if base.is_empty() || schema_id(&self.schema).as_deref() == Some(base) {
+            Some(&self.schema)
+        } else {
+            let mut found = find_embedded_resource(
+                &self.schema,
+                base,
+                self.dialect,
+                ctx,
+                path,
+            )?;
+            if found.is_none() {
+                for (uri, supplied) in &self.resources.entries {
+                    ctx.charge_work(uri.len().saturating_add(1), path.clone())?;
+                    if uri.to_utf8().ok().as_deref() == Some(base) {
+                        found = Some(supplied);
+                        break;
+                    }
+                    found = find_embedded_resource(supplied, base, self.dialect, ctx, path)?;
+                    if found.is_some() { break; }
+                }
+            }
+            found
+        };
+        Ok(resource.map(|resource| {
+            let mut root = base.encode_utf16().collect::<Vec<_>>();
+            root.push(b'#' as u16);
+            (resource, Utf16::new(root))
+        }))
     }
 
     fn effective_schema_path(
@@ -3170,9 +3319,16 @@ impl CompiledSchema {
                         target = self.python_scope_node(*node_address, ctx)?;
                         tsp = dynamic_path.clone();
                     } else {
-                        let dynamic_ref = Value::String(dynamic_path.clone());
-                        (target, tsp, id_applied) =
-                            self.resolve_eval_ref(&dynamic_ref, dynamic_path, ctx)?;
+                        // Resource-scope registration may point at a dynamic
+                        // anchor nested in `$defs`; the resource URI is enough
+                        // for relative references, while the stable node
+                        // identity selects the actual anchor schema.
+                        target = self.python_scope_node(*node_address, ctx)?;
+                        tsp = dynamic_path.clone();
+                        // A root path is already normalized by the resource
+                        // resolver. Only a descendant anchor needs its own
+                        // `$id` processing during evaluation.
+                        id_applied = dynamic_path.units().last() == Some(&(b'#' as u16));
                     }
                     if matches!(self.regex_profile, RegexProfile::Python(_))
                         && !matches!(target, Value::Object(_) | Value::Bool(_))
@@ -7034,6 +7190,7 @@ fn schema_child_values<'a>(
         }
         let count = match (keyword.as_str(), value) {
             ("items", Value::Array(items))
+            | ("prefixItems", Value::Array(items))
             | ("allOf" | "anyOf" | "oneOf" | "extends", Value::Array(items)) => items.len(),
             (
                 "properties" | "patternProperties" | "definitions" | "$defs" | "dependentSchemas",
@@ -7092,6 +7249,11 @@ fn schema_child_values<'a>(
                 Value::Array(items) => children.extend(items.iter()),
                 _ => children.push(value),
             },
+            "prefixItems" => {
+                if let Value::Array(items) = value {
+                    children.extend(items.iter());
+                }
+            }
             "allOf" | "anyOf" | "oneOf" | "extends" => {
                 if let Value::Array(items) = value {
                     children.extend(items.iter());
@@ -9458,5 +9620,115 @@ mod static_reference_resolution_tests {
             .validate(&value(r#"{"x":{"y":{}}}"#), &mut Context::ordinary())
             .unwrap()
             .is_empty());
+    }
+}
+
+#[cfg(test)]
+mod draft2020_dynamic_annotation_regressions {
+    use super::*;
+
+    fn value(source: &str) -> Value {
+        crate::serialization::read_json_value(
+            &source.encode_utf16().collect::<Vec<_>>(),
+            crate::serialization::Format::Json,
+            &mut Context::ordinary(),
+        )
+        .unwrap()
+    }
+
+    fn members(value: &Value) -> &[(Utf16, Value)] {
+        match value { Value::Object(members) => members, _ => panic!("expected object") }
+    }
+
+    fn run_cases(file: &str, indices: &[usize], remote: Option<(&str, &str)>) {
+        let corpus = value(file);
+        let Value::Array(cases) = corpus else { panic!("upstream corpus must be an array") };
+        for index in indices {
+            let case = &cases[*index];
+            let schema = member(members(case), "schema").unwrap();
+            let resources = remote
+                .map(|(uri, body)| vec![(Utf16::from(uri), value(body))])
+                .unwrap_or_default();
+            let compiled = CompiledSchema::compile_consumer(
+                schema,
+                &SchemaResources { entries: resources },
+                false,
+                &mut Context::ordinary(),
+            )
+            .unwrap_or_else(|error| panic!("case {index} failed to compile: {error:?}"));
+            let Value::Array(tests) = member(members(case), "tests").unwrap() else {
+                panic!("case tests must be an array")
+            };
+            for (test_index, test) in tests.iter().enumerate() {
+                let data = member(members(test), "data").unwrap();
+                let expected = matches!(member(members(test), "valid"), Some(Value::Bool(true)));
+                let actual = compiled
+                    .validate(data, &mut Context::ordinary())
+                    .unwrap_or_else(|error| panic!("case {index} test {test_index} errored: {error:?}"))
+                    .is_empty();
+                assert_eq!(actual, expected, "case {index} test {test_index}");
+            }
+        }
+    }
+
+    #[test]
+    fn draft2020_dynamic_scope_uses_active_resource_anchors() {
+        run_cases(
+            include_str!("../../../fixtures/json-schema/upstream/draft2020-12/dynamicRef.json"),
+            &[3, 5, 11, 12, 14, 15, 16, 20],
+            Some((
+                "http://localhost:1234/draft2020-12/extendible-dynamic-ref.json",
+                include_str!("../../../fixtures/json-schema/upstream/remotes/draft2020-12/extendible-dynamic-ref.json"),
+            )),
+        );
+    }
+
+    #[test]
+    fn draft2020_unevaluated_keywords_receive_dynamic_reference_annotations() {
+        run_cases(
+            include_str!("../../../fixtures/json-schema/upstream/draft2020-12/unevaluatedItems.json"),
+            &[18],
+            None,
+        );
+        run_cases(
+            include_str!("../../../fixtures/json-schema/upstream/draft2020-12/unevaluatedProperties.json"),
+            &[21],
+            None,
+        );
+    }
+
+    #[test]
+    fn python_draft2020_keeps_its_per_node_dynamic_anchor_scope() {
+        let schema = value(r##"{"$schema":"https://json-schema.org/draft/2020-12/schema","$id":"https://example.test/root","$dynamicAnchor":"tree","type":"object","properties":{"x":{"$id":"https://example.test/branch","$dynamicRef":"#tree","$defs":{"target":{"$dynamicAnchor":"tree","type":"string"}}}}}"##);
+        let mut ctx = Context::ordinary();
+        let source = crate::python_value::python_from_core_value(&schema, &mut ctx).unwrap();
+        let compiled = CompiledSchema::compile_python_source(
+            &source,
+            &crate::python_value::PythonSchemaResources::default(),
+            false,
+            crate::python_regex::PythonReVersion::V3_14,
+            &mut ctx,
+        ).unwrap();
+        let instance = crate::python_value::python_from_core_value(&value(r#"{"x":"text"}"#), &mut ctx).unwrap();
+        // The active outer node anchor rebinds the reference to the root object
+        // schema, which cannot validate the property's scalar value.
+        assert!(!compiled.validate(&instance, &mut ctx).unwrap().is_empty());
+    }
+
+    #[test]
+    fn resource_scope_discovers_dynamic_anchor_under_prefix_items() {
+        let schema = value(r##"{"$schema":"https://json-schema.org/draft/2020-12/schema","$id":"https://example.test/root","$ref":"base/","$defs":{"base":{"$id":"base/","type":"array","$dynamicRef":"target#a","$defs":{"target":{"$id":"target","$dynamicAnchor":"a"}}}},"prefixItems":[{"$dynamicAnchor":"a","type":"object"}]}"##);
+        let compiled = CompiledSchema::compile_consumer(&schema, &SchemaResources::default(), false, &mut Context::ordinary()).unwrap();
+        // The prefix item itself is a valid object. Its anchor also participates
+        // in the outer resource scope and is applied to the root array by the
+        // reference in the base resource, making that array invalid.
+        assert!(!compiled.validate(&value(r#"[{}]"#), &mut Context::ordinary()).unwrap().is_empty());
+    }
+
+    #[test]
+    fn dynamic_resource_root_keeps_normalized_relative_id_provenance() {
+        let schema = value(r##"{"$schema":"https://json-schema.org/draft/2020-12/schema","$id":"https://example.test/root/","$ref":"base/","$defs":{"base":{"$id":"base/","$dynamicAnchor":"a","$ref":"leaf","properties":{"x":{"$dynamicRef":"target#a"}},"$defs":{"leaf":{"$id":"leaf"},"target":{"$id":"target","$dynamicAnchor":"a","type":"string"}}}}}"##);
+        let compiled = CompiledSchema::compile_consumer(&schema, &SchemaResources::default(), false, &mut Context::ordinary()).unwrap();
+        assert!(compiled.validate(&value(r#"{"x":42}"#), &mut Context::ordinary()).unwrap().is_empty());
     }
 }
