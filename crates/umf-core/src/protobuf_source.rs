@@ -7,7 +7,7 @@
 
 use crate::{
     context::Context,
-    error::EngineError,
+    error::{Diagnostic, EngineError, Severity},
     protobuf_document,
     value::{copy_json, Utf16, Value},
 };
@@ -44,6 +44,147 @@ impl PreparedProtobufSourceImport {
     /// Borrow the compiler-facing snapshot without granting mutation access.
     pub fn compiler_request(&self) -> &Value { &self.request }
 }
+
+/// Owned descriptor bytes prepared for a host emitter.
+/// This value is consumed by `finish_source_export`, so a prepared export can
+/// be finalized only once. The emitter never receives the archived source.
+pub struct PreparedProtobufSourceExport {
+    descriptor_set: Vec<u8>,
+}
+
+impl PreparedProtobufSourceExport {
+    /// Current descriptor state encoded for the explicit host emitter.
+    pub fn descriptor_set(&self) -> &[u8] { &self.descriptor_set }
+}
+
+/// Validate the document and prepare current descriptor bytes for a trusted
+/// host emitter. No compiler, printer, process, filesystem, or network is
+/// discovered or invoked here. The caller supplies its current document to
+/// finish after the callback; archived Protobuf sources are never replayed.
+pub fn prepare_source_export(
+    document: &Value,
+    context: &mut Context<'_>,
+) -> Result<PreparedProtobufSourceExport, EngineError> {
+    let descriptor_set = protobuf_document::export_descriptor_set(document, context)?;
+    context.charge_work(0, Utf16::default())?;
+    Ok(PreparedProtobufSourceExport { descriptor_set })
+}
+
+/// Finalize a prepared source export using the explicit result returned by a
+/// trusted host emitter. The original Context must span both phases so late
+/// cancellation, deadlines, and work limits are checked before the final copy.
+/// Unknown emitter result fields are retained, matching the TypeScript result
+/// spread; source and diagnostics are replaced by core-owned values.
+pub fn finish_source_export(
+    _prepared: PreparedProtobufSourceExport,
+    document_after_callback: &Value,
+    emitter_result: &Value,
+    context: &mut Context<'_>,
+) -> Result<Value, EngineError> {
+    // Match the predecessor's copy-first result admission: bad numbers or
+    // duplicate keys are rejected before emitter shape validation.
+    let mut result = copy_json(emitter_result, context)?;
+    let fields = object(&result).ok_or_else(|| emit_error("Invalid emitter result"))?;
+    let files = get_metered(fields, "files", context)?.and_then(object)
+        .ok_or_else(|| emit_error("Invalid emitter result"))?;
+    if !js_truthy(get_metered(fields, "compiler", context)?) || !js_truthy(get_metered(fields, "printer", context)?) {
+        return Err(emit_error("Invalid emitter result"));
+    }
+    for (name, text) in files {
+        context.charge_work(1, Utf16::default())?;
+        if name.is_empty() || !matches!(text, Value::String(_)) {
+            return Err(emit_error("Emitted files require names and text"));
+        }
+    }
+
+    // TypeScript copies source only after the awaited callback returns. Keep
+    // that timing explicit: a trusted callback which closes over and mutates
+    // the caller's document affects this returned source snapshot, while the
+    // emitter still received only the already-prepared descriptor bytes.
+    let source = copy_json(document_after_callback, context)?;
+    let inspection = protobuf_document::inspect(document_after_callback, context)?;
+    context.charge_work(inspection.diagnostics.len().saturating_add(1), Utf16::default())?;
+    let mut diagnostics = Vec::with_capacity(inspection.diagnostics.len().saturating_add(1));
+    for diagnostic in inspection.diagnostics {
+        diagnostics.push(diagnostic_value(diagnostic, context)?);
+    }
+    const LAYOUT_CODE: &str = "PROTOBUF_SOURCE_LAYOUT";
+    const LAYOUT_MESSAGE: &str = "Source layout, locations and comment attachment can change during emission; retain source UMF and its original archive.";
+    context.charge_work(4usize.saturating_add(
+        [LAYOUT_CODE, "", LAYOUT_MESSAGE, "warning", "code", "path", "message", "severity"]
+            .iter().map(|text| text.encode_utf16().count()).sum::<usize>()
+    ), Utf16::default())?;
+    diagnostics.push(diagnostic_value(Diagnostic {
+        code: Utf16::from(LAYOUT_CODE),
+        path: Utf16::default(),
+        python_source_path: false,
+        message: Utf16::from(LAYOUT_MESSAGE),
+        severity: Severity::Warning,
+        python_text_origin: None,
+    }, context)?);
+    set_field(&mut result, "source", source, context)?;
+    set_field(&mut result, "diagnostics", Value::Array(diagnostics), context)?;
+
+    // A host cancellation/deadline check immediately precedes the final
+    // defensive copy, including when the emitter returns an empty file set.
+    context.charge_work(0, Utf16::default())?;
+    copy_json(&result, context)
+}
+
+fn diagnostic_value(diagnostic: Diagnostic, context: &mut Context<'_>) -> Result<Value, EngineError> {
+    const FIELDS: [&str; 4] = ["code", "path", "message", "severity"];
+    let message = match diagnostic.severity { Severity::Error => "error", Severity::Warning => "warning" };
+    let units = diagnostic.code.len().saturating_add(diagnostic.path.len()).saturating_add(diagnostic.message.len())
+        .saturating_add(message.encode_utf16().count())
+        .saturating_add(FIELDS.iter().map(|field| field.encode_utf16().count()).sum::<usize>());
+    context.charge_work(4usize.saturating_add(units), Utf16::default())?;
+    Ok(Value::Object(vec![
+        (Utf16::from("code"), Value::String(diagnostic.code)),
+        (Utf16::from("path"), Value::String(diagnostic.path)),
+        (Utf16::from("message"), Value::String(diagnostic.message)),
+        (Utf16::from("severity"), Value::string_utf8(message)),
+    ]))
+}
+
+fn js_truthy(value: Option<&Value>) -> bool {
+    match value {
+        None | Some(Value::Null) | Some(Value::Bool(false)) => false,
+        Some(Value::String(text)) => !text.is_empty(),
+        Some(Value::Number(number)) => *number != 0.0,
+        Some(Value::Bool(true)) | Some(Value::Array(_)) | Some(Value::Object(_)) => true,
+    }
+}
+
+fn set_field(value: &mut Value, name: &str, replacement: Value, context: &mut Context<'_>) -> Result<(), EngineError> {
+    let fields = object_mut(value).ok_or_else(|| emit_error("Invalid emitter result"))?;
+    let mut found = None;
+    for (index, (key, _)) in fields.iter().enumerate() {
+        context.charge_work(1, Utf16::default())?;
+        if key_eq_ascii(key, name) { found = Some(index); break; }
+    }
+    if let Some(index) = found {
+        fields[index].1 = replacement;
+    } else {
+        context.charge_work(1usize.saturating_add(name.len()), Utf16::default())?;
+        fields.push((Utf16::from(name), replacement));
+    }
+    Ok(())
+}
+
+fn get_metered<'a>(fields: &'a [(Utf16, Value)], name: &str, context: &mut Context<'_>) -> Result<Option<&'a Value>, EngineError> {
+    for (key, value) in fields {
+        context.charge_work(1, Utf16::default())?;
+        if key_eq_ascii(key, name) { return Ok(Some(value)); }
+    }
+    Ok(None)
+}
+
+fn key_eq_ascii(key: &Utf16, expected: &str) -> bool {
+    let units = key.units();
+    units.len() == expected.len() && units.iter().zip(expected.bytes()).all(|(unit, byte)| *unit == u16::from(byte))
+}
+
+fn emit_error(message: &str) -> EngineError { EngineError::new("PROTOBUF_EMIT", Utf16::default(), message) }
 
 /// Validate and copy `{files, roots}` before a trusted compiler is called.
 pub fn prepare_source_import(

@@ -727,6 +727,16 @@ then the separate number and vocabulary refusal/error clusters, and recapture
 under a fresh source closure. Neither v6 nor the focused suite qualifies broad
 Draft 2020-12 support or default cutover.
 
+The additive [v12 Draft 2020-12 source-bound receipt](evidence/rust-migration/r5-json-schema/draft2020-completion-v12-2026-10-23.md)
+records a pre/post-identical 91-file closure and full pinned 46-file, 384-case,
+1,301-vector capture. Rust executed all vectors with no compile/runtime errors
+or upstream-expected disagreements; the reviewed acceptance gate accepted the
+report with 35 explicit Ajv/profile exclusions. Final `schema.rs` hash
+`a6957bbee794086753b751e76b0ccd62c688c1ebf622e71c2fe5a4f9e0a48d17`
+passed 207 offline core library tests and independent Sol metered-lookup review
+without P1/P2. This closes the pinned Rust core evaluator corpus, not the full
+JSON Schema adapter, bindings, browser path or default cutover.
+
 The next bounded CONTRACT-003 Protobuf shard is only the binary descriptor
 codec, `readDescriptorSet` and `writeDescriptorSet`; source compilation,
 emission, inspection and JSON Schema projection remain separate. The
@@ -854,6 +864,16 @@ inspector cases. The capture compiler is a stub, and the existing TypeScript
 native-oracle test reached its assertions but failed while writing its fixture
 report in this worktree. Real compiler qualification, bindings, source emission,
 Edition 2024 and default cutover remain open.
+
+The [opt-in Protobuf source-export checkpoint](evidence/rust-migration/r5-protobuf-source-export/README.md)
+adds a Rust `prepare_source_export`/`finish_source_export` boundary around an
+explicit trusted host emitter. A frozen TypeScript packet includes callback
+mutation: descriptor bytes are prepared before emission, while returned
+source and inspection reflect the document after callback completion. The
+focused offline Rust suite passes 5/5; independent Sol review reproduced the
+packet byte-for-byte and found no P1/P2 in the bounded core boundary. No
+native emitter ran. Printer semantics, source layout, bindings, browser
+delivery, Edition 2024 and default cutover remain open.
 
 The next bounded Avro field-metadata shard has a frozen
 [100-case predecessor and independent native packet](evidence/rust-migration/r5-avro-fields/README.md).

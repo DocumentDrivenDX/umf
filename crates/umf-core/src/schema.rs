@@ -45,12 +45,42 @@ pub enum SchemaDialect {
     Draft2019_09,
     Draft2020_12,
 }
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+struct KeywordPolicy {
+    applicator: bool,
+    validation: bool,
+    unevaluated: bool,
+    custom: bool,
+}
+impl KeywordPolicy {
+    const DRAFT2020: Self = Self {
+        applicator: true,
+        validation: true,
+        unevaluated: true,
+        custom: false,
+    };
+    fn keyword_is_active(self, keyword: &str) -> bool {
+        if is_validation_vocabulary_keyword(keyword) {
+            self.validation
+        } else if is_unevaluated_vocabulary_keyword(keyword) {
+            self.unevaluated
+        } else if is_applicator_vocabulary_keyword(keyword) {
+            self.applicator
+        } else {
+            true
+        }
+    }
+}
+impl Default for KeywordPolicy {
+    fn default() -> Self { Self::DRAFT2020 }
+}
 #[derive(Clone, Debug)]
 pub struct CompiledSchema {
     schema: Value,
     resources: SchemaResources,
     dialect: SchemaDialect,
     strict: bool,
+    root_keyword_policy: KeywordPolicy,
     regex_profile: RegexProfile,
     resolve_references_at_compile: bool,
     /// Original Python code-point text keyed by projected schema pointer.
@@ -287,6 +317,7 @@ struct Evaluated {
     codegen_errors: bool,
     annotation_scan: bool,
     annotation_scan_short_circuit: bool,
+    keyword_policy: KeywordPolicy,
 }
 impl Evaluated {
     fn child(&self, ctx: &mut Context<'_>, path: &Utf16) -> Result<Self, EngineError> {
@@ -307,6 +338,7 @@ impl Evaluated {
             mode: self.mode,
             collect_annotations: self.collect_annotations,
             codegen_errors: self.codegen_errors,
+            keyword_policy: self.keyword_policy,
             ..Self::default()
         })
     }
@@ -987,6 +1019,8 @@ impl CompiledSchema {
             false,
             !strict,
             true,
+            false,
+            KeywordPolicy::DRAFT2020,
             ctx,
         )?;
         compiled.python_text_origins = source_origins.values;
@@ -1041,6 +1075,7 @@ impl CompiledSchema {
                 .map(|id| resolve_schema_uri(dialect, "", &id).unwrap_or(id))
                 .unwrap_or_default(),
             0,
+            compiled.root_keyword_policy,
             ctx,
             &mut BTreeSet::new(),
         )?;
@@ -1053,6 +1088,7 @@ impl CompiledSchema {
                 &Utf16::new(root_path),
                 &retrieval,
                 0,
+                compiled.root_keyword_policy,
                 ctx,
                 &mut BTreeSet::new(),
             )?;
@@ -1080,8 +1116,31 @@ impl CompiledSchema {
         strict: bool,
         ctx: &mut Context<'_>,
     ) -> Result<Self, EngineError> {
-        let dialect = select_dialect(schema)?;
-        Self::compile_with_dialect(schema, resources, dialect, strict, ctx)
+        let declared = get(schema, "$schema").and_then(as_utf8);
+        let dialect = match select_dialect(schema) {
+            Ok(dialect) => dialect,
+            Err(_) if declared.is_some() => SchemaDialect::Draft2020_12,
+            Err(error) => return Err(error),
+        };
+        let policy = match declared {
+            Some(uri) if declared_dialect(schema).is_none() => {
+                custom_vocabulary_policy(&uri, resources, ctx, Utf16::default())?
+            }
+            _ => KeywordPolicy::DRAFT2020,
+        };
+        Self::compile_inner(
+            schema,
+            resources,
+            dialect,
+            strict,
+            RegexProfile::Ecma262Unicode,
+            true,
+            false,
+            false,
+            true,
+            policy,
+            ctx,
+        )
     }
     /// Validate only the pinned dialect metaschema, without compiling or
     /// resolving schema references. This lets callers report malformed schema
@@ -1131,6 +1190,8 @@ impl CompiledSchema {
             false,
             !strict,
             false,
+            false,
+            KeywordPolicy::DRAFT2020,
             ctx,
         )
     }
@@ -1186,6 +1247,7 @@ impl CompiledSchema {
             resources: SchemaResources { entries },
             dialect: self.dialect,
             strict: self.strict,
+            root_keyword_policy: self.root_keyword_policy,
             regex_profile: self.regex_profile,
             resolve_references_at_compile: self.resolve_references_at_compile,
             python_text_origins: self.python_text_origins.clone(),
@@ -1389,6 +1451,8 @@ impl CompiledSchema {
             true,
             false,
             false,
+            true,
+            KeywordPolicy::DRAFT2020,
             ctx,
         )
     }
@@ -1401,13 +1465,17 @@ impl CompiledSchema {
         resolve_references_at_compile: bool,
         apply_local_reference_gate: bool,
         allow_duplicate_schema_keys: bool,
+        finite_binary64_admission: bool,
+        root_keyword_policy: KeywordPolicy,
         ctx: &mut Context<'_>,
     ) -> Result<Self, EngineError> {
         if ctx.profile() == crate::context::ResourceProfile::HardIsolated {
             return Err(unavailable());
         }
         let schema = if allow_duplicate_schema_keys {
-            copy_schema_json(schema, ctx)?
+            copy_schema_json(schema, ctx, true)?
+        } else if finite_binary64_admission {
+            copy_schema_json(schema, ctx, false)?
         } else {
             copy_json(schema, ctx)?
         };
@@ -1427,7 +1495,9 @@ impl CompiledSchema {
                 continue;
             }
             let copied = if allow_duplicate_schema_keys {
-                copy_schema_json(value, ctx)?
+                copy_schema_json(value, ctx, true)?
+            } else if finite_binary64_admission {
+                copy_schema_json(value, ctx, false)?
             } else {
                 copy_json(value, ctx)?
             };
@@ -1439,6 +1509,7 @@ impl CompiledSchema {
             resources: SchemaResources { entries: owned },
             dialect,
             strict,
+            root_keyword_policy,
             regex_profile,
             resolve_references_at_compile,
             python_text_origins: std::collections::BTreeMap::new(),
@@ -1459,6 +1530,7 @@ impl CompiledSchema {
                 .map(|id| resolve_schema_uri(dialect, "", &id).unwrap_or(id))
                 .unwrap_or_default(),
             0,
+            compiled.root_keyword_policy,
             ctx,
             &mut BTreeSet::new(),
         )?;
@@ -1471,11 +1543,16 @@ impl CompiledSchema {
                 &Utf16::new(root_path),
                 &retrieval,
                 0,
+                compiled.root_keyword_policy,
                 ctx,
                 &mut BTreeSet::new(),
             )?;
         }
-        validate_schema_against_metaschema(&compiled.schema, dialect, regex_profile, ctx)?;
+        if get(&compiled.schema, "$schema").is_none()
+            || declared_dialect(&compiled.schema).is_some()
+        {
+            validate_schema_against_metaschema(&compiled.schema, dialect, regex_profile, ctx)?;
+        }
         Ok(compiled)
     }
     pub fn validate(
@@ -1509,10 +1586,19 @@ impl CompiledSchema {
         codegen_errors: bool,
         ctx: &mut Context<'_>,
     ) -> Result<Vec<StructuralError>, EngineError> {
-        let value = copy_json(value, ctx)?;
+        // JSON Schema's numeric domain is the finite binary64 domain used by
+        // the native validator. Keep this exception local to schema
+        // validation; core documents continue to use `copy_json`'s narrower
+        // interoperable-number profile.
+        let value = if matches!(self.regex_profile, RegexProfile::Python(_)) {
+            copy_json(value, ctx)?
+        } else {
+            copy_schema_json(value, ctx, false)?
+        };
         let mut errors = Vec::new();
         let mut evaluated = Evaluated::default();
         evaluated.codegen_errors = codegen_errors;
+        evaluated.keyword_policy = self.root_keyword_policy;
         self.eval(
             &self.schema,
             &value,
@@ -1549,6 +1635,7 @@ impl CompiledSchema {
         let mut errors = Vec::new();
         let mut evaluated = Evaluated::default();
         evaluated.mode = mode;
+        evaluated.keyword_policy = self.root_keyword_policy;
         let result = self.eval(
             &self.schema,
             value,
@@ -1574,12 +1661,101 @@ impl CompiledSchema {
             terminal_error,
         })
     }
+    fn keyword_policy_for(
+        &self,
+        schema: &Value,
+        schema_path: &Utf16,
+        inherited: KeywordPolicy,
+        ctx: &mut Context<'_>,
+    ) -> Result<KeywordPolicy, EngineError> {
+        if get_metered(schema, "$schema", ctx, schema_path)?.is_some() {
+            return self.explicit_keyword_policy(schema, inherited, ctx);
+        }
+        ctx.charge_work(schema_path.len(), schema_path.clone())?;
+        let origin = schema_path
+            .to_utf8()
+            .ok()
+            .and_then(|path| path.split_once('#').map(|(origin, _)| origin.to_owned()))
+            .unwrap_or_default();
+        if origin.is_empty() {
+            return Ok(inherited);
+        }
+        if schema_id_metered(&self.schema, ctx, schema_path)?.as_deref() == Some(origin.as_str()) {
+            return self.explicit_keyword_policy(&self.schema, inherited, ctx);
+        }
+        for (id, resource) in &self.resources.entries {
+            ctx.charge_work(id.len(), schema_path.clone())?;
+            let retrieval_matches = id.to_utf8().ok().as_deref() == Some(origin.as_str());
+            let schema_matches = if retrieval_matches {
+                false
+            } else {
+                schema_id_metered(resource, ctx, schema_path)?.as_deref() == Some(origin.as_str())
+            };
+            if retrieval_matches || schema_matches {
+                return self.explicit_keyword_policy(resource, inherited, ctx);
+            }
+        }
+        if let Some(resource) = find_embedded_resource(
+            &self.schema,
+            &origin,
+            self.dialect,
+            ctx,
+            schema_path,
+        )? {
+            return self.explicit_keyword_policy(resource, inherited, ctx);
+        }
+        for (_, resource) in &self.resources.entries {
+            if let Some(found) = find_embedded_resource(
+                resource,
+                &origin,
+                self.dialect,
+                ctx,
+                schema_path,
+            )? {
+                return self.explicit_keyword_policy(found, inherited, ctx);
+            }
+        }
+        Ok(inherited)
+    }
+
+    fn explicit_keyword_policy(
+        &self,
+        schema: &Value,
+        inherited: KeywordPolicy,
+        ctx: &mut Context<'_>,
+    ) -> Result<KeywordPolicy, EngineError> {
+        let Some(uri_value) = get_metered(schema, "$schema", ctx, &Utf16::default())? else {
+            return Ok(inherited);
+        };
+        let Value::String(uri_text) = uri_value else {
+            return Err(EngineError::new(
+                "SCHEMA_DIALECT",
+                Utf16::default(),
+                "Schema dialect URI must be a string",
+            ));
+        };
+        ctx.charge_work(uri_text.len(), Utf16::default())?;
+        let Some(uri) = as_utf8(uri_value) else {
+            return Err(EngineError::new(
+                "SCHEMA_DIALECT",
+                Utf16::default(),
+                "Schema dialect URI must be valid Unicode",
+            ));
+        };
+        if dialect_from_uri(&uri).is_some() {
+            Ok(KeywordPolicy::DRAFT2020)
+        } else {
+            custom_vocabulary_policy(&uri, &self.resources, ctx, Utf16::default())
+        }
+    }
+
     fn preflight(
         &self,
         schema: &Value,
         path: &Utf16,
         scope: &str,
         depth: usize,
+        inherited_policy: KeywordPolicy,
         ctx: &mut Context<'_>,
         seen: &mut BTreeSet<usize>,
     ) -> Result<(), EngineError> {
@@ -1611,6 +1787,7 @@ impl CompiledSchema {
             }
             return Err(schema_error(path, "Schema must be an object or boolean"));
         };
+        let policy = self.keyword_policy_for(schema, path, inherited_policy, ctx)?;
         let known = keywords(self.dialect);
         let scope = if let Some(id) = schema_id(schema) {
             ctx.charge_work(scope.len().saturating_add(id.len()), path.clone())?;
@@ -1624,8 +1801,11 @@ impl CompiledSchema {
                 Err(_) if !self.strict => continue,
                 Err(_) => return Err(schema_error(path, "Schema keyword is not valid Unicode")),
             };
+            if !policy.keyword_is_active(&text) {
+                continue;
+            }
             if !known.contains(text.as_str()) {
-                if self.strict {
+                if self.strict && !policy.custom {
                     return Err(EngineError::new(
                         "SCHEMA_UNKNOWN_KEYWORD",
                         path.clone(),
@@ -1666,7 +1846,7 @@ impl CompiledSchema {
                     if self.dialect == SchemaDialect::Draft3 {
                         match val {
                             Value::Object(_) => {
-                                self.preflight(val, &child, &scope, depth + 1, ctx, seen)?;
+                                self.preflight(val, &child, &scope, depth + 1, policy, ctx, seen)?;
                             }
                             Value::Array(items) => {
                                 for (index, branch) in items.iter().enumerate() {
@@ -1676,6 +1856,7 @@ impl CompiledSchema {
                                             &append_schema_path(&child, &index.to_string()),
                                             &scope,
                                             depth + 1,
+                                            policy,
                                             ctx,
                                             seen,
                                         )?;
@@ -1722,7 +1903,7 @@ impl CompiledSchema {
                                 self.compile_pattern(name, &pattern_path, ctx)?;
                             }
                             let p = append_schema_pointer(&append_schema_path(path, &text), name);
-                            self.preflight(child_schema, &p, &scope, depth + 1, ctx, seen)?;
+                            self.preflight(child_schema, &p, &scope, depth + 1, policy, ctx, seen)?;
                         }
                     } else {
                         return Err(schema_error(&child, "Keyword value must be an object"));
@@ -1770,12 +1951,13 @@ impl CompiledSchema {
                                 ),
                                 &scope,
                                 depth + 1,
+                                policy,
                                 ctx,
                                 seen,
                             )?;
                         }
                     } else {
-                        self.preflight(val, &child, &scope, depth + 1, ctx, seen)?;
+                        self.preflight(val, &child, &scope, depth + 1, policy, ctx, seen)?;
                     }
                 }
                 "allOf" | "anyOf" | "oneOf" | "prefixItems" => {
@@ -1789,6 +1971,7 @@ impl CompiledSchema {
                                 &append_schema_path(&child, &i.to_string()),
                                 &scope,
                                 depth + 1,
+                                policy,
                                 ctx,
                                 seen,
                             )?;
@@ -1805,12 +1988,13 @@ impl CompiledSchema {
                                 &append_schema_path(&child, &index.to_string()),
                                 &scope,
                                 depth + 1,
+                                policy,
                                 ctx,
                                 seen,
                             )?;
                         }
                     } else {
-                        self.preflight(val, &child, &scope, depth + 1, ctx, seen)?;
+                        self.preflight(val, &child, &scope, depth + 1, policy, ctx, seen)?;
                     }
                 }
                 "pattern" => {
@@ -1885,6 +2069,7 @@ impl CompiledSchema {
                                     &append_schema_pointer(&child, name),
                                     &scope,
                                     depth + 1,
+                                    policy,
                                     ctx,
                                     seen,
                                 )?;
@@ -2580,12 +2765,14 @@ impl CompiledSchema {
         evaluated: &mut Evaluated,
         id_already_applied: bool,
     ) -> Result<(), EngineError> {
+        let previous_policy = evaluated.keyword_policy;
         let scoped_path = if id_already_applied {
             ctx.charge_work(sp.len(), Utf16::default())?;
             sp.clone()
         } else {
             self.effective_schema_path(schema, sp, ctx)?
         };
+        evaluated.keyword_policy = self.keyword_policy_for(schema, &scoped_path, previous_policy, ctx)?;
         let scope_len = evaluated.dynamic_scope.len();
         // Draft 2020-12 dynamic scope is a chain of entered schema resources,
         // not a stack of only the dynamically anchored nodes visited by normal
@@ -2632,6 +2819,7 @@ impl CompiledSchema {
             self.eval_inner(schema, data, ip, &scoped_path, depth, ctx, out, evaluated)
         };
         evaluated.dynamic_scope.truncate(scope_len);
+        evaluated.keyword_policy = previous_policy;
         result
     }
 
@@ -5661,7 +5849,9 @@ impl CompiledSchema {
             // A keyword known to a newer dialect is an inert extension in
             // older consumer dialects. In particular, do not execute a
             // Draft 2020/2019 arm merely because it shares the same spelling.
-            if !active_keywords(self.dialect).contains(&keyword.as_str()) {
+            if !active_keywords(self.dialect).contains(&keyword.as_str())
+                || !evaluated.keyword_policy.keyword_is_active(&keyword)
+            {
                 continue;
             }
             if has_ref
@@ -6297,6 +6487,7 @@ fn validate_schema_against_metaschema(
         resources: SchemaResources { entries: resources },
         dialect,
         strict: false,
+        root_keyword_policy: KeywordPolicy::DRAFT2020,
         regex_profile,
         resolve_references_at_compile: false,
         python_text_origins: std::collections::BTreeMap::new(),
@@ -6320,7 +6511,10 @@ fn validate_schema_against_metaschema(
 
 fn declared_dialect(schema: &Value) -> Option<SchemaDialect> {
     let id = as_utf8(get(schema, "$schema")?)?;
-    match id.as_str() {
+    dialect_from_uri(&id)
+}
+fn dialect_from_uri(id: &str) -> Option<SchemaDialect> {
+    match id {
         "http://json-schema.org/draft-03/schema#" | "http://json-schema.org/draft-03/schema" => {
             Some(SchemaDialect::Draft3)
         }
@@ -6340,6 +6534,19 @@ fn declared_dialect(schema: &Value) -> Option<SchemaDialect> {
         _ => None,
     }
 }
+fn declared_dialect_metered(
+    schema: &Value,
+    ctx: &mut Context<'_>,
+    path: &Utf16,
+) -> Result<Option<SchemaDialect>, EngineError> {
+    let Some(value) = get_metered(schema, "$schema", ctx, path)? else {
+        return Ok(None);
+    };
+    if let Value::String(text) = value {
+        ctx.charge_work(text.len(), path.clone())?;
+    }
+    Ok(as_utf8(value).and_then(|uri| dialect_from_uri(&uri)))
+}
 fn select_dialect(schema: &Value) -> Result<SchemaDialect, EngineError> {
     if get(schema, "$schema").is_none() {
         return Ok(SchemaDialect::Draft2020_12);
@@ -6352,6 +6559,129 @@ fn select_dialect(schema: &Value) -> Result<SchemaDialect, EngineError> {
         )
     })
 }
+fn custom_vocabulary_policy(
+    uri: &str,
+    resources: &SchemaResources,
+    ctx: &mut Context<'_>,
+    path: Utf16,
+) -> Result<KeywordPolicy, EngineError> {
+    let mut resource = None;
+    for (retrieval, value) in &resources.entries {
+        ctx.charge_work(retrieval.len(), path.clone())?;
+        let retrieval_matches = retrieval.to_utf8().ok().as_deref() == Some(uri);
+        let id_matches = if retrieval_matches {
+            false
+        } else {
+            schema_id_metered(value, ctx, &path)?.as_deref() == Some(uri)
+        };
+        if retrieval_matches || id_matches {
+            resource = Some(value);
+            break;
+        }
+    }
+    let resource = resource.ok_or_else(|| EngineError::new(
+        "SCHEMA_DIALECT",
+        Utf16::default(),
+        "Custom schema dialect must be supplied as an explicit resource",
+    ))?;
+    if declared_dialect_metered(resource, ctx, &path)?.is_none() {
+        return Err(EngineError::new(
+            "SCHEMA_DIALECT",
+            Utf16::default(),
+            "Custom dialect metaschema must declare a supported base dialect",
+        ));
+    }
+    let vocabularies = get_metered(resource, "$vocabulary", ctx, &path)?.and_then(|value| match value {
+        Value::Object(members) => Some(members),
+        _ => None,
+    }).ok_or_else(|| EngineError::new(
+        "SCHEMA_DIALECT",
+        Utf16::default(),
+        "Custom dialect resource requires a valid $vocabulary object",
+    ))?;
+    let mut core_required = false;
+    let mut policy = KeywordPolicy {
+        applicator: false,
+        validation: false,
+        unevaluated: false,
+        custom: true,
+    };
+    for (name, required) in vocabularies {
+        ctx.charge_work(name.len(), path.clone())?;
+        let name = name.to_utf8().map_err(|_| EngineError::new(
+            "SCHEMA_DIALECT", Utf16::default(), "Vocabulary URI must be valid Unicode",
+        ))?;
+        let Value::Bool(required) = required else {
+            return Err(EngineError::new(
+                "SCHEMA_DIALECT", Utf16::default(), "$vocabulary values must be booleans",
+            ));
+        };
+        let implemented = match name.as_str() {
+            "https://json-schema.org/draft/2020-12/vocab/core" => {
+                core_required = *required;
+                true
+            }
+            "https://json-schema.org/draft/2020-12/vocab/applicator"
+            | "https://json-schema.org/draft/2020-12/vocab/validation"
+            | "https://json-schema.org/draft/2020-12/vocab/meta-data"
+            | "https://json-schema.org/draft/2020-12/vocab/format-annotation"
+            | "https://json-schema.org/draft/2020-12/vocab/content"
+            | "https://json-schema.org/draft/2020-12/vocab/unevaluated" => true,
+            _ => false,
+        };
+        if *required && !implemented {
+            return Err(EngineError::new(
+                "SCHEMA_DIALECT",
+                Utf16::default(),
+                "Custom dialect requires an unsupported vocabulary",
+            ));
+        }
+        match name.as_str() {
+            "https://json-schema.org/draft/2020-12/vocab/applicator" => {
+                policy.applicator = *required
+            }
+            "https://json-schema.org/draft/2020-12/vocab/validation" => {
+                policy.validation = *required
+            }
+            "https://json-schema.org/draft/2020-12/vocab/unevaluated" => {
+                policy.unevaluated = *required
+            }
+            _ => {}
+        }
+    }
+    if !core_required {
+        return Err(EngineError::new(
+            "SCHEMA_DIALECT",
+            Utf16::default(),
+            "Custom dialect must require the Draft 2020-12 core vocabulary",
+        ));
+    }
+    Ok(policy)
+}
+
+fn is_validation_vocabulary_keyword(keyword: &str) -> bool {
+    matches!(
+        keyword,
+        "type" | "const" | "enum" | "multipleOf" | "maximum" | "exclusiveMaximum"
+            | "minimum" | "exclusiveMinimum" | "maxLength" | "minLength" | "pattern"
+            | "maxItems" | "minItems" | "uniqueItems" | "maxContains" | "minContains"
+            | "maxProperties" | "minProperties" | "required" | "dependentRequired"
+    )
+}
+
+fn is_applicator_vocabulary_keyword(keyword: &str) -> bool {
+    matches!(
+        keyword,
+        "prefixItems" | "items" | "contains" | "additionalProperties" | "properties"
+            | "patternProperties" | "dependentSchemas" | "propertyNames" | "if" | "then"
+            | "else" | "allOf" | "anyOf" | "oneOf" | "not"
+    )
+}
+
+fn is_unevaluated_vocabulary_keyword(keyword: &str) -> bool {
+    matches!(keyword, "unevaluatedItems" | "unevaluatedProperties")
+}
+
 fn active_keywords(d: SchemaDialect) -> &'static [&'static str] {
     match d {
         SchemaDialect::Draft3 => &[
@@ -6673,13 +7003,18 @@ fn schema_error(path: &Utf16, msg: &str) -> EngineError {
 /// Copy a schema carrier while preserving distinct Python dictionary keys
 /// that happen to project to the same UTF-16 sequence. Source-origin member
 /// metadata disambiguates them in the shared Python-profile evaluator.
-fn copy_schema_json(value: &Value, ctx: &mut Context<'_>) -> Result<Value, EngineError> {
+fn copy_schema_json(
+    value: &Value,
+    ctx: &mut Context<'_>,
+    allow_duplicate_keys: bool,
+) -> Result<Value, EngineError> {
     fn visit(
         value: &Value,
         path: &Utf16,
         depth: usize,
         count: &mut usize,
         ctx: &mut Context<'_>,
+        allow_duplicate_keys: bool,
     ) -> Result<Value, EngineError> {
         ctx.charge_work(1, path.clone())?;
         *count = count.checked_add(1).ok_or_else(|| {
@@ -6696,7 +7031,13 @@ fn copy_schema_json(value: &Value, ctx: &mut Context<'_>) -> Result<Value, Engin
         match value {
             Value::Null => Ok(Value::Null),
             Value::Bool(value) => Ok(Value::Bool(*value)),
-            Value::Number(value) => Value::number(*value, path.clone()),
+            Value::Number(value) if allow_duplicate_keys => Value::number(*value, path.clone()),
+            Value::Number(value) if value.is_finite() => Ok(Value::Number(*value)),
+            Value::Number(_) => Err(EngineError::new(
+                "NUMBER",
+                path.clone(),
+                "JSON Schema numbers must be finite binary64 values",
+            )),
             Value::String(value) => {
                 ctx.charge_work(value.len(), path.clone())?;
                 Ok(Value::String(value.clone()))
@@ -6711,6 +7052,7 @@ fn copy_schema_json(value: &Value, ctx: &mut Context<'_>) -> Result<Value, Engin
                         depth + 1,
                         count,
                         ctx,
+                        allow_duplicate_keys,
                     )?);
                 }
                 Ok(Value::Array(copied))
@@ -6718,8 +7060,16 @@ fn copy_schema_json(value: &Value, ctx: &mut Context<'_>) -> Result<Value, Engin
             Value::Object(members) => {
                 ctx.charge_work(members.len(), path.clone())?;
                 let mut copied = Vec::with_capacity(members.len());
+                let mut keys = BTreeSet::new();
                 for (key, value) in members {
                     ctx.charge_work(key.len(), path.clone())?;
+                    if !allow_duplicate_keys && !keys.insert(key.units().to_vec()) {
+                        return Err(EngineError::new(
+                            "DUPLICATE_KEY",
+                            path.clone(),
+                            "Duplicate object key",
+                        ));
+                    }
                     copied.push((
                         key.clone(),
                         visit(
@@ -6728,6 +7078,7 @@ fn copy_schema_json(value: &Value, ctx: &mut Context<'_>) -> Result<Value, Engin
                             depth + 1,
                             count,
                             ctx,
+                            allow_duplicate_keys,
                         )?,
                     ));
                 }
@@ -6736,7 +7087,24 @@ fn copy_schema_json(value: &Value, ctx: &mut Context<'_>) -> Result<Value, Engin
         }
     }
     let mut count = 0;
-    visit(value, &Utf16::from("#"), 0, &mut count, ctx)
+    visit(value, &Utf16::from("#"), 0, &mut count, ctx, allow_duplicate_keys)
+}
+fn schema_id_metered(
+    schema: &Value,
+    ctx: &mut Context<'_>,
+    path: &Utf16,
+) -> Result<Option<String>, EngineError> {
+    let value = match get_metered(schema, "$id", ctx, path)? {
+        Some(value) => Some(value),
+        None => get_metered(schema, "id", ctx, path)?,
+    };
+    let Some(value) = value else {
+        return Ok(None);
+    };
+    if let Value::String(text) = value {
+        ctx.charge_work(text.len(), path.clone())?;
+    }
+    Ok(as_utf8(value).filter(|id| !id.is_empty()))
 }
 fn schema_id(schema: &Value) -> Option<String> {
     as_utf8(get(schema, "$id").or_else(|| get(schema, "id"))?).filter(|id| !id.is_empty())
@@ -7082,7 +7450,7 @@ fn find_embedded_resource<'a>(
         ctx.charge_work(1, path.clone())?;
         match node {
             Value::Object(_) => {
-                let own_id = schema_id(node);
+                let own_id = schema_id_metered(node, ctx, path)?;
                 let effective = own_id.as_deref().map(|id| {
                     // URI parsing is bounded by metering both the inherited
                     // base and the authored identifier before resolution.
@@ -7118,7 +7486,7 @@ fn find_embedded_resource<'a>(
             _ => Ok(None),
         }
     }
-    let root_id = schema_id(root).unwrap_or_default();
+    let root_id = schema_id_metered(root, ctx, path)?.unwrap_or_default();
     visit(root, &root_id, target, dialect, ctx, path)
 }
 
@@ -7295,6 +7663,29 @@ fn get<'a>(v: &'a Value, key: &str) -> Option<&'a Value> {
     } else {
         None
     }
+}
+fn get_metered<'a>(
+    value: &'a Value,
+    key: &str,
+    ctx: &mut Context<'_>,
+    path: &Utf16,
+) -> Result<Option<&'a Value>, EngineError> {
+    let Value::Object(members) = value else {
+        return Ok(None);
+    };
+    // Each lookup iteration clones the diagnostic path for Context. Admit
+    // those copies up front, before allocating them in the loop.
+    ctx.charge_work_u64(
+        (members.len() as u64).saturating_mul(path.len() as u64),
+        Utf16::default(),
+    )?;
+    for (name, member_value) in members {
+        ctx.charge_work(name.len().saturating_add(key.len()), path.clone())?;
+        if name.to_utf8().ok().as_deref() == Some(key) {
+            return Ok(Some(member_value));
+        }
+    }
+    Ok(None)
 }
 fn member<'a>(m: &'a [(Utf16, Value)], key: &str) -> Option<&'a Value> {
     m.iter()
@@ -9212,6 +9603,461 @@ fn append_instance_path(p: &Utf16, s: &Utf16) -> Utf16 {
         }
     }
     Utf16::new(u)
+}
+
+#[cfg(test)]
+mod finite_binary64_schema_admission_tests {
+    use super::*;
+
+    fn parsed(source: &str) -> Value {
+        crate::serialization::read_json_value(
+            &source.encode_utf16().collect::<Vec<_>>(),
+            crate::serialization::Format::Json,
+            &mut Context::ordinary(),
+        )
+        .unwrap()
+    }
+
+    #[test]
+    fn schema_and_instance_accept_finite_binary64_outside_core_profile() {
+        let schema = Value::Object(vec![(
+            Utf16::from("const"),
+            Value::Number(9_007_199_254_740_992.0),
+        )]);
+        let compiled = CompiledSchema::compile_consumer(
+            &schema,
+            &SchemaResources::default(),
+            false,
+            &mut Context::ordinary(),
+        )
+        .unwrap();
+        for (instance, expected) in [
+            (9_007_199_254_740_992.0, true),
+            (9_007_199_254_740_991.0, false),
+            (9_007_199_254_740_992.0, true),
+            (9_007_199_254_740_991.0, false),
+        ] {
+            assert_eq!(
+                compiled
+                    .validate(&Value::Number(instance), &mut Context::ordinary())
+                    .unwrap()
+                    .is_empty(),
+                expected
+            );
+        }
+        let instance = Value::Number(9_007_199_254_740_992.0);
+        assert_eq!(
+            copy_json(&instance, &mut Context::ordinary())
+                .unwrap_err()
+                .code,
+            "NUMBER"
+        );
+    }
+
+    #[test]
+    fn schema_instance_rejects_nonfinite_and_preserves_multiple_of_overflow_result() {
+        let schema = parsed(
+            r#"{"$schema":"https://json-schema.org/draft/2020-12/schema","type":"integer","multipleOf":0.123456789}"#,
+        );
+        let compiled = CompiledSchema::compile_consumer(
+            &schema,
+            &SchemaResources::default(),
+            false,
+            &mut Context::ordinary(),
+        )
+        .unwrap();
+        let huge_finite = Value::Number(1e308);
+        assert!(!compiled
+            .validate(&huge_finite, &mut Context::ordinary())
+            .unwrap()
+            .is_empty());
+        let nonfinite = Value::Number(f64::INFINITY);
+        assert_eq!(
+            compiled
+                .validate(&nonfinite, &mut Context::ordinary())
+                .unwrap_err()
+                .code,
+            "NUMBER"
+        );
+        let bad_schema = Value::Object(vec![(
+            Utf16::from("minimum"),
+            Value::Number(f64::INFINITY),
+        )]);
+        assert_eq!(
+            CompiledSchema::compile_consumer(
+                &bad_schema,
+                &SchemaResources::default(),
+                false,
+                &mut Context::ordinary(),
+            )
+            .unwrap_err()
+            .code,
+            "NUMBER"
+        );
+    }
+}
+
+#[cfg(test)]
+mod custom_vocabulary_policy_tests {
+    use super::*;
+    use crate::context::WorkMeter;
+
+    fn parsed(source: &str) -> Value {
+        crate::serialization::read_json_value(
+            &source.encode_utf16().collect::<Vec<_>>(),
+            crate::serialization::Format::Json,
+            &mut Context::ordinary(),
+        )
+        .unwrap()
+    }
+
+    fn object_with_prefix_members(count: usize, tail: &str) -> Value {
+        let mut source = String::from("{");
+        for index in 0..count {
+            source.push_str(&format!("\"filler{index}\":null,"));
+        }
+        source.push_str(tail);
+        parsed(&source)
+    }
+
+    fn resources() -> SchemaResources {
+        SchemaResources {
+            entries: vec![
+                (
+                    Utf16::from("https://example.test/no-validation"),
+                    parsed(r#"{"$schema":"https://json-schema.org/draft/2020-12/schema","$id":"https://example.test/no-validation","$vocabulary":{"https://json-schema.org/draft/2020-12/vocab/core":true,"https://json-schema.org/draft/2020-12/vocab/applicator":true,"https://example.test/vocab/optional":false}}"#),
+                ),
+                (
+                    Utf16::from("https://example.test/standard"),
+                    parsed(r#"{"$schema":"https://json-schema.org/draft/2020-12/schema","$id":"https://example.test/standard","minimum":10}"#),
+                ),
+                (
+                    Utf16::from("https://example.test/standard-nested"),
+                    parsed(r#"{"$schema":"https://json-schema.org/draft/2020-12/schema","$id":"https://example.test/standard-nested","properties":{"x":{"minimum":10}}}"#),
+                ),
+                (
+                    Utf16::from("https://example.test/custom-resource"),
+                    parsed(r#"{"$schema":"https://example.test/no-validation","$id":"https://example.test/custom-resource","properties":{"x":{"minimum":10}}}"#),
+                ),
+                (
+                    Utf16::from("https://example.test/standard-fragment"),
+                    parsed(r#"{"$schema":"https://json-schema.org/draft/2020-12/schema","$defs":{"x":{"minimum":10}}}"#),
+                ),
+                (
+                    Utf16::from("https://example.test/custom-fragment"),
+                    parsed(r#"{"$schema":"https://example.test/no-validation","$defs":{"x":{"minimum":10}}}"#),
+                ),
+            ],
+        }
+    }
+
+    #[test]
+    fn absent_validation_vocabulary_keeps_applicators_and_ignores_inactive_malformed_keywords() {
+        let schema = parsed(r#"{"$schema":"https://example.test/no-validation","minimum":"inactive","unknownOptionalKeyword":{"x":1},"properties":{"blocked":false}}"#);
+        let compiled = CompiledSchema::compile_consumer(
+            &schema,
+            &resources(),
+            true,
+            &mut Context::ordinary(),
+        )
+        .unwrap();
+        assert!(compiled.validate(&parsed("5"), &mut Context::ordinary()).unwrap().is_empty());
+        assert!(!compiled
+            .validate(&parsed(r#"{"blocked":true}"#), &mut Context::ordinary())
+            .unwrap()
+            .is_empty());
+    }
+
+    #[test]
+    fn referenced_standard_resource_reactivates_validation_vocabulary() {
+        let schema = parsed(r#"{"$schema":"https://example.test/no-validation","$ref":"https://example.test/standard-nested"}"#);
+        let compiled = CompiledSchema::compile_consumer(
+            &schema,
+            &resources(),
+            false,
+            &mut Context::ordinary(),
+        )
+        .unwrap();
+        assert!(!compiled
+            .validate(&parsed(r#"{"x":5}"#), &mut Context::ordinary())
+            .unwrap()
+            .is_empty());
+        assert!(compiled
+            .validate(&parsed(r#"{"x":12}"#), &mut Context::ordinary())
+            .unwrap()
+            .is_empty());
+    }
+
+    #[test]
+    fn referenced_custom_resource_disables_validation_for_its_nested_schemas() {
+        let schema = parsed(r#"{"$schema":"https://json-schema.org/draft/2020-12/schema","$ref":"https://example.test/custom-resource"}"#);
+        let compiled = CompiledSchema::compile_consumer(
+            &schema,
+            &resources(),
+            false,
+            &mut Context::ordinary(),
+        )
+        .unwrap();
+        assert!(compiled
+            .validate(&parsed(r#"{"x":5}"#), &mut Context::ordinary())
+            .unwrap()
+            .is_empty());
+    }
+
+    #[test]
+    fn fragment_reference_uses_standard_enclosing_resource_policy() {
+        let schema = parsed(r#"{"$schema":"https://example.test/no-validation","$ref":"https://example.test/standard-fragment#/$defs/x"}"#);
+        let compiled = CompiledSchema::compile_consumer(
+            &schema,
+            &resources(),
+            false,
+            &mut Context::ordinary(),
+        )
+        .unwrap();
+        assert!(!compiled
+            .validate(&parsed("5"), &mut Context::ordinary())
+            .unwrap()
+            .is_empty());
+    }
+
+    #[test]
+    fn fragment_reference_uses_custom_enclosing_resource_policy() {
+        let schema = parsed(r#"{"$schema":"https://json-schema.org/draft/2020-12/schema","$ref":"https://example.test/custom-fragment#/$defs/x"}"#);
+        let compiled = CompiledSchema::compile_consumer(
+            &schema,
+            &resources(),
+            false,
+            &mut Context::ordinary(),
+        )
+        .unwrap();
+        assert!(compiled
+            .validate(&parsed("5"), &mut Context::ordinary())
+            .unwrap()
+            .is_empty());
+    }
+
+    #[test]
+    fn omitted_applicator_and_unevaluated_vocabularies_leave_keywords_inert() {
+        let mut resources = resources();
+        resources.entries[0].1 = parsed(r#"{"$schema":"https://json-schema.org/draft/2020-12/schema","$id":"https://example.test/no-validation","$vocabulary":{"https://json-schema.org/draft/2020-12/vocab/core":true}}"#);
+        let schema = parsed(r#"{"$schema":"https://example.test/no-validation","properties":{"x":false},"allOf":7,"unevaluatedProperties":false}"#);
+        let compiled = CompiledSchema::compile_consumer(
+            &schema,
+            &resources,
+            true,
+            &mut Context::ordinary(),
+        )
+        .unwrap();
+        assert!(compiled
+            .validate(&parsed(r#"{"x":1,"extra":2}"#), &mut Context::ordinary())
+            .unwrap()
+            .is_empty());
+    }
+
+    #[test]
+    fn custom_dialect_requires_explicit_well_formed_supported_vocabulary_declaration() {
+        let schema = parsed(r#"{"$schema":"https://example.test/missing"}"#);
+        assert_eq!(
+            CompiledSchema::compile_consumer(
+                &schema,
+                &SchemaResources::default(),
+                false,
+                &mut Context::ordinary(),
+            )
+            .unwrap_err()
+            .code,
+            "SCHEMA_DIALECT"
+        );
+        let mut malformed = resources();
+        malformed.entries[0].1 = parsed(r#"{"$id":"https://example.test/no-validation","$vocabulary":{"https://json-schema.org/draft/2020-12/vocab/core":false}}"#);
+        assert_eq!(
+            CompiledSchema::compile_consumer(
+                &parsed(r#"{"$schema":"https://example.test/no-validation"}"#),
+                &malformed,
+                false,
+                &mut Context::ordinary(),
+            )
+            .unwrap_err()
+            .code,
+            "SCHEMA_DIALECT"
+        );
+        let mut unsupported = resources();
+        unsupported.entries[0].1 = parsed(r#"{"$schema":"https://json-schema.org/draft/2020-12/schema","$id":"https://example.test/no-validation","$vocabulary":{"https://json-schema.org/draft/2020-12/vocab/core":true,"https://example.test/vocab/required":true}}"#);
+        assert_eq!(
+            CompiledSchema::compile_consumer(
+                &parsed(r#"{"$schema":"https://example.test/no-validation"}"#),
+                &unsupported,
+                false,
+                &mut Context::ordinary(),
+            )
+            .unwrap_err()
+            .code,
+            "SCHEMA_DIALECT"
+        );
+    }
+
+    #[test]
+    fn nested_custom_dialect_declarations_must_resolve_and_be_supported() {
+        let schema = parsed(r#"{"$schema":"https://example.test/no-validation","properties":{"x":{"$schema":"https://example.test/missing"}}}"#);
+        assert_eq!(
+            CompiledSchema::compile_consumer(
+                &schema,
+                &resources(),
+                false,
+                &mut Context::ordinary(),
+            )
+            .unwrap_err()
+            .code,
+            "SCHEMA_DIALECT"
+        );
+
+        let mut resources = resources();
+        resources.entries.push((
+            Utf16::from("https://example.test/unsupported-meta"),
+            parsed(r#"{"$schema":"https://json-schema.org/draft/2020-12/schema","$id":"https://example.test/unsupported-meta","$vocabulary":{"https://json-schema.org/draft/2020-12/vocab/core":true,"https://example.test/vocab/mandatory":true}}"#),
+        ));
+        let nested = parsed(r#"{"$schema":"https://example.test/no-validation","properties":{"x":{"$schema":"https://example.test/unsupported-meta"}}}"#);
+        assert_eq!(
+            CompiledSchema::compile_consumer(
+                &nested,
+                &resources,
+                false,
+                &mut Context::ordinary(),
+            )
+            .unwrap_err()
+            .code,
+            "SCHEMA_DIALECT"
+        );
+    }
+
+    #[test]
+    fn optional_vocabulary_uri_conversion_is_charged_on_each_validation() {
+        let unknown_uri = format!("https://example.test/vocab/{}", "x".repeat(100_000));
+        let meta = parsed(&format!(
+            r#"{{"$schema":"https://json-schema.org/draft/2020-12/schema","$id":"https://example.test/metered-meta","$vocabulary":{{"https://json-schema.org/draft/2020-12/vocab/core":true,"{unknown_uri}":false}}}}"#
+        ));
+        let resources = SchemaResources {
+            entries: vec![(Utf16::from("https://example.test/metered-meta"), meta)],
+        };
+        let schema = parsed(r#"{"$schema":"https://example.test/metered-meta"}"#);
+        let compiled = CompiledSchema::compile_consumer(
+            &schema,
+            &resources,
+            true,
+            &mut Context::ordinary(),
+        )
+        .unwrap();
+
+        let mut observed = 0usize;
+        let mut meter = |work: usize| {
+            observed = observed.saturating_add(work);
+            Ok(())
+        };
+        let mut meter: &mut WorkMeter<'_> = &mut meter;
+        let mut ctx = Context::ordinary().with_meter(&mut meter);
+        assert!(compiled.validate(&parsed("null"), &mut ctx).unwrap().is_empty());
+        assert!(compiled.validate(&parsed("null"), &mut ctx).unwrap().is_empty());
+        assert!(observed >= 2 * unknown_uri.encode_utf16().count());
+    }
+
+    #[test]
+    fn unrelated_resource_lookup_conversion_is_charged_on_each_validation() {
+        let unrelated_uri = format!("https://example.test/{}", "r".repeat(100_000));
+        let unrelated_id = format!("https://example.test/{}", "i".repeat(80_000));
+        let resources = SchemaResources {
+            entries: vec![
+                (Utf16::from(unrelated_uri.as_str()), parsed("{}")),
+                (
+                    Utf16::from("https://example.test/unrelated-retrieval"),
+                    parsed(&format!(r#"{{"$id":"{unrelated_id}"}}"#)),
+                ),
+                (
+                    Utf16::from("https://example.test/metered-meta"),
+                    parsed(r#"{"$schema":"https://json-schema.org/draft/2020-12/schema","$id":"https://example.test/metered-meta","$vocabulary":{"https://json-schema.org/draft/2020-12/vocab/core":true}}"#),
+                ),
+            ],
+        };
+        let schema = parsed(r#"{"$schema":"https://example.test/metered-meta"}"#);
+        let compiled = CompiledSchema::compile_consumer(
+            &schema,
+            &resources,
+            true,
+            &mut Context::ordinary(),
+        )
+        .unwrap();
+
+        let mut observed = 0usize;
+        let mut meter = |work: usize| {
+            observed = observed.saturating_add(work);
+            Ok(())
+        };
+        let mut meter: &mut WorkMeter<'_> = &mut meter;
+        let mut ctx = Context::ordinary().with_meter(&mut meter);
+        assert!(compiled.validate(&parsed("null"), &mut ctx).unwrap().is_empty());
+        assert!(compiled.validate(&parsed("null"), &mut ctx).unwrap().is_empty());
+        assert!(
+            observed
+                >= 2 * (unrelated_uri.encode_utf16().count()
+                    + unrelated_id.encode_utf16().count())
+        );
+    }
+
+    #[test]
+    fn custom_metaschema_member_search_is_charged_on_each_validation() {
+        let meta = object_with_prefix_members(
+            10_000,
+            r#""$schema":"https://json-schema.org/draft/2020-12/schema","$id":"https://example.test/metered-members-meta","$vocabulary":{"https://json-schema.org/draft/2020-12/vocab/core":true}}"#,
+        );
+        let resources = SchemaResources {
+            entries: vec![(Utf16::from("https://example.test/metered-members-meta"), meta)],
+        };
+        let schema = parsed(r#"{"$schema":"https://example.test/metered-members-meta"}"#);
+        let compiled = CompiledSchema::compile_consumer(
+            &schema,
+            &resources,
+            false,
+            &mut Context::ordinary(),
+        )
+        .unwrap();
+
+        let mut observed = 0usize;
+        let mut meter = |work: usize| {
+            observed = observed.saturating_add(work);
+            Ok(())
+        };
+        let mut meter: &mut WorkMeter<'_> = &mut meter;
+        let mut ctx = Context::ordinary().with_meter(&mut meter);
+        assert!(compiled.validate(&parsed("null"), &mut ctx).unwrap().is_empty());
+        assert!(compiled.validate(&parsed("null"), &mut ctx).unwrap().is_empty());
+        assert!(observed >= 2 * 10_000);
+    }
+
+    #[test]
+    fn root_dialect_member_search_is_charged_on_each_validation() {
+        let resources = resources();
+        let schema = object_with_prefix_members(
+            10_000,
+            r#""$schema":"https://example.test/no-validation"}"#,
+        );
+        let compiled = CompiledSchema::compile_consumer(
+            &schema,
+            &resources,
+            false,
+            &mut Context::ordinary(),
+        )
+        .unwrap();
+
+        let mut observed = 0usize;
+        let mut meter = |work: usize| {
+            observed = observed.saturating_add(work);
+            Ok(())
+        };
+        let mut meter: &mut WorkMeter<'_> = &mut meter;
+        let mut ctx = Context::ordinary().with_meter(&mut meter);
+        assert!(compiled.validate(&parsed("null"), &mut ctx).unwrap().is_empty());
+        assert!(compiled.validate(&parsed("null"), &mut ctx).unwrap().is_empty());
+        assert!(observed >= 2 * 10_000);
+    }
 }
 
 #[cfg(test)]

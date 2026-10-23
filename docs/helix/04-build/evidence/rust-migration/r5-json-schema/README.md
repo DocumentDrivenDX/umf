@@ -23,6 +23,10 @@ This harness does not rerun the independent native oracle corpus, browser Chromi
 
 The capture deliberately leaves implementation and fixtures untouched. It provides a reviewable observation set for the Rust adapter agent; it is not a completed R5 qualification or a default-cutover decision.
 
+The subsequent source-bound [Draft 2020-12 v12 receipt](draft2020-completion-v12-2026-10-23.md)
+records the Rust core's accepted pinned-corpus run and its explicit remaining
+delivery limits. This predecessor baseline remains unchanged.
+
 Independent Sol rereview reproduced all five awaited edit/export outcomes, nine
 admission cases, copy-isolation controls, twelve source hashes and byte-for-byte
 `--check` with no remaining P1/P2 in this bounded predecessor capture. Rust
