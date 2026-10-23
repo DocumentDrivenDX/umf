@@ -101,3 +101,61 @@ changes those traces for unselected malformed sources and for an earlier host
 lookup failure followed by a later unknown source. The attempted bounded port
 was discarded; this operation remains unclaimed until a slice preserves those
 host interactions or explicitly qualifies a narrower contract.
+
+## `value_from_native` typed-token follow-up — 2026-10-23
+
+The next bounded operation-values shard moves exact text classification for the
+`integer`, `decimal`, `uuid` and `bits128` result carriers into `umf-core`.
+Python still checks `None` first and reads `output['nullable']` only in that
+branch; for non-None it reads `output['carrier']`, enforces exact bool/string
+carriers, and calls UTF-8 encoding before token admission. This preserves host
+mapping access and Unicode failure order. Python also retains the original token
+text and creates the existing result wrapper. Date, timestamp, float,
+`nativeEncoding`, and other carrier decisions remain Python-owned.
+
+Predecessor evidence was frozen before edits. The original active source
+`operation_values.py` had SHA-256
+`123dbe5d4897ebf6a82f3cd8c73b5f2c71485b69fcd6b3ea6720aaf38ce3fd92`; its
+previous frozen copy `frozen-operation-values.py` has SHA-256
+`90638f330104eeb9405e553ef03638fe26db3a2f0440a255c0242deba0ce8b77`. Frozen
+behavior accepts and preserves `-0` for integer, canonical lowercase UUID only,
+and lowercase 32-hex bits128 only. Decimal admission uses the predecessor
+grammar plus `Decimal(value).is_finite()`; its constructor exponent limits include
+`MAX_EMAX=999999999999999999` and `MIN_ETINY=-1999999999999999997`, including
+adjusted-exponent checks for the coefficient. Rust combines the explicit exponent
+with the negative fractional scale before applying these limits. A source review
+caught and repaired an initial raw-exponent check that incorrectly refused
+`1.0e999999999999999999` and `0.01e1000000000000000000`, and incorrectly admitted
+`0.1e-1999999999999999997`. The frozen CPython 3.14.8 predecessor oracle now
+replays 10 accepted and 15 refused token vectors including those boundaries.
+For grammar-valid constructor exponent overflow, Rust returns a distinct
+`DecimalInvalidOperation` decision; the thin Python adapter sets only the current
+thread's `decimal.InvalidOperation` context flag before returning the established
+`SessionError`. This matches both default trapped and trap-disabled Decimal
+contexts. Malformed grammar, including a huge exponent followed by trailing junk,
+remains a plain refusal and does not set the flag.
+
+Rust charges token length to a per-call ordinary `Context` work counter and scans
+the coefficient without allocating a second token-sized string. The predecessor
+has no token-size ceiling, so this slice introduces no new semantic size cap; a
+hard host deadline/meter and unbounded-input qualification remain open.
+
+New focused tests add exact accepted/refused token vectors and verify that
+nullable-only `None` access and lone-surrogate UTF-8 failure happen before Rust
+classification. The frozen CPython 3.14.8 oracle also confirms flag behavior for
+default and disabled `InvalidOperation` traps, malformed grammar, and huge
+exponent trailing junk. Python syntax compilation and `git diff --check` pass. Rust
+builds and the focused Rust/Python extension tests are intentionally pending the
+release coordinator's macOS build hold; this source change therefore has no
+current executable Rust or installed-wheel qualification. Native Weft/consumer
+integration remains a later CONTRACT-079 gate.
+
+Current source identities for this follow-up are:
+
+| Source | SHA-256 |
+| --- | --- |
+| `crates/umf-core/src/operation_values.rs` | `a2bef35886f79d522a62aa400a2c16a5af1cfb9037b932eb7f06b1547be71812` |
+| `bindings/core/python/src/lib.rs` | `208b760c8019ac691c256fd145dc7e04c865a7f4d7b32e766ded8762516dc60b` |
+| `python/src/umf/rust_operation_values.py` | `6f6b5444319a36732b75ad57367f72013bd74ca081e0e0e49ad06238160aac25` |
+| `python/umf_access/src/umf_access/unified/operation_values.py` | `106cd256e4976d37855eb6ef838c553de717bbcf09be269fbe374f1bdb4f852a` |
+| `python/umf_access/tests/test_table_read_values.py` | `47e5e1ee7a1ec3f87f137e36993aac5a93dd4c23a8749b51bfdd13684c7c58d0` |

@@ -227,6 +227,27 @@ fn operation_key_literal_mode(
 }
 
 #[pyfunction]
+fn operation_native_token_classify(kind: &str, token: &str) -> PyResult<&'static str> {
+    let kind = match kind {
+        "integer" => umf_core::operation_values::NativeTokenKind::Integer,
+        "decimal" => umf_core::operation_values::NativeTokenKind::Decimal,
+        "uuid" => umf_core::operation_values::NativeTokenKind::Uuid,
+        "bits128" => umf_core::operation_values::NativeTokenKind::Bits128,
+        _ => return Err(PyValueError::new_err("unsupported native result token kind")),
+    };
+    let mut context = Context::ordinary();
+    umf_core::operation_values::native_token_classify(&mut context, kind, token)
+        .map(|decision| match decision {
+            umf_core::operation_values::NativeTokenDecision::Accepted => "accepted",
+            umf_core::operation_values::NativeTokenDecision::Refused => "refused",
+            umf_core::operation_values::NativeTokenDecision::DecimalInvalidOperation => {
+                "decimal-invalid-operation"
+            }
+        })
+        .map_err(py_error)
+}
+
+#[pyfunction]
 fn access_float32_profile_version() -> &'static str {
     "umf-access-float32/0.1.0"
 }
@@ -2197,6 +2218,7 @@ fn _rust_core(module: &Bound<'_, PyModule>) -> PyResult<()> {
     module.add_function(wrap_pyfunction!(operation_token_encode, module)?)?;
     module.add_function(wrap_pyfunction!(operation_token_decode, module)?)?;
     module.add_function(wrap_pyfunction!(operation_key_literal_mode, module)?)?;
+    module.add_function(wrap_pyfunction!(operation_native_token_classify, module)?)?;
     module.add_function(wrap_pyfunction!(access_float32_profile_version, module)?)?;
     module.add_function(wrap_pyfunction!(access_float32_classify, module)?)?;
     module.add_function(wrap_pyfunction!(access_range_profile_version, module)?)?;

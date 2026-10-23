@@ -40,6 +40,10 @@ def operation_key_literal_mode(carrier: str, value_is_none: bool) -> str:
     return _rust._rust_core.operation_key_literal_mode(carrier, value_is_none)
 
 
+def operation_native_token_classify(kind: str, token: str) -> str:
+    return _rust._rust_core.operation_native_token_classify(kind, token)
+
+
 def require_operation_values_profile() -> None:
     actual = operation_values_profile_version()
     if actual != _PROFILE:

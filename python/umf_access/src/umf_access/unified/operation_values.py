@@ -7,7 +7,7 @@ import math
 import re
 import struct
 from datetime import date, datetime
-from decimal import Decimal, InvalidOperation
+from decimal import Decimal, InvalidOperation, getcontext
 from uuid import UUID
 
 from .session_policy import SessionError
@@ -174,6 +174,21 @@ def value_from_native(value,output):
     if type(value) is not str:raise SessionError('native result carrier differs')
     value.encode('utf-8')
     if kind=='string':return value
+    if type(kind) is str and kind in ('integer','decimal','uuid','bits128'):
+        try:
+            decision = _rust_values().operation_native_token_classify(kind, value)
+        except SessionError:
+            raise
+        except (AttributeError, RuntimeError) as error:
+            raise SessionError('native operation-values capability unavailable') from error
+        except (ValueError, TypeError, UnicodeError) as error:
+            raise _native_error(error, 'native result value differs from its declared carrier') from None
+        if decision == 'accepted':
+            key = {'integer':'integerToken','decimal':'decimalToken','uuid':'uuid','bits128':'bits128Hex'}[kind]
+            return {key:value}
+        if kind == 'decimal' and decision == 'decimal-invalid-operation':
+            getcontext().flags[InvalidOperation] = True
+        raise SessionError('native result value differs from its declared carrier')
     if kind=='date':
         try:
             if re.fullmatch('[0-9]{4}-[0-9]{2}-[0-9]{2}',value) and date.fromisoformat(value).isoformat()==value:return {'date':value}
@@ -184,8 +199,10 @@ def value_from_native(value,output):
                 datetime.fromisoformat(value)
                 return {'timestamp':value}
         except ValueError:pass
-    if kind=='integer' and re.fullmatch(r'-?(?:0|[1-9][0-9]*)',value):return {'integerToken':value}
-    if kind=='decimal' and re.fullmatch(r'-?(?:0|[1-9][0-9]*)(?:\.[0-9]+)?(?:[eE][+-]?[0-9]+)?',value):
+    # Dynamic carrier objects keep the predecessor's Python comparison path;
+    # exact built-in token kinds were decided by Rust above.
+    if type(kind) is not str and kind=='integer' and re.fullmatch(r'-?(?:0|[1-9][0-9]*)',value):return {'integerToken':value}
+    if type(kind) is not str and kind=='decimal' and re.fullmatch(r'-?(?:0|[1-9][0-9]*)(?:\.[0-9]+)?(?:[eE][+-]?[0-9]+)?',value):
         try:
             if Decimal(value).is_finite():return {'decimalToken':value}
         except InvalidOperation:pass
@@ -198,11 +215,11 @@ def value_from_native(value,output):
         try:
             if math.isfinite(float(value)):return {'floatToken':value}
         except ValueError:pass
-    if kind=='uuid':
+    if type(kind) is not str and kind=='uuid':
         try:
             if str(UUID(value))==value:return {'uuid':value}
         except ValueError:pass
-    if kind=='bits128' and re.fullmatch('[a-f0-9]{32}',value):return {'bits128Hex':value}
+    if type(kind) is not str and kind=='bits128' and re.fullmatch('[a-f0-9]{32}',value):return {'bits128Hex':value}
     raise SessionError('native result value differs from its declared carrier')
 
 

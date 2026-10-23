@@ -41,6 +41,182 @@ pub enum KeyLiteralMode {
     PassThrough,
 }
 
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+pub enum NativeTokenKind {
+    Integer,
+    Decimal,
+    Uuid,
+    Bits128,
+}
+
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+pub enum NativeTokenDecision {
+    Accepted,
+    Refused,
+    DecimalInvalidOperation,
+}
+
+/// Classify the closed text grammar for exact native result tokens.
+/// The caller owns carrier extraction and UTF-8 admission; this function has no
+/// host callbacks and does not normalize or rewrite the original token.
+pub fn native_token_classify(
+    context: &mut Context<'_>,
+    kind: NativeTokenKind,
+    token: &str,
+) -> Result<NativeTokenDecision, crate::error::EngineError> {
+    context.charge_work(token.len(), Utf16::default())?;
+    Ok(match kind {
+        NativeTokenKind::Integer => decision(valid_integer_token(token)),
+        NativeTokenKind::Decimal => valid_decimal_token(token),
+        NativeTokenKind::Uuid => decision(valid_uuid_token(token)),
+        NativeTokenKind::Bits128 => decision(
+            token.len() == 32
+                && token
+                    .bytes()
+                    .all(|byte| byte.is_ascii_hexdigit() && !byte.is_ascii_uppercase()),
+        ),
+    })
+}
+
+fn decision(valid: bool) -> NativeTokenDecision {
+    if valid {
+        NativeTokenDecision::Accepted
+    } else {
+        NativeTokenDecision::Refused
+    }
+}
+
+fn valid_integer_token(token: &str) -> bool {
+    let digits = token.strip_prefix('-').unwrap_or(token);
+    !digits.is_empty()
+        && digits.bytes().all(|byte| byte.is_ascii_digit())
+        && (digits == "0" || !digits.starts_with('0'))
+}
+
+fn valid_decimal_token(token: &str) -> NativeTokenDecision {
+    let bytes = token.as_bytes();
+    if bytes.is_empty() {
+        return NativeTokenDecision::Refused;
+    }
+    let mut i = usize::from(bytes[0] == b'-');
+    let integer_start = i;
+    while i < bytes.len() && bytes[i].is_ascii_digit() {
+        i += 1;
+    }
+    if i == integer_start || (i - integer_start > 1 && bytes[integer_start] == b'0') {
+        return NativeTokenDecision::Refused;
+    }
+    let integer_end = i;
+    let mut fraction_end = i;
+    if i < bytes.len() && bytes[i] == b'.' {
+        i += 1;
+        let fraction_start = i;
+        while i < bytes.len() && bytes[i].is_ascii_digit() {
+            i += 1;
+        }
+        if i == fraction_start {
+            return NativeTokenDecision::Refused;
+        }
+        fraction_end = i;
+    }
+    let fraction_start = if fraction_end == integer_end {
+        integer_end
+    } else {
+        integer_end + 1
+    };
+    let base_exponent = -((fraction_end - fraction_start) as i128);
+    let coefficient_digits = bytes[integer_start..integer_end]
+        .iter()
+        .chain(bytes[fraction_start..fraction_end].iter());
+    let mut significant_digits = 0usize;
+    let mut nonzero_seen = false;
+    for byte in coefficient_digits {
+        if nonzero_seen || *byte != b'0' {
+            significant_digits += 1;
+            nonzero_seen = true;
+        }
+    }
+    valid_decimal_exponent_tail(bytes, token, i, base_exponent, significant_digits.max(1))
+}
+
+fn valid_decimal_exponent_tail(
+    bytes: &[u8],
+    token: &str,
+    mut i: usize,
+    base_exponent: i128,
+    significant_digits: usize,
+) -> NativeTokenDecision {
+    let mut decimal_exponent = base_exponent;
+    let mut constructor_overflow = false;
+    if i < bytes.len() && matches!(bytes[i], b'e' | b'E') {
+        i += 1;
+        let negative_exponent = i < bytes.len() && bytes[i] == b'-';
+        if i < bytes.len() && matches!(bytes[i], b'+' | b'-') {
+            i += 1;
+        }
+        let exponent_start = i;
+        while i < bytes.len() && bytes[i].is_ascii_digit() {
+            i += 1;
+        }
+        if i == exponent_start {
+            return NativeTokenDecision::Refused;
+        }
+        let exponent = &token[exponent_start..i];
+        let significant = exponent.trim_start_matches('0');
+        let magnitude = if significant.is_empty() {
+            0
+        } else if let Ok(value) = significant.parse::<i128>() {
+            value
+        } else {
+            constructor_overflow = true;
+            0
+        };
+        let signed_magnitude = if negative_exponent {
+            -magnitude
+        } else {
+            magnitude
+        };
+        if let Some(combined) = decimal_exponent.checked_add(signed_magnitude) {
+            decimal_exponent = combined;
+        } else {
+            constructor_overflow = true;
+        }
+    }
+    if i != bytes.len() {
+        return NativeTokenDecision::Refused;
+    }
+    if constructor_overflow {
+        // Grammar-valid but unrepresentable Decimal exponents set the Python
+        // InvalidOperation flag. The adapter restores that host-visible effect.
+        return NativeTokenDecision::DecimalInvalidOperation;
+    }
+    if decimal_exponent > 999_999_999_999_999_999i128
+        || decimal_exponent < -1_999_999_999_999_999_997i128
+    {
+        return NativeTokenDecision::DecimalInvalidOperation;
+    }
+    let Some(adjusted_exponent) = decimal_exponent.checked_add(significant_digits as i128 - 1)
+    else {
+        return NativeTokenDecision::DecimalInvalidOperation;
+    };
+    if adjusted_exponent > 999_999_999_999_999_999i128 {
+        NativeTokenDecision::DecimalInvalidOperation
+    } else {
+        NativeTokenDecision::Accepted
+    }
+}
+
+fn valid_uuid_token(token: &str) -> bool {
+    token.len() == 36
+        && token.bytes().enumerate().all(|(index, byte)| {
+            if matches!(index, 8 | 13 | 18 | 23) {
+                byte == b'-'
+            } else {
+                byte.is_ascii_digit() || (b'a'..=b'f').contains(&byte)
+            }
+        })
+}
+
 pub fn key_literal_mode(
     carrier: &Utf16,
     value_is_none: bool,
@@ -346,6 +522,67 @@ mod tests {
         assert_eq!(
             key_literal_mode(&Utf16::new(vec![0xd800]), true),
             Err(OperationValuesError::NativeKeyAbsent)
+        );
+    }
+
+    #[test]
+    fn typed_native_token_grammar_is_exact_and_does_not_normalize() {
+        let classify =
+            |kind, token| native_token_classify(&mut Context::ordinary(), kind, token).unwrap();
+        for (kind, token) in [
+            (NativeTokenKind::Integer, "0"),
+            (NativeTokenKind::Integer, "-123456789012345678901234567890"),
+            (NativeTokenKind::Decimal, "-0.000e-123"),
+            (NativeTokenKind::Decimal, "1e999999999999999999"),
+            (NativeTokenKind::Decimal, "1.0e999999999999999999"),
+            (NativeTokenKind::Decimal, "0.01e1000000000000000000"),
+            (NativeTokenKind::Decimal, "1e-1999999999999999997"),
+            (
+                NativeTokenKind::Uuid,
+                "00000000-0000-0000-0000-000000000001",
+            ),
+            (NativeTokenKind::Bits128, "0123456789abcdef0123456789abcdef"),
+        ] {
+            assert_eq!(
+                classify(kind, token),
+                NativeTokenDecision::Accepted,
+                "{token}"
+            );
+        }
+        for (kind, token) in [
+            (NativeTokenKind::Integer, "01"),
+            (NativeTokenKind::Decimal, "01"),
+            (
+                NativeTokenKind::Uuid,
+                "00000000-0000-0000-0000-00000000000A",
+            ),
+            (NativeTokenKind::Bits128, "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF"),
+        ] {
+            assert_eq!(
+                classify(kind, token),
+                NativeTokenDecision::Refused,
+                "{token}"
+            );
+        }
+        for token in [
+            "1e1000000000000000000",
+            "1e-1999999999999999998",
+            "0.1e-1999999999999999997",
+            "99.99e999999999999999999",
+        ] {
+            assert_eq!(
+                classify(NativeTokenKind::Decimal, token),
+                NativeTokenDecision::DecimalInvalidOperation,
+                "{token}"
+            );
+        }
+        assert_eq!(
+            classify(NativeTokenKind::Decimal, "1e"),
+            NativeTokenDecision::Refused
+        );
+        assert_eq!(
+            classify(NativeTokenKind::Decimal, "1e100000000000000000000x"),
+            NativeTokenDecision::Refused
         );
     }
 }
