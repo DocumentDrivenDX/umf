@@ -1,0 +1,179 @@
+{
+  "id": "example.dashboard",
+  "version": "1.0.0",
+  "coreVersion": "0.10.0",
+  "description": "Synthetic dashboard kind and core-shape composition example; no BI platform compatibility claim.",
+  "semantics": "Fixture-owned validation checks Record/Field bindings; queries remain opaque. CONTRACT-906.",
+  "scopes": [
+    "document",
+    "module",
+    "element"
+  ],
+  "schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "oneOf": [
+      {
+        "type": "object",
+        "required": [
+          "kind",
+          "title"
+        ],
+        "properties": {
+          "kind": {
+            "const": "dashboard"
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      {
+        "type": "object",
+        "required": [
+          "kind"
+        ],
+        "properties": {
+          "kind": {
+            "const": "data"
+          }
+        }
+      },
+      {
+        "type": "object",
+        "required": [
+          "kind",
+          "schemaCoverage",
+          "query"
+        ],
+        "properties": {
+          "kind": {
+            "const": "dataset"
+          },
+          "schemaCoverage": {
+            "enum": [
+              "declared",
+              "partial"
+            ]
+          },
+          "query": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      {
+        "type": "object",
+        "required": [
+          "kind",
+          "dataset",
+          "field",
+          "aggregation"
+        ],
+        "properties": {
+          "kind": {
+            "const": "visual"
+          },
+          "dataset": {
+            "$ref": "#/$defs/reference"
+          },
+          "field": {
+            "$ref": "#/$defs/reference"
+          },
+          "aggregation": {
+            "enum": [
+              "none",
+              "sum"
+            ]
+          }
+        }
+      },
+      {
+        "type": "object",
+        "required": [
+          "kind",
+          "dataset",
+          "field"
+        ],
+        "properties": {
+          "kind": {
+            "const": "filter"
+          },
+          "dataset": {
+            "$ref": "#/$defs/reference"
+          },
+          "field": {
+            "$ref": "#/$defs/reference"
+          }
+        }
+      }
+    ],
+    "$defs": {
+      "reference": {
+        "type": "object",
+        "required": [
+          "module",
+          "element"
+        ],
+        "properties": {
+          "module": {
+            "type": "string",
+            "minLength": 1
+          },
+          "element": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "capabilities": {
+    "validation": "semantic",
+    "directions": [],
+    "evidence": [
+      "tests/extension-kinds/composition.test.ts"
+    ]
+  },
+  "kindCatalog": {
+    "profile": "1.0.0",
+    "definitions": {
+      "dashboard": {
+        "title": "Dashboard",
+        "description": "A synthetic composition of dataset consumers; not a core Record.",
+        "scopes": [
+          "document"
+        ]
+      },
+      "data": {
+        "title": "Dataset catalog",
+        "description": "A container for declared dataset schemas.",
+        "scopes": [
+          "module"
+        ]
+      },
+      "dataset": {
+        "title": "Dataset",
+        "description": "A declared core Record with an opaque query binding.",
+        "scopes": [
+          "element"
+        ]
+      },
+      "visual": {
+        "title": "Visual",
+        "description": "A field consumer bound to a dataset Record.",
+        "scopes": [
+          "element"
+        ]
+      },
+      "filter": {
+        "title": "Filter",
+        "description": "A filter bound to a declared dataset Field.",
+        "scopes": [
+          "element"
+        ]
+      }
+    }
+  }
+}

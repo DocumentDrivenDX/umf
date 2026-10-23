@@ -1,11 +1,11 @@
 {
   "profile": "umf.metamodel.outputs/1",
   "provenance": {
-    "modelSha256": "1e406ee49b0c4c08b8eb996bb1fcb6e96fa8d6f4673f0877aa1800986b2dbbce",
-    "compilerSha256": "e3088d5c9bb519953181fd236443a91e1bfa7b77e0b6c93ae1564031c3ae4f3e"
+    "modelSha256": "42144576e3b15da4945ca744623a31967e3b29efa54da8ba3961e446b1c0e34b",
+    "compilerSha256": "a4786e24a2ddf17711a8ce93794cdc5e54dc5dd70bfd335f1d090021691a116f"
   },
   "sources": {
-    "spec/metamodel/umf.yaml": "1e406ee49b0c4c08b8eb996bb1fcb6e96fa8d6f4673f0877aa1800986b2dbbce",
+    "spec/metamodel/umf.yaml": "42144576e3b15da4945ca744623a31967e3b29efa54da8ba3961e446b1c0e34b",
     ".cargo/config.toml": "84fd4fa17fd967cae6006ba1b0dc430904239dec921c1441dd657387ee802d6c",
     "Cargo.lock": "e12048f6e1141dd742974ab3c5924dc0d7f025bf063f6aca90fbead32388a34f",
     "Cargo.toml": "89eac14b52190dec0bd75d0abad4c9fa5d93ea27337d7e9d87bb0aa9aa32cc9f",
@@ -47,16 +47,17 @@
     "crates/umf-codegen/tests/sol_second_shared_review.rs": "755128cfdbbdedeedc62e5bcde9e3fa84ff18e7b0670dc6553b6b65b94830322",
     "crates/umf-core-wire/Cargo.toml": "bff385c5254e71750414694d8f0ab7edb8c8eb1ad386786d3c750d0eeba4b24d",
     "crates/umf-core-wire/src/codegen.rs": "93722ce1d1580f0ce6a7f359cc0b5ebb309fab7a5bfabcae1b3f9f34d1c03cfb",
-    "crates/umf-core-wire/src/lib.rs": "558f828c66058fb1cfcb08472feae6ec5f16212861ba612540b9b034a0ae3a37",
+    "crates/umf-core-wire/src/lib.rs": "57c1fb73db793546952aa3b57a8695cbcd9f20d30ed0887700d4b6fc621f24e6",
     "crates/umf-core/Cargo.toml": "4ff5476362f3075246a4ad23d9f64788f12d447b7b1cd28d1e89ac99ad8e24c3",
     "crates/umf-core/src/constraint_language.rs": "0c630cf71a0d88fad4462ce69c68587441ba0a632c90877f3126a9fc1e64a026",
-    "crates/umf-core/src/constraints.rs": "c86221388090a9990914209584b794b2f73aae0514d16f5edeb56daeb0ed05a9",
+    "crates/umf-core/src/constraints.rs": "9ce7950e96801e2c7080bb5e582824e455d89c7378f3d9960471ab247b8432e6",
     "crates/umf-core/src/context.rs": "a13f98a54af0a302a1ef7104b099b17c0d5359d5f805fd348ef41f288dbc2b20",
     "crates/umf-core/src/document.rs": "f99993f490af1ada7d656eb68c0896ec902e920006438fc02624345088bee3ab",
     "crates/umf-core/src/ecma_coercion.rs": "5d1eed144e203d1e4f08ca73ba69db59b8276256d39ba0cc622d23f4dee757ba",
-    "crates/umf-core/src/engine.rs": "9ba05772146a2b5dbf75d65f2a080290f3c15cfe00337f87d81607804a109bf9",
+    "crates/umf-core/src/engine.rs": "87137c80cb21717f34418e09da0ff4e7987946a6a80e7d2192bee910a4146bf7",
     "crates/umf-core/src/error.rs": "e40104752917c0dccc0accabc1337f5e36857f55ae20cc55ddf2900f24ea79af",
-    "crates/umf-core/src/lib.rs": "4b16542c1a42b3ce8686fcbdb8d2fea5734e415a9381947db04bee16df32be07",
+    "crates/umf-core/src/kinds.rs": "7e3aed5c9f37b67e9348291703dabc6c217178f73295e4fd9c801d1cefc6f349",
+    "crates/umf-core/src/lib.rs": "d71b7915c423ff6962d8c609ddc2129291f15e53ef94e5ea9265df052169b577",
     "crates/umf-core/src/literal.rs": "ffa18f6ff115a1cae69d32bad355b88cc27e108fc4d3e6cf2a7e1441e61a84f9",
     "crates/umf-core/src/literal_policy.rs": "24140e302cf083e54843f20cf9959ef004e791146be03eba8888b8699a61827b",
     "crates/umf-core/src/python_re_names.dat": "1a7d63f9371ecc8111ca04efad730a8afa700316eee1974912669a74c8ef0071",
@@ -65,7 +66,7 @@
     "crates/umf-core/src/python_regex.rs": "f639ce9effe57755ed0fe414d5b072b29a21c877a07eab67a5f4b775de07b4e1",
     "crates/umf-core/src/python_uri.LICENSE": "87be3b02582cd0088845ad069a3afa9ad17eee76fae7b999fbba0f8588d80dfd",
     "crates/umf-core/src/python_value.rs": "ec72fbd70e3d02efbe4bc40c4e6aa56847128aa364de5082e0cbb565e177b633",
-    "crates/umf-core/src/registry.rs": "a1b3d45c8433738e0be993f0409a65f6f4239754f6564cb18ffe25dd8c0f28f6",
+    "crates/umf-core/src/registry.rs": "38ff151bddffdd9d79462802804cae76d58d01edf0ccaea68799907efe0918d3",
     "crates/umf-core/src/schema.rs": "43c68947653ccb61e10c861fdd93f0be6d7ee46cfe8b0004fefecf850029d525",
     "crates/umf-core/src/schema_metas.LICENSE": "4f2a34d2ee51aa8cce232c73bdc446b4faf3e4adc791b4f25176b114a4227797",
     "crates/umf-core/src/schema_metas.json": "cecc3fdf8f3977662e71b53c20d6f954c62bec1cc2e96db20cbc9f895cf47195",
@@ -75,6 +76,7 @@
     "crates/umf-core/tests/codegen_combinators.rs": "cccf9354fc047db4a8e30580f3644ee141fa4616601aa9da6c5eab9ca89fef31",
     "crates/umf-core/tests/constraints.rs": "de4002952bb501cc70eb3a78d1a73ad67f57cfc257a712e36193b48402042378",
     "crates/umf-core/tests/consumer_schema.rs": "2abfb36696a66d603366c38870826fdbb94b0f5d368d08833ae7ae2a8b030c0a",
+    "crates/umf-core/tests/extension_kinds.rs": "1445ac8af313872c7949a215648f97c9ea3c40c88225e7d7a93879ab19641883",
     "crates/umf-core/tests/fixtures/cpython-re/PSF-LICENSE.txt": "3b2f81fe21d181c499c59a256c8e1968455d6689d269aa85373bfb6af41da3bf",
     "crates/umf-core/tests/fixtures/cpython-re/independent-boundaries.json": "1ec5fb81302aae40f455f6ce2e6008d1ab0fce54fa62c0990e50c53faf800281",
     "crates/umf-core/tests/fixtures/cpython-re/independent-hex-boundaries.json": "f6f442149ae3b045229d2cfc722c9f6031b870789911019a97d48b38c8966ee1",
@@ -167,19 +169,19 @@
     "bindings/core/README.md": "13bf7bbb7fc2575e235e101b2031dbe28e6d5cb1b271bc74d8a2b25836935f9e",
     "bindings/core/node/Cargo.toml": "e7121458e326e4d1a3a9d9112ed83fcf9a4ffc221c45fff6cd192288b1a9814d",
     "bindings/core/node/build.rs": "fcbd1ff3f627a7553fa1704dc6f558998daff8bc256015c37aace62cc49ce584",
-    "bindings/core/node/index.d.ts": "70802fbe85ca64741b17022f15a6b20f5f084d7d564879dbcc82e71be1ee03d8",
-    "bindings/core/node/index.js": "50548052ffdfa5bbd2f9911454b85972a8e322b568e95a72a6e18a6f5325b578",
+    "bindings/core/node/index.d.ts": "9cc70fe4eb135d48f6df5243e59c5c24247c145cd6f94c4e459e850a48961a02",
+    "bindings/core/node/index.js": "81844d4a6c31179e44d77653043f8d781e2e1f7144babcf08cc1a0184c98b284",
     "bindings/core/node/package.json": "bdbba5cc86d4f99db586b892fa27c94f931f2c68ed7c7f821cddb572aca35045",
     "bindings/core/node/src/lib.rs": "3a5261ec1d792c313987ccb41535ad2c5df604793623ff63e5862fda8b137897",
     "bindings/core/node/src/wire.d.ts": "0ec29a86b2f1939fd7211e4d8aa2d43eac0050a1f3f0936d54dbec705849d405",
     "bindings/core/node/src/wire.js": "31c0bda130717d6e6438674bc7ba80977f916eb29e8ee1e9604e2ed219b56f33",
     "bindings/core/python/Cargo.toml": "190f17abce90c387affa8a01a875c98d81ebfbfce2ae7b525a9624701bb7e165",
     "bindings/core/python/build.rs": "b2b1e8e649acf8ffa52e323b8899147a542ec33c0f14619db3074c1f3df79cfc",
-    "bindings/core/python/src/lib.rs": "c6ddb417decc09e877891565871cd4edb38f21bd8369c520d33a5ac3f619798c",
+    "bindings/core/python/src/lib.rs": "2eb8a2d14a721e7ae123e08f40b080b2933bbfd85fa3b2ce35b085686a96a8db",
     "bindings/core/python/src/python_value.rs": "6d82b89136f80c433d2b7e1d78074b9c958c5385f03fd13a953cdf81a8b56410",
     "bindings/core/wasm/Cargo.toml": "5633ccb692f4cc80b9fe55a1ab9ca2ceb99642c9132d986b8f850cc4a67633c3",
-    "bindings/core/wasm/index.d.ts": "745b06a5ec6d8566d44e9ed8452be851b756e57b9dc6dce46794b50a02451896",
-    "bindings/core/wasm/index.js": "b2c770686883cff0c0e6212aab1f071f2f64a7d4fdc683d7c053c5d906b50396",
+    "bindings/core/wasm/index.d.ts": "9e829f0eba17dfe73a752b0401ae5b6e12e89acc7964d443c4bc1b9814587494",
+    "bindings/core/wasm/index.js": "22c4656c3002dd17d10ed47ece6c8c7449217377a450cf278878f318c24e08ff",
     "bindings/core/wasm/package.json": "197699908988d1472664b651c9ca5b5ffc7d7e62cceb743ed5ead0c989b0d63b",
     "bindings/core/wasm/src/lib.rs": "ac3faa1ad52ebe9be630072caad24560a6e3ef9f4806248229a3a90a6af147e6",
     "bindings/rust-spike/node/Cargo.toml": "1ada780dc1ae343ec00c1ff23a0500747fc476a515331841b18c5f24f62ac8b2",
@@ -210,19 +212,19 @@
     "bindings/core/README.md": "13bf7bbb7fc2575e235e101b2031dbe28e6d5cb1b271bc74d8a2b25836935f9e",
     "bindings/core/node/Cargo.toml": "e7121458e326e4d1a3a9d9112ed83fcf9a4ffc221c45fff6cd192288b1a9814d",
     "bindings/core/node/build.rs": "fcbd1ff3f627a7553fa1704dc6f558998daff8bc256015c37aace62cc49ce584",
-    "bindings/core/node/index.d.ts": "70802fbe85ca64741b17022f15a6b20f5f084d7d564879dbcc82e71be1ee03d8",
-    "bindings/core/node/index.js": "50548052ffdfa5bbd2f9911454b85972a8e322b568e95a72a6e18a6f5325b578",
+    "bindings/core/node/index.d.ts": "9cc70fe4eb135d48f6df5243e59c5c24247c145cd6f94c4e459e850a48961a02",
+    "bindings/core/node/index.js": "81844d4a6c31179e44d77653043f8d781e2e1f7144babcf08cc1a0184c98b284",
     "bindings/core/node/package.json": "bdbba5cc86d4f99db586b892fa27c94f931f2c68ed7c7f821cddb572aca35045",
     "bindings/core/node/src/lib.rs": "3a5261ec1d792c313987ccb41535ad2c5df604793623ff63e5862fda8b137897",
     "bindings/core/node/src/wire.d.ts": "0ec29a86b2f1939fd7211e4d8aa2d43eac0050a1f3f0936d54dbec705849d405",
     "bindings/core/node/src/wire.js": "31c0bda130717d6e6438674bc7ba80977f916eb29e8ee1e9604e2ed219b56f33",
     "bindings/core/python/Cargo.toml": "190f17abce90c387affa8a01a875c98d81ebfbfce2ae7b525a9624701bb7e165",
     "bindings/core/python/build.rs": "b2b1e8e649acf8ffa52e323b8899147a542ec33c0f14619db3074c1f3df79cfc",
-    "bindings/core/python/src/lib.rs": "c6ddb417decc09e877891565871cd4edb38f21bd8369c520d33a5ac3f619798c",
+    "bindings/core/python/src/lib.rs": "2eb8a2d14a721e7ae123e08f40b080b2933bbfd85fa3b2ce35b085686a96a8db",
     "bindings/core/python/src/python_value.rs": "6d82b89136f80c433d2b7e1d78074b9c958c5385f03fd13a953cdf81a8b56410",
     "bindings/core/wasm/Cargo.toml": "5633ccb692f4cc80b9fe55a1ab9ca2ceb99642c9132d986b8f850cc4a67633c3",
-    "bindings/core/wasm/index.d.ts": "745b06a5ec6d8566d44e9ed8452be851b756e57b9dc6dce46794b50a02451896",
-    "bindings/core/wasm/index.js": "b2c770686883cff0c0e6212aab1f071f2f64a7d4fdc683d7c053c5d906b50396",
+    "bindings/core/wasm/index.d.ts": "9e829f0eba17dfe73a752b0401ae5b6e12e89acc7964d443c4bc1b9814587494",
+    "bindings/core/wasm/index.js": "22c4656c3002dd17d10ed47ece6c8c7449217377a450cf278878f318c24e08ff",
     "bindings/core/wasm/package.json": "197699908988d1472664b651c9ca5b5ffc7d7e62cceb743ed5ead0c989b0d63b",
     "bindings/core/wasm/src/lib.rs": "ac3faa1ad52ebe9be630072caad24560a6e3ef9f4806248229a3a90a6af147e6",
     "bindings/rust-spike/node/Cargo.toml": "1ada780dc1ae343ec00c1ff23a0500747fc476a515331841b18c5f24f62ac8b2",
@@ -258,44 +260,44 @@
   },
   "outputs": {
     "spec/core/schema.json": {
-      "sha256": "57bdb4a349ccc1d5ab56e5b0700bcf8a11caa91e13b2efc33b29ff27839e76cb",
-      "bytes": 34651
+      "sha256": "8ba058ee5fedd38058ead8d49e59b74cdce4ac688e81f3828b75265a668c7a5b",
+      "bytes": 45342
     },
     "spec/core/semantic-type-reference.schema.json": {
-      "sha256": "ae1585250d493cb119db4d457b13ae3bec1c1ee55f5ca0f3bcb047aeedc5c411",
-      "bytes": 34772
+      "sha256": "5bb6a8431928aa6ede2ccead65b4bb5d5979fef8f1d32a22be54a56a97542073",
+      "bytes": 45463
     },
     "spec/core/extension-package.schema.json": {
-      "sha256": "eeda9a096c2a277b13335f2f86c14e3400f83f4f9ad1e6fdc4ed73544fd6db32",
-      "bytes": 34314
+      "sha256": "a93e929d328e0442f0434999e33f0f1265e814e53d7c31c48be103b5d9798aca",
+      "bytes": 45001
     },
     "spec/metamodel/package.json": {
       "sha256": "5930c77eaa8308d76761cd93d5a58bd5b0a7b3f30b5bc56fdc7db6d961fb0b89",
       "bytes": 1265
     },
     "spec/metamodel/generated/core-constraints.json": {
-      "sha256": "1db20e22f4f48df20cc288871f92d27314d578ffcd41ab6e9df01f218a7760fb",
+      "sha256": "d254e83df4dd4a4ff793094ee82c8fa0563dd21b6f196d4a17d9bc026bbe2244",
       "bytes": 190252
     },
     "spec/metamodel/generated/domain-policy.json": {
-      "sha256": "038a4f9b1f8a7cee78c2628a7d595ce7b5549afc41396bffffb8508e380843cb",
-      "bytes": 14016
+      "sha256": "fd50e87b740f165219d78d516a4b4abe0f23380ceb6b56b9f660ec84d5776805",
+      "bytes": 14827
     },
     "spec/metamodel/generated/python-shapes.json": {
-      "sha256": "7baed6286fd435d023a5b83e14415509fdcec5ec34dab400903b0754281c0106",
-      "bytes": 75560
+      "sha256": "ecf5aa8105c79f3943bd8914243183207d4f6af2ffdc9c5b33905d90dfe927fb",
+      "bytes": 98734
     },
     "python/umf_access/src/umf_access/generated_core.py": {
-      "sha256": "85a6c567012677d92ffdf511f280317c9a148dd763cd3f956e113b0e76901471",
+      "sha256": "4cbae98795bbd212ea5c0485426e51bb9bd75745a0aefb5710703a33d8a4c254",
       "bytes": 360
     },
     "src/generated/core-model.ts": {
-      "sha256": "afd43ffe02ffb64973cf95521991c142c54bb07151d68f018066a9b46108b911",
-      "bytes": 5012
+      "sha256": "5e3a15bcad4278133b83f2a18c173322e1e67ed87aa7b7d3800c52b5e46aa22b",
+      "bytes": 6714
     },
     "src/generated/core-validators.ts": {
-      "sha256": "88e4252883b595782c01d6b63fd86e7a5ba8492aa4fec953a628e32a051bbbc4",
-      "bytes": 284515
+      "sha256": "ce9319b6261d1d681a5950cb068294717345916552b185102e88b7a31356e78b",
+      "bytes": 305070
     }
   }
 }

@@ -3026,6 +3026,26 @@ extensions:
           code: VALIDATOR_FAILURE
           message: Validator failure
           severity: error
+        kindCatalogPolicy:
+          activeCoreVersion: 0.10.0
+          profile: 1.0.0
+          schemaReference: "#/$defs/extensionKindCatalog"
+        kindRequired:
+          code: EXTENSION_KIND_REQUIRED
+          message: Expected an own nonempty string kind tag
+          severity: error
+        kindUnknown:
+          code: EXTENSION_KIND_UNKNOWN
+          message: Kind is not declared by this exact extension version
+          severity: error
+        kindScope:
+          code: EXTENSION_KIND_SCOPE
+          message: Kind is not permitted at this attachment scope
+          severity: error
+        kindUnsupported:
+          code: EXTENSION_KIND_CATALOG_UNSUPPORTED
+          message: Kind catalog retained without interpretation
+          severity: warning
       literal:
         fieldKind: field
         recordReferenceRole: record-type
@@ -5275,3 +5295,675 @@ modules:
             element: extensionPackage.scopes
           - module: umf
             element: extensionPackage.capabilities
+          - module: umf
+            element: extensionPackage.kindCatalog
+
+      - id: extensionKindDefinition.title
+        name: title
+        kind: field
+        cardinality: one
+        extensions:
+          umf.metamodel:
+            presence: required
+            shape:
+              tag: text
+              min: 1
+      - id: extensionKindDefinition.description
+        name: description
+        kind: field
+        cardinality: one
+        extensions:
+          umf.metamodel:
+            presence: required
+            shape:
+              tag: text
+              min: 1
+      - id: extensionKindDefinition.scopes
+        name: scopes
+        kind: field
+        cardinality: one
+        extensions:
+          umf.metamodel:
+            presence: required
+            shape:
+              tag: sequence
+              min: 1
+              unique: true
+              item:
+                tag: choice
+                options:
+                  - tag: constant
+                    value: document
+                  - tag: constant
+                    value: module
+                  - tag: constant
+                    value: element
+      - id: extensionKindDefinition
+        name: extensionKindDefinition
+        kind: record
+        description: UMF extension kind extensionKindDefinition
+        extensions:
+          umf.metamodel:
+            definition: extensionKindDefinition
+            shape:
+              tag: object
+        members:
+          - module: umf
+            element: extensionKindDefinition.title
+          - module: umf
+            element: extensionKindDefinition.description
+          - module: umf
+            element: extensionKindDefinition.scopes
+      - id: extensionKindCatalog.profile
+        name: profile
+        kind: field
+        cardinality: one
+        extensions:
+          umf.metamodel:
+            presence: required
+            shape:
+              tag: text
+              min: 1
+      - id: extensionKindCatalog.definitions
+        name: definitions
+        kind: field
+        cardinality: one
+        extensions:
+          umf.metamodel:
+            presence: optional
+            shape:
+              tag: any
+      - id: extensionKindCatalog
+        name: extensionKindCatalog
+        kind: record
+        description: UMF extension kind extensionKindCatalog
+        extensions:
+          umf.metamodel:
+            definition: extensionKindCatalog
+            shape:
+              tag: object
+              conditions:
+                - tag: conditional
+                  condition:
+                    tag: object
+                    fields:
+                      profile:
+                        tag: constant
+                        value: 1.0.0
+                    mandatory:
+                      - profile
+                  yes:
+                    tag: object
+                    fields:
+                      definitions:
+                        tag: object
+                        key:
+                          tag: text
+                          min: 1
+                        open:
+                          tag: link
+                          target: extensionKindDefinition
+                        conditions:
+                          - tag: not
+                            value:
+                              tag: constant
+                              value: {}
+                    mandatory:
+                      - definitions
+        members:
+          - module: umf
+            element: extensionKindCatalog.profile
+          - module: umf
+            element: extensionKindCatalog.definitions
+      - id: extensionKindReference.extension
+        name: extension
+        kind: field
+        cardinality: one
+        extensions:
+          umf.metamodel:
+            presence: required
+            shape:
+              tag: text
+              min: 1
+      - id: extensionKindReference.version
+        name: version
+        kind: field
+        cardinality: one
+        extensions:
+          umf.metamodel:
+            presence: required
+            shape:
+              tag: text
+              min: 1
+      - id: extensionKindReference.kind
+        name: kind
+        kind: field
+        cardinality: one
+        extensions:
+          umf.metamodel:
+            presence: required
+            shape:
+              tag: text
+              min: 1
+      - id: extensionKindReference
+        name: extensionKindReference
+        kind: record
+        description: UMF extension kind extensionKindReference
+        extensions:
+          umf.metamodel:
+            definition: extensionKindReference
+            shape:
+              tag: object
+              open: false
+        members:
+          - module: umf
+            element: extensionKindReference.extension
+          - module: umf
+            element: extensionKindReference.version
+          - module: umf
+            element: extensionKindReference.kind
+      - id: extensionKindDiagnostic.code
+        name: code
+        kind: field
+        cardinality: one
+        extensions:
+          umf.metamodel:
+            presence: required
+            shape:
+              tag: text
+              min: 1
+      - id: extensionKindDiagnostic.path
+        name: path
+        kind: field
+        cardinality: one
+        extensions:
+          umf.metamodel:
+            presence: required
+            shape:
+              tag: text
+      - id: extensionKindDiagnostic.message
+        name: message
+        kind: field
+        cardinality: one
+        extensions:
+          umf.metamodel:
+            presence: required
+            shape:
+              tag: text
+      - id: extensionKindDiagnostic.severity
+        name: severity
+        kind: field
+        cardinality: one
+        extensions:
+          umf.metamodel:
+            presence: required
+            shape:
+              tag: choice
+              options:
+                - tag: constant
+                  value: error
+                - tag: constant
+                  value: warning
+      - id: extensionKindDiagnostic
+        name: extensionKindDiagnostic
+        kind: record
+        description: UMF extension kind extensionKindDiagnostic
+        extensions:
+          umf.metamodel:
+            definition: extensionKindDiagnostic
+            shape:
+              tag: object
+              open: false
+        members:
+          - module: umf
+            element: extensionKindDiagnostic.code
+          - module: umf
+            element: extensionKindDiagnostic.path
+          - module: umf
+            element: extensionKindDiagnostic.message
+          - module: umf
+            element: extensionKindDiagnostic.severity
+      - id: extensionKindValidation.valid
+        name: valid
+        kind: field
+        cardinality: one
+        extensions:
+          umf.metamodel:
+            presence: required
+            shape:
+              tag: boolean
+      - id: extensionKindValidation.complete
+        name: complete
+        kind: field
+        cardinality: one
+        extensions:
+          umf.metamodel:
+            presence: required
+            shape:
+              tag: boolean
+      - id: extensionKindValidation.diagnostics
+        name: diagnostics
+        kind: field
+        cardinality: one
+        extensions:
+          umf.metamodel:
+            presence: required
+            shape:
+              tag: sequence
+              item:
+                tag: link
+                target: extensionKindDiagnostic
+      - id: extensionKindValidation
+        name: extensionKindValidation
+        kind: record
+        description: UMF extension kind extensionKindValidation
+        extensions:
+          umf.metamodel:
+            definition: extensionKindValidation
+            shape:
+              tag: object
+              open: false
+        members:
+          - module: umf
+            element: extensionKindValidation.valid
+          - module: umf
+            element: extensionKindValidation.complete
+          - module: umf
+            element: extensionKindValidation.diagnostics
+      - id: extensionKindEntry.reference
+        name: reference
+        kind: field
+        cardinality: one
+        extensions:
+          umf.metamodel:
+            presence: required
+            shape:
+              tag: link
+              target: extensionKindReference
+      - id: extensionKindEntry.owner
+        name: owner
+        kind: field
+        cardinality: one
+        extensions:
+          umf.metamodel:
+            presence: required
+            shape:
+              tag: exclusive-choice
+              options:
+                - tag: object
+                  open: false
+                  fields:
+                    scope:
+                      tag: constant
+                      value: document
+                  mandatory:
+                    - scope
+                - tag: object
+                  open: false
+                  fields:
+                    scope:
+                      tag: constant
+                      value: module
+                    module:
+                      tag: text
+                      min: 1
+                  mandatory:
+                    - scope
+                    - module
+                - tag: object
+                  open: false
+                  fields:
+                    scope:
+                      tag: constant
+                      value: element
+                    module:
+                      tag: text
+                      min: 1
+                    element:
+                      tag: text
+                      min: 1
+                  mandatory:
+                    - scope
+                    - module
+                    - element
+      - id: extensionKindEntry.payloadPath
+        name: payloadPath
+        kind: field
+        cardinality: one
+        extensions:
+          umf.metamodel:
+            presence: required
+            shape:
+              tag: text
+              min: 1
+      - id: extensionKindEntry.definition
+        name: definition
+        kind: field
+        cardinality: one
+        extensions:
+          umf.metamodel:
+            presence: required
+            shape:
+              tag: link
+              target: extensionKindDefinition
+      - id: extensionKindEntry
+        name: extensionKindEntry
+        kind: record
+        description: UMF extension kind extensionKindEntry
+        extensions:
+          umf.metamodel:
+            definition: extensionKindEntry
+            shape:
+              tag: object
+              open: false
+        members:
+          - module: umf
+            element: extensionKindEntry.reference
+          - module: umf
+            element: extensionKindEntry.owner
+          - module: umf
+            element: extensionKindEntry.payloadPath
+          - module: umf
+            element: extensionKindEntry.definition
+      - id: extensionKindCoverage.owner
+        name: owner
+        kind: field
+        cardinality: one
+        extensions:
+          umf.metamodel:
+            presence: required
+            shape:
+              tag: exclusive-choice
+              options:
+                - tag: object
+                  open: false
+                  fields:
+                    scope:
+                      tag: constant
+                      value: document
+                  mandatory:
+                    - scope
+                - tag: object
+                  open: false
+                  fields:
+                    scope:
+                      tag: constant
+                      value: module
+                    module:
+                      tag: text
+                      min: 1
+                  mandatory:
+                    - scope
+                    - module
+                - tag: object
+                  open: false
+                  fields:
+                    scope:
+                      tag: constant
+                      value: element
+                    module:
+                      tag: text
+                      min: 1
+                    element:
+                      tag: text
+                      min: 1
+                  mandatory:
+                    - scope
+                    - module
+                    - element
+      - id: extensionKindCoverage.extension
+        name: extension
+        kind: field
+        cardinality: one
+        extensions:
+          umf.metamodel:
+            presence: required
+            shape:
+              tag: text
+              min: 1
+      - id: extensionKindCoverage.version
+        name: version
+        kind: field
+        cardinality: one
+        extensions:
+          umf.metamodel:
+            presence: required
+            shape:
+              tag: choice
+              options:
+                - tag: text
+                  min: 1
+                - tag: "null"
+      - id: extensionKindCoverage.payloadPath
+        name: payloadPath
+        kind: field
+        cardinality: one
+        extensions:
+          umf.metamodel:
+            presence: required
+            shape:
+              tag: text
+              min: 1
+      - id: extensionKindCoverage.status
+        name: status
+        kind: field
+        cardinality: one
+        extensions:
+          umf.metamodel:
+            presence: required
+            shape:
+              tag: choice
+              options:
+                - tag: constant
+                  value: resolved
+                - tag: constant
+                  value: absent-catalog
+                - tag: constant
+                  value: unavailable
+                - tag: constant
+                  value: unsupported-catalog
+                - tag: constant
+                  value: invalid
+      - id: extensionKindCoverage.diagnostics
+        name: diagnostics
+        kind: field
+        cardinality: one
+        extensions:
+          umf.metamodel:
+            presence: required
+            shape:
+              tag: sequence
+              item:
+                tag: link
+                target: extensionKindDiagnostic
+      - id: extensionKindCoverage
+        name: extensionKindCoverage
+        kind: record
+        description: UMF extension kind extensionKindCoverage
+        extensions:
+          umf.metamodel:
+            definition: extensionKindCoverage
+            shape:
+              tag: object
+              open: false
+        members:
+          - module: umf
+            element: extensionKindCoverage.owner
+          - module: umf
+            element: extensionKindCoverage.extension
+          - module: umf
+            element: extensionKindCoverage.version
+          - module: umf
+            element: extensionKindCoverage.payloadPath
+          - module: umf
+            element: extensionKindCoverage.status
+          - module: umf
+            element: extensionKindCoverage.diagnostics
+      - id: extensionKindListResult.definitions
+        name: definitions
+        kind: field
+        cardinality: one
+        extensions:
+          umf.metamodel:
+            presence: required
+            shape:
+              tag: sequence
+              item:
+                tag: object
+                open: false
+                fields:
+                  reference:
+                    tag: link
+                    target: extensionKindReference
+                  definition:
+                    tag: link
+                    target: extensionKindDefinition
+                mandatory:
+                  - reference
+                  - definition
+      - id: extensionKindListResult.packages
+        name: packages
+        kind: field
+        cardinality: one
+        extensions:
+          umf.metamodel:
+            presence: required
+            shape:
+              tag: sequence
+              item:
+                tag: object
+                open: false
+                fields:
+                  extension:
+                    tag: text
+                    min: 1
+                  version:
+                    tag: text
+                    min: 1
+                  catalog:
+                    tag: choice
+                    options:
+                      - tag: constant
+                        value: available
+                      - tag: constant
+                        value: absent
+                      - tag: constant
+                        value: unsupported
+                  diagnostics:
+                    tag: sequence
+                    item:
+                      tag: link
+                      target: extensionKindDiagnostic
+                mandatory:
+                  - extension
+                  - version
+                  - catalog
+                  - diagnostics
+      - id: extensionKindListResult.complete
+        name: complete
+        kind: field
+        cardinality: one
+        extensions:
+          umf.metamodel:
+            presence: required
+            shape:
+              tag: boolean
+      - id: extensionKindListResult
+        name: extensionKindListResult
+        kind: record
+        description: UMF extension kind extensionKindListResult
+        extensions:
+          umf.metamodel:
+            definition: extensionKindListResult
+            shape:
+              tag: object
+              open: false
+        members:
+          - module: umf
+            element: extensionKindListResult.definitions
+          - module: umf
+            element: extensionKindListResult.packages
+          - module: umf
+            element: extensionKindListResult.complete
+      - id: extensionKindInspection.source
+        name: source
+        kind: field
+        cardinality: one
+        extensions:
+          umf.metamodel:
+            presence: required
+            shape:
+              tag: any
+      - id: extensionKindInspection.sourceValidation
+        name: sourceValidation
+        kind: field
+        cardinality: one
+        extensions:
+          umf.metamodel:
+            presence: required
+            shape:
+              tag: link
+              target: extensionKindValidation
+      - id: extensionKindInspection.entries
+        name: entries
+        kind: field
+        cardinality: one
+        extensions:
+          umf.metamodel:
+            presence: required
+            shape:
+              tag: sequence
+              item:
+                tag: link
+                target: extensionKindEntry
+      - id: extensionKindInspection.coverage
+        name: coverage
+        kind: field
+        cardinality: one
+        extensions:
+          umf.metamodel:
+            presence: required
+            shape:
+              tag: sequence
+              item:
+                tag: link
+                target: extensionKindCoverage
+      - id: extensionKindInspection.complete
+        name: complete
+        kind: field
+        cardinality: one
+        extensions:
+          umf.metamodel:
+            presence: required
+            shape:
+              tag: boolean
+      - id: extensionKindInspection
+        name: extensionKindInspection
+        kind: record
+        description: UMF extension kind extensionKindInspection
+        extensions:
+          umf.metamodel:
+            definition: extensionKindInspection
+            shape:
+              tag: object
+              open: false
+        members:
+          - module: umf
+            element: extensionKindInspection.source
+          - module: umf
+            element: extensionKindInspection.sourceValidation
+          - module: umf
+            element: extensionKindInspection.entries
+          - module: umf
+            element: extensionKindInspection.coverage
+          - module: umf
+            element: extensionKindInspection.complete
+      - id: extensionPackage.kindCatalog
+        name: kindCatalog
+        kind: field
+        cardinality: one
+        extensions:
+          umf.metamodel:
+            presence: optional
+            shape:
+              tag: any

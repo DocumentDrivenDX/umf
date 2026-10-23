@@ -15,8 +15,8 @@ ddx:
 
 **Priority:** P0.
 **Covered PRD Subsystem(s)**: Extensions and Partial Participation
-**Covered PRD Requirements**: FR-2, FR-4, FR-5, FR-22, FR-27, FR-31, FR-34, FR-40
-**Cross-Subsystem Rationale**: This feature owns extension participation; native fidelity and consumer tooling remain separate capabilities. Its first story addresses only the envelope.
+**Covered PRD Requirements**: FR-2, FR-4, FR-5, FR-15, FR-20, FR-21, FR-22, FR-23, FR-27, FR-31, FR-34, FR-40, FR-41
+**Cross-Subsystem Rationale**: This feature owns extension participation and generic kind discovery; adapter fidelity and consuming applications retain their own boundaries. Its first story addresses only the envelope.
 
 ## Overview
 
@@ -43,6 +43,14 @@ would prevent reliable native round trips and future independent consumers.
 - EXT-03: Validate installed vocabularies and reject unsafe edits atomically.
 - EXT-04: Add third-party and DDD vocabularies without redefining unrelated ones.
   DDD depth and native adapter stories follow the initial foundation.
+- EXT-05: An extension may declare its own object kinds. Generic tools discover
+  their exact extension/version identity, applicable scopes and descriptions,
+  and validate occurrences through the installed extension without a built-in
+  list of ecosystem kinds. Classification does not confer core Field/Record
+  semantics or native compatibility.
+- EXT-06: Reuse core Records and Fields where their meanings fit an extension's
+  data shapes. Preserve extension-specific calculations, interactions and native
+  refinements; do not infer complete schemas from partial observations.
 
 Non-functional constraints: no silent losses in the declared fixture corpus;
 no artifact-directed code execution or implicit network retrieval; bounded inputs
@@ -52,6 +60,10 @@ with explicit incomplete/error outcomes. Exact bounds live in CONTRACT-001.
 
 [US-001](../user-stories/US-001-preserve-versioned-documents.md) implements the
 initial envelope. Later native/DDD participation stories remain to derive.
+
+[US-904](../user-stories/US-904-extension-defined-kinds.md) covers generic
+discovery and validation of extension-defined kinds. Its exact interface is
+[CONTRACT-906](../../02-design/contracts/CONTRACT-906-extension-defined-kinds.md).
 
 ## Edge Cases and Error Handling
 

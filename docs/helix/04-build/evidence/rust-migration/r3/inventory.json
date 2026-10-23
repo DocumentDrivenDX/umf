@@ -189,18 +189,18 @@
   "capture": {
     "inventoryFormat": "0.2",
     "inventoryScript": "scripts/rust-inventory.py",
-    "sourceCohortSha256": "a66f4eef2ab3409504c3f8b65f0dbc70e0aeb6f9d378e7d66491e8a6d1f7661f",
+    "sourceCohortSha256": "2e64d70ed1b381aadfe3f15815309c0a8a5c91e504a83cf72bc37f52efae486d",
     "typescriptApi": "5.9.3"
   },
   "counts": {
-    "activeScriptFiles": 329,
-    "algorithmSymbols": 10145,
+    "activeScriptFiles": 330,
+    "algorithmSymbols": 10165,
     "pythonModules": 104,
     "rustBuildInputs": 76,
-    "rustModules": 114,
-    "scriptFiles": 2931,
-    "sourceModules": 575,
-    "typescriptModules": 471
+    "rustModules": 116,
+    "scriptFiles": 2939,
+    "sourceModules": 577,
+    "typescriptModules": 473
   },
   "dependencies": {
     "javascript": {
@@ -5650,14 +5650,14 @@
       "sha256": "e7121458e326e4d1a3a9d9112ed83fcf9a4ffc221c45fff6cd192288b1a9814d"
     },
     {
-      "bytes": 3485,
+      "bytes": 4017,
       "path": "bindings/core/node/index.d.ts",
-      "sha256": "70802fbe85ca64741b17022f15a6b20f5f084d7d564879dbcc82e71be1ee03d8"
+      "sha256": "9cc70fe4eb135d48f6df5243e59c5c24247c145cd6f94c4e459e850a48961a02"
     },
     {
-      "bytes": 14046,
+      "bytes": 15207,
       "path": "bindings/core/node/index.js",
-      "sha256": "50548052ffdfa5bbd2f9911454b85972a8e322b568e95a72a6e18a6f5325b578"
+      "sha256": "81844d4a6c31179e44d77653043f8d781e2e1f7144babcf08cc1a0184c98b284"
     },
     {
       "bytes": 210,
@@ -5685,14 +5685,14 @@
       "sha256": "5633ccb692f4cc80b9fe55a1ab9ca2ceb99642c9132d986b8f850cc4a67633c3"
     },
     {
-      "bytes": 3981,
+      "bytes": 5544,
       "path": "bindings/core/wasm/index.d.ts",
-      "sha256": "745b06a5ec6d8566d44e9ed8452be851b756e57b9dc6dce46794b50a02451896"
+      "sha256": "9e829f0eba17dfe73a752b0401ae5b6e12e89acc7964d443c4bc1b9814587494"
     },
     {
-      "bytes": 15117,
+      "bytes": 16264,
       "path": "bindings/core/wasm/index.js",
-      "sha256": "b2c770686883cff0c0e6212aab1f071f2f64a7d4fdc683d7c053c5d906b50396"
+      "sha256": "22c4656c3002dd17d10ed47ece6c8c7449217377a450cf278878f318c24e08ff"
     },
     {
       "bytes": 209,
@@ -6057,7 +6057,7 @@
       "sha256": "b2b1e8e649acf8ffa52e323b8899147a542ec33c0f14619db3074c1f3df79cfc"
     },
     {
-      "bytes": 55272,
+      "bytes": 57979,
       "disposition": "production-host-binding",
       "imports": [
         "pyo3::{\n    exceptions::PyValueError,\n    prelude::*,\n    types::{PyBytes, PyDict, PyList, PyTuple},\n}",
@@ -6069,7 +6069,7 @@
       "migrationObligation": "R2 installed target-specific compatibility, callback and resource evidence required",
       "path": "bindings/core/python/src/lib.rs",
       "publicExports": [],
-      "sha256": "c6ddb417decc09e877891565871cd4edb38f21bd8369c520d33a5ac3f619798c"
+      "sha256": "2eb8a2d14a721e7ae123e08f40b080b2933bbfd85fa3b2ce35b085686a96a8db"
     },
     {
       "bytes": 8241,
@@ -6752,7 +6752,7 @@
       "sha256": "0c630cf71a0d88fad4462ce69c68587441ba0a632c90877f3126a9fc1e64a026"
     },
     {
-      "bytes": 155937,
+      "bytes": 156180,
       "disposition": "production-host-free-rust-engine",
       "imports": [
         "crate::{\n    context::Context,\n    ecma_coercion::{abstract_relational_compare, Primitive},\n    error::{Diagnostic, EngineError, Severity},\n    literal::{literal_errors_admitted, literal_identity_admitted, numeric_interval_admitted},\n    literal_policy::{prepare_policy, PreparedPolicy},\n    value::{copy_json, Utf16, Value},\n}",
@@ -6770,7 +6770,7 @@
         "run_core_constraints",
         "value"
       ],
-      "sha256": "c86221388090a9990914209584b794b2f73aae0514d16f5edeb56daeb0ed05a9"
+      "sha256": "9ce7950e96801e2c7080bb5e582824e455d89c7378f3d9960471ab247b8432e6"
     },
     {
       "bytes": 18266,
@@ -6848,7 +6848,7 @@
       "sha256": "5d1eed144e203d1e4f08ca73ba69db59b8276256d39ba0cc622d23f4dee757ba"
     },
     {
-      "bytes": 22802,
+      "bytes": 22938,
       "disposition": "production-host-free-rust-engine",
       "imports": [
         "crate::{\n    constraints::{execute_constraints_admitted, prepare_program, PreparedProgram},\n    context::Context,\n    error::{Diagnostic, EngineError, Severity, Validation},\n    literal_policy::{prepare_policy, PreparedPolicy},\n    registry::Registry,\n    schema::{CompiledSchema, SchemaResources},\n    value::{copy_json, Utf16, Value},\n}",
@@ -6874,7 +6874,7 @@
         "validate_document",
         "validate_python_document"
       ],
-      "sha256": "9ba05772146a2b5dbf75d65f2a080290f3c15cfe00337f87d81607804a109bf9"
+      "sha256": "87137c80cb21717f34418e09da0ff4e7987946a6a80e7d2192bee910a4146bf7"
     },
     {
       "bytes": 3694,
@@ -6897,14 +6897,34 @@
       "sha256": "e40104752917c0dccc0accabc1337f5e36857f55ae20cc55ddf2900f24ea79af"
     },
     {
-      "bytes": 1196,
+      "bytes": 20196,
+      "disposition": "production-host-free-rust-engine",
+      "imports": [
+        "crate::{\n    copy_json, Capabilities, Context, Diagnostic, Engine, EngineError, Registry, Severity, Utf16,\n    Validation, Value,\n}",
+        "std::collections::BTreeSet"
+      ],
+      "language": "rust",
+      "migrationObligation": "R2 full independent compiler/core conformance and metered resource qualification required",
+      "path": "crates/umf-core/src/kinds.rs",
+      "publicExports": [
+        "admit",
+        "definition",
+        "get_kind",
+        "inspect_extension_kinds",
+        "list_kinds",
+        "registry"
+      ],
+      "sha256": "7e3aed5c9f37b67e9348291703dabc6c217178f73295e4fd9c801d1cefc6f349"
+    },
+    {
+      "bytes": 1211,
       "disposition": "production-host-free-rust-engine",
       "imports": [],
       "language": "rust",
       "migrationObligation": "R2 full independent compiler/core conformance and metered resource qualification required",
       "path": "crates/umf-core/src/lib.rs",
       "publicExports": [],
-      "sha256": "4b16542c1a42b3ce8686fcbdb8d2fea5734e415a9381947db04bee16df32be07"
+      "sha256": "d71b7915c423ff6962d8c609ddc2129291f15e53ef94e5ea9265df052169b577"
     },
     {
       "bytes": 46648,
@@ -7045,7 +7065,7 @@
       "sha256": "ec72fbd70e3d02efbe4bc40c4e6aa56847128aa364de5082e0cbb565e177b633"
     },
     {
-      "bytes": 14228,
+      "bytes": 17389,
       "disposition": "production-host-free-rust-engine",
       "imports": [
         "crate::{\n    context::Context,\n    error::EngineError,\n    python_regex::PythonReVersion,\n    python_value::{PythonConsumerValue, PythonSchemaResources},\n    schema::{CompiledSchema, SchemaResources},\n    value::{copy_json, Utf16, Value},\n}"
@@ -7067,13 +7087,15 @@
         "register_extension_owned_with_python_profile",
         "register_extension_python_source",
         "register_extension_with_python_profile",
+        "register_kind_package",
         "schema",
         "scopes",
         "semantic",
         "token",
-        "version"
+        "version",
+        "with_kind_policy"
       ],
-      "sha256": "a1b3d45c8433738e0be993f0409a65f6f4239754f6564cb18ffe25dd8c0f28f6"
+      "sha256": "38ff151bddffdd9d79462802804cae76d58d01edf0ccaea68799907efe0918d3"
     },
     {
       "bytes": 339625,
@@ -7215,6 +7237,19 @@
       "path": "crates/umf-core/tests/consumer_schema.rs",
       "publicExports": [],
       "sha256": "2abfb36696a66d603366c38870826fdbb94b0f5d368d08833ae7ae2a8b030c0a"
+    },
+    {
+      "bytes": 12996,
+      "disposition": "production-host-free-rust-engine",
+      "imports": [
+        "serde_json::{json, Value as Json}",
+        "umf_core::{\n    Capabilities, Context, Diagnostic, Engine, EngineError, Registry, ResourceSet, SemanticContext,\n    Utf16, Value,\n}"
+      ],
+      "language": "rust",
+      "migrationObligation": "R2 full independent compiler/core conformance and metered resource qualification required",
+      "path": "crates/umf-core/tests/extension_kinds.rs",
+      "publicExports": [],
+      "sha256": "1445ac8af313872c7949a215648f97c9ea3c40c88225e7d7a93879ab19641883"
     },
     {
       "bytes": 19706,
@@ -7892,14 +7927,14 @@
       "sha256": "93722ce1d1580f0ce6a7f359cc0b5ebb309fab7a5bfabcae1b3f9f34d1c03cfb"
     },
     {
-      "bytes": 57067,
+      "bytes": 59682,
       "disposition": "production-private-value-transport",
       "imports": [
         "std::collections::BTreeSet",
         "std::fmt::Write as _",
         "super::*",
         "umf_core::serialization::Format",
-        "umf_core::{\n    copy_json, Capabilities, Context, Diagnostic, Engine, EngineError, Limits, Registry,\n    ResourceProfile, ResourceSet, Severity, Utf16, Value,\n}"
+        "umf_core::{\n    copy_json, Capabilities, Context, Diagnostic, Engine, EngineError, Limits, ResourceProfile,\n    ResourceSet, Severity, Utf16, Value,\n}"
       ],
       "language": "rust",
       "migrationObligation": "R2 closed UTF16 wire; strict admission before allocation and no semantic fallback",
@@ -7920,7 +7955,7 @@
         "write_value_wire",
         "write_value_wire_with_control"
       ],
-      "sha256": "558f828c66058fb1cfcb08472feae6ec5f16212861ba612540b9b034a0ae3a37"
+      "sha256": "57c1fb73db793546952aa3b57a8695cbcd9f20d30ed0887700d4b6fc621f24e6"
     },
     {
       "bytes": 80611,
@@ -7971,12 +8006,12 @@
       "activationEvidence": [],
       "active": false,
       "algorithmSymbols": [],
-      "bytes": 3485,
+      "bytes": 4017,
       "disposition": "production-rust-host-glue",
       "language": "ts",
       "migrationObligation": "R2 host descriptor admission/loading/callback transport only; Rust owns shared semantics; installed target evidence required",
       "path": "bindings/core/node/index.d.ts",
-      "sha256": "70802fbe85ca64741b17022f15a6b20f5f084d7d564879dbcc82e71be1ee03d8"
+      "sha256": "9cc70fe4eb135d48f6df5243e59c5c24247c145cd6f94c4e459e850a48961a02"
     },
     {
       "activationEvidence": [],
@@ -8000,12 +8035,12 @@
         "runRawValue",
         "runRequest"
       ],
-      "bytes": 14046,
+      "bytes": 15207,
       "disposition": "production-rust-host-glue",
       "language": "js",
       "migrationObligation": "R2 host descriptor admission/loading/callback transport only; Rust owns shared semantics; installed target evidence required",
       "path": "bindings/core/node/index.js",
-      "sha256": "50548052ffdfa5bbd2f9911454b85972a8e322b568e95a72a6e18a6f5325b578"
+      "sha256": "81844d4a6c31179e44d77653043f8d781e2e1f7144babcf08cc1a0184c98b284"
     },
     {
       "activationEvidence": [
@@ -8050,12 +8085,12 @@
       "activationEvidence": [],
       "active": false,
       "algorithmSymbols": [],
-      "bytes": 3981,
+      "bytes": 5544,
       "disposition": "production-rust-host-glue",
       "language": "ts",
       "migrationObligation": "R2 host descriptor admission/loading/callback transport only; Rust owns shared semantics; installed target evidence required",
       "path": "bindings/core/wasm/index.d.ts",
-      "sha256": "745b06a5ec6d8566d44e9ed8452be851b756e57b9dc6dce46794b50a02451896"
+      "sha256": "9e829f0eba17dfe73a752b0401ae5b6e12e89acc7964d443c4bc1b9814587494"
     },
     {
       "activationEvidence": [],
@@ -8080,12 +8115,12 @@
         "result",
         "runRawValue"
       ],
-      "bytes": 15117,
+      "bytes": 16264,
       "disposition": "production-rust-host-glue",
       "language": "js",
       "migrationObligation": "R2 host descriptor admission/loading/callback transport only; Rust owns shared semantics; installed target evidence required",
       "path": "bindings/core/wasm/index.js",
-      "sha256": "b2c770686883cff0c0e6212aab1f071f2f64a7d4fdc683d7c053c5d906b50396"
+      "sha256": "22c4656c3002dd17d10ed47ece6c8c7449217377a450cf278878f318c24e08ff"
     },
     {
       "activationEvidence": [],
@@ -8461,12 +8496,12 @@
       "activationEvidence": [],
       "active": false,
       "algorithmSymbols": [],
-      "bytes": 1202,
+      "bytes": 1258,
       "disposition": "unreferenced-script-source",
       "language": "py",
       "migrationObligation": "No current package/workflow/import activation edge discovered",
       "path": "python/src/umf/__init__.py",
-      "sha256": "e9dca8a080364f76a1c370caabd95f35e36c011c6b27fd58a487cadf320aee9d"
+      "sha256": "bfd0c2e4da3e59790897a0ef90a2ee9a8c1b650867d24bd178fdcf922c7e985b"
     },
     {
       "activationEvidence": [
@@ -8607,14 +8642,18 @@
         "Validation",
         "__init__",
         "get",
-        "register"
+        "get_kind",
+        "get_package",
+        "list_kinds",
+        "register",
+        "register_package"
       ],
-      "bytes": 1867,
+      "bytes": 3400,
       "disposition": "active-host-tooling-algorithm",
       "language": "py",
       "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
       "path": "python/src/umf/registry.py",
-      "sha256": "c29cc0087cbd555dc1a964d2deed90d74cf8f3e2c28aff2b9895512fa90c88bc"
+      "sha256": "24e457eeb4ccd369bb3c18288e3bf855744b90922495ce239a8887085f6587be"
     },
     {
       "activationEvidence": [],
@@ -8700,14 +8739,15 @@
       "activationEvidence": [],
       "active": false,
       "algorithmSymbols": [
+        "inspect_extension_kinds",
         "validate_document"
       ],
-      "bytes": 828,
+      "bytes": 1361,
       "disposition": "unreferenced-script-source",
       "language": "py",
       "migrationObligation": "No current package/workflow/import activation edge discovered",
       "path": "python/src/umf/validation.py",
-      "sha256": "0422eb695da542314da853518532fc29466a60be4070123d911277a6b9d02d64"
+      "sha256": "aac6f413ab68fa7ece1e7733e9030445aea17faad6f9adccab0e4cdceeef22b5"
     },
     {
       "activationEvidence": [],
@@ -8751,6 +8791,21 @@
       "migrationObligation": "Retained test/evidence source with no discovered current activation edge",
       "path": "python/tests/test_domain_packs.py",
       "sha256": "5bdc0fbbbf2639ea0f40611299ac1d4bd6b24044a415c69cf72f7b4bf8433591"
+    },
+    {
+      "activationEvidence": [],
+      "active": false,
+      "algorithmSymbols": [
+        "test_full_manifest_snapshot_and_atomic_catalog_admission",
+        "test_generic_kind_corpus",
+        "test_kind_errors_suppress_callback_and_legacy_registration_stays_opaque"
+      ],
+      "bytes": 3108,
+      "disposition": "unreferenced-test-source",
+      "language": "py",
+      "migrationObligation": "Retained test/evidence source with no discovered current activation edge",
+      "path": "python/tests/test_extension_kinds.py",
+      "sha256": "69258167b0386cacd2b39ea33d6a3c75b03210fb7a8d7c5070b3b0c627456c18"
     },
     {
       "activationEvidence": [],
@@ -12106,7 +12161,7 @@
       "language": "py",
       "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
       "path": "python/umf_access/src/umf_access/generated_core.py",
-      "sha256": "85a6c567012677d92ffdf511f280317c9a148dd763cd3f956e113b0e76901471"
+      "sha256": "4cbae98795bbd212ea5c0485426e51bb9bd75745a0aefb5710703a33d8a4c254"
     },
     {
       "activationEvidence": [],
@@ -19363,12 +19418,12 @@
       ],
       "active": true,
       "algorithmSymbols": [],
-      "bytes": 1441,
+      "bytes": 1472,
       "disposition": "active-host-tooling-algorithm",
       "language": "ts",
       "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
       "path": "scripts/build-test-prerequisites.ts",
-      "sha256": "de6faba8e824be1420491f55671fbbbabedd0a0e8f15c2b5bf8f9f69daabae6c"
+      "sha256": "9167151919274e313b5c1a008eecf4b9b31dd160fd7057eed742f6250a18e1f0"
     },
     {
       "activationEvidence": [
@@ -19523,12 +19578,12 @@
         "scan_text",
         "sha"
       ],
-      "bytes": 30769,
+      "bytes": 32374,
       "disposition": "active-host-tooling-algorithm",
       "language": "py",
       "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
       "path": "scripts/check-rust-boundaries.py",
-      "sha256": "437ecd4d6a126b619448da33d6144e768ca8de1c0c2cdb9e116006f467245705"
+      "sha256": "3464d835e1706ef30927642b6daa8aba70a851a0324a4824903c77ee463cef78"
     },
     {
       "activationEvidence": [],
@@ -26793,6 +26848,46 @@
     {
       "activationEvidence": [],
       "active": false,
+      "algorithmSymbols": [
+        "canonical",
+        "command",
+        "hash",
+        "snapshot"
+      ],
+      "bytes": 9491,
+      "disposition": "unreferenced-script-source",
+      "language": "ts",
+      "migrationObligation": "No current package/workflow/import activation edge discovered",
+      "path": "scripts/extension-kinds-conformance.ts",
+      "sha256": "366260b999f2c83881da770b404bf01e792de007f9a4990d68f7b96e5a000e52"
+    },
+    {
+      "activationEvidence": [],
+      "active": false,
+      "algorithmSymbols": [
+        "read"
+      ],
+      "bytes": 1011,
+      "disposition": "unreferenced-script-source",
+      "language": "mjs",
+      "migrationObligation": "No current package/workflow/import activation edge discovered",
+      "path": "scripts/extension-kinds-node.mjs",
+      "sha256": "967c421e5d3ff227d911de643bf6245c1d1c4687b2553d54d8df80360e386494"
+    },
+    {
+      "activationEvidence": [],
+      "active": false,
+      "algorithmSymbols": [],
+      "bytes": 633,
+      "disposition": "unreferenced-script-source",
+      "language": "py",
+      "migrationObligation": "No current package/workflow/import activation edge discovered",
+      "path": "scripts/extension-kinds-python.py",
+      "sha256": "7146848476704086f0954aef6f5f270167a58ffaf7a738df543f483bed683adc"
+    },
+    {
+      "activationEvidence": [],
+      "active": false,
       "algorithmSymbols": [],
       "bytes": 1660,
       "disposition": "unreferenced-script-source",
@@ -30805,6 +30900,20 @@
       "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
       "path": "scripts/prepare-action-tests.ts",
       "sha256": "cb9566bbaed99b8dcf5379df78653397fd28f5eb37993283a24a0b347c87d4df"
+    },
+    {
+      "activationEvidence": [
+        "scripts/build-test-prerequisites.ts",
+        "transitive-import-closure"
+      ],
+      "active": true,
+      "algorithmSymbols": [],
+      "bytes": 1333,
+      "disposition": "active-host-tooling-algorithm",
+      "language": "ts",
+      "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
+      "path": "scripts/prepare-kind-tests.ts",
+      "sha256": "178a0ef6a02ebb24e5ad3406fcdef547ad6683a24b2df0ff9cbd962021af1a18"
     },
     {
       "activationEvidence": [],
@@ -41929,6 +42038,47 @@
       "activationEvidence": [],
       "active": false,
       "algorithmSymbols": [
+        "verify"
+      ],
+      "bytes": 2567,
+      "disposition": "unreferenced-test-source",
+      "language": "ts",
+      "migrationObligation": "Retained test/evidence source with no discovered current activation edge",
+      "path": "tests/extension-kinds/browser-entry.ts",
+      "sha256": "46eb9f9b641a9fe67761d16277eb1d76a4f0c29efd46dd85f4a595e631b7a520"
+    },
+    {
+      "activationEvidence": [],
+      "active": false,
+      "algorithmSymbols": [
+        "load",
+        "registry"
+      ],
+      "bytes": 5542,
+      "disposition": "unreferenced-test-source",
+      "language": "ts",
+      "migrationObligation": "Retained test/evidence source with no discovered current activation edge",
+      "path": "tests/extension-kinds/composition.test.ts",
+      "sha256": "80f45e4d662e7b51c33e337e84a81caa6127f814e6013ef7bb5ac4e0cc9f3e21"
+    },
+    {
+      "activationEvidence": [],
+      "active": false,
+      "algorithmSymbols": [
+        "coreRows",
+        "fail"
+      ],
+      "bytes": 1800,
+      "disposition": "unreferenced-test-source",
+      "language": "ts",
+      "migrationObligation": "Retained test/evidence source with no discovered current activation edge",
+      "path": "tests/extension-kinds/support.ts",
+      "sha256": "e9b83ba9acbe4f07a8cbe2c88ce35813ad3a368446358368308941d6f60e2012"
+    },
+    {
+      "activationEvidence": [],
+      "active": false,
+      "algorithmSymbols": [
         "cases"
       ],
       "bytes": 6616,
@@ -44011,18 +44161,20 @@
         "test_cross_package_private_import_is_rejected",
         "test_current_v8_is_only_allowed_at_exact_pre_r4_sources",
         "test_feature_tree_parser_captures_only_named_package_features",
+        "test_generic_kinds_keep_ecosystem_semantics_out_of_core",
         "test_inverse_cargo_tree_reports_only_active_target_parents_and_path",
+        "test_kind_wrapper_transport_and_semantic_fork_controls",
         "test_production_core_cannot_restore_retired_runtime_or_reference_fallback",
         "test_production_graph_has_no_spike_entropy_exception",
         "test_temporary_manifests_exercise_core_dependency_policy",
         "test_wasm_entropy_exception_is_target_path_feature_and_source_exact"
       ],
-      "bytes": 9616,
+      "bytes": 10692,
       "disposition": "test-oracle-fixture-algorithm",
       "language": "py",
       "migrationObligation": "Active only where activation evidence says so; test/oracle logic is evidence and not an implementation port by default",
       "path": "tests/rust-inventory/test_boundaries.py",
-      "sha256": "039144196a7bd03c5ffa0683d76baff4154554b2fae2916386a8380a845b26c9"
+      "sha256": "36baa35f6b478439642cae2fbbb0801276b61e004bfb93273c7aa2524e89d1a7"
     },
     {
       "activationEvidence": [
@@ -52971,7 +53123,7 @@
   ],
   "sourceModules": [
     {
-      "bytes": 1202,
+      "bytes": 1258,
       "disposition": "python-public-core-surface",
       "imports": [
         ".models",
@@ -52999,6 +53151,7 @@
         "current_core_version",
         "dataset_source_schema",
         "domain_pack_schema",
+        "inspect_extension_kinds",
         "read_document",
         "read_json_value",
         "schema_validator",
@@ -53008,7 +53161,7 @@
         "write_json_value"
       ],
       "resolvedInternalImports": [],
-      "sha256": "e9dca8a080364f76a1c370caabd95f35e36c011c6b27fd58a487cadf320aee9d"
+      "sha256": "bfd0c2e4da3e59790897a0ef90a2ee9a8c1b650867d24bd178fdcf922c7e985b"
     },
     {
       "bytes": 13793,
@@ -53150,12 +53303,13 @@
       "sha256": "c625c5f187268ce66c60a396a7cad14d2b5e3d9ddb976719e0cc6209fcfc08e1"
     },
     {
-      "bytes": 1867,
+      "bytes": 3400,
       "disposition": "python-registry-binding",
       "imports": [
         "._rust",
         "collections.abc",
         "dataclasses",
+        "json",
         "sys"
       ],
       "language": "python",
@@ -53168,7 +53322,7 @@
         "Validation"
       ],
       "resolvedInternalImports": [],
-      "sha256": "c29cc0087cbd555dc1a964d2deed90d74cf8f3e2c28aff2b9895512fa90c88bc"
+      "sha256": "24e457eeb4ccd369bb3c18288e3bf855744b90922495ce239a8887085f6587be"
     },
     {
       "bytes": 8935,
@@ -53243,20 +53397,22 @@
       "sha256": "d77a9afc1bd7d500d341fa00f3c8af73ed89694a0a5cd3f2382f577e6fdb947a"
     },
     {
-      "bytes": 828,
+      "bytes": 1361,
       "disposition": "python-validation-binding",
       "imports": [
         "._rust",
-        ".registry"
+        ".registry",
+        "json"
       ],
       "language": "python",
       "migrationObligation": "R2 preserve Python diagnostics/callback API around shared Rust validation",
       "path": "python/src/umf/validation.py",
       "publicExports": [
+        "inspect_extension_kinds",
         "validate_document"
       ],
       "resolvedInternalImports": [],
-      "sha256": "0422eb695da542314da853518532fc29466a60be4070123d911277a6b9d02d64"
+      "sha256": "aac6f413ab68fa7ece1e7733e9030445aea17faad6f9adccab0e4cdceeef22b5"
     },
     {
       "bytes": 2063,
@@ -54033,7 +54189,7 @@
       "path": "python/umf_access/src/umf_access/generated_core.py",
       "publicExports": [],
       "resolvedInternalImports": [],
-      "sha256": "85a6c567012677d92ffdf511f280317c9a148dd763cd3f956e113b0e76901471"
+      "sha256": "4cbae98795bbd212ea5c0485426e51bb9bd75745a0aefb5710703a33d8a4c254"
     },
     {
       "bytes": 1486,
@@ -56263,7 +56419,7 @@
         "proposeAvroNodeEdit"
       ],
       "resolvedImports": [
-        "node_modules/avsc/etc/browser/avsc-types.js",
+        "../../../../Projects/umf/node_modules/avsc/etc/browser/avsc-types.js",
         "spec/extensions/avro/native-schema.schema.json",
         "spec/extensions/avro/package.json",
         "src/adapters/avro/metadata.ts",
@@ -56910,7 +57066,7 @@
         "proposeGeneralizedRdfQuadEdit"
       ],
       "resolvedImports": [
-        "node_modules/ajv/dist/2020.d.ts",
+        "../../../../Projects/umf/node_modules/ajv/dist/2020.d.ts",
         "spec/extensions/generalized-rdf/dataset-schema.json",
         "spec/extensions/generalized-rdf/package.json",
         "src/adapters/jsonld/rdf-terms.ts",
@@ -56953,7 +57109,7 @@
         "inspectGraphql"
       ],
       "resolvedImports": [
-        "node_modules/graphql/index.d.mts",
+        "../../../../Projects/umf/node_modules/graphql/index.d.mts",
         "spec/extensions/graphql/package.json",
         "src/generated/core-model.ts",
         "src/model/document.ts",
@@ -57252,7 +57408,7 @@
         "walkJsonSchema"
       ],
       "resolvedImports": [
-        "node_modules/ajv/dist/2020.d.ts",
+        "../../../../Projects/umf/node_modules/ajv/dist/2020.d.ts",
         "spec/extensions/json-schema/package.json",
         "spec/extensions/json-schema/schema.json",
         "src/adapters/json-schema/tree.ts",
@@ -57336,8 +57492,8 @@
         "proposeRdfToJsonLd"
       ],
       "resolvedImports": [
-        "node_modules/jsonld/lib/flatten.js",
-        "node_modules/jsonld/lib/index.js",
+        "../../../../Projects/umf/node_modules/jsonld/lib/flatten.js",
+        "../../../../Projects/umf/node_modules/jsonld/lib/index.js",
         "spec/extensions/jsonld/package.json",
         "src/adapters/generalized-rdf/index.ts",
         "src/adapters/jsonld/rdf-terms.ts",
@@ -57441,7 +57597,7 @@
         "proposeLinkmlDocumentNodeEdit"
       ],
       "resolvedImports": [
-        "node_modules/ajv/dist/2019.d.ts",
+        "../../../../Projects/umf/node_modules/ajv/dist/2019.d.ts",
         "spec/extensions/linkml/native-schema.json",
         "spec/extensions/linkml/package.json",
         "src/generated/core-model.ts",
@@ -57542,7 +57698,7 @@
         "proposeOdcsDocumentNodeEdit"
       ],
       "resolvedImports": [
-        "node_modules/ajv/dist/2019.d.ts",
+        "../../../../Projects/umf/node_modules/ajv/dist/2019.d.ts",
         "spec/extensions/odcs/native-3.0.0.json",
         "spec/extensions/odcs/native-3.0.1.json",
         "spec/extensions/odcs/native-3.0.2.json",
@@ -57725,7 +57881,7 @@
         "proposeOpenapiEdit"
       ],
       "resolvedImports": [
-        "node_modules/ajv-draft-04/dist/index.d.ts",
+        "../../../../Projects/umf/node_modules/ajv-draft-04/dist/index.d.ts",
         "spec/extensions/openapi/package.json",
         "spec/extensions/openapi/upstream/2.0-schema.json",
         "spec/extensions/openapi/upstream/3.0-schema.json",
@@ -59047,9 +59203,9 @@
         "writeDescriptorSet"
       ],
       "resolvedImports": [
-        "node_modules/@bufbuild/protobuf/dist/esm/index.d.ts",
-        "node_modules/@bufbuild/protobuf/dist/esm/reflect/index.d.ts",
-        "node_modules/@bufbuild/protobuf/dist/esm/wkt/index.d.ts",
+        "../../../../Projects/umf/node_modules/@bufbuild/protobuf/dist/esm/index.d.ts",
+        "../../../../Projects/umf/node_modules/@bufbuild/protobuf/dist/esm/reflect/index.d.ts",
+        "../../../../Projects/umf/node_modules/@bufbuild/protobuf/dist/esm/wkt/index.d.ts",
         "src/model/json.ts",
         "src/model/types.ts"
       ],
@@ -59095,9 +59251,9 @@
         "writeDescriptorSet"
       ],
       "resolvedImports": [
-        "node_modules/@bufbuild/protobuf/dist/esm/index.d.ts",
-        "node_modules/@bufbuild/protobuf/dist/esm/wkt/index.d.ts",
-        "node_modules/ajv/dist/2020.d.ts",
+        "../../../../Projects/umf/node_modules/@bufbuild/protobuf/dist/esm/index.d.ts",
+        "../../../../Projects/umf/node_modules/@bufbuild/protobuf/dist/esm/wkt/index.d.ts",
+        "../../../../Projects/umf/node_modules/ajv/dist/2020.d.ts",
         "spec/extensions/protobuf/package.json",
         "src/adapters/protobuf/descriptor.ts",
         "src/adapters/protobuf/source.ts",
@@ -59173,8 +59329,8 @@
         "rdfRegistry"
       ],
       "resolvedImports": [
-        "node_modules/@rdfjs/types/index.d.ts",
-        "node_modules/n3/browser/n3.esm.min.js",
+        "../../../../Projects/umf/node_modules/@rdfjs/types/index.d.ts",
+        "../../../../Projects/umf/node_modules/n3/browser/n3.esm.min.js",
         "spec/extensions/rdf/package.json",
         "src/generated/core-model.ts",
         "src/model/json.ts",
@@ -59223,8 +59379,8 @@
         "proposeShaclEngineValidation"
       ],
       "resolvedImports": [
-        "node_modules/n3/browser/n3.esm.min.js",
-        "node_modules/rdf-validate-shacl/index.d.ts",
+        "../../../../Projects/umf/node_modules/n3/browser/n3.esm.min.js",
+        "../../../../Projects/umf/node_modules/rdf-validate-shacl/index.d.ts",
         "src/adapters/rdf/index.ts",
         "src/adapters/shacl/index.ts",
         "src/adapters/shacl/lists.ts",
@@ -59357,11 +59513,11 @@
         "installExactShaclNumbers"
       ],
       "resolvedImports": [
-        "node_modules/@rdfjs/types/index.d.ts",
-        "node_modules/rdf-literal/index.d.ts",
-        "node_modules/rdf-validate-shacl/index.d.ts",
-        "node_modules/rdf-validate-shacl/src/property-path.d.ts",
-        "node_modules/rdf-validate-shacl/src/shapes-graph.d.ts",
+        "../../../../Projects/umf/node_modules/@rdfjs/types/index.d.ts",
+        "../../../../Projects/umf/node_modules/rdf-literal/index.d.ts",
+        "../../../../Projects/umf/node_modules/rdf-validate-shacl/index.d.ts",
+        "../../../../Projects/umf/node_modules/rdf-validate-shacl/src/property-path.d.ts",
+        "../../../../Projects/umf/node_modules/rdf-validate-shacl/src/shapes-graph.d.ts",
         "src/adapters/shacl/float.ts",
         "src/adapters/shacl/strings.ts",
         "src/model/types.ts"
@@ -59385,9 +59541,9 @@
         "installShaclStrings"
       ],
       "resolvedImports": [
-        "node_modules/rdf-validate-shacl/index.d.ts",
-        "node_modules/rdf-validate-shacl/src/dataset-utils.d.ts",
-        "node_modules/rdf-validate-shacl/src/shapes-graph.d.ts",
+        "../../../../Projects/umf/node_modules/rdf-validate-shacl/index.d.ts",
+        "../../../../Projects/umf/node_modules/rdf-validate-shacl/src/dataset-utils.d.ts",
+        "../../../../Projects/umf/node_modules/rdf-validate-shacl/src/shapes-graph.d.ts",
         "src/model/types.ts"
       ],
       "sha256": "e27fcf3f348ddb2f1c7573e2e8092a3c7760db5d61c07f3a39ce5e7d3e2ecb49"
@@ -59875,7 +60031,7 @@
         "typeSpecCompilerReport"
       ],
       "resolvedImports": [
-        "node_modules/@typespec/compiler/dist/src/index.d.ts",
+        "../../../../Projects/umf/node_modules/@typespec/compiler/dist/src/index.d.ts",
         "node_modules/@typespec/compiler/dist/src/lib/intrinsic/tsp-index.d.ts",
         "node_modules/@typespec/compiler/dist/src/lib/tsp-index.d.ts",
         "node_modules/@typespec/json-schema/dist/src/index.d.ts",
@@ -59940,7 +60096,7 @@
         "typespecRegistry"
       ],
       "resolvedImports": [
-        "node_modules/@typespec/compiler/dist/src/ast/index.d.ts",
+        "../../../../Projects/umf/node_modules/@typespec/compiler/dist/src/ast/index.d.ts",
         "spec/extensions/typespec/package.json",
         "src/adapters/typespec/compiler.ts",
         "src/adapters/typespec/libraries.ts",
@@ -60015,7 +60171,7 @@
         "getTypeSpecSemanticGraph"
       ],
       "resolvedImports": [
-        "node_modules/@typespec/compiler/dist/src/index.d.ts",
+        "../../../../Projects/umf/node_modules/@typespec/compiler/dist/src/index.d.ts",
         "src/adapters/typespec/compiler.ts",
         "src/adapters/typespec/index.ts",
         "src/model/json.ts",
@@ -60299,7 +60455,7 @@
         "avroFieldAllowsNull"
       ],
       "resolvedImports": [
-        "node_modules/avsc/etc/browser/avsc-types.js",
+        "../../../../Projects/umf/node_modules/avsc/etc/browser/avsc-types.js",
         "src/model/native-json.ts",
         "src/model/serialization.ts"
       ],
@@ -60327,7 +60483,7 @@
         "inspectAvroTypeShape"
       ],
       "resolvedImports": [
-        "node_modules/avsc/etc/browser/avsc-types.js",
+        "../../../../Projects/umf/node_modules/avsc/etc/browser/avsc-types.js",
         "src/model/json.ts",
         "src/model/native-json.ts",
         "src/model/serialization.ts"
@@ -63437,7 +63593,7 @@
         "verifyRelationshipExtra"
       ],
       "resolvedImports": [
-        "node_modules/graphql/index.d.mts",
+        "../../../../Projects/umf/node_modules/graphql/index.d.mts",
         "spec/core/relationship-extras.schema.json",
         "spec/core/relationship-operation.schema.json",
         "spec/core/schema.json",
@@ -67146,7 +67302,7 @@
       "sha256": "bb542d8d282f6b5dfe4b4df6624717b6aa6bbbdf9e30bfa0046fac2aecc7985f"
     },
     {
-      "bytes": 5012,
+      "bytes": 6714,
       "disposition": "generated-metamodel-output",
       "imports": [
         "../../spec/core/extension-package.schema.json",
@@ -67164,6 +67320,15 @@
         "CoreSemanticTypeReference",
         "Document",
         "Element",
+        "ExtensionKindCatalog",
+        "ExtensionKindCoverage",
+        "ExtensionKindDefinition",
+        "ExtensionKindDiagnostic",
+        "ExtensionKindEntry",
+        "ExtensionKindInspection",
+        "ExtensionKindListResult",
+        "ExtensionKindReference",
+        "ExtensionKindValidation",
         "ExtensionPackage",
         "Extensions",
         "Facets",
@@ -67198,10 +67363,10 @@
         "spec/metamodel/generated/core-constraints.json",
         "spec/metamodel/generated/domain-policy.json"
       ],
-      "sha256": "afd43ffe02ffb64973cf95521991c142c54bb07151d68f018066a9b46108b911"
+      "sha256": "5e3a15bcad4278133b83f2a18c173322e1e67ed87aa7b7d3800c52b5e46aa22b"
     },
     {
-      "bytes": 284515,
+      "bytes": 305070,
       "disposition": "generated-metamodel-output",
       "imports": [
         "ajv"
@@ -67217,12 +67382,12 @@
         "checkSemanticTypeReferences"
       ],
       "resolvedImports": [
-        "node_modules/ajv/dist/ajv.d.ts"
+        "../../../../Projects/umf/node_modules/ajv/dist/ajv.d.ts"
       ],
-      "sha256": "88e4252883b595782c01d6b63fd86e7a5ba8492aa4fec953a628e32a051bbbc4"
+      "sha256": "ce9319b6261d1d681a5950cb068294717345916552b185102e88b7a31356e78b"
     },
     {
-      "bytes": 31768,
+      "bytes": 31809,
       "disposition": "typescript-public-api-facade",
       "imports": [
         "../spec/core/bit128-selection.schema.json",
@@ -67548,6 +67713,7 @@
         "./model/dataset-values-compact",
         "./model/document",
         "./model/evolution",
+        "./model/extension-kinds",
         "./model/facets",
         "./model/field-kind",
         "./model/json",
@@ -67927,6 +68093,13 @@
         "Element",
         "ElementKind",
         "EvaluatedSecurityRule",
+        "ExtensionKindCoverage",
+        "ExtensionKindDefinition",
+        "ExtensionKindEntry",
+        "ExtensionKindInspection",
+        "ExtensionKindListResult",
+        "ExtensionKindReference",
+        "ExtensionKindRuntime",
         "ExtensionPackage",
         "FacetsAvroProjection",
         "FacetsAvroRequest",
@@ -68911,6 +69084,7 @@
         "inspectDeltaTable",
         "inspectDomainPack",
         "inspectDomainPackLoader",
+        "inspectExtensionKinds",
         "inspectFieldClassification",
         "inspectFieldProjection",
         "inspectGeneralizedRdfDocument",
@@ -69819,6 +69993,7 @@
         "src/model/dataset-values.ts",
         "src/model/document.ts",
         "src/model/evolution.ts",
+        "src/model/extension-kinds.ts",
         "src/model/facets.ts",
         "src/model/field-kind.ts",
         "src/model/json.ts",
@@ -69887,7 +70062,7 @@
         "src/validation/relationships.ts",
         "src/validation/schema-properties.ts"
       ],
-      "sha256": "bf5c4683ed4fa3290d1908610f23392580194715db4117d0c84bdfb721fb794b"
+      "sha256": "b6d36d3db4ce65322399c9de1b2a040552b8b49f5c9286c846b517771ea4db69"
     },
     {
       "bytes": 1995,
@@ -70188,6 +70363,36 @@
         "src/validation/schema.ts"
       ],
       "sha256": "f4833f850c30257421dd92c286539ea93c35114fca2b749452cee5d1feeb7e24"
+    },
+    {
+      "bytes": 916,
+      "disposition": "shared-semantic-engine",
+      "imports": [
+        "../generated/core-model",
+        "../registry/kind-runtime",
+        "../registry/registry",
+        "./types"
+      ],
+      "language": "typescript",
+      "migrationObligation": "R5 or R2 migration obligation; preserve contract and generated authority",
+      "path": "src/model/extension-kinds.ts",
+      "publicExports": [
+        "ExtensionKindCoverage",
+        "ExtensionKindDefinition",
+        "ExtensionKindEntry",
+        "ExtensionKindInspection",
+        "ExtensionKindListResult",
+        "ExtensionKindReference",
+        "ExtensionKindRuntime",
+        "inspectExtensionKinds"
+      ],
+      "resolvedImports": [
+        "src/generated/core-model.ts",
+        "src/model/types.ts",
+        "src/registry/kind-runtime.ts",
+        "src/registry/registry.ts"
+      ],
+      "sha256": "b8037dc95b4e96e39b08e11b13c06095ca2a0df2c23fcc004319de5cb275e750"
     },
     {
       "bytes": 8239,
@@ -70622,7 +70827,7 @@
         "treeChild"
       ],
       "resolvedImports": [
-        "node_modules/yaml/dist/index.d.ts",
+        "../../../../Projects/umf/node_modules/yaml/dist/index.d.ts",
         "src/model/json.ts",
         "src/model/types.ts"
       ],
@@ -71256,7 +71461,7 @@
         "writeJsonValue"
       ],
       "resolvedImports": [
-        "node_modules/yaml/dist/index.d.ts",
+        "../../../../Projects/umf/node_modules/yaml/dist/index.d.ts",
         "src/model/errors.ts",
         "src/model/internal/json-number.ts",
         "src/model/internal/scan-json-frame.ts",
@@ -71939,7 +72144,7 @@
         "verifyDddGraphqlProjection"
       ],
       "resolvedImports": [
-        "node_modules/graphql/index.d.mts",
+        "../../../../Projects/umf/node_modules/graphql/index.d.mts",
         "spec/core/schema.json",
         "spec/projections/ddd-graphql.schema.json",
         "src/adapters/graphql/index.ts",
@@ -72158,7 +72363,7 @@
         "projectGraphqlInputToJsonSchema"
       ],
       "resolvedImports": [
-        "node_modules/graphql/index.d.mts",
+        "../../../../Projects/umf/node_modules/graphql/index.d.mts",
         "src/adapters/graphql/index.ts",
         "src/adapters/json-schema/index.ts",
         "src/model/json.ts",
@@ -72586,12 +72791,32 @@
       "sha256": "76cd94692bf1949f7d6f89630ec3b68ea8761b8c7c8b6a631644e6ed2b03bf2f"
     },
     {
-      "bytes": 1807,
+      "bytes": 708,
       "disposition": "shared-semantic-engine",
       "imports": [
+        "../model/types"
+      ],
+      "language": "typescript",
+      "migrationObligation": "R5 or R2 migration obligation; preserve contract and generated authority",
+      "path": "src/registry/kind-runtime.ts",
+      "publicExports": [
+        "ExtensionKindRuntime",
+        "KindRegistration"
+      ],
+      "resolvedImports": [
+        "src/model/types.ts"
+      ],
+      "sha256": "9cfb57d1cf2331107e8cf756538d3bd698d2c03cad77aa8d2d43d046b2b89745"
+    },
+    {
+      "bytes": 4053,
+      "disposition": "shared-semantic-engine",
+      "imports": [
+        "../generated/core-model",
         "../model/json",
         "../model/types",
         "../validation/schema",
+        "./kind-runtime",
         "ajv"
       ],
       "language": "typescript",
@@ -72603,12 +72828,14 @@
         "SemanticValidator"
       ],
       "resolvedImports": [
-        "node_modules/ajv/dist/ajv.d.ts",
+        "../../../../Projects/umf/node_modules/ajv/dist/ajv.d.ts",
+        "src/generated/core-model.ts",
         "src/model/json.ts",
         "src/model/types.ts",
+        "src/registry/kind-runtime.ts",
         "src/validation/schema.ts"
       ],
-      "sha256": "b5fc12f7ea6799acc61442df2c1e6b8f1d6b2ece3410278396daf8992a431674"
+      "sha256": "3fa010311edc23c5dc74826eb7a74a8a19a9a4c41da3031bc66e6f741d1164c1"
     },
     {
       "bytes": 9773,
@@ -73114,7 +73341,7 @@
       "sha256": "010d8dcc062363592713d68fcd54000775420cae779a074474bcca19b862cd33"
     },
     {
-      "bytes": 1407,
+      "bytes": 1641,
       "disposition": "shared-semantic-engine",
       "imports": [
         "../generated/core-validators",
@@ -73138,7 +73365,7 @@
         "src/validation/constraint-kernel.ts",
         "src/validation/current-policy.ts"
       ],
-      "sha256": "ca016c6efa4f48da17d3d1e72dccc44b0c92eeb348084bd43c24f41e806b93f9"
+      "sha256": "bb88c43790277f67269cea09af251b908e93ddd356a1a4aa8bc10c0cf135720a"
     },
     {
       "bytes": 457,
@@ -73304,7 +73531,7 @@
         "installJsonEquality"
       ],
       "resolvedImports": [
-        "node_modules/ajv/dist/2020.d.ts",
+        "../../../../Projects/umf/node_modules/ajv/dist/2020.d.ts",
         "src/generated/core-model.ts",
         "src/generated/core-validators.ts",
         "src/validation/internal-schema.ts",

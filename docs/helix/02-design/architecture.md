@@ -665,6 +665,36 @@ direct expression composition and optional backend preparation.
 
 ## Module Boundaries
 
+### Extension-defined kinds (proposed)
+
+[CONTRACT-906](contracts/CONTRACT-906-extension-defined-kinds.md) defines
+package-owned kind catalogs and generic discovery through existing extension
+payload tags. [The design](plan-2026-10-22-extension-defined-kinds.md) maps the
+explicit registration and qualification. This extends the existing
+registry boundary; it introduces no ecosystem kind enum, second kind registry,
+owner classification field or artifact-directed validator loading.
+
+| Module | Owned responsibility / public boundary | Allowed dependencies | Forbidden dependencies |
+| --- | --- | --- | --- |
+| `crates/umf-core/src/{registry,kinds}.rs` | Immutable registered catalogs and exact kind identities; CONTRACT-906 list/get/inspect operations | Core values, Context, generated package policy, existing registry and validation APIs | Adapters, dashboard literals, filesystem/network/process, binding runtimes |
+| `crates/umf-core/src/{constraints,engine}.rs` | Generic kind/tag/scope mechanics at existing extension validation boundary | Authored/generated policy, registered catalogs, explicit semantic capabilities | Per-ecosystem branches, manifest-selected code, a parallel payload-schema path |
+| `crates/umf-core-wire`, `bindings/core/{python,node,wasm}` | Complete manifest transport and language presentation | Public shared engine APIs, existing exact admission and callback protocol | Duplicated kind resolution/validation or lossy manifest reconstruction |
+| `spec/metamodel/umf.yaml`, compiler | Package/catalog/result shapes and diagnostic policy; generated outputs | Closed authored vocabulary and generic compiler mechanics | Hand-maintained generated schemas/types/rules |
+
+Construction remains host-owned: callers install exact packages and trusted
+validators in the existing registry. The extension publisher owns kind meaning,
+payload schemas, native behavior and data-shape bindings. Core Record/Field
+semantics are independent of extension classification. New handwritten kind
+mechanics belong to Rust under ADR-006; the retained TypeScript engine does not
+gain a second implementation.
+
+Before dependent implementation, extend `bun run check:rust-boundaries` for
+these paths and new binding exports. Add negative controls for adapter imports,
+dashboard-specific generic branches, wrapper semantic forks and dropped catalog
+metadata. Existing checker success does not prove these new controls exist.
+
+### Existing compiler and SDK boundaries
+
 **Source Applicability**: source; the stage-one compiler and Python access SDK
 contain handwritten source. This is the bounded adoption scope selected in
 Concerns; it does not baseline unrelated legacy modules.

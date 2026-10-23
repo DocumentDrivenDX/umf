@@ -1,0 +1,75 @@
+{
+  "profile": "umf.extension-kinds.conformance/1",
+  "core": "0.10.0",
+  "catalog": "1.0.0",
+  "cases": 15,
+  "hosts": [
+    "native CLI (empty PATH)",
+    "installed Node package",
+    "installed Bun package",
+    "installed Python wheel",
+    "Chromium WASM"
+  ],
+  "mismatches": 0,
+  "versions": {
+    "node": "26.12.1",
+    "bun": "1.4.3",
+    "python": "3.13.16",
+    "pydantic": "2.14.1",
+    "chromium": "153.0.8010.12"
+  },
+  "pythonArtifact": {
+    "version": "3.13.16",
+    "pydantic": "2.14.1",
+    "native": "34cee2aace34d92767e87ab253b2da8d8ee5051a2f14da3f9e0ac5e9cdc12343",
+    "resources": {
+      "spec/core/schema.json": "8ba058ee5fedd38058ead8d49e59b74cdce4ac688e81f3828b75265a668c7a5b",
+      "spec/core/semantic-type-reference.schema.json": "5bb6a8431928aa6ede2ccead65b4bb5d5979fef8f1d32a22be54a56a97542073",
+      "spec/core/extension-package.schema.json": "a93e929d328e0442f0434999e33f0f1265e814e53d7c31c48be103b5d9798aca",
+      "spec/metamodel/generated/core-constraints.json": "d254e83df4dd4a4ff793094ee82c8fa0563dd21b6f196d4a17d9bc026bbe2244",
+      "spec/metamodel/generated/domain-policy.json": "fd50e87b740f165219d78d516a4b4abe0f23380ceb6b56b9f660ec84d5776805",
+      "spec/metamodel/generated/manifest.json": "1f01dd1eb96578553608a96a6befe3f1ae8f0ce5c1fee5fbf9b0a082c8847403"
+    }
+  },
+  "externalRequests": 0,
+  "pageErrors": [],
+  "composition": {
+    "record": "sales-row",
+    "fields": [
+      "channel",
+      "revenue"
+    ],
+    "serializationRecoveries": 2,
+    "invalidBindingRejected": true
+  },
+  "sources": {
+    "Cargo.lock": "e12048f6e1141dd742974ab3c5924dc0d7f025bf063f6aca90fbead32388a34f",
+    "spec/metamodel/umf.yaml": "42144576e3b15da4945ca744623a31967e3b29efa54da8ba3961e446b1c0e34b",
+    "spec/metamodel/generated/manifest.json": "1f01dd1eb96578553608a96a6befe3f1ae8f0ce5c1fee5fbf9b0a082c8847403",
+    "crates/umf-core/src/kinds.rs": "7e3aed5c9f37b67e9348291703dabc6c217178f73295e4fd9c801d1cefc6f349",
+    "crates/umf-core/src/registry.rs": "38ff151bddffdd9d79462802804cae76d58d01edf0ccaea68799907efe0918d3",
+    "crates/umf-core/src/engine.rs": "87137c80cb21717f34418e09da0ff4e7987946a6a80e7d2192bee910a4146bf7",
+    "crates/umf-core/src/constraints.rs": "9ce7950e96801e2c7080bb5e582824e455d89c7378f3d9960471ab247b8432e6",
+    "crates/umf-core-wire/src/lib.rs": "57c1fb73db793546952aa3b57a8695cbcd9f20d30ed0887700d4b6fc621f24e6",
+    "bindings/core/node/index.js": "81844d4a6c31179e44d77653043f8d781e2e1f7144babcf08cc1a0184c98b284",
+    "bindings/core/wasm/index.js": "22c4656c3002dd17d10ed47ece6c8c7449217377a450cf278878f318c24e08ff",
+    "bindings/core/python/src/lib.rs": "2eb8a2d14a721e7ae123e08f40b080b2933bbfd85fa3b2ce35b085686a96a8db",
+    "python/src/umf/registry.py": "24e457eeb4ccd369bb3c18288e3bf855744b90922495ce239a8887085f6587be",
+    "python/src/umf/validation.py": "aac6f413ab68fa7ece1e7733e9030445aea17faad6f9adccab0e4cdceeef22b5",
+    "fixtures/extension-kinds/conformance.json": "780543fe5bd2ca481c4e1062f7f3c755070b0d1934724ee7960f46642a03e598",
+    "fixtures/extension-kinds/dashboard.yaml": "d13a774cb08927fe5d0b2305bee3ec0f3fe92688d9735c00dde3183d205b4d66",
+    "fixtures/extension-kinds/dashboard-package.json": "46f1d646f304e26d68b9b8337f94d87d93b12488a47a21a5d334371f304608cf",
+    "tests/extension-kinds/browser-entry.ts": "46eb9f9b641a9fe67761d16277eb1d76a4f0c29efd46dd85f4a595e631b7a520",
+    "tests/extension-kinds/support.ts": "e9b83ba9acbe4f07a8cbe2c88ce35813ad3a368446358368308941d6f60e2012",
+    "scripts/extension-kinds-conformance.ts": "366260b999f2c83881da770b404bf01e792de007f9a4990d68f7b96e5a000e52",
+    "scripts/extension-kinds-node.mjs": "967c421e5d3ff227d911de643bf6245c1d1c4687b2553d54d8df80360e386494",
+    "scripts/extension-kinds-python.py": "7146848476704086f0954aef6f5f270167a58ffaf7a738df543f483bed683adc"
+  },
+  "artifacts": {
+    "nodeAddon": "8a9e63eb469b5bc0c831216e18f35a5ad9e85f3feb5291bc21f9de3be39114cf",
+    "cli": "da8600899ab4b7226653330af3f7b6f870962109c835064881be71319f63ed7d",
+    "wasm": "9d1fe0ca3aa5252f69b8e542bbd363f174160322e4b02d7399d8c3dab57cd852",
+    "browserBundle": "1646d26dd4daa82903ae5a5d8a1f56aacef9d6dc7dabdb4aebba782948690e7f"
+  },
+  "limits": "Synthetic dashboard composition and generic classification only; no native BI system compatibility or platform-wide release qualification."
+}
