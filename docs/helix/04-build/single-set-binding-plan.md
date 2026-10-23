@@ -461,3 +461,55 @@ The independent reviewer read/hashed the diff and did not execute this test.
 This is partial fixture-repair evidence, not an installed artifact
 qualification or a replacement for either hosted runtime suite. New hosted
 source and complete direct/rebuilt artifact gates remain required.
+
+## Legacy codegen bundle provenance refresh
+
+Typed-access run `40025542594` failed the official legacy Python codegen
+`--check` in jobs `120660679871` and `120660680034`: the checked-in bundle
+still reflected the pre-refresh generated resources. This is a generated
+source-cohort blocker, not a failure of the separately retained native SDK
+runtime matrix. The unmodified official `bun scripts/build-codegen.ts` was
+rerun against source `a658acc7122f40d6e89cd6c15cbf0acb24f618e7` with Bun
+1.4.3 and the frozen dependency lock. Only its three declared generated
+outputs changed; no authored generator, dependency, license, notice, engine
+or operation inventory changed.
+
+Independent hashing confirms gzip
+`b08e07bd30e2fad8ff144d61ddc972d866dfeb7be7fa933bb3a8ad05848c0ebc`,
+manifest
+`500989293c3db8fc7473cb3e179336ea2576426489182fdd4e29671f31c86983`
+and generated `_release.py`
+`faf7dbb6114481014fbda331f7ef98c8c83d31497ad7aa6e984897358b45a1e7`.
+All 234 manifest input hashes match the actual source. Exactly seven inputs
+changed: the three generated core schemas, core constraints, domain policy,
+core model and core validators previously reviewed in the metamodel refresh.
+The manifest's eleven payload hashes and generated release pin also match.
+The decompressed bundle SHA-256 is
+`11f62b1e2fecc6d8638359b0d2d6b133e6972c300b8136f7e7a81cc250532775`.
+
+The decompressed old/new bundles are each 758,125 bytes. The independent
+review used the already-locked TypeScript 5.9.3 API to parse and bind both
+texts without evaluating the JavaScript. Across 217,127 AST nodes, structure
+and positions match after the five exact compiler-pin substitutions. The
+remaining differences are 36 lexical binding renames at 72 identifier
+occurrences, with identical declaration positions/kinds; properties and
+shorthand keys are not renamed. Applying only those bound identifier changes
+accounts for every remaining byte. This establishes the provenance refresh
+and minifier alpha-renaming without treating textual name substitutions as
+permission to change schema literals or execution logic. The retained
+parser/binding review SHA-256 is
+`3853af94868280aefa828bdad9529926d62b0350df9f036f5668ae775c44244c`.
+
+The implementation owner reports the official check current at 234 inputs /
+13 outputs, deterministic gzip tests passing one test / 18 assertions, and
+scoped source Python codegen tests passing four tests / eight subtests. Its
+scoped legacy-codegen Hatch wheel hash is
+`38eea04e23d77ce0b725168c84387049d1791fea19e89479c8e3e0fb8983af65`;
+that build is not a new native SDK qualification. The independent reviewer
+performed read/hash/parser analysis and did not rerun these functional checks.
+The generated-source change is clear for final inventory capture and hosted
+checks. Because these legacy assets are included in the SDK source archive,
+the new source-distribution cohort must be rebuilt and both resulting native
+artifacts independently qualified again. Earlier successful matrix receipts
+remain unchanged evidence for their exact originals; public publication and
+Arras default public-extra acceptance remain separate gates.
