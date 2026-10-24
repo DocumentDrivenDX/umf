@@ -1,6 +1,35 @@
 # Core 0.10.2 producer evidence
 
-The current product-source producer is `14cc001d8944cb3ed61da720c7795b8b521d496e`.
+The current checked product-source candidate is
+`2a76a8e8213ec64334408ec49edadc3b6e765cce`. Its parent
+`e527340c60c68c56ace12b9e0644e93211d3f792` fixes cross-filesystem reference
+staging by staging normal builds beside their destination; check mode retains
+its original temporary path. The focused two-test regression passes. The fresh
+inventory was actually generated at e527, then committed unchanged in 2a76.
+
+The separate unmodified full source-inventory check at 2a76 returned zero:
+578 modules and 344 active scripts, inventory SHA256
+`90ecd7dc3c7461660d67aa42358d8c339534cb9618d6b68b6b8c336cb843e35c`.
+The checker took 103.087 seconds; its controller completed in 168.328 seconds.
+Independent read-only audit took 23.631 seconds and finished within the original
+300-second aggregate budget. The controller and all 14 owned child PIDs and
+process groups are absent, the worktree is absent from the filesystem and Git
+registry, and all 19,517 dependency entries match fresh before/after observations.
+The committed inventory input stayed byte-identical. The `*-011.json` records
+retain actual receipts and provenance; the audit source is inert `.py.txt`.
+The retained syntax warning is source analysis, not execution of that probe.
+
+Independent source/inventory gate review accepted the actual check and retained
+owned cleanup evidence. This check does not qualify the
+website build or native Python artifacts. Hosted Linux/macOS wheel evidence at
+`ebce5444dfacf4cfda9cc93f1652d43f83e59d57` keeps that exact historical source.
+Fresh candidate CI, website and platform artifacts, final review, merge,
+immutable publication and fresh public-download verification remain required.
+No release or managed consumer acceptance is claimed.
+
+# Historical check010 source evidence
+
+The product-source producer at that checkpoint is `14cc001d8944cb3ed61da720c7795b8b521d496e`.
 Its sole change over b4f is test import ordering and equivalent combined context
 managers. Repository-config Ruff 0.17.1 reproduces I001/SIM117 on the baseline;
 the corrected test passes Ruff and all three focused tests. Independent review
