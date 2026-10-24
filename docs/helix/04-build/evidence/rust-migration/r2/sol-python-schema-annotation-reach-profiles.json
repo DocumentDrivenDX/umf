@@ -1,0 +1,45 @@
+{
+  "id": "R2-SOL-PYTHON-SCHEMA-ANNOTATION-REACH-PROFILES-001",
+  "source": "origin/main 53de049136c7e41b482d1a73665d031cd5fbaec6",
+  "jsonschema": "4.26.0",
+  "basePython": "3.11.17",
+  "scope": "All 96 schema-instance cases, including one native schema admission refusal, and 285 method observations are equal as JSON values across CPython 3.11.17, 3.12.15 and 3.13.16. This includes ordered keyword/path prefixes and arithmetic exception class/messages. Immutable 3.11 fixtures are shared expected semantic records; candidate native arithmetic exceptions use the separately approved stable Rust error mapping.",
+  "captureMethod": "Each interpreter loads unchanged predecessor schemas.py/json.py via an isolated package shell, skipping unrelated package __init__/Pydantic imports; pure Python jsonschema dependencies are shared from the local cache and rpds matches the interpreter minor. No candidate outputs enter the oracle.",
+  "profiles": [
+    {
+      "python": "3.12.15",
+      "executable": "/Users/erik/.local/share/uv/python/cpython-3.12.15-macos-aarch64-none/bin/python3.12",
+      "executableSha256": "fe5e57e7f0dc374654e314d4e8f20cf2a345bda8a4e03032046f407027628a32",
+      "captures": [
+        {
+          "fixture": "sol-python-schema-annotation-reach-predecessor.json",
+          "fixtureSha256": "d6b746112fe489795aa842824c0f516e39c42aadf1010d47d0226d8b4820611f",
+          "generatorSha256": "da236daf576ccfd567988d90ca8baba8ea0cc6c788278d478791b6c7e29e3ec9",
+          "cases": 96,
+          "methodObservations": 285,
+          "completeRecordsEqual": true,
+          "captureSha256": "43804e6d77a5f614f01bb558eaf70334c8c5b01f24d737ae219a29ee8cacf5c8",
+          "capturePath": "/private/tmp/umf-sol-python-schema-annotation-reach-3.12.15.json"
+        }
+      ]
+    },
+    {
+      "python": "3.13.16",
+      "executable": "/Users/erik/.local/share/uv/python/cpython-3.13.16-macos-aarch64-none/bin/python3.13",
+      "executableSha256": "b898474cdfda938c1dd25af22d1b066d4808ba8b7e2d14e20033781d7787f87f",
+      "captures": [
+        {
+          "fixture": "sol-python-schema-annotation-reach-predecessor.json",
+          "fixtureSha256": "d6b746112fe489795aa842824c0f516e39c42aadf1010d47d0226d8b4820611f",
+          "generatorSha256": "da236daf576ccfd567988d90ca8baba8ea0cc6c788278d478791b6c7e29e3ec9",
+          "cases": 96,
+          "methodObservations": 285,
+          "completeRecordsEqual": true,
+          "captureSha256": "4c3164438a09acdc7df6f564cb543e640126aacde7ab4d36de7c8ff26c88b84b",
+          "capturePath": "/private/tmp/umf-sol-python-schema-annotation-reach-3.13.16.json"
+        }
+      ]
+    }
+  ],
+  "overallR2Approved": false
+}

@@ -21,10 +21,10 @@ ddx:
 
 ## Context
 
-UMF needs a default development and test runtime for its preferred TypeScript
-implementation. The library must also execute in a browser as JavaScript, with
-WebAssembly available where justified. The owner explicitly selects Bun for
-development and testing; high throughput is not the reason for this choice.
+UMF needs a default JavaScript development and test runtime for wrappers,
+generated clients and browser presentation. ADR-006 selects Rust shared execution;
+this ADR retains Bun for the JavaScript toolchain and actual-browser verification.
+The owner explicitly selects Bun for development and testing; high throughput is not the reason for this choice.
 
 ## Decision
 
@@ -33,13 +33,15 @@ tooling, and automated tests. Use its package manager and test runner as the
 default toolchain. Pin the chosen Bun and TypeScript versions and commit the
 dependency lockfile when scaffolding the implementation.
 
-Use `bun test` for the native unit/integration suites. Keep a separate TypeScript
+Use `bun test` for JavaScript unit/integration suites. Use Cargo for Rust tests;
+ADR-006 governs native engine/CLI delivery. Keep a separate TypeScript
 type-check gate and an actual-browser test gate. Bun success does not establish
 browser compatibility. Browser-facing core and adapters must not depend on
 `Bun.*`, Node filesystem/process APIs, or runtime-specific global types; those
 belong in development/test/CLI boundaries. Supply references and data explicitly.
 
-The browser artifact is JavaScript; Bun is not required in the consuming browser.
+The browser artifact uses JavaScript host code and Rust WASM under ADR-006;
+Bun is not required in the consuming browser.
 Pin any separate runtime required by an independent native oracle or browser
 automation tool. Such tools do not replace Bun as the default project runtime.
 
@@ -96,18 +98,21 @@ ecosystems.
 ## Supersession
 
 Supersedes: none. Supplements ADR-001, which selected serialization only.
-Superseded by: none.
+Superseded in part by [ADR-006](ADR-006-shared-rust-implementation.md) for
+shared-engine language and native package/CLI delivery. Bun tooling and browser
+verification remain selected.
 
 ## Concern Impact
 
 Selects the HELIX library `typescript-bun` concern for the `language-runtime`
-slot across all project areas. It applies reproducibility, portability, minimal
-participation, and runtime-boundary concerns without changing NFR-12–NFR-14.
+slot for JavaScript tooling and host code. ADR-006 selects Rust for shared
+execution and permits a Cargo workspace and binding distributions. It applies
+reproducibility, portability, minimal participation, and runtime-boundary concerns without changing NFR-12–NFR-14.
 
 UMF overrides four catalog practices in the project concerns artifact: Bun-native
-APIs stay outside browser-facing library code; the repository remains a single
-package rather than a Bun workspace; Biome is not a current gate; and the checked-in
-strict TypeScript configuration, rather than additional source-style restrictions,
+APIs stay outside browser-facing library code; ADR-006 permits Rust workspace
+and binding package boundaries alongside the historical TypeScript package; Biome
+is not a current gate; and the checked-in strict TypeScript configuration, rather than additional source-style restrictions,
 defines the accepted compiler boundary. The actual-browser gate and separate
 portable/tooling type environments mitigate the runtime-boundary override.
 

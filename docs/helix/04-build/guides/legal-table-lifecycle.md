@@ -63,8 +63,36 @@ representations are checked by the compiler, and PostgreSQL validates existing
 values and target constraints. Narrowing, cross-family casts, rounding,
 arbitrary expressions, unrelated default/generated/immutable/collation changes,
 and hidden logical facet changes refuse even with a fresh review marker. Existing
-column NULL backfill, online chunked rewrite, retained-value retirement windows,
-and automatic data rollback after purge are unsupported.
+column NULL backfill is outside this 0.2 profile. Online chunked rewrite,
+retained-value retirement windows and automatic data rollback after purge remain
+unsupported.
+
+## Existing-column fill before requiredness
+
+The successor options/plan 0.3 and execution profile 0.2 admit one existing
+optional Field becoming required with a reviewed, bounded NULL-only fill. Select
+the exact next-source, parameter-free, single-assignment typed UPDATE in
+`backfills`, including `scopedRows: true`, and the exact tightening review marker.
+The native fixture uses `column: {module: 'demo', element: 'summary'}` and
+`operation: 'fill_summary'`; see the
+[complete source-bound fixture](../../../../tests/lifecycle/g01-native-fixture.ts).
+
+Identity, carrier/type, facets and future default must remain unchanged. The fill
+uses an admitted non-null literal or qualified transaction clock, preserves
+present values, and changes historical NULL cells only. A future default does
+not fill history. The required phase holds native locks and commits fill,
+NOT NULL and the phase receipt together. Constraint or bound failure rolls the
+pair back; direct writers cannot cross an activation gap. Exact recovery observes
+a committed pair without repeating its fill or clock.
+
+This is a standalone maintenance operation: additional column/table/index,
+validation, seed or other effects refuse before a runnable plan is returned.
+Arbitrary per-row transforms and online reconciliation remain unsupported.
+The [independent installed signoff](../evidence/schema-migration-design-review/g01-review.json)
+qualifies the exact PostgreSQL/Python/package cohort and thirteen-case subset.
+Durable approval and the closed installation-reference 0.3 metadata profile are
+required. They do not authorize downgrading a persistent-approval installation
+to an older profile for otherwise unsupported table-inventory changes.
 
 ## Python administration
 
@@ -82,15 +110,39 @@ discovery function above to author review markers, then compile the request.
 predecessors and the final source. A trusted file manifest can bind original file
 bytes; a rehashed plan alone does not provide host authority.
 
-`umf-table apply` routes plans with the v0.2 execution profile to the public
-`umf_access.lifecycle.apply_mixed_migration` runner. It requires an explicitly
-supplied idle-autocommit connection, approved plan digest, expected head and
-person-role set. The CLI accepts the explicit DSN and approval arguments, owns its
-connection transaction/session behavior, and reports success only after durable
-publication. The mixed runner holds the session lock across phases, fences normal
-lifecycle data access while progress is incomplete, and resumes only the same
-approved source-bound plan. Legacy transaction-only plans continue through
-`apply_table_migration`; import and compilation execute no database effects.
+`umf-table apply` preserves the recorded v0.1/v0.2 runner routes. For v0.3
+plans, first record a durable host approval, then apply using that exact receipt:
+
+```sh
+umf-table approve --plan migration.json --dsn "$ADMIN_DSN" \
+  --expected-head "$PRIOR_ENTRY_DIGEST" --installation-id legal-prod-east \
+  --target-profile local-postgresql18 --qualification-profile pg18-maintenance-v1 \
+  --evidence-digest "$QUALIFICATION_EVIDENCE_SHA256" --decision approved
+
+umf-table apply --plan migration.json --dsn "$ADMIN_DSN" \
+  --expected-head "$PRIOR_ENTRY_DIGEST" --approval-id "$HOST_RECEIPT_ID" \
+  --installation-id legal-prod-east --target-profile local-postgresql18 \
+  --qualification-profile pg18-maintenance-v1 \
+  --evidence-digest "$QUALIFICATION_EVIDENCE_SHA256"
+```
+
+The approval command connects with the trusted administrative credential and
+sets the configured installation owner role. PostgreSQL records the authenticated
+`session_user` and decision time; the host's stable `installation-id`, target
+profile, original plan-file SHA-256, plan/source digest, predecessor head and
+ordered phase hashes are included in the binding. The selected qualification
+profile and its evidence digest are also bound. Treat the receipt ID as a
+host-issued reference, not source metadata. `--approved-digest` remains only the
+legacy plan-digest gate; it cannot create or substitute for a v0.3 receipt, and
+`nativeQualified: false` stays false.
+
+The apply command recomputes the binding from the current database identity,
+exact plan bytes, predecessor, profile and phase list, then requires the stored
+receipt ID to match that binding before effects. A missing receipt reports
+`approval-receipt-required`. The adapter owns the idle-autocommit connection,
+locks, whole-phase transactions, durable progress, head fence and publication.
+It reports success only after durable finalization and observes uncertain commits
+before continuing. Import, check and compile commands perform no database effects.
 
 UMF owns source comparison, review candidates, plan binding and refusal. Weft owns
 lowering declared typed data operations such as the scoped backfill. The native
@@ -101,11 +153,36 @@ evidence does not qualify managed Praxis/Lakebase or another storage backend.
 The fixed administrative metadata view is separate from author-supplied stored
 SQL. Direct SQL outside the lifecycle clients remains under host custody.
 
+## Canonical domain authoring
+
+Use the existing core forms for documented table domains; no table-specific
+shorthand is needed. Put human-readable text in the record or Field `description`.
+Deployment emits escaped `COMMENT ON TABLE` and `COMMENT ON COLUMN` statements,
+and catalog verification compares the resulting comments with the authored
+source. Removing a previously present description in a successor clears the
+native comment.
+
+For a finite string domain, use a nonempty `allowedValues` array of typed scalar
+literals on the Field. For a bounded numeric value, use typed `facets.range`
+`min`/`max` literals and the explicit `minInclusive`/`maxInclusive` flags where
+the default inclusive bounds are not intended. These declarations become
+deterministic PostgreSQL `CHECK` constraints and the same generated Python model
+validates the corresponding enum/range. A nullable Field remains nullable:
+ordinary SQL `NULL` satisfies these membership and range checks, while present
+values outside the declared set or interval fail. Keep type precision and scale
+consistent with the native numeric declaration. Unsupported or unknown domain
+facets should produce a located refusal rather than be silently ignored.
+
+The synthetic `legalDomainAuthoringSource()` fixture layers these declarations
+on a clone of the legal source. It deliberately exercises quoted text, a
+backslash and a newline in comments, a nullable enum, and an exclusive numeric
+upper bound without changing bootstrap or history fixtures.
+
 ## Validation and remaining limits
 
 The migration implementation plan tracks residuals MIG-G01 through MIG-G11 in
 [`schema-migration-plan.md`](../schema-migration-plan.md). Those entries include
-existing-column NULL fills, arbitrary row transforms, general defaults, narrowing,
+existing-column NULL fills outside the selected 0.3 pair, arbitrary row transforms, general defaults, narrowing,
 retirement/restore, online chunked rewrites, cross-document work, non-PostgreSQL
 backends, managed-consumer qualification, v0.2 inventory/bootstrap and combined
 column drop/append. They are explicit scope limits, not implied support.

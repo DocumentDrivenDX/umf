@@ -1,0 +1,35 @@
+{
+  "id": "R2-SOL-PYTHON-RESOURCE-ANCHOR-PROFILES-001",
+  "fixture": "sol-python-resource-anchor-companion-predecessor.json",
+  "sha256": "ba8357b3d85b64edefea6f57b3ca91872ef8053d3182406ee7543af5bbd2f2d5",
+  "cases": 24,
+  "methods": 72,
+  "constructorRefusals": 0,
+  "profiles": [
+    {
+      "python": "3.11.17",
+      "captureSha256": "ba8357b3d85b64edefea6f57b3ca91872ef8053d3182406ee7543af5bbd2f2d5",
+      "recordsEqual": true,
+      "uriAdmissionProfileEqual": true
+    },
+    {
+      "python": "3.12.15",
+      "captureSha256": "c8e6f7f2a69f5efe9595dc5357b39f27a8788274462e38b964ae30da7dff00bb",
+      "recordsEqual": true,
+      "uriAdmissionProfileEqual": true
+    },
+    {
+      "python": "3.13.16",
+      "captureSha256": "61383ec0c7ac95d464a6039204af009fa9a8bde737a5f66c26a8c9478f462894",
+      "recordsEqual": true,
+      "uriAdmissionProfileEqual": true
+    }
+  ],
+  "sourceSha256": {
+    "schemas.py": "22f02d6a6903b8804a1d504b0b6f232872aa564bc20e77933c880a4f9016a402",
+    "referencing/_core.py": "d923c67da4efcc0dec46a6e3ff8476c02fbe7e25e8942515a4b14b249eb3759f",
+    "referencing/jsonschema.py": "8d767ab7ac7da13bd31cc202d2d4726858d6e6bdaa78739b62ebbb52149f2b74"
+  },
+  "generatorSha256": "0642b965de1a52f07b0cb6fd7bd8b6d3b7a687085945f8bf51c188bcc36728c3",
+  "target": "Exact frozen predecessor; no semantic correction."
+}

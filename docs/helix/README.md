@@ -1,5 +1,28 @@
 # UMF project documentation
 
+[Embedder completion plan](04-build/praxis-embedder-completion-plan.md) selects
+remaining upstream U4–U9 asks, atomic existing-column NULL fill before
+requiredness, domain/conversion fixtures and a consumer-owner handoff, followed
+by another release. Actual Praxis changes and managed consumer acceptance stay
+outside this task; the released U1–U3 evidence below keeps its original scope.
+
+[Extension-defined kinds design](02-design/plan-2026-10-22-extension-defined-kinds.md)
+defines package-owned kind catalogs so generic tooling can discover and validate
+a dashboard without adding its meaning to core. [CONTRACT-906](02-design/contracts/CONTRACT-906-extension-defined-kinds.md)
+defines exact identities and validation/discovery boundaries;
+[US-904](01-frame/user-stories/US-904-extension-defined-kinds.md) defines acceptance.
+The registration capability preserves core 0.10.0; scoped implementation and
+runtime qualification are recorded in [execution evidence](04-build/evidence/extension-kinds/README.md).
+See the [usage guide](05-deploy/extension-defined-kinds.md) for explicit activation.
+
+[Shared Rust migration and Python V8 removal plan](04-build/rust-migration-plan.md)
+sequences a native Rust CLI and Python/Node/Bun/browser bindings over one engine.
+[ADR-006](02-design/adr/ADR-006-shared-rust-implementation.md) records the target
+ownership; the [R0 inventory](04-build/evidence/rust-migration/r0/README.md) and
+[R1 installed binding/browser evidence](04-build/evidence/rust-migration/r1/README.md)
+qualify a bounded Darwin-arm64 spike. Production V8 removal and the full Rust
+migration remain unimplemented.
+
 [Schema migration design](02-design/solution-designs/SD-007-schema-migrations.md)
 and [delivery plan](04-build/schema-migration-plan.md) define field additions,
 requiredness/default/backfill, removals and type changes. The existing

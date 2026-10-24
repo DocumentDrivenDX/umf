@@ -1,0 +1,2660 @@
+{
+  "cases": [
+    {
+      "id": "sol-final-request-record-pair-nul-collision",
+      "operation": "generateAccessPackage",
+      "request": {
+        "request": {
+          "contract": "umf-access-generate/0.1",
+          "sources": [
+            {
+              "id": "logical",
+              "format": "json",
+              "text": "{\"umf\":\"0.10.0\",\"id\":\"commerce-model\",\"vocabularies\":{\"umf.access\":{\"version\":\"0.1.0\"},\"umf.actions\":{\"version\":\"0.1.0\"}},\"modules\":[{\"id\":\"commerce\",\"namespace\":\"commerce\",\"elements\":[{\"id\":\"orderId\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"amount\",\"kind\":\"field\",\"scalarType\":\"decimal\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{},\"facets\":{\"precision\":12,\"scale\":2}},{\"id\":\"memo\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}},{\"id\":\"placedAt\",\"kind\":\"field\",\"scalarType\":\"timestamp\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"revision\",\"kind\":\"field\",\"scalarType\":\"integer\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{},\"facets\":{\"integerWidth\":{\"bits\":64,\"signed\":true}}},{\"id\":\"Order\",\"kind\":\"record\",\"members\":[{\"module\":\"commerce\",\"element\":\"orderId\"},{\"module\":\"commerce\",\"element\":\"amount\"},{\"module\":\"commerce\",\"element\":\"memo\"},{\"module\":\"commerce\",\"element\":\"placedAt\"},{\"module\":\"commerce\",\"element\":\"revision\"}],\"keys\":[{\"id\":\"order-key\",\"name\":\"Order primary key\",\"fields\":[{\"module\":\"commerce\",\"element\":\"orderId\"}],\"primary\":true},{\"id\":\"HTTP-id\",\"name\":\"alternate\",\"fields\":[{\"module\":\"commerce\",\"element\":\"revision\"}],\"primary\":false}],\"extensions\":{}},{\"id\":\"customerId\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"name\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"Customer\",\"kind\":\"record\",\"members\":[{\"module\":\"commerce\",\"element\":\"customerId\"},{\"module\":\"commerce\",\"element\":\"name\"}],\"keys\":[{\"id\":\"Customer-key\",\"name\":\"Customer primary key\",\"primary\":true,\"fields\":[{\"module\":\"commerce\",\"element\":\"customerId\"}]}],\"extensions\":{}},{\"id\":\"lineOrderId\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"lineNumber\",\"kind\":\"field\",\"scalarType\":\"integer\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{},\"facets\":{\"integerWidth\":{\"bits\":32,\"signed\":true}}},{\"id\":\"OrderLine\",\"kind\":\"record\",\"members\":[{\"module\":\"commerce\",\"element\":\"lineOrderId\"},{\"module\":\"commerce\",\"element\":\"lineNumber\"}],\"keys\":[{\"id\":\"OrderLine-key\",\"name\":\"OrderLine primary key\",\"primary\":true,\"fields\":[{\"module\":\"commerce\",\"element\":\"lineOrderId\"},{\"module\":\"commerce\",\"element\":\"lineNumber\"}]}],\"extensions\":{}}],\"extensions\":{\"umf.access\":{\"views\":[{\"record\":{\"module\":\"commerce\",\"element\":\"Order\"},\"fields\":[{\"field\":{\"module\":\"commerce\",\"element\":\"orderId\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":false,\"generated\":false},{\"field\":{\"module\":\"commerce\",\"element\":\"amount\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":true,\"generated\":false},{\"field\":{\"module\":\"commerce\",\"element\":\"memo\"},\"row\":{\"missing\":true,\"null\":true},\"create\":{\"missing\":true,\"null\":true},\"mutable\":true,\"generated\":false},{\"field\":{\"module\":\"commerce\",\"element\":\"placedAt\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":false,\"generated\":false,\"temporal\":\"instant\"},{\"field\":{\"module\":\"commerce\",\"element\":\"revision\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":true,\"null\":false},\"mutable\":false,\"generated\":true}],\"selectedKey\":{\"module\":\"commerce\",\"element\":\"Order\",\"key\":\"order-key\"}},{\"record\":{\"module\":\"commerce\",\"element\":\"Customer\"},\"fields\":[{\"field\":{\"module\":\"commerce\",\"element\":\"customerId\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":false,\"generated\":false},{\"field\":{\"module\":\"commerce\",\"element\":\"name\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":true,\"generated\":false}],\"selectedKey\":{\"module\":\"commerce\",\"element\":\"Customer\",\"key\":\"Customer-key\"}},{\"record\":{\"module\":\"commerce\",\"element\":\"OrderLine\"},\"fields\":[{\"field\":{\"module\":\"commerce\",\"element\":\"lineOrderId\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":false,\"generated\":false},{\"field\":{\"module\":\"commerce\",\"element\":\"lineNumber\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":false,\"generated\":false}],\"selectedKey\":{\"module\":\"commerce\",\"element\":\"OrderLine\",\"key\":\"OrderLine-key\"}}],\"columns\":[],\"search\":[],\"searchBindings\":[]},\"umf.actions\":{\"actions\":[{\"id\":\"shipOrder\",\"name\":\"Ship order\",\"description\":\"Declared handler identity; no execution qualification\",\"parameters\":[{\"id\":\"order\",\"kind\":\"entity\",\"target\":{\"module\":\"commerce\",\"element\":\"Order\",\"key\":\"HTTP-id\"},\"required\":true},{\"id\":\"memo\",\"kind\":\"value\",\"field\":{\"module\":\"commerce\",\"element\":\"memo\"},\"required\":false}],\"outputs\":[{\"id\":\"amount\",\"kind\":\"value\",\"field\":{\"module\":\"commerce\",\"element\":\"amount\"},\"required\":true}],\"preconditions\":[],\"postconditions\":[],\"reads\":[],\"writes\":[],\"binding\":{\"kind\":\"handler\",\"profile\":{\"id\":\"test-handler-profile\",\"version\":\"1\"},\"handler\":{\"id\":\"test-ship\",\"version\":\"1\"}},\"failures\":[{\"code\":\"NOT_READY\",\"message\":\"Not ready\",\"retryable\":false}],\"authorization\":{\"kind\":\"roles\",\"profile\":{\"id\":\"umf.actions.roles\",\"version\":\"1\"},\"roles\":[\"shipper\"]},\"attribution\":{\"subject\":\"person-required\"},\"atomicity\":\"single-store\",\"idempotency\":\"caller-key-optional\",\"result\":{\"identities\":\"created-and-changed\",\"version\":\"store-opaque\",\"receipt\":\"read-at-least\"}}]}}}]}"
+            }
+          ],
+          "logical": "logical",
+          "bindings": [],
+          "records": [
+            {
+              "module": "a\u0000b",
+              "element": "c"
+            },
+            {
+              "module": "a",
+              "element": "b\u0000c"
+            }
+          ],
+          "actions": [
+            {
+              "module": "commerce",
+              "action": "shipOrder"
+            }
+          ],
+          "projections": [],
+          "package": "shop",
+          "names": [],
+          "mode": "strict",
+          "profileId": "test.access",
+          "profileVersion": "0.1.0",
+          "coreVersion": "0.10.0"
+        },
+        "profile": {
+          "id": "test.access",
+          "version": "0.1.0",
+          "compilerVersion": "test",
+          "coreVersions": [
+            "0.10.0"
+          ],
+          "vocabularies": [
+            {
+              "id": "umf.access",
+              "version": "0.1.0"
+            },
+            {
+              "id": "umf.actions",
+              "version": "0.1.0"
+            },
+            {
+              "id": "umf.binding",
+              "version": "0.2.0"
+            }
+          ],
+          "python": {
+            "version": "3.14.7"
+          },
+          "dependencies": [
+            {
+              "distribution": "umf_access",
+              "version": "0.1.0"
+            },
+            {
+              "distribution": "pydantic",
+              "version": "2.14.1"
+            }
+          ],
+          "checkers": [
+            {
+              "name": "mypy",
+              "version": "2.4.0",
+              "configuration": {
+                "check_untyped_defs": true
+              }
+            },
+            {
+              "name": "pyright",
+              "version": "1.1.414",
+              "configuration": {
+                "typeCheckingMode": "strict",
+                "environment": "test"
+              }
+            }
+          ],
+          "reservedNames": [
+            "test_reserved"
+          ],
+          "importedNames": [
+            "decimal",
+            "pydantic",
+            "umf_access"
+          ],
+          "assertionKinds": [
+            "kind",
+            "nullability",
+            "Key",
+            "facets",
+            "defaults",
+            "relationships",
+            "actions",
+            "umf.access"
+          ],
+          "subset": "test fixture, not qualified",
+          "codeSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      },
+      "expected": {
+        "ok": true,
+        "result": {
+          "contract": "umf-access-generate/0.1",
+          "abi": "umf-python-types/0.1",
+          "runtimeAbi": {
+            "distribution": "umf_access",
+            "version": "0.1.0",
+            "abi": "umf-access-runtime/0.1"
+          },
+          "outcome": "refused",
+          "inputDigest": "00f59b8c975f7ee9d561578893fe53139f77afe8dcbad63688f807530886c27f",
+          "files": [],
+          "symbols": [],
+          "dispositions": [
+            {
+              "id": "d1",
+              "sourceId": "logical",
+              "pointer": "/id",
+              "assertion": "source-context",
+              "relevance": "selected",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Known source identity or annotation retained; no native enforcement or execution is established",
+              "obligationIds": []
+            },
+            {
+              "id": "d158",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/0",
+              "assertion": "actions",
+              "relevance": "selected",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "inspectActions declaration result; external execution duties remain undischargeable by generation",
+              "obligationIds": [
+                "o3"
+              ]
+            },
+            {
+              "id": "d9",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/0/cardinality",
+              "assertion": "cardinality",
+              "relevance": "dependency",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+              "obligationIds": []
+            },
+            {
+              "id": "d11",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/0/extensions",
+              "assertion": "extensions",
+              "relevance": "dependency",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+              "obligationIds": []
+            },
+            {
+              "id": "d6",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/0/id",
+              "assertion": "id",
+              "relevance": "dependency",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+              "obligationIds": []
+            },
+            {
+              "id": "d7",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/0/kind",
+              "assertion": "kind",
+              "relevance": "dependency",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+              "obligationIds": []
+            },
+            {
+              "id": "d10",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/0/nullability",
+              "assertion": "nullability",
+              "relevance": "dependency",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+              "obligationIds": []
+            },
+            {
+              "id": "d8",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/0/scalarType",
+              "assertion": "scalarType",
+              "relevance": "dependency",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+              "obligationIds": []
+            },
+            {
+              "id": "d159",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/1",
+              "assertion": "actions",
+              "relevance": "selected",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "inspectActions declaration result; external execution duties remain undischargeable by generation",
+              "obligationIds": [
+                "o4"
+              ]
+            },
+            {
+              "id": "d15",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/1/cardinality",
+              "assertion": "cardinality",
+              "relevance": "dependency",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+              "obligationIds": []
+            },
+            {
+              "id": "d17",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/1/extensions",
+              "assertion": "extensions",
+              "relevance": "dependency",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+              "obligationIds": []
+            },
+            {
+              "id": "d18",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/1/facets/precision",
+              "assertion": "facets",
+              "relevance": "dependency",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+              "obligationIds": []
+            },
+            {
+              "id": "d19",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/1/facets/scale",
+              "assertion": "facets",
+              "relevance": "dependency",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+              "obligationIds": []
+            },
+            {
+              "id": "d12",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/1/id",
+              "assertion": "id",
+              "relevance": "dependency",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+              "obligationIds": []
+            },
+            {
+              "id": "d13",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/1/kind",
+              "assertion": "kind",
+              "relevance": "dependency",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+              "obligationIds": []
+            },
+            {
+              "id": "d16",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/1/nullability",
+              "assertion": "nullability",
+              "relevance": "dependency",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+              "obligationIds": []
+            },
+            {
+              "id": "d14",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/1/scalarType",
+              "assertion": "scalarType",
+              "relevance": "dependency",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+              "obligationIds": []
+            },
+            {
+              "id": "d160",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/2",
+              "assertion": "actions",
+              "relevance": "selected",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "inspectActions declaration result; external execution duties remain undischargeable by generation",
+              "obligationIds": [
+                "o5"
+              ]
+            },
+            {
+              "id": "d23",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/2/cardinality",
+              "assertion": "cardinality",
+              "relevance": "dependency",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+              "obligationIds": []
+            },
+            {
+              "id": "d25",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/2/extensions",
+              "assertion": "extensions",
+              "relevance": "dependency",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+              "obligationIds": []
+            },
+            {
+              "id": "d20",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/2/id",
+              "assertion": "id",
+              "relevance": "dependency",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+              "obligationIds": []
+            },
+            {
+              "id": "d21",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/2/kind",
+              "assertion": "kind",
+              "relevance": "dependency",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+              "obligationIds": []
+            },
+            {
+              "id": "d24",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/2/nullability",
+              "assertion": "nullability",
+              "relevance": "dependency",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+              "obligationIds": []
+            },
+            {
+              "id": "d22",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/2/scalarType",
+              "assertion": "scalarType",
+              "relevance": "dependency",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+              "obligationIds": []
+            },
+            {
+              "id": "d161",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/3",
+              "assertion": "actions",
+              "relevance": "selected",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "inspectActions declaration result; external execution duties remain undischargeable by generation",
+              "obligationIds": [
+                "o6"
+              ]
+            },
+            {
+              "id": "d29",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/3/cardinality",
+              "assertion": "cardinality",
+              "relevance": "dependency",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+              "obligationIds": []
+            },
+            {
+              "id": "d31",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/3/extensions",
+              "assertion": "extensions",
+              "relevance": "dependency",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+              "obligationIds": []
+            },
+            {
+              "id": "d26",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/3/id",
+              "assertion": "id",
+              "relevance": "dependency",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+              "obligationIds": []
+            },
+            {
+              "id": "d27",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/3/kind",
+              "assertion": "kind",
+              "relevance": "dependency",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+              "obligationIds": []
+            },
+            {
+              "id": "d30",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/3/nullability",
+              "assertion": "nullability",
+              "relevance": "dependency",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+              "obligationIds": []
+            },
+            {
+              "id": "d28",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/3/scalarType",
+              "assertion": "scalarType",
+              "relevance": "dependency",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+              "obligationIds": []
+            },
+            {
+              "id": "d162",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/4",
+              "assertion": "actions",
+              "relevance": "selected",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "inspectActions declaration result; external execution duties remain undischargeable by generation",
+              "obligationIds": [
+                "o7"
+              ]
+            },
+            {
+              "id": "d35",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/4/cardinality",
+              "assertion": "cardinality",
+              "relevance": "dependency",
+              "fidelity": "exact",
+              "checks": [
+                "client"
+              ],
+              "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+              "obligationIds": []
+            },
+            {
+              "id": "d37",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/4/extensions",
+              "assertion": "extensions",
+              "relevance": "dependency",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+              "obligationIds": []
+            },
+            {
+              "id": "d38",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/4/facets/integerWidth/bits",
+              "assertion": "facets",
+              "relevance": "dependency",
+              "fidelity": "exact",
+              "checks": [
+                "client"
+              ],
+              "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+              "obligationIds": []
+            },
+            {
+              "id": "d39",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/4/facets/integerWidth/signed",
+              "assertion": "facets",
+              "relevance": "dependency",
+              "fidelity": "exact",
+              "checks": [
+                "client"
+              ],
+              "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+              "obligationIds": []
+            },
+            {
+              "id": "d32",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/4/id",
+              "assertion": "id",
+              "relevance": "dependency",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+              "obligationIds": []
+            },
+            {
+              "id": "d33",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/4/kind",
+              "assertion": "kind",
+              "relevance": "dependency",
+              "fidelity": "exact",
+              "checks": [
+                "client"
+              ],
+              "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+              "obligationIds": []
+            },
+            {
+              "id": "d36",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/4/nullability",
+              "assertion": "nullability",
+              "relevance": "dependency",
+              "fidelity": "exact",
+              "checks": [
+                "client"
+              ],
+              "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+              "obligationIds": []
+            },
+            {
+              "id": "d34",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/4/scalarType",
+              "assertion": "scalarType",
+              "relevance": "dependency",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+              "obligationIds": []
+            },
+            {
+              "id": "d157",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/5",
+              "assertion": "actions",
+              "relevance": "selected",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "inspectActions declaration result; external execution duties remain undischargeable by generation",
+              "obligationIds": [
+                "o2"
+              ]
+            },
+            {
+              "id": "d62",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/5/extensions",
+              "assertion": "extensions",
+              "relevance": "dependency",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+              "obligationIds": []
+            },
+            {
+              "id": "d40",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/5/id",
+              "assertion": "id",
+              "relevance": "dependency",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+              "obligationIds": []
+            },
+            {
+              "id": "d163",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/5/keys/0",
+              "assertion": "actions",
+              "relevance": "selected",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "inspectActions declaration result; external execution duties remain undischargeable by generation",
+              "obligationIds": [
+                "o8"
+              ]
+            },
+            {
+              "id": "d55",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/5/keys/0/fields/0/element",
+              "assertion": "keys",
+              "relevance": "dependency",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "inspectCoreKeys result3.0.0 retains ordered identity; Python DTO equality is not UMF equality or store uniqueness",
+              "obligationIds": [
+                "o0"
+              ]
+            },
+            {
+              "id": "d54",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/5/keys/0/fields/0/module",
+              "assertion": "keys",
+              "relevance": "dependency",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "inspectCoreKeys result3.0.0 retains ordered identity; Python DTO equality is not UMF equality or store uniqueness",
+              "obligationIds": [
+                "o0"
+              ]
+            },
+            {
+              "id": "d52",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/5/keys/0/id",
+              "assertion": "keys",
+              "relevance": "dependency",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "inspectCoreKeys result3.0.0 retains ordered identity; Python DTO equality is not UMF equality or store uniqueness",
+              "obligationIds": [
+                "o0"
+              ]
+            },
+            {
+              "id": "d53",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/5/keys/0/name",
+              "assertion": "keys",
+              "relevance": "dependency",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "inspectCoreKeys result3.0.0 retains ordered identity; Python DTO equality is not UMF equality or store uniqueness",
+              "obligationIds": [
+                "o0"
+              ]
+            },
+            {
+              "id": "d56",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/5/keys/0/primary",
+              "assertion": "keys",
+              "relevance": "dependency",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "inspectCoreKeys result3.0.0 retains ordered identity; Python DTO equality is not UMF equality or store uniqueness",
+              "obligationIds": [
+                "o0"
+              ]
+            },
+            {
+              "id": "d164",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/5/keys/1",
+              "assertion": "actions",
+              "relevance": "selected",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "inspectActions declaration result; external execution duties remain undischargeable by generation",
+              "obligationIds": [
+                "o9"
+              ]
+            },
+            {
+              "id": "d60",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/5/keys/1/fields/0/element",
+              "assertion": "keys",
+              "relevance": "dependency",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "inspectCoreKeys result3.0.0 retains ordered identity; Python DTO equality is not UMF equality or store uniqueness",
+              "obligationIds": [
+                "o0"
+              ]
+            },
+            {
+              "id": "d59",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/5/keys/1/fields/0/module",
+              "assertion": "keys",
+              "relevance": "dependency",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "inspectCoreKeys result3.0.0 retains ordered identity; Python DTO equality is not UMF equality or store uniqueness",
+              "obligationIds": [
+                "o0"
+              ]
+            },
+            {
+              "id": "d57",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/5/keys/1/id",
+              "assertion": "keys",
+              "relevance": "dependency",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "inspectCoreKeys result3.0.0 retains ordered identity; Python DTO equality is not UMF equality or store uniqueness",
+              "obligationIds": [
+                "o0"
+              ]
+            },
+            {
+              "id": "d58",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/5/keys/1/name",
+              "assertion": "keys",
+              "relevance": "dependency",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "inspectCoreKeys result3.0.0 retains ordered identity; Python DTO equality is not UMF equality or store uniqueness",
+              "obligationIds": [
+                "o0"
+              ]
+            },
+            {
+              "id": "d61",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/5/keys/1/primary",
+              "assertion": "keys",
+              "relevance": "dependency",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "inspectCoreKeys result3.0.0 retains ordered identity; Python DTO equality is not UMF equality or store uniqueness",
+              "obligationIds": [
+                "o0"
+              ]
+            },
+            {
+              "id": "d41",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/5/kind",
+              "assertion": "kind",
+              "relevance": "dependency",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+              "obligationIds": []
+            },
+            {
+              "id": "d43",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/5/members/0/element",
+              "assertion": "members",
+              "relevance": "dependency",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+              "obligationIds": []
+            },
+            {
+              "id": "d42",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/5/members/0/module",
+              "assertion": "members",
+              "relevance": "dependency",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+              "obligationIds": []
+            },
+            {
+              "id": "d45",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/5/members/1/element",
+              "assertion": "members",
+              "relevance": "dependency",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+              "obligationIds": []
+            },
+            {
+              "id": "d44",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/5/members/1/module",
+              "assertion": "members",
+              "relevance": "dependency",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+              "obligationIds": []
+            },
+            {
+              "id": "d47",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/5/members/2/element",
+              "assertion": "members",
+              "relevance": "dependency",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+              "obligationIds": []
+            },
+            {
+              "id": "d46",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/5/members/2/module",
+              "assertion": "members",
+              "relevance": "dependency",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+              "obligationIds": []
+            },
+            {
+              "id": "d49",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/5/members/3/element",
+              "assertion": "members",
+              "relevance": "dependency",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+              "obligationIds": []
+            },
+            {
+              "id": "d48",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/5/members/3/module",
+              "assertion": "members",
+              "relevance": "dependency",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+              "obligationIds": []
+            },
+            {
+              "id": "d51",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/5/members/4/element",
+              "assertion": "members",
+              "relevance": "dependency",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+              "obligationIds": []
+            },
+            {
+              "id": "d50",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/5/members/4/module",
+              "assertion": "members",
+              "relevance": "dependency",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Public core admission and contextual inspectors resolve this authored assertion; metadata retention does not imply enforcement",
+              "obligationIds": []
+            },
+            {
+              "id": "d66",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/6/cardinality",
+              "assertion": "cardinality",
+              "relevance": "unselected",
+              "fidelity": "unknown",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Unselected content retained in exact source archive",
+              "obligationIds": []
+            },
+            {
+              "id": "d68",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/6/extensions",
+              "assertion": "extensions",
+              "relevance": "unselected",
+              "fidelity": "unknown",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Unselected content retained in exact source archive",
+              "obligationIds": []
+            },
+            {
+              "id": "d63",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/6/id",
+              "assertion": "id",
+              "relevance": "unselected",
+              "fidelity": "unknown",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Unselected content retained in exact source archive",
+              "obligationIds": []
+            },
+            {
+              "id": "d64",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/6/kind",
+              "assertion": "kind",
+              "relevance": "unselected",
+              "fidelity": "unknown",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Unselected content retained in exact source archive",
+              "obligationIds": []
+            },
+            {
+              "id": "d67",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/6/nullability",
+              "assertion": "nullability",
+              "relevance": "unselected",
+              "fidelity": "unknown",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Unselected content retained in exact source archive",
+              "obligationIds": []
+            },
+            {
+              "id": "d65",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/6/scalarType",
+              "assertion": "scalarType",
+              "relevance": "unselected",
+              "fidelity": "unknown",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Unselected content retained in exact source archive",
+              "obligationIds": []
+            },
+            {
+              "id": "d72",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/7/cardinality",
+              "assertion": "cardinality",
+              "relevance": "unselected",
+              "fidelity": "unknown",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Unselected content retained in exact source archive",
+              "obligationIds": []
+            },
+            {
+              "id": "d74",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/7/extensions",
+              "assertion": "extensions",
+              "relevance": "unselected",
+              "fidelity": "unknown",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Unselected content retained in exact source archive",
+              "obligationIds": []
+            },
+            {
+              "id": "d69",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/7/id",
+              "assertion": "id",
+              "relevance": "unselected",
+              "fidelity": "unknown",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Unselected content retained in exact source archive",
+              "obligationIds": []
+            },
+            {
+              "id": "d70",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/7/kind",
+              "assertion": "kind",
+              "relevance": "unselected",
+              "fidelity": "unknown",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Unselected content retained in exact source archive",
+              "obligationIds": []
+            },
+            {
+              "id": "d73",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/7/nullability",
+              "assertion": "nullability",
+              "relevance": "unselected",
+              "fidelity": "unknown",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Unselected content retained in exact source archive",
+              "obligationIds": []
+            },
+            {
+              "id": "d71",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/7/scalarType",
+              "assertion": "scalarType",
+              "relevance": "unselected",
+              "fidelity": "unknown",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Unselected content retained in exact source archive",
+              "obligationIds": []
+            },
+            {
+              "id": "d86",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/8/extensions",
+              "assertion": "extensions",
+              "relevance": "unselected",
+              "fidelity": "unknown",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Unselected content retained in exact source archive",
+              "obligationIds": []
+            },
+            {
+              "id": "d75",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/8/id",
+              "assertion": "id",
+              "relevance": "unselected",
+              "fidelity": "unknown",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Unselected content retained in exact source archive",
+              "obligationIds": []
+            },
+            {
+              "id": "d85",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/8/keys/0/fields/0/element",
+              "assertion": "keys",
+              "relevance": "unselected",
+              "fidelity": "unknown",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Unselected content retained in exact source archive",
+              "obligationIds": []
+            },
+            {
+              "id": "d84",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/8/keys/0/fields/0/module",
+              "assertion": "keys",
+              "relevance": "unselected",
+              "fidelity": "unknown",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Unselected content retained in exact source archive",
+              "obligationIds": []
+            },
+            {
+              "id": "d81",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/8/keys/0/id",
+              "assertion": "keys",
+              "relevance": "unselected",
+              "fidelity": "unknown",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Unselected content retained in exact source archive",
+              "obligationIds": []
+            },
+            {
+              "id": "d82",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/8/keys/0/name",
+              "assertion": "keys",
+              "relevance": "unselected",
+              "fidelity": "unknown",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Unselected content retained in exact source archive",
+              "obligationIds": []
+            },
+            {
+              "id": "d83",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/8/keys/0/primary",
+              "assertion": "keys",
+              "relevance": "unselected",
+              "fidelity": "unknown",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Unselected content retained in exact source archive",
+              "obligationIds": []
+            },
+            {
+              "id": "d76",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/8/kind",
+              "assertion": "kind",
+              "relevance": "unselected",
+              "fidelity": "unknown",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Unselected content retained in exact source archive",
+              "obligationIds": []
+            },
+            {
+              "id": "d78",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/8/members/0/element",
+              "assertion": "members",
+              "relevance": "unselected",
+              "fidelity": "unknown",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Unselected content retained in exact source archive",
+              "obligationIds": []
+            },
+            {
+              "id": "d77",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/8/members/0/module",
+              "assertion": "members",
+              "relevance": "unselected",
+              "fidelity": "unknown",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Unselected content retained in exact source archive",
+              "obligationIds": []
+            },
+            {
+              "id": "d80",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/8/members/1/element",
+              "assertion": "members",
+              "relevance": "unselected",
+              "fidelity": "unknown",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Unselected content retained in exact source archive",
+              "obligationIds": []
+            },
+            {
+              "id": "d79",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/8/members/1/module",
+              "assertion": "members",
+              "relevance": "unselected",
+              "fidelity": "unknown",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Unselected content retained in exact source archive",
+              "obligationIds": []
+            },
+            {
+              "id": "d90",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/9/cardinality",
+              "assertion": "cardinality",
+              "relevance": "unselected",
+              "fidelity": "unknown",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Unselected content retained in exact source archive",
+              "obligationIds": []
+            },
+            {
+              "id": "d92",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/9/extensions",
+              "assertion": "extensions",
+              "relevance": "unselected",
+              "fidelity": "unknown",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Unselected content retained in exact source archive",
+              "obligationIds": []
+            },
+            {
+              "id": "d87",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/9/id",
+              "assertion": "id",
+              "relevance": "unselected",
+              "fidelity": "unknown",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Unselected content retained in exact source archive",
+              "obligationIds": []
+            },
+            {
+              "id": "d88",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/9/kind",
+              "assertion": "kind",
+              "relevance": "unselected",
+              "fidelity": "unknown",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Unselected content retained in exact source archive",
+              "obligationIds": []
+            },
+            {
+              "id": "d91",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/9/nullability",
+              "assertion": "nullability",
+              "relevance": "unselected",
+              "fidelity": "unknown",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Unselected content retained in exact source archive",
+              "obligationIds": []
+            },
+            {
+              "id": "d89",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/9/scalarType",
+              "assertion": "scalarType",
+              "relevance": "unselected",
+              "fidelity": "unknown",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Unselected content retained in exact source archive",
+              "obligationIds": []
+            },
+            {
+              "id": "d96",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/10/cardinality",
+              "assertion": "cardinality",
+              "relevance": "unselected",
+              "fidelity": "unknown",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Unselected content retained in exact source archive",
+              "obligationIds": []
+            },
+            {
+              "id": "d98",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/10/extensions",
+              "assertion": "extensions",
+              "relevance": "unselected",
+              "fidelity": "unknown",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Unselected content retained in exact source archive",
+              "obligationIds": []
+            },
+            {
+              "id": "d99",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/10/facets/integerWidth/bits",
+              "assertion": "facets",
+              "relevance": "unselected",
+              "fidelity": "unknown",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Unselected content retained in exact source archive",
+              "obligationIds": []
+            },
+            {
+              "id": "d100",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/10/facets/integerWidth/signed",
+              "assertion": "facets",
+              "relevance": "unselected",
+              "fidelity": "unknown",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Unselected content retained in exact source archive",
+              "obligationIds": []
+            },
+            {
+              "id": "d93",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/10/id",
+              "assertion": "id",
+              "relevance": "unselected",
+              "fidelity": "unknown",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Unselected content retained in exact source archive",
+              "obligationIds": []
+            },
+            {
+              "id": "d94",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/10/kind",
+              "assertion": "kind",
+              "relevance": "unselected",
+              "fidelity": "unknown",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Unselected content retained in exact source archive",
+              "obligationIds": []
+            },
+            {
+              "id": "d97",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/10/nullability",
+              "assertion": "nullability",
+              "relevance": "unselected",
+              "fidelity": "unknown",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Unselected content retained in exact source archive",
+              "obligationIds": []
+            },
+            {
+              "id": "d95",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/10/scalarType",
+              "assertion": "scalarType",
+              "relevance": "unselected",
+              "fidelity": "unknown",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Unselected content retained in exact source archive",
+              "obligationIds": []
+            },
+            {
+              "id": "d114",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/11/extensions",
+              "assertion": "extensions",
+              "relevance": "unselected",
+              "fidelity": "unknown",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Unselected content retained in exact source archive",
+              "obligationIds": []
+            },
+            {
+              "id": "d101",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/11/id",
+              "assertion": "id",
+              "relevance": "unselected",
+              "fidelity": "unknown",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Unselected content retained in exact source archive",
+              "obligationIds": []
+            },
+            {
+              "id": "d111",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/11/keys/0/fields/0/element",
+              "assertion": "keys",
+              "relevance": "unselected",
+              "fidelity": "unknown",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Unselected content retained in exact source archive",
+              "obligationIds": []
+            },
+            {
+              "id": "d110",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/11/keys/0/fields/0/module",
+              "assertion": "keys",
+              "relevance": "unselected",
+              "fidelity": "unknown",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Unselected content retained in exact source archive",
+              "obligationIds": []
+            },
+            {
+              "id": "d113",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/11/keys/0/fields/1/element",
+              "assertion": "keys",
+              "relevance": "unselected",
+              "fidelity": "unknown",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Unselected content retained in exact source archive",
+              "obligationIds": []
+            },
+            {
+              "id": "d112",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/11/keys/0/fields/1/module",
+              "assertion": "keys",
+              "relevance": "unselected",
+              "fidelity": "unknown",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Unselected content retained in exact source archive",
+              "obligationIds": []
+            },
+            {
+              "id": "d107",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/11/keys/0/id",
+              "assertion": "keys",
+              "relevance": "unselected",
+              "fidelity": "unknown",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Unselected content retained in exact source archive",
+              "obligationIds": []
+            },
+            {
+              "id": "d108",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/11/keys/0/name",
+              "assertion": "keys",
+              "relevance": "unselected",
+              "fidelity": "unknown",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Unselected content retained in exact source archive",
+              "obligationIds": []
+            },
+            {
+              "id": "d109",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/11/keys/0/primary",
+              "assertion": "keys",
+              "relevance": "unselected",
+              "fidelity": "unknown",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Unselected content retained in exact source archive",
+              "obligationIds": []
+            },
+            {
+              "id": "d102",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/11/kind",
+              "assertion": "kind",
+              "relevance": "unselected",
+              "fidelity": "unknown",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Unselected content retained in exact source archive",
+              "obligationIds": []
+            },
+            {
+              "id": "d104",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/11/members/0/element",
+              "assertion": "members",
+              "relevance": "unselected",
+              "fidelity": "unknown",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Unselected content retained in exact source archive",
+              "obligationIds": []
+            },
+            {
+              "id": "d103",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/11/members/0/module",
+              "assertion": "members",
+              "relevance": "unselected",
+              "fidelity": "unknown",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Unselected content retained in exact source archive",
+              "obligationIds": []
+            },
+            {
+              "id": "d106",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/11/members/1/element",
+              "assertion": "members",
+              "relevance": "unselected",
+              "fidelity": "unknown",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Unselected content retained in exact source archive",
+              "obligationIds": []
+            },
+            {
+              "id": "d105",
+              "sourceId": "logical",
+              "pointer": "/modules/0/elements/11/members/1/module",
+              "assertion": "members",
+              "relevance": "unselected",
+              "fidelity": "unknown",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Unselected content retained in exact source archive",
+              "obligationIds": []
+            },
+            {
+              "id": "d151",
+              "sourceId": "logical",
+              "pointer": "/modules/0/extensions/umf.actions/actions/0/atomicity",
+              "assertion": "actions",
+              "relevance": "selected",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Selected action assertion retained after inspectActions declaration checks; executor obligations are not discharged by generation",
+              "obligationIds": []
+            },
+            {
+              "id": "d170",
+              "sourceId": "logical",
+              "pointer": "/modules/0/extensions/umf.actions/actions/0/atomicity",
+              "assertion": "actions",
+              "relevance": "selected",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "inspectActions declaration result; external execution duties remain undischargeable by generation",
+              "obligationIds": [
+                "o15"
+              ]
+            },
+            {
+              "id": "d169",
+              "sourceId": "logical",
+              "pointer": "/modules/0/extensions/umf.actions/actions/0/attribution",
+              "assertion": "actions",
+              "relevance": "selected",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "inspectActions declaration result; external execution duties remain undischargeable by generation",
+              "obligationIds": [
+                "o14"
+              ]
+            },
+            {
+              "id": "d150",
+              "sourceId": "logical",
+              "pointer": "/modules/0/extensions/umf.actions/actions/0/attribution/subject",
+              "assertion": "actions",
+              "relevance": "selected",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Selected action assertion retained after inspectActions declaration checks; executor obligations are not discharged by generation",
+              "obligationIds": []
+            },
+            {
+              "id": "d168",
+              "sourceId": "logical",
+              "pointer": "/modules/0/extensions/umf.actions/actions/0/authorization",
+              "assertion": "actions",
+              "relevance": "selected",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "inspectActions declaration result; external execution duties remain undischargeable by generation",
+              "obligationIds": [
+                "o13"
+              ]
+            },
+            {
+              "id": "d146",
+              "sourceId": "logical",
+              "pointer": "/modules/0/extensions/umf.actions/actions/0/authorization/kind",
+              "assertion": "actions",
+              "relevance": "selected",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Selected action assertion retained after inspectActions declaration checks; executor obligations are not discharged by generation",
+              "obligationIds": []
+            },
+            {
+              "id": "d147",
+              "sourceId": "logical",
+              "pointer": "/modules/0/extensions/umf.actions/actions/0/authorization/profile/id",
+              "assertion": "actions",
+              "relevance": "selected",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Selected action assertion retained after inspectActions declaration checks; executor obligations are not discharged by generation",
+              "obligationIds": []
+            },
+            {
+              "id": "d148",
+              "sourceId": "logical",
+              "pointer": "/modules/0/extensions/umf.actions/actions/0/authorization/profile/version",
+              "assertion": "actions",
+              "relevance": "selected",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Selected action assertion retained after inspectActions declaration checks; executor obligations are not discharged by generation",
+              "obligationIds": []
+            },
+            {
+              "id": "d149",
+              "sourceId": "logical",
+              "pointer": "/modules/0/extensions/umf.actions/actions/0/authorization/roles/0",
+              "assertion": "actions",
+              "relevance": "selected",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Selected action assertion retained after inspectActions declaration checks; executor obligations are not discharged by generation",
+              "obligationIds": []
+            },
+            {
+              "id": "d173",
+              "sourceId": "logical",
+              "pointer": "/modules/0/extensions/umf.actions/actions/0/binding",
+              "assertion": "actions",
+              "relevance": "selected",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "inspectActions declaration result; external execution duties remain undischargeable by generation",
+              "obligationIds": [
+                "o18"
+              ]
+            },
+            {
+              "id": "d174",
+              "sourceId": "logical",
+              "pointer": "/modules/0/extensions/umf.actions/actions/0/binding/handler",
+              "assertion": "actions",
+              "relevance": "selected",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "inspectActions declaration result; external execution duties remain undischargeable by generation",
+              "obligationIds": [
+                "o19"
+              ]
+            },
+            {
+              "id": "d141",
+              "sourceId": "logical",
+              "pointer": "/modules/0/extensions/umf.actions/actions/0/binding/handler/id",
+              "assertion": "actions",
+              "relevance": "selected",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Selected action assertion retained after inspectActions declaration checks; executor obligations are not discharged by generation",
+              "obligationIds": []
+            },
+            {
+              "id": "d142",
+              "sourceId": "logical",
+              "pointer": "/modules/0/extensions/umf.actions/actions/0/binding/handler/version",
+              "assertion": "actions",
+              "relevance": "selected",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Selected action assertion retained after inspectActions declaration checks; executor obligations are not discharged by generation",
+              "obligationIds": []
+            },
+            {
+              "id": "d138",
+              "sourceId": "logical",
+              "pointer": "/modules/0/extensions/umf.actions/actions/0/binding/kind",
+              "assertion": "actions",
+              "relevance": "selected",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Selected action assertion retained after inspectActions declaration checks; executor obligations are not discharged by generation",
+              "obligationIds": []
+            },
+            {
+              "id": "d139",
+              "sourceId": "logical",
+              "pointer": "/modules/0/extensions/umf.actions/actions/0/binding/profile/id",
+              "assertion": "actions",
+              "relevance": "selected",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Selected action assertion retained after inspectActions declaration checks; executor obligations are not discharged by generation",
+              "obligationIds": []
+            },
+            {
+              "id": "d140",
+              "sourceId": "logical",
+              "pointer": "/modules/0/extensions/umf.actions/actions/0/binding/profile/version",
+              "assertion": "actions",
+              "relevance": "selected",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Selected action assertion retained after inspectActions declaration checks; executor obligations are not discharged by generation",
+              "obligationIds": []
+            },
+            {
+              "id": "d117",
+              "sourceId": "logical",
+              "pointer": "/modules/0/extensions/umf.actions/actions/0/description",
+              "assertion": "actions",
+              "relevance": "selected",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Selected action assertion retained after inspectActions declaration checks; executor obligations are not discharged by generation",
+              "obligationIds": []
+            },
+            {
+              "id": "d167",
+              "sourceId": "logical",
+              "pointer": "/modules/0/extensions/umf.actions/actions/0/failures/0",
+              "assertion": "actions",
+              "relevance": "selected",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "inspectActions declaration result; external execution duties remain undischargeable by generation",
+              "obligationIds": [
+                "o12"
+              ]
+            },
+            {
+              "id": "d143",
+              "sourceId": "logical",
+              "pointer": "/modules/0/extensions/umf.actions/actions/0/failures/0/code",
+              "assertion": "actions",
+              "relevance": "selected",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Selected action assertion retained after inspectActions declaration checks; executor obligations are not discharged by generation",
+              "obligationIds": []
+            },
+            {
+              "id": "d144",
+              "sourceId": "logical",
+              "pointer": "/modules/0/extensions/umf.actions/actions/0/failures/0/message",
+              "assertion": "actions",
+              "relevance": "selected",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Selected action assertion retained after inspectActions declaration checks; executor obligations are not discharged by generation",
+              "obligationIds": []
+            },
+            {
+              "id": "d145",
+              "sourceId": "logical",
+              "pointer": "/modules/0/extensions/umf.actions/actions/0/failures/0/retryable",
+              "assertion": "actions",
+              "relevance": "selected",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Selected action assertion retained after inspectActions declaration checks; executor obligations are not discharged by generation",
+              "obligationIds": []
+            },
+            {
+              "id": "d115",
+              "sourceId": "logical",
+              "pointer": "/modules/0/extensions/umf.actions/actions/0/id",
+              "assertion": "actions",
+              "relevance": "selected",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Selected action assertion retained after inspectActions declaration checks; executor obligations are not discharged by generation",
+              "obligationIds": []
+            },
+            {
+              "id": "d152",
+              "sourceId": "logical",
+              "pointer": "/modules/0/extensions/umf.actions/actions/0/idempotency",
+              "assertion": "actions",
+              "relevance": "selected",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Selected action assertion retained after inspectActions declaration checks; executor obligations are not discharged by generation",
+              "obligationIds": []
+            },
+            {
+              "id": "d171",
+              "sourceId": "logical",
+              "pointer": "/modules/0/extensions/umf.actions/actions/0/idempotency",
+              "assertion": "actions",
+              "relevance": "selected",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "inspectActions declaration result; external execution duties remain undischargeable by generation",
+              "obligationIds": [
+                "o16"
+              ]
+            },
+            {
+              "id": "d116",
+              "sourceId": "logical",
+              "pointer": "/modules/0/extensions/umf.actions/actions/0/name",
+              "assertion": "actions",
+              "relevance": "selected",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Selected action assertion retained after inspectActions declaration checks; executor obligations are not discharged by generation",
+              "obligationIds": []
+            },
+            {
+              "id": "d166",
+              "sourceId": "logical",
+              "pointer": "/modules/0/extensions/umf.actions/actions/0/outputs/0",
+              "assertion": "actions",
+              "relevance": "selected",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "inspectActions declaration result; external execution duties remain undischargeable by generation",
+              "obligationIds": [
+                "o11"
+              ]
+            },
+            {
+              "id": "d132",
+              "sourceId": "logical",
+              "pointer": "/modules/0/extensions/umf.actions/actions/0/outputs/0/field/element",
+              "assertion": "actions",
+              "relevance": "selected",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Selected action assertion retained after inspectActions declaration checks; executor obligations are not discharged by generation",
+              "obligationIds": []
+            },
+            {
+              "id": "d131",
+              "sourceId": "logical",
+              "pointer": "/modules/0/extensions/umf.actions/actions/0/outputs/0/field/module",
+              "assertion": "actions",
+              "relevance": "selected",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Selected action assertion retained after inspectActions declaration checks; executor obligations are not discharged by generation",
+              "obligationIds": []
+            },
+            {
+              "id": "d129",
+              "sourceId": "logical",
+              "pointer": "/modules/0/extensions/umf.actions/actions/0/outputs/0/id",
+              "assertion": "actions",
+              "relevance": "selected",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Selected action assertion retained after inspectActions declaration checks; executor obligations are not discharged by generation",
+              "obligationIds": []
+            },
+            {
+              "id": "d130",
+              "sourceId": "logical",
+              "pointer": "/modules/0/extensions/umf.actions/actions/0/outputs/0/kind",
+              "assertion": "actions",
+              "relevance": "selected",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Selected action assertion retained after inspectActions declaration checks; executor obligations are not discharged by generation",
+              "obligationIds": []
+            },
+            {
+              "id": "d133",
+              "sourceId": "logical",
+              "pointer": "/modules/0/extensions/umf.actions/actions/0/outputs/0/required",
+              "assertion": "actions",
+              "relevance": "selected",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Selected action assertion retained after inspectActions declaration checks; executor obligations are not discharged by generation",
+              "obligationIds": []
+            },
+            {
+              "id": "d156",
+              "sourceId": "logical",
+              "pointer": "/modules/0/extensions/umf.actions/actions/0/parameters/0",
+              "assertion": "actions",
+              "relevance": "selected",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "inspectActions declaration result; external execution duties remain undischargeable by generation",
+              "obligationIds": [
+                "o1"
+              ]
+            },
+            {
+              "id": "d118",
+              "sourceId": "logical",
+              "pointer": "/modules/0/extensions/umf.actions/actions/0/parameters/0/id",
+              "assertion": "actions",
+              "relevance": "selected",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Selected action assertion retained after inspectActions declaration checks; executor obligations are not discharged by generation",
+              "obligationIds": []
+            },
+            {
+              "id": "d119",
+              "sourceId": "logical",
+              "pointer": "/modules/0/extensions/umf.actions/actions/0/parameters/0/kind",
+              "assertion": "actions",
+              "relevance": "selected",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Selected action assertion retained after inspectActions declaration checks; executor obligations are not discharged by generation",
+              "obligationIds": []
+            },
+            {
+              "id": "d123",
+              "sourceId": "logical",
+              "pointer": "/modules/0/extensions/umf.actions/actions/0/parameters/0/required",
+              "assertion": "actions",
+              "relevance": "selected",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Selected action assertion retained after inspectActions declaration checks; executor obligations are not discharged by generation",
+              "obligationIds": []
+            },
+            {
+              "id": "d121",
+              "sourceId": "logical",
+              "pointer": "/modules/0/extensions/umf.actions/actions/0/parameters/0/target/element",
+              "assertion": "actions",
+              "relevance": "selected",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Selected action assertion retained after inspectActions declaration checks; executor obligations are not discharged by generation",
+              "obligationIds": []
+            },
+            {
+              "id": "d122",
+              "sourceId": "logical",
+              "pointer": "/modules/0/extensions/umf.actions/actions/0/parameters/0/target/key",
+              "assertion": "actions",
+              "relevance": "selected",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Selected action assertion retained after inspectActions declaration checks; executor obligations are not discharged by generation",
+              "obligationIds": []
+            },
+            {
+              "id": "d120",
+              "sourceId": "logical",
+              "pointer": "/modules/0/extensions/umf.actions/actions/0/parameters/0/target/module",
+              "assertion": "actions",
+              "relevance": "selected",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Selected action assertion retained after inspectActions declaration checks; executor obligations are not discharged by generation",
+              "obligationIds": []
+            },
+            {
+              "id": "d165",
+              "sourceId": "logical",
+              "pointer": "/modules/0/extensions/umf.actions/actions/0/parameters/1",
+              "assertion": "actions",
+              "relevance": "selected",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "inspectActions declaration result; external execution duties remain undischargeable by generation",
+              "obligationIds": [
+                "o10"
+              ]
+            },
+            {
+              "id": "d127",
+              "sourceId": "logical",
+              "pointer": "/modules/0/extensions/umf.actions/actions/0/parameters/1/field/element",
+              "assertion": "actions",
+              "relevance": "selected",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Selected action assertion retained after inspectActions declaration checks; executor obligations are not discharged by generation",
+              "obligationIds": []
+            },
+            {
+              "id": "d126",
+              "sourceId": "logical",
+              "pointer": "/modules/0/extensions/umf.actions/actions/0/parameters/1/field/module",
+              "assertion": "actions",
+              "relevance": "selected",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Selected action assertion retained after inspectActions declaration checks; executor obligations are not discharged by generation",
+              "obligationIds": []
+            },
+            {
+              "id": "d124",
+              "sourceId": "logical",
+              "pointer": "/modules/0/extensions/umf.actions/actions/0/parameters/1/id",
+              "assertion": "actions",
+              "relevance": "selected",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Selected action assertion retained after inspectActions declaration checks; executor obligations are not discharged by generation",
+              "obligationIds": []
+            },
+            {
+              "id": "d125",
+              "sourceId": "logical",
+              "pointer": "/modules/0/extensions/umf.actions/actions/0/parameters/1/kind",
+              "assertion": "actions",
+              "relevance": "selected",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Selected action assertion retained after inspectActions declaration checks; executor obligations are not discharged by generation",
+              "obligationIds": []
+            },
+            {
+              "id": "d128",
+              "sourceId": "logical",
+              "pointer": "/modules/0/extensions/umf.actions/actions/0/parameters/1/required",
+              "assertion": "actions",
+              "relevance": "selected",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Selected action assertion retained after inspectActions declaration checks; executor obligations are not discharged by generation",
+              "obligationIds": []
+            },
+            {
+              "id": "d135",
+              "sourceId": "logical",
+              "pointer": "/modules/0/extensions/umf.actions/actions/0/postconditions",
+              "assertion": "actions",
+              "relevance": "selected",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Selected action assertion retained after inspectActions declaration checks; executor obligations are not discharged by generation",
+              "obligationIds": []
+            },
+            {
+              "id": "d134",
+              "sourceId": "logical",
+              "pointer": "/modules/0/extensions/umf.actions/actions/0/preconditions",
+              "assertion": "actions",
+              "relevance": "selected",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Selected action assertion retained after inspectActions declaration checks; executor obligations are not discharged by generation",
+              "obligationIds": []
+            },
+            {
+              "id": "d136",
+              "sourceId": "logical",
+              "pointer": "/modules/0/extensions/umf.actions/actions/0/reads",
+              "assertion": "actions",
+              "relevance": "selected",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Selected action assertion retained after inspectActions declaration checks; executor obligations are not discharged by generation",
+              "obligationIds": []
+            },
+            {
+              "id": "d172",
+              "sourceId": "logical",
+              "pointer": "/modules/0/extensions/umf.actions/actions/0/result",
+              "assertion": "actions",
+              "relevance": "selected",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "inspectActions declaration result; external execution duties remain undischargeable by generation",
+              "obligationIds": [
+                "o17"
+              ]
+            },
+            {
+              "id": "d153",
+              "sourceId": "logical",
+              "pointer": "/modules/0/extensions/umf.actions/actions/0/result/identities",
+              "assertion": "actions",
+              "relevance": "selected",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Selected action assertion retained after inspectActions declaration checks; executor obligations are not discharged by generation",
+              "obligationIds": []
+            },
+            {
+              "id": "d155",
+              "sourceId": "logical",
+              "pointer": "/modules/0/extensions/umf.actions/actions/0/result/receipt",
+              "assertion": "actions",
+              "relevance": "selected",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Selected action assertion retained after inspectActions declaration checks; executor obligations are not discharged by generation",
+              "obligationIds": []
+            },
+            {
+              "id": "d154",
+              "sourceId": "logical",
+              "pointer": "/modules/0/extensions/umf.actions/actions/0/result/version",
+              "assertion": "actions",
+              "relevance": "selected",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Selected action assertion retained after inspectActions declaration checks; executor obligations are not discharged by generation",
+              "obligationIds": []
+            },
+            {
+              "id": "d137",
+              "sourceId": "logical",
+              "pointer": "/modules/0/extensions/umf.actions/actions/0/writes",
+              "assertion": "actions",
+              "relevance": "selected",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Selected action assertion retained after inspectActions declaration checks; executor obligations are not discharged by generation",
+              "obligationIds": []
+            },
+            {
+              "id": "d4",
+              "sourceId": "logical",
+              "pointer": "/modules/0/id",
+              "assertion": "source-context",
+              "relevance": "selected",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Known source identity or annotation retained; no native enforcement or execution is established",
+              "obligationIds": []
+            },
+            {
+              "id": "d5",
+              "sourceId": "logical",
+              "pointer": "/modules/0/namespace",
+              "assertion": "source-context",
+              "relevance": "selected",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Known source identity or annotation retained; no native enforcement or execution is established",
+              "obligationIds": []
+            },
+            {
+              "id": "d0",
+              "sourceId": "logical",
+              "pointer": "/umf",
+              "assertion": "source-context",
+              "relevance": "selected",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Known source identity or annotation retained; no native enforcement or execution is established",
+              "obligationIds": []
+            },
+            {
+              "id": "d2",
+              "sourceId": "logical",
+              "pointer": "/vocabularies/umf.access/version",
+              "assertion": "source-context",
+              "relevance": "selected",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Known source identity or annotation retained; no native enforcement or execution is established",
+              "obligationIds": []
+            },
+            {
+              "id": "d3",
+              "sourceId": "logical",
+              "pointer": "/vocabularies/umf.actions/version",
+              "assertion": "source-context",
+              "relevance": "selected",
+              "fidelity": "exact",
+              "checks": [
+                "informational"
+              ],
+              "reason": "Known source identity or annotation retained; no native enforcement or execution is established",
+              "obligationIds": []
+            }
+          ],
+          "diagnostics": [
+            {
+              "code": "ACCESS",
+              "accessCode": "ACCESS_REFERENCE",
+              "sourceId": "logical",
+              "pointer": "/modules/-1/elements/-1",
+              "message": "Authored access declaration violates ACCESS_REFERENCE"
+            },
+            {
+              "code": "REFERENCE",
+              "sourceId": "logical",
+              "pointer": "/modules/0/extensions/umf.actions/actions/0/outputs/0/field",
+              "message": "Typed access declaration refused: REFERENCE"
+            },
+            {
+              "code": "REFERENCE",
+              "sourceId": "logical",
+              "pointer": "/modules/0/extensions/umf.actions/actions/0/parameters/1/field",
+              "message": "Typed access declaration refused: REFERENCE"
+            }
+          ],
+          "obligations": [
+            {
+              "id": "o0",
+              "owner": "engine",
+              "description": "Store enforces authored Key uniqueness/equality; generated DTO does not establish it",
+              "dispositionIds": [
+                "d52",
+                "d53",
+                "d54",
+                "d55",
+                "d56",
+                "d57",
+                "d58",
+                "d59",
+                "d60",
+                "d61"
+              ]
+            },
+            {
+              "id": "o1",
+              "owner": "engine",
+              "description": "Selected action key remains an executor obligation",
+              "dispositionIds": [
+                "d156"
+              ]
+            },
+            {
+              "id": "o2",
+              "owner": "engine",
+              "description": "Selected action model remains an executor obligation",
+              "dispositionIds": [
+                "d157"
+              ]
+            },
+            {
+              "id": "o3",
+              "owner": "engine",
+              "description": "Selected action model remains an executor obligation",
+              "dispositionIds": [
+                "d158"
+              ]
+            },
+            {
+              "id": "o4",
+              "owner": "engine",
+              "description": "Selected action model remains an executor obligation",
+              "dispositionIds": [
+                "d159"
+              ]
+            },
+            {
+              "id": "o5",
+              "owner": "engine",
+              "description": "Selected action model remains an executor obligation",
+              "dispositionIds": [
+                "d160"
+              ]
+            },
+            {
+              "id": "o6",
+              "owner": "engine",
+              "description": "Selected action model remains an executor obligation",
+              "dispositionIds": [
+                "d161"
+              ]
+            },
+            {
+              "id": "o7",
+              "owner": "engine",
+              "description": "Selected action model remains an executor obligation",
+              "dispositionIds": [
+                "d162"
+              ]
+            },
+            {
+              "id": "o8",
+              "owner": "engine",
+              "description": "Selected action key remains an executor obligation",
+              "dispositionIds": [
+                "d163"
+              ]
+            },
+            {
+              "id": "o9",
+              "owner": "engine",
+              "description": "Selected action key remains an executor obligation",
+              "dispositionIds": [
+                "d164"
+              ]
+            },
+            {
+              "id": "o10",
+              "owner": "engine",
+              "description": "Selected action value remains an executor obligation",
+              "dispositionIds": [
+                "d165"
+              ]
+            },
+            {
+              "id": "o11",
+              "owner": "engine",
+              "description": "Selected action output remains an executor obligation",
+              "dispositionIds": [
+                "d166"
+              ]
+            },
+            {
+              "id": "o12",
+              "owner": "engine",
+              "description": "Selected action failure remains an executor obligation",
+              "dispositionIds": [
+                "d167"
+              ]
+            },
+            {
+              "id": "o13",
+              "owner": "engine",
+              "description": "Selected action authorization remains an executor obligation",
+              "dispositionIds": [
+                "d168"
+              ]
+            },
+            {
+              "id": "o14",
+              "owner": "engine",
+              "description": "Selected action attribution remains an executor obligation",
+              "dispositionIds": [
+                "d169"
+              ]
+            },
+            {
+              "id": "o15",
+              "owner": "engine",
+              "description": "Selected action atomicity remains an executor obligation",
+              "dispositionIds": [
+                "d170"
+              ]
+            },
+            {
+              "id": "o16",
+              "owner": "engine",
+              "description": "Selected action idempotency remains an executor obligation",
+              "dispositionIds": [
+                "d171"
+              ]
+            },
+            {
+              "id": "o17",
+              "owner": "engine",
+              "description": "Selected action result remains an executor obligation",
+              "dispositionIds": [
+                "d172"
+              ]
+            },
+            {
+              "id": "o18",
+              "owner": "engine",
+              "description": "Selected action binding remains an executor obligation",
+              "dispositionIds": [
+                "d173"
+              ]
+            },
+            {
+              "id": "o19",
+              "owner": "engine",
+              "description": "Selected action handler remains an executor obligation",
+              "dispositionIds": [
+                "d174"
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

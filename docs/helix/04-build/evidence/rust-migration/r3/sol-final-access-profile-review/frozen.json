@@ -1,0 +1,915 @@
+{
+  "cases": [
+    {
+      "id": "sol-final-profile-compilerVersion-0",
+      "operation": "generateAccessPackage",
+      "request": {
+        "request": {
+          "contract": "umf-access-generate/0.1",
+          "sources": [
+            {
+              "id": "logical",
+              "format": "json",
+              "text": "{\"umf\":\"0.10.0\",\"id\":\"commerce-model\",\"vocabularies\":{\"umf.access\":{\"version\":\"0.1.0\"},\"umf.actions\":{\"version\":\"0.1.0\"}},\"modules\":[{\"id\":\"commerce\",\"namespace\":\"commerce\",\"elements\":[{\"id\":\"orderId\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"amount\",\"kind\":\"field\",\"scalarType\":\"decimal\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{},\"facets\":{\"precision\":12,\"scale\":2}},{\"id\":\"memo\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}},{\"id\":\"placedAt\",\"kind\":\"field\",\"scalarType\":\"timestamp\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"revision\",\"kind\":\"field\",\"scalarType\":\"integer\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{},\"facets\":{\"integerWidth\":{\"bits\":64,\"signed\":true}}},{\"id\":\"Order\",\"kind\":\"record\",\"members\":[{\"module\":\"commerce\",\"element\":\"orderId\"},{\"module\":\"commerce\",\"element\":\"amount\"},{\"module\":\"commerce\",\"element\":\"memo\"},{\"module\":\"commerce\",\"element\":\"placedAt\"},{\"module\":\"commerce\",\"element\":\"revision\"}],\"keys\":[{\"id\":\"order-key\",\"name\":\"Order primary key\",\"fields\":[{\"module\":\"commerce\",\"element\":\"orderId\"}],\"primary\":true},{\"id\":\"HTTP-id\",\"name\":\"alternate\",\"fields\":[{\"module\":\"commerce\",\"element\":\"revision\"}],\"primary\":false}],\"extensions\":{}},{\"id\":\"customerId\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"name\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"Customer\",\"kind\":\"record\",\"members\":[{\"module\":\"commerce\",\"element\":\"customerId\"},{\"module\":\"commerce\",\"element\":\"name\"}],\"keys\":[{\"id\":\"Customer-key\",\"name\":\"Customer primary key\",\"primary\":true,\"fields\":[{\"module\":\"commerce\",\"element\":\"customerId\"}]}],\"extensions\":{}},{\"id\":\"lineOrderId\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"lineNumber\",\"kind\":\"field\",\"scalarType\":\"integer\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{},\"facets\":{\"integerWidth\":{\"bits\":32,\"signed\":true}}},{\"id\":\"OrderLine\",\"kind\":\"record\",\"members\":[{\"module\":\"commerce\",\"element\":\"lineOrderId\"},{\"module\":\"commerce\",\"element\":\"lineNumber\"}],\"keys\":[{\"id\":\"OrderLine-key\",\"name\":\"OrderLine primary key\",\"primary\":true,\"fields\":[{\"module\":\"commerce\",\"element\":\"lineOrderId\"},{\"module\":\"commerce\",\"element\":\"lineNumber\"}]}],\"extensions\":{}}],\"extensions\":{\"umf.access\":{\"views\":[{\"record\":{\"module\":\"commerce\",\"element\":\"Order\"},\"fields\":[{\"field\":{\"module\":\"commerce\",\"element\":\"orderId\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":false,\"generated\":false},{\"field\":{\"module\":\"commerce\",\"element\":\"amount\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":true,\"generated\":false},{\"field\":{\"module\":\"commerce\",\"element\":\"memo\"},\"row\":{\"missing\":true,\"null\":true},\"create\":{\"missing\":true,\"null\":true},\"mutable\":true,\"generated\":false},{\"field\":{\"module\":\"commerce\",\"element\":\"placedAt\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":false,\"generated\":false,\"temporal\":\"instant\"},{\"field\":{\"module\":\"commerce\",\"element\":\"revision\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":true,\"null\":false},\"mutable\":false,\"generated\":true}],\"selectedKey\":{\"module\":\"commerce\",\"element\":\"Order\",\"key\":\"order-key\"}},{\"record\":{\"module\":\"commerce\",\"element\":\"Customer\"},\"fields\":[{\"field\":{\"module\":\"commerce\",\"element\":\"customerId\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":false,\"generated\":false},{\"field\":{\"module\":\"commerce\",\"element\":\"name\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":true,\"generated\":false}],\"selectedKey\":{\"module\":\"commerce\",\"element\":\"Customer\",\"key\":\"Customer-key\"}},{\"record\":{\"module\":\"commerce\",\"element\":\"OrderLine\"},\"fields\":[{\"field\":{\"module\":\"commerce\",\"element\":\"lineOrderId\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":false,\"generated\":false},{\"field\":{\"module\":\"commerce\",\"element\":\"lineNumber\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":false,\"generated\":false}],\"selectedKey\":{\"module\":\"commerce\",\"element\":\"OrderLine\",\"key\":\"OrderLine-key\"}}],\"columns\":[],\"search\":[],\"searchBindings\":[]},\"umf.actions\":{\"actions\":[{\"id\":\"shipOrder\",\"name\":\"Ship order\",\"description\":\"Declared handler identity; no execution qualification\",\"parameters\":[{\"id\":\"order\",\"kind\":\"entity\",\"target\":{\"module\":\"commerce\",\"element\":\"Order\",\"key\":\"HTTP-id\"},\"required\":true},{\"id\":\"memo\",\"kind\":\"value\",\"field\":{\"module\":\"commerce\",\"element\":\"memo\"},\"required\":false}],\"outputs\":[{\"id\":\"amount\",\"kind\":\"value\",\"field\":{\"module\":\"commerce\",\"element\":\"amount\"},\"required\":true}],\"preconditions\":[],\"postconditions\":[],\"reads\":[],\"writes\":[],\"binding\":{\"kind\":\"handler\",\"profile\":{\"id\":\"test-handler-profile\",\"version\":\"1\"},\"handler\":{\"id\":\"test-ship\",\"version\":\"1\"}},\"failures\":[{\"code\":\"NOT_READY\",\"message\":\"Not ready\",\"retryable\":false}],\"authorization\":{\"kind\":\"roles\",\"profile\":{\"id\":\"umf.actions.roles\",\"version\":\"1\"},\"roles\":[\"shipper\"]},\"attribution\":{\"subject\":\"person-required\"},\"atomicity\":\"single-store\",\"idempotency\":\"caller-key-optional\",\"result\":{\"identities\":\"created-and-changed\",\"version\":\"store-opaque\",\"receipt\":\"read-at-least\"}}]}}}]}"
+            }
+          ],
+          "logical": "logical",
+          "bindings": [],
+          "records": [
+            {
+              "module": "commerce",
+              "element": "Order"
+            }
+          ],
+          "actions": [
+            {
+              "module": "commerce",
+              "action": "shipOrder"
+            }
+          ],
+          "projections": [],
+          "package": "shop",
+          "names": [],
+          "mode": "strict",
+          "profileId": "test.access",
+          "profileVersion": "0.1.0",
+          "coreVersion": "0.10.0"
+        },
+        "profile": {
+          "id": "test.access",
+          "version": "0.1.0",
+          "compilerVersion": null,
+          "coreVersions": [
+            "0.10.0"
+          ],
+          "vocabularies": [
+            {
+              "id": "umf.access",
+              "version": "0.1.0"
+            },
+            {
+              "id": "umf.actions",
+              "version": "0.1.0"
+            },
+            {
+              "id": "umf.binding",
+              "version": "0.2.0"
+            }
+          ],
+          "python": {
+            "version": "3.14.7"
+          },
+          "dependencies": [
+            {
+              "distribution": "umf_access",
+              "version": "0.1.0"
+            },
+            {
+              "distribution": "pydantic",
+              "version": "2.14.1"
+            }
+          ],
+          "checkers": [
+            {
+              "name": "mypy",
+              "version": "2.4.0",
+              "configuration": {
+                "check_untyped_defs": true
+              }
+            },
+            {
+              "name": "pyright",
+              "version": "1.1.414",
+              "configuration": {
+                "typeCheckingMode": "strict",
+                "environment": "test"
+              }
+            }
+          ],
+          "reservedNames": [
+            "test_reserved"
+          ],
+          "importedNames": [
+            "decimal",
+            "pydantic",
+            "umf_access"
+          ],
+          "assertionKinds": [
+            "kind",
+            "nullability",
+            "Key",
+            "facets",
+            "defaults",
+            "relationships",
+            "actions",
+            "umf.access"
+          ],
+          "subset": "test fixture, not qualified",
+          "codeSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      },
+      "expected": {
+        "ok": true,
+        "result": {
+          "contract": "umf-access-generate/0.1",
+          "abi": "umf-python-types/0.1",
+          "runtimeAbi": {
+            "distribution": "umf_access",
+            "version": "0.1.0",
+            "abi": "umf-access-runtime/0.1"
+          },
+          "outcome": "refused",
+          "inputDigest": "cbd1d201a93578735600a6a0233e194fdbe30765d23365c445f7065b0c5c0265",
+          "files": [],
+          "symbols": [],
+          "dispositions": [],
+          "diagnostics": [
+            {
+              "code": "PROFILE",
+              "sourceId": "logical",
+              "pointer": "/profile",
+              "message": "Typed access declaration refused: PROFILE"
+            }
+          ],
+          "obligations": []
+        }
+      }
+    },
+    {
+      "id": "sol-final-profile-subset-1",
+      "operation": "generateAccessPackage",
+      "request": {
+        "request": {
+          "contract": "umf-access-generate/0.1",
+          "sources": [
+            {
+              "id": "logical",
+              "format": "json",
+              "text": "{\"umf\":\"0.10.0\",\"id\":\"commerce-model\",\"vocabularies\":{\"umf.access\":{\"version\":\"0.1.0\"},\"umf.actions\":{\"version\":\"0.1.0\"}},\"modules\":[{\"id\":\"commerce\",\"namespace\":\"commerce\",\"elements\":[{\"id\":\"orderId\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"amount\",\"kind\":\"field\",\"scalarType\":\"decimal\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{},\"facets\":{\"precision\":12,\"scale\":2}},{\"id\":\"memo\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}},{\"id\":\"placedAt\",\"kind\":\"field\",\"scalarType\":\"timestamp\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"revision\",\"kind\":\"field\",\"scalarType\":\"integer\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{},\"facets\":{\"integerWidth\":{\"bits\":64,\"signed\":true}}},{\"id\":\"Order\",\"kind\":\"record\",\"members\":[{\"module\":\"commerce\",\"element\":\"orderId\"},{\"module\":\"commerce\",\"element\":\"amount\"},{\"module\":\"commerce\",\"element\":\"memo\"},{\"module\":\"commerce\",\"element\":\"placedAt\"},{\"module\":\"commerce\",\"element\":\"revision\"}],\"keys\":[{\"id\":\"order-key\",\"name\":\"Order primary key\",\"fields\":[{\"module\":\"commerce\",\"element\":\"orderId\"}],\"primary\":true},{\"id\":\"HTTP-id\",\"name\":\"alternate\",\"fields\":[{\"module\":\"commerce\",\"element\":\"revision\"}],\"primary\":false}],\"extensions\":{}},{\"id\":\"customerId\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"name\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"Customer\",\"kind\":\"record\",\"members\":[{\"module\":\"commerce\",\"element\":\"customerId\"},{\"module\":\"commerce\",\"element\":\"name\"}],\"keys\":[{\"id\":\"Customer-key\",\"name\":\"Customer primary key\",\"primary\":true,\"fields\":[{\"module\":\"commerce\",\"element\":\"customerId\"}]}],\"extensions\":{}},{\"id\":\"lineOrderId\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"lineNumber\",\"kind\":\"field\",\"scalarType\":\"integer\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{},\"facets\":{\"integerWidth\":{\"bits\":32,\"signed\":true}}},{\"id\":\"OrderLine\",\"kind\":\"record\",\"members\":[{\"module\":\"commerce\",\"element\":\"lineOrderId\"},{\"module\":\"commerce\",\"element\":\"lineNumber\"}],\"keys\":[{\"id\":\"OrderLine-key\",\"name\":\"OrderLine primary key\",\"primary\":true,\"fields\":[{\"module\":\"commerce\",\"element\":\"lineOrderId\"},{\"module\":\"commerce\",\"element\":\"lineNumber\"}]}],\"extensions\":{}}],\"extensions\":{\"umf.access\":{\"views\":[{\"record\":{\"module\":\"commerce\",\"element\":\"Order\"},\"fields\":[{\"field\":{\"module\":\"commerce\",\"element\":\"orderId\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":false,\"generated\":false},{\"field\":{\"module\":\"commerce\",\"element\":\"amount\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":true,\"generated\":false},{\"field\":{\"module\":\"commerce\",\"element\":\"memo\"},\"row\":{\"missing\":true,\"null\":true},\"create\":{\"missing\":true,\"null\":true},\"mutable\":true,\"generated\":false},{\"field\":{\"module\":\"commerce\",\"element\":\"placedAt\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":false,\"generated\":false,\"temporal\":\"instant\"},{\"field\":{\"module\":\"commerce\",\"element\":\"revision\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":true,\"null\":false},\"mutable\":false,\"generated\":true}],\"selectedKey\":{\"module\":\"commerce\",\"element\":\"Order\",\"key\":\"order-key\"}},{\"record\":{\"module\":\"commerce\",\"element\":\"Customer\"},\"fields\":[{\"field\":{\"module\":\"commerce\",\"element\":\"customerId\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":false,\"generated\":false},{\"field\":{\"module\":\"commerce\",\"element\":\"name\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":true,\"generated\":false}],\"selectedKey\":{\"module\":\"commerce\",\"element\":\"Customer\",\"key\":\"Customer-key\"}},{\"record\":{\"module\":\"commerce\",\"element\":\"OrderLine\"},\"fields\":[{\"field\":{\"module\":\"commerce\",\"element\":\"lineOrderId\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":false,\"generated\":false},{\"field\":{\"module\":\"commerce\",\"element\":\"lineNumber\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":false,\"generated\":false}],\"selectedKey\":{\"module\":\"commerce\",\"element\":\"OrderLine\",\"key\":\"OrderLine-key\"}}],\"columns\":[],\"search\":[],\"searchBindings\":[]},\"umf.actions\":{\"actions\":[{\"id\":\"shipOrder\",\"name\":\"Ship order\",\"description\":\"Declared handler identity; no execution qualification\",\"parameters\":[{\"id\":\"order\",\"kind\":\"entity\",\"target\":{\"module\":\"commerce\",\"element\":\"Order\",\"key\":\"HTTP-id\"},\"required\":true},{\"id\":\"memo\",\"kind\":\"value\",\"field\":{\"module\":\"commerce\",\"element\":\"memo\"},\"required\":false}],\"outputs\":[{\"id\":\"amount\",\"kind\":\"value\",\"field\":{\"module\":\"commerce\",\"element\":\"amount\"},\"required\":true}],\"preconditions\":[],\"postconditions\":[],\"reads\":[],\"writes\":[],\"binding\":{\"kind\":\"handler\",\"profile\":{\"id\":\"test-handler-profile\",\"version\":\"1\"},\"handler\":{\"id\":\"test-ship\",\"version\":\"1\"}},\"failures\":[{\"code\":\"NOT_READY\",\"message\":\"Not ready\",\"retryable\":false}],\"authorization\":{\"kind\":\"roles\",\"profile\":{\"id\":\"umf.actions.roles\",\"version\":\"1\"},\"roles\":[\"shipper\"]},\"attribution\":{\"subject\":\"person-required\"},\"atomicity\":\"single-store\",\"idempotency\":\"caller-key-optional\",\"result\":{\"identities\":\"created-and-changed\",\"version\":\"store-opaque\",\"receipt\":\"read-at-least\"}}]}}}]}"
+            }
+          ],
+          "logical": "logical",
+          "bindings": [],
+          "records": [
+            {
+              "module": "commerce",
+              "element": "Order"
+            }
+          ],
+          "actions": [
+            {
+              "module": "commerce",
+              "action": "shipOrder"
+            }
+          ],
+          "projections": [],
+          "package": "shop",
+          "names": [],
+          "mode": "strict",
+          "profileId": "test.access",
+          "profileVersion": "0.1.0",
+          "coreVersion": "0.10.0"
+        },
+        "profile": {
+          "id": "test.access",
+          "version": "0.1.0",
+          "compilerVersion": "test",
+          "coreVersions": [
+            "0.10.0"
+          ],
+          "vocabularies": [
+            {
+              "id": "umf.access",
+              "version": "0.1.0"
+            },
+            {
+              "id": "umf.actions",
+              "version": "0.1.0"
+            },
+            {
+              "id": "umf.binding",
+              "version": "0.2.0"
+            }
+          ],
+          "python": {
+            "version": "3.14.7"
+          },
+          "dependencies": [
+            {
+              "distribution": "umf_access",
+              "version": "0.1.0"
+            },
+            {
+              "distribution": "pydantic",
+              "version": "2.14.1"
+            }
+          ],
+          "checkers": [
+            {
+              "name": "mypy",
+              "version": "2.4.0",
+              "configuration": {
+                "check_untyped_defs": true
+              }
+            },
+            {
+              "name": "pyright",
+              "version": "1.1.414",
+              "configuration": {
+                "typeCheckingMode": "strict",
+                "environment": "test"
+              }
+            }
+          ],
+          "reservedNames": [
+            "test_reserved"
+          ],
+          "importedNames": [
+            "decimal",
+            "pydantic",
+            "umf_access"
+          ],
+          "assertionKinds": [
+            "kind",
+            "nullability",
+            "Key",
+            "facets",
+            "defaults",
+            "relationships",
+            "actions",
+            "umf.access"
+          ],
+          "subset": null,
+          "codeSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      },
+      "expected": {
+        "ok": true,
+        "result": {
+          "contract": "umf-access-generate/0.1",
+          "abi": "umf-python-types/0.1",
+          "runtimeAbi": {
+            "distribution": "umf_access",
+            "version": "0.1.0",
+            "abi": "umf-access-runtime/0.1"
+          },
+          "outcome": "refused",
+          "inputDigest": "3efe18498f8b89e9bd51aa4543f980e5c4f09aa256282aec192d0a8a9dd3f863",
+          "files": [],
+          "symbols": [],
+          "dispositions": [],
+          "diagnostics": [
+            {
+              "code": "PROFILE",
+              "sourceId": "logical",
+              "pointer": "/profile",
+              "message": "Typed access declaration refused: PROFILE"
+            }
+          ],
+          "obligations": []
+        }
+      }
+    },
+    {
+      "id": "sol-final-profile-python-2",
+      "operation": "generateAccessPackage",
+      "request": {
+        "request": {
+          "contract": "umf-access-generate/0.1",
+          "sources": [
+            {
+              "id": "logical",
+              "format": "json",
+              "text": "{\"umf\":\"0.10.0\",\"id\":\"commerce-model\",\"vocabularies\":{\"umf.access\":{\"version\":\"0.1.0\"},\"umf.actions\":{\"version\":\"0.1.0\"}},\"modules\":[{\"id\":\"commerce\",\"namespace\":\"commerce\",\"elements\":[{\"id\":\"orderId\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"amount\",\"kind\":\"field\",\"scalarType\":\"decimal\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{},\"facets\":{\"precision\":12,\"scale\":2}},{\"id\":\"memo\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}},{\"id\":\"placedAt\",\"kind\":\"field\",\"scalarType\":\"timestamp\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"revision\",\"kind\":\"field\",\"scalarType\":\"integer\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{},\"facets\":{\"integerWidth\":{\"bits\":64,\"signed\":true}}},{\"id\":\"Order\",\"kind\":\"record\",\"members\":[{\"module\":\"commerce\",\"element\":\"orderId\"},{\"module\":\"commerce\",\"element\":\"amount\"},{\"module\":\"commerce\",\"element\":\"memo\"},{\"module\":\"commerce\",\"element\":\"placedAt\"},{\"module\":\"commerce\",\"element\":\"revision\"}],\"keys\":[{\"id\":\"order-key\",\"name\":\"Order primary key\",\"fields\":[{\"module\":\"commerce\",\"element\":\"orderId\"}],\"primary\":true},{\"id\":\"HTTP-id\",\"name\":\"alternate\",\"fields\":[{\"module\":\"commerce\",\"element\":\"revision\"}],\"primary\":false}],\"extensions\":{}},{\"id\":\"customerId\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"name\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"Customer\",\"kind\":\"record\",\"members\":[{\"module\":\"commerce\",\"element\":\"customerId\"},{\"module\":\"commerce\",\"element\":\"name\"}],\"keys\":[{\"id\":\"Customer-key\",\"name\":\"Customer primary key\",\"primary\":true,\"fields\":[{\"module\":\"commerce\",\"element\":\"customerId\"}]}],\"extensions\":{}},{\"id\":\"lineOrderId\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"lineNumber\",\"kind\":\"field\",\"scalarType\":\"integer\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{},\"facets\":{\"integerWidth\":{\"bits\":32,\"signed\":true}}},{\"id\":\"OrderLine\",\"kind\":\"record\",\"members\":[{\"module\":\"commerce\",\"element\":\"lineOrderId\"},{\"module\":\"commerce\",\"element\":\"lineNumber\"}],\"keys\":[{\"id\":\"OrderLine-key\",\"name\":\"OrderLine primary key\",\"primary\":true,\"fields\":[{\"module\":\"commerce\",\"element\":\"lineOrderId\"},{\"module\":\"commerce\",\"element\":\"lineNumber\"}]}],\"extensions\":{}}],\"extensions\":{\"umf.access\":{\"views\":[{\"record\":{\"module\":\"commerce\",\"element\":\"Order\"},\"fields\":[{\"field\":{\"module\":\"commerce\",\"element\":\"orderId\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":false,\"generated\":false},{\"field\":{\"module\":\"commerce\",\"element\":\"amount\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":true,\"generated\":false},{\"field\":{\"module\":\"commerce\",\"element\":\"memo\"},\"row\":{\"missing\":true,\"null\":true},\"create\":{\"missing\":true,\"null\":true},\"mutable\":true,\"generated\":false},{\"field\":{\"module\":\"commerce\",\"element\":\"placedAt\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":false,\"generated\":false,\"temporal\":\"instant\"},{\"field\":{\"module\":\"commerce\",\"element\":\"revision\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":true,\"null\":false},\"mutable\":false,\"generated\":true}],\"selectedKey\":{\"module\":\"commerce\",\"element\":\"Order\",\"key\":\"order-key\"}},{\"record\":{\"module\":\"commerce\",\"element\":\"Customer\"},\"fields\":[{\"field\":{\"module\":\"commerce\",\"element\":\"customerId\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":false,\"generated\":false},{\"field\":{\"module\":\"commerce\",\"element\":\"name\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":true,\"generated\":false}],\"selectedKey\":{\"module\":\"commerce\",\"element\":\"Customer\",\"key\":\"Customer-key\"}},{\"record\":{\"module\":\"commerce\",\"element\":\"OrderLine\"},\"fields\":[{\"field\":{\"module\":\"commerce\",\"element\":\"lineOrderId\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":false,\"generated\":false},{\"field\":{\"module\":\"commerce\",\"element\":\"lineNumber\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":false,\"generated\":false}],\"selectedKey\":{\"module\":\"commerce\",\"element\":\"OrderLine\",\"key\":\"OrderLine-key\"}}],\"columns\":[],\"search\":[],\"searchBindings\":[]},\"umf.actions\":{\"actions\":[{\"id\":\"shipOrder\",\"name\":\"Ship order\",\"description\":\"Declared handler identity; no execution qualification\",\"parameters\":[{\"id\":\"order\",\"kind\":\"entity\",\"target\":{\"module\":\"commerce\",\"element\":\"Order\",\"key\":\"HTTP-id\"},\"required\":true},{\"id\":\"memo\",\"kind\":\"value\",\"field\":{\"module\":\"commerce\",\"element\":\"memo\"},\"required\":false}],\"outputs\":[{\"id\":\"amount\",\"kind\":\"value\",\"field\":{\"module\":\"commerce\",\"element\":\"amount\"},\"required\":true}],\"preconditions\":[],\"postconditions\":[],\"reads\":[],\"writes\":[],\"binding\":{\"kind\":\"handler\",\"profile\":{\"id\":\"test-handler-profile\",\"version\":\"1\"},\"handler\":{\"id\":\"test-ship\",\"version\":\"1\"}},\"failures\":[{\"code\":\"NOT_READY\",\"message\":\"Not ready\",\"retryable\":false}],\"authorization\":{\"kind\":\"roles\",\"profile\":{\"id\":\"umf.actions.roles\",\"version\":\"1\"},\"roles\":[\"shipper\"]},\"attribution\":{\"subject\":\"person-required\"},\"atomicity\":\"single-store\",\"idempotency\":\"caller-key-optional\",\"result\":{\"identities\":\"created-and-changed\",\"version\":\"store-opaque\",\"receipt\":\"read-at-least\"}}]}}}]}"
+            }
+          ],
+          "logical": "logical",
+          "bindings": [],
+          "records": [
+            {
+              "module": "commerce",
+              "element": "Order"
+            }
+          ],
+          "actions": [
+            {
+              "module": "commerce",
+              "action": "shipOrder"
+            }
+          ],
+          "projections": [],
+          "package": "shop",
+          "names": [],
+          "mode": "strict",
+          "profileId": "test.access",
+          "profileVersion": "0.1.0",
+          "coreVersion": "0.10.0"
+        },
+        "profile": {
+          "id": "test.access",
+          "version": "0.1.0",
+          "compilerVersion": "test",
+          "coreVersions": [
+            "0.10.0"
+          ],
+          "vocabularies": [
+            {
+              "id": "umf.access",
+              "version": "0.1.0"
+            },
+            {
+              "id": "umf.actions",
+              "version": "0.1.0"
+            },
+            {
+              "id": "umf.binding",
+              "version": "0.2.0"
+            }
+          ],
+          "python": null,
+          "dependencies": [
+            {
+              "distribution": "umf_access",
+              "version": "0.1.0"
+            },
+            {
+              "distribution": "pydantic",
+              "version": "2.14.1"
+            }
+          ],
+          "checkers": [
+            {
+              "name": "mypy",
+              "version": "2.4.0",
+              "configuration": {
+                "check_untyped_defs": true
+              }
+            },
+            {
+              "name": "pyright",
+              "version": "1.1.414",
+              "configuration": {
+                "typeCheckingMode": "strict",
+                "environment": "test"
+              }
+            }
+          ],
+          "reservedNames": [
+            "test_reserved"
+          ],
+          "importedNames": [
+            "decimal",
+            "pydantic",
+            "umf_access"
+          ],
+          "assertionKinds": [
+            "kind",
+            "nullability",
+            "Key",
+            "facets",
+            "defaults",
+            "relationships",
+            "actions",
+            "umf.access"
+          ],
+          "subset": "test fixture, not qualified",
+          "codeSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      },
+      "expected": {
+        "ok": true,
+        "result": {
+          "contract": "umf-access-generate/0.1",
+          "abi": "umf-python-types/0.1",
+          "runtimeAbi": {
+            "distribution": "umf_access",
+            "version": "0.1.0",
+            "abi": "umf-access-runtime/0.1"
+          },
+          "outcome": "refused",
+          "inputDigest": "877577e7d8fa2a49d68b5f5925114c9e502606597e9bb3c3897bde1f51db970b",
+          "files": [],
+          "symbols": [],
+          "dispositions": [],
+          "diagnostics": [
+            {
+              "code": "PROFILE",
+              "sourceId": "logical",
+              "pointer": "/profile",
+              "message": "Typed access declaration refused: PROFILE"
+            }
+          ],
+          "obligations": []
+        }
+      }
+    },
+    {
+      "id": "sol-final-profile-python-3",
+      "operation": "generateAccessPackage",
+      "request": {
+        "request": {
+          "contract": "umf-access-generate/0.1",
+          "sources": [
+            {
+              "id": "logical",
+              "format": "json",
+              "text": "{\"umf\":\"0.10.0\",\"id\":\"commerce-model\",\"vocabularies\":{\"umf.access\":{\"version\":\"0.1.0\"},\"umf.actions\":{\"version\":\"0.1.0\"}},\"modules\":[{\"id\":\"commerce\",\"namespace\":\"commerce\",\"elements\":[{\"id\":\"orderId\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"amount\",\"kind\":\"field\",\"scalarType\":\"decimal\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{},\"facets\":{\"precision\":12,\"scale\":2}},{\"id\":\"memo\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}},{\"id\":\"placedAt\",\"kind\":\"field\",\"scalarType\":\"timestamp\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"revision\",\"kind\":\"field\",\"scalarType\":\"integer\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{},\"facets\":{\"integerWidth\":{\"bits\":64,\"signed\":true}}},{\"id\":\"Order\",\"kind\":\"record\",\"members\":[{\"module\":\"commerce\",\"element\":\"orderId\"},{\"module\":\"commerce\",\"element\":\"amount\"},{\"module\":\"commerce\",\"element\":\"memo\"},{\"module\":\"commerce\",\"element\":\"placedAt\"},{\"module\":\"commerce\",\"element\":\"revision\"}],\"keys\":[{\"id\":\"order-key\",\"name\":\"Order primary key\",\"fields\":[{\"module\":\"commerce\",\"element\":\"orderId\"}],\"primary\":true},{\"id\":\"HTTP-id\",\"name\":\"alternate\",\"fields\":[{\"module\":\"commerce\",\"element\":\"revision\"}],\"primary\":false}],\"extensions\":{}},{\"id\":\"customerId\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"name\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"Customer\",\"kind\":\"record\",\"members\":[{\"module\":\"commerce\",\"element\":\"customerId\"},{\"module\":\"commerce\",\"element\":\"name\"}],\"keys\":[{\"id\":\"Customer-key\",\"name\":\"Customer primary key\",\"primary\":true,\"fields\":[{\"module\":\"commerce\",\"element\":\"customerId\"}]}],\"extensions\":{}},{\"id\":\"lineOrderId\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"lineNumber\",\"kind\":\"field\",\"scalarType\":\"integer\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{},\"facets\":{\"integerWidth\":{\"bits\":32,\"signed\":true}}},{\"id\":\"OrderLine\",\"kind\":\"record\",\"members\":[{\"module\":\"commerce\",\"element\":\"lineOrderId\"},{\"module\":\"commerce\",\"element\":\"lineNumber\"}],\"keys\":[{\"id\":\"OrderLine-key\",\"name\":\"OrderLine primary key\",\"primary\":true,\"fields\":[{\"module\":\"commerce\",\"element\":\"lineOrderId\"},{\"module\":\"commerce\",\"element\":\"lineNumber\"}]}],\"extensions\":{}}],\"extensions\":{\"umf.access\":{\"views\":[{\"record\":{\"module\":\"commerce\",\"element\":\"Order\"},\"fields\":[{\"field\":{\"module\":\"commerce\",\"element\":\"orderId\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":false,\"generated\":false},{\"field\":{\"module\":\"commerce\",\"element\":\"amount\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":true,\"generated\":false},{\"field\":{\"module\":\"commerce\",\"element\":\"memo\"},\"row\":{\"missing\":true,\"null\":true},\"create\":{\"missing\":true,\"null\":true},\"mutable\":true,\"generated\":false},{\"field\":{\"module\":\"commerce\",\"element\":\"placedAt\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":false,\"generated\":false,\"temporal\":\"instant\"},{\"field\":{\"module\":\"commerce\",\"element\":\"revision\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":true,\"null\":false},\"mutable\":false,\"generated\":true}],\"selectedKey\":{\"module\":\"commerce\",\"element\":\"Order\",\"key\":\"order-key\"}},{\"record\":{\"module\":\"commerce\",\"element\":\"Customer\"},\"fields\":[{\"field\":{\"module\":\"commerce\",\"element\":\"customerId\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":false,\"generated\":false},{\"field\":{\"module\":\"commerce\",\"element\":\"name\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":true,\"generated\":false}],\"selectedKey\":{\"module\":\"commerce\",\"element\":\"Customer\",\"key\":\"Customer-key\"}},{\"record\":{\"module\":\"commerce\",\"element\":\"OrderLine\"},\"fields\":[{\"field\":{\"module\":\"commerce\",\"element\":\"lineOrderId\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":false,\"generated\":false},{\"field\":{\"module\":\"commerce\",\"element\":\"lineNumber\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":false,\"generated\":false}],\"selectedKey\":{\"module\":\"commerce\",\"element\":\"OrderLine\",\"key\":\"OrderLine-key\"}}],\"columns\":[],\"search\":[],\"searchBindings\":[]},\"umf.actions\":{\"actions\":[{\"id\":\"shipOrder\",\"name\":\"Ship order\",\"description\":\"Declared handler identity; no execution qualification\",\"parameters\":[{\"id\":\"order\",\"kind\":\"entity\",\"target\":{\"module\":\"commerce\",\"element\":\"Order\",\"key\":\"HTTP-id\"},\"required\":true},{\"id\":\"memo\",\"kind\":\"value\",\"field\":{\"module\":\"commerce\",\"element\":\"memo\"},\"required\":false}],\"outputs\":[{\"id\":\"amount\",\"kind\":\"value\",\"field\":{\"module\":\"commerce\",\"element\":\"amount\"},\"required\":true}],\"preconditions\":[],\"postconditions\":[],\"reads\":[],\"writes\":[],\"binding\":{\"kind\":\"handler\",\"profile\":{\"id\":\"test-handler-profile\",\"version\":\"1\"},\"handler\":{\"id\":\"test-ship\",\"version\":\"1\"}},\"failures\":[{\"code\":\"NOT_READY\",\"message\":\"Not ready\",\"retryable\":false}],\"authorization\":{\"kind\":\"roles\",\"profile\":{\"id\":\"umf.actions.roles\",\"version\":\"1\"},\"roles\":[\"shipper\"]},\"attribution\":{\"subject\":\"person-required\"},\"atomicity\":\"single-store\",\"idempotency\":\"caller-key-optional\",\"result\":{\"identities\":\"created-and-changed\",\"version\":\"store-opaque\",\"receipt\":\"read-at-least\"}}]}}}]}"
+            }
+          ],
+          "logical": "logical",
+          "bindings": [],
+          "records": [
+            {
+              "module": "commerce",
+              "element": "Order"
+            }
+          ],
+          "actions": [
+            {
+              "module": "commerce",
+              "action": "shipOrder"
+            }
+          ],
+          "projections": [],
+          "package": "shop",
+          "names": [],
+          "mode": "strict",
+          "profileId": "test.access",
+          "profileVersion": "0.1.0",
+          "coreVersion": "0.10.0"
+        },
+        "profile": {
+          "id": "test.access",
+          "version": "0.1.0",
+          "compilerVersion": "test",
+          "coreVersions": [
+            "0.10.0"
+          ],
+          "vocabularies": [
+            {
+              "id": "umf.access",
+              "version": "0.1.0"
+            },
+            {
+              "id": "umf.actions",
+              "version": "0.1.0"
+            },
+            {
+              "id": "umf.binding",
+              "version": "0.2.0"
+            }
+          ],
+          "python": {
+            "version": "3.14",
+            "extra": true
+          },
+          "dependencies": [
+            {
+              "distribution": "umf_access",
+              "version": "0.1.0"
+            },
+            {
+              "distribution": "pydantic",
+              "version": "2.14.1"
+            }
+          ],
+          "checkers": [
+            {
+              "name": "mypy",
+              "version": "2.4.0",
+              "configuration": {
+                "check_untyped_defs": true
+              }
+            },
+            {
+              "name": "pyright",
+              "version": "1.1.414",
+              "configuration": {
+                "typeCheckingMode": "strict",
+                "environment": "test"
+              }
+            }
+          ],
+          "reservedNames": [
+            "test_reserved"
+          ],
+          "importedNames": [
+            "decimal",
+            "pydantic",
+            "umf_access"
+          ],
+          "assertionKinds": [
+            "kind",
+            "nullability",
+            "Key",
+            "facets",
+            "defaults",
+            "relationships",
+            "actions",
+            "umf.access"
+          ],
+          "subset": "test fixture, not qualified",
+          "codeSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      },
+      "expected": {
+        "ok": true,
+        "result": {
+          "contract": "umf-access-generate/0.1",
+          "abi": "umf-python-types/0.1",
+          "runtimeAbi": {
+            "distribution": "umf_access",
+            "version": "0.1.0",
+            "abi": "umf-access-runtime/0.1"
+          },
+          "outcome": "refused",
+          "inputDigest": "b2a677b0898f4682b30566d3f03787721f896c04300c2ececa12f0d728e1b2de",
+          "files": [],
+          "symbols": [],
+          "dispositions": [],
+          "diagnostics": [
+            {
+              "code": "PROFILE",
+              "sourceId": "logical",
+              "pointer": "/profile",
+              "message": "Typed access declaration refused: PROFILE"
+            }
+          ],
+          "obligations": []
+        }
+      }
+    },
+    {
+      "id": "sol-final-profile-vocabularies-4",
+      "operation": "generateAccessPackage",
+      "request": {
+        "request": {
+          "contract": "umf-access-generate/0.1",
+          "sources": [
+            {
+              "id": "logical",
+              "format": "json",
+              "text": "{\"umf\":\"0.10.0\",\"id\":\"commerce-model\",\"vocabularies\":{\"umf.access\":{\"version\":\"0.1.0\"},\"umf.actions\":{\"version\":\"0.1.0\"}},\"modules\":[{\"id\":\"commerce\",\"namespace\":\"commerce\",\"elements\":[{\"id\":\"orderId\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"amount\",\"kind\":\"field\",\"scalarType\":\"decimal\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{},\"facets\":{\"precision\":12,\"scale\":2}},{\"id\":\"memo\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}},{\"id\":\"placedAt\",\"kind\":\"field\",\"scalarType\":\"timestamp\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"revision\",\"kind\":\"field\",\"scalarType\":\"integer\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{},\"facets\":{\"integerWidth\":{\"bits\":64,\"signed\":true}}},{\"id\":\"Order\",\"kind\":\"record\",\"members\":[{\"module\":\"commerce\",\"element\":\"orderId\"},{\"module\":\"commerce\",\"element\":\"amount\"},{\"module\":\"commerce\",\"element\":\"memo\"},{\"module\":\"commerce\",\"element\":\"placedAt\"},{\"module\":\"commerce\",\"element\":\"revision\"}],\"keys\":[{\"id\":\"order-key\",\"name\":\"Order primary key\",\"fields\":[{\"module\":\"commerce\",\"element\":\"orderId\"}],\"primary\":true},{\"id\":\"HTTP-id\",\"name\":\"alternate\",\"fields\":[{\"module\":\"commerce\",\"element\":\"revision\"}],\"primary\":false}],\"extensions\":{}},{\"id\":\"customerId\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"name\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"Customer\",\"kind\":\"record\",\"members\":[{\"module\":\"commerce\",\"element\":\"customerId\"},{\"module\":\"commerce\",\"element\":\"name\"}],\"keys\":[{\"id\":\"Customer-key\",\"name\":\"Customer primary key\",\"primary\":true,\"fields\":[{\"module\":\"commerce\",\"element\":\"customerId\"}]}],\"extensions\":{}},{\"id\":\"lineOrderId\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"lineNumber\",\"kind\":\"field\",\"scalarType\":\"integer\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{},\"facets\":{\"integerWidth\":{\"bits\":32,\"signed\":true}}},{\"id\":\"OrderLine\",\"kind\":\"record\",\"members\":[{\"module\":\"commerce\",\"element\":\"lineOrderId\"},{\"module\":\"commerce\",\"element\":\"lineNumber\"}],\"keys\":[{\"id\":\"OrderLine-key\",\"name\":\"OrderLine primary key\",\"primary\":true,\"fields\":[{\"module\":\"commerce\",\"element\":\"lineOrderId\"},{\"module\":\"commerce\",\"element\":\"lineNumber\"}]}],\"extensions\":{}}],\"extensions\":{\"umf.access\":{\"views\":[{\"record\":{\"module\":\"commerce\",\"element\":\"Order\"},\"fields\":[{\"field\":{\"module\":\"commerce\",\"element\":\"orderId\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":false,\"generated\":false},{\"field\":{\"module\":\"commerce\",\"element\":\"amount\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":true,\"generated\":false},{\"field\":{\"module\":\"commerce\",\"element\":\"memo\"},\"row\":{\"missing\":true,\"null\":true},\"create\":{\"missing\":true,\"null\":true},\"mutable\":true,\"generated\":false},{\"field\":{\"module\":\"commerce\",\"element\":\"placedAt\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":false,\"generated\":false,\"temporal\":\"instant\"},{\"field\":{\"module\":\"commerce\",\"element\":\"revision\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":true,\"null\":false},\"mutable\":false,\"generated\":true}],\"selectedKey\":{\"module\":\"commerce\",\"element\":\"Order\",\"key\":\"order-key\"}},{\"record\":{\"module\":\"commerce\",\"element\":\"Customer\"},\"fields\":[{\"field\":{\"module\":\"commerce\",\"element\":\"customerId\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":false,\"generated\":false},{\"field\":{\"module\":\"commerce\",\"element\":\"name\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":true,\"generated\":false}],\"selectedKey\":{\"module\":\"commerce\",\"element\":\"Customer\",\"key\":\"Customer-key\"}},{\"record\":{\"module\":\"commerce\",\"element\":\"OrderLine\"},\"fields\":[{\"field\":{\"module\":\"commerce\",\"element\":\"lineOrderId\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":false,\"generated\":false},{\"field\":{\"module\":\"commerce\",\"element\":\"lineNumber\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":false,\"generated\":false}],\"selectedKey\":{\"module\":\"commerce\",\"element\":\"OrderLine\",\"key\":\"OrderLine-key\"}}],\"columns\":[],\"search\":[],\"searchBindings\":[]},\"umf.actions\":{\"actions\":[{\"id\":\"shipOrder\",\"name\":\"Ship order\",\"description\":\"Declared handler identity; no execution qualification\",\"parameters\":[{\"id\":\"order\",\"kind\":\"entity\",\"target\":{\"module\":\"commerce\",\"element\":\"Order\",\"key\":\"HTTP-id\"},\"required\":true},{\"id\":\"memo\",\"kind\":\"value\",\"field\":{\"module\":\"commerce\",\"element\":\"memo\"},\"required\":false}],\"outputs\":[{\"id\":\"amount\",\"kind\":\"value\",\"field\":{\"module\":\"commerce\",\"element\":\"amount\"},\"required\":true}],\"preconditions\":[],\"postconditions\":[],\"reads\":[],\"writes\":[],\"binding\":{\"kind\":\"handler\",\"profile\":{\"id\":\"test-handler-profile\",\"version\":\"1\"},\"handler\":{\"id\":\"test-ship\",\"version\":\"1\"}},\"failures\":[{\"code\":\"NOT_READY\",\"message\":\"Not ready\",\"retryable\":false}],\"authorization\":{\"kind\":\"roles\",\"profile\":{\"id\":\"umf.actions.roles\",\"version\":\"1\"},\"roles\":[\"shipper\"]},\"attribution\":{\"subject\":\"person-required\"},\"atomicity\":\"single-store\",\"idempotency\":\"caller-key-optional\",\"result\":{\"identities\":\"created-and-changed\",\"version\":\"store-opaque\",\"receipt\":\"read-at-least\"}}]}}}]}"
+            }
+          ],
+          "logical": "logical",
+          "bindings": [],
+          "records": [
+            {
+              "module": "commerce",
+              "element": "Order"
+            }
+          ],
+          "actions": [
+            {
+              "module": "commerce",
+              "action": "shipOrder"
+            }
+          ],
+          "projections": [],
+          "package": "shop",
+          "names": [],
+          "mode": "strict",
+          "profileId": "test.access",
+          "profileVersion": "0.1.0",
+          "coreVersion": "0.10.0"
+        },
+        "profile": {
+          "id": "test.access",
+          "version": "0.1.0",
+          "compilerVersion": "test",
+          "coreVersions": [
+            "0.10.0"
+          ],
+          "vocabularies": {},
+          "python": {
+            "version": "3.14.7"
+          },
+          "dependencies": [
+            {
+              "distribution": "umf_access",
+              "version": "0.1.0"
+            },
+            {
+              "distribution": "pydantic",
+              "version": "2.14.1"
+            }
+          ],
+          "checkers": [
+            {
+              "name": "mypy",
+              "version": "2.4.0",
+              "configuration": {
+                "check_untyped_defs": true
+              }
+            },
+            {
+              "name": "pyright",
+              "version": "1.1.414",
+              "configuration": {
+                "typeCheckingMode": "strict",
+                "environment": "test"
+              }
+            }
+          ],
+          "reservedNames": [
+            "test_reserved"
+          ],
+          "importedNames": [
+            "decimal",
+            "pydantic",
+            "umf_access"
+          ],
+          "assertionKinds": [
+            "kind",
+            "nullability",
+            "Key",
+            "facets",
+            "defaults",
+            "relationships",
+            "actions",
+            "umf.access"
+          ],
+          "subset": "test fixture, not qualified",
+          "codeSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      },
+      "expected": {
+        "ok": true,
+        "result": {
+          "contract": "umf-access-generate/0.1",
+          "abi": "umf-python-types/0.1",
+          "runtimeAbi": {
+            "distribution": "umf_access",
+            "version": "0.1.0",
+            "abi": "umf-access-runtime/0.1"
+          },
+          "outcome": "refused",
+          "inputDigest": "58017b3756001addc07d9f4245e07b48963145567442197d4c10e9e5c192bd77",
+          "files": [],
+          "symbols": [],
+          "dispositions": [],
+          "diagnostics": [
+            {
+              "code": "PROFILE",
+              "sourceId": "logical",
+              "pointer": "/profile",
+              "message": "Typed access declaration refused: PROFILE"
+            }
+          ],
+          "obligations": []
+        }
+      }
+    },
+    {
+      "id": "sol-final-profile-vocabularies-5",
+      "operation": "generateAccessPackage",
+      "request": {
+        "request": {
+          "contract": "umf-access-generate/0.1",
+          "sources": [
+            {
+              "id": "logical",
+              "format": "json",
+              "text": "{\"umf\":\"0.10.0\",\"id\":\"commerce-model\",\"vocabularies\":{\"umf.access\":{\"version\":\"0.1.0\"},\"umf.actions\":{\"version\":\"0.1.0\"}},\"modules\":[{\"id\":\"commerce\",\"namespace\":\"commerce\",\"elements\":[{\"id\":\"orderId\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"amount\",\"kind\":\"field\",\"scalarType\":\"decimal\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{},\"facets\":{\"precision\":12,\"scale\":2}},{\"id\":\"memo\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}},{\"id\":\"placedAt\",\"kind\":\"field\",\"scalarType\":\"timestamp\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"revision\",\"kind\":\"field\",\"scalarType\":\"integer\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{},\"facets\":{\"integerWidth\":{\"bits\":64,\"signed\":true}}},{\"id\":\"Order\",\"kind\":\"record\",\"members\":[{\"module\":\"commerce\",\"element\":\"orderId\"},{\"module\":\"commerce\",\"element\":\"amount\"},{\"module\":\"commerce\",\"element\":\"memo\"},{\"module\":\"commerce\",\"element\":\"placedAt\"},{\"module\":\"commerce\",\"element\":\"revision\"}],\"keys\":[{\"id\":\"order-key\",\"name\":\"Order primary key\",\"fields\":[{\"module\":\"commerce\",\"element\":\"orderId\"}],\"primary\":true},{\"id\":\"HTTP-id\",\"name\":\"alternate\",\"fields\":[{\"module\":\"commerce\",\"element\":\"revision\"}],\"primary\":false}],\"extensions\":{}},{\"id\":\"customerId\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"name\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"Customer\",\"kind\":\"record\",\"members\":[{\"module\":\"commerce\",\"element\":\"customerId\"},{\"module\":\"commerce\",\"element\":\"name\"}],\"keys\":[{\"id\":\"Customer-key\",\"name\":\"Customer primary key\",\"primary\":true,\"fields\":[{\"module\":\"commerce\",\"element\":\"customerId\"}]}],\"extensions\":{}},{\"id\":\"lineOrderId\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"lineNumber\",\"kind\":\"field\",\"scalarType\":\"integer\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{},\"facets\":{\"integerWidth\":{\"bits\":32,\"signed\":true}}},{\"id\":\"OrderLine\",\"kind\":\"record\",\"members\":[{\"module\":\"commerce\",\"element\":\"lineOrderId\"},{\"module\":\"commerce\",\"element\":\"lineNumber\"}],\"keys\":[{\"id\":\"OrderLine-key\",\"name\":\"OrderLine primary key\",\"primary\":true,\"fields\":[{\"module\":\"commerce\",\"element\":\"lineOrderId\"},{\"module\":\"commerce\",\"element\":\"lineNumber\"}]}],\"extensions\":{}}],\"extensions\":{\"umf.access\":{\"views\":[{\"record\":{\"module\":\"commerce\",\"element\":\"Order\"},\"fields\":[{\"field\":{\"module\":\"commerce\",\"element\":\"orderId\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":false,\"generated\":false},{\"field\":{\"module\":\"commerce\",\"element\":\"amount\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":true,\"generated\":false},{\"field\":{\"module\":\"commerce\",\"element\":\"memo\"},\"row\":{\"missing\":true,\"null\":true},\"create\":{\"missing\":true,\"null\":true},\"mutable\":true,\"generated\":false},{\"field\":{\"module\":\"commerce\",\"element\":\"placedAt\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":false,\"generated\":false,\"temporal\":\"instant\"},{\"field\":{\"module\":\"commerce\",\"element\":\"revision\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":true,\"null\":false},\"mutable\":false,\"generated\":true}],\"selectedKey\":{\"module\":\"commerce\",\"element\":\"Order\",\"key\":\"order-key\"}},{\"record\":{\"module\":\"commerce\",\"element\":\"Customer\"},\"fields\":[{\"field\":{\"module\":\"commerce\",\"element\":\"customerId\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":false,\"generated\":false},{\"field\":{\"module\":\"commerce\",\"element\":\"name\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":true,\"generated\":false}],\"selectedKey\":{\"module\":\"commerce\",\"element\":\"Customer\",\"key\":\"Customer-key\"}},{\"record\":{\"module\":\"commerce\",\"element\":\"OrderLine\"},\"fields\":[{\"field\":{\"module\":\"commerce\",\"element\":\"lineOrderId\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":false,\"generated\":false},{\"field\":{\"module\":\"commerce\",\"element\":\"lineNumber\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":false,\"generated\":false}],\"selectedKey\":{\"module\":\"commerce\",\"element\":\"OrderLine\",\"key\":\"OrderLine-key\"}}],\"columns\":[],\"search\":[],\"searchBindings\":[]},\"umf.actions\":{\"actions\":[{\"id\":\"shipOrder\",\"name\":\"Ship order\",\"description\":\"Declared handler identity; no execution qualification\",\"parameters\":[{\"id\":\"order\",\"kind\":\"entity\",\"target\":{\"module\":\"commerce\",\"element\":\"Order\",\"key\":\"HTTP-id\"},\"required\":true},{\"id\":\"memo\",\"kind\":\"value\",\"field\":{\"module\":\"commerce\",\"element\":\"memo\"},\"required\":false}],\"outputs\":[{\"id\":\"amount\",\"kind\":\"value\",\"field\":{\"module\":\"commerce\",\"element\":\"amount\"},\"required\":true}],\"preconditions\":[],\"postconditions\":[],\"reads\":[],\"writes\":[],\"binding\":{\"kind\":\"handler\",\"profile\":{\"id\":\"test-handler-profile\",\"version\":\"1\"},\"handler\":{\"id\":\"test-ship\",\"version\":\"1\"}},\"failures\":[{\"code\":\"NOT_READY\",\"message\":\"Not ready\",\"retryable\":false}],\"authorization\":{\"kind\":\"roles\",\"profile\":{\"id\":\"umf.actions.roles\",\"version\":\"1\"},\"roles\":[\"shipper\"]},\"attribution\":{\"subject\":\"person-required\"},\"atomicity\":\"single-store\",\"idempotency\":\"caller-key-optional\",\"result\":{\"identities\":\"created-and-changed\",\"version\":\"store-opaque\",\"receipt\":\"read-at-least\"}}]}}}]}"
+            }
+          ],
+          "logical": "logical",
+          "bindings": [],
+          "records": [
+            {
+              "module": "commerce",
+              "element": "Order"
+            }
+          ],
+          "actions": [
+            {
+              "module": "commerce",
+              "action": "shipOrder"
+            }
+          ],
+          "projections": [],
+          "package": "shop",
+          "names": [],
+          "mode": "strict",
+          "profileId": "test.access",
+          "profileVersion": "0.1.0",
+          "coreVersion": "0.10.0"
+        },
+        "profile": {
+          "id": "test.access",
+          "version": "0.1.0",
+          "compilerVersion": "test",
+          "coreVersions": [
+            "0.10.0"
+          ],
+          "vocabularies": [
+            {
+              "id": "umf.access",
+              "version": "0.1.0",
+              "extra": true
+            }
+          ],
+          "python": {
+            "version": "3.14.7"
+          },
+          "dependencies": [
+            {
+              "distribution": "umf_access",
+              "version": "0.1.0"
+            },
+            {
+              "distribution": "pydantic",
+              "version": "2.14.1"
+            }
+          ],
+          "checkers": [
+            {
+              "name": "mypy",
+              "version": "2.4.0",
+              "configuration": {
+                "check_untyped_defs": true
+              }
+            },
+            {
+              "name": "pyright",
+              "version": "1.1.414",
+              "configuration": {
+                "typeCheckingMode": "strict",
+                "environment": "test"
+              }
+            }
+          ],
+          "reservedNames": [
+            "test_reserved"
+          ],
+          "importedNames": [
+            "decimal",
+            "pydantic",
+            "umf_access"
+          ],
+          "assertionKinds": [
+            "kind",
+            "nullability",
+            "Key",
+            "facets",
+            "defaults",
+            "relationships",
+            "actions",
+            "umf.access"
+          ],
+          "subset": "test fixture, not qualified",
+          "codeSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      },
+      "expected": {
+        "ok": true,
+        "result": {
+          "contract": "umf-access-generate/0.1",
+          "abi": "umf-python-types/0.1",
+          "runtimeAbi": {
+            "distribution": "umf_access",
+            "version": "0.1.0",
+            "abi": "umf-access-runtime/0.1"
+          },
+          "outcome": "refused",
+          "inputDigest": "78666f66257ab852041d03bb71de8546013dbfa155066f7f1861d920f2f3b78d",
+          "files": [],
+          "symbols": [],
+          "dispositions": [],
+          "diagnostics": [
+            {
+              "code": "PROFILE",
+              "sourceId": "logical",
+              "pointer": "/profile",
+              "message": "Typed access declaration refused: PROFILE"
+            }
+          ],
+          "obligations": []
+        }
+      }
+    },
+    {
+      "id": "sol-final-profile-validation-order",
+      "operation": "generateAccessPackage",
+      "request": {
+        "request": {
+          "contract": "umf-access-generate/0.1",
+          "sources": [
+            {
+              "id": "logical",
+              "format": "json",
+              "text": "{\"umf\":\"0.10.0\",\"id\":\"commerce-model\",\"vocabularies\":{\"umf.access\":{\"version\":\"0.1.0\"},\"umf.actions\":{\"version\":\"0.1.0\"}},\"modules\":[{\"id\":\"commerce\",\"namespace\":\"commerce\",\"elements\":[{\"id\":\"orderId\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"amount\",\"kind\":\"field\",\"scalarType\":\"decimal\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{},\"facets\":{\"precision\":12,\"scale\":2}},{\"id\":\"memo\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"absent-allowed\",\"extensions\":{}},{\"id\":\"placedAt\",\"kind\":\"field\",\"scalarType\":\"timestamp\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"revision\",\"kind\":\"field\",\"scalarType\":\"integer\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{},\"facets\":{\"integerWidth\":{\"bits\":64,\"signed\":true}}},{\"id\":\"Order\",\"kind\":\"record\",\"members\":[{\"module\":\"commerce\",\"element\":\"orderId\"},{\"module\":\"commerce\",\"element\":\"amount\"},{\"module\":\"commerce\",\"element\":\"memo\"},{\"module\":\"commerce\",\"element\":\"placedAt\"},{\"module\":\"commerce\",\"element\":\"revision\"}],\"keys\":[{\"id\":\"order-key\",\"name\":\"Order primary key\",\"fields\":[{\"module\":\"commerce\",\"element\":\"orderId\"}],\"primary\":true},{\"id\":\"HTTP-id\",\"name\":\"alternate\",\"fields\":[{\"module\":\"commerce\",\"element\":\"revision\"}],\"primary\":false}],\"extensions\":{}},{\"id\":\"customerId\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"name\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"Customer\",\"kind\":\"record\",\"members\":[{\"module\":\"commerce\",\"element\":\"customerId\"},{\"module\":\"commerce\",\"element\":\"name\"}],\"keys\":[{\"id\":\"Customer-key\",\"name\":\"Customer primary key\",\"primary\":true,\"fields\":[{\"module\":\"commerce\",\"element\":\"customerId\"}]}],\"extensions\":{}},{\"id\":\"lineOrderId\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"lineNumber\",\"kind\":\"field\",\"scalarType\":\"integer\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{},\"facets\":{\"integerWidth\":{\"bits\":32,\"signed\":true}}},{\"id\":\"OrderLine\",\"kind\":\"record\",\"members\":[{\"module\":\"commerce\",\"element\":\"lineOrderId\"},{\"module\":\"commerce\",\"element\":\"lineNumber\"}],\"keys\":[{\"id\":\"OrderLine-key\",\"name\":\"OrderLine primary key\",\"primary\":true,\"fields\":[{\"module\":\"commerce\",\"element\":\"lineOrderId\"},{\"module\":\"commerce\",\"element\":\"lineNumber\"}]}],\"extensions\":{}}],\"extensions\":{\"umf.access\":{\"views\":[{\"record\":{\"module\":\"commerce\",\"element\":\"Order\"},\"fields\":[{\"field\":{\"module\":\"commerce\",\"element\":\"orderId\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":false,\"generated\":false},{\"field\":{\"module\":\"commerce\",\"element\":\"amount\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":true,\"generated\":false},{\"field\":{\"module\":\"commerce\",\"element\":\"memo\"},\"row\":{\"missing\":true,\"null\":true},\"create\":{\"missing\":true,\"null\":true},\"mutable\":true,\"generated\":false},{\"field\":{\"module\":\"commerce\",\"element\":\"placedAt\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":false,\"generated\":false,\"temporal\":\"instant\"},{\"field\":{\"module\":\"commerce\",\"element\":\"revision\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":true,\"null\":false},\"mutable\":false,\"generated\":true}],\"selectedKey\":{\"module\":\"commerce\",\"element\":\"Order\",\"key\":\"order-key\"}},{\"record\":{\"module\":\"commerce\",\"element\":\"Customer\"},\"fields\":[{\"field\":{\"module\":\"commerce\",\"element\":\"customerId\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":false,\"generated\":false},{\"field\":{\"module\":\"commerce\",\"element\":\"name\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":true,\"generated\":false}],\"selectedKey\":{\"module\":\"commerce\",\"element\":\"Customer\",\"key\":\"Customer-key\"}},{\"record\":{\"module\":\"commerce\",\"element\":\"OrderLine\"},\"fields\":[{\"field\":{\"module\":\"commerce\",\"element\":\"lineOrderId\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":false,\"generated\":false},{\"field\":{\"module\":\"commerce\",\"element\":\"lineNumber\"},\"row\":{\"missing\":false,\"null\":false},\"create\":{\"missing\":false,\"null\":false},\"mutable\":false,\"generated\":false}],\"selectedKey\":{\"module\":\"commerce\",\"element\":\"OrderLine\",\"key\":\"OrderLine-key\"}}],\"columns\":[],\"search\":[],\"searchBindings\":[]},\"umf.actions\":{\"actions\":[{\"id\":\"shipOrder\",\"name\":\"Ship order\",\"description\":\"Declared handler identity; no execution qualification\",\"parameters\":[{\"id\":\"order\",\"kind\":\"entity\",\"target\":{\"module\":\"commerce\",\"element\":\"Order\",\"key\":\"HTTP-id\"},\"required\":true},{\"id\":\"memo\",\"kind\":\"value\",\"field\":{\"module\":\"commerce\",\"element\":\"memo\"},\"required\":false}],\"outputs\":[{\"id\":\"amount\",\"kind\":\"value\",\"field\":{\"module\":\"commerce\",\"element\":\"amount\"},\"required\":true}],\"preconditions\":[],\"postconditions\":[],\"reads\":[],\"writes\":[],\"binding\":{\"kind\":\"handler\",\"profile\":{\"id\":\"test-handler-profile\",\"version\":\"1\"},\"handler\":{\"id\":\"test-ship\",\"version\":\"1\"}},\"failures\":[{\"code\":\"NOT_READY\",\"message\":\"Not ready\",\"retryable\":false}],\"authorization\":{\"kind\":\"roles\",\"profile\":{\"id\":\"umf.actions.roles\",\"version\":\"1\"},\"roles\":[\"shipper\"]},\"attribution\":{\"subject\":\"person-required\"},\"atomicity\":\"single-store\",\"idempotency\":\"caller-key-optional\",\"result\":{\"identities\":\"created-and-changed\",\"version\":\"store-opaque\",\"receipt\":\"read-at-least\"}}]}}}]}"
+            }
+          ],
+          "logical": "logical",
+          "bindings": [],
+          "records": [
+            {
+              "module": "commerce",
+              "element": "Order"
+            }
+          ],
+          "actions": [
+            {
+              "module": "commerce",
+              "action": "shipOrder"
+            }
+          ],
+          "projections": [],
+          "package": "shop",
+          "names": [],
+          "mode": "strict",
+          "profileId": "test.access",
+          "profileVersion": "0.1.0",
+          "coreVersion": "0.10.0"
+        },
+        "profile": {
+          "id": "test.access",
+          "version": "0.1.0",
+          "compilerVersion": null,
+          "coreVersions": [
+            "0.10.0"
+          ],
+          "vocabularies": [],
+          "python": {
+            "version": "3.14.7"
+          },
+          "dependencies": [
+            {
+              "distribution": "umf_access",
+              "version": "0.1.0"
+            },
+            {
+              "distribution": "pydantic",
+              "version": "2.14.1"
+            }
+          ],
+          "checkers": [
+            {
+              "name": "mypy",
+              "version": "2.4.0",
+              "configuration": {
+                "check_untyped_defs": true
+              }
+            },
+            {
+              "name": "pyright",
+              "version": "1.1.414",
+              "configuration": {
+                "typeCheckingMode": "strict",
+                "environment": "test"
+              }
+            }
+          ],
+          "reservedNames": [
+            "test_reserved"
+          ],
+          "importedNames": [
+            "decimal",
+            "pydantic",
+            "umf_access"
+          ],
+          "assertionKinds": [
+            "kind",
+            "nullability",
+            "Key",
+            "facets",
+            "defaults",
+            "relationships",
+            "actions",
+            "umf.access"
+          ],
+          "subset": "test fixture, not qualified",
+          "codeSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      },
+      "expected": {
+        "ok": true,
+        "result": {
+          "contract": "umf-access-generate/0.1",
+          "abi": "umf-python-types/0.1",
+          "runtimeAbi": {
+            "distribution": "umf_access",
+            "version": "0.1.0",
+            "abi": "umf-access-runtime/0.1"
+          },
+          "outcome": "refused",
+          "inputDigest": "7c6fd7990e0907849b7071b7ab3632e9ddb638d024ee8fc2cbdd4b278356cab3",
+          "files": [],
+          "symbols": [],
+          "dispositions": [],
+          "diagnostics": [
+            {
+              "code": "PROFILE",
+              "sourceId": "logical",
+              "pointer": "/profile",
+              "message": "Typed access declaration refused: PROFILE"
+            }
+          ],
+          "obligations": []
+        }
+      }
+    }
+  ]
+}

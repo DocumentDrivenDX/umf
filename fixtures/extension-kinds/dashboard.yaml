@@ -1,0 +1,69 @@
+umf: 0.10.0
+id: dashboard:core-shapes
+vocabularies:
+  example.dashboard:
+    version: 1.0.0
+  example.unknown:
+    version: 9.0.0
+extensions:
+  example.dashboard:
+    kind: dashboard
+    title: Sales
+  example.unknown:
+    future:
+      unknown: []
+      exactToken: "9007199254740993"
+modules:
+  - id: sales
+    namespace: sales
+    extensions:
+      example.dashboard:
+        kind: data
+    elements:
+      - id: channel
+        kind: field
+        name: channel
+        scalarType: string
+        extensions: {}
+      - id: revenue
+        kind: field
+        name: revenue
+        scalarType: decimal
+        facets:
+          precision: 12
+          scale: 2
+        extensions: {}
+      - id: sales-row
+        kind: record
+        name: SalesRow
+        members:
+          - module: sales
+            element: channel
+          - module: sales
+            element: revenue
+        extensions:
+          example.dashboard:
+            kind: dataset
+            schemaCoverage: declared
+            query: SELECT channel, revenue FROM sales
+      - id: revenue-chart
+        extensions:
+          example.dashboard:
+            kind: visual
+            dataset:
+              module: sales
+              element: sales-row
+            field:
+              module: sales
+              element: revenue
+            aggregation: sum
+      - id: channel-filter
+        extensions:
+          example.dashboard:
+            kind: filter
+            dataset:
+              module: sales
+              element: sales-row
+            field:
+              module: sales
+              element: channel

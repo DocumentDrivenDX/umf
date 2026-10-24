@@ -1,0 +1,33 @@
+{
+  "format": "umf-r3-migration-supplement-receipt/1",
+  "oracle": "scripts/codegen/entry.ts operation wrappers; full ordered input/result envelopes retained in lossless gzip JSON",
+  "toolchain": {
+    "bun": "1.4.3",
+    "bunReportedNodeCompat": "v26.3.0",
+    "platform": "darwin",
+    "arch": "arm64"
+  },
+  "fixture": {
+    "path": "operations.json.gz",
+    "compressedBytes": 681541,
+    "compressedSha256": "cb5279ae0f5f8888bd9cac82c78b6142fd17ed42815e4646f27e06c59deefabb",
+    "uncompressedBytes": 9894503,
+    "uncompressedSha256": "0e3b1548a1d27b59f7b1150f0e32f9ce5dc4ac0bd974362b71db3b34021d071c",
+    "caseCount": 26
+  },
+  "sources": {
+    "path": "source-manifest.json",
+    "sha256": "0fc8191e965191885a2ea3de292c85d2aa75ffb3c32e989e381fcdec15d6420a",
+    "count": 14
+  },
+  "coverage": [
+    "compileTableMigration",
+    "discoverTableMigrationChanges",
+    "verifyTableMigration"
+  ],
+  "notes": [
+    "Fixture was captured from the current TypeScript wrappers, not generated Rust expectations.",
+    "Existing R3 baseline files were not modified.",
+    "Corpus includes initial, legacy concurrent-index, and phased backfill cohorts; reviewed-change kinds and marker/rehash refusal controls."
+  ]
+}

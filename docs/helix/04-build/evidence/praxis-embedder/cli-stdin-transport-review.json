@@ -1,0 +1,121 @@
+{
+  "schema": "umf.sol-review/1",
+  "status": "approved-for-integration",
+  "reviewer": "Sol AI review agent",
+  "scope": "Qualification harness stdin transport and fail-closed diagnostics only; no product semantics or release/publication approval",
+  "baseCommit": "240fbb262d28c0b2a77601abe611e8eb6583e746",
+  "sourceState": "Uncommitted five-file patch against base commit; exact file hashes below",
+  "sourceFiles": [
+    {
+      "path": "scripts/rust-core/cli-core-conformance.mjs",
+      "sha256": "7ff048d9b3885d9be7c733a3befa6a54421b56a2ed68f3c4add4b7821bc33de5"
+    },
+    {
+      "path": "scripts/rust-core/cli-wire-transport.mjs",
+      "sha256": "b176d978be24d86881a67a55cd2e0283a13511b01146ef078abb93e9343c4ad4"
+    },
+    {
+      "path": "scripts/rust-core/cli-wire-transport.test.mjs",
+      "sha256": "5d95cbea9a404e7b7c0816fa2c6d624764c197a6df7ff9169b5ebb46af5c7802"
+    },
+    {
+      "path": "scripts/rust-core/full-conformance.ts",
+      "sha256": "468caf8036cc8b6514f3fe841173bac61d1ec2663509b923ed853a210c510be9"
+    },
+    {
+      "path": "scripts/rust-migration/r3/host-replay.mjs",
+      "sha256": "fc17b6617c7c7e7b6881772523e7360a62caacd74ad7e239ce1e040cd09da527"
+    }
+  ],
+  "authorSourceClosureSha256": "8cc944721a250dc9ddfe7ac08ff8a6e90103ceb17587fa2fa3971e3e0de4cbb1",
+  "trackedPatchSha256": "3d5b56cb217a4bf5059f109d7c5e813988f18f91d79fabfce976b8a6e2bf6b0c",
+  "evidence": {
+    "path": "/private/tmp/umf-u1-stdin-eof-receipt.json",
+    "sha256": "5165ddfbfa9e805106458f9bf9a86cd220864e6d76047437a372de5be32f092a"
+  },
+  "sourceFindings": [],
+  "correctedFindings": [
+    "Per-case timeout increased from30s to120s to allow headroom above measured28.8s case",
+    "Inherited qualification cwd preserved",
+    "Transport tests moved after CLI build",
+    "Fault child startup headroom increased from250ms to3000ms",
+    "Outer buffered command start/end identity added"
+  ],
+  "independentChecks": [
+    {
+      "name": "transport suite including actual public pipe control",
+      "result": "9/9 passed",
+      "command": "UMF_CLI_PATH=/private/tmp/umf-u1-cli-target/release/umf node --test scripts/rust-core/cli-wire-transport.test.mjs"
+    },
+    {
+      "name": "full-conformance TypeScript syntax/bundling",
+      "result": "passed",
+      "command": "bun build scripts/rust-core/full-conformance.ts --target=bun --outfile /private/tmp/umf-sol-stdin-full-conformance.js"
+    },
+    {
+      "name": "exact author receipt source file and built CLI hashes",
+      "result": "all matched"
+    },
+    {
+      "name": "tracked patch whitespace",
+      "result": "git diff --check passed"
+    }
+  ],
+  "reviewedAuthorExecutedChecks": [
+    {
+      "name": "transport-tests",
+      "command": "UMF_CLI_PATH=/private/tmp/umf-u1-cli-target/release/umf node --test scripts/rust-core/cli-wire-transport.test.mjs",
+      "status": "pass",
+      "cases": 9
+    },
+    {
+      "name": "cli-core",
+      "command": "UMF_CLI_PATH=/private/tmp/umf-u1-cli-target/release/umf node scripts/rust-core/cli-core-conformance.mjs docs/helix/04-build/evidence/rust-migration/r2/baseline-current-conformance.json",
+      "status": "pass",
+      "cases": 139,
+      "controls": 3
+    },
+    {
+      "name": "nested-launch-repeat",
+      "command": "/opt/homebrew/bin/bun /private/tmp/umf-u1-repeat100.mjs",
+      "status": "pass",
+      "loops": 100,
+      "requests": 500,
+      "durationMs": 174302
+    },
+    {
+      "name": "all-compiler-fixtures",
+      "command": "node /private/tmp/umf-u1-fixture-sweep.mjs",
+      "status": "pass",
+      "fixtures": 102,
+      "cases": 615,
+      "durationMs": 255207
+    },
+    {
+      "name": "public-pipe-control",
+      "command": "node /private/tmp/umf-u1-direct-pipe.mjs",
+      "status": "pass"
+    }
+  ],
+  "evidenceCustody": "100-repeat/500-call and102-fixture/615-case runs preceded only final full-conformance command logging delta. CLI helper/drivers/tests hashes are unchanged. Final full-conformance wrapper was reviewed and syntax-checked; prior execution is not relabeled as final wrapper execution.",
+  "qualifiedLocalRuntime": {
+    "os": "27.0.1",
+    "machine": "arm64",
+    "bun": "1.4.3",
+    "node": "26.12.1",
+    "rust": "1.90.0"
+  },
+  "limitations": [
+    "Captured local EOF wait is not proof of exact hosted CI root cause",
+    "No universal subprocess-safety claim: unrelated generic build orchestration remains synchronous and unchanged",
+    "Local Mac27 controls do not substitute for hosted selected matrix",
+    "Source review is bounded to five listed files; required integrated checks and artifact custody remain pending"
+  ],
+  "pendingGates": [
+    "Commit/integrate exact reviewed patch and inspect any integration delta",
+    "Current required CI on resulting source tree with full raw prior-run retention",
+    "Compute nine binary asset and source/provenance closure impact; do not relabel old receipts",
+    "Fresh native and installed/package qualification selected by root for new source lineage",
+    "Final CI merge actual metadata review publication and post-download verification"
+  ]
+}

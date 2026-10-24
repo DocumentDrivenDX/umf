@@ -1,0 +1,144 @@
+{
+  "profile": "umf.sol-runtime-object-provenance-decision/1",
+  "decisionId": "R2-SOL-RUNTIME-OBJECT-PROVENANCE-001",
+  "reviewer": "Sol independent review (/root/sol_r2_review)",
+  "status": "approved-for-implementation-not-overall-R2-approval",
+  "reason": "The retained interpreter recursively copies document/program/policy JSON objects with null prototypes, but evaluates expression object literals with Object.fromEntries. Both are admitted ordinary JSON; their private coercion provenance affects accepted closed operator behavior. Preserve this behavior with Rust-owned metadata rather than a compatibility correction.",
+  "authority": [
+    "CONTRACT-080 R2 native compatibility, UTF16 value identity, explicit host capabilities and no silent meaning loss",
+    "TD-091 shared Rust interpreter ownership",
+    "STP-091 independent predecessor controls"
+  ],
+  "referenceSources": {
+    "src/validation/constraint-kernel.ts": "968bde65e6e7e8da7ec92849498dbfbe9a71f931c9538094a18c85be5b4a4362",
+    "src/model/json.ts": "d0a06bd26beb215d262b92f5c47d5cea9e85291bb4a780f0aea98b8277c15f98",
+    "src/validation/json-equality.ts": "a9ecbd0d4d513223889eaf83d053bc0d48e8020f8a73cae3fe32a8bc06d1e20f",
+    "src/validation/constraint-language.ts": "decf47ca801a2c03d0c01b92ef3418813c79992c042be879ba0c1d2561678597"
+  },
+  "frozenControls": {
+    "sol-runtime-operators-predecessor.json": {
+      "sha256": "89c680033d94381a98202c7119f8241468d4f0f984d88a2ecddd130c23aaa2b1",
+      "cases": 6271
+    },
+    "sol-runtime-operator-edges-predecessor.json": {
+      "sha256": "56aa4908719056b6aa2709ed1725bc5a66084c80677c6ec128877d30aecb4615",
+      "cases": 2619
+    }
+  },
+  "scope": {
+    "unchanged": [
+      "Public Value/PythonConsumerValue carriers",
+      "Ordinary JSON admission and safe-number envelope",
+      "Closed core-wire payloads",
+      "ResourceSet/schema/policy formats",
+      "Host descriptor admission policy"
+    ],
+    "changed": "Private Runtime values may carry O(1) Rust-owned copied-null versus ordinary object provenance; no host prototype inspection or executable object hooks."
+  },
+  "constructorRules": [
+    {
+      "trigger": "executeConstraints document/program/policy defensive copy",
+      "origin": "copied-null recursively, as copyJson creates Object.create(null)"
+    },
+    {
+      "trigger": "Evaluated expression object literal",
+      "origin": "ordinary object, as Object.fromEntries"
+    },
+    {
+      "trigger": "without result",
+      "origin": "ordinary new object, with retained field-value origins"
+    },
+    {
+      "trigger": "Normalized literal/numeric/extension diagnostic object",
+      "origin": "ordinary object; exact text/codepoint sidecars retained separately"
+    },
+    {
+      "trigger": "Evaluated array/tuple/map/filter/entries pair/sort/flatten wrapper",
+      "origin": "new ordinary array; retained or evaluated child values keep their own origins"
+    }
+  ],
+  "transformRules": [
+    {
+      "operations": [
+        "var",
+        "get",
+        "values",
+        "entries",
+        "filter",
+        "find",
+        "index",
+        "remember",
+        "lookup"
+      ],
+      "rule": "Return/retain the selected or stored value origin, including nested array children."
+    },
+    {
+      "operations": [
+        "length"
+      ],
+      "rule": "Map size, array/string length; object own length property is returned with its original type and origin, nullish property becomes zero."
+    },
+    {
+      "operations": [
+        "eq",
+        "ne",
+        "canonical",
+        "collection-key canonicalization"
+      ],
+      "rule": "Canonical own JSON data semantics ignore private object provenance; Map canonicalization retains frozen predecessor o{} behavior."
+    },
+    {
+      "operations": [
+        "map"
+      ],
+      "rule": "The callback expression determines each new item origin."
+    },
+    {
+      "operations": [
+        "without"
+      ],
+      "rule": "Object itself is newly ordinary; retained children retain origin."
+    }
+  ],
+  "coercionRules": [
+    {
+      "value": "copied-null JSON object",
+      "behavior": "No callable valueOf/toString/symbol values exist in admitted JSON, so primitive conversion refuses."
+    },
+    {
+      "value": "ordinary expression/normalized diagnostic object",
+      "behavior": "Default conversion is [object Object]; own non-callable toString blocks conversion. Own non-callable valueOf alone does not block inherited Object.prototype.toString."
+    },
+    {
+      "value": "array",
+      "behavior": "Join children using each child origin. Null/Missing array fields become empty text; nested object conversion may refuse. New wrappers do not change child provenance."
+    },
+    {
+      "value": "Map",
+      "behavior": "Default string conversion [object Map]; canonical data representation remains o{}."
+    },
+    {
+      "value": "text",
+      "behavior": "Constraint comparisons and canonical keys use UTF16 semantics; trusted Python text/path origin remains a separate materialization concern."
+    }
+  ],
+  "exceptionMapping": {
+    "reference": "805 exact retained-TypeScript exception observations in the immutable2619-case edge fixture. Reference errors have TypeError class and runtime-specific messages such as No default value.",
+    "rust": "CONSTRAINT_COERCION in the stable EngineError {code,path,message} envelope when the same private conversion has no primitive result.",
+    "qualification": "Acceptance/refusal and no partial successful result are required. Rust/binding support does not claim JavaScript TypeError class identity or byte-identical runtime-specific exception wording. Preserve frozen observations; comparator must not rewrite them to candidate errors.",
+    "requires": "A source-guarded comparator must distinguish expected success from expected refusal and reject blanket refusal of the remaining1814 successful edge programs."
+  },
+  "resourceRules": [
+    "Metadata is invocation-owned, not inferred from text/data property names.",
+    "Selection/copy/origin reconstruction and coercion scans use the existing caller Context.",
+    "Premeasure output and potential conversion failure before allocating or publishing results.",
+    "No private aggregate4M cap; ordinary source/output limits unchanged."
+  ],
+  "originCompanionGate": "Trusted Python schema-pointer fragments must be decoded individually before string composition. Arbitrary literal/callback/URI marker-looking segments stay exact; do not propagate one trusted flag over mixed composed text.",
+  "overallR2Approved": false,
+  "remaining": [
+    "Owner implementation and independent rerun all6271+2619 cases",
+    "Python-origin companion/source review",
+    "Final formatted source cohort, generated outputs and fresh installed native/Node/Bun/Python/real-WASM receipts"
+  ]
+}

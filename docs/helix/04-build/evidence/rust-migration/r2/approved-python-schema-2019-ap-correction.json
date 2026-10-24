@@ -1,0 +1,105 @@
+{
+  "id": "R2-SOL-CORRECTION-001-AMENDMENT-001",
+  "status": "root-approved-semantic-amendment-and-normalization",
+  "amends": "R2-SOL-CORRECTION-001; immutable original exact named official-suite baseline/decision is retained. This amendment authorizes a coherent same-defect branch rule instead of fixture-specific production checks.",
+  "selector": {
+    "dialect": "Draft2019-09",
+    "keyword": "additionalProperties",
+    "schemaKind": "Object only",
+    "mechanism": "Annotation collection for schema-valued additionalProperties incorrectly treated its rule-own member names as evaluated instance names."
+  },
+  "approvedRule": "Only actual extra instance names, excluding adjacent declared properties and patternProperties matches, are tested with the existing FirstError descendant predicate against the AP rule. Mark successful extras as evaluated. Remove the erroneous AP-rule-own-member-name annotation.",
+  "unchanged": "All other legacy2019 helper branches, including schemaObject unevaluatedProperties name-mark bug and boolean-items runtime refusal; defaultECMA/Bun and Python2020 profiles; source admission and ordinary keyword/predicate modes.",
+  "evidence": {
+    "approved-schema-compatibility-deltas.json": "a233e5e1d58ad7f8c667fd36dc18482eeacf3ace6130d90d743fe27df01ae7ed",
+    "sol-python-schema-annotation-mechanism-2019-predecessor.json": "42e39726fe537b4f39d5bf1c691d598dd14aa51e4ca4e4f4b5299b4e7fcbfce8",
+    "sol-python-schema-2019-ap-native.json": "8666440936228516f5357d1776a26c69189bf6843139607c56c63da2c2128d07",
+    "sol-python-schema-2019-ap-target-proposal.json": "68807db9a1256d2e2f1ed9598ac99db40e39c83a3d5407b7cc947ee4a0d907f3",
+    "sol-python-schema-2019-ap-target-profiles.json": "13971ee20ac08bda3ec5f6e4eb3a1035d98e1b58b92bdfd186ee8c31acaeae56",
+    "freeze-python-schema-2019-ap-targets.py": "aed7196e4a09ac886d2c46342f6e7b2faf6c4a40759223a526fd2ed9ddc80526"
+  },
+  "proposedTargetFilenameQualification": "The target filename retains its proposal history; this approved decision now makes those exact bytes authoritative targets only for the selected changed methods. No frozen baseline file or prior status record is rewritten.",
+  "targetConstruction": "Independent predecessor validators/scalar/descend kernels with only the specified legacy schema-valued AP annotation arm replaced. No candidate outputs enter target generation. All37complete target and baseline case records independently equal across CPython3.11.17/3.12.15/3.13.16, jsonschema4.26.0. Original28legacy rows are byte-value-identical within the native37case receipt.",
+  "counts": {
+    "nativeCases": 37,
+    "methods": 108,
+    "constructorRefusals": 1,
+    "changedRows": 8,
+    "changedMethods": 21
+  },
+  "selectedChangedRows": [
+    {
+      "id": "draft4-up-ap-predicate",
+      "methods": [
+        "is_valid",
+        "validate",
+        "iterate"
+      ]
+    },
+    {
+      "id": "draft4-ap-empty-rule",
+      "methods": [
+        "is_valid",
+        "validate",
+        "iterate"
+      ]
+    },
+    {
+      "id": "draft4-ap-valid-extra",
+      "methods": [
+        "is_valid",
+        "validate",
+        "iterate"
+      ]
+    },
+    {
+      "id": "draft4-ap-valid-before-type",
+      "methods": [
+        "validate",
+        "iterate"
+      ]
+    },
+    {
+      "id": "draft4-ap-pattern-exclusion",
+      "methods": [
+        "is_valid",
+        "validate",
+        "iterate"
+      ]
+    },
+    {
+      "id": "draft4-ap-declared-exclusion",
+      "methods": [
+        "validate",
+        "iterate"
+      ]
+    },
+    {
+      "id": "draft4-ap-rule-member-collision",
+      "methods": [
+        "validate",
+        "iterate"
+      ]
+    },
+    {
+      "id": "draft4-ap-original-correction001",
+      "methods": [
+        "is_valid",
+        "validate",
+        "iterate"
+      ]
+    }
+  ],
+  "comparatorSelection": "Hashguard baseline, target, generator/profile and this decision. Match case id plus exact schemaText/instanceRecipe. Use target only for listed changed method outcomes; all remaining case/method/admission outcomes enforce unchanged native baseline. No blanket2019 override.",
+  "boolItemsNormalization": {
+    "selector": "Reached Draft2019-09 item annotation helper after required reference processing, items is Bool and additionalItems is absent. additionalItems present causes native all-index early return and does not raise.",
+    "native": "TypeError: object of type 'bool' has no len()",
+    "code": "PYTHON_SCHEMA_EVALUATION",
+    "message": "Draft 2019-09 boolean items annotation has no length",
+    "phase": "Trusted internal ordered semantic terminal; source admission unchanged. Iterator yields prior public diagnostics then terminal; FirstError/predicates retain native short circuits.",
+    "provenance": "Never derive deferability from public strings. Operational host callback failures remain outer Err even if text or previously obtained semantic EngineError collides.",
+    "qualification": "Stable Rust UmfCoreError normalized envelope; no native TypeError class identity promise."
+  },
+  "overallR2Approved": false,
+  "sourceApproved": false
+}

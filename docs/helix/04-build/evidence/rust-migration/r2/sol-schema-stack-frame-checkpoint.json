@@ -1,0 +1,34 @@
+{
+  "id": "R2-SOL-SCHEMA-STACK-FRAMES-001",
+  "status": "independent-native-frame-diagnosis-awaiting-owner-rebuild",
+  "overallR2Approved": false,
+  "sourceApproved": false,
+  "executable": "target/debug/deps/schema_depth_stack-c54ebb882e049f07",
+  "executableSha256": "053177b0608105a1b8ae6dfa4890febcde422ab112931b115780bf52e592895d",
+  "tool": "Apple otool -tvV on aarch64 debug test executable; inspect stack allocation prologues, including saved-register stack space. Both Value and Python monomorphizations have equal listed sizes.",
+  "normalStackBytes": 2097152,
+  "retainedFramesBytes": {
+    "eval": 1728,
+    "eval_inner": 7888,
+    "eval_keyword_properties": 5248,
+    "eval_keyword_references": 9216,
+    "eval_keyword_patterns_additional": 10224,
+    "eval_keyword_combinators": 9712,
+    "eval_keyword_items": 8352
+  },
+  "failingPathBudget": {
+    "perRecursiveChildEdgeBytes": 33696,
+    "childEdges": 64,
+    "totalBeforeOtherFrames": 2156544,
+    "calculation": "2*(eval+eval_inner)+properties+references per child edge; root at depth0,65objects reaches evaluator depth128. This already exceeds2MiB before outer/runtime/temporary helper frames.",
+    "test": "schema_depth_stack recursive_schema_evaluation_accepts_depth_128_and_refuses_129_on_2m_stack"
+  },
+  "sentOwnerGuidance": [
+    "Use one dispatch match Result and one ? rather than separate branch-local Try temporaries.",
+    "Extract boolean-schema special handling to non-inlined helper to shrink permanent recursion frame.",
+    "Preserve depth128/129 and normal2MiB stacks; do not raise stack or lower depth to mask failure.",
+    "Budget heavier additionalProperties/items/combinator paths too; properties-only pass is insufficient margin."
+  ],
+  "ownerStatus": "A reports applying common Result/? and boolean helper cuts, waiting for B current reference run before coherent rebuild. B received request for representative heavier-path stack controls.",
+  "qualification": "This receipt explains the pre-fix regression. It does not attest the pending rebuilt source or WASM artifact. Full existing gates and exact final source/artifact reconciliation remain required."
+}

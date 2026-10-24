@@ -1,0 +1,103 @@
+{
+  "schema": "umf.r3-incremental-native-replay/1",
+  "scope": "Incremental diagnostic replay; binary hash does not independently establish a clean source/build cohort",
+  "binary": "/Users/erik/.codex/worktrees/rust-binding-spike/umf/target/debug/examples/r3_replay",
+  "binarySha256": "db091aafea120615b8d8274f24d2e5afce06b5ff5c787ed63bf1d1aea6d0e78d",
+  "binaryChangedDuringRun": false,
+  "fixture": "/Users/erik/.codex/worktrees/rust-binding-spike/umf/docs/helix/04-build/evidence/rust-migration/r3/generation-limit-phase-review/frozen.json",
+  "fixtureSha256": "b78ff332c19c9b801582dcdf7d68c27ef18eee94132834ee74e64592d6e465dc",
+  "driverScriptSha256": "2d83d22fb75d54598714edfacf8a5ec4dbc47ea0980f4a40c7d80e91832c5964",
+  "elapsedSeconds": 1.336123791988939,
+  "cases": 5,
+  "matches": 0,
+  "mismatches": [
+    {
+      "id": "profile-before-source-limit",
+      "operation": "generateAccessPackage",
+      "path": "$/result/diagnostics/0/code",
+      "reason": "values differ",
+      "expected": "PROFILE",
+      "actual": "LIMIT"
+    },
+    {
+      "id": "profile-before-record-limit",
+      "operation": "generateAccessPackage",
+      "path": "$/result/diagnostics/0/code",
+      "reason": "values differ",
+      "expected": "PROFILE",
+      "actual": "LIMIT"
+    },
+    {
+      "id": "shape-before-source-limit",
+      "operation": "generateAccessPackage",
+      "path": "$",
+      "reason": "object members differ",
+      "expectedMembers": [
+        "error",
+        "ok"
+      ],
+      "actualMembers": [
+        "ok",
+        "result"
+      ]
+    },
+    {
+      "id": "duplicate-before-record-limit",
+      "operation": "generateAccessPackage",
+      "path": "$",
+      "reason": "object members differ",
+      "expectedMembers": [
+        "error",
+        "ok"
+      ],
+      "actualMembers": [
+        "ok",
+        "result"
+      ]
+    },
+    {
+      "id": "duplicate-before-action-limit",
+      "operation": "generateAccessPackage",
+      "path": "$",
+      "reason": "object members differ",
+      "expectedMembers": [
+        "error",
+        "ok"
+      ],
+      "actualMembers": [
+        "ok",
+        "result"
+      ]
+    }
+  ],
+  "outcomes": [
+    {
+      "id": "profile-before-source-limit",
+      "operation": "generateAccessPackage",
+      "matches": false
+    },
+    {
+      "id": "profile-before-record-limit",
+      "operation": "generateAccessPackage",
+      "matches": false
+    },
+    {
+      "id": "shape-before-source-limit",
+      "operation": "generateAccessPackage",
+      "matches": false
+    },
+    {
+      "id": "duplicate-before-record-limit",
+      "operation": "generateAccessPackage",
+      "matches": false
+    },
+    {
+      "id": "duplicate-before-action-limit",
+      "operation": "generateAccessPackage",
+      "matches": false
+    }
+  ],
+  "actualPath": "/private/tmp/r3-generation-limit-phase-pre.actual.json",
+  "rawPath": "/private/tmp/r3-generation-limit-phase-pre.stdout.jsonl",
+  "stderrPath": "/private/tmp/r3-generation-limit-phase-pre.stderr.log"
+}

@@ -1,0 +1,54 @@
+{
+  "cleanup": {
+    "databaseExistsAfterDrop": false,
+    "disposableDatabase": "umf_u4v2_20261022_7b2d9e4f",
+    "generatedSchemaCountBeforeDatabaseDrop": 0,
+    "runnerRoleCleanup": "native runner completed its schema and role cleanup path without errors"
+  },
+  "evidenceScope": "Synthetic U4 comments, enum/range facets, NULL behavior and PostgreSQL enforcement; no managed target claim.",
+  "fixture": {
+    "generatorSha256": "139938263856a2bf1413a35cbdb06f59c72b5f0cb9134c6ad79577584ea0fbf3",
+    "path": "/private/tmp/umf-u4-final-v2-source.json",
+    "runnerSha256": "f658aa1e955ac5883040ce2e4af1f15d84c46be3912ed956ce9aa7029bb968b0",
+    "sha256": "7bcace44588585ab3f674fb1d18d177b8f28a0188deb65eb3264ff556c8c32a4"
+  },
+  "frozenEnvironment": {
+    "distributions": {
+      "mini-racer": "0.14.1",
+      "psycopg": "3.2.13",
+      "umf-access": "0.1.0.dev7",
+      "umf-codegen": "0.1.0a4",
+      "umf-core": "0.10.0",
+      "weft-sql": "0.4.49"
+    },
+    "importOriginsAreInstalledSitePackages": true,
+    "path": "/private/tmp/umf-g01-scoped-freeze-v2-20261022/venv",
+    "python": "3.11.17",
+    "pythonpathSet": false
+  },
+  "invocation": {
+    "fixtureGenerator": "bun tests/unified/table-domain-native-fixture.ts /private/tmp/umf-u4-final-v2-source.json",
+    "nativeRunner": "env -u PYTHONPATH -u PYTHONHOME /private/tmp/umf-g01-scoped-freeze-v2-20261022/venv/bin/python -I tests/unified/table_domain_native.py --dsn dbname=umf_u4v2_20261022_7b2d9e4f --source /private/tmp/umf-u4-final-v2-source.json --report /private/tmp/umf-u4-final-installed-v2-runner.json",
+    "runnerUsesFreshUniqueSuffixForSchemaAndRoles": true
+  },
+  "nativeResult": {
+    "checks": [
+      "synthetic-domain-deployment-installed",
+      "escaped-table-comment-round-trips",
+      "escaped-and-domain-column-comments-round-trip",
+      "nullable-domain-fields-allow-null",
+      "enum-and-range-valid-native-values-accepted",
+      "native-domain-rejects-10",
+      "native-domain-rejects-11",
+      "native-domain-rejects-12"
+    ],
+    "passedCount": 8,
+    "resultSha256": "f4217db7365b3f7a3bef3b68860cec371f54e7ee7ae4bb3441ff403136978d51",
+    "server": "PostgreSQL 18.6 (Homebrew) on aarch64-apple-darwin27.0.0, compiled by Apple clang version 21.0.0 (clang-2100.3.34.2), 64-bit"
+  },
+  "profile": "umf.u4-final-installed-native/1",
+  "receipt": "/private/tmp/umf-u4-final-installed-v2.json",
+  "recordedAtUtc": "2026-10-22T13:02:27.503977+00:00",
+  "sourceAndEnvironmentModified": false,
+  "status": "passed"
+}

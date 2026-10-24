@@ -1,0 +1,61 @@
+{
+  "id": "umf.r3.post-qualification-ruff-review/1",
+  "decision": "approve_exact_two_file_delta_subject_to_required_hosted_ci",
+  "baseCommit": "6363689afdd03aabd5a081e2651e3987b9267275",
+  "pullRequest": "https://github.com/DocumentDrivenDX/umf/pull/45",
+  "immutableFullQualification": {
+    "path": "../production-host-qualification.json",
+    "sha256": "2e068100414297c19c3c8f12c603b16a7353904e40eb31914c19bd30f4c74bf2",
+    "sourceClosureSha256": "8dc238d2a285a25dc94941f8120b0bef22745a5ef1b815d74487e8a2e3ece03d",
+    "scope": "615/615 cases in 102 packets in each of six compiler cohorts at the original source hashes; not relabeled as qualification of the successor delta"
+  },
+  "files": [
+    {
+      "path": "python/src/umf/rust_codegen.py",
+      "beforeSha256": "7afdfadfa71206f46036974edff7e1b8b73c6d1d47636346f11ff606ddf08acb",
+      "afterSha256": "a1d787a1475ac2e52fa13f7d3e62a821896b30f9a8d557ef1661946e10cf825e"
+    },
+    {
+      "path": "python/tests/test_rust_codegen.py",
+      "beforeSha256": "122b6fe48a27c3ab68f27ab9aef1d4291faf87daf571ab6cf7c9d3773e10e09b",
+      "afterSha256": "29585570049168d066872d4feaa46051ea837a31aba036df63d21cd945ecaa1d"
+    }
+  ],
+  "independentReview": {
+    "productionNonImportAstEqual": true,
+    "method": "ast.parse both exact sources; remove top-level Import/ImportFrom only; compare ast.dump(include_attributes=False)",
+    "importReview": "Callable imported from standard collections.abc instead of typing; postponed Callable annotations retain source spelling. Other imported names unchanged; multiline formatting only.",
+    "testReview": "Three resource dictionaries now construct independent empty values; these tests do not rely on shared aliases. subprocess check=False makes its existing default explicit. Import separation only otherwise.",
+    "findings": []
+  },
+  "validation": {
+    "affectedTests": {
+      "status": "pass",
+      "reportedBy": "luna_final_client_admission",
+      "command": "/private/tmp/umf-r3-incremental-python/bin/python -m pytest python/tests/test_rust_codegen.py -q",
+      "passed": 8,
+      "seconds": 5.39
+    },
+    "pythonSuite": {
+      "status": "pass",
+      "reportedBy": "luna_final_client_admission",
+      "command": "/private/tmp/umf-r3-incremental-python/bin/python -m pytest python/tests -q",
+      "passed": 206,
+      "seconds": 15.81,
+      "environmentQualification": "Current wrapper copied into temporary installed environment; matching generated_resources.py, spec/core/schema.json and python-shapes.json refreshed in that environment only. First run had205pass/1stale installed-resource hash failure; refreshed environment run passed. This is not a fresh wheel build."
+    },
+    "lint": {
+      "version": "ruff 0.17.1",
+      "command": "uv tool run --from ruff==0.17.1 ruff check python/src/umf/rust_codegen.py python/tests/test_rust_codegen.py",
+      "status": "pass",
+      "reportedBy": "luna_final_client_admission"
+    },
+    "reviewerFinalHashCheck": "Both successor file hashes independently rechecked against current bytes after validation report.",
+    "hostedSuccessorFullGate": "Required; not yet claimed complete"
+  },
+  "limitations": [
+    "AST equality excludes imports; import behavior was separately reviewed.",
+    "No Rust/compiler/resource/frozen expectation changed.",
+    "This packet supplements the immutable full receipt; it does not establish a new local complete source cohort."
+  ]
+}

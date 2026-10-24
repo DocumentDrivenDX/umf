@@ -1,0 +1,41 @@
+bun test v1.4.3 (26aa4e1a9)
+
+tests/core-ideals/facets-sqlserver-discovery.test.ts:
+ 8 | const column=(table:string,name='value')=>columns.find(c=>c.table.name===table&&c.element.name===name)!.nativeColumn;
+ 9 | const result=(id:string)=>proof.cases.find((r:any)=>r.id===id).actual;
+10 | test('pinned native discovery preserves exact outputs and current inputs',async()=>{
+11 |  const history=await Bun.file('docs/helix/04-build/evidence/metamodel-authority/history/manifest.json').json();
+12 |  expect(proof.serverVersion).toBe('16.0.4295.3');expect(proof.observational).toBe(false);expect(proof.serializationRecoveries).toBe(2);expect(proof.columns).toBe(37);expect(proof.cases.length).toBe(86);
+13 |  for(const [path,sha] of Object.entries(proof.sha256 as Record<string,string>)){const archived=history.entries.find((entry:any)=>entry.path===path)?.archive;const source=archived??path;expect(createHash('sha256').update(new Uint8Array(await Bun.file(source).arrayBuffer())).digest('hex'),path).toBe(sha);}
+                                                                                                                                                                                                                                                                                                           ^
+error: scripts/core-ideals/facets-sqlserver-discovery-cases.ts
+
+Expected: "3a6755b7c376f1392547a6064f6831706a41fabe5c3236820794f7b345fe22b9"
+Received: "f13558eab7646f9520350440df4e496e1540da85a294e4c9f7e3575a7c15ca24"
+
+      at <anonymous> (/private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-r2-main-regression-m1v119x8/tests/core-ideals/facets-sqlserver-discovery.test.ts:13:295)
+(fail) pinned native discovery preserves exact outputs and current inputs [34.32ms]
+(pass) native type observations distinguish unsigned integers, decimal scale and storage units [2.65ms]
+(pass) inconsistent and inexact native metadata refuses without normalization; unknown detail stays attached [1.25ms]
+
+tests/core-ideals/facets-postgresql-constraints.test.ts:
+ 7 | import {readJsonValue, writeJsonValue} from '../../src/model/serialization';
+ 8 | const find=(schema:string,relation:string)=>evidence.capture.constraints.find(c=>c.schema===schema&&c.relation===relation)!;
+ 9 | test('native supplement is pinned, fingerprinted and preserves resolved identities separately from syntax',async()=>{
+10 |  expect(evidence.capture.serverVersion).toBe(170004);expect(evidence.capture.encoding).toBe('UTF8');
+11 |  expect(evidence.capture.constraints).toHaveLength(12);
+12 |  for(const [path,hash] of Object.entries(evidence.sha256))expect(createHash('sha256').update(new Uint8Array(await Bun.file(path).arrayBuffer())).digest('hex')).toBe(hash);
+                                                                                                                                                                     ^
+error: expect(received).toBe(expected)
+
+Expected: "1cfce6a6e616730573ee2a5dfdc251a85b61ab3aeb562e9655232e6d9dfb1ede"
+Received: "91a0174e0beb5bb25fa25d437f30639c3d5f4131b538376b264c0ab8c50ca3c1"
+
+      at <anonymous> (/private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-r2-main-regression-m1v119x8/tests/core-ideals/facets-postgresql-constraints.test.ts:12:161)
+(fail) native supplement is pinned, fingerprinted and preserves resolved identities separately from syntax [19.32ms]
+(pass) native deparsed checks replay as candidates or explicit refusals with complete retained trees [13.12ms]
+
+ 3 pass
+ 2 fail
+ 164 expect() calls
+Ran 5 tests across 2 files. [5.26s]

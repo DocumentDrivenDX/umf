@@ -1,0 +1,24 @@
+{
+  "profile": "mini-racer-wheel-pins/1",
+  "distribution": "mini-racer",
+  "version": "0.14.1",
+  "source": "https://pypi.org/project/mini-racer/0.14.1/",
+  "upstreamPublisher": "github.com/bpcreech/PyMiniRacer",
+  "upstreamCommit": "95b89887e74103a91747bca45a1e35ff0e1b81c3",
+  "upstreamWorkflow": "https://github.com/bpcreech/PyMiniRacer/blob/95b89887e74103a91747bca45a1e35ff0e1b81c3/.github/workflows/build.yml",
+  "license": "ISC",
+  "wheels": [
+    {
+      "platform": "linux-x86_64-glibc-2.27+",
+      "filename": "mini_racer-0.14.1-py3-none-manylinux_2_27_x86_64.whl",
+      "sha256": "cdf3a088e1363f16a695288f882abf76b3705b8e1df21418208b87ed010037a4",
+      "sizeLabel": "22.2 MB"
+    },
+    {
+      "platform": "macos-11+-arm64",
+      "filename": "mini_racer-0.14.1-py3-none-macosx_11_0_arm64.whl",
+      "sha256": "56cc6965a1665a50d8d613bc43aa83b4cec6b1f09acc69dc4c2845dacb201463",
+      "sizeLabel": "18.5 MB"
+    }
+  ]
+}

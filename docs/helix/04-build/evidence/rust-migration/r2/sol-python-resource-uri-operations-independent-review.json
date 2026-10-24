@@ -1,0 +1,40 @@
+{
+  "id": "R2-SOL-PYTHON-RESOURCE-URI-OPERATIONS-INDEPENDENT-REVIEW-001",
+  "capturedAt": "2026-10-22T07:40:24.945185+00:00",
+  "reviewer": "Independent Sol final reviewer; did not implement production resource changes",
+  "status": "native finite companion independently verified; implementation/source closure and artifacts remain pending",
+  "sourceApproved": false,
+  "overallR2Approved": false,
+  "fixture": {
+    "file": "sol-python-resource-uri-operations-predecessor.json",
+    "sha256": "e79cdee8693892517cc372f9b5b05d902199e78b734175bf10359baadeabfae9",
+    "publicCases": 24,
+    "methodObservations": 72,
+    "constructorRefusals": 0,
+    "nativeUriOperationCases": 140
+  },
+  "profiles": {
+    "file": "sol-python-resource-uri-operations-profiles.json",
+    "sha256": "1017a9140607d05e84c8f5998cb23ebcb8b4cc3d97cb3c78f691da50768e86fb"
+  },
+  "generator": {
+    "file": "freeze-python-resource-uri-operations.py",
+    "sha256": "db2a75afe2d98c13f6c1def642c1e029198c800efd701d14cb90bfd1c1399fd8"
+  },
+  "independentObservedChecks": [
+    "Read generator and native pins; it imports the exact 53de049 predecessor schema facade and actual jsonschema/referencing dependencies, without reading candidate source or using candidate expected outcomes.",
+    "Freshly executed the complete generator using the qualified CPython3.11/jsonschema4.26 predecessor environment and compared its parsed complete output with the immutable3.11 capture: equal.",
+    "Compared all public case records, native URI operation records and URI admission qualifiers across the complete3.11.17/3.12.15/3.13.16 captures: equal.",
+    "Independently recomputed every one of the140 URI operation results under each of the three installed CPython versions using native urllib.parse.urljoin: all equal."
+  ],
+  "coverage": {
+    "public": "definitions and $defs resource boundaries across Draft3/4/6/7/2019-09/2020-12, inner versus outer instance outcomes, all three public methods.",
+    "nativeUri": "Seven bases including relative, file, urn, query/params/fragment and raw-surrogate text; twenty references including empty, trailing slash, relative and absolute paths, repeated slash, dot segments, authority replacement, query, fragment, params, absolute and same-scheme URI forms."
+  },
+  "captureLimits": [
+    "The140 direct urllib operation records qualify the private URI mechanism. They do not widen public schema ID/reference admission or claim that every such text is accepted under every dialect. Existing dialect metaschema, local-reference source guard and optional-format-extra qualifiers remain unchanged.",
+    "Public finite controls add72 methods to the previously required7599, giving7671 installed schema method observations; the263 metadata/subject/path records remain unchanged. The140 URI operation cases require native Rust mechanism comparisons as well as these installed public controls.",
+    "Source implementation was not approved by this oracle review. Ordinary2MiB stack, fresh actualWASM and final committed-source installed artifact gates remain required."
+  ],
+  "next": "Implementer ports the single frozen finite packet; independent source review resumes on coherent source. Original89, identity114 and anchor24 fixtures remain immutable."
+}

@@ -25,7 +25,7 @@ from .serialization import (
     write_document,
     write_json_value,
 )
-from .validation import validate_document
+from .validation import validate_document, inspect_extension_kinds
 
 __version__ = "0.10.0"
 __all__ = [
@@ -49,6 +49,7 @@ __all__ = [
     "schema_validator",
     "semantic_type_reference_schema",
     "validate_document",
+    "inspect_extension_kinds",
     "write_document",
     "write_json_value",
 ]

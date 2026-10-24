@@ -99,11 +99,13 @@ jobs:
           --wheel /tmp/umf-p1-wheels/*.whl
           --report /tmp/umf-p1-compatibility.json
       - name: Check installed session scheduling and lease fault handling
-        run: |
-          python -I -m unittest discover -s python/umf_access/tests -p 'test_*session*.py' -v
-          python -I -m unittest discover -s python/umf_access/tests -p 'test_table_read_values.py' -v
-          python -I -m unittest discover -s python/umf_access/tests -p 'test_table_outcomes.py' -v
-          python -I -m unittest discover -s python/umf_access/tests -p 'test_native_binding.py' -v
+        run: python -I -m unittest discover -s python/umf_access/tests -p 'test_*session*.py' -v
+      - name: Check installed table read values
+        run: python -I -m unittest discover -s python/umf_access/tests -p 'test_table_read_values.py' -v
+      - name: Check installed table outcomes
+        run: python -I -m unittest discover -s python/umf_access/tests -p 'test_table_outcomes.py' -v
+      - name: Check installed native binding
+        run: python -I -m unittest discover -s python/umf_access/tests -p 'test_native_binding.py' -v
       - name: Check portable sync and async clients
         run: >-
           bun test tests/access-native-table.test.ts tests/access-native-domains.test.ts tests/access-unified.test.ts tests/access-unified-sync.test.ts
@@ -125,31 +127,74 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+      - name: Isolate Rust toolchain from the runner image
+        run: echo "RUSTUP_HOME=$RUNNER_TEMP/umf-rustup" >> "$GITHUB_ENV"
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: 1.90.0
+          components: rustfmt
       - run: bun install --frozen-lockfile
       - run: python -m venv /tmp/native-client-checkers
       - run: /tmp/native-client-checkers/bin/pip install mypy==2.4.0 pyright==1.1.414 ty==0.0.88
-      - run: python scripts/verify-native-client-types.py --environment /tmp/native-client-checkers --work-dir /tmp/native-client-types
+      - name: Produce clients with the shared Rust engine
+        run: |
+          cargo build --locked --release -p umf-codegen --example r3_replay
+          python scripts/rust-migration/r3/native-replay.py --binary target/release/examples/r3_replay --fixture docs/helix/04-build/evidence/rust-migration/r3/baseline/operations.json --report /tmp/r3-native-types-replay.json
+          python scripts/rust-migration/r3/extract-native-clients.py --actual /tmp/r3-native-types-replay.actual.json --output /tmp/r3-native-generated > /tmp/r3-native-types-files.json
+      - run: python scripts/verify-native-client-types.py --environment /tmp/native-client-checkers --work-dir /tmp/native-client-types --generated-dir /tmp/r3-native-generated
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: native-client-types
-          path: /tmp/native-client-types/*-*.log
+          path: |
+            /tmp/native-client-types/*-*.log
+            /tmp/r3-native-types-*.json
 
 
   python-codegen:
+    name: python-codegen (${{ matrix.os }}, Python ${{ matrix.python-version }})
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest]
+        include:
+          - os: ubuntu-24.04
+            architecture: x86_64
+            mini-racer-platform: linux-x86_64-glibc-2.27+
+            weft-wheel-filename: weft_sql-0.4.49-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+            weft-wheel-url: https://github.com/DocumentDrivenDX/weft/releases/download/v0.4.49/weft_sql-0.4.49-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+            weft-wheel-sha256: 8ca1625249c1d3bed20864dfd71481d8b956b3901ffdc619fc3ec4a1a473be9c
+            python-version: '3.11'
+          - os: ubuntu-24.04
+            architecture: x86_64
+            mini-racer-platform: linux-x86_64-glibc-2.27+
+            weft-wheel-filename: weft_sql-0.4.49-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+            weft-wheel-url: https://github.com/DocumentDrivenDX/weft/releases/download/v0.4.49/weft_sql-0.4.49-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+            weft-wheel-sha256: 8ca1625249c1d3bed20864dfd71481d8b956b3901ffdc619fc3ec4a1a473be9c
+            python-version: '3.14'
+          - os: macos-14
+            architecture: arm64
+            mini-racer-platform: macos-11+-arm64
+            weft-wheel-filename: weft_sql-0.4.49-cp39-abi3-macosx_11_0_arm64.whl
+            weft-wheel-url: https://github.com/DocumentDrivenDX/weft/releases/download/v0.4.49/weft_sql-0.4.49-cp39-abi3-macosx_11_0_arm64.whl
+            weft-wheel-sha256: 695e12867dfcffedb0e4bde7fa571835ebd43fd1c06b0d775b1abecb45ffa117
+            python-version: '3.11'
+          - os: macos-14
+            architecture: arm64
+            mini-racer-platform: macos-11+-arm64
+            weft-wheel-filename: weft_sql-0.4.49-cp39-abi3-macosx_11_0_arm64.whl
+            weft-wheel-url: https://github.com/DocumentDrivenDX/weft/releases/download/v0.4.49/weft_sql-0.4.49-cp39-abi3-macosx_11_0_arm64.whl
+            weft-wheel-sha256: 695e12867dfcffedb0e4bde7fa571835ebd43fd1c06b0d775b1abecb45ffa117
+            python-version: '3.14'
     steps:
       - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version: 1.4.3
       - uses: actions/setup-python@v5
+        id: setup-python
         with:
-          python-version: '3.11'
+          python-version: ${{ matrix.python-version }}
       - run: bun install --frozen-lockfile
       - run: bun test tests/compilation/codegen-gzip.test.ts
       - run: bun scripts/build-codegen.ts --check
@@ -163,43 +208,97 @@ jobs:
       - run: bun scripts/row-scope-codegen-corpus.ts /tmp/umf-row-scope-codegen-corpus.json
       - name: Build wheel through the self-contained source distribution
         run: python -m build python/umf_codegen --outdir /tmp/umf-codegen-wheels
-      - run: python -m pip install /tmp/umf-codegen-wheels/*.whl
+      - run: bun scripts/codegen-corpus.ts /tmp/umf-codegen-corpus.json
+      - run: bun scripts/table-deployment-corpus.ts /tmp/umf-deployment-corpus.json
+      - run: bun scripts/table-migration-corpus.ts /tmp/umf-migration-corpus.json
+      - run: bun scripts/table-reviewed-changes-corpus.ts /tmp/umf-reviewed-changes-corpus.json
+      - name: Acquire and verify the exact mini-racer platform wheel
+        run: |
+          python -m pip download --no-deps --only-binary=:all: --dest /tmp/mini-racer-wheelhouse mini-racer==0.14.1
+          python -I tests/codegen/verify_mini_racer_wheel.py \
+            --wheelhouse /tmp/mini-racer-wheelhouse \
+            --pins docs/helix/04-build/evidence/praxis-embedder/mini-racer-wheel-pins.json \
+            --expected-platform '${{ matrix.mini-racer-platform }}'
+      - name: Install exact local wheels into a clean environment
+        run: |
+          python -m venv /tmp/umf-codegen-installed
+          /tmp/umf-codegen-installed/bin/python -m pip --isolated install \
+            --disable-pip-version-check --no-cache-dir --no-index --no-deps \
+            /tmp/mini-racer-wheelhouse/*.whl /tmp/umf-codegen-wheels/*.whl
+          /tmp/umf-codegen-installed/bin/python -I -m pip check
       - name: Installed row_scope normalizer parity
         run: >-
-          python -I tests/codegen/row_scope_probe.py
-          --corpus /tmp/umf-row-scope-codegen-corpus.json
-      - run: bun scripts/codegen-corpus.ts /tmp/umf-codegen-corpus.json
+          /tmp/umf-codegen-installed/bin/python -I tests/codegen/row_scope_probe.py
+          --corpus /tmp/umf-row-scope-codegen-corpus.json > /tmp/umf-row-scope-report.json
       - name: Installed generator parity without external JavaScript processes
         run: >-
-          python -I tests/codegen/installed_probe.py
+          /tmp/umf-codegen-installed/bin/python -I tests/codegen/installed_probe.py
           --corpus /tmp/umf-codegen-corpus.json --report /tmp/umf-codegen-report.json
-      - run: bun scripts/table-deployment-corpus.ts /tmp/umf-deployment-corpus.json
       - name: Installed original deployment compiler and tamper controls
         run: >-
-          python -I tests/codegen/deployment_probe.py
+          /tmp/umf-codegen-installed/bin/python -I tests/codegen/deployment_probe.py
           --corpus /tmp/umf-deployment-corpus.json --report /tmp/umf-deployment-python.json
-      - run: bun scripts/table-migration-corpus.ts /tmp/umf-migration-corpus.json
       - name: Installed original migration compiler and rehashed tamper controls
         run: >-
-          python -I tests/codegen/migration_probe.py
+          /tmp/umf-codegen-installed/bin/python -I tests/codegen/migration_probe.py
           --corpus /tmp/umf-migration-corpus.json --report /tmp/umf-migration-python.json
-      - run: bun scripts/table-reviewed-changes-corpus.ts /tmp/umf-reviewed-changes-corpus.json
       - name: Installed reviewed-change discovery parity and source-forgery refusals
         run: >-
-          python -I tests/codegen/reviewed_changes_probe.py
-          --corpus /tmp/umf-reviewed-changes-corpus.json
+          /tmp/umf-codegen-installed/bin/python -I tests/codegen/reviewed_changes_probe.py
+          --corpus /tmp/umf-reviewed-changes-corpus.json > /tmp/umf-reviewed-changes-python.json
+      - name: Verify matrix cell and write immutable receipt
+        run: >-
+          /tmp/umf-codegen-installed/bin/python -I tests/codegen/matrix_receipt.py
+          --wheelhouse /tmp/mini-racer-wheelhouse
+          --pins docs/helix/04-build/evidence/praxis-embedder/mini-racer-wheel-pins.json
+          --corpus /tmp/umf-codegen-corpus.json
+          --generator-report /tmp/umf-codegen-report.json
+          --row-scope-report /tmp/umf-row-scope-report.json
+          --deployment-report /tmp/umf-deployment-python.json
+          --migration-report /tmp/umf-migration-python.json
+          --reviewed-report /tmp/umf-reviewed-changes-python.json
+          --expected-os '${{ matrix.os }}'
+          --expected-arch '${{ matrix.architecture }}'
+          --expected-python '${{ matrix.python-version }}'
+          --source-commit '${{ github.sha }}'
+          --report /tmp/umf-codegen-matrix-receipt.json
+      - name: Verify the lock-driven offline mirror and refusal controls
+        run: python tests/codegen/test_package_mirror.py
+      - name: Acquire and freeze the exact 18-wheel installed cohort for this cell
+        run: >-
+          python tests/codegen/acquire_offline_cohort.py
+          --output-dir /tmp/umf-full-cohort
+          --source-commit '${{ github.sha }}'
+          --expected-os '${{ matrix.os }}'
+          --expected-architecture '${{ matrix.architecture }}'
+          --expected-python '${{ matrix.python-version }}'
+          --weft-wheel-url '${{ matrix.weft-wheel-url }}'
+          --weft-wheel-filename '${{ matrix.weft-wheel-filename }}'
+          --weft-wheel-sha256 '${{ matrix.weft-wheel-sha256 }}'
+          --mini-racer-wheel /tmp/mini-racer-wheelhouse/*.whl
+      - name: Install and exercise the complete locked mirror with OS network denial
+        run: >-
+          python -I tests/codegen/offline_mirror_probe.py
+          --wheelhouse /tmp/umf-full-cohort/wheelhouse
+          --lock /tmp/umf-full-cohort/cohort.lock.json
+          --mirror /tmp/umf-full-cohort/mirror
+          --generator-corpus /tmp/umf-codegen-corpus.json
+          --report /tmp/umf-full-cohort/offline-mirror-receipt.json
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: codegen-${{ matrix.os }}
-          path: /tmp/umf-codegen-report.json
-      - uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: deployment-python-${{ matrix.os }}
+          name: codegen-${{ matrix.os }}-py${{ matrix.python-version }}
           path: |
+            /tmp/umf-codegen-matrix-receipt.json
+            /tmp/umf-codegen-report.json
+            /tmp/umf-row-scope-report.json
             /tmp/umf-deployment-python.json
             /tmp/umf-migration-python.json
+            /tmp/umf-reviewed-changes-python.json
+            /tmp/umf-full-cohort/cohort.lock.json
+            /tmp/umf-full-cohort/cohort-template.json
+            /tmp/umf-full-cohort/mirror/manifest.json
+            /tmp/umf-full-cohort/offline-mirror-receipt.json
 
 
   native-sessions:
@@ -334,3 +433,43 @@ jobs:
             /tmp/umf-mixed-native.json
             /tmp/umf-reviewed-native-fixture.json
             /tmp/umf-reviewed-native-report.json
+
+  rust-stage-one-runtime:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.4.3
+      - uses: actions/setup-python@v5
+        id: runtime-python
+        with:
+          python-version: '3.11.17'
+      - name: Isolate Rust toolchain from the runner image
+        run: echo "RUSTUP_HOME=$RUNNER_TEMP/umf-rustup" >> "$GITHUB_ENV"
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: 1.90.0
+          components: rustfmt
+      - run: bun install --frozen-lockfile
+      - run: python -m pip install build==1.3.0
+      - run: python -m build --wheel --outdir /tmp/r3-access-runtime python/umf_access
+      - run: python -m pip install /tmp/r3-access-runtime/*.whl pydantic==2.14.1
+      - name: Build the shared Rust compiler binding
+        run: |
+          cargo build --locked --release -p umf-core-node
+          cp target/release/libumf_core_node.so bindings/core/node/umf_core_node.node
+      - name: Exercise generated Python creation and codecs with the installed runtime
+        env:
+          R3_RUNTIME_PYTHON: ${{ steps.runtime-python.outputs.python-path }}
+        run: >-
+          bun scripts/access-e2e.ts
+          --python "$R3_RUNTIME_PYTHON"
+          --wheel /tmp/r3-access-runtime/*.whl
+          --report /tmp/r3-stage-runtime.json
+          --rust-node-entry "$GITHUB_WORKSPACE/bindings/core/node/index.js"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: r3-stage-one-runtime
+          path: /tmp/r3-stage-runtime.json

@@ -1,0 +1,3229 @@
+{
+  "profile": "umf.r2-sol-python-schema-annotation-reach/1",
+  "python": "3.11.17",
+  "jsonschema": "4.26.0",
+  "schemaSourceSha256": "22f02d6a6903b8804a1d504b0b6f232872aa564bc20e77933c880a4f9016a402",
+  "scope": "Annotation type guards, actual keyword position, and deferred native annotation predicates; deterministic method outcomes only.",
+  "cases": [
+    {
+      "id": "draft0-up-wrongkind-primitive",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"anyOf\":[{},{\"divisibleBy\":0.5}],\"unevaluatedProperties\":false}",
+      "instanceRecipe": {
+        "kind": "float",
+        "bits": "7ff8000000000000"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft0-up-wrongkind-array",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"anyOf\":[{},{\"contains\":{\"divisibleBy\":0.5}}],\"unevaluatedProperties\":false}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "float",
+            "bits": "7ff8000000000000"
+          }
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft0-ui-wrongkind-object",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"anyOf\":[{},{\"properties\":{\"b\":{\"divisibleBy\":0.5}}}],\"unevaluatedItems\":false}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "b",
+            {
+              "kind": "float",
+              "bits": "7ff8000000000000"
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft0-up-after-type-error",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"anyOf\":[{},{\"properties\":{\"b\":{\"divisibleBy\":0.5}}}],\"type\":\"string\",\"unevaluatedProperties\":false}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "b",
+            {
+              "kind": "float",
+              "bits": "7ff8000000000000"
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [],
+            "schemaPath": [
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [],
+              "schemaPath": [
+                "type"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft0-ui-after-type-error",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"anyOf\":[{},{\"contains\":{\"divisibleBy\":0.5}}],\"type\":\"object\",\"unevaluatedItems\":false}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "float",
+            "bits": "7ff8000000000000"
+          }
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [],
+            "schemaPath": [
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [],
+              "schemaPath": [
+                "type"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft0-up-after-min-properties-error",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"anyOf\":[{},{\"properties\":{\"b\":{\"divisibleBy\":0.5}}}],\"minProperties\":2,\"unevaluatedProperties\":false}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "b",
+            {
+              "kind": "float",
+              "bits": "7ff8000000000000"
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft0-up-before-required",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"unevaluatedProperties\":false,\"required\":[\"missing\"]}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "a",
+            {
+              "kind": "integer",
+              "decimal": "0"
+            }
+          ]
+        ]
+      },
+      "methods": {},
+      "schemaError": {
+        "type": "SchemaError",
+        "message": "['missing'] is not of type 'boolean'\n\nFailed validating 'type' in metaschema['properties']['required']:\n    {'type': 'boolean', 'default': False}\n\nOn schema['required']:\n    ['missing']"
+      }
+    },
+    {
+      "id": "draft0-ui-before-type",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"unevaluatedItems\":false,\"type\":\"object\"}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "integer",
+            "decimal": "0"
+          }
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [],
+            "schemaPath": [
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [],
+              "schemaPath": [
+                "type"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft0-up-before-type-annotation-replay",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"unevaluatedProperties\":false,\"type\":\"string\",\"anyOf\":[{},{\"properties\":{\"b\":{\"divisibleBy\":0.5}}}]}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "b",
+            {
+              "kind": "float",
+              "bits": "7ff8000000000000"
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [],
+            "schemaPath": [
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [],
+              "schemaPath": [
+                "type"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft0-ui-before-type-annotation-replay",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"unevaluatedItems\":false,\"type\":\"object\",\"anyOf\":[{},{\"contains\":{\"divisibleBy\":0.5}}]}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "float",
+            "bits": "7ff8000000000000"
+          }
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [],
+            "schemaPath": [
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [],
+              "schemaPath": [
+                "type"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft0-up-after-successful-if",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"if\":{\"properties\":{\"x\":{\"type\":\"number\"}}},\"then\":{\"properties\":{\"x\":{}}},\"unevaluatedProperties\":false}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "x",
+            {
+              "kind": "integer",
+              "decimal": "1"
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft0-up-before-successful-if",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"unevaluatedProperties\":false,\"if\":{\"properties\":{\"x\":{\"type\":\"number\"}}},\"then\":{\"properties\":{\"x\":{}}}}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "x",
+            {
+              "kind": "integer",
+              "decimal": "1"
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft0-not-wrongkind-annotations",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"not\":{\"anyOf\":[{},{\"divisibleBy\":0.5}],\"unevaluatedProperties\":false}}",
+      "instanceRecipe": {
+        "kind": "float",
+        "bits": "7ff8000000000000"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft0-if-wrongkind-annotations",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"if\":{\"anyOf\":[{},{\"divisibleBy\":0.5}],\"unevaluatedProperties\":false},\"then\":{\"type\":\"string\"},\"else\":{}}",
+      "instanceRecipe": {
+        "kind": "float",
+        "bits": "7ff8000000000000"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft0-contains-wrongkind-annotations",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"contains\":{\"anyOf\":[{},{\"divisibleBy\":0.5}],\"unevaluatedProperties\":false}}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "float",
+            "bits": "7ff8000000000000"
+          }
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft0-ref-wrongkind-annotations",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-03/schema#\",\"$defs\":{\"target\":{\"anyOf\":[{},{\"divisibleBy\":0.5}],\"unevaluatedProperties\":false}},\"$ref\":\"#/$defs/target\"}",
+      "instanceRecipe": {
+        "kind": "float",
+        "bits": "7ff8000000000000"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft1-up-wrongkind-primitive",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"anyOf\":[{},{\"multipleOf\":0.5}],\"unevaluatedProperties\":false}",
+      "instanceRecipe": {
+        "kind": "float",
+        "bits": "7ff8000000000000"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft1-up-wrongkind-array",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"anyOf\":[{},{\"contains\":{\"multipleOf\":0.5}}],\"unevaluatedProperties\":false}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "float",
+            "bits": "7ff8000000000000"
+          }
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft1-ui-wrongkind-object",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"anyOf\":[{},{\"properties\":{\"b\":{\"multipleOf\":0.5}}}],\"unevaluatedItems\":false}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "b",
+            {
+              "kind": "float",
+              "bits": "7ff8000000000000"
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft1-up-after-type-error",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"anyOf\":[{},{\"properties\":{\"b\":{\"multipleOf\":0.5}}}],\"type\":\"string\",\"unevaluatedProperties\":false}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "b",
+            {
+              "kind": "float",
+              "bits": "7ff8000000000000"
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [],
+            "schemaPath": [
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [],
+              "schemaPath": [
+                "type"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft1-ui-after-type-error",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"anyOf\":[{},{\"contains\":{\"multipleOf\":0.5}}],\"type\":\"object\",\"unevaluatedItems\":false}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "float",
+            "bits": "7ff8000000000000"
+          }
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [],
+            "schemaPath": [
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [],
+              "schemaPath": [
+                "type"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft1-up-after-min-properties-error",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"anyOf\":[{},{\"properties\":{\"b\":{\"multipleOf\":0.5}}}],\"minProperties\":2,\"unevaluatedProperties\":false}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "b",
+            {
+              "kind": "float",
+              "bits": "7ff8000000000000"
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "minProperties",
+            "instancePath": [],
+            "schemaPath": [
+              "minProperties"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "minProperties",
+              "instancePath": [],
+              "schemaPath": [
+                "minProperties"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft1-up-before-required",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"unevaluatedProperties\":false,\"required\":[\"missing\"]}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "a",
+            {
+              "kind": "integer",
+              "decimal": "0"
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "required",
+            "instancePath": [],
+            "schemaPath": [
+              "required"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "required",
+              "instancePath": [],
+              "schemaPath": [
+                "required"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft1-ui-before-type",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"unevaluatedItems\":false,\"type\":\"object\"}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "integer",
+            "decimal": "0"
+          }
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [],
+            "schemaPath": [
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [],
+              "schemaPath": [
+                "type"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft1-up-before-type-annotation-replay",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"unevaluatedProperties\":false,\"type\":\"string\",\"anyOf\":[{},{\"properties\":{\"b\":{\"multipleOf\":0.5}}}]}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "b",
+            {
+              "kind": "float",
+              "bits": "7ff8000000000000"
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [],
+            "schemaPath": [
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [],
+              "schemaPath": [
+                "type"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft1-ui-before-type-annotation-replay",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"unevaluatedItems\":false,\"type\":\"object\",\"anyOf\":[{},{\"contains\":{\"multipleOf\":0.5}}]}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "float",
+            "bits": "7ff8000000000000"
+          }
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [],
+            "schemaPath": [
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [],
+              "schemaPath": [
+                "type"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft1-up-after-successful-if",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"if\":{\"properties\":{\"x\":{\"type\":\"number\"}}},\"then\":{\"properties\":{\"x\":{}}},\"unevaluatedProperties\":false}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "x",
+            {
+              "kind": "integer",
+              "decimal": "1"
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft1-up-before-successful-if",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"unevaluatedProperties\":false,\"if\":{\"properties\":{\"x\":{\"type\":\"number\"}}},\"then\":{\"properties\":{\"x\":{}}}}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "x",
+            {
+              "kind": "integer",
+              "decimal": "1"
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft1-not-wrongkind-annotations",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"not\":{\"anyOf\":[{},{\"multipleOf\":0.5}],\"unevaluatedProperties\":false}}",
+      "instanceRecipe": {
+        "kind": "float",
+        "bits": "7ff8000000000000"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "not",
+            "instancePath": [],
+            "schemaPath": [
+              "not"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "not",
+              "instancePath": [],
+              "schemaPath": [
+                "not"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft1-if-wrongkind-annotations",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"if\":{\"anyOf\":[{},{\"multipleOf\":0.5}],\"unevaluatedProperties\":false},\"then\":{\"type\":\"string\"},\"else\":{}}",
+      "instanceRecipe": {
+        "kind": "float",
+        "bits": "7ff8000000000000"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft1-contains-wrongkind-annotations",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"contains\":{\"anyOf\":[{},{\"multipleOf\":0.5}],\"unevaluatedProperties\":false}}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "float",
+            "bits": "7ff8000000000000"
+          }
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft1-ref-wrongkind-annotations",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"$defs\":{\"target\":{\"anyOf\":[{},{\"multipleOf\":0.5}],\"unevaluatedProperties\":false}},\"$ref\":\"#/$defs/target\"}",
+      "instanceRecipe": {
+        "kind": "float",
+        "bits": "7ff8000000000000"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft2-up-wrongkind-primitive",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"anyOf\":[{},{\"multipleOf\":0.5}],\"unevaluatedProperties\":false}",
+      "instanceRecipe": {
+        "kind": "float",
+        "bits": "7ff8000000000000"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft2-up-wrongkind-array",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"anyOf\":[{},{\"contains\":{\"multipleOf\":0.5}}],\"unevaluatedProperties\":false}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "float",
+            "bits": "7ff8000000000000"
+          }
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft2-ui-wrongkind-object",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"anyOf\":[{},{\"properties\":{\"b\":{\"multipleOf\":0.5}}}],\"unevaluatedItems\":false}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "b",
+            {
+              "kind": "float",
+              "bits": "7ff8000000000000"
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft2-up-after-type-error",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"anyOf\":[{},{\"properties\":{\"b\":{\"multipleOf\":0.5}}}],\"type\":\"string\",\"unevaluatedProperties\":false}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "b",
+            {
+              "kind": "float",
+              "bits": "7ff8000000000000"
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [],
+            "schemaPath": [
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [],
+              "schemaPath": [
+                "type"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft2-ui-after-type-error",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"anyOf\":[{},{\"contains\":{\"multipleOf\":0.5}}],\"type\":\"object\",\"unevaluatedItems\":false}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "float",
+            "bits": "7ff8000000000000"
+          }
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [],
+            "schemaPath": [
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [],
+              "schemaPath": [
+                "type"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft2-up-after-min-properties-error",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"anyOf\":[{},{\"properties\":{\"b\":{\"multipleOf\":0.5}}}],\"minProperties\":2,\"unevaluatedProperties\":false}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "b",
+            {
+              "kind": "float",
+              "bits": "7ff8000000000000"
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "minProperties",
+            "instancePath": [],
+            "schemaPath": [
+              "minProperties"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "minProperties",
+              "instancePath": [],
+              "schemaPath": [
+                "minProperties"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft2-up-before-required",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"unevaluatedProperties\":false,\"required\":[\"missing\"]}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "a",
+            {
+              "kind": "integer",
+              "decimal": "0"
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "required",
+            "instancePath": [],
+            "schemaPath": [
+              "required"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "required",
+              "instancePath": [],
+              "schemaPath": [
+                "required"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft2-ui-before-type",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"unevaluatedItems\":false,\"type\":\"object\"}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "integer",
+            "decimal": "0"
+          }
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [],
+            "schemaPath": [
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [],
+              "schemaPath": [
+                "type"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft2-up-before-type-annotation-replay",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"unevaluatedProperties\":false,\"type\":\"string\",\"anyOf\":[{},{\"properties\":{\"b\":{\"multipleOf\":0.5}}}]}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "b",
+            {
+              "kind": "float",
+              "bits": "7ff8000000000000"
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [],
+            "schemaPath": [
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [],
+              "schemaPath": [
+                "type"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft2-ui-before-type-annotation-replay",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"unevaluatedItems\":false,\"type\":\"object\",\"anyOf\":[{},{\"contains\":{\"multipleOf\":0.5}}]}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "float",
+            "bits": "7ff8000000000000"
+          }
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [],
+            "schemaPath": [
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [],
+              "schemaPath": [
+                "type"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft2-up-after-successful-if",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"if\":{\"properties\":{\"x\":{\"type\":\"number\"}}},\"then\":{\"properties\":{\"x\":{}}},\"unevaluatedProperties\":false}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "x",
+            {
+              "kind": "integer",
+              "decimal": "1"
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft2-up-before-successful-if",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"unevaluatedProperties\":false,\"if\":{\"properties\":{\"x\":{\"type\":\"number\"}}},\"then\":{\"properties\":{\"x\":{}}}}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "x",
+            {
+              "kind": "integer",
+              "decimal": "1"
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft2-not-wrongkind-annotations",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"not\":{\"anyOf\":[{},{\"multipleOf\":0.5}],\"unevaluatedProperties\":false}}",
+      "instanceRecipe": {
+        "kind": "float",
+        "bits": "7ff8000000000000"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "not",
+            "instancePath": [],
+            "schemaPath": [
+              "not"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "not",
+              "instancePath": [],
+              "schemaPath": [
+                "not"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft2-if-wrongkind-annotations",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"if\":{\"anyOf\":[{},{\"multipleOf\":0.5}],\"unevaluatedProperties\":false},\"then\":{\"type\":\"string\"},\"else\":{}}",
+      "instanceRecipe": {
+        "kind": "float",
+        "bits": "7ff8000000000000"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft2-contains-wrongkind-annotations",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"contains\":{\"anyOf\":[{},{\"multipleOf\":0.5}],\"unevaluatedProperties\":false}}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "float",
+            "bits": "7ff8000000000000"
+          }
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft2-ref-wrongkind-annotations",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"$defs\":{\"target\":{\"anyOf\":[{},{\"multipleOf\":0.5}],\"unevaluatedProperties\":false}},\"$ref\":\"#/$defs/target\"}",
+      "instanceRecipe": {
+        "kind": "float",
+        "bits": "7ff8000000000000"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft3-up-wrongkind-primitive",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"anyOf\":[{},{\"multipleOf\":0.5}],\"unevaluatedProperties\":false}",
+      "instanceRecipe": {
+        "kind": "float",
+        "bits": "7ff8000000000000"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft3-up-wrongkind-array",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"anyOf\":[{},{\"contains\":{\"multipleOf\":0.5}}],\"unevaluatedProperties\":false}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "float",
+            "bits": "7ff8000000000000"
+          }
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft3-ui-wrongkind-object",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"anyOf\":[{},{\"properties\":{\"b\":{\"multipleOf\":0.5}}}],\"unevaluatedItems\":false}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "b",
+            {
+              "kind": "float",
+              "bits": "7ff8000000000000"
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft3-up-after-type-error",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"anyOf\":[{},{\"properties\":{\"b\":{\"multipleOf\":0.5}}}],\"type\":\"string\",\"unevaluatedProperties\":false}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "b",
+            {
+              "kind": "float",
+              "bits": "7ff8000000000000"
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [],
+            "schemaPath": [
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [],
+              "schemaPath": [
+                "type"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft3-ui-after-type-error",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"anyOf\":[{},{\"contains\":{\"multipleOf\":0.5}}],\"type\":\"object\",\"unevaluatedItems\":false}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "float",
+            "bits": "7ff8000000000000"
+          }
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [],
+            "schemaPath": [
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [],
+              "schemaPath": [
+                "type"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft3-up-after-min-properties-error",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"anyOf\":[{},{\"properties\":{\"b\":{\"multipleOf\":0.5}}}],\"minProperties\":2,\"unevaluatedProperties\":false}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "b",
+            {
+              "kind": "float",
+              "bits": "7ff8000000000000"
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "minProperties",
+            "instancePath": [],
+            "schemaPath": [
+              "minProperties"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "minProperties",
+              "instancePath": [],
+              "schemaPath": [
+                "minProperties"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft3-up-before-required",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"unevaluatedProperties\":false,\"required\":[\"missing\"]}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "a",
+            {
+              "kind": "integer",
+              "decimal": "0"
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "required",
+            "instancePath": [],
+            "schemaPath": [
+              "required"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "required",
+              "instancePath": [],
+              "schemaPath": [
+                "required"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft3-ui-before-type",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"unevaluatedItems\":false,\"type\":\"object\"}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "integer",
+            "decimal": "0"
+          }
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [],
+            "schemaPath": [
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [],
+              "schemaPath": [
+                "type"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft3-up-before-type-annotation-replay",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"unevaluatedProperties\":false,\"type\":\"string\",\"anyOf\":[{},{\"properties\":{\"b\":{\"multipleOf\":0.5}}}]}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "b",
+            {
+              "kind": "float",
+              "bits": "7ff8000000000000"
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [],
+            "schemaPath": [
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [],
+              "schemaPath": [
+                "type"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft3-ui-before-type-annotation-replay",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"unevaluatedItems\":false,\"type\":\"object\",\"anyOf\":[{},{\"contains\":{\"multipleOf\":0.5}}]}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "float",
+            "bits": "7ff8000000000000"
+          }
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [],
+            "schemaPath": [
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [],
+              "schemaPath": [
+                "type"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft3-up-after-successful-if",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"if\":{\"properties\":{\"x\":{\"type\":\"number\"}}},\"then\":{\"properties\":{\"x\":{}}},\"unevaluatedProperties\":false}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "x",
+            {
+              "kind": "integer",
+              "decimal": "1"
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft3-up-before-successful-if",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"unevaluatedProperties\":false,\"if\":{\"properties\":{\"x\":{\"type\":\"number\"}}},\"then\":{\"properties\":{\"x\":{}}}}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "x",
+            {
+              "kind": "integer",
+              "decimal": "1"
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft3-not-wrongkind-annotations",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"not\":{\"anyOf\":[{},{\"multipleOf\":0.5}],\"unevaluatedProperties\":false}}",
+      "instanceRecipe": {
+        "kind": "float",
+        "bits": "7ff8000000000000"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "not",
+            "instancePath": [],
+            "schemaPath": [
+              "not"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "not",
+              "instancePath": [],
+              "schemaPath": [
+                "not"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft3-if-wrongkind-annotations",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"if\":{\"anyOf\":[{},{\"multipleOf\":0.5}],\"unevaluatedProperties\":false},\"then\":{\"type\":\"string\"},\"else\":{}}",
+      "instanceRecipe": {
+        "kind": "float",
+        "bits": "7ff8000000000000"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [],
+            "schemaPath": [
+              "then",
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [],
+              "schemaPath": [
+                "then",
+                "type"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft3-contains-wrongkind-annotations",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"contains\":{\"anyOf\":[{},{\"multipleOf\":0.5}],\"unevaluatedProperties\":false}}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "float",
+            "bits": "7ff8000000000000"
+          }
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft3-ref-wrongkind-annotations",
+      "schemaText": "{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"$defs\":{\"target\":{\"anyOf\":[{},{\"multipleOf\":0.5}],\"unevaluatedProperties\":false}},\"$ref\":\"#/$defs/target\"}",
+      "instanceRecipe": {
+        "kind": "float",
+        "bits": "7ff8000000000000"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft4-up-wrongkind-primitive",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"anyOf\":[{},{\"multipleOf\":0.5}],\"unevaluatedProperties\":false}",
+      "instanceRecipe": {
+        "kind": "float",
+        "bits": "7ff8000000000000"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft4-up-wrongkind-array",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"anyOf\":[{},{\"contains\":{\"multipleOf\":0.5}}],\"unevaluatedProperties\":false}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "float",
+            "bits": "7ff8000000000000"
+          }
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft4-ui-wrongkind-object",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"anyOf\":[{},{\"properties\":{\"b\":{\"multipleOf\":0.5}}}],\"unevaluatedItems\":false}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "b",
+            {
+              "kind": "float",
+              "bits": "7ff8000000000000"
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft4-up-after-type-error",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"anyOf\":[{},{\"properties\":{\"b\":{\"multipleOf\":0.5}}}],\"type\":\"string\",\"unevaluatedProperties\":false}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "b",
+            {
+              "kind": "float",
+              "bits": "7ff8000000000000"
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [],
+            "schemaPath": [
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "arithmetic-error",
+          "type": "ValueError",
+          "message": "cannot convert float NaN to integer",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [],
+              "schemaPath": [
+                "type"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft4-ui-after-type-error",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"anyOf\":[{},{\"contains\":{\"multipleOf\":0.5}}],\"type\":\"object\",\"unevaluatedItems\":false}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "float",
+            "bits": "7ff8000000000000"
+          }
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [],
+            "schemaPath": [
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "arithmetic-error",
+          "type": "ValueError",
+          "message": "cannot convert float NaN to integer",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [],
+              "schemaPath": [
+                "type"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft4-up-after-min-properties-error",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"anyOf\":[{},{\"properties\":{\"b\":{\"multipleOf\":0.5}}}],\"minProperties\":2,\"unevaluatedProperties\":false}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "b",
+            {
+              "kind": "float",
+              "bits": "7ff8000000000000"
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "minProperties",
+            "instancePath": [],
+            "schemaPath": [
+              "minProperties"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "arithmetic-error",
+          "type": "ValueError",
+          "message": "cannot convert float NaN to integer",
+          "prefix": [
+            {
+              "keyword": "minProperties",
+              "instancePath": [],
+              "schemaPath": [
+                "minProperties"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft4-up-before-required",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"unevaluatedProperties\":false,\"required\":[\"missing\"]}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "a",
+            {
+              "kind": "integer",
+              "decimal": "0"
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "unevaluatedProperties",
+            "instancePath": [],
+            "schemaPath": [
+              "unevaluatedProperties"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "unevaluatedProperties",
+              "instancePath": [],
+              "schemaPath": [
+                "unevaluatedProperties"
+              ]
+            },
+            {
+              "keyword": "required",
+              "instancePath": [],
+              "schemaPath": [
+                "required"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft4-ui-before-type",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"unevaluatedItems\":false,\"type\":\"object\"}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "integer",
+            "decimal": "0"
+          }
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "unevaluatedItems",
+            "instancePath": [],
+            "schemaPath": [
+              "unevaluatedItems"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "unevaluatedItems",
+              "instancePath": [],
+              "schemaPath": [
+                "unevaluatedItems"
+              ]
+            },
+            {
+              "keyword": "type",
+              "instancePath": [],
+              "schemaPath": [
+                "type"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft4-up-before-type-annotation-replay",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"unevaluatedProperties\":false,\"type\":\"string\",\"anyOf\":[{},{\"properties\":{\"b\":{\"multipleOf\":0.5}}}]}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "b",
+            {
+              "kind": "float",
+              "bits": "7ff8000000000000"
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "arithmetic-error",
+          "type": "ValueError",
+          "message": "cannot convert float NaN to integer"
+        },
+        "validate": {
+          "status": "arithmetic-error",
+          "type": "ValueError",
+          "message": "cannot convert float NaN to integer"
+        },
+        "iterate": {
+          "status": "arithmetic-error",
+          "type": "ValueError",
+          "message": "cannot convert float NaN to integer",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft4-ui-before-type-annotation-replay",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"unevaluatedItems\":false,\"type\":\"object\",\"anyOf\":[{},{\"contains\":{\"multipleOf\":0.5}}]}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "float",
+            "bits": "7ff8000000000000"
+          }
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "arithmetic-error",
+          "type": "ValueError",
+          "message": "cannot convert float NaN to integer"
+        },
+        "validate": {
+          "status": "arithmetic-error",
+          "type": "ValueError",
+          "message": "cannot convert float NaN to integer"
+        },
+        "iterate": {
+          "status": "arithmetic-error",
+          "type": "ValueError",
+          "message": "cannot convert float NaN to integer",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft4-up-after-successful-if",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"if\":{\"properties\":{\"x\":{\"type\":\"number\"}}},\"then\":{\"properties\":{\"x\":{}}},\"unevaluatedProperties\":false}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "x",
+            {
+              "kind": "integer",
+              "decimal": "1"
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft4-up-before-successful-if",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"unevaluatedProperties\":false,\"if\":{\"properties\":{\"x\":{\"type\":\"number\"}}},\"then\":{\"properties\":{\"x\":{}}}}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "x",
+            {
+              "kind": "integer",
+              "decimal": "1"
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft4-not-wrongkind-annotations",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"not\":{\"anyOf\":[{},{\"multipleOf\":0.5}],\"unevaluatedProperties\":false}}",
+      "instanceRecipe": {
+        "kind": "float",
+        "bits": "7ff8000000000000"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "not",
+            "instancePath": [],
+            "schemaPath": [
+              "not"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "not",
+              "instancePath": [],
+              "schemaPath": [
+                "not"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft4-if-wrongkind-annotations",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"if\":{\"anyOf\":[{},{\"multipleOf\":0.5}],\"unevaluatedProperties\":false},\"then\":{\"type\":\"string\"},\"else\":{}}",
+      "instanceRecipe": {
+        "kind": "float",
+        "bits": "7ff8000000000000"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [],
+            "schemaPath": [
+              "then",
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [],
+              "schemaPath": [
+                "then",
+                "type"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft4-contains-wrongkind-annotations",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"contains\":{\"anyOf\":[{},{\"multipleOf\":0.5}],\"unevaluatedProperties\":false}}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "float",
+            "bits": "7ff8000000000000"
+          }
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft4-ref-wrongkind-annotations",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2019-09/schema\",\"$defs\":{\"target\":{\"anyOf\":[{},{\"multipleOf\":0.5}],\"unevaluatedProperties\":false}},\"$ref\":\"#/$defs/target\"}",
+      "instanceRecipe": {
+        "kind": "float",
+        "bits": "7ff8000000000000"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft5-up-wrongkind-primitive",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"anyOf\":[{},{\"multipleOf\":0.5}],\"unevaluatedProperties\":false}",
+      "instanceRecipe": {
+        "kind": "float",
+        "bits": "7ff8000000000000"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft5-up-wrongkind-array",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"anyOf\":[{},{\"contains\":{\"multipleOf\":0.5}}],\"unevaluatedProperties\":false}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "float",
+            "bits": "7ff8000000000000"
+          }
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft5-ui-wrongkind-object",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"anyOf\":[{},{\"properties\":{\"b\":{\"multipleOf\":0.5}}}],\"unevaluatedItems\":false}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "b",
+            {
+              "kind": "float",
+              "bits": "7ff8000000000000"
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft5-up-after-type-error",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"anyOf\":[{},{\"properties\":{\"b\":{\"multipleOf\":0.5}}}],\"type\":\"string\",\"unevaluatedProperties\":false}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "b",
+            {
+              "kind": "float",
+              "bits": "7ff8000000000000"
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [],
+            "schemaPath": [
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "arithmetic-error",
+          "type": "ValueError",
+          "message": "cannot convert float NaN to integer",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [],
+              "schemaPath": [
+                "type"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft5-ui-after-type-error",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"anyOf\":[{},{\"contains\":{\"multipleOf\":0.5}}],\"type\":\"object\",\"unevaluatedItems\":false}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "float",
+            "bits": "7ff8000000000000"
+          }
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [],
+            "schemaPath": [
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "arithmetic-error",
+          "type": "ValueError",
+          "message": "cannot convert float NaN to integer",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [],
+              "schemaPath": [
+                "type"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft5-up-after-min-properties-error",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"anyOf\":[{},{\"properties\":{\"b\":{\"multipleOf\":0.5}}}],\"minProperties\":2,\"unevaluatedProperties\":false}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "b",
+            {
+              "kind": "float",
+              "bits": "7ff8000000000000"
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "minProperties",
+            "instancePath": [],
+            "schemaPath": [
+              "minProperties"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "arithmetic-error",
+          "type": "ValueError",
+          "message": "cannot convert float NaN to integer",
+          "prefix": [
+            {
+              "keyword": "minProperties",
+              "instancePath": [],
+              "schemaPath": [
+                "minProperties"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft5-up-before-required",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"unevaluatedProperties\":false,\"required\":[\"missing\"]}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "a",
+            {
+              "kind": "integer",
+              "decimal": "0"
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "unevaluatedProperties",
+            "instancePath": [],
+            "schemaPath": [
+              "unevaluatedProperties"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "unevaluatedProperties",
+              "instancePath": [],
+              "schemaPath": [
+                "unevaluatedProperties"
+              ]
+            },
+            {
+              "keyword": "required",
+              "instancePath": [],
+              "schemaPath": [
+                "required"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft5-ui-before-type",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"unevaluatedItems\":false,\"type\":\"object\"}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "integer",
+            "decimal": "0"
+          }
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "unevaluatedItems",
+            "instancePath": [],
+            "schemaPath": [
+              "unevaluatedItems"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "unevaluatedItems",
+              "instancePath": [],
+              "schemaPath": [
+                "unevaluatedItems"
+              ]
+            },
+            {
+              "keyword": "type",
+              "instancePath": [],
+              "schemaPath": [
+                "type"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft5-up-before-type-annotation-replay",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"unevaluatedProperties\":false,\"type\":\"string\",\"anyOf\":[{},{\"properties\":{\"b\":{\"multipleOf\":0.5}}}]}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "b",
+            {
+              "kind": "float",
+              "bits": "7ff8000000000000"
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "arithmetic-error",
+          "type": "ValueError",
+          "message": "cannot convert float NaN to integer"
+        },
+        "validate": {
+          "status": "arithmetic-error",
+          "type": "ValueError",
+          "message": "cannot convert float NaN to integer"
+        },
+        "iterate": {
+          "status": "arithmetic-error",
+          "type": "ValueError",
+          "message": "cannot convert float NaN to integer",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft5-ui-before-type-annotation-replay",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"unevaluatedItems\":false,\"type\":\"object\",\"anyOf\":[{},{\"contains\":{\"multipleOf\":0.5}}]}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "float",
+            "bits": "7ff8000000000000"
+          }
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "arithmetic-error",
+          "type": "ValueError",
+          "message": "cannot convert float NaN to integer"
+        },
+        "validate": {
+          "status": "arithmetic-error",
+          "type": "ValueError",
+          "message": "cannot convert float NaN to integer"
+        },
+        "iterate": {
+          "status": "arithmetic-error",
+          "type": "ValueError",
+          "message": "cannot convert float NaN to integer",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft5-up-after-successful-if",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"if\":{\"properties\":{\"x\":{\"type\":\"number\"}}},\"then\":{\"properties\":{\"x\":{}}},\"unevaluatedProperties\":false}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "x",
+            {
+              "kind": "integer",
+              "decimal": "1"
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft5-up-before-successful-if",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"unevaluatedProperties\":false,\"if\":{\"properties\":{\"x\":{\"type\":\"number\"}}},\"then\":{\"properties\":{\"x\":{}}}}",
+      "instanceRecipe": {
+        "kind": "object",
+        "members": [
+          [
+            "x",
+            {
+              "kind": "integer",
+              "decimal": "1"
+            }
+          ]
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft5-not-wrongkind-annotations",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"not\":{\"anyOf\":[{},{\"multipleOf\":0.5}],\"unevaluatedProperties\":false}}",
+      "instanceRecipe": {
+        "kind": "float",
+        "bits": "7ff8000000000000"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "not",
+            "instancePath": [],
+            "schemaPath": [
+              "not"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "not",
+              "instancePath": [],
+              "schemaPath": [
+                "not"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft5-if-wrongkind-annotations",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"if\":{\"anyOf\":[{},{\"multipleOf\":0.5}],\"unevaluatedProperties\":false},\"then\":{\"type\":\"string\"},\"else\":{}}",
+      "instanceRecipe": {
+        "kind": "float",
+        "bits": "7ff8000000000000"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": false
+        },
+        "validate": {
+          "status": "validation-error",
+          "error": {
+            "keyword": "type",
+            "instancePath": [],
+            "schemaPath": [
+              "then",
+              "type"
+            ]
+          }
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": [
+            {
+              "keyword": "type",
+              "instancePath": [],
+              "schemaPath": [
+                "then",
+                "type"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "draft5-contains-wrongkind-annotations",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"contains\":{\"anyOf\":[{},{\"multipleOf\":0.5}],\"unevaluatedProperties\":false}}",
+      "instanceRecipe": {
+        "kind": "array",
+        "items": [
+          {
+            "kind": "float",
+            "bits": "7ff8000000000000"
+          }
+        ]
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    },
+    {
+      "id": "draft5-ref-wrongkind-annotations",
+      "schemaText": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"$defs\":{\"target\":{\"anyOf\":[{},{\"multipleOf\":0.5}],\"unevaluatedProperties\":false}},\"$ref\":\"#/$defs/target\"}",
+      "instanceRecipe": {
+        "kind": "float",
+        "bits": "7ff8000000000000"
+      },
+      "methods": {
+        "is_valid": {
+          "status": "validity",
+          "valid": true
+        },
+        "validate": {
+          "status": "valid"
+        },
+        "iterate": {
+          "status": "end",
+          "prefix": []
+        }
+      }
+    }
+  ]
+}

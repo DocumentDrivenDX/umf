@@ -17,6 +17,8 @@ export interface PhasedMigrationStep {
  operation?:string;
  constraintKind?:'check'|'foreignKey';
  seedSets?:string[];
+ phaseOperation?:'backfill'|'tighten-not-null';
+ phaseTarget?:{table:string;field:{module:string;element:string}};
 }
 
 export interface SeedMigrationStep extends PhasedMigrationStep {
@@ -38,8 +40,13 @@ export interface PhasedMigrationResult<TStep extends PhasedMigrationStep> {
  executionProfile:TableMigrationExecutionProfile;
 }
 
-const EXECUTION_PROFILE:TableMigrationExecutionProfile={
+const EXECUTION_PROFILE_01:TableMigrationExecutionProfile={
  version:'umf.table-migration-execution/0.1',
+ progressRelation:'umf_lifecycle_progress',
+ ownerOnly:true,
+};
+const EXECUTION_PROFILE_02:TableMigrationExecutionProfile={
+ version:'umf.table-migration-execution/0.2',
  progressRelation:'umf_lifecycle_progress',
  ownerOnly:true,
 };
@@ -79,10 +86,20 @@ export function phaseTableMigrationSteps<TStep extends PhasedMigrationStep>(
    expectedOutcome:{phase:'before-commit',kind:'complete-next-source-catalog',bundleDigest},
    verification:'native-catalog-privileges-and-role-scope',recovery:'rollback-transaction'});
  }
+ const isG01=!!_options&&typeof _options==='object'&&(_options as {version?:unknown}).version==='umf.table-migration-options/0.3';
  const phases:TableMigrationPhase[]=[];
  let current:TableMigrationPhase|undefined;
  const flush=()=>{if(current){phases.push(current);current=undefined;}};
- for(const step of plannedSteps){
+ for(let i=0;i<plannedSteps.length;i++){
+  const step=plannedSteps[i]!;
+  if(isG01&&step.phaseOperation==='backfill'){
+   const tighten=plannedSteps[i+1];
+   if(step.kind!=='backfill'||step.transaction!=='required'||!step.phaseTarget||!tighten||tighten.phaseOperation!=='tighten-not-null'||tighten.kind!=='table'||tighten.transaction!=='required'||tighten.phaseTarget?.table!==step.phaseTarget.table||tighten.phaseTarget.field.module!==step.phaseTarget.field.module||tighten.phaseTarget.field.element!==step.phaseTarget.field.element)throw new Error('g01-backfill-tighten-pair-invalid');
+   flush();
+   phases.push({id:'phase-'+String(phases.length+1).padStart(5,'0'),kind:'backfill-tighten',transaction:'required',steps:[step.id,tighten.id]});
+   i++;
+   continue;
+  }
   const kind=phaseKind(step),isolated=kind!=='transaction';
   if(isolated)flush();
   if(!current){
@@ -95,5 +112,5 @@ export function phaseTableMigrationSteps<TStep extends PhasedMigrationStep>(
   if(isolated)flush();
  }
  flush();
- return {steps:plannedSteps,phases,executionProfile:EXECUTION_PROFILE};
+ return {steps:plannedSteps,phases,executionProfile:isG01?EXECUTION_PROFILE_02:EXECUTION_PROFILE_01};
 }

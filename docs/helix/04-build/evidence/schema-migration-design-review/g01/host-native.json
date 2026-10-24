@@ -1,0 +1,69 @@
+{
+  "approvalBindingDigest": "5e0d0f619d3a44a3e2258c1f489493adcf5d361d15285be95399e50de0e14a6e",
+  "approvalDecider": "erik",
+  "approvalPlanDigestMatches": true,
+  "audiences": {
+    "batch": {
+      "approvalReadDenied": true,
+      "headObserved": true,
+      "rowCount": 2
+    },
+    "person": {
+      "approvalReadDenied": true,
+      "headObserved": true,
+      "rowCount": 1
+    }
+  },
+  "case": "populated",
+  "commandOnlyLostResponseObserved": true,
+  "commandOnlyPhaseCount": 0,
+  "commandOnlyPlanDigest": "5008b22deb4f0ff54ccd68c87b9252eb4793056e915ebdb99f5917a467a7d5de",
+  "database": "rv_g01_host_c5f5c0d148",
+  "executionQualified": false,
+  "fileDigest": "a3de5cb5e7d8dceb61f87192af69f01ca74f8844c486d854fd9f2627b51a3661",
+  "generatedActionStatus": "committed",
+  "generation": 3,
+  "historicalReplayReturnsCurrentReference": true,
+  "historicalReplayStatus": "already-applied",
+  "installationId": "umf-u5-disposable:rv_g01_host_c5f5c0d148",
+  "planDigest": "7af9f221baeecba7341a36a86e8c0431a81bba5d296929d866dd7652145d7168",
+  "progressRelationRemoved": true,
+  "referenceVersion": "umf.table-installation/0.3",
+  "replayStatus": "already-applied",
+  "status": "passed",
+  "tamperRefusals": [
+    {
+      "case": "changed-file",
+      "refusal": "approval-required"
+    },
+    {
+      "case": "changed-head",
+      "refusal": "ledger-head-mismatch"
+    },
+    {
+      "case": "changed-approval-id",
+      "refusal": "approval-receipt-mismatch"
+    },
+    {
+      "case": "changed-target",
+      "refusal": "approval-required"
+    },
+    {
+      "case": "nonowner-decider-write",
+      "refusal": "permission-denied"
+    },
+    {
+      "case": "altered-approval-shape",
+      "refusal": "approval-catalog-mismatch"
+    },
+    {
+      "case": "approval-acl-grant",
+      "refusal": "approval-privilege-mismatch"
+    },
+    {
+      "case": "unexpected-schema-object",
+      "refusal": "catalog-mismatch"
+    }
+  ],
+  "targetProfile": "local-postgresql18"
+}

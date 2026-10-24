@@ -1,0 +1,70 @@
+{
+  "defaultContainsPglast": false,
+  "defaultMirror": "/private/tmp/umf-embedder-final-cohort-v2/mirror",
+  "defaultMirrorSha256": "8a0c48b944ac4da487f6888b31023adfe57bbf2ee144da1ff7685189f2a927a1",
+  "defaultWheelCount": 29,
+  "mirrorManifestSha256": "603af1571efbd28f7ea1846f0bf79dfbf230bc86d1c711492185cb04ab5b733b",
+  "optionalLockSha256": "e1fceac329977419f0009c33e1acc8cf8bb97fa469dc40c231f47faec8826ce8",
+  "optionalProfile": "optional-admin-sql-containment",
+  "profile": "umf.optional-pglast-mirror-inventory/1",
+  "pypiJsonSha256": "e150e22f3877b2dff3e1fd4c3b9101f047ce84a0845561a00430be14a7bda66f",
+  "sourceOffer": {
+    "distribution": "pglast",
+    "licenseEvidence": [
+      {
+        "path": "licenses/pglast-7.20/PKG-INFO",
+        "sha256": "837968169d3a232e44bf6b3e26919413581dea52178483ba272fb418bf5d9697"
+      },
+      {
+        "path": "licenses/pglast-7.20/LICENSE",
+        "sha256": "f9352c20940619a380a5e9f23cebe34d8f797cfbd747fc236a7a3e5fc8ef9b41"
+      }
+    ],
+    "licenseExpression": "GPL-3.0-or-later",
+    "pypiAttestation": "not provided for this release",
+    "pypiJson": "https://pypi.org/pypi/pglast/7.20/json",
+    "pypiJsonSha256": "e150e22f3877b2dff3e1fd4c3b9101f047ce84a0845561a00430be14a7bda66f",
+    "releasePage": "https://pypi.org/project/pglast/7.20/",
+    "retrievedAtUtc": "2026-10-22T12:52:03.697075+00:00",
+    "sdist": {
+      "filename": "pglast-7.20.tar.gz",
+      "preservedAt": "source/pglast-7.20.tar.gz",
+      "sha256": "6dd32bfd848e0f35de448ef23d819c8de5bb55087b160f488918d97779116a92",
+      "sizeBytes": 3434321,
+      "url": "https://files.pythonhosted.org/packages/30/54/7f4368d2c8918fb3a6fcca44be1766d201e12528604def9b5381ea97122d/pglast-7.20.tar.gz"
+    },
+    "version": "7.20"
+  },
+  "status": "locked-and-built",
+  "templateSha256": "f052b63ee89a01b9c526e09ccbe286eb6b9430629f24edeb4a9267e318a65025",
+  "wheels": [
+    {
+      "filename": "pglast-7.20-cp311-cp311-macosx_11_0_arm64.whl",
+      "pypiSha256": "bebb805cac4354b5907b620dc16c30144ac72dd18b423bedfd5f33d272a836f6",
+      "sha256": "bebb805cac4354b5907b620dc16c30144ac72dd18b423bedfd5f33d272a836f6",
+      "size": 1493347,
+      "url": "https://files.pythonhosted.org/packages/04/35/7afda7e6ac5d9f5901347ac7e69fbdbe5cbd5894c43209ada074cd21e264/pglast-7.20-cp311-cp311-macosx_11_0_arm64.whl"
+    },
+    {
+      "filename": "pglast-7.20-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+      "pypiSha256": "b8dea95b65e469b05f0e0edc9a06a8bdd100527b66ac66d0412ddc23e5a1ca83",
+      "sha256": "b8dea95b65e469b05f0e0edc9a06a8bdd100527b66ac66d0412ddc23e5a1ca83",
+      "size": 6282972,
+      "url": "https://files.pythonhosted.org/packages/83/9d/161bfe5599e7a84fd2ea26d36ca6031f5fc11c2936d007ae5ceb1b0388b0/pglast-7.20-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl"
+    },
+    {
+      "filename": "pglast-7.20-cp314-cp314-macosx_11_0_arm64.whl",
+      "pypiSha256": "9728963e1f0570a1fcff25e04ab3843bffcafd509822d6aad9df093dca1a331b",
+      "sha256": "9728963e1f0570a1fcff25e04ab3843bffcafd509822d6aad9df093dca1a331b",
+      "size": 1506915,
+      "url": "https://files.pythonhosted.org/packages/8f/24/76a92c004ddec00a1692fdb2ab6e40e7a124d5f74c9ade006f3a82e10458/pglast-7.20-cp314-cp314-macosx_11_0_arm64.whl"
+    },
+    {
+      "filename": "pglast-7.20-cp314-cp314-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+      "pypiSha256": "8f28a703ebc6318dcccfba720a56ca9b0e3b720f60caa43cc617c710123e4496",
+      "sha256": "8f28a703ebc6318dcccfba720a56ca9b0e3b720f60caa43cc617c710123e4496",
+      "size": 6293354,
+      "url": "https://files.pythonhosted.org/packages/a5/9a/e9c64f44fcc060ccb133dd140a574dabbabfb9486d018c157f1ef7c7b6dc/pglast-7.20-cp314-cp314-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl"
+    }
+  ]
+}

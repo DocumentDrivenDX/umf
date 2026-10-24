@@ -1,0 +1,63 @@
+{
+  "id": "R2-SOL-PYTHON-SCHEMA-REFERENCE-PROFILE-002",
+  "status": "reviewed-interface-and-root-approved-profile-amendment",
+  "supersedes": "Only the blanket Draft3-boolean selector in R2-SOL-PYTHON-SCHEMA-REFERENCE-TERMINALS-001 and subject-phase mapping interpretation. Frozen observations and other mappings remain unchanged.",
+  "nativeMechanism": {
+    "referencingVersion": "0.37.0",
+    "coreSourceSha256": "d923c67da4efcc0dec46a6e3ff8476c02fbe7e25e8942515a4b14b249eb3759f",
+    "jsonschemaSourceSha256": "8d767ab7ac7da13bd31cc202d2d4726858d6e6bdaa78739b62ebbb52149f2b74",
+    "explanation": "Resource.pointer accumulates typed segments and asks the active dialect specification whether each reached value is a subresource. When the resolver changes it clears the accumulated segments. Draft3 legacy id inspection can raise before descend when the reached subresource is boolean; ordinary descend handles a boolean reached through an unknown annotation as true/false normally.",
+    "draft3Sets": {
+      "in_value": [
+        "additionalItems",
+        "additionalProperties"
+      ],
+      "in_subarray": [
+        "extends"
+      ],
+      "in_subvalues": [
+        "definitions",
+        "patternProperties",
+        "properties"
+      ],
+      "specialItemsDependencies": "items/dependencies enter a subresource only when reached contents are Mapping."
+    },
+    "nativeDistinction": [
+      "#/definitions/no with false reached as recognized Draft3 subresource raises TypeError during legacy id inspection.",
+      "#/x-target with false through unknown annotation does not cross that boundary; descend emits ordinary false-schema error."
+    ],
+    "target": "Preserve actual dialect/source subresource classification, not blanket target-kind or fixture-id heuristics. Use existing exact Draft3 deterministic evaluation reason only for the native subresource-classification refusal; ordinary boolean descend stays ordinary validation."
+  },
+  "arrayIndexProfile": {
+    "fixture": "sol-python-schema-reference-indices-predecessor.json",
+    "fixtureSha256": "9755d0e13765268dc2a95cec5fd3fe733a62c1bcddbd8398e8ede8f263ad6407",
+    "profiles": "sol-python-schema-reference-indices-profiles.json",
+    "profilesSha256": "fbe607c386aa26835f69c5d963b7b299d1d56e9935951a669882c8b51ce55e34",
+    "cases": 315,
+    "methods": 945,
+    "target": "Python consumer references preserve urllib fragment percent decoding, Python int grammar and Python sequence negative indexing, then bounds/refusal. This includes signs, allowed whitespace, Unicode decimal digits, underscores and leading zeros. Ordinary ECMA/Bun schema pointer profile is unchanged.",
+    "resource": "Validate syntax and bound needed index magnitude before allocating. Do not allocate an arbitrary huge BigInt merely to reject an out-of-range array index. Preserve runtime terminal versus admission phase; Context before owned work."
+  },
+  "typedSchemaPathInterface": {
+    "fixture": "sol-python-schema-path-segments-predecessor.json",
+    "fixtureSha256": "35bfbceb67a1aec0c3d87180c23dd1ba5435e7644eec9a5306d8f65ee9987c63",
+    "profiles": "sol-python-schema-path-segments-profiles.json",
+    "profilesSha256": "add048101b07a240b4a0e574ec272f766223538130a5e9cfca7031ba696bd2b0",
+    "cases": 48,
+    "errorRecords": 42,
+    "admissionRefusals": 1,
+    "runtimeRefusals": 0,
+    "requirement": "Preserve exact mixed string/integer segment types in existing facade absolute_schema_path and schema_path after reference target-relative display rebasing. Numeric object keys remain strings.",
+    "interface": "Trusted internal PythonStructuralError schema_path_segments: Key(PyText) or Index(usize/u64), or proven equivalent source locator. Populate from actual evaluation/source path and preserve through ref rebase/prefix/boolean omission operations. PyO3 projects typed list; facade consumes it rather than re-traversing original root.",
+    "resource": "Meter vector/key copies before allocation; use shared source/path state when practical. No whole-root copy per node/error.",
+    "publicBoundaries": "Public Diagnostic, interoperable Value and generic closed wire unchanged. Strict Value-only fallback remains separately qualified."
+  },
+  "qualifiedPython": [
+    "3.11.17",
+    "3.12.15",
+    "3.13.16"
+  ],
+  "jsonschema": "4.26.0",
+  "overallR2Approved": false,
+  "sourceApproved": false
+}

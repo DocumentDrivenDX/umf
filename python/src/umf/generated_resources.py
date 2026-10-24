@@ -12,6 +12,7 @@ from typing import Any
 _RESOURCE_PATHS = {
     "schema": "spec/core/schema.json",
     "semantic_reference": "spec/core/semantic-type-reference.schema.json",
+    "package_schema": "spec/core/extension-package.schema.json",
     "constraints": "spec/metamodel/generated/core-constraints.json",
     "domain_policy": "spec/metamodel/generated/domain-policy.json",
     "python_shapes": "spec/metamodel/generated/python-shapes.json",

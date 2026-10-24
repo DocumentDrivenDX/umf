@@ -1,0 +1,83 @@
+bun test v1.4.3 (26aa4e1a9)
+
+tests/lifecycle/reviewed.test.ts:
+(pass) a column drop needs its exact review marker, compiles a digest-bound drop and rejects changed source [1895.22ms]
+(pass) reviewed middle-column removal preserves unchanged trailing fields by stable Field identity [615.17ms]
+(pass) column removal and appended fields refuse before producing an incomplete plan at same or mixed counts [1056.21ms]
+(pass) column drops resolve nested policy references by stable field identity and require a reviewed policy rewrite [1144.31ms]
+(pass) column drops detect related-policy references from other selected tables and order reviewed rewrites first [1291.12ms]
+(pass) column drops resolve nested command references independent of object key order [844.81ms]
+(pass) reviewed column rename and NOT NULL tightening compile only with exact source markers [2094.83ms]
+(pass) renamed columns revoke old column grants before changing the physical name [668.20ms]
+(pass) type changes require a digest-bound explicit safe PostgreSQL widening conversion [1809.10ms]
+(pass) reviewed index replacement emits an ordered drop and create for the exact source object [967.95ms]
+(pass) stable-ID index replacement emits both drop and create at the same array position [610.50ms]
+(pass) reviewed index removal names unreviewed objects and emits an explicit DROP INDEX [797.81ms]
+(pass) policy revisions require old/new policy digests and update stored policy plus grants [666.21ms]
+(pass) primary-key replacement requires an exact marker and refuses dependent foreign keys by name [613.43ms]
+(pass) reviewed primary-key replacement emits ordered DROP and ADD when dependency closure is empty [708.13ms]
+(pass) reviewed foreign-key replacement drops the old constraint before adding the exact successor [777.45ms]
+(pass) stable-ID foreign-key replacement emits drop and add at the same array position [496.92ms]
+(pass) reviewed foreign-key removal requires a marker and emits an explicit constraint drop [689.36ms]
+(pass) reviewed check-constraint replacement drops the old definition before adding its successor [890.11ms]
+(pass) reviewed check-constraint removal requires a marker and emits an explicit constraint drop [641.63ms]
+(pass) selected new foreign keys compile as add-not-valid and separate validation phases [560.94ms]
+(pass) version 0.2 refuses table inventory changes the phase runtime cannot fence yet [467.09ms]
+(pass) version 0.2 refuses initial publication until the mixed runtime supports it [281.95ms]
+
+tests/lifecycle/migration.test.ts:
+(pass) domain descriptions, reviewed scoped backfills, checks/FKs and concurrent phases have exact source custody [1166.58ms]
+(pass) unacknowledged, duplicate, unrelated or parameterized backfills refuse without erasing source [1301.83ms]
+(pass) concurrent source selections refuse mixed effects and rehashed/unapproved phase substitution [829.94ms]
+(pass) comments escape SQL text and multibyte identifier bounds are byte-based [460.05ms]
+(pass) legacy description-bearing deployment bundles retain exact verifier recovery [713.60ms]
+(pass) removing an authored description explicitly clears its native comment [357.85ms]
+(pass) backfill column generation never parses SQL-looking identifier text [909.13ms]
+
+tests/compilation/access-diff.test.ts:
+(pass) manifest diff classifies rename/retype as breaking and optional Create additions as source-compatible [522.16ms]
+(pass) alternate Key compatibility compares its actual fields [166.18ms]
+
+tests/compilation/access-naming.test.ts:
+(pass) unsafe_names_and_limits_refuse [1058.60ms]
+(pass) metadata cannot choose a profile or template and must remain inert [41.63ms]
+(pass) hostile authored identities emit only inert Python literals [85.51ms]
+(pass) selected element and action count bounds refuse before resolving [46.68ms]
+(pass) malformed and ambiguous profile pins refuse as PROFILE [1.04ms]
+(pass) action input and output aliases cannot overwrite a declared parameter [149.26ms]
+(pass) generated provenance and join imports cannot be shadowed [431.34ms]
+(pass) joined projection descriptor names cannot shadow another projection model [32.39ms]
+(pass) action endpoint keyword and case-fold collisions refuse before emission [129.65ms]
+
+tests/compilation/access-package-limits.test.ts:
+(pass) package file bound includes both source archive and manifest [11.39ms]
+(pass) 32 MiB output boundary includes the complete manifest, with no truncation [1713.28ms]
+(pass) packager independently refuses disposition bound plus one [740.55ms]
+
+tests/compilation/access-writer.test.ts:
+(pass) writer_refuses_changed_output: edited, added and removed inventory [74.10ms]
+(pass) writer refuses symlinks without reading outside output [26.22ms]
+(pass) writer fault injection preserves pre-swap tree and reports post-swap state [59.63ms]
+(pass) stage-two files survive regeneration and are excluded exactly [70.18ms]
+(pass) ci_drift_check names each differing path [14.79ms]
+(pass) unsafe candidate paths and digests refuse before writing [9.10ms]
+(pass) check reports missing and extra bytes without modifying output [15.46ms]
+(pass) rename boundary failures restore the original package [37.95ms]
+(pass) reserved symlinks and destination symlinks refuse [8.35ms]
+(pass) empty existing output refuses after complete inventory removal [8.55ms]
+(pass) explicit CLI uses real generator, checks byte drift and refuses without writes [4758.04ms]
+(pass) stage-two privilege bytes survive regeneration and are excluded from drift [49.47ms]
+(pass) failed replacement and failed restoration report recoverable old tree [18.61ms]
+(pass) normalized output ownership excludes concurrent write check and CLI before reads [27.04ms]
+(pass) CLI owns complete read diff write interval and retains unresolved metadata [556.88ms]
+
+tests/compilation/access-census-completeness.test.ts:
+(pass) authored selected/reached census scope is frozen independently of generator output [1.02ms]
+(pass) every authored selected and dependency leaf has an exact census disposition [292.12ms]
+(pass) all obligations have closed owner fields and valid reciprocal links without discharge claims [177.75ms]
+(pass) reciprocal obligation oracle detects every missing owner or broken relation [175.63ms]
+
+ 63 pass
+ 0 fail
+ 2506 expect() calls
+Ran 63 tests across 7 files. [38.72s]

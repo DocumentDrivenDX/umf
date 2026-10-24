@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import type {CoreLiteral} from '../model/schema-literals';
-import type {TableExpression,TableNativeType,TableDeclaration} from '../extensions/tables';
+import type {TableExpression,TableNativeType,TableDeclaration,TableColumn} from '../extensions/tables';
 import type {DeploymentContext} from './types';
 import {deploymentError} from './configuration';
 import {nativeDate,nativeInstant} from './temporal';
@@ -17,6 +17,17 @@ export function nativeTypeExpectation(type:TableNativeType):{typeSchema:'pg_cata
 export function nativeType(type:TableNativeType):string{
  const name='pg_catalog.'+quoteIdentifier(nativeNames[type.kind]!);
  return type.kind==='varchar'||type.kind==='char'?name+'('+type.length+')':type.kind==='numeric'?name+'('+type.precision+','+type.scale+')':name;
+}
+export function columnDefinitionSql(column:TableColumn,nullable:boolean):string{
+ let definition=quoteIdentifier(column.name)+' '+nativeType(column.nativeType);
+ if(['text','varchar'].includes(column.nativeType.kind))definition+=' COLLATE pg_catalog."C"';
+ if(!nullable)definition+=' NOT NULL';
+ if(column.generated)definition+=' GENERATED '+(column.generated.generation==='always'?'ALWAYS':'BY DEFAULT')+' AS IDENTITY';
+ if(column.default){
+  const value=column.default.kind==='literal'?literalSql(column.default.value):column.default.kind==='randomUuid'?'pg_catalog.gen_random_uuid()':'CURRENT_TIMESTAMP';
+  definition+=' DEFAULT '+value;
+ }
+ return definition;
 }
 function numericToken(token:string):string{
  const match=/^(-?)(0|[1-9][0-9]*)(?:\.([0-9]+))?(?:[eE]([+-]?[0-9]+))?$/.exec(token);

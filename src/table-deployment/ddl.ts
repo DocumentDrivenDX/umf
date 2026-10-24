@@ -3,7 +3,7 @@ import {hashCanonical} from '../compilation/bundle/hash';
 import type {TableDeclaration} from '../extensions/tables';
 import type {DeploymentContext,TableDeploymentBundle} from './types';
 import {deploymentError} from './configuration';
-import {expressionSql,literalSql,nativeType,nativeTypeExpectation,quoteIdentifier as q,quoteText} from './sql';
+import {columnDefinitionSql,expressionSql,nativeTypeExpectation,quoteIdentifier as q,quoteText} from './sql';
 import {policySql} from './policies';
 import {domainPredicates} from './domains';
 const keyName=(table:string,id:string):string=>'umf_k_'+hashCanonical([table,id]).slice(0,32);
@@ -23,14 +23,7 @@ export function deploymentSteps(ctx:DeploymentContext):TableDeploymentBundle['ex
    if(c.nativeType.kind==='numeric'&&(field.facets?.precision!==c.nativeType.precision||field.facets?.scale!==c.nativeType.scale))deploymentError('Native numeric capacity must equal the declared logical precision/scale',p);
    if(['char','float4','float8','timestamp'].includes(c.nativeType.kind))deploymentError('Native padding/float/time codec is not yet qualified',p);
    if(c.nativeType.kind==='bytea'&&field.scalarType!=='binary')deploymentError('bits128 bytea requires a separately qualified width constraint',p);
-   let sql=q(c.name)+' '+nativeType(c.nativeType);
-   if(['text','varchar'].includes(c.nativeType.kind))sql+=' COLLATE pg_catalog."C"';
-   if(field.nullability==='required')sql+=' NOT NULL';
-   if(c.generated)sql+=' GENERATED '+(c.generated.generation==='always'?'ALWAYS':'BY DEFAULT')+' AS IDENTITY';
-   if(c.default){
-    const value=c.default.kind==='literal'?literalSql(c.default.value):c.default.kind==='randomUuid'?'pg_catalog.gen_random_uuid()':'CURRENT_TIMESTAMP';
-    sql+=' DEFAULT '+value;
-   }
+   const sql=columnDefinitionSql(c,field.nullability!=='required');
    expectations.push({table:table.id,name:c.name,field:c.field,sourcePath:p,...nativeTypeExpectation(c.nativeType),nullable:field.nullability!=='required',collation:['text','varchar'].includes(c.nativeType.kind)?'C':null,identity:c.generated?(c.generated.generation==='always'?'a':'d'):'',definitionSql:sql});
    return sql;
   });

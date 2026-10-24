@@ -1,0 +1,186 @@
+{
+  "cases": [
+    {
+      "id": "row-owner-array-index",
+      "operation": "normalizeRowScope",
+      "request": {
+        "input": {
+          "owner_column": "0",
+          "commands": [
+            "vendor"
+          ]
+        },
+        "context": {
+          "ownerColumns": [
+            {
+              "module": "m",
+              "element": "f"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "ok": true,
+        "result": {
+          "valid": false,
+          "source": {
+            "owner_column": "0",
+            "commands": [
+              "vendor"
+            ]
+          },
+          "diagnostics": [
+            {
+              "code": "ROW_SCOPE_COMMAND",
+              "path": "/commands/0",
+              "message": "Unknown command"
+            }
+          ],
+          "sourceToOutput": {}
+        }
+      }
+    },
+    {
+      "id": "row-owner-array-length",
+      "operation": "normalizeRowScope",
+      "request": {
+        "input": {
+          "owner_column": "length",
+          "commands": [
+            "vendor"
+          ]
+        },
+        "context": {
+          "ownerColumns": [
+            1
+          ]
+        }
+      },
+      "expected": {
+        "ok": true,
+        "result": {
+          "valid": false,
+          "source": {
+            "owner_column": "length",
+            "commands": [
+              "vendor"
+            ]
+          },
+          "diagnostics": [
+            {
+              "code": "ROW_SCOPE_COMMAND",
+              "path": "/commands/0",
+              "message": "Unknown command"
+            }
+          ],
+          "sourceToOutput": {}
+        }
+      }
+    },
+    {
+      "id": "row-owner-string-index",
+      "operation": "normalizeRowScope",
+      "request": {
+        "input": {
+          "owner_column": "0",
+          "commands": [
+            "vendor"
+          ]
+        },
+        "context": {
+          "ownerColumns": "abc"
+        }
+      },
+      "expected": {
+        "ok": true,
+        "result": {
+          "valid": false,
+          "source": {
+            "owner_column": "0",
+            "commands": [
+              "vendor"
+            ]
+          },
+          "diagnostics": [
+            {
+              "code": "ROW_SCOPE_COMMAND",
+              "path": "/commands/0",
+              "message": "Unknown command"
+            }
+          ],
+          "sourceToOutput": {}
+        }
+      }
+    },
+    {
+      "id": "row-owner-string-length",
+      "operation": "normalizeRowScope",
+      "request": {
+        "input": {
+          "owner_column": "length",
+          "commands": [
+            "vendor"
+          ]
+        },
+        "context": {
+          "ownerColumns": "abc"
+        }
+      },
+      "expected": {
+        "ok": true,
+        "result": {
+          "valid": false,
+          "source": {
+            "owner_column": "length",
+            "commands": [
+              "vendor"
+            ]
+          },
+          "diagnostics": [
+            {
+              "code": "ROW_SCOPE_COMMAND",
+              "path": "/commands/0",
+              "message": "Unknown command"
+            }
+          ],
+          "sourceToOutput": {}
+        }
+      }
+    },
+    {
+      "id": "row-owner-object-inherited",
+      "operation": "normalizeRowScope",
+      "request": {
+        "input": {
+          "owner_column": "toString",
+          "commands": [
+            "vendor"
+          ]
+        },
+        "context": {
+          "ownerColumns": {}
+        }
+      },
+      "expected": {
+        "ok": true,
+        "result": {
+          "valid": false,
+          "source": {
+            "owner_column": "toString",
+            "commands": [
+              "vendor"
+            ]
+          },
+          "diagnostics": [
+            {
+              "code": "ROW_SCOPE_COMMAND",
+              "path": "/commands/0",
+              "message": "Unknown command"
+            }
+          ],
+          "sourceToOutput": {}
+        }
+      }
+    }
+  ]
+}

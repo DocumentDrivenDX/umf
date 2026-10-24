@@ -10,7 +10,7 @@ version = "0.10.0"
 description = "Official Python document models and extension machinery for UMF"
 readme = "README.md"
 requires-python = ">=3.11"
-dependencies = ["pydantic>=2.11,<3", "jsonschema>=4.25,<5", "ruamel.yaml>=0.18,<1"]
+dependencies = ["pydantic>=2.11,<3"]
 
 [project.urls]
 Repository = "https://github.com/DocumentDrivenDX/umf"
@@ -19,6 +19,7 @@ Repository = "https://github.com/DocumentDrivenDX/umf"
 packages = ["src/umf"]
 
 [tool.hatch.build.targets.sdist.force-include]
+"../spec/extensions/tables/operation.schema.json" = "spec/extensions/tables/operation.schema.json"
 "../spec/core/schema.json" = "spec/core/schema.json"
 "../spec/core/semantic-type-reference.schema.json" = "spec/core/semantic-type-reference.schema.json"
 "../spec/core/extension-package.schema.json" = "spec/core/extension-package.schema.json"

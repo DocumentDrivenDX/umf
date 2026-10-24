@@ -4,7 +4,16 @@ import {mkdtemp,mkdir,writeFile} from 'node:fs/promises';
 import {join,resolve} from 'node:path';
 import {tmpdir} from 'node:os';
 import {createHash} from 'node:crypto';
-import {generatePythonClient} from '../src/access';
+import {generatePythonClient as referenceGeneratePythonClient} from '../src/access';
+import {readFileSync} from 'node:fs';
+
+function generatePythonClient(request:Parameters<typeof referenceGeneratePythonClient>[0]):ReturnType<typeof referenceGeneratePythonClient>{
+ const path=process.env.UMF_R3_UNIFIED_CANDIDATE;
+ if(!path)return referenceGeneratePythonClient(request);
+ const result=JSON.parse(readFileSync(path,'utf8')) as ReturnType<typeof referenceGeneratePythonClient>;
+ if(result.sourceDigest!==createHash('sha256').update(request.text).digest('hex')||!result.files.every(file=>file.path.startsWith(request.package+'/')))throw Error('Rust generated client does not match the exact requested source/package');
+ return result;
+}
 
 const root=resolve(import.meta.dir,'..');
 

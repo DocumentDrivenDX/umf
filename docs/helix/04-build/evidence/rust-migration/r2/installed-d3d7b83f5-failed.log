@@ -1,0 +1,714 @@
+d3d7b83f5cb9832ae955710b71db5a40e149bf24
+    Finished `release` profile [optimized] target(s) in 0.16s
+umf-core-rust-native-0.1.0.tgz
+npm notice
+npm notice 📦  @umf/core-rust-native@0.1.0
+npm notice Tarball Contents
+npm notice 2.1kB index.d.ts
+npm notice 10.8kB index.js
+npm notice 210B package.json
+npm notice 6.8kB src/wire.js
+npm notice 4.5MB umf_core_node.node
+npm notice Tarball Details
+npm notice name: @umf/core-rust-native
+npm notice version: 0.1.0
+npm notice filename: umf-core-rust-native-0.1.0.tgz
+npm notice package size: 1.7 MB
+npm notice unpacked size: 4.5 MB
+npm notice shasum: b35c64070b3cedb02728df310f4b70d3977307b7
+npm notice integrity: sha512-s6M3M1+wtuUKg[...]DR3PpTuOZ16qQ==
+npm notice total files: 5
+npm notice
+
+added 1 package in 387ms
+v26.12.1{"status":"pass","runtime":"Node v26.12.1","engineVersion":"umf-core-r2","fixture":"/Users/erik/.codex/worktrees/rust-binding-spike/umf/docs/helix/04-build/evidence/rust-migration/r2/baseline-current-conformance.json","fixtureSha256":"bb008a98b8448050748e65f867e7863475ccad9501a5b9229ae9e6d336691544","cases":139,"orderedDiagnostics":true,"copiedTextUnits":6000000,"sourceTextUnits":4000000,"maxDocumentDepth":128,"inventoryExtensionDepth":{"accepted":122,"refused":123},"hostControls":["meter","cancel","deadline","reentry"]}
+{"status":"pass","runtime":"Bun 1.4.3","engineVersion":"umf-core-r2","fixture":"/Users/erik/.codex/worktrees/rust-binding-spike/umf/docs/helix/04-build/evidence/rust-migration/r2/baseline-current-conformance.json","fixtureSha256":"bb008a98b8448050748e65f867e7863475ccad9501a5b9229ae9e6d336691544","cases":139,"orderedDiagnostics":true,"copiedTextUnits":6000000,"sourceTextUnits":4000000,"maxDocumentDepth":128,"inventoryExtensionDepth":{"accepted":122,"refused":123},"hostControls":["meter","cancel","deadline","reentry"]}
+{"status":"pass","executable":"/Users/erik/.codex/worktrees/rust-binding-spike/umf/target/release/umf","sourceSha256":"d7d5362575b8f64ee129a9edaf839f200c60cccc41cf2eb6b7dbf66579e3e652","fixtureSha256":"bb008a98b8448050748e65f867e7863475ccad9501a5b9229ae9e6d336691544","cases":139,"orderedDiagnostics":true,"path":"empty"}
+   Compiling umf-core-wasm v0.1.0 (/Users/erik/.codex/worktrees/rust-binding-spike/umf/bindings/core/wasm)
+    Finished `release` profile [optimized] target(s) in 0.73s
+{"status":"pass","engineVersion":"umf-core-r2","wasmQualification":"default-production","cases":139,"rawSurrogateCallback":true,"jsonYamlRoundTrip":true,"copiedTextUnits":6000000,"sourceTextUnits":4000000,"maxDocumentDepth":128,"inventoryExtensionDepth":{"accepted":122,"refused":123},"hostControls":["meter","cancel","deadline","reentry"],"chromium":"153.0.8010.12","externalRequests":0}
+   Compiling umf-core-wasm v0.1.0 (/Users/erik/.codex/worktrees/rust-binding-spike/umf/bindings/core/wasm)
+    Finished `release` profile [optimized] target(s) in 0.31s
+{"status":"pass","engineVersion":"umf-core-r2","wasmQualification":"python-regex-feature","cases":139,"regexOutcomeParserControls":15,"wideWorkCounter":"u64-portable-chunks-and-refusal","pythonRegexCasesPerProfile":6372,"pythonRegexComparisons":19116,"pythonRegexInfoCasesPerProfile":15120,"pythonRegexInfoComparisons":45360,"pythonRegexHexCasesPerProfile":2022,"pythonRegexHexComparisons":6066,"pythonRegexProfiles":[11,12,13],"schemaDepth128Accepted129Refused":true,"annotatedVisitorDepth128Accepted129Refused":true,"rawSurrogateCallback":true,"jsonYamlRoundTrip":true,"copiedTextUnits":6000000,"sourceTextUnits":4000000,"maxDocumentDepth":128,"inventoryExtensionDepth":{"accepted":122,"refused":123},"hostControls":["meter","cancel","deadline","reentry"],"chromium":"153.0.8010.12","externalRequests":0}
+Building source distribution...
+Building wheel...
+   Compiling pyo3-build-config v0.23.5
+   Compiling pyo3-ffi v0.23.5
+   Compiling pyo3-macros-backend v0.23.5
+   Compiling pyo3 v0.23.5
+   Compiling umf-core-python v0.1.0 (/Users/erik/.codex/worktrees/rust-binding-spike/umf/bindings/core/python)
+   Compiling pyo3-macros v0.23.5
+warning: use of deprecated associated function `pyo3::types::PyDict::new_bound`: renamed to `PyDict::new`
+  --> bindings/core/python/src/python_value.rs:51:30
+   |
+51 |         let kwargs = PyDict::new_bound(py);
+   |                              ^^^^^^^^^
+   |
+   = note: `#[warn(deprecated)]` on by default
+
+warning: use of deprecated associated function `pyo3::types::PyBytes::new_bound`: renamed to `PyBytes::new`
+   --> bindings/core/python/src/python_value.rs:165:34
+    |
+165 |             let bytes = PyBytes::new_bound(py, &bytes);
+    |                                  ^^^^^^^^^
+
+warning: use of deprecated associated function `pyo3::types::PyDict::new_bound`: renamed to `PyDict::new`
+   --> bindings/core/python/src/python_value.rs:166:34
+    |
+166 |             let kwargs = PyDict::new_bound(py);
+    |                                  ^^^^^^^^^
+
+warning: use of deprecated associated function `pyo3::types::PyList::empty_bound`: renamed to `PyList::empty`
+   --> bindings/core/python/src/python_value.rs:179:34
+    |
+179 |             let output = PyList::empty_bound(py);
+    |                                  ^^^^^^^^^^^
+
+warning: use of deprecated associated function `pyo3::types::PyDict::new_bound`: renamed to `PyDict::new`
+   --> bindings/core/python/src/python_value.rs:187:34
+    |
+187 |             let output = PyDict::new_bound(py);
+    |                                  ^^^^^^^^^
+
+warning: use of deprecated method `pyo3::Python::<'py>::import_bound`: renamed to `Python::import`
+   --> bindings/core/python/src/python_value.rs:208:18
+    |
+208 |     let chr = py.import_bound("builtins")?.getattr("chr")?;
+    |                  ^^^^^^^^^^^^
+
+warning: use of deprecated associated function `pyo3::types::PyList::empty_bound`: renamed to `PyList::empty`
+   --> bindings/core/python/src/python_value.rs:209:26
+    |
+209 |     let output = PyList::empty_bound(py);
+    |                          ^^^^^^^^^^^
+
+warning: use of deprecated associated function `pyo3::types::PyString::new_bound`: renamed to `PyString::new`
+   --> bindings/core/python/src/python_value.rs:213:18
+    |
+213 |     Ok(PyString::new_bound(py, "")
+    |                  ^^^^^^^^^
+
+warning: use of deprecated associated function `pyo3::types::PyList::empty_bound`: renamed to `PyList::empty`
+   --> bindings/core/python/src/lib.rs:159:35
+    |
+159 |         let diagnostics = PyList::empty_bound(py);
+    |                                   ^^^^^^^^^^^
+
+warning: use of deprecated associated function `pyo3::types::PyDict::new_bound`: renamed to `PyDict::new`
+   --> bindings/core/python/src/lib.rs:166:32
+    |
+166 |             let item = PyDict::new_bound(py);
+    |                                ^^^^^^^^^
+
+warning: use of deprecated associated function `pyo3::types::PyList::empty_bound`: renamed to `PyList::empty`
+   --> bindings/core/python/src/lib.rs:247:35
+    |
+247 |         let diagnostics = PyList::empty_bound(py);
+    |                                   ^^^^^^^^^^^
+
+warning: use of deprecated associated function `pyo3::types::PyDict::new_bound`: renamed to `PyDict::new`
+   --> bindings/core/python/src/lib.rs:254:32
+    |
+254 |             let item = PyDict::new_bound(py);
+    |                                ^^^^^^^^^
+
+warning: use of deprecated associated function `pyo3::types::PyList::empty_bound`: renamed to `PyList::empty`
+   --> bindings/core/python/src/lib.rs:322:26
+    |
+322 |     let output = PyList::empty_bound(py);
+    |                          ^^^^^^^^^^^
+
+warning: use of deprecated associated function `pyo3::types::PyDict::new_bound`: renamed to `PyDict::new`
+   --> bindings/core/python/src/lib.rs:759:30
+    |
+759 |         let result = PyDict::new_bound(py);
+    |                              ^^^^^^^^^
+
+warning: use of deprecated associated function `pyo3::types::PyList::empty_bound`: renamed to `PyList::empty`
+   --> bindings/core/python/src/lib.rs:764:35
+    |
+764 |         let diagnostics = PyList::empty_bound(py);
+    |                                   ^^^^^^^^^^^
+
+warning: use of deprecated associated function `pyo3::types::PyDict::new_bound`: renamed to `PyDict::new`
+   --> bindings/core/python/src/lib.rs:768:32
+    |
+768 |             let item = PyDict::new_bound(py);
+    |                                ^^^^^^^^^
+
+warning: use of deprecated associated function `pyo3::types::PyList::empty_bound`: renamed to `PyList::empty`
+   --> bindings/core/python/src/lib.rs:856:26
+    |
+856 |     let output = PyList::empty_bound(py);
+    |                          ^^^^^^^^^^^
+
+warning: use of deprecated associated function `pyo3::types::PyDict::new_bound`: renamed to `PyDict::new`
+   --> bindings/core/python/src/lib.rs:860:28
+    |
+860 |         let item = PyDict::new_bound(py);
+    |                            ^^^^^^^^^
+
+warning: use of deprecated associated function `pyo3::types::PyDict::new_bound`: renamed to `PyDict::new`
+    --> bindings/core/python/src/lib.rs:1119:30
+     |
+1119 |         let kwargs = PyDict::new_bound(self.py);
+     |                              ^^^^^^^^^
+
+warning: use of deprecated method `pyo3::Python::<'py>::import_bound`: renamed to `Python::import`
+    --> bindings/core/python/src/lib.rs:1232:10
+     |
+1232 |         .import_bound("json")
+     |          ^^^^^^^^^^^^
+
+warning: use of deprecated method `pyo3::Python::<'py>::import_bound`: renamed to `Python::import`
+    --> bindings/core/python/src/lib.rs:1237:10
+     |
+1237 |         .import_bound("umf._rust")
+     |          ^^^^^^^^^^^^
+
+warning: use of deprecated associated function `pyo3::types::PyBytes::new_bound`: renamed to `PyBytes::new`
+    --> bindings/core/python/src/lib.rs:1259:17
+     |
+1259 |     Ok(PyBytes::new_bound(py, &bytes)
+     |                 ^^^^^^^^^
+
+warning: use of deprecated method `pyo3::PyErr::value_bound`: renamed to `PyErr::value`
+    --> bindings/core/python/src/lib.rs:1296:10
+     |
+1296 |         .value_bound(py)
+     |          ^^^^^^^^^^^
+
+warning: use of deprecated method `pyo3::PyErr::value_bound`: renamed to `PyErr::value`
+    --> bindings/core/python/src/lib.rs:1315:17
+     |
+1315 |     match error.value_bound(py).str() {
+     |                 ^^^^^^^^^^^
+
+warning: use of deprecated method `pyo3::Python::<'py>::import_bound`: renamed to `Python::import`
+    --> bindings/core/python/src/lib.rs:1345:10
+     |
+1345 |         .import_bound("umf._rust")
+     |          ^^^^^^^^^^^^
+
+warning: use of deprecated associated function `pyo3::PyErr::from_value_bound`: renamed to `PyErr::from_value`
+    --> bindings/core/python/src/lib.rs:1349:29
+     |
+1349 |         Ok(value) => PyErr::from_value_bound(value),
+     |                             ^^^^^^^^^^^^^^^^
+
+warning: use of deprecated method `pyo3::PyErr::value_bound`: renamed to `PyErr::value`
+    --> bindings/core/python/src/lib.rs:1368:10
+     |
+1368 |         .value_bound(py)
+     |          ^^^^^^^^^^^
+
+warning: unused variable: `py`
+    --> bindings/core/python/src/lib.rs:1264:18
+     |
+1264 | fn extract_utf16(py: Python<'_>, value: &Bound<'_, PyAny>) -> PyResult<Utf16> {
+     |                  ^^ help: if this is intentional, prefix it with an underscore: `_py`
+     |
+     = note: `#[warn(unused_variables)]` on by default
+
+warning: `umf-core-python` (lib) generated 28 warnings
+    Finished `release` profile [optimized] target(s) in 6.16s
+Successfully built /var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-r2-full-conformance-FTyiHX/python-wheel/wheel/umf_core-0.10.0.tar.gz
+Successfully built /var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-r2-full-conformance-FTyiHX/python-wheel/wheel/umf_core-0.10.0-cp311-abi3-macosx_11_0_arm64.whl
+umf_core-0.10.0/conformance.py
+umf_core-0.10.0/rust-spike/run_conformance.py
+umf_core-0.10.0/src/umf/__init__.py
+umf_core-0.10.0/src/umf/_rust.py
+umf_core-0.10.0/src/umf/constraint_kernel.py
+umf_core-0.10.0/src/umf/generated_resources.py
+umf_core-0.10.0/src/umf/json.py
+umf_core-0.10.0/src/umf/literal_kernel.py
+umf_core-0.10.0/src/umf/models.py
+umf_core-0.10.0/src/umf/py.typed
+umf_core-0.10.0/src/umf/registry.py
+umf_core-0.10.0/src/umf/schemas.py
+umf_core-0.10.0/src/umf/serialization.py
+umf_core-0.10.0/src/umf/validation.py
+umf_core-0.10.0/tests/test_core.py
+umf_core-0.10.0/tests/test_domain_packs.py
+umf_core-0.10.0/tests/test_rust_core.py
+umf_core-0.10.0/umf_access/LICENSE-APACHE
+umf_core-0.10.0/umf_access/LICENSE-MIT
+umf_core-0.10.0/umf_access/LICENSE.md
+umf_core-0.10.0/umf_access/compatibility-profile.json
+umf_core-0.10.0/umf_access/pyproject.toml
+umf_core-0.10.0/umf_access/conformance/README.md
+umf_core-0.10.0/umf_access/conformance/__init__.py
+umf_core-0.10.0/umf_access/conformance/actions.py
+umf_core-0.10.0/umf_access/conformance/bulk.py
+umf_core-0.10.0/umf_access/conformance/qualification_packet.py
+umf_core-0.10.0/umf_access/conformance/reads.py
+umf_core-0.10.0/umf_access/src/umf_access/__init__.py
+umf_core-0.10.0/umf_access/src/umf_access/adoption.py
+umf_core-0.10.0/umf_access/src/umf_access/bulk.py
+umf_core-0.10.0/umf_access/src/umf_access/capture.py
+umf_core-0.10.0/umf_access/src/umf_access/catalog.py
+umf_core-0.10.0/umf_access/src/umf_access/codec_support.py
+umf_core-0.10.0/umf_access/src/umf_access/commands.py
+umf_core-0.10.0/umf_access/src/umf_access/delta_read.py
+umf_core-0.10.0/umf_access/src/umf_access/engine_catalog.py
+umf_core-0.10.0/umf_access/src/umf_access/generated_core.py
+umf_core-0.10.0/umf_access/src/umf_access/managed_actions.py
+umf_core-0.10.0/umf_access/src/umf_access/managed_bulk.py
+umf_core-0.10.0/umf_access/src/umf_access/managed_delta.py
+umf_core-0.10.0/umf_access/src/umf_access/managed_support.py
+umf_core-0.10.0/umf_access/src/umf_access/manifest_commands.py
+umf_core-0.10.0/umf_access/src/umf_access/native_actions.py
+umf_core-0.10.0/umf_access/src/umf_access/native_program.py
+umf_core-0.10.0/umf_access/src/umf_access/pages.py
+umf_core-0.10.0/umf_access/src/umf_access/postgres_bulk.py
+umf_core-0.10.0/umf_access/src/umf_access/postgres_read.py
+umf_core-0.10.0/umf_access/src/umf_access/postgres_search.py
+umf_core-0.10.0/umf_access/src/umf_access/protocols.py
+umf_core-0.10.0/umf_access/src/umf_access/py.typed
+umf_core-0.10.0/umf_access/src/umf_access/related_keys.py
+umf_core-0.10.0/umf_access/src/umf_access/reviewed.py
+umf_core-0.10.0/umf_access/src/umf_access/search_catalog.py
+umf_core-0.10.0/umf_access/src/umf_access/targets.py
+umf_core-0.10.0/umf_access/src/umf_access/types.py
+umf_core-0.10.0/umf_access/src/umf_access/unity_search.py
+umf_core-0.10.0/umf_access/src/umf_access/values.py
+umf_core-0.10.0/umf_access/src/umf_access/verification.py
+umf_core-0.10.0/umf_access/src/umf_access/build/__init__.py
+umf_core-0.10.0/umf_access/src/umf_access/build/approximate.py
+umf_core-0.10.0/umf_access/src/umf_access/build/catalog.py
+umf_core-0.10.0/umf_access/src/umf_access/build/commands.py
+umf_core-0.10.0/umf_access/src/umf_access/build/pg_privileges.py
+umf_core-0.10.0/umf_access/src/umf_access/build/privileges.py
+umf_core-0.10.0/umf_access/src/umf_access/build/search.py
+umf_core-0.10.0/umf_access/src/umf_access/build/unity_search.py
+umf_core-0.10.0/umf_access/src/umf_access/dsl/__init__.py
+umf_core-0.10.0/umf_access/src/umf_access/dsl/_context.py
+umf_core-0.10.0/umf_access/src/umf_access/dsl/_expressions.py
+umf_core-0.10.0/umf_access/src/umf_access/dsl/_joined.py
+umf_core-0.10.0/umf_access/src/umf_access/dsl/_nodes.py
+umf_core-0.10.0/umf_access/src/umf_access/dsl/_query.py
+umf_core-0.10.0/umf_access/src/umf_access/dsl/_selection.py
+umf_core-0.10.0/umf_access/src/umf_access/dsl/navigation.py
+umf_core-0.10.0/umf_access/src/umf_access/dsl/render.py
+umf_core-0.10.0/umf_access/src/umf_access/dsl/search.py
+umf_core-0.10.0/umf_access/src/umf_access/lifecycle/__init__.py
+umf_core-0.10.0/umf_access/src/umf_access/lifecycle/backfills.py
+umf_core-0.10.0/umf_access/src/umf_access/lifecycle/catalog.py
+umf_core-0.10.0/umf_access/src/umf_access/lifecycle/cli.py
+umf_core-0.10.0/umf_access/src/umf_access/lifecycle/concurrent.py
+umf_core-0.10.0/umf_access/src/umf_access/lifecycle/correspondence.py
+umf_core-0.10.0/umf_access/src/umf_access/lifecycle/head.py
+umf_core-0.10.0/umf_access/src/umf_access/lifecycle/head_view.py
+umf_core-0.10.0/umf_access/src/umf_access/lifecycle/ledger.py
+umf_core-0.10.0/umf_access/src/umf_access/lifecycle/ledger_schema.py
+umf_core-0.10.0/umf_access/src/umf_access/lifecycle/mixed.py
+umf_core-0.10.0/umf_access/src/umf_access/lifecycle/outcome_schema.py
+umf_core-0.10.0/umf_access/src/umf_access/lifecycle/phase_fence.py
+umf_core-0.10.0/umf_access/src/umf_access/lifecycle/privileges.py
+umf_core-0.10.0/umf_access/src/umf_access/lifecycle/probe.py
+umf_core-0.10.0/umf_access/src/umf_access/lifecycle/progress.py
+umf_core-0.10.0/umf_access/src/umf_access/lifecycle/roles.py
+umf_core-0.10.0/umf_access/src/umf_access/lifecycle/seeds.py
+umf_core-0.10.0/umf_access/src/umf_access/lifecycle/table_boundary.py
+umf_core-0.10.0/umf_access/src/umf_access/lifecycle/witness.py
+umf_core-0.10.0/umf_access/src/umf_access/unified/__init__.py
+umf_core-0.10.0/umf_access/src/umf_access/unified/_binding.py
+umf_core-0.10.0/umf_access/src/umf_access/unified/head_session.py
+umf_core-0.10.0/umf_access/src/umf_access/unified/native_binding.py
+umf_core-0.10.0/umf_access/src/umf_access/unified/operation_values.py
+umf_core-0.10.0/umf_access/src/umf_access/unified/outcome_values.py
+umf_core-0.10.0/umf_access/src/umf_access/unified/session_async.py
+umf_core-0.10.0/umf_access/src/umf_access/unified/session_binding.py
+umf_core-0.10.0/umf_access/src/umf_access/unified/session_policy.py
+umf_core-0.10.0/umf_access/src/umf_access/unified/session_psycopg2.py
+umf_core-0.10.0/umf_access/src/umf_access/unified/session_sqlalchemy.py
+umf_core-0.10.0/umf_access/src/umf_access/unified/session_sync.py
+umf_core-0.10.0/umf_access/src/umf_access/unified/table_reads.py
+umf_core-0.10.0/umf_access/src/umf_access/unified/table_writes.py
+umf_core-0.10.0/umf_access/tests/aggregate_native_e2e.py
+umf_core-0.10.0/umf_access/tests/alias_native_e2e.py
+umf_core-0.10.0/umf_access/tests/bulk_list_native_e2e.py
+umf_core-0.10.0/umf_access/tests/catalog_declarations.py
+umf_core-0.10.0/umf_access/tests/catalog_e2e.py
+umf_core-0.10.0/umf_access/tests/delta_e2e.py
+umf_core-0.10.0/umf_access/tests/finite_degree_native_e2e.py
+umf_core-0.10.0/umf_access/tests/generated_import_probe.py
+umf_core-0.10.0/umf_access/tests/generated_matrix_probe.py
+umf_core-0.10.0/umf_access/tests/native_actions_e2e.py
+umf_core-0.10.0/umf_access/tests/pg_fence_e2e_support.py
+umf_core-0.10.0/umf_access/tests/pg_ranked_strict_context_e2e.py
+umf_core-0.10.0/umf_access/tests/pg_search_fence_e2e.py
+umf_core-0.10.0/umf_access/tests/postgres_projection_e2e.py
+umf_core-0.10.0/umf_access/tests/refinement_native_e2e.py
+umf_core-0.10.0/umf_access/tests/related_native_e2e.py
+umf_core-0.10.0/umf_access/tests/relationship_joined_native_e2e.py
+umf_core-0.10.0/umf_access/tests/relationship_native_e2e.py
+umf_core-0.10.0/umf_access/tests/search_e2e.py
+umf_core-0.10.0/umf_access/tests/search_filter_parameters_e2e.py
+umf_core-0.10.0/umf_access/tests/source_exact_native_e2e.py
+umf_core-0.10.0/umf_access/tests/source_exact_vector_membership_e2e.py
+umf_core-0.10.0/umf_access/tests/spark_hll_e2e.py
+umf_core-0.10.0/umf_access/tests/spark_list_e2e.py
+umf_core-0.10.0/umf_access/tests/spark_numeric_e2e.py
+umf_core-0.10.0/umf_access/tests/term_filters_e2e.py
+umf_core-0.10.0/umf_access/tests/test_action_clients.py
+umf_core-0.10.0/umf_access/tests/test_adoption_packet.py
+umf_core-0.10.0/umf_access/tests/test_aggregate_dsl.py
+umf_core-0.10.0/umf_access/tests/test_alias_dsl.py
+umf_core-0.10.0/umf_access/tests/test_approximate_profile.py
+umf_core-0.10.0/umf_access/tests/test_async_bulk_plan.py
+umf_core-0.10.0/umf_access/tests/test_batch_frames.py
+umf_core-0.10.0/umf_access/tests/test_bulk_list_parameters.py
+umf_core-0.10.0/umf_access/tests/test_capture.py
+umf_core-0.10.0/umf_access/tests/test_catalog_configuration.py
+umf_core-0.10.0/umf_access/tests/test_catalog_fence.py
+umf_core-0.10.0/umf_access/tests/test_catalog_writer.py
+umf_core-0.10.0/umf_access/tests/test_codec_support_red.py
+umf_core-0.10.0/umf_access/tests/test_codecs.py
+umf_core-0.10.0/umf_access/tests/test_command_source.py
+umf_core-0.10.0/umf_access/tests/test_delta_read_classification.py
+umf_core-0.10.0/umf_access/tests/test_delta_read_projection_values.py
+umf_core-0.10.0/umf_access/tests/test_delta_stream_limits.py
+umf_core-0.10.0/umf_access/tests/test_dsl_render.py
+umf_core-0.10.0/umf_access/tests/test_dsl_runtime.py
+umf_core-0.10.0/umf_access/tests/test_engine_catalog.py
+umf_core-0.10.0/umf_access/tests/test_engine_presence_signatures.py
+umf_core-0.10.0/umf_access/tests/test_fixed_query_description.py
+umf_core-0.10.0/umf_access/tests/test_fixed_query_preparation.py
+umf_core-0.10.0/umf_access/tests/test_generated_actiontypes.py
+umf_core-0.10.0/umf_access/tests/test_generated_models.py
+umf_core-0.10.0/umf_access/tests/test_generated_projections.py
+umf_core-0.10.0/umf_access/tests/test_golden_vectors.py
+umf_core-0.10.0/umf_access/tests/test_integer_native_output.py
+umf_core-0.10.0/umf_access/tests/test_join_refinement.py
+umf_core-0.10.0/umf_access/tests/test_joined_keys_context.py
+umf_core-0.10.0/umf_access/tests/test_joined_model_projection.py
+umf_core-0.10.0/umf_access/tests/test_managed_receipt.py
+umf_core-0.10.0/umf_access/tests/test_manifest_bulk_plan.py
+umf_core-0.10.0/umf_access/tests/test_manifest_commands.py
+umf_core-0.10.0/umf_access/tests/test_many_navigation.py
+umf_core-0.10.0/umf_access/tests/test_migration_phases.py
+umf_core-0.10.0/umf_access/tests/test_mutation_fence_driver.py
+umf_core-0.10.0/umf_access/tests/test_mutation_index_custody.py
+umf_core-0.10.0/umf_access/tests/test_native_binding.py
+umf_core-0.10.0/umf_access/tests/test_native_column_custody.py
+umf_core-0.10.0/umf_access/tests/test_native_key_admission.py
+umf_core-0.10.0/umf_access/tests/test_native_sessions.py
+umf_core-0.10.0/umf_access/tests/test_operation_input_snapshot.py
+umf_core-0.10.0/umf_access/tests/test_pg_privilege_advisory.py
+umf_core-0.10.0/umf_access/tests/test_postgres_projection_values.py
+umf_core-0.10.0/umf_access/tests/test_postgres_resolution.py
+umf_core-0.10.0/umf_access/tests/test_postgres_search_projection_values.py
+umf_core-0.10.0/umf_access/tests/test_privilege_report.py
+umf_core-0.10.0/umf_access/tests/test_ranked_projection.py
+umf_core-0.10.0/umf_access/tests/test_read_fence_driver.py
+umf_core-0.10.0/umf_access/tests/test_refactor_regeneration.py
+umf_core-0.10.0/umf_access/tests/test_related_custody.py
+umf_core-0.10.0/umf_access/tests/test_related_generated.py
+umf_core-0.10.0/umf_access/tests/test_related_key_transport.py
+umf_core-0.10.0/umf_access/tests/test_related_projection_stream.py
+umf_core-0.10.0/umf_access/tests/test_relationship_admission.py
+umf_core-0.10.0/umf_access/tests/test_relationship_key_identity.py
+umf_core-0.10.0/umf_access/tests/test_relationship_literals.py
+umf_core-0.10.0/umf_access/tests/test_reviewed_dbapi_transport.py
+umf_core-0.10.0/umf_access/tests/test_reviewed_projection_carriers.py
+umf_core-0.10.0/umf_access/tests/test_reviewed_reads.py
+umf_core-0.10.0/umf_access/tests/test_reviewed_source.py
+umf_core-0.10.0/umf_access/tests/test_runtime_driven_codecs.py
+umf_core-0.10.0/umf_access/tests/test_schema_binding_configuration.py
+umf_core-0.10.0/umf_access/tests/test_search_parameter_custody.py
+umf_core-0.10.0/umf_access/tests/test_search_resolution_order.py
+umf_core-0.10.0/umf_access/tests/test_session_binding.py
+umf_core-0.10.0/umf_access/tests/test_snapshot_declarations.py
+umf_core-0.10.0/umf_access/tests/test_source_exact_read_admission.py
+umf_core-0.10.0/umf_access/tests/test_spark_list_parameters.py
+umf_core-0.10.0/umf_access/tests/test_spark_numeric_parameters.py
+umf_core-0.10.0/umf_access/tests/test_stream_lifecycle.py
+umf_core-0.10.0/umf_access/tests/test_stream_page_size.py
+umf_core-0.10.0/umf_access/tests/test_table_outcomes.py
+umf_core-0.10.0/umf_access/tests/test_table_read_values.py
+umf_core-0.10.0/umf_access/tests/test_target_verification.py
+umf_core-0.10.0/umf_access/tests/test_temporal_carriers_red.py
+umf_core-0.10.0/umf_access/tests/test_term_admission.py
+umf_core-0.10.0/umf_access/tests/test_term_configuration_custody.py
+umf_core-0.10.0/umf_access/tests/test_truss_related_metadata.py
+umf_core-0.10.0/umf_access/tests/test_unified_binding_identity.py
+umf_core-0.10.0/umf_access/tests/test_unity_search.py
+umf_core-0.10.0/umf_access/tests/test_unity_search_build.py
+umf_core-0.10.0/umf_access/tests/test_values_red.py
+umf_core-0.10.0/umf_access/tests/test_verification_cache.py
+umf_core-0.10.0/umf_access/tests/test_wheel_contract.py
+umf_core-0.10.0/umf_access/tests/unity_search_schema_e2e.py
+umf_core-0.10.0/umf_access/tests/conformance_selftest/test_actions.py
+umf_core-0.10.0/umf_access/tests/conformance_selftest/test_bulk.py
+umf_core-0.10.0/umf_access/tests/conformance_selftest/test_reads.py
+umf_core-0.10.0/umf_access/tests/fixtures/unity-search-ann-compiler-r2.json
+umf_core-0.10.0/umf_access/tests/fixtures/unity-search-ann-current-010.json
+umf_core-0.10.0/umf_access/tests/fixtures/unity-search-ann-current-010.provenance.json
+umf_core-0.10.0/umf_access/tests/fixtures/unity-search-ann-current-010.request.json
+umf_core-0.10.0/umf_access/tests/packaging/aggregate_receipt_controls.py
+umf_core-0.10.0/umf_access/tests/packaging/build_wheel.py
+umf_core-0.10.0/umf_access/tests/packaging/emit_replay_fixture.ts
+umf_core-0.10.0/umf_access/tests/packaging/replay_installed.py
+umf_core-0.10.0/umf_access/tests/packaging/runtime_fix_e2e.py
+umf_core-0.10.0/umf_access/tests/packaging/snapshot_runtime.py
+umf_core-0.10.0/umf_access/tests/static/manifest-commands/negative.py
+umf_core-0.10.0/umf_access/tests/static/manifest-commands/positive.py
+umf_core-0.10.0/umf_codegen/LICENSE-APACHE
+umf_core-0.10.0/umf_codegen/LICENSE-MIT
+umf_core-0.10.0/umf_codegen/LICENSE.md
+umf_core-0.10.0/umf_codegen/README.md
+umf_core-0.10.0/umf_codegen/hatch_build.py
+umf_core-0.10.0/umf_codegen/pyproject.toml
+umf_core-0.10.0/umf_codegen/src/umf_codegen/__init__.py
+umf_core-0.10.0/umf_codegen/src/umf_codegen/__main__.py
+umf_core-0.10.0/umf_codegen/src/umf_codegen/_embedded.py
+umf_core-0.10.0/umf_codegen/src/umf_codegen/_release.py
+umf_core-0.10.0/umf_codegen/src/umf_codegen/_writer.py
+umf_core-0.10.0/umf_codegen/src/umf_codegen/py.typed
+umf_core-0.10.0/umf_codegen/src/umf_codegen/_assets/generator.js.gz
+umf_core-0.10.0/umf_codegen/src/umf_codegen/_assets/manifest.json
+umf_core-0.10.0/umf_codegen/src/umf_codegen/_assets/notices/ajv/LICENSE
+umf_core-0.10.0/umf_codegen/src/umf_codegen/_assets/notices/ajv/package.json
+umf_core-0.10.0/umf_codegen/src/umf_codegen/_assets/notices/fast-deep-equal/LICENSE
+umf_core-0.10.0/umf_codegen/src/umf_codegen/_assets/notices/fast-deep-equal/package.json
+umf_core-0.10.0/umf_codegen/src/umf_codegen/_assets/notices/fast-uri/LICENSE
+umf_core-0.10.0/umf_codegen/src/umf_codegen/_assets/notices/fast-uri/package.json
+umf_core-0.10.0/umf_codegen/src/umf_codegen/_assets/notices/json-schema-traverse/LICENSE
+umf_core-0.10.0/umf_codegen/src/umf_codegen/_assets/notices/json-schema-traverse/package.json
+umf_core-0.10.0/umf_codegen/src/umf_codegen/_assets/notices/yaml/LICENSE
+umf_core-0.10.0/umf_codegen/src/umf_codegen/_assets/notices/yaml/package.json
+umf_core-0.10.0/umf_codegen/tests/test_boundaries.py
+umf_core-0.10.0/umf_codegen/tests/test_row_scope.py
+umf_core-0.10.0/fixtures/metamodel/current-conformance.json
+umf_core-0.10.0/spec/core/extension-package.schema.json
+umf_core-0.10.0/spec/core/schema.json
+umf_core-0.10.0/spec/core/semantic-type-reference.schema.json
+umf_core-0.10.0/spec/extensions/dataset-source/package.json
+umf_core-0.10.0/spec/extensions/dataset-source/schema.json
+umf_core-0.10.0/spec/extensions/domain-pack/package.json
+umf_core-0.10.0/spec/extensions/domain-pack/schema.json
+umf_core-0.10.0/spec/metamodel/generated/core-constraints.json
+umf_core-0.10.0/spec/metamodel/generated/domain-policy.json
+umf_core-0.10.0/spec/metamodel/generated/manifest.json
+umf_core-0.10.0/spec/metamodel/generated/python-shapes.json
+umf_core-0.10.0/.gitignore
+umf_core-0.10.0/Cargo.lock
+umf_core-0.10.0/Cargo.toml
+umf_core-0.10.0/LICENSE-APACHE
+umf_core-0.10.0/LICENSE-APACHE
+umf_core-0.10.0/LICENSE-MIT
+umf_core-0.10.0/LICENSE-MIT
+umf_core-0.10.0/LICENSE.md
+umf_core-0.10.0/LICENSE.md
+umf_core-0.10.0/README.md
+umf_core-0.10.0/hatch_build.py
+umf_core-0.10.0/pyproject.toml
+umf_core-0.10.0/rust-toolchain.toml
+umf_core-0.10.0/.cargo/config.toml
+umf_core-0.10.0/crates/rust-spike-cli/Cargo.toml
+umf_core-0.10.0/crates/rust-spike-core/Cargo.toml
+umf_core-0.10.0/crates/umf-cli/Cargo.toml
+umf_core-0.10.0/crates/umf-core-wire/Cargo.toml
+umf_core-0.10.0/crates/umf-core/Cargo.toml
+umf_core-0.10.0/crates/umf-metamodel/Cargo.toml
+umf_core-0.10.0/bindings/core/node/Cargo.toml
+umf_core-0.10.0/bindings/core/node/build.rs
+umf_core-0.10.0/bindings/core/node/index.d.ts
+umf_core-0.10.0/bindings/core/node/index.js
+umf_core-0.10.0/bindings/core/node/package.json
+umf_core-0.10.0/bindings/core/python/Cargo.toml
+umf_core-0.10.0/bindings/core/python/build.rs
+umf_core-0.10.0/bindings/core/wasm/Cargo.toml
+umf_core-0.10.0/bindings/core/wasm/index.d.ts
+umf_core-0.10.0/bindings/core/wasm/index.js
+umf_core-0.10.0/bindings/core/wasm/package.json
+umf_core-0.10.0/bindings/rust-spike/node/Cargo.toml
+umf_core-0.10.0/bindings/rust-spike/node/build.rs
+umf_core-0.10.0/bindings/rust-spike/node/index.d.ts
+umf_core-0.10.0/bindings/rust-spike/node/index.js
+umf_core-0.10.0/bindings/rust-spike/node/package.json
+umf_core-0.10.0/bindings/rust-spike/python/Cargo.toml
+umf_core-0.10.0/bindings/rust-spike/python/build.rs
+umf_core-0.10.0/bindings/rust-spike/python/pyproject.toml
+umf_core-0.10.0/bindings/rust-spike/wasm/Cargo.toml
+umf_core-0.10.0/bindings/rust-spike/wasm/index.js
+umf_core-0.10.0/crates/rust-spike-cli/src/main.rs
+umf_core-0.10.0/crates/rust-spike-core/src/lib.rs
+umf_core-0.10.0/crates/umf-cli/src/main.rs
+umf_core-0.10.0/crates/umf-cli/tests/core_cli.rs
+umf_core-0.10.0/crates/umf-core-wire/src/lib.rs
+umf_core-0.10.0/crates/umf-core/src/constraint_language.rs
+umf_core-0.10.0/crates/umf-core/src/constraints.rs
+umf_core-0.10.0/crates/umf-core/src/context.rs
+umf_core-0.10.0/crates/umf-core/src/document.rs
+umf_core-0.10.0/crates/umf-core/src/ecma_coercion.rs
+umf_core-0.10.0/crates/umf-core/src/engine.rs
+umf_core-0.10.0/crates/umf-core/src/error.rs
+umf_core-0.10.0/crates/umf-core/src/lib.rs
+umf_core-0.10.0/crates/umf-core/src/literal.rs
+umf_core-0.10.0/crates/umf-core/src/literal_policy.rs
+umf_core-0.10.0/crates/umf-core/src/python_re_names.dat
+umf_core-0.10.0/crates/umf-core/src/python_re_tables.LICENSE
+umf_core-0.10.0/crates/umf-core/src/python_re_tables.rs
+umf_core-0.10.0/crates/umf-core/src/python_regex.rs
+umf_core-0.10.0/crates/umf-core/src/python_uri.LICENSE
+umf_core-0.10.0/crates/umf-core/src/python_value.rs
+umf_core-0.10.0/crates/umf-core/src/registry.rs
+umf_core-0.10.0/crates/umf-core/src/schema.rs
+umf_core-0.10.0/crates/umf-core/src/schema_metas.LICENSE
+umf_core-0.10.0/crates/umf-core/src/schema_metas.json
+umf_core-0.10.0/crates/umf-core/src/serialization.rs
+umf_core-0.10.0/crates/umf-core/src/value.rs
+umf_core-0.10.0/crates/umf-core/tests/admission.rs
+umf_core-0.10.0/crates/umf-core/tests/constraints.rs
+umf_core-0.10.0/crates/umf-core/tests/consumer_schema.rs
+umf_core-0.10.0/crates/umf-core/tests/literals.rs
+umf_core-0.10.0/crates/umf-core/tests/python_regex_hex_independent.rs
+umf_core-0.10.0/crates/umf-core/tests/python_regex_independent.rs
+umf_core-0.10.0/crates/umf-core/tests/python_regex_info_independent.rs
+umf_core-0.10.0/crates/umf-core/tests/python_serialization_predecessor.rs
+umf_core-0.10.0/crates/umf-core/tests/registry.rs
+umf_core-0.10.0/crates/umf-core/tests/resources.rs
+umf_core-0.10.0/crates/umf-core/tests/runtime_operator_edges_predecessor.rs
+umf_core-0.10.0/crates/umf-core/tests/runtime_operators_predecessor.rs
+umf_core-0.10.0/crates/umf-core/tests/schema.rs
+umf_core-0.10.0/crates/umf-core/tests/schema_annotation_stack.rs
+umf_core-0.10.0/crates/umf-core/tests/schema_depth_stack.rs
+umf_core-0.10.0/crates/umf-core/tests/schema_helper_stack.rs
+umf_core-0.10.0/crates/umf-core/tests/schema_python_annotation_order.rs
+umf_core-0.10.0/crates/umf-core/tests/schema_python_arithmetic.rs
+umf_core-0.10.0/crates/umf-core/tests/schema_python_evaluation_order.rs
+umf_core-0.10.0/crates/umf-core/tests/schema_python_path_keys.rs
+umf_core-0.10.0/crates/umf-core/tests/schema_python_recursive_resource_scope.rs
+umf_core-0.10.0/crates/umf-core/tests/schema_python_reference_paths.rs
+umf_core-0.10.0/crates/umf-core/tests/schema_terminal_provenance.rs
+umf_core-0.10.0/crates/umf-core/tools/generate_cpython_re_corpus.py
+umf_core-0.10.0/crates/umf-core/tools/generate_independent_python_re_boundaries.py
+umf_core-0.10.0/crates/umf-core/tools/generate_independent_python_re_hex.py
+umf_core-0.10.0/crates/umf-core/tools/generate_independent_python_re_info.py
+umf_core-0.10.0/crates/umf-core/tools/generate_python_re_tables.py
+umf_core-0.10.0/crates/umf-metamodel/src/lib.rs
+umf_core-0.10.0/crates/umf-metamodel/tests/compiler.rs
+umf_core-0.10.0/bindings/core/node/src/lib.rs
+umf_core-0.10.0/bindings/core/node/src/wire.d.ts
+umf_core-0.10.0/bindings/core/node/src/wire.js
+umf_core-0.10.0/bindings/core/python/src/lib.rs
+umf_core-0.10.0/bindings/core/python/src/python_value.rs
+umf_core-0.10.0/bindings/core/wasm/src/lib.rs
+umf_core-0.10.0/bindings/rust-spike/node/src/lib.rs
+umf_core-0.10.0/bindings/rust-spike/python/src/lib.rs
+umf_core-0.10.0/bindings/rust-spike/wasm/src/lib.rs
+umf_core-0.10.0/crates/umf-core/tools/unicode/NameAliases-14.0.0.txt
+umf_core-0.10.0/crates/umf-core/tools/unicode/NameAliases-15.0.0.txt
+umf_core-0.10.0/crates/umf-core/tools/unicode/NameAliases-15.1.0.txt
+umf_core-0.10.0/crates/umf-core/vendor/saphyr-parser/.cargo-ok
+umf_core-0.10.0/crates/umf-core/vendor/saphyr-parser/.cargo_vcs_info.json
+umf_core-0.10.0/crates/umf-core/vendor/saphyr-parser/.gitattributes
+umf_core-0.10.0/crates/umf-core/vendor/saphyr-parser/CHANGELOG.md
+umf_core-0.10.0/crates/umf-core/vendor/saphyr-parser/Cargo.lock
+umf_core-0.10.0/crates/umf-core/vendor/saphyr-parser/Cargo.toml
+umf_core-0.10.0/crates/umf-core/vendor/saphyr-parser/Cargo.toml.orig
+umf_core-0.10.0/crates/umf-core/vendor/saphyr-parser/Cargo.toml.upstream
+umf_core-0.10.0/crates/umf-core/vendor/saphyr-parser/LICENSE
+umf_core-0.10.0/crates/umf-core/vendor/saphyr-parser/README.md
+umf_core-0.10.0/crates/umf-core/vendor/saphyr-parser/UPSTREAM.md
+umf_core-0.10.0/crates/umf-core/vendor/saphyr-parser/justfile
+umf_core-0.10.0/crates/umf-core/tests/fixtures/cpython-re/PSF-LICENSE.txt
+umf_core-0.10.0/crates/umf-core/tests/fixtures/cpython-re/independent-boundaries.json
+umf_core-0.10.0/crates/umf-core/tests/fixtures/cpython-re/independent-hex-boundaries.json
+umf_core-0.10.0/crates/umf-core/tests/fixtures/cpython-re/independent-hex-outcomes.tsv
+umf_core-0.10.0/crates/umf-core/tests/fixtures/cpython-re/independent-info-boundaries.json
+umf_core-0.10.0/crates/umf-core/tests/fixtures/cpython-re/independent-info-outcomes.tsv
+umf_core-0.10.0/crates/umf-core/tests/fixtures/cpython-re/independent-outcomes.tsv
+umf_core-0.10.0/crates/umf-core/tests/fixtures/cpython-re/outcomes-3.11.tsv
+umf_core-0.10.0/crates/umf-core/tests/fixtures/cpython-re/outcomes-3.12.tsv
+umf_core-0.10.0/crates/umf-core/tests/fixtures/cpython-re/outcomes-3.13.tsv
+umf_core-0.10.0/crates/umf-core/tests/fixtures/cpython-re/re_tests.py
+umf_core-0.10.0/crates/umf-core/tests/fixtures/cpython-re/test_re-3.11.14.py
+umf_core-0.10.0/crates/umf-core/vendor/saphyr-parser/.cargo/config.toml
+umf_core-0.10.0/crates/umf-core/vendor/saphyr-parser/.licenses/ChenYuheng-Apache
+umf_core-0.10.0/crates/umf-core/vendor/saphyr-parser/.licenses/ChenYuheng-MIT
+umf_core-0.10.0/crates/umf-core/vendor/saphyr-parser/.licenses/Ethiraric-Apache
+umf_core-0.10.0/crates/umf-core/vendor/saphyr-parser/.licenses/Ethiraric-MIT
+umf_core-0.10.0/crates/umf-core/vendor/saphyr-parser/src/char_traits.rs
+umf_core-0.10.0/crates/umf-core/vendor/saphyr-parser/src/debug.rs
+umf_core-0.10.0/crates/umf-core/vendor/saphyr-parser/src/input.rs
+umf_core-0.10.0/crates/umf-core/vendor/saphyr-parser/src/lib.rs
+umf_core-0.10.0/crates/umf-core/vendor/saphyr-parser/src/parser.rs
+umf_core-0.10.0/crates/umf-core/vendor/saphyr-parser/src/scanner.rs
+umf_core-0.10.0/crates/umf-core/vendor/saphyr-parser/tests/basic.rs
+umf_core-0.10.0/crates/umf-core/vendor/saphyr-parser/tests/closing_bracket.rs
+umf_core-0.10.0/crates/umf-core/vendor/saphyr-parser/tests/comment_intercepts_line.rs
+umf_core-0.10.0/crates/umf-core/vendor/saphyr-parser/tests/fuzz.rs
+umf_core-0.10.0/crates/umf-core/vendor/saphyr-parser/tests/issues.rs
+umf_core-0.10.0/crates/umf-core/vendor/saphyr-parser/tests/plain_scalar_indicators.rs
+umf_core-0.10.0/crates/umf-core/vendor/saphyr-parser/tests/plain_tab.rs
+umf_core-0.10.0/crates/umf-core/vendor/saphyr-parser/tests/reserved_directive.rs
+umf_core-0.10.0/crates/umf-core/vendor/saphyr-parser/tests/span.rs
+umf_core-0.10.0/crates/umf-core/vendor/saphyr-parser/tests/spec_test.rs
+umf_core-0.10.0/crates/umf-core/vendor/saphyr-parser/tests/spec_test.rs.inc
+umf_core-0.10.0/crates/umf-core/vendor/saphyr-parser/tests/specexamples.rs.inc
+umf_core-0.10.0/crates/umf-core/vendor/saphyr-parser/tests/yaml-test-suite.rs
+umf_core-0.10.0/crates/umf-core/vendor/saphyr-parser/tools/README.md
+umf_core-0.10.0/crates/umf-core/vendor/saphyr-parser/tools/dump_events.rs
+umf_core-0.10.0/crates/umf-core/vendor/saphyr-parser/tools/run_bench.rs
+umf_core-0.10.0/crates/umf-core/vendor/saphyr-parser/tools/time_parse.rs
+umf_core-0.10.0/crates/umf-core/vendor/saphyr-parser/src/input/buffered.rs
+umf_core-0.10.0/crates/umf-core/vendor/saphyr-parser/src/input/str.rs
+umf_core-0.10.0/PKG-INFO
+Using CPython 3.11.17 interpreter at: /Users/erik/.local/bin/python3.11
+Creating virtual environment at: /var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-r2-full-conformance-FTyiHX/python-wheel/wheel-installed/venv
+Activate with: source /var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-r2-full-conformance-FTyiHX/python-wheel/wheel-installed/venv/bin/activate
+Using Python 3.11.17 environment at: /var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-r2-full-conformance-FTyiHX/python-wheel/wheel-installed/venv
+Resolved 11 packages in 5ms
+Prepared 1 package in 16ms
+Installed 11 packages in 28ms
+ + annotated-types==0.8.0
+ + iniconfig==2.3.1
+ + packaging==26.3
+ + pluggy==1.7.0
+ + pydantic==2.14.1
+ + pydantic-core==2.50.1
+ + pygments==2.21.0
+ + pytest==9.1.1
+ + typing-extensions==4.16.0
+ + typing-inspection==0.4.4
+ + umf-core==0.10.0 (from file:///var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-r2-full-conformance-FTyiHX/python-wheel/wheel/umf_core-0.10.0-cp311-abi3-macosx_11_0_arm64.whl)
+{"python": "3.11.17 (main, Oct  3 2026, 00:54:14) [Clang 22.1.3 ]", "implementation": "cpython", "pydantic": "2.14.1", "pytest": "9.1.1"}
+============================= test session starts ==============================
+platform darwin -- Python 3.11.17, pytest-9.1.1, pluggy-1.7.0
+rootdir: /Users/erik/.codex/worktrees/rust-binding-spike/umf/python
+configfile: pyproject.toml
+collected 198 items
+
+../../../../../../../../../Users/erik/.codex/worktrees/rust-binding-spike/umf/python/tests/test_core.py . [  0%]
+........................................................................ [ 36%]
+........................................................................ [ 73%]
+..................                                                       [ 82%]
+../../../../../../../../../Users/erik/.codex/worktrees/rust-binding-spike/umf/python/tests/test_domain_packs.py . [ 82%]
+..                                                                       [ 83%]
+../../../../../../../../../Users/erik/.codex/worktrees/rust-binding-spike/umf/python/tests/test_rust_core.py . [ 84%]
+...............................                                          [100%]
+
+============================= 198 passed in 9.95s ==============================
+{"cases": 139, "copiedTextUnits": 6000000, "fixture": "/Users/erik/.codex/worktrees/rust-binding-spike/umf/docs/helix/04-build/evidence/rust-migration/r2/baseline-current-conformance.json", "fixtureSha256": "bb008a98b8448050748e65f867e7863475ccad9501a5b9229ae9e6d336691544", "invalid": 88, "inventoryExtensionDepth": {"accepted": 122, "refused": 123}, "maxDocumentDepth": 128, "native": "umf-core-r2", "orderedDiagnostics": true, "package": "/private/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-r2-full-conformance-FTyiHX/python-wheel/wheel-installed/venv/lib/python3.11/site-packages/umf/__init__.py", "runtime": "3.11.17", "sourceTextUnits": 4000000, "status": "pass", "valid": 51}
+{"status": "pass", "admissionCases": 9282, "officialCases": 4995, "officialEvaluated": 4995, "numericCases": 2586, "numericValidityResults": 2316, "numericInstanceErrors": 270, "numericProfiles": {"umf.r2-sol-python-schema-arithmetic/1": 648, "umf.r2-sol-python-schema-arithmetic-edges/1": 1938}, "numericCandidatePython": "3.11.17", "mismatches": 0, "mismatchBuckets": {}, "firstFive": [], "firstPerProfile": {}, "failures": []}
+Traceback (most recent call last):
+  File "/Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-core/schema-evaluation-order-conformance.py", line 1151, in <module>
+    main()
+  File "/Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-core/schema-evaluation-order-conformance.py", line 996, in main
+    raise RuntimeError("Unexpected Python resource-URI operation profile/review receipt")
+RuntimeError: Unexpected Python resource-URI operation profile/review receipt
+48 | function command(program: string, args: string[], cwd: string, env: NodeJS.ProcessEnv = process.env) {
+49 |   const result = spawnSync(program, args, {cwd, env, encoding: 'utf8', maxBuffer: 512 * 1024 * 1024});
+50 |   if (result.stdout) process.stdout.write(result.stdout);
+51 |   if (result.stderr) process.stderr.write(result.stderr);
+52 |   if (result.error) throw result.error;
+53 |   if (result.status !== 0) throw new Error(`${program} ${args.join(' ')} failed (${result.status ?? result.signal})`);
+                                          ^
+error: /var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/umf-r2-full-conformance-FTyiHX/python-wheel/wheel-installed/venv/bin/python /Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-core/schema-evaluation-order-conformance.py failed (1)
+      at command (/Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-core/full-conformance.ts:53:38)
+      at installPythonWheel (/Users/erik/.codex/worktrees/rust-binding-spike/umf/scripts/rust-core/full-conformance.ts:263:33)
+
+Bun v1.4.3 (macOS arm64)

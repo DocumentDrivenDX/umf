@@ -1,0 +1,51 @@
+{
+  "id": "R2-SOL-CI-CARGO-COLOR-REVIEW-001",
+  "profile": "umf.r2-independent-ci-cargo-color-review/1",
+  "capturedAt": "2026-10-22T09:39:08.948753+00:00",
+  "reviewer": "Independent Sol reviewer (/root/sol_r2_final_review)",
+  "status": "Narrow Cargo output-format repair approved; final-head CI and merge remain pending.",
+  "sourceHeadBeforeRepair": "5a63f910a74a97540baf29208789d0df8511efa7",
+  "reviewedHashes": {
+    "scripts/check-rust-boundaries.py": "092a0fdc45b095948d92d08bb5d6c011c11055d7da34cea87d9a1ebd34df1edd",
+    "tests/rust-inventory/test_boundaries.py": "ad5c743fa936f51149d51ada0fc5ef826e0bbc9e6e096c395a3f900db5f3cc1c",
+    "docs/helix/04-build/evidence/rust-migration/r2/boundary-check.json": "65f378c7cfee33997f49177b310e5a2c620f47dd4ffbfd2210a0421eee3e6af0",
+    "docs/helix/04-build/evidence/rust-migration/r2/inventory.json": "b51df8fd22b8f87d2f33117fe63358a7407f80f304df8ec8c377ab4d98a01de0",
+    "docs/helix/04-build/evidence/rust-migration/r2/ci-linux-forced-color-boundary-control.json": "e13216df32c04a2b3275b32a0b4ac3999d61982732196bcf342ef4068379e5aa"
+  },
+  "coreSchemaSha256": "d54a65813299792cf0d6fb55d33648744395cde9b3a0623d7d6ea158f2d49813",
+  "findings": [],
+  "scope": "Owned cargo_tree invocations explicitly use --color never and CARGO_TERM_COLOR=never. Owned cargo_metadata sets CARGO_TERM_COLOR=never. No dependency policy, parser, source expectation, runtime resource or semantic operation changes.",
+  "independentVerification": {
+    "modifiedFunctionASTComparison": "Only cargo_metadata and cargo_tree changed; all parser and qualification functions unchanged.",
+    "invocationFlags": "Locked/offline, target, package, inverse, edge, format and prefix arguments retained.",
+    "boundaryUnitTests": {
+      "interpreter": "CPython3.11.17",
+      "passed": 11,
+      "failed": 0
+    },
+    "forcedColorUnitControl": "Caller environment always is overridden to never; exact command prefix and parsed parents/path checked.",
+    "negativeControls": "Existing direct/additional/path/source mismatch refusals and production no-entropy-exception controls retained and pass.",
+    "boundaryGoldenExactComparison": "Current parsed report equals HEAD after removing only four newly recorded --color never command pairs.",
+    "inventoryGoldenComparison": "Authored sourceModules, RustModules, RustBuildInputs and all script paths unchanged. Only checker/test script records change; added test increases algorithmSymbols by1 to9813.",
+    "linuxControlRead": "Actual supplied offline Linux forced-color report is pass:578 modules, no findings, all9 embedded negative controls pass, exact R1 exception path/parents/features preserved.",
+    "documentation": "Read current integration/plan paragraph; output-format diagnosis and limits match evidence."
+  },
+  "reportedSupportingExecution": {
+    "owner": "Root and implementation agent",
+    "linux": "Existing Linux ARM64 Docker Rust/Cargo1.90 image, read-only repository/registry mounts and --network none; caller CARGO_TERM_COLOR=always; checker --self-test passes. No new broad platform claim.",
+    "localForcedColor": "578 modules / zero findings /9 negative controls pass",
+    "inventoryTests": 10,
+    "inventoryCheck": "Current569 authored modules /301 active scripts"
+  },
+  "approval": {
+    "narrowRepairApproved": true,
+    "priorProductionImplementationApprovalRetained": true,
+    "newCohortArtifactsApproved": false,
+    "deliveryComplete": false,
+    "remaining": [
+      "Commit/push exact checker/test/golden cohort.",
+      "Require fresh final-head qualification and complete CI matrix, independently reconcile source-bound receipts, then reviewed merge."
+    ]
+  },
+  "publication": false
+}

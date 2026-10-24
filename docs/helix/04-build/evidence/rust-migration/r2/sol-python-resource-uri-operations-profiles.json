@@ -1,0 +1,39 @@
+{
+  "id": "R2-SOL-PYTHON-RESOURCE-URI-OPERATIONS-PROFILES-001",
+  "fixture": "sol-python-resource-uri-operations-predecessor.json",
+  "sha256": "e79cdee8693892517cc372f9b5b05d902199e78b734175bf10359baadeabfae9",
+  "cases": 24,
+  "methods": 72,
+  "uriOperations": 140,
+  "constructorRefusals": 0,
+  "profiles": [
+    {
+      "python": "3.11.17",
+      "captureSha256": "e79cdee8693892517cc372f9b5b05d902199e78b734175bf10359baadeabfae9",
+      "recordsEqual": true,
+      "uriOperationsEqual": true,
+      "uriAdmissionProfileEqual": true
+    },
+    {
+      "python": "3.12.15",
+      "captureSha256": "bd602fb6df7048475df71080faa45bbeb462c86a172050f1398743cb759a7970",
+      "recordsEqual": true,
+      "uriOperationsEqual": true,
+      "uriAdmissionProfileEqual": true
+    },
+    {
+      "python": "3.13.16",
+      "captureSha256": "c0435239437dfdb8a9c9997203354435a2422784324870c69614d94f03e50a7f",
+      "recordsEqual": true,
+      "uriOperationsEqual": true,
+      "uriAdmissionProfileEqual": true
+    }
+  ],
+  "generatorSha256": "db2a75afe2d98c13f6c1def642c1e029198c800efd701d14cb90bfd1c1399fd8",
+  "sourceSha256": {
+    "schemas.py": "22f02d6a6903b8804a1d504b0b6f232872aa564bc20e77933c880a4f9016a402",
+    "referencing/_core.py": "d923c67da4efcc0dec46a6e3ff8476c02fbe7e25e8942515a4b14b249eb3759f",
+    "referencing/jsonschema.py": "8d767ab7ac7da13bd31cc202d2d4726858d6e6bdaa78739b62ebbb52149f2b74"
+  },
+  "target": "Exact predecessor values and native urllib.parse.urljoin operations. No semantic correction."
+}

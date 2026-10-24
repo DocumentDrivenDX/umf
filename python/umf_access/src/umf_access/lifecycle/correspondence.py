@@ -111,6 +111,14 @@ WHERE c.relnamespace=%s AND c.relkind NOT IN ('i','I') ORDER BY c.relname""",(sc
     names = sorted([(t['name'],) for t in source['expectedCatalog']['tables']]+[(HEAD,),(HISTORY,)])
     if 'outcomeShape' in expected:
         names=sorted([*names,(OUTCOMES,)])
+    if expected.get('version') == 'umf.table-installation/0.3':
+        from .approval import APPROVAL_PROFILE, _approval_shape_steps
+
+        if (expected.get('approvalProfile') != APPROVAL_PROFILE
+                or expected.get('approvalPlanDigest') != expected.get('planDigest')
+                or _normalized((yield from _approval_shape_steps(schema))) != expected.get('approvalShape')):
+            raise CatalogError('approval-catalog-mismatch')
+        names=sorted([*names,(APPROVAL_PROFILE['relation'],)])
     if inventory != names:
         raise CatalogError('catalog-mismatch')
     for role in (cfg['ownerRole'],cfg['personRole'],cfg['batchRole']):

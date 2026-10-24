@@ -1,0 +1,1 @@
+Additive malformed request-shape control: sourceId in records ref is refused INPUT before inspector. It does not prove located missing-element path semantics. The adjacent sol-missing-selected-element-valid-review control uses an admitted Ref shape.

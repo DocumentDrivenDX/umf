@@ -1,0 +1,19 @@
+[package]
+name = "umf-core-python"
+version = "0.1.0"
+edition = "2021"
+license = "MIT OR Apache-2.0"
+publish = false
+
+[lib]
+name = "_rust_core"
+crate-type = ["cdylib"]
+
+[dependencies]
+pyo3 = { version = "=0.23.5", features = ["extension-module", "abi3-py311"] }
+num-bigint = "=0.4.8"
+umf-core = { path = "../../../crates/umf-core" }
+umf-core-wire = { path = "../../../crates/umf-core-wire" }
+
+[build-dependencies]
+pyo3-build-config = "=0.23.5"

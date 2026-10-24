@@ -6,14 +6,18 @@ build-backend = "hatchling.build"
 license = "MIT OR Apache-2.0"
 license-files = ["LICENSE.md", "LICENSE-MIT", "LICENSE-APACHE"]
 name = "umf_access"
-version = "0.1.0.dev6"
+version = "0.1.0.dev7"
 description = "Local prerelease typed access runtime; target qualification pending"
 requires-python = ">=3.11,<3.15"
 dependencies = ["pydantic>=2.13,<3", "typing-extensions>=4.16,<5"]
 
+[project.optional-dependencies]
+sql-containment = ["pglast==7.20"]
+
 [project.scripts]
 umf-access = "umf_access.build.catalog:main"
 umf-table = "umf_access.lifecycle.cli:main"
+umf-sql-check = "umf_access.lifecycle.sql_containment_cli:main"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/umf_access"]

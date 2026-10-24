@@ -1,0 +1,37 @@
+{
+  "schema": "umf.r3.native-migration-replay/1",
+  "plansSha256": "cdc0d8c3943c25afd148718880956eb0977d485627bdb3a00d45f0fce173e138",
+  "planDigests": {
+    "initial": "485adc82ad369f9f288c82c1e48c2eb8d6ec2dad79d5bb863f9be33ebc3c00ef",
+    "forward": "f8a0fe3eb696a2936d2ea17da28fde08e50e45aefe8113843b595992732e7c30"
+  },
+  "bundleDigests": {
+    "initial": "ab585d07e95d00c0186c039c9d5b50f214133656791c4e4604a3c0ae4bff4c0e",
+    "forward": "7a1a01c15e137dfa784f5234b9855f14397234b25cbec897dc5316740579d78c"
+  },
+  "initialStepCount": 84,
+  "forwardStepCount": 10,
+  "backfillOperation": "backfill_review",
+  "checks": [
+    "rust-initial-plan-committed",
+    "rust-forward-mixed-plan-committed",
+    "weft-backfill-updated-both-fixture-rows"
+  ],
+  "postgresVersion": "PostgreSQL 18.6 (Homebrew) on aarch64-apple-darwin27.0.0, compiled by Apple clang version 21.0.0 (clang-2100.3.34.2), 64-bit",
+  "reviewStateRows": [
+    "restricted",
+    "restricted"
+  ],
+  "initialReceiptStatus": "applied-in-transaction",
+  "forwardReceiptStatus": "committed",
+  "weftVersion": "0.4.48",
+  "pythonCodegenHostVersion": "0.1.0a4",
+  "status": "passed",
+  "runnerSha256": "fa935426dd1fcba53c20be40d3342efffe175bc59d7b8d46d18ba8f43b1e39a0",
+  "sourceSha256ManifestSha256": "6e09fa63d2f76597ff77c0f8519cb73626e96de51340c1a0a0a75aa9a84b66f9",
+  "pythonRuntime": "3.11.17",
+  "weftWheel": {
+    "filename": "weft_sql-0.4.48-cp39-abi3-macosx_11_0_arm64.whl",
+    "sha256": "0b5df2a1f00f5aa907799659995086ac7b8a4d49d5434b070295f5c8bd3e96bd"
+  }
+}

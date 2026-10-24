@@ -1,0 +1,39 @@
+{
+  "schema": "umf.r3-incremental-native-replay/1",
+  "scope": "Incremental diagnostic replay; binary hash does not independently establish a clean source/build cohort",
+  "binary": "/Users/erik/.codex/worktrees/rust-binding-spike/umf/target/release/examples/r3_replay",
+  "binarySha256": "9c731b3b65c4370d4cad6f5070c780ff7a1e660635ed01ede442eb8c4900497e",
+  "binaryChangedDuringRun": false,
+  "fixture": "/private/tmp/sol-row-truthiness.json",
+  "fixtureSha256": "20310fc9a90ba6529c99590e543140bfed83f74bb0250c833607c515b342ade9",
+  "driverScriptSha256": "444c13fa3ff53c68e3476755511107072017c6b84907ea956222958535c000f0",
+  "elapsedSeconds": 0.7746913750000001,
+  "cases": 4,
+  "matches": 4,
+  "mismatches": [],
+  "outcomes": [
+    {
+      "id": "sol7_open_binding_object",
+      "operation": "normalizeRowScope",
+      "matches": true
+    },
+    {
+      "id": "sol7_open_binding_string",
+      "operation": "normalizeRowScope",
+      "matches": true
+    },
+    {
+      "id": "sol7_open_binding_number",
+      "operation": "normalizeRowScope",
+      "matches": true
+    },
+    {
+      "id": "sol7_open_binding_false",
+      "operation": "normalizeRowScope",
+      "matches": true
+    }
+  ],
+  "actualPath": "/private/tmp/sol-freeze-truthiness.actual.json",
+  "rawPath": "/private/tmp/sol-freeze-truthiness.stdout.jsonl",
+  "stderrPath": "/private/tmp/sol-freeze-truthiness.stderr.log"
+}

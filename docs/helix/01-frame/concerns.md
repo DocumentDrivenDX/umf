@@ -24,7 +24,7 @@ context, not a technology stack or another requirements layer.
 
 | Concern | Source | Areas | Why Active | Key Practices |
 | --- | --- | --- | --- | --- |
-| `typescript-bun` | HELIX library; `language-runtime` slot; owner-selected and recorded by ADR-002 | all | TypeScript is the implementation language, Bun is the pinned development/package/test runtime, and the shipped library must execute as browser JavaScript. | Pin Bun and TypeScript; keep strict type checks (`noUncheckedIndexedAccess`, `exactOptionalPropertyTypes`); use `bun:test`; confine Bun/host APIs to scripts, tests, and CLI boundaries; require a host-global-free browser build and actual Chromium checks. |
+| Rust shared execution with `typescript-bun` host tooling | Project-local owner direction; ADR-006; ADR-002 retained for JS tooling | all | Rust owns shared executable semantics; Python/Node/Bun bind the engine and browsers use WASM. | Pin Rust/Cargo and binding tools; retain strict TS/Bun checks and actual Chromium; enforce engine/host boundaries, installed artifact parity and exact/unknown preservation. |
 | Fidelity and partial understanding | project-local; owner requirements | `area:model`, `area:adapters`, `area:transform` | NFR-1, NFR-2, NFR-3, NFR-23, NFR-24, NFR-25, NFR-31, NFR-40, NFR-44 | Preserve unknown/native content; distinguish safe operations from retention; compare native meaning; retain disagreement. |
 | Identity and vocabulary composition | project-local; owner requirements | `area:model`, `area:extensions` | NFR-5, NFR-6, NFR-7, NFR-8, NFR-9, NFR-10, NFR-34, NFR-41, NFR-42, NFR-43 | Exercise stable identity, explicit resolution, isolated versioned vocabularies, declared authority, and conservative core promotion. |
 | Reproducible portable processing | project-local; owner requirements | `area:model`, `area:transform`, `area:tooling` | NFR-4, NFR-11, NFR-12, NFR-13, NFR-14, NFR-26, NFR-27, NFR-45, NFR-47 | Pin semantic inputs, retain origins, support offline packages, and compare optimized behavior with normative outcomes. |
@@ -38,7 +38,7 @@ context, not a technology stack or another requirements layer.
 | Concern | Practice | Override | Authority |
 | --- | --- | --- | --- |
 | `typescript-bun` | Prefer Bun-native file, process, environment, and service APIs throughout implementation. | Bun-native and Node-compatible host APIs are permitted only in development scripts, tests, native oracles, and CLI boundaries. Browser-facing `src/` modules receive data and dependencies explicitly and must build and run without host globals. | ADR-002; FR-39 |
-| `typescript-bun` | Use Bun workspaces and split code into concern-specific packages. | UMF remains one private package while its portable source, tooling, schemas, fixtures, and extension packages are developed together. A workspace split requires a later decision backed by a concrete independent-release or dependency-boundary need. | ADR-002; current package boundary |
+| `typescript-bun` | Use Bun workspaces and split code into concern-specific packages. | ADR-006 permits a Cargo workspace and native Python/npm/WASM distributions sharing the same Rust engine. The existing private TS package can remain for host tooling during cutover. | ADR-006; ADR-002 tooling boundary |
 | `typescript-bun` | Require Biome linting/formatting and its prescribed formatting profile. | Biome is not an accepted gate for the current repository. Review, strict TypeScript checks, focused/full Bun tests, schema/package audits, browser builds, and actual Chromium runs are the recorded gates. Adopting a formatter or linter requires an explicit tooling decision and a repository-wide baseline. | ADR-002; TP-001 |
 | `typescript-bun` | Require `verbatimModuleSyntax` and prohibit every explicit `any`. | The accepted compiler boundary is the checked-in strict `tsconfig.json`, including `noUncheckedIndexedAccess` and `exactOptionalPropertyTypes`. Module preservation and stronger source-style restrictions are not claimed until separately enabled and validated across the existing adapter corpus. | ADR-002; checked-in TypeScript configuration |
 
@@ -92,8 +92,9 @@ FEAT-008 retains the selected fidelity, qualified identity, bounded processing, 
 ## Typed data access SDK application
 
 FEAT-028 to FEAT-031 adopt the existing fidelity, identity, reproducibility,
-bounded-processing, conformance and consumer-runtime concerns. ADR-002's
-`typescript-bun` selection remains for the stage-one generator. ADR-004 adds the
+bounded-processing, conformance and consumer-runtime concerns. ADR-006 moves the
+stage-one generator to Rust, retaining ADR-002 for JavaScript tooling and browser
+verification. ADR-004 adds the
 `umf_access` Python distribution for the DSL, catalog build and runtime; Python
 is a target and runtime language for this capability only. No UI or
 authentication provider is selected; datastores are host-selected targets, not
@@ -121,7 +122,7 @@ already enforces those new paths.
 ## Generated ontology access
 
 FEAT-033 follows the existing fidelity, identity, reproducibility, bounded
-processing and consumer-runtime constraints. ADR-002 governs the generator;
+processing and consumer-runtime constraints. ADR-006 governs the shared generator;
 generated Python uses only the standard library. Future generator/codec modules
 retain the existing encapsulation requirements. Developers need no extra setup.
 
@@ -129,3 +130,23 @@ The owner's shared-API clarification makes stdlib-only generated models and
 runtime expression composition common to table and ontology access. Compilation,
 preparation and optional runtime dependencies belong inside consumer bindings;
 mandatory `@query`/`Param` application scaffolding is superseded by ADR-004.
+
+## Shared Rust execution application
+
+ADR-006 overrides the TypeScript shared-engine preference while retaining Bun/TS
+host development. Apply `modularity-and-encapsulation` to Rust core, compiler,
+adapters and each binding. Cargo graphs and cross-language import controls must
+prevent host I/O and semantic forks in wrappers. TP-001 requires installed
+native/Python/Node/Bun/browser parity. Native dependencies and consumer-owned
+execution retain explicit capability boundaries; generated Python stays stdlib-only.
+
+## Extension-defined kinds application
+
+FEAT-001 EXT-05/06 and US-904 reuse the selected fidelity, exact identity,
+bounded-processing, conformance and runtime-boundary concerns. Apply the
+`modularity-and-encapsulation` source baseline (`baseline-policy`) to the new
+Rust registry/kind mechanics and their binding/facade paths. Architecture owns
+the scoped map; CONTRACT-906 owns exact interfaces. Implementation readiness
+requires boundary-checker adoption and its negative controls. Generic discovery
+does not infer ecosystem equivalence or confer core Field/Record semantics.
+This library design adds no UI framework, service, datastore or telemetry sink.

@@ -1,0 +1,77 @@
+{
+  "caches": "disabled",
+  "databaseConnectionAttempted": false,
+  "defaultCohortCell": {
+    "architecture": "arm64",
+    "libc": "not applicable",
+    "os": "macos-27",
+    "python": "3.11"
+  },
+  "defaultMirror": {
+    "containsPglast": false,
+    "manifestSha256": "8a0c48b944ac4da487f6888b31023adfe57bbf2ee144da1ff7685189f2a927a1",
+    "path": "/private/tmp/umf-embedder-final-cohort-v2/mirror",
+    "wheelCount": 29
+  },
+  "freshEnvironments": {
+    "defaultOnly": "/private/tmp/umf-pglast-final-v2-default-venv",
+    "optionalCombined": "/private/tmp/umf-pglast-final-v2-optional-venv"
+  },
+  "networkIsolation": "macOS sandbox-exec deny network*",
+  "networkUsedForInstall": false,
+  "optionalCohortCell": null,
+  "optionalMirror": {
+    "lockSha256": "e1fceac329977419f0009c33e1acc8cf8bb97fa469dc40c231f47faec8826ce8",
+    "manifestSha256": "603af1571efbd28f7ea1846f0bf79dfbf230bc86d1c711492185cb04ab5b733b",
+    "path": "/private/tmp/umf-pglast-final-mirror-v2",
+    "wheelCount": 4
+  },
+  "profile": "umf.optional-pglast-installed-smoke/1",
+  "pythonVersion": "Python 3.11.17",
+  "runnerIdentity": {
+    "architecture": "arm64",
+    "macVersion": "27.0.1",
+    "system": "Darwin"
+  },
+  "sourceBuilds": "forbidden",
+  "status": "passed-local-smoke",
+  "steps": {
+    "defaultCliImportLazy": {
+      "status": "passed",
+      "stderrTail": "",
+      "stdoutTail": "default CLIs import without pglast\n"
+    },
+    "defaultInstall": {
+      "status": "passed",
+      "stderrTail": "",
+      "stdoutTail": "rocessing /private/tmp/umf-embedder-final-cohort-v2/mirror/files/ruamel_yaml-0.19.1-py3-none-any.whl (from -r /private/tmp/umf-embedder-final-cohort-v2/mirror/requirements.lock (line 12))\nProcessing /private/tmp/umf-embedder-final-cohort-v2/mirror/files/typing_extensions-4.16.0-py3-none-any.whl (from -r /private/tmp/umf-embedder-final-cohort-v2/mirror/requirements.lock (line 13))\nProcessing /private/tmp/umf-embedder-final-cohort-v2/mirror/files/typing_inspection-0.4.4-py3-none-any.whl (from -r /private/tmp/umf-embedder-final-cohort-v2/mirror/requirements.lock (line 14))\nProcessing /private/tmp/umf-embedder-final-cohort-v2/mirror/files/umf_access-0.1.0.dev7-py3-none-any.whl (from -r /private/tmp/umf-embedder-final-cohort-v2/mirror/requirements.lock (line 15))\nProcessing /private/tmp/umf-embedder-final-cohort-v2/mirror/files/umf_codegen-0.1.0a4-py3-none-any.whl (from -r /private/tmp/umf-embedder-final-cohort-v2/mirror/requirements.lock (line 16))\nProcessing /private/tmp/umf-embedder-final-cohort-v2/mirror/files/umf_core-0.10.0-py3-none-any.whl (from -r /private/tmp/umf-embedder-final-cohort-v2/mirror/requirements.lock (line 17))\nProcessing /private/tmp/umf-embedder-final-cohort-v2/mirror/files/weft_sql-0.4.49-cp39-abi3-macosx_11_0_arm64.whl (from -r /private/tmp/umf-embedder-final-cohort-v2/mirror/requirements.lock (line 18))\nInstalling collected packages: weft-sql, typing-extensions, ruamel-yaml, rpds-py, psycopg-binary, mini-racer, attrs, annotated-types, umf-codegen, typing-inspection, referencing, pydantic-core, psycopg, pydantic, jsonschema-specifications, umf-access, jsonschema, umf-core\nSuccessfully installed annotated-types-0.8.0 attrs-26.1.0 jsonschema-4.26.0 jsonschema-specifications-2025.9.1 mini-racer-0.14.1 psycopg-3.2.13 psycopg-binary-3.2.13 pydantic-2.14.1 pydantic-core-2.50.1 referencing-0.37.0 rpds-py-2026.9.1 ruamel-yaml-0.19.1 typing-extensions-4.16.0 typing-inspection-0.4.4 umf-access-0.1.0.dev7 umf-codegen-0.1.0a4 umf-core-0.10.0 weft-sql-0.4.49\n"
+    },
+    "defaultPipCheck": {
+      "status": "passed",
+      "stderrTail": "",
+      "stdoutTail": "No broken requirements found.\n"
+    },
+    "fiveParserUnitFamilies": {
+      "status": "passed",
+      "stderrTail": "test_cli_is_offline_and_retains_source (test_sql_containment.ContainmentTests.test_cli_is_offline_and_retains_source) ... ok\ntest_hostile_or_unresolved_sql_refuses (test_sql_containment.ContainmentTests.test_hostile_or_unresolved_sql_refuses) ... ok\ntest_limits_and_inventories_fail_closed (test_sql_containment.ContainmentTests.test_limits_and_inventories_fail_closed) ... ok\ntest_supported_statements_parse_every_reference (test_sql_containment.ContainmentTests.test_supported_statements_parse_every_reference) ... ok\ntest_trusted_parser_version_and_closed_ast (test_sql_containment.ContainmentTests.test_trusted_parser_version_and_closed_ast) ... ok\n\n----------------------------------------------------------------------\nRan 5 tests in 0.455s\n\nOK\n",
+      "stdoutTail": ""
+    },
+    "installedParserIdentity": {
+      "status": "passed",
+      "stderrTail": "",
+      "stdoutTail": "7.20\n{\"version\":170007,\"stmts\":[{\"stmt\":{\"SelectStmt\":{\"targetList\":[{\"ResTarget\":{\"val\":{\"A_Const\":{\"ival\":{\"ival\":1},\"locat\n"
+    },
+    "optionalInstall": {
+      "status": "passed",
+      "stderrTail": "",
+      "stdoutTail": "uirements.lock (line 12))\nProcessing /private/tmp/umf-embedder-final-cohort-v2/mirror/files/typing_extensions-4.16.0-py3-none-any.whl (from -r /private/tmp/umf-embedder-final-cohort-v2/mirror/requirements.lock (line 13))\nProcessing /private/tmp/umf-embedder-final-cohort-v2/mirror/files/typing_inspection-0.4.4-py3-none-any.whl (from -r /private/tmp/umf-embedder-final-cohort-v2/mirror/requirements.lock (line 14))\nProcessing /private/tmp/umf-embedder-final-cohort-v2/mirror/files/umf_access-0.1.0.dev7-py3-none-any.whl (from -r /private/tmp/umf-embedder-final-cohort-v2/mirror/requirements.lock (line 15))\nProcessing /private/tmp/umf-embedder-final-cohort-v2/mirror/files/umf_codegen-0.1.0a4-py3-none-any.whl (from -r /private/tmp/umf-embedder-final-cohort-v2/mirror/requirements.lock (line 16))\nProcessing /private/tmp/umf-embedder-final-cohort-v2/mirror/files/umf_core-0.10.0-py3-none-any.whl (from -r /private/tmp/umf-embedder-final-cohort-v2/mirror/requirements.lock (line 17))\nProcessing /private/tmp/umf-embedder-final-cohort-v2/mirror/files/weft_sql-0.4.49-cp39-abi3-macosx_11_0_arm64.whl (from -r /private/tmp/umf-embedder-final-cohort-v2/mirror/requirements.lock (line 18))\nProcessing ./files/pglast-7.20-cp311-cp311-macosx_11_0_arm64.whl (from -r /private/tmp/umf-pglast-final-mirror-v2/requirements.lock (line 1))\nInstalling collected packages: pglast, weft-sql, typing-extensions, ruamel-yaml, rpds-py, psycopg-binary, mini-racer, attrs, annotated-types, umf-codegen, typing-inspection, referencing, pydantic-core, psycopg, pydantic, jsonschema-specifications, umf-access, jsonschema, umf-core\nSuccessfully installed annotated-types-0.8.0 attrs-26.1.0 jsonschema-4.26.0 jsonschema-specifications-2025.9.1 mini-racer-0.14.1 pglast-7.20 psycopg-3.2.13 psycopg-binary-3.2.13 pydantic-2.14.1 pydantic-core-2.50.1 referencing-0.37.0 rpds-py-2026.9.1 ruamel-yaml-0.19.1 typing-extensions-4.16.0 typing-inspection-0.4.4 umf-access-0.1.0.dev7 umf-codegen-0.1.0a4 umf-core-0.10.0 weft-sql-0.4.49\n"
+    },
+    "optionalPipCheck": {
+      "status": "passed",
+      "stderrTail": "",
+      "stdoutTail": "No broken requirements found.\n"
+    }
+  },
+  "supportClaim": "none for optional intended cells; actual host is macOS 27, lock targets macOS 14",
+  "timestampUtc": "2026-10-22T12:53:35.684684+00:00"
+}

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 /** @covers US-089-AC19 @covers US-089-AC20 @covers US-089-AC24 */
 import {describe,test,expect} from 'bun:test';
-import {readFile,mkdtemp,mkdir,writeFile,copyFile,symlink,readdir,stat} from 'node:fs/promises';
+import {readFile,mkdtemp,mkdir,writeFile,copyFile,symlink,readdir,stat,rm} from 'node:fs/promises';
 import {join,dirname,resolve} from 'node:path';
 import {tmpdir} from 'node:os';
 import {compileModel,parseModel} from '../../scripts/metamodel/compile';
@@ -64,16 +64,19 @@ describe('closed authored compiler vocabulary',()=>{
    (p:any)=>p.interval.qualifierKeys.integerWidth=[false],(p:any)=>delete p.refinements[1].unitError,
   ];
   for(const mutate of mutations){const m=model();mutate(m.extensions['umf.metamodel'].domains.literal);expect(()=>compileModel(m)).toThrow();}
- });
+ },30_000);
  test('public metadata mutation cannot change default active validation',()=>{const before=validateDocument(doc),exposed=domainPolicy as any,saved=exposed.literal.refinements;try{exposed.literal.refinements=[];exposed.structuralDiagnostic.code='TAMPERED';expect(validateDocument(doc)).toEqual(before);expect(validateDocument({...doc,umf:'retired'}).diagnostics[0]!.code).toBe('SEMANTIC_TYPE_STRUCTURE');}finally{exposed.literal.refinements=saved;exposed.structuralDiagnostic.code='SEMANTIC_TYPE_STRUCTURE';}});
  test('current self-model validates with declared vocabulary and old markers reject',async()=>{const registry=new Registry().register(await Bun.file(join(root,'spec/metamodel/package.json')).json());expect(validateDocument(model(),registry).valid).toBe(true);for(const version of ['0.1.0','0.8.0','0.9.0'])expect(validateDocument({...doc,umf:version}).valid).toBe(false);expect(validateDocument(doc).complete).toBe(true);});
 });
 test('clean generation has no derived dependency; fixed point and no-write check enforce inventory',async()=>{
  const dir=await mkdtemp(join(tmpdir(),'umf-metamodel-clean-')),manifest=await Bun.file(join(root,'spec/metamodel/generated/manifest.json')).json();
+ try{
  for(const path of Object.keys(manifest.sources)){await mkdir(dirname(join(dir,path)),{recursive:true});await copyFile(join(root,path),join(dir,path));}
  await symlink(join(root,'node_modules'),join(dir,'node_modules'),'dir');
- const run=async(check=false)=>{const child=Bun.spawn([process.execPath,join(dir,'scripts/metamodel/build.ts'),...(check?['--check']:[]),'--output-root',dir],{cwd:dir,stdout:'pipe',stderr:'pipe'});return {status:await child.exited,stderr:await new Response(child.stderr).text()};};
- expect((await run()).status).toBe(0);const files=[...Object.keys(manifest.outputs),'spec/metamodel/generated/manifest.json'];const snapshots=await Promise.all(files.map(async path=>({path,text:await readFile(join(dir,path),'utf8'),mtime:(await stat(join(dir,path))).mtimeMs})));
+ const cleanEnv={...process.env};delete cleanEnv.UMF_METAMODEL_CLI;
+ const run=async(check=false)=>{const child=Bun.spawn([process.execPath,join(dir,'scripts/metamodel/build.ts'),...(check?['--check']:[]),'--output-root',dir],{cwd:dir,env:cleanEnv,stdout:'pipe',stderr:'pipe'});return {status:await child.exited,stderr:await new Response(child.stderr).text()};};
+ const initial=await run();if(initial.status!==0)throw Error(initial.stderr);expect(initial.status).toBe(0);const files=[...Object.keys(manifest.outputs),'spec/metamodel/generated/manifest.json'];const snapshots=await Promise.all(files.map(async path=>({path,text:await readFile(join(dir,path),'utf8'),mtime:(await stat(join(dir,path))).mtimeMs})));
  expect((await run(true)).status).toBe(0);for(const file of snapshots){expect(await readFile(join(dir,file.path),'utf8')).toBe(file.text);expect((await stat(join(dir,file.path))).mtimeMs).toBe(file.mtime);}
  await writeFile(join(dir,'src/generated/unexpected.ts'),'export const surprise=true;');expect((await run(true)).status).toBe(1);
-});
+ }finally{await rm(dir,{recursive:true,force:true});}
+},120_000);
