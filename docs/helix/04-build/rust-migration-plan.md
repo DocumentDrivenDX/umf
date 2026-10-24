@@ -758,10 +758,20 @@ operation tests. Sol's final source review closed the semantic-callback,
 URI-diagnostic and root/resource-collision ordering findings without a remaining
 P1/P2 in that scope. The shared wire dispatcher passes two focused tests; the
 [opt-in host shard](evidence/rust-migration/r5-json-schema-bindings/host-shard.md)
-passes 11 Bun wrapper controls and the generated WASM source check. Those tests
-do not qualify an actual native addon, packaged WASM in Chromium, Python wheels
-or the 30-case frozen operation replay. Python/CLI source review and real-host
-qualification remain in progress. No default adapter switch or TypeScript
+passes 11 Bun wrapper controls and the generated WASM source check. Python and
+CLI source review passes for the seven-operation profile, with direct CPython
+extension and clean-PATH CLI checks; installed Python wheels remain open. The
+[pre-repair real-host receipt](evidence/rust-migration/r5-json-schema-bindings/real-hosts.md)
+replayed the frozen 30 cases on Node and Bun native addons plus fresh packaged
+WASM on Bun and Chromium. Each path matched 25/30 exact outcomes and passed
+five public-engine work/cancellation/deadline/meter controls. Two mismatches
+are diagnostic wording; three contain the same conservative `complete: false`
+validator warning. The receipt binds the pre-repair inspector and artifact
+hashes, so later source changes need fresh host replay. Frozen predecessor
+error paths were not captured and remain unqualified. The reviewed
+[native-complete proposal](evidence/rust-migration/r5-json-schema/native-complete-subset-proposal-2026-10-23.md)
+narrows a future `complete: true` profile and its independent-oracle gates; it
+records no implementation claim. No default adapter switch or TypeScript
 retirement is credited.
 
 The next bounded CONTRACT-003 Protobuf shard is only the binary descriptor
