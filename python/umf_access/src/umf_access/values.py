@@ -100,9 +100,36 @@ def _native_values_bridge() -> Any:
 def validate_string(value: object) -> str:
     if not isinstance(value, str):
         raise ValueRuleError("string carrier required")
-    if any(0xD800 <= ord(char) <= 0xDFFF for char in value):
+    if type(value) is not str:
+        # Subclasses can replace iteration. Keep their Python protocol,
+        # short-circuiting, and original exceptions exactly as before.
+        if any(0xD800 <= ord(char) <= 0xDFFF for char in value):
+            raise ValueRuleError("string contains unpaired surrogate")
+        return value
+    native = _native_string_bridge()
+    result = native.access_values_validate_string(value)
+    if type(result) is not bool:
+        raise ValueRuleError("native string result differs")
+    if not result:
         raise ValueRuleError("string contains unpaired surrogate")
     return value
+
+
+def _native_string_bridge() -> Any:
+    """Require the exact installed Rust string profile; never use a fallback."""
+    try:
+        from umf import rust_values
+    except ImportError:
+        raise ValueRuleError("installed umf-core Rust string engine required") from None
+    version = getattr(rust_values, "access_values_string_profile_version", None)
+    validate = getattr(rust_values, "access_values_validate_string", None)
+    try:
+        matches = callable(version) and version() == "umf-access-string/0.1.0"
+    except (TypeError, ValueError, OverflowError):
+        matches = False
+    if not (matches and callable(validate)):
+        raise ValueRuleError("installed umf-core lacks the required string profile")
+    return rust_values
 
 
 def validate_binary(value: object) -> bytes:

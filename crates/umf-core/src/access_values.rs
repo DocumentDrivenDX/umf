@@ -1,8 +1,10 @@
-//! Exact integer-width and decimal precision/scale decisions for typed access.
+//! Exact value admission decisions for typed access.
 //!
 //! Python owns carrier admission and Decimal tuple extraction. This module
-//! owns the arithmetic decisions and deliberately avoids powers of ten.
+//! owns arithmetic and Unicode scalar decisions without expanding powers of
+//! ten or materializing full-string copies.
 
+use crate::{Context, EngineError, Utf16};
 use num_bigint::{BigInt, BigUint};
 use num_traits::{One, ToPrimitive, Zero};
 use std::{cmp::Ordering, fmt};
@@ -52,6 +54,25 @@ impl fmt::Display for AccessValuesError {
 }
 
 impl std::error::Error for AccessValuesError {}
+
+/// Check a streamed sequence of Python code points for Unicode scalar values.
+/// The iterator stays lazy: every inspected point is charged before the
+/// decision, and the scan stops at the first surrogate code point.
+pub fn validate_unicode_scalar_stream<I>(
+    codepoints: I,
+    context: &mut Context<'_>,
+) -> Result<bool, EngineError>
+where
+    I: IntoIterator<Item = u32>,
+{
+    for codepoint in codepoints {
+        context.charge_work(1, Utf16::default())?;
+        if codepoint > 0x10FFFF || (0xD800..=0xDFFF).contains(&codepoint) {
+            return Ok(false);
+        }
+    }
+    Ok(true)
+}
 
 /// Return whether an already admitted arbitrary-precision integer fits its
 /// authored width. `bits` remains arbitrary precision; no narrowing occurs.
@@ -309,5 +330,79 @@ mod tests {
             validate_float32(1.0 + 2.0f64.powi(-24)),
             Err(Float32Error::Rounding)
         );
+    }
+
+    #[test]
+    fn unicode_scalar_stream_is_lazy_and_stops_at_the_first_surrogate() {
+        let mut consumed = 0;
+        let codepoints = [u32::from('a'), 0xD800, u32::from('b')]
+            .into_iter()
+            .inspect(|_| consumed += 1);
+        assert!(!validate_unicode_scalar_stream(
+            codepoints,
+            &mut Context::ordinary()
+        )
+        .unwrap());
+        assert_eq!(consumed, 2);
+
+        let accepted = [u32::from('A'), 0x1F600, 0x0301];
+        assert!(validate_unicode_scalar_stream(
+            accepted,
+            &mut Context::ordinary()
+        )
+        .unwrap());
+        assert!(!validate_unicode_scalar_stream(
+            [0x110000],
+            &mut Context::ordinary()
+        )
+        .unwrap());
+    }
+
+    #[test]
+    fn unicode_scalar_stream_obeys_meter_and_cancellation_per_point() {
+        let mut meter_calls = 0;
+        let mut meter = |amount| {
+            meter_calls += 1;
+            if meter_calls == 2 {
+                Err(EngineError::new(
+                    "METER_FAILURE",
+                    Utf16::default(),
+                    "denied during streamed string admission",
+                ))
+            } else {
+                assert_eq!(amount, 1);
+                Ok(())
+            }
+        };
+        let mut consumed = 0;
+        let codepoints = [u32::from('a'), u32::from('b'), u32::from('c')]
+            .into_iter()
+            .inspect(|_| consumed += 1);
+        let error = validate_unicode_scalar_stream(
+            codepoints,
+            &mut Context::ordinary().with_meter(&mut meter),
+        )
+        .unwrap_err();
+        assert_eq!(error.code, "METER_FAILURE");
+        assert_eq!(meter_calls, 2);
+        assert_eq!(consumed, 2);
+
+        let mut cancellation_calls = 0;
+        let mut cancel = || {
+            cancellation_calls += 1;
+            cancellation_calls == 2
+        };
+        let mut consumed = 0;
+        let codepoints = [u32::from('a'), u32::from('b'), u32::from('c')]
+            .into_iter()
+            .inspect(|_| consumed += 1);
+        let error = validate_unicode_scalar_stream(
+            codepoints,
+            &mut Context::ordinary().with_cancellation(&mut cancel),
+        )
+        .unwrap_err();
+        assert_eq!(error.code, "CANCELLED");
+        assert_eq!(cancellation_calls, 2);
+        assert_eq!(consumed, 2);
     }
 }

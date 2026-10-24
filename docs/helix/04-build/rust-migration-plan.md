@@ -1052,6 +1052,21 @@ numeric codec paths and reached native PostgreSQL/Weft checks remain open.
 The current raw numeric bridge still lacks a hard host work/deadline/cancel
 contract; its work accounting cannot be represented as a resource ceiling.
 
+The bounded [R6 Python string admission checkpoint](evidence/rust-migration/r6-string/README.md)
+moves the Unicode-scalar decision for exact built-in `str` to a versioned Rust
+core/PyO3 bridge. The binding streams CPython code points without a UTF-8
+conversion or whole-string copy, so lone surrogates remain observable. Python
+retains the initial carrier check, original-object return, and the predecessor's
+iteration, short-circuit and exception behavior for `str` subclasses. The
+frozen 18-case CPython predecessor packet, focused Rust meter/cancellation
+tests, an installed CPython 3.11 wheel and 19 focused access/projection tests
+pass; an independent Sol review also checked all 1,114,112 CPython code points
+through the raw installed binding and found no P1/P2. The recorded wheel is a
+historical source cohort because concurrent R5 schema edits followed its build.
+The raw bridge has no host work ceiling, deadline or cancellation callback;
+final-cohort wheel rebuild, other Python platforms and live native consumers
+remain open.
+
 The bounded R6 binary32 slice delegates per-scalar IEEE float32 classification
 from `validate_vector` and `validate_float32` to Rust through public
 `umf.rust_values` capability `umf-access-float32/0.1.0`. Python retains exact

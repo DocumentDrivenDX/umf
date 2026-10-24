@@ -2,10 +2,15 @@
 """Red specification for proposed runtime ABI; not generated-model acceptance."""
 
 import unittest
+import sys
 from datetime import date, datetime, timedelta, timezone
 from decimal import Decimal, localcontext
+from types import ModuleType, SimpleNamespace
+from unittest.mock import patch
 
+from umf import rust_values
 from umf_access.values import (
+    FieldValidator,
     validate_allowed,
     validate_binary,
     validate_boolean,
@@ -70,6 +75,111 @@ class ValuePolicyTests(unittest.TestCase):
         for value in ("\ud800", "x\udfff", b"text", 1):
             with self.assertRaises(ValueError):
                 validate_string(value)
+
+    def test_string_rust_admission_preserves_identity_and_subclass_protocol(self):
+        self.assertEqual(
+            rust_values.access_values_string_profile_version(), "umf-access-string/0.1.0"
+        )
+        for value in ("", "ASCII", "é", "😀", "e\u0301"):
+            self.assertIs(rust_values.access_values_validate_string(value), True)
+        for value in ("\ud800", "x\udfff", "\ud83d\ude00"):
+            self.assertIs(rust_values.access_values_validate_string(value), False)
+        class RawSubclass(str):
+            pass
+
+        with self.assertRaisesRegex(ValueError, "string carrier required"):
+            rust_values.access_values_validate_string(RawSubclass("subclass"))
+
+        for value in ("", "ascii", "é", "e\u0301", "😀"):
+            self.assertIs(validate_string(value), value)
+            self.assertIs(FieldValidator(kind="string")(value), value)
+        for value in ("\ud800", "x\udfff", "\ud83d\ude00"):
+            for validator in (validate_string, FieldValidator(kind="string")):
+                with self.subTest(value=repr(value)), self.assertRaisesRegex(
+                    ValueError, "string contains unpaired surrogate"
+                ):
+                    validator(value)
+
+        class IteratedString(str):
+            def __iter__(self):
+                return iter(("v",))
+
+        class SurrogateString(str):
+            def __iter__(self):
+                return iter(("\ud800",))
+
+        class IterationFailure(Exception):
+            pass
+
+        failure = IterationFailure("custom iteration failed")
+
+        class RaisingString(str):
+            def __iter__(self):
+                raise failure
+
+        for value in (IteratedString("stored"),):
+            self.assertIs(validate_string(value), value)
+            self.assertIs(FieldValidator(kind="string")(value), value)
+        for value in (SurrogateString("stored"),):
+            for validator in (validate_string, FieldValidator(kind="string")):
+                with self.assertRaisesRegex(ValueError, "string contains unpaired surrogate"):
+                    validator(value)
+        for validator in (validate_string, FieldValidator(kind="string")):
+            with self.assertRaises(IterationFailure) as caught:
+                validator(RaisingString("stored"))
+            self.assertIs(caught.exception, failure)
+
+    def test_string_requires_matching_native_capability_for_exact_strings(self):
+        missing = ModuleType("umf")
+        with patch.dict("sys.modules", {"umf": missing}):
+            sys.modules.pop("umf.rust_values", None)
+            with self.assertRaisesRegex(ValueError, "string carrier required"):
+                validate_string(b"not a string")
+            for validator in (validate_string, FieldValidator(kind="string")):
+                with self.assertRaisesRegex(
+                    ValueError, "installed umf-core Rust string engine required"
+                ):
+                    validator("exact string")
+            with self.assertRaisesRegex(
+                ValueError, "installed umf-core Rust string engine required"
+            ):
+                validate_string("\ud800")
+
+            class Subclass(str):
+                def __iter__(self):
+                    return iter(("s",))
+
+            subclass = Subclass("stored")
+            self.assertIs(validate_string(subclass), subclass)
+            self.assertIs(FieldValidator(kind="string")(subclass), subclass)
+
+        mismatched = ModuleType("umf")
+        mismatched.rust_values = SimpleNamespace(
+            access_values_string_profile_version=lambda: "umf-access-string/9.9.9",
+            access_values_validate_string=lambda value: None,
+        )
+        with patch.dict("sys.modules", {"umf": mismatched}):
+            for validator in (validate_string, FieldValidator(kind="string")):
+                with self.assertRaisesRegex(
+                    ValueError, "installed umf-core lacks the required string profile"
+                ):
+                    validator("exact string")
+            for validator in (validate_string, FieldValidator(kind="string")):
+                with self.assertRaisesRegex(
+                    ValueError, "installed umf-core lacks the required string profile"
+                ):
+                    validator("\ud800")
+
+        native_failure = ValueError("native control failure envelope")
+        failing = ModuleType("umf")
+        failing.rust_values = SimpleNamespace(
+            access_values_string_profile_version=lambda: "umf-access-string/0.1.0",
+            access_values_validate_string=lambda value: (_ for _ in ()).throw(native_failure),
+        )
+        with patch.dict("sys.modules", {"umf": failing}):
+            with self.assertRaises(ValueError) as caught:
+                validate_string("exact string")
+            self.assertIs(caught.exception, native_failure)
 
     # @covers US-081-AC2
     def test_resolved_scalar_and_container_constraints(self):

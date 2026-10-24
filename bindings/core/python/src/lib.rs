@@ -51,6 +51,47 @@ fn access_values_profile_version() -> &'static str {
 }
 
 #[pyfunction]
+fn access_values_string_profile_version() -> &'static str {
+    "umf-access-string/0.1.0"
+}
+
+#[pyfunction]
+fn access_values_validate_string(py: Python<'_>, value: &Bound<'_, PyAny>) -> PyResult<bool> {
+    if !value.is_exact_instance_of::<PyString>() {
+        return Err(PyValueError::new_err("string carrier required"));
+    }
+    let string = value
+        .downcast::<PyString>()
+        .map_err(|_| PyValueError::new_err("string carrier required"))?;
+    let length = unsafe { pyo3::ffi::PyUnicode_GetLength(string.as_ptr()) };
+    if length < 0 {
+        return Err(PyErr::fetch(py));
+    }
+    let mut index = 0;
+    // The exact string is immutable and `index` stays within the length just
+    // returned by CPython, so ReadChar has no expected failure case here. Keep
+    // the sentinel/PyErr check in case the C API nevertheless reports one.
+    let codepoints = std::iter::from_fn(|| {
+        if index >= length {
+            return None;
+        }
+        let codepoint = unsafe { pyo3::ffi::PyUnicode_ReadChar(string.as_ptr(), index) };
+        index += 1;
+        if codepoint == u32::MAX && PyErr::occurred(py) {
+            index = length;
+        }
+        Some(codepoint)
+    });
+    let mut context = Context::ordinary();
+    let valid = umf_core::access_values::validate_unicode_scalar_stream(codepoints, &mut context)
+        .map_err(py_error)?;
+    if PyErr::occurred(py) {
+        return Err(PyErr::fetch(py));
+    }
+    Ok(valid)
+}
+
+#[pyfunction]
 fn operation_values_profile_version() -> &'static str {
     umf_core::operation_values::PROFILE_VERSION
 }
@@ -2591,6 +2632,8 @@ fn _rust_core(module: &Bound<'_, PyModule>) -> PyResult<()> {
     module.add_function(wrap_pyfunction!(access_temporal_canonical_token, module)?)?;
     module.add_function(wrap_pyfunction!(access_temporal_profile_version, module)?)?;
     module.add_function(wrap_pyfunction!(access_values_profile_version, module)?)?;
+    module.add_function(wrap_pyfunction!(access_values_string_profile_version, module)?)?;
+    module.add_function(wrap_pyfunction!(access_values_validate_string, module)?)?;
     module.add_function(wrap_pyfunction!(operation_values_profile_version, module)?)?;
     module.add_function(wrap_pyfunction!(avro_fields_profile_version, module)?)?;
     module.add_function(wrap_pyfunction!(iceberg_schema_profile_version, module)?)?;

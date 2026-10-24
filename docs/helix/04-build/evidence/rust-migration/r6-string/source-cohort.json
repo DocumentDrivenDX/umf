@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "cohort": "R6 installed core/access wheel, historical frozen source cohort",
+  "snapshot": "/private/tmp/umf-r6-snapshot",
+  "source_status": "Historical installed-wheel evidence. Schema adapter source changed after wheel build for a separate parity repair; this cohort does not claim current-worktree or final-release state.",
+  "runtime": {
+    "python": "CPython 3.11.17",
+    "hatchling": "1.27.0",
+    "rust": "1.90",
+    "target": "macOS arm64"
+  },
+  "build": {
+    "command": "PATH=/Users/erik/.rustup/toolchains/1.90.0-aarch64-apple-darwin/bin:$PATH CARGO_NET_OFFLINE=true CARGO_TARGET_DIR=/private/tmp/umf-r6-string-target /private/tmp/umf-r4-build-env/bin/python -m build --wheel --no-isolation --outdir /private/tmp/umf-r6-wheels-final python",
+    "wheel": "umf_core-0.11.0-cp311-abi3-macosx_11_0_arm64.whl",
+    "wheel_sha256": "150a204c225c620238f1b2e1b47c8bf7d2e12dd6dd7ebb47f4f39a7d8d0af654"
+  },
+  "files": {
+    "Cargo.toml": "89eac14b52190dec0bd75d0abad4c9fa5d93ea27337d7e9d87bb0aa9aa32cc9f",
+    "Cargo.lock": "82adcd46f08ad8e9589b3724e5a7a68efcb38c621092ace49dad0316ccbfeea4",
+    "rust-toolchain.toml": "9af7a084f6c81634ad8ed71a2a095dc77bc1723406e0f95dccf19f4af5d984e6",
+    "bindings/core/python/src/lib.rs": "93258be68881ab114590dcc721de21389635d16cbb28aca64853a6618f7cd24d",
+    "crates/umf-core/src/access_values.rs": "31b4b344300fdf23e0f4e7f08bf6d7d1ea82445216c27443166e23f0f2265eca",
+    "crates/umf-core/src/json_schema_adapter.rs": "5d5264dd980940f18ab50523a12ec2cbf95f57f5b9d1ec0fd7cec95ba62b12db",
+    "crates/umf-core/src/json_schema_inspect.rs": "848ca8b7340ab8641d2611655d523f4c8ce1652e129708467550603c412a9786",
+    "crates/umf-core/src/native_json.rs": "afbac8e48057179afb353dbd66370a536d11dfe48d85c517bfbda1b5d8c5f556",
+    "python/src/umf/rust_values.py": "34429de00fa71ab08412b05620d636fd8944eb74b60316d47650df848dc3362d",
+    "python/umf_access/src/umf_access/values.py": "939377d2501352f387d2a11a01c7a63cb4e8942790a13a9b8e8b96354cf92515",
+    "python/umf_access/tests/test_values_red.py": "f7f628d7bd11b05ae276394294a98f18d03557d51b7bcbe24901cbe301b5cea7",
+    "python/pyproject.toml": "2bad9324634577d69877eb8e0ada4bb3ea43612e35cc9a45014961745266c7aa",
+    "python/hatch_build.py": "277961b28565828c4a9ee431b6dc832bf378a0e68a6bc72c641c80184beaa7d0",
+    "spec/core/schema.json": "49e64fca92251784006f390a53a2af2e12c55ab43c8312fa32e03fd5ffc8c1f3",
+    "spec/metamodel/generated/manifest.json": "8adcdceec1380a0ede08fc86756e6a1fa23505626197c5e6f83bfd5e4fc0d912",
+    "spec/extensions/domain-pack/schema.json": "e34054015eae699987d7fd0640bdbc17906b129fa46b2c5770753ebf0723931e",
+    "spec/extensions/dataset-source/schema.json": "385f12f3b643f86838cb2b9baec60d85cbac1e3e543ffd015105465fa1ccbc95"
+  }
+}

@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: MIT OR Apache-2.0
-"""Public versioned bridge for exact typed-access numeric decisions."""
+"""Public versioned bridge for exact typed-access value decisions."""
 
 from . import _rust
 
@@ -18,6 +18,16 @@ def access_float32_classify(value: float) -> int:
 
 def access_values_profile_version() -> str:
     return _rust._rust_core.access_values_profile_version()
+
+
+def access_values_string_profile_version() -> str:
+    """Return the version of the Unicode scalar admission profile."""
+    return _rust._rust_core.access_values_string_profile_version()
+
+
+def access_values_validate_string(value: str) -> bool:
+    """Return whether exact built-in string code points are Unicode scalars."""
+    return _rust._rust_core.access_values_validate_string(value)
 
 
 def access_values_integer_fits(
