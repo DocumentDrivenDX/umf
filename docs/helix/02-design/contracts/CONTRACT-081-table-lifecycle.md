@@ -5917,3 +5917,244 @@ objects and native receipts; no public supplied resolver/seal/data proof.
 Activation must invoke it and reobserve live gate/roles/target/source. A source
 test's synthetic handle is only a control, never native qualification. Complete
 fence receipt/resolution digest alone cannot issue GenerationEnrollment.
+
+
+#### G04 original store birth, table enrollment and protected capture capabilities
+
+This unpublished native integration amendment closes previously unspecified
+original creation/enrollment/session seams. It explicitly preserves adopted
+protected transactional TABLE RLS disable, businessOwner collection, controller
+archive insertion and original/final RLS/settings restoration; row_security GUC
+stays on. Select exact new host policy0.2 for retained mode to signature-bind
+capacity, preserving old policy0.1's closed shape. Fixed schema COMMENT receipt
+changes no .1 table footprint and is data-free/non-confidential; it never replaces
+original external native custody. Actual implementation/native/resource/installed
+and release qualification remain required.
+
+##### Approval-bound capacity and per-table enrollment
+
+Keep exact G04 host policy0.1 unchanged. Retained-originals execution0.6 now
+requires NEW closed policy
+`{version:"umf.g04.execution-policy/0.2",phasePolicy,conversionEntryLimit,
+retainedLogicalBytesLimit,maxIssuedInstances}`. Original three values retain
+0.1 semantics/bounds; maxIssuedInstances exact integer1..1000000, default1000000.
+Complete policy digest is the one actually signed in the G11 ingress request
+and recorded in native phase/transition; do not reconstruct a different local
+capacity after approval. Irreversible/roundtrip old policy variants retain their
+original finite admission, not implicit extra members. Missing qualified host/
+session/renderer support refuses retained execution. The new member is host
+capacity, not extra Weft expression authority or author options.
+
+The original concrete native issuer prepares a per-table request exactly
+`{profile:"umf.row-table-enrollment-request/0.1",requestId,providerId,
+installationId,targetCustody,store,planDigest,planApprovalDigest,
+ingressRequestDigest,ingressApprovalDigest,executionPolicyDigest,
+previousSourceDigest,previousBundleDigest,nextSourceDigest,nextBundleDigest,
+table,record,businessRelation,tableToken,metadataNames,maxIssuedInstances}`.
+Store is the original signed store tuple profile/storeId/schemaName. BusinessRelation
+is actual `{schemaOid,schemaName,tableOid,tableName}`; record exact module/element.
+MetadataNames is exactly `{idColumn,revisionColumn,uniqueConstraint,
+revisionConstraint,trigger,function}`, derived from the adopted token32 renderer.
+All IDs/OIDs/digests and source bounds use adopted exact normal forms; request
+<=1MiB. There are NO future metadata OIDs or row values. Allocate tableToken and
+requestId in original private registry before collision checking/export/binding.
+Names must be absent in their exact native namespaces; collision refuses, not
+retries a new token after approval/unknown outcome.
+
+`prepare_row_table_enrollment(originalPhase,originalStore,verifiedPlan)` yields
+an opaque RowTableEnrollmentRequest, after original source/native/catalog/role/
+policy/selected retained-recovery correspondence. The fixed native resolver
+requires original verified plan approval AND original G11 ingress transition
+approval/reservation/phase handle plus original confirmed store. This is an
+implementation-derived effect already authorized by the EXACT retained-recovery
+plan/native profile, not a second human prompt or store-creation signature reused
+as permission to ALTER business data. Both original approvals and original context
+must actually admit that plan/table/capacity. No raw caller dict/cursor/source
+selector can mint this handle; data-free export confers no authority.
+
+Original custodian durably reserves that complete request before ALTER, yielding
+opaque RowTableEnrollmentReservation and private record exactly
+`{profile:"umf.row-table-enrollment-reservation/0.1",reservationId,requestDigest,
+providerId,installationId,targetCustody,storeId,tableToken,custodySequence}`.
+Reserve/observe/confirm/abort use original existing durable ledger and writer
+lease, bounded4096requests/8MiB. Same table/original phase effect key resolves
+one request/token/reservation; changed intent on occupied key refuses. No new
+metadata table. Unknown journal/native outcome blocks before fresh enrollment.
+
+The fixed `enroll_row_table(originalReservation)` alone can ALTER. Under actual
+exclusive business/dependency locks, durable ingress fence, SAME actual phase
+transaction and approved actor scopes, execute the adopted column/constraint/
+ledger/guard/privilege enrollment. Existing row_tables record retains its EXACT
+adopted keys, maxIssuedInstances and creationReservationDigest; the latter hashes
+this ORIGINAL reservation. The record/record_digest, actual metadata identities,
+issued IDs/count and source privilege translation commit with the ALTERs. No
+extra enrollment columns/table or supplied native success dictionary. This is
+the native enrollment receipt in the declared footprint. External confirmation
+binds that actual record digest and original created-object inventory AFTER
+positive native COMMIT. Native phase observation can validate it before COMMIT,
+but cannot claim external confirmation early. Unknown outcome observes original
+row/guard/inventory/phase outcome, never re-ALTER or adopt a same-named record.
+
+##### Original store creation reservation and native receipt
+
+Use original signed native-store-creation approval for the EXACT store tuple
+and full actual native authority evidence, verified through original issuer/
+context. Custodian reserves BEFORE fixed DDL exactly
+`{profile:"umf.row-originals-store-reservation/0.1",reservationId,providerId,
+installationId,targetCustody,store,creationRequestDigest,creationApprovalDigest,
+nativeAuthorityEvidenceDigest,configurationDigest,custodySequence}`.
+No future schema OID. Actual original namespace absence/exclusive privileged-DDL
+coordination, source gate, native authority and original target are mandatory.
+Generic IF NOT EXISTS/name/prefix adoption is forbidden.
+
+For new store creation, persist the native receipt using EXACTLY ONE COMMENT
+ON the new original private SCHEMA in the SAME transaction as its fixed objects;
+no undeclared .1 metadata table. Comment text is the fixed ASCII prefix
+`umf.originals-creation-receipt/0.1:` followed by RFC8785 JSON exactly
+`{profile:"umf.originals-creation-receipt/0.1",providerId,installationId,
+storeProfile,storeId,reservationDigest,creationRequestDigest,
+creationApprovalDigest,targetCustodyDigest,schemaOid,objects,state}`.
+State is exactly created: it means created in this transaction, NOT already
+committed. Objects <=1024 ordered exact
+`{classId,objectId,subId,kind,qualifiedName,definitionDigest}` entries,
+ordered integer classId/objectId/subId. Object IDs are actual positive uint32,
+subId nonnegative native attnum or0. Kind is closed schema|table|column|
+constraint|index|row-type|array-type for this fixed initial store. QualifiedName
+is exactly `{schema,name,member}`: schema the actual store schema; name the
+actual relation/type/index name (schema name again for kind schema); member
+the exact column/constraint name for those kinds and null otherwise. It is
+renderer-derived metadata, not SQL. Definitions use the fixed complete native catalog shape
+witness for each class, including exact owner/ACL/dependencies and implicit
+row/array types/backing objects. Observe exactly the renderer's created footprint,
+never a supplied arbitrary object list. Unknown extra closure refuses.
+
+The receipt is <=1MiB UTF8, data-free. Native comments ARE NOT CONFIDENTIAL;
+include NO credentials, keys, approval signatures, private source bytes, row
+values, reject samples or per-value hashes. Object IDs/names and original opaque
+request/approval/custody digests are metadata only. [PostgreSQL18 COMMENT documentation](https://www.postgresql.org/docs/18/sql-comment.html)
+explicitly makes comment visibility public. Native/catalog metadata can
+be visible to ordinary observers; this comment does not weaken value/metadata-
+column/store-table ACL requirements. Full native observations/authority receipts
+stay privately retained. Do not advertise the comment as authenticated proof.
+
+Avoid self-reference: objects' definition projections exclude ONLY this schema's
+creation-receipt comment text/digest, while explicitly requiring its exact tagged
+form separately. No other object comment/definition/ACL/dependency is excluded.
+The full receipt digest is computed AFTER actual fixed DDL observations and stored
+in original external confirmation, never inside itself or precreation request.
+This explicitly replaces any earlier schema marker for the unpublished originals
+profile; ingress-store's separate marker remains unchanged. G04 .1 native shape
+has only its declared three heaps/objects; G05 .2 separately adds lifecycle.
+No previously qualified store upgrade or comment adoption is claimed.
+
+After positive native COMMIT, original custodian's fixed confirmation reobserves
+original target, exact comment and COMPLETE native created inventory and records
+the original reservation/receipt/OIDs/definitions. Then issue OriginalRowOriginalsStore
+capability from that SAME original private registry. Unknown COMMIT reobserves
+that original reservation/target/comment/inventory before confirmation or known-
+abort settlement; no new schema/token/approval or ownership-only inference.
+Missing original ledger/gate/attestor context refuses. A copied comment/store
+never establishes original custody. A lost response is not proof of abort.
+
+##### Same-connection actor/transaction and full-row capture
+
+Use existing adopted original store session authority/phase binding; no public
+new raw-connection or callback interface. RowOriginalsPhaseCapability is issued
+by the concrete original host/native issuer from its SAME actual private phase
+connection, verified plan/step/store/table enrollment/policy, actual locks and
+original durable ingress fence. Private registry retains connection object,
+actual backend PID/start, database/native target identity, original transaction
+identity and driver INTRANS status. Recheck actual continuity at each scope.
+Idle, aborted, autocommit, replaced backend/connection or wrong transaction refuses.
+Pin transactionId to actual `pg_catalog.pg_current_xact_id()::text` at initial
+active phase binding and each role boundary, strict canonical decimal uint64
+without floating conversion. This may allocate the transaction ID; it is a
+write phase, not an allegedly side-effect-free read. The XID binds transaction
+continuity, never source row identity or historical creation authority.
+[PostgreSQL18 transaction information](https://www.postgresql.org/docs/18/functions-info.html#FUNCTIONS-TXID-SNAPSHOT)
+defines its top-level xid8 semantics; actual PG18.6/driver behavior remains a gate.
+No caller-created cursor, seal or matching connection tuple issues capability.
+
+Finite store methods take only original phase/enrollment/archive capabilities:
+`enroll_row_table`, `capture_originals`, `record_post_revisions`,
+`validate_originals`, `read_native_receipt`. Their fixed internal controller hook
+never accepts or returns a callback, SQL string, cursor, row iterator or elevated
+connection. Internal bounded typed buffers remain private to the implementation.
+It does not BEGIN/COMMIT/release a savepoint on behalf of the outer phase.
+
+At outer phase entry observe SESSION_USER original maintenance, CURRENT_USER
+original businessOwner with exact native OIDs/names/role setting. The original
+controller used for store setup is a different qualified scope: if a bootstrap
+entry starts in controller, fixed issuer must establish/reobserve businessOwner
+outer phase BEFORE issuing this capability. Snapshot COMPLETE original immutable
+qualified session-module policy and actual dynamic settings, including all its
+settings plus DateStyle, client_encoding and the actual timeout/deadline values;
+recompute against original selected policy/artifact. Unknown/missing policy keys
+or unauthorized values refuse, not a partial six-setting snapshot. Required base
+settings remain pg_catalog search path, UTC, row_security GUC on, origin replication,
+read committed, read-write and UTF8. Capture pins DateStyle ISO,YMD using SET LOCAL;
+role changes use fixed safely quoted original names with SET LOCAL ROLE only.
+Never RESET ROLE to privileged SESSION_USER or mutate ambient session settings.
+
+Actual adopted capture sequence is:
+
+1. Verify original actual exclusive table+dependency locks and durable ingress
+   fence on this phase, original native relation/enrollment/source and original
+   ENABLE/FORCE RLS flags. No claimed boolean lock/fence is authority.
+2. As original businessOwner use fixed ALTER TABLE DISABLE ROW LEVEL SECURITY
+   on ONLY that actual approved table, verify relrowsecurity=false and preserve
+   the original relforcerowsecurity observation. The row_security GUC stays ON.
+   This is a protected maintenance scope, not an online worker read mechanism.
+3. Collect complete bounded typed instance ID/revision/value rows as businessOwner
+   on this SAME connection. Validate native finite/calendar/domain before a
+   driver can collapse special values. Use fixed pg_catalog native scalar I/O
+   under ISO,YMD/UTC for logical byte accounting; retain genuinely typed values.
+   No general controller business SELECT query or SELECT grant is introduced.
+4. Close each internal source cursor before SET LOCAL ROLE original controller.
+   Reobserve original session/current identities/settings/store/transaction,
+   insert ONLY those private typed values into the exact approved archive using
+   fixed parameter adaptation, then SET LOCAL ROLE businessOwner and reverify.
+   Controller row_security remains ON. No ordinary archive read/insert grants.
+5. Repeat bounded private batches with complete immutable-ID/set witnesses under
+   the held exclusive lock. Before COMMIT restore/reverify original or selected
+   final ENABLE/FORCE RLS and complete policy/catalog surface, outer businessOwner
+   role and ALL original dynamic settings. Complete native source/instance/
+   archive/value/revision/budget validation precedes actual phase receipt.
+
+One concrete bounded collector first reads at most1000 instance IDs/revisions/
+native canonical byte lengths (NO row values), chooses a prefix whose declared
+41+N logical cost is <=8MiB, then reads ONLY those actual typed values. Exact
+held source locks make the two observations stable; verify identities/lengths
+again. A single row exceeding8MiB refuses this first buffer profile before
+adapting its value. Aggregate G04 limits still apply. Keyset/native set witnesses
+prove completeness, not LIMIT/count alone. Buffers must be discarded after the
+fixed insert; no live generator crosses role scopes. Logical8MiB is not a Python
+RSS/physical-memory promise; actual representation/resource behavior requires
+native/driver qualification. No author's SQL predicate chooses captured rows.
+
+Any failure marks phase capability unusable, aborts the ENTIRE native transaction
+and discards private buffers. When aborted transaction prevents role restoration,
+rollback then close/quarantine the physical connection; never return it elevated
+to a pool or continue business COMMIT. Do not suppress errors as zero rows.
+Unknown COMMIT follows original phase/store/enrollment outcomes; no capture replay
+or business-only commit. The actual outer source/RLS/settings must be restored
+before successful receipt/publication, not merely in a Python finally block.
+
+##### Independent qualification gates
+
+Test real distinct maintenance/controller/businessOwner actors, INTRANS/backend/
+transaction continuity and complete dynamic settings restoration; wrong target/
+role/denied SET and exception/quarantine paths. Execute actual FORCE RLS-hidden
+rows to show complete businessOwner capture ONLY inside the approved locked
+RLS-off scope, controller-only archive inserts, ordinary metadata/value denial
+and final source ENABLE/FORCE/policy restoration. Check ISO,YMD/UTC exact typed
+values/bytes, buffer/row/aggregate bounds and no public values/driver collapse.
+
+Exercise real original store absence/reservation/comment+DDL COMMIT, observed
+object/type/constraint/index inventory, lost creation acknowledgement, positive
+restart confirmation and copied-comment/foreign-store rejection. Test exact
+per-table source/plan/ingress/policy/token/capacity/native-name binding, collision,
+unknown enrollment COMMIT and no re-ALTER. These are native gates; eight source
+controls or self-consistent receipt JSON cannot establish them. Governing three-
+document amendment and exact source review precede enablement; .2 G05 upgrades,
+online capture and generalized external custody remain separately tracked.

@@ -729,3 +729,31 @@ DDL, credential leak or legacy re-enable. Existing epoch/concurrent enrollment
 and source drift during signing refuse. True headless install stays a distinct
 G10 test/profile. Actual frozen installed artifacts/native platform/CI/browser
 and fresh public bytes are separate required gates; no source-only closure.
+
+
+### G04 original creation/enrollment and actual capture boundary acceptance
+
+Independently test exact policy0.2/source/plan/ingress/capacity request binding,
+original private capability/reservation issuer/registry and no raw JSON/cursor/
+callback authority. Execute actual store creation with exact data-free schema
+COMMENT and complete native created OID/type/constraint/index inventory in SAME
+transaction; external confirmation follows observed COMMIT. Lose acknowledgement
+and positively recover original reservation/receipt; copied comment, wrong native
+target, same name, missing history and arbitrary extra metadata refuse.
+
+Run real approved per-table ALTER/guard/ledger/record/ACL enrollment with native
+name collisions, unknown outcome, original request reuse and no duplicate ALTER.
+Use real distinct maintenance/controller/businessOwner identities and verify
+backend/xid8/INTRANS continuity plus complete selected policy/dynamic settings.
+Capture actual FORCE RLS-hidden/NULL/special/boundary values only inside locked/
+fenced businessOwner TABLE RLS-off scope; GUC stays on, controller inserts only
+private archives, final RLS/policies/role/settings are exact before receipt.
+Test denied SET, wrong actor/transaction, hook exception, rollback/close/quarantine,
+ordinary metadata/value denial, partial restoration and no elevated pool reuse.
+
+Verify ISO,YMD/UTC genuine typed value and canonical byte oracles, preadaptation
+finite/calendar/size checks,1000-row/8MiB buffer and aggregate capacity edges,
+complete instance sets and no public values. Repeat actual original phase/native
+COMMIT recovery and no capture replay. Source controls are separate from real
+PostgreSQL18.6/driver/installed qualification; G05 .2 upgrade, online and external
+custody remain distinct compositions.

@@ -860,3 +860,41 @@ refuses without recreating keys, locks, contexts or role history. Do not rerun
 confirmed roles/epoch or re-enable legacy subjects after unknown COMMIT. Actual
 native production/acceptance trust, private issuer, backend barrier and process
 restart evidence remain mandatory, not implied by source signature tests.
+
+
+### G04 concrete store/table capability and same-transaction capture integration
+
+Implement exact original store reservation/native COMMENT creation receipt and
+positive external confirmation; no undeclared .1 table or prefix/name adoption.
+Record real created object OIDs/complete native definitions, including implicit
+types/index/dependency closure; exclude only the creation-receipt comment from
+its own definition projection to avoid a hash cycle. The comment is visible
+metadata, never a place for values/signatures/credentials or native authority.
+Missing original ledger/target/attestor after unknown COMMIT refuses instead of
+creating a new schema or treating matching metadata as birth proof.
+
+Implement exact per-table source/plan/ingress/native identity/token/name/capacity
+request and original reservation before ALTER. Existing adopted row_tables
+record is the native enrollment receipt; no extra columns/table or copied JSON
+capability. Native metadata/guard/issued IDs/ACL translation and enrollment
+record commit together. Retained execution0.6 selects exact G04 policy0.2 with
+maxIssuedInstances; actual original ingress signature/policy digest binds it.
+No .1 policy normalization or future OID invented during preparation.
+
+Expose only finite fixed store methods with original phase/enrollment/archive
+capabilities. Same actual private connection/backend/native top-level xid8/
+INTRANS and original target/context persist across every role boundary. Original
+outer businessOwner and complete dynamic session policy are observed, controller
+hooks use transaction-local fixed original roles, and restoration is reverified
+before receipt. Follow the adopted locked/fenced temporary TABLE RLS disable,
+businessOwner typed collection, controller-only archive insert, final original/
+next ENABLE/FORCE/role/settings restoration. No controller general business
+SELECT workaround, author callback/elevated cursor or online RLS-disable claim.
+
+Before adapting values, native finite/calendar/domain and canonical-length
+preflight bounds source ID batches1000/8MiB logical cost, under original source
+locks. Private typed values stay internal and complete set/budget/revision proof
+remains mandatory. On any hook/error/restore uncertainty invalidate capability,
+abort whole phase and close/quarantine actual physical connection; no business-
+only commit or elevated pooled reuse. Real driver/native resource evidence is
+required; logical bytes do not claim Python RSS/physical disk limits.
