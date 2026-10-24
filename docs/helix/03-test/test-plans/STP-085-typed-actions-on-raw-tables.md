@@ -804,3 +804,25 @@ installed concrete crypto and platform CI, final release and public bytes.
 Source tests/signature examples and data-only native receipts cannot substitute
 for those gates. Old active .1 root upgrade and absent subject/schema bootstrap
 remain explicitly tracked until separately implemented and qualified.
+
+
+### G11 primary setup birth original positive recovery and missing custody
+
+Rerun all original boundary003 seven probes and BOTH actual004 failure controls
+against exact frozen source. The original signed pending effect history cannot
+be rebound after both obsolete sidecars are lost. Inject real filesystem failure
+at every init lock/header/fsync/replace/return boundary and positively resume
+SAME pending IDs/path/expected bytes; no effect DDL or signature replay.
+
+Exercise new-process and real two-writer initialization, original setup lease
+ordering, missing primary/setup lock, foreign path/ID/root/config/purpose,
+lock-only/empty/expected header prefix, wrong prefix/effect records and every
+confirmed missing resource. Runtime factory must never install first operator
+configuration on absence. Supervisor direct-constructor bypass refuses; copied
+config/UID/hash/fixture is not an original production deployment authority.
+
+Prove old enrollment0.1 byte compatibility with originally installed owner-only
+context0.3 and root enrollment0.2 with generation registry birth under SAME
+primary commit. Old context upgrade remains a located refusal. Source crypto/
+file controls alone cannot establish actual deployment-origin/native provider/
+process/epoch behavior, installed platform/browser or release/public-byte gates.

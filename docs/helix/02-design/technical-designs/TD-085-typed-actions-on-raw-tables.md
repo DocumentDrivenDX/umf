@@ -948,3 +948,29 @@ settles the same request/birth/confirmation with stable IDs and no reconstructed
 confirmed-missing files. Old-host .1 trust upgrade, missing stable subject/schema
 bootstrap, headless G10 authority and full native qualification remain explicit
 separate gates.
+
+
+### G11 one primary original setup state, no optional-sidecar first use
+
+Implement new context0.3 EXACT as the G11 primary setup contract. The existing
+fixed owner-bootstrap-context.json is the primary original state; original
+operator deployment installs pending binding and existing setup lock BEFORE
+resource initialization. Runtime factory never creates a missing primary, lock
+or inferred first configuration, and never substitutes a caller-selected path.
+No usable context/approval/native session exists while primary is pending.
+
+Under original existing setup lease initialize only pinned original owner ledger
+and, for enrollment0.2, generation registry, using exact existing header bytes
+and qualified original custody. One atomic primary pending-to-confirmed write
+commits birth after all required bytes/fsyncs; no two-file confirmation window.
+Original pending header/lock/prefix resume is initialization-only, never effect
+history repair. Confirmed missing files refuse without O_CREAT. The concrete
+supervisor constructor independently verifies confirmed primary/path/core; pure
+crypto construction grants no native authority.
+
+Keep owner enrollment0.1 and root enrollment0.2 exact. Owner-only context0.3
+uses generationAuthority:null; root-enabled context0.3 binds010 root policy and
+acyclic registry birth. Old context0.1/0.2 upgrade and configured deployment
+restoration are separate unqualified operations. The old optional birth/anchor
+files cannot authorize native sessions or change path after loss. Preserve
+actual003/004 failures and scope every source/native claim.

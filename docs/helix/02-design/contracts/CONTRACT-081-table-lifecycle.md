@@ -6524,3 +6524,185 @@ head/subject/gate/epoch operations, installed crypto/platform CI and release/
 public bytes. Old-host trust upgrade and missing role/schema bootstrap stay
 explicit residuals until separately implemented/qualified; source crypto tests
 alone cannot close this seam or G11.
+
+
+#### G11 primary original owner-ledger birth and logical-root composition
+
+This correction supersedes010 context0.2 setup/birth assembly with new exact
+context0.3 below, preserving both original enrollment shapes and the late actual
+logical-config root signature. It responds to retained actual004 rebinding and
+first-birth crash failures; no old context is silently upgraded.
+
+##### Primary record and compatibility
+
+Use the EXISTING fixed `control_home/owner-bootstrap-context.json` as the primary
+original setup state with NEW profile `umf.local-owner-bootstrap-context/0.3`.
+Do not change the exact original enrollment0.1 or governing010 enrollment0.2
+records. Do not silently widen context0.1/0.2 or reinterpret their bytes.
+
+Context0.3 is EXACTLY
+`{profile,enrollmentId,enrollmentRecordDigest,authorityConfigurationDigest,
+purpose,context,setupId,state,ownerLedger,generationAuthority}`.
+The first six fields retain their original enclosing enrollment/config/purpose/
+context meanings and bounds. SetupId is a newly allocated canonical UUID fixed
+before resource creation. State is exactly `pending` or `confirmed`.
+
+OwnerLedger is EXACTLY `{ledgerId,ledgerPath,lockPath,initialHeaderDigest}`.
+LedgerId is an original allocated UUID fixed before initialization. Paths are
+original canonical absolute paths, NUL-free UTF8<=4096 bytes, no symlink/reparse
+or alias acceptance; lockPath equals ledgerPath plus `.lock` in the same parent.
+The original qualified private owned directory/file/permissions/identity rules
+remain conjunctive. Configured path cannot overlap the control files, bootstrap
+configuration or generation registry. No argument may change the retained path.
+
+InitialHeaderDigest hashes the exact expected EXISTING owner-ledger0.1 canonical
+header line, including its terminal LF. Header body is exactly
+`{profile:"umf.configured-owner-approval-ledger/0.1",authorityId,
+configurationDigest}`, and the existing `digest` hashes the canonical BODY;
+canonical complete record plus LF is the expected header. No ledgerId, context
+or new meaning is inserted into that historical ledger grammar. The primary
+original setup binds ledgerId/path/header; matching a header alone proves no
+birth or authority. The lock's admitted initial bytes remain the existing empty
+bytes; its actual original custody and required existence are still verified.
+
+For physical enrollment0.1, GenerationAuthority is literal null. Physical owner
+operations need no logical root. For enrollment0.2 it is EXACTLY
+`{rootPolicyDigest,registryBirth}`, where rootPolicyDigest hashes that complete
+original generationAuthorityRoots policy and registryBirth is EXACTLY
+`{registryId,anchorDigest,registryPath,lockPath,initialRegistryDigest}` using
+010's fixed generation registry paths/header/limits and allocated identity.
+The old birth receipt's `profile` and `state:"confirmed"` are derived ONLY after
+this primary context is confirmed. No second independent confirmation status is
+needed in this primary record. The root policy, registry header and context are
+all fixed before physical target creation; no future target/store/subject OIDs.
+
+Compute the generation registry anchor from the exact original enclosing
+`{enrollmentRecordDigest,authorityConfigurationDigest,generationRootPolicyDigest,
+purpose,context}` as in010. It excludes this primary state, final context digest
+and registry digest; no hash cycle. Confirmed OwnerBootstrapContextDigest hashes
+the complete confirmed0.3 primary bytes. Those bytes never mutate after any
+usable authority is issued. There is no approval/context digest before confirmed
+birth; neither header incorporates a future usable context digest.
+
+##### Original installation and one atomic confirmation
+
+The ORIGINAL trusted deployment configuration boundary installs the complete
+canonical pending0.3 record together with its original enrollment configuration,
+BEFORE any ledger/lock/generation registry or native effect. It allocates the
+retained setup/ledger/registry IDs and exact selected paths and expected headers.
+This is the same trusted ORIGINAL operator configuration installation boundary
+that enrolls the physical public keys/purpose; no request, source/native caller,
+filesystem UID, matching JSON/hash, or migration plan can enroll configuration.
+Source fixtures explicitly install their own acceptance-only configuration.
+Actual production/acceptance deployment-origin qualification remains mandatory.
+
+An ordinary session/issuer/recovery factory NEVER writes a missing primary
+context, treats absence as first use, discovers another path or invokes the
+operator installer as fallback. Missing primary state refuses even when a caller
+supplies a fresh path and all other files are absent. A separate explicit trusted
+operator installation is required for FIRST configuration; it is not a reusable
+repair API, cannot overwrite an original context, cannot reinstall lost custody
+for an enrolled installation, and cannot silently reuse an enrollmentId after
+unknown initialization. Configuration restoration/rotation/old-host upgrade
+requires its separately authorized original operator protocol and remains open.
+This requirement is about actual installation provenance, not a constructor seal
+or a new self-hashed file being labelled original.
+
+The original operator installation also creates fixed
+`control_home/owner-bootstrap-setup.lock` with exact empty bytes/private original
+custody BEFORE publishing pending primary. It is a writer lock, not an authority
+record or a replacement birth marker. Runtime opens this existing lock with
+NOFOLLOW and no O_CREAT, verifies actual original owned regular single-link
+private identity, and takes exclusive flock plus the original per-path process
+thread lock. Missing lock refuses in pending and confirmed states.
+
+The fixed bootstrap initialization coordinator reads this original pending
+record under that original exclusive setup lease. Lock order is setup lease,
+owner ledger initialization lock, then generation registry initialization lock.
+No ordinary request takes the setup lease while holding a ledger lock; confirmed
+primary bytes are immutable and read/validated without mutating them. Two setup
+processes reread primary under the same lease before acting or returning.
+The lease remains held through resource verification, atomic confirmation and
+its durable positive observation. It admits only its exact same setup/ledger/registry paths/IDs,
+complete config/root/purpose and private original file identities. Before any
+file creation, the pending primary bytes and parent directory are durable. No
+usable OwnerAuthorityContext, approval request, native supervisor/session or
+logical trust request is issued during this pending state.
+
+Initialize the exact owner lock/header, and for enrollment0.2 the exact generation
+registry lock/initial header. Each uses original exclusive creation, nofollow,
+private permissions, bounded reads, actual write/fsync and parent fsync. Reopen
+and verify ALL required exact original initial resource bytes and identities.
+Then atomically replace ONLY the same primary pending record with the exact
+same record except state=`confirmed`; fsync replacement and parent BEFORE
+issuing usable objects. This ONE primary transition is the only birth commit.
+There is no confirmed-anchor then pending-birth state in the new protocol.
+
+The former owner-approval-ledger-birth.json and anchor.json are no longer sources
+of authority for0.3. Neither their absence nor matching contents can change the
+primary binding. Do not silently delete, reconstruct, upgrade from or adopt
+old state through them. Exact old profile evidence remains archived. Existing
+context0.1/0.2 and actual deployed ledger upgrade are explicitly unqualified;
+the new native session path refuses them before effects until a separate
+qualified upgrade exists. A fresh enrollment0.1 file can be paired with a new
+ORIGINALLY installed0.3 state; its enrollment bytes remain exact.
+
+##### Positive recovery and refusal
+
+Recovery has only these original setup states:
+
+| Original primary | Actual resources | Result |
+| --- | --- | --- |
+| missing, invalid or changed identity/binding | any | Refuse; never create primary/resources or choose a new path |
+| pending | no resources yet | Initialize ONLY original paths/IDs and expected bytes |
+| pending | lock-only, newly empty ledger, or exact expected initial-header prefix | Under original exclusive initialization custody, finish ONLY remaining expected initialization bytes; retain existing same original lock/file, no truncation or new IDs |
+| pending | complete exact initial owner header and any required generation registry | Verify original bytes/custody, finish other original resources if needed, atomically confirm SAME primary |
+| pending | any effect record, foreign/torn non-prefix bytes, changed identity/path/config/root or unexpected object | Refuse; no replay, truncation or adoption |
+| confirmed | all exact original required resources exist | Validate original full ledgers/registry continuity; issue fixed original process-local capabilities/context |
+| confirmed | any ledger/lock/context/required generation registry missing, rewound or conflicting | Refuse without O_CREAT or automatic repair |
+
+Expected-prefix completion is ONLY for the pending original initial owner
+header, before any request/effect, bounded by its exact expected bytes. It is
+not general torn-history repair. Generation registry uses its original bounded
+atomic initialization and exact initial bytes; a staged temp file is never a
+committed registry. Any resource identity that original custody cannot establish
+refuses. Do not infer original continuity from equal hashes or PID/UID alone.
+
+Crash before pending installation is a deployment setup outcome to settle through
+that ORIGINAL operator boundary, not a library first-use inference. Crash after
+pending durability resumes the SAME IDs/path; crash after header fsync before
+primary confirmation positively confirms the same initialized resources. Crash
+after confirmed replacement but before return reopens the same confirmed state.
+Unknown replacement must observe original durable primary before yielding a
+capability. Final context/issuer identity and all earlier effect records remain
+stable across process restart. No native role/database DDL occurs in this setup.
+
+##### Concrete integration and qualification
+
+The fixed deployment boundary installs the original configuration; the public
+runtime entry remains `create_owner_authority_session(profile,*,ledger_path)`.
+It loads/requires original0.3 setup, checks the argument equals the pinned path,
+settles exact pending initialization if present, reopens confirmed bytes and
+ONLY THEN issues original issuer/context/core/native pair. The supervisor's
+concrete constructor independently verifies that exact confirmed setup and the
+same core ledger path; bypassing the facade cannot skip original birth checks.
+Pure configured crypto objects remain non-native and confer no session capability.
+Native effect dispatch still needs the SAME real approval/core pending handle,
+original native reservation and receipt/outcome resolver. No generic callback,
+virtual origin claim or lazy import back-edge is introduced.
+
+Governing010 logical trust setup composes with0.3, using its confirmed enclosing
+record/config/root/registry birth. Its late actual-config root signature and
+one-registry trust-confirmation protocol remain exact. Existing-head logical0.1
+and future fresh logical0.2 selection, original six physical/two logical scopes,
+original key/purpose and native source/role/store facts are unchanged.
+
+Retain and rerun the original seven boundary controls plus BOTH actual004
+failures. Add new-process and actual two-writer controls for every initial
+write/fsync/replace/return boundary, missing both old sidecars, missing primary,
+new path, lock-only/empty/header-prefix, wrong prefix, unexpected effect records,
+confirmed missing files, original same-path positive recovery and constructor
+bypass refusal. Use real crypto and original files, attributing synthetic native
+observations accurately. Then independently qualify actual deployment-origin,
+process/provider/native effects, installed/platform/browser and release/public
+bytes. Passing source fixtures alone cannot close G11 or original root setup.
