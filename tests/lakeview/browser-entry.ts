@@ -6,7 +6,7 @@ import {readDocument,writeDocument} from '../../src/model/document';
 import {inspectExtensionKinds} from '../../src/model/extension-kinds';
 import {selectCoreElements} from '../../src/model/selection';
 import {elementKey} from '../../src/adapters/lakeview/project';
-import {legacyIds,legacyFixture,legacyNumericFixture,legacyMixedDefaults,legacySelectionFixture} from './legacy-fixture';
+import {legacyIds,legacyFixture,legacyNumericFixture,legacyMixedDefaults,legacySelectionFixture,legacyUnknownWidgetTypes,legacyUnknownFormats,legacyUnknownChannels,legacyFormatFixture,legacyChannelFixture} from './legacy-fixture';
 export async function verify(){
   const url='/wasm/umf_core_wasm.js';
   const runtime=await initializeWasm(()=>import(url),globalThis,{coreSchema,referenceSchema:semanticTypeReferenceSchema,packageSchema:extensionPackageSchema,constraints:coreConstraints,domainPolicy});
@@ -56,5 +56,22 @@ export async function verify(){
     const projected=legacyProject(legacyFixture('column',{futureOption:empty}));
     if(projected.issues.length!==1||projected.issues[0]?.code!=='LAKEVIEW_UNMAPPED'||projected.issues[0]?.path!=='/pages/0/layout/0/widget/spec/futureOption')throw Error('Legacy empty-container gap hidden');
   }
-  return {results,generic,legacy:{hostileNames:3,numericDefaults:3,unknownEmptyContainers:2,mixedUnknownDefaults:3}};
+  for(const widgetType of legacyUnknownWidgetTypes){
+    const projected=legacyProject(legacyFixture('column',{widgetType}));
+    if(projected.elements.has(elementKey('page','filter'))||!projected.issues.some(i=>i.code==='LAKEVIEW_WIDGET_TYPE'&&i.classification==='unsupported'&&i.path==='/pages/0/layout/0/widget'))throw Error('Legacy unknown widget discriminator projected '+JSON.stringify(widgetType));
+  }
+  for(const type of legacyUnknownFormats){
+    const projected=legacyProject(legacyFormatFixture(type));
+    const visual=projected.elements.get(elementKey('page','filter')) as any;
+    if(!visual||visual.encodings[0]?.format!==undefined||!projected.issues.some(i=>i.code==='LAKEVIEW_UNMAPPED'&&i.path==='/pages/0/layout/0/widget/spec/encodings/columns/0/format'))throw Error('Legacy unknown format projected '+JSON.stringify(type));
+  }
+  for(const name of legacyUnknownChannels){
+    const projected=legacyProject(legacyChannelFixture(name));
+    const visual=projected.elements.get(elementKey('page','filter')) as any;
+    if(!visual||JSON.stringify(visual.encodings)!==JSON.stringify([{channel:'column',field:'column',aggregation:'none'}])||!projected.issues.some(i=>i.code==='LAKEVIEW_UNMAPPED'&&i.path==='/pages/0/layout/0/widget/spec/encodings/'+name))throw Error('Legacy unknown channel projected '+name);
+  }
+  const supported=legacyProject(legacyFormatFixture('number-percent'));
+  const supportedVisual=supported.elements.get(elementKey('page','filter')) as any;
+  if(supported.issues.length||JSON.stringify(supportedVisual?.encodings)!==JSON.stringify([{channel:'column',field:'column',aggregation:'none',format:{kind:'percent'}}]))throw Error('Legacy supported visual output changed');
+  return {results,generic,legacy:{hostileNames:3,numericDefaults:3,unknownEmptyContainers:2,mixedUnknownDefaults:3,unknownWidgetTypes:legacyUnknownWidgetTypes.length,unknownFormats:legacyUnknownFormats.length,unknownChannels:legacyUnknownChannels.length,supportedVisuals:1}};
 }

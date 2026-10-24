@@ -78,7 +78,11 @@
     "hostileNames": 3,
     "numericDefaults": 3,
     "unknownEmptyContainers": 2,
-    "mixedUnknownDefaults": 3
+    "mixedUnknownDefaults": 3,
+    "unknownWidgetTypes": 7,
+    "unknownFormats": 7,
+    "unknownChannels": 4,
+    "supportedVisuals": 1
   },
   "errors": [],
   "externalRequests": [],
@@ -87,7 +91,7 @@
     "crates/umf-core/src/serialization.rs": "3685eb35b7c506916a582de54c3d05970cb4e1d43f35b1b34a5769bf90fecd10",
     "crates/umf-core-wire/src/lib.rs": "3fe2101e8f67322e3696b415b7f9f13ca92a71669629e8f97cdd3fa05caeaf2f",
     "src/adapters/lakeview/index.ts": "ef67d0b28e6cda86ed0a1faee9a7c31e62ded2f620d2d9105f47fdb52c636577",
-    "src/adapters/lakeview/project.ts": "f9d9c30e8b28170e07fe2c623b912274d4d1535afd89f84564db7be7a541b387",
+    "src/adapters/lakeview/project.ts": "17f156f919a7f8903f4ff8da576acf499698d9aa768a942aae5350b4e1aa4389",
     "src/registry/registry.ts": "5c20e8cdbcd0f11bf8e32e1b72045f7b08ce845db2bd58020ad829cbdf9b0ddf",
     "src/registry/kind-runtime.ts": "23c8a019d799d6214c534c4338cd916295ae55e2146aba6da3de1a1fc3a78b76",
     "spec/extensions/lakeview/package.json": "0043b4ca077e4f80d18c2729a3823a43c90914f6d91ba338f0f04a2fca6a6f16",
@@ -95,18 +99,18 @@
     "spec/metamodel/generated/manifest.json": "144d594f6448b959db6f97f4fb6c84c4ea9af77a1ea22b668eaa9ab2600535cc",
     "bindings/core/wasm/index.js": "6bbc66d4d272ef2f870bbeafde57af837e93aa394277f3cc80ed5f46635d5945",
     "bindings/core/wasm/index.d.ts": "8f85e6e5d7a1616d573db5d1bbdf7565ac089348ebe13f989468db1ce0960cbe",
-    "tests/lakeview/browser-entry.ts": "83a48b58551330d466f3ee4259d6ce5348b6056d853161bda9af005ad44925e3",
-    "tests/lakeview/legacy-fixture.ts": "720c5da56913d1e7a8b03ca412fbc8a906dc62f3f409198ff1ac0bb3a9861548",
-    "tests/lakeview/legacy-projection.test.ts": "5b347e6c44491fd7323130a4b38820bdb3ad5ff6e060e463b54368f0326a2c8e",
+    "tests/lakeview/browser-entry.ts": "a17664bfeaf8660fe7c4e41b7e40b6c92b03ef00f77d39b18c42e4a4bcc195d1",
+    "tests/lakeview/legacy-fixture.ts": "5ecd5661cc7c026e7fbd757298cbc9e7c28b4fd557498048320ae7c9fa31a435",
+    "tests/lakeview/legacy-projection.test.ts": "d2f10f2e79a3777d239fcdc4a93fb1e50c62c041ebc865a2bc07acfd4b121e81",
     "tests/lakeview/interchange.test.ts": "4a3939fe65ee4cd4a56787266cff8805e1340c33e8b9a7a93be46d6bba702d82",
-    "scripts/lakeview-browser.ts": "fabd5a63c7a76ea8811b51a628a7f01e477a8942f5287e9ea3e982231d1cfd69",
+    "scripts/lakeview-browser.ts": "dbfab092f5d78a374a9973c536569c98a96e7bf5ed429f20ef1016c281013c3a",
     "fixtures/lakeview/marketing-campaign.lvdash.json": "ee1f95917a936051063a08c617099d34b33df5a5604ab2f4d1d8aafdf56643d5",
     "fixtures/lakeview/lexical-quirks.lvdash.json": "f8cc6ab19e159673180196c029afc6ddd9d06d79dba82443e9dd2c93b407c8f5",
     "fixtures/lakeview/empty-sections.lvdash.json": "3c195f344050a969755145132a31fd65e652b6f0396a9f5ed7937fc1466c7671"
   },
   "artifacts": {
     "wasm": "751f3be1858b65cf859a34143e896eaefa74a7288a3acf40aaee20a4657e77ea",
-    "bundle": "ab92b2f3a020671a60b23cba0f3ffa939a3aa5d557967fe4902241172de4859b"
+    "bundle": "3e1caef22280662dffb2ee8e2ad080ed826d3cc8c772848942ac3e94e5dfac90"
   },
-  "limits": "Three committed files; direct and UMF JSON/YAML untouched UTF-8 reconstruction, generic composition and eleven legacy compatibility controls only. No live Databricks acceptance or edited-source rewrite."
+  "limits": "Three committed files; direct and UMF JSON/YAML untouched UTF-8 reconstruction, generic composition and thirty legacy compatibility controls only. No live Databricks acceptance or edited-source rewrite."
 }

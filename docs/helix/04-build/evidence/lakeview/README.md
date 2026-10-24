@@ -200,3 +200,31 @@ originals through direct/JSON/YAML paths. `legacy-mixed-defaults.json` records
 this successor's scoped evidence. The generated payload remains current and
 source inventory is refreshed; no native rebuild or release integration was
 performed. Independent review remains a separate pending gate.
+
+
+### Discriminator source-review correction — 2026-10-24
+
+Independent review of `4308be2597166c86adab6230ec9619f5952338f0` found
+that the legacy widget-control, format and encoding-channel tables could accept
+inherited object members. All three lookups now require an own string key.
+Unknown or coerced widget types omit the widget with `LAKEVIEW_WIDGET_TYPE`;
+unknown formats and channels remain unconsumed and receive attributable
+`LAKEVIEW_UNMAPPED` reports. Recognized visual output is preserved, and native
+input is unchanged.
+
+The 34 focused regressions pass with 101 assertions. Combined typechecking and
+generated-payload custody pass. Real Chromium passes 30 compatibility controls
+and compares all three originals byte for byte through direct, JSON and YAML
+paths. Independent review of the frozen seven-path patch and those results
+found no actionable application issue. `legacy-discriminators.json` records the
+source and log hashes and the bounded review scope.
+
+The first runner stopped only the inventory refresh after rejecting a transient
+process-state value; its original terminal remains a failure, and the exact
+rejected token was not retained. A separately reviewed, bounded inventory-only
+successor completed successfully, retaining the first four passing checks.
+Inventory records 580 source modules, 340 active scripts and 244 locked JavaScript
+packages. A pre-existing Python invalid-escape warning is recorded without a
+support claim for that unrelated security probe. Final process/source custody
+checks returned the shared host. No native rebuild, upstream release integration,
+hosted-CI qualification or publication is claimed by this local correction.

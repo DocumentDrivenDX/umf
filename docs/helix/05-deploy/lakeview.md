@@ -60,7 +60,11 @@ whole default and reports unverified precision; this also avoids narrowing a
 mixed selection. String/boolean defaults remain available. Hostile field names
 are ordinary own keys, real measure collisions still refuse, and unknown empty
 containers receive explicit loss reports. These compatibility limits do not
-change the primary importer's exact numeric-token retention. Edited dashboard generation and a future
+change the primary importer's exact numeric-token retention. Unknown widget types, including inherited
+property names and non-string values, omit the widget with an explicit
+`LAKEVIEW_WIDGET_TYPE` report. Unknown formats and encoding channels are likewise
+omitted through own string membership, retaining recognized encodings and
+reporting the unsupported source pointers. Edited dashboard generation and a future
 generic dashboard profile need separate semantics and evidence.
 
 The [execution evidence](../04-build/evidence/lakeview/README.md) records byte

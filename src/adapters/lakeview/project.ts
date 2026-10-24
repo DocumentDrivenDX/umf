@@ -19,6 +19,7 @@ const aggregate=/^(SUM|AVG|MEAN|MIN|MAX|COUNT|COUNT_IF|SUM_IF|AVG_IF|ANY_VALUE|F
 const quoted='`((?:[^`]|``)+)`';
 const unquote=(name:string)=>name.replaceAll('``','`');
 const hex=(value:unknown)=>typeof value==='string'&&/^#[0-9A-Fa-f]{6}$/.test(value);
+const ownString=(table:Record<string,string>,key:unknown)=>typeof key==='string'&&Object.hasOwn(table,key)?table[key]:undefined;
 type Use={field:string;aggregation:string;expression?:{language:string;text:string};derived?:boolean};
 class Skip extends Error {constructor(readonly path:string,readonly code:string,readonly detail:string){super(detail);}}
 /** Projects a parsed .lvdash.json into umf.dashboard payloads, consuming or reporting every native member. */
@@ -75,7 +76,7 @@ export function projectLakeview(view:any,ids:LakeviewIds,options:{title:string})
   return out;
  }
  function formatOf(format:any,path:string){
-  const kind=formats[format?.type];if(!kind)return undefined;const out:any={kind};use(at(path,'type'));
+  const kind=ownString(formats,format?.type);if(!kind)return undefined;const out:any={kind};use(at(path,'type'));
   if(typeof format.currencyCode==='string'){out.currency=format.currencyCode;use(at(path,'currencyCode'));}
   if(['compact','none'].includes(format.abbreviation)){out.abbreviation=format.abbreviation;use(at(path,'abbreviation'));}
   if(format.hideGroupSeparator!==undefined)issue(at(path,'hideGroupSeparator'),'LAKEVIEW_STYLE','annotation-only','Group separator setting is not declared');
@@ -93,7 +94,7 @@ export function projectLakeview(view:any,ids:LakeviewIds,options:{title:string})
   if(Array.isArray(w.multilineTextboxSpec?.lines)&&position){use(at(at(wp,'multilineTextboxSpec'),'lines'));return {kind:'text',content:{format:'markdown',text:w.multilineTextboxSpec.lines.join('')},position};}
   if(typeof w.textbox_spec==='string'&&position){use(at(wp,'textbox_spec'));return {kind:'text',content:{format:'markdown',text:w.textbox_spec},position};}
   const spec=w.spec,sp=at(wp,'spec');if(!spec||typeof spec!=='object'||!position)return undefined;
-  const type=spec.widgetType,chart=charts.has(type),control=controls[type];
+  const type=spec.widgetType,chart=charts.has(type),control=ownString(controls,type);
   if(!chart&&!control){issue(wp,'LAKEVIEW_WIDGET_TYPE','unsupported','Widget type '+JSON.stringify(type)+' version '+spec.version+' has no neutral chart family; only the native payload is retained');return undefined;}
   const pending:{fields:Record<string,any>;name:string}[]=[];
   const column=(fields:Record<string,any>,name:string,path:string)=>{if(Object.hasOwn(fields,name)&&fields[name].role!=='column')throw new Skip(path,'LAKEVIEW_FIELD_COLLISION','Column '+JSON.stringify(name)+' shares its name with a dataset measure');pending.push({fields,name});};
@@ -119,7 +120,7 @@ export function projectLakeview(view:any,ids:LakeviewIds,options:{title:string})
     if(queries.length!==1)throw new Skip(wp,'LAKEVIEW_PROJECTION','A visual widget with '+queries.length+' queries has no single neutral dataset');
     const main=query(0),encodings:any[]=[];
     for(const [key,value] of Object.entries<any>(enc)){
-     const channel=channels[key],kp=at(ep,key);if(!channel)continue;
+     const channel=ownString(channels,key),kp=at(ep,key);if(!channel)continue;
      const entries:[any,string,any][]=Array.isArray(value)?value.map((e,i)=>[e,at(kp,i),e]):Array.isArray(value?.fields)?value.fields.map((e:any,i:number)=>[e,at(at(kp,'fields'),i),value]):[[value,kp,value]];
      for(const [e,p,shared] of entries){
       if(typeof e?.fieldName!=='string'){issue(p,'LAKEVIEW_STYLE','annotation-only','Encoding '+key+' without a field ('+JSON.stringify(e)+') is presentation only');continue;}

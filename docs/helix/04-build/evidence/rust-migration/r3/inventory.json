@@ -195,12 +195,12 @@
   "capture": {
     "inventoryFormat": "0.2",
     "inventoryScript": "scripts/rust-inventory.py",
-    "sourceCohortSha256": "44845ca0f620cdd83fd6946d198bb6ed22ab5d50dd43b188f9be55427e8eeee7",
+    "sourceCohortSha256": "4c8828ca354643f5786481611cb62f2baeb0debd2145c2589bf1bd5a73833697",
     "typescriptApi": "5.9.3"
   },
   "counts": {
     "activeScriptFiles": 340,
-    "algorithmSymbols": 10338,
+    "algorithmSymbols": 10340,
     "pythonModules": 105,
     "rustBuildInputs": 76,
     "rustModules": 129,
@@ -28553,7 +28553,7 @@
       "language": "ts",
       "migrationObligation": "No current package/workflow/import activation edge discovered",
       "path": "scripts/lakeview-browser.ts",
-      "sha256": "fabd5a63c7a76ea8811b51a628a7f01e477a8942f5287e9ea3e982231d1cfd69"
+      "sha256": "dbfab092f5d78a374a9973c536569c98a96e7bf5ed429f20ef1016c281013c3a"
     },
     {
       "activationEvidence": [],
@@ -43022,12 +43022,12 @@
         "legacyProject",
         "verify"
       ],
-      "bytes": 5111,
+      "bytes": 7087,
       "disposition": "unreferenced-test-source",
       "language": "ts",
       "migrationObligation": "Retained test/evidence source with no discovered current activation edge",
       "path": "tests/lakeview/browser-entry.ts",
-      "sha256": "83a48b58551330d466f3ee4259d6ce5348b6056d853161bda9af005ad44925e3"
+      "sha256": "a17664bfeaf8660fe7c4e41b7e40b6c92b03ef00f77d39b18c42e4a4bcc195d1"
     },
     {
       "activationEvidence": [],
@@ -43047,16 +43047,18 @@
       "activationEvidence": [],
       "active": false,
       "algorithmSymbols": [
+        "legacyChannelFixture",
         "legacyFixture",
+        "legacyFormatFixture",
         "legacyNumericFixture",
         "legacySelectionFixture"
       ],
-      "bytes": 1489,
+      "bytes": 2193,
       "disposition": "unreferenced-test-source",
       "language": "ts",
       "migrationObligation": "Retained test/evidence source with no discovered current activation edge",
       "path": "tests/lakeview/legacy-fixture.ts",
-      "sha256": "720c5da56913d1e7a8b03ca412fbc8a906dc62f3f409198ff1ac0bb3a9861548"
+      "sha256": "5ecd5661cc7c026e7fbd757298cbc9e7c28b4fd557498048320ae7c9fa31a435"
     },
     {
       "activationEvidence": [],
@@ -43066,12 +43068,12 @@
         "filter",
         "project"
       ],
-      "bytes": 3738,
+      "bytes": 5846,
       "disposition": "unreferenced-test-source",
       "language": "ts",
       "migrationObligation": "Retained test/evidence source with no discovered current activation edge",
       "path": "tests/lakeview/legacy-projection.test.ts",
-      "sha256": "5b347e6c44491fd7323130a4b38820bdb3ad5ff6e060e463b54368f0326a2c8e"
+      "sha256": "d2f10f2e79a3777d239fcdc4a93fb1e50c62c041ebc865a2bc07acfd4b121e81"
     },
     {
       "activationEvidence": [],
@@ -58240,7 +58242,7 @@
       "sha256": "ef67d0b28e6cda86ed0a1faee9a7c31e62ded2f620d2d9105f47fdb52c636577"
     },
     {
-      "bytes": 22859,
+      "bytes": 23018,
       "disposition": "shared-adapter-or-extension",
       "imports": [
         "../../model/types",
@@ -58260,7 +58262,7 @@
         "src/model/types.ts",
         "src/projections/json-schema-protobuf.ts"
       ],
-      "sha256": "f9d9c30e8b28170e07fe2c623b912274d4d1535afd89f84564db7be7a541b387"
+      "sha256": "17f156f919a7f8903f4ff8da576acf499698d9aa768a942aae5350b4e1aa4389"
     },
     {
       "bytes": 4789,

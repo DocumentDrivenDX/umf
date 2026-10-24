@@ -120,7 +120,12 @@ omit the complete default selection when any value is numeric, with an explicit
 selection. String and boolean defaults remain representable. Field dictionaries
 MUST treat inherited property names as ordinary own data while retaining real
 column/measure collision checks. Unconsumed empty objects and arrays MUST receive
-an attributable `LAKEVIEW_UNMAPPED` issue, like other unconsumed content. Shared concepts may
+an attributable `LAKEVIEW_UNMAPPED` issue, like other unconsumed content. Legacy
+widget types, format types and encoding-channel keys MUST resolve through own
+string membership, without inherited-property lookup or non-string coercion.
+Unknown widget types MUST omit the widget and report `LAKEVIEW_WIDGET_TYPE`.
+Unknown formats and channels MUST omit only that unsupported part, retain known
+encodings and report `LAKEVIEW_UNMAPPED` at the unconsumed source pointer. Shared concepts may
 be promoted to a future generic dashboard extension after independent systems
 provide evidence. This contract adds no dashboard semantics to core.
 
