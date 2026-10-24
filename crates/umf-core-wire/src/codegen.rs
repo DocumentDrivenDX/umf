@@ -41,6 +41,10 @@ fn invoke(
             engine.verify_table_migration(field(request, "plan").ok_or_else(missing_argument)?, ctx)
         }
         "normalizeRowScope" => engine.normalize_row_scope(request, ctx),
+        "singleSetCapabilities" => engine.single_set_capabilities(request, ctx),
+        "prepareSingleSetAction" => engine.prepare_single_set_action(request, ctx),
+        "admitGeneratedActionInvocation" => engine.admit_generated_action_invocation(request, ctx),
+        "admitGeneratedRecordValues" => engine.admit_generated_record_values(request, ctx),
         "discoverTableMigrationChanges" => {
             let fields = match request {
                 Value::Object(fields) => fields,

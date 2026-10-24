@@ -262,6 +262,23 @@ Test text/native numeric assignment alterations that satisfy the target's native
 type but differ from the intended result. Snapshot actual rows/catalog/progress
 before a failing phase and independently prove complete rollback afterward.
 
+Native G02 coverage must include the admitted non-numeric carriers. Use fabricated
+Person birthdays to fill an existing optional `date` target from an unchanged
+same-row date Field and an explicit typed date literal/coalesce fallback, then
+enforce NOT NULL. Preserve a distinct already-present target and unchanged input
+values. Exercise admitted instant, UUID and boolean copy/coalesce with exact
+native/logical matches and independently written expected values. A matched NULL
+result must roll back every earlier valid row and the requiredness transition.
+Observe the host's actual durable boundaries: initial admission commits the
+owner-only READY receipt and ingress fence before the required phase. After a
+known phase abort, history and row/column catalog snapshots stay unchanged; the
+exact plan/file/head-bound READY receipt remains at phase index zero with no
+completed steps and the original prefix witness, and ordinary ingress stays
+fenced. Do not require progress to return to its pre-admission absence. Successful
+final publication advances history once and removes the progress relation.
+Qualify these as installed row-expression migrations; G03 future-default changes
+and standalone Weft scalar checks cannot substitute for this host-phase evidence.
+
 Append fixtures must prove nullable creation, only NULL-permitting target domain
 CHECKs, fill, optional future default and final NOT NULL share one native required
 transaction. A NULL-rejecting staged CHECK explicitly refuses; a compiler may not

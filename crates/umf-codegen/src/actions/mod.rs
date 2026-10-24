@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 //! Declarative action inspection used by portable generators.
 
+pub mod single_set;
+
 use std::collections::{BTreeMap, BTreeSet};
 
 use umf_core::{Context, Diagnostic, EngineError, Severity, Utf16, Validation, Value};
@@ -5279,6 +5281,17 @@ fn read_action_expression(text: &Utf16, ctx: &mut Context<'_>) -> Result<Value, 
     }
     read_source_value(text, umf_core::serialization::Format::Json, ctx)
 }
+
+pub(crate) fn selector_uses_entity_parameter(
+    expression: &Utf16,
+    expected_parameter: &str,
+    ctx: &mut Context<'_>,
+) -> Result<bool, EngineError> {
+    let parsed = read_action_expression(expression, ctx)?;
+    Ok(exact_members(&parsed, &["entity"])
+        && string_member(&parsed, "entity") == Some(&Utf16::from(expected_parameter)))
+}
+
 fn duplicate_action_source_message(
     source: &[u16],
     offset: usize,

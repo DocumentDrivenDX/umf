@@ -1,0 +1,50 @@
+{
+  "format": "umf.action-runtime-resources/1",
+  "resources": {
+    "actionsPackage": {
+      "file": "actionsPackage.json",
+      "sha256": "b77e7cee2ac6ad9d482122a63d0ab6044c341b2757135a0c896213c3fa596d62",
+      "source": "spec/extensions/actions/package.json"
+    },
+    "bindingPackage": {
+      "file": "bindingPackage.json",
+      "sha256": "f3326533dcf3d2227955bae2261ab005eaf8692e289c7461f2015fd40565a78f",
+      "source": "spec/extensions/binding/package.json"
+    },
+    "constraints": {
+      "file": "constraints.json",
+      "sha256": "444f3dbb8dca0b3f5777d2c26887fc371efb62e6f37e5ae5600b63067785b412",
+      "source": "spec/metamodel/generated/core-constraints.json"
+    },
+    "coreSchema": {
+      "file": "coreSchema.json",
+      "sha256": "89306e2fd6127114b275a367ed1e1908d15aa71fc15d17d8866c53443ce0d78f",
+      "source": "spec/core/schema.json"
+    },
+    "domainPolicy": {
+      "file": "domainPolicy.json",
+      "sha256": "14c141d6b7adc55f7dbddfaa3ea016eafb158e4e12ccf56155bc75f510c6e641",
+      "source": "spec/metamodel/generated/domain-policy.json"
+    },
+    "packageSchema": {
+      "file": "packageSchema.json",
+      "sha256": "85a5c4a704bd6222ada4908cb7cfaada6b7869cf21b1b0095cdff8846754494d",
+      "source": "spec/core/extension-package.schema.json"
+    },
+    "referenceSchema": {
+      "file": "referenceSchema.json",
+      "sha256": "32ce36e9181dfaad50277f78907ca5374c5cf5e03e77f0b7924a425a19cae3e0",
+      "source": "spec/core/semantic-type-reference.schema.json"
+    },
+    "stableBindingPackage": {
+      "file": "stableBindingPackage.json",
+      "sha256": "0550ae86d0cf07f9e61fb78bbb3a2eeb370838681a1483b1088409ddaeb0631e",
+      "source": "spec/extensions/binding-stable/package.json"
+    },
+    "tablesPackage": {
+      "file": "tablesPackage.json",
+      "sha256": "beeb8749216b20d98211700c0a81cdd210b1eaea4060f7ae81b8a91f061da18d",
+      "source": "spec/extensions/tables/package.json"
+    }
+  }
+}

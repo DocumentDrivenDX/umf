@@ -144,6 +144,16 @@ locks, whole-phase transactions, durable progress, head fence and publication.
 It reports success only after durable finalization and observes uncertain commits
 before continuing. Import, check and compile commands perform no database effects.
 
+For phased migration profiles, admission durably records the initial READY
+receipt and fences ordinary clients before running the first required phase.
+A known phase failure rolls back that phase's data, DDL and completion receipt;
+the initial READY receipt and fence remain. Keep the exact plan bytes, approval,
+predecessor and installation bindings for authenticated recovery. An absent
+progress relation before admission, a READY receipt after a failed phase and
+absence after successful final publication are distinct states. Final publication
+advances history and removes the transient progress relation; a phase error alone
+does not authorize reopening ordinary writes.
+
 UMF owns source comparison, review candidates, plan binding and refusal. Weft owns
 lowering declared typed data operations such as the scoped backfill. The native
 host owns credentials, connection selection, durable locking/progress/history,

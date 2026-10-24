@@ -445,7 +445,9 @@ Field and literal leaves have carrier types. Intermediate typing does not apply
 all target refinements to each operand: a separator literal need not satisfy the
 final string's enumeration or minimum length. Coalesce and conditional branches
 must have compatible carriers. Text/varchar uses exact Unicode text and C
-collation; char/bpchar and locale-dependent operations refuse. Date, instant,
+collation; NUL and unpaired UTF-16 surrogate literals refuse rather than being
+normalized during UTF-8 transport. Valid supplementary/combining Unicode is
+preserved exactly. Char/bpchar and locale-dependent operations refuse. Date, instant,
 UUID and boolean support copy/coalesce/conditional only when source and target
 native/logical meanings match exactly. No parsing, timezone conversion or cast
 language is implied. Float and mixed text/numeric coercions refuse.
@@ -486,7 +488,11 @@ from unchanged inputs; a full aggregate guard combines exactness/non-NULL with
 the existing effect-count guard and raises a statement error on any failure.
 Numeric comparison uses exact numeric values; text comparison uses text with C
 collation and significant trailing spaces. No private row values or booleans
-escape through the public result. Zero matches pass the exactness guard. The
+escape through the public result. The public marker frame limit does not bound
+private expression/input memory. Source/token/AST/numeric/row limits, host
+statement and lock timeouts, and PostgreSQL datum/server resource limits apply;
+there is no claimed 8 MiB private-value memory guarantee. SQL expansion must
+remain bounded by the admitted AST/slots, without exponential subtree cloning. Zero matches pass the exactness guard. The
 guard must depend on the full effects relation, so pagination or a LIMIT cannot
 hide an invalid row. Native errors remain errors. All functions, operators, types and collations use qualified built-in resolution;
 ambient search_path must not change meaning. No CTID join or speculative
@@ -513,6 +519,13 @@ closed correspondence with exact ordered steps; never inherit a split legacy
 phase accidentally. Compound unrelated changes and dependent new-field chains
 remain refused. Future defaults do not supply existing-row values implicitly.
 
+Both retained sources must independently compile. In particular, appending a
+required target without a future default can invalidate an existing create
+command that omits it. This profile does not rewrite that command or admit a
+combined command edit outside its closed source correspondence. Refuse that
+composition explicitly; qualify no-default append only with a valid successor
+source. Companion command evolution remains a tracked later composition scope.
+
 Known aborted attempts may retry. Unknown commit outcomes must be observed from
 authenticated progress/native witnesses before dispatch. Committed work is never
 rerun, even though expressions are pure. Failure after this phase commits keeps
@@ -520,6 +533,17 @@ the installation fenced for exact resume or separately authorized forward repair
 whole-plan data rollback is not promised. Receipts contain counts, identities and
 outcomes, not birthdays, raw rows or rejected samples. Ordinary diagnostics must
 sanitize native DETAIL; private host error custody is a separate authority.
+
+Distinguish phase atomicity from durable job setup. The existing host commits a
+source-bound initial READY receipt and fences the installed head before entering
+the required phase. A known first-phase failure rolls back its data, DDL and
+phase-completion receipt; the initial READY receipt and fencing remain for
+authenticated recovery. The oracle must distinguish an absent progress relation
+before setup from one exact READY row afterward: phase index zero, no completed
+steps, the empty-input SHA-256 phase digest and exact plan/file/predecessor/prefix
+bindings. History and application values/column constraints remain unchanged.
+Successful final publication advances history and removes the progress relation.
+Neither a missing table nor an empty row array may conceal these distinct states.
 
 ### Required independent acceptance
 
@@ -535,7 +559,8 @@ copy/coalesce/strict concat/conditional/arithmetic, Unicode and trailing spaces,
 zero matches, preserved present/input/unrelated values, and both phase shapes.
 Exercise intermediate budget refusals, overflow, NULL, decimal rounding, length,
 checks/enumerations, unique/FK failures, row-bound overflow and invalid rows after
-valid rows; every failed phase must leave no partial data, DDL or progress.
+valid rows; every failed phase must leave no partial data, DDL or phase-completion
+progress. Separately verify the durable READY/fencing state described above.
 Held writers, cancellation, faults before/after commit, lost commit responses,
 resume without repeat, tampered AST/references/source/approval/program and old
 0.1–0.3 verification/replay are mandatory. Bun and real Chromium establish

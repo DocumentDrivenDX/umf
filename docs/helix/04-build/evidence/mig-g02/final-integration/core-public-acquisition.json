@@ -1,0 +1,81 @@
+{
+  "status": "anonymous-public-bytes-verified",
+  "observedUtc": "2026-10-24T00:47:57.644462+00:00",
+  "tagRefs": "259bf1ed91466ff7e9782d7517c14f2112282026\trefs/tags/umf-v0.5.6\n",
+  "expectedActualProducer": "259bf1ed91466ff7e9782d7517c14f2112282026",
+  "assets": [
+    {
+      "name": "umf_core-0.10.1-cp311-abi3-linux_x86_64.whl",
+      "url": "https://github.com/DocumentDrivenDX/umf/releases/download/umf-v0.5.6/umf_core-0.10.1-cp311-abi3-linux_x86_64.whl",
+      "status": 200,
+      "size": 3527255,
+      "sha256": "3512e56730d1dab59d803b20301aea3ac8f6896b0dab452f767f4c3575b9ff4c",
+      "authentication": "none"
+    },
+    {
+      "name": "umf_core-0.10.1-cp311-abi3-macosx_11_0_arm64.whl",
+      "url": "https://github.com/DocumentDrivenDX/umf/releases/download/umf-v0.5.6/umf_core-0.10.1-cp311-abi3-macosx_11_0_arm64.whl",
+      "status": 200,
+      "size": 3250983,
+      "sha256": "49459bb2dbc37ac9b62b269e9664bac1483439c7d4c79f0b07855e9c8546c823",
+      "authentication": "none"
+    },
+    {
+      "name": "umf_core-0.10.1.tar.gz",
+      "url": "https://github.com/DocumentDrivenDX/umf/releases/download/umf-v0.5.6/umf_core-0.10.1.tar.gz",
+      "status": 200,
+      "size": 2634235,
+      "sha256": "f0bc596a38de03d861212dd30d9d1d2844af215c4572dea7d7186e1f8cda0bb5",
+      "authentication": "none"
+    },
+    {
+      "name": "qualification.json",
+      "url": "https://github.com/DocumentDrivenDX/umf/releases/download/umf-v0.5.6/qualification.json",
+      "status": 200,
+      "size": 14137,
+      "sha256": "d4f18d52d9449e94c249238bd33ae5851a31c90b6e7b9bf57186808f14b3c0c5",
+      "authentication": "none"
+    },
+    {
+      "name": "SHA256SUMS",
+      "url": "https://github.com/DocumentDrivenDX/umf/releases/download/umf-v0.5.6/SHA256SUMS",
+      "status": 200,
+      "size": 774,
+      "sha256": "8f3f195f7589fc2ee87be0c6df118cc752f48671a2d0d5d47ec4ba30b52a3bd0",
+      "authentication": "none"
+    },
+    {
+      "name": "PUBLIC_ASSET_INVENTORY.json",
+      "url": "https://github.com/DocumentDrivenDX/umf/releases/download/umf-v0.5.6/PUBLIC_ASSET_INVENTORY.json",
+      "status": 200,
+      "size": 2142,
+      "sha256": "5171d5fbaaaefebbf94a8d07d1471c7c4d2937115f6631b651fa21aa4a054e39",
+      "authentication": "none"
+    },
+    {
+      "name": "current-source-ci.json",
+      "url": "https://github.com/DocumentDrivenDX/umf/releases/download/umf-v0.5.6/current-source-ci.json",
+      "status": 200,
+      "size": 18053,
+      "sha256": "cef80d2d1e10650a87f8c41d12e9d48ca146540a11157df06cac837147db804d",
+      "authentication": "none"
+    },
+    {
+      "name": "RELEASE_NOTES.md",
+      "url": "https://github.com/DocumentDrivenDX/umf/releases/download/umf-v0.5.6/RELEASE_NOTES.md",
+      "status": 200,
+      "size": 3457,
+      "sha256": "35f6e098af5e329cd4b72a69ee56c2106d70c23bb926794f806dac36f479e165",
+      "authentication": "none"
+    },
+    {
+      "name": "umf-core-0.10.1-qualification-evidence.zip",
+      "url": "https://github.com/DocumentDrivenDX/umf/releases/download/umf-v0.5.6/umf-core-0.10.1-qualification-evidence.zip",
+      "status": 200,
+      "size": 71652,
+      "sha256": "66a87fb0da28b3662eddd178e3a60e05b19c81274185919e6428a4ae6768a9d3",
+      "authentication": "none"
+    }
+  ],
+  "scope": "Core0.10.1publisheddependencyonly; noG02finalreleaseorinstalledcohortacceptance"
+}

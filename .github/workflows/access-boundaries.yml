@@ -57,7 +57,7 @@ jobs:
       - run: >-
           bun test tests/table-authoring/row-scope.test.ts tests/binding/tables.test.ts tests/binding/table-operations.test.ts tests/binding/table-temporal.test.ts tests/binding/table-domains.test.ts tests/binding/table-deployment.test.ts tests/binding/table-migration.test.ts
           tests/compilation/table-lifecycle-boundaries.test.ts tests/compilation/table-deployment-boundaries.test.ts
-          tests/lifecycle/g02-derived-fill.test.ts
+          tests/lifecycle/g02-derived-fill.test.ts tests/lifecycle/g02-temporal-native-fixture.test.ts
       - run: bunx playwright install --with-deps chromium
       - name: Actual browser metadata parity and preservation
         env:
@@ -194,11 +194,20 @@ jobs:
             --expected-os ubuntu-24.04 \
             --expected-architecture x86_64 \
             --expected-python 3.11 \
+            --core-wheel-url 'https://github.com/DocumentDrivenDX/umf/releases/download/umf-v0.5.6/umf_core-0.10.1-cp311-abi3-linux_x86_64.whl' \
+            --core-wheel-filename 'umf_core-0.10.1-cp311-abi3-linux_x86_64.whl' \
+            --core-wheel-sha256 '3512e56730d1dab59d803b20301aea3ac8f6896b0dab452f767f4c3575b9ff4c' \
+            --core-version '0.10.1' \
+            --core-release-tag 'umf-v0.5.6' \
+            --core-source-commit '259bf1ed91466ff7e9782d7517c14f2112282026' \
+            --core-repository-url 'https://github.com/DocumentDrivenDX/umf' \
+            --core-sdist-url 'https://github.com/DocumentDrivenDX/umf/releases/download/umf-v0.5.6/umf_core-0.10.1.tar.gz' \
+            --core-sdist-sha256 'f0bc596a38de03d861212dd30d9d1d2844af215c4572dea7d7186e1f8cda0bb5' \
             --weft-wheel-url "https://github.com/DocumentDrivenDX/weft/releases/download/v0.4.53/weft_sql-0.4.53-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl" \
             --weft-wheel-filename 'weft_sql-0.4.53-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl' \
             --weft-wheel-sha256 "db01c4cf6357d674f1591609a2b9c83a9322ad8f8937c345e5950cc1582b83d2" \
             --mini-racer-wheel /tmp/g02-mini-racer-wheelhouse/*.whl
-      - name: Qualify the hash-locked 18-wheel mirror with missing, tampered and network-denial controls
+      - name: Qualify the hash-locked declared wheel mirror with missing, tampered and network-denial controls
         run: >-
           python -I tests/codegen/offline_mirror_probe.py
           --wheelhouse /tmp/umf-g02-cohort/wheelhouse
@@ -215,7 +224,7 @@ jobs:
             -r /tmp/umf-g02-cohort/mirror/requirements.lock
           /tmp/g02-native-installed/bin/python -I -m pip --isolated check
           /tmp/g02-native-installed/bin/python -I -c \
-            "from importlib.metadata import version; assert version('weft-sql')=='0.4.53'; assert version('umf-access')=='0.1.0.dev8'; assert version('umf-codegen')=='0.1.0a5'; assert version('umf-core')=='0.10.0'"
+            "from importlib.metadata import version; from umf import current_core_version; assert version('weft-sql')=='0.4.53'; assert version('umf-access')=='0.1.0.dev8'; assert version('umf-codegen')=='0.1.0a5'; assert version('umf-core')=='0.10.1'; assert current_core_version()=='0.10.0'"
           /tmp/g02-native-installed/bin/python -I - <<'PY'
           import psycopg
           with psycopg.connect('host=127.0.0.1 port=5432 dbname=postgres user=postgres') as connection:
@@ -228,13 +237,23 @@ jobs:
           bun tests/lifecycle/g02-derived-fill-native-fixture.ts /tmp/g02-base-fixture.json
           bun tests/lifecycle/g02-null-semantics-native-fixture.ts /tmp/g02-null-fixture.json
           bun tests/lifecycle/g02-no-default-native-fixture.ts /tmp/g02-no-default-fixture.json
+          bun tests/lifecycle/g02-temporal-native-fixture.ts /tmp/g02-temporal-fixture.json
           python - <<'PY'
           import json
           base=json.load(open('/tmp/g02-base-fixture.json'))
           nulls=json.load(open('/tmp/g02-null-fixture.json'))
           no_default=json.load(open('/tmp/g02-no-default-fixture.json'))
+          temporal=json.load(open('/tmp/g02-temporal-fixture.json'))
           assert len(base['cases'])==2, len(base['cases'])
           assert len(nulls['cases'])==18, len(nulls['cases'])
+          assert temporal['version']=='umf.g02-temporal-native-fixture/1'
+          assert len(temporal['cases'])==5, len(temporal['cases'])
+          assert temporal['provenance']['domain']=='SD-007 Person optional birthday example'
+          for case in temporal['cases']:
+            old=json.loads(case['initialSource']['utf8'])['modules'][0]['extensions']['umf.tables']['commands']
+            new=json.loads(case['source']['utf8'])['modules'][0]['extensions']['umf.tables']['commands']
+            assert len(old)==1 and old==new[:1] and old[0]['id']=='create_person'
+            assert len(new)==2 and new[1]['version']=='umf.table-operation/0.2'
           assert no_default['version']=='umf.praxis.g02-no-default-native-fixture/1'
           assert json.loads(no_default['initialSource']['utf8'])['modules'][0]['extensions']['umf.tables']['commands']==[]
           assert [command['id'] for command in json.loads(no_default['source']['utf8'])['modules'][0]['extensions']['umf.tables']['commands']]==['derive_total']
@@ -258,13 +277,20 @@ jobs:
           --dsn 'host=127.0.0.1 port=5432 dbname=postgres user=postgres'
           --fixture /tmp/g02-no-default-fixture.json
           --report /tmp/g02-no-default-native.json
+      - name: Qualify native date, instant, UUID and boolean G02 carriers
+        run: >-
+          /tmp/g02-native-installed/bin/python -I tests/lifecycle/g02-temporal-native.py
+          --dsn 'host=127.0.0.1 port=5432 dbname=postgres user=postgres'
+          --fixture /tmp/g02-temporal-fixture.json
+          --report /tmp/g02-temporal-native.json
       - name: Bind three recovery fault scenarios to the complete immutable inputs
         run: |
           python - <<'PY'
           import hashlib, json, pathlib, subprocess
           root=pathlib.Path('/tmp/umf-g02-cohort')
           wheels={p.name:{'sha256':hashlib.sha256(p.read_bytes()).hexdigest(),'bytes':p.stat().st_size} for p in sorted((root/'wheelhouse').glob('*.whl'))}
-          assert len(wheels)==18, len(wheels)
+          locked=json.loads((root/'cohort.lock.json').read_text())['wheels']
+          assert set(wheels)=={item['filename'] for item in locked}, (len(wheels),len(locked))
           manifest={
             'candidate':'G02-native-${{ github.sha }}',
             'sourceCommit':'${{ github.sha }}',
@@ -273,8 +299,8 @@ jobs:
             'embeddedGeneratorManifestSha256':hashlib.sha256(pathlib.Path('python/umf_codegen/src/umf_codegen/_assets/manifest.json').read_bytes()).hexdigest(),
             'embeddedGeneratorInputHashes':json.loads(pathlib.Path('python/umf_codegen/src/umf_codegen/_assets/manifest.json').read_text())['inputs'],
             'codegenCorpusSha256':hashlib.sha256(pathlib.Path('/tmp/g02-codegen-corpus.json').read_bytes()).hexdigest(),
-            'fixtureHashes':{name:hashlib.sha256(pathlib.Path('/tmp/'+name).read_bytes()).hexdigest() for name in ('g02-base-fixture.json','g02-null-fixture.json','g02-no-default-fixture.json')},
-            'nativeRunnerHashes':{name:hashlib.sha256(pathlib.Path(name).read_bytes()).hexdigest() for name in ('tests/lifecycle/derived-fill-native.py','tests/lifecycle/g02-faults-native.py','tests/lifecycle/g02-derived-fill-native-fixture.ts','tests/lifecycle/g02-null-semantics-native-fixture.ts','tests/lifecycle/g02-no-default-native.py','tests/lifecycle/g02-no-default-native-fixture.ts')},
+            'fixtureHashes':{name:hashlib.sha256(pathlib.Path('/tmp/'+name).read_bytes()).hexdigest() for name in ('g02-base-fixture.json','g02-null-fixture.json','g02-no-default-fixture.json','g02-temporal-fixture.json')},
+            'nativeRunnerHashes':{name:hashlib.sha256(pathlib.Path(name).read_bytes()).hexdigest() for name in ('tests/lifecycle/derived-fill-native.py','tests/lifecycle/g02-faults-native.py','tests/lifecycle/g02-derived-fill-native-fixture.ts','tests/lifecycle/g02-null-semantics-native-fixture.ts','tests/lifecycle/g02-no-default-native.py','tests/lifecycle/g02-no-default-native-fixture.ts','tests/lifecycle/g02-temporal-native.py','tests/lifecycle/g02-temporal-native-fixture.ts')},
             'artifacts':wheels,
           }
           pathlib.Path('/tmp/g02-candidate-manifest.json').write_text(json.dumps(manifest,indent=2,sort_keys=True)+'\n')
@@ -295,6 +321,8 @@ jobs:
             /tmp/umf-g02-cohort/cohort.lock.json
             /tmp/umf-g02-cohort/cohort-template.json
             /tmp/umf-g02-cohort/mirror/manifest.json
+            /tmp/umf-g02-cohort/wheelhouse/*.whl
+            /tmp/umf-g02-cohort/release-inputs/*
 
 
   python-codegen:
@@ -305,29 +333,45 @@ jobs:
       matrix:
         include:
           - os: ubuntu-24.04
+            cell-id: linux-x86_64-py311
             architecture: x86_64
             mini-racer-platform: linux-x86_64-glibc-2.27+
+            core-wheel-filename: umf_core-0.10.1-cp311-abi3-linux_x86_64.whl
+            core-wheel-url: https://github.com/DocumentDrivenDX/umf/releases/download/umf-v0.5.6/umf_core-0.10.1-cp311-abi3-linux_x86_64.whl
+            core-wheel-sha256: 3512e56730d1dab59d803b20301aea3ac8f6896b0dab452f767f4c3575b9ff4c
             weft-wheel-filename: weft_sql-0.4.53-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
             weft-wheel-url: https://github.com/DocumentDrivenDX/weft/releases/download/v0.4.53/weft_sql-0.4.53-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
             weft-wheel-sha256: db01c4cf6357d674f1591609a2b9c83a9322ad8f8937c345e5950cc1582b83d2
             python-version: '3.11'
           - os: ubuntu-24.04
+            cell-id: linux-x86_64-py314
             architecture: x86_64
             mini-racer-platform: linux-x86_64-glibc-2.27+
+            core-wheel-filename: umf_core-0.10.1-cp311-abi3-linux_x86_64.whl
+            core-wheel-url: https://github.com/DocumentDrivenDX/umf/releases/download/umf-v0.5.6/umf_core-0.10.1-cp311-abi3-linux_x86_64.whl
+            core-wheel-sha256: 3512e56730d1dab59d803b20301aea3ac8f6896b0dab452f767f4c3575b9ff4c
             weft-wheel-filename: weft_sql-0.4.53-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
             weft-wheel-url: https://github.com/DocumentDrivenDX/weft/releases/download/v0.4.53/weft_sql-0.4.53-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
             weft-wheel-sha256: db01c4cf6357d674f1591609a2b9c83a9322ad8f8937c345e5950cc1582b83d2
             python-version: '3.14'
           - os: macos-14
+            cell-id: macos-arm64-py311
             architecture: arm64
             mini-racer-platform: macos-11+-arm64
+            core-wheel-filename: umf_core-0.10.1-cp311-abi3-macosx_11_0_arm64.whl
+            core-wheel-url: https://github.com/DocumentDrivenDX/umf/releases/download/umf-v0.5.6/umf_core-0.10.1-cp311-abi3-macosx_11_0_arm64.whl
+            core-wheel-sha256: 49459bb2dbc37ac9b62b269e9664bac1483439c7d4c79f0b07855e9c8546c823
             weft-wheel-filename: weft_sql-0.4.53-cp39-abi3-macosx_11_0_arm64.whl
             weft-wheel-url: https://github.com/DocumentDrivenDX/weft/releases/download/v0.4.53/weft_sql-0.4.53-cp39-abi3-macosx_11_0_arm64.whl
             weft-wheel-sha256: 4c8281945b852af02cae8602747fb7b1b652ab3a1369d7650efce62ae6d35c6c
             python-version: '3.11'
           - os: macos-14
+            cell-id: macos-arm64-py314
             architecture: arm64
             mini-racer-platform: macos-11+-arm64
+            core-wheel-filename: umf_core-0.10.1-cp311-abi3-macosx_11_0_arm64.whl
+            core-wheel-url: https://github.com/DocumentDrivenDX/umf/releases/download/umf-v0.5.6/umf_core-0.10.1-cp311-abi3-macosx_11_0_arm64.whl
+            core-wheel-sha256: 49459bb2dbc37ac9b62b269e9664bac1483439c7d4c79f0b07855e9c8546c823
             weft-wheel-filename: weft_sql-0.4.53-cp39-abi3-macosx_11_0_arm64.whl
             weft-wheel-url: https://github.com/DocumentDrivenDX/weft/releases/download/v0.4.53/weft_sql-0.4.53-cp39-abi3-macosx_11_0_arm64.whl
             weft-wheel-sha256: 4c8281945b852af02cae8602747fb7b1b652ab3a1369d7650efce62ae6d35c6c
@@ -410,7 +454,11 @@ jobs:
           --report /tmp/umf-codegen-matrix-receipt.json
       - name: Verify the lock-driven offline mirror and refusal controls
         run: python tests/codegen/test_package_mirror.py
-      - name: Acquire and freeze the exact 18-wheel installed cohort for this cell
+      - name: Run reviewed exact Core selector controls
+        run: |
+          python -m unittest discover -s tests/codegen -p test_cohort_selector.py -v
+          python -m unittest discover -s tests/codegen -p test_aggregate_cohort.py -v
+      - name: Acquire and freeze the exact declared installed cohort for this cell
         run: >-
           python tests/codegen/acquire_offline_cohort.py
           --output-dir /tmp/umf-full-cohort
@@ -418,11 +466,20 @@ jobs:
           --expected-os '${{ matrix.os }}'
           --expected-architecture '${{ matrix.architecture }}'
           --expected-python '${{ matrix.python-version }}'
+          --core-wheel-url '${{ matrix.core-wheel-url }}'
+          --core-wheel-filename '${{ matrix.core-wheel-filename }}'
+          --core-wheel-sha256 '${{ matrix.core-wheel-sha256 }}'
+          --core-version '0.10.1'
+          --core-release-tag 'umf-v0.5.6'
+          --core-source-commit '259bf1ed91466ff7e9782d7517c14f2112282026'
+          --core-repository-url 'https://github.com/DocumentDrivenDX/umf'
+          --core-sdist-url 'https://github.com/DocumentDrivenDX/umf/releases/download/umf-v0.5.6/umf_core-0.10.1.tar.gz'
+          --core-sdist-sha256 'f0bc596a38de03d861212dd30d9d1d2844af215c4572dea7d7186e1f8cda0bb5'
           --weft-wheel-url '${{ matrix.weft-wheel-url }}'
           --weft-wheel-filename '${{ matrix.weft-wheel-filename }}'
           --weft-wheel-sha256 '${{ matrix.weft-wheel-sha256 }}'
           --mini-racer-wheel /tmp/mini-racer-wheelhouse/*.whl
-      - name: Install and exercise the complete locked mirror with OS network denial
+      - name: Install and exercise this producer cell's frozen mirror with OS network denial
         run: >-
           python -I tests/codegen/offline_mirror_probe.py
           --wheelhouse /tmp/umf-full-cohort/wheelhouse
@@ -437,6 +494,7 @@ jobs:
           path: |
             /tmp/umf-codegen-matrix-receipt.json
             /tmp/umf-codegen-report.json
+            /tmp/umf-codegen-corpus.json
             /tmp/umf-row-scope-report.json
             /tmp/umf-deployment-python.json
             /tmp/umf-migration-python.json
@@ -445,6 +503,112 @@ jobs:
             /tmp/umf-full-cohort/cohort-template.json
             /tmp/umf-full-cohort/mirror/manifest.json
             /tmp/umf-full-cohort/offline-mirror-receipt.json
+            /tmp/umf-full-cohort/wheelhouse/*.whl
+            /tmp/umf-full-cohort/release-inputs/*
+
+
+  aggregate-python-cohort:
+    name: assemble closed four-cell Python wheel union
+    runs-on: ubuntu-24.04
+    needs: python-codegen
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: codegen-*
+          path: /tmp/codegen-cell-artifacts
+      - name: Bind all four producer locks and release inputs to the cell IDs
+        run: |
+          set -euo pipefail
+          input=/tmp/aggregate-input
+          mkdir -p "$input"
+          declare -A ids=(
+            [codegen-ubuntu-24.04-py3.11]=linux-x86_64-py311
+            [codegen-ubuntu-24.04-py3.14]=linux-x86_64-py314
+            [codegen-macos-14-py3.11]=macos-arm64-py311
+            [codegen-macos-14-py3.14]=macos-arm64-py314
+          )
+          for artifact in "${!ids[@]}"; do
+            root="/tmp/codegen-cell-artifacts/$artifact"
+            lock=$(find "$root" -name cohort.lock.json -type f -print -quit)
+            test -n "$lock"
+            cohort=$(dirname "$lock")
+            cell="$input/${ids[$artifact]}"
+            mkdir -p "$cell/wheelhouse"
+            cp "$lock" "$cell/cohort.lock.json"
+            cp "$cohort/offline-mirror-receipt.json" "$cell/offline-mirror-receipt.json"
+            cp "$cohort"/wheelhouse/*.whl "$cell/wheelhouse/"
+          done
+          python - <<'PY'
+          import hashlib, pathlib, shutil
+          root=pathlib.Path('/tmp/codegen-cell-artifacts')
+          target=pathlib.Path('/tmp/aggregate-generator-corpus.json')
+          matches=sorted(root.rglob('umf-codegen-corpus.json'))
+          assert len(matches)==4, len(matches)
+          digests={hashlib.sha256(path.read_bytes()).hexdigest() for path in matches}
+          assert len(digests)==1, 'producer source corpora differ'
+          shutil.copyfile(matches[0], target)
+          PY
+      - name: Assemble and verify the one closed aggregate mirror
+        run: >-
+          python -I tests/codegen/aggregate_cohort.py assemble
+          --input-root /tmp/aggregate-input
+          --output /tmp/umf-aggregate-cohort
+          --source-commit '${{ github.sha }}'
+      - name: Bind the identical compiler corpus into the aggregate artifact
+        run: cp /tmp/aggregate-generator-corpus.json /tmp/umf-aggregate-cohort/generator-corpus.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: umf-aggregate-cohort-${{ github.sha }}
+          path: /tmp/umf-aggregate-cohort/**
+
+
+  python-union-replay:
+    name: aggregate-union replay (${{ matrix.cell-id }})
+    runs-on: ${{ matrix.os }}
+    needs: aggregate-python-cohort
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - cell-id: linux-x86_64-py311
+            os: ubuntu-24.04
+            python-version: '3.11'
+          - cell-id: linux-x86_64-py314
+            os: ubuntu-24.04
+            python-version: '3.14'
+          - cell-id: macos-arm64-py311
+            os: macos-14
+            python-version: '3.11'
+          - cell-id: macos-arm64-py314
+            os: macos-14
+            python-version: '3.14'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - uses: actions/download-artifact@v4
+        with:
+          name: umf-aggregate-cohort-${{ github.sha }}
+          path: /tmp/umf-aggregate-cohort
+      - name: Replay the selected lock from the shared union under network denial
+        run: >-
+          python -I tests/codegen/offline_mirror_probe.py
+          --aggregate-index /tmp/umf-aggregate-cohort/aggregate.json
+          --selected-cell '${{ matrix.cell-id }}'
+          --expected-source-commit '${{ github.sha }}'
+          --mirror /tmp/umf-aggregate-cohort/mirror
+          --generator-corpus /tmp/umf-aggregate-cohort/generator-corpus.json
+          --report /tmp/umf-union-replay-${{ matrix.cell-id }}.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: union-replay-${{ matrix.cell-id }}-${{ github.sha }}
+          path: /tmp/umf-union-replay-${{ matrix.cell-id }}.json
 
 
   native-sessions:
