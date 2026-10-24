@@ -496,3 +496,8 @@ Required members and all Key components still need required assignments.
 Version 1 continues to require required assignment parameters. Unknown recipe
 profiles block selected client generation. This is declaration/admission meaning;
 executors must separately qualify version 2 before accepting its invocations.
+
+
+## Source-bound single-SET consumer bridge — 2026-10-23
+
+CONTRACT-906 defines a distinct core 0.10.0 pure consumer binding for one STRING-key, STRING-value SET and seed-row admission. It preserves opaque policy obligations and reports a separate host capability assessment with executionVerified:false. It neither grants authority nor changes this contract's authored action meaning. See [CONTRACT-906](CONTRACT-906-single-set-admission.md).

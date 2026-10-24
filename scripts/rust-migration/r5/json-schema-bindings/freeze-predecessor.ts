@@ -27,10 +27,12 @@ async function captureSourceClosure(entry:string):Promise<{sources:Record<string
     const visit=(node:ts.Node) => {
       if(ts.isImportDeclaration(node)||ts.isExportDeclaration(node)) {
         if(node.moduleSpecifier&&ts.isStringLiteral(node.moduleSpecifier))specifiers.push(node.moduleSpecifier.text);
-      } else if(ts.isCallExpression(node)&&node.expression.kind===ts.SyntaxKind.ImportKeyword&&node.arguments.length===1&&ts.isStringLiteral(node.arguments[0])) {
-        specifiers.push(node.arguments[0].text);
-      } else if(ts.isCallExpression(node)&&ts.isIdentifier(node.expression)&&node.expression.text==='require'&&node.arguments.length===1&&ts.isStringLiteral(node.arguments[0])) {
-        specifiers.push(node.arguments[0].text);
+      } else if(ts.isCallExpression(node)&&node.expression.kind===ts.SyntaxKind.ImportKeyword&&node.arguments.length===1) {
+        const argument=node.arguments[0];
+        if(argument&&ts.isStringLiteral(argument))specifiers.push(argument.text);
+      } else if(ts.isCallExpression(node)&&ts.isIdentifier(node.expression)&&node.expression.text==='require'&&node.arguments.length===1) {
+        const argument=node.arguments[0];
+        if(argument&&ts.isStringLiteral(argument))specifiers.push(argument.text);
       } else if(ts.isImportTypeNode(node)&&ts.isLiteralTypeNode(node.argument)&&ts.isStringLiteral(node.argument.literal)) {
         specifiers.push(node.argument.literal.text);
       }
@@ -87,11 +89,17 @@ add(cases,'import.invalid-native-schema',{text:'{"type":12}',options:{id:'urn:um
 add(cases,'import.unknown-dialect-preserved',{text:'{"$schema":"https://example.test/unknown","type":"object"}',options:{id:'urn:umf:r5:unknown-dialect',baseUri:base}},()=>importJsonSchema('{"$schema":"https://example.test/unknown","type":"object"}',{id:'urn:umf:r5:unknown-dialect',baseUri:base}));
 
 add(cases,'inspect.success',{document:imported},()=>inspectJsonSchema(imported));
-const invalidVersion=structuredClone(imported); invalidVersion.vocabularies['umf.json-schema'].version='9.9.9';
+const invalidVersion=structuredClone(imported);
+const jsonSchemaVocabulary=invalidVersion.vocabularies['umf.json-schema'];
+if(!jsonSchemaVocabulary)throw new Error('Frozen JSON Schema fixture lacks its vocabulary');
+jsonSchemaVocabulary.version='9.9.9';
 add(cases,'inspect.invalid-version',{document:invalidVersion},()=>inspectJsonSchema(invalidVersion));
 const invalidDocument=structuredClone(imported); invalidDocument.id='';
 add(cases,'inspect.invalid-document',{document:invalidDocument},()=>inspectJsonSchema(invalidDocument));
-const missingPayload=structuredClone(imported); delete missingPayload.modules[0].elements[0].extensions['umf.json-schema'];
+const missingPayload=structuredClone(imported);
+const rootElement=missingPayload.modules[0]?.elements[0];
+if(!rootElement)throw new Error('Frozen JSON Schema fixture lacks its root element');
+delete rootElement.extensions['umf.json-schema'];
 add(cases,'inspect.missing-payload',{document:missingPayload},()=>inspectJsonSchema(missingPayload));
 
 add(cases,'export.root',{document:imported},()=>exportJsonSchema(imported));
