@@ -1210,3 +1210,8 @@ Source/kernel actual file-lock/identity/crash controls, real native process/SQL/
 custody controls, and installed/release proof remain separate named qualifications.
 Retain every failed precursor and unknown result. No passing count or future stub
 closes this adoption's implementation or the remaining G02–G11 release backlog.
+
+
+### G10 verification checkpoint 002: schema-USAGE and internal tags
+
+Required future acceptance: initial empty/nonempty and mixed inventory; one closed schema-grant step versus exactly two declared catalog rows; installed unchanged and last-table removal have no redundant grant/revoke; quoted names; schema/audience/privilege/extra-member/null-table/fake-table/metadata/SQL contradictions refuse; every actual renderer has complete closed tags; full tagged-to-public equality and historical golden bundle bytes/digests remain exact. Native cases prove genuine original empty schema/principals, exact before/after ACLs, fenced clients through publication/external activation, positive commit and same-original unknown-COMMIT recovery. All phase/step/prefix/cap accounting includes the real step. None of these obligations is marked passed by this design adoption.

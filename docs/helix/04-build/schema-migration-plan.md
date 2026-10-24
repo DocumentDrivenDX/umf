@@ -653,3 +653,16 @@ synthetic fixtures are retained in `evidence/schema-migration-native-lease009/`.
 This is source implementation evidence, not PostgreSQL/native acceptance. Journal
 birth015, durable ROOT checkpoints/all-writer fences, original ingress/application
 providers and all remaining migration/release/public-byte gates stay open.
+
+
+G10 governing checkpoint002 adopts the closed schema-USAGE subject and actual
+renderer lowering contract after root review of the complete addendum and
+governing001 definitions. One original combined grant maps exactly the person
+and batch catalog rows; installed unchanged schemas retain both grants without
+reissuing or revoking them, including last-table removal. Private closed renderer
+tags must reproduce the historical public bundle bytes exactly. Exact prior
+contract/design/test-plan prefixes and the complete proposal/review packet are
+retained in `evidence/schema-migration-design-review/g10-contract-002/`.
+This is design adoption only. Source implementation/legacy parity, original
+bootstrap and native ACL/COMMIT recovery, fenced clients and all mixed, browser,
+installed, managed, merge/release/public-byte gates remain open.
