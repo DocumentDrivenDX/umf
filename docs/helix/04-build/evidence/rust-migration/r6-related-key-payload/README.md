@@ -354,3 +354,62 @@ memory, cancellation and deadline guarantees remain open.
 | `docs/helix/04-build/evidence/rust-migration/r6-related-key-payload/recursion_controls.py` | `283f945527ef5e69ecb1708a2230e65b6d3a0a45dbfcb6fab608ed3fc95a0912` |
 | `docs/helix/04-build/evidence/rust-migration/r6-related-key-payload/custom-recursion-cpython-3.11.json` | `f38677660b6b0aefa9859b4a1dae09c409bac46fd4cd2a2f006ab0e879a6060f` |
 | `docs/helix/04-build/evidence/rust-migration/r6-related-key-payload/custom-recursion-cpython-3.14.json` | `639d07d17869ea507fa5063af1d9113f67333540c346b1da679dcbfb6c7a13c9` |
+
+### Staged live default replay (current source)
+
+The public `decode_related_keys` default now selects the Rust JSON parser only
+for CPython 3.11 and 3.14, after metadata, PostgreSQL profile, and exact-`str`
+admission. The call remains in the public decoder frame. CPython 3.11 uses the
+explicit `loads_default` facade frame to model the call topology needed by its
+`json.loads` recursion budget; CPython 3.14 calls `loads` directly. The
+opt-in `decode_related_keys_rust` path is unchanged. CPython 3.12/3.13 and
+non-CPython runtimes keep the Python `json.loads` path. Missing or mismatched
+native capability is caught only at the PostgreSQL boundary and becomes a
+fixed `ReadObligationUnmet` after decoder metadata and text-type admission.
+
+Using current access source and an abi3 extension rebuilt from the current
+Rust binding source, the live default matched all 56 frozen outcomes and all
+20 unprofiled direct recursion controls on both CPython 3.11.17 and 3.14.8.
+The source replay also retains the frozen parser-entry count of 53/56 on
+CPython 3.11; the other three observations are rejected before parser entry.
+Profiling changed outcomes in 14 controls on 3.11 and zero on 3.14, so those
+profiled results remain diagnostic only. The earlier 12/20 result came from
+the immutable 6cd866f core wheel, which predates the binding repair recorded
+above; it is not evidence for the current binding. Its one-array threshold
+deltas were `(limit, ambient depth; frozen → wheel)`: `(30,0; 21→22)`,
+`(30,10; 11→12)`, `(50,0; 41→42)`, `(50,10; 31→32)`, `(50,25; 16→17)`,
+`(100,0; 91→92)`, `(100,10; 81→82)`, `(100,25; 66→67)`, `(100,40; 51→52)`,
+`(250,25; 216→217)`, `(250,40; 201→202)`, and `(250,190; 51→52)`. The
+current extension/source overlay results below have zero unprofiled mismatches.
+
+The access source was not installed in that replay. The compiled extension
+was built with the documented macOS LINKEDIT workaround from
+`bindings/core/python/src/related_keys.rs` SHA-256
+`d5f99acccc49c8d2f4bf89b94c4673ad3af3585cfbd223b9e490f03738a56114`; its
+SHA-256 was
+`9908b33f12b89ea2e58bfc209322799cea3e7590eac12f7ce3064ad8a9a23787`.
+Both replay runners used the synthetic Pydantic and generated-Key capture
+harness, so this is source/extension overlay evidence, not an installed wheel
+cohort or PostgreSQL/Weft consumer qualification.
+
+Actual CPython 3.12.15 and 3.13.16 probes loaded the current live decoder with
+the frozen synthetic model, decoded a valid related-Key payload, and observed
+no import of `umf_access.rust_related_keys`; the Python parser remained
+selected. The focused source test module passed 10 tests plus five subtests on
+CPython 3.11 and 10 unittest cases on CPython 3.14 with a temporary synthetic
+`commerce.OrderKey`. These checks do not qualify Rust behavior on 3.12/3.13 or
+replace the pending exact installed core/access-wheel and consumer runs.
+
+Current replay source hashes are:
+
+| Source | SHA-256 |
+| --- | --- |
+| `bindings/core/python/src/related_keys.rs` | `d5f99acccc49c8d2f4bf89b94c4673ad3af3585cfbd223b9e490f03738a56114` |
+| `python/umf_access/src/umf_access/related_keys.py` | `90dd7aeb784ff06bd0baebf1e035b819aee66fd5619eb74af159f109a49132ca` |
+| `python/umf_access/src/umf_access/rust_related_keys.py` | `e80fa3489cefa12aaaaa80b55784f0bb03d53c1cb466c3bc3f0c1710c40ab5b6` |
+| `python/umf_access/src/umf_access/postgres_read.py` | `51002e22de961cec878a85370aecd9458dce9d30e9bf279c5789567dcf3246ab` |
+| `python/umf_access/src/umf_access/types.py` | `d351d98cc0076342cfac4914103ab32eafbf6140adec1a28b4066f8ef9b0c3cc` |
+| `python/umf_access/tests/test_rust_related_keys.py` | `33a052c0ce39046365fa18e61a77723fb66fd51ac0da3134ef82ffcb1eb32357` |
+| `replay_rust.py` | `2a20121da4281307c6a722bb0446968274e53b8a6d45d0becef17dd95a6c7690` |
+| `recursion_controls.py` | `6da9deea6578145a5c22c76031fd3372844fb0e99641a7ca477466908f489831` |
+| Current compiled extension overlay | `9908b33f12b89ea2e58bfc209322799cea3e7590eac12f7ce3064ad8a9a23787` |

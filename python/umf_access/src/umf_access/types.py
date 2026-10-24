@@ -32,6 +32,10 @@ class CodecError(ValueError):
     """A codec boundary refused its value graph or column inventory."""
 
 
+class RelatedKeyParserUnavailable(RuntimeError):
+    """The selected Rust related-Key parser capability is absent or mismatched."""
+
+
 class StrictModel(BaseModel):
     """Generated classes inherit directly, then seal their own subclass hook.
 

@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import re
+import sys
 from decimal import Decimal, InvalidOperation
 from types import GenericAlias
 from typing import cast
@@ -12,7 +13,7 @@ from pydantic import BaseModel
 
 from .codec_support import validate_graph
 from .dsl import RelatedKeys
-from .types import CodecError, StrictModel
+from .types import CodecError, RelatedKeyParserUnavailable, StrictModel
 
 _INTEGER = re.compile(r"(?:0|-[1-9][0-9]*|[1-9][0-9]*)\Z")
 _DECIMAL = re.compile(r"[+-]?(?:[0-9]+(?:\.[0-9]*)?|\.[0-9]+)(?:[eE][+-]?[0-9]+)?\Z")
@@ -124,15 +125,27 @@ def _number(_: str) -> object:
 
 
 def decode_related_keys(value: object, decoder: object, key_model: type[StrictModel]) -> RelatedKeys[StrictModel]:
-    # Keep the legacy path in this frame: CPython's json.loads recursion
-    # behavior depends on ambient Python call depth, including this wrapper.
+    # Keep parsing in this frame: CPython's json.loads recursion behavior
+    # depends on ambient Python call depth, including this wrapper.
     metadata = validate_decoder(decoder,key_model)
     if metadata["profile"] != "pg-related-keys-json/0.1":
         raise CodecError("original engine related values require their owner adapter")
     if type(value) is not str:
         raise CodecError("related-Key native JSON text required")
+    parser = json.loads
+    if sys.implementation.name == "cpython" and sys.version_info[:2] in ((3, 11), (3, 14)):
+        try:
+            if sys.version_info[:2] == (3, 11):
+                from .rust_related_keys import loads_default as parser
+            else:
+                from .rust_related_keys import loads as parser
+        except (ImportError, AttributeError):
+            raise RelatedKeyParserUnavailable("Rust related-Key parser capability unavailable") from None
     try:
-        payload=json.loads(value,object_pairs_hook=_object,parse_int=_number,parse_float=_number,parse_constant=_number)
+        if parser is json.loads:
+            payload=json.loads(value,object_pairs_hook=_object,parse_int=_number,parse_float=_number,parse_constant=_number)
+        else:
+            payload=parser(value)  # type: ignore[operator]
     except (ValueError,TypeError):
         raise CodecError("invalid related-Key JSON text") from None
     if type(payload) is not dict or set(payload) != {"items","truncated"} or type(payload["items"]) is not list or type(payload["truncated"]) is not bool:

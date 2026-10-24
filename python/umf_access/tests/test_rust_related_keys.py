@@ -5,6 +5,8 @@ from __future__ import annotations
 
 import sys
 import unittest
+from types import SimpleNamespace
+from unittest.mock import patch
 
 from commerce import OrderKey
 from umf_access.related_keys import (
@@ -24,12 +26,69 @@ class RustRelatedKeyParserTests(unittest.TestCase):
             "key": key_descriptor(OrderKey),
         }
 
-    def test_opt_in_keeps_default_decoder_unchanged(self) -> None:
+    def test_opt_in_and_default_produce_same_result(self) -> None:
         text = '{"items":[["a"],["b"]],"truncated":true}'
         self.assertEqual(
             decode_related_keys_rust(text, self.metadata, OrderKey),
             decode_related_keys(text, self.metadata, OrderKey),
         )
+
+    def test_default_dispatches_to_rust_only_on_qualified_cpython_versions(self) -> None:
+        text = '{"items":[["a"]],"truncated":false}'
+        import umf_access.rust_related_keys as rust_parser
+
+        if sys.implementation.name == "cpython" and sys.version_info[:2] in ((3, 11), (3, 14)):
+            selected = rust_parser.loads_default if sys.version_info[:2] == (3, 11) else rust_parser.loads
+            selected_name = "loads_default" if sys.version_info[:2] == (3, 11) else "loads"
+            original = selected
+            calls: list[str] = []
+
+            def observed(value: str):
+                calls.append(value)
+                return original(value)
+
+            with patch.object(rust_parser, selected_name, observed):
+                self.assertEqual(decode_related_keys(text, self.metadata, OrderKey).items[0], OrderKey(order_id="a"))
+            self.assertEqual(calls, [text])
+
+        for name, version in (("cpython", (3, 12)), ("cpython", (3, 13)), ("pypy", (3, 11))):
+            environment = SimpleNamespace(
+                implementation=SimpleNamespace(name=name),
+                version_info=version,
+            )
+            with patch("umf_access.related_keys.sys", environment), patch.object(
+                rust_parser, "loads", side_effect=AssertionError("unqualified runtime called Rust")
+            ):
+                self.assertEqual(
+                    decode_related_keys(text, self.metadata, OrderKey).items[0],
+                    OrderKey(order_id="a"),
+                )
+
+    def test_capability_failure_is_deferred_and_maps_at_postgres_boundary(self) -> None:
+        from umf_access.pages import ReadObligationUnmet
+        from umf_access.postgres_read import _output_value
+        import umf_access.rust_related_keys as rust_parser
+
+        if sys.implementation.name != "cpython" or sys.version_info[:2] not in ((3, 11), (3, 14)):
+            self.skipTest("default Rust parser is staged only for CPython 3.11 and 3.14")
+        with patch.object(rust_parser, "profile_version", return_value="wrong-profile"):
+            with self.assertRaises(CodecError):
+                decode_related_keys("{}", {**self.metadata, "profile": "unknown"}, OrderKey)
+            with self.assertRaisesRegex(CodecError, "related-Key native JSON text required"):
+                decode_related_keys(3, self.metadata, OrderKey)
+            with self.assertRaisesRegex(ReadObligationUnmet, "native related-Key decoder capability unavailable"):
+                _output_value(
+                    '{"items":[],"truncated":false}',
+                    {"carrier": "related-keys", "decoder": self.metadata},
+                    key_model=OrderKey,
+                )
+        with patch.object(rust_parser, "profile_version", side_effect=AttributeError("missing capability")):
+            with self.assertRaisesRegex(ReadObligationUnmet, "native related-Key decoder capability unavailable"):
+                _output_value(
+                    '{"items":[],"truncated":false}',
+                    {"carrier": "related-keys", "decoder": self.metadata},
+                    key_model=OrderKey,
+                )
 
     def test_parser_errors_keep_suppressed_inner_context(self) -> None:
         expected_context = {
@@ -72,11 +131,10 @@ class RustRelatedKeyParserTests(unittest.TestCase):
         self.assertEqual(error.__context__.pos, position)
 
     def test_surrogates_and_deep_parser_controls(self) -> None:
-        # The raw surrogate survives parsing and is rejected by Python-owned
-        # Key validation with the same code point still present in context.
+        # Raw lone surrogates remain ordinary Python code points in Key values.
         text = '{"items":[["\\ud800"]],"truncated":false}'
-        with self.assertRaises(CodecError):
-            decode_related_keys_rust(text, self.metadata, OrderKey)
+        result = decode_related_keys(text, self.metadata, OrderKey)
+        self.assertEqual(tuple(map(ord, result.items[0].order_id)), (0xD800,))
 
         deep = "[" * 1200 + "null" + "]" * 1200
         if sys.version_info[:2] == (3, 11):
@@ -89,10 +147,12 @@ class RustRelatedKeyParserTests(unittest.TestCase):
             self.skipTest("only the captured CPython 3.11 and 3.14 profiles are supported")
 
         # A failed deep call must release every recursive-call guard.
-        with self.assertRaises(CodecError):
+        self.assertEqual(
             decode_related_keys_rust(
                 '{"items":[],"truncated":false}', self.metadata, OrderKey
-            )
+            ).items,
+            (),
+        )
 
     def test_custom_and_ambient_recursion_budgets_are_honored(self) -> None:
         original_limit = sys.getrecursionlimit()
@@ -109,8 +169,12 @@ class RustRelatedKeyParserTests(unittest.TestCase):
                     )
                 return recurse(depth - 1)
 
-            with self.assertRaises(RecursionError):
-                recurse(190)
+            if sys.version_info[:2] == (3, 11):
+                with self.assertRaises(RecursionError):
+                    recurse(190)
+            else:
+                with self.assertRaisesRegex(CodecError, "closed related-Key JSON payload required"):
+                    recurse(190)
 
             sys.setrecursionlimit(50)
             low_limit = "[" * 180 + "null" + "]" * 180
@@ -183,10 +247,11 @@ class RustRelatedKeyParserTests(unittest.TestCase):
             "[]",
             "null",
             '{"items":[],"truncated":false,"future":true}',
-            '{"items":[["a"]],"truncated":false}',
         ):
             with self.subTest(text=text), self.assertRaises(CodecError):
                 decode_related_keys_rust(text, self.metadata, OrderKey)
+        valid = decode_related_keys('{"items":[["a"]],"truncated":false}', self.metadata, OrderKey)
+        self.assertEqual(valid.items, (OrderKey(order_id="a"),))
 
     def test_large_text_and_flat_tree_have_no_new_parser_cap(self) -> None:
         from umf_access.rust_related_keys import loads

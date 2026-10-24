@@ -15,6 +15,7 @@ import sys
 from typing import Any
 
 from umf import rust_related_keys as _core
+from .types import RelatedKeyParserUnavailable
 
 _PROFILE = "umf-r6-related-key-json/0.1.0"
 
@@ -29,7 +30,7 @@ def _diagnostic_profile() -> str:
         return "cpython-3.11"
     if version == (3, 14):
         return "cpython-3.14"
-    raise RuntimeError(
+    raise RelatedKeyParserUnavailable(
         "Rust related-Key parser is qualified only for CPython 3.11 and 3.14"
     )
 
@@ -41,11 +42,24 @@ def loads(text: str) -> Any:
     wrapper. Consequently these inner exceptions become the same suppressed
     ``CodecError.__context__`` as the original object/number hooks and decoder.
     """
-    if profile_version() != _PROFILE:
-        raise RuntimeError("umf-core related-Key parser capability profile mismatch")
-    value, failure_kind, diagnostic, offset = _core.parse(
-        text, _diagnostic_profile()
-    )
+    try:
+        profile = profile_version()
+    except (AttributeError, ImportError):
+        raise RelatedKeyParserUnavailable(
+            "umf-core related-Key parser capability unavailable"
+        ) from None
+    if profile != _PROFILE:
+        raise RelatedKeyParserUnavailable(
+            "umf-core related-Key parser capability profile mismatch"
+        )
+    try:
+        value, failure_kind, diagnostic, offset = _core.parse(
+            text, _diagnostic_profile()
+        )
+    except AttributeError:
+        raise RelatedKeyParserUnavailable(
+            "umf-core related-Key parser capability unavailable"
+        ) from None
     if failure_kind is None:
         return value
     if failure_kind in ("duplicate", "numeric"):
@@ -59,3 +73,14 @@ def loads(text: str) -> Any:
             raise RuntimeError("Rust related-Key parser returned an invalid diagnostic")
         raise json.JSONDecodeError(message, text, offset)
     raise RuntimeError("Rust related-Key parser returned an unknown failure kind")
+
+
+def loads_default(text: str) -> Any:
+    """Model CPython 3.11's direct ``json.loads`` decoder call frame.
+
+    The iterative native parser needs one Python call level to reproduce the
+    3.11 JSON scanner's recursion accounting. This explicit call-topology
+    boundary is used only by the direct live default; opt-in callers retain
+    the original ``loads`` path and frame layout.
+    """
+    return loads(text)

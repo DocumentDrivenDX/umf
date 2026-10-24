@@ -53,6 +53,7 @@ def main() -> int:
     parser.add_argument("--check", action="store_true", help="compare every outcome to frozen CPython reports")
     parser.add_argument("--output", type=Path, help="write the complete observed report to this path")
     parser.add_argument("--extension-overlay", type=Path, help="temporary Python package overlay containing the candidate _rust_core extension")
+    parser.add_argument("--default", action="store_true", help="exercise the staged live decode_related_keys default")
     args = parser.parse_args()
 
     version = f"{sys.version_info.major}.{sys.version_info.minor}"
@@ -77,6 +78,11 @@ def main() -> int:
         sys.modules["umf._rust"] = rust
         package._rust = rust
     capture = load_capture()
+    types_stub = sys.modules.get("umf_access.types")
+    if types_stub is not None and not hasattr(types_stub, "RelatedKeyParserUnavailable"):
+        class RelatedKeyParserUnavailable(RuntimeError):
+            pass
+        types_stub.RelatedKeyParserUnavailable = RelatedKeyParserUnavailable
     live = load_live_related_keys()
     rust_parser = importlib.import_module("umf_access.rust_related_keys")
     original_loads = rust_parser.loads
@@ -88,7 +94,9 @@ def main() -> int:
         return original_loads(text)
 
     rust_parser.loads = count_parser_call
-    live.decode_related_keys = live.decode_related_keys_rust
+    decode = live.decode_related_keys if args.default else live.decode_related_keys_rust
+    if not args.default:
+        live.decode_related_keys = decode
     capture.related_keys = live
     observed = capture.capture()
     if parser_calls != 53:
@@ -97,7 +105,7 @@ def main() -> int:
         )
     deep = "[" * 1200 + "null" + "]" * 1200
     try:
-        live.decode_related_keys_rust(deep, capture.metadata(capture.STRING_KEY), capture.STRING_KEY)
+        decode(deep, capture.metadata(capture.STRING_KEY), capture.STRING_KEY)
     except RecursionError:
         deep_outcome = "RecursionError"
     except capture.CodecError as error:
@@ -108,7 +116,7 @@ def main() -> int:
     if deep_outcome != expected_deep:
         raise SystemExit(f"versioned depth control mismatch: {deep_outcome!r} != {expected_deep!r}")
     # Check per-call guard cleanup after the deepest failure/success path.
-    live.decode_related_keys_rust(
+    decode(
         capture.payload("[]"), capture.metadata(capture.STRING_KEY), capture.STRING_KEY
     )
     original_limit = sys.getrecursionlimit()
@@ -129,7 +137,7 @@ def main() -> int:
         sys.setrecursionlimit(250)
         def ambient(depth: int):
             if depth == 0:
-                return live.decode_related_keys_rust(
+                return decode(
                     "[" * 80 + "null" + "]" * 80,
                     capture.metadata(capture.STRING_KEY), capture.STRING_KEY,
                 )
@@ -161,7 +169,10 @@ def main() -> int:
         "customLimitPolicy": "observed-depth-control-only; broader-predecessor-parity-open",
         "postDeepCallCleanup": "passed",
     }
-    observed["profile"] = "umf-r6-related-key-json-rust/0.1.0"
+    observed["profile"] = (
+        "umf-r6-related-key-json-default/0.1.0"
+        if args.default else "umf-r6-related-key-json-rust/0.1.0"
+    )
     observed["source"] = {
         "predecessor": capture.SOURCE_SHA,
         "candidateFiles": {
@@ -171,7 +182,10 @@ def main() -> int:
     }
     observed["harness"] = {
         "dependencies": "stdlib-only stubs for Pydantic, generated Key model, and validate_graph",
-        "executedCode": "live Python decode path with opt-in PyO3 parser",
+        "executedCode": (
+            "live default decode_related_keys path with staged PyO3 parser"
+            if args.default else "live Python decode path with opt-in PyO3 parser"
+        ),
         "scope": "Full predecessor output/exception/Decimal-context comparison; no installed consumer or native engine qualification.",
         "parserCallCount": parser_calls,
     }

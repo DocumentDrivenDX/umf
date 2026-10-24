@@ -18,6 +18,7 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--extension-overlay", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--default", action="store_true", help="exercise the staged live decode_related_keys default")
     args = parser.parse_args()
 
     version = f"{sys.version_info.major}.{sys.version_info.minor}"
@@ -42,6 +43,11 @@ def main() -> int:
     package._rust = rust
 
     capture = load_capture()
+    types_stub = sys.modules.get("umf_access.types")
+    if types_stub is not None and not hasattr(types_stub, "RelatedKeyParserUnavailable"):
+        class RelatedKeyParserUnavailable(RuntimeError):
+            pass
+        types_stub.RelatedKeyParserUnavailable = RelatedKeyParserUnavailable
     live = load_live_related_keys()
     rust_parser = importlib.import_module("umf_access.rust_related_keys")
 
@@ -59,7 +65,12 @@ def main() -> int:
             elif event == "c_call" and getattr(arg, "__module__", None) == "umf._rust_core" and getattr(arg, "__name__", None) == "related_keys_parse":
                 entries["rustCoreParse"] += 1
 
-        decode = capture.related_keys.decode_related_keys if which == "frozen" else live.decode_related_keys_rust
+        if which == "frozen":
+            decode = capture.related_keys.decode_related_keys
+        elif args.default:
+            decode = live.decode_related_keys
+        else:
+            decode = live.decode_related_keys_rust
         text = "[" * depth + "null" + "]" * depth
 
         def invoke():
@@ -89,7 +100,8 @@ def main() -> int:
         for limit in (30, 50, 100, 250):
             for ambient in (0, 10, 25, 40, 190):
                 pair = {"recursionLimit": limit, "ambientDepth": ambient}
-                for which in ("frozen", "rust"):
+                candidate = "default" if args.default else "rust"
+                for which in ("frozen", candidate):
                     first_plain = None
                     first_profiled = None
                     for depth in range(1, 221):
@@ -107,10 +119,10 @@ def main() -> int:
         sys.setrecursionlimit(original_limit)
 
     result = {
-        "profile": "umf-r6-related-key-recursion-controls/2",
+        "profile": "umf-r6-related-key-recursion-controls/3" if args.default else "umf-r6-related-key-recursion-controls/2",
         "python": sys.version,
         "frozenPredecessorSha256": capture.SOURCE_SHA,
-        "scope": "First RecursionError by nested-array depth through 220. Unprofiled outcomes are direct production calls. Profiled outcomes use sys.setprofile events without replacing functions or adding wrapper frames; events distinguish json.loads, Rust facade loads, and the PyO3 native related_keys_parse c_call.",
+        "scope": "First RecursionError by nested-array depth through 220. Unprofiled outcomes are direct production calls. Profiled outcomes use sys.setprofile events without replacing functions or adding wrapper frames; events distinguish json.loads, Rust facade loads, and the PyO3 native related_keys_parse c_call." + (" Candidate is the staged live default." if args.default else ""),
         "matrix": records,
     }
     args.output.write_text(json.dumps(result, ensure_ascii=True, indent=2) + "\n", encoding="utf-8")
@@ -122,12 +134,13 @@ def main() -> int:
 
     instrumentation_changes = 0
     mismatches = 0
+    candidate = "default" if args.default else "rust"
     for row in records:
-        for which in ("frozen", "rust"):
+        for which in ("frozen", candidate):
             values = row[which]
             instrumentation_changes += comparable(values["unprofiled"]) != comparable(values["profiled"])
-        mismatches += comparable(row["frozen"]["unprofiled"]) != comparable(row["rust"]["unprofiled"])
-    print(f"CPython {version}: {len(records)} controls; {mismatches} unprofiled first-recursion mismatches; profile outcome changes={instrumentation_changes}")
+        mismatches += comparable(row["frozen"]["unprofiled"]) != comparable(row[candidate]["unprofiled"])
+    print(f"CPython {version}: {len(records)} controls; {mismatches} unprofiled first-recursion mismatches; profile outcome changes={instrumentation_changes}; candidate={candidate}")
     return 0
 
 
