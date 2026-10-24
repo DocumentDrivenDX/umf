@@ -513,3 +513,4 @@ export * from './table-migration';
 
 // Portable table lifecycle row_scope authoring; emitted policies remain subject to lifecycle admission.
 export * from './table-authoring/row-scope';
+export * from './adapters/lakeview';

@@ -503,6 +503,11 @@ impl Engine {
     pub fn package_schema(&self) -> &CompiledSchema {
         &self.package
     }
+    pub fn core_version(&self) -> Option<&Value> {
+        get(&self.resources.core_schema, "properties")
+            .and_then(|v| get(v, "umf"))
+            .and_then(|v| get(v, "const"))
+    }
     pub fn schema_resources_with_context(
         &self,
         ctx: &mut Context<'_>,

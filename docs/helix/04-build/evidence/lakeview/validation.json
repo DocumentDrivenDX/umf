@@ -1,0 +1,59 @@
+{
+  "profile": "umf.lakeview.clean-validation/1",
+  "date": "2026-10-23",
+  "sharedFixCommit": "07598886f762e896781977148083a3dae74363ca",
+  "typecheck": "pass",
+  "metamodel": {
+    "passed": 59,
+    "failed": 0,
+    "assertions": 405,
+    "suiteSeconds": 120.6
+  },
+  "ledger": {
+    "passed": 5,
+    "failed": 0,
+    "assertions": 1272,
+    "suiteSeconds": 7.67,
+    "criteria": 841
+  },
+  "core": {
+    "passed": 193,
+    "assertions": 4217
+  },
+  "python": {
+    "passed": 212
+  },
+  "transport": {
+    "passed": 9
+  },
+  "referenceAndResolution": {
+    "passed": 5,
+    "assertions": 37
+  },
+  "originalByteEvidence": [
+    "browser.json",
+    "installed.json"
+  ],
+  "logSha256": {
+    "typecheck": "79026c23638c604d4c76d405715bad40f28a56044d20bc97ba3114137511fcbd",
+    "metamodel": "d4447551fda030fb8cc2289c431d780869bef7508ba487ad8696b9f5537ef4c4",
+    "ledger": "2535364e190950b93d25bd2f47c71c3d2c8e3eea88e06b9a984a0226024ebd94",
+    "core": "e74c6114543e575cf0a55798fec38c1d3d981cca03e587c58e95c64de64c3776",
+    "python": "6b23d94856513c4e013e4dab3c7a077a8d66c719bedfce855c170a9545518ae3",
+    "reference-and-resolution": "940606e1abe72356db18ba3358ad3912ae219c2c2ac13a732d12318b5f640101",
+    "codegen": "10e1a31e1cfa0c9b17d650a0285a731a606954e2b2812ba1078bfbfceb50b24f",
+    "transport": "fb81ef1598d53af0e703af2efb8e61e886d78d566bb4099f8fd8125be477a8a1"
+  },
+  "sources": {
+    "scripts/acceptance-traceability.ts": "a08330ed56c66e03c3111c5f17517de482e252523c4d64a3b0523973cee25511",
+    "scripts/rust-core/full-conformance.ts": "56b9c9292b93105ed62b71c8bfcbc982b821b4aa7d9224166b4ebf99f940f1f7",
+    "scripts/rust-inventory-typescript.ts": "e9cd4ec974b629d262bc73ca73b39cd479732fd14674e72b0810c571d56acccd",
+    "tests/metamodel/compiler-kernel.test.ts": "5c0b47a111db9351efead0adaf28eda15ff81a43071f2acc48dcf45ca65e9d6b",
+    "tests/reference/self-model.test.ts": "a5ab1411acf4876d411995755032d31a7ad22822a62bbdb590faece19605abb5",
+    "tests/rust-inventory/typescript-resolution.test.ts": "ee570b07fb5067e94b865a27324e7a9b04409d44b50cfb751ecebdd8c65de4e5",
+    "python/umf_codegen/src/umf_codegen/_assets/manifest.json": "3c1b37460310250723d94fb4393a762d4604ddf2d9a799b52c7644d59355456c",
+    "crates/umf-core/src/lakeview.rs": "650e6cba44ba4932a2d9c8bbead22a312eb4fc2c25f3ec868f556950f9f41a6f",
+    "src/adapters/lakeview/index.ts": "ef67d0b28e6cda86ed0a1faee9a7c31e62ded2f620d2d9105f47fdb52c636577"
+  },
+  "limits": "Local validation of the existing PR stack; newer main release work and hosted workflow completion are separate merge gates."
+}

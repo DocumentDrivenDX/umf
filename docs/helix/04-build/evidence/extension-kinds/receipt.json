@@ -21,14 +21,14 @@
   "pythonArtifact": {
     "version": "3.13.16",
     "pydantic": "2.14.1",
-    "native": "34cee2aace34d92767e87ab253b2da8d8ee5051a2f14da3f9e0ac5e9cdc12343",
+    "native": "16f8d4026484783a10b0a6f4dfb4dd70dd831abfbd74fba1abde5d4db21a8f60",
     "resources": {
-      "spec/core/schema.json": "8ba058ee5fedd38058ead8d49e59b74cdce4ac688e81f3828b75265a668c7a5b",
-      "spec/core/semantic-type-reference.schema.json": "5bb6a8431928aa6ede2ccead65b4bb5d5979fef8f1d32a22be54a56a97542073",
-      "spec/core/extension-package.schema.json": "a93e929d328e0442f0434999e33f0f1265e814e53d7c31c48be103b5d9798aca",
-      "spec/metamodel/generated/core-constraints.json": "d254e83df4dd4a4ff793094ee82c8fa0563dd21b6f196d4a17d9bc026bbe2244",
-      "spec/metamodel/generated/domain-policy.json": "fd50e87b740f165219d78d516a4b4abe0f23380ceb6b56b9f660ec84d5776805",
-      "spec/metamodel/generated/manifest.json": "1f01dd1eb96578553608a96a6befe3f1ae8f0ce5c1fee5fbf9b0a082c8847403"
+      "spec/core/schema.json": "b1ea4a30a0b17093d8a3c5c312605975ab3fee73406f9204c2092e74c85fbd70",
+      "spec/core/semantic-type-reference.schema.json": "c870d4540ee88391dc40a99b6c1b04a4ac05ce57bd65a3b8ada33c76f3b2bb40",
+      "spec/core/extension-package.schema.json": "b37cc10e7efd939a2765c4f79b7824971e9af4478554c9ac3be698ad69fc8263",
+      "spec/metamodel/generated/core-constraints.json": "1793588d728fb688418b78dadda30266d3f723058338ca4dd9bdf784e09c9849",
+      "spec/metamodel/generated/domain-policy.json": "63812d1882975503c76f3392bc8335d2dcb162f7e5d8d80c475f6cc49da0164a",
+      "spec/metamodel/generated/manifest.json": "144d594f6448b959db6f97f4fb6c84c4ea9af77a1ea22b668eaa9ab2600535cc"
     }
   },
   "externalRequests": 0,
@@ -45,14 +45,14 @@
   "sources": {
     "Cargo.lock": "e12048f6e1141dd742974ab3c5924dc0d7f025bf063f6aca90fbead32388a34f",
     "spec/metamodel/umf.yaml": "42144576e3b15da4945ca744623a31967e3b29efa54da8ba3961e446b1c0e34b",
-    "spec/metamodel/generated/manifest.json": "1f01dd1eb96578553608a96a6befe3f1ae8f0ce5c1fee5fbf9b0a082c8847403",
+    "spec/metamodel/generated/manifest.json": "144d594f6448b959db6f97f4fb6c84c4ea9af77a1ea22b668eaa9ab2600535cc",
     "crates/umf-core/src/kinds.rs": "7e3aed5c9f37b67e9348291703dabc6c217178f73295e4fd9c801d1cefc6f349",
     "crates/umf-core/src/registry.rs": "38ff151bddffdd9d79462802804cae76d58d01edf0ccaea68799907efe0918d3",
-    "crates/umf-core/src/engine.rs": "87137c80cb21717f34418e09da0ff4e7987946a6a80e7d2192bee910a4146bf7",
+    "crates/umf-core/src/engine.rs": "b97f15e203ac60e311036d40c3655f2187688283d7f55beac48a1a17d48467d9",
     "crates/umf-core/src/constraints.rs": "9ce7950e96801e2c7080bb5e582824e455d89c7378f3d9960471ab247b8432e6",
-    "crates/umf-core-wire/src/lib.rs": "57c1fb73db793546952aa3b57a8695cbcd9f20d30ed0887700d4b6fc621f24e6",
-    "bindings/core/node/index.js": "81844d4a6c31179e44d77653043f8d781e2e1f7144babcf08cc1a0184c98b284",
-    "bindings/core/wasm/index.js": "22c4656c3002dd17d10ed47ece6c8c7449217377a450cf278878f318c24e08ff",
+    "crates/umf-core-wire/src/lib.rs": "3fe2101e8f67322e3696b415b7f9f13ca92a71669629e8f97cdd3fa05caeaf2f",
+    "bindings/core/node/index.js": "b9fa8f1765a5bc8b98039d107b0ba251fcd6202757658e1af5f470173b3237a7",
+    "bindings/core/wasm/index.js": "6bbc66d4d272ef2f870bbeafde57af837e93aa394277f3cc80ed5f46635d5945",
     "bindings/core/python/src/lib.rs": "2eb8a2d14a721e7ae123e08f40b080b2933bbfd85fa3b2ce35b085686a96a8db",
     "python/src/umf/registry.py": "c4c69b2af2245a816f7af4fef7199933dc27bb4baa6e092dcbc23c3a828d0c88",
     "python/src/umf/validation.py": "4860946222fa5d25f2076766e52cb71dd18b82449451f26adab1b371e2896142",
@@ -66,10 +66,10 @@
     "scripts/extension-kinds-python.py": "7146848476704086f0954aef6f5f270167a58ffaf7a738df543f483bed683adc"
   },
   "artifacts": {
-    "nodeAddon": "8a9e63eb469b5bc0c831216e18f35a5ad9e85f3feb5291bc21f9de3be39114cf",
-    "cli": "da8600899ab4b7226653330af3f7b6f870962109c835064881be71319f63ed7d",
-    "wasm": "9d1fe0ca3aa5252f69b8e542bbd363f174160322e4b02d7399d8c3dab57cd852",
-    "browserBundle": "31b5d1cfa5188da8974d6ecd7e9d5768529e0e5327690ba1409741f53fb84582"
+    "nodeAddon": "be22d9b16f65cdd9e7ef97ccd66d427134dfb93fa200f017b187834bd66a82ea",
+    "cli": "af4f8b37282bd0f66d89456f9a7c2439fb5910e2329bd2fa8c376120f958f63f",
+    "wasm": "751f3be1858b65cf859a34143e896eaefa74a7288a3acf40aaee20a4657e77ea",
+    "browserBundle": "bf48e96b2af35f0f4681d6e1e40cbc362b419c87de00829a28f10c43fae466a4"
   },
   "limits": "Synthetic dashboard composition and generic classification only; no native BI system compatibility or platform-wide release qualification."
 }

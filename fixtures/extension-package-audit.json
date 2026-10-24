@@ -1,7 +1,7 @@
 {
   "scope": "Manifest validation, joint registry registration, standalone schema equality and local evidence existence only; no native conformance or inventory completeness claim",
-  "packages": 71,
-  "passed": 71,
+  "packages": 72,
+  "passed": 72,
   "results": [
     {
       "path": "spec/extensions/access/package.json",
@@ -375,6 +375,19 @@
         "subset": "JSON source and explicit context bundle; exact-number expansion with recorded loss events or rejection; flattening and standalone compaction with recorded corpus discrepancies; framing selected views with retained sources, strict flag validation and recorded compatibility blocks; RDF-to-JSON-LD projection with lexical/native type policies; qualified JSON-LD-to-RDF proposals with explicitly recorded strict/binary64 numeric policies with explicit quantization and finite-overflow blocks; optional generalized dataset projection through umf.generalized-rdf; malformed terms omitted with explicit loss events; compound-literal direction conversion with graph/list round-trip evidence; no network"
       },
       "evidenceCount": 30,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/lakeview/package.json",
+      "id": "umf.lakeview",
+      "version": "0.2.0",
+      "native": {
+        "system": "Databricks AI/BI (Lakeview)",
+        "version": "unversioned observed lvdash.json exports",
+        "subset": "Committed marketing campaign fixture and synthetic UTF-8 fixtures; untouched source-byte recovery only. No live Databricks acceptance, SQL execution or edited-source rewrite qualification."
+      },
+      "evidenceCount": 3,
       "passed": true,
       "failures": []
     },

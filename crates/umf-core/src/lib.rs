@@ -11,6 +11,7 @@ pub(crate) mod ecma_coercion;
 pub mod engine;
 pub mod error;
 pub mod kinds;
+pub mod lakeview;
 pub mod literal;
 pub mod literal_policy;
 pub mod python_regex;

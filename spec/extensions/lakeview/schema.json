@@ -1,0 +1,214 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:lakeview:0.2.0",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/dashboard"
+    },
+    {
+      "$ref": "#/$defs/page"
+    },
+    {
+      "$ref": "#/$defs/data"
+    },
+    {
+      "$ref": "#/$defs/dataset"
+    },
+    {
+      "$ref": "#/$defs/layout-item"
+    },
+    {
+      "$ref": "#/$defs/query-result"
+    },
+    {
+      "$ref": "#/$defs/field"
+    }
+  ],
+  "$defs": {
+    "dashboard": {
+      "type": "object",
+      "required": [
+        "kind",
+        "native",
+        "order",
+        "originalText",
+        "title"
+      ],
+      "properties": {
+        "kind": {
+          "const": "dashboard"
+        },
+        "native": {
+          "$ref": "#/$defs/node"
+        },
+        "order": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "originalText": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "page": {
+      "type": "object",
+      "required": [
+        "kind",
+        "native",
+        "order"
+      ],
+      "properties": {
+        "kind": {
+          "const": "page"
+        },
+        "native": {
+          "$ref": "#/$defs/node"
+        },
+        "order": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "data": {
+      "type": "object",
+      "required": [
+        "kind"
+      ],
+      "properties": {
+        "kind": {
+          "const": "data"
+        }
+      },
+      "additionalProperties": false
+    },
+    "dataset": {
+      "type": "object",
+      "required": [
+        "kind",
+        "native",
+        "schemaCoverage"
+      ],
+      "properties": {
+        "kind": {
+          "const": "dataset"
+        },
+        "native": {
+          "$ref": "#/$defs/node"
+        },
+        "schemaCoverage": {
+          "const": "partial-native-declarations"
+        }
+      },
+      "additionalProperties": false
+    },
+    "layout-item": {
+      "type": "object",
+      "required": [
+        "kind",
+        "native"
+      ],
+      "properties": {
+        "kind": {
+          "const": "layout-item"
+        },
+        "native": {
+          "$ref": "#/$defs/node"
+        }
+      },
+      "additionalProperties": false
+    },
+    "node": {
+      "type": "object",
+      "required": [
+        "kind",
+        "members"
+      ],
+      "properties": {
+        "kind": {
+          "const": "object"
+        },
+        "members": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "reference": {
+      "type": "object",
+      "required": [
+        "module",
+        "element"
+      ],
+      "properties": {
+        "module": {
+          "type": "string",
+          "minLength": 1
+        },
+        "element": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "query-result": {
+      "type": "object",
+      "required": [
+        "kind",
+        "sourcePath",
+        "schemaCoverage"
+      ],
+      "properties": {
+        "kind": {
+          "const": "query-result"
+        },
+        "sourcePath": {
+          "type": "string"
+        },
+        "schemaCoverage": {
+          "const": "declared-query-output"
+        },
+        "dataset": {
+          "$ref": "#/$defs/reference"
+        }
+      },
+      "additionalProperties": false
+    },
+    "field": {
+      "type": "object",
+      "required": [
+        "kind",
+        "sourcePath",
+        "role"
+      ],
+      "properties": {
+        "kind": {
+          "const": "field"
+        },
+        "sourcePath": {
+          "type": "string"
+        },
+        "role": {
+          "enum": [
+            "declared-column",
+            "query-output"
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

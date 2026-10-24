@@ -4,6 +4,7 @@ import type {ExtensionPackage,Diagnostic,Validation} from '../model/types';
 export interface KindRegistration {
   manifest: ExtensionPackage;
   kinds?:boolean;
+  nativeValidator?:string;
   semantics?: (payload:unknown,context:{document:unknown;path:string;scope:string})=>Diagnostic[];
 }
 export interface ExtensionKindRuntime {
