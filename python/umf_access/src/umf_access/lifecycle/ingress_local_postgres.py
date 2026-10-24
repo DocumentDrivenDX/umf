@@ -27,6 +27,27 @@ from pathlib import Path
 from typing import Any
 
 from .generation_ingress import OwnerEnrollmentRequest
+from .owner_bootstrap import (
+    _BOOTSTRAP_ISSUER_SEAL,
+    _BOOTSTRAP_ISSUERS,
+    LocalPostgresError,
+    LocalPostgresProfile,
+    _canonical,
+    _digest,
+    _fsync_directory,
+    _LocalOwnerBootstrapIssuer,
+    _no_duplicates,
+    _private_directory,
+    _profile_to_enrollment,
+    _read_bootstrap_enrollment,
+    _read_private,
+    _role,
+    _uuid,
+    _validate_bootstrap_context_journal,
+    _verify_bootstrap_enrollment,  # noqa: F401 - compatibility import used by source tests.
+    _write_private,
+    sys_platform_darwin,
+)
 
 _JOURNAL_PROFILE = 'umf.local-postgresql-supervisor-journal/0.1'
 _OWNER_KIND = 'umf.local-owner-target-registration/0.1'
@@ -41,8 +62,6 @@ _MAX_EVENTS = 16_384
 _MAX_SAFE = 9_007_199_254_740_991
 _NATIVE_EFFECT_RESERVATION_SEAL = object()
 _NATIVE_EFFECT_OUTCOME_SEAL = object()
-_BOOTSTRAP_ISSUER_SEAL = object()
-_BOOTSTRAP_ISSUERS: dict[int, object] = {}
 _ROLE = re.compile(r'^[a-z][a-z0-9_]{0,62}$')
 _HEX = re.compile(r'^[a-f0-9]{64}$')
 _STORE_SCHEMA_PREFIXES = {
@@ -68,57 +87,6 @@ _POSTGRES_SETTINGS = (
 )
 
 
-class LocalPostgresError(RuntimeError):
-    """Sanitized failure from the concrete local owner profile."""
-
-    def __init__(self, code: str):
-        super().__init__(code)
-        self.code = code
-
-
-def _canonical(value: Any) -> bytes:
-    stack = [(value, 0)]
-    nodes = 0
-    while stack:
-        item, depth = stack.pop()
-        nodes += 1
-        if nodes > 100_000 or depth > 64:
-            raise LocalPostgresError('supervisor-record-capacity')
-        if item is None or type(item) is bool:
-            continue
-        if type(item) is int:
-            if abs(item) > _MAX_SAFE:
-                raise LocalPostgresError('supervisor-record-invalid')
-        elif type(item) is str:
-            try:
-                item.encode('utf-8')
-            except UnicodeEncodeError:
-                raise LocalPostgresError('supervisor-record-invalid') from None
-            if '\x00' in item:
-                raise LocalPostgresError('supervisor-record-invalid')
-        elif type(item) is list:
-            stack.extend((x, depth + 1) for x in item)
-        elif type(item) is dict:
-            for key, child in item.items():
-                if type(key) is not str or not key.isascii():
-                    raise LocalPostgresError('supervisor-record-invalid')
-                stack.extend(((key, depth + 1), (child, depth + 1)))
-        else:
-            raise LocalPostgresError('supervisor-record-invalid')
-    try:
-        raw = json.dumps(value, ensure_ascii=False, sort_keys=True,
-                         separators=(',', ':'), allow_nan=False).encode('utf-8')
-    except (TypeError, ValueError, UnicodeError, RecursionError):
-        raise LocalPostgresError('supervisor-record-invalid') from None
-    if len(raw) > _MAX_JOURNAL:
-        raise LocalPostgresError('supervisor-record-capacity')
-    return raw
-
-
-def _digest(value: Any) -> str:
-    return hashlib.sha256(_canonical(value)).hexdigest()
-
-
 def _sha_file(path: Path) -> str:
     digest = hashlib.sha256()
     try:
@@ -128,23 +96,6 @@ def _sha_file(path: Path) -> str:
     except OSError:
         raise LocalPostgresError('supervisor-input-unavailable') from None
     return digest.hexdigest()
-
-
-def _uuid(value: str) -> str:
-    try:
-        parsed = uuid.UUID(value)
-    except (ValueError, TypeError, AttributeError):
-        raise LocalPostgresError('supervisor-identity-invalid') from None
-    if str(parsed) != value:
-        raise LocalPostgresError('supervisor-identity-invalid')
-    return value
-
-
-def _role(value: str) -> str:
-    if (type(value) is not str or not _ROLE.fullmatch(value)
-            or value == 'postgres' or value.startswith('pg_')):
-        raise LocalPostgresError('supervisor-role-name-invalid')
-    return value
 
 
 def _store_descriptor(profile: object, provider_id: object) -> dict[str, str]:
@@ -157,7 +108,7 @@ def _store_descriptor(profile: object, provider_id: object) -> dict[str, str]:
 
 def _registration_intent_bytes(request: object) -> bytes:
     """Return the exact signed registration intent after checking its binding."""
-    from .owner_authority import OwnerApprovalRequest
+    from .owner_approval_core import OwnerApprovalRequest
 
     if (type(request) is not OwnerApprovalRequest
             or type(request._intent_bytes) is not bytes
@@ -186,28 +137,6 @@ def _owner_registration_approval_payload(events: object) -> dict[str, Any]:
     return payload
 
 
-def _private_directory(path: Path, *, create: bool = False) -> Path:
-    if not path.is_absolute() or os.path.normpath(str(path)) != str(path):
-        raise LocalPostgresError('supervisor-path-invalid')
-    if create:
-        try:
-            path.mkdir(mode=0o700)
-        except FileExistsError:
-            raise LocalPostgresError('supervisor-path-already-exists') from None
-        except OSError:
-            raise LocalPostgresError('supervisor-path-create-failed') from None
-    try:
-        st = os.lstat(path)
-    except OSError:
-        raise LocalPostgresError('supervisor-path-unavailable') from None
-    if (not stat.S_ISDIR(st.st_mode) or stat.S_ISLNK(st.st_mode)
-            or st.st_uid != os.geteuid() or stat.S_IMODE(st.st_mode) != 0o700):
-        raise LocalPostgresError('supervisor-path-unsafe')
-    if path.resolve(strict=True) != path:
-        raise LocalPostgresError('supervisor-path-unsafe')
-    return path
-
-
 def _regular_owned(path: Path, *, executable: bool = False) -> Path:
     try:
         resolved = path.resolve(strict=True)
@@ -218,71 +147,6 @@ def _regular_owned(path: Path, *, executable: bool = False) -> Path:
             or st.st_mode & 0o022 or (executable and not st.st_mode & 0o111)):
         raise LocalPostgresError('supervisor-input-unsafe')
     return resolved
-
-
-def _write_private(path: Path, data: bytes, *, exclusive: bool = True) -> None:
-    flags = os.O_WRONLY | os.O_CREAT | getattr(os, 'O_NOFOLLOW', 0)
-    flags |= os.O_EXCL if exclusive else os.O_TRUNC
-    try:
-        fd = os.open(path, flags, 0o600)
-    except OSError:
-        raise LocalPostgresError('supervisor-private-file-create-failed') from None
-    try:
-        os.fchmod(fd, 0o600)
-        st = os.fstat(fd)
-        if not stat.S_ISREG(st.st_mode) or st.st_uid != os.geteuid() or st.st_nlink != 1:
-            raise LocalPostgresError('supervisor-private-file-unsafe')
-        view = memoryview(data)
-        while view:
-            written = os.write(fd, view)
-            if written <= 0:
-                raise LocalPostgresError('supervisor-private-file-write-failed')
-            view = view[written:]
-        os.fsync(fd)
-    except OSError:
-        raise LocalPostgresError('supervisor-private-file-write-failed') from None
-    finally:
-        os.close(fd)
-    _fsync_directory(path.parent)
-
-
-def _fsync_directory(path: Path) -> None:
-    try:
-        fd = os.open(path, os.O_RDONLY | getattr(os, 'O_DIRECTORY', 0))
-        try:
-            os.fsync(fd)
-        finally:
-            os.close(fd)
-    except OSError:
-        raise LocalPostgresError('supervisor-directory-durability-unverified') from None
-
-
-def _read_private(path: Path) -> bytes:
-    try:
-        fd = os.open(path, os.O_RDONLY | getattr(os, 'O_NOFOLLOW', 0))
-    except OSError:
-        raise LocalPostgresError('supervisor-private-file-unavailable') from None
-    try:
-        st = os.fstat(fd)
-        if (not stat.S_ISREG(st.st_mode) or st.st_uid != os.geteuid()
-                or st.st_nlink != 1 or stat.S_IMODE(st.st_mode) != 0o600
-                or st.st_size > _MAX_JOURNAL):
-            raise LocalPostgresError('supervisor-private-file-unsafe')
-        raw = bytearray()
-        while len(raw) <= _MAX_JOURNAL:
-            chunk = os.read(fd, min(65_536, _MAX_JOURNAL + 1 - len(raw)))
-            if not chunk:
-                break
-            raw.extend(chunk)
-        if len(raw) > _MAX_JOURNAL:
-            raise LocalPostgresError('supervisor-record-capacity')
-        os.fsync(fd)
-    except OSError:
-        raise LocalPostgresError('supervisor-private-file-read-failed') from None
-    finally:
-        os.close(fd)
-    _fsync_directory(path.parent)
-    return bytes(raw)
 
 
 def _read_owned_regular_nofollow(path: Path, *, limit: int = 4096) -> bytes:
@@ -320,15 +184,6 @@ def _postmaster_pidfile_matches(raw: bytes, *, pid: int, data_directory: Path,
     return (len(lines) >= 6 and lines[0] == str(pid)
             and lines[1] == str(data_directory) and lines[3] == str(port)
             and lines[4] == '' and lines[5] == '127.0.0.1')
-
-
-def _no_duplicates(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
-    result = {}
-    for key, value in pairs:
-        if key in result:
-            raise LocalPostgresError('supervisor-journal-corrupt')
-        result[key] = value
-    return result
 
 
 class _SupervisorJournal:
@@ -740,136 +595,12 @@ class _SupervisorJournal:
                     pass
 
 
-@dataclass(frozen=True, slots=True)
-class LocalPostgresProfile:
-    """Trusted installed host profile, never constructed from migration input."""
-
-    control_home: Path
-    data_home: Path
-    postgres_binary: Path
-    initdb_binary: Path
-    process_observer: Path
-    process_observer_sha256: str
-    port: int
-    database_name: str
-    business_owner: str
-    custodian_id: str
-    supervisor_id: str
-    provider_id: str
-    installation_id: str
-    purpose: str
-
-    def __post_init__(self) -> None:
-        if os.name != 'posix' or not sys_platform_darwin():
-            raise LocalPostgresError('local-postgresql-profile-unsupported-platform')
-        if type(self.port) is not int or not 1 <= self.port <= 65535:
-            raise LocalPostgresError('local-postgresql-port-invalid')
-        _role(self.database_name)
-        _role(self.business_owner)
-        _uuid(self.custodian_id)
-        _uuid(self.supervisor_id)
-        _uuid(self.provider_id)
-        if (type(self.installation_id) is not str
-                or not 1 <= len(self.installation_id.encode('utf-8')) <= 128
-                or '\x00' in self.installation_id
-                or self.purpose not in ('production', 'native-acceptance')):
-            raise LocalPostgresError('local-postgresql-profile-invalid')
-        if self.supervisor_id == self.provider_id:
-            raise LocalPostgresError('local-postgresql-profile-invalid')
-        if type(self.process_observer_sha256) is not str or not _HEX.fullmatch(self.process_observer_sha256):
-            raise LocalPostgresError('local-postgresql-observer-pin-invalid')
-        for name in ('control_home', 'data_home'):
-            path = getattr(self, name)
-            if not isinstance(path, Path):
-                raise LocalPostgresError('local-postgresql-profile-invalid')
-            _private_directory(path)
-        if (self.control_home == self.data_home
-                or self.control_home in self.data_home.parents
-                or self.data_home in self.control_home.parents):
-            raise LocalPostgresError('local-postgresql-roots-overlap')
-        for name in ('postgres_binary', 'initdb_binary', 'process_observer'):
-            if not isinstance(getattr(self, name), Path):
-                raise LocalPostgresError('local-postgresql-profile-invalid')
-
-
-class _LocalOwnerBootstrapIssuer:
-    """Original private host enrollment used to bind the immutable authority context.
-
-    This is created by the trusted installation factory, before a target exists.
-    It is deliberately not derived from a UID, public registration, or journal
-    dictionary and is never serialized as an authority.
-    """
-
-    __slots__ = (
-        '_configuration_bytes',
-        '_configuration_digest',
-        '_context_bytes',
-        '_context_material',
-        '_enrollment_digest',
-        '_enrollment_id',
-        '_enrollment_path',
-        '_installation_id',
-        '_issuer_id',
-        '_profile',
-        '_purpose',
-    )
-
-    def __init__(self, seal: object, profile: LocalPostgresProfile,
-                 configuration_digest: str, *, enrollment_id: str,
-                 enrollment_path: Path, enrollment_digest: str,
-                 configuration_bytes: bytes, context_material: tuple[str, ...],
-                 context_bytes: bytes):
-        if seal is not _BOOTSTRAP_ISSUER_SEAL or type(profile) is not LocalPostgresProfile:
-            raise TypeError('local bootstrap issuer is trusted-host issued')
-        if type(configuration_digest) is not str or not _HEX.fullmatch(configuration_digest):
-            raise LocalPostgresError('local-postgresql-owner-configuration-invalid')
-        self._profile = profile
-        self._purpose = profile.purpose
-        self._installation_id = profile.installation_id
-        self._configuration_digest = configuration_digest
-        self._issuer_id = str(uuid.uuid4())
-        self._enrollment_id = _uuid(enrollment_id)
-        self._enrollment_path = enrollment_path
-        self._enrollment_digest = enrollment_digest
-        self._configuration_bytes = bytes(configuration_bytes)
-        self._context_material = context_material
-        self._context_bytes = bytes(context_bytes)
-        _BOOTSTRAP_ISSUERS[id(self)] = self
-
-    def _owner_authority_context_material(self) -> tuple[str, str, str, str, str, str]:
-        if _BOOTSTRAP_ISSUERS.get(id(self)) is not self:
-            raise LocalPostgresError('local-postgresql-bootstrap-issuer-unverified')
-        _verify_bootstrap_enrollment(self._enrollment_path, self._enrollment_digest)
-        try:
-            if _read_private(self._profile.control_home / 'owner-bootstrap-context.json') != self._context_bytes:
-                raise LocalPostgresError('local-postgresql-bootstrap-context-changed')
-        except LocalPostgresError:
-            raise LocalPostgresError('local-postgresql-bootstrap-context-unavailable') from None
-        return self._context_material
-
-    @property
-    def owner_configuration(self) -> dict[str, Any]:
-        _verify_bootstrap_enrollment(self._enrollment_path, self._enrollment_digest)
-        value = json.loads(self._configuration_bytes, object_pairs_hook=_no_duplicates)
-        if type(value) is not dict:
-            raise LocalPostgresError('local-postgresql-owner-configuration-invalid')
-        return value
-
-    def __setattr__(self, name: str, value: object) -> None:
-        if hasattr(self, name):
-            raise AttributeError('local bootstrap issuer is immutable')
-        object.__setattr__(self, name, value)
-
-    def __reduce_ex__(self, _protocol: int):
-        raise TypeError('local bootstrap issuer cannot be serialized')
-
-
 def _issue_local_owner_bootstrap_issuer(
         profile: LocalPostgresProfile) -> _LocalOwnerBootstrapIssuer:
     """Load an originally installed enrollment; never enroll or rewrite production."""
     record_path = profile.control_home / 'owner-bootstrap-enrollment.json'
     record, raw = _read_bootstrap_enrollment(record_path)
-    from .owner_authority import _canonical_bytes, _digest_bytes, _validate_config
+    from .owner_approval_core import _canonical_bytes, _digest_bytes, _validate_config
 
     config, _keys = _validate_config(record['ownerConfiguration'])
     config_bytes = _canonical_bytes(config)
@@ -882,96 +613,16 @@ def _issue_local_owner_bootstrap_issuer(
             or context['providerId'] != profile.provider_id
             or context['installationId'] != profile.installation_id):
         raise LocalPostgresError('local-postgresql-owner-context-mismatch')
+    configuration_digest = _digest_bytes(config_bytes)
     material = (record['purpose'], context['custodianId'], context['supervisorId'],
-                context['providerId'], context['installationId'], _digest_bytes(config_bytes))
+                context['providerId'], context['installationId'], configuration_digest)
     context_bytes = _validate_bootstrap_context_journal(
-        profile.control_home, record, raw, _digest_bytes(config_bytes))
+        profile.control_home, record, raw, configuration_digest)
     return _LocalOwnerBootstrapIssuer(
-        _BOOTSTRAP_ISSUER_SEAL, profile, _digest_bytes(config_bytes),
+        _BOOTSTRAP_ISSUER_SEAL, profile, configuration_digest,
         enrollment_id=record['enrollmentId'], enrollment_path=record_path,
         enrollment_digest=_digest_bytes(raw), configuration_bytes=config_bytes,
         context_material=material, context_bytes=context_bytes)
-
-
-_NATIVE_PROFILE_KEYS = {
-    'controlHome', 'dataHome', 'postgresBinary', 'initdbBinary',
-    'processObserver', 'processObserverSha256', 'port', 'databaseName',
-    'businessOwner', 'custodianId', 'supervisorId', 'providerId',
-    'installationId', 'purpose',
-}
-
-
-def _profile_to_enrollment(profile: LocalPostgresProfile) -> dict[str, Any]:
-    return {'controlHome': str(profile.control_home), 'dataHome': str(profile.data_home),
-            'postgresBinary': str(profile.postgres_binary),
-            'initdbBinary': str(profile.initdb_binary),
-            'processObserver': str(profile.process_observer),
-            'processObserverSha256': profile.process_observer_sha256,
-            'port': profile.port, 'databaseName': profile.database_name,
-            'businessOwner': profile.business_owner,
-            'custodianId': profile.custodian_id,
-            'supervisorId': profile.supervisor_id, 'providerId': profile.provider_id,
-            'installationId': profile.installation_id, 'purpose': profile.purpose}
-
-
-def _read_bootstrap_enrollment(path: Path) -> tuple[dict[str, Any], bytes]:
-    if (not isinstance(path, Path) or not path.is_absolute()
-            or path.name != 'owner-bootstrap-enrollment.json'):
-        raise LocalPostgresError('local-postgresql-bootstrap-enrollment-required')
-    raw = _read_private(path)
-    try:
-        record = json.loads(raw, object_pairs_hook=_no_duplicates)
-    except (json.JSONDecodeError, UnicodeDecodeError, LocalPostgresError):
-        raise LocalPostgresError('local-postgresql-bootstrap-enrollment-invalid') from None
-    if _canonical(record) != raw:
-        raise LocalPostgresError('local-postgresql-bootstrap-enrollment-noncanonical')
-    if (type(record) is not dict or set(record) != {
-            'profile', 'enrollmentId', 'purpose', 'context',
-            'ownerConfiguration', 'nativeProfile'}
-            or record['profile'] != 'umf.local-owner-bootstrap-enrollment/0.1'
-            or record['purpose'] not in ('production', 'native-acceptance')
-            or type(record['ownerConfiguration']) is not dict
-            or type(record['nativeProfile']) is not dict
-            or set(record['nativeProfile']) != _NATIVE_PROFILE_KEYS):
-        raise LocalPostgresError('local-postgresql-bootstrap-enrollment-invalid')
-    _uuid(record['enrollmentId'])
-    context = record['context']
-    if (type(context) is not dict or set(context) != {
-            'custodianId', 'supervisorId', 'providerId', 'installationId'}):
-        raise LocalPostgresError('local-postgresql-bootstrap-enrollment-invalid')
-    for name in ('custodianId', 'supervisorId', 'providerId'):
-        _uuid(context[name])
-    if type(context['installationId']) is not str or not context['installationId']:
-        raise LocalPostgresError('local-postgresql-bootstrap-enrollment-invalid')
-    return record, raw
-
-
-def _verify_bootstrap_enrollment(path: Path, expected_digest: str) -> None:
-    _record, raw = _read_bootstrap_enrollment(path)
-    if hashlib.sha256(raw).hexdigest() != expected_digest:
-        raise LocalPostgresError('local-postgresql-bootstrap-enrollment-changed')
-
-
-def _validate_bootstrap_context_journal(control_home: Path, record: dict[str, Any],
-                                        raw: bytes, configuration_digest: str) -> bytes:
-    path = control_home / 'owner-bootstrap-context.json'
-    context = record['context']
-    expected = {'profile': 'umf.local-owner-bootstrap-context/0.1',
-                'enrollmentId': record['enrollmentId'],
-                'enrollmentRecordDigest': hashlib.sha256(raw).hexdigest(),
-                'authorityConfigurationDigest': configuration_digest,
-                'purpose': record['purpose'], 'context': context}
-    encoded = _canonical(expected)
-    try:
-        current = _read_private(path)
-    except LocalPostgresError as exc:
-        if exc.code != 'supervisor-private-file-unavailable' or path.exists():
-            raise LocalPostgresError('local-postgresql-bootstrap-context-unavailable') from None
-        _write_private(path, encoded)
-        return encoded
-    if current != encoded:
-        raise LocalPostgresError('local-postgresql-bootstrap-context-mismatch')
-    return encoded
 
 
 class _NativeEffectReservation:
@@ -1214,12 +865,6 @@ class _OriginalNativeTarget:
         raise TypeError('original native target cannot be serialized')
 
 
-def sys_platform_darwin() -> bool:
-    import sys
-
-    return sys.platform == 'darwin'
-
-
 def _render_hba(maintenance_name: str) -> bytes:
     maintenance_name = _role(maintenance_name)
     lines = (
@@ -1451,7 +1096,7 @@ class _VerifiedNativeStorePreparation:
                  native_observation_bytes: bytes):
         if seal is not _VERIFIED_STORE_PREPARATION_SEAL:
             raise TypeError('verified native preparation is supervisor-issued')
-        from .owner_authority import OwnerApprovalRequest
+        from .owner_approval_core import OwnerApprovalRequest
         if type(owner_request) is not OwnerApprovalRequest:
             raise LocalPostgresError('local-postgresql-owner-request-required')
         if type(payload_bytes) is not bytes or len(payload_bytes) > 65_536:
@@ -1497,6 +1142,7 @@ class LocalPostgresSupervisor:
         '_authority_context',
         '_bootstrap_issuer',
         '_bound_installation_id',
+        '_creation_recovery_receipts',
         '_custodian',
         '_custodian_id',
         '_custody_handle',
@@ -1504,48 +1150,59 @@ class LocalPostgresSupervisor:
         '_journal',
         '_launch',
         '_maintenance_password',
-        '_native_effect_bindings',
         '_native_effect_outcomes',
         '_native_effect_reservations',
         '_native_targets',
         '_observer',
-        '_owner_authority',
+        '_owner_core',
         '_owner_payloads',
         '_pending_creation_values',
         '_pending_creations',
         '_pg_process',
         '_principal_dispatches',
         '_principal_preparations',
+        '_principal_recovery_dispatches',
         '_profile',
         '_provider_id',
         '_registration_dispatches',
         '_registration_preparations',
+        '_registration_recovery_dispatches',
+        '_reserved_creation_values',
         '_store_issuer',
         '_store_preparations',
         '_supervisor_id',
         '_target_paths',
     )
 
-    def __init__(self, profile: LocalPostgresProfile, *, owner_authority: object):
+    def __init__(self, profile: LocalPostgresProfile, *, owner_core: object,
+                 authority_context: object, bootstrap_issuer: object):
         if type(profile) is not LocalPostgresProfile:
             raise TypeError('local PostgreSQL profile must be trusted host configuration')
         if not sys_platform_darwin():
             raise LocalPostgresError('local-postgresql-profile-unsupported-platform')
-        from .owner_authority import ConfiguredEd25519OwnerAuthority
-        if type(owner_authority) is not ConfiguredEd25519OwnerAuthority:
-            raise LocalPostgresError('local-postgresql-owner-authority-required')
-        context = getattr(owner_authority, 'authority_context', None)
-        issuer = getattr(context, '_issuer', None)
+        from .owner_approval_core import OwnerApprovalCore
+        from .owner_bootstrap import (
+            _require_owner_context,
+            _verify_confirmed_owner_ledger_birth,
+        )
+        if type(owner_core) is not OwnerApprovalCore:
+            raise LocalPostgresError('local-postgresql-owner-core-required')
+        context = _require_owner_context(
+            authority_context, issuer=bootstrap_issuer,
+            configuration_digest=owner_core.configuration_digest)
+        issuer = bootstrap_issuer
         if (type(issuer) is not _LocalOwnerBootstrapIssuer
                 or _BOOTSTRAP_ISSUERS.get(id(issuer)) is not issuer
                 or issuer._profile is not profile
                 or issuer._purpose != profile.purpose
                 or issuer._installation_id != profile.installation_id
                 or issuer._context_material[1] != profile.custodian_id
-                or issuer._configuration_digest != owner_authority.configuration_digest):
+                or issuer._configuration_digest != owner_core.configuration_digest):
             raise LocalPostgresError('local-postgresql-owner-context-unverified')
+        _verify_confirmed_owner_ledger_birth(
+            issuer, owner_core._ledger.path, owner_core.configuration_digest)
         self._profile = profile
-        self._owner_authority = owner_authority
+        self._owner_core = owner_core
         self._authority_context = context
         self._bootstrap_issuer = issuer
         self._bound_installation_id = profile.installation_id
@@ -1563,6 +1220,7 @@ class LocalPostgresSupervisor:
         self._owner_payloads: dict[str, dict[str, Any]] = {}
         self._custodian = None
         self._custody_handle = None
+        self._creation_recovery_receipts: dict[int, dict[str, Any]] = {}
         self._store_issuer = object()
         self._store_preparations: dict[
             int, tuple[object, _VerifiedNativeStorePreparation, bytes, bytes, bytes]
@@ -1571,17 +1229,25 @@ class LocalPostgresSupervisor:
         self._native_effect_outcomes: dict[int, _VerifiedNativeEffectOutcome] = {}
         self._pending_creations: dict[int, _PendingTargetCreation] = {}
         self._pending_creation_values: dict[int, tuple[_PendingTargetCreation, dict[str, Any]]] = {}
+        self._reserved_creation_values: dict[
+            int, tuple[_NativeEffectReservation, dict[str, Any]]
+        ] = {}
         self._active_creation: _PendingTargetCreation | None = None
-        self._native_effect_bindings: dict[int, object] = {}
         self._native_targets: dict[int, _OriginalNativeTarget] = {}
         self._principal_preparations: dict[int, _PreparedOriginalPrincipals] = {}
         self._registration_preparations: dict[int, _PreparedTargetRegistration] = {}
         self._principal_dispatches: dict[int, _NativeEffectReservation] = {}
+        self._principal_recovery_dispatches: dict[
+            int, tuple[_NativeEffectReservation, _PreparedOriginalPrincipals,
+                       _VerifiedNativeEffectOutcome | None, dict[str, Any],
+                       dict[str, Any] | None, dict[str, Any]]
+        ] = {}
         self._registration_dispatches: dict[int, _NativeEffectReservation] = {}
-        try:
-            owner_authority._bind_native_effect_issuer(self)
-        except Exception:  # noqa: BLE001 - redact private authority or driver details; fail closed.
-            raise LocalPostgresError('local-postgresql-native-effect-issuer-binding-failed') from None
+        self._registration_recovery_dispatches: dict[
+            int, tuple[_NativeEffectReservation, _OriginalNativeTarget, object,
+                       _VerifiedNativeEffectOutcome | None, dict[str, Any],
+                       dict[str, Any], dict[str, Any] | None]
+        ] = {}
 
     @property
     def authority_context(self) -> object:
@@ -1594,7 +1260,7 @@ class LocalPostgresSupervisor:
             ) -> _NativeEffectReservation:
         if self._journal is None:
             raise LocalPostgresError('local-postgresql-native-effect-journal-unavailable')
-        from .owner_authority import OwnerApprovalRequest, VerifiedOwnerApproval
+        from .owner_approval_core import OwnerApprovalRequest, VerifiedOwnerApproval
         if (type(request) is not OwnerApprovalRequest
                 or type(approval) is not VerifiedOwnerApproval
                 or approval._request is not request
@@ -1625,7 +1291,7 @@ class LocalPostgresSupervisor:
 
     def _resolve_native_effect_reservation(
             self, value: object, verified_approval: object) -> _NativeEffectReservation:
-        from .owner_authority import OwnerAuthorityError
+        from .owner_approval_core import OwnerAuthorityError
         if (type(value) is not _NativeEffectReservation
                 or value._issuer is not self or value._supervisor is not self
                 or self._native_effect_reservations.get(id(value)) is not value
@@ -1635,7 +1301,7 @@ class LocalPostgresSupervisor:
                 or self._journal is None):
             raise LocalPostgresError('local-postgresql-native-effect-reservation-unverified')
         try:
-            self._owner_authority._resolve_verified_approval(
+            self._owner_core._resolve_verified_approval(
                 verified_approval, original_request=value._request,
                 scope=value._scope, intent_digest=value._request_digest)
         except OwnerAuthorityError:
@@ -1651,9 +1317,27 @@ class LocalPostgresSupervisor:
             raise LocalPostgresError('local-postgresql-native-effect-reservation-stale')
         return value
 
+    def _require_bound_pending_effect(
+            self, reservation: object, effect_handle: object, *,
+            mode: str = 'execute') -> None:
+        """Require the exact core-issued ledger binding before native effects."""
+        from .owner_approval_core import OwnerAuthorityError
+
+        if (type(reservation) is not _NativeEffectReservation
+                or reservation._supervisor is not self
+                or self._native_effect_reservations.get(id(reservation)) is not reservation):
+            raise LocalPostgresError('local-postgresql-native-effect-reservation-unverified')
+        try:
+            self._owner_core._resolve_pending_effect(
+                effect_handle, original_request=reservation._request,
+                reservation_digest=reservation._journal_record_digest, mode=mode)
+        except OwnerAuthorityError:
+            raise LocalPostgresError('local-postgresql-owner-effect-binding-required') from None
+
     def _record_native_effect_outcome(
             self, reservation: _NativeEffectReservation, status: str,
-            receipt: dict[str, Any]) -> _VerifiedNativeEffectOutcome:
+            receipt: dict[str, Any], effect_handle: object) -> _VerifiedNativeEffectOutcome:
+        self._require_bound_pending_effect(reservation, effect_handle)
         self._resolve_native_effect_reservation(reservation, reservation._approval)
         if status not in ('confirmed', 'known-aborted'):
             raise LocalPostgresError('local-postgresql-native-effect-outcome-unknown')
@@ -1668,15 +1352,6 @@ class LocalPostgresSupervisor:
             sequence=event['sequence'], status=status, receipt_digest=receipt_digest,
             journal_record_digest=event['recordDigest'])
         self._native_effect_outcomes[id(outcome)] = outcome
-        binding = self._native_effect_bindings.get(id(reservation))
-        if binding is None:
-            raise LocalPostgresError('local-postgresql-native-effect-binding-unavailable')
-        try:
-            self._owner_authority.record_native_outcome(binding, outcome)
-        except Exception:  # noqa: BLE001 - redact private authority or driver details; fail closed.
-            # Journal receipt remains authoritative; caller must observe this
-            # original operation and must not dispatch a replacement.
-            raise LocalPostgresError('local-postgresql-native-effect-record-pending') from None
         return outcome
 
     def _resolve_native_effect_outcome(
@@ -1768,13 +1443,13 @@ class LocalPostgresSupervisor:
         if hashlib.sha256(intent_bytes).hexdigest() != expected_digest:
             raise LocalPostgresError('local-postgresql-original-request-mismatch')
         try:
-            request = self._owner_authority._recover_original_request(
+            request = self._owner_core._recover_original_request(
                 scope, intent_bytes, context=self._authority_context,
                 expected_approval_id=approval_id)
             if (request._scope != scope or request._intent_bytes != intent_bytes
                     or request._approval_id != approval_id):
                 raise LocalPostgresError('local-postgresql-original-request-mismatch')
-            outcome = self._owner_authority.observe_original_request(
+            outcome = self._owner_core.observe_original_request(
                 self._authority_context, request.effect_key)
         except LocalPostgresError:
             raise
@@ -1944,8 +1619,7 @@ class LocalPostgresSupervisor:
         expected_receipt_digest = _digest(receipt)
         if outcome is not None and outcome.receipt_digest != expected_receipt_digest:
             raise LocalPostgresError('local-postgresql-original-creation-outcome-mismatch')
-        if outcome is None:
-            self._record_native_effect_outcome(reservation, 'confirmed', receipt)
+        self._creation_recovery_receipts[id(reservation)] = receipt
         creation_request = _PendingTargetCreation(
             _BOOTSTRAP_ISSUER_SEAL, self, request, _canonical({
                 key: creation[key] for key in (
@@ -1967,6 +1641,33 @@ class LocalPostgresSupervisor:
                 'dataDirectory', 'postgresPath', 'postgresSha256', 'initdbPath',
                 'initdbSha256', 'port', 'configDigest', 'hbaDigest')}))
         return target
+
+    def confirm_reattached_target_creation(
+            self, target: object, effect_handle: object) -> None:
+        """Bind a fresh native observation to the original pending ledger row.
+
+        A previously confirmed effect is only compared with the newly observed
+        receipt; this method never repeats target creation.
+        """
+        if (type(target) is not _OriginalNativeTarget or target._issuer is not self
+                or self._native_targets.get(id(target)) is not target
+                or self._journal is None):
+            raise LocalPostgresError('local-postgresql-original-target-unverified')
+        reservation = target._reservation
+        receipt = self._creation_recovery_receipts.get(id(reservation))
+        if receipt is None:
+            raise LocalPostgresError('local-postgresql-original-creation-outcome-mismatch')
+        outcome = next((item for item in self._native_effect_outcomes.values()
+                        if item._reservation is reservation), None)
+        if outcome is not None:
+            self._require_bound_pending_effect(reservation, effect_handle, mode='recover')
+            if (outcome.status != 'confirmed'
+                    or outcome.receipt_digest != _digest(receipt)):
+                raise LocalPostgresError('local-postgresql-original-creation-outcome-mismatch')
+            return
+        self._require_bound_pending_effect(reservation, effect_handle, mode='execute')
+        self._record_native_effect_outcome(
+            reservation, 'confirmed', receipt, effect_handle)
 
     def _recover_original_native_effect(self, scope: str, *, target: object = None
                                         ) -> tuple[_NativeEffectReservation,
@@ -2052,11 +1753,11 @@ class LocalPostgresSupervisor:
                 or hashlib.sha256(intent_bytes).hexdigest() != effect['payloadDigest']):
             raise LocalPostgresError('local-postgresql-original-effect-mismatch')
         try:
-            request = self._owner_authority._recover_original_request(
+            request = self._owner_core._recover_original_request(
                 scope, intent_bytes, context=self._authority_context,
                 expected_approval_id=approval_id)
-            approval = self._owner_authority._recover_verified_approval(request)
-            self._owner_authority._resolve_verified_approval(
+            approval = self._owner_core._recover_verified_approval(request)
+            self._owner_core._resolve_verified_approval(
                 approval, original_request=request, scope=scope,
                 intent_digest=effect['requestDigest'])
         except Exception:  # noqa: BLE001 - redact private authority or driver details; fail closed.
@@ -2079,10 +1780,8 @@ class LocalPostgresSupervisor:
         self._native_effect_reservations[id(reservation)] = reservation
         try:
             self._resolve_native_effect_reservation(reservation, approval)
-            binding = self._owner_authority.bind_native_effect(approval, reservation)
         except Exception:  # noqa: BLE001 - redact private authority or driver details; fail closed.
             raise LocalPostgresError('local-postgresql-original-effect-binding-recovery-failed') from None
-        self._native_effect_bindings[id(reservation)] = binding
 
         terminal = next((event for event in events
                          if event['kind'] in ('native-effect-confirmed',
@@ -2100,7 +1799,7 @@ class LocalPostgresSupervisor:
                 journal_record_digest=terminal['recordDigest'])
             self._native_effect_outcomes[id(outcome)] = outcome
             self._resolve_native_effect_outcome(outcome, reservation)
-        owner_state = self._owner_authority.observe_original_request(
+        owner_state = self._owner_core.observe_original_request(
             self._authority_context, request.effect_key)
         if (owner_state.approval_id != approval_id
                 or owner_state.intent_digest != effect['requestDigest']):
@@ -2115,8 +1814,9 @@ class LocalPostgresSupervisor:
             raise LocalPostgresError('local-postgresql-original-outcome-mismatch')
         return reservation, outcome, request
 
-    def reattach_original_registration(self, target: object) -> object:
-        """Reconcile only the exact signed registration for an attached target.
+    def prepare_original_registration_reattachment(
+            self, target: object) -> _NativeEffectReservation:
+        """Prepare reconciliation of the exact signed registration, without effects.
 
         The custody journal and opaque handle are reconstructed through the
         enrolled owner resolver.  Journal payloads are inputs to verification,
@@ -2177,6 +1877,28 @@ class LocalPostgresSupervisor:
                      or owner_approved['approvalDigest'] != approval.approval_digest)):
             raise LocalPostgresError('local-postgresql-registration-recovery-mismatch')
 
+        self._registration_recovery_dispatches[id(reservation)] = (
+            reservation, target, request, outcome, registration, payload, owner_approved)
+        return reservation
+
+    def execute_original_registration_reattachment(
+            self, reservation: object, effect_handle: object) -> object:
+        """Run the exact recovered registration after facade ledger binding."""
+        recovery = self._registration_recovery_dispatches.get(id(reservation))
+        if (type(reservation) is not _NativeEffectReservation
+                or recovery is None or recovery[0] is not reservation
+                or self._native_effect_reservations.get(id(reservation)) is not reservation
+                or reservation._supervisor is not self):
+            raise LocalPostgresError('local-postgresql-registration-recovery-unverified')
+        (_reservation, target, request, outcome, registration, payload,
+         owner_approved) = recovery
+        self._require_bound_pending_effect(
+            reservation, effect_handle,
+            mode='recover' if outcome is not None else 'execute')
+        if (type(target) is not _OriginalNativeTarget or target._issuer is not self
+                or self._native_targets.get(id(target)) is not target
+                or self._journal is None or self._launch is None):
+            raise LocalPostgresError('local-postgresql-original-target-unverified')
         from .ingress_custody import (
             ExternalCustodyJournal,
             _bind_owner_registration_resolver,
@@ -2194,7 +1916,12 @@ class LocalPostgresSupervisor:
         self._handles[id(owner_request)] = (
             owner_request, payload, self._launch['nativeAttestation'])
         try:
-            handle = custodian.register_target(owner_request)
+            if outcome is not None:
+                if outcome.status != 'confirmed':
+                    raise LocalPostgresError('local-postgresql-registration-outcome-mismatch')
+                handle = custodian.reattach_confirmed_target(owner_request)
+            else:
+                handle = custodian.register_target(owner_request)
             reference = custodian._public_reference(handle)
         except Exception:  # noqa: BLE001 - redact private authority or driver details; fail closed.
             raise LocalPostgresError(
@@ -2202,12 +1929,12 @@ class LocalPostgresSupervisor:
         self._resolver = resolver
         self._custodian = custodian
         self._custody_handle = handle
-        if owner_approved is None:
+        if owner_approved is None and outcome is None:
             self._journal.append('owner-registration-approved', {
                 'registrationId': registration['registrationId'],
                 'payloadDigest': _digest(payload),
-                'approvalId': approval.approval_id,
-                'approvalDigest': approval.approval_digest,
+                'approvalId': reservation.approval_id,
+                'approvalDigest': reservation.approval_digest,
             })
         receipt = {
             'profile': 'umf.local-target-registration-effect-receipt/0.1',
@@ -2220,23 +1947,19 @@ class LocalPostgresSupervisor:
         }
         expected_receipt = _digest(receipt)
         if outcome is None:
-            self._record_native_effect_outcome(reservation, 'confirmed', receipt)
+            self._record_native_effect_outcome(
+                reservation, 'confirmed', receipt, effect_handle)
         elif (outcome.status != 'confirmed'
               or outcome.receipt_digest != expected_receipt):
             raise LocalPostgresError('local-postgresql-registration-outcome-mismatch')
         else:
-            owner_state = self._owner_authority.observe_original_request(
+            owner_state = self._owner_core.observe_original_request(
                 self._authority_context, request.effect_key)
-            if owner_state.effect_status == 'effect-pending':
-                try:
-                    self._owner_authority.record_native_outcome(
-                        self._native_effect_bindings[id(reservation)], outcome)
-                except Exception:  # noqa: BLE001 - redact private authority or driver details; fail closed.
-                    raise LocalPostgresError(
-                        'local-postgresql-registration-outcome-record-pending') from None
-            elif (owner_state.effect_status != 'confirmed'
-                  or owner_state.effect_receipt_digest != outcome.receipt_digest):
+            if (owner_state.effect_status not in ('effect-pending', 'confirmed')
+                  or (owner_state.effect_status == 'confirmed'
+                      and owner_state.effect_receipt_digest != outcome.receipt_digest)):
                 raise LocalPostgresError('local-postgresql-registration-outcome-mismatch')
+        self._registration_recovery_dispatches.pop(id(reservation), None)
         return handle
 
     def prepare_target_creation(self) -> tuple[_PendingTargetCreation, object]:
@@ -2299,7 +2022,7 @@ class LocalPostgresSupervisor:
         }
         request_bytes = _canonical(request_value)
         try:
-            request = self._owner_authority.prepare_request(
+            request = self._owner_core.prepare_request(
                 'local-target-creation', request_bytes, context=self._authority_context)
         except Exception:  # noqa: BLE001 - redact private authority or driver details; fail closed.
             self._maintenance_password = None
@@ -2326,24 +2049,23 @@ class LocalPostgresSupervisor:
         if pending is None:
             raise LocalPostgresError('local-postgresql-owner-request-not-original')
         try:
-            return self._owner_authority.export_signing_request(request)
+            return self._owner_core.export_signing_request(request)
         except Exception:  # noqa: BLE001 - redact signer details at the public boundary.
             raise LocalPostgresError('local-postgresql-owner-request-unavailable') from None
 
-    def create_target(self, pending: object, signed_envelope: object) -> object:
-        """Create the approved original target and stop at maintenance-only launch."""
+    def reserve_target_creation(
+            self, pending: object, approval: object) -> _NativeEffectReservation:
+        """Durably reserve an already verified creation approval; perform no DDL."""
         if type(pending) is not _PendingTargetCreation or pending._issuer is not self:
             raise LocalPostgresError('local-postgresql-original-creation-required')
         if self._pending_creations.get(id(pending)) is not pending or self._active_creation is not None:
             raise LocalPostgresError('local-postgresql-original-creation-not-reserved')
-        from .owner_authority import OwnerAuthorityError
         request = pending._request
         try:
-            approval = self._owner_authority.verify_approval(request, signed_envelope)
-            self._owner_authority._resolve_verified_approval(
+            self._owner_core._resolve_verified_approval(
                 approval, original_request=request, scope='local-target-creation',
                 intent_digest=request._intent_digest)
-        except OwnerAuthorityError:
+        except Exception:  # noqa: BLE001 - redact private authority failure details.
             raise LocalPostgresError('local-postgresql-original-creation-approval-invalid') from None
         pending_values = self._pending_creation_values.get(id(pending))
         if pending_values is None or pending_values[0] is not pending:
@@ -2365,30 +2087,54 @@ class LocalPostgresSupervisor:
             request, approval, 'local-target-creation', effect_key,
             self._profile.purpose, None, self._journal.read()['events'][-1],
             pending._request_bytes)
-        try:
-            binding = self._owner_authority.bind_native_effect(approval, reservation)
-        except Exception:  # noqa: BLE001 - redact private authority or driver details; fail closed.
-            raise LocalPostgresError('local-postgresql-original-creation-dispatch-unavailable') from None
         self._native_effect_reservations[id(reservation)] = reservation
-        self._native_effect_bindings[id(reservation)] = binding
+        self._reserved_creation_values[id(reservation)] = (reservation, pending_values[1])
         self._pending_creations.pop(id(pending), None)
         self._pending_creation_values.pop(id(pending), None)
+        return reservation
+
+    def execute_target_creation(self, pending: object, reservation: object,
+                                effect_handle: object) -> object:
+        """Execute only the exact reservation returned for this pending creation."""
+        if (type(pending) is not _PendingTargetCreation or pending._issuer is not self
+                or type(reservation) is not _NativeEffectReservation
+                or self._native_effect_reservations.get(id(reservation)) is not reservation
+                or reservation._supervisor is not self
+                or reservation._request is not pending._request
+                or reservation._scope != 'local-target-creation'
+                or self._active_creation is not None):
+            raise LocalPostgresError('local-postgresql-original-creation-not-reserved')
+        self._require_bound_pending_effect(reservation, effect_handle)
+        # The reservation is already durable.  The public owner session must
+        # bind it to its independent ledger before this native stage is called.
+        pending_values = self._creation_values_for_reservation(reservation)
+        values = pending_values
         try:
             _private_directory(values['control'], create=True)
             _private_directory(values['data'], create=True)
             _write_private(values['pwPath'], self._maintenance_password + b'\n')
             _write_private(values['credentialPath'], self._maintenance_password + b'\n')
             _write_private(values['identPath'], b'')
-            target = self._run_target_creation(pending, reservation, values)
+            target = self._run_target_creation(pending, reservation, values, effect_handle)
         except BaseException:  # noqa: TRY203 - preserve the original effect failure and unresolved journal.
             # The effect is not called aborted from an exception. The original
             # journal remains authoritative until explicit observation resolves it.
             raise
         return target
 
+    def _creation_values_for_reservation(
+            self, reservation: _NativeEffectReservation) -> dict[str, Any]:
+        # The value set is moved out of the preparation registry at reservation
+        # time; retain it under the exact reservation identity until execution.
+        values = self._reserved_creation_values.get(id(reservation))
+        if values is None or values[0] is not reservation:
+            raise LocalPostgresError('local-postgresql-original-creation-not-reserved')
+        return values[1]
+
     def _run_target_creation(self, pending: _PendingTargetCreation,
                              reservation: _NativeEffectReservation,
-                             values: dict[str, Any]) -> _OriginalNativeTarget:
+                             values: dict[str, Any],
+                             effect_handle: object) -> _OriginalNativeTarget:
         request = values['request']
         self._active_creation = pending
         self._write_creation_config(values)
@@ -2427,7 +2173,8 @@ class LocalPostgresSupervisor:
                    'initdbReceiptDigest': _digest(initdb_receipt),
                    'launchReceiptDigest': self._journal.read()['events'][-1]['recordDigest'],
                    'purpose': self._profile.purpose}
-        self._record_native_effect_outcome(reservation, 'confirmed', receipt)
+        self._record_native_effect_outcome(
+            reservation, 'confirmed', receipt, effect_handle)
         target = _OriginalNativeTarget(
             _BOOTSTRAP_ISSUER_SEAL, self, pending, reservation, request['clusterId'])
         self._native_targets[id(target)] = target
@@ -2536,7 +2283,7 @@ class LocalPostgresSupervisor:
         }
         intent_bytes = _canonical(intent_value)
         try:
-            request = self._owner_authority.prepare_request(
+            request = self._owner_core.prepare_request(
                 'native-principal-preparation', intent_bytes,
                 context=self._authority_context)
         except Exception:  # noqa: BLE001 - redact private authority or driver details; fail closed.
@@ -2560,13 +2307,13 @@ class LocalPostgresSupervisor:
                 or self._principal_preparations.get(id(prepared)) is not prepared):
             raise LocalPostgresError('local-postgresql-principal-request-not-original')
         try:
-            return self._owner_authority.export_signing_request(prepared._request)
+            return self._owner_core.export_signing_request(prepared._request)
         except Exception:  # noqa: BLE001 - redact private authority or driver details; fail closed.
             raise LocalPostgresError('local-postgresql-principal-request-unavailable') from None
 
-    def apply_original_principals(self, prepared: object,
-                                  signed_envelope: object) -> dict[str, Any]:
-        """Apply the approved role transaction, then separately create the application DB."""
+    def reserve_original_principals(self, prepared: object,
+                                    approval: object) -> _NativeEffectReservation:
+        """Reserve the verified principal operation without running native DDL."""
         if (type(prepared) is not _PreparedOriginalPrincipals
                 or prepared._issuer is not self
                 or self._principal_preparations.get(id(prepared)) is not prepared
@@ -2575,13 +2322,11 @@ class LocalPostgresSupervisor:
         if id(prepared) in self._principal_dispatches:
             raise LocalPostgresError('local-postgresql-principal-outcome-unresolved')
         request = prepared._request
-        from .owner_authority import OwnerAuthorityError
         try:
-            approval = self._owner_authority.verify_approval(request, signed_envelope)
-            self._owner_authority._resolve_verified_approval(
+            self._owner_core._resolve_verified_approval(
                 approval, original_request=request, scope='native-principal-preparation',
                 intent_digest=request._intent_digest)
-        except OwnerAuthorityError:
+        except Exception:  # noqa: BLE001 - redact private authority failure details.
             raise LocalPostgresError('local-postgresql-principal-approval-invalid') from None
         intent_value = prepared._values['intent']
         assert self._journal is not None
@@ -2591,15 +2336,26 @@ class LocalPostgresSupervisor:
         reservation = self._make_native_effect_reservation(
             request, approval, 'native-principal-preparation', effect_key,
             self._profile.purpose, prepared._target, event, prepared._request._intent_bytes)
-        # Persist the in-process dispatch fence before binding approval or
-        # entering either native stage. A failure at any later point must be
-        # observed through the original journal reservation, never replayed.
+        # Persist the in-process dispatch fence before returning the reservation.
         self._principal_dispatches[id(prepared)] = reservation
-        try:
-            binding = self._owner_authority.bind_native_effect(approval, reservation)
-        except Exception:  # noqa: BLE001 - redact private authority or driver details; fail closed.
-            raise LocalPostgresError('local-postgresql-principal-dispatch-unavailable') from None
-        self._native_effect_bindings[id(reservation)] = binding
+        self._native_effect_reservations[id(reservation)] = reservation
+        return reservation
+
+    def execute_original_principals(self, prepared: object, reservation: object,
+                                    effect_handle: object) -> dict[str, Any]:
+        """Run native principal DDL only after the session facade ledger-binds it."""
+        if (type(prepared) is not _PreparedOriginalPrincipals
+                or prepared._issuer is not self
+                or self._principal_preparations.get(id(prepared)) is not prepared
+                or self._principal_dispatches.get(id(prepared)) is not reservation
+                or type(reservation) is not _NativeEffectReservation
+                or self._native_effect_reservations.get(id(reservation)) is not reservation
+                or reservation._supervisor is not self
+                or reservation._request is not prepared._request):
+            raise LocalPostgresError('local-postgresql-principal-dispatch-unverified')
+        self._require_bound_pending_effect(reservation, effect_handle)
+        intent_value = prepared._values['intent']
+        assert self._journal is not None
         self._journal.append('principal-roles-intent', {
             'reservationId': reservation.reservation_id,
             'preparationId': intent_value['preparationId']})
@@ -2624,7 +2380,8 @@ class LocalPostgresSupervisor:
                    'applicationDatabase': database,
                    'creationReceiptDigest': reservation.journal_record_digest,
                    'purpose': self._profile.purpose}
-        self._record_native_effect_outcome(reservation, 'confirmed', receipt)
+        self._record_native_effect_outcome(
+            reservation, 'confirmed', receipt, effect_handle)
         assert self._journal is not None
         chain = self._journal.read()
         creation = next(event['payload'] for event in chain['events']
@@ -2671,16 +2428,8 @@ class LocalPostgresSupervisor:
         self._principal_preparations.pop(id(prepared), None)
         return receipt
 
-    def resume_original_principal_stage(self, target: object) -> dict[str, Any]:
-        """Reconcile the original role/DB stage and continue only its DB substage.
-
-        This recovery path requires the exact original prepared request, verified
-        signature, and native effect reservation. It never repeats role DDL. If
-        the roles transaction is not fully visible with the reviewed flags and
-        memberships, it refuses for further observation rather than guessing.
-        An absent application database after committed roles may be created only
-        under the original database substage and original approval.
-        """
+    def prepare_original_principal_recovery(self, target: object) -> _NativeEffectReservation:
+        """Reconstruct the exact original principal dispatch without native DDL."""
         if (type(target) is not _OriginalNativeTarget or target._issuer is not self
                 or self._native_targets.get(id(target)) is not target
                 or self._journal is None or self._launch is None):
@@ -2758,12 +2507,50 @@ class LocalPostgresSupervisor:
                 self._journal.append('principal-database-intent', {
                     'reservationId': reservation.reservation_id,
                     'databaseName': intent['applicationDatabase']['name']})
-            database = self._create_application_database(prepared)
+        self._principal_recovery_dispatches[id(reservation)] = (
+            reservation, prepared, outcome, role_observation, database, intent)
+        return reservation
+
+    def execute_original_principal_recovery(
+            self, reservation: object, effect_handle: object) -> dict[str, Any]:
+        """Continue only the original database substage after facade binding."""
+        recovery = self._principal_recovery_dispatches.get(id(reservation))
+        if (type(reservation) is not _NativeEffectReservation
+                or recovery is None or recovery[0] is not reservation
+                or self._native_effect_reservations.get(id(reservation)) is not reservation
+                or reservation._supervisor is not self):
+            raise LocalPostgresError('local-postgresql-principal-recovery-unverified')
+        self._require_bound_pending_effect(reservation, effect_handle, mode='recover')
+        (_reservation, prepared, outcome, role_observation, database, intent) = recovery
+        if (type(prepared) is not _PreparedOriginalPrincipals
+                or prepared._issuer is not self
+                or self._principal_preparations.get(id(prepared)) is not prepared
+                or self._principal_dispatches.get(id(prepared)) is not reservation):
+            raise LocalPostgresError('local-postgresql-principal-recovery-unverified')
+        if outcome is not None:
+            owner_state = self._owner_core.observe_original_request(
+                self._authority_context, prepared._request.effect_key)
+            if (outcome.status != 'confirmed' or database is None
+                    or owner_state.effect_status not in ('effect-pending', 'confirmed')
+                    or (owner_state.effect_status == 'confirmed'
+                        and owner_state.effect_receipt_digest != outcome.receipt_digest)):
+                raise LocalPostgresError('local-postgresql-principal-outcome-mismatch')
+        if database is None:
+            # A terminal native outcome is reconciliation-only. It can settle
+            # the matching owner ledger row, but can never authorize a retry.
+            if outcome is not None:
+                raise LocalPostgresError('local-postgresql-principal-outcome-mismatch')
+            database = self._observe_original_application_database(prepared)
+            if database is None:
+                database = self._create_application_database(prepared)
+            assert self._journal is not None
             self._journal.append('principal-database-confirmed', {
                 'reservationId': reservation.reservation_id,
                 'databaseOid': database['oid'],
                 'systemIdentifier': database['systemIdentifier']})
 
+        request = prepared._request
+        role_digest = _digest(role_observation)
         receipt = {'profile': 'umf.local-postgresql-principal-preparation-receipt/0.1',
                    'preparationId': intent['preparationId'],
                    'requestDigest': reservation.request_digest,
@@ -2774,25 +2561,21 @@ class LocalPostgresSupervisor:
                    'purpose': self._profile.purpose}
         expected_receipt_digest = _digest(receipt)
         if outcome is None:
-            self._record_native_effect_outcome(reservation, 'confirmed', receipt)
+            self._record_native_effect_outcome(
+                reservation, 'confirmed', receipt, effect_handle)
         elif outcome.status != 'confirmed' or outcome.receipt_digest != expected_receipt_digest:
             raise LocalPostgresError('local-postgresql-principal-outcome-mismatch')
         else:
-            owner_state = self._owner_authority.observe_original_request(
+            owner_state = self._owner_core.observe_original_request(
                 self._authority_context, request.effect_key)
-            if owner_state.effect_status == 'effect-pending':
-                try:
-                    self._owner_authority.record_native_outcome(
-                        self._native_effect_bindings[id(reservation)], outcome)
-                except Exception:  # noqa: BLE001 - redact private authority or driver details; fail closed.
-                    raise LocalPostgresError(
-                        'local-postgresql-principal-outcome-record-pending') from None
-            elif (owner_state.effect_status != 'confirmed'
-                  or owner_state.effect_receipt_digest != outcome.receipt_digest):
+            if (owner_state.effect_status not in ('effect-pending', 'confirmed')
+                    or (owner_state.effect_status == 'confirmed'
+                        and owner_state.effect_receipt_digest != outcome.receipt_digest)):
                 raise LocalPostgresError('local-postgresql-principal-outcome-mismatch')
 
         self._finalize_recovered_principal_receipt(
             reservation, receipt, role_observation, database)
+        self._principal_recovery_dispatches.pop(id(reservation), None)
         return receipt
 
     def _observe_original_principal_roles(
@@ -2966,7 +2749,7 @@ class LocalPostgresSupervisor:
                   'registration': registration}
         intent_bytes = _canonical(intent)
         try:
-            request = self._owner_authority.prepare_request(
+            request = self._owner_core.prepare_request(
                 'local-target-registration', intent_bytes,
                 context=self._authority_context)
         except Exception:  # noqa: BLE001 - redact private authority or driver details; fail closed.
@@ -2988,12 +2771,12 @@ class LocalPostgresSupervisor:
                 or self._registration_preparations.get(id(prepared)) is not prepared):
             raise LocalPostgresError('local-postgresql-registration-request-not-original')
         try:
-            return self._owner_authority.export_signing_request(prepared._request)
+            return self._owner_core.export_signing_request(prepared._request)
         except Exception:  # noqa: BLE001 - redact private authority or driver details; fail closed.
             raise LocalPostgresError('local-postgresql-registration-request-unavailable') from None
 
-    def apply_target_registration(self, prepared: object,
-                                  signed_envelope: object) -> object:
+    def reserve_target_registration(self, prepared: object,
+                                    approval: object) -> _NativeEffectReservation:
         """Verify signed registration, then let the original custodian journal it."""
         if (type(prepared) is not _PreparedTargetRegistration
                 or prepared._issuer is not self
@@ -3004,13 +2787,11 @@ class LocalPostgresSupervisor:
         if id(prepared) in self._registration_dispatches:
             raise LocalPostgresError('local-postgresql-registration-outcome-unresolved')
         request = prepared._request
-        from .owner_authority import OwnerAuthorityError
         try:
-            approval = self._owner_authority.verify_approval(request, signed_envelope)
-            self._owner_authority._resolve_verified_approval(
+            self._owner_core._resolve_verified_approval(
                 approval, original_request=request, scope='local-target-registration',
                 intent_digest=request._intent_digest)
-        except OwnerAuthorityError:
+        except Exception:  # noqa: BLE001 - redact private authority failure details.
             raise LocalPostgresError('local-postgresql-registration-approval-invalid') from None
         creation = prepared._registration
         # Preserve the approved operation before any further observations. If
@@ -3028,13 +2809,6 @@ class LocalPostgresSupervisor:
                 or not self._native_origin_matches(
                     creation['origin'], self._launch.get('nativeAttestation'))):
             raise LocalPostgresError('local-postgresql-registration-origin-stale')
-        owner_approval = {
-            'authorityId': approval.authority_id,
-            'approvalId': approval.approval_id,
-            'approvalDigest': approval.approval_digest,
-            'scope': _OWNER_APPROVAL_SCOPE,
-        }
-        payload = {**creation, 'ownerApproval': owner_approval}
         # The reservation payload is the exact signed intent, not the outer
         # public registration envelope. Recovery reconstructs this same byte
         # sequence from the journaled request before resolving the approval.
@@ -3046,11 +2820,29 @@ class LocalPostgresSupervisor:
             request, approval, 'local-target-registration', effect_key,
             self._profile.purpose, prepared._target, event, payload_bytes)
         self._registration_dispatches[id(prepared)] = reservation
-        try:
-            binding = self._owner_authority.bind_native_effect(approval, reservation)
-        except Exception:  # noqa: BLE001 - redact private authority or driver details; fail closed.
-            raise LocalPostgresError('local-postgresql-registration-dispatch-unavailable') from None
-        self._native_effect_bindings[id(reservation)] = binding
+        self._native_effect_reservations[id(reservation)] = reservation
+        return reservation
+
+    def execute_target_registration(self, prepared: object, reservation: object,
+                                    effect_handle: object) -> object:
+        if (type(prepared) is not _PreparedTargetRegistration
+                or prepared._issuer is not self
+                or self._registration_preparations.get(id(prepared)) is not prepared
+                or self._registration_dispatches.get(id(prepared)) is not reservation
+                or type(reservation) is not _NativeEffectReservation
+                or self._native_effect_reservations.get(id(reservation)) is not reservation
+                or reservation._supervisor is not self
+                or reservation._request is not prepared._request):
+            raise LocalPostgresError('local-postgresql-registration-dispatch-unverified')
+        self._require_bound_pending_effect(reservation, effect_handle)
+        creation = prepared._registration
+        approval = reservation._approval
+        payload = {**creation, 'ownerApproval': {
+            'authorityId': approval.authority_id,
+            'approvalId': approval.approval_id,
+            'approvalDigest': approval.approval_digest,
+            'scope': _OWNER_APPROVAL_SCOPE,
+        }}
         from .ingress_custody import (
             ExternalCustodyJournal,
             _bind_owner_registration_resolver,
@@ -3088,7 +2880,8 @@ class LocalPostgresSupervisor:
                    'requestDigest': reservation.request_digest,
                    'approvalDigest': reservation.approval_digest,
                    'purpose': self._profile.purpose}
-        self._record_native_effect_outcome(reservation, 'confirmed', receipt)
+        self._record_native_effect_outcome(
+            reservation, 'confirmed', receipt, effect_handle)
         self._custody_handle = handle
         self._registration_preparations.pop(id(prepared), None)
         return handle
@@ -3475,17 +3268,17 @@ class LocalPostgresSupervisor:
         if self._maintenance_password is None:
             raise LocalPostgresError('local-postgresql-credential-unavailable')
         try:
-            import psycopg
+            from psycopg import connect
 
-            return psycopg.connect(host='127.0.0.1', port=self._profile.port,
-                                    dbname=database_name, user=self._maintenance_name(),
-                                    password=self._maintenance_password.decode('ascii').rstrip('\n'),
-                                    sslmode='disable', connect_timeout=3,
-                                    application_name='umf_g11_local_owner',
-                                    options="-c search_path=pg_catalog -c row_security=on "
-                                            "-c session_replication_role=origin "
-                                            "-c default_transaction_read_only=off "
-                                            "-c 'default_transaction_isolation=read committed'")
+            return connect(host='127.0.0.1', port=self._profile.port,
+                           dbname=database_name, user=self._maintenance_name(),
+                           password=self._maintenance_password.decode('ascii').rstrip('\n'),
+                           sslmode='disable', connect_timeout=3,
+                           application_name='umf_g11_local_owner',
+                           options="-c search_path=pg_catalog -c row_security=on "
+                                   "-c session_replication_role=origin "
+                                   "-c default_transaction_read_only=off "
+                                   "-c 'default_transaction_isolation=read committed'")
         except Exception:  # noqa: BLE001 - redact private authority or driver details; fail closed.
             raise LocalPostgresError('local-postgresql-maintenance-authentication-failed') from None
 
@@ -3843,7 +3636,7 @@ pending_restart FROM pg_catalog.pg_settings ORDER BY name""").fetchall()
             reference, verified, registration, authority, native)
         preparation_payload = {'profile': 'umf.owner-store-create-intent/0.1',
                                'store': store, 'evidence': evidence_payload}
-        owner_request = self._owner_authority.prepare_request(
+        owner_request = self._owner_core.prepare_request(
             'native-store-creation', _canonical(preparation_payload),
             context=self._authority_context)
         evidence = _VerifiedNativeStorePreparation(
@@ -3882,7 +3675,7 @@ pending_restart FROM pg_catalog.pg_settings ORDER BY name""").fetchall()
         registration = {
             'registrationId': registration_event['payload']['registrationId'],
             'payloadDigest': registration_event['payload']['payloadDigest'],
-            'authorityId': self._owner_authority.authority_id,
+            'authorityId': self._owner_core.authority_id,
             'approvalScope': 'local-target-registration',
             'approvalReceiptDigest': registration_event['payload']['approvalDigest'],
         }
@@ -3892,7 +3685,7 @@ pending_restart FROM pg_catalog.pg_settings ORDER BY name""").fetchall()
             'approvalIntentDigest': principal_intent['payload']['requestDigest'],
             'approvalId': principal_intent['payload']['approvalId'],
             'approvalDigest': principal_intent['payload']['approvalDigest'],
-            'authorityId': self._owner_authority.authority_id,
+            'authorityId': self._owner_core.authority_id,
             'approvalScope': 'native-principal-preparation',
             'approvalReceiptDigest': creation_receipt['principalPreparationReceiptDigest'],
         }
@@ -3906,7 +3699,7 @@ pending_restart FROM pg_catalog.pg_settings ORDER BY name""").fetchall()
                 or evidence.supervisor is not self):
             raise LocalPostgresError('local-postgresql-store-preparation-unverified')
         try:
-            return self._owner_authority.export_signing_request(evidence.owner_request)
+            return self._owner_core.export_signing_request(evidence.owner_request)
         except Exception:  # noqa: BLE001 - redact private authority or driver details; fail closed.
             raise LocalPostgresError('local-postgresql-owner-request-unavailable') from None
 
@@ -3914,7 +3707,7 @@ pending_restart FROM pg_catalog.pg_settings ORDER BY name""").fetchall()
             self, request: object, signed_envelope: object
             ) -> tuple[_VerifiedNativeStorePreparation, object]:
         """Verify a signed final approval against the retained original evidence."""
-        from .owner_authority import OwnerApprovalRequest, OwnerAuthorityError
+        from .owner_approval_core import OwnerApprovalRequest, OwnerAuthorityError
         if type(request) is not OwnerApprovalRequest:
             raise LocalPostgresError('local-postgresql-owner-request-required')
         evidence = next((item[1] for item in self._store_preparations.values()
@@ -3922,8 +3715,8 @@ pending_restart FROM pg_catalog.pg_settings ORDER BY name""").fetchall()
         if evidence is None:
             raise LocalPostgresError('local-postgresql-owner-request-not-original')
         try:
-            approval = self._owner_authority.verify_approval(request, signed_envelope)
-            self._owner_authority._resolve_verified_approval(
+            approval = self._owner_core.verify_approval(request, signed_envelope)
+            self._owner_core._resolve_verified_approval(
                 approval, original_request=request, scope='native-store-creation',
                 intent_digest=request._intent_digest)
         except OwnerAuthorityError:
@@ -4035,8 +3828,8 @@ pending_restart FROM pg_catalog.pg_settings ORDER BY name""").fetchall()
             'custodianId': self._custodian_id,
             'providerId': self._provider_id,
             'installationId': self._installation_id(),
-            'ownerAuthorityId': self._owner_authority.authority_id,
-            'ownerPolicyRevision': self._owner_authority.policy_revision,
+            'ownerAuthorityId': self._owner_core.authority_id,
+            'ownerPolicyRevision': self._owner_core.policy_revision,
             'registrationDigest': registration['payloadDigest'],
             'targetCustodyDigest': _digest(reference),
             'authorityPreparationReceiptDigest': authority['approvalReceiptDigest'],
@@ -4096,7 +3889,7 @@ pending_restart FROM pg_catalog.pg_settings ORDER BY name""").fetchall()
     def _resolve_original_store_preparation(self, evidence: object, approval: object, *,
                                             custodian: object, target: object):
         from .ingress_custody import CustodyJournalError
-        from .owner_authority import OwnerAuthorityError, VerifiedOwnerApproval
+        from .owner_approval_core import OwnerAuthorityError, VerifiedOwnerApproval
         if (type(evidence) is not _VerifiedNativeStorePreparation
                 or evidence._issuer is not self._store_issuer
                 or evidence.supervisor is not self
@@ -4109,7 +3902,7 @@ pending_restart FROM pg_catalog.pg_settings ORDER BY name""").fetchall()
         if type(approval) is not VerifiedOwnerApproval:
             raise LocalPostgresError('local-postgresql-final-approval-unverified')
         try:
-            self._owner_authority._resolve_verified_approval(
+            self._owner_core._resolve_verified_approval(
                 approval, original_request=evidence.owner_request,
                 scope='native-store-creation',
                 intent_digest=evidence.owner_request._intent_digest)

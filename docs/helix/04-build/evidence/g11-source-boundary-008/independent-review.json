@@ -1,0 +1,64 @@
+{
+  "profile": "umf.g11.source008-portable003-independent-review/1",
+  "status": "accepted-source-only-four-path-candidate",
+  "manifestSha256": "49c6f4d8b633fed4c84a7c8b2be9737cc196f321530358e000f054c75c7ed1da",
+  "safeMembersVerified": 244,
+  "sourceClosureMembers": 240,
+  "productSource": "Two guard files exact candidate002;001\u2192002 actual catch-domain and local alias deltas inspected, not claimed byte-identical001. Candidate003 changes only two portable test files versus002.",
+  "portableTestReview": "Complete new physical test inspected: original setup before first factory open, actual valid pure signed record, genuine factory positive/foreign prepared and confirmed variants, no scratch/runpy dependency. Imported TestCase classes replaced with module aliases to prevent duplicate unittest discovery. Signed maximumSubjects is exact int1 BEFORE signature; only duplicate becomesTrue; config restored in finally.",
+  "execution": {
+    "tests": 123,
+    "failures": 0,
+    "errors": 0,
+    "foreignLocalImports": [],
+    "allLocalImportPins": 58,
+    "qualification": "Distinct selected source suite tests, not previous153 invocation count with duplicate imported classes."
+  },
+  "predecessorControl": {
+    "productSnapshot": "immutable007",
+    "testSource": "candidate003 new typed-copy test",
+    "executed": true,
+    "testMethods": 1,
+    "expectedAssertionFailures": 3,
+    "observedAssertionFailures": 3,
+    "errors": 0,
+    "qualification": "Actual negative regression control: all three aliases accepted by old validator cause assertion failures; wrapper script exits0 only when expected3 failures occur. This is expected failure evidence, not a passing old source test."
+  },
+  "priorReviews": [
+    "g11-owner-boundary-source-007/review.json (changes-required preserved)",
+    "g11-root-validator-source-008/review.json (exact001 two guard fixes scoped acceptance)"
+  ],
+  "qualification": "Four-path portable source adoption clear relative to frozen007, with exact inspected002 guard corrections. No auxiliary scratch transitions, actual native provider/bootstrap/committed ingress birth/subject ownership/exclusion/nonrewind/browser/installed/CI/release acceptance or full migration-gap completion. Actual source commit must be independently audited to exact reviewed closure.",
+  "files": [
+    {
+      "path": "predecessor-control.py",
+      "size": 957,
+      "sha256": "12482d988c7364eda256b05a8ca90002862e5074c630855376d86dffdc4d7ac6"
+    },
+    {
+      "path": "predecessor.stderr",
+      "size": 3612,
+      "sha256": "c99a32b17a0559bd8ca7d422b13f80be8acbc60c8bbc674feeb0750043877b4d"
+    },
+    {
+      "path": "predecessor.stdout",
+      "size": 75,
+      "sha256": "fa390ab9618c67d1c10e95caa49285adebd226aacb0dda5de0db737a99b8aa51"
+    },
+    {
+      "path": "run-suite.py",
+      "size": 1403,
+      "sha256": "a7867db87cabf7131d30ac77a592179a661bf9e93fc8e77a1211b0ed079ce2f1"
+    },
+    {
+      "path": "suite.stderr",
+      "size": 23625,
+      "sha256": "b53d90cc39073a0b80d0d20c6f2d4b1515f7a46b7055c00839986059aac2d9be"
+    },
+    {
+      "path": "suite.stdout",
+      "size": 15020,
+      "sha256": "66c12316c4925bb3d2d2912bfc2ed637b1009b4a520df75331f20d5756cb417c"
+    }
+  ]
+}

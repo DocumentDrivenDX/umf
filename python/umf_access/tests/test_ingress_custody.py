@@ -277,6 +277,56 @@ class ExternalCustodyJournalTests(unittest.TestCase):
         self.assertEqual(custodian._public_reference(reissued)['registrationId'],
                          _owner_payload()['registrationId'])
 
+    def test_confirmed_reattachment_reissues_handle_without_journal_mutation(self) -> None:
+        from umf_access.lifecycle import generation_ingress
+
+        issuer = object()
+        adapter = _SourceControlOwnerAdapter()
+        resolver = _bind_owner_registration_resolver(issuer, adapter)
+        adapter.binding = resolver
+        request = generation_ingress.OwnerEnrollmentRequest(
+            generation_ingress._CAPABILITY_SEAL, issuer,
+            'umf.local-owner-target-registration/0.1')
+        initial = _bootstrap_local_target_custodian(
+            self.journal, _owner_payload()['custodianId'], _owner_payload()['providerId'], resolver)
+        original_handle = initial.register_target(request)
+        original_ref = initial._public_reference(original_handle)
+        original_bytes = self.path.read_bytes()
+        original_sequence = self.journal.snapshot()['sequence']
+
+        restarted = _bootstrap_local_target_custodian(
+            self.journal, _owner_payload()['custodianId'], _owner_payload()['providerId'], resolver)
+        handle = restarted.reattach_confirmed_target(request)
+
+        self.assertEqual(restarted._public_reference(handle), original_ref)
+        self.assertIsNot(handle, original_handle)
+        self.assertEqual(self.path.read_bytes(), original_bytes)
+        self.assertEqual(self.journal.snapshot()['sequence'], original_sequence)
+
+    def test_confirmed_reattachment_refuses_unconfirmed_or_changed_original(self) -> None:
+        from umf_access.lifecycle import generation_ingress
+
+        issuer = object()
+        adapter = _SourceControlOwnerAdapter()
+        resolver = _bind_owner_registration_resolver(issuer, adapter)
+        adapter.binding = resolver
+        request = generation_ingress.OwnerEnrollmentRequest(
+            generation_ingress._CAPABILITY_SEAL, issuer,
+            'umf.local-owner-target-registration/0.1')
+        custodian = _bootstrap_local_target_custodian(
+            self.journal, _owner_payload()['custodianId'], _owner_payload()['providerId'], resolver)
+        self.journal._append('registration-intent', {
+            'registrationId': _owner_payload()['registrationId'],
+            'registrationDigest': _hex('1'), 'ownerPayload': _owner_payload(),
+            'ownerApproval': {'approvalId': _owner_payload()['ownerApproval']['approvalId'],
+                              'approvalDigest': _owner_payload()['ownerApproval']['approvalDigest']},
+        })
+        before = self.path.read_bytes()
+        with self.assertRaisesRegex(CustodyJournalError,
+                                   'registration-confirmation-required'):
+            custodian.reattach_confirmed_target(request)
+        self.assertEqual(self.path.read_bytes(), before)
+
     def test_unknown_members_duplicate_keys_and_noncanonical_bytes_refuse(self) -> None:
         owner = _owner_payload()
         payload = {'registrationId': owner['registrationId'], 'registrationDigest': _hex('1'),

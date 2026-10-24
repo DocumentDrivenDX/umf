@@ -7,6 +7,28 @@ import sysconfig
 from pathlib import Path
 
 
+def approved_lifecycle_external_import(name: str, target: str, member: str, *,
+                                       verifier_scope: bool = False) -> bool:
+    """Return only the reviewed host-API exceptions for lifecycle modules."""
+    if name == "umf_access.lifecycle.ingress_local_postgres":
+        return target == "psycopg" and member == "connect"
+    if name == "umf_access.lifecycle.ingress_store":
+        return target == "psycopg.pq" and member == "TransactionStatus"
+    verifier_modules = {
+        "umf_access.lifecycle.owner_approval_core": "OwnerApprovalCore",
+        "umf_access.lifecycle.generation_enrollment_authority":
+            "ConfiguredGenerationEnrollmentAuthority",
+        "umf_access.lifecycle.generation_authority_bootstrap":
+            "ConfiguredGenerationAuthorityRootVerifier",
+    }
+    if name in verifier_modules and verifier_scope:
+        return ((target == "cryptography" and member == "__version__")
+                or (target == "cryptography.exceptions" and member == "InvalidSignature")
+                or (target == "cryptography.hazmat.primitives.asymmetric.ed25519"
+                    and member == "Ed25519PublicKey"))
+    return False
+
+
 def check(root: Path) -> int:
     package_root = root / "python/umf_access"
     bases = [package_root, package_root / "src/umf_access"]
@@ -37,16 +59,24 @@ def check(root: Path) -> int:
                "build": {"dsl", "runtime", "foundation"}, "runtime": {"dsl", "foundation"},
                "targets": {"runtime", "dsl", "foundation"}, "conformance": {"runtime", "foundation"},
                "facade": {"dsl", "runtime", "foundation"}}
-    helpers = {"types": "foundation", "values": "foundation", "codec_support": "foundation", "generated_core": "foundation",
+    helpers = {"canonical": "foundation", "types": "foundation", "values": "foundation", "codec_support": "foundation", "generated_core": "foundation",
                "related_keys": "runtime", "verification": "targets", "managed_delta": "targets", "managed_actions": "targets", "managed_bulk": "targets", "managed_support": "targets", "delta_read": "targets", "postgres_search": "targets", "unity_search": "targets", "search_catalog": "runtime", "commands": "runtime", "manifest_commands": "runtime", "bulk": "runtime", "postgres_bulk": "targets", "native_program": "runtime", "native_actions": "targets", "catalog": "runtime", "reviewed": "runtime", "postgres_read": "targets", "capture": "dsl", "protocols": "runtime", "pages": "runtime", "adoption": "runtime", "engine_catalog": "runtime", "unified": "targets"}
     # Keep the administrative host, approval and optional parser adapters
     # explicit in the module map. They remain within the lifecycle owner.
     helpers.update({"host": "lifecycle", "approval": "lifecycle",
+                    "owner_bootstrap": "lifecycle", "owner_approval_core": "lifecycle",
+                    "owner_wire": "lifecycle",
+                    "owner_authority": "lifecycle", "ingress_custody": "lifecycle",
+                    "ingress_local_postgres": "lifecycle", "ingress_store": "lifecycle",
+                    "generation_enrollment_authority": "lifecycle",
+                    "generation_authority_bootstrap": "lifecycle",
+                    "generation_enrollment_ledger": "lifecycle",
+                    "generation_authority_session": "lifecycle",
                     "sql_containment": "lifecycle", "sql_containment_parser": "lifecycle",
                     "sql_containment_cli": "lifecycle"})
     # Administration is a separate explicit owner; generator/driver imports do
     # not become available to the portable DSL, regular runtime or other targets.
-    allowed["lifecycle"] = set()
+    allowed["lifecycle"] = {"foundation"}
     extras = {"build": {"weft"}, "targets": {"psycopg", "databricks", "pyspark"},
               "lifecycle": {"psycopg", "umf_codegen"}}
 
@@ -79,7 +109,7 @@ def check(root: Path) -> int:
         parts = name.split(".")
         return helpers.get(parts[1], parts[1]) if len(parts) > 1 else "facade"
 
-    def edge(name: str, target: str, member: str = "") -> None:
+    def edge(name: str, target: str, member: str = "", *, verifier_scope: bool = False) -> None:
         path = modules[name]
         source_owner = owner(name)
         if name == 'umf_access.lifecycle.sql_containment' and not (
@@ -103,6 +133,7 @@ def check(root: Path) -> int:
         if source_owner == "lifecycle" and package in {"psycopg", "umf_codegen"}:
             public = (target == "psycopg" and member == "Error" or target == "psycopg.rows" and member == "tuple_row"
                       or target == "psycopg.types.json" and member == "Jsonb"
+                      or approved_lifecycle_external_import(name, target, member, verifier_scope=verifier_scope)
                       or target == "umf_codegen" and member in {"verify_table_deployment", "verify_table_migration"}
                       or name == "umf_access.lifecycle.ledger" and target == "umf_codegen" and member == "compile_table_migration"
                       or name == "umf_access.lifecycle.concurrent" and target == "umf_codegen" and member == "compile_table_deployment"
@@ -129,7 +160,8 @@ def check(root: Path) -> int:
         # the pure checker module must not import the parser or its dependencies.
         containment_parser = (name == 'umf_access.lifecycle.sql_containment_parser'
                               and target == 'pglast.parser' and member == 'parse_sql_json')
-        if package not in permitted and not spark_error and not typing_backport and not psycopg2_cursor and not table_read_compiler and not seed_compiler and not containment_parser:
+        if package not in permitted and not spark_error and not typing_backport and not psycopg2_cursor and not table_read_compiler and not seed_compiler and not containment_parser and not approved_lifecycle_external_import(
+                name, target, member, verifier_scope=verifier_scope):
             fail(path, "DEPENDENCY", f"{target} outside approved imports for {source_owner}")
         metadata_pin = (name == 'umf_access.lifecycle.sql_containment_parser'
                         and target == 'importlib.metadata' and member in {'version', 'PackageNotFoundError'})
@@ -148,10 +180,82 @@ def check(root: Path) -> int:
         except (SyntaxError, UnicodeError) as error:
             fail(path, "SYNTAX", str(error))
             continue
+        parents = {child: parent for parent in ast.walk(tree)
+                   for child in ast.iter_child_nodes(parent)}
+
+        def exact_verifier_method(module_name: str = name,
+                                  module_tree: ast.AST = tree) -> ast.FunctionDef | ast.AsyncFunctionDef | None:
+            expected_class = {
+                "umf_access.lifecycle.owner_approval_core": "OwnerApprovalCore",
+                "umf_access.lifecycle.generation_enrollment_authority":
+                    "ConfiguredGenerationEnrollmentAuthority",
+                "umf_access.lifecycle.generation_authority_bootstrap":
+                    "ConfiguredGenerationAuthorityRootVerifier",
+            }.get(module_name)
+            if expected_class is None:
+                return None
+            # Only the unique class defined directly in the module and its
+            # direct method are the reviewed verifier. Same-named nested or
+            # locally shadowing classes/functions are not equivalent scopes.
+            classes = [node for node in module_tree.body
+                       if isinstance(node, ast.ClassDef) and node.name == expected_class]
+            if len(classes) != 1:
+                return None
+            methods = [node for node in classes[0].body
+                       if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef))
+                       and node.name == 'verify_approval']
+            if len(methods) != 1:
+                return None
+            method = methods[0]
+            pinned = any(
+                isinstance(node, ast.Compare)
+                and isinstance(node.left, ast.Name)
+                and node.left.id == 'crypto_version'
+                and len(node.ops) == 1
+                and isinstance(node.ops[0], ast.NotEq)
+                and any(isinstance(value, ast.Constant) and value.value == '50.0.2'
+                        for value in node.comparators)
+                for node in ast.walk(method))
+            return method if pinned else None
+
+        verifier_method = exact_verifier_method()
+
+        def approved_verifier_scope(node: ast.AST, *, module_name: str = name,
+                                    parent_nodes: dict[ast.AST, ast.AST] = parents,
+                                    method: ast.FunctionDef | ast.AsyncFunctionDef | None = verifier_method
+                                    ) -> bool:
+            if method is None:
+                return False
+            current = node
+            import_guarded = False
+            while current is not method:
+                parent = parent_nodes.get(current)
+                if parent is None:
+                    return False
+                if isinstance(parent, (ast.FunctionDef, ast.AsyncFunctionDef)):
+                    # The only function ancestor permitted is the exact
+                    # reviewed module-level verifier itself.
+                    if parent is not method:
+                        return False
+                elif isinstance(parent, ast.ClassDef):
+                    # Reject nested classes even when they borrow the
+                    # approved class and method names.
+                    return False
+                if isinstance(parent, ast.Try) and not import_guarded:
+                    guarded_nodes = {child for statement in parent.body
+                                     for child in ast.walk(statement)}
+                    has_import_error = any(
+                        isinstance(handler.type, ast.Name) and handler.type.id == 'ImportError'
+                        for handler in parent.handlers)
+                    import_guarded = current in guarded_nodes and has_import_error
+                current = parent
+            return import_guarded
+
         for node in ast.walk(tree):
+            lazy_verifier_scope = approved_verifier_scope(node)
             if isinstance(node, ast.Import):
                 for alias in node.names:
-                    edge(name, alias.name)
+                    edge(name, alias.name, verifier_scope=lazy_verifier_scope)
             elif isinstance(node, ast.ImportFrom):
                 target = node.module or ""
                 if node.level:
@@ -163,7 +267,8 @@ def check(root: Path) -> int:
                     target = ".".join(prefix + ([target] if target else []))
                 for alias in node.names:
                     child = f"{target}.{alias.name}"
-                    edge(name, child if child in modules else target, alias.name)
+                    edge(name, child if child in modules else target, alias.name,
+                         verifier_scope=lazy_verifier_scope)
                     if alias.name == "*":
                         fail(path, "PRIVATE", "star imports hide public ownership")
             elif isinstance(node, ast.Name) and node.id in {"__import__", "eval", "exec", "compile"}:

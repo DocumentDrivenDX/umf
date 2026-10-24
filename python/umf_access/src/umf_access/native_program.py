@@ -9,6 +9,7 @@ from collections.abc import Mapping
 from dataclasses import dataclass
 from typing import Any, NoReturn
 
+from .canonical import canonical_json
 from .protocols import ActionRefused
 from .reviewed import (
     ReadBuildError,
@@ -38,23 +39,6 @@ def program_json(text: str) -> Any:
         raise ValueError("nonfinite owner JSON")
 
     return json.loads(text, object_pairs_hook=members, parse_constant=constant)
-
-
-def canonical_json(value: Any) -> str:
-    # The Weft owner uses UTF-16 ordering, including non-BMP identifiers.
-    def ordered(item: Any) -> Any:
-        if isinstance(item, dict):
-            return {
-                key: ordered(item[key])
-                for key in sorted(item, key=lambda key: key.encode("utf-16-be"))
-            }
-        if isinstance(item, list):
-            return [ordered(v) for v in item]
-        return item
-
-    return json.dumps(
-        ordered(value), ensure_ascii=False, separators=(",", ":"), allow_nan=False
-    )
 
 
 def _bulk_list_custody(

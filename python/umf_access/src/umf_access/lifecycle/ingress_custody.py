@@ -891,6 +891,66 @@ class LocalTargetCustodian:
         self._handles[id(handle)] = (handle, verified)
         return handle
 
+    def reattach_confirmed_target(self, owner_enrollment: object) -> object:
+        """Reissue volatile custody for the exact already-confirmed registration.
+
+        This recovery path is deliberately read-only: it requires the original
+        intent and confirmation in the journal, re-resolves the exact owner
+        request, and obtains a fresh native observation.  It never appends an
+        observation or confirmation and cannot create a new registration.
+        """
+        from .generation_ingress import OwnerEnrollmentRequest, TargetCustody
+
+        if type(owner_enrollment) is not OwnerEnrollmentRequest:
+            raise CustodyJournalError('owner-enrollment-required')
+        evidence = self._resolver.resolve(owner_enrollment, self.custodian_id,
+                                         self.provider_id)
+        payload = evidence.payload
+        _validate_owner_payload(payload)
+        if (payload['custodianId'] != self.custodian_id
+                or payload['providerId'] != self.provider_id):
+            raise CustodyJournalError('owner-registration-mismatch')
+
+        document = self._journal._load()
+        state = _replay(document['events'])['registration']
+        if state is None or state.get('status') != 'confirmed':
+            raise CustodyJournalError('registration-confirmation-required')
+        intents = [event['payload'] for event in document['events']
+                   if event['kind'] == 'registration-intent']
+        confirmations = [event['payload'] for event in document['events']
+                         if event['kind'] == 'registration-confirmed']
+        if (len(intents) != 1 or len(confirmations) != 1
+                or state.get('id') != payload['registrationId']
+                or intents[0]['registrationId'] != payload['registrationId']
+                or intents[0]['ownerPayload'] != payload
+                or intents[0]['registrationDigest'] != evidence.observation['registrationDigest']
+                or confirmations[0] != {'registrationId': payload['registrationId'],
+                                         'targetCustody': state.get('custody')}):
+            raise CustodyJournalError('registration-original-outcome-unresolved')
+
+        fresh = self._resolver.observe_original(
+            owner_enrollment, intents[0]['ownerPayload'], document['sequence'])
+        self._check_fresh_observation(
+            fresh, document, payload, intents[0]['registrationDigest'])
+        observation = fresh.observation
+        reference = {
+            'profile': 'umf.native-target-custody/0.1',
+            'custodianId': self.custodian_id,
+            'registrationId': payload['registrationId'],
+            'resourceId': payload['origin']['clusterId'],
+            'incarnation': payload['origin']['incarnationId'],
+            'registrationDigest': observation['registrationDigest'],
+        }
+        if reference != state.get('custody'):
+            raise CustodyJournalError('registration-original-outcome-unresolved')
+
+        handle = TargetCustody(_target_capability_seal(), self._issuer,
+                               'umf.native-target-custody/0.1')
+        verified = _VerifiedTargetCustody(_CUSTODY_SEAL, self, payload,
+                                          fresh.native_attestation, reference)
+        self._handles[id(handle)] = (handle, verified)
+        return handle
+
     @staticmethod
     def _check_fresh_observation(evidence: _OwnerRegistrationEvidence,
                                  document: dict[str, Any], payload: dict[str, Any],

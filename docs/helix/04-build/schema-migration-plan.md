@@ -575,3 +575,37 @@ The full G02–G11 implementation, portable/browser/installed/native verificatio
 independent review, merge, immutable release and fresh public-byte qualification
 remain the delivery goal. UMF/Weft ownership and the exclusion of Praxis changes
 are unchanged. Shared heavy validation remains serialized by the coordinator.
+
+
+### Reviewed source boundary and inventory design checkpoint
+
+G11 source008 portable candidate003 is adopted after root and independent
+review. Its complete 240-file source closure matches the retained manifest
+under `evidence/g11-source-boundary-008/`. The distinct source suite passes
+123 tests with cryptography50.0.2; the new typed-copy regression fails against
+frozen source007 with three expected failures. Correct matching prepared and
+confirmed physical associations remain accepted; signed foreign associations
+refuse. This qualifies source guards and ownership boundaries only. Native014
+lease/checkpoints, committed ingress-store creation, genuine subject/schema
+births, native effects, installed evidence and release gates remain open.
+Auxiliary scratch ROOT byte-transition helpers are not adopted by this change.
+
+G10 design adoption001 is committed at
+`1fe2ddba25a3d98c34f4b4f55eb7dabb688db7ac`: all three governing documents
+retain their complete base prefixes, and all 21 reviewed definition files are
+retained with the full 88 planned acceptance obligations. One durable original
+provider allocation must serve common and outer campaign records; native
+receipts charge one attempt, while cumulative admission preserves every grant.
+This is a required design, not implemented or native-qualified G10 support.
+
+Core37290 actual browser attempt001 stopped during its build because the
+external dependency symlink failed the existing input realpath guard. The
+browser did not run. Its controller and all 40 recorded child process groups
+are absent; the temporary worktree was removed, source stayed clean, and
+retained full dependency snapshots matched. Source-only preparation work is
+correcting the owned dependency copy; a new reviewed finite resource grant
+remains required before another build/browser attempt.
+
+The full G02-G11 testing, independent review, merge, immutable release and
+fresh public-byte qualification goal remains open. UMF/Weft ownership and
+the exclusion of Praxis changes remain unchanged.

@@ -1,0 +1,32 @@
+{
+  "actualValidation": {
+    "predecessor007": {
+      "conclusion": "Newregressiondistinguishesoldbuggyvalidatorfromfix.",
+      "exitCode": 1,
+      "expectedSubtestFailures": 3,
+      "tests": 1
+    },
+    "successor": {
+      "durationSeconds": 5.284,
+      "exitCode": 0,
+      "tests": 123
+    }
+  },
+  "candidateManifestSha256": "49c6f4d8b633fed4c84a7c8b2be9737cc196f321530358e000f054c75c7ed1da",
+  "evidence": {
+    "predecessor.stderr": "52d022a83fa77dc2f656cdc41465f6d28ecc339db720f49e62a1003feec9394b",
+    "predecessor.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "suite.stderr": "5ba3687d299356f45b33729c85e3dd31ffdcf690bc2fa709852fafa5a3c1db7c",
+    "suite.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "limitations": [
+    "No standalone scratch ROOTtransition adoption.",
+    "No native PostgreSQL/provider/committedstore/subjectbirth or production enrollment qualification.",
+    "No merge/release/currentpublicbyte acceptance."
+  ],
+  "portableTestDelta": "selfcontainedfactoryprepared/confirmedmatchingpositive+foreigncontexts;all3signednumeric/booleanduplicateforgeries;fixturemodulealiasesavoiddiscoveryduplicates",
+  "productDelta": "twosourceguards:canonicalJSONcrosslinks +originalphysicalcontextbinding;001to002correctrootexceptioncatchandlocalaliascleanupread;002to003productbytesidentical",
+  "sourceFileCount": 240,
+  "status": "source-only-root-review-clear-awaiting-independent-final-disposition",
+  "verifiedSafeMembers": 244
+}

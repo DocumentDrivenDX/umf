@@ -23,9 +23,7 @@ from umf_access.lifecycle.ingress_local_postgres import (
     _NativeEffectReservation,
     _ordered_membership_payload,
     _ordered_required_memberships,
-    _OriginalNativeTarget,
     _owner_registration_approval_payload,
-    _PendingTargetCreation,
     _postmaster_pidfile_matches,
     _PreparedOriginalPrincipals,
     _PreparedTargetRegistration,
@@ -281,7 +279,7 @@ class LocalPostgresSupervisorSourceTests(unittest.TestCase):
             '_profile': SimpleNamespace(
                 purpose='native-acceptance', installation_id=installation_id,
                 control_home=Path('/control'), data_home=Path('/data')),
-            '_journal': Journal(), '_owner_authority': authority,
+            '_journal': Journal(), '_owner_core': authority,
             '_authority_context': context,
         }.items():
             object.__setattr__(supervisor, name, value)
@@ -324,7 +322,7 @@ class LocalPostgresSupervisorSourceTests(unittest.TestCase):
             '_profile': SimpleNamespace(
                 purpose='native-acceptance', installation_id='installation-1',
                 control_home=Path('/control'), data_home=Path('/data')),
-            '_journal': Journal(), '_owner_authority': authority,
+            '_journal': Journal(), '_owner_core': authority,
             '_authority_context': object(),
         }.items():
             object.__setattr__(supervisor, name, value)
@@ -433,9 +431,9 @@ class LocalPostgresSupervisorSourceTests(unittest.TestCase):
             '_profile': SimpleNamespace(purpose='native-acceptance',
                                         installation_id=installation_id,
                                         control_home=Path('/control'), data_home=Path('/data')),
-            '_journal': journal, '_owner_authority': authority,
+            '_journal': journal, '_owner_core': authority,
             '_authority_context': context, '_native_effect_reservations': {},
-            '_native_effect_bindings': {}, '_native_effect_outcomes': {},
+            '_native_effect_outcomes': {},
         }.items():
             object.__setattr__(supervisor, name, value)
 
@@ -447,97 +445,54 @@ class LocalPostgresSupervisorSourceTests(unittest.TestCase):
         self.assertEqual(reservation.journal_record_digest, reservation_digest)
         self.assertEqual(reservation.effect_key, request.effect_key)
         self.assertEqual(authority.recovered_id, approval_id)
-        self.assertEqual(authority.bound, [(approval, reservation_id, reservation_digest)])
+        self.assertEqual(authority.bound, [])
         self.assertEqual(journal.writes, 0)
 
-    def test_principal_recovery_continues_only_database_after_role_proof(self) -> None:
-        supervisor_id = '11111111-1111-4111-8111-111111111111'
-        preparation_id = '55555555-5555-4555-8555-555555555555'
-        approval_id = '66666666-6666-4666-8666-666666666666'
-        request_digest = 'a' * 64
-        reservation_id = '77777777-7777-4777-8777-777777777777'
-        intent = {
-            'profile': 'umf.local-postgresql-principal-preparation/0.1',
-            'preparationId': preparation_id, 'creationRequestDigest': 'b' * 64,
-            'maintenanceBefore': {'name': 'umf_m_test'},
-            'controller': {'name': 'umf_c_test'},
-            'businessOwner': {'name': 'umf_owner'},
-            'applicationDatabase': {'name': 'umf_app', 'ownerName': 'umf_owner'},
-        }
-        request = SimpleNamespace(_intent_digest=request_digest, _intent_bytes=_canonical(intent),
-                                  _approval_id=approval_id,
-                                  effect_key=('native-principal-preparation',
-                                              supervisor_id, preparation_id))
-        creation_request = SimpleNamespace(_intent_digest='b' * 64)
-        creation = object.__new__(_PendingTargetCreation)
-        object.__setattr__(creation, '_issuer', None)
-        object.__setattr__(creation, '_request', creation_request)
-        target = object.__new__(_OriginalNativeTarget)
-        object.__setattr__(target, '_issuer', None)
-        object.__setattr__(target, '_creation', creation)
-        object.__setattr__(target, '_reservation', object())
-        object.__setattr__(target, '_target_id', '88888888-8888-4888-8888-888888888888')
-        reservation = SimpleNamespace(reservation_id=reservation_id,
-                                      request_digest=request_digest,
-                                      approval_digest='c' * 64,
-                                      journal_record_digest='d' * 64)
-        role_observation = {'roles': {'verified': True}, 'memberships': []}
-        database = {'oid': 9100, 'name': 'umf_app', 'systemIdentifier': '1234'}
+    def test_principal_recovery_is_owned_by_facade_not_native_supervisor(self) -> None:
+        from umf_access.lifecycle.owner_authority import OwnerAuthoritySession
 
-        initial_events = [
-            {'kind': 'principal-request-prepared', 'payload': {
-                'preparationId': preparation_id, 'approvalId': approval_id,
-                'intent': intent, 'requestDigest': request_digest}},
-            {'kind': 'native-effect-intent', 'payload': {
-                'reservationId': reservation_id,
-                'scope': 'native-principal-preparation'}},
-            {'kind': 'principal-roles-intent', 'payload': {
-                'reservationId': reservation_id, 'preparationId': preparation_id}},
-            {'kind': 'principal-database-intent', 'payload': {
-                'reservationId': reservation_id, 'databaseName': 'umf_app'}},
-        ]
+        self.assertFalse(hasattr(LocalPostgresSupervisor, 'resume_original_principal_stage'))
+        self.assertTrue(hasattr(OwnerAuthoritySession, 'resume_original_principal_stage'))
 
-        class Journal:
+        target = object()
+        reservation = SimpleNamespace(_approval=object())
+        receipt = {'profile': 'test.principal-recovery-receipt/1'}
+        outcome = SimpleNamespace(_reservation=reservation)
+        binding, handle = SimpleNamespace(_reservation=reservation), object()
+
+        class Supervisor:
             def __init__(self):
-                self.events = list(initial_events)
-                self.appended = []
-            def read(self):
-                return {'events': list(self.events)}
-            def append(self, kind, payload):
-                self.appended.append((kind, payload))
-                self.events.append({'kind': kind, 'payload': payload})
+                self._native_effect_outcomes = {id(outcome): outcome}
+                self.calls = []
 
-        journal = Journal()
-        supervisor = object.__new__(LocalPostgresSupervisor)
-        object.__setattr__(creation, '_issuer', supervisor)
-        object.__setattr__(target, '_issuer', supervisor)
-        for name, value in {
-            '_supervisor_id': supervisor_id, '_journal': journal,
-            '_profile': SimpleNamespace(purpose='native-acceptance'),
-            '_launch': {},
-            '_native_targets': {id(target): target},
-            '_principal_preparations': {}, '_principal_dispatches': {},
-            '_native_effect_bindings': {}, '_authority_context': object(),
-            '_owner_authority': object(),
-        }.items():
-            object.__setattr__(supervisor, name, value)
-        with (patch.object(LocalPostgresSupervisor, '_recover_original_native_effect',
-                           return_value=(reservation, None, request)),
-              patch.object(LocalPostgresSupervisor, '_observe_original_principal_roles',
-                           return_value=role_observation),
-              patch.object(LocalPostgresSupervisor, '_observe_original_application_database',
-                           return_value=None),
-              patch.object(LocalPostgresSupervisor, '_create_application_database',
-                           return_value=database) as create_db,
-              patch.object(LocalPostgresSupervisor, '_apply_principal_role_transaction',
-                           side_effect=AssertionError('role DDL must not be replayed')),
-              patch.object(LocalPostgresSupervisor, '_record_native_effect_outcome'),
-              patch.object(LocalPostgresSupervisor, '_finalize_recovered_principal_receipt')):
-            receipt = supervisor.resume_original_principal_stage(target)
-        create_db.assert_called_once()
-        self.assertEqual(receipt['applicationDatabase'], database)
-        self.assertEqual([kind for kind, _payload in journal.appended],
-                         ['principal-roles-confirmed', 'principal-database-confirmed'])
+            def prepare_original_principal_recovery(self, actual_target):
+                self.calls.append(('prepare', actual_target))
+                return reservation
+
+            def execute_original_principal_recovery(self, actual_reservation, actual_handle):
+                self.calls.append(('execute', actual_reservation, actual_handle))
+                return receipt
+
+        supervisor = Supervisor()
+        session = object.__new__(OwnerAuthoritySession)
+        object.__setattr__(session, '_supervisor', supervisor)
+        object.__setattr__(session, '_authority', object())
+        object.__setattr__(session, '_bootstrap_issuer', object())
+        object.__setattr__(session, '_effect_bindings', {id(binding): binding})
+        observed = []
+        with (patch.object(OwnerAuthoritySession, 'bind_native_effect',
+                           return_value=binding) as bind,
+              patch.object(OwnerAuthoritySession, '_pending_effect_handle',
+                           return_value=handle) as pending,
+              patch.object(OwnerAuthoritySession, 'record_native_outcome',
+                           side_effect=lambda actual_binding, actual_outcome:
+                               observed.append((actual_binding, actual_outcome)))):
+            self.assertIs(session.resume_original_principal_stage(target), receipt)
+        bind.assert_called_once_with(reservation._approval, reservation)
+        pending.assert_called_once_with(binding, mode='recover')
+        self.assertEqual(supervisor.calls, [
+            ('prepare', target), ('execute', reservation, handle)])
+        self.assertEqual(observed, [(binding, outcome)])
 
     def test_target_preparation_creates_no_target_paths_or_native_journal(self) -> None:
         if os.geteuid() == 0:
@@ -565,7 +520,7 @@ class LocalPostgresSupervisorSourceTests(unittest.TestCase):
             authority = Authority()
             supervisor = object.__new__(LocalPostgresSupervisor)
             for name, value in {
-                '_profile': profile, '_owner_authority': authority,
+                '_profile': profile, '_owner_core': authority,
                 '_authority_context': authority.authority_context,
                 '_supervisor_id': supervisor_id, '_custodian_id': str(uuid.uuid4()),
                 '_provider_id': str(uuid.uuid4()),
@@ -593,7 +548,7 @@ class LocalPostgresSupervisorSourceTests(unittest.TestCase):
             self.assertEqual(authority.context, authority.authority_context)
             self.assertTrue(authority.intent)
 
-    def test_original_enrollment_is_read_only_and_context_journal_is_bound(self) -> None:
+    def test_original_enrollment_is_read_only_and_missing_primary_context_refuses(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             control = Path(tmp)
             os.chmod(control, 0o700)
@@ -630,14 +585,18 @@ class LocalPostgresSupervisorSourceTests(unittest.TestCase):
             digest = __import__('hashlib').sha256(raw).hexdigest()
             _verify_bootstrap_enrollment(enrollment, digest)
             before = enrollment.read_bytes()
-            context_bytes = _validate_bootstrap_context_journal(
-                control, record, raw, 'd' * 64)
-            self.assertEqual((control / 'owner-bootstrap-context.json').read_bytes(),
-                             context_bytes)
-            _validate_bootstrap_context_journal(control, record, raw, 'd' * 64)
+            with self.assertRaisesRegex(LocalPostgresError,
+                                        'local-postgresql-bootstrap-context-unavailable'):
+                _validate_bootstrap_context_journal(control, record, raw, 'd' * 64)
+            self.assertFalse((control / 'owner-bootstrap-context.json').exists())
+            # The runtime loader must never install a missing primary context
+            # from the enrollment file or from its own matching digest.
+            with self.assertRaisesRegex(LocalPostgresError,
+                                        'local-postgresql-bootstrap-context-unavailable'):
+                _validate_bootstrap_context_journal(control, record, raw, 'd' * 64)
             self.assertEqual(enrollment.read_bytes(), before)
             with self.assertRaisesRegex(LocalPostgresError,
-                                        'local-postgresql-bootstrap-context-mismatch'):
+                                        'local-postgresql-bootstrap-context-unavailable'):
                 _validate_bootstrap_context_journal(control, record, raw, 'e' * 64)
             self.assertEqual(enrollment.read_bytes(), before)
 
@@ -677,10 +636,10 @@ class LocalPostgresSupervisorSourceTests(unittest.TestCase):
             id(registration): reservation})
         with self.assertRaisesRegex(LocalPostgresError,
                                     'local-postgresql-principal-outcome-unresolved'):
-            supervisor.apply_original_principals(principal, object())
+            supervisor.reserve_original_principals(principal, object())
         with self.assertRaisesRegex(LocalPostgresError,
                                     'local-postgresql-registration-outcome-unresolved'):
-            supervisor.apply_target_registration(registration, object())
+            supervisor.reserve_target_registration(registration, object())
 
     def test_fixed_hba_and_external_config_are_closed(self) -> None:
         hba = _render_hba('umf_m_0123456789abcdef0123456789abcdef')

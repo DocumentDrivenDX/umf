@@ -18,10 +18,13 @@ from unittest.mock import patch
 
 from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
+from umf_access.canonical import canonical_json as public_canonical_json
+from umf_access.lifecycle.owner_approval_core import OwnerApprovalCore
 from umf_access.lifecycle.owner_authority import (
     _SIGNATURE_DOMAIN,
     ConfiguredEd25519OwnerAuthority,
     OwnerAuthorityError,
+    OwnerAuthoritySession,
     _canonical_bytes,
     _digest_bytes,
 )
@@ -37,6 +40,13 @@ def _hex(value: str) -> str:
 
 
 class OwnerAuthorityTests(unittest.TestCase):
+    def test_canonical_json_is_reexported_without_changing_utf16_ordering(self):
+        self.assertIs(canonical_json, public_canonical_json)
+        value = {'\U00010000': 1, '\ue000': 2, 'plain': 3}
+        expected = '{"plain":3,"𐀀":1,"":2}'
+        self.assertEqual(canonical_json(value), expected)
+        self.assertEqual(canonical_json(value).encode('utf-8'), expected.encode('utf-8'))
+
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory(prefix='umf-owner-authority-')
         self.root = Path(self.temp.name).resolve()
@@ -94,8 +104,12 @@ class OwnerAuthorityTests(unittest.TestCase):
                     '33333333-3333-4333-8333-333333333333', 'installation-a', digest)
         with patch.object(native._LocalOwnerBootstrapIssuer,
                           '_owner_authority_context_material', lambda _self: material):
+            from umf_access.lifecycle.owner_bootstrap import (
+                _issue_owner_authority_context,
+            )
+            context = _issue_owner_authority_context(issuer, digest)
             return ConfiguredEd25519OwnerAuthority(
-                config, ledger_path=path, bootstrap_issuer=issuer)
+                config, ledger_path=path, context=context)
 
     def _intent(self):
         flags = {'canLogin': True, 'superuser': False, 'createDatabase': False,
@@ -250,16 +264,18 @@ class OwnerAuthorityTests(unittest.TestCase):
         from umf_access.lifecycle import ingress_local_postgres as native
 
         supervisor = object.__new__(native.LocalPostgresSupervisor)
-        supervisor._owner_authority = self.authority
+        supervisor._owner_core = self.authority._core
         supervisor._authority_context = self.authority.authority_context
+        supervisor._bootstrap_issuer = self.authority.authority_context._issuer
         supervisor._profile = SimpleNamespace(purpose='native-acceptance')
         events = []
         journal = SimpleNamespace(read=lambda: {'events': list(events)})
         supervisor._journal = journal
         supervisor._native_effect_reservations = {}
-        supervisor._native_effect_bindings = {}
         supervisor._native_effect_outcomes = {}
-        self.authority._bind_native_effect_issuer(supervisor)
+        session = OwnerAuthoritySession(
+            self.authority, bootstrap_issuer=supervisor._bootstrap_issuer,
+            supervisor=supervisor)
 
         for index, (scope, intent) in enumerate(self._scope_intents().items(), start=1):
             with self.subTest(scope=scope):
@@ -292,7 +308,7 @@ class OwnerAuthorityTests(unittest.TestCase):
                     reservation_id=reservation_id,
                     journal_record_digest=reservation_event['recordDigest'])
                 supervisor._native_effect_reservations[id(reservation)] = reservation
-                binding = self.authority.bind_native_effect(verified, reservation)
+                binding = session.bind_native_effect(verified, reservation)
                 pending = self.authority.observe_original_request(
                     self.authority.authority_context, request.effect_key)
                 self.assertEqual(pending.approval_status, 'consumed')
@@ -313,7 +329,7 @@ class OwnerAuthorityTests(unittest.TestCase):
                     receipt_digest=receipt,
                     journal_record_digest=outcome_event['recordDigest'])
                 supervisor._native_effect_outcomes[id(outcome)] = outcome
-                terminal = self.authority.record_native_outcome(binding, outcome)
+                terminal = session.record_native_outcome(binding, outcome)
                 self.assertEqual(terminal.approval_id, request._approval_id)
                 self.assertEqual(terminal.scope, scope)
                 self.assertEqual(terminal.approval_status, 'consumed')
@@ -464,8 +480,9 @@ class OwnerAuthorityTests(unittest.TestCase):
         request = self._request()
         approval = self.authority.verify_approval(request, self._envelope(request))
         supervisor = object.__new__(native.LocalPostgresSupervisor)
-        supervisor._owner_authority = self.authority
+        supervisor._owner_core = self.authority._core
         supervisor._authority_context = self.authority.authority_context
+        supervisor._bootstrap_issuer = self.authority.authority_context._issuer
         supervisor._profile = SimpleNamespace(purpose='native-acceptance')
         event = {'sequence': 1, 'recordDigest': _hex('1'),
                  'kind': 'native-effect-intent',
@@ -482,18 +499,19 @@ class OwnerAuthorityTests(unittest.TestCase):
             reservation_id=event['payload']['reservationId'],
             journal_record_digest=event['recordDigest'])
         supervisor._native_effect_reservations = {id(reservation): reservation}
-        supervisor._native_effect_bindings = {}
         supervisor._native_effect_outcomes = {}
-        self.authority._bind_native_effect_issuer(supervisor)
+        session = OwnerAuthoritySession(
+            self.authority, bootstrap_issuer=supervisor._bootstrap_issuer,
+            supervisor=supervisor)
 
-        binding = self.authority.bind_native_effect(approval, reservation)
-        self.assertIs(self.authority.bind_native_effect(approval, reservation), binding)
+        binding = session.bind_native_effect(approval, reservation)
+        self.assertIs(session.bind_native_effect(approval, reservation), binding)
         pending = self.authority.observe_original_request(
             self.authority.authority_context, request.effect_key)
         self.assertEqual(pending.approval_status, 'consumed')
         self.assertEqual(pending.effect_status, 'effect-pending')
         with self.assertRaisesRegex(OwnerAuthorityError, 'native-outcome-untrusted'):
-            self.authority.record_native_outcome(binding, {'status': 'confirmed'})
+            session.record_native_outcome(binding, {'status': 'confirmed'})
 
         receipt = _hex('2')
         outcome_event = {'sequence': 2, 'recordDigest': _hex('3'),
@@ -506,7 +524,7 @@ class OwnerAuthorityTests(unittest.TestCase):
             sequence=2, status='confirmed', receipt_digest=receipt,
             journal_record_digest=outcome_event['recordDigest'])
         supervisor._native_effect_outcomes[id(native_outcome)] = native_outcome
-        completed = self.authority.record_native_outcome(binding, native_outcome)
+        completed = session.record_native_outcome(binding, native_outcome)
         self.assertEqual(completed.effect_status, 'confirmed')
         self.assertEqual(completed.effect_receipt_digest, receipt)
 
@@ -520,7 +538,7 @@ class OwnerAuthorityTests(unittest.TestCase):
         return {'payload': payload, 'signature': _b64(signature)}
 
     def _run_forced_registry_interleaving(self, method_name, first_call, second_call):
-        original = getattr(ConfiguredEd25519OwnerAuthority, method_name)
+        original = getattr(OwnerApprovalCore, method_name)
         first_entered = threading.Event()
         release_first = threading.Event()
         second_started = threading.Event()
@@ -547,7 +565,7 @@ class OwnerAuthorityTests(unittest.TestCase):
             except OwnerAuthorityError as error:
                 errors.append(error)
 
-        with patch.object(ConfiguredEd25519OwnerAuthority, method_name, delayed):
+        with patch.object(OwnerApprovalCore, method_name, delayed):
             first_thread = threading.Thread(target=run, args=(first_call,))
             first_thread.start()
             self.assertTrue(first_entered.wait(timeout=2))
@@ -585,7 +603,7 @@ class OwnerAuthorityTests(unittest.TestCase):
             intent_digest=verified.intent_digest)
         self.assertIs(resolved, verified)
         with self.assertRaisesRegex(OwnerAuthorityError, 'native-reservation-required'):
-            self.authority._consume_verified_approval(
+            self.authority._core._consume_verified_approval(
                 verified, original_request=request, scope='native-store-creation',
                 intent_digest=verified.intent_digest)
         self.assertEqual(self.authority.observe_approval(request).effect_status,
@@ -681,7 +699,12 @@ class OwnerAuthorityTests(unittest.TestCase):
 
     def test_same_issuer_concurrent_prepare_returns_one_request_object(self):
         calls, requests = self._run_forced_registry_interleaving(
-            '_make_request', self._request, self._request)
+            '_make_request', lambda: self.authority._core.prepare_request(
+                'native-store-creation', self.intent_bytes,
+                context=self.authority.authority_context),
+            lambda: self.authority._core.prepare_request(
+                'native-store-creation', self.intent_bytes,
+                context=self.authority.authority_context))
         self.assertEqual(len(calls), 1)
         self.assertEqual(len(requests), 2)
         self.assertIs(requests[0], requests[1])
@@ -691,8 +714,8 @@ class OwnerAuthorityTests(unittest.TestCase):
         envelope = self._envelope(request)
         calls, approvals = self._run_forced_registry_interleaving(
             '_make_verified',
-            lambda: self.authority.verify_approval(request, envelope),
-            lambda: self.authority.verify_approval(request, envelope))
+            lambda: self.authority._core.verify_approval(request, envelope),
+            lambda: self.authority._core.verify_approval(request, envelope))
         self.assertEqual(len(calls), 1)
         self.assertEqual(len(approvals), 2)
         self.assertIs(approvals[0], approvals[1])
