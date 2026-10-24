@@ -170,8 +170,20 @@ test('G10 seed retirement review retains the original definition and never claim
  document.modules[0]!.extensions['umf.tables'].seedSets=[];
  const next=deploy(document),history=initialG10History(previous);
  const candidates=discoverTableInventoryMigrationChanges(previous,next,selector([],['synthetic-bootstrap']),history);
- expect(candidates).toHaveLength(1);
- const [candidate]=candidates!;
+ const legacyContexts:any[]=[];consumeTableMigrationChangesBounded(previous,next,{version:'umf.table-migration-discovery/0.3'},2048,25165824,candidate=>legacyContexts.push(candidate));
+ const expectedContexts=legacyContexts.filter(candidate=>candidate.kind==='change-operation-context');
+ const actualContexts=candidates.filter(candidate=>candidate.kind==='change-operation-context');
+ const row=(candidate:any)=>({id:candidate.id,kind:candidate.kind,path:candidate.path,oldDigest:candidate.oldDigest,newDigest:candidate.newDigest,oldValue:candidate.oldValue,newValue:candidate.newValue,...(Object.hasOwn(candidate,'oldPath')?{oldPath:candidate.oldPath}:{}),...(Object.hasOwn(candidate,'newPath')?{newPath:candidate.newPath}:{})});
+ expect(expectedContexts).toHaveLength(5);expect(actualContexts).toHaveLength(5);expect(actualContexts.map(row)).toEqual(expectedContexts.map(row));
+ const retirements=candidates.filter(candidate=>candidate.kind==='retire-seed-history');expect(retirements).toHaveLength(1);expect(candidates).toHaveLength(expectedContexts.length+1);
+ const definition=history.plans[0]!.next.seedSets.find(seed=>seed.id==='synthetic-bootstrap')!;
+ const oldValue={profile:'umf.table-inventory-seed-retirement-review/0.1',side:'previous',source:{format:'json',sha256:previous.sourceDigest},configuration:previous.configuration,id:'synthetic-bootstrap',definition,definitionDigest:hashCanonical(definition),originalSourceDigest:previous.sourceDigest,execution:'not-run',retired:false,effects:[]};
+ const newValue={...oldValue,side:'next',source:{format:'json',sha256:next.sourceDigest},configuration:next.configuration,retired:true,effects:['original-definition-and-execution-retained-in-history','no-data-replay']};
+ const retirementPath='/options/retiredSeedSets/0',oldDigest=hashCanonical(oldValue),newDigest=hashCanonical(newValue),retirementId='review-'+hashCanonical(['retire-seed-history',retirementPath,oldDigest,newDigest]).slice(0,24);
+ const expectedRetirement={id:retirementId,kind:'retire-seed-history',path:retirementPath,oldDigest,newDigest,oldValue,newValue,oldPath:'/modules/0/extensions/umf.tables/seedSets/0',newPath:null};
+ const candidate=retirements[0]!;
+ expect(candidates.map(row)).toEqual([...expectedContexts.map(row),expectedRetirement]);
+ expect(candidates.every(candidate=>candidate.kind==='change-operation-context'||candidate.kind==='retire-seed-history')).toBe(true);
  expect(candidate?.kind).toBe('retire-seed-history');
  expect(candidate?.oldValue).toMatchObject({profile:'umf.table-inventory-seed-retirement-review/0.1',side:'previous',id:'synthetic-bootstrap',execution:'not-run',retired:false,effects:[]});
  expect(candidate?.newValue).toMatchObject({profile:'umf.table-inventory-seed-retirement-review/0.1',side:'next',id:'synthetic-bootstrap',execution:'not-run',retired:true,effects:['original-definition-and-execution-retained-in-history','no-data-replay']});
@@ -183,16 +195,16 @@ test('G10 removal candidates expose the exact irreversible purge disclosure befo
  document.modules[0]!.extensions['umf.tables'].tables=[];document.modules[0]!.extensions['umf.tables'].seedSets=[];document.modules[0]!.extensions['umf.tables'].commands=[];
  const next=deploy(document),history=originalHistory(previous);
  const intents=previous.expectedCatalog.tables.map(table=>({kind:'remove' as const,table:table.id,record:{...table.record},disposition:{mode:'irreversible-purge' as const,reviewMarker:'pending'}}));
- const candidates=discoverTableInventoryMigrationChanges(previous,next,selector(intents),history);
+ const completeSelector=selector(intents,['synthetic-bootstrap']),candidates=discoverTableInventoryMigrationChanges(previous,next,completeSelector,history);
  const effects=candidates.filter(candidate=>candidate.kind==='table-removal-effects');
  expect(effects).toHaveLength(intents.length);
  const disclosures=effects.map(irreversiblePurgeDisclosure);
  expect(disclosures.every(item=>item.code==='IRREVERSIBLE_TABLE_PURGE'&&item.message.includes('all stored rows and columns')&&item.message.includes('not a data backup'))).toBe(true);
+ const markerful=structuredClone(completeSelector) as any;for(const intent of markerful.tableIntents)if(intent.kind==='remove')intent.disposition.reviewMarker='pending';
+ expect(()=>discoverTableInventoryMigrationChanges(previous,next,markerful,history)).toThrow();
  const tampered={...effects[0]!,oldValue:{...(effects[0]!.oldValue as object),table:'other_table'}} as typeof effects[number];
  expect(()=>irreversiblePurgeDisclosure(tampered)).toThrow();
  for(const intent of intents){const disclosure=disclosures.find(item=>{const candidate=effects.find(value=>value.id===item.markerId);return !!candidate&&!!candidate.oldValue&&typeof candidate.oldValue==='object'&&!Array.isArray(candidate.oldValue)&&(candidate.oldValue as {table?:unknown}).table===intent.table;});expect(disclosure?.path).toMatch(/^\/options\/tableIntents\/\d+\/disposition$/);}
- const markerfulSelector=selector([intents[0]!]) as any;markerfulSelector.tableIntents[0]!.disposition.reviewMarker='not-allowed-during-discovery';
- expect(()=>discoverTableInventoryMigrationChanges(previous,next,markerfulSelector,history)).toThrow();
 });
 
 function optionalReviewDate(source:any):void{
@@ -239,6 +251,7 @@ test('G10 mixed CREATE plus appended G02 uses global source ownership without wi
  expect(candidates.some(candidate=>candidate.kind==='change-operation'&&(candidate.newValue as any)?.id==='derive_matter_review_date')).toBe(true);
  expect(candidates.some(candidate=>candidate.kind==='change-operation'&&(candidate.newValue as any)?.id==='create_review_team')).toBe(true);
  const result=compileTableInventoryMigration(request);
+ if(result.status!=='compiled'){compileG10InventoryPlan(request);}
  expect(result.status).toBe('compiled');if(result.status!=='compiled')throw new Error(JSON.stringify(result.diagnostics));
  expect(result.plan.review).toEqual(candidates);expect(verifyTableInventoryMigration(result.plan,history)).toEqual(result.plan);
  expect(JSON.parse(serializeTableInventoryMigration(result.plan,history))).toEqual(result.plan);
@@ -273,10 +286,33 @@ test('G10 mixed CREATE plus existing-target G02 partitions only the exact tighte
  expect(nextColumn.default).toEqual(previousColumn.default);
  expect(candidates.some(candidate=>candidate.kind==='tighten-not-null')).toBe(true);
  const result=compileTableInventoryMigration(request);
+ if(result.status!=='compiled'){compileG10InventoryPlan(request);}
  expect(result.status).toBe('compiled');if(result.status!=='compiled')throw new Error(JSON.stringify(result.diagnostics));
  expect(result.plan.review).toEqual(candidates);expect(verifyTableInventoryMigration(result.plan,history)).toEqual(result.plan);
  const foreignTightening={...request,options:{...request.options,reviewedChanges:request.options.reviewedChanges.map((marker:any)=>marker.kind==='tighten-not-null'?{...marker,path:'/modules/0/extensions/umf.tables/tables/0/columns/0'}:marker)}};
  expect(compileTableInventoryMigration(foreignTightening).status).toBe('blocked');
+});
+
+test('G10 prepared public calls own source/history inputs and never invoke request accessors',()=>{
+ const {request}=mixedG02Request(true),accessorOptions={...request.options};let getterCalls=0;
+ Object.defineProperty(accessorOptions,'reviewedChanges',{enumerable:true,configurable:true,get(){getterCalls++;return request.options.reviewedChanges;}});
+ const blocked=compileTableInventoryMigration({...request,options:accessorOptions as any});
+ expect(blocked.status).toBe('blocked');expect(getterCalls).toBe(0);
+ let rootGetterCalls=0;const accessorRoot={...request};Object.defineProperty(accessorRoot,'id',{enumerable:true,configurable:true,get(){rootGetterCalls++;return request.id;}});
+ expect(compileTableInventoryMigration(accessorRoot as any).status).toBe('blocked');expect(rootGetterCalls).toBe(0);
+ let historyGetterCalls=0;const accessorHistory={...request.history};Object.defineProperty(accessorHistory,'profile',{enumerable:true,configurable:true,get(){historyGetterCalls++;return request.history.profile;}});
+ expect(compileTableInventoryMigration({...request,history:accessorHistory as any}).status).toBe('blocked');expect(historyGetterCalls).toBe(0);
+ const customPrototype=Object.assign(Object.create({untrusted:true}),request);
+ expect(compileTableInventoryMigration(customPrototype as any).status).toBe('blocked');
+ let predecessorGetterCalls=0;const accessorPredecessor=Object.defineProperties({}, {id:{enumerable:true,get(){predecessorGetterCalls++;return request.predecessor!.id;}},digest:{enumerable:true,value:request.predecessor!.digest}});
+ expect(compileTableInventoryMigration({...request,predecessor:accessorPredecessor as any}).status).toBe('blocked');expect(predecessorGetterCalls).toBe(0);
+
+ const originalSource=request.next.source.utf8,result=compileTableInventoryMigration(request);
+ expect(result.status).toBe('compiled');if(result.status!=='compiled')throw new Error(JSON.stringify(result.diagnostics));
+ request.next.source.utf8='{}';request.history.plans.length=0;request.options.reviewedChanges.pop();
+ expect(result.plan.next.source.utf8).toBe(originalSource);
+ expect(result.plan.historyBinding.count).toBe(1);
+ expect(compileTableInventoryMigration(request).status).toBe('blocked');
 });
 
 test('G10 G02 module-context ownership retains only local tightening from complete compiled markers',()=>{
