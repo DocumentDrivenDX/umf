@@ -1,9 +1,14 @@
 # SPDX-License-Identifier: MIT OR Apache-2.0
 """Effect-receipt custody, occupied-slot and exact-bound negative controls."""
+import hashlib
+import hmac
+import json
 import unittest
 from typing import ClassVar
+from unittest.mock import patch
 
 from umf_access.unified import SessionError, SessionIdentity
+from umf_access.unified import outcome_values
 from umf_access.unified.outcome_values import (
     outcome_from_record,
     outcome_invocation,
@@ -17,6 +22,97 @@ class TableOutcomes(unittest.TestCase):
         value={'inputs':{'status':{'string':'private-low-entropy-value'}}}
         self.assertEqual(outcome_invocation(b'x'*32,value),outcome_invocation(b'x'*32,value))
         self.assertNotEqual(outcome_invocation(b'x'*32,value),outcome_invocation(b'z'*32,value))
+
+    def test_default_rust_path_matches_domain_separated_hmac_vectors(self):
+        value={'inputs':{'雪':'non-BMP 🐈'}}
+        raw=json.dumps(value,ensure_ascii=False,sort_keys=True,separators=(',',':')).encode()
+        expected=hmac.new(self.secret,b'umf.table-outcome/0.1\0invocation\0'+raw,hashlib.sha256).hexdigest()
+        self.assertEqual(outcome_invocation(self.secret,value),expected)
+        self.assertEqual(outcome_invocation(bytearray(self.secret),value),expected)
+
+        row=outcome_record(self.secret,self.principal,self.slot,self.metadata,[1],{'ok':True})
+        payload=json.loads(row['payload'])
+        response=json.dumps({'ok':True},sort_keys=True,separators=(',',':')).encode()
+        self.assertEqual(payload['responseDigest'],hmac.new(
+            self.secret,b'umf.table-outcome/0.1\0response\0'+response,hashlib.sha256
+        ).hexdigest())
+        self.assertEqual(self.verify(tuple(row[key] for key in (
+            'invocationDigest','scopeDigest','payload','signature'
+        )))['effects'],[{'integerToken':'1'}])
+
+    def test_default_receipt_path_reaches_native_primitives(self):
+        calls=[]
+        crypto=outcome_values.rust_outcome_values
+        native_hmac=crypto.hmac_sha256
+        native_slot=crypto.slot_sha256
+        native_compare=crypto.signature_matches
+
+        def hmac_call(secret,message):
+            calls.append('hmac')
+            return native_hmac(secret,message)
+        def slot_call(message):
+            calls.append('slot')
+            return native_slot(message)
+        def compare_call(left,right):
+            calls.append('compare')
+            return native_compare(left,right)
+
+        actor=SessionIdentity('person','alice')
+        with patch.object(crypto,'hmac_sha256',hmac_call), \
+             patch.object(crypto,'slot_sha256',slot_call), \
+             patch.object(crypto,'signature_matches',compare_call):
+            outcome_invocation(self.secret,{'v':1})
+            outcome_slot(actor,42,{'schema':'plugin','module':'demo'},'create','key')
+            stored=self.record()
+            self.verify(stored)
+        self.assertEqual(calls.count('slot'),1)
+        self.assertGreaterEqual(calls.count('hmac'),4)
+        self.assertEqual(calls.count('compare'),1)
+
+    def test_invalid_hmac_key_and_bad_value_keep_predecessor_order(self):
+        with self.assertRaisesRegex(TypeError,"key: expected bytes or bytearray"):
+            outcome_invocation(memoryview(b'x'*32),{'v':1})
+        with self.assertRaisesRegex(SessionError,'invalid operation JSON'):
+            outcome_invocation(object(),"\ud800")
+
+    def test_secret_carriers_and_signature_length_gate_keep_predecessor_rules(self):
+        class BytesSubclass(bytes):
+            pass
+
+        value={'v':'🐈'}
+        expected=outcome_invocation(self.secret,value)
+        self.assertEqual(outcome_invocation(BytesSubclass(self.secret),value),expected)
+        for length in (0,31):
+            with self.subTest(length=length),self.assertRaisesRegex(ValueError,'at least256 bits'):
+                outcome_values._signature(b'x'*length,self.principal,self.slot,{
+                    'invocationDigest':'5'*64,'scopeDigest':'6'*64,'payload':'{}'
+                })
+        for length in (32,64,65):
+            with self.subTest(length=length):
+                signature=outcome_values._signature(b'x'*length,self.principal,self.slot,{
+                    'invocationDigest':'5'*64,'scopeDigest':'6'*64,'payload':'{}'
+                })
+                self.assertEqual(len(signature),64)
+        with self.assertRaisesRegex(ValueError,'at least256 bits'):
+            outcome_record(bytearray(self.secret),self.principal,self.slot,self.metadata,[1],{})
+        with self.assertRaisesRegex(ValueError,'at least256 bits'):
+            outcome_record(BytesSubclass(self.secret),self.principal,self.slot,self.metadata,[1],{})
+
+    def test_secret_subclass_conversion_does_not_call_overridden_bytes(self):
+        class BytesSubclass(bytes):
+            def __bytes__(self):
+                raise RuntimeError('bytes override must not run')
+
+        class BytearraySubclass(bytearray):
+            def __bytes__(self):
+                raise RuntimeError('bytes override must not run')
+
+        value={'v':'🐈'}
+        message=b'umf.table-outcome/0.1\0invocation\0'+outcome_values.canonical(value).encode()
+        for secret in (BytesSubclass(self.secret), BytearraySubclass(self.secret)):
+            with self.subTest(carrier=type(secret).__name__):
+                expected=hmac.new(secret,message,hashlib.sha256).hexdigest()
+                self.assertEqual(outcome_invocation(secret,value),expected)
     secret=b'x'*32
     principal=42
     slot='a'*64

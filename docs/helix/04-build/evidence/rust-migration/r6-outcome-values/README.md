@@ -347,3 +347,47 @@ full-package harness and frozen outcome replay only. Native PostgreSQL/Weft
 remains unavailable and unqualified. These receipts supersede the prior
 combined-wheel checkpoint for the Protobuf inspector source fix, while retaining
 the earlier reports as immutable historical cohorts.
+
+## Default Python receipt-path integration — 2026-10-23
+
+The default `umf_access.unified.outcome_values` path now calls the existing
+versioned Rust bridge for invocation/response HMAC, slot SHA-256, receipt HMAC,
+and fixed-width signature comparison. Python retains canonical JSON creation,
+UTF-8 admission, exact secret guards, receipt assembly and validation order,
+metadata/effects checks, and transaction sequencing. Bytearray keys for the
+invocation and response HMAC retain the predecessor's accepted behavior by
+being copied to bytes through their buffer interface at the native boundary;
+bytes subclasses pass through unchanged, so an overridden `__bytes__` is never
+invoked. Other invalid key types are
+checked with `hmac.new` at the original point in the order. `_signature` keeps
+its exact-bytes and 32-byte minimum check, and response digest calculation
+still precedes that gate. A missing or mismatched Rust profile/capability fails
+closed when the relevant primitive is reached.
+
+`compare_live.py` executes the immutable predecessor and current default
+implementation against the same capture matrix. It matched the canonical
+preimages, invocation and response digests, signature, row, slot digest, all
+17 refusal outcomes, all eight slot-key controls, payload boundary, and the
+frozen source-call order. The comparison ran in a mixed source/environment
+setup. The loaded extension SHA-256 was
+`e4c5f32ce1b880d53772a37e1f2e0d5d8c0d1d137a21b22d1e28840a3028fc38`, while
+the extension embedded in the separately recorded core wheel
+`02b6b8fe766993c615902b2a7b90e75505657fc6f74fe0a4d3adccf7146c8335` has SHA-256
+`8ae1a6a40462a3a081dcc1a8316d2163f29afb9725d87b2bbe0e72e7a5dd8ed8`.
+Those identities do not match. Treat the replay as source-behavior and smoke
+evidence only; it does not establish an installed binary cohort or qualify an
+installed access wheel.
+
+The mixed-environment CPython 3.11.17 run passed 17 tests across
+`test_table_outcomes.py`, `test_outcome_slot_short_circuit.py`, and
+`test_rust_outcome_values.py`. That includes the occupied-slot no-effects
+controls and native-call spies. The independent matrix replay passed with 17
+receipt refusal cases and eight key controls. PostgreSQL/Weft write and recovery
+replay, installed access-wheel qualification, and broader R6 migration remain
+open.
+
+| Source | SHA-256 |
+| --- | --- |
+| `python/umf_access/src/umf_access/unified/outcome_values.py` | `7da5dfeb0d34fca8a31e388b4e24a08ee6846c1f738ab001fcad5e9957b3f1bf` |
+| `python/umf_access/tests/test_table_outcomes.py` | `77ef4c3c13210673663f8c171e95be58fa302f726e3b44432ad4ec0f5344776e` |
+| `compare_live.py` | `4be5a4a3c0e6c7167875ba12f53170e05ef536e115bdaa57a8f06c479d2a0709` |
