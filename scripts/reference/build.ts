@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 import {resolve,join,relative} from 'node:path';
-import {tmpdir} from 'node:os';
 import {mkdtemp,mkdir,rename,rm,readdir} from 'node:fs/promises';
 import Ajv from 'ajv/dist/2020';
 import {identity,assertJoins,canonical,exclude,type Entry,type ReferenceIndex} from '../../docs/helix/05-deploy/reference/model';
@@ -19,7 +18,8 @@ const output=resolve(root,'docs/helix/05-deploy/microsite/dist/reference');
 const {check,candidate}=rendererArguments(process.argv.slice(2));
 const renderer=await rendererPackage(root,resolve(output,'..'),candidate);
 const expectedRuntime=(await Bun.file(resolve(root,'package.json')).json()).packageManager;if(expectedRuntime!=='bun@'+Bun.version)throw Error('REFERENCE_RUNTIME use the pinned '+expectedRuntime+' toolchain; observed bun@'+Bun.version);
-const stage=await mkdtemp(join(tmpdir(),'umf-reference-'));
+await mkdir(resolve(output,'..'),{recursive:true});
+const stage=await mkdtemp(join(resolve(output,'..'),'.umf-reference-'));
 const ajv=new Ajv({strict:true,allErrors:true,allowUnionTypes:true});
 const validators=new Map<string,any>();
 async function validate(name:string,value:unknown){let test=validators.get(name);if(!test){test=ajv.compile(await read(config+'/schemas/'+name+'.json'));validators.set(name,test);}if(!test(value))throw Error('REFERENCE_STRUCTURE '+name+' '+JSON.stringify(test.errors));}

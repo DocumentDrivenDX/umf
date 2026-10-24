@@ -286,13 +286,25 @@ status and probe receipts. The retained [replay evidence](evidence/mig-g02/final
 qualifies that legacy path only. Missing/tamper controls use separate temporary
 copies; the generated mirror is disposable test output excluded from publication.
 
-The additional date/instant/UUID/boolean native fixture remains unqualified.
-Its first two runs stopped on harness errors before migration acceptance: the
-initial boolean cast and then a query assuming the transient progress table
-survives final publication. Both failures
-are retained, and the second run's pre/post database and role inventories match.
-The corrected source must pass review and actual installed native execution;
-source tests alone do not close this gate.
+The additional date/instant/UUID/boolean native fixture passed its owner run on
+PostgreSQL 18.6 with the frozen installed cohort: five cases and 78 checks,
+including retained ordinary creates, exact full-row oracles and matched-NULL
+rollback with the authenticated READY receipt and ingress fence retained.
+The [actual report and dispatch](evidence/mig-g02/final-integration/temporal-native-attempt-005/runner-report.json)
+bind the reviewed runner and fixture; settings and database/role inventory
+projections were restored. A separate installed environment independently passed
+the same five cases and 78 checks; all 431 installed payloads remained exact
+afterward. The [independent receipt](evidence/mig-g02/final-integration/temporal-independent-007-review.json)
+records that gate and owned-resource cleanup. Full settings/inventory projection
+equality is the separate owner-run evidence, not an inferred independent check.
+
+Earlier harness failures are retained: an initial boolean cast, a query assuming
+transient progress survives publication, and unequal observation roles under
+FORCE RLS. An initial-install-only diagnostic proved the owner saw zero rows
+while the administrative observer saw all three. The corrected runner uses one
+read-only UTC administrative observer and an explicit manual three-row baseline.
+A separate socket-permission failure occurred before native dispatch. These
+failures do not substitute for the successful run or its independent gate.
 
 Final candidate review includes a closed four-cell wheel-union index and actual
 network-denied installation from that union on each supported runtime cell.

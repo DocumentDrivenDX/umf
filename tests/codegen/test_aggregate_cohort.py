@@ -52,10 +52,8 @@ def _wheel_bytes(distribution: str, version: str, marker: str = "") -> bytes:
 
 class AggregateCohortTests(unittest.TestCase):
     def setUp(self) -> None:
-        self.temporary = tempfile.TemporaryDirectory(
-            prefix="umf-aggregate-cohort-test-", dir="/private/tmp"
-        )
-        self.root = Path(self.temporary.name)
+        self.temporary = tempfile.TemporaryDirectory(prefix="umf-aggregate-cohort-test-")
+        self.root = Path(self.temporary.name).resolve()
         self.input_root = self.root / "cells"
         self.output = self.root / "aggregate"
 

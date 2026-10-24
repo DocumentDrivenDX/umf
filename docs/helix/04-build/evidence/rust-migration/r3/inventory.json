@@ -168,6 +168,7 @@
       "tests/lifecycle/g02-null-semantics-native-fixture.ts",
       "tests/lifecycle/g02-temporal-native-fixture.test.ts",
       "tests/lifecycle/g02-temporal-native-fixture.ts",
+      "tests/lifecycle/g02-temporal-native-observer.test.py",
       "tests/lifecycle/g02-temporal-native.py",
       "tests/lifecycle/mixed-native.py",
       "tests/lifecycle/owner_via_native.py",
@@ -212,16 +213,16 @@
   "capture": {
     "inventoryFormat": "0.2",
     "inventoryScript": "scripts/rust-inventory.py",
-    "sourceCohortSha256": "bd6e3113fd3a624f714df5da54193e48d6e9febb4a636caea206bf67d2983a1a",
+    "sourceCohortSha256": "415accd28045494e05e0645e19bbc50569437c365e99d0f35df02572f8c2de48",
     "typescriptApi": "5.9.3"
   },
   "counts": {
-    "activeScriptFiles": 350,
-    "algorithmSymbols": 10460,
+    "activeScriptFiles": 351,
+    "algorithmSymbols": 10471,
     "pythonModules": 105,
     "rustBuildInputs": 76,
     "rustModules": 125,
-    "scriptFiles": 2958,
+    "scriptFiles": 2959,
     "sourceModules": 577,
     "typescriptModules": 472
   },
@@ -32131,12 +32132,12 @@
         "files",
         "validate"
       ],
-      "bytes": 15400,
+      "bytes": 15433,
       "disposition": "active-host-tooling-algorithm",
       "language": "ts",
       "migrationObligation": "Active build/test/CLI tooling; individually review any UMF semantic algorithm before declaring a host-only boundary",
       "path": "scripts/reference/build.ts",
-      "sha256": "40b0f0b925c988b835b6e8b7e564832a5ccad0a10e69d85f7dd2f32e7b3eb8e3"
+      "sha256": "d61be2d4f5bd8b812d1107962c8e4bdd021e45fbce17fb6e1dcc158be8a1c429"
     },
     {
       "activationEvidence": [
@@ -37626,12 +37627,12 @@
         "test_unsafe_union_path_refuses_before_path_use",
         "test_wrong_selected_environment_refuses"
       ],
-      "bytes": 18119,
+      "bytes": 18087,
       "disposition": "unreferenced-test-source",
       "language": "py",
       "migrationObligation": "Retained test/evidence source with no discovered current activation edge",
       "path": "tests/codegen/test_aggregate_cohort.py",
-      "sha256": "9f399dacf7dc3c5ee728545eb400b2117182079ccc4670ac18cc54f947bd8526"
+      "sha256": "1ede818a400a05fa7197b3862e37e434c4712972a2a6aeb9e29b27d870b73fd5"
     },
     {
       "activationEvidence": [],
@@ -43243,19 +43244,44 @@
       ],
       "active": true,
       "algorithmSymbols": [
+        "ObserverControls",
+        "call_source",
+        "function_node",
+        "null_failure_branch",
+        "setUpClass",
+        "test_both_full_row_snapshots_use_one_read_only_admin_observer",
+        "test_host_effect_connection_remains_owner_bound",
+        "test_manual_full_row_oracle_matches_fixture_initial_rows",
+        "test_manual_initial_oracle_is_asserted_before_host_effect"
+      ],
+      "bytes": 4672,
+      "disposition": "test-oracle-fixture-algorithm",
+      "language": "py",
+      "migrationObligation": "Active only where activation evidence says so; test/oracle logic is evidence and not an implementation port by default",
+      "path": "tests/lifecycle/g02-temporal-native-observer.test.py",
+      "sha256": "7d98b567143e93e1ee02afa3218fe522eb8fc4d02903189373fb9c6e4bf55a69"
+    },
+    {
+      "activationEvidence": [
+        ".github/workflows/access-boundaries.yml"
+      ],
+      "active": true,
+      "algorithmSymbols": [
         "bundle",
         "catalog_snapshot",
         "check",
         "factory",
+        "matched_null_initial_rows",
         "metadata_snapshot",
+        "observer_context",
         "table_rows"
       ],
-      "bytes": 17630,
+      "bytes": 20243,
       "disposition": "test-oracle-fixture-algorithm",
       "language": "py",
       "migrationObligation": "Active only where activation evidence says so; test/oracle logic is evidence and not an implementation port by default",
       "path": "tests/lifecycle/g02-temporal-native.py",
-      "sha256": "29f6c27fb68329a6851c1705b1d5b6dc98faf46435778f2be24fb9c4c3ab1cc2"
+      "sha256": "ad2e7f74ef4c4a606aa0e8a83610e7e2e035e2c466a744fa0699489fd4f9bdee"
     },
     {
       "activationEvidence": [],

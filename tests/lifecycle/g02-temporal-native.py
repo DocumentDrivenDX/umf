@@ -43,6 +43,17 @@ def table_rows(connection,cfg):
     # Boolean text output is normalized to PostgreSQL's stable "true"/"false" form.
     query=sql.SQL('SELECT ')+sql.SQL(',').join(expr)+sql.SQL(' FROM {} ORDER BY id').format(sql.Identifier(cfg['schema'],'people'))
     return connection.execute(query).fetchall()
+def observer_context(connection):
+    return connection.execute("SELECT session_user,current_user,current_setting('row_security'),current_setting('role'),rolsuper,rolbypassrls FROM pg_catalog.pg_roles WHERE rolname=current_user").fetchone()
+def matched_null_initial_rows(individuals):
+    # Independent handwritten full-row oracle for the rollback fixture. Keep in
+    # lockstep with the human-authored fixture values, never AST evaluation.
+    alice,bob=individuals
+    return [
+        ('p1',alice,'2012-03-04',None,None,None,None,None,None,None),
+        ('p2',bob,None,None,None,None,None,None,None,None),
+        ('p3',alice,'1999-12-31',None,None,None,None,None,None,None),
+    ]
 def catalog_snapshot(connection,cfg):
     columns=connection.execute("SELECT column_name,is_nullable,column_default,data_type,udt_name,ordinal_position FROM information_schema.columns WHERE table_schema=%s AND table_name='people' ORDER BY ordinal_position",(cfg['schema'],)).fetchall()
     relation=connection.execute("SELECT c.relkind,c.relpersistence,c.relrowsecurity,c.relforcerowsecurity,c.relfilenode,c.relowner FROM pg_catalog.pg_class c JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace WHERE n.nspname=%s AND c.relname='people'",(cfg['schema'],)).fetchone()
@@ -106,28 +117,44 @@ with psycopg.connect(args.dsn,autocommit=True) as admin:
                 approval=host.record_approval(MigrationRequest(plan,head,file_digest),decision='approved',qualification_profile='postgresql18/0.1',evidence_digest=evidence)
                 if case.get('expectedFailure')=='null-result':
                     from umf_access.lifecycle.witness import _capture_witness
-                    before_rows=table_rows(connection,cfg);before_catalog=catalog_snapshot(connection,cfg);before_meta=metadata_snapshot(connection,cfg)
-                    before_witness=_capture_witness(connection,next_bundle)
-                    try:
-                        apply_migration_on_host(host,plan,expected_head=head,file_digest=file_digest,qualification_profile='postgresql18/0.1',evidence_digest=evidence,approval_id=approval.receipt_id)
-                    except CatalogError as error:
-                        check(case['id']+'-private-null-result-error',str(error)=='derived-backfill-native-error' and error.sqlstate=='22012')
-                    except HostOutcomeUnknown:
-                        raise AssertionError('Known NULL row-expression failure was reported as an unknown outcome')
-                    else:
-                        raise AssertionError('Matched NULL date result unexpectedly committed')
-                    connection.execute('RESET ROLE')
-                    after_rows=table_rows(connection,cfg);after_catalog=catalog_snapshot(connection,cfg);after_meta=metadata_snapshot(connection,cfg)
-                    check(case['id']+'-full-row-snapshot-unchanged',before_rows==after_rows and len(before_rows)==3)
-                    check(case['id']+'-catalog-snapshot-unchanged',before_catalog==after_catalog and next(column for column in after_catalog[0] if column[0]=='birthday')[1]=='YES')
-                    check(case['id']+'-history-unchanged-and-no-prefailure-progress',before_meta[0]==after_meta[0] and before_meta[1] is None)
-                    progress=after_meta[1]
-                    check(case['id']+'-failed-phase-keeps-ready-receipt',progress is not None and len(progress)==1 and progress[0][0]==plan['id'] and progress[0][1]==plan['digest'] and progress[0][2]==head and progress[0][3]==file_digest and progress[0][4]==0 and progress[0][5]=='ready' and progress[0][6]==hashlib.sha256(b'').hexdigest() and progress[0][7]==[] and progress[0][8]==before_witness)
-                    connection.execute(sql.SQL('SET ROLE {}').format(sql.Identifier(individuals[0])))
-                    try:connection.execute(sql.SQL('SELECT * FROM {}').format(sql.Identifier(cfg['schema'],'umf_lifecycle_head'))).fetchall()
-                    except psycopg.errors.InsufficientPrivilege as error:check(case['id']+'-clients-remain-fenced-after-failed-phase',error.sqlstate=='42501')
-                    else:raise AssertionError('Failed matched-NULL phase released the generation fence')
-                    finally:connection.execute('RESET ROLE')
+                    # A separate trusted observer bypasses FORCE RLS for both
+                    # snapshots. The host connection remains under the owner
+                    # role and pg_catalog search_path for all lifecycle effects.
+                    with psycopg.connect(dsn,autocommit=True) as observer:
+                        observer.execute('SET TIME ZONE UTC')
+                        observer.execute('SET default_transaction_read_only=on')
+                        observer.execute('SET row_security=on')
+                        before_identity=observer_context(observer)
+                        check(case['id']+'-trusted-observer-before',before_identity[0]==before_identity[1] and (before_identity[4] or before_identity[5]) and before_identity[2]=='on' and before_identity[3]=='none')
+                        before_rows=table_rows(observer,cfg);before_catalog=catalog_snapshot(observer,cfg);before_meta=metadata_snapshot(observer,cfg)
+                        expected_before=matched_null_initial_rows(individuals)
+                        check(case['id']+'-initial-full-row-manual-oracle',before_rows==expected_before and len(before_rows)==3)
+                        before_witness=_capture_witness(observer,next_bundle)
+                        host_identity_before=connection.execute("SELECT session_user,current_user,current_setting('role')").fetchone()
+                        check(case['id']+'-host-remains-owner-before-effect',host_identity_before[0]==before_identity[0] and host_identity_before[1]==owner and host_identity_before[2]==owner)
+                        try:
+                            apply_migration_on_host(host,plan,expected_head=head,file_digest=file_digest,qualification_profile='postgresql18/0.1',evidence_digest=evidence,approval_id=approval.receipt_id)
+                        except CatalogError as error:
+                            check(case['id']+'-private-null-result-error',str(error)=='derived-backfill-native-error' and error.sqlstate=='22012')
+                        except HostOutcomeUnknown:
+                            raise AssertionError('Known NULL row-expression failure was reported as an unknown outcome')
+                        else:
+                            raise AssertionError('Matched NULL date result unexpectedly committed')
+                        host_identity_after=connection.execute("SELECT session_user,current_user,current_setting('role')").fetchone()
+                        check(case['id']+'-host-remains-owner-after-effect',host_identity_after==host_identity_before)
+                        after_identity=observer_context(observer)
+                        after_rows=table_rows(observer,cfg);after_catalog=catalog_snapshot(observer,cfg);after_meta=metadata_snapshot(observer,cfg)
+                        check(case['id']+'-trusted-observer-same-identity',after_identity==before_identity and after_identity[0]==after_identity[1] and (after_identity[4] or after_identity[5]) and after_identity[3]=='none')
+                        check(case['id']+'-full-row-snapshot-unchanged',before_rows==after_rows and after_rows==expected_before and len(after_rows)==3)
+                        check(case['id']+'-catalog-snapshot-unchanged',before_catalog==after_catalog and next(column for column in after_catalog[0] if column[0]=='birthday')[1]=='YES')
+                        check(case['id']+'-history-unchanged-and-no-prefailure-progress',before_meta[0]==after_meta[0] and before_meta[1] is None)
+                        progress=after_meta[1]
+                        check(case['id']+'-failed-phase-keeps-ready-receipt',progress is not None and len(progress)==1 and progress[0][0]==plan['id'] and progress[0][1]==plan['digest'] and progress[0][2]==head and progress[0][3]==file_digest and progress[0][4]==0 and progress[0][5]=='ready' and progress[0][6]==hashlib.sha256(b'').hexdigest() and progress[0][7]==[] and progress[0][8]==before_witness)
+                        connection.execute(sql.SQL('SET ROLE {}').format(sql.Identifier(individuals[0])))
+                        try:connection.execute(sql.SQL('SELECT * FROM {}').format(sql.Identifier(cfg['schema'],'umf_lifecycle_head'))).fetchall()
+                        except psycopg.errors.InsufficientPrivilege as error:check(case['id']+'-clients-remain-fenced-after-failed-phase',error.sqlstate=='42501')
+                        else:raise AssertionError('Failed matched-NULL phase released the generation fence')
+                        finally:connection.execute('RESET ROLE')
                     continue
                 applied=apply_migration_on_host(host,plan,expected_head=head,file_digest=file_digest,qualification_profile='postgresql18/0.1',evidence_digest=evidence,approval_id=approval.receipt_id)
                 check(case['id']+'-public-host-committed',applied['status']=='committed' and applied['generation']==2)

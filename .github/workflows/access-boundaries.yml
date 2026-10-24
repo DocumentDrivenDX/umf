@@ -259,6 +259,10 @@ jobs:
           assert [command['id'] for command in json.loads(no_default['source']['utf8'])['modules'][0]['extensions']['umf.tables']['commands']]==['derive_total']
           assert 'default' not in next(column for column in json.loads(no_default['source']['utf8'])['modules'][0]['extensions']['umf.tables']['tables'][0]['columns'] if column['name']=='total')
           PY
+      - name: Verify G02 temporal observer controls
+        env:
+          UMF_G02_TEMPORAL_FIXTURE: /tmp/g02-temporal-fixture.json
+        run: /tmp/g02-native-installed/bin/python -I tests/lifecycle/g02-temporal-native-observer.test.py
       - name: Run the base two-case PostgreSQL 18.6 qualification
         run: >-
           /tmp/g02-native-installed/bin/python -I tests/lifecycle/derived-fill-native.py
