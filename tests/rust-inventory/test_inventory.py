@@ -15,9 +15,110 @@ SPEC = importlib.util.spec_from_file_location("rust_inventory", ROOT / "scripts/
 MODULE = importlib.util.module_from_spec(SPEC)
 assert SPEC.loader is not None
 SPEC.loader.exec_module(MODULE)
+SUCCESSOR_SPEC = importlib.util.spec_from_file_location(
+    "rust_successor_inventory", ROOT / "scripts/rust-migration/r4/inventory/capture.py")
+SUCCESSOR = importlib.util.module_from_spec(SUCCESSOR_SPEC)
+assert SUCCESSOR_SPEC.loader is not None
+SUCCESSOR_SPEC.loader.exec_module(SUCCESSOR)
 
 
 class InventoryDependencyTests(unittest.TestCase):
+    def test_successor_census_canonical_output_check_cannot_be_bypassed_by_explicit_path(self):
+        with tempfile.TemporaryDirectory() as directory:
+            canonical = Path(directory) / "census.json"
+            diagnostic = Path(directory) / "candidate.json"
+            with patch.object(SUCCESSOR, "OUT", canonical):
+                self.assertTrue(SUCCESSOR.is_canonical_output(canonical))
+                self.assertTrue(SUCCESSOR.is_canonical_output(canonical.parent / "." / canonical.name))
+                self.assertFalse(SUCCESSOR.is_canonical_output(diagnostic))
+
+    def test_successor_census_binds_metamodel_sources_and_schema_outputs_to_fixed_point(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory).resolve()
+            model = root / "spec/metamodel/umf.yaml"
+            schema = root / "spec/core/schema.json"
+            generated = root / "src/generated/core-model.ts"
+            for path, content in ((model, b"model-v1"), (schema, b"schema-v1"),
+                                  (generated, b"generated-v1")):
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_bytes(content)
+            sha = lambda value: __import__("hashlib").sha256(value).hexdigest()
+            manifest = {
+                "profile": "umf.metamodel.outputs/1",
+                "sources": {"spec/metamodel/umf.yaml": sha(b"model-v1")},
+                "outputs": {"spec/core/schema.json": {"sha256": sha(b"schema-v1")},
+                            "src/generated/core-model.ts": {"sha256": sha(b"generated-v1")}},
+            }
+            manifest_path = root / "spec/metamodel/generated/manifest.json"
+            manifest_path.parent.mkdir(parents=True)
+            manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+
+            snapshot = SUCCESSOR.metamodel_authority_snapshot(root)
+            self.assertEqual("current", snapshot["manifestDigestStatus"])
+            self.assertIn("manifest-digests-only", snapshot["verification"])
+            self.assertEqual(["spec/core/schema.json"],
+                             [item["path"] for item in snapshot["schemaInputs"]])
+            self.assertTrue(all(item["matches"] for item in snapshot["sources"] + snapshot["outputs"]))
+
+            model.write_bytes(b"model-v2")
+            stale = SUCCESSOR.metamodel_authority_snapshot(root)
+            self.assertEqual("stale", stale["manifestDigestStatus"])
+            self.assertFalse(stale["sources"][0]["matches"])
+
+            model.write_bytes(b"model-v1")
+            generated.write_bytes(b"generated-v2")
+            stale_output = SUCCESSOR.metamodel_authority_snapshot(root)
+            self.assertEqual("stale", stale_output["manifestDigestStatus"])
+            self.assertFalse(next(item for item in stale_output["outputs"]
+                                  if item["path"] == "src/generated/core-model.ts")["matches"])
+
+    def test_successor_census_reports_missing_or_invalid_metamodel_manifest(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory).resolve()
+            self.assertEqual("missing-manifest", SUCCESSOR.metamodel_authority_snapshot(root)["manifestDigestStatus"])
+            manifest = root / "spec/metamodel/generated/manifest.json"
+            manifest.parent.mkdir(parents=True)
+            manifest.write_text("not json", encoding="utf-8")
+            self.assertEqual("invalid-manifest", SUCCESSOR.metamodel_authority_snapshot(root)["manifestDigestStatus"])
+
+    def test_successor_census_rejects_manifest_paths_outside_repository_root(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory).resolve()
+            model = root / "spec/metamodel/umf.yaml"
+            schema = root / "spec/core/schema.json"
+            generated = root / "src/generated/core-model.ts"
+            for path in (model, schema, generated):
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_bytes(b"fixture")
+            manifest = {
+                "profile": "umf.metamodel.outputs/1",
+                "sources": {"spec/metamodel/umf.yaml": "0" * 64,
+                            "../outside-secret": "1" * 64,
+                            str(root.parent / "absolute-secret"): "4" * 64},
+                "outputs": {"spec/core/schema.json": {"sha256": "2" * 64},
+                            "src/generated/core-model.ts": {"sha256": "3" * 64}},
+            }
+            manifest_path = root / "spec/metamodel/generated/manifest.json"
+            manifest_path.parent.mkdir(parents=True)
+            manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+            snapshot = SUCCESSOR.metamodel_authority_snapshot(root)
+            self.assertEqual("invalid-manifest-paths", snapshot["manifestDigestStatus"])
+            self.assertEqual([], snapshot["sources"])
+            self.assertEqual([], snapshot["outputs"])
+
+            outside = root.parent / "symlink-secret"
+            outside.write_bytes(b"must not be read")
+            link = root / "spec/metamodel/external.yaml"
+            link.symlink_to(outside)
+            manifest["sources"].pop("../outside-secret")
+            manifest["sources"].pop(str(root.parent / "absolute-secret"))
+            manifest["sources"]["spec/metamodel/external.yaml"] = "5" * 64
+            manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+            symlink_snapshot = SUCCESSOR.metamodel_authority_snapshot(root)
+            self.assertEqual("invalid-manifest-paths", symlink_snapshot["manifestDigestStatus"])
+            self.assertEqual([], symlink_snapshot["sources"])
+            outside.unlink()
+
     def test_python_console_scripts_activate_only_resolved_authored_entrypoint_modules(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory).resolve()

@@ -9,7 +9,7 @@ import importlib.util
 import json
 import sys
 import tempfile
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 
 ROOT = Path(__file__).resolve().parents[4]
 OUT = ROOT / "docs/helix/04-build/evidence/rust-migration/r4/inventory/census.json"
@@ -21,6 +21,81 @@ BASELINE_SCRIPT = ROOT / "scripts/rust-inventory.py"
 
 def digest(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
+
+
+def is_canonical_output(path: Path) -> bool:
+    return path.resolve() == OUT.resolve()
+
+
+def metamodel_authority_snapshot(root: Path = ROOT) -> dict[str, object]:
+    """Bind authored metamodel inputs and their generated schema/output cohort."""
+    manifest_path = root / "spec/metamodel/generated/manifest.json"
+    result: dict[str, object] = {
+        "manifest": {"path": "spec/metamodel/generated/manifest.json", "sha256": None},
+        "sources": [], "schemaInputs": [], "outputs": [],
+        "manifestDigestStatus": "unverified",
+        "verification": "manifest-digests-only; run bun scripts/metamodel/build.ts --check separately to verify the generated fixed point",
+    }
+    if not manifest_path.is_file():
+        result["manifestDigestStatus"] = "missing-manifest"
+        return result
+
+    raw = manifest_path.read_bytes()
+    result["manifest"] = {"path": "spec/metamodel/generated/manifest.json", "sha256": digest(raw)}
+    try:
+        manifest = json.loads(raw)
+    except (UnicodeDecodeError, json.JSONDecodeError):
+        result["manifestDigestStatus"] = "invalid-manifest"
+        return result
+    if not isinstance(manifest, dict) or manifest.get("profile") != "umf.metamodel.outputs/1":
+        result["manifestDigestStatus"] = "unsupported-manifest"
+        return result
+
+    sources = manifest.get("sources")
+    outputs = manifest.get("outputs")
+    if (not isinstance(sources, dict) or not isinstance(outputs, dict) or
+            "spec/metamodel/umf.yaml" not in sources or
+            "spec/core/schema.json" not in outputs or
+            "src/generated/core-model.ts" not in outputs):
+        result["manifestDigestStatus"] = "invalid-manifest"
+        return result
+
+    def safe_repo_path(path: object) -> bool:
+        if not isinstance(path, str) or not path or "\\" in path or ":" in path:
+            return False
+        parsed = PurePosixPath(path)
+        if parsed.is_absolute() or not all(part not in {"", ".", ".."} for part in parsed.parts):
+            return False
+        try:
+            return (root / path).resolve().is_relative_to(root.resolve())
+        except (OSError, RuntimeError):
+            return False
+
+    if not all(safe_repo_path(path) for path in [*sources, *outputs]):
+        result["manifestDigestStatus"] = "invalid-manifest-paths"
+        return result
+
+    def rows(entries: dict[str, object], *, output: bool) -> list[dict[str, object]]:
+        captured = []
+        for path, declaration in sorted(entries.items()):
+            expected = declaration.get("sha256") if output and isinstance(declaration, dict) else declaration
+            file_path = root / path
+            actual = digest(file_path.read_bytes()) if file_path.is_file() else None
+            captured.append({"path": path, "expectedSha256": expected, "sha256": actual,
+                             "matches": isinstance(expected, str) and actual == expected})
+        return captured
+
+    source_rows = rows(sources, output=False)
+    output_rows = rows(outputs, output=True)
+    schema_rows = [item for item in source_rows + output_rows
+                   if str(item["path"]).startswith("spec/core/") and
+                   (str(item["path"]).endswith(".schema.json") or
+                    Path(str(item["path"])).name == "schema.json")]
+    result["sources"] = source_rows
+    result["schemaInputs"] = schema_rows
+    result["outputs"] = output_rows
+    result["manifestDigestStatus"] = "current" if all(item["matches"] for item in source_rows + output_rows) else "stale"
+    return result
 
 
 def load_inventory_builder():
@@ -265,8 +340,16 @@ def enrich(data: dict[str, object], builder, ts_files: dict[str, object]) -> dic
                   (str(item["path"]).startswith("scripts/metamodel/") or
                    str(item["path"]).startswith("scripts/reference/") or
                    str(item["path"]).startswith("docs/helix/05-deploy/schema-browser/"))]
-    data["schema"] = "umf.rust-migration-successor-census/1.0"
-    data["capture"]["inventoryFormat"] = "1.0"
+    authority = metamodel_authority_snapshot()
+    data["metamodelAuthority"] = authority
+    base_cohort = str(data["capture"].get("sourceCohortSha256", ""))
+    authority_cohort = digest(json.dumps(authority, ensure_ascii=False, sort_keys=True,
+                                         separators=(",", ":")).encode())
+    data["capture"]["baseSourceCohortSha256"] = base_cohort
+    data["capture"]["authorityCohortSha256"] = authority_cohort
+    data["capture"]["sourceCohortSha256"] = digest(f"{base_cohort}\n{authority_cohort}\n".encode())
+    data["schema"] = "umf.rust-migration-successor-census/1.1"
+    data["capture"]["inventoryFormat"] = "1.1"
     data["capture"]["inventoryScript"] = "scripts/rust-migration/r4/inventory/capture.py"
     data["scope"] = "Live R4-R8 successor census. R0 and R3 inventories remain immutable historical evidence."
     data["r3OperationClosure"] = r3_operations
@@ -305,6 +388,7 @@ def enrich(data: dict[str, object], builder, ts_files: dict[str, object]) -> dic
         "Python umf_access is a submodule API whose consumer imports are dynamic; all rows remain live and require caller/consumer evidence.",
         "Human implementer assignment is not inferred; owner values name the family role, and unresolved rows require assignment before a shard starts.",
         "R5-R8 family contracts, versions, fixtures, independent oracles and installed host cohorts remain separate acceptance gates.",
+        "Metamodel authority inputs and generated schemas/outputs are hash-bound against the generated manifest; this digest comparison is not a fixed-point check, which separately requires bun scripts/metamodel/build.ts --check.",
     ]
     return data
 
@@ -349,10 +433,20 @@ def main() -> int:
     finally:
         builder.subprocess.check_output = original_check_output
     payload = json.dumps(enrich(data, builder, captured_ts), ensure_ascii=False, sort_keys=True, indent=2) + "\n"
+    current = json.loads(payload)
+    authority_status = current["metamodelAuthority"]["manifestDigestStatus"]
     if "--live-check" in sys.argv:
+        if authority_status != "current":
+            print(f"Metamodel manifest digest cohort is {authority_status}; regenerate outputs and verify them before the live census gate",
+                  file=sys.stderr)
+            return 1
         print(f"Live successor census validated: {len(data['sourceModules'])} modules; "
-              f"{data['summary']['unresolvedModuleRows']} rows need review")
+              f"{data['summary']['unresolvedModuleRows']} rows need review; metamodel fixed point still requires `bun scripts/metamodel/build.ts --check`")
         return 0
+    if is_canonical_output(output) and authority_status != "current":
+        print(f"Refusing to replace the canonical R8 census with metamodel manifest digest status {authority_status}; "
+              "regenerate and verify outputs first", file=sys.stderr)
+        return 1
     if "--check" in sys.argv:
         current = output.read_text() if output.exists() else ""
         if current != payload:
