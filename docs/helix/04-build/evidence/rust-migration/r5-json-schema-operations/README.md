@@ -41,7 +41,7 @@ The source comparison is the immutable TypeScript capture in
 [`r5-json-schema/baseline.json`](../r5-json-schema/baseline.json). Its adapter,
 tree, test and extension-source hashes remain unchanged. Its captured migration
 plan hash predates later additive plan entries; current plan SHA-256 at this
-receipt is `c7d4d2dd07a2aad8a28187101410273b58de71fa6226a16c9e2a7f0ca1402bb5`.
+receipt is `9c1bc16993a44f08b2242711c514f0bf085763d8d084ae8049861ea617c3783e`.
 The capture was not rewritten. Source hashes below are a bounded historical
 snapshot for this repair pass; root will freeze the complete cohort separately.
 The façade tests assert predecessor ordering for

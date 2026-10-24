@@ -751,8 +751,18 @@ real-Chromium WASM with exact resources, diagnostics, copy isolation and
 controls. `parseNativeJson` is a separate public operation gate.
 `editJsonSchemaNode` and `jsonSchemaRegistry` require the live callback/registry
 interface and remain separate; this opt-in engine does not retire them or switch
-the default adapter. The current Rust operation façade still has open review
-corrections and no binding qualification at this checkpoint.
+the default adapter. The bounded
+[Rust operation façade](evidence/rust-migration/r5-json-schema-operations/README.md)
+now composes the seven operations and passes 12 adapter, seven inspector and 17
+operation tests. Sol's final source review closed the semantic-callback,
+URI-diagnostic and root/resource-collision ordering findings without a remaining
+P1/P2 in that scope. The shared wire dispatcher passes two focused tests; the
+[opt-in host shard](evidence/rust-migration/r5-json-schema-bindings/host-shard.md)
+passes 11 Bun wrapper controls and the generated WASM source check. Those tests
+do not qualify an actual native addon, packaged WASM in Chromium, Python wheels
+or the 30-case frozen operation replay. Python/CLI source review and real-host
+qualification remain in progress. No default adapter switch or TypeScript
+retirement is credited.
 
 The next bounded CONTRACT-003 Protobuf shard is only the binary descriptor
 codec, `readDescriptorSet` and `writeDescriptorSet`; source compilation,
