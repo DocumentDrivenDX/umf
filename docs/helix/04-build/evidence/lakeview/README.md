@@ -1,8 +1,8 @@
 # Lakeview kinds and original-byte reconstruction — 2026-10-23
 
-Implements [CONTRACT-082 0.2](../../../02-design/contracts/CONTRACT-082-lakeview-dashboard-interchange.md)
+Implements [CONTRACT-083 0.2](../../../02-design/contracts/CONTRACT-083-lakeview-dashboard-interchange.md)
 and [US-093](../../../01-frame/user-stories/US-093-lakeview-dashboard-interchange.md),
-using [CONTRACT-906 kinds](../../../02-design/contracts/CONTRACT-906-extension-defined-kinds.md).
+using [CONTRACT-907 kinds](../../../02-design/contracts/CONTRACT-907-extension-defined-kinds.md).
 See the [usage guide](../../../05-deploy/lakeview.md).
 
 ## Change and rationale
@@ -94,7 +94,7 @@ structurally checked; full nested consistency requires the explicitly selected
 Rust validator. Missing capabilities remain incomplete, not implicitly trusted.
 
 This revision builds on [PR #46](https://github.com/DocumentDrivenDX/umf/pull/46)
-with shared validation fixes at `07598886f762e896781977148083a3dae74363ca`. Generic kind admission,
+with current-main integration at `2610e47e9def4248ab74f525b44fc8849f85f7f9`. Generic kind admission,
 discovery and interpretation remain in that prerequisite; this PR owns the
 Lakeview package, adapter/runtime integration and original-byte tests. Receipts
 are refreshed on the stacked source cohort and qualify local built artifacts,
@@ -124,6 +124,33 @@ regressions, nine CLI transport controls, five-host kind parity and four-host
 original-byte reconstruction pass again. The native engine and Lakeview source
 semantics are unchanged by these build/test fixes.
 
-These results qualify the existing PR stack. Newer main release work at 259bf1e
-is not integrated here; hosted checks and current-main merge validation remain
-separate gates before merging.
+Those results preceded the current-main integration recorded below; their
+source hashes and timings remain historical qualification.
+
+
+## Current-main integration — 2026-10-23
+
+The stack includes main `259bf1ed91466ff7e9782d7517c14f2112282026` through
+#46 at `2610e47e9def4248ab74f525b44fc8849f85f7f9`. Main's SDK 0.5.6,
+Python distribution 0.10.1, action runtime and packaging fixes are preserved.
+Core document 0.10.0 and Lakeview 0.2.0 remain unchanged. To avoid IDs introduced
+independently on main, extension kinds uses CONTRACT-907 and Lakeview uses
+CONTRACT-083; main's CONTRACT-906 single-SET and CONTRACT-082 Spark contracts
+are preserved. All Lakeview traceability references follow the new IDs.
+
+Metamodel outputs, codegen assets and the Python action-runtime integrity
+inventory are rebuilt for this source cohort. Fresh installed Node/Bun, the
+native CLI with empty PATH, and real Chromium WASM compare directly with all
+three original files through direct import, UMF JSON and UMF YAML: all bytes
+agree. The 15-case generic-kind corpus agrees across all five hosts, including
+the fresh Python 0.10.1 wheel. Current receipts are `installed.json`,
+`browser.json` and `../extension-kinds/receipt.json`; `main-integration.json`
+records the other repeated checks and source hashes. Hosted CI and publication
+remain separate gates; no live Databricks or edited-source claim is added.
+
+Combined typechecking, 211 focused Bun tests, 328 Rust tests, 254 installed
+Python tests, and all 64 metamodel/ledger tests (1,677 assertions) pass. The
+clean-room assertion phase took 77.00 seconds within its existing 120-second
+bound. Python lint, 72 package/382 schema audits, core and native architecture
+checks, codegen custody, nine CLI transport tests, four reference/gzip tests and
+Chromium's 138 core vectors plus one callback control also pass.

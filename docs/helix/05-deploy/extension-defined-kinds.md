@@ -58,7 +58,7 @@ execution or native dashboard reconstruction. A native adapter must separately
 prove byte-for-byte recovery of untouched originals and qualify edited/native
 behavior for its stated source versions.
 
-See [CONTRACT-906](../02-design/contracts/CONTRACT-906-extension-defined-kinds.md)
+See [CONTRACT-907](../02-design/contracts/CONTRACT-907-extension-defined-kinds.md)
 and [execution evidence](../04-build/evidence/extension-kinds/README.md).
 
 For a focused source-checkout run, use `bun scripts/prepare-kind-tests.ts` then

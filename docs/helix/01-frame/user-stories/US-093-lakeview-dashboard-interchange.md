@@ -42,5 +42,5 @@ original file, so I can inspect it generically without losing native meaning.
 Tests use the PR42 marketing-campaign original and two committed synthetic files
 for BOM/CRLF, lexical escapes, exact/overflowing numeric tokens, hostile keys and
 empty/absent collections. Real Chromium and native Rust qualify the same bounded
-operation family. No private-file or live Databricks claim is made. CONTRACT-082
+operation family. No private-file or live Databricks claim is made. CONTRACT-083
 0.2 governs this successor; PR42's neutral projection is explicitly legacy-only.

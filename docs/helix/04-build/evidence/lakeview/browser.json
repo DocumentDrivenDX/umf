@@ -86,7 +86,7 @@
     "src/registry/kind-runtime.ts": "23c8a019d799d6214c534c4338cd916295ae55e2146aba6da3de1a1fc3a78b76",
     "spec/extensions/lakeview/package.json": "0043b4ca077e4f80d18c2729a3823a43c90914f6d91ba338f0f04a2fca6a6f16",
     "spec/extensions/lakeview/schema.json": "99f8a98b1635887468a564d127d4cf2383806babf95ba08e9200521c044a4012",
-    "spec/metamodel/generated/manifest.json": "e7b61114fce39e4229a024891c7fda1b76471ed42e9c126d561740e615c7399c",
+    "spec/metamodel/generated/manifest.json": "144d594f6448b959db6f97f4fb6c84c4ea9af77a1ea22b668eaa9ab2600535cc",
     "bindings/core/wasm/index.js": "6bbc66d4d272ef2f870bbeafde57af837e93aa394277f3cc80ed5f46635d5945",
     "bindings/core/wasm/index.d.ts": "8f85e6e5d7a1616d573db5d1bbdf7565ac089348ebe13f989468db1ce0960cbe",
     "tests/lakeview/browser-entry.ts": "b867021f09ed1742d62e86bc5644280af617e922d75397170198e31a72715550",
@@ -97,8 +97,8 @@
     "fixtures/lakeview/empty-sections.lvdash.json": "3c195f344050a969755145132a31fd65e652b6f0396a9f5ed7937fc1466c7671"
   },
   "artifacts": {
-    "wasm": "058a0a169dcff43c096b274d4f162040f6a79e53ced07d7c627cb505d15a1555",
-    "bundle": "989a0f99295abb4f49c6fefab7d59930d52af9b2a6ff1bd44aba06b68a602bd5"
+    "wasm": "751f3be1858b65cf859a34143e896eaefa74a7288a3acf40aaee20a4657e77ea",
+    "bundle": "b65fc5f1d243df86ae6bbea57952f91580791233fb2a9d6b063dd5bfae58d1f4"
   },
   "limits": "Three committed files; direct and UMF JSON/YAML untouched UTF-8 reconstruction and generic composition only. No live Databricks acceptance or edited-source rewrite."
 }

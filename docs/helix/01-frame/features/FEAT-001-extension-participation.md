@@ -63,7 +63,7 @@ initial envelope. Later native/DDD participation stories remain to derive.
 
 [US-904](../user-stories/US-904-extension-defined-kinds.md) covers generic
 discovery and validation of extension-defined kinds. Its exact interface is
-[CONTRACT-906](../../02-design/contracts/CONTRACT-906-extension-defined-kinds.md).
+[CONTRACT-907](../../02-design/contracts/CONTRACT-907-extension-defined-kinds.md).
 
 ## Edge Cases and Error Handling
 

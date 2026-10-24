@@ -46,7 +46,7 @@ so generic tools discover the composition without assuming BI equivalence.
 - LV-03: Use core Records and Fields for explicitly named dataset columns and
   widget-query outputs, connected by stable core references. Do not persist a
   parallel field dictionary, infer SQL types or claim complete dataset schemas.
-- LV-04: Declare discoverable kinds and permitted scopes under CONTRACT-906;
+- LV-04: Declare discoverable kinds and permitted scopes under CONTRACT-907;
   ordinary validation must reject kind/scope mistakes and inconsistent native/core
   representations when the explicit built-in validator is registered.
 - LV-05: Keep opaque expressions and unknown native content, report interpretation

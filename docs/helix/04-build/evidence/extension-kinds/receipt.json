@@ -21,14 +21,14 @@
   "pythonArtifact": {
     "version": "3.13.16",
     "pydantic": "2.14.1",
-    "native": "c9b5b2654cd25551ca373a78e02c982406e05d9373aa228e1c0937cdb4d95b6c",
+    "native": "16f8d4026484783a10b0a6f4dfb4dd70dd831abfbd74fba1abde5d4db21a8f60",
     "resources": {
-      "spec/core/schema.json": "c8a79413e3b83e1e41d3fb9e939ef86a9a2aaf237e2bcb7f588e4456f485d948",
-      "spec/core/semantic-type-reference.schema.json": "d8fb12814f7d13570a31efb21143f821a16106c25dc88fefb406ede2da5a3a52",
-      "spec/core/extension-package.schema.json": "e059dc9ae70a3dae3be75a9d2fc72d67b7b3885bec655c4c09603e9a1c9c24f9",
-      "spec/metamodel/generated/core-constraints.json": "37bc640fea9fa5719bf89d4e38b44a360873a78c8cb7bc629fbc72387f3bd278",
-      "spec/metamodel/generated/domain-policy.json": "0367331e26660fce1741b6b5470a9d63920c09b6581b6f363f62a69febdb77b9",
-      "spec/metamodel/generated/manifest.json": "e7b61114fce39e4229a024891c7fda1b76471ed42e9c126d561740e615c7399c"
+      "spec/core/schema.json": "b1ea4a30a0b17093d8a3c5c312605975ab3fee73406f9204c2092e74c85fbd70",
+      "spec/core/semantic-type-reference.schema.json": "c870d4540ee88391dc40a99b6c1b04a4ac05ce57bd65a3b8ada33c76f3b2bb40",
+      "spec/core/extension-package.schema.json": "b37cc10e7efd939a2765c4f79b7824971e9af4478554c9ac3be698ad69fc8263",
+      "spec/metamodel/generated/core-constraints.json": "1793588d728fb688418b78dadda30266d3f723058338ca4dd9bdf784e09c9849",
+      "spec/metamodel/generated/domain-policy.json": "63812d1882975503c76f3392bc8335d2dcb162f7e5d8d80c475f6cc49da0164a",
+      "spec/metamodel/generated/manifest.json": "144d594f6448b959db6f97f4fb6c84c4ea9af77a1ea22b668eaa9ab2600535cc"
     }
   },
   "externalRequests": 0,
@@ -45,7 +45,7 @@
   "sources": {
     "Cargo.lock": "e12048f6e1141dd742974ab3c5924dc0d7f025bf063f6aca90fbead32388a34f",
     "spec/metamodel/umf.yaml": "42144576e3b15da4945ca744623a31967e3b29efa54da8ba3961e446b1c0e34b",
-    "spec/metamodel/generated/manifest.json": "e7b61114fce39e4229a024891c7fda1b76471ed42e9c126d561740e615c7399c",
+    "spec/metamodel/generated/manifest.json": "144d594f6448b959db6f97f4fb6c84c4ea9af77a1ea22b668eaa9ab2600535cc",
     "crates/umf-core/src/kinds.rs": "7e3aed5c9f37b67e9348291703dabc6c217178f73295e4fd9c801d1cefc6f349",
     "crates/umf-core/src/registry.rs": "38ff151bddffdd9d79462802804cae76d58d01edf0ccaea68799907efe0918d3",
     "crates/umf-core/src/engine.rs": "b97f15e203ac60e311036d40c3655f2187688283d7f55beac48a1a17d48467d9",
@@ -66,10 +66,10 @@
     "scripts/extension-kinds-python.py": "7146848476704086f0954aef6f5f270167a58ffaf7a738df543f483bed683adc"
   },
   "artifacts": {
-    "nodeAddon": "37703a8c845616d86ff03467c5338dcbcd6a4ae14d08fef50ec9394a441dd82b",
-    "cli": "d8b0ecab7b152af30ed3e604195b86bad0b8d9bd6398daaa75fc1f37faed33e7",
-    "wasm": "058a0a169dcff43c096b274d4f162040f6a79e53ced07d7c627cb505d15a1555",
-    "browserBundle": "f24cb2f05a3e945bb9979f0e4b009e162a64fd9440b54f1cb52f582941aa6c9d"
+    "nodeAddon": "be22d9b16f65cdd9e7ef97ccd66d427134dfb93fa200f017b187834bd66a82ea",
+    "cli": "af4f8b37282bd0f66d89456f9a7c2439fb5910e2329bd2fa8c376120f958f63f",
+    "wasm": "751f3be1858b65cf859a34143e896eaefa74a7288a3acf40aaee20a4657e77ea",
+    "browserBundle": "bf48e96b2af35f0f4681d6e1e40cbc362b419c87de00829a28f10c43fae466a4"
   },
   "limits": "Synthetic dashboard composition and generic classification only; no native BI system compatibility or platform-wide release qualification."
 }

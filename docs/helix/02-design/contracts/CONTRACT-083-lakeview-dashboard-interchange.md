@@ -1,6 +1,6 @@
 ---
 ddx:
-  id: CONTRACT-082
+  id: CONTRACT-083
   type: contract
   activity: design
   status: draft
@@ -15,11 +15,11 @@ ddx:
       kind: informed_by
     - id: US-093
       kind: informed_by
-    - id: CONTRACT-906
+    - id: CONTRACT-907
       kind: informed_by
 ---
 
-# CONTRACT-082: Lakeview dashboard interchange
+# CONTRACT-083: Lakeview dashboard interchange
 
 **Version:** `umf.lakeview` 0.2.0, core 0.10.0, kind catalog profile 1.0.0.
 **Type:** native adapter/library and portable extension package.
@@ -119,7 +119,7 @@ provide evidence. This contract adds no dashboard semantics to core.
 
 ## Error Semantics
 
-Generic kind errors come from CONTRACT-906. `LAKEVIEW_NATIVE` rejects malformed
+Generic kind errors come from CONTRACT-907. `LAKEVIEW_NATIVE` rejects malformed
 native container shapes; `LAKEVIEW_OPTIONS` rejects import options;
 `SOURCE_ENCODING` rejects malformed source text, and strict byte decoding rejects
 invalid UTF-8. `LAKEVIEW_SOURCE` requires original text and

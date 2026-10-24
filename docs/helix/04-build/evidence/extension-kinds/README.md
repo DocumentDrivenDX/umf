@@ -1,6 +1,6 @@
 # Extension-defined kinds implementation evidence — 2026-10-23
 
-Implements [CONTRACT-906](../../../02-design/contracts/CONTRACT-906-extension-defined-kinds.md)
+Implements [CONTRACT-907](../../../02-design/contracts/CONTRACT-907-extension-defined-kinds.md)
 and [US-904](../../../01-frame/user-stories/US-904-extension-defined-kinds.md),
 following the [implementation plan](../../../02-design/plan-2026-10-22-extension-defined-kinds.md).
 The [usage guide](../../../05-deploy/extension-defined-kinds.md) describes explicit
@@ -122,5 +122,33 @@ schema semantics are unchanged by these build/test fixes.
 The focused 185-test core/kind/dashboard suite, installed 212-test Python subset,
 15-case five-host kind parity, and nine bounded CLI transport tests pass again.
 These are local source-cohort results; hosted workflow status is tracked on the
-PR and is not inferred from local passes. The PR remains based on its original
-main cohort pending separate integration of newer release work.
+PR and is not inferred from local passes. That validation preceded the main integration recorded below.
+
+
+## Current-main integration — 2026-10-23
+
+Merged main `259bf1ed91466ff7e9782d7517c14f2112282026`, including its
+SDK 0.5.6 and Python distribution 0.10.1 release work, single-SET action runtime,
+Delta realization and packaging fixes. The core document marker remains 0.10.0.
+The extension-kinds contract is now CONTRACT-907 because main independently
+introduced CONTRACT-906 for single-SET admission; upstream IDs and all linked
+extension-kinds references remain unambiguous. Main's isolated-test Hatchling
+installation is retained alongside the checked command-redaction guard.
+
+Metamodel outputs, embedded Python codegen assets, acceptance traceability and
+the portable Rust inventory are regenerated from the combined source cohort.
+`main-integration.json` records the checks repeated after integration. Earlier
+installed five-host receipts above continue to describe their recorded source
+cohort; they are not silently promoted to the merged cohort. No release was
+published and hosted-CI completion remains a separate gate.
+
+Combined types, 203 focused Bun tests, 324 Rust tests, 64 metamodel/ledger
+tests (1,665 assertions), and 254 installed Python tests pass after integration.
+The Python set includes main's action fixture, generated-client and runtime
+resource controls. Regenerated schema hashes are explicitly repinned in the
+action-runtime inventory and its trusted digest; missing/tampered resource
+negative controls remain enabled. Ruff, 71 package/381 schema audits, core
+authority, compilation boundaries, deterministic codegen custody, nine CLI
+transport tests, reference identity checks and Chromium's 138 vectors plus one
+callback control pass. Clean-room fixed-point assertions took 78.72 seconds
+with the existing 120-second assertion deadline.

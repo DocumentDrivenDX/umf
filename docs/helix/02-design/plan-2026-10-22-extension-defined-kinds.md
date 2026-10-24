@@ -12,7 +12,7 @@ ddx:
       kind: informed_by
     - id: umf.architecture
       kind: informed_by
-    - id: CONTRACT-906
+    - id: CONTRACT-907
       kind: references
     - id: CONTRACT-080
       kind: references
@@ -33,7 +33,7 @@ One owner can carry several extension classifications and an independent core
 structural kind. A Record defines named members; a dashboard composes data and
 presentation. Dataset shapes reuse core Records/Fields when that meaning is
 established, while calculation, interaction and native syntax stay extension-owned.
-The contract is [CONTRACT-906](contracts/CONTRACT-906-extension-defined-kinds.md).
+The contract is [CONTRACT-907](contracts/CONTRACT-907-extension-defined-kinds.md).
 The journey and acceptance criteria belong to
 [US-904](../01-frame/user-stories/US-904-extension-defined-kinds.md).
 
@@ -115,7 +115,7 @@ This demonstrates reuse without freezing a premature production dashboard API.
 
 ## Interfaces and failure behavior
 
-CONTRACT-906 owns package `kindCatalog`, exact identities, list/get/inspect
+CONTRACT-907 owns package `kindCatalog`, exact identities, list/get/inspect
 operations, ordering, coverage states, errors and version compatibility.
 Ordinary `validateDocument` must reject wrong kind tags/scopes; inspection cannot
 be the only place validation happens. The inspector delegates validation once
@@ -233,7 +233,7 @@ nested discovery requires a future profile, not silent recursive interpretation.
 Actual Lakeview catalog/version and dataset-binding design remain adapter work.
 
 This design resolves the generic mechanism without deciding dashboard-specific
-semantics. Architecture owns module boundaries, CONTRACT-906 owns interfaces,
+semantics. Architecture owns module boundaries, CONTRACT-907 owns interfaces,
 US-904 owns acceptance, and the implementation must supply passing evidence.
 
 ## Design verification — 2026-10-22
@@ -266,7 +266,7 @@ package core markers remain 0.10.0, because this capability introduces no new
 document members or core meanings. Explicit registration activates catalog
 profile 1.0.0. Ordinary registration preserves even catalog-shaped metadata as
 opaque. This avoids migrating unrelated adapters and makes interpretation an
-explicit consumer capability. CONTRACT-906 records the implemented interface.
+explicit consumer capability. CONTRACT-907 records the implemented interface.
 
 The synthetic dashboard example attaches dataset meaning to a core Record and
 references its core Fields from visuals and filters. Its validator is fixture

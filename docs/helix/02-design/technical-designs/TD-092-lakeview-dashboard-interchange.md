@@ -9,7 +9,7 @@ ddx:
   links:
     - id: umf.architecture
       kind: informed_by
-    - id: CONTRACT-082
+    - id: CONTRACT-083
       kind: informed_by
     - id: US-093
       kind: informed_by
@@ -23,8 +23,8 @@ ddx:
 
 ## Approach
 
-The owner requested applying CONTRACT-906 to PR42, reusing core Records/Fields
-and comparing reconstruction directly against original input bytes. CONTRACT-082
+The owner requested applying CONTRACT-907 to PR42, reusing core Records/Fields
+and comparing reconstruction directly against original input bytes. CONTRACT-083
 0.2 replaces compact rendering as the recovery criterion. Raw UTF-8 source and
 split native fragments coexist deliberately: raw text preserves lexical facts;
 fragments and core declarations provide inspectable identities and semantic

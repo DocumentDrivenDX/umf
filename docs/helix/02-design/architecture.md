@@ -667,7 +667,7 @@ direct expression composition and optional backend preparation.
 
 ### Extension-defined kinds (proposed)
 
-[CONTRACT-906](contracts/CONTRACT-906-extension-defined-kinds.md) defines
+[CONTRACT-907](contracts/CONTRACT-907-extension-defined-kinds.md) defines
 package-owned kind catalogs and generic discovery through existing extension
 payload tags. [The design](plan-2026-10-22-extension-defined-kinds.md) maps the
 explicit registration and qualification. This extends the existing
@@ -676,7 +676,7 @@ owner classification field or artifact-directed validator loading.
 
 | Module | Owned responsibility / public boundary | Allowed dependencies | Forbidden dependencies |
 | --- | --- | --- | --- |
-| `crates/umf-core/src/{registry,kinds}.rs` | Immutable registered catalogs and exact kind identities; CONTRACT-906 list/get/inspect operations | Core values, Context, generated package policy, existing registry and validation APIs | Adapters, dashboard literals, filesystem/network/process, binding runtimes |
+| `crates/umf-core/src/{registry,kinds}.rs` | Immutable registered catalogs and exact kind identities; CONTRACT-907 list/get/inspect operations | Core values, Context, generated package policy, existing registry and validation APIs | Adapters, dashboard literals, filesystem/network/process, binding runtimes |
 | `crates/umf-core/src/{constraints,engine}.rs` | Generic kind/tag/scope mechanics at existing extension validation boundary | Authored/generated policy, registered catalogs, explicit semantic capabilities | Per-ecosystem branches, manifest-selected code, a parallel payload-schema path |
 | `crates/umf-core-wire`, `bindings/core/{python,node,wasm}` | Complete manifest transport and language presentation | Public shared engine APIs, existing exact admission and callback protocol | Duplicated kind resolution/validation or lossy manifest reconstruction |
 | `spec/metamodel/umf.yaml`, compiler | Package/catalog/result shapes and diagnostic policy; generated outputs | Closed authored vocabulary and generic compiler mechanics | Hand-maintained generated schemas/types/rules |
