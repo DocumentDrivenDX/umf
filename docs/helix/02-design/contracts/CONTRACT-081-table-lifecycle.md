@@ -1420,3 +1420,229 @@ being inside an owned-schema statement does not make arbitrary calls safe.
 Trusted runtime role/timeout/fence setup is separate host code. Passing
 containment never replaces original-source regeneration, review/approval or live
 native correspondence, and never introduces raw SQL into typed G01 operations.
+
+### G02 typed same-row backfill successor
+
+This section implements SD-007's selected finite algebra. It changes no historical
+operation 0.1 or migration/options 0.1–0.3 grammar or replay meaning. All objects
+below are closed; unknown members and versions refuse before a runnable plan or
+native program is returned. Unsupported extensions remain retained in source.
+
+| Surface | G02 version and rule |
+| --- | --- |
+| Source declaration | `umf.table-operation/0.2`; only the closed UPDATE below |
+| Options / plan | `umf.table-migration-options/0.4` / `umf.table-migration/0.4` |
+| Execution profile | `umf.table-migration-execution/0.3`; required atomic phases below |
+| Weft compiled program | `weft.table-operation/0.2`; exact-value guard required |
+| Deployment bundle / module preparation | Existing versions and signatures retained; explicit source-operation version dispatch |
+| Approval / installation reference | Existing approval 0.1 and installation 0.3; latest approval plan digest may bind verified plan 0.4 |
+| Progress / history storage | Existing exact schema, privileges and receipt meaning; no new relation or metadata exception |
+| UMF opt-in Rust migration | Explicit refusal of options/plan 0.4 until separately implemented and qualified |
+
+An old compiler, source interpreter or host MUST refuse a successor it cannot
+verify. Retaining an unchanged wrapper or relation does not authorize accepting
+unknown operations or phase kinds. Persisted original plans are verified and
+replayed with their original profile; no downgrade or rehashed conversion grants
+new effects. `nativeQualified:false` and trusted host approval remain mandatory.
+
+#### Source operation and expression
+
+Operation 0.2 has exactly the keys `version`, `id`,
+`parameters`, `consistency`, `replay`, `body`. Values are respectively
+`umf.table-operation/0.2`, the existing bounded identity, `[]`, `transaction`,
+`caller-key-required`, and a closed body with exactly `kind`, `table`, `values`,
+`where`, `returning`, `maxRows`. The body has `kind:"update"`, one assignment,
+`returning:[]`, integral maxRows 1–10000 and exactly
+`where:{op:"isNull",field:targetRef}`. The assignment is exactly
+`{field:targetRef,value:{kind:"rowExpression",expression:RowExpression}}`.
+The optional historical `batch` member is absent. This version grants no insert,
+batch, read or general UPDATE expression surface.
+Operation 0.2 is administrative migration intent. Ordinary generated action/method
+catalogs exclude it while retaining ordinary 0.1 methods and exact original source.
+Its presence does not invalidate generation for the rest of a module. Ordinary
+runtime 0.1 paths MUST refuse a 0.2 program before SQL; only the verified migration
+0.4 path admits this guarded administrative program in this qualification.
+
+Each RowExpression is one closed object:
+
+| `op` | Other required members |
+| --- | --- |
+| `field` | `field:TableRef` |
+| `literal` | `value:CoreLiteral` |
+| `coalesce`, `concat` | `args:RowExpression[2..32]` |
+| `add`, `subtract`, `multiply` | `left:RowExpression`, `right:RowExpression` |
+| `conditional` | `when:TableOperationPredicate`, `then:RowExpression`, `else:RowExpression` |
+
+TableRef retains exactly `module` and `element`. The complete expression,
+including every predicate node and value leaf in a conditional, has maximum
+depth 16 and 256 nodes; repeated occurrences count again. Arrays have maximum
+fanout 32. Root depth is zero. Cyclic in-memory inputs refuse before traversal;
+serialized input remains subject to the existing source/request byte limits.
+Every predicate value leaf also consumes one node; literal wrappers do not open
+an uncharged expression subtree. Every literal token retains the existing
+1,048,576-byte value limit. Generated literal slots derive only from these charged
+leaves, never an independent unbounded list; deduplication does not reduce the
+source occurrence budget. Unknown extra slots or input sources refuse.
+New text literal leaves reject NUL and unpaired UTF-16 surrogates, including in
+unused branches. Supplementary Unicode remains supported without normalization
+or replacement-character substitution. Historical operation 0.1 is unchanged.
+Compiler SQL expansion MUST stay bounded by the admitted AST and literal slots;
+coalesce must not exponentially duplicate operand subtrees. The public 8 MiB
+frame guard measures returned markers/outputs, not private expression values or
+input memory. This profile relies on source/literal/AST/numeric/row limits,
+host statement/lock timeouts and PostgreSQL datum/server resource limits; it
+does not promise an 8 MiB bound on private evaluation memory.
+
+Conditions use existing `all`, `and`, `or`, `not`, `isNull`, `in`, comparisons and
+`startsWith` forms, with source-table input Fields and literal-only value
+operands. `related`, parameter, sourceField, rowExpression, principal and clock
+operands refuse. Predicate ordering, NULL and comparison semantics retain their
+qualified meaning: only SQL true selects `then`; false or unknown selects `else`.
+Equality and inequality retain the existing NULL-safe predicate meaning: two
+NULL values compare equal, and exactly one NULL compares unequal. Ordering and
+membership retain their existing SQL three-valued meaning. Qualified operator
+closure MUST preserve these distinctions.
+
+Every input Field MUST already exist on the same table and retain exact logical,
+native, facet, collation and mapping meaning across both sources. The target,
+new siblings, generated/volatile inputs and unresolved relevant semantics
+refuse. No other input or schema meaning changes in this plan. There is no
+callback, transform registry, raw SQL, join or ambient-state resolution.
+Source bytes, operation identity and AST are covered by the existing source and
+plan digests; a separate AST digest is not an authority substitute.
+The selected migration profile 0.4 requires both retained sources to have
+`format: "json"`, matching the qualified native binding capability. Non-JSON
+predecessor or successor sources MUST refuse at portable plan admission before
+approval, ingress fencing or effects. Implementations MUST NOT normalize them
+silently or change historical profile 0.1–0.3 admission.
+
+Carrier typing follows SD-007. CoreLiteral wrappers determine non-NULL literal
+types without imposing final target refinements on intermediate operands. NULL
+is a context-resolved nullable leaf; ambiguous incompatible carriers refuse.
+Coalesce returns the first non-NULL operand, conditional selects one branch, and
+concat is strict: any NULL operand yields NULL. Concat retains its text carrier
+and arithmetic retains its numeric carrier even when every operand is NULL;
+context resolution cannot turn either into an unrelated result type. Text/varchar requires C
+collation; char/bpchar and locale conversions refuse. Boolean, UUID, date and
+instant admit only identity-preserving field/literal, coalesce and conditional
+forms with exact native/logical compatibility. No float, implicit parsing,
+timezone conversion, division, remainder or user-defined function is admitted.
+
+Numeric typing admits exact integer/decimal promotion. Integer targets require
+a statically integral result. Decimal leaves require finite precision and
+nonnegative scale no greater than precision. A node's maximum integral and
+fractional digits `(I,S)` use native bounds or exact token bounds; add/subtract
+infer `(max(I1,I2)+1,max(S1,S2))`, multiply `(I1+I2,S1+S2)`, and
+coalesce/conditional componentwise maxima. Every node requires I+S <= 1000.
+Literal budgets describe the effective exact value after exponent/fraction
+cancellation. Implementations MUST bound the resulting coefficient and scale
+before allocating canonical native values; a raw exponent threshold is not a
+substitute for this budget. Original source tokens remain unchanged.
+All arithmetic uses unconstrained numeric intermediates. Nonfinite database
+values or final NULL/invalid results abort the entire phase. No invalid row is
+skipped, clipped, quarantined or silently replaced by a default.
+
+#### Guarded Weft program
+
+Program 0.2 retains the closed ordinary compiled-program members and transport,
+source/model/declaration/structural digest and recompile checks. Its `result`
+additionally requires exactly this `nativeExactValueGuard` descriptor:
+
+```json
+{"profile":"pg18-row-expression-exact/0.1","sqlstate":"22012","scope":"all-direct-target-rows","nullResult":"statement-error-and-transaction-rollback","nonfiniteInput":"statement-error-and-transaction-rollback","lossyAssignment":"statement-error-and-transaction-rollback","privateResults":true}
+```
+
+The successor is a single-call mutation with `outputs:[]`, affected marker
+`umf_affected`, existing effect-count/frame guards, and no parameter input other
+than source-declared literal slots. The host MUST require program 0.2 and the
+exact guard descriptor for a 0.4 derived backfill, and reject either a downgraded
+0.1 program or a missing/altered/unknown guard. Old backfills continue to require
+their original program version; adding this branch does not relax that check.
+
+Weft alone emits SQL. UPDATE's private RETURNING expression compares the stored
+target with the exact pure expression reevaluated from unchanged inputs and
+requires a non-NULL valid result. Numeric comparison uses exact numeric values;
+text uses text/C comparison preserving trailing spaces. The full effects
+aggregate combines every row's validity with the existing count/frame guard and
+raises runtime SQLSTATE 22012 on any false result. It also rejects every nonfinite
+referenced numeric input, including unused conditional branches, and every
+nonfinite final numeric value. Constrained numeric typmods do not exclude NaN;
+equality or cancellation cannot establish finiteness. NULL inputs remain allowed
+under the expression's explicit semantics. Zero effects pass. The guard
+cannot use LIMIT, filtering or sampling to exclude invalid effects. Its private
+values/booleans MUST NOT appear in public rows or diagnostics. Native NOT NULL,
+CHECK, unique, FK, overflow and length failures retain their native SQLSTATEs
+and abort the phase. Built-in functions, operators, types and C collation MUST
+resolve explicitly in pg_catalog, independently of ambient search_path.
+
+#### Plan, phases and durable admission
+
+Options 0.4 have exactly `version`, `backfills`, `concurrentIndexes`,
+`reviewedChanges`, `validations`, with predecessor-profile limits. Exactly one
+backfill selects the same closed `{table,column,operation,scopedRows:true}` shape.
+`concurrentIndexes` and `validations` are empty. The selected exact next-source
+operation is version 0.2; no selector/marker is unused or multiply consumed.
+Unrelated data/schema changes, seed phases and dependent new-field chains refuse.
+The existing target requires its exact reviewed tighten-not-null marker and
+unchanged meaning except optional-to-required nullability. An appended required
+target requires no fabricated tightening marker for a nonexistent predecessor.
+Other reviewed changes refuse. Generated/immutable targets remain unsupported.
+
+Plan 0.4 retains the 0.3 top-level members and approval profile. Its execution
+profile is exactly `{version:"umf.table-migration-execution/0.3",
+progressRelation:"umf_lifecycle_progress",ownerOnly:true}`. Every selected step
+has the existing exact `phaseTarget:{table,field:TableRef}` correspondence.
+`phaseOperation` permits these additional role values only in this profile:
+`add-column`, `target-check`, `install-default`; existing `backfill` and
+`tighten-not-null` are retained. Roles describe compiler-owned source steps,
+never SQL-text adjacency or executable author annotations.
+
+| Phase kind | Closed ordered membership; all transactions `required` |
+| --- | --- |
+| `backfill-tighten` | Exactly matching backfill then tighten-not-null, as G01 |
+| `backfill-add` | One add-column (nullable, no default), zero or more source-derived NULL-permitting target domain CHECK steps, one backfill, optional install-default, then one tighten-not-null |
+
+The append phase owns only the new target's column-local domain CHECKs and
+independently declared future default. New keys/FKs, cross-column checks or other
+dependency changes require separately qualified profiles and refuse here. Existing
+native constraints on unchanged tables stay effective.
+Staged target CHECKs must admit the nullable intermediate state without weakening
+their authored meaning. A target CHECK that explicitly rejects NULL refuses this
+first append shape; it cannot be silently weakened or applied before fill.
+All step IDs appear once,
+in source-derived order; missing, duplicate, swapped, extra or partial members
+refuse. Ordinary surrounding installation bookkeeping may remain separate phases,
+but no target add/fill/default/validation/tighten step escapes its atomic phase.
+Prefix reconstruction and native witnesses MUST recognize both complete shapes.
+
+The host locks the existing table before any phase member. It holds native writer
+exclusion across every member, restores/verifies RLS and authority before commit,
+and commits data, DDL and authenticated progress together. Aborts leave no partial
+column, fill, default, constraint or phase receipt. Unknown outcomes require exact
+observation; a committed phase never repeats its UPDATE. Final publication still
+atomically advances current source/history/grants and retains trusted approvals.
+Existing reference 0.3 and approval storage are reusable only with explicit plan
+0.4/execution 0.3 dispatch and identical metadata/ACL verification.
+
+#### Refusals, diagnostics and example
+
+Invalid source-operation grammar/type/reference/resource use returns a located
+`TABLES_OPERATION_SHAPE`, `TABLES_OPERATION_DOMAIN`, `TABLES_OPERATION_SOURCE`
+or `TABLES_OPERATION_CAPACITY` diagnostic. Unsupported selection or source-change
+correspondence returns located `TABLE_MIGRATION_OPTIONS`; unsupported profile
+composition returns `TABLE_MIGRATION_UNSUPPORTED`. No partial plan is returned.
+Host successor/program/guard mismatch refuses before SQL as
+`backfill-compilation-refused`; native guard errors abort the transaction.
+Ordinary diagnostics include identifiers, bounded paths and SQLSTATE only; native
+DETAIL/raw rejected rows stay outside public receipts and exception messages.
+
+For an unchanged given-name and family-name pair, the selected assignment may be:
+
+```json
+{"field":{"module":"people","element":"full-name"},"value":{"kind":"rowExpression","expression":{"op":"concat","args":[{"op":"field","field":{"module":"people","element":"given-name"}},{"op":"literal","value":{"string":" "}},{"op":"field","field":{"module":"people","element":"family-name"}}]}}}
+```
+
+The complete approved command supplies the exact target-NULL predicate and effect
+bound. Existing full names survive; a NULL input without authored coalesce or an
+overlength/rounded result aborts the entire phase. A future default is separate
+intent and never supplies historical row values implicitly.

@@ -1,0 +1,199 @@
+{
+  "status": "Weft 0.4.53 published; exact-head Weft PR checks passed and root plus independent post-publication asset verification passed; UMF final source CI, cohort integration and release gates remain pending",
+  "policy": "Use one explicit PR event/run per required workflow at the exact final source SHA; never infer approval from duplicate names, cancellation, or a previous head.",
+  "cancelRequested": {
+    "umfDuplicatePushRuns": [
+      40012163802,
+      40012163771,
+      40012163863,
+      40012163833,
+      40012163812,
+      40012163829
+    ],
+    "weftDuplicatePushRuns": [
+      40012272508,
+      40014221661,
+      40019945613,
+      40023180158
+    ],
+    "weftSupersededBuildOnlyRun": [
+      40012339395
+    ],
+    "weftSupersededPRRuns": [
+      40012339524,
+      40012338923
+    ],
+    "umfSupersededInitialRustRun": [
+      40012221525
+    ]
+  },
+  "retainedForSourceReview": {
+    "umfPRRuns": [
+      40012221576,
+      40012221638,
+      40012221600,
+      40012221605,
+      40012221525,
+      40012221770,
+      40012221554
+    ],
+    "weftPRRuns": [
+      40012339524,
+      40012338923,
+      40012338941
+    ]
+  },
+  "reason": "Duplicate and superseded CI runs remain historical and are not counted as final passes. The selected Weft PR checks passed at the exact reviewed head. The Weft dependency release is now published and verified; final UMF source-defined CI/cohort/release gates remain open.",
+  "alreadyCancelledSupersededPRRuns": [
+    40012338941
+  ],
+  "preliminaryPassingRuns": {
+    "weftSource": "54a8af9d02827cce85374db56e9cd50fbb7de97c",
+    "sharedCompiler": 40014225359,
+    "nativeTableOperations": 40014225595,
+    "linuxBuildOnly": 40014233937
+  },
+  "observedFailures": [
+    {
+      "repository": "DocumentDrivenDX/weft",
+      "runId": 40014225554,
+      "jobId": 120622326406,
+      "sourceCommit": "54a8af9d02827cce85374db56e9cd50fbb7de97c",
+      "job": "compiler-and-evidence",
+      "reason": "Governed metadata missing/unsupported on preexisting v0.4.52 release candidate document; corrected frontmatter only in4e576069. Final current-source hosted rerun required.",
+      "log": "/private/tmp/weft-g02-source54-compiler-ci.log"
+    },
+    {
+      "repository": "DocumentDrivenDX/weft",
+      "runId": 40019953439,
+      "jobId": 120641598247,
+      "sourceCommit": "7413c19d16ca5d8d8ce60b62d49ca0a3250544df",
+      "job": "compiler-and-evidence",
+      "reason": "New row-expression exports and three existing host release scripts absent from module ownership inventory; narrowed metadata-only correction committed in5d196ea3; final-head checks pending.",
+      "log": "/private/tmp/weft-g02-source7413-compiler-ci.log"
+    },
+    {
+      "repository": "DocumentDrivenDX/umf",
+      "runId": 40012221576,
+      "jobId": 120615210089,
+      "sourceCommit": "8a79d269e648f17ae1e24841ebc02b5f17020973",
+      "job": "python",
+      "reason": "Ruff TRY203/PLR1711 and test import ordering; current-source narrow cleanup and fresh artifacts pending.",
+      "log": "/private/tmp/umf-g02-initial-python-ci.log"
+    },
+    {
+      "repository": "DocumentDrivenDX/umf",
+      "runId": 40012221638,
+      "jobId": 120615211872,
+      "sourceCommit": "8a79d269e648f17ae1e24841ebc02b5f17020973",
+      "job": "inventory-boundaries",
+      "reason": "Source-derived Rust migration inventory stale after new source modules and package versions; refresh via owned generator pending.",
+      "log": "/private/tmp/umf-g02-initial-inventory-ci.log"
+    },
+    {
+      "repository": "DocumentDrivenDX/umf",
+      "runId": 40012221770,
+      "sourceCommit": "8a79d269e648f17ae1e24841ebc02b5f17020973",
+      "job": "python-codegen matrix and table-declarations",
+      "reason": "Old .49 URLs conflicted with new .53 lock, and initial pure admission boundary allowlist omitted row-expression helper. Boundary allowlist fixed in76ff1cc7; final .53 pins prepared, publication verification pending."
+    }
+  ],
+  "currentWeftSelectionPassed": {
+    "sourceCommit": "5d196ea3184b1a711bb4bcf91215a496c18ce9b2",
+    "event": "pull_request",
+    "runs": [
+      40023185471,
+      40023185590,
+      40023185354
+    ],
+    "buildOnlyRun": 40019944651,
+    "packagingSourceCommit": "7413c19d16ca5d8d8ce60b62d49ca0a3250544df",
+    "status": "passed: all four selected source-defined PR checks completed successfully at exact head 5d196ea3184b1a711bb4bcf91215a496c18ce9b2; subsequent Weft 0.4.53 publication and root/independent asset verification passed; UMF final source CI/cohort/release gates remain separate",
+    "requiredJobs": [
+      {
+        "runId": 40023185471,
+        "jobId": 120652687377,
+        "name": "shared-compiler",
+        "status": "completed",
+        "conclusion": "success",
+        "checkRunHeadSha": "5d196ea3184b1a711bb4bcf91215a496c18ce9b2"
+      },
+      {
+        "runId": 40023185590,
+        "jobId": 120652687772,
+        "name": "native-table-operations",
+        "status": "completed",
+        "conclusion": "success",
+        "checkRunHeadSha": "5d196ea3184b1a711bb4bcf91215a496c18ce9b2"
+      },
+      {
+        "runId": 40023185354,
+        "jobId": 120652687811,
+        "name": "graph-requirements-candidate",
+        "status": "completed",
+        "conclusion": "success",
+        "checkRunHeadSha": "5d196ea3184b1a711bb4bcf91215a496c18ce9b2"
+      },
+      {
+        "runId": 40023185354,
+        "jobId": 120652688055,
+        "name": "compiler-and-evidence",
+        "status": "completed",
+        "conclusion": "success",
+        "checkRunHeadSha": "5d196ea3184b1a711bb4bcf91215a496c18ce9b2"
+      }
+    ],
+    "checkoutCommit": "c6414d163f270425027db08ef454747904bde406",
+    "sourceAndCheckoutTree": "82913d1be942577389b6568d900cdf7c0ec3a20f",
+    "receiptPath": "docs/helix/04-build/evidence/mig-g02/weft-ci-5d196/receipt-final.json",
+    "receiptSha256": "67cc0a176aa4c54f508bd2aec0234488492a16ea82466510c73e81cfd2cd32e2",
+    "memberHashManifestPath": "docs/helix/04-build/evidence/mig-g02/weft-ci-5d196/members.sha256",
+    "memberHashManifestSha256": "455c65c1d013477ed7ee0a58140acd917fa7c07abd2571491d05607b0f6ff5b3",
+    "verifiedAt": "2026-10-23T22:03:26Z",
+    "archivePath": "docs/helix/04-build/evidence/mig-g02/weft-ci-5d196/weft-ci-5d196-evidence.tar.gz",
+    "archiveSha256": "99aae101f641ab520698630ef78edb413982569259e32793d619e5f74885d103",
+    "archiveManifestPath": "docs/helix/04-build/evidence/mig-g02/weft-ci-5d196/archive-manifest.json",
+    "archiveManifestSha256": "6c4e62c8ea403f828ba51c9328fe60f307da51320ffbcb222c9b43b51daccc09",
+    "historicalMemberInventoryPathInsideArchive": "weft-ci-5d196/members.sha256",
+    "historicalMemberInventorySha256": "455c65c1d013477ed7ee0a58140acd917fa7c07abd2571491d05607b0f6ff5b3"
+  },
+  "publishedDependencyRelease": {
+    "status": "published-and-verified",
+    "repository": "DocumentDrivenDX/weft",
+    "version": "0.4.53",
+    "tag": "v0.4.53",
+    "releaseId": 422347988,
+    "publishedAt": "2026-10-23T22:07:21Z",
+    "releaseUrl": "https://github.com/DocumentDrivenDX/weft/releases/tag/v0.4.53",
+    "mergeCommit": "726a840e956e25217d6aeea2674fdfcf3f342a24",
+    "mergeTree": "82913d1be942577389b6568d900cdf7c0ec3a20f",
+    "packagingSourceCommit": "7413c19d16ca5d8d8ce60b62d49ca0a3250544df",
+    "packagingRunId": 40019944651,
+    "promotionRunId": 40031490546,
+    "promotionStatus": "success",
+    "automaticTagRunId": 40031224537,
+    "automaticTagRunStatus": "completed/cancelled before macOS staging",
+    "assetInventorySha256": "3ce9110319b90f264f0d542a8728018b86dbe55814fcf161b5245f2de142f2b9",
+    "rootVerifier": {
+      "path": "docs/helix/04-build/evidence/mig-g02/weft-publication-0.4.53/root-verification/verification.json",
+      "sha256": "38595ee113837f706caeee75ed5fc012ba414868a4b7e3d743589b636bcde73b",
+      "status": "passed-local-asset-verification"
+    },
+    "independentVerifier": {
+      "path": "docs/helix/04-build/evidence/mig-g02/weft-publication-0.4.53/independent-review/verification.json",
+      "sha256": "38595ee113837f706caeee75ed5fc012ba414868a4b7e3d743589b636bcde73b",
+      "status": "passed-local-asset-verification"
+    },
+    "reviewerSignoff": {
+      "path": "docs/helix/04-build/evidence/mig-g02/weft-publication-0.4.53/independent-review/weft-0.4.53-published-review.json",
+      "sha256": "094b7179a60aac72662e5499415aa6b33366960ff317011af6f8c5f7ccb9c442",
+      "status": "passed-independent-fresh-published-verification"
+    },
+    "workflowPinCheck": {
+      "path": "docs/helix/04-build/evidence/mig-g02/weft-publication-0.4.53/workflow-pin-verification.json",
+      "sha256": "674c88d83bc5c375a5ebd3d102ff5ef8b38dcb29ec323f1f6791af2459d446f1",
+      "status": "passed"
+    },
+    "limitation": "Weft Linux wheels are packaging-qualified only; no Linux G02 native functional execution claim."
+  }
+}

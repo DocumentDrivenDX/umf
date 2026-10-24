@@ -25,8 +25,8 @@ V8_DEBT = {
         "patterns": ["py_mini_racer", "MiniRacer"],
     },
     "python/umf_codegen/pyproject.toml": {
-        "sha256": "6fd91b3a8e5c381e41f2092a4de79669e09586bcb282582a8859586cbab35c36",
-        "reason": "Pinned MiniRacer dependency remains pre-R4 debt; main PR40/41 changed only the package version through 0.1.0a4.",
+        "sha256": "07253df785a646223c12051e41e3a07b0d5806e442b5aec96f8dce9362d30620",
+        "reason": "Pinned MiniRacer dependency remains pre-R4 debt; the G02 release candidate changes only the package version from 0.1.0a4 to 0.1.0a5.",
         "patterns": ["mini-racer==0.14.1"],
     },
 }

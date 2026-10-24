@@ -1,0 +1,326 @@
+{
+  "coreBuildInputSourceDiffFromProducer": {
+    "command": "git diff --name-only 259bf1ed91466ff7e9782d7517c14f2112282026 -- Cargo.toml Cargo.lock rust-toolchain.toml .cargo crates/umf-core crates/umf-core-wire bindings/core/python python/hatch_build.py python/pyproject.toml python/src/umf spec/core spec/metamodel/generated",
+    "interpretation": "within the listed Rust/Core producer and Core payload source paths, only the generated metamodel provenance manifest differs from the published producer commit",
+    "paths": [
+      "spec/metamodel/generated/manifest.json"
+    ]
+  },
+  "decisionRecord": "Root directed reuse of immutable Core 0.10.1 from producer 259; retain its embedded old manifest. The SDK 0.5.7 current-source manifest is separately regenerated and pinned. This comparison documents the two root package.json fingerprint changes; it does not authorize rebuilding or overwriting Core 0.10.1.",
+  "onlyDifference": {
+    "archivedSha256": "bb8cb847fdbbbcc64dcb92dc24103eb4364d82a9f03576de45be8352bd730635",
+    "changedJsonPaths": [
+      {
+        "new": "c7b69fba001805dc9cd4e26e84a9b786be379c1413d020c34600c063d287101b",
+        "old": "031bdb38c663c33804c02de06906c9c4fdd7bbf32728204cd4c8d30959c324ed",
+        "path": "/backend/inputs/package.json"
+      },
+      {
+        "new": "c7b69fba001805dc9cd4e26e84a9b786be379c1413d020c34600c063d287101b",
+        "old": "031bdb38c663c33804c02de06906c9c4fdd7bbf32728204cd4c8d30959c324ed",
+        "path": "/sources/package.json"
+      }
+    ],
+    "classification": "package.json provenance digest only; every other field in the generated metamodel manifest is equal; no schema, constraint, domain-policy, Python module, or native-module change",
+    "currentSha256": "2599f3f589c2c17e33d733227eeaa0aba17c9a9ba9aa292f42ab0c7870ea567b",
+    "member": "umf/spec/metamodel/generated/manifest.json"
+  },
+  "producer": {
+    "acquisitionStatus": "anonymous-public-bytes-verified",
+    "observedUtc": "2026-10-24T00:47:57.644462+00:00",
+    "producerCommit": "259bf1ed91466ff7e9782d7517c14f2112282026",
+    "publicBytesAnonymousVerified": true,
+    "releaseTag": "umf-v0.5.6",
+    "repository": "DocumentDrivenDX/umf"
+  },
+  "publishedCore": {
+    "linuxNativeModuleSha256": "9cca9d9bb5afd48316de234df2f831b81a1de2d9563909a91ad5433e6a7467eb",
+    "nativeModuleSha256": "4455abbceb674228e0a52b1e747d830bad0bcb3f597a918d0ea3dc943ced50fd",
+    "qualificationSha256": "d4f18d52d9449e94c249238bd33ae5851a31c90b6e7b9bf57186808f14b3c0c5",
+    "sdist": {
+      "path": "/private/tmp/umf-g02-core-0101-public-acquisition/umf_core-0.10.1.tar.gz",
+      "rootPackageIncluded": false,
+      "sha256": "f0bc596a38de03d861212dd30d9d1d2844af215c4572dea7d7186e1f8cda0bb5",
+      "sourceFileCount": 523
+    },
+    "wheel": {
+      "path": "/private/tmp/umf-g02-core-0101-public-acquisition/umf_core-0.10.1-cp311-abi3-macosx_11_0_arm64.whl",
+      "publicUrl": "https://github.com/DocumentDrivenDX/umf/releases/download/umf-v0.5.6/umf_core-0.10.1-cp311-abi3-macosx_11_0_arm64.whl",
+      "sha256": "49459bb2dbc37ac9b62b269e9664bac1483439c7d4c79f0b07855e9c8546c823",
+      "sizeBytes": 3250983
+    }
+  },
+  "schema": "umf.core-reuse-comparison/1",
+  "scope": "Read-only comparison of immutable published Core 0.10.1 payload against SDK 0.5.7 working-source counterparts; no Core rebuild, no claim Core was built from SDK 0.5.7, no publication qualification.",
+  "sdkSource": {
+    "head": "c46d483cedf7a243f1a05960ab64688ed9fa617f",
+    "manifestPath": "spec/metamodel/generated/manifest.json",
+    "manifestSha256": "2599f3f589c2c17e33d733227eeaa0aba17c9a9ba9aa292f42ab0c7870ea567b",
+    "rootPackageSha256": "c7b69fba001805dc9cd4e26e84a9b786be379c1413d020c34600c063d287101b",
+    "rootPackageVersion": "0.5.7",
+    "worktree": "/Users/erik/.codex/worktrees/g02-final-integration/umf"
+  },
+  "wheelSourceMemberComparison": {
+    "byteEqualCount": 31,
+    "checkedCount": 32,
+    "differentCount": 1,
+    "entries": [
+      {
+        "archivedSha256": "f7ca7df3c0b7cd6f493126bfe0edfa1aa7e3e92e66d88274777d77534766caaf",
+        "byteEqual": true,
+        "currentSha256": "f7ca7df3c0b7cd6f493126bfe0edfa1aa7e3e92e66d88274777d77534766caaf",
+        "currentSourcePath": "python/src/umf/__init__.py",
+        "sizeBytes": 1202,
+        "wheelMember": "umf/__init__.py"
+      },
+      {
+        "archivedSha256": "f3b573f016fe6c89ac0d45da62cc49f145ea08622d9244490411248dfbb9fddf",
+        "byteEqual": true,
+        "currentSha256": "f3b573f016fe6c89ac0d45da62cc49f145ea08622d9244490411248dfbb9fddf",
+        "currentSourcePath": "python/src/umf/_rust.py",
+        "sizeBytes": 13793,
+        "wheelMember": "umf/_rust.py"
+      },
+      {
+        "archivedSha256": "6ba9e8f7480b7d2c691af088dc44a1d82efb0b0c4b9e38700eec91a6abfebb89",
+        "byteEqual": true,
+        "currentSha256": "6ba9e8f7480b7d2c691af088dc44a1d82efb0b0c4b9e38700eec91a6abfebb89",
+        "currentSourcePath": "python/src/umf/action_runtime.py",
+        "sizeBytes": 10318,
+        "wheelMember": "umf/action_runtime.py"
+      },
+      {
+        "archivedSha256": "4e93b3f9ef520cd6a1e3778fc41ad6e5494713313c420e017188632a4ee20598",
+        "byteEqual": true,
+        "currentSha256": "4e93b3f9ef520cd6a1e3778fc41ad6e5494713313c420e017188632a4ee20598",
+        "currentSourcePath": "python/src/umf/constraint_kernel.py",
+        "sizeBytes": 272,
+        "wheelMember": "umf/constraint_kernel.py"
+      },
+      {
+        "archivedSha256": "9b473cf89f7d9ff5486d741282d590f5cc115e83b831d5b9090464e127e8e7f8",
+        "byteEqual": true,
+        "currentSha256": "9b473cf89f7d9ff5486d741282d590f5cc115e83b831d5b9090464e127e8e7f8",
+        "currentSourcePath": "python/src/umf/generated_resources.py",
+        "sizeBytes": 1721,
+        "wheelMember": "umf/generated_resources.py"
+      },
+      {
+        "archivedSha256": "14e7a4916c581655cca993500cdf76b7372213eab3e421fc2d9892d951b98aec",
+        "byteEqual": true,
+        "currentSha256": "14e7a4916c581655cca993500cdf76b7372213eab3e421fc2d9892d951b98aec",
+        "currentSourcePath": "python/src/umf/json.py",
+        "sizeBytes": 340,
+        "wheelMember": "umf/json.py"
+      },
+      {
+        "archivedSha256": "908eaa7d47ab6de89ca3493f0637ba19606936f3db756d984c5e3c6aaae0076f",
+        "byteEqual": true,
+        "currentSha256": "908eaa7d47ab6de89ca3493f0637ba19606936f3db756d984c5e3c6aaae0076f",
+        "currentSourcePath": "python/src/umf/literal_kernel.py",
+        "sizeBytes": 848,
+        "wheelMember": "umf/literal_kernel.py"
+      },
+      {
+        "archivedSha256": "c625c5f187268ce66c60a396a7cad14d2b5e3d9ddb976719e0cc6209fcfc08e1",
+        "byteEqual": true,
+        "currentSha256": "c625c5f187268ce66c60a396a7cad14d2b5e3d9ddb976719e0cc6209fcfc08e1",
+        "currentSourcePath": "python/src/umf/models.py",
+        "sizeBytes": 4150,
+        "wheelMember": "umf/models.py"
+      },
+      {
+        "archivedSha256": "c29cc0087cbd555dc1a964d2deed90d74cf8f3e2c28aff2b9895512fa90c88bc",
+        "byteEqual": true,
+        "currentSha256": "c29cc0087cbd555dc1a964d2deed90d74cf8f3e2c28aff2b9895512fa90c88bc",
+        "currentSourcePath": "python/src/umf/registry.py",
+        "sizeBytes": 1867,
+        "wheelMember": "umf/registry.py"
+      },
+      {
+        "archivedSha256": "a1d787a1475ac2e52fa13f7d3e62a821896b30f9a8d557ef1661946e10cf825e",
+        "byteEqual": true,
+        "currentSha256": "a1d787a1475ac2e52fa13f7d3e62a821896b30f9a8d557ef1661946e10cf825e",
+        "currentSourcePath": "python/src/umf/rust_codegen.py",
+        "sizeBytes": 8935,
+        "wheelMember": "umf/rust_codegen.py"
+      },
+      {
+        "archivedSha256": "4729344e8aa9846281b6af82d0398e3aad41d778b59cf5895f5e7a3d219f642d",
+        "byteEqual": true,
+        "currentSha256": "4729344e8aa9846281b6af82d0398e3aad41d778b59cf5895f5e7a3d219f642d",
+        "currentSourcePath": "python/src/umf/schemas.py",
+        "sizeBytes": 9924,
+        "wheelMember": "umf/schemas.py"
+      },
+      {
+        "archivedSha256": "d77a9afc1bd7d500d341fa00f3c8af73ed89694a0a5cd3f2382f577e6fdb947a",
+        "byteEqual": true,
+        "currentSha256": "d77a9afc1bd7d500d341fa00f3c8af73ed89694a0a5cd3f2382f577e6fdb947a",
+        "currentSourcePath": "python/src/umf/serialization.py",
+        "sizeBytes": 657,
+        "wheelMember": "umf/serialization.py"
+      },
+      {
+        "archivedSha256": "0422eb695da542314da853518532fc29466a60be4070123d911277a6b9d02d64",
+        "byteEqual": true,
+        "currentSha256": "0422eb695da542314da853518532fc29466a60be4070123d911277a6b9d02d64",
+        "currentSourcePath": "python/src/umf/validation.py",
+        "sizeBytes": 828,
+        "wheelMember": "umf/validation.py"
+      },
+      {
+        "archivedSha256": "857cb47fd75b274631c9008c61d1200ec0141b1d6da972248ba7b4a516967660",
+        "byteEqual": true,
+        "currentSha256": "857cb47fd75b274631c9008c61d1200ec0141b1d6da972248ba7b4a516967660",
+        "currentSourcePath": "python/src/umf/action_runtime_resource_manifest.json",
+        "sizeBytes": 1945,
+        "wheelMember": "umf/action_runtime_resource_manifest.json"
+      },
+      {
+        "archivedSha256": "b77e7cee2ac6ad9d482122a63d0ab6044c341b2757135a0c896213c3fa596d62",
+        "byteEqual": true,
+        "currentSha256": "b77e7cee2ac6ad9d482122a63d0ab6044c341b2757135a0c896213c3fa596d62",
+        "currentSourcePath": "spec/extensions/actions/package.json",
+        "sizeBytes": 11496,
+        "wheelMember": "umf/action_runtime_resources/actionsPackage.json"
+      },
+      {
+        "archivedSha256": "f3326533dcf3d2227955bae2261ab005eaf8692e289c7461f2015fd40565a78f",
+        "byteEqual": true,
+        "currentSha256": "f3326533dcf3d2227955bae2261ab005eaf8692e289c7461f2015fd40565a78f",
+        "currentSourcePath": "spec/extensions/binding/package.json",
+        "sizeBytes": 8840,
+        "wheelMember": "umf/action_runtime_resources/bindingPackage.json"
+      },
+      {
+        "archivedSha256": "444f3dbb8dca0b3f5777d2c26887fc371efb62e6f37e5ae5600b63067785b412",
+        "byteEqual": true,
+        "currentSha256": "444f3dbb8dca0b3f5777d2c26887fc371efb62e6f37e5ae5600b63067785b412",
+        "currentSourcePath": "spec/metamodel/generated/core-constraints.json",
+        "sizeBytes": 190252,
+        "wheelMember": "umf/action_runtime_resources/constraints.json"
+      },
+      {
+        "archivedSha256": "89306e2fd6127114b275a367ed1e1908d15aa71fc15d17d8866c53443ce0d78f",
+        "byteEqual": true,
+        "currentSha256": "89306e2fd6127114b275a367ed1e1908d15aa71fc15d17d8866c53443ce0d78f",
+        "currentSourcePath": "spec/core/schema.json",
+        "sizeBytes": 34651,
+        "wheelMember": "umf/action_runtime_resources/coreSchema.json"
+      },
+      {
+        "archivedSha256": "14c141d6b7adc55f7dbddfaa3ea016eafb158e4e12ccf56155bc75f510c6e641",
+        "byteEqual": true,
+        "currentSha256": "14c141d6b7adc55f7dbddfaa3ea016eafb158e4e12ccf56155bc75f510c6e641",
+        "currentSourcePath": "spec/metamodel/generated/domain-policy.json",
+        "sizeBytes": 14016,
+        "wheelMember": "umf/action_runtime_resources/domainPolicy.json"
+      },
+      {
+        "archivedSha256": "85a5c4a704bd6222ada4908cb7cfaada6b7869cf21b1b0095cdff8846754494d",
+        "byteEqual": true,
+        "currentSha256": "85a5c4a704bd6222ada4908cb7cfaada6b7869cf21b1b0095cdff8846754494d",
+        "currentSourcePath": "spec/core/extension-package.schema.json",
+        "sizeBytes": 34314,
+        "wheelMember": "umf/action_runtime_resources/packageSchema.json"
+      },
+      {
+        "archivedSha256": "32ce36e9181dfaad50277f78907ca5374c5cf5e03e77f0b7924a425a19cae3e0",
+        "byteEqual": true,
+        "currentSha256": "32ce36e9181dfaad50277f78907ca5374c5cf5e03e77f0b7924a425a19cae3e0",
+        "currentSourcePath": "spec/core/semantic-type-reference.schema.json",
+        "sizeBytes": 34772,
+        "wheelMember": "umf/action_runtime_resources/referenceSchema.json"
+      },
+      {
+        "archivedSha256": "0550ae86d0cf07f9e61fb78bbb3a2eeb370838681a1483b1088409ddaeb0631e",
+        "byteEqual": true,
+        "currentSha256": "0550ae86d0cf07f9e61fb78bbb3a2eeb370838681a1483b1088409ddaeb0631e",
+        "currentSourcePath": "spec/extensions/binding-stable/package.json",
+        "sizeBytes": 8885,
+        "wheelMember": "umf/action_runtime_resources/stableBindingPackage.json"
+      },
+      {
+        "archivedSha256": "beeb8749216b20d98211700c0a81cdd210b1eaea4060f7ae81b8a91f061da18d",
+        "byteEqual": true,
+        "currentSha256": "beeb8749216b20d98211700c0a81cdd210b1eaea4060f7ae81b8a91f061da18d",
+        "currentSourcePath": "spec/extensions/tables/package.json",
+        "sizeBytes": 23817,
+        "wheelMember": "umf/action_runtime_resources/tablesPackage.json"
+      },
+      {
+        "archivedSha256": "85a5c4a704bd6222ada4908cb7cfaada6b7869cf21b1b0095cdff8846754494d",
+        "byteEqual": true,
+        "currentSha256": "85a5c4a704bd6222ada4908cb7cfaada6b7869cf21b1b0095cdff8846754494d",
+        "currentSourcePath": "spec/core/extension-package.schema.json",
+        "sizeBytes": 34314,
+        "wheelMember": "umf/spec/core/extension-package.schema.json"
+      },
+      {
+        "archivedSha256": "89306e2fd6127114b275a367ed1e1908d15aa71fc15d17d8866c53443ce0d78f",
+        "byteEqual": true,
+        "currentSha256": "89306e2fd6127114b275a367ed1e1908d15aa71fc15d17d8866c53443ce0d78f",
+        "currentSourcePath": "spec/core/schema.json",
+        "sizeBytes": 34651,
+        "wheelMember": "umf/spec/core/schema.json"
+      },
+      {
+        "archivedSha256": "32ce36e9181dfaad50277f78907ca5374c5cf5e03e77f0b7924a425a19cae3e0",
+        "byteEqual": true,
+        "currentSha256": "32ce36e9181dfaad50277f78907ca5374c5cf5e03e77f0b7924a425a19cae3e0",
+        "currentSourcePath": "spec/core/semantic-type-reference.schema.json",
+        "sizeBytes": 34772,
+        "wheelMember": "umf/spec/core/semantic-type-reference.schema.json"
+      },
+      {
+        "archivedSha256": "444f3dbb8dca0b3f5777d2c26887fc371efb62e6f37e5ae5600b63067785b412",
+        "byteEqual": true,
+        "currentSha256": "444f3dbb8dca0b3f5777d2c26887fc371efb62e6f37e5ae5600b63067785b412",
+        "currentSourcePath": "spec/metamodel/generated/core-constraints.json",
+        "sizeBytes": 190252,
+        "wheelMember": "umf/spec/metamodel/generated/core-constraints.json"
+      },
+      {
+        "archivedSha256": "14c141d6b7adc55f7dbddfaa3ea016eafb158e4e12ccf56155bc75f510c6e641",
+        "byteEqual": true,
+        "currentSha256": "14c141d6b7adc55f7dbddfaa3ea016eafb158e4e12ccf56155bc75f510c6e641",
+        "currentSourcePath": "spec/metamodel/generated/domain-policy.json",
+        "sizeBytes": 14016,
+        "wheelMember": "umf/spec/metamodel/generated/domain-policy.json"
+      },
+      {
+        "archivedSha256": "bb8cb847fdbbbcc64dcb92dc24103eb4364d82a9f03576de45be8352bd730635",
+        "byteEqual": false,
+        "currentSha256": "2599f3f589c2c17e33d733227eeaa0aba17c9a9ba9aa292f42ab0c7870ea567b",
+        "currentSourcePath": "spec/metamodel/generated/manifest.json",
+        "sizeBytes": 31720,
+        "wheelMember": "umf/spec/metamodel/generated/manifest.json"
+      },
+      {
+        "archivedSha256": "414e92bbde701d11e101c17bba3c51d78f396c6d7c2af62b0b1be61bfd6c3589",
+        "byteEqual": true,
+        "currentSha256": "414e92bbde701d11e101c17bba3c51d78f396c6d7c2af62b0b1be61bfd6c3589",
+        "currentSourcePath": "spec/metamodel/generated/python-shapes.json",
+        "sizeBytes": 75560,
+        "wheelMember": "umf/spec/metamodel/generated/python-shapes.json"
+      },
+      {
+        "archivedSha256": "385f12f3b643f86838cb2b9baec60d85cbac1e3e543ffd015105465fa1ccbc95",
+        "byteEqual": true,
+        "currentSha256": "385f12f3b643f86838cb2b9baec60d85cbac1e3e543ffd015105465fa1ccbc95",
+        "currentSourcePath": "spec/extensions/dataset-source/schema.json",
+        "sizeBytes": 3227,
+        "wheelMember": "umf/spec/extensions/dataset-source/schema.json"
+      },
+      {
+        "archivedSha256": "e34054015eae699987d7fd0640bdbc17906b129fa46b2c5770753ebf0723931e",
+        "byteEqual": true,
+        "currentSha256": "e34054015eae699987d7fd0640bdbc17906b129fa46b2c5770753ebf0723931e",
+        "currentSourcePath": "spec/extensions/domain-pack/schema.json",
+        "sizeBytes": 16109,
+        "wheelMember": "umf/spec/extensions/domain-pack/schema.json"
+      }
+    ]
+  }
+}

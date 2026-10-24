@@ -212,13 +212,122 @@ whether refusal occurs in planning or requires unqualified host capability.
 | MIG-G07 | Cross-document schema migration and coordinated multi-store execution are not delivered by single-document deployment digests. | US-050/CONTRACT-045 then MIG-02/08 | Exact revision/dependency closure, unknown extensions, source/target identity and explicit cross-store recovery without assumed distributed atomicity |
 | MIG-G08 | Truss, Ashlar and other storage backends lack qualification for this shared migration design. Mutable admission and immutable new-publication semantics remain backend-owned. | MIG-08; each backend owner | Same Person intent with genuine graph/table/file effects, backend-specific refusals and publication/journal recovery |
 | MIG-G09 | Actual managed Lakebase/Praxis consumer migration acceptance is unverified. Local PostgreSQL evidence and installed wheels do not establish managed privileges, platform limits or adoption. | MIG-07; integration and consumer owners | Dedicated managed target and actual consumer schema/workload replay on frozen installed artifacts |
-| MIG-G10 | Mixed v0.2/v0.3 table-inventory changes and initial deployment are outside the selected existing-table evolution profiles. The separately qualified v0.1 bootstrap/add-table route does not imply a downgrade path from persistent-approval metadata or one mixed plan that creates tables and evolves existing ones. | MIG-02/07; table compiler/host | Explicit portable refusal of unsupported v0.2/v0.3 shapes, preserved exact v0.1 bootstrap/add-table behavior, then a separately designed prefix-inventory execution profile before expansion |
-| MIG-G11 | Dropping and appending columns in one existing-table migration is explicitly unsupported and must refuse before plan emission, including equal-count replacement. Do not infer atomic combined support from separate drop/add capabilities. | MIG-02/05; stable-ID dependency scheduling owner | Stable-ID additions/removals and complete ordered effects; same/different counts, denied UPDATE and dependent policies; separately approved migrations only where each intermediate schema/data state is valid and independently qualified |
+| MIG-G10 | Mixed v0.2/v0.3 table-inventory changes and initial deployment are outside the selected existing-table evolution profiles. The separately qualified v0.1 bootstrap/add-table route does not imply a downgrade path from persistent-approval metadata or one mixed plan that creates tables and evolves existing ones. G02 does not rewrite retained create commands: a required appended Field without a default requires those commands already to supply it, or ordinary admission refuses with `TABLES_OPERATION_REQUIRED`. | MIG-02/07; table compiler/host | Explicit portable refusal of unsupported v0.2/v0.3 shapes, preserved exact v0.1 bootstrap/add-table behavior, then a separately designed prefix-inventory execution profile before expansion |
+| MIG-G11 | Dropping and appending columns in one existing-table migration is explicitly unsupported and must refuse before plan emission, including equal-count replacement. G02 does not rewrite retained commands to bridge such replacement; combined command evolution around a derived append/drop remains separately scoped. Do not infer atomic combined support from separate drop/add capabilities. | MIG-02/05; stable-ID dependency scheduling owner | Stable-ID additions/removals and complete ordered effects; same/different counts, denied UPDATE and dependent policies; separately approved migrations only where each intermediate schema/data state is valid and independently qualified |
 
 Do not invent dates or erase residuals to close the bounded release. Each owner
 must select and design its next slice before advertising the corresponding
 capability. A change that was explicitly refused becomes supported only after
 its native and portable acceptance gates pass for the declared version/subset.
+
+## Backlog execution selection — 2026-10-23
+
+The human explicitly selected **all remaining MIG-G02–G11** through planning,
+implementation, test, design review, independent native verification and release.
+G02 is next. This selection supersedes the older proposed ordering below, while
+preserving that historical record and the qualified G01/0.5.5 evidence. The active
+umbrella goal stays open after the G02 release until the remaining entries pass
+their own closure gates or a concrete external prerequisite is explicitly tracked.
+Unavailability of a target is not evidence that its gap is closed.
+
+**Plan UMF and Weft Praxis asks** owns implementation, integrated contracts,
+tests, merge and release. **Explain UMF schema migrations** owns design decisions,
+independent review/native verification and published-artifact comparison. Product
+implementation stays in the implementation session; this plan does not authorize
+changes to Praxis. No release version/date or managed target is assumed.
+
+### G02 selected delivery gates
+
+The governing design is [SD-007's G02 section](../02-design/solution-designs/SD-007-schema-migrations.md#mig-g02--typed-same-row-backfills-selected-2026-10-23).
+The selected finite typed algebra closes a useful declared profile, not arbitrary
+user code. Broader expression families stay explicitly unsupported; no generic
+trusted callback claim may be inferred.
+
+| Gate | Implementation owner deliverable | Independent acceptance / exit |
+| --- | --- | --- |
+| G02-D1 interfaces | Amend CONTRACT-081, TD-085 and STP-085: closed operation 0.2 AST, options/plan 0.4, Weft program 0.2 guard descriptor, exact source/reference/approval/runtime admission and two atomic phase correspondences | Review concrete shapes, type/NULL/exactness/resource semantics and old-version refusal/replay before feature code |
+| G02-D2 Weft | Shared Rust admission/lowering for Python and WASM; finite exact arithmetic, C text semantics, private full-effects exactness/count guard; qualified built-in resolution | No UMF SQL renderer; no rounding/truncation/intermediate loss; baseline operation 0.1 unchanged; new unsupported shapes refuse |
+| G02-D3 UMF | Browser-compatible compiler/validators, stable input closure, canonical identity, two closed phase variants, unchanged native meaning admission | Bun and actual Chromium; malformed/tampered/resource/unsupported cases; no new operation admitted by old schema authority |
+| G02-D4 host | Versioned program admission, locked atomic data/constraint/progress, full native constraints, bounded effects and sanitized failures | Existing and appended required target shapes; unknown commit resolution, rollback/no repeat and held direct-writer evidence |
+| G02-D5 independent native | Frozen installable cohort and synthetic PostgreSQL fixtures with manually specified expected rows; semantic and fault matrix in SD-007/STP-085 | Reviewer independently runs installed artifacts; records native versions, hashes, SQLSTATEs, exact rows, locks and recovery; no self-oracle |
+| G02-D6 candidate review | Focused source review, dependency/platform inventory, required CI, fresh package installation/network-denied controls and accurate release notes | Candidate source/tree and all artifacts frozen; old capabilities retained, UMF Rust 0.4 refused unless separately qualified; remaining G03–G11 listed |
+| G02-D7 publication | Merge reviewed candidate; publish exact immutable UMF/Weft cohort in dependency order, without colliding with another release | Fresh published downloads match reviewed hashes/inner SDK inventory and merge/tag tree; notes accurately state finite G02 limits and every residual |
+
+D1 must fix exact wrapper/reference version dispatch and the compiled guard wire
+contract, not defer those decisions to implementation. D2–D4 may proceed in
+parallel only after interface review. Any semantic expansion returns to design
+review. The selected native baseline is PostgreSQL 18.6 maintenance execution;
+managed adoption remains G09. Each new dependency release must use a unique actual
+version after checking concurrent publishers; historical 0.4.49 artifacts cannot
+be relabeled. Public platform support follows shipped and verified artifacts,
+not a historical platform count.
+
+#### Final G02 integration checkpoint
+
+SDK 0.5.7 is selected after the separate Core 0.10.1 publication at
+`umf-v0.5.6`, commit `259bf1ed91466ff7e9782d7517c14f2112282026`.
+The integration retains those immutable Core wheel/sdist bytes and their original
+producer identity. Comparison against the regenerated SDK 0.5.7 source maps
+32 Core Python/JSON payloads: 31 match exactly; the generated metamodel manifest
+differs only in two root `package.json` fingerprints. The Core semantic document
+version remains 0.10.0. Reusing the published component requires fresh installed
+composition tests; an SDK source fingerprint does not relabel its Core producer.
+
+The combined source passed type checking, nine focused G02 compiler tests
+(47 assertions), five host phase tests, one ordinary-runtime refusal test and
+three host-error privacy tests. The reviewed single-cell selector and aggregate
+verifier passed 29 self-contained tests in the integration checkout. These checks precede the final
+source freeze and do not replace current-source CI or native acceptance.
+
+The actual published 0.5.5 legacy mirror passed a fresh network-denied replay on
+macOS 27.0.1 arm64 / CPython 3.11.17 using its original corpus and fixtures.
+Independent review verified the archive, all 29 original wheels, actual exit
+status and probe receipts. The retained [replay evidence](evidence/mig-g02/final-integration/legacy-public-0.5.5/independent-review.json)
+qualifies that legacy path only. Missing/tamper controls use separate temporary
+copies; the generated mirror is disposable test output excluded from publication.
+
+The additional date/instant/UUID/boolean native fixture remains unqualified.
+Its first two runs stopped on harness errors before migration acceptance: the
+initial boolean cast and then a query assuming the transient progress table
+survives final publication. Both failures
+are retained, and the second run's pre/post database and role inventories match.
+The corrected source must pass review and actual installed native execution;
+source tests alone do not close this gate.
+
+Final candidate review includes a closed four-cell wheel-union index and actual
+network-denied installation from that union on each supported runtime cell.
+Aggregate source review passed its scoped gate. Final regeneration, current-source CI, independently
+reviewed native evidence, merge and SDK publication remain open. The
+[0.5.7 candidate notes](../05-deploy/sdk-release-notes-0.5.7.md) retain the finite
+capability and residual migration scopes. Earlier 0.5.6 backfill candidate
+receipts remain historical evidence with their original components and hashes.
+
+### Successor work queue and closure gates
+
+After each reviewed release, update the residual matrix with exact qualified
+subset/evidence and select the next concrete contract slice. Carry any remaining
+part of a gap forward under its existing ID. The default sequence below is by
+dependency; independently available external qualification can proceed earlier.
+
+| Order / ID | Next design and implementation slice | Closure evidence required |
+| --- | --- | --- |
+| 1 / G02 | Finite typed per-row algebra above, both target shapes | All G02-D1–D7 gates; residual arbitrary/external transforms explicitly refused |
+| 2 / G03 | Existing-column SET/DROP future defaults; finite expression identity/type/volatility rules | Old rows unchanged, omitted versus explicit NULL writes, source/native default correspondence, tamper/recovery and installed publication |
+| 3 / G11 | Stable-ID combined drop/append scheduling and full dependency closure | Equal/different counts; exact ordered effects; policies, denied UPDATE and references; no name/count matching; atomic failure and native postconditions |
+| 4 / G10 | Successor initial/prefix inventory profile, including mixed table creation/evolution | Empty/add/remove/combined inventory fixtures, persistent approval continuity, no downgrade, exact historical 0.1 replay and native phase recovery |
+| 5 / G04 | Explicit narrowing/cross-family conversion vocabulary and retained shadow representation | Format/timezone/precision/rounding/loss decisions, target constraints, retained originals and independent native edge-value oracle; no implicit cast claims |
+| 6 / G05 | Retire access, retain recoverable values and separately authorized physical purge | Retention/backup authority, restore after subsequent writes, privacy/access enforcement, expiry and irreversible purge receipt; history alone insufficient |
+| 7 / G06 | Online chunking with stable keys/version reconciliation and guarded cutover | Insert/update/delete/reinsert races, interrupted chunks, bounded progress, cancellation, no lost edits or unprotected activation interval |
+| 8 / G07 | US-050/CONTRACT-045 dependency revision closure followed by coordinated store migration | Exact cross-document pins/unknown meaning handling and multi-store failure recovery; no assumed distributed transaction |
+| independent / G08 | Select actual Truss mutable and Ashlar immutable backend owners/capabilities | Genuine effects, refusal and journal/publication recovery for shared Person intents; adapter-specific versions and native evidence |
+| independent / G09 | Obtain authorized isolated managed target and actual consumer workload from its owner | Frozen installed cohort, actual managed privileges/platform constraints and consumer workload acceptance; local PostgreSQL does not close it |
+
+G08 cannot be marked complete because a reader or schema comparator works. G09
+cannot be marked complete using a local substitute or unauthorized production
+exercise. If external ownership/access remains unavailable, record the precise
+owner, missing prerequisite and remaining acceptance work; keep the umbrella
+objective incomplete and report the actual dependency. Do not silently reduce
+the human's all-backlog scope to the immediate G02 release.
 
 ## Remaining-gap delivery order
 

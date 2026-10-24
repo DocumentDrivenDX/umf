@@ -1,3 +1,13 @@
+<!-- helix:publish audience=developer page=python-wheel-mirror kind=how-to voice=onboarding budget=2000 -->
+<!-- helix:source python/packaging/embedder-wheel-lock.template.json sha256:d19891212c5eff24 -->
+<!-- helix:source tests/codegen/acquire_offline_cohort.py sha256:ac0c3d6789ea532e -->
+<!-- helix:source scripts/python-package-mirror.py sha256:3e5d9fbd5b95c51e -->
+<!-- helix:source tests/codegen/aggregate_cohort.py sha256:068d2b67797369a4 -->
+<!-- helix:source tests/codegen/offline_mirror_probe.py sha256:5e7861eb6e1ccfe7 -->
+<!-- helix:source tests/codegen/offline_mirror_probe_legacy.py sha256:7bfe839de559af93 -->
+<!-- helix:source tests/codegen/test_aggregate_cohort.py sha256:9f399dacf7dc3c5e -->
+<!-- helix:source .github/workflows/access-boundaries.yml sha256:e9dd72b3b80a4c2d -->
+
 # Hash-pinned Python wheel mirror
 
 A static mirror provides an offline distribution route. A released mirror
@@ -34,15 +44,52 @@ license files, and overwrite. This command records a candidate inventory; it doe
 not make it approved. The builder refuses an unresolved template or a wheelhouse
 that differs by even one file or hash.
 
-The `python-codegen` CI matrix performs acquisition per exact runner cell.
-`tests/codegen/acquire_offline_cohort.py` builds `umf-access` and `umf-codegen`
-from the checked-out commit, verifies the immutable UMF core and Weft release
-wheels, acquires the pinned binary-only PyPI closure, compares each PyPI wheel
-with that release's JSON SHA-256, and captures an 18-wheel lock for the cell.
-The lock, generated template, mirror manifest and installed receipt are uploaded
-together. The receipt's actual OS identity is authoritative; a machine with a
-different OS release cannot stand in for an intended CI cell. Review all four
-receipts before recording a four-cell support claim.
+The `python-codegen` CI matrix acquires one child lock per exact runner cell.
+`tests/codegen/acquire_offline_cohort.py` builds `umf-access` and
+`umf-codegen` from the checked-out commit, verifies immutable UMF Core and Weft
+release wheels, acquires the pinned binary-only PyPI closure, checks each PyPI
+wheel against release metadata, and records the exact selected wheel set. The
+receipt's actual OS identity is authoritative; another OS release cannot stand
+in for an intended cell.
+
+## Assemble and replay the four-cell union
+
+The aggregate profile binds all four child locks, their original installed
+receipts, and one physical wheel union. Its index uses the closed
+`umf.embedder-wheel-aggregate/0.1` profile. It records each stable cell ID,
+child lock path and SHA-256, runtime identity, qualification receipt path and
+SHA-256, and each union wheel's filename, hash, size, distribution, version,
+metadata hash, and provenance. The synthesized union lock and static PEP 503
+mirror are also hash-bound. Unknown fields, unsafe paths, missing or duplicate
+cells, conflicting package identity or provenance, and extra or missing wheel
+files cause validation to refuse.
+
+The `aggregate-python-cohort` job assembles that index and mirror from the four
+`python-codegen` artifacts. The separate `python-union-replay` matrix then
+validates the whole aggregate and installs the selected child lock from the
+shared union in a fresh environment with OS network denial, pip cache disabled,
+and hashes required. The selected runner must match the recorded cell. Only a
+successful union replay in each of the four cells establishes four-cell union
+qualification; the producer receipts and aggregate assembly alone do not.
+
+Run a selected-cell replay with:
+
+```sh
+python -I tests/codegen/offline_mirror_probe.py \
+  --aggregate-index /tmp/umf-aggregate-cohort/aggregate.json \
+  --selected-cell linux-x86_64-py311 \
+  --expected-source-commit "$GITHUB_SHA" \
+  --mirror /tmp/umf-aggregate-cohort/mirror \
+  --generator-corpus /tmp/umf-aggregate-cohort/generator-corpus.json \
+  --report /tmp/union-replay.json
+```
+
+The `--wheelhouse` and `--lock` arguments remain available for a single-cell
+producer check. Use `tests/codegen/offline_mirror_probe_legacy.py` for the frozen
+published 0.5.5 single-lock profile: the current verifier adds a compiled Core
+native-extension check and expects one selected wheel per distribution, which
+does not match that historical pure-Python Core lock. Neither single-lock
+entrypoint qualifies installation from the aggregate union.
 
 Build a fresh static mirror only from the reviewed lock:
 

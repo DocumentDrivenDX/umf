@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: MIT OR Apache-2.0
-"""Acquire the exact current-source 18-wheel cohort and freeze a per-cell lock.
+"""Acquire the exact declared current-source and immutable-release wheel cohort and freeze a per-cell lock.
 
 Network access is deliberately used only in this acquisition step. The resulting
 wheelhouse and lock are passed to offline_mirror_probe.py, which repeats the
@@ -23,14 +23,16 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 TEMPLATE_PATH = ROOT / 'python/packaging/embedder-wheel-lock.template.json'
-CORE_SHA256 = '49633924b45a3c8499d4fcc1a24c30d5a8fcb34d974ab019bbda987cb47da0f9'
-CORE_URL = ('https://github.com/DocumentDrivenDX/umf/releases/download/umf-v0.5.4/'
-            'umf_core-0.10.0-py3-none-any.whl')
 
 SPEC = importlib.util.spec_from_file_location('python_package_mirror', ROOT / 'scripts/python-package-mirror.py')
 assert SPEC and SPEC.loader
 MIRROR = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(MIRROR)
+
+SELECTOR_SPEC = importlib.util.spec_from_file_location('cohort_selector', ROOT / 'tests/codegen/cohort_selector.py')
+assert SELECTOR_SPEC and SELECTOR_SPEC.loader
+SELECTOR = importlib.util.module_from_spec(SELECTOR_SPEC)
+SELECTOR_SPEC.loader.exec_module(SELECTOR)
 
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument('--output-dir', required=True, type=Path)
@@ -39,6 +41,15 @@ parser.add_argument('--source-commit', required=True)
 parser.add_argument('--expected-os', required=True)
 parser.add_argument('--expected-architecture', required=True)
 parser.add_argument('--expected-python', required=True)
+parser.add_argument('--core-wheel-url', required=True)
+parser.add_argument('--core-wheel-filename', required=True)
+parser.add_argument('--core-wheel-sha256', required=True)
+parser.add_argument('--core-version', required=True)
+parser.add_argument('--core-release-tag', required=True)
+parser.add_argument('--core-source-commit', required=True)
+parser.add_argument('--core-repository-url', required=True)
+parser.add_argument('--core-sdist-url', required=True)
+parser.add_argument('--core-sdist-sha256', required=True)
 parser.add_argument('--weft-wheel-url', required=True)
 parser.add_argument('--weft-wheel-filename', required=True)
 parser.add_argument('--weft-wheel-sha256', required=True)
@@ -62,10 +73,28 @@ if len(args.source_commit) != 40 or any(character not in '0123456789abcdef' for 
     raise SystemExit('Source commit must be a full 40-character Git SHA')
 if len(args.weft_wheel_sha256) != 64 or any(character not in '0123456789abcdef' for character in args.weft_wheel_sha256):
     raise SystemExit('Weft SHA-256 must be a lowercase 64-character digest')
+for label, digest in (('Core wheel', args.core_wheel_sha256), ('Core sdist', args.core_sdist_sha256)):
+    if len(digest) != 64 or any(character not in '0123456789abcdef' for character in digest):
+        raise SystemExit(f'{label} SHA-256 must be a lowercase 64-character digest')
+if len(args.core_source_commit) != 40 or any(character not in '0123456789abcdef' for character in args.core_source_commit.lower()):
+    raise SystemExit('Core source commit must be a full 40-character Git SHA')
+if not args.core_release_tag or any(part in args.core_release_tag for part in ('/', '..', '\\')):
+    raise SystemExit('Core release tag must be one exact tag name')
+if Path(args.core_wheel_filename).name != args.core_wheel_filename or not args.core_wheel_filename.endswith('.whl'):
+    raise SystemExit('Core wheel filename must be a plain wheel basename')
+sdist_filename = f'umf_core-{args.core_version}.tar.gz'
+try:
+    SELECTOR.validate_release_asset_urls(args.core_repository_url, args.core_release_tag,
+                                         args.core_wheel_url, args.core_wheel_filename,
+                                         args.core_sdist_url, sdist_filename)
+except ValueError as error:
+    raise SystemExit(str(error)) from None
 
 args.output_dir.mkdir(parents=True)
 wheelhouse = args.output_dir / 'wheelhouse'
 wheelhouse.mkdir()
+release_inputs = args.output_dir / 'release-inputs'
+release_inputs.mkdir()
 
 def fetch(url: str, target: Path, expected_sha: str) -> None:
     request = urllib.request.Request(url, headers={'User-Agent': 'UMF-embedder-offline-cohort/1'})
@@ -100,7 +129,40 @@ def pypi_artifact_hash(project_url: str, filename: str) -> tuple[str, str]:
         raise SystemExit(f'PyPI release metadata omits the selected wheel hash: {project} {version} {filename}')
     return api_url, digest
 
-acquire_release_wheel(CORE_URL, wheelhouse / 'umf_core-0.10.0-py3-none-any.whl', CORE_SHA256)
+# Resolve the immutable tag to its peeled commit. The supplied source commit is
+# not accepted as provenance unless the selected release tag resolves to it.
+tag_ref = f'refs/tags/{args.core_release_tag}'
+resolved = subprocess.run(['git', 'ls-remote', '--exit-code', args.core_repository_url, tag_ref, tag_ref + '^{}'],
+                          check=False, text=True, capture_output=True)
+if resolved.returncode:
+    raise SystemExit('Cannot resolve selected Core release tag from its repository')
+refs = {line.split()[1]: line.split()[0] for line in resolved.stdout.splitlines() if len(line.split()) == 2}
+resolved_commit = refs.get(tag_ref + '^{}', refs.get(tag_ref))
+if resolved_commit != args.core_source_commit:
+    raise SystemExit('Core release tag does not resolve to the declared source commit')
+
+core_wheel = wheelhouse / args.core_wheel_filename
+acquire_release_wheel(args.core_wheel_url, core_wheel, args.core_wheel_sha256)
+core_metadata = MIRROR.wheel_metadata(core_wheel)
+if core_metadata['distribution'] != 'umf-core' or core_metadata['version'] != args.core_version:
+    raise SystemExit('Selected Core wheel METADATA does not match declared distribution/version')
+try:
+    from packaging.tags import sys_tags
+    from packaging.utils import parse_wheel_filename
+except ImportError:
+    try:
+        from pip._vendor.packaging.tags import sys_tags
+        from pip._vendor.packaging.utils import parse_wheel_filename
+    except ImportError:
+        raise SystemExit('Selected Core validation requires pip-vendored packaging') from None
+try:
+    wheel_name, wheel_version, _build, wheel_tags = parse_wheel_filename(core_wheel.name)
+except ValueError:
+    raise SystemExit('Selected Core filename is not a valid wheel filename') from None
+if MIRROR.normalized_name(str(wheel_name)) != 'umf-core' or str(wheel_version) != args.core_version or not wheel_tags.intersection(sys_tags()):
+    raise SystemExit('Selected Core wheel filename/version is incompatible with this exact runner cell')
+source_archive = release_inputs / sdist_filename
+fetch(args.core_sdist_url, source_archive, args.core_sdist_sha256)
 acquire_release_wheel(args.weft_wheel_url, wheelhouse / args.weft_wheel_filename, args.weft_wheel_sha256)
 
 mini_metadata = MIRROR.wheel_metadata(args.mini_racer_wheel)
@@ -124,17 +186,28 @@ with tempfile.TemporaryDirectory(prefix='umf-offline-cohort-') as temporary:
     # file. Acquire the dependencies before looking up their PyPI file hashes.
     template = copy.deepcopy(source_template)
     template['intendedCells'] = [cell]
+    template['coreSemanticVersion'] = source_template['coreSemanticVersion']
+    core_rows = [package for package in template['packages'] if MIRROR.normalized_name(package['distribution']) == 'umf-core']
+    if len(core_rows) != 1:
+        raise SystemExit('Template must declare exactly one umf-core package')
+    core_rows[0]['version'] = args.core_version
+    core_rows[0]['source'].update({
+        'url': args.core_wheel_url, 'filename': args.core_wheel_filename,
+        'sha256': args.core_wheel_sha256, 'releaseTag': args.core_release_tag,
+        'repository': args.core_repository_url, 'sourceCommit': args.core_source_commit,
+        'sdistUrl': args.core_sdist_url, 'sdistSha256': args.core_sdist_sha256,
+        'sdistFilename': source_archive.name,
+    })
     for package in template['packages']:
         name = package['distribution']
         source = package['source']
         if name in ('umf-access', 'umf-codegen'):
             source['commit'] = args.source_commit
-        elif name == 'umf-core':
-            source.update({'url': CORE_URL, 'sha256': CORE_SHA256, 'release': 'umf-v0.5.4'})
         elif name == 'weft-sql':
             source.update({'url': args.weft_wheel_url, 'sha256': args.weft_wheel_sha256,
-                           'release': 'weft v0.4.49'})
+                           'release': f'weft v{package["version"]}'})
 
+    catalog = list(template['packages'])
     dependencies = [
         f"{package['distribution']}=={package['version']}"
         for package in template['packages']
@@ -173,14 +246,47 @@ with tempfile.TemporaryDirectory(prefix='umf-offline-cohort-') as temporary:
                        'publisherArtifactSha256': publisher_hash,
                        'publisherHashSource': 'PyPI JSON release metadata'})
 
+    # Select the final mirror package set from active Requires-Dist in the
+    # exact selected wheel METADATA. Qualification drivers remain explicit
+    # roots; their presence is not attributed to production dependencies.
+    metadata_by_distribution = {
+        MIRROR.normalized_name(MIRROR.wheel_metadata(path)['distribution']): MIRROR.wheel_metadata(path)
+        for path in wheelhouse.glob('*.whl')
+    }
+    try:
+        from packaging.markers import default_environment
+    except ImportError:
+        from pip._vendor.packaging.markers import default_environment
+    marker_environment = default_environment()
+    roots = template['packageRoots']
+    resolution = SELECTOR.resolve_dependency_closure(
+        roots['production'] + roots['qualificationDrivers'], catalog,
+        metadata_by_distribution, marker_environment)
+    selected_names = resolution['selectedNormalizedDistributions']
+    template['packages'] = [row for row in catalog
+                            if MIRROR.normalized_name(row['distribution']) in selected_names]
+    allowed_names = set(selected_names)
+    for candidate in list(wheelhouse.glob('*.whl')):
+        if MIRROR.normalized_name(MIRROR.wheel_metadata(candidate)['distribution']) not in allowed_names:
+            candidate.unlink()
+    template['dependencyResolution'] = {
+        'method': 'active Requires-Dist closure from exact selected wheel METADATA',
+        'markerEnvironment': marker_environment,
+        'productionRoots': roots['production'],
+        'qualificationDriverRoots': roots['qualificationDrivers'],
+        'selectedNormalizedDistributions': selected_names,
+        'checkedRequirements': resolution['checkedRequirements'],
+    }
+
     template_path = args.output_dir / 'cohort-template.json'
     template_path.write_text(json.dumps(template, indent=2, sort_keys=True) + '\n', encoding='utf-8')
     lock_path = args.output_dir / 'cohort.lock.json'
     locked = MIRROR.capture_lock(template_path, wheelhouse, lock_path)
-    if len(locked['packages']) != 18 or len(locked['wheels']) != 18:
-        raise SystemExit(f'Expected the complete 18-wheel cohort, got {len(locked["packages"])} packages and {len(locked["wheels"])} wheels')
+    SELECTOR.validate_exact_wheel_inventory(template['packages'], locked['wheels'])
 print(json.dumps({
     'status': 'acquired-and-locked', 'cell': cell, 'sourceCommit': args.source_commit,
     'lock': str(lock_path), 'lockSha256': MIRROR.sha256(lock_path),
     'wheelhouse': str(wheelhouse), 'wheelCount': len(locked['wheels']),
+    'coreSourceArchive': str(source_archive), 'coreSourceArchiveSha256': MIRROR.sha256(source_archive),
+    'coreReleaseTagResolvedCommit': resolved_commit,
 }, sort_keys=True))

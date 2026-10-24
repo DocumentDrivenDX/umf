@@ -236,3 +236,61 @@ runner name may follow the existing host harness; these are required observation
 Record exact installed runtime/generator/source hashes and final person/batch
 observations. This is a release-blocking data-client integration gate, not proof
 from approval-store unit tests or a successful migration return alone.
+## G02 typed same-row backfill acceptance
+
+SD-007 and CONTRACT-081 select operation 0.2, migration/options 0.4, execution
+0.3 and guarded Weft program 0.2. TD-085 owns component integration. These planned
+cases extend the existing primary suites; no pass is claimed by their presence.
+Both existing-target and appended-required-target shapes must pass before release.
+
+| Stable criterion / primary layer | Test and source citation | Required observation |
+| --- | --- | --- |
+| US-051-AC12/16, portable | Extend `tests/binding/table-migration.test.ts`, `tests/lifecycle/migration.test.ts`; `@covers US-051-AC12`, `@covers US-051-AC16` | Exact closed AST/options/plan/version admission; stable old/new input closure; no target self/new sibling/related/ambient dependencies; max depth/node/fanout/token and per-node numeric budget; all refused inputs yield no partial plan |
+| US-051-AC12/16, compiler parity | Shared derived-backfill fixture through Bun, lifecycle Chromium suite and installed `umf_codegen` | Deterministic plans/refusals and original source/AST identity; explicit UMF Rust 0.4 refusal; 0.1–0.3 frozen verification/replay and default TS/V8 path unchanged |
+| US-051-AC12, Weft shared Rust | Extend `crates/weft-postgresql/tests/table_operation.rs`, native Python and real WASM browser corpus | Field/literal/coalesce/strict concat/add/subtract/multiply/conditional type and NULL semantics; exact program 0.2/guard closure, fully qualified resolution and private marker isolation; source/AST/SQL/program self-rehash forgery refuses |
+| US-051-AC12/15/16, installed native | New `tests/lifecycle/derived-fill-native.py` using existing G01 helpers; cite all three ACs | Distinct manually specified per-row results for fabricated Person and commerce domains; existing optional tightening and appended required field with/without future default; preserved present/input/unrelated data and final catalogs |
+| US-051-AC12/15, native invalid data | Same installed native suite and reviewer-owned independent oracle | NULL result, NaN numeric input (including unused branch), NaN result, decimal rounding, intermediate/resource excess, integer overflow, significant trailing spaces, Unicode/varchar length, enum/range/CHECK/unique/FK and maxRows failures abort the entire phase including earlier valid rows |
+| US-051-AC15, native writers/recovery | Same installed native suite with actual two-session barriers and driver fault injection | Writer exclusion across complete existing/append phases; no partial column/fill/default/constraint/progress; known abort retry, lost commit response observation, committed phase never repeated, later failure keeps ingress fenced until exact resume |
+| US-051-AC16, host admission/privacy | Extend host-native/progress tests and derived suite | Wrong old/new source, selector, marker, AST/ref, approval, program version, guard descriptor, partial/reordered phase or native privilege/catalog drift refuses before effects; ordinary errors contain SQLSTATE/paths, never native DETAIL/raw rows |
+
+Use synthetic non-PII records with multiple different inputs, all-NULL/mixed/
+populated targets, valid and invalid rows in the same statement, and zero matches.
+Expected decimals use manually specified exact tokens or an independent
+high-precision decimal calculation, not the implementation AST evaluator. Include
+numeric(p,s) NaN despite its finite typmod, and invalid data in an unused branch.
+Test text/native numeric assignment alterations that satisfy the target's native
+type but differ from the intended result. Snapshot actual rows/catalog/progress
+before a failing phase and independently prove complete rollback afterward.
+
+Native G02 coverage must include the admitted non-numeric carriers. Use fabricated
+Person birthdays to fill an existing optional `date` target from an unchanged
+same-row date Field and an explicit typed date literal/coalesce fallback, then
+enforce NOT NULL. Preserve a distinct already-present target and unchanged input
+values. Exercise admitted instant, UUID and boolean copy/coalesce with exact
+native/logical matches and independently written expected values. A matched NULL
+result must roll back every earlier valid row and the requiredness transition.
+Observe the host's actual durable boundaries: initial admission commits the
+owner-only READY receipt and ingress fence before the required phase. After a
+known phase abort, history and row/column catalog snapshots stay unchanged; the
+exact plan/file/head-bound READY receipt remains at phase index zero with no
+completed steps and the original prefix witness, and ordinary ingress stays
+fenced. Do not require progress to return to its pre-admission absence. Successful
+final publication advances history once and removes the progress relation.
+Qualify these as installed row-expression migrations; G03 future-default changes
+and standalone Weft scalar checks cannot substitute for this host-phase evidence.
+
+Append fixtures must prove nullable creation, only NULL-permitting target domain
+CHECKs, fill, optional future default and final NOT NULL share one native required
+transaction. A NULL-rejecting staged CHECK explicitly refuses; a compiler may not
+weaken it. Existing-target fixtures retain native constraint failure cases.
+Every unsupported compound refuses before any executable plan is emitted.
+
+Run the existing boundary commands and negative controls before feature handoff.
+After source tests, build fresh SDK/access/codegen and Weft Python/WASM artifacts;
+audit source/embedded/RECORD/schema hashes and run isolated installed native tests
+on the exact cohort. The design reviewer independently executes native acceptance
+on the frozen candidate and reviews scoped support and platform receipts.
+Release gates include required CI, reviewed actual merge/source equivalence,
+immutable packages/mirrors/licenses, and two independent fresh published-download
+comparisons plus the packaged network-denied offline probe. Managed/Praxis
+acceptance and MIG-G03–G11 are separate gates, never inferred from local passes.

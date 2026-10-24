@@ -15,9 +15,10 @@ export interface PhasedMigrationStep {
  kind:string;
  transaction:MigrationPhaseTransaction;
  operation?:string;
+ sql?:string;
  constraintKind?:'check'|'foreignKey';
  seedSets?:string[];
- phaseOperation?:'backfill'|'tighten-not-null';
+ phaseOperation?:'backfill'|'tighten-not-null'|'add-column'|'target-check'|'install-default';
  phaseTarget?:{table:string;field:{module:string;element:string}};
 }
 
@@ -47,6 +48,11 @@ const EXECUTION_PROFILE_01:TableMigrationExecutionProfile={
 };
 const EXECUTION_PROFILE_02:TableMigrationExecutionProfile={
  version:'umf.table-migration-execution/0.2',
+ progressRelation:'umf_lifecycle_progress',
+ ownerOnly:true,
+};
+const EXECUTION_PROFILE_03:TableMigrationExecutionProfile={
+ version:'umf.table-migration-execution/0.3',
  progressRelation:'umf_lifecycle_progress',
  ownerOnly:true,
 };
@@ -87,12 +93,24 @@ export function phaseTableMigrationSteps<TStep extends PhasedMigrationStep>(
    verification:'native-catalog-privileges-and-role-scope',recovery:'rollback-transaction'});
  }
  const isG01=!!_options&&typeof _options==='object'&&(_options as {version?:unknown}).version==='umf.table-migration-options/0.3';
+ const isG02=!!_options&&typeof _options==='object'&&(_options as {version?:unknown}).version==='umf.table-migration-options/0.4';
  const phases:TableMigrationPhase[]=[];
  let current:TableMigrationPhase|undefined;
  const flush=()=>{if(current){phases.push(current);current=undefined;}};
  for(let i=0;i<plannedSteps.length;i++){
   const step=plannedSteps[i]!;
-  if(isG01&&step.phaseOperation==='backfill'){
+  if(isG02&&step.phaseOperation==='add-column'){
+   const target=step.phaseTarget;
+   const group=[step];let j=i+1;
+   while(j<plannedSteps.length&&plannedSteps[j]!.phaseTarget?.table===target?.table&&plannedSteps[j]!.phaseTarget?.field.module===target?.field.module&&plannedSteps[j]!.phaseTarget?.field.element===target?.field.element&&plannedSteps[j]!.phaseOperation){group.push(plannedSteps[j]!);j++;}
+   const roles=group.map(item=>item.phaseOperation);
+   const backfillIndex=roles.indexOf('backfill'),defaultIndex=roles.indexOf('install-default');
+   if(!target||step.kind!=='table'||step.transaction!=='required'||roles[0]!=='add-column'||roles.filter(role=>role==='backfill').length!==1||roles.filter(role=>role==='tighten-not-null').length!==1||roles.at(-1)!=='tighten-not-null'||roles.filter(role=>role==='install-default').length>1||roles.some(role=>!['add-column','target-check','backfill','install-default','tighten-not-null'].includes(role!))||roles.slice(1,backfillIndex).some(role=>role!=='target-check')||defaultIndex!==-1&&defaultIndex<backfillIndex||roles.slice(backfillIndex+1,-1).some(role=>role!=='install-default'))throw new Error('g02-add-fill-tighten-correspondence-invalid');
+   const backfill=group.find(item=>item.phaseOperation==='backfill'),tighten=group.at(-1);
+   if(group.length<3||backfill?.kind!=='backfill'||backfill.sql!==''||tighten?.kind!=='table'||backfill.transaction!=='required'||tighten.transaction!=='required'||group.some(item=>item.transaction!=='required'||item.phaseTarget?.table!==target.table||item.phaseTarget.field.module!==target.field.module||item.phaseTarget.field.element!==target.field.element))throw new Error('g02-add-fill-tighten-correspondence-invalid');
+   flush();phases.push({id:'phase-'+String(phases.length+1).padStart(5,'0'),kind:'backfill-add',transaction:'required',steps:group.map(item=>item.id)});i=j-1;continue;
+  }
+  if((isG01||isG02)&&step.phaseOperation==='backfill'){
    const tighten=plannedSteps[i+1];
    if(step.kind!=='backfill'||step.transaction!=='required'||!step.phaseTarget||!tighten||tighten.phaseOperation!=='tighten-not-null'||tighten.kind!=='table'||tighten.transaction!=='required'||tighten.phaseTarget?.table!==step.phaseTarget.table||tighten.phaseTarget.field.module!==step.phaseTarget.field.module||tighten.phaseTarget.field.element!==step.phaseTarget.field.element)throw new Error('g01-backfill-tighten-pair-invalid');
    flush();
@@ -112,5 +130,5 @@ export function phaseTableMigrationSteps<TStep extends PhasedMigrationStep>(
   if(isolated)flush();
  }
  flush();
- return {steps:plannedSteps,phases,executionProfile:isG01?EXECUTION_PROFILE_02:EXECUTION_PROFILE_01};
+ return {steps:plannedSteps,phases,executionProfile:isG02?EXECUTION_PROFILE_03:isG01?EXECUTION_PROFILE_02:EXECUTION_PROFILE_01};
 }

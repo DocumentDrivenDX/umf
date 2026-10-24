@@ -220,6 +220,8 @@ def _run_required_phase(connection, plan, phase, person_roles, *, statement_time
     from .seeds import _apply_seeds
     if phase['kind'] == 'backfill-tighten':
         _verify_backfill_tighten_target(plan, phase)
+    elif phase['kind'] == 'backfill-add':
+        _verify_backfill_add_target(plan, phase)
     with _installation(connection, bundle, statement_timeout_ms=statement_timeout_ms,
                        lock_timeout_ms=lock_timeout_ms):
         for step in _phase_steps(plan, phase):
@@ -264,6 +266,61 @@ def _verify_backfill_tighten_target(plan, phase):
             or columns[0].get('sourcePath') != tighten.get('sourcePath')
             or columns[0].get('nullable') is not False
             or backfill.get('sourcePath') != '/options/backfills/'+str(matches[0][0])):
+        raise CatalogError('mixed-phase-profile')
+
+
+def _verify_backfill_add_target(plan, phase):
+    """Bind the atomic add/fill/tighten correspondence to one new required Field."""
+    steps = _phase_steps(plan, phase)
+    options = plan.get('options', {})
+    if (plan.get('version') != 'umf.table-migration/0.4'
+            or options.get('version') != 'umf.table-migration-options/0.4'
+            or len(options.get('backfills', [])) != 1 or not steps):
+        raise CatalogError('mixed-phase-profile')
+    target = steps[0].get('phaseTarget')
+    if type(target) is not dict or set(target) != {'table','field'}:
+        raise CatalogError('mixed-phase-profile')
+    ref = {'module':target.get('field',{}).get('module'),
+           'element':target.get('field',{}).get('element')}
+    columns = [item for item in plan['next']['expectedCatalog']['columns']
+               if item.get('table') == target.get('table') and item.get('field') == ref]
+    old_columns = [item for item in plan['previous']['expectedCatalog']['columns']
+                   if item.get('table') == target.get('table') and item.get('field') == ref]
+    by_role = {step.get('phaseOperation'): step for step in steps
+               if step.get('phaseOperation') != 'target-check'}
+    roles = [step.get('phaseOperation') for step in steps]
+    backfill_index = roles.index('backfill') if 'backfill' in roles else -1
+    default_index = roles.index('install-default') if 'install-default' in roles else -1
+    selection = options['backfills'][0]
+    target_checks = [step for step in steps if step.get('phaseOperation') == 'target-check']
+    domain_id = 'domain:' + ref['module'] + '.' + ref['element']
+    expected_checks = [item for item in plan['next']['expectedCatalog']['checks']
+                       if item.get('table') == target.get('table') and item.get('id') == domain_id]
+    table = next((item for item in plan['next']['expectedCatalog']['tables']
+                  if item.get('id') == target.get('table')), None)
+    expected_check_sql = ('ALTER TABLE ' + _q(plan['next']['configuration']['schema']) + '.'
+                          + _q(table['name']) + ' ADD ' + expected_checks[0]['definitionSql']
+                          if table is not None and expected_checks else None)
+    if (selection.get('table') != target.get('table') or selection.get('column') != ref
+            or len(columns) != 1 or old_columns or columns[0].get('nullable') is not False
+            or steps[0].get('phaseOperation') != 'add-column'
+            or steps[0].get('kind') != 'table' or steps[0].get('transaction') != 'required'
+            or len(steps) < 3 or roles.count('backfill') != 1
+            or roles.count('tighten-not-null') != 1 or roles.count('install-default') > 1
+            or roles[-1] != 'tighten-not-null' or backfill_index < 1
+            or any(role != 'target-check' for role in roles[1:backfill_index])
+            or default_index != -1 and default_index < backfill_index
+            or any(role != 'install-default' for role in roles[backfill_index+1:-1])
+            or any(step.get('phaseTarget') != target or step.get('transaction') != 'required'
+                   for step in steps)
+            or by_role.get('backfill', {}).get('kind') != 'backfill'
+            or by_role.get('backfill', {}).get('operation') != selection.get('operation')
+            or by_role.get('backfill', {}).get('sourcePath') != '/options/backfills/0'
+            or by_role.get('tighten-not-null', {}).get('sourcePath') != columns[0].get('sourcePath')
+            or steps[-1].get('phaseOperation') != 'tighten-not-null'
+            or len(target_checks) != len(expected_checks)
+            or any(step.get('sourcePath') != columns[0].get('sourcePath') + '/domain'
+                   or step.get('sql') != expected_check_sql for step in target_checks)):
         raise CatalogError('mixed-phase-profile')
 
 
