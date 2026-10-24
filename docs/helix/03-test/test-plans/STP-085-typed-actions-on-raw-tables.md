@@ -366,3 +366,77 @@ session, fixed-query, operation-input and table-outcome suites.
   profile checks, actual Chromium/compiler parity, package closure/custody and
   independent published artifact verification. Report any unqualified carrier,
   wrapper, host route or managed identity as an explicit remaining limit.
+
+## G11 combined replacement acceptance allocation (proposed)
+
+Allocate US-051-AC12/15/16 coverage to a dedicated portable G11 suite, compiler
+parity corpus, host-profile/refusal suites and fresh installed native runner.
+These are planned gates, not execution evidence.
+
+- Stable-ID drop/add with equal and different counts; reuse the old SQL name
+  with a new Field identity and prove no implicit rename/value transfer. Include
+  nullable no-fill/no-UPDATE and required G02 fill from unchanged inputs; reject
+  old-only input copy, new-field chain and future-default-only historical fill.
+  Add at least two new required Fields with independent explicit fills, verify
+  deterministic ordering and complete expected rows, then fail the second fill
+  and prove all first-fill values and DDL rolled back. Test aggregate effect and
+  absolute deadline exhaustion without resetting budgets per operation.
+- Complete Key/FK/check/index/policy/grant and operation dependencies; explicit
+  supported replacements with exact markers, unknown/native dependency refusal,
+  inbound retained-table dependencies and deterministic DAG ordering. Refuse
+  concurrent effects and unsupported generated cycles. Roll back native
+  constraints on invalid complete data, including rows ordinary RLS hides.
+  Include NULL-rejecting and cross-new-Field CHECKs that pass only after both
+  fills, precise target-check versus dependency-check ownership, and unchanged
+  complete CHECK semantics. Reused declaration pointers with distinct operation
+  IDs must consume distinct complete markers, never path-only deduplication.
+- Actual Person create example: remove old Field `legacyName`, remove its old
+  read command, add required `displayName`, and explicitly add a new create
+  parameter/assignment. Use unchanged `name` as the reviewed historical fill
+  input. Validate both complete sources and regenerated parameter/result types.
+  Do not use a source that was invalid before migration as a positive fixture.
+  Exercise actual ordinary create after publication and reject the old client.
+- Companion parameter removal with another retained use refuses; unchanged
+  operation context changes require conservative context markers; unrelated same-ID predicate,
+  audience/effect changes refuse. Added/removed command markers are exact and
+  fully consumed. Policy review does not grant ordinary batch UPDATE.
+- Real old reader/writer transactions and direct granted clients during cutover:
+  block/drain before native replacement and keep fenced until publication.
+  A prepared old query must never read a new Field through a reused SQL name.
+  Include inherited/PUBLIC grants and actual non-owner principals; administrative
+  SET ROLE checks alone do not qualify authenticated client isolation.
+- Inject failure after each dependency/carrier/fill/default/constraint action
+  and before commit: complete old values/catalog survive, no phase completion,
+  ingress remains accurately fenced. Inject lost COMMIT response and final
+  publication failure: observe exact progress, resume without duplicate fill,
+  and retain deleted-value irreversibility disclosure. Forge equal final
+  column counts/native names without progress and require refusal.
+- Old discovery/profiles and byte-frozen outputs remain unchanged; G03 selected
+  module propagation remains explicit where required. Bun/real Chromium and
+  installed compiler parity, both host routes, fresh qualified native artifact
+  cohort, platform closure, public-download byte identity and release notes
+  with all remaining G02–G11 limits are separate mandatory release gates.
+
+Context controls cover an unchanged operation with cross-module Field changes,
+metadata-only source byte changes and complete configuration changes. Verify
+exact RFC8785 context digests, full source-byte hashing once per side and no
+context marker for a changed declaration. Actual Weft result/parameter typing
+remains a separate acceptance check. Generated subject controls tamper role,
+rule, command, ordered mutable column identities/names, expression and digest;
+refuse name-only adoption, role/relation recreation and extra PUBLIC/inherited
+capabilities. Positive UPDATE grant scheduling must preserve unrelated mutable
+columns and exclude immutable/generated/Key columns exactly.
+
+Whole-source negative controls alter schema/roles/group mapping, retained table
+name/order, retained Field default/type/nullability/facets/generation/immutability,
+unknown qualifiers and unrelated content. Even complete forged review markers
+or a changed source-context digest must not authorize them. Positive shared-Field
+cases retain a definition still used elsewhere while dropping only one selected
+native mapping. Preserve retained relative ordering and exact new authored order.
+Test a predecessor containing seeds unaffected by selected Fields (unchanged,
+no replay), a seed row referencing a removed Field, and a row made invalid by a
+new required Field. The latter cases refuse before effects with located seed
+diagnostics. Editing/removing those declarations to make a fixture pass also
+refuses as an unsupported seed companion, explicitly reported as a remaining
+G11 limit. Metadata history/source custody is not mistaken for restoring purged
+business values.

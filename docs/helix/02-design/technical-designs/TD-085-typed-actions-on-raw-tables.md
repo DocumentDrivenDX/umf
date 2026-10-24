@@ -537,3 +537,60 @@ the explicit host policy opt-in and its immutable compatible dependency; they
 must not expose an author/request selector or imply logical default resolution
 performs SQL insertion. Existing administrative seed/backfill dispatch is not
 silently widened. CONTRACT-081 and STP-085 are the release gates for this work.
+
+## G11 atomic Field replacement implementation allocation (proposed)
+
+CONTRACT-081 freezes successor 0.6/0.5/0.3; SD-007 owns the reviewed design.
+The TypeScript adapter owns stable-ID source comparison, complete typed
+dependency graph, companion operation/source-context marker derivation and deterministic
+DDL schedule. Build a dedicated successor branch: removing a column-count guard
+from an older profile is insufficient. Preserve complete sources, original
+pointers, unknown content and authored order. Resolve implicit Record results
+and unused/retained parameter dependencies before admitting a companion change.
+
+Weft retains finite G02 typed data lowering; a selected administrative fill is
+authorized independently of ordinary batch UPDATE denial. No-fill cases need no
+Weft UPDATE. UMF retains default/DDL rendering, phase target/dependency identity,
+strict prefix witnesses and final source correspondence. The successor supports
+multiple independently selected added targets under the existing array cap,
+unique target selection and aggregate phase budgets. Classify column-local
+NULL-permitting pre-fill CHECKs separately from cross-Field/NULL-rejecting
+post-population dependency CHECKs; both carry exact source rerender ownership. Host-neutral and
+Psycopg appliers explicitly admit the successor and must acquire reader/writer
+quiescence and native locks over the actual dependency closure. They do not
+interpret arbitrary SQL to infer step ownership. Unsupported direct-client
+quiescence is a refusal, not a metadata-head fence claim.
+
+Extend exact phase schemas, both host dispatch/recovery routes, approval/reference
+latest-plan admission, compiler bridge and generated clients with explicit 0.6
+selection. Preserve installation 0.3 and fixed owner-only progress/approval
+relations only where their exact schemas/ACL semantics remain valid. No new
+unmanaged-object allowance. Progress witnesses cover complete before/after
+atomic shapes, including reused SQL names with different Field IDs. Publish
+only after native catalog/data/ACL/RLS and generated-client generation agree.
+
+Implementation must retain explicit residuals for generated dependency cycles,
+old-only Field copies (G04), retained restoration (G05), online conversion (G06)
+and table-inventory changes (G10). A narrow implementation cannot mark broader
+G11 command/dependency composition complete without its actual native tests.
+
+The context marker normal form is exactly CONTRACT-081's full retained-document
+digest plus complete configuration/module/authored operation. It intentionally
+marks extra unchanged operations when context changes; do not invent compiled
+result metadata in a deployment bundle that has none. Weft retains fixed-query
+resolution. Policy/grant subject IDs are full content digests of closed typed
+normal forms; extract the existing policy/grant renderer inputs to build them,
+not SQL-prefix/suffix parsing. Bind physical role/relation/policy/ACL witness
+separately, including missing/recreated native objects and inherited authority.
+
+Implement a dedicated whole-source correspondence pass before scheduling or
+effect emission. Record exact exemptions by before/after location and stable
+typed identity, then compare all remaining content/array order; do not normalize
+away an entire selected object and lose unknown qualifiers. Configuration,
+retained carrier semantics and table inventory/name/order remain unchanged.
+Operation-context review does not widen this admitted change set. Preserve
+shared Field definitions still used elsewhere while removing a selected mapping.
+Keep authored seedSets unchanged and never execute/replay them; seed-dependent
+invalid successor or requested seed edit must refuse at its original location.
+Seed-history evolution remains explicitly tracked within G11 rather than being
+hidden behind a successful command-free/seed-free fixture.

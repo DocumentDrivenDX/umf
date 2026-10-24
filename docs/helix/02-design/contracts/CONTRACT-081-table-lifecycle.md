@@ -1880,3 +1880,236 @@ No G03 release claim is admitted until a new immutable Weft artifact implements
 the selected module, its Python wrapper propagates the selector without loss,
 and the exact installed cohort passes both profile compatibility and G03 native
 acceptance. Published Weft 0.4.53 bytes MUST NOT be replaced to add this support.
+
+### G11 combined stored-Field removal/addition successor (proposed)
+
+This section reserves options/plan `umf.table-migration-options/0.6` and
+`umf.table-migration/0.6`, execution `umf.table-migration-execution/0.5`, and
+explicit discovery selector `{version:"umf.table-migration-discovery/0.3"}`.
+Older selectors and profiles retain their exact behavior. This proposal does
+not establish implementation or native support. Both sources must be exact
+retained JSON and independently valid. The same installed table inventory and
+stable Record/table identities must remain; G10 owns table-inventory changes.
+At least one stored Field must be removed and at least one added, by full
+`{module,element}` identity, irrespective of column count/name/type equality.
+
+#### Whole-source correspondence and seed boundary
+
+The complete validated TableDeploymentConfiguration MUST be identical on both
+sides, including schema, owner/person/batch roles and group-role mappings. This
+profile does not migrate configuration or role identity. The source-context
+normal form can describe a configuration difference, but selecting a context
+marker MUST NOT override this refusal.
+
+Preserve document/module/table/Record identities, retained table names and table
+inventory/order. Preserve every retained Field's logical/native type, facets,
+nullability, default, generation, immutability, collation, mapping and unknown
+qualifiers. No retained-column rename or nullability/type/default mutation is
+implicitly authorized. Remove and add only the selected stable Field definitions,
+their exact Record memberships and native column mappings. Retained memberships,
+columns and unrelated elements keep their relative authored order; new entries
+keep their authored order rather than being sorted by native names. A shared
+Field still referenced elsewhere cannot be deleted from the document merely
+because one table drops its carrier; complete source validity and dependency
+analysis distinguish dropping that mapping from deleting the definition.
+
+The only other source exemptions are explicit supported dependent Key, FK,
+CHECK, index, policy and operation changes selected by their exact markers and
+the complete resulting source binding. Existing ordinary read/return declarations
+may be byte-unchanged while their context needs review. Grant changes are derived
+only from those admitted declarations, column mutability and unchanged trusted
+configuration; an operation-context marker is never grant authority. Every
+exemption must identify exact before/after source locations and typed identities.
+Unknown content on selected objects is retained and blocks interpretation where
+unsupported; deleting the containing property for comparison must not conceal
+an unknown qualifier. After consuming all allowed exemptions, require equality
+of all remaining parsed content and authored array order. Exact original source
+bytes still bind the plan and approval. Discovery cannot turn an unsupported
+unrelated edit into an executable migration.
+
+This first atomic successor keeps the complete authored `seedSets` array
+unchanged and has `seedExecution:"none"`. Existing previously applied seed values
+are not instructions to replay, fill a new target or repopulate a dropped Field.
+If unchanged seeds make the successor invalid (for example a retained seed row
+references a removed Field or omits a newly required target), refuse with the
+original seed/table/Field location before plan emission. A caller may not evade
+that refusal by deleting or editing the seed declarations: seed addition,
+removal, value change and seed-history disposition are unsupported companions
+and remain an explicit G11 residual until a separate exact reviewed source and
+execution/custody contract is qualified. Do not classify a seed declaration as
+an ordinary command-context exemption. Retained before-source seed values remain
+part of source/marker custody even when stored business values are purged.
+
+
+Options 0.6 contain exactly `version`, `backfills`, `concurrentIndexes`,
+`reviewedChanges`, `validations`. Existing array limits apply. Concurrent indexes
+and deferred validations must be empty. Backfills contain zero or more existing
+exact `{table,column,operation,scopedRows:true}` G02 selections, bounded by the
+existing 256-entry limit and at most one selection per added target. Every
+selection must be consumed exactly once. Typed inputs must refer only to
+unchanged retained Fields;
+no old-only Field, added-field chain, callback or author SQL is admitted. An
+optional addition may remain NULL; a required addition needs an admitted
+explicit fill before tightening. A future default alone does not populate old
+rows. The no-fill transition must dispatch no UPDATE.
+
+Every removed stored Field needs an exact `drop-column` marker and the existing
+`IRREVERSIBLE_COLUMN_PURGE` review disclosure bound by plan approval. This
+profile performs immediate physical deletion, not G05 retained retirement.
+Retention selection, type conversion of retained Fields, initial deployment,
+seeds, changed unrelated defaults and unknown change kinds refuse. Selected
+new-field future defaults use existing qualified typed admission and renderer;
+G03 default mutation of a retained Field is not implicitly composed.
+
+Discovery 0.3 emits existing marker candidates plus `change-operation` for every
+added, removed or changed ordinary operation, and `change-operation-context`
+when an unchanged authored operation's complete source/configuration context
+changes. This is conservative source review, not inferred query result typing. Markers contain exactly `id,kind,path,oldDigest,newDigest`; `conversion`
+and unknown members refuse. Candidate values are source-derived:
+`change-operation` hashes the complete original declaration or canonical null
+for absence; `change-operation-context` hashes the closed value
+`{version:"umf.table-operation-source-context/0.1",
+source:{format,sha256},configuration,module,operation}`. `source.sha256` is
+recomputed over the exact complete retained document bytes; `format` is `json`.
+`configuration` is the complete validated TableDeploymentConfiguration, `module`
+the exact owning module ID and `operation` the exact unchanged authored
+declaration. All source/configuration context changes are conservatively
+reviewed, including cross-module Fields, metadata-only and unrelated changes;
+do not claim that a marker proves an operation's result type changed. Only
+unchanged declarations receive context markers. Changed declarations use their
+complete `change-operation` marker and the already source-bound plan approval.
+Hash using RFC8785 with the existing SHA256 primitive. Memoize source hashing
+and shared context once per side; avoid reparsing/serializing the full document
+per operation. Actual generated parameters/projections and Weft typed query
+results must separately validate and qualify; no prepared handle or new SQL
+parser supplies portable marker authority. Operation
+paths use the actual successor declaration pointer when present, otherwise the
+actual predecessor pointer. A candidate includes both original pointers as
+diagnostic location metadata, not marker authority. Operation identity is the full module/element tuple. Pointer reuse by a different
+operation identity does not merge or consume its markers; each original identity
+and change kind has its own complete correspondence. Existing deterministic
+`review-` plus first24 hex of RFC8785 hash `[kind,path,oldDigest,newDigest]` applies.
+Duplicate, forged, stale, missing or unused markers refuse before plan emission.
+Discovery is not permission to execute unsupported changes.
+
+Every affected Key, FK, check, index, generated expression, policy, grant and
+operation must be preserved with valid dependencies, explicitly changed under
+its supported source correspondence, or cause a located refusal. Existing
+constraint/index/key/policy markers bind complete physical and logical meaning.
+Unknown native views, triggers, rules, grants or other dependants block execution;
+CASCADE and generic inventory exceptions are forbidden. Preserving the table
+set does not permit ignoring inbound dependencies from another retained table.
+
+Allowed companion operations use existing declaration/expression versions:
+unchanged declarations with reviewed binding changes; new/removed declarations;
+and same-ID changes confined to selected Field-related parameters, assignments
+and projections. Same-ID table, identity, audience, predicate, effect, call kind
+and unrelated returning meaning must be unchanged. A new required create
+parameter and assignment are explicit authored API evolution. Removed parameters
+must have no retained uses. Complete before/after parameter and implicit whole
+Record dependencies must validate. No ignored old argument, synthesized default,
+implicit assignment or repair is admitted. Changed ordinary policy predicates
+require their existing exact review markers and complete typed dependency checks.
+
+Plan 0.6 retains the closed plan 0.5 members and fixes `seedExecution:"none"`.
+Its execution profile is exactly
+`{version:"umf.table-migration-execution/0.5",
+progressRelation:"umf_lifecycle_progress",ownerOnly:true}` and approval profile
+remains 0.1. There is exactly one phase with `kind:"field-replacement"`,
+`transaction:"required"` and all emitted migration-effect step IDs exactly once.
+Surrounding publication/bookkeeping follows the existing lifecycle contract;
+no target/dependency effect escapes the atomic phase. Step IDs/digests derive
+from the final source-bound ordered steps, never SQL parsing or adjacency.
+
+Column steps retain exact `phaseTarget:{table,field:TableRef}`. Allowed role
+values are `drop-column`, `add-column`, `target-check`, `backfill`,
+`install-default`, `tighten-not-null`. Dependency steps instead carry exactly
+`phaseDependency:{table,kind,id,sourcePath,meaningDigest}` with role
+`dependency-drop` or `dependency-add`; kind is `check|foreignKey|index|key|policy|grant`,
+and digest binds the complete predecessor or successor typed native expectation
+respectively. A step must carry exactly one target form, correct kind/operation,
+and required transaction. Subject identity cannot be supplied as author SQL.
+
+For policies and grants, `id` is compiler-owned `dependency-` followed by the
+complete 64-hex RFC8785/SHA256 subject digest, and `meaningDigest` is that digest;
+no authored stable ID is invented. Their common closed subject prefix is
+`{version:"umf.table-native-subject/0.1",kind,relation,meaning}` where `relation`
+is exactly `{table,record,schema,name}` from that side's table/configuration.
+The policy `meaning` has exactly `{audience,command,name,role,permissive,rule,
+usingSql,withCheckSql}`. Audience is `person|batch`, command one of
+`select|insert|update|delete`, name the existing `umf_<audience>_<command>`, role
+the selected configured role, permissive `true`, and rule the complete original
+TableRowRule. SQL expressions come only from the existing authoritative typed
+policy renderer: INSERT has `usingSql:null`; UPDATE has both expressions; SELECT
+and DELETE have `withCheckSql:null`. These are generated expressions retained
+for exact source rerender, never author-supplied executable SQL or SQL inference.
+
+The grant `meaning` has exactly `{audience,command,role,columns,grantOption}`.
+Role and audience/command are as above; `grantOption` is `false`. SELECT, INSERT
+and DELETE table grants have `columns:null`. UPDATE has the ordered nonempty
+array of exact `{field,name}` for ordinary mutable columns, derived with the
+existing exclusion of immutable/generated/Key Fields. A deny rule produces no
+grant subject; a disappearing prior grant has its prior source-derived subject.
+PUBLIC revocation and schema/head privileges remain separate mandatory fixed
+installation/fence invariants, never dependants that can be dropped to permit a
+Field change. Unknown privilege variants or extra subjects refuse.
+
+The host verifies these subject normal forms by exact source recompilation and
+independently verifies physical relation/role/policy/ACL witnesses under native
+locks. Source content ID and native incarnation are separate: a role name or OID
+alone is not enduring identity across drop/recreation, restore or another
+installation. Native inventory must detect extra/inherited/PUBLIC capabilities;
+matching generated GRANT text alone is insufficient. Complete source/plan
+authority still binds policy-related tables, configuration and original meaning.
+
+The adapter builds a deterministic dependency DAG: remove approved obsolete
+dependants before their old carriers; drop an old carrier before adding a new
+one reusing its SQL name; add nullable new carriers before fills; install each admitted future default
+after its fill; verify all required values before NOT NULL; add/validate
+dependent constraints, policies and grants only when all referenced carriers
+and data are ready. A NULL-permitting column-local domain CHECK may precede its
+fill only if its complete semantics admit every intermediate state. A
+NULL-rejecting or cross-Field CHECK is installed and validated after all of its
+required populations; no NOT VALID/deferred-validation shortcut is admitted
+by this first atomic profile. Stable source order breaks
+ties, not display names. Unsupported cycles refuse. New global Keys/FKs validate
+the complete native population, never only rows visible to ordinary RLS. A
+CHECK is never silently weakened for an intermediate state. A column-local
+`target-check` step carries the one exact Field target and complete source-derived
+domain meaning. Every cross-Field or separately identified native CHECK carries
+a `dependency-add` subject with `kind:"check"`, never a guessed single Field
+target. The source rerender must prove this disjoint classification. Generated-column changes need separately qualified scheduling and remain
+an explicit unsupported composition until delivered.
+
+Before any carrier effect, the host must establish native exclusion/quiescence
+for both old readers and writers over the full affected dependency closure.
+Drain active old transactions, prepared queries, streams and admitted direct
+clients; metadata-head revocation alone is insufficient. Lock affected physical
+relations in deterministic native identity order, then reverify exact source,
+strict inventory, effective native authority and approval. Direct inherited/
+PUBLIC/owner-role authority must be accounted for. The read/write fence remains
+durable through carrier cutover and final source/client publication; the
+rollback-transaction interval and committed-prefix interval must be distinguished.
+
+All admitted fills run in deterministic dependency/source order in the same
+atomic phase. Each retains its own G02 typed authority and effect bound. The
+host enforces a finite aggregate phase effect budget and absolute deadline over
+all fills/DDL/validation; a per-fill reset cannot evade them. Exceeding a bound
+or failing a later fill aborts every earlier fill and DDL in that transaction.
+DDL, admitted fills, complete native validation and authenticated progress commit
+in the same database transaction. A known abort leaves old data/catalog and no
+phase completion; it does not erase the durable ingress fence. Unknown COMMIT
+requires exact plan/source/phase progress and native postcondition observation
+before any redispatch. A committed phase never repeats fill or drop. Native
+final shape/name/count equality alone cannot prove completion. Final head,
+history, generated client generation and grant restoration publish atomically
+only after complete successor verification. Old clients/cursors are generation
+fenced; retained metadata is not a backup of deleted values.
+
+Unsupported source/dependency/schedule returns a located
+`TABLE_MIGRATION_UNSUPPORTED`; malformed selectors/markers return
+`TABLE_MIGRATION_OPTIONS`; missing destructive review retains
+`destructive_change_unreviewed`. No partial executable plan is returned. Host
+profile/target/phase/approval/progress mismatch refuses before effects and native
+errors retain bounded SQLSTATE/identifiers without row DETAIL. Opt-in Rust must
+explicitly refuse unsupported successor 0.6, without engine fallback.
