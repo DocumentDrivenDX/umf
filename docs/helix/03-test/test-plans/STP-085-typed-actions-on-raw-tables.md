@@ -516,3 +516,28 @@ must not erase the full remaining backlog.
   explicit typed backfill and unchanged future-default behavior. Pin the actual
   new Weft artifact and prove trusted admin/client identities and legacy0.1
   compatibility separately. Record exact committed budget receipt and counts.
+
+
+### G11 owner authority and backend normal-form acceptance
+
+Allocate the closed owner/session/backend records to actual US-051-AC15/16
+provider tests. Source controls reject swapped issuer/resolver, dict/digest minting,
+wrong provider/custodian/installation, unknown/bad bounds and cyclic approval
+hashes; preserve exact native state/null shapes and require original candidate
+resolution. Source tests do not qualify a live authority or admission barrier.
+
+Actual native tests must create/observe an isolated supervised target, authenticate
+maintenance separately from controller/businessOwner, verify exact real role
+flags/memberships/full closure, target/settings and fixed same-connection hooks.
+Prove original external intent before role/store creation, unknown-outcome
+reconciliation, native restart versus copied/restored target, endpoint gating,
+wrong process/PID reuse/alternate routes and journal rewind refusal.
+
+Observe real delayed SCRAM activity as actually emitted: starting or SQL NULL
+state is retained, never synthesized. Verify full native stats visibility,
+missing-start refusal, pending/non-old/exited/owned-old resolutions, cross-DB
+old sessions, unrelated pending handshakes, activity-disabled clients, bounded
+positive termination and fresh zero-old-session proof. Lose fence acknowledgements
+and prove original candidates survive. Test introducing the verified fence
+receipt on fencing→fenced and no old-client authority through carrier COMMIT,
+publication or recovery. Native/profile/artifact/release gates remain mandatory.

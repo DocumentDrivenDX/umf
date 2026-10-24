@@ -2791,3 +2791,451 @@ actual validated counts in execution order; sum(rows) equals affectedRows and
 must fit the policy. Record it with phase completion and provider cutover in the
 SAME native transaction. Null means no committed phase-budget receipt; it is
 neither proof of zero effects nor permission to replay an unknown commit.
+
+
+#### G11 selected owner, native session and backend-observation elaboration
+
+The following rules complete the selected private owner-registration, original
+store/session authority and backend-barrier record boundaries. They do not
+change any portable plan/options version or waive actual native qualification.
+Opaque types and structural protocols remain non-authoritative without the
+actual enrolled native issuer, original external custody and endpoint controller.
+The original ingress005 protocol remains governing; these exact observations
+and separate original authority issuance resolve its private implementation seams.
+
+##### Trusted bootstrap and private resolution
+
+The concrete local custodian is constructed by trusted host bootstrap with one
+explicitly enrolled native owner/supervisor adapter and its private registration
+resolver. Neither is selected by a migration plan, request payload, GUC, callback
+argument or an untrusted request's claimed issuer. A protocol implementation is
+not sufficient enrollment. Bootstrap binds the actual adapter object identity,
+qualified immutable implementation artifact/profile, host authority identity,
+custodian/provider IDs, target-supervisor identity, journal ownership and endpoint
+control policy. Test stubs cannot satisfy the production registration check.
+
+An actual owner adapter prepares an OwnerEnrollmentRequest only after the host's
+authenticated owner approval and native registration observations succeed. It
+issues the exact existing opaque handle with kind
+`umf.local-owner-target-registration/0.1`, and privately retains the immutable
+closed payload below keyed by handle OBJECT identity in its own issuer registry.
+The handle itself exposes neither a JSON payload nor an issuer selected by the
+caller. Do not use repr, pickle or a public digest-to-capability constructor.
+
+The custodian calls only its bootstrap-enrolled resolver's private
+`resolve_owner_registration(request, *, custodian_id, provider_id)` seam.
+The resolver requires the exact OwnerEnrollmentRequest type, verifies
+`request._issued_by(enrolled_owner_issuer, selected_kind)` and its original
+private registry entry, and validates the entire payload, authenticated approval,
+qualified native origin/continuity observation and endpoint-controller authority.
+Return a private nonserializable VerifiedOwnerRegistration capability, bound to
+that actual resolver and custodian. Production code verifies the issuer/object
+registry again before using it. A returned dictionary or user-implemented resolver
+does not qualify. Python reflection/imports are not a sandbox against hostile
+in-process host code; actual host bootstrap/issuer authority is the trust boundary.
+
+The custodian does not need the issuer's construction seal. It holds a separately
+enrolled resolver reference and receives verified original registration through
+that reference. Never let a caller pass both a handle and a new purported resolver
+or attest to its own payload. Provider and custodian IDs must match bootstrap
+before any journal reservation/native work. Native attestation is independently
+performed by the enrolled owner adapter, not by validating self-consistent hashes.
+
+##### Closed local registration payload
+
+The private payload has exactly:
+
+```text
+{profile:"umf.local-owner-target-registration/0.1",
+ registrationId,custodianId,providerId,installationId,
+ ownerApproval,origin,endpointControl}
+```
+
+IDs other than installationId are UUID strings. installationId uses the existing
+bounded nonempty installation identity. ownerApproval is exactly
+`{authorityId,approvalId,approvalDigest,scope}`; scope is exactly
+`"enroll-owned-local-postgresql-target"`. These fields name the actual original
+authenticated host-owner approval retained by the issuer; caller strings do not
+establish it. Approval binds the full cycle-free registration intent, including
+registrationId, target origin, requested installation, custodian/provider and
+endpoint controller, but not its own approvalDigest. Hashing never includes a
+digest of itself. Missing/wrong/changed authority or scope refuses.
+
+Origin is exactly:
+
+```text
+{profile:"postgresql18-local-supervised-origin/0.1",
+ supervisorId,clusterId,incarnationId,creationReceiptDigest,
+ nativeBinary,dataDirectory,initialPostmaster,database,endpoint}
+```
+
+supervisorId/clusterId/incarnationId are host-issued UUIDs from actual supervisor
+creation custody. creationReceiptDigest identifies the supervisor's original
+externally retained creation observation, not a SQL-generated random marker.
+nativeBinary is exactly `{path,sha256,version}`, version initially `"18.6"`;
+path is a private absolute canonical path and sha256 is lowercase64hex over the
+actual executable. dataDirectory is exactly `{path,device,inode,ownerUid}` with
+actual private host identity observations; device/inode are canonical unsigned
+decimal strings in0..18446744073709551615, ownerUid an integer in0..4294967295.
+They are additional observations, never standalone anti-copy proof.
+initialPostmaster is exactly `{pid,startToken,launchReceiptDigest}` from the
+actual supervised child and host process-start observation. pid is positive
+native PID; startToken is a bounded exact host-native start identifier. A PID,
+pidfile or process-name match alone does not prove owned lineage.
+
+Database is exactly `{name,oid,systemIdentifier}`: qualified native database
+identity plus actual cluster system identifier. Oid is a positive native OID;
+systemIdentifier is its exact decimal string. These database-copyable values
+are cross-checks, not physical continuity authority. Endpoint is exactly
+`{host,port}`; first local subset requires host `"127.0.0.1"` and the original
+supervisor-owned private port in1..65535. Any admitted Unix socket/alternate
+listener must be inventoried and governed by the same endpoint controller before
+that extension is qualified; an uncontrolled alternate route refuses enrollment.
+
+endpointControl is exactly
+`{controllerId,profile,authorityReceiptDigest}`, profile
+`"umf.local-postgresql-endpoint-controller/0.1"`. The receipt is issued from the
+actual host-owned controller that controls ALL ordinary connection exposure,
+startup/restart/restore admission and private maintenance access. Merely promising
+to check the metadata head after ordinary connections arrive is insufficient.
+First target is a dedicated isolated supervised local cluster, not an arbitrary
+already-running shared service that this controller cannot gate.
+
+Canonical payload is RFC8785 UTF8, at most65536 bytes. Paths are absolute,
+canonical resolved native paths, each1..4096 UTF8 bytes. installationId is1..128
+UTF8 bytes; startToken1..128 ASCII bytes; database.name1..63 UTF8 bytes. All are
+NUL-free. UUID strings use lower-case canonical8-4-4-4-12 spelling. Native OIDs
+are exact integers in1..4294967295; PID1..2147483647; port1..65535; ownerUid as
+above; custodianSequence1..9007199254740991. systemIdentifier is canonical
+unsigned decimal in0..18446744073709551615. Booleans are never integers. Every
+digest is exactly64 lower-case hex characters. No nonfinite/unsafe numeric values, duplicate
+JSON keys or unknown members. UUID/digest/path canonicality is rechecked by the
+resolver. Paths, native observations and authority details remain private; public
+TargetCustody exposes only its existing opaque host capability/approved summary.
+
+##### Actual attestor and nonrewinding journal sequence
+
+The enrolled supervisor adapter must actually own cluster creation/startup and
+ordinary endpoint gating. It observes the specific supervised process, executable,
+host data-directory identity and endpoint, and obtains native control/system/
+database observations through its private authenticated maintenance channel.
+It verifies their relationship to the ORIGINAL creation/launch records and actual
+host controller, not caller-provided process or SQL facts. Actual authentication,
+binary version and source ordering need the G11 native acceptance gates.
+
+The fresh private observation has exactly
+`{profile:"umf.local-target-registration-observation/0.1",registrationDigest,
+originReceiptDigest,currentLaunchReceiptDigest,continuityChainDigest,
+endpointGateReceiptDigest,nativeObservationDigest,custodianSequence}`.
+Its underlying original observations remain in issuer/custodian custody. The
+observer capability is bound to the exact actual issuer and target, not accepted
+solely because these strings are hashes. The local custodian validates the
+original supervisor's start/restart chain, nonrewinding external journal sequence
+and endpoint gate before TargetCustody issuance. No external journal/native
+transaction atomicity is assumed.
+
+Registration uses the existing private host journal's exclusive lock, bounded
+closed records, original intent/reservation, fsync and atomic durability rules.
+Write original registration intent and authenticated authority BEFORE any native
+provider enrollment effect. Observe original outcome after unknown write/commit;
+do not mint a new registrationId or adopt a same-named target. Confirm TargetCustody
+only after actual origin/endpoint observation and durable original registration.
+The exact registration digest, provider/custodian/installation, target incarnation
+and supervisor origin become part of the custody binding used by subsequent
+enrollment, disabled provisioning and transition reservations.
+
+On process restart a volatile handle is not durable authority. The enrolled owner
+adapter may reissue a private handle ONLY after resolving the original durable
+registration/approval and re-observing the original actual supervisor/custody
+chain. Reissuing an opaque handle does not create a new registration/reservation.
+After a database restore/copy or an unknown supervisor lineage, keep ordinary
+endpoint exposure closed and refuse continuity. Recovery/new incarnation requires
+separately approved actual controller action and external/native reconciliation.
+Do not reset external journal sequences to make restored native rows agree.
+
+Missing native owner adapter/approval/controller/journal/continuity proof refuses.
+Source journal primitives and test-only attestation do not satisfy this production
+precondition. A managed control-plane target uses a separately qualified immutable
+resource/incarnation/controller issuer; it cannot claim this local profile.
+
+##### Acceptance allocation
+
+Source controls cover wrong issuer/kind/object registry, forged dict/hex digest,
+swapped resolver, changed custodian/provider/installation, unknown payload keys,
+cyclic approval hash, bounds, serialization and original-outcome restart lookup.
+These controls never qualify an actual registration.
+
+Native tests create one actual isolated supervised target and prove binary/
+process/data-directory/endpoint/native identity, authenticated maintenance, ordinary
+endpoint gating and original external sequence. Inject crashes/lost acknowledgement
+at intent/observation/confirmation, legitimate restart versus copied/restored
+directory/native markers, wrong process/PID reuse, changed executable/endpoint,
+alternate routes, journal rewind/tamper and original approval mismatch. Prove no
+TargetCustody or ordinary endpoint exposure on uncertainty. Then run the real
+G11 enrollment/provision/fence/session/phase/publication matrix. A production
+feature permanently missing the required adapter is unfinished, not a passing
+native acceptance result.
+
+
+##### Ordering and original authority
+
+Do not require future controller/store OIDs in initial target registration.
+Register actual supervised physical target custody first. Then the enrolled owner
+adapter observes the existing business owner and maintenance identity, and
+prepares the exact native provider controller under separate authenticated host
+principal-preparation authority. If creation is needed, external original intent
+precedes native role creation and the original native creation receipt follows;
+no same-name role adoption or guessed future OID. Ordinary ingress remains closed.
+Controller roles and all three actual role OIDs must exist BEFORE issuing store
+creation authority or obtaining its final approval. Actual setup authority and
+receipt are retained by the same independently enrolled owner/custodian chain.
+
+The qualified native attestor then issues an opaque OriginalStoreCreationAuthority
+bound to its original private issuer registry. Its closed private payload is:
+
+```text
+{profile:"umf.pg18.store-creation-authority/0.1",
+ providerId,installationId,registrationDigest,targetCustodyDigest,
+ authorityPreparationReceiptDigest,creationApprovalDigest,
+ maintenance,controller,businessOwner,requiredMemberships,
+ requiredSettings,nativeAuthorityObservationDigest}
+```
+
+Each principal is exactly `{oid,name,flags}`. Oid is positive native OID;
+name is actual1..63 UTF8 bytes/NUL-free, not an author-selected SET ROLE token.
+flags has exactly boolean `canLogin,superuser,createDatabase,createRole,
+replication,bypassRls,inherit`, derived from the actual native pg_roles row and
+matched to the authenticated original host authority preparation/approval.
+The three native principals are distinct. Business owner retains the existing
+UMF owner restrictions; trusted maintenance/controller privileges must match the
+selected qualified authority profile, never arbitrary flags from a caller.
+Ordinary clients cannot reach either controller or business owner. Elevated
+trusted maintenance authority is disclosed and qualified separately from ordinary
+client safety; a missing concrete privilege profile refuses production issuance.
+
+requiredMemberships is exactly the ordered two direct edges maintenance→controller
+then maintenance→businessOwner, each
+`{memberOid,roleOid,inherit:false,set:true,admin:false}`. Verify their actual native
+edges AND full effective privilege/role closure against the original enrolled
+authority and client inventories. Do not treat this two-edge list as evidence
+that no additional native reachability exists. Unknown/unapproved extra closure
+refuses. Privilege reachability through superuser/ownership/role options is
+recorded in the private native observation and selected original host profile;
+it cannot be hidden by checking only membership names.
+
+requiredSettings is exactly
+`{searchPath:"pg_catalog",timeZone:"UTC",rowSecurity:"on",
+sessionReplicationRole:"origin",transactionReadOnly:"off",
+transactionIsolation:"read committed"}` for this first write-store profile.
+Selected phase policy separately binds dynamic timeout settings. Hooks must
+restore/reverify their complete outer policy/settings snapshot, not only these
+six members. Additional isolation/native authority variants need their own
+explicit qualification, not silent acceptance.
+
+Digests are lowercase64hex; IDs/formats use the existing owner-registration bounds.
+The payload is at most65536 canonical RFC8785 UTF8 bytes, no unknown keys,
+unsafe numeric coercion or duplicate JSON keys. Creation approval binds the full
+cycle-free payload without its own creationApprovalDigest and the original
+external creation intent; it includes the actual controller/owner/maintenance
+identities and target custody. Native authority observation and original setup
+receipts must be retained and authenticated privately. Recomputed hashes alone
+cannot authorize any identity or privilege.
+
+##### Closed native context observation
+
+The actual attestor records exactly:
+
+```text
+{profile:"umf.pg18.native-session-authority-observation/0.1",
+ authorityScopeDigest,registrationDigest,targetCustodyDigest,
+ nativeServerVersionNum,database,sessionUser,currentUser,roleSetting,
+ settings,principalObservations,membershipObservations,privilegeClosureDigest}
+```
+
+First local profile pins nativeServerVersionNum180006 to actual PostgreSQL18.6.
+Database is exactly `{oid,name,systemIdentifier}` from the real private native
+channel and independently registered physical target. sessionUser/currentUser
+are exactly `{oid,name}` observed natively; roleSetting is the actual exact
+current_setting('role') string. Settings has the six closed normalized keys above;
+principalObservations is the three actual principal records in authority order;
+membershipObservations is the complete bounded native role-edge observation
+underlying the verified selected closure, sorted by numeric memberOid then roleOid,
+with the same exact boolean option fields. Missing visibility/overflow refuses.
+Privileged full-closure observations remain privately retained, not supplied as
+author summaries. The observation binds the original authority scope, actual
+connection/target and exact issuer; a fabricated instance or self-consistent
+record does not establish any of these facts.
+
+For create/read/provider-DML context require sessionUser==original maintenance,
+currentUser==original controller and roleSetting==controller.name. For outer
+business witness/effect context require sessionUser==original maintenance,
+currentUser==original businessOwner and roleSetting==businessOwner.name. Compare
+BOTH native OIDs and names with original preparation/creation custody, plus the
+actual target, settings and full qualified membership/authority closure.
+SESSION_USER is deliberately different from CURRENT_USER in both contexts;
+never require them equal. Calling SET ROLE does not change the authenticated
+maintenance identity or make a caller-chosen role authoritative.
+
+##### Store creation and hook use
+
+Before private control-schema creation, the custodian durably reserves the
+original store-creation intent bound to the verified authority/approval and exact
+future schema UUID/name. The request does not claim a future schema/table OID.
+Reobserve actual native context immediately before fixed DDL on the SAME private
+connection/transaction; after creation, record actual original object identities
+and native creation receipt in that transaction. External confirmation follows
+known native COMMIT. Unknown COMMIT observes the original reservation/objects,
+never creates another schema or adopts a same-named preexisting store.
+
+Later store reads use the original externally retained creation authority and
+receipt, verify exact native ownership/catalog/ACL and actual controller context.
+They do not infer creation authority from current object ownership alone.
+Business phase/publication enters the same-connection fixed controller hook only
+after the outer business-owner context is observed, verifies controller context,
+performs its finite bound provider DML, then restores/reverifies the complete
+original outer business context before business SQL/COMMIT. No generic elevated
+cursor/callback or extra-object waiver. Errors abort the whole transaction;
+uncertain role restoration closes/quarantines the connection. Source attestation
+objects cannot substitute for this actual native hook/transaction evidence.
+
+Native acceptance verifies distinct authenticated/effective identities, exact
+native principal flags/SET-only edges/extra-closure refusal, wrong target/settings,
+denied SET, role/OID/name reuse, wrong actor, private read/creation and same-connection
+phase hooks; crashes/lost creation acknowledgements and copied store/native
+markers; and no business-only commit or elevated pooled connection. Fake/private
+registry tests are source controls only. Until the real issuer, external origin
+and native privileges are qualified, concrete provider execution remains unfinished.
+
+
+##### Source facts and qualified inference
+
+Pinned PostgreSQL18.6 activity output maps native backend states to `starting`,
+`idle`, `active`, `idle in transaction`, `fastpath function call`,
+`idle in transaction (aborted)` and `disabled`. Undefined state maps to SQL NULL.
+Some activity fields are permission-restricted; invalid database/user IDs and
+zero start timestamp have explicit NULL output paths.
+[pgstatfuncs.c](https://github.com/postgres/postgres/blob/REL_18_6/src/backend/utils/adt/pgstatfuncs.c)
+
+Startup status initialization assigns process start time, initially invalid
+database/user identity and the starting state.
+[backend_status.c](https://github.com/postgres/postgres/blob/REL_18_6/src/backend/utils/activity/backend_status.c)
+The corresponding native state enum is fixed in
+[backend_status.h](https://github.com/postgres/postgres/blob/REL_18_6/src/include/utils/backend_status.h).
+These facts inform the following provider contract; they do not prove a live
+server's privileges, binary, startup/auth ordering or barrier completeness.
+
+##### Stored candidate entry
+
+An original barrier candidate has exactly
+`{pid,backendStart,databaseOid,loginOid,state}`. No extra member or string coercion.
+
+| member | Exact normal form |
+| --- | --- |
+| pid | Integer1..2147483647, excluding boolean. |
+| backendStart | Exact finite native timestamptz normalized to UTC `YYYY-MM-DDTHH:mm:ss.ffffffZ`, AD0001..9999, six microseconds digits; no truncation or arbitrary text parser. It is a process token paired with PID, never a timestamp cutoff/order proof. |
+| databaseOid | Integer1..4294967295 or JSON null representing actual SQL NULL. Zero and role/database names refuse. |
+| loginOid | Integer1..4294967295 or JSON null representing actual SQL NULL. It is native authenticated session identity from the activity observation, not CURRENT_USER after SET ROLE. |
+| state | Exact one of the seven source strings above, or JSON null representing actual SQL NULL. No case folding, aliases, `unknown`, inferred `starting` or empty string. |
+
+OID/state NULLs are permitted independently in the captured pending observation;
+do not require a fabricated starting label or infer that NULL proves a particular
+startup stage. A starting/NULL identity remains unresolved until the actual token
+exits or authenticated identity is resolved. State is an observation, not an
+authorization or session-absence proof. In particular `disabled` is not exit.
+
+A raw activity row with SQL NULL backend_start cannot supply the required
+PID/start token. Preserve that actual raw observation privately and refuse fence
+completion before carrier effects. Do not drop it, guess its timestamp, signal
+only by PID or attach a later process to that unqualified token. First profile
+requires qualified full-statistics access and an actual non-null native start
+token for every captured client row. Missing field visibility is not a reason to
+ignore an ordinary connection. Detecting such an unsupported native observation
+keeps ingress fenced and requires actual provider investigation/requalification.
+
+Capture every client-backend row in the fresh post-fence-commit observation,
+without role, database, state or identity filters. The finite qualified profile
+uses native backend classification only to select client backends and must prove
+that old admitted authentication cannot establish another access-capable backend
+class. Refuse if that proof/closed native role inventory is unavailable. Existing
+cross-database old sessions are included; exclusive old-role ownership is required.
+Sort entries by integer PID then exact backendStart for canonical storage; reject
+duplicate PID/start tokens or duplicate live PID entries. Read at most4097 to
+detect the4096 bound, never truncate and declare success.
+
+The current G11 fence receipt retains the EXACT original candidate array. A
+candidate's later state/identity must not overwrite that original observation.
+Reobservations and resolutions are private custodian evidence bound below.
+
+##### Closed resolution evidence
+
+Use private record profile `umf.pg18.backend-barrier-resolution/0.1`, with exactly
+`{profile,requestDigest,reservationDigest,fenceCommitReceiptDigest,
+candidatesDigest,resolutions}`. Digests are lowercase64hex over the exact original
+binding/receipt/array. Resolutions is ordered one-for-one with the original
+candidates; no omission, extra token or cross-transition reuse. Each resolution
+is exactly `{token,disposition,finalObservation,retirementReceiptDigest}`.
+Token is exactly `{pid,backendStart}` copied from that original candidate.
+
+- `pending`: finalObservation is a same-token candidate entry with loginOid null
+  or otherwise still-unresolved identity; retirementReceiptDigest is null.
+  Pending evidence may be persisted during fencing but forbids a complete fence.
+- `exited`: finalObservation and retirementReceiptDigest are null. A fresh
+  qualified native observation proves the ORIGINAL PID/start token absent;
+  a reused PID with a different start token is not that original session. Do not
+  signal the new process. This disposition does not claim that an unidentified
+  candidate was owned or deliberately terminated.
+- `resolved-other`: finalObservation is a fresh same-token entry with positive
+  loginOid proven outside the exact retired authentication-role inventory;
+  retirementReceiptDigest is null. Independently verified privilege closure must
+  exclude ordinary alternate access to the protected installation. Do not kill
+  an unrelated pending session to force resolution.
+- `retired-old`: finalObservation is the last same-token native entry with
+  positive loginOid matching the exact original owned old authentication role;
+  retirementReceiptDigest binds its actual bounded termination/positive absence
+  receipt. The last observation is not itself proof of exit. Never infer owned
+  identity from a username, SET ROLE, NULL or a caller-supplied ID.
+
+Only exited/resolved-other/retired-old are terminal. Do not classify a NULL-state
+candidate as terminal merely because its state label is absent or disabled.
+An actual known non-old authenticated UID can resolve identity independently of
+the state label, provided privilege closure and the same native token hold.
+If a previously observed identity changes incompatibly for a still-live same
+token, or cannot be bound to the original snapshot, refuse rather than relabel.
+
+Fence completion requires every original candidate terminal, zero currently
+observed old authenticated sessions cluster-wide, qualified native role/ACL
+closure and the actual source-informed admission ordering. A final fresh full
+snapshot independently confirms no old sessions; it does not replace unresolved
+original candidates or establish completion through two empty scans. Original
+external custody retains the complete observations, termination results and
+resolution record. Existing fence digests bind those original observations; no
+new public values or generic caller-supplied observation authority.
+
+##### Retirement receipt entries and transitions
+
+The existing retiredSessions entry stays exactly
+`{pid,backendStart,databaseOid,loginOid,outcome}`. PID/start forms match above;
+loginOid is positive and proven owned old authentication. databaseOid is positive
+or actual null if the known owned session had not acquired a database identity.
+Outcome is exactly `terminated|already-exited`, backed by actual original-token
+absence. Termination-signal acceptance alone does not satisfy either outcome.
+For an unidentified initial candidate that disappears, use resolution exited;
+do not fabricate a retiredSessions identity. Entries are unique and sorted by
+PID/start. No currently live original old session can have a terminal receipt.
+
+A transition may enter fencing with fenceReceipt null and no complete resolution.
+The guarded `fencing -> fenced` update MUST be able to introduce the newly
+verified non-null fence receipt/resolution while keeping the original request,
+reservation, epochs, policy and original candidate custody unchanged. Requiring
+a fence receipt already present in fencing would prevent the real transition.
+Fenced/cutover/published require the verified non-null original fence receipt;
+prepared cannot claim completion. Unknown COMMIT observes the original native
+state and custodian reservation, not a replacement receipt. Retrying must never
+reset the original candidate set or forget a pending pre-fence authentication.
+
+Native acceptance uses real delayed SCRAM authentication with NULL/starting
+observations as actually emitted, full-statistics privilege verification,
+activity-disabled clients, held transactions/cursors, PID reuse, unrelated
+pending clients, cross-database old sessions, failed/late termination and lost
+fence commit acknowledgements. Store/source tests of these shapes are separate
+from the required real PostgreSQL18.6 admission-barrier evidence.

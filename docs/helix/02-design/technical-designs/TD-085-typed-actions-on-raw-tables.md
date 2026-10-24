@@ -637,3 +637,26 @@ host clock and clamp each dispatch. Share one actual marker-row counter across
 all fills; record policy and budget receipt with the cutover transaction. Legacy
 module0.1 and return behavior stay compatible. New Weft module0.2 artifacts and
 installed-native default-bearing G11 evidence are prerequisites for admission.
+
+
+### G11 concrete owner/session/backend observation integration
+
+Implement CONTRACT-081's closed private owner registration and separately
+enrolled native resolver; no caller-selected issuer/resolver/dictionary or
+shared construction seal grants target authority. Resolve actual original
+cluster/supervisor/endpoint/native observations before TargetCustody issuance.
+Prepare actual controller/owner/maintenance native roles under original host
+authority before final store creation approval; do not require future role OIDs
+in initial target registration. OriginalStoreCreationAuthority binds original
+role identities/flags, SET edges and full approved closure, actual native target
+and settings. SESSION_USER remains maintenance while CURRENT_USER is controller
+or businessOwner depending on the fixed private hook; verify both OID and name.
+
+Preserve native backend state strings/SQL NULL exactly. Capture complete original
+client PID/start entries; missing start refuses proof. Keep originals immutable
+and persist one-for-one private resolution evidence. Do not drop an unresolved
+NULL identity, kill an unrelated handshake, signal by PID alone or treat a
+signal-only result as termination. fencing→fenced can introduce the newly
+verified receipt; original request/reservation/candidate authority cannot change.
+Implement the real supervisor/issuer/native observation path before production
+enablement; source test attestations are insufficient.
